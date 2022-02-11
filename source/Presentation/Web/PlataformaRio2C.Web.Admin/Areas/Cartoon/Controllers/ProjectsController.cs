@@ -45,6 +45,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
         private readonly IProjectEvaluationStatusRepository evaluationStatusRepo;
         private readonly IAttendeeCartoonProjectRepository attendeeCartoonProjectRepo;
         private readonly ICartoonProjectFormatRepository cartoonProjectFormatRepo;
+        private readonly ICartoonProjectRepository cartoonProjectRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectsController" /> class.
@@ -54,17 +55,20 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
         /// <param name="projectEvaluationStatusRepository">The project evaluation status repository.</param>
         /// <param name="attendeeCartoonProjectRepository">The attendee cartoon project repository.</param>
         /// <param name="cartoonProjectFormatRepository">The cartoon project format repository.</param>
+        /// <param name="cartoonProjectRepository">The cartoon project repository.</param>
         public ProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
             IProjectEvaluationStatusRepository projectEvaluationStatusRepository,
             IAttendeeCartoonProjectRepository attendeeCartoonProjectRepository,
-            ICartoonProjectFormatRepository cartoonProjectFormatRepository)
+            ICartoonProjectFormatRepository cartoonProjectFormatRepository,
+            ICartoonProjectRepository cartoonProjectRepository)
             : base(commandBus, identityController)
         {
             this.evaluationStatusRepo = projectEvaluationStatusRepository;
             this.attendeeCartoonProjectRepo = attendeeCartoonProjectRepository;
             this.cartoonProjectFormatRepo = cartoonProjectFormatRepository;
+            this.cartoonProjectRepo = cartoonProjectRepository;
         }
 
         #region List
@@ -210,6 +214,331 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        #endregion     
+        #endregion
+
+        #region Details
+
+        /// <summary>
+        /// Evaluations the details.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="projectFormatUid">The project format uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> EvaluationDetails(int? id, string searchKeywords = null, Guid? projectFormatUid = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 10)
+        {
+            if (!page.HasValue || page <= 0)
+            {
+                page++;
+            }
+
+            var attendeeCartoonProjectDto = await this.attendeeCartoonProjectRepo.FindDtoToEvaluateAsync(id ?? 0);
+            if (attendeeCartoonProjectDto == null)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Projects", new { Area = "Cartoon" });
+            }
+
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CartoonProjects, new List<BreadcrumbItemHelper>{
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "Cartoon" })),
+                new BreadcrumbItemHelper(attendeeCartoonProjectDto?.CartoonProject?.Title ?? Labels.Project, Url.Action("EvaluationDetails", "Projects", new { Area = "Cartoon", id }))
+            });
+
+            #endregion
+
+            var allProjectsIds = await this.attendeeCartoonProjectRepo.FindAllCartoonProjectsIdsPagedAsync(
+                this.EditionDto.Edition.Id,
+                searchKeywords,
+                new List<Guid?> { projectFormatUid },
+                evaluationStatusUid,
+                page.Value,
+                pageSize.Value);
+            var currentProjectIdIndex = Array.IndexOf(allProjectsIds, id.Value) + 1; //Index start at 0, its a fix to "start at 1"
+
+            ViewBag.SearchKeywords = searchKeywords;
+            ViewBag.ProjectFormatUid = projectFormatUid;
+            ViewBag.EvaluationStatusUid = evaluationStatusUid;
+            ViewBag.Page = page;
+            ViewBag.PageSize = pageSize;
+            ViewBag.CurrentCartoonProjectIndex = currentProjectIdIndex;
+
+            ViewBag.CartoonProjectsTotalCount = await this.attendeeCartoonProjectRepo.CountPagedAsync(this.EditionDto.Edition.Id, searchKeywords, new List<Guid?> { projectFormatUid }, evaluationStatusUid, page.Value, pageSize.Value);
+            ViewBag.ApprovedAttendeeCartoonProjectsIds = await this.attendeeCartoonProjectRepo.FindAllApprovedAttendeeCartoonProjectsIdsAsync(this.EditionDto.Edition.Id);
+
+            return View(attendeeCartoonProjectDto);
+        }
+
+        /// <summary>
+        /// Previouses the evaluation details.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="projectFormatUid">The project format uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> PreviousEvaluationDetails(int? id, string searchKeywords = null, Guid? projectFormatUid = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 10)
+        {
+            var allProjectsIds = await this.attendeeCartoonProjectRepo.FindAllCartoonProjectsIdsPagedAsync(
+                this.EditionDto.Edition.Id,
+                searchKeywords,
+                new List<Guid?> { projectFormatUid },
+                evaluationStatusUid,
+                page.Value,
+                pageSize.Value);
+
+            var currentProjectIdIndex = Array.IndexOf(allProjectsIds, id.Value);
+            var previousProjectId = allProjectsIds.ElementAtOrDefault(currentProjectIdIndex - 1);
+            if (previousProjectId == 0)
+            {
+                previousProjectId = id.Value;
+            }
+
+            return RedirectToAction("EvaluationDetails",
+                new
+                {
+                    id = previousProjectId,
+                    searchKeywords,
+                    projectFormatUid,
+                    evaluationStatusUid,
+                    page,
+                    pageSize
+                });
+        }
+
+        /// <summary>
+        /// Nexts the evaluation details.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="projectFormatUid">The project format uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> NextEvaluationDetails(int? id, string searchKeywords = null, Guid? projectFormatUid = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 10)
+        {
+            var allProjectsIds = await this.attendeeCartoonProjectRepo.FindAllCartoonProjectsIdsPagedAsync(
+                this.EditionDto.Edition.Id,
+                searchKeywords,
+                new List<Guid?> { projectFormatUid },
+                evaluationStatusUid,
+                page.Value,
+                pageSize.Value);
+
+            var currentProjectIdIndex = Array.IndexOf(allProjectsIds, id.Value);
+            var nextProjectId = allProjectsIds.ElementAtOrDefault(currentProjectIdIndex + 1);
+            if (nextProjectId == 0)
+            {
+                nextProjectId = id.Value;
+            }
+
+            return RedirectToAction("EvaluationDetails",
+                new
+                {
+                    id = nextProjectId,
+                    searchKeywords,
+                    projectFormatUid,
+                    evaluationStatusUid,
+                    page,
+                    pageSize
+                });
+        }
+
+        #endregion
+
+        #region Main Information Widget
+
+        [HttpGet]
+        public async Task<ActionResult> ShowMainInformationWidget(Guid? attendeeCartoonProjectUid)
+        {
+            var mainInformationWidgetDto = await this.attendeeCartoonProjectRepo.FindMainInformationWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty);
+            if (mainInformationWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#ProjectMainInformationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Evaluation Grade Widget 
+
+        /// <summary>
+        /// Shows the evaluation grade widget.
+        /// </summary>
+        /// <param name="attendeeCartoonProjectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowEvaluationGradeWidget(Guid? attendeeCartoonProjectUid)
+        {
+            var evaluationDto = new CartoonProjectDto();//await this.attendeeCartoonProjectRepo.FindEvaluationGradeWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty, this.AdminAccessControlDto.User.Id);
+            if (evaluationDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Startup, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            ViewBag.ApprovedAttendeeCartoonProjectsIds = await this.attendeeCartoonProjectRepo.FindAllApprovedAttendeeCartoonProjectsIdsAsync(this.EditionDto.Edition.Id);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EvaluationGradeWidget", evaluationDto), divIdOrClass = "#ProjectEvaluationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Evaluates the specified cartoon project identifier.
+        /// </summary>
+        /// <param name="cartoonProjectId">The cartoon project identifier.</param>
+        /// <param name="grade">The grade.</param>
+        /// <returns></returns>
+        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
+        [HttpPost]
+        public async Task<ActionResult> Evaluate(int cartoonProjectId, decimal? grade)
+        {
+            if (this.EditionDto?.IsCartoonProjectEvaluationOpen() != true)
+            {
+                return Json(new { status = "error", message = Messages.EvaluationPeriodClosed }, JsonRequestBehavior.AllowGet);
+            }
+
+            var result = new AppValidationResult();
+
+            try
+            {
+                var cmd = new EvaluateInnovationOrganization(
+                    null,//await this.innovationOrganizationRepo.FindByIdAsync(cartoonProjectId),
+                    grade);
+
+                cmd.UpdatePreSendProperties(
+                  this.AdminAccessControlDto.User.Id,
+                  this.AdminAccessControlDto.User.Uid,
+                  this.EditionDto.Id,
+                  this.EditionDto.Uid,
+                  this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors.Select(e => e = new AppValidationError(e.Message, "ToastrError", e.Code))?
+                                            .FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                //projectUid = cmd.MusicBandId,
+                message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.Evaluated.ToLowerInvariant())
+            });
+        }
+
+        #endregion
+
+        #region Evaluators Widget
+
+        /// <summary>
+        /// Shows the evaluators widget.
+        /// </summary>
+        /// <param name="attendeeCartoonProjectUid">The attendee cartoon project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowEvaluatorsWidget(Guid? attendeeCartoonProjectUid)
+        {
+            var evaluationDto = new CartoonProjectDto(); //await this.attendeeCartoonProjectRepo.FindEvaluatorsWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty);
+            if (evaluationDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EvaluatorsWidget", evaluationDto), divIdOrClass = "#ProjectEvaluatorsWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Creators Widget
+
+        [HttpGet]
+        public async Task<ActionResult> ShowCreatorsWidget(Guid? attendeeCartoonProjectUid)
+        {
+            var creatorsWidgetDto = new List<CartoonProjectOrganizationDto> { }; //await this.attendeeCartoonProjectRepo.FindCreatorsWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty);
+            if (creatorsWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/CreatorsWidget", creatorsWidgetDto), divIdOrClass = "#ProjectCreatorsWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion 
+
+        #region Organization Widget
+
+        [HttpGet]
+        public async Task<ActionResult> ShowOrganizationWidget(Guid? attendeeCartoonProjectUid)
+        {
+            var organizationWidgetDto = new CartoonProjectOrganizationDto();//await this.attendeeCartoonProjectRepo.FindOrganizationWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty);
+            if (organizationWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/OrganizationWidget", organizationWidgetDto), divIdOrClass = "#ProjectOrganizationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
     }
 }

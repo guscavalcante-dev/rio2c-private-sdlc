@@ -108,25 +108,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<AttendeeCartoonProject> FindByKeywords(this IQueryable<AttendeeCartoonProject> query, string keywords)
         {
-            //if (!string.IsNullOrEmpty(keywords))
-            //{
-            //    var outerWhere = PredicateBuilder.New<AttendeeCartoonProject>(false);
-            //    var innerInnovationOrganizationNameWhere = PredicateBuilder.New<AttendeeCartoonProject>(true);
-            //    var innerInnovationOrganizationServiceNameWhere = PredicateBuilder.New<AttendeeCartoonProject>(true);
+            if (!string.IsNullOrEmpty(keywords))
+            {
+                var outerWhere = PredicateBuilder.New<AttendeeCartoonProject>(false);
+                var innerCartoonProjecTitleWhere = PredicateBuilder.New<AttendeeCartoonProject>(true);
 
-            //    foreach (var keyword in keywords.Split(' '))
-            //    {
-            //        if (!string.IsNullOrEmpty(keyword))
-            //        {
-            //            innerInnovationOrganizationNameWhere = innerInnovationOrganizationNameWhere.Or(aio => aio.InnovationOrganization.Name.Contains(keyword));
-            //            innerInnovationOrganizationServiceNameWhere = innerInnovationOrganizationServiceNameWhere.Or(aio => aio.InnovationOrganization.ServiceName.Contains(keyword));
-            //        }
-            //    }
+                foreach (var keyword in keywords.Split(' '))
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        innerCartoonProjecTitleWhere = innerCartoonProjecTitleWhere.Or(acp => acp.CartoonProject.Title.Contains(keyword));
+                    }
+                }
 
-            //    outerWhere = outerWhere.Or(innerInnovationOrganizationNameWhere);
-            //    outerWhere = outerWhere.Or(innerInnovationOrganizationServiceNameWhere);
-            //    query = query.Where(outerWhere);
-            //}
+                outerWhere = outerWhere.Or(innerCartoonProjecTitleWhere);
+                query = query.Where(outerWhere);
+            }
 
             return query;
         }
@@ -750,29 +747,23 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="attendeeCartoonProjectUid">The attendee cartoon project uid.</param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<AttendeeCartoonProjectDto> FindMainInformationWidgetDtoAsync(Guid attendeeCartoonProjectUid)
+        public async Task<CartoonProjectDto> FindMainInformationWidgetDtoAsync(Guid attendeeCartoonProjectUid)
         {
             var query = this.GetBaseQuery()
                                .FindByUids(new List<Guid?> { attendeeCartoonProjectUid })
-                               .Select(aio => new AttendeeCartoonProjectDto
+                               .Select(acp => new CartoonProjectDto
                                {
-                                   AttendeeCartoonProject = aio,
-                                   CartoonProject = aio.CartoonProject,
-                                   AttendeeCartoonProjectCollaboratorDtos = aio.AttendeeCartoonProjectCollaborators
-                                                                                   .Where(aioc => !aioc.IsDeleted)
-                                                                                   .Select(aioc => new AttendeeCartoonProjectCollaboratorDto
-                                                                                   {
-                                                                                       AttendeeCollaborator = aioc.AttendeeCollaborator,
-                                                                                       Collaborator = aioc.AttendeeCollaborator.Collaborator,
-                                                                                   }).ToList(),
-
-                                   AttendeeCartoonProjectEvaluationDtos = aio.AttendeeCartoonProjectEvaluations
-                                                                                      .Where(aioe => !aioe.IsDeleted)
-                                                                                      .Select(aioe => new AttendeeCartoonProjectEvaluationDto
-                                                                                      {
-                                                                                          AttendeeCartoonProjectEvaluation = aioe,
-                                                                                          EvaluatorUser = aioe.EvaluatorUser
-                                                                                      }).ToList()
+                                   Title = acp.CartoonProject.Title,
+                                   LogLine = acp.CartoonProject.LogLine,
+                                   CartoonProjectFormatName = acp.CartoonProject.CartoonProjectFormat.Name,
+                                   EachEpisodePlayingTime = acp.CartoonProject.EachEpisodePlayingTime,
+                                   Motivation = acp.CartoonProject.Motivation,
+                                   NumberOfEpisodes = acp.CartoonProject.NumberOfEpisodes.ToString(),
+                                   ProductionPlan = "", //TODO: Implements ProductionPlan at database!
+                                   ProjectBibleUrl = "", //TODO: Implements ProjectBibleUrl at database!
+                                   ProjectTeaserUrl = "", //TODO: Implements ProjectTeaserUrl at database!
+                                   Summary = acp.CartoonProject.Summary,
+                                   TotalValueOfProject = acp.CartoonProject.TotalValueOfProject.ToString()
                                });
 
             return await query
