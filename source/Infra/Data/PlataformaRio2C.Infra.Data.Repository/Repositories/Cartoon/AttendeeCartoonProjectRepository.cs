@@ -279,122 +279,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ToListAsync();
         }
 
-        #endregion
-
-        /// <summary>
-        /// find by identifier as an asynchronous operation.
-        /// </summary>
-        /// <param name="attendeeCartoonProjectIds">The cartoon project ids.</param>
-        /// <returns>Task&lt;List&lt;AttendeeCartoonProject&gt;&gt;.</returns>
-        public async Task<AttendeeCartoonProject> FindByIdAsync(int attendeeCartoonProjectIds)
-        {
-            var query = this.GetBaseQuery()
-                            .FindByIds(new List<int?> { attendeeCartoonProjectIds });
-
-            return await query.FirstOrDefaultAsync();
-        }
-
-        /// <summary>
-        /// Finds the by uid asynchronous.
-        /// </summary>
-        /// <param name="attendeeCartoonProjectUid">The cartoon project uid.</param>
-        /// <returns>Task&lt;AttendeeCartoonProject&gt;.</returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public async Task<AttendeeCartoonProject> FindByUidAsync(Guid attendeeCartoonProjectUid)
-        {
-            var query = this.GetBaseQuery()
-                            .FindByUids(new List<Guid?> { attendeeCartoonProjectUid });
-
-            return await query.FirstOrDefaultAsync();
-        }
-
-        /// <summary>
-        /// find by ids as an asynchronous operation.
-        /// </summary>
-        /// <param name="attendeeCartoonProjectIds">The cartoon project ids.</param>
-        /// <returns>Task&lt;List&lt;AttendeeCartoonProject&gt;&gt;.</returns>
-        public async Task<List<AttendeeCartoonProject>> FindAllByIdsAsync(List<int?> attendeeCartoonProjectIds)
-        {
-            var query = this.GetBaseQuery()
-                            .FindByIds(attendeeCartoonProjectIds);
-
-            return await query.ToListAsync();
-        }
-
-        /// <summary>
-        /// find by ids as an asynchronous operation.
-        /// </summary>
-        /// <param name="attendeeCartoonProjectUids">The cartoon project ids.</param>
-        /// <returns>Task&lt;List&lt;AttendeeCartoonProject&gt;&gt;.</returns>
-        public async Task<List<AttendeeCartoonProject>> FindAllByUidsAsync(List<Guid?> attendeeCartoonProjectUids)
-        {
-            var query = this.GetBaseQuery()
-                            .FindByUids(attendeeCartoonProjectUids);
-
-            return await query.ToListAsync();
-        }
-
-        /// <summary>
-        /// find by document and edition identifier as an asynchronous operation.
-        /// </summary>
-        /// <param name="document">The document.</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <returns>Task&lt;AttendeeCartoonProject&gt;.</returns>
-        public async Task<AttendeeCartoonProject> FindByTitleAndEditionIdAsync(string document, int editionId)
-        {
-            var query = this.GetBaseQuery()
-                           .FindByTitleAndEditionId(document, editionId);
-
-            return await query.FirstOrDefaultAsync();
-        }
-
-        /// <summary>
-        /// Finds all approved attendee cartoon projects ids asynchronous.
-        /// </summary>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <returns></returns>
-        public async Task<int[]> FindAllApprovedAttendeeCartoonProjectsIdsAsync(int editionId)
-        {
-            var edition = await this.editioRepo.FindByIdAsync(editionId);
-
-            var query = this.GetBaseQuery()
-                                .FindByEditionId(editionId)
-                                .FindByIsEvaluated();
-
-            return await query
-                            .OrderByDescending(aio => aio.Grade)
-                            .Take(edition.CartoonCommissionMaximumApprovedProjectsCount)//VOLTAR AQUI
-                            .Select(aio => aio.Id)
-                            .ToArrayAsync();
-        }
-
-        /// <summary>Counts the asynchronous.</summary>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        /// <returns></returns>
-        public async Task<int> CountAsync(int editionId, bool showAllEditions = false)
-
-        {
-            var query = this.GetBaseQuery()
-                                .FindByEditionId(editionId, showAllEditions);
-
-            return await query.CountAsync();
-        }
-
-        /// <summary>
-        /// Finds all by edition identifier asynchronous.
-        /// </summary>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <returns></returns>
-        public async Task<List<AttendeeCartoonProject>> FindAllByEditionIdAsync(int editionId)
-        {
-            var query = this.GetBaseQuery()
-                               .FindByEditionId(editionId);
-
-            return await query
-                            .ToListAsync();
-        }
-
         /// <summary>
         /// Finds all attendee cartoon project dtos asynchronous.
         /// </summary>
@@ -433,6 +317,47 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Order()
                             .ToListAsync();
         }
+
+        /// <summary>
+        /// Finds all json dtos asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <returns></returns>
+        private async Task<List<AttendeeCartoonProjectJsonDto>> FindAllJsonDtosAsync(
+            int editionId,
+            string searchKeywords,
+            List<Tuple<string, string>> sortColumns)
+        {
+            var query = this.GetBaseQuery()
+                               .FindByEditionId(editionId, false)
+                               .FindByKeywords(searchKeywords)
+                               .DynamicOrder<AttendeeCartoonProject>(
+                                   sortColumns,
+                                   null,
+                                   new List<string> { "CreateDate", "UpdateDate" },
+                                   "CreateDate")
+                               .Select(aio => new AttendeeCartoonProjectJsonDto
+                               {
+                                   AttendeeCartoonProjectId = aio.Id,
+                                   AttendeeCartoonProjectUid = aio.Uid,
+                                   CartoonProjectId = aio.CartoonProject.Id,
+                                   CartoonProjectUid = aio.CartoonProject.Uid,
+                                   CartoonProjectTitle = aio.CartoonProject.Title,
+                                   CartoonProjectFormatName = aio.CartoonProject.CartoonProjectFormat.Name,
+                                   Grade = aio.Grade,
+                                   EvaluationsCount = aio.AttendeeCartoonProjectEvaluations.Count(aioe => !aioe.IsDeleted),
+
+                                   CreateDate = aio.CreateDate,
+                                   UpdateDate = aio.UpdateDate
+                               });
+
+            return await query
+                            .ToListAsync();
+        }
+
+        #endregion
 
         /// <summary>
         /// Finds all music project dtos paged asynchronous.
@@ -563,62 +488,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
-        /// Finds the dto to evaluate asynchronous.
-        /// </summary>
-        /// <param name="attendeeCartoonProjectId">The attendee cartoon project identifier.</param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public async Task<AttendeeCartoonProjectDto> FindDtoToEvaluateAsync(int attendeeCartoonProjectId)
-        {
-            var query = this.GetBaseQuery()
-                               .FindByIds(new List<int?> { attendeeCartoonProjectId })
-                               .Select(aio => new AttendeeCartoonProjectDto
-                               {
-                                   AttendeeCartoonProject = aio,
-                                   CartoonProject = aio.CartoonProject,
-                                   AttendeeCartoonProjectCollaboratorDtos = aio.AttendeeCartoonProjectCollaborators
-                                                                                       .Where(aioc => !aioc.IsDeleted)
-                                                                                       .Select(aioc =>
-                                                                                       new AttendeeCartoonProjectCollaboratorDto
-                                                                                       {
-                                                                                           AttendeeCollaborator = aioc.AttendeeCollaborator,
-                                                                                           Collaborator = aioc.AttendeeCollaborator.Collaborator
-                                                                                       })
-                               });
-
-            return await query
-                           .FirstOrDefaultAsync();
-        }
-
-        /// <summary>
-        /// Finds the dto to evaluate asynchronous.
-        /// </summary>
-        /// <param name="attendeeCartoonProjectUid">The attendee cartoon project uid.</param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public async Task<AttendeeCartoonProjectDto> FindDtoToEvaluateAsync(Guid attendeeCartoonProjectUid)
-        {
-            var query = this.GetBaseQuery()
-                                .FindByUids(new List<Guid?> { attendeeCartoonProjectUid })
-                                .Select(aio => new AttendeeCartoonProjectDto
-                                {
-                                    AttendeeCartoonProject = aio,
-                                    CartoonProject = aio.CartoonProject,
-                                    AttendeeCartoonProjectCollaboratorDtos = aio.AttendeeCartoonProjectCollaborators
-                                                                                        .Where(aioc => !aioc.IsDeleted)
-                                                                                        .Select(aioc =>
-                                                                                        new AttendeeCartoonProjectCollaboratorDto
-                                                                                        {
-                                                                                            AttendeeCollaborator = aioc.AttendeeCollaborator,
-                                                                                            Collaborator = aioc.AttendeeCollaborator.Collaborator
-                                                                                        })
-                                });
-
-            return await query
-                           .FirstOrDefaultAsync();
-        }
-
-        /// <summary>
         /// Finds all cartoon projects ids paged asynchronous.
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
@@ -682,6 +551,176 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Select(aio => aio.Id)
                             .OrderBy(aioId => aioId)
                             .ToArray();
+        }
+
+        /// <summary>
+        /// Finds the by identifier asynchronous.
+        /// </summary>
+        /// <param name="attendeeCartoonProjectIds">The attendee cartoon project ids.</param>
+        /// <returns></returns>
+        public async Task<AttendeeCartoonProject> FindByIdAsync(int attendeeCartoonProjectIds)
+        {
+            var query = this.GetBaseQuery()
+                            .FindByIds(new List<int?> { attendeeCartoonProjectIds });
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the by uid asynchronous.
+        /// </summary>
+        /// <param name="attendeeCartoonProjectUid">The cartoon project uid.</param>
+        /// <returns>Task&lt;AttendeeCartoonProject&gt;.</returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<AttendeeCartoonProject> FindByUidAsync(Guid attendeeCartoonProjectUid)
+        {
+            var query = this.GetBaseQuery()
+                            .FindByUids(new List<Guid?> { attendeeCartoonProjectUid });
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds all by ids asynchronous.
+        /// </summary>
+        /// <param name="attendeeCartoonProjectIds">The attendee cartoon project ids.</param>
+        /// <returns></returns>
+        public async Task<List<AttendeeCartoonProject>> FindAllByIdsAsync(List<int?> attendeeCartoonProjectIds)
+        {
+            var query = this.GetBaseQuery()
+                            .FindByIds(attendeeCartoonProjectIds);
+
+            return await query.ToListAsync();
+        }
+
+        /// <summary>
+        /// Finds all by uids asynchronous.
+        /// </summary>
+        /// <param name="attendeeCartoonProjectUids">The attendee cartoon project uids.</param>
+        /// <returns></returns>
+        public async Task<List<AttendeeCartoonProject>> FindAllByUidsAsync(List<Guid?> attendeeCartoonProjectUids)
+        {
+            var query = this.GetBaseQuery()
+                            .FindByUids(attendeeCartoonProjectUids);
+
+            return await query.ToListAsync();
+        }
+
+        /// <summary>
+        /// Finds the by title and edition identifier asynchronous.
+        /// </summary>
+        /// <param name="document">The document.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeCartoonProject> FindByTitleAndEditionIdAsync(string document, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                           .FindByTitleAndEditionId(document, editionId);
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds all approved attendee cartoon projects ids asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<int[]> FindAllApprovedAttendeeCartoonProjectsIdsAsync(int editionId)
+        {
+            var edition = await this.editioRepo.FindByIdAsync(editionId);
+
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId)
+                                .FindByIsEvaluated();
+
+            return await query
+                            .OrderByDescending(aio => aio.Grade)
+                            .Take(edition.CartoonCommissionMaximumApprovedProjectsCount)//VOLTAR AQUI
+                            .Select(aio => aio.Id)
+                            .ToArrayAsync();
+        }
+
+        /// <summary>
+        /// Finds all by edition identifier asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<List<AttendeeCartoonProject>> FindAllByEditionIdAsync(int editionId)
+        {
+            var query = this.GetBaseQuery()
+                               .FindByEditionId(editionId);
+
+            return await query
+                            .ToListAsync();
+        }
+
+        /// <summary>
+        /// Finds the dto to evaluate asynchronous.
+        /// </summary>
+        /// <param name="attendeeCartoonProjectId">The attendee cartoon project identifier.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<AttendeeCartoonProjectDto> FindDtoToEvaluateAsync(int attendeeCartoonProjectId)
+        {
+            var query = this.GetBaseQuery()
+                               .FindByIds(new List<int?> { attendeeCartoonProjectId })
+                               .Select(aio => new AttendeeCartoonProjectDto
+                               {
+                                   AttendeeCartoonProject = aio,
+                                   CartoonProject = aio.CartoonProject,
+                                   AttendeeCartoonProjectCollaboratorDtos = aio.AttendeeCartoonProjectCollaborators
+                                                                                       .Where(aioc => !aioc.IsDeleted)
+                                                                                       .Select(aioc =>
+                                                                                       new AttendeeCartoonProjectCollaboratorDto
+                                                                                       {
+                                                                                           AttendeeCollaborator = aioc.AttendeeCollaborator,
+                                                                                           Collaborator = aioc.AttendeeCollaborator.Collaborator
+                                                                                       })
+                               });
+
+            return await query
+                           .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the dto to evaluate asynchronous.
+        /// </summary>
+        /// <param name="attendeeCartoonProjectUid">The attendee cartoon project uid.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<AttendeeCartoonProjectDto> FindDtoToEvaluateAsync(Guid attendeeCartoonProjectUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUids(new List<Guid?> { attendeeCartoonProjectUid })
+                                .Select(aio => new AttendeeCartoonProjectDto
+                                {
+                                    AttendeeCartoonProject = aio,
+                                    CartoonProject = aio.CartoonProject,
+                                    AttendeeCartoonProjectCollaboratorDtos = aio.AttendeeCartoonProjectCollaborators
+                                                                                        .Where(aioc => !aioc.IsDeleted)
+                                                                                        .Select(aioc =>
+                                                                                        new AttendeeCartoonProjectCollaboratorDto
+                                                                                        {
+                                                                                            AttendeeCollaborator = aioc.AttendeeCollaborator,
+                                                                                            Collaborator = aioc.AttendeeCollaborator.Collaborator
+                                                                                        })
+                                });
+
+            return await query
+                           .FirstOrDefaultAsync();
+        }
+
+        /// <summary>Counts the asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <returns></returns>
+        public async Task<int> CountAsync(int editionId, bool showAllEditions = false)
+
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId, showAllEditions);
+
+            return await query.CountAsync();
         }
 
         /// <summary>
@@ -771,22 +810,57 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
-        /// Finds the business information widget dto asynchronous.
+        /// Finds the creators widget dto asynchronous.
         /// </summary>
         /// <param name="attendeeCartoonProjectUid">The attendee cartoon project uid.</param>
         /// <returns></returns>
-        public async Task<AttendeeCartoonProjectDto> FindBusinessInformationWidgetDtoAsync(Guid attendeeCartoonProjectUid)
+        public async Task<List<CartoonProjectCreatorDto>> FindCreatorsWidgetDtoAsync(Guid attendeeCartoonProjectUid)
         {
             var query = this.GetBaseQuery()
-                               .FindByUids(new List<Guid?> { attendeeCartoonProjectUid })
-                               .Select(aio => new AttendeeCartoonProjectDto
-                               {
-                                   AttendeeCartoonProject = aio,
-                                   CartoonProject = aio.CartoonProject
-                               });
+                            .FindByUids(new List<Guid?> { attendeeCartoonProjectUid })
+                            .SelectMany(acp => acp.CartoonProject.CartoonProjectCreators
+                                .Where(cpc => !acp.IsDeleted &&
+                                              !cpc.IsDeleted &&
+                                              !acp.CartoonProject.IsDeleted)
+                                   .Select(cpo => new CartoonProjectCreatorDto
+                                   {
+                                      FirstName = cpo.FirstName,
+                                      LastName = cpo.LastName,
+                                      Email = cpo.Email,
+                                      CellPhone = cpo.CellPhone,
+                                      MiniBio = cpo.MiniBio,
+                                      PhoneNumber = cpo.PhoneNumber
+                                   }));
 
             return await query
-                           .FirstOrDefaultAsync();
+                            .ToListAsync();
+        }
+
+        /// <summary>
+        /// Finds the organization widget dto asynchronous.
+        /// </summary>
+        /// <param name="attendeeCartoonProjectUid">The attendee cartoon project uid.</param>
+        /// <returns></returns>
+        public async Task<CartoonProjectOrganizationDto> FindOrganizationWidgetDtoAsync(Guid attendeeCartoonProjectUid)
+        {
+            var query = this.GetBaseQuery()
+                             .FindByUids(new List<Guid?> { attendeeCartoonProjectUid })
+                             .SelectMany(acp => acp.CartoonProject.CartoonProjectOrganizations
+                                 .Where(cpo => !acp.IsDeleted && 
+                                               !cpo.IsDeleted && 
+                                               !acp.CartoonProject.IsDeleted)
+                                    .Select(cpo => new CartoonProjectOrganizationDto
+                                    { 
+                                        Name = cpo.Name,
+                                        TradeName = cpo.TradeName,
+                                        Document = cpo.Document,
+                                        PhoneNumber = cpo.PhoneNumber,
+                                        ReelUrl = cpo.ReelUrl,
+                                        Address = cpo.Address.Address1
+                                    }));
+
+            return await query
+                            .FirstOrDefaultAsync();
         }
 
         /// <summary>
@@ -851,109 +925,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query
                             .FirstOrDefaultAsync();
         }
-
-        /// <summary>
-        /// Finds all json dtos paged asynchronous.
-        /// </summary>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
-        /// <param name="page">The page.</param>
-        /// <param name="pageSize">Size of the page.</param>
-        /// <param name="sortColumns">The sort columns.</param>
-        /// <returns></returns>
-        public async Task<IPagedList<AttendeeCartoonProjectJsonDto>> FindAllJsonDtosPagedAsync(
-            int editionId,
-            string searchKeywords,
-            Guid? evaluationStatusUid,
-            int page,
-            int pageSize,
-            List<Tuple<string, string>> sortColumns)
-        {
-            var attendeeCartoonProjectJsonDtos = await this.FindAllJsonDtosAsync(editionId, searchKeywords, sortColumns);
-            var editionDto = await this.editioRepo.FindDtoAsync(editionId);
-
-            IEnumerable<AttendeeCartoonProjectJsonDto> attendeeCartoonProjectJsonDtosResult = attendeeCartoonProjectJsonDtos;
-            if (editionDto.IsCartoonProjectEvaluationOpen())
-            {
-                #region Evaluation is Open
-
-                if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
-                {
-                    attendeeCartoonProjectJsonDtosResult = new List<AttendeeCartoonProjectJsonDto>(); //Returns a empty list
-                }
-                else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
-                {
-                    attendeeCartoonProjectJsonDtosResult = new List<AttendeeCartoonProjectJsonDto>(); //Returns a empty list
-                }
-
-                #endregion
-            }
-            else
-            {
-                #region Evaluation is Closed
-
-                var approvedCartoonProjectIds = await this.FindAllApprovedAttendeeCartoonProjectsIdsAsync(editionId);
-
-                if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
-                {
-                    attendeeCartoonProjectJsonDtosResult = attendeeCartoonProjectJsonDtos.Where(w => approvedCartoonProjectIds.Contains(w.AttendeeCartoonProjectId));
-                }
-                else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
-                {
-                    attendeeCartoonProjectJsonDtosResult = attendeeCartoonProjectJsonDtos.Where(w => !approvedCartoonProjectIds.Contains(w.AttendeeCartoonProjectId));
-                }
-                else if (evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
-                {
-                    attendeeCartoonProjectJsonDtosResult = new List<AttendeeCartoonProjectJsonDto>();
-                }
-
-                #endregion
-            }
-
-            return await attendeeCartoonProjectJsonDtosResult
-                            .ToPagedListAsync(page, pageSize);
-        }
-
-        /// <summary>
-        /// Finds all json dtos asynchronous.
-        /// </summary>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="sortColumns">The sort columns.</param>
-        /// <returns></returns>
-        private async Task<List<AttendeeCartoonProjectJsonDto>> FindAllJsonDtosAsync(
-            int editionId,
-            string searchKeywords,
-            List<Tuple<string, string>> sortColumns)
-        {
-            var query = this.GetBaseQuery()
-                               .FindByEditionId(editionId, false)
-                               .FindByKeywords(searchKeywords)
-                               .DynamicOrder<AttendeeCartoonProject>(
-                                   sortColumns,
-                                   null,
-                                   new List<string> { "CreateDate", "UpdateDate" },
-                                   "CreateDate")
-                               .Select(aio => new AttendeeCartoonProjectJsonDto
-                               {
-                                   AttendeeCartoonProjectId = aio.Id,
-                                   AttendeeCartoonProjectUid = aio.Uid,
-                                   CartoonProjectId = aio.CartoonProject.Id,
-                                   CartoonProjectUid = aio.CartoonProject.Uid,
-                                   CartoonProjectTitle= aio.CartoonProject.Title,
-                                   CartoonProjectFormatName = aio.CartoonProject.CartoonProjectFormat.Name,
-                                   Grade = aio.Grade,
-                                   EvaluationsCount = aio.AttendeeCartoonProjectEvaluations.Count(aioe => !aioe.IsDeleted),
-                                   
-                                   CreateDate = aio.CreateDate,
-                                   UpdateDate = aio.UpdateDate
-                               });
-
-            return await query
-                            .ToListAsync();
-        }
-
     }
 }
 
