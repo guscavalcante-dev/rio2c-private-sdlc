@@ -37,7 +37,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<AttendeeCartoonProjectDto> FindDtoToEvaluateAsync(int attendeeCartoonProjectId);
         Task<int[]> FindAllCartoonProjectsIdsPagedAsync(int editionId, string searchKeywords, List<Guid?> projectFormatUids, Guid? evaluationStatusUid, int page, int pageSize);
         Task<int> CountPagedAsync(int editionId, string searchKeywords, List<Guid?> projectFormatUids, Guid? evaluationStatusUid, int page, int pageSize);
-        Task<CartoonProjectDto> FindMainInformationWidgetDtoAsync(Guid attendeeCartoonProjectUid);
+        Task<AttendeeCartoonProjectDto> FindMainInformationWidgetDtoAsync(Guid attendeeCartoonProjectUid);
         Task<List<CartoonProjectCreatorDto>> FindCreatorsWidgetDtoAsync(Guid attendeeCartoonProjectUid);
         Task<CartoonProjectOrganizationDto> FindOrganizationWidgetDtoAsync(Guid attendeeCartoonProjectUid);
         Task<AttendeeCartoonProjectDto> FindEvaluatorsWidgetDtoAsync(Guid attendeeCartoonProjectUid);

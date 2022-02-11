@@ -35,14 +35,14 @@
             <div class="kt-widget__content">
                 <div class="kt-widget__head">
                     <span class="kt-widget__username">
-                        @(Model.CartoonProject?.Title ?? "-")
+                        @(Model.CartoonProjectDto.Title ?? "-")
                     </span>
                 </div>
                 <div class="kt-widget__info col-md-12 mr-0 pr-0 pl-0">
                     <div class="kt-widget__desc pl-0 col-md-6">
                         <div class="kt-widget__desc">
                             <div class="kt-widget__subhead pt-0">
-                                @(Model.CartoonProject?.Summary ?? "-")
+                                @(Model.CartoonProjectDto.Summary ?? "-")
                             </div>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                                         <div class="form-group mt-2 mb-2 mr-3">
                                             @Html.TextBox("AttendeeCartoonProjectEvaluationGradeMain", currentEvaluation?.AttendeeCartoonProjectEvaluation?.Grade, new { @class = "form-control text-center decimal-globalize-mask", placeholder = Labels.Grade, style = "width: 105px;" }) @*, @type = "number", @min = "1", @max = "10", @step = ".10"*@
                                         </div>
-                                        <button type="button" class="btn btn-success mt-2 mb-2 mr-3" onclick="CartoonProjectsMainInformationWidget.submitEvaluationGrade('@Model.CartoonProject.Id');">@Labels.Evaluate</button>
+                                        <button type="button" class="btn btn-success mt-2 mb-2 mr-3" onclick="CartoonProjectsMainInformationWidget.submitEvaluationGrade('@Model.CartoonProjectDto.Id');">@Labels.Evaluate</button>
                                         @if (hasCurrentEvaluation)
                                         {
                                             <button type="button" class="btn btn-secondary mt-2 mb-2 mr-2 pl-4" onclick="MyRio2cCommon.disableFieldEdit({ dataId: 'EvaluationGradeMain' })" data-toggle="tooltip" title="@(Labels.Cancel)">

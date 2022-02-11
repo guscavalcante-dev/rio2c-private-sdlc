@@ -175,7 +175,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             if (projectFormatUids?.Any(i => i.HasValue) == true)
             {
                 query = query.Where(acp => projectFormatUids.Any(projectFormatUid => !acp.CartoonProject.CartoonProjectFormat.IsDeleted &&
-                                                                                      acp.CartoonProject.CartoonProjectFormat.Uid == projectFormatUid));                 
+                                                                                      acp.CartoonProject.CartoonProjectFormat.Uid == projectFormatUid));
             }
 
             return query;
@@ -786,23 +786,45 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="attendeeCartoonProjectUid">The attendee cartoon project uid.</param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<CartoonProjectDto> FindMainInformationWidgetDtoAsync(Guid attendeeCartoonProjectUid)
+        public async Task<AttendeeCartoonProjectDto> FindMainInformationWidgetDtoAsync(Guid attendeeCartoonProjectUid)
         {
             var query = this.GetBaseQuery()
                                .FindByUids(new List<Guid?> { attendeeCartoonProjectUid })
-                               .Select(acp => new CartoonProjectDto
+                               .Select(x => new AttendeeCartoonProjectDto
                                {
-                                   Title = acp.CartoonProject.Title,
-                                   LogLine = acp.CartoonProject.LogLine,
-                                   CartoonProjectFormatName = acp.CartoonProject.CartoonProjectFormat.Name,
-                                   EachEpisodePlayingTime = acp.CartoonProject.EachEpisodePlayingTime,
-                                   Motivation = acp.CartoonProject.Motivation,
-                                   NumberOfEpisodes = acp.CartoonProject.NumberOfEpisodes.ToString(),
-                                   ProductionPlan = "", //TODO: Implements ProductionPlan at database!
-                                   ProjectBibleUrl = "", //TODO: Implements ProjectBibleUrl at database!
-                                   ProjectTeaserUrl = "", //TODO: Implements ProjectTeaserUrl at database!
-                                   Summary = acp.CartoonProject.Summary,
-                                   TotalValueOfProject = acp.CartoonProject.TotalValueOfProject.ToString()                                 
+                                   AttendeeCartoonProject = x,
+                                   CartoonProjectDto = new CartoonProjectDto
+                                   {
+                                       Id = x.CartoonProject.Id,
+                                       Title =  x.CartoonProject.Title,
+                                       LogLine = x.CartoonProject.LogLine,
+                                       CartoonProjectFormatName = x.CartoonProject.CartoonProjectFormat.Name,
+                                       EachEpisodePlayingTime = x.CartoonProject.EachEpisodePlayingTime,
+                                       Motivation = x.CartoonProject.Motivation,
+                                       NumberOfEpisodes = x.CartoonProject.NumberOfEpisodes.ToString(),
+                                       ProductionPlan = "", //TODO: Implements ProductionPlan at database!
+                                       ProjectBibleUrl = "", //TODO: Implements ProjectBibleUrl at database!
+                                       ProjectTeaserUrl = "", //TODO: Implements ProjectTeaserUrl at database!
+                                       Summary = x.CartoonProject.Summary,
+                                       TotalValueOfProject = x.CartoonProject.TotalValueOfProject.ToString()
+                                   },
+                                   AttendeeCartoonProjectEvaluationDtos = x.AttendeeCartoonProjectEvaluations
+                                                                                        .Where(aioe => !aioe.IsDeleted)
+                                                                                        .Select(aioe =>
+                                                                                          new AttendeeCartoonProjectEvaluationDto
+                                                                                          {
+                                                                                              AttendeeCartoonProjectEvaluation = aioe,
+                                                                                              AttendeeCartoonProject = aioe.AttendeeCartoonProject,
+                                                                                              EvaluatorUser = aioe.EvaluatorUser
+                                                                                          }),
+                                   AttendeeCartoonProjectCollaboratorDtos = x.AttendeeCartoonProjectCollaborators
+                                                                                        .Where(aioc => !aioc.IsDeleted)
+                                                                                        .Select(aioc =>
+                                                                                        new AttendeeCartoonProjectCollaboratorDto
+                                                                                        {
+                                                                                            AttendeeCollaborator = aioc.AttendeeCollaborator,
+                                                                                            Collaborator = aioc.AttendeeCollaborator.Collaborator
+                                                                                        })
                                });
 
             return await query
@@ -824,12 +846,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                               !acp.CartoonProject.IsDeleted)
                                    .Select(cpo => new CartoonProjectCreatorDto
                                    {
-                                      FirstName = cpo.FirstName,
-                                      LastName = cpo.LastName,
-                                      Email = cpo.Email,
-                                      CellPhone = cpo.CellPhone,
-                                      MiniBio = cpo.MiniBio,
-                                      PhoneNumber = cpo.PhoneNumber
+                                       FirstName = cpo.FirstName,
+                                       LastName = cpo.LastName,
+                                       Email = cpo.Email,
+                                       CellPhone = cpo.CellPhone,
+                                       MiniBio = cpo.MiniBio,
+                                       PhoneNumber = cpo.PhoneNumber
                                    }));
 
             return await query
@@ -846,11 +868,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                              .FindByUids(new List<Guid?> { attendeeCartoonProjectUid })
                              .SelectMany(acp => acp.CartoonProject.CartoonProjectOrganizations
-                                 .Where(cpo => !acp.IsDeleted && 
-                                               !cpo.IsDeleted && 
+                                 .Where(cpo => !acp.IsDeleted &&
+                                               !cpo.IsDeleted &&
                                                !acp.CartoonProject.IsDeleted)
                                     .Select(cpo => new CartoonProjectOrganizationDto
-                                    { 
+                                    {
                                         Name = cpo.Name,
                                         TradeName = cpo.TradeName,
                                         Document = cpo.Document,

@@ -22,6 +22,7 @@ namespace PlataformaRio2C.Domain.Dtos
     public class AttendeeCartoonProjectDto
     {
         public CartoonProject CartoonProject { get; set; }
+        public CartoonProjectDto CartoonProjectDto { get; set; }
         public AttendeeCartoonProject AttendeeCartoonProject { get; set; }
 
         public AttendeeCartoonProjectEvaluationDto AttendeeCartoonProjectEvaluationDto { get; set; }
