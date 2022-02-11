@@ -1024,14 +1024,9 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/cartoon.projects.widget.js").Include(
                 "~/Assets/js/cartoon/projects/cartoon.projects.maininformation.widget.js",
-                "~/Assets/js/cartoon/projects/cartoon.projects.tracks.widget.js",
-                "~/Assets/js/cartoon/projects/cartoon.projects.objectives.widget.js",
-                "~/Assets/js/cartoon/projects/cartoon.projects.experiences.widget.js",
-                "~/Assets/js/cartoon/projects/cartoon.projects.technologies.widget.js",
                 "~/Assets/js/cartoon/projects/cartoon.projects.evaluators.widget.js",
-                "~/Assets/js/cartoon/projects/cartoon.projects.founders.widget.js",
-                "~/Assets/js/cartoon/projects/cartoon.projects.businessinformation.widget.js",
-                "~/Assets/js/cartoon/projects/cartoon.projects.presentation.widget.js"
+                "~/Assets/js/cartoon/projects/cartoon.projects.creators.widget.js",
+                "~/Assets/js/cartoon/projects/cartoon.projects.organization.widget.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/js/cartoon.projects.evaluation.widget.js").Include(

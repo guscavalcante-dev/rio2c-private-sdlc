@@ -358,6 +358,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
 
         #region Main Information Widget
 
+        /// <summary>
+        /// Shows the main information widget.
+        /// </summary>
+        /// <param name="attendeeCartoonProjectUid">The attendee cartoon project uid.</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> ShowMainInformationWidget(Guid? attendeeCartoonProjectUid)
         {
@@ -378,6 +383,62 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
         }
 
         #endregion
+
+        #region Organization Widget
+
+        /// <summary>
+        /// Shows the organization widget.
+        /// </summary>
+        /// <param name="attendeeCartoonProjectUid">The attendee cartoon project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowOrganizationWidget(Guid? attendeeCartoonProjectUid)
+        {
+            var organizationWidgetDto = await this.attendeeCartoonProjectRepo.FindOrganizationWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty);
+            if (organizationWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/OrganizationWidget", organizationWidgetDto), divIdOrClass = "#ProjectOrganizationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Creators Widget
+
+        /// <summary>
+        /// Shows the creators widget.
+        /// </summary>
+        /// <param name="attendeeCartoonProjectUid">The attendee cartoon project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowCreatorsWidget(Guid? attendeeCartoonProjectUid)
+        {
+            var creatorsWidgetDto = await this.attendeeCartoonProjectRepo.FindCreatorsWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty);
+            if (creatorsWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/CreatorsWidget", creatorsWidgetDto), divIdOrClass = "#ProjectCreatorsWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion 
 
         #region Evaluation Grade Widget 
 
@@ -489,52 +550,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
                 pages = new List<dynamic>
                 {
                     new { page = this.RenderRazorViewToString("Widgets/EvaluatorsWidget", evaluationDto), divIdOrClass = "#ProjectEvaluatorsWidget" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        #endregion
-
-        #region Creators Widget
-
-        [HttpGet]
-        public async Task<ActionResult> ShowCreatorsWidget(Guid? attendeeCartoonProjectUid)
-        {
-            var creatorsWidgetDto = await this.attendeeCartoonProjectRepo.FindCreatorsWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty);
-            if (creatorsWidgetDto == null)
-            {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Widgets/CreatorsWidget", creatorsWidgetDto), divIdOrClass = "#ProjectCreatorsWidget" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        #endregion 
-
-        #region Organization Widget
-
-        [HttpGet]
-        public async Task<ActionResult> ShowOrganizationWidget(Guid? attendeeCartoonProjectUid)
-        {
-            var organizationWidgetDto = new CartoonProjectOrganizationDto();//await this.attendeeCartoonProjectRepo.FindOrganizationWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty);
-            if (organizationWidgetDto == null)
-            {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Widgets/OrganizationWidget", organizationWidgetDto), divIdOrClass = "#ProjectOrganizationWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }

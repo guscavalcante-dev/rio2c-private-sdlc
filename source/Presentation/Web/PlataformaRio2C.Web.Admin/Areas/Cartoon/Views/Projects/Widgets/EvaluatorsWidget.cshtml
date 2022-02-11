@@ -1,5 +1,5 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
-@model AttendeeInnovationOrganizationDto
+@model AttendeeCartoonProjectDto
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
 }
@@ -9,7 +9,7 @@
     </div>
 </div>
 <div class="kt-portlet__body pt-0">
-    @if (editionDto?.IsInnovationProjectEvaluationStarted() != true)
+    @if (editionDto?.IsCartoonProjectEvaluationStarted() != true)
     {
         <div class="row mt-75">
             <div class="col-12">
@@ -19,7 +19,7 @@
             </div>
         </div>
     }
-    else if (Model.AttendeeInnovationOrganizationEvaluationDtos?.Any() == true)
+    else if (Model.AttendeeCartoonProjectEvaluationDtos?.Any() == true)
     {
         <div class="row">
             <div class="col-12">
@@ -31,11 +31,11 @@
                         </tr>
                     </thead>
                     <tbody class="rio2c-scroll" style="max-height: 150px;">
-                        @foreach (var attendeeInnovationOrganizationEvaluationDto in Model.AttendeeInnovationOrganizationEvaluationDtos)
+                        @foreach (var attendeeCartoonProjectEvaluationDto in Model.AttendeeCartoonProjectEvaluationDtos)
                         {
                             <tr>
-                                <td>@(attendeeInnovationOrganizationEvaluationDto.EvaluatorUser?.Name)</td>
-                                <td class="text-center">@(attendeeInnovationOrganizationEvaluationDto?.AttendeeInnovationOrganizationEvaluation?.Grade)</td>
+                                <td>@(attendeeCartoonProjectEvaluationDto.EvaluatorUser?.Name)</td>
+                                <td class="text-center">@(attendeeCartoonProjectEvaluationDto?.AttendeeCartoonProjectEvaluation?.Grade)</td>
                             </tr>
                         }
                     </tbody>
