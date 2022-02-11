@@ -892,34 +892,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
-        /// Finds the evaluators widget dto asynchronous.
-        /// </summary>
-        /// <param name="attendeeCartoonProjectUid">The creators by cartoon project uid.</param>
-        /// <returns></returns>
-        public async Task<AttendeeCartoonProjectDto> FindCreatorsWidgetDtoAsync(Guid attendeeCartoonProjectUid)
-        {
-            var query = this.GetBaseQuery()
-                              .FindByUids(new List<Guid?> { attendeeCartoonProjectUid })
-                              .Select(aio => new AttendeeCartoonProjectDto
-                              {
-                                  CartoonCreatorsDto = aio.CartoonProjectCreators.Where(cpc => !cpc.IsDeleted).Select(x =>
-                                  
-                                      new CartoonProjectCreatorDto()
-                                      {
-                                          CellPhone = x.CellPhone,
-                                          Email = x.Email,
-                                          FirstName = x.FirstName,
-                                          LastName = x.LastName,
-                                          MiniBio = x.MiniBio,
-                                          PhoneNumber = x.PhoneNumber                                  
-                                      })
-                              });
-
-            return await query
-                            .FirstOrDefaultAsync();
-        }
-
-        /// <summary>
         /// Finds the evaluation grade widget dto asynchronous.
         /// </summary>
         /// <param name="attendeeCartoonProjectUid">The attendee cartoon project uid.</param>
