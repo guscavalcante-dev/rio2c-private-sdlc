@@ -200,6 +200,7 @@
     <Compile Include="CQRS\CommandsHandlers\BaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Cartoon\Projects\BaseCommandHandlers\CartoonProjectBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Cartoon\Projects\CreateCartoonProjectCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Cartoon\Projects\DeleteCartoonProjectCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Cartoon\Projects\EvaluateCartoonProjectCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\BaseCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\CreateTinyCollaboratorCommandHandler.cs" />
@@ -381,6 +382,7 @@
     <Compile Include="CQRS\Commands\Audiovisual\Negotiations\DeleteNegotiation.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\Projects\AudiovisualComissionEvaluateProject.cs" />
     <Compile Include="CQRS\Commands\Cartoon\Projects\CreateCartoonProject.cs" />
+    <Compile Include="CQRS\Commands\Cartoon\Projects\DeleteCartoonProject.cs" />
     <Compile Include="CQRS\Commands\Cartoon\Projects\EvaluateCartoonProject.cs" />
     <Compile Include="CQRS\Commands\Collaborators\UpdateCollaboratorSocialNetworks.cs" />
     <Compile Include="CQRS\Commands\ConferenceParticipantRoles\BaseCommands\ConferenceParticipantRoleTitleBaseCommand.cs" />

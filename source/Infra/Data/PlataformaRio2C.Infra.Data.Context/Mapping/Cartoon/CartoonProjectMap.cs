@@ -36,6 +36,15 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.Property(t => t.Motivation)
                 .HasMaxLength(CartoonProject.MotivationMaxLength);
 
+            this.Property(t => t.ProductionPlan)
+                .HasMaxLength(CartoonProject.ProductionPlanMaxLength);
+
+            this.Property(t => t.TeaserUrl)
+                .HasMaxLength(CartoonProject.TeaserUrlMaxLength);
+
+            this.Property(t => t.BibleUrl)
+                .HasMaxLength(CartoonProject.BibleUrlMaxLength);
+
             this.Property(t => t.EachEpisodePlayingTime)
                 .HasMaxLength(CartoonProject.EachEpisodePlayingTimeMaxLength);
 

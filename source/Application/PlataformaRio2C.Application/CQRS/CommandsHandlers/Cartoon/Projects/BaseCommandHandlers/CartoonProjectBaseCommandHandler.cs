@@ -41,5 +41,22 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.CartoonProjectRepo = cartoonProjectRepository;
         }
+
+        /// <summary>
+        /// Gets the cartoon project by uid.
+        /// </summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        public async Task<CartoonProject> GetCartoonProjectByUid(Guid projectUid)
+        {
+            var cartoonProject = await this.CartoonProjectRepo.GetAsync(projectUid);
+            if (cartoonProject == null || cartoonProject.IsDeleted)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM), new string[] { "ToastrError" }));
+                return null;
+            }
+
+            return cartoonProject;
+        }
     }
 }

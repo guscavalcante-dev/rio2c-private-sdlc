@@ -802,9 +802,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                        EachEpisodePlayingTime = x.CartoonProject.EachEpisodePlayingTime,
                                        Motivation = x.CartoonProject.Motivation,
                                        NumberOfEpisodes = x.CartoonProject.NumberOfEpisodes.ToString(),
-                                       ProductionPlan = null, //TODO: Implements ProductionPlan at database!
-                                       ProjectBibleUrl = null, //TODO: Implements ProjectBibleUrl at database!
-                                       ProjectTeaserUrl = null, //TODO: Implements ProjectTeaserUrl at database!
+                                       ProductionPlan = x.CartoonProject.ProductionPlan,
+                                       ProjectBibleUrl = x.CartoonProject.BibleUrl,
+                                       ProjectTeaserUrl = x.CartoonProject.TeaserUrl,
                                        Summary = x.CartoonProject.Summary,
                                        TotalValueOfProject = x.CartoonProject.TotalValueOfProject.ToString()
                                    },

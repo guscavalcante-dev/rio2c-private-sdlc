@@ -2724,6 +2724,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Público-alvo/Faixa-etária</value>
     <comment>Público-alvo/Faixa-etária</comment>
   </data>
+  <data name="TeaserLink" xml:space="preserve">
+    <value>Link do teaser</value>
+  </data>
   <data name="TeaserLinks" xml:space="preserve">
     <value>Links de teaser</value>
   </data>

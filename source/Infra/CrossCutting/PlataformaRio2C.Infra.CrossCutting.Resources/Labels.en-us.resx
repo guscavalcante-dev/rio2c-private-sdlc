@@ -2714,6 +2714,9 @@
     <value>Target audiences</value>
     <comment>Público-alvo/Faixa-etária</comment>
   </data>
+  <data name="TeaserLink" xml:space="preserve">
+    <value>Teaser Link</value>
+  </data>
   <data name="TeaserLinks" xml:space="preserve">
     <value>Teaser links</value>
   </data>

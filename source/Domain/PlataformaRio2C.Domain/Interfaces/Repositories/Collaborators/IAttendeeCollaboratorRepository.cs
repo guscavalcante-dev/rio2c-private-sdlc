@@ -33,9 +33,8 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<AttendeeCollaboratorTracksWidgetDto> FindTracksWidgetDtoAsync(Guid collaboratorUid, int editionId);
         Task<CommissionAttendeeCollaboratorInterestsWidgetDto> FindInterestsWidgetDtoAsync(Guid collaboratorUid, int editionId);
         Task<AttendeeCollaboratorInnovationEvaluationsWidgetDto> FindInnovationEvaluationsWidgetDtoAsync(Guid collaboratorUid, int editionId);
-
         Task<AttendeeCollaboratorMusicBandEvaluationsWidgetDto> FindMusicBandsEvaluationsWidgetDtoAsync(Guid collaboratorUid, int editionId);
-        //Task<AttendeeCollaboratorCartoonEvaluationsWidgetDto> FindCartoonEvaluationsWidgetDtoAsync(Guid collaboratorUid, int editionId);//new
+        Task<AttendeeCollaboratorCartoonEvaluationsWidgetDto> FindCartoonEvaluationsWidgetDtoAsync(Guid collaboratorUid, int editionId);
         Task<AttendeeCollaboratorAudiovisualCommissionEvaluationsWidgetDto> FindAudiovisualCommissionEvaluationsWidgetDtoAsync(Guid collaboratorUid, int editionId);
         Task<AttendeeCollaboratorDto> FindConferenceWidgetDtoAsync(Guid collaboratorUid, int editionId);
         Task<AttendeeCollaboratorDto> FindParticipantsWidgetDtoAsync(Guid collaboratorUid, int editionId);

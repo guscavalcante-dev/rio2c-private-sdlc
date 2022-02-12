@@ -614,6 +614,40 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        /// <summary>
+        /// Finds the cartoon evaluations widget dto asynchronous.
+        /// </summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeCollaboratorCartoonEvaluationsWidgetDto> FindCartoonEvaluationsWidgetDtoAsync(Guid collaboratorUid, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByCollaboratorUid(collaboratorUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ac => new AttendeeCollaboratorCartoonEvaluationsWidgetDto
+                            {
+                                AttendeeCollaboratorDto = new AttendeeCollaboratorDto
+                                {
+                                    AttendeeCollaborator = ac,
+                                    Collaborator = ac.Collaborator
+                                },
+                                AttendeeCartoonProjectEvaluationDtos = ac.Collaborator.User.AttendeeCartoonProjectEvaluations
+                                                                                        .Where(aioe => !aioe.IsDeleted)
+                                                                                        .OrderBy(aioe => aioe.CreateDate)
+                                                                                        .Select(aioe => new AttendeeCartoonProjectEvaluationDto
+                                                                                        {
+                                                                                            AttendeeCartoonProjectEvaluation = aioe,
+                                                                                            AttendeeCartoonProject = aioe.AttendeeCartoonProject,
+                                                                                            CartoonProject = aioe.AttendeeCartoonProject.CartoonProject,
+                                                                                            EvaluatorUser = aioe.EvaluatorUser
+                                                                                        }).ToList()
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
         //public async Task<AttendeeCollaboratorCartoonEvaluationsWidgetDto> FindCartoonEvaluationsWidgetDtoAsync(Guid collaboratorUid, int editionId)
         //{
         //    var query = this.GetBaseQuery(true)

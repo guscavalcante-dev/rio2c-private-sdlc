@@ -36,6 +36,15 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int MotivationMinLength = 1;
         public static readonly int MotivationMaxLength = 3000;
 
+        public static readonly int ProductionPlanMinLength = 1;
+        public static readonly int ProductionPlanMaxLength = 3000;
+
+        public static readonly int TeaserUrlMinLength = 1;
+        public static readonly int TeaserUrlMaxLength = 300;
+
+        public static readonly int BibleUrlMinLength = 1;
+        public static readonly int BibleUrlMaxLength = 300;
+
         public static readonly int EachEpisodePlayingTimeMinLength = 1;
         public static readonly int EachEpisodePlayingTimeMaxLength = 10;
 
@@ -46,6 +55,9 @@ namespace PlataformaRio2C.Domain.Entities
         public string LogLine { get; private set; }
         public string Summary { get; private set; }
         public string Motivation { get; private set; }
+        public string ProductionPlan { get; private set; }
+        public string TeaserUrl { get; private set; }
+        public string BibleUrl { get; private set; }
         public int NumberOfEpisodes { get; private set; }
         public string EachEpisodePlayingTime { get; private set; }
         public string TotalValueOfProject { get; private set; }
@@ -56,15 +68,17 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeCartoonProject> AttendeeCartoonProjects { get; private set; }
         public virtual ICollection<CartoonProjectCreator> CartoonProjectCreators { get; private set; }
 
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="CartoonProject"/> class.
+        /// Initializes a new instance of the <see cref="CartoonProject" /> class.
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="title">The title.</param>
         /// <param name="logLine">The log line.</param>
         /// <param name="summary">The summary.</param>
         /// <param name="motivation">The motivation.</param>
+        /// <param name="productionPlan">The production plan.</param>
+        /// <param name="teaserUrl">The teaser URL.</param>
+        /// <param name="bibleUrl">The bible URL.</param>
         /// <param name="numberOfEpisodes">The number of episodes.</param>
         /// <param name="eachEpisodePlayingTime">The each episode playing time.</param>
         /// <param name="totalValueOfProject">The total value of project.</param>
@@ -78,6 +92,9 @@ namespace PlataformaRio2C.Domain.Entities
             string logLine,
             string summary,
             string motivation,
+            string productionPlan,
+            string teaserUrl,
+            string bibleUrl,
             int numberOfEpisodes,
             string eachEpisodePlayingTime,
             string totalValueOfProject,
@@ -90,6 +107,9 @@ namespace PlataformaRio2C.Domain.Entities
             this.LogLine = logLine;
             this.Summary = summary;
             this.Motivation = motivation;
+            this.ProductionPlan = productionPlan;
+            this.TeaserUrl = teaserUrl;
+            this.BibleUrl = bibleUrl;
             this.NumberOfEpisodes = numberOfEpisodes;
             this.EachEpisodePlayingTime = eachEpisodePlayingTime;
             this.TotalValueOfProject = totalValueOfProject;
@@ -126,6 +146,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="logLine">The log line.</param>
         /// <param name="summary">The summary.</param>
         /// <param name="motivation">The motivation.</param>
+        /// <param name="productionPlan">The production plan.</param>
+        /// <param name="teaserUrl">The teaser URL.</param>
+        /// <param name="bibleUrl">The bible URL.</param>
         /// <param name="numberOfEpisodes">The number of episodes.</param>
         /// <param name="eachEpisodePlayingTime">The each episode playing time.</param>
         /// <param name="totalValueOfProject">The total value of project.</param>
@@ -139,6 +162,9 @@ namespace PlataformaRio2C.Domain.Entities
             string logLine,
             string summary,
             string motivation,
+            string productionPlan,
+            string teaserUrl,
+            string bibleUrl,
             int numberOfEpisodes,
             string eachEpisodePlayingTime,
             string totalValueOfProject,
@@ -151,6 +177,9 @@ namespace PlataformaRio2C.Domain.Entities
             this.LogLine = logLine;
             this.Summary = summary;
             this.Motivation = motivation;
+            this.ProductionPlan = productionPlan;
+            this.TeaserUrl = teaserUrl;
+            this.BibleUrl = bibleUrl;
             this.NumberOfEpisodes = numberOfEpisodes;
             this.EachEpisodePlayingTime = eachEpisodePlayingTime;
             this.TotalValueOfProject = totalValueOfProject;
@@ -381,6 +410,21 @@ namespace PlataformaRio2C.Domain.Entities
             if (!string.IsNullOrEmpty(this.Motivation) && this.Motivation?.Trim().Length > MotivationMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.CreativeMotivation, MotivationMaxLength, MotivationMinLength), new string[] { "Motivation" }));
+            }
+
+            if (!string.IsNullOrEmpty(this.ProductionPlan) && this.ProductionPlan?.Trim().Length > ProductionPlanMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.ProductionPlan, ProductionPlanMaxLength, ProductionPlanMinLength), new string[] { "ProductionPlan" }));
+            }
+
+            if (!string.IsNullOrEmpty(this.TeaserUrl) && this.TeaserUrl?.Trim().Length > TeaserUrlMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.TeaserLink, TeaserUrlMaxLength, TeaserUrlMinLength), new string[] { "TeaserUrl" }));
+            }
+
+            if (!string.IsNullOrEmpty(this.BibleUrl) && this.BibleUrl?.Trim().Length > BibleUrlMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.BibleUrl, BibleUrlMaxLength, BibleUrlMinLength), new string[] { "BibleUrl" }));
             }
 
             if (!string.IsNullOrEmpty(this.EachEpisodePlayingTime) && this.EachEpisodePlayingTime?.Trim().Length > EachEpisodePlayingTimeMaxLength)

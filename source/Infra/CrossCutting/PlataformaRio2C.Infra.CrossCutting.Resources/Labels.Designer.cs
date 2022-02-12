@@ -6262,6 +6262,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Link do teaser.
+        /// </summary>
+        public static string TeaserLink {
+            get {
+                return ResourceManager.GetString("TeaserLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Links de teaser.
         /// </summary>
         public static string TeaserLinks {
