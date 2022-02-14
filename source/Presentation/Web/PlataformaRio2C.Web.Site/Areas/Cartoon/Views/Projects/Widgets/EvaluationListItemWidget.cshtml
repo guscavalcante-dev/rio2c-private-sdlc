@@ -22,16 +22,9 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="text-center w-100">
-                            @*@if (Model.CartoonProject?.HasImage() == true)
-                            {
-                                <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, Model.CartoonProject.Uid, Model.CartoonProject.ImageUploadDate, false)" class="w-100" alt="" style="height: 125px; border-radius: 4px; object-fit: cover;">
-                            }
-                            else
-                            {
-                                <div class="kt-userpic kt-userpic--lg kt-userpic--brand">
-                                    <span style="width: 100%; height: 125px; font-size: 40px;">@(Model.CartoonProject?.GetNameAbbreviation())</span>
-                                </div>
-                            }*@
+                            <div class="kt-userpic kt-userpic--lg kt-userpic--brand">
+                                <span style="width: 100%; height: 125px; font-size: 40px;">@(Model.CartoonProject?.GetNameAbbreviation())</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -40,49 +33,19 @@
                         <span style="font-weight: 600; font-size: 17px; line-height: 19px; color: #403D50;">@(Model.CartoonProject?.Title ?? "-")</span>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-12 mt-2">
-                        <span style="font-weight: normal; font-size: 13px; line-height: 19px; color: #898C98;">@(Model.CartoonProject?.Summary ?? "-")</span>
-                    </div>
-                </div>
-                @*<div class="row">
-                    <div class="col-12 mt-3">
-                        <div style="font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; width: 50px; display: inline-block;">@Labels.Tracks:</div>
-                        @if (Model.AttendeeInnovationOrganizationTrackDtos?.Any() == true)
-                        {
-                            foreach (var attendeeInnovationOrganizationTrackDto in Model.AttendeeInnovationOrganizationTrackDtos)
-                            {
-                                <span class="kt-badge kt-badge--inline kt-badge--info mt-1">
-                                    @(attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOption.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
-                                    @if (attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOption.HasAdditionalInfo && !string.IsNullOrEmpty(attendeeInnovationOrganizationTrackDto.AttendeeInnovationOrganizationTrack.AdditionalInfo))
-                                    {
-                                        @attendeeInnovationOrganizationTrackDto.AttendeeInnovationOrganizationTrack.AdditionalInfo
-                                    }
-                                </span>
-                            }
-                        }
-                        else
-                        {
-                            @:-
-                        }
-                    </div>
-                </div>*@
                 @*<div class="row">
                         <div class="col-12 mt-2">
-                            <div style="font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; width: 88px; display: inline-block;">@Labels.TargetAudience</div>
-                            @if (Model.AttendeeInnovationBandDto?.InnovationBandTargetAudienceDtos?.Any() == true)
-                            {
-                                foreach (var musicBandTargetAudienceDto in Model.AttendeeInnovationBandDto.InnovationBandTargetAudienceDtos)
-                                {
-                                    <span class="kt-badge kt-badge--inline kt-badge--primary">@(musicBandTargetAudienceDto.TargetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
-                                }
-                            }
-                            else
-                            {
-                                @:-
-                            }
+                            <span style="font-weight: normal; font-size: 13px; line-height: 19px; color: #898C98;">@(Model.CartoonProject?.Summary ?? "-")</span>
                         </div>
                     </div>*@
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <div style="font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; width: 50px; display: inline-block;">@Labels.Format:</div>
+                        <span class="kt-badge kt-badge--inline kt-badge--info mt-1 ml-3">
+                            @(Model.CartoonProjectDto?.CartoonProjectFormatName ?? "-")
+                        </span>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-12 mt-4">
                         @Html.Partial("Shared/_Evaluation", Model)

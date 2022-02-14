@@ -310,7 +310,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                       {
                                                                                           AttendeeCartoonProjectEvaluation = aioe,
                                                                                           EvaluatorUser = aioe.EvaluatorUser
-                                                                                      }).ToList()
+                                                                                      }).ToList(),
+                                   CartoonProjectDto = new CartoonProjectDto()
+                                   {
+                                       Id = aio.CartoonProject.Id,
+                                       Title = aio.CartoonProject.Title,
+                                       CartoonProjectFormatName = aio.CartoonProject.CartoonProjectFormat.Name,
+                                       LogLine = aio.CartoonProject.LogLine,
+                                       Summary = aio.CartoonProject.Summary,
+                                       Motivation = aio.CartoonProject.Motivation,
+                                       EachEpisodePlayingTime = aio.CartoonProject.EachEpisodePlayingTime,
+                                       NumberOfEpisodes = aio.CartoonProject.NumberOfEpisodes.ToString(),
+                                       ProductionPlan = aio.CartoonProject.ProductionPlan,
+                                       ProjectBibleUrl = aio.CartoonProject.BibleUrl,
+                                       ProjectTeaserUrl = aio.CartoonProject.TeaserUrl,
+                                       TotalValueOfProject = aio.CartoonProject.TotalValueOfProject.ToString()
+                                   }
                                });
 
             return await query

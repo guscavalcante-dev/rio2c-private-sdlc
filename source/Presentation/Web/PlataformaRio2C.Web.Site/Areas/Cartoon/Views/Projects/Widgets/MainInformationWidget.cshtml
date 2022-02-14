@@ -18,18 +18,9 @@
         <div class="kt-widget__top">
             <div style="float: right;">
                 <a href="@Url.Action("EvaluationDetails", "Projects", new {Area = "Cartoon", id = Model.AttendeeCartoonProject?.Id})" target="_blank">
-                    @*@if (Model.CartoonProject?.HasImage() == true)
-                    {
-                        <div class="kt-widget__media">
-                            <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, Model.InnovationOrganization.Uid, Model.InnovationOrganization.ImageUploadDate, true)" alt="image">
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest" style="width: 110px; height: 110px;">
-                            <span>@(Model.InnovationOrganization?.GetNameAbbreviation() ?? "-")</span>
-                        </div>
-                    }*@
+                    <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest" style="width: 110px; height: 110px;">
+                        <span>@(Model.CartoonProjectDto?.GetNameAbbreviation() ?? "-")</span>
+                    </div>
                 </a>
             </div>
             <div class="kt-widget__content">
@@ -44,6 +35,12 @@
                             <div class="kt-widget__subhead pt-0">
                                 @(Model.CartoonProjectDto.Summary ?? "-")
                             </div>
+                        </div>
+                        <div class="kt-widget__subhead pb-0">
+                            @Labels.Format:
+                            <span class="kt-badge kt-badge--inline kt-badge--info">
+                                @(Model.CartoonProjectDto.CartoonProjectFormatName ?? "-")
+                            </span>
                         </div>
                     </div>
                     <div class="kt-widget__desc myrio2c-evaluation-position col-md-6 pr-0">
@@ -107,81 +104,60 @@
             </div>
         </div>
         <div class="kt-widget__bottom">
-            @*<div class="kt-widget__item w-100">
-            <div class="kt-widget__details">
-                <span class="kt-widget__title">@Labels.Description</span>
-                <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(Model.CartoonProject?.Summary?.Replace("\n", "<br/>") ?? "-"))</span></span>
-            </div>
-        </div>
-        <div class="kt-widget__item w-100">
-            <div class="kt-widget__details">
-                <span class="kt-widget__title">@Labels.LogLines</span>
-                <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span> @(Model.CartoonProject?.LogLine ?? "-")</span></span>
-            </div>
-        </div>*@
-            <div class="kt-widget__item w-50 w-xs-100">
+            <div class="kt-widget__item w-100">
                 <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.Description</span>
-                    <span class="kt-widget__value"><span class="text-break">@(Html.Raw(Model.CartoonProjectDto?.Summary?.Replace("\n", "<br/>") ?? "-"))</span></span>
-                </div>
-            </div>
-            <div class="kt-widget__item w-25 w-xs-100">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.NumberOfEpisodes</span>
-                    <span class="kt-widget__value"><span class="text-break">@(Model.CartoonProjectDto?.NumberOfEpisodes ?? "-")</span></span>
-                </div>
-            </div>
-            <div class="kt-widget__item w-25 w-xs-100">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.EachEpisodePlayingTime</span>
-                    <span class="kt-widget__value"><span class="text-break">@(Model.CartoonProjectDto?.EachEpisodePlayingTime ?? "-")</span></span>
+                    <span class="kt-widget__title">@Labels.LogLines</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(Model.CartoonProjectDto?.LogLine?.Replace("\n", "<br/>") ?? "-"))</span></span>
                 </div>
             </div>
             <div class="kt-widget__item w-100">
                 <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.LogLines</span>
-                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span> @(Model.CartoonProjectDto?.LogLine ?? "-")</span></span>
+                    <span class="kt-widget__title">@Labels.Summary</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span class="text-break">@(Html.Raw(Model.CartoonProjectDto?.Summary?.Replace("\n", "<br/>") ?? "-"))</span></span>
                 </div>
             </div>
-            <div class="kt-widget__item w-75 w-xs-100">
+            <div class="kt-widget__item w-100">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.CreativeMotivation</span>
-                    <span class="kt-widget__value"><span class="text-break">@(Model.CartoonProjectDto?.Motivation ?? "-")</span></span>
-                </div>
-            </div>
-            <div class="kt-widget__item w-25 w-xs-100">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.TotalValueOfProject</span>
-                    <span class="kt-widget__value"><span class="text-break">@(Model.CartoonProjectDto?.TotalValueOfProject ?? "-")</span></span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span class="text-break">@(Html.Raw(Model.CartoonProjectDto?.Motivation?.Replace("\n", "<br/>") ?? "-"))</span></span>
                 </div>
             </div>
             <div class="kt-widget__item w-100">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.ProductionPlans</span>
-                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Model.CartoonProjectDto?.ProductionPlan ?? "-")</span></span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(Model.CartoonProjectDto?.ProductionPlan?.Replace("\n", "<br/>") ?? "-"))</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-25">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.NumberOfEpisodes</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.CartoonProjectDto?.NumberOfEpisodes ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-25">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.EachEpisodePlayingTime</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.CartoonProjectDto?.EachEpisodePlayingTime ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-25">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.TotalValueOfProject</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.CartoonProjectDto?.TotalValueOfProject ?? "-")</span></span>
                 </div>
             </div>
             <div class="kt-widget__item w-50 w-xs-100">
                 <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.TeaserLinks</span>
+                    <span class="kt-widget__title">@Labels.LinksForPromoTeaser</span>
                     <span class="kt-widget__value"><span class="text-break">@(Model.CartoonProjectDto.ProjectTeaserUrl ?? "-")</span></span>
                 </div>
             </div>
             <div class="kt-widget__item w-50 w-xs-100">
                 <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.TeaserLinks</span>
+                    <span class="kt-widget__title">@Labels.BibleUrl</span>
                     <span class="kt-widget__value"><span class="text-break">@(Model.CartoonProjectDto?.ProjectBibleUrl ?? "-")</span></span>
                 </div>
             </div>
-            <div class="kt-widget__item w-100 w-xs-100">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.Format</span>
-                    <span class="kt-widget__value"><span class="text-break">@(Model.CartoonProjectDto?.CartoonProjectFormatName ?? "-")</span></span>
-                </div>
-            </div>
-
-
-
         </div>
     </div>
 </div>

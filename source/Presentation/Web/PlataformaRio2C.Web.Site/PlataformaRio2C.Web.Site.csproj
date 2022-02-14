@@ -7778,7 +7778,6 @@
     <Folder Include="Areas\Audiovisual\Data\" />
     <Folder Include="Areas\Audiovisual\Views\Projects\Modals\" />
     <Folder Include="Areas\Audiovisual\Views\Shared\" />
-    <Folder Include="Areas\Cartoon\Views\Cartoon\" />
     <Folder Include="Areas\Cartoon\Views\Projects\Modals\" />
     <Folder Include="Areas\Cartoon\Views\Shared\" />
     <Folder Include="Areas\Innovation\Data\" />
