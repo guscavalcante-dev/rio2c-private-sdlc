@@ -166,10 +166,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="cartoonProjectFormatUid">The cartoon project format uid.</param>
         /// <returns></returns>
-        public async Task<CartoonProject> FindByUidAsync(Guid cartoonProjectFormatUid)
+        public async Task<CartoonProject> FindByUidAsync(Guid cartoonProjectUid)
         {
             var query = this.GetBaseQuery()
-                            .FindByUids(new List<Guid?> { cartoonProjectFormatUid });
+                            .FindByUids(new List<Guid?> { cartoonProjectUid });
 
             return await query.FirstOrDefaultAsync();
         }

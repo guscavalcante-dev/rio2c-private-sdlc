@@ -54,7 +54,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="name">The name.</param>
         /// <param name="document">The document.</param>
         /// <param name="serviceName">Name of the service.</param>
-        /// <param name="foundationDate">The foundation date.</param>
         /// <param name="description">The description.</param>
         /// <param name="website">The website.</param>
         /// <param name="accumulatedRevenue">The accumulated revenue.</param>
@@ -68,6 +67,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="businessStage">The business stage.</param>
         /// <param name="isPresentationUploaded">if set to <c>true</c> [is presentation uploaded].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="presentationFileExtension">The presentation file extension.</param>
         /// <param name="attendeeInnovationOrganizationFounderApiDtos">The attendee innovation organization founder API dtos.</param>
         /// <param name="attendeeInnovationOrganizationCompetitorApiDtos">The attendee innovation organization competitor API dtos.</param>
         /// <param name="innovationOrganizationExperienceOptionApiDtos">The innovation organization experience option API dtos.</param>
@@ -195,6 +195,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="name">The name.</param>
         /// <param name="document">The document.</param>
         /// <param name="serviceName">Name of the service.</param>
+        /// <param name="foundationDate">The foundation date.</param>
         /// <param name="description">The description.</param>
         /// <param name="website">The website.</param>
         /// <param name="accumulatedRevenue">The accumulated revenue.</param>
@@ -209,6 +210,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isPresentationUploaded">if set to <c>true</c> [is presentation uploaded].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
+        /// <param name="presentationFileExtension">The presentation file extension.</param>
         /// <param name="attendeeInnovationOrganizationFounderApiDtos">The attendee innovation organization founder API dtos.</param>
         /// <param name="attendeeInnovationOrganizationCompetitorApiDtos">The attendee innovation organization competitor API dtos.</param>
         /// <param name="innovationOrganizationExperienceOptionApiDtos">The innovation organization experience option API dtos.</param>

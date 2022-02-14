@@ -174,6 +174,77 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Exports the evaluation list widget.
+        /// </summary>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="projectFormatUid">The project format uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ExportEvaluationListWidget(string searchKeywords, Guid? projectFormatUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 1000)
+        {
+            StringBuilder data = new StringBuilder();
+            data.AppendLine($"{Labels.Title}; {Labels.Format}; {Labels.Status}; {Labels.Votes}; {Labels.Average}");
+
+            var attendeeCartoonProjectJsonDtos = await this.attendeeCartoonProjectRepo.FindAllJsonDtosPagedAsync(this.EditionDto.Id, searchKeywords, new List<Guid?> { projectFormatUid }, evaluationStatusUid, 1, 10000, new List<Tuple<string, string>>());
+            var approvedAttendeeCartoonProjectIds = await this.attendeeCartoonProjectRepo.FindAllApprovedAttendeeCartoonProjectsIdsAsync(this.EditionDto.Id);
+
+            foreach (var attendeeCartoonProjectJsonDto in attendeeCartoonProjectJsonDtos)
+            {
+                data.AppendLine(attendeeCartoonProjectJsonDto.CartoonProjectTitle + ";" +
+                                attendeeCartoonProjectJsonDto.CartoonProjectFormatName + ";" +
+                                (approvedAttendeeCartoonProjectIds.Contains(attendeeCartoonProjectJsonDto.AttendeeCartoonProjectId) ? Labels.ProjectAccepted : Labels.ProjectRefused) + ";" +
+                                attendeeCartoonProjectJsonDto.EvaluationsCount + ";" +
+                                attendeeCartoonProjectJsonDto?.Grade ?? "-");
+            }
+
+            return Json(new
+            {
+                fileName = "CartoonProjects_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv",
+                fileContent = data.ToString()
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Exports the evaluators list widget.
+        /// </summary>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="projectFormatUid">The project format uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ExportEvaluatorsListWidget(string searchKeywords, Guid? projectFormatUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 1000)
+        {
+            StringBuilder data = new StringBuilder();
+            data.AppendLine($"{Labels.Title}; {Labels.Format}; {Labels.Evaluation}; {Labels.Evaluator};");
+
+            var attendeeCartoonProjectJsonDtos = await this.attendeeCartoonProjectRepo.FindAllJsonDtosPagedAsync(this.EditionDto.Id, searchKeywords, new List<Guid?> { projectFormatUid }, evaluationStatusUid, 1, 1000, new List<Tuple<string, string>>());
+            foreach (var attendeeCartoonProjectJsonDto in attendeeCartoonProjectJsonDtos)
+            {
+                var attendeeCartoonProjectDto = await this.attendeeCartoonProjectRepo.FindEvaluatorsWidgetDtoAsync(attendeeCartoonProjectJsonDto.AttendeeCartoonProjectUid);
+                foreach (var attendeeCartoonProjectEvaluationDto in attendeeCartoonProjectDto.AttendeeCartoonProjectEvaluationDtos)
+                {
+                    data.AppendLine(
+                        attendeeCartoonProjectJsonDto.CartoonProjectTitle + ";" +
+                        attendeeCartoonProjectJsonDto.CartoonProjectFormatName + ";" +
+                        attendeeCartoonProjectEvaluationDto.AttendeeCartoonProjectEvaluation.Grade + ";" +
+                        attendeeCartoonProjectEvaluationDto.EvaluatorUser.Name + ";"
+                    );
+                }
+            }
+
+            return Json(new
+            {
+                fileName = "CartoonProjects_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv",
+                fileContent = data.ToString()
+            }, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #region Total Count Widget

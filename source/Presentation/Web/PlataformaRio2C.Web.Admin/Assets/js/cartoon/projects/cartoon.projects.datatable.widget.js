@@ -221,7 +221,7 @@ var CartoonProjectsDataTableWidget = function () {
                         html += '\          <button class="dropdown-item" onclick="CartoonProjectsDataTableWidget.showDetails(\'' + row.AttendeeCartoonProjectId + '\', \'' + searchKeywords + '\', \'' + projectFormatUid + '\', \'' + evaluationStatusUid + '\', \'' + initialPage + '\', \'' + initialPageSize + '\');">';
                         html += '\              <i class="la la-eye"></i>' + labels.view + '';
                         html += '\          </button>';
-                        html += '\          <button class="dropdown-item" onclick="CartoonProjectsDelete.showModal(\'' + row.AttendeeCartoonProjectUid + '\');">';
+                        html += '\          <button class="dropdown-item" onclick="CartoonProjectsDelete.showModal(\'' + row.CartoonProjectUid + '\');">';
                         html += '\              <i class="la la-remove"></i>' + labels.remove + '';
                         html += '\          </button>';
                         html += '\      </div>';
@@ -313,7 +313,6 @@ var CartoonProjectsDataTableWidget = function () {
     // Export -------------------------------------------------------------------------------------
     var exportExcel = function (url) {
         var jsonParameters = new Object();
-
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition(url), jsonParameters, function (resp) {
 

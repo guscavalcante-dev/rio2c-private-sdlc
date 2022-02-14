@@ -49,7 +49,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <returns></returns>
         public async Task<CartoonProject> GetCartoonProjectByUid(Guid projectUid)
         {
-            var cartoonProject = await this.CartoonProjectRepo.GetAsync(projectUid);
+            var cartoonProject = await this.CartoonProjectRepo.FindByUidAsync(projectUid);
             if (cartoonProject == null || cartoonProject.IsDeleted)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM), new string[] { "ToastrError" }));

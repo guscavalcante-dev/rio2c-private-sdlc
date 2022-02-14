@@ -230,7 +230,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isAdmin">if set to <c>true</c> [is admin].</param>
         public void Delete(int userId)
         {
-            //this.DeleteProjectBuyerEvaluations(userId);
+            this.DeleteAttendeeCartoonProjects(userId);
+            this.DeleteCartoonProjectCreators(userId);
+            this.DeleteCartoonProjectOrganizations(userId);
             base.Delete(userId);
         }
 
@@ -337,6 +339,18 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
+        /// <summary>
+        /// Deletes the cartoon project creators.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteCartoonProjectCreators(int userId)
+        {
+            foreach (var cartoonProjectCreator in this.CartoonProjectCreators.Where(w => !w.IsDeleted))
+            {
+                cartoonProjectCreator.Delete(userId);
+            }
+        }
+
         #endregion
 
         #region Cartoon Project Organization
@@ -370,6 +384,18 @@ namespace PlataformaRio2C.Domain.Entities
                 cartoonProjectCompanyApiDto.ZipCode,
                 userId,
                 this));
+        }
+
+        /// <summary>
+        /// Deletes the cartoon project organizations.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteCartoonProjectOrganizations(int userId)
+        {
+            foreach (var cartoonProjectOrganization in this.CartoonProjectOrganizations.Where(w => !w.IsDeleted))
+            {
+                cartoonProjectOrganization.Delete(userId);
+            }
         }
 
         #endregion

@@ -15,11 +15,11 @@
 var CartoonProjectsDelete = function () {
 
     // Delete -------------------------------------------------------------------------------------
-    var executeDelete = function (attendeeCartoonProjectUid) {
+    var executeDelete = function (cartoonProjectUid) {
         MyRio2cCommon.block();
 
         var jsonParameters = new Object();
-        jsonParameters.attendeeCartoonProjectUid = attendeeCartoonProjectUid;
+        jsonParameters.cartoonProjectUid = cartoonProjectUid;
 
         $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Cartoon/Projects/Delete'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -50,7 +50,7 @@ var CartoonProjectsDelete = function () {
         });
     };
 
-    var showModal = function (attendeeCartoonProjectUid) {
+    var showModal = function (cartoonProjectUid) {
         var message = labels.deleteConfirmationMessage;
 
         bootbox.dialog({
@@ -66,7 +66,7 @@ var CartoonProjectsDelete = function () {
                     label: labels.remove,
                     className: "btn btn-danger",
                     callback: function () {
-                        executeDelete(attendeeCartoonProjectUid);
+                        executeDelete(cartoonProjectUid);
                     }
                 }
             }
@@ -74,8 +74,8 @@ var CartoonProjectsDelete = function () {
     };
 
     return {
-        showModal: function (attendeeCartoonProjectUid) {
-            showModal(attendeeCartoonProjectUid);
+        showModal: function (cartoonProjectUid) {
+            showModal(cartoonProjectUid);
         }
     };
 }();
