@@ -1,5 +1,5 @@
---must run on deploy | test: no, not done
---must run on deploy | prod: no, not done
+--must run on deploy | test: yes, done
+--must run on deploy | prod: yes, not done
 --possible values are: "no", "yes, not done" and "yes, done"
 BEGIN TRY
 	BEGIN TRANSACTION
