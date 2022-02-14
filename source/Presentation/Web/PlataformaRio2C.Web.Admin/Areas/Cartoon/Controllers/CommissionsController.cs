@@ -44,8 +44,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
     {
         private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
-        private readonly IAttendeeInnovationOrganizationRepository attendeeInnovationOrganizationRepo;
-        
+        private readonly IAttendeeCartoonProjectRepository attendeeCartoonProjectRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CommissionsController" /> class.
@@ -54,18 +53,18 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
         /// <param name="identityController">The identity controller.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
-        /// <param name="attendeeInnovationOrganizationRepository">The attendee innovation organization repository.</param>
+        /// <param name="attendeeCartoonProjectRepository">The attendee cartoon project repository.</param>
         public CommissionsController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             ICollaboratorRepository collaboratorRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
-            IAttendeeInnovationOrganizationRepository attendeeInnovationOrganizationRepository)
+            IAttendeeCartoonProjectRepository attendeeCartoonProjectRepository)
             : base(commandBus, identityController)
         {
             this.collaboratorRepo = collaboratorRepository;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
-            this.attendeeInnovationOrganizationRepo = attendeeInnovationOrganizationRepository;
+            this.attendeeCartoonProjectRepo = attendeeCartoonProjectRepository;
         }
 
         #region List
@@ -163,20 +162,20 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowEvaluationsWidget(Guid? collaboratorUid)
         {
-            var innovationEvaluationsWidgetDto = await this.attendeeCollaboratorRepo.FindInnovationEvaluationsWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
-            if (innovationEvaluationsWidgetDto == null)
+            var cartoonEvaluationsWidgetDto = await this.attendeeCollaboratorRepo.FindCartoonEvaluationsWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
+            if (cartoonEvaluationsWidgetDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            ViewBag.ApprovedAttendeeInnovationOrganizationsIds = await this.attendeeInnovationOrganizationRepo.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(this.EditionDto.Edition.Id);
+            ViewBag.ApprovedAttendeeCartoonProjectsIds = await this.attendeeCartoonProjectRepo.FindAllApprovedAttendeeCartoonProjectsIdsAsync(this.EditionDto.Edition.Id);
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/EvaluationsWidget", innovationEvaluationsWidgetDto), divIdOrClass = "#InnovationCommissionEvaluationsWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/EvaluationsWidget", cartoonEvaluationsWidgetDto), divIdOrClass = "#CartoonCommissionEvaluationsWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -401,15 +400,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUpdateModal(Guid? collaboratorUid, bool? isAddingToCurrentEdition)
         {
-            UpdateInnovationCollaborator cmd;
+            UpdateTinyCollaborator cmd;
 
             try
             {
-                cmd = new UpdateInnovationCollaborator(
+                cmd = new UpdateTinyCollaborator(
                     await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
-                    isAddingToCurrentEdition,
-                    await this.attendeeCollaboratorRepo.FindTracksWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id),
-                    null);
+                    isAddingToCurrentEdition);
             }
             catch (DomainException ex)
             {
@@ -430,7 +427,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Update(UpdateInnovationCollaborator cmd)
+        public async Task<ActionResult> Update(UpdateTinyCollaborator cmd)
         {
             var result = new AppValidationResult();
 
@@ -442,7 +439,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    Constants.CollaboratorType.CommissionInnovation,
+                    Constants.CollaboratorType.CommissionCartoon,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -462,15 +459,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
-                cmd.UpdateDropdownProperties(null);
-
                 return Json(new
                 {
                     status = "error",
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("/Views/Collaborators/Forms/_TinyForm.cshtml", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }

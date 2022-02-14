@@ -727,6 +727,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Link para Bíblia do Projeto.
+        /// </summary>
+        public static string BibleUrl {
+            get {
+                return ResourceManager.GetString("BibleUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data de Nascimento.
         /// </summary>
         public static string BirthDate {
@@ -907,7 +916,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Comissão de Cartoon.
+        ///   Looks up a localized string similar to Comissão de Cartoonito.
         /// </summary>
         public static string CartoonCommission {
             get {
@@ -916,7 +925,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data de término da avaliação de projeto de cartoon.
+        ///   Looks up a localized string similar to Data de término da avaliação de projeto de cartoonito.
         /// </summary>
         public static string CartoonCommissionEvaluationEndDate {
             get {
@@ -925,7 +934,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data de início da avaliação de projeto de cartoon.
+        ///   Looks up a localized string similar to Data de início da avaliação de projeto de cartoonito.
         /// </summary>
         public static string CartoonCommissionEvaluationStartDate {
             get {
@@ -934,7 +943,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quantidade máxima de empresas aprovadas.
+        ///   Looks up a localized string similar to Quantidade máxima de projetos aprovados.
         /// </summary>
         public static string CartoonCommissionMaximumApprovedProjectsCount {
             get {
@@ -961,7 +970,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Projeto de Cartoon.
+        ///   Looks up a localized string similar to Projeto de Cartoonito.
         /// </summary>
         public static string CartoonProject {
             get {
@@ -970,7 +979,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Projetos de Cartoon.
+        ///   Looks up a localized string similar to Projetos de Cartoonito.
         /// </summary>
         public static string CartoonProjects {
             get {
@@ -979,7 +988,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data de término de envio de projeto de cartoon.
+        ///   Looks up a localized string similar to Data de término de envio de projeto de cartoonito.
         /// </summary>
         public static string CartoonProjectSubmitEndDate {
             get {
@@ -988,7 +997,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data de início de envio de projeto de cartoon.
+        ///   Looks up a localized string similar to Data de início de envio de projeto de cartoonito.
         /// </summary>
         public static string CartoonProjectSubmitStartDate {
             get {
@@ -1524,6 +1533,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string CreativeMotivation {
             get {
                 return ResourceManager.GetString("CreativeMotivation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Criador.
+        /// </summary>
+        public static string Creator {
+            get {
+                return ResourceManager.GetString("Creator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Criadores.
+        /// </summary>
+        public static string Creators {
+            get {
+                return ResourceManager.GetString("Creators", resourceCulture);
             }
         }
         
@@ -6231,6 +6258,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string TargetAudiences {
             get {
                 return ResourceManager.GetString("TargetAudiences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Link do teaser.
+        /// </summary>
+        public static string TeaserLink {
+            get {
+                return ResourceManager.GetString("TeaserLink", resourceCulture);
             }
         }
         

@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 01-25-2022
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 01-25-2022
+// Last Modified By : Rafael Franco
+// Last Modified On : 02-08-2022
 // ***********************************************************************
 // <copyright file="ICartoonProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

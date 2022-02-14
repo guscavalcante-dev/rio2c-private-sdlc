@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -35,6 +36,15 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int MotivationMinLength = 1;
         public static readonly int MotivationMaxLength = 3000;
 
+        public static readonly int ProductionPlanMinLength = 1;
+        public static readonly int ProductionPlanMaxLength = 3000;
+
+        public static readonly int TeaserUrlMinLength = 1;
+        public static readonly int TeaserUrlMaxLength = 300;
+
+        public static readonly int BibleUrlMinLength = 1;
+        public static readonly int BibleUrlMaxLength = 300;
+
         public static readonly int EachEpisodePlayingTimeMinLength = 1;
         public static readonly int EachEpisodePlayingTimeMaxLength = 10;
 
@@ -45,6 +55,9 @@ namespace PlataformaRio2C.Domain.Entities
         public string LogLine { get; private set; }
         public string Summary { get; private set; }
         public string Motivation { get; private set; }
+        public string ProductionPlan { get; private set; }
+        public string TeaserUrl { get; private set; }
+        public string BibleUrl { get; private set; }
         public int NumberOfEpisodes { get; private set; }
         public string EachEpisodePlayingTime { get; private set; }
         public string TotalValueOfProject { get; private set; }
@@ -56,13 +69,16 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<CartoonProjectCreator> CartoonProjectCreators { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CartoonProject"/> class.
+        /// Initializes a new instance of the <see cref="CartoonProject" /> class.
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="title">The title.</param>
         /// <param name="logLine">The log line.</param>
         /// <param name="summary">The summary.</param>
         /// <param name="motivation">The motivation.</param>
+        /// <param name="productionPlan">The production plan.</param>
+        /// <param name="teaserUrl">The teaser URL.</param>
+        /// <param name="bibleUrl">The bible URL.</param>
         /// <param name="numberOfEpisodes">The number of episodes.</param>
         /// <param name="eachEpisodePlayingTime">The each episode playing time.</param>
         /// <param name="totalValueOfProject">The total value of project.</param>
@@ -76,6 +92,9 @@ namespace PlataformaRio2C.Domain.Entities
             string logLine,
             string summary,
             string motivation,
+            string productionPlan,
+            string teaserUrl,
+            string bibleUrl,
             int numberOfEpisodes,
             string eachEpisodePlayingTime,
             string totalValueOfProject,
@@ -88,6 +107,9 @@ namespace PlataformaRio2C.Domain.Entities
             this.LogLine = logLine;
             this.Summary = summary;
             this.Motivation = motivation;
+            this.ProductionPlan = productionPlan;
+            this.TeaserUrl = teaserUrl;
+            this.BibleUrl = bibleUrl;
             this.NumberOfEpisodes = numberOfEpisodes;
             this.EachEpisodePlayingTime = eachEpisodePlayingTime;
             this.TotalValueOfProject = totalValueOfProject;
@@ -124,6 +146,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="logLine">The log line.</param>
         /// <param name="summary">The summary.</param>
         /// <param name="motivation">The motivation.</param>
+        /// <param name="productionPlan">The production plan.</param>
+        /// <param name="teaserUrl">The teaser URL.</param>
+        /// <param name="bibleUrl">The bible URL.</param>
         /// <param name="numberOfEpisodes">The number of episodes.</param>
         /// <param name="eachEpisodePlayingTime">The each episode playing time.</param>
         /// <param name="totalValueOfProject">The total value of project.</param>
@@ -137,6 +162,9 @@ namespace PlataformaRio2C.Domain.Entities
             string logLine,
             string summary,
             string motivation,
+            string productionPlan,
+            string teaserUrl,
+            string bibleUrl,
             int numberOfEpisodes,
             string eachEpisodePlayingTime,
             string totalValueOfProject,
@@ -149,6 +177,9 @@ namespace PlataformaRio2C.Domain.Entities
             this.LogLine = logLine;
             this.Summary = summary;
             this.Motivation = motivation;
+            this.ProductionPlan = productionPlan;
+            this.TeaserUrl = teaserUrl;
+            this.BibleUrl = bibleUrl;
             this.NumberOfEpisodes = numberOfEpisodes;
             this.EachEpisodePlayingTime = eachEpisodePlayingTime;
             this.TotalValueOfProject = totalValueOfProject;
@@ -171,14 +202,45 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>
+        /// Evaluates the specified edition.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="evaluatorUser">The evaluator user.</param>
+        /// <param name="grade">The grade.</param>
+        public void Evaluate(Edition edition, User evaluatorUser, decimal grade)
+        {
+            var attendeeCartoonProject = this.GetAttendeeCartoonProjectByEditionId(edition.Id);
+            attendeeCartoonProject?.Evaluate(evaluatorUser, grade);
+        }
+
+        /// <summary>
+        /// Gets the attendee innovation organization by edition identifier.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public AttendeeCartoonProject GetAttendeeCartoonProjectByEditionId(int editionId)
+        {
+            return this.AttendeeCartoonProjects?.FirstOrDefault(aio => aio.Edition.Id == editionId);
+        }
+
+        /// <summary>
         /// Deletes the specified user identifier.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <param name="isAdmin">if set to <c>true</c> [is admin].</param>
         public void Delete(int userId)
         {
-            //this.DeleteProjectBuyerEvaluations(userId);
+            this.DeleteAttendeeCartoonProjects(userId);
+            this.DeleteCartoonProjectCreators(userId);
+            this.DeleteCartoonProjectOrganizations(userId);
             base.Delete(userId);
+        }
+
+        /// <summary>Gets the name abbreviation.</summary>
+        /// <returns></returns>
+        public string GetNameAbbreviation()
+        {
+            return this.Title?.GetTwoLetterCode();
         }
 
         #region Attendee Cartoon Projects
@@ -277,6 +339,18 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
+        /// <summary>
+        /// Deletes the cartoon project creators.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteCartoonProjectCreators(int userId)
+        {
+            foreach (var cartoonProjectCreator in this.CartoonProjectCreators.Where(w => !w.IsDeleted))
+            {
+                cartoonProjectCreator.Delete(userId);
+            }
+        }
+
         #endregion
 
         #region Cartoon Project Organization
@@ -312,6 +386,18 @@ namespace PlataformaRio2C.Domain.Entities
                 this));
         }
 
+        /// <summary>
+        /// Deletes the cartoon project organizations.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteCartoonProjectOrganizations(int userId)
+        {
+            foreach (var cartoonProjectOrganization in this.CartoonProjectOrganizations.Where(w => !w.IsDeleted))
+            {
+                cartoonProjectOrganization.Delete(userId);
+            }
+        }
+
         #endregion
 
         #region Validations
@@ -321,10 +407,9 @@ namespace PlataformaRio2C.Domain.Entities
         ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
         public override bool IsValid()
         {
-            this.ValidationResult = new ValidationResult();
-
+            this.ValidationResult = new ValidationResult();            
             this.ValidateMaxLengths();
-
+            this.ValidateAttendeeCartoonProjects();
             return this.ValidationResult.IsValid;
         }
 
@@ -353,6 +438,21 @@ namespace PlataformaRio2C.Domain.Entities
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.CreativeMotivation, MotivationMaxLength, MotivationMinLength), new string[] { "Motivation" }));
             }
 
+            if (!string.IsNullOrEmpty(this.ProductionPlan) && this.ProductionPlan?.Trim().Length > ProductionPlanMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.ProductionPlan, ProductionPlanMaxLength, ProductionPlanMinLength), new string[] { "ProductionPlan" }));
+            }
+
+            if (!string.IsNullOrEmpty(this.TeaserUrl) && this.TeaserUrl?.Trim().Length > TeaserUrlMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.TeaserLink, TeaserUrlMaxLength, TeaserUrlMinLength), new string[] { "TeaserUrl" }));
+            }
+
+            if (!string.IsNullOrEmpty(this.BibleUrl) && this.BibleUrl?.Trim().Length > BibleUrlMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.BibleUrl, BibleUrlMaxLength, BibleUrlMinLength), new string[] { "BibleUrl" }));
+            }
+
             if (!string.IsNullOrEmpty(this.EachEpisodePlayingTime) && this.EachEpisodePlayingTime?.Trim().Length > EachEpisodePlayingTimeMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.EachEpisodePlayingTime, EachEpisodePlayingTimeMaxLength, EachEpisodePlayingTimeMinLength), new string[] { "EachEpisodePlayingTime" }));
@@ -361,6 +461,22 @@ namespace PlataformaRio2C.Domain.Entities
             if (!string.IsNullOrEmpty(this.TotalValueOfProject) && this.TotalValueOfProject?.Trim().Length > TotalValueOfProjectMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.TotalValueOfProject, TotalValueOfProjectMaxLength, TotalValueOfProjectMinLength), new string[] { "TotalValueOfProject" }));
+            }
+        }
+
+        /// <summary>
+        /// Validates the attendee cartoon projects.
+        /// </summary>
+        private void ValidateAttendeeCartoonProjects()
+        {
+            if (this.AttendeeCartoonProjects?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var attendeeCartoonProject in this.AttendeeCartoonProjects.Where(aiof => !aiof.IsValid()))
+            {
+                this.ValidationResult.Add(attendeeCartoonProject.ValidationResult);
             }
         }
 

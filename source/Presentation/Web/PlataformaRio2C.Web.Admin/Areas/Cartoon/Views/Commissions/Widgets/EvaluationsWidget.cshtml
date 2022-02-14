@@ -29,7 +29,7 @@
                 @foreach (var attendeeCartoonProjectEvaluationDto in Model.AttendeeCartoonProjectEvaluationDtos.OrderBy(aioeDto => aioeDto.AttendeeCartoonProjectEvaluation.CreateDate))
                 {
                     <tr>
-                        <td class="align-middle">@(attendeeCartoonProjectEvaluationDto.CartoonProject.Name)</td>
+                        <td class="align-middle">@(attendeeCartoonProjectEvaluationDto.CartoonProject.Title)</td>
                         <td class="text-center align-middle">@(attendeeCartoonProjectEvaluationDto.AttendeeCartoonProjectEvaluation.Grade)</td>
                         <td class="text-center align-middle">@(attendeeCartoonProjectEvaluationDto.AttendeeCartoonProjectEvaluation.CreateDate.ToBrazilTimeZone().ToShortDateString())</td>
                         <td class="align-middle pb-0 mb-0">

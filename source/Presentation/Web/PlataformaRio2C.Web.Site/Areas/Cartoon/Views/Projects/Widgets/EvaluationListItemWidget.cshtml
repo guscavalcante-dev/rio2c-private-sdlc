@@ -1,0 +1,62 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Statics
+@model AttendeeCartoonProjectDto
+@{
+    var evaluationDetailsAction = Url.Action("EvaluationDetails", "Projects", new
+    {
+        Area = "Cartoon",
+        id = Model.AttendeeCartoonProject.Id,
+        //step = 0,
+        searchKeywords = ViewBag.SearchKeywords,
+        evaluationStatusUid = ViewBag.EvaluationStatusUid,
+        Page = ViewBag.Page,
+        pageSize = ViewBag.PageSize
+    });
+}
+@if (Model != null)
+{
+    <div class="col-sm-6 col-lg-6 col-xl-4">
+        <div class="kt-portlet kt-portlet--height-fluid" id="project-@Model.AttendeeCartoonProject.Uid">
+            <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="text-center w-100">
+                            <div class="kt-userpic kt-userpic--lg kt-userpic--brand">
+                                <span style="width: 100%; height: 125px; font-size: 40px;">@(Model.CartoonProject?.GetNameAbbreviation())</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-3" style="min-height:41px;">
+                        <span style="font-weight: 600; font-size: 17px; line-height: 19px; color: #403D50;">@(Model.CartoonProject?.Title ?? "-")</span>
+                    </div>
+                </div>
+                @*<div class="row">
+                        <div class="col-12 mt-2">
+                            <span style="font-weight: normal; font-size: 13px; line-height: 19px; color: #898C98;">@(Model.CartoonProject?.Summary ?? "-")</span>
+                        </div>
+                    </div>*@
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <div style="font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; width: 50px; display: inline-block;">@Labels.Format:</div>
+                        <span class="kt-badge kt-badge--inline kt-badge--info mt-1 ml-3">
+                            @(Model.CartoonProjectDto?.CartoonProjectFormatName ?? "-")
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-4">
+                        @Html.Partial("Shared/_Evaluation", Model)
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-2">
+                    <div class="col-md-12 text-center">
+                        <a href="@evaluationDetailsAction" class="btn btn-brand">@Labels.View</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

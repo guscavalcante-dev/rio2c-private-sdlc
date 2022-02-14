@@ -401,6 +401,9 @@
     <value>Being processed</value>
     <comment>Sendo executado</comment>
   </data>
+  <data name="BibleUrl" xml:space="preserve">
+    <value>Project Bible link</value>
+  </data>
   <data name="BirthDate" xml:space="preserve">
     <value>Birth Date</value>
     <comment>Data de nascimento</comment>
@@ -480,34 +483,34 @@
     <value>Caption:</value>
   </data>
   <data name="CartoonCommission" xml:space="preserve">
-    <value>Cartoon Commission</value>
+    <value>Cartoonito Commission</value>
   </data>
   <data name="CartoonCommissionEvaluationEndDate" xml:space="preserve">
-    <value>Cartoon project evaluation end date</value>
+    <value>Cartoonito project evaluation end date</value>
   </data>
   <data name="CartoonCommissionEvaluationStartDate" xml:space="preserve">
-    <value>Cartoon project evaluation start date</value>
+    <value>Cartoonito project evaluation start date</value>
   </data>
   <data name="CartoonCommissionMaximumApprovedProjectsCount" xml:space="preserve">
-    <value>Cartoon commission maximum approved companies count</value>
+    <value>Cartoonito commission maximum approved projects count</value>
   </data>
   <data name="CartoonCommissionMinimumEvaluationsCount" xml:space="preserve">
-    <value>Cartoon commission minimum evaluations count</value>
+    <value>Cartoonito commission minimum evaluations count</value>
   </data>
   <data name="Cartoonito" xml:space="preserve">
     <value>Cartoonito</value>
   </data>
   <data name="CartoonProject" xml:space="preserve">
-    <value>Cartoon Project</value>
+    <value>Cartoonito Project</value>
   </data>
   <data name="CartoonProjects" xml:space="preserve">
-    <value>Cartoon Projects</value>
+    <value>Cartoonito Projects</value>
   </data>
   <data name="CartoonProjectSubmitEndDate" xml:space="preserve">
-    <value>Cartoon project submission end date</value>
+    <value>Cartoonito project submission end date</value>
   </data>
   <data name="CartoonProjectSubmitStartDate" xml:space="preserve">
-    <value>Cartoon project submission start date</value>
+    <value>Cartoonito project submission start date</value>
   </data>
   <data name="CellPhone" xml:space="preserve">
     <value>Mobile</value>
@@ -728,6 +731,12 @@
   <data name="CreativeMotivation" xml:space="preserve">
     <value>Creative Motivation</value>
   </data>
+  <data name="Creator" xml:space="preserve">
+    <value>Creator</value>
+  </data>
+  <data name="Creators" xml:space="preserve">
+    <value>Creators</value>
+  </data>
   <data name="Curatorship" xml:space="preserve">
     <value>Curatorship</value>
     <comment>Curadoria</comment>
@@ -739,9 +748,6 @@
   <data name="Curriculum" xml:space="preserve">
     <value>Curriculum</value>
     <comment>Curriculum</comment>
-  </data>
-  <data name="D" xml:space="preserve">
-    <value />
   </data>
   <data name="Dashboard" xml:space="preserve">
     <value>Dashboard</value>
@@ -1683,9 +1689,6 @@
   </data>
   <data name="NoPlayerWasFound" xml:space="preserve">
     <value>No player has been found</value>
-  </data>
-  <data name="NoProjectRegistered" xml:space="preserve">
-    <value />
   </data>
   <data name="NoProjectWasFound" xml:space="preserve">
     <value>There are currently no projects available.</value>
@@ -2659,10 +2662,6 @@
     <value>Street</value>
     <comment>Logradouro</comment>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value>Quantidade máxima de bandas aprovadas</value>
-    <comment>Quantidade máxima de bandas aprovadas</comment>
-  </data>
   <data name="SubGenre" xml:space="preserve">
     <value>Subgenre</value>
   </data>
@@ -2714,6 +2713,9 @@
   <data name="TargetAudiences" xml:space="preserve">
     <value>Target audiences</value>
     <comment>Público-alvo/Faixa-etária</comment>
+  </data>
+  <data name="TeaserLink" xml:space="preserve">
+    <value>Teaser Link</value>
   </data>
   <data name="TeaserLinks" xml:space="preserve">
     <value>Teaser links</value>

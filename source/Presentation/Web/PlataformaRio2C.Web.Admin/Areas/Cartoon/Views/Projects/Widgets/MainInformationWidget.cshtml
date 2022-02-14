@@ -1,0 +1,163 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Entities
+@using PlataformaRio2C.Domain.Statics
+@using Constants = PlataformaRio2C.Domain.Constants;
+@model AttendeeCartoonProjectDto
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    var adminAccessControlDto = ViewBag.AdminAccessControlDto as AdminAccessControlDto;
+    var isCartoonCommission = adminAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.CommissionCartoon) == true;
+    var currentEvaluation = Model.GetAttendeeCartoonProjectEvaluationByUserId(adminAccessControlDto.User.Id);
+    var approvedAttendeeCartoonProjectsIds = ViewBag.ApprovedAttendeeCartoonProjectsIds as int[];
+    var isThisCartoonProjectApproved = (approvedAttendeeCartoonProjectsIds?.Contains(Model.AttendeeCartoonProject.Id) == true);
+    var collaboratorDto = Model.GetAttendeeCartoonProjectCollaboratorByEditionId(editionDto.Id);
+}
+<div class="kt-portlet__body">
+    <div class="kt-widget kt-widget--user-profile-3">
+        <div class="kt-widget__top">
+            <div style="float: right;">
+                <a href="@Url.Action("EvaluationDetails", "Projects", new {Area = "Cartoon", id = Model.AttendeeCartoonProject?.Id})" target="_blank">
+                    <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest" style="width: 110px; height: 110px;">
+                        <span>@(Model.CartoonProjectDto?.GetNameAbbreviation() ?? "-")</span>
+                    </div>
+                </a>
+            </div>
+            <div class="kt-widget__content">
+                <div class="kt-widget__head">
+                    <span class="kt-widget__username">
+                        @(Model.CartoonProjectDto.Title ?? "-")
+                    </span>
+                </div>
+                <div class="kt-widget__info col-md-12 mr-0 pr-0 pl-0">
+                    <div class="kt-widget__desc pl-0 col-md-6">
+                        <div class="kt-widget__desc">
+                            <div class="kt-widget__subhead pt-0">
+                                @(Model.CartoonProjectDto.Summary ?? "-")
+                            </div>
+                        </div>
+                        <div class="kt-widget__subhead pb-0">
+                            @Labels.Format:
+                            <span class="kt-badge kt-badge--inline kt-badge--info">
+                                @(Model.CartoonProjectDto.CartoonProjectFormatName ?? "-")
+                            </span>
+                        </div>
+                    </div>
+                    <div class="kt-widget__desc myrio2c-evaluation-position col-md-6 pr-0">
+                        <div class="kt-widget__text pull-right" data-id="EvaluationGradeMain">
+                            @if (editionDto?.IsCartoonProjectEvaluationStarted() != true)
+                            {
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="myrio2c-alert-box danger mx-auto text-center">
+                                            <span>@Messages.OutOfEvaluationPeriod</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else if (editionDto?.IsCartoonProjectEvaluationOpen() == true)
+                            {
+                                var hasCurrentEvaluation = currentEvaluation != null;
+                                if (hasCurrentEvaluation)
+                                {
+                                    <div class="view">
+                                        <form class="form-inline">
+                                            <div class="form-group">
+                                                <div class="myrio2c-evaluation-grade-box-lg form-control" data-toggle="tooltip" title="@Labels.ClickHereToEvaluateProject" onclick="MyRio2cCommon.enableFieldEdit({ dataId: 'EvaluationGradeMain' })" style="cursor: pointer;">
+                                                    <span class="grade-label mr-2">@Labels.Evaluation</span>
+                                                    <span class="grade-vote">@(currentEvaluation?.AttendeeCartoonProjectEvaluation?.Grade)</span>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                }
+                                <div class="edit @(hasCurrentEvaluation ? "d-none" : "")">
+                                    <form class="form-inline myrio2c-evaluation-grade-box-form justify-content-center">
+                                        <div class="form-group font-weight-bold ml-3 mr-3 mt-2 mb-2">@Labels.EvaluateProject</div>
+                                        <div class="form-group mt-2 mb-2 mr-3">
+                                            @Html.TextBox("AttendeeCartoonProjectEvaluationGradeMain", currentEvaluation?.AttendeeCartoonProjectEvaluation?.Grade, new { @class = "form-control text-center decimal-globalize-mask", placeholder = Labels.Grade, style = "width: 105px;" }) @*, @type = "number", @min = "1", @max = "10", @step = ".10"*@
+                                        </div>
+                                        <button type="button" class="btn btn-success mt-2 mb-2 mr-3" onclick="CartoonProjectsMainInformationWidget.submitEvaluationGrade('@Model.CartoonProjectDto.Id');">@Labels.Evaluate</button>
+                                        @if (hasCurrentEvaluation)
+                                        {
+                                            <button type="button" class="btn btn-secondary mt-2 mb-2 mr-2 pl-4" onclick="MyRio2cCommon.disableFieldEdit({ dataId: 'EvaluationGradeMain' })" data-toggle="tooltip" title="@(Labels.Cancel)">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        }
+                                    </form>
+                                </div>
+                            }
+                            else
+                            {
+                                <form class="form-inline">
+                                    <div class="form-group mb-2">
+                                        <div class="myrio2c-evaluation-grade-box-lg form-control">
+                                            <span class="grade-label mr-2">@Labels.Average</span>
+                                            <span class="grade-vote">@(Model.AttendeeCartoonProject?.Grade?.ToString() ?? "-")</span>
+                                        </div>
+                                    </div>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="kt-widget__bottom">
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.LogLines</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(Model.CartoonProjectDto?.LogLine?.Replace("\n", "<br/>") ?? "-"))</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.Summary</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span class="text-break">@(Html.Raw(Model.CartoonProjectDto?.Summary?.Replace("\n", "<br/>") ?? "-"))</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.CreativeMotivation</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span class="text-break">@(Html.Raw(Model.CartoonProjectDto?.Motivation?.Replace("\n", "<br/>") ?? "-"))</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.ProductionPlans</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(Model.CartoonProjectDto?.ProductionPlan?.Replace("\n", "<br/>") ?? "-"))</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-25">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.NumberOfEpisodes</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.CartoonProjectDto?.NumberOfEpisodes ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-25">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.EachEpisodePlayingTime</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.CartoonProjectDto?.EachEpisodePlayingTime ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-25">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.TotalValueOfProject</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.CartoonProjectDto?.TotalValueOfProject ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-50 w-xs-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.LinksForPromoTeaser</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.CartoonProjectDto.ProjectTeaserUrl ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-50 w-xs-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.BibleUrl</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.CartoonProjectDto?.ProjectBibleUrl ?? "-")</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

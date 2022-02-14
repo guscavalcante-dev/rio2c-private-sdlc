@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Domain
-// Author           : Renan Valentim
-// Created          : 01-29-2022
+// Author           : Rafael Franco
+// Created          : 02-08-2022
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 01-29-2022
+// Last Modified By : Rafael Franco
+// Last Modified On : 02-08-2022
 // ***********************************************************************
 // <copyright file="AttendeeCartoonProjectEvaluationDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,7 +21,8 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         public CartoonProject CartoonProject { get; set; }
         public AttendeeCartoonProject AttendeeCartoonProject { get; set; }
-        //public AttendeeCartoonProjectEvaluation AttendeeCartoonProjectEvaluation { get; set; }
+        
+        public AttendeeCartoonProjectEvaluation AttendeeCartoonProjectEvaluation { get; set; }
         public User EvaluatorUser { get; set; }
 
         /// <summary>

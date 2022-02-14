@@ -399,6 +399,9 @@
     <value>Sendo executado</value>
     <comment>Sendo executado</comment>
   </data>
+  <data name="BibleUrl" xml:space="preserve">
+    <value>Link para Bíblia do Projeto</value>
+  </data>
   <data name="BirthDate" xml:space="preserve">
     <value>Data de Nascimento</value>
     <comment>Data de Nascimento</comment>
@@ -478,16 +481,16 @@
     <value>Legenda:</value>
   </data>
   <data name="CartoonCommission" xml:space="preserve">
-    <value>Comissão de Cartoon</value>
+    <value>Comissão de Cartoonito</value>
   </data>
   <data name="CartoonCommissionEvaluationEndDate" xml:space="preserve">
-    <value>Data de término da avaliação de projeto de cartoon</value>
+    <value>Data de término da avaliação de projeto de cartoonito</value>
   </data>
   <data name="CartoonCommissionEvaluationStartDate" xml:space="preserve">
-    <value>Data de início da avaliação de projeto de cartoon</value>
+    <value>Data de início da avaliação de projeto de cartoonito</value>
   </data>
   <data name="CartoonCommissionMaximumApprovedProjectsCount" xml:space="preserve">
-    <value>Quantidade máxima de empresas aprovadas</value>
+    <value>Quantidade máxima de projetos aprovados</value>
   </data>
   <data name="CartoonCommissionMinimumEvaluationsCount" xml:space="preserve">
     <value>Quantidade mínima de votos para gerar média</value>
@@ -496,16 +499,16 @@
     <value>Cartoonito</value>
   </data>
   <data name="CartoonProject" xml:space="preserve">
-    <value>Projeto de Cartoon</value>
+    <value>Projeto de Cartoonito</value>
   </data>
   <data name="CartoonProjects" xml:space="preserve">
-    <value>Projetos de Cartoon</value>
+    <value>Projetos de Cartoonito</value>
   </data>
   <data name="CartoonProjectSubmitEndDate" xml:space="preserve">
-    <value>Data de término de envio de projeto de cartoon</value>
+    <value>Data de término de envio de projeto de cartoonito</value>
   </data>
   <data name="CartoonProjectSubmitStartDate" xml:space="preserve">
-    <value>Data de início de envio de projeto de cartoon</value>
+    <value>Data de início de envio de projeto de cartoonito</value>
   </data>
   <data name="CellPhone" xml:space="preserve">
     <value>Celular</value>
@@ -727,6 +730,12 @@
   </data>
   <data name="CreativeMotivation" xml:space="preserve">
     <value>Motivação Criativa</value>
+  </data>
+  <data name="Creator" xml:space="preserve">
+    <value>Criador</value>
+  </data>
+  <data name="Creators" xml:space="preserve">
+    <value>Criadores</value>
   </data>
   <data name="Curatorship" xml:space="preserve">
     <value>Curadoria</value>
@@ -2714,6 +2723,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="TargetAudiences" xml:space="preserve">
     <value>Público-alvo/Faixa-etária</value>
     <comment>Público-alvo/Faixa-etária</comment>
+  </data>
+  <data name="TeaserLink" xml:space="preserve">
+    <value>Link do teaser</value>
   </data>
   <data name="TeaserLinks" xml:space="preserve">
     <value>Links de teaser</value>

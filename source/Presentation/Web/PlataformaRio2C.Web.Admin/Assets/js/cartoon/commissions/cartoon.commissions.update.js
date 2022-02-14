@@ -72,7 +72,7 @@ var CartoonCommissionsUpdate = function () {
                 }
 
                 if (typeof (CartoonCommissionsEditionCountWidget) !== 'undefined') {
-	                cartoonCommissionsEditionCountWidget.init();
+	                CartoonCommissionsEditionCountWidget.init();
                 }
             },
             onError: function (data) {

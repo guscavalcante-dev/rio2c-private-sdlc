@@ -1,0 +1,65 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@using System.Linq;
+@model AttendeeCartoonProjectDto
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var currentEvaluation = Model.GetAttendeeCartoonProjectEvaluationByUserId(userAccessControlDto?.User?.Id ?? 0);
+    var approvedAttendeeCartoonProjectsIds = ViewBag.ApprovedAttendeeCartoonProjectsIds as int[];
+    var isThisCartoonProjectApproved = approvedAttendeeCartoonProjectsIds?.Contains(Model.AttendeeCartoonProject.Id) == true;
+}
+@if (editionDto?.IsCartoonProjectEvaluationOpen() == true)
+{
+    var hasCurrentEvaluation = currentEvaluation != null;
+    if (hasCurrentEvaluation)
+    {
+        <form class="form-inline justify-content-center">
+            <div class="form-group mb-2">
+                <div class="myrio2c-evaluation-grade-box-lg form-control">
+                    <span class="grade-label mr-2">@Labels.Evaluation</span>
+                    <span class="grade-vote">@(currentEvaluation?.AttendeeCartoonProjectEvaluation?.Grade ?? 0)</span>
+                </div>
+            </div>
+        </form>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-12 mb-2">
+                <div class="myrio2c-alert-box warning mx-auto text-center">
+                    <span>@Messages.NotEvaluated</span>
+                </div>
+            </div>
+        </div>
+    }
+}
+else if (editionDto?.IsCartoonProjectEvaluationEnded() == true)
+{
+    var icon = "fa-diagnoses";
+    var color = "warning";
+    var status = Labels.UnderEvaluation;
+
+    if (isThisCartoonProjectApproved)
+    {
+        icon = "fa-thumbs-up";
+        color = "success";
+        status = Labels.ProjectAccepted;
+    }
+    else
+    {
+        icon = "fa-thumbs-down";
+        color = "danger";
+        status = Labels.ProjectRefused;
+    }
+    <form class="form-inline justify-content-center">
+        <span class="btn btn-label-@(color) mb-2 mr-4">
+            <i class="fa @(icon) mr-1"></i> @status
+        </span>
+        <div class="form-group mb-2">
+            <div class="myrio2c-evaluation-grade-box-sm form-control">
+                <span class="grade-label mr-2">@Labels.Average</span>
+                <span class="grade-vote">@(Model.AttendeeCartoonProject?.Grade?.ToString() ?? "-")</span>
+            </div>
+        </div>
+    </form>
+}

@@ -195,19 +195,31 @@ namespace PlataformaRio2C.Infra.Data.Context
 
             // Cartoon
             modelBuilder.Configurations.Add(new CartoonProjectMap());
-            modelBuilder.Configurations.Add(new AttendeeCartoonProjectMap());
             modelBuilder.Configurations.Add(new CartoonProjectFormatMap());
             modelBuilder.Configurations.Add(new CartoonProjectCreatorMap());
             modelBuilder.Configurations.Add(new CartoonProjectOrganizationMap());
+            modelBuilder.Configurations.Add(new AttendeeCartoonProjectMap());
+            modelBuilder.Configurations.Add(new AttendeeCartoonProjectCollaboratorMap());
+            modelBuilder.Configurations.Add(new AttendeeCartoonProjectEvaluationMap());
 
             base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<UserRole> UsersRoles { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<AttendeeCollaborator> AttendeeCollaborators { get; set; }
+        public DbSet<AttendeeCollaborator> AttendeeCollaborators { get; set; }      
         public DbSet<AttendeeCollaboratorType> AttendeeCollaboratorTypes { get; set; }
         public DbSet<CollaboratorType> CollaboratorTypes { get; set; }
+
+        // Cartoon
+
+        public DbSet<CartoonProject> CartoonProjecs{ get; set; }
+        public DbSet<CartoonProjectFormat> CartoonProjectFormats { get; set; }
+        public DbSet<CartoonProjectCreator> CartoonProjectCreators { get; set; }
+        public DbSet<CartoonProjectOrganization> CartoonProjectOrganizations { get; set; }
+        public DbSet<AttendeeCartoonProject> AttendeeCartoonProjects { get; set; }
+        public DbSet<AttendeeCartoonProjectCollaborator> AttendeeCartoonProjectCollaborators { get; set; }
+        public DbSet<AttendeeCartoonProjectEvaluation> AttendeeCartoonProjectEvaluations { get; set; }
 
         // Edition
         public DbSet<Edition> Editions { get; set; }

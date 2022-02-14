@@ -41,6 +41,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeCollaboratorTicket> AttendeeCollaboratorTickets { get; private set; }
         public virtual ICollection<ConferenceParticipant> ConferenceParticipants { get; private set; }
         public virtual ICollection<AttendeeMusicBandCollaborator> AttendeeMusicBandCollaborators { get; private set; }
+        public virtual ICollection<AttendeeCartoonProjectCollaborator> AttendeeCartoonProjectCollaborators { get; private set; }
         public virtual ICollection<AttendeeInnovationOrganizationCollaborator> AttendeeInnovationOrganizationCollaborators { get; private set; }
         public virtual ICollection<Logistic> Logistics { get; private set; }
         public virtual ICollection<AttendeeCollaboratorInnovationOrganizationTrack> AttendeeCollaboratorInnovationOrganizationTracks { get; private set; }
@@ -1152,6 +1153,92 @@ namespace PlataformaRio2C.Domain.Entities
         public List<AttendeeMusicBand> GetAllAttendeMusicBands()
         {
             return this.AttendeeMusicBandCollaborators?.Select(ambc => ambc.AttendeeMusicBand)?.ToList();
+        }
+
+        #endregion
+
+        #region Attendee Cartoon Projects Collaborators
+
+        /// <summary>Synchronizes the attendee cartoon projects collaborators.</summary>
+        /// <param name="attendeeCartoonProjects">The attendee cartoon projects.</param>
+        /// <param name="shouldDeleteAttendeeCartoonsProject">if set to <c>true</c> [should delete attende cartoon projects].</param>
+        /// <param name="userId">The user identifier.</param>
+        public void SynchronizeAttendeeCartoonProjectsCollaborators(List<AttendeeCartoonProject> attendeeCartoonProjects, bool shouldDeleteAttendeeCartoonsProject, int userId)
+        {
+            if (this.AttendeeCartoonProjectCollaborators == null)
+            {
+                this.AttendeeCartoonProjectCollaborators = new List<AttendeeCartoonProjectCollaborator>();
+            }
+
+            if (shouldDeleteAttendeeCartoonsProject)
+            {
+                this.DeleteAttendeeCartoonProjectCollaborators(attendeeCartoonProjects, userId);
+            }
+
+            if (attendeeCartoonProjects?.Any() != true)
+            {
+                return;
+            }
+
+            // Create or update
+            foreach (var attendee in attendeeCartoonProjects)
+            {
+                var attendeeCollaboratorDb = this.AttendeeCartoonProjectCollaborators.FirstOrDefault(ambc => ambc.AttendeeCartoonProjectId == attendee.Id);
+                if (attendeeCollaboratorDb != null)
+                {
+                    attendeeCollaboratorDb.Update(userId);
+                }
+                else
+                {
+                    this.CreateAttendeeCartoonProjectCollaborator(attendee, userId);
+                }
+            }
+        }
+
+        /// <summary>Deletes the attendee music band collaborator.</summary>
+        /// <param name="musicBandUid">The music band uid.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void DeleteAttendeeCartoonProjectCollaborator(Guid musicBandUid, int userId)
+        {
+            var attendeeMusicBandCollaborator = this.FindAttendeeMusicBandCollaboratorByMusicBandUid(musicBandUid);
+            attendeeMusicBandCollaborator?.Delete(userId);
+        }
+
+        /// <summary>Deletes the attendee cartoon projects collaborators.</summary>
+        /// <param name="newAttendeeCartoonProjects">The new attendee cartoon projects.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteAttendeeCartoonProjectCollaborators(List<AttendeeCartoonProject> newAttendeeCartoonProjects, int userId)
+        {
+            var attendeCollaboratorToDelete = this.AttendeeCartoonProjectCollaborators.Where(ambc => !ambc.IsDeleted
+                                                                                                             && newAttendeeCartoonProjects?.Select(namb => namb.Id)?.Contains(ambc.AttendeeCartoonProjectId) == false)
+                                                                                                 .ToList();
+            foreach (var attendee in attendeCollaboratorToDelete)
+            {
+                attendee.Delete(userId);
+            }
+        }
+
+        /// <summary>Creates the attendee cartoon project collaborator.</summary>
+        /// <param name="attendeeCartoonProject">The attendee cartoon project.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void CreateAttendeeCartoonProjectCollaborator(AttendeeCartoonProject attendeeCartoonProject, int userId)
+        {
+            this.AttendeeCartoonProjectCollaborators.Add(new AttendeeCartoonProjectCollaborator(attendeeCartoonProject, this, userId));
+        }
+
+        /// <summary>Finds the attendee cartoon project collaborator by cartoon project uid.</summary>
+        /// <param name="uid">The music band uid.</param>
+        /// <returns></returns>
+        private AttendeeCartoonProjectCollaborator FindAttendeeCartoonProjectCollaboratorByCartoonProjectUid(Guid uid)
+        {
+            return this.AttendeeCartoonProjectCollaborators?.FirstOrDefault(ambc => ambc.AttendeeCartoonProject.CartoonProject.Uid == uid);
+        }
+
+        /// <summary>Gets all attende cartoon project.</summary>
+        /// <returns></returns>
+        public List<AttendeeCartoonProject> GetAllAttendeCartoonProjects()
+        {
+            return this.AttendeeCartoonProjectCollaborators?.Select(ambc => ambc.AttendeeCartoonProject)?.ToList();
         }
 
         #endregion

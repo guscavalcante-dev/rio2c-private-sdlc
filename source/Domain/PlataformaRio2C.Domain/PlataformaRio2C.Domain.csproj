@@ -129,8 +129,14 @@
     <Compile Include="Dtos\Cartoon\API\CartoonProjectCreatorApiDto.cs" />
     <Compile Include="Dtos\Cartoon\API\CartoonProjectApiDto.cs" />
     <Compile Include="Dtos\Cartoon\API\CartoonProjectFormatApiDto.cs" />
+    <Compile Include="Dtos\Cartoon\AttendeeCartoonProjectDto.cs" />
     <Compile Include="Dtos\Cartoon\AttendeeCollaboratorCartoonEvaluationsWidgetDto.cs" />
     <Compile Include="Dtos\Cartoon\AttendeeCartoonProjectEvaluationDto.cs" />
+    <Compile Include="Dtos\Cartoon\AttendeeInnovationOrganizationCollaboratorDto.cs" />
+    <Compile Include="Dtos\Cartoon\CartoonProjectOrganizationDto.cs" />
+    <Compile Include="Dtos\Cartoon\CartoonProjectCreatorDto.cs" />
+    <Compile Include="Dtos\Cartoon\CartoonProjectDto.cs" />
+    <Compile Include="Dtos\Cartoon\AttendeeCartoonProjectJsonDto.cs" />
     <Compile Include="Dtos\Innovation\API\InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto.cs" />
     <Compile Include="Dtos\Innovation\AttendeeCollaboratorInnovationEvaluationsWidgetDto.cs" />
     <Compile Include="Dtos\Innovation\AttendeeCollaboratorTracksWidgetDto.cs" />
@@ -319,6 +325,8 @@
     <Compile Include="Entities\Audiovisual\CommissionAttendeeCollaboratorInterest.cs" />
     <Compile Include="Entities\Base\AggregateRoot.cs" />
     <Compile Include="Entities\Cartoon\AttendeeCartoonProject.cs" />
+    <Compile Include="Entities\Cartoon\AttendeeCartoonProjectCollaborator.cs" />
+    <Compile Include="Entities\Cartoon\AttendeeCartoonProjectEvaluation.cs" />
     <Compile Include="Entities\Cartoon\CartoonProjectCreator.cs" />
     <Compile Include="Entities\Cartoon\CartoonProjectOrganization.cs" />
     <Compile Include="Entities\Cartoon\CartoonProject.cs" />

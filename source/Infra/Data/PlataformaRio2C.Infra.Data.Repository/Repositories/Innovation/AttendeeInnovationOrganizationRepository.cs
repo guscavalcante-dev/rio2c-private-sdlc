@@ -281,7 +281,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="innovationOrganizationTrackOptionUid">The innovation organization track option uid.</param>
-        /// <returns></returns>
+        /// <returns></returns> 
         private async Task<List<AttendeeInnovationOrganizationDto>> FindAllAttendeeInnovationOrganizationDtosAsync(
             int editionId,
             string searchKeywords,
@@ -490,18 +490,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var attendeeInnovaitonOrganizationJsonDtos = await this.FindAllJsonDtosAsync(editionId, searchKeywords, innovationOrganizationTrackOptionUids, sortColumns);
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
 
-            IEnumerable<AttendeeInnovationOrganizationJsonDto> attendeeInnovaitonOrganizationJsonDtosResult = attendeeInnovaitonOrganizationJsonDtos;
+            IEnumerable<AttendeeInnovationOrganizationJsonDto> attendeeInnovationOrganizationJsonDtosResult = attendeeInnovaitonOrganizationJsonDtos;
             if (editionDto.IsInnovationProjectEvaluationOpen())
             {
                 #region Evaluation is Open
 
                 if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
                 {
-                    attendeeInnovaitonOrganizationJsonDtosResult = new List<AttendeeInnovationOrganizationJsonDto>(); //Returns a empty list
+                    attendeeInnovationOrganizationJsonDtosResult = new List<AttendeeInnovationOrganizationJsonDto>(); //Returns a empty list
                 }
                 else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
                 {
-                    attendeeInnovaitonOrganizationJsonDtosResult = new List<AttendeeInnovationOrganizationJsonDto>(); //Returns a empty list
+                    attendeeInnovationOrganizationJsonDtosResult = new List<AttendeeInnovationOrganizationJsonDto>(); //Returns a empty list
                 }
 
                 #endregion
@@ -510,25 +510,25 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             {
                 #region Evaluation is Closed
 
-                var approvedMusicBandsIds = await this.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(editionId);
+                var approvedInnovationOrganizationsIds = await this.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(editionId);
 
                 if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
                 {
-                    attendeeInnovaitonOrganizationJsonDtosResult = attendeeInnovaitonOrganizationJsonDtos.Where(w => approvedMusicBandsIds.Contains(w.AttendeeInnovationOrganizationId));
+                    attendeeInnovationOrganizationJsonDtosResult = attendeeInnovaitonOrganizationJsonDtos.Where(w => approvedInnovationOrganizationsIds.Contains(w.AttendeeInnovationOrganizationId));
                 }
                 else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
                 {
-                    attendeeInnovaitonOrganizationJsonDtosResult = attendeeInnovaitonOrganizationJsonDtos.Where(w => !approvedMusicBandsIds.Contains(w.AttendeeInnovationOrganizationId));
+                    attendeeInnovationOrganizationJsonDtosResult = attendeeInnovaitonOrganizationJsonDtos.Where(w => !approvedInnovationOrganizationsIds.Contains(w.AttendeeInnovationOrganizationId));
                 }
                 else if (evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
                 {
-                    attendeeInnovaitonOrganizationJsonDtosResult = new List<AttendeeInnovationOrganizationJsonDto>();
+                    attendeeInnovationOrganizationJsonDtosResult = new List<AttendeeInnovationOrganizationJsonDto>();
                 }
 
                 #endregion
             }
 
-            return await attendeeInnovaitonOrganizationJsonDtosResult
+            return await attendeeInnovationOrganizationJsonDtosResult
                             .ToPagedListAsync(page, pageSize);
         }
 

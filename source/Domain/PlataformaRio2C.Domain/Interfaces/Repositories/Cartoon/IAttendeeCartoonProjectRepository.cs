@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 06-29-2021
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 08-28-2021
+// Last Modified By : Rafael Franco
+// Last Modified On : 02-08-2022
 // ***********************************************************************
 // <copyright file="IAttendeeCartoonProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -31,5 +31,16 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<List<AttendeeCartoonProject>> FindAllByEditionIdAsync(int editionId);
         Task<int[]> FindAllApprovedAttendeeCartoonProjectsIdsAsync(int editionId);
         Task<int> CountAsync(int editionId, bool showAllEditions = false);
+        Task<IPagedList<AttendeeCartoonProjectDto>> FindAllDtosPagedAsync(int editionId, string searchKeywords, List<Guid?> projectFormatUids, Guid? evaluationStatusUid, int page, int pageSize);
+        Task<IPagedList<AttendeeCartoonProjectJsonDto>> FindAllJsonDtosPagedAsync(int editionId, string searchKeywords, List<Guid?> projectFormatUids, Guid? evaluationStatusUid, int page, int pageSize, List<Tuple<string, string>> sortColumns);
+        Task<AttendeeCartoonProjectDto> FindDtoToEvaluateAsync(Guid attendeeCartoonProjectUid);
+        Task<AttendeeCartoonProjectDto> FindDtoToEvaluateAsync(int attendeeCartoonProjectId);
+        Task<int[]> FindAllCartoonProjectsIdsPagedAsync(int editionId, string searchKeywords, List<Guid?> projectFormatUids, Guid? evaluationStatusUid, int page, int pageSize);
+        Task<int> CountPagedAsync(int editionId, string searchKeywords, List<Guid?> projectFormatUids, Guid? evaluationStatusUid, int page, int pageSize);
+        Task<AttendeeCartoonProjectDto> FindMainInformationWidgetDtoAsync(Guid attendeeCartoonProjectUid);
+        Task<List<CartoonProjectCreatorDto>> FindCreatorsWidgetDtoAsync(Guid attendeeCartoonProjectUid);
+        Task<CartoonProjectOrganizationDto> FindOrganizationWidgetDtoAsync(Guid attendeeCartoonProjectUid);
+        Task<AttendeeCartoonProjectDto> FindEvaluatorsWidgetDtoAsync(Guid attendeeCartoonProjectUid);
+        Task<AttendeeCartoonProjectDto> FindEvaluationGradeWidgetDtoAsync(Guid attendeeCartoonProjectUid, int userId);
     }
 }

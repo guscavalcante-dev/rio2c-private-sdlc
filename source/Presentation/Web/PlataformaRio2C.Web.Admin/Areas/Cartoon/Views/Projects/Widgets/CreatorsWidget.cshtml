@@ -1,0 +1,55 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model List<CartoonProjectCreatorDto>
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">@Labels.Creators</h3>
+    </div>
+</div>
+<div class="kt-portlet__body pt-0">
+    <div class="kt-widget">
+        <div class="kt-widget__bottom">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="kt-widget4">
+                        @if (Model?.Any() == true)
+                        {
+                            <div class="col-12">
+                                <table class="table table-sm table-head-bg-brand table-body-scroll">
+                                    <thead class="thead-inverse">
+                                        <tr>
+                                            <th class="col-md-2">@Labels.Name</th>
+                                            <th class="col-md-2">@Labels.Email</th>
+                                            <th class="col-md-2">@Labels.CellPhone</th>
+                                            <th class="col-md-2">@Labels.PhoneNumber</th>
+                                            <th class="col-md-4">@Labels.MiniBio</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="rio2c-scroll" style="height: 180px;">
+                                        @foreach (var cartoonProjectCreatorDto in Model)
+                                        {
+                                            <tr>
+                                                <td class="col-md-2">@(cartoonProjectCreatorDto.FirstName ?? "-") @(cartoonProjectCreatorDto.LastName ?? "-")</td>
+                                                <td class="col-md-2">@(cartoonProjectCreatorDto.Email ?? "-")</td>
+                                                <td class="col-md-2">@(cartoonProjectCreatorDto.CellPhone ?? "-")</td>
+                                                <td class="col-md-2">@(cartoonProjectCreatorDto.PhoneNumber ?? "-")</td>
+                                                <td class="col-md-4">@(cartoonProjectCreatorDto.MiniBio ?? "-")</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="row mt-3">
+                                <div class="col-12 text-center">
+                                    <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Creators, Labels.FoundF)</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
