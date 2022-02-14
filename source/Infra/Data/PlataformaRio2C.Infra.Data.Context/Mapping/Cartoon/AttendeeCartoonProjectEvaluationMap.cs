@@ -23,7 +23,8 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         public AttendeeCartoonProjectEvaluationMap()
         {
             this.ToTable("AttendeeCartoonProjectEvaluations");
-            this.Property(x => x.AttendeeCartoonProjectId).HasColumnName("AttendeeCartoonProjectId");
+            //this.Property(x => x.AttendeeCartoonProjectId)
+            //    .HasColumnName("AttendeeCartoonProjectId");
 
             // Relationships
             this.HasRequired(t => t.AttendeeCartoonProject)

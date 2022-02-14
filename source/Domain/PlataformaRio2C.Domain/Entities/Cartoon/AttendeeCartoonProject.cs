@@ -34,7 +34,6 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual CartoonProject CartoonProject { get; private set; }
 
         public virtual ICollection<AttendeeCartoonProjectCollaborator> AttendeeCartoonProjectCollaborators { get; private set; }
-        public virtual ICollection<CartoonProjectCreator> CartoonProjectCreators { get; private set; }
         public virtual ICollection<AttendeeCartoonProjectEvaluation> AttendeeCartoonProjectEvaluations { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeCartoonProject"/> class.</summary>
