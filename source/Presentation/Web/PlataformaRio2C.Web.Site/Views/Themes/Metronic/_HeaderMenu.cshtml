@@ -9,6 +9,7 @@
     var audiovisualCollaboratorTypesCount = userAccessControlDto?.CountCollaboratorTypes(Constants.CollaboratorType.Audiovisuals);
     var musicCollaboratorTypesCount = userAccessControlDto?.CountCollaboratorTypes(Constants.CollaboratorType.Musics);
     var innovationCollaboratorTypesCount = userAccessControlDto?.CountCollaboratorTypes(Constants.CollaboratorType.Innovations);
+    var cartoonCollaboratorTypesCount = userAccessControlDto?.CountCollaboratorTypes(Constants.CollaboratorType.Cartoons);
 }
 <ul class="kt-menu__nav">
     <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "Index", "Home", null)" aria-haspopup="true">
@@ -177,6 +178,23 @@
         <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "Projects", "Innovation")" aria-haspopup="true">
             <a class="kt-menu__link" href="@projectsUrl">
                 <span class="kt-menu__link-text">@Labels.Innovation</span>
+            </a>
+        </li>
+    }
+    @if (cartoonCollaboratorTypesCount > 0)
+    {
+        var projectsUrl = Url.Action("Index", "Projects", new { Area = "" });
+        if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.CommissionCartoon) == true)
+        {
+            projectsUrl = Url.Action("EvaluationList", "Projects", new { Area = "Cartoon" });
+            if (editionDto?.IsCartoonProjectEvaluationStarted() != true)
+            {
+                projectsUrl = Url.Action("Index", "Projects", new { Area = "Cartoon" });
+            }
+        }
+        <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "Projects", "Cartoon")" aria-haspopup="true">
+            <a class="kt-menu__link" href="@projectsUrl">
+                <span class="kt-menu__link-text">@Labels.Cartoonito</span>
             </a>
         </li>
     }
