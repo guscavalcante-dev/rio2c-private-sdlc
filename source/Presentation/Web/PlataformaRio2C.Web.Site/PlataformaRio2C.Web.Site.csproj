@@ -826,14 +826,11 @@
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.commission.evaluation.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.interest.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.links.widget.js" />
-    <Content Include="Assets\js\cartoon\projects\cartoon.projects.businessinformation.widget.js" />
     <Content Include="Assets\js\cartoon\projects\cartoon.projects.evaluation.list.widget.js" />
     <Content Include="Assets\js\cartoon\projects\cartoon.projects.evaluation.widget.js" />
     <Content Include="Assets\js\cartoon\projects\cartoon.projects.evaluators.widget.js" />
-    <Content Include="Assets\js\cartoon\projects\cartoon.projects.experiences.widget.js" />
     <Content Include="Assets\js\cartoon\projects\cartoon.projects.maininformation.widget.js" />
-    <Content Include="Assets\js\cartoon\projects\cartoon.projects.objectives.widget.js" />
-    <Content Include="Assets\js\cartoon\projects\cartoon.projects.presentation.widget.js" />
+    <Content Include="Assets\js\cartoon\projects\cartoon.projects.organization.widget.js" />
     <Content Include="Assets\js\cartoon\projects\cartoon.projects.creators.widget.js" />
     <Content Include="Assets\js\companies\companies.executive.widget.js" />
     <Content Include="Assets\js\companies\companies.interest.widget.js" />
@@ -6927,6 +6924,7 @@
     <Content Include="Areas\Cartoon\Views\Projects\Widgets\EvaluationListItemWidget.cshtml" />
     <Content Include="Areas\Cartoon\Views\Projects\Widgets\EvaluationGradeWidget.cshtml" />
     <Content Include="Areas\Cartoon\Views\Projects\Widgets\CreatorsWidget.cshtml" />
+    <Content Include="Areas\Cartoon\Views\Projects\Widgets\OrganizationWidget.cshtml" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />

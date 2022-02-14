@@ -392,7 +392,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        #endregion 
+        #endregion
 
         #region Organization Widget
 
@@ -404,37 +404,25 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowOrganizationWidget(Guid? attendeeCartoonProjectUid)
         {
-            var mainInformationWidgetDto = await this.attendeeCartoonProjectRepo.FindOrganizationWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty);
-            if (mainInformationWidgetDto == null)
+            var cartoonProjectOrganizationDto = await this.attendeeCartoonProjectRepo.FindOrganizationWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty);
+            if (cartoonProjectOrganizationDto == null)
             {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Startup, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
-
-            #region AttendeeCollaborator and AttendeeInnovationOrganization Tracks validation
-
-           if (mainInformationWidgetDto == null)
-                {
-                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("EvaluationList", "Projects", new { Area = "Cartoon" });
-            }
-
-            #endregion
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/BusinessInformationWidget", mainInformationWidgetDto), divIdOrClass = "#ProjectBusinessInformationWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/OrganizationWidget", cartoonProjectOrganizationDto), divIdOrClass = "#ProjectOrganizationWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
 
-        //#endregion
-
-        //#region Evaluation Grade Widget 
+        #region Evaluation Grade Widget 
 
         /// <summary>
         /// Shows the evaluation grade widget.
@@ -528,7 +516,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
             });
         }
 
-        //#endregion
+        #endregion
 
         #region Evaluators Widget
 
@@ -559,137 +547,5 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
         }
 
         #endregion
-
-        //#region Founders Widget
-
-        ///// <summary>
-        ///// Shows the evaluators widget.
-        ///// </summary>
-        ///// <param name="attendeeInnovationOrganizationUid">The project uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowFoundersWidget(Guid? attendeeInnovationOrganizationUid)
-        //{
-        //    var attendeeInnovationOrganizationDto = await this.attendeeInnovationOrganizationRepo.FindFoundersWidgetDtoAsync(attendeeInnovationOrganizationUid ?? Guid.Empty);
-        //    if (attendeeInnovationOrganizationDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Startup, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
-
-        //    #region AttendeeCollaborator and AttendeeInnovationOrganization Tracks validation
-
-        //    var attendeeCollaboratorInnovationOrganizationTrackOptionsUids = await this.GetAttendeeCollaboratorInnovationOrganizationTrackOptionsUids();
-
-        //    if (attendeeInnovationOrganizationDto == null ||
-        //        attendeeInnovationOrganizationDto.AttendeeInnovationOrganizationTrackDtos.Any(aiotDto => attendeeCollaboratorInnovationOrganizationTrackOptionsUids.Contains(aiotDto.InnovationOrganizationTrackOption.Uid)) == false)
-        //    {
-        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("EvaluationList", "Projects", new { Area = "Innovation" });
-        //    }
-
-        //    #endregion
-
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/FoundersWidget", attendeeInnovationOrganizationDto), divIdOrClass = "#ProjectsFoundersWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
-
-        //#endregion
-
-        //#region Presentation Widget
-
-        ///// <summary>Shows the clipping widget.</summary>
-        ///// <param name="projectUid">The project uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowPresentationWidget(Guid? attendeeInnovationOrganizationUid)
-        //{
-        //    var presentationWidgetDto = await this.attendeeInnovationOrganizationRepo.FindPresentationWidgetDtoAsync(attendeeInnovationOrganizationUid ?? Guid.Empty);
-        //    if (presentationWidgetDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
-
-        //    #region AttendeeCollaborator and AttendeeInnovationOrganization Tracks validation
-
-        //    var attendeeCollaboratorInnovationOrganizationTrackOptionsUids = await this.GetAttendeeCollaboratorInnovationOrganizationTrackOptionsUids();
-
-        //    if (presentationWidgetDto == null ||
-        //        presentationWidgetDto.AttendeeInnovationOrganizationTrackDtos.Any(aiotDto => attendeeCollaboratorInnovationOrganizationTrackOptionsUids.Contains(aiotDto.InnovationOrganizationTrackOption.Uid)) == false)
-        //    {
-        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("EvaluationList", "Projects", new { Area = "Innovation" });
-        //    }
-
-        //    #endregion
-
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/PresentationWidget", presentationWidgetDto), divIdOrClass = "#ProjectsPresentationWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
-
-        //#endregion
-
-        ///// <summary>
-        ///// Gets the attendee collaborator innovation organization track options uids.
-        ///// </summary>
-        ///// <param name="innovationOrganizationTrackOptionUid">The innovation organization track option uid.</param>
-        ///// <returns></returns>
-        //private async Task<List<Guid?>> GetAttendeeCollaboratorInnovationOrganizationTrackOptionsUids()
-        //{
-        //    List<Guid?> innovationOrganizationTrackOptionUids = new List<Guid?>();
-
-        //    var userDto = await this.userRepo.FindUserDtoByUserIdAsync(this.UserAccessControlDto.User.Id);
-        //    var attendeeCollaborator = userDto.Collaborator?.GetAttendeeCollaboratorByEditionId(this.EditionDto.Edition.Id);
-        //    if (attendeeCollaborator != null)
-        //    {
-        //        var innovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllByAttendeeCollaboratorIdAsync(attendeeCollaborator.Id);
-        //        innovationOrganizationTrackOptionUids = innovationOrganizationTrackOptions.Select(ioto => ioto.Uid as Guid?).ToList();
-        //    }
-        //    else
-        //    {
-        //        //Admin dont have Collaborator/AttendeeCollaborator, so, list all InnovationOrganizationTrackOptions in Dropdown.
-        //        var innovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllAsync();
-        //        innovationOrganizationTrackOptionUids = innovationOrganizationTrackOptions.Select(ioto => ioto.Uid as Guid?).ToList();
-        //    }
-
-        //    return innovationOrganizationTrackOptionUids;
-        //}
-
-        ///// <summary>
-        ///// Gets the search innovation organization track option uids.
-        ///// </summary>
-        ///// <param name="innovationOrganizationTrackOptionUid">The InnovationOrganizationTrackOptionUid selected in dropdown filter</param>
-        ///// <returns></returns>
-        //private async Task<List<Guid?>> GetSearchInnovationOrganizationTrackOptionUids(Guid? innovationOrganizationTrackOptionUid)
-        //{
-        //    var attendeeCollaboratorInnovationOrganizationTrackOptionsUids = await this.GetAttendeeCollaboratorInnovationOrganizationTrackOptionsUids();
-
-        //    List<Guid?> innovationOrganizationTrackOptions = new List<Guid?>();
-        //    if (!innovationOrganizationTrackOptionUid.HasValue)
-        //    {
-        //        //Search by "AttendeeCollaboratorInnovationOrganizationTrackOptions" when have no "InnovationOrganizationTrackOptionUid" selected in dropdown filter
-        //        innovationOrganizationTrackOptions.AddRange(attendeeCollaboratorInnovationOrganizationTrackOptionsUids);
-        //    }
-        //    else
-        //    {
-        //        //Search by "InnovationOrganizationTrackOptionUid" selected in dropdown filter
-        //        innovationOrganizationTrackOptions.Add(innovationOrganizationTrackOptionUid);
-        //    }
-
-        //    return innovationOrganizationTrackOptions;
-        //}
-
-        //#endregion
     }
 }
