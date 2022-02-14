@@ -4,7 +4,7 @@
     var editionDto = ViewBag.EditionDto as EditionDto;
     ViewBag.Title = $"{Labels.Cartoonito} {Model.CartoonProject?.Title}";
     var totalCartoonProjectsCount = ViewBag.CartoonProjectsTotalCount as int?;
-    var currentCartoonProjectIndex = ViewBag.CurrentCartoonProjectIndex as int?;
+    var currentCartoonProjectIndex = ViewBag.CurrentProjectIndex as int?;
 
     var previousStepEvent = Url.Action("PreviousEvaluationDetails", "Projects", new
     {
