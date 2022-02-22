@@ -24,6 +24,12 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         {
             this.ToTable("AttendeeInnovationOrganizationFounders");
 
+            this.Property(t => t.Fullname)
+                .HasMaxLength(AttendeeInnovationOrganizationFounder.FullNameMaxLenght);
+
+            this.Property(t => t.Curriculum)
+                .HasMaxLength(AttendeeInnovationOrganizationFounder.CurriculumMaxLenght);
+
             // Relationships
             this.HasRequired(t => t.AttendeeInnovationOrganization)
                 .WithMany(aio => aio.AttendeeInnovationOrganizationFounders)
