@@ -24,6 +24,31 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         {
             this.ToTable("AttendeeInnovationOrganizations");
 
+            this.Property(t => t.BusinessDefinition)
+                .HasMaxLength(AttendeeInnovationOrganization.BusinessDefinitionMaxLenght);
+
+            this.Property(t => t.BusinessDifferentials)
+                .HasMaxLength(AttendeeInnovationOrganization.BusinessDifferentialsMaxLenght);
+
+            this.Property(t => t.BusinessEconomicModel)
+                .HasMaxLength(AttendeeInnovationOrganization.BusinessEconomicModelMaxLenght);
+
+            this.Property(t => t.BusinessFocus)
+                .HasMaxLength(AttendeeInnovationOrganization.BusinessFocusMaxLenght);
+
+            this.Property(t => t.BusinessOperationalModel)
+                .HasMaxLength(AttendeeInnovationOrganization.BusinessOperationalModelMaxLenght);
+
+            this.Property(t => t.BusinessStage)
+                .HasMaxLength(AttendeeInnovationOrganization.BusinessStageMaxLenght);
+
+            this.Property(t => t.MarketSize)
+                .HasMaxLength(AttendeeInnovationOrganization.MarketSizeMaxLenght);
+
+            this.Property(t => t.VideoUrl)
+                .HasMaxLength(AttendeeInnovationOrganization.VideoUrlMaxLenght);
+
+
             // Relationships
             this.HasRequired(t => t.Edition)
                 .WithMany()
