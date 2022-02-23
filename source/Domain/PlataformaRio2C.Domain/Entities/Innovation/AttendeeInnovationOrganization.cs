@@ -624,7 +624,6 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-
         #region Attendee Innovation Organization Sustainable Developemnt Objectives
 
         /// <summary>

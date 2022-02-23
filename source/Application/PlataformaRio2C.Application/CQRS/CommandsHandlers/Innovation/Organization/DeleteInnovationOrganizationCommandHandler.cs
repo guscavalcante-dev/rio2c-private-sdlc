@@ -4,9 +4,9 @@
 // Created          : 07-27-2021
 //
 // Last Modified By :  Renan Valentim
-// Last Modified On :  07-27-2021
+// Last Modified On :  02-23-2022
 // ***********************************************************************
-// <copyright file="DeleteAttendeeInnovationOrganizationCommandHandler.cs" company="Softo">
+// <copyright file="DeleteInnovationOrganizationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -20,18 +20,20 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>DeleteAttendeeInnovationOrganizationCommandHandler</summary>
-    public class DeleteAttendeeInnovationOrganizationCommandHandler : AttendeeInnovationOrganizationBaseCommandHandler, IRequestHandler<DeleteAttendeeInnovationOrganization, AppValidationResult>
+    /// <summary>DeleteInnovationOrganizationCommandHandler</summary>
+    public class DeleteInnovationOrganizationCommandHandler : InnovationOrganizationBaseCommandHandler, IRequestHandler<DeleteInnovationOrganization, AppValidationResult>
     {
-        /// <summary>Initializes a new instance of the <see cref="DeleteAttendeeInnovationOrganizationCommandHandler"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteInnovationOrganizationCommandHandler"/> class.
+        /// </summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
-        /// <param name="InnovationOrganizationRepository">The music project repository.</param>
-        public DeleteAttendeeInnovationOrganizationCommandHandler(
+        /// <param name="innovationOrganizationRepository">The innovation organization repository.</param>
+        public DeleteInnovationOrganizationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            IAttendeeInnovationOrganizationRepository attendeeInnovationOrganizationRepository)
-            : base(eventBus, uow, attendeeInnovationOrganizationRepository)
+            IInnovationOrganizationRepository innovationOrganizationRepository)
+            : base(eventBus, uow, innovationOrganizationRepository)
         {
         }
 
@@ -39,11 +41,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(DeleteAttendeeInnovationOrganization cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(DeleteInnovationOrganization cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
-            var attendeeInnovationOrganization = await this.GetAttendeeInnovationOrganizationByUid(cmd.AttendeeInnovationOrganizationUid);
+            var innovationOrganization = await this.GetInnovationOrganizationByUid(cmd.InnovationOrganizationUid);
 
             #region Initial validations
 
@@ -55,14 +57,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            attendeeInnovationOrganization.Delete(cmd.UserId);
-            if (!attendeeInnovationOrganization.IsValid())
+            innovationOrganization.Delete(cmd.UserId);
+            if (!innovationOrganization.IsValid())
             {
-                this.AppValidationResult.Add(attendeeInnovationOrganization.ValidationResult);
+                this.AppValidationResult.Add(innovationOrganization.ValidationResult);
                 return this.AppValidationResult;
             }
 
-            this.AttendeeInnovationOrganizationRepo.Update(attendeeInnovationOrganization);
+            this.InnovationOrganizationRepo.Update(innovationOrganization);
             this.Uow.SaveChanges();
 
             return this.AppValidationResult;

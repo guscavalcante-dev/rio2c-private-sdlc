@@ -4,7 +4,7 @@
 // Created          : 07-24-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-31-2021
+// Last Modified On : 02-23-2022
 // ***********************************************************************
 // <copyright file="innovation.projects.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -238,7 +238,7 @@ var InnovationProjectsDataTableWidget = function () {
                         html += '\          <button class="dropdown-item" onclick="InnovationProjectsDataTableWidget.showDetails(\'' + row.AttendeeInnovationOrganizationId + '\', \'' + searchKeywords + '\', \'' + innovationOrganizationTrackUid + '\', \'' + evaluationStatusUid + '\', \'' + initialPage + '\', \'' + initialPageSize + '\');">';
                         html += '\              <i class="la la-eye"></i>' + labels.view + '';
                         html += '\          </button>';
-                        html += '\          <button class="dropdown-item" onclick="InnovationProjectsDelete.showModal(\'' + row.AttendeeInnovationOrganizationUid + '\');">';
+                        html += '\          <button class="dropdown-item" onclick="InnovationProjectsDelete.showModal(\'' + row.InnovationOrganizationUid + '\');">';
                         html += '\              <i class="la la-remove"></i>' + labels.remove + '';
                         html += '\          </button>';
                         html += '\      </div>';

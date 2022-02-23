@@ -4,7 +4,7 @@
 // Created          : 07-24-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-24-2021
+// Last Modified On : 02-23-2022
 // ***********************************************************************
 // <copyright file="innovation.projects.delete.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,11 +15,11 @@
 var InnovationProjectsDelete = function () {
 
     // Delete -------------------------------------------------------------------------------------
-    var executeDelete = function (attendeeInnovationOrganizationUid) {
+    var executeDelete = function (innovationOrganizationUid) {
         MyRio2cCommon.block();
 
         var jsonParameters = new Object();
-        jsonParameters.attendeeInnovationOrganizationUid = attendeeInnovationOrganizationUid;
+        jsonParameters.innovationOrganizationUid = innovationOrganizationUid;
 
         $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Projects/Delete'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -50,7 +50,7 @@ var InnovationProjectsDelete = function () {
         });
     };
 
-    var showModal = function (attendeeInnovationOrganizationUid) {
+    var showModal = function (innovationOrganizationUid) {
         var message = labels.deleteConfirmationMessage;
 
         bootbox.dialog({
@@ -66,7 +66,7 @@ var InnovationProjectsDelete = function () {
                     label: labels.remove,
                     className: "btn btn-danger",
                     callback: function () {
-                        executeDelete(attendeeInnovationOrganizationUid);
+                        executeDelete(innovationOrganizationUid);
                     }
                 }
             }
@@ -74,8 +74,8 @@ var InnovationProjectsDelete = function () {
     };
 
     return {
-        showModal: function (attendeeInnovationOrganizationUid) {
-            showModal(attendeeInnovationOrganizationUid);
+        showModal: function (innovationOrganizationUid) {
+            showModal(innovationOrganizationUid);
         }
     };
 }();
