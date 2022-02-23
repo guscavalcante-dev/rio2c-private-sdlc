@@ -4,7 +4,7 @@
 // Created          : 06-29-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-07-2021
+// Last Modified On : 02-23-2022
 // ***********************************************************************
 // <copyright file="InnovationOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -322,6 +322,16 @@ namespace PlataformaRio2C.Domain.Entities
                edition,
                innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
                userId);
+        }
+
+        /// <summary>
+        /// Deletes the Innovation Organization.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        public new void Delete(int userId)
+        {
+            this.DeleteAttendeeInnovationOrganizations(userId);
+            base.Delete(userId);
         }
 
         /// <summary>Determines whether this instance has image.</summary>

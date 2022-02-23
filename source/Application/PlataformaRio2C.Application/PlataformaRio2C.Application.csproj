@@ -260,7 +260,7 @@
     <Compile Include="CQRS\CommandsHandlers\Innovation\Organization\BaseCommandHandlers\AttendeeInnovationOrganizationBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Innovation\Organization\BaseCommandHandlers\InnovationOrganizationBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Innovation\Organization\CreateInnovationOrganizationCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Innovation\Organization\DeleteAttendeeInnovationOrganizationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Innovation\Organization\DeleteInnovationOrganizationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Innovation\Organization\EvaluateInnovationOrganizationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\LogisticSponsors\DeleteLogisticSponsorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\LogisticSponsors\UpdateLogisticSponsorMainInformationCommandHandler.cs" />
@@ -412,7 +412,7 @@
     <Compile Include="CQRS\Commands\Innovation\Collaborators\UpdateInnovationCollaboratorSocialNetworks.cs" />
     <Compile Include="CQRS\Commands\Innovation\BaseCommands\InnovationOrganizationTrackOptionBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Innovation\Collaborators\CreateInnovationCollaborator.cs" />
-    <Compile Include="CQRS\Commands\Innovation\Organizations\DeleteAttendeeInnovationOrganization.cs" />
+    <Compile Include="CQRS\Commands\Innovation\Organizations\DeleteInnovationOrganization.cs" />
     <Compile Include="CQRS\Commands\Innovation\Organizations\EvaluateInnovationOrganization.cs" />
     <Compile Include="CQRS\Commands\Innovation\Organizations\UpdateInnovationOrganization.cs" />
     <Compile Include="CQRS\Commands\Innovation\Organizations\CreateInnovationOrganization.cs" />
