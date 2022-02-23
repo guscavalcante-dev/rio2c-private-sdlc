@@ -55,7 +55,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Edition = edition;
             this.Name = name?.Trim();
             this.StartDate = startDate.ToUtcTimeZone();
-            this.EndDate = endDate.ToEndDateTimeOffset();
+            this.EndDate = endDate.ToEndDateTime().ToUtcTimeZone();
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
@@ -80,7 +80,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.Name = name?.Trim();
             this.StartDate = startDate.ToUtcTimeZone();
-            this.EndDate = endDate.ToEndDateTimeOffset();
+            this.EndDate = endDate.ToEndDateTime().ToUtcTimeZone();
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
