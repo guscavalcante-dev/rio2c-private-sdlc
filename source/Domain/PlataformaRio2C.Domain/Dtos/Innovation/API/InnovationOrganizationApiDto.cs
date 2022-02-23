@@ -173,98 +173,101 @@ namespace PlataformaRio2C.Domain.Dtos
             return this.ValidationResult.IsValid;
         }
 
+        /// <summary>
+        /// Validates the fields required.
+        /// </summary>
         private void ValidateFieldsRequired()
         {
-            if(Name == null || Name?.Length == 0)
+            if (this.Name == null || this.Name?.Length == 0)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(Name)), new string[] { nameof(Name) }));
             }
 
-            if (Document == null || Document?.Length == 0)
+            if (this.Document == null || this.Document?.Length == 0)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(Document)), new string[] { nameof(Document) }));
             }
 
-            if (ServiceName == null || ServiceName?.Length == 0)
+            if (this.ServiceName == null || this.ServiceName?.Length == 0)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(ServiceName)), new string[] { nameof(ServiceName) }));
             }
 
-            if (ResponsibleName == null || ResponsibleName?.Length == 0)
+            if (this.ResponsibleName == null || this.ResponsibleName?.Length == 0)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(ResponsibleName)), new string[] { nameof(ResponsibleName) }));
             }
 
-            if (ResponsibleName == null || ResponsibleName?.Length == 0)
+            if (this.ResponsibleName == null || this.ResponsibleName?.Length == 0)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(ResponsibleName)), new string[] { nameof(ResponsibleName) }));
             }
 
-            if (Email == null || Email?.Length == 0)
+            if (this.Email == null || this.Email?.Length == 0)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(Email)), new string[] { nameof(Email) }));
             }
 
-            if (CellPhone == null || CellPhone?.Length == 0)
+            if (this.CellPhone == null || this.CellPhone?.Length == 0)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(CellPhone)), new string[] { nameof(CellPhone) }));
             }
 
-            if (AccumulatedRevenue <= 0)
+            if (this.AccumulatedRevenue <= 0)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(AccumulatedRevenue)), new string[] { nameof(AccumulatedRevenue) }));
             }
 
-            if (Description == null || Description?.Length == 0)
+            if (this.Description == null || this.Description?.Length == 0)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(Description)), new string[] { nameof(Description) }));
             }
 
-            if (ImageFile == null || ImageFile?.Length == 0)
+            if (this.ImageFile == null || this.ImageFile?.Length == 0)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(ImageFile)), new string[] { nameof(ImageFile) }));
             }
 
-            if (BusinessFocus == null || BusinessFocus?.Length == 0)
+            if (this.BusinessFocus == null || this.BusinessFocus?.Length == 0)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(BusinessFocus)), new string[] { nameof(BusinessFocus) }));
             }
 
-            if (MarketSize == null || MarketSize?.Length == 0)
+            if (this.MarketSize == null || this.MarketSize?.Length == 0)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(MarketSize)), new string[] { nameof(MarketSize) }));
             }
 
-            if (BusinessDifferentials == null || BusinessDifferentials?.Length == 0)
+            if (this.BusinessDifferentials == null || this.BusinessDifferentials?.Length == 0)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(BusinessDifferentials)), new string[] { nameof(BusinessDifferentials) }));
             }
 
-            if (BusinessStage == null || BusinessStage?.Length == 0)
+            if (this.BusinessStage == null || this.BusinessStage?.Length == 0)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(BusinessStage)), new string[] { nameof(BusinessStage) }));
             }
 
-            if (PresentationFile == null || PresentationFile?.Length == 0)
+            if (this.PresentationFile == null || this.PresentationFile?.Length == 0)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(PresentationFile)), new string[] { nameof(PresentationFile) }));
             }
 
-            if (this.AttendeeInnovationOrganizationFounderApiDtos.Count == 0)
+            if (this.AttendeeInnovationOrganizationFounderApiDtos?.Count == 0)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, "founders"), new string[] { "founders" }));
             }
 
-            if (this.AttendeeInnovationOrganizationCompetitorApiDtos.Count == 0)
+            if (this.AttendeeInnovationOrganizationCompetitorApiDtos?.Count == 0)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, "competingCompanies"), new string[] { "competingCompanies" }));
             }
 
-            if (this.AttendeeInnovationOrganizationFounderApiDtos.Count > 0)
+            if (this.AttendeeInnovationOrganizationFounderApiDtos?.Count > 0)
             {
                 foreach (var founder in this.AttendeeInnovationOrganizationFounderApiDtos)
                 {
-                    if(founder.Curriculum == null || founder.Curriculum?.Length == 0)
+                    if (founder.Curriculum == null || founder.Curriculum?.Length == 0)
                     {
                         this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(founder.Curriculum)), new string[] { nameof(founder.Curriculum) }));
                     }
@@ -278,7 +281,7 @@ namespace PlataformaRio2C.Domain.Dtos
                     {
                         this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(founder.WorkDedicationUid)), new string[] { nameof(founder.WorkDedicationUid) }));
                     }
-                }              
+                }
             }
         }
 
