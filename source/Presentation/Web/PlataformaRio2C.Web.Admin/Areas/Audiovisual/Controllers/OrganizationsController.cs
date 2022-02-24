@@ -866,26 +866,12 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowExecutivesWidget(Guid? organizationUid, Guid? organizationTypeUid)
         {
-            //We may have to review this rule, but for now it has been defined that we will list the collaborators according to the rules below.
-            Guid? collaboratorTypeUid = null;
-            if (organizationTypeUid == OrganizationType.Player.Uid)
-            {
-                //When OrganizationType = Player, must list only collaborators wiwh CollaboratorType = AudiovisualPlayerExecutive on Widget
-                collaboratorTypeUid = CollaboratorType.AudiovisualPlayerExecutive.Uid;
-            }
-            else if (organizationTypeUid == OrganizationType.Producer.Uid)
-            {
-                //When OrganizationType = Producer, must list only collaborators wiwh CollaboratorType = Industry on Widget
-                collaboratorTypeUid = CollaboratorType.Industry.Uid;
-            }
-
             ViewBag.OrganizationTypeUid = organizationTypeUid;
             ViewBag.CollaboratorTypeForDropdownSearch = organizationTypeUid == OrganizationType.Player.Uid ? "PlayersExecutives" : "ProducersExecutives";
 
             var executiveWidgetDto = await this.attendeeOrganizationRepo.FindAdminExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(
                 organizationUid ?? Guid.Empty,
                 organizationTypeUid ?? Guid.Empty,
-                collaboratorTypeUid ?? Guid.Empty,
                 this.EditionDto.Id);
             if (executiveWidgetDto == null)
             {

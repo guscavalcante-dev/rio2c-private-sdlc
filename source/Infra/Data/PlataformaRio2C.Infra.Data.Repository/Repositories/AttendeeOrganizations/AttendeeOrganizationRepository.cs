@@ -702,7 +702,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<AttendeeOrganizationExecutiveWidgetDto> FindAdminExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, Guid organizationTypeUid, Guid collaboratorTypeUid, int editionId)
+        public async Task<AttendeeOrganizationExecutiveWidgetDto> FindAdminExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, Guid organizationTypeUid, int editionId)
         {
             var query = this.GetBaseQuery(true)
                                 .FindByOrganizationUid(organizationUid)
@@ -720,8 +720,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                     .Where(aoc => !aoc.IsDeleted
                                                                                     && aoc.AttendeeCollaborator.Edition.Id == editionId
                                                                                     && !aoc.AttendeeCollaborator.IsDeleted
-                                                                                    && !aoc.AttendeeCollaborator.Collaborator.IsDeleted
-                                                                                    && aoc.AttendeeCollaborator.AttendeeCollaboratorTypes.Any(act => act.CollaboratorType.Uid == collaboratorTypeUid))
+                                                                                    && !aoc.AttendeeCollaborator.Collaborator.IsDeleted)
                                                                     .Select(aoc => new AttendeeCollaboratorDto
                                                                     {
                                                                         AttendeeCollaborator = aoc.AttendeeCollaborator,
