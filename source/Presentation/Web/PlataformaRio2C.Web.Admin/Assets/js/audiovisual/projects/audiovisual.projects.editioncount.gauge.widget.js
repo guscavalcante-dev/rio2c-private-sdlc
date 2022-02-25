@@ -120,7 +120,7 @@ var AudiovisualProjectsEditionCountGaugeWidget = function () {
             label.y = am4core.percent(100);
             label.horizontalCenter = "middle";
             label.verticalCenter = "bottom";
-            label.text = "0";
+            label.text = chartData;
             label.id = totalCountLabelId;
 
             //Only trigger animation when the chartData is greather than charMinValue. Otherwise, visual bug occurs.
