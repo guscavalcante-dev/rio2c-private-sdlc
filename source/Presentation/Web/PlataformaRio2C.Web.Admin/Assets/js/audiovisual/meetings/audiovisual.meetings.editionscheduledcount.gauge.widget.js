@@ -199,7 +199,7 @@ var AudiovisualMeetingsEditionScheduledCountGaugeWidget = function () {
             label.y = am4core.percent(100);
             label.horizontalCenter = "middle";
             label.verticalCenter = "bottom";
-            label.text = "0";
+            label.text = chartData;
             label.fill = matchingGrade == null ? am4core.color("#000") : am4core.color(matchingGrade.color);
             label.id = totalCountLabelId;
 
