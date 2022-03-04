@@ -175,7 +175,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         public async Task<ActionResult> ShowTotalCountWidget()
         {
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
-                CollaboratorType.AudiovisualPlayerExecutive.Name,
+                CollaboratorType.Industry.Name,
                 OrganizationType.Producer.Name,
                 true, 
                 this.EditionDto.Id);
@@ -199,7 +199,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         public async Task<ActionResult> ShowEditionCountWidget()
         {
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
-                CollaboratorType.AudiovisualPlayerExecutive.Name,
+                CollaboratorType.Industry.Name,
                 OrganizationType.Producer.Name,
                 false, 
                 this.EditionDto.Id);
