@@ -4,7 +4,7 @@
 // Created          : 07-12-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-12-2021
+// Last Modified On : 03-04-2022
 // ***********************************************************************
 // <copyright file="AttendeeInnovationOrganizationTrack.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -54,9 +54,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.AttendeeInnovationOrganizationId = attendeeInnovationOrganization?.Id ?? 0;
             this.InnovationOrganizationTrackOptionId = innovationOrganizationTrackOption?.Id ?? 0;
 
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
+            this.SetCreateDate(userId);
         }
 
         /// <summary>
@@ -85,6 +83,29 @@ namespace PlataformaRio2C.Domain.Entities
         public AttendeeInnovationOrganizationTrack()
         {
 
+        }
+
+        /// <summary>
+        /// Updates the specified attendee innovation organization.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganization">The attendee innovation organization.</param>
+        /// <param name="innovationOrganizationTrackOption">The innovation organization track option.</param>
+        /// <param name="additionalInfo">The additional information.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(
+            AttendeeInnovationOrganization attendeeInnovationOrganization,
+            InnovationOrganizationTrackOption innovationOrganizationTrackOption,
+            string additionalInfo,
+            int userId)
+        {
+            this.AttendeeInnovationOrganization = attendeeInnovationOrganization;
+            this.InnovationOrganizationTrackOption = innovationOrganizationTrackOption;
+            this.AdditionalInfo = additionalInfo;
+
+            this.AttendeeInnovationOrganizationId = attendeeInnovationOrganization?.Id ?? 0;
+            this.InnovationOrganizationTrackOptionId = innovationOrganizationTrackOption?.Id ?? 0;
+
+            this.SetUpdateDate(userId);
         }
 
         #region Valitations

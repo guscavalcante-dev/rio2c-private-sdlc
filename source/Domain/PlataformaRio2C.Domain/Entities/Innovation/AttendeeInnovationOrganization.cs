@@ -4,7 +4,7 @@
 // Created          : 06-29-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-16-2021
+// Last Modified On : 03-04-2022
 // ***********************************************************************
 // <copyright file="AttendeeInnovationOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -302,10 +302,17 @@ namespace PlataformaRio2C.Domain.Entities
                 this.AttendeeInnovationOrganizationCollaborators = new List<AttendeeInnovationOrganizationCollaborator>();
             }
 
-            this.AttendeeInnovationOrganizationCollaborators.Add(new AttendeeInnovationOrganizationCollaborator(this, attendeeCollaborator, userId));
+            var attendeeInnovationOrganizationCollaboratorDb = this.AttendeeInnovationOrganizationCollaborators.FirstOrDefault(aoc => aoc.AttendeeCollaboratorId == attendeeCollaborator.Id);
+            if (attendeeInnovationOrganizationCollaboratorDb != null)
+            {
+                attendeeInnovationOrganizationCollaboratorDb.Update(userId);
+            }
+            else
+            {
+                this.AttendeeInnovationOrganizationCollaborators.Add(new AttendeeInnovationOrganizationCollaborator(this, attendeeCollaborator, userId));
+            }
 
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            this.SetUpdateDate(userId);
         }
 
         /// <summary>
@@ -347,10 +354,17 @@ namespace PlataformaRio2C.Domain.Entities
                 this.AttendeeInnovationOrganizationFounders = new List<AttendeeInnovationOrganizationFounder>();
             }
 
-            this.AttendeeInnovationOrganizationFounders.Add(new AttendeeInnovationOrganizationFounder(this, workDedication, fullName, curriculum, userId));
+            var attendeeInnovationOrganizationFounderDb = this.AttendeeInnovationOrganizationFounders.FirstOrDefault(aoc => aoc.Fullname == fullName);
+            if (attendeeInnovationOrganizationFounderDb != null)
+            {
+                attendeeInnovationOrganizationFounderDb.Update(this, workDedication, fullName, curriculum, userId);
+            }
+            else
+            {
+                this.AttendeeInnovationOrganizationFounders.Add(new AttendeeInnovationOrganizationFounder(this, workDedication, fullName, curriculum, userId));
+            }
 
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            this.SetUpdateDate(userId);
         }
 
         /// <summary>
@@ -374,7 +388,6 @@ namespace PlataformaRio2C.Domain.Entities
             return this.AttendeeInnovationOrganizationFounders?.Where(aoc => !aoc.IsDeleted)?.ToList();
         }
 
-
         #endregion
 
         #region Attendee Innovation Organization Competitor
@@ -391,10 +404,17 @@ namespace PlataformaRio2C.Domain.Entities
                 this.AttendeeInnovationOrganizationCompetitors = new List<AttendeeInnovationOrganizationCompetitor>();
             }
 
-            this.AttendeeInnovationOrganizationCompetitors.Add(new AttendeeInnovationOrganizationCompetitor(this, name, userId));
+            var attendeeInnovationOrganizationCompetitorDb = this.AttendeeInnovationOrganizationCompetitors.FirstOrDefault(aoc => aoc.Name == name);
+            if (attendeeInnovationOrganizationCompetitorDb != null)
+            {
+                attendeeInnovationOrganizationCompetitorDb.Update(this, name, userId);
+            }
+            else
+            {
+                this.AttendeeInnovationOrganizationCompetitors.Add(new AttendeeInnovationOrganizationCompetitor(this, name, userId));
+            }
 
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            this.SetUpdateDate(userId);
         }
 
         /// <summary>
@@ -438,14 +458,25 @@ namespace PlataformaRio2C.Domain.Entities
                 this.AttendeeInnovationOrganizationExperiences = new List<AttendeeInnovationOrganizationExperience>();
             }
 
-            this.AttendeeInnovationOrganizationExperiences.Add(new AttendeeInnovationOrganizationExperience(
-                this,
-                innovationOrganizationExperienceOption,
-                additionalInfo,
-                userId));
+            var attendeeInnovationOrganizationExperienceDb = this.AttendeeInnovationOrganizationExperiences.FirstOrDefault(aoc => aoc.Uid == innovationOrganizationExperienceOption.Uid);
+            if (attendeeInnovationOrganizationExperienceDb != null)
+            {
+                attendeeInnovationOrganizationExperienceDb.Update(
+                    this,
+                    innovationOrganizationExperienceOption,
+                    additionalInfo,
+                    userId);
+            }
+            else
+            {
+                this.AttendeeInnovationOrganizationExperiences.Add(new AttendeeInnovationOrganizationExperience(
+                    this,
+                    innovationOrganizationExperienceOption,
+                    additionalInfo,
+                    userId));
+            }
 
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            this.SetUpdateDate(userId);
         }
 
         /// <summary>
@@ -489,14 +520,25 @@ namespace PlataformaRio2C.Domain.Entities
                 this.AttendeeInnovationOrganizationObjectives = new List<AttendeeInnovationOrganizationObjective>();
             }
 
-            this.AttendeeInnovationOrganizationObjectives.Add(new AttendeeInnovationOrganizationObjective(
-                this,
-                innovationOrganizationObjectivesOption,
-                additionalInfo,
-                userId));
+            var attendeeInnovationOrganizationObjectiveDb = this.AttendeeInnovationOrganizationObjectives.FirstOrDefault(aoc => aoc.Uid == innovationOrganizationObjectivesOption.Uid);
+            if (attendeeInnovationOrganizationObjectiveDb != null)
+            {
+                attendeeInnovationOrganizationObjectiveDb.Update(
+                    this,
+                    innovationOrganizationObjectivesOption,
+                    additionalInfo,
+                    userId);
+            }
+            else
+            {
+                this.AttendeeInnovationOrganizationObjectives.Add(new AttendeeInnovationOrganizationObjective(
+                    this,
+                    innovationOrganizationObjectivesOption,
+                    additionalInfo,
+                    userId));
+            }
 
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            this.SetUpdateDate(userId);
         }
 
         /// <summary>
@@ -540,14 +582,25 @@ namespace PlataformaRio2C.Domain.Entities
                 this.AttendeeInnovationOrganizationTechnologies = new List<AttendeeInnovationOrganizationTechnology>();
             }
 
-            this.AttendeeInnovationOrganizationTechnologies.Add(new AttendeeInnovationOrganizationTechnology(
-                this,
-                innovationOrganizationTechnologyOption,
-                additionalInfo,
-                userId));
+            var attendeeInnovationOrganizationTechnologyDb = this.AttendeeInnovationOrganizationTechnologies.FirstOrDefault(aoc => aoc.Uid == innovationOrganizationTechnologyOption.Uid);
+            if (attendeeInnovationOrganizationTechnologyDb != null)
+            {
+                attendeeInnovationOrganizationTechnologyDb.Update(
+                    this,
+                    innovationOrganizationTechnologyOption,
+                    additionalInfo,
+                    userId);
+            }
+            else
+            {
+                this.AttendeeInnovationOrganizationTechnologies.Add(new AttendeeInnovationOrganizationTechnology(
+                    this,
+                    innovationOrganizationTechnologyOption,
+                    additionalInfo,
+                    userId));
+            }
 
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            this.SetUpdateDate(userId);
         }
 
         /// <summary>
@@ -591,14 +644,25 @@ namespace PlataformaRio2C.Domain.Entities
                 this.AttendeeInnovationOrganizationTracks = new List<AttendeeInnovationOrganizationTrack>();
             }
 
-            this.AttendeeInnovationOrganizationTracks.Add(new AttendeeInnovationOrganizationTrack(
-                this,
-                innovationOrganizationTrackOption,
-                additionalInfo,
-                userId));
+            var attendeeInnovationOrganizationTrackDb = this.AttendeeInnovationOrganizationTracks.FirstOrDefault(aoc => aoc.Uid == innovationOrganizationTrackOption.Uid);
+            if (attendeeInnovationOrganizationTrackDb != null)
+            {
+                attendeeInnovationOrganizationTrackDb.Update(
+                    this,
+                    innovationOrganizationTrackOption,
+                    additionalInfo,
+                    userId);
+            }
+            else
+            {
+                this.AttendeeInnovationOrganizationTracks.Add(new AttendeeInnovationOrganizationTrack(
+                    this,
+                    innovationOrganizationTrackOption,
+                    additionalInfo,
+                    userId));
+            }
 
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            this.SetUpdateDate(userId);
         }
 
         /// <summary>
@@ -642,12 +706,25 @@ namespace PlataformaRio2C.Domain.Entities
                 this.AttendeeInnovationOrganizationSustainableDevelopmentObjective = new List<AttendeeInnovationOrganizationSustainableDevelopmentObjective>();
             }
 
-            this.AttendeeInnovationOrganizationSustainableDevelopmentObjective.Add(new AttendeeInnovationOrganizationSustainableDevelopmentObjective(
-                this,
-                innovationOrganizationSustainableDevelopmentObjectivesOption,
-                additionalInfo,
-                userId));
-            base.SetUpdateDate(userId);
+            var attendeeInnovationOrganizationSustainableDevelopmentObjectiveDb = this.AttendeeInnovationOrganizationSustainableDevelopmentObjective.FirstOrDefault(aoc => aoc.Uid == innovationOrganizationSustainableDevelopmentObjectivesOption.Uid);
+            if (attendeeInnovationOrganizationSustainableDevelopmentObjectiveDb != null)
+            {
+                attendeeInnovationOrganizationSustainableDevelopmentObjectiveDb.Update(
+                    this,
+                    innovationOrganizationSustainableDevelopmentObjectivesOption,
+                    additionalInfo,
+                    userId);
+            }
+            else
+            {
+                this.AttendeeInnovationOrganizationSustainableDevelopmentObjective.Add(new AttendeeInnovationOrganizationSustainableDevelopmentObjective(
+                    this,
+                    innovationOrganizationSustainableDevelopmentObjectivesOption,
+                    additionalInfo,
+                    userId));
+            }
+
+            this.SetUpdateDate(userId);
         }
 
         /// <summary>

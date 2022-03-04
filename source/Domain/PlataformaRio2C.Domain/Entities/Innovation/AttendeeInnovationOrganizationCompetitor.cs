@@ -4,7 +4,7 @@
 // Created          : 07-12-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-12-2021
+// Last Modified On : 03-04-2022
 // ***********************************************************************
 // <copyright file="AttendeeInnovationOrganizationCompetitor.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -49,9 +49,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.AttendeeInnovationOrganization = attendeeInnovationOrganization;
             this.Name = name;
 
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
+            this.SetCreateDate(userId);
         }
 
         /// <summary>
@@ -60,6 +58,23 @@ namespace PlataformaRio2C.Domain.Entities
         public AttendeeInnovationOrganizationCompetitor()
         {
 
+        }
+
+        /// <summary>
+        /// Updates the specified attendee innovation organization.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganization">The attendee innovation organization.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(
+            AttendeeInnovationOrganization attendeeInnovationOrganization,
+            string name,
+            int userId)
+        {
+            this.AttendeeInnovationOrganization = attendeeInnovationOrganization;
+            this.Name = name;
+
+            this.SetUpdateDate(userId);
         }
 
         #region Valitations
