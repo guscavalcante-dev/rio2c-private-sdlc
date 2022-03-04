@@ -4,7 +4,7 @@
 // Created          : 07-12-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-12-2021
+// Last Modified On : 03-04-2022
 // ***********************************************************************
 // <copyright file="AttendeeInnovationOrganizationTechnology.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,7 +35,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual InnovationOrganizationTechnologyOption InnovationOrganizationTechnologyOption { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationTechnology"/> class.
+        /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationTechnology" /> class.
         /// </summary>
         /// <param name="attendeeInnovationOrganization">The attendee innovation organization.</param>
         /// <param name="innovationOrganizationTechnologyOption">The innovation organization technology option.</param>
@@ -51,9 +51,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.InnovationOrganizationTechnologyOption = innovationOrganizationTechnologyOption;
             this.AdditionalInfo = additionalInfo;
 
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
+            this.SetCreateDate(userId);
         }
 
         /// <summary>
@@ -62,6 +60,26 @@ namespace PlataformaRio2C.Domain.Entities
         public AttendeeInnovationOrganizationTechnology()
         {
 
+        }
+
+        /// <summary>
+        /// Updates the specified attendee innovation organization.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganization">The attendee innovation organization.</param>
+        /// <param name="innovationOrganizationTechnologyOption">The innovation organization technology option.</param>
+        /// <param name="additionalInfo">The additional information.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(
+            AttendeeInnovationOrganization attendeeInnovationOrganization,
+            InnovationOrganizationTechnologyOption innovationOrganizationTechnologyOption,
+            string additionalInfo,
+            int userId)
+        {
+            this.AttendeeInnovationOrganization = attendeeInnovationOrganization;
+            this.InnovationOrganizationTechnologyOption = innovationOrganizationTechnologyOption;
+            this.AdditionalInfo = additionalInfo;
+
+            this.SetUpdateDate(userId);
         }
 
         #region Valitations

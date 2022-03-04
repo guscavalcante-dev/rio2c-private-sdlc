@@ -4,7 +4,7 @@
 // Created          : 07-12-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-12-2021
+// Last Modified On : 03-04-2022
 // ***********************************************************************
 // <copyright file="AttendeeInnovationOrganizationExperience.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -51,9 +51,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.InnovationOrganizationExperienceOption = innovationOrganizationExperienceOption;
             this.AdditionalInfo = additionalInfo;
 
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
+            this.SetCreateDate(userId);
         }
 
         /// <summary>
@@ -62,6 +60,25 @@ namespace PlataformaRio2C.Domain.Entities
         public AttendeeInnovationOrganizationExperience()
         {
 
+        }
+
+        /// <summary>
+        /// Updates the specified attendee innovation organization.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganization">The attendee innovation organization.</param>
+        /// <param name="innovationOrganizationExperienceOption">The innovation organization experience option.</param>
+        /// <param name="additionalInfo">The additional information.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(AttendeeInnovationOrganization attendeeInnovationOrganization,
+            InnovationOrganizationExperienceOption innovationOrganizationExperienceOption,
+            string additionalInfo,
+            int userId)
+        {
+            this.AttendeeInnovationOrganization = attendeeInnovationOrganization;
+            this.InnovationOrganizationExperienceOption = innovationOrganizationExperienceOption;
+            this.AdditionalInfo = additionalInfo;
+
+            this.SetUpdateDate(userId);
         }
 
         #region Valitations

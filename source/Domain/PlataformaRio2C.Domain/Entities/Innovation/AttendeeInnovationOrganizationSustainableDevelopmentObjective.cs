@@ -3,8 +3,8 @@
 // Author           : Rafael Franco
 // Created          : 12-01-2022
 //
-// Last Modified By : Rafael Franco
-// Last Modified On : 12-01-2022
+// Last Modified By : Renan Valentim
+// Last Modified On : 03-04-2022
 // ***********************************************************************
 // <copyright file="AttendeeInnovationOrganizationSustainableDevelopmentObjective.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -49,35 +49,37 @@ namespace PlataformaRio2C.Domain.Entities
             this.AdditionalInfo = additionalInfo;
 
             this.AttendeeInnovationOrganizationId = attendeeInnovationOrganization?.Id ?? 0;
-            //this.InnovationOrganizationSustainableDevelopmentObjectiveOptionId = innovationOrganizationSustainableDevelopmentObjectiveOption?.Id ?? 0;
 
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationSustainableDevelopmentObjective"/> class.
-        /// </summary>
-        /// <param name="innovationOrganizationSustainableDevelopmentObjectivesOption">The innovation organization sustainable development objective option.</param>
-        /// <param name="additionalInfo">The additional information.</param>
-        /// <param name="userId">The user identifier.</param>
-        public AttendeeInnovationOrganizationSustainableDevelopmentObjective(
-            InnovationOrganizationSustainableDevelopmentObjectivesOption innovationOrganizationSustainableDevelopmentObjectiveOption,
-            string additionalInfo,
-            int userId)
-        {
-            this.InnovationOrganizationSustainableDevelopmentObjectiveOption = innovationOrganizationSustainableDevelopmentObjectiveOption;
-            //this.InnovationOrganizationSustainableDevelopmentObjectiveOptionId = innovationOrganizationSustainableDevelopmentObjectiveOption?.Id ?? 0;
-            this.AdditionalInfo = additionalInfo?.Trim();
-            base.SetCreateDate(userId);
+            this.SetCreateDate(userId);
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationSustainableDevelopmentObjective"/> class.
         /// </summary>
         public AttendeeInnovationOrganizationSustainableDevelopmentObjective()
-        {}
+        {
+        }
+
+        /// <summary>
+        /// Updates the specified attendee innovation organization.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganization">The attendee innovation organization.</param>
+        /// <param name="innovationOrganizationSustainableDevelopmentObjectiveOption">The innovation organization sustainable development objective option.</param>
+        /// <param name="additionalInfo">The additional information.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(
+            AttendeeInnovationOrganization attendeeInnovationOrganization,
+            InnovationOrganizationSustainableDevelopmentObjectivesOption innovationOrganizationSustainableDevelopmentObjectiveOption,
+            string additionalInfo,
+            int userId)
+        {
+            this.AttendeeInnovationOrganization = attendeeInnovationOrganization;
+            this.InnovationOrganizationSustainableDevelopmentObjectiveOption = innovationOrganizationSustainableDevelopmentObjectiveOption;
+            this.AdditionalInfo = additionalInfo;
+            this.AttendeeInnovationOrganizationId = attendeeInnovationOrganization?.Id ?? 0;
+
+            this.SetUpdateDate(userId);
+        }
 
         #region Valitations
 
