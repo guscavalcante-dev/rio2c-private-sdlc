@@ -4682,7 +4682,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Planos de Produção.
+        ///   Looks up a localized string similar to Plano de Produção.
         /// </summary>
         public static string ProductionPlans {
             get {

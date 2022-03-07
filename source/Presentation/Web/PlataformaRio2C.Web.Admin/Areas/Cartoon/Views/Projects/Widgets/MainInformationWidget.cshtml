@@ -33,7 +33,7 @@
                     <div class="kt-widget__desc pl-0 col-md-6">
                         <div class="kt-widget__desc">
                             <div class="kt-widget__subhead pt-0">
-                                @(Model.CartoonProjectDto.Summary ?? "-")
+                                @*@(Model.CartoonProjectDto.Summary ?? "-")*@
                             </div>
                         </div>
                         <div class="kt-widget__subhead pb-0">
@@ -107,55 +107,63 @@
             <div class="kt-widget__item w-100">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.LogLines</span>
-                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(Model.CartoonProjectDto?.LogLine?.Replace("\n", "<br/>") ?? "-"))</span></span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(!string.IsNullOrEmpty(Model.CartoonProjectDto?.LogLine) ? Model.CartoonProjectDto?.LogLine?.Replace("\n", "<br/>") : "-"))</span></span>
                 </div>
             </div>
             <div class="kt-widget__item w-100">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.Summary</span>
-                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span class="text-break">@(Html.Raw(Model.CartoonProjectDto?.Summary?.Replace("\n", "<br/>") ?? "-"))</span></span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span class="text-break">@(Html.Raw(!string.IsNullOrEmpty(Model.CartoonProjectDto?.Summary) ? Model.CartoonProjectDto?.Summary?.Replace("\n", "<br/>") : "-"))</span></span>
                 </div>
             </div>
             <div class="kt-widget__item w-100">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.CreativeMotivation</span>
-                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span class="text-break">@(Html.Raw(Model.CartoonProjectDto?.Motivation?.Replace("\n", "<br/>") ?? "-"))</span></span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span class="text-break">@(Html.Raw(!string.IsNullOrEmpty(Model.CartoonProjectDto?.Motivation) ? Model.CartoonProjectDto?.Motivation?.Replace("\n", "<br/>") : "-"))</span></span>
                 </div>
             </div>
             <div class="kt-widget__item w-100">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.ProductionPlans</span>
-                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(Model.CartoonProjectDto?.ProductionPlan?.Replace("\n", "<br/>") ?? "-"))</span></span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(!string.IsNullOrEmpty(Model.CartoonProjectDto?.ProductionPlan) ? Model.CartoonProjectDto?.ProductionPlan?.Replace("\n", "<br/>") : "-"))</span></span>
                 </div>
             </div>
             <div class="kt-widget__item w-25">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.NumberOfEpisodes</span>
-                    <span class="kt-widget__value"><span class="text-break">@(Model.CartoonProjectDto?.NumberOfEpisodes ?? "-")</span></span>
+                    <span class="kt-widget__value"><span class="text-break">@(!string.IsNullOrEmpty(Model.CartoonProjectDto?.NumberOfEpisodes) ? Model.CartoonProjectDto?.NumberOfEpisodes : "-")</span></span>
                 </div>
             </div>
             <div class="kt-widget__item w-25">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.EachEpisodePlayingTime</span>
-                    <span class="kt-widget__value"><span class="text-break">@(Model.CartoonProjectDto?.EachEpisodePlayingTime ?? "-")</span></span>
+                    <span class="kt-widget__value"><span class="text-break">@(!string.IsNullOrEmpty(Model.CartoonProjectDto?.EachEpisodePlayingTime) ? Model.CartoonProjectDto?.EachEpisodePlayingTime : "-")</span></span>
                 </div>
             </div>
             <div class="kt-widget__item w-25">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.TotalValueOfProject</span>
-                    <span class="kt-widget__value"><span class="text-break">@(Model.CartoonProjectDto?.TotalValueOfProject ?? "-")</span></span>
+                    <span class="kt-widget__value"><span class="text-break">@(!string.IsNullOrEmpty(Model.CartoonProjectDto?.TotalValueOfProject) ? Model.CartoonProjectDto?.TotalValueOfProject : "-")</span></span>
                 </div>
             </div>
             <div class="kt-widget__item w-50 w-xs-100">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.LinksForPromoTeaser</span>
-                    <span class="kt-widget__value"><span class="text-break">@(Model.CartoonProjectDto.ProjectTeaserUrl ?? "-")</span></span>
+                    <span class="kt-widget__value">
+                        <span class="text-break">
+                            <a href="@Model.CartoonProjectDto.ProjectTeaserUrl" target="_blank">@(!string.IsNullOrEmpty(Model.CartoonProjectDto?.ProjectTeaserUrl) ? Model.CartoonProjectDto?.ProjectTeaserUrl : "-")</a>
+                        </span>
+                    </span>
                 </div>
             </div>
             <div class="kt-widget__item w-50 w-xs-100">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.BibleUrl</span>
-                    <span class="kt-widget__value"><span class="text-break">@(Model.CartoonProjectDto?.ProjectBibleUrl ?? "-")</span></span>
+                    <span class="kt-widget__value">
+                        <span class="text-break">
+                            <a href="@Model.CartoonProjectDto.ProjectBibleUrl" target="_blank">@(!string.IsNullOrEmpty(Model.CartoonProjectDto?.ProjectBibleUrl) ? Model.CartoonProjectDto?.ProjectBibleUrl : "-")</a>
+                        </span>
+                    </span>
                 </div>
             </div>
         </div>
