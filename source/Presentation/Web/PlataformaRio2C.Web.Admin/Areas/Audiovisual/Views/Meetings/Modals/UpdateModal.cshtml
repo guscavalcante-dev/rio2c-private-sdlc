@@ -22,7 +22,7 @@
                 {
                     <div class="row">
                         <div class="col-sm-12 text-right">
-                            @Labels.LastUpdateOn <b>@Model.NegotiationDto.Negotiation.UpdateDate.ToBrazilTimeZone().ToShortDateString() @Model.NegotiationDto.Negotiation.UpdateDate.ToBrazilTimeZone().ToLongTimeString()</b> @Labels.By <b>@Model.NegotiationDto.UpdaterDto.Name</b>.
+                            @Labels.LastUpdateOn <b>@Model.NegotiationDto.Negotiation.UpdateDate.ToBrazilTimeZone().ToShortDateString() @Model.NegotiationDto.Negotiation.UpdateDate.ToBrazilTimeZone().ToLongTimeString()</b> @Labels.By <b>@(Model.NegotiationDto.UpdaterDto?.Name ?? "-")</b>.
                         </div>
                     </div>
                 }
