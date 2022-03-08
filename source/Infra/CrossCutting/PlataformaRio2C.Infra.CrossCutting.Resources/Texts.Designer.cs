@@ -19,7 +19,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Texts {
@@ -157,10 +157,10 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;p&gt;Prezado(a) Sr(a), @{Name},&lt;/p&gt;
-        ///&lt;p&gt;Seja bem-vindo(a) ao Rio2C / RioContentMarket!&lt;p/&gt;
-        ///&lt;p&gt;Iniciamos as inscrições dos players para as Rodadas de Negócios do &lt;strong&gt;Rio2C / RioContentMarket 2018&lt;/strong&gt;, que acontecerá de &lt;strong&gt;04 a 06 de abril&lt;/strong&gt;, na Cidade das Artes, Barra da Tijuca, Rio de Janeiro.&lt;/p&gt;
+        ///&lt;p&gt;Seja bem-vindo(a) ao Rio2C!&lt;p/&gt;
+        ///&lt;p&gt;Iniciamos as inscrições dos players para as Rodadas de Negócios do &lt;strong&gt;Rio2C&lt;/strong&gt;, que acontecerá de &lt;strong&gt;04 a 06 de abril&lt;/strong&gt;, na Cidade das Artes, Barra da Tijuca, Rio de Janeiro.&lt;/p&gt;
         ///&lt;p&gt;Seguem abaixo as instruções para sua inscrição com o link, login e uma senha para acesso. Solicitamos que, por favor, preencha a ficha até o dia &lt;strong&gt;15 de dezembro&lt;/strong&gt;.&lt;/p&gt;
-        ///&lt;p&gt;O r [rest of string was truncated]&quot;;.
+        ///&lt;p&gt;O regulamento das Rodadas de Negócios encontra [rest of string was truncated]&quot;;.
         /// </summary>
         public static string EmailInviteCollaborator {
             get {
@@ -489,7 +489,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Deseja participar do processo de seleção para apresentar esse projeto nas sessões de PITCHING do Rio2C/RioContentMarket?.
+        ///   Looks up a localized string similar to Deseja participar do processo de seleção para apresentar esse projeto nas sessões de PITCHING do Rio2C?.
         /// </summary>
         public static string SelectionForPitchingSessions {
             get {
@@ -633,7 +633,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Participará no processo de seleção das sessões PITCHING no Rio2C / RioContentMarket.
+        ///   Looks up a localized string similar to Participará no processo de seleção das sessões PITCHING no Rio2C.
         /// </summary>
         public static string WillTakePartInPitching {
             get {
