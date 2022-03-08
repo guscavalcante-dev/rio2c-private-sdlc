@@ -519,7 +519,7 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             document.Add(paragraph);
             paragraph.Clear();
 
-            paragraph.Add(GetChunk("Participará no processo de seleção das sessões PITCHING no Rio2C / RioContentMarket: ", DefaultFontSize + 4f, Font.BOLD));
+            paragraph.Add(GetChunk("Participará no processo de seleção das sessões PITCHING no Rio2C: ", DefaultFontSize + 4f, Font.BOLD));
             paragraph.IndentationLeft = 15;
             paragraph.IndentationRight = 15;
             paragraph.SpacingBefore = 10;

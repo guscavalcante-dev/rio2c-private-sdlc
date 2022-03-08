@@ -174,8 +174,8 @@
   </data>
   <data name="EmailInviteCollaborator" xml:space="preserve">
     <value>&lt;p&gt;Prezado(a) Sr(a), @{Name},&lt;/p&gt;
-&lt;p&gt;Seja bem-vindo(a) ao Rio2C / RioContentMarket!&lt;p/&gt;
-&lt;p&gt;Iniciamos as inscrições dos players para as Rodadas de Negócios do &lt;strong&gt;Rio2C / RioContentMarket 2018&lt;/strong&gt;, que acontecerá de &lt;strong&gt;04 a 06 de abril&lt;/strong&gt;, na Cidade das Artes, Barra da Tijuca, Rio de Janeiro.&lt;/p&gt;
+&lt;p&gt;Seja bem-vindo(a) ao Rio2C!&lt;p/&gt;
+&lt;p&gt;Iniciamos as inscrições dos players para as Rodadas de Negócios do &lt;strong&gt;Rio2C&lt;/strong&gt;, que acontecerá de &lt;strong&gt;04 a 06 de abril&lt;/strong&gt;, na Cidade das Artes, Barra da Tijuca, Rio de Janeiro.&lt;/p&gt;
 &lt;p&gt;Seguem abaixo as instruções para sua inscrição com o link, login e uma senha para acesso. Solicitamos que, por favor, preencha a ficha até o dia &lt;strong&gt;15 de dezembro&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;O regulamento das Rodadas de Negócios encontra-se disponível ao iniciar seu cadastro no sistema.&lt;/p&gt;
 &lt;ul&gt;
@@ -195,7 +195,7 @@
 
 &lt;p&gt;
 Atenciosamente, &lt;br/&gt;
-Credenciamento Rio2C / RioContentMarket&lt;br/&gt;
+Credenciamento Rio2C&lt;br/&gt;
 Email: credenciamento@rio2c.com
 &lt;/p&gt;
 
@@ -211,8 +211,8 @@ maira@rio2c.com&lt;br/&gt;
 
 &lt;p&gt;Dear Mr/Mrs @{Name},&lt;/p&gt;
 
-&lt;p&gt;Welcome to Rio2C / RioContentMarket!&lt;/p&gt;
-&lt;p&gt;We have started registering players for &lt;strong&gt;Rio2C / RioContentMarket 2018&lt;/strong&gt; One-to-One Meetings, which will be held from &lt;strong&gt;April 4th to 6th&lt;/strong&gt;, at Cidade das Artes in Rio de Janeiro. &lt;/p&gt;
+&lt;p&gt;Welcome to Rio2C&lt;/p&gt;
+&lt;p&gt;We have started registering players for &lt;strong&gt;Rio2C&lt;/strong&gt; One-to-One Meetings, which will be held from &lt;strong&gt;April 4th to 6th&lt;/strong&gt;, at Cidade das Artes in Rio de Janeiro. &lt;/p&gt;
 
 &lt;p&gt;Please find below the instructions for your registration and the access link, login and password. Please, fill up the form until &lt;strong&gt;December 15th, 2017&lt;/strong&gt;. &lt;/p&gt;
 &lt;p&gt;The One-to-One meetings regulation is available upon registration. &lt;/p&gt; 
@@ -234,7 +234,7 @@ maira@rio2c.com&lt;br/&gt;
 
 &lt;p&gt;
 Best regards,&lt;br/&gt;
-Registration Rio2C / RioContentMarket&lt;br/&gt;
+Registration Rio2C&lt;br/&gt;
 Email: credenciamento@rio2c.com&lt;br/&gt;
 &lt;/p&gt;
 
@@ -408,7 +408,7 @@ O MyRio2C também é um canal de comunicação do Rio2C com você, trazendo info
     <comment>As agendas das Rodadas de Negócios serão divulgadas à partir de 23 de fevereiro.</comment>
   </data>
   <data name="SelectionForPitchingSessions" xml:space="preserve">
-    <value>Deseja participar do processo de seleção para apresentar esse projeto nas sessões de PITCHING do Rio2C/RioContentMarket?</value>
+    <value>Deseja participar do processo de seleção para apresentar esse projeto nas sessões de PITCHING do Rio2C?</value>
   </data>
   <data name="SelectLanguage" xml:space="preserve">
     <value>Selecione um idioma</value>
@@ -515,7 +515,7 @@ O MyRio2C também é um canal de comunicação do Rio2C com você, trazendo info
 &lt;p&gt;Acesse Plataforma Rio2C no link: @{UrlSite} com seus dados de acesso.&lt;/p&gt;</value>
   </data>
   <data name="WillTakePartInPitching" xml:space="preserve">
-    <value>Participará no processo de seleção das sessões PITCHING no Rio2C / RioContentMarket</value>
+    <value>Participará no processo de seleção das sessões PITCHING no Rio2C</value>
   </data>
   <data name="WouldYouLikeToSubmitProject" xml:space="preserve">
     <value>Gostaria de submeter o projeto "{0}" para avaliação destes players?</value>

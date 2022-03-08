@@ -296,7 +296,7 @@ O MyRio2C também é um canal de comunicação do Rio2C com você, trazendo info
     <comment>The One-to-one Meetings agendas will be released starting February 23.</comment>
   </data>
   <data name="SelectionForPitchingSessions" xml:space="preserve">
-    <value>Do you wish to take part in the selection process for the PITCHING sessions at Rio2C/RioContentMarket?</value>
+    <value>Do you wish to take part in the selection process for the PITCHING sessions at Rio2C?</value>
   </data>
   <data name="SelectLanguage" xml:space="preserve">
     <value>Select language</value>
@@ -408,7 +408,7 @@ O MyRio2C também é um canal de comunicação do Rio2C com você, trazendo info
 &lt;p&gt; Rio2C in the link: @{UrlSite} with your access data. &lt;/p&gt;</value>
   </data>
   <data name="WillTakePartInPitching" xml:space="preserve">
-    <value>Will take part in the selection process for the PITCHING sessions at Rio2C/RioContentMarket</value>
+    <value>Will take part in the selection process for the PITCHING sessions at Rio2C</value>
   </data>
   <data name="WouldYouLikeToSubmitProject" xml:space="preserve">
     <value>Would you like to submit the "{0}" project to be evaluated by these players?</value>
