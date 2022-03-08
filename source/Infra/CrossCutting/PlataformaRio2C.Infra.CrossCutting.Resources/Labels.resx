@@ -2055,7 +2055,7 @@
     <comment>Plano de Produção - Detalhar seu cronograma e estrutura do projeto</comment>
   </data>
   <data name="ProductionPlans" xml:space="preserve">
-    <value>Planos de Produção</value>
+    <value>Plano de Produção</value>
   </data>
   <data name="ProductName" xml:space="preserve">
     <value>Nome do produto</value>

@@ -130,13 +130,15 @@ var CartoonProjectsDataTableWidget = function () {
                                 <table class="image-side-text text-left">\
                                     <tr>\
                                         <td>';
-                        
+
+                        // TODO: Image isn't implemented at CartoonProject API, so we have to show CartoonProjectTitleAbbreviation for a while.
                         //if (!MyRio2cCommon.isNullOrEmpty(row.ImageUploadDate)) {
                         //    html += '<img src="' + imageDirectory + row.CartoonProjectUid + '_thumbnail.png?v=' + moment(row.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
                         //}
                         //else {
-                            html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
+                        //   html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
                         //}
+                        html += '<span class="kt-badge kt-badge--inline kt-badge--info" style="width: 50px; height: 50px; font-weight: bold; font-size: 13px; background: rgba(54,108,243,.1); color: #366cf3;">' + row.CartoonProjectTitleAbbreviation + '</span>';
 
                         html += '       <td> ' + data + '</td>\
                                     </tr>\

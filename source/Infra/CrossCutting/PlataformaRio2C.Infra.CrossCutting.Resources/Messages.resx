@@ -638,8 +638,8 @@
     <value>Somente um Criador deve estar marcado como Responsável</value>
   </data>
   <data name="OutOfEvaluationPeriod" xml:space="preserve">
-    <value>Fora do período de avaliação.</value>
-    <comment>Fora do período de avaliação.</comment>
+    <value>Fora do período de avaliação</value>
+    
   </data>
   <data name="PaginationMessage" xml:space="preserve">
     <value>Exibindo {0} a {1} de {2}</value>

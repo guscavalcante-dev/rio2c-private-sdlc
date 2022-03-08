@@ -28,11 +28,11 @@
                                         @foreach (var cartoonProjectCreatorDto in Model)
                                         {
                                             <tr>
-                                                <td class="col-md-2">@(cartoonProjectCreatorDto.FirstName ?? "-") @(cartoonProjectCreatorDto.LastName ?? "-")</td>
-                                                <td class="col-md-2">@(cartoonProjectCreatorDto.Email ?? "-")</td>
-                                                <td class="col-md-2">@(cartoonProjectCreatorDto.CellPhone ?? "-")</td>
-                                                <td class="col-md-2">@(cartoonProjectCreatorDto.PhoneNumber ?? "-")</td>
-                                                <td class="col-md-4">@(cartoonProjectCreatorDto.MiniBio ?? "-")</td>
+                                                <td class="col-md-2">@(!string.IsNullOrEmpty(cartoonProjectCreatorDto.FirstName) ? cartoonProjectCreatorDto.FirstName : "-") @(!string.IsNullOrEmpty(cartoonProjectCreatorDto.LastName) ? cartoonProjectCreatorDto.LastName : "-")</td>
+                                                <td class="col-md-2">@(!string.IsNullOrEmpty(cartoonProjectCreatorDto.Email) ? cartoonProjectCreatorDto.Email : "-")</td>
+                                                <td class="col-md-2">@(!string.IsNullOrEmpty(cartoonProjectCreatorDto.CellPhone) ? cartoonProjectCreatorDto.CellPhone : "-")</td>
+                                                <td class="col-md-2">@(!string.IsNullOrEmpty(cartoonProjectCreatorDto.PhoneNumber) ? cartoonProjectCreatorDto.PhoneNumber : "-")</td>
+                                                <td class="col-md-4">@(!string.IsNullOrEmpty(cartoonProjectCreatorDto.MiniBio) ? cartoonProjectCreatorDto.MiniBio : "-")</td>
                                             </tr>
                                         }
                                     </tbody>

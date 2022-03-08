@@ -1356,7 +1356,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fora do período de avaliação..
+        ///   Looks up a localized string similar to Fora do período de avaliação.
         /// </summary>
         public static string OutOfEvaluationPeriod {
             get {

@@ -11,6 +11,7 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
 
@@ -24,6 +25,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public int CartoonProjectId { get; set; }
         public Guid CartoonProjectUid { get; set; }
         public string CartoonProjectTitle { get; set; }
+        public string CartoonProjectTitleAbbreviation => this.CartoonProjectTitle?.GetTwoLetterCode() ?? "-";
         public string CartoonProjectFormatName { get; set; }
         public DateTimeOffset? ImageUploadDate { get; set; }
         public decimal? Grade { get; set; }
