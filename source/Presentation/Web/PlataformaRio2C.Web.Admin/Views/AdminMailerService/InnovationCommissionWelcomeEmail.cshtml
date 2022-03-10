@@ -3,18 +3,19 @@
 @{
     var brCulture = new CultureInfo("pt-BR");
     var usCulture = new CultureInfo("en-US");
+    var defaultFontColor = "#F2388F";
 }
 <td valign="top">
     <!-- content -->
     <h1>
         <span>Olá @Model.RecipientFirstName,</span><br />
-        <span style="font-style: italic; color: red;">Hi @Model.RecipientFirstName,</span>
+        <span style="font-style: italic; color: @defaultFontColor;">Hi @Model.RecipientFirstName,</span>
     </h1>
     <p>
         <span>
             Bem-vindo(a) ao @Model.Edition.Name | Pitching de Startup @Model.Edition.UrlCode!
         </span><br />
-        <span style="font-style: italic; color: red;">
+        <span style="font-style: italic; color: @defaultFontColor;">
             Welcome to @Model.Edition.Name | Startup Pitching @Model.Edition.UrlCode!
         </span>
     </p>
@@ -23,7 +24,7 @@
             Acesse a plataforma MyRio2C até o dia <b>21 de janeiro de 2022</b> para completar a sua inscrição na Comissão de Inovação. Preencha todos os campos informando seus dados e da sua empresa.
             Clique no botão abaixo e utilize o mesmo endereço deste e-mail para iniciar seu login.
         </span><br />
-        <span style="font-style: italic; color: red;">
+        <span style="font-style: italic; color: @defaultFontColor;">
             It is required that you access MyRio2C’s platform by <b>January 21st, 2022</b>, to register yourself and your company for the Innovation Commission.
             Please click on the button below and use this same email address to login.
         </span>
@@ -35,7 +36,7 @@
                 <td align="center">
                     <table cellpadding="0" cellspacing="0" width="250" border="0" style="border-collapse: separate !important;">
                         <tr>
-                            <td style="background-color: #EA202C; color: #FFFFFF; font-family: sans-serif; font-size: 16px; font-weight: bold; padding: 10px 10px; border-radius: 10px; text-align: center;">
+                            <td style="background-color: @defaultFontColor; color: #FFFFFF; font-family: sans-serif; font-size: 16px; font-weight: bold; padding: 10px 10px; border-radius: 10px; text-align: center;">
                                 <a href="@($"{ViewBag.SiteUrl}/account/onboarding?culture={Model.UserInterfaceLanguage}&edition={Model.Edition.UrlCode}&email={Url.Encode(Model.RecipientEmail)}&uid={Model.RecipientUserUid}&token={Model.UserSecurityToken}")" style="color:#FFFFFF;text-decoration:none;">Clique Aqui / Click here</a>
                             </td>
                         </tr>
@@ -49,7 +50,7 @@
         <span>
             Qualquer dúvida entre em contato através do email: inovacao@rio2c.com
         </span><br />
-        <span style="font-style: italic; color: red;">
+        <span style="font-style: italic; color: @defaultFontColor;">
             If you have any questions do not hesitate to get in touch at: inovacao@rio2c.com
         </span>
     </p>
@@ -57,7 +58,7 @@
         <span>
             Venha fazer parte do Rio2C!
         </span><br />
-        <span style="font-style: italic; color: red;">
+        <span style="font-style: italic; color: @defaultFontColor;">
             Come and join us at Rio2C!
         </span>
     </p>
@@ -65,7 +66,7 @@
         <span>
             Sua oportunidade de viver dias incríveis de aprendizado, negócios, networking e experiências inovadoras.
         </span><br />
-        <span style="font-style: italic; color: red;">
+        <span style="font-style: italic; color: @defaultFontColor;">
             This is your chance to experience days filled with great content, doing business, networking and sharing innovative experiences.
         </span>
     </p>

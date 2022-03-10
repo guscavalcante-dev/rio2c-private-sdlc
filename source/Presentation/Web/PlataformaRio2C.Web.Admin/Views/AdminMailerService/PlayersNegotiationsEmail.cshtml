@@ -3,6 +3,7 @@
 @model PlataformaRio2C.Application.CQRS.Commands.SendPlayerNegotiationsEmailAsync
 @{
     var brazilUtc = @DateTimeExtensions.GetBrazilUtc();
+    var defaultFontColor = "#F2388F";
 }
 <td valign="top">
     <!-- content -->
@@ -11,7 +12,7 @@
     </h1>
     <p>
         <span>Gostaríamos de informar que a sua agenda de rodadas de negócio da Rio2C @Model.Edition.UrlCode já está disponível na plataforma MyRio2C.</span><br />
-        <span style="font-style: italic; color: red;">We would like to inform that your one-to-one meetings schedule of Rio2C @Model.Edition.UrlCode is already available at the MyRio2C platform.</span>
+        <span style="font-style: italic; color: @defaultFontColor;">We would like to inform that your one-to-one meetings schedule of Rio2C @Model.Edition.UrlCode is already available at the MyRio2C platform.</span>
     </p>
     <div>
         <table style="width: 100%; margin-top: 30px; margin-bottom: 30px;">
@@ -101,7 +102,7 @@
                 <td align="center">
                     <table cellpadding="0" cellspacing="0" width="250" border="0" style="border-collapse: separate !important;">
                         <tr>
-                            <td style="background-color: #EA202C; color: #FFFFFF; font-family: sans-serif; font-size: 16px; font-weight: bold; padding: 10px 10px; border-radius: 10px; text-align: center;">
+                            <td style="background-color: @defaultFontColor; color: #FFFFFF; font-family: sans-serif; font-size: 16px; font-weight: bold; padding: 10px 10px; border-radius: 10px; text-align: center;">
                                 <a href="@($"{ViewBag.SiteUrl}/Agendas")" style="color:#FFFFFF;text-decoration:none;">Agenda</a>
                             </td>
                         </tr>
@@ -113,19 +114,19 @@
     </div>
     <p>
         <span>Aproveitamos a oportunidade para lembrar que o chat do MyRio2C está disponível para novos contatos entre os participantes.</span><br />
-        <span style="font-style: italic; color: red;">We take this opportunity to remind you that the MyRio2C chat is available for new contacts among participants.</span>
+        <span style="font-style: italic; color: @defaultFontColor;">We take this opportunity to remind you that the MyRio2C chat is available for new contacts among participants.</span>
     </p>
     <p>
         <span>Não esqueça de verificar sua caixa de mensagem com frequência para não perder nenhuma novidade.</span><br />
-        <span style="font-style: italic; color: red;">Don't forget to check your inbox frequently so you don't miss any news.</span>
+        <span style="font-style: italic; color: @defaultFontColor;">Don't forget to check your inbox frequently so you don't miss any news.</span>
     </p>
     <p>
         <span>Em caso de dúvidas, entre em contato com nossa equipe em: meetings@rio2c.com.</span><br />
-        <span style="font-style: italic; color: red;">If you have any questions do not hesitate to get in touch with our team at: meetings@rio2c.com.</span>
+        <span style="font-style: italic; color: @defaultFontColor;">If you have any questions do not hesitate to get in touch with our team at: meetings@rio2c.com.</span>
     </p>
     <p>
         <span>Desejamos ótimas reuniões e muito negócios!</span><br />
-        <span style="font-style: italic; color: red;">We wish you great meetings and lots of business!</span>
+        <span style="font-style: italic; color: @defaultFontColor;">We wish you great meetings and lots of business!</span>
     </p>
 </td>
 @section Styles {

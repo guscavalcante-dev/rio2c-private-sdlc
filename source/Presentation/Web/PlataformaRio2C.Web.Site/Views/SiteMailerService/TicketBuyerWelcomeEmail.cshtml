@@ -1,22 +1,25 @@
 ﻿@using Mvc.Mailer
 @model PlataformaRio2C.Application.CQRS.Commands.SendProducerWelcomeEmailAsync
+@{
+    var defaultFontColor = "#F2388F";
+}
 <td valign="top">
     <!-- content -->
     <h1>
         <span>Caro(a) @Model.RecipientFirstName,</span><br />
-        <span style="font-style: italic; color: red;">Dear @Model.RecipientFirstName,</span>
+        <span style="font-style: italic; color: @defaultFontColor;">Dear @Model.RecipientFirstName,</span>
     </h1>
     <p>
         <span>Bem-vindo(a) ao Rio2C</span><br />
-        <span style="font-style: italic; color: red;">Welcome to Rio2C</span>
+        <span style="font-style: italic; color: @defaultFontColor;">Welcome to Rio2C</span>
     </p>
     <p>
         <span>A sua credencial foi adquirida com sucesso!</span><br />
-        <span style="font-style: italic; color: red;">Your credential was successfully acquired!</span>
+        <span style="font-style: italic; color: @defaultFontColor;">Your credential was successfully acquired!</span>
     </p>
     <p>
         <span>Agora, é necessário entrar a plataforma MyRio2C para finalizar seu registro e ter acesso aos demais benefícios do seu ingresso. Clique no botão abaixo e utilize esse mesmo endereço de e-mail para fazer seu acesso.</span><br />
-        <span style="font-style: italic; color: red;">Now, it´s necessary to register yourself at MyRio2C platform to have access to all your badge´s advantages. Click on the button below and use this same email address to login.</span>
+        <span style="font-style: italic; color: @defaultFontColor;">Now, it´s necessary to register yourself at MyRio2C platform to have access to all your badge´s advantages. Click on the button below and use this same email address to login.</span>
     </p>
     <div style="margin-top: 25px; margin-bottom: 25px;">
         <!--Button:begin-->
@@ -25,7 +28,7 @@
                 <td align="center">
                     <table cellpadding="0" cellspacing="0" width="250" border="0" style="border-collapse: separate !important;">
                         <tr>
-                            <td style="background-color:#EA202C;color:#FFFFFF;font-family:sans-serif;font-size:16px;font-weight:bold;padding:10px 10px;border-radius:10px;text-align:center;">
+                            <td style="background-color:@defaultFontColor;color:#FFFFFF;font-family:sans-serif;font-size:16px;font-weight:bold;padding:10px 10px;border-radius:10px;text-align:center;">
                                 <a href="@Url.Abs(Url.Action("Onboarding", "Account", new {culture = Model.UserInterfaceLanguage, edition = Model.Edition.UrlCode, email = Model.RecipientEmail, uid = Model.RecipientUserUid, token = Model.UserSecurityToken}))" style="color: #FFFFFF; text-decoration: none;">
                                     Clique Aqui / Click here
                                 </a>
@@ -41,7 +44,7 @@
         <span>
             Em caso de dúvidas, entre em contato com a nossa equipe em: credenciamento@rio2c.com
         </span><br />
-        <span style="font-style: italic; color: red;">
+        <span style="font-style: italic; color: @defaultFontColor;">
             If you have any questions, contatct our team at: credenciamento@rio2c.com
         </span>
     </p>
