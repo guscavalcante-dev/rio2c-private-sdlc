@@ -321,10 +321,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Select(e => new EditionDto()
                             {
                                 Edition = e,
-                                EditionEventDtos = e.EditionEvents.Select(ee => new EditionEventDto()
-                                {
-                                    EditionEvent = ee
-                                }).ToList()
+                                EditionEventDtos = e.EditionEvents
+                                                        .Where(ev => !ev.IsDeleted)
+                                                        .Select(ee => new EditionEventDto()
+                                                        {
+                                                            EditionEvent = ee
+                                                        }).ToList()
                             })
                             .FirstOrDefaultAsync();
         }
