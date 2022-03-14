@@ -685,6 +685,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         /// <returns><c>true</c> if [is base64 string] [the specified s]; otherwise, <c>false</c>.</returns>
         public static bool IsBase64String(this string s)
         {
+            if (String.IsNullOrEmpty(s))
+                return false;
+
             s = s.Trim();
             return (s.Length % 4 == 0) && Regex.IsMatch(s, @"^[a-zA-Z0-9\+/]*={0,3}$", RegexOptions.None);
 
