@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-16-2021
+// Last Modified On : 03-17-2022
 // ***********************************************************************
 // <copyright file="Edition.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -160,47 +160,47 @@ namespace PlataformaRio2C.Domain.Entities
             int urlCode,
             bool isCurrent,
             bool isActive,
-            DateTimeOffset startDate,
-            DateTimeOffset endDate,
-            DateTimeOffset sellStartDate,
-            DateTimeOffset sellEndDate,
-            DateTimeOffset oneToOneMeetingsScheduleDate,
+            DateTime startDate,
+            DateTime endDate,
+            DateTime sellStartDate,
+            DateTime sellEndDate,
+            DateTime oneToOneMeetingsScheduleDate,
 
-            DateTimeOffset projectSubmitStartDate,
-            DateTimeOffset projectSubmitEndDate,
-            DateTimeOffset projectEvaluationStartDate,
-            DateTimeOffset projectEvaluationEndDate,
-            DateTimeOffset negotiationStartDate,
-            DateTimeOffset negotiationEndDate,
+            DateTime projectSubmitStartDate,
+            DateTime projectSubmitEndDate,
+            DateTime projectEvaluationStartDate,
+            DateTime projectEvaluationEndDate,
+            DateTime negotiationStartDate,
+            DateTime negotiationEndDate,
             int attendeeOrganizationMaxSellProjectsCount,
             int projectMaxBuyerEvaluationsCount,
             short audiovisualNegotiationsVirtualMeetingsJoinMinutes,
 
-            DateTimeOffset musicProjectSubmitStartDate,
-            DateTimeOffset musicProjectSubmitEndDate,
-            DateTimeOffset musicCommissionEvaluationStartDate,
-            DateTimeOffset musicCommissionEvaluationEndDate,
+            DateTime musicProjectSubmitStartDate,
+            DateTime musicProjectSubmitEndDate,
+            DateTime musicCommissionEvaluationStartDate,
+            DateTime musicCommissionEvaluationEndDate,
             int musicCommissionMinimumEvaluationsCount,
             int musicCommissionMaximumApprovedBandsCount,
 
-            DateTimeOffset innovationProjectSubmitStartDate,
-            DateTimeOffset innovationProjectSubmitEndDate,
-            DateTimeOffset innovationCommissionEvaluationStartDate,
-            DateTimeOffset innovationCommissionEvaluationEndDate,
+            DateTime innovationProjectSubmitStartDate,
+            DateTime innovationProjectSubmitEndDate,
+            DateTime innovationCommissionEvaluationStartDate,
+            DateTime innovationCommissionEvaluationEndDate,
             int innovationCommissionMinimumEvaluationsCount,
             int innovationCommissionMaximumApprovedCompaniesCount,
 
-            DateTimeOffset audiovisualNegotiationsCreateStartDate,
-            DateTimeOffset audiovisualNegotiationsCreateEndDate,
-            DateTimeOffset audiovisualCommissionEvaluationStartDate,
-            DateTimeOffset audiovisualCommissionEvaluationEndDate,
+            DateTime audiovisualNegotiationsCreateStartDate,
+            DateTime audiovisualNegotiationsCreateEndDate,
+            DateTime audiovisualCommissionEvaluationStartDate,
+            DateTime audiovisualCommissionEvaluationEndDate,
             int audiovisualCommissionMinimumEvaluationsCount,
             int audiovisualCommissionMaximumApprovedProjectsCount,
 
-            DateTimeOffset cartoonProjectSubmitStartDate,
-            DateTimeOffset cartoonProjectSubmitEndDate,
-            DateTimeOffset cartoonCommissionEvaluationStartDate,
-            DateTimeOffset cartoonCommissionEvaluationEndDate,
+            DateTime cartoonProjectSubmitStartDate,
+            DateTime cartoonProjectSubmitEndDate,
+            DateTime cartoonCommissionEvaluationStartDate,
+            DateTime cartoonCommissionEvaluationEndDate,
             int cartoonCommissionMinimumEvaluationsCount,
             int CartoonCommissionMaximumApprovedProjectsCount,
 
@@ -211,52 +211,52 @@ namespace PlataformaRio2C.Domain.Entities
             this.UrlCode = urlCode;
             this.IsCurrent = isCurrent;
             this.IsActive = isActive;
-            this.StartDate = startDate;
-            this.EndDate = endDate;
-            this.SellStartDate = sellStartDate;
-            this.SellEndDate = sellEndDate;
+            this.StartDate = startDate.ToUtcTimeZone();
+            this.EndDate = endDate.ToEndDateTimeOffset();
+            this.SellStartDate = sellStartDate.ToUtcTimeZone();
+            this.SellEndDate = sellEndDate.ToEndDateTimeOffset();
 
             // Audiovisual - Negotiations
-            this.ProjectSubmitStartDate = projectSubmitStartDate;
-            this.ProjectSubmitEndDate = projectSubmitEndDate;
-            this.ProjectEvaluationStartDate = projectEvaluationStartDate;
-            this.ProjectEvaluationEndDate = projectEvaluationEndDate;
-            this.OneToOneMeetingsScheduleDate = oneToOneMeetingsScheduleDate;
-            this.NegotiationStartDate = negotiationStartDate;
-            this.NegotiationEndDate = negotiationEndDate;
+            this.ProjectSubmitStartDate = projectSubmitStartDate.ToUtcTimeZone();
+            this.ProjectSubmitEndDate = projectSubmitEndDate.ToEndDateTimeOffset();
+            this.ProjectEvaluationStartDate = projectEvaluationStartDate.ToUtcTimeZone();
+            this.ProjectEvaluationEndDate = projectEvaluationEndDate.ToEndDateTimeOffset();
+            this.OneToOneMeetingsScheduleDate = oneToOneMeetingsScheduleDate.ToUtcTimeZone();
+            this.NegotiationStartDate = negotiationStartDate.ToUtcTimeZone();
+            this.NegotiationEndDate = negotiationEndDate.ToEndDateTimeOffset();
             this.AttendeeOrganizationMaxSellProjectsCount = attendeeOrganizationMaxSellProjectsCount;
             this.ProjectMaxBuyerEvaluationsCount = projectMaxBuyerEvaluationsCount;
             this.AudiovisualNegotiationsVirtualMeetingsJoinMinutes = audiovisualNegotiationsVirtualMeetingsJoinMinutes;
 
             // Music - Commissions
-            this.MusicProjectSubmitStartDate = musicProjectSubmitStartDate;
-            this.MusicProjectSubmitEndDate = musicProjectSubmitEndDate;
-            this.MusicCommissionEvaluationStartDate = musicCommissionEvaluationStartDate;
-            this.MusicCommissionEvaluationEndDate = musicCommissionEvaluationEndDate;
+            this.MusicProjectSubmitStartDate = musicProjectSubmitStartDate.ToUtcTimeZone();
+            this.MusicProjectSubmitEndDate = musicProjectSubmitEndDate.ToEndDateTimeOffset();
+            this.MusicCommissionEvaluationStartDate = musicCommissionEvaluationStartDate.ToUtcTimeZone();
+            this.MusicCommissionEvaluationEndDate = musicCommissionEvaluationEndDate.ToEndDateTimeOffset();
             this.MusicCommissionMinimumEvaluationsCount = musicCommissionMinimumEvaluationsCount;
             this.MusicCommissionMaximumApprovedBandsCount = musicCommissionMaximumApprovedBandsCount;
 
             // Innovation - Commissions
-            this.InnovationProjectSubmitStartDate = innovationProjectSubmitStartDate;
-            this.InnovationProjectSubmitEndDate = innovationProjectSubmitEndDate;
-            this.InnovationCommissionEvaluationStartDate = innovationCommissionEvaluationStartDate;
-            this.InnovationCommissionEvaluationEndDate = innovationCommissionEvaluationEndDate;
+            this.InnovationProjectSubmitStartDate = innovationProjectSubmitStartDate.ToUtcTimeZone();
+            this.InnovationProjectSubmitEndDate = innovationProjectSubmitEndDate.ToEndDateTimeOffset();
+            this.InnovationCommissionEvaluationStartDate = innovationCommissionEvaluationStartDate.ToUtcTimeZone();
+            this.InnovationCommissionEvaluationEndDate = innovationCommissionEvaluationEndDate.ToEndDateTimeOffset();
             this.InnovationCommissionMinimumEvaluationsCount = innovationCommissionMinimumEvaluationsCount;
             this.InnovationCommissionMaximumApprovedCompaniesCount = innovationCommissionMaximumApprovedCompaniesCount;
 
             // Audiovisual - Commissions
-            this.AudiovisualNegotiationsCreateStartDate = audiovisualNegotiationsCreateStartDate;
-            this.AudiovisualNegotiationsCreateEndDate = audiovisualNegotiationsCreateEndDate;
-            this.AudiovisualCommissionEvaluationStartDate = audiovisualCommissionEvaluationStartDate;
-            this.AudiovisualCommissionEvaluationEndDate = audiovisualCommissionEvaluationEndDate;
+            this.AudiovisualNegotiationsCreateStartDate = audiovisualNegotiationsCreateStartDate.ToUtcTimeZone();
+            this.AudiovisualNegotiationsCreateEndDate = audiovisualNegotiationsCreateEndDate.ToEndDateTimeOffset();
+            this.AudiovisualCommissionEvaluationStartDate = audiovisualCommissionEvaluationStartDate.ToUtcTimeZone();
+            this.AudiovisualCommissionEvaluationEndDate = audiovisualCommissionEvaluationEndDate.ToEndDateTimeOffset();
             this.AudiovisualCommissionMinimumEvaluationsCount = audiovisualCommissionMinimumEvaluationsCount;
             this.AudiovisualCommissionMaximumApprovedProjectsCount = audiovisualCommissionMaximumApprovedProjectsCount;
 
             // Cartoon - Commissions
-            this.CartoonProjectSubmitStartDate = cartoonProjectSubmitStartDate;
-            this.CartoonProjectSubmitEndDate = cartoonProjectSubmitEndDate;
-            this.CartoonCommissionEvaluationStartDate = cartoonCommissionEvaluationStartDate;
-            this.CartoonCommissionEvaluationEndDate = cartoonCommissionEvaluationEndDate;
+            this.CartoonProjectSubmitStartDate = cartoonProjectSubmitStartDate.ToUtcTimeZone();
+            this.CartoonProjectSubmitEndDate = cartoonProjectSubmitEndDate.ToEndDateTimeOffset();
+            this.CartoonCommissionEvaluationStartDate = cartoonCommissionEvaluationStartDate.ToUtcTimeZone();
+            this.CartoonCommissionEvaluationEndDate = cartoonCommissionEvaluationEndDate.ToEndDateTimeOffset();
             this.CartoonCommissionMinimumEvaluationsCount = cartoonCommissionMinimumEvaluationsCount;
             this.CartoonCommissionMaximumApprovedProjectsCount = CartoonCommissionMaximumApprovedProjectsCount;
 
@@ -275,8 +275,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="urlCode">The URL code.</param>
         /// <param name="isCurrent">if set to <c>true</c> [is current].</param>
         /// <param name="isActive">if set to <c>true</c> [is active].</param>
-        /// <param name="attendeeOrganizationMaxSellProjectsCount">The attendee organization maximum sell projects count.</param>
-        /// <param name="projectMaxBuyerEvaluationsCount">The project maximum buyer evaluations count.</param>
         /// <param name="startDate">The start date.</param>
         /// <param name="endDate">The end date.</param>
         /// <param name="sellStartDate">The sell start date.</param>
@@ -299,11 +297,11 @@ namespace PlataformaRio2C.Domain.Entities
             this.UrlCode = urlCode;
             this.IsCurrent = isCurrent;
             this.IsActive = isActive;
-            this.StartDate = startDate.ToEndDateTimeOffset();
+            this.StartDate = startDate.ToUtcTimeZone();
             this.EndDate = endDate.ToEndDateTimeOffset();
-            this.SellStartDate = sellStartDate.ToEndDateTimeOffset();
+            this.SellStartDate = sellStartDate.ToUtcTimeZone();
             this.SellEndDate = sellEndDate.ToEndDateTimeOffset();
-            this.OneToOneMeetingsScheduleDate = oneToOneMeetingsScheduleDate.ToEndDateTimeOffset();
+            this.OneToOneMeetingsScheduleDate = oneToOneMeetingsScheduleDate.ToUtcTimeZone();
 
             base.SetUpdateDate(userId);
         }
@@ -386,40 +384,40 @@ namespace PlataformaRio2C.Domain.Entities
 
             int userId)
         {
-            this.ProjectSubmitStartDate = projectSubmitStartDate.ToEndDateTimeOffset();
+            this.ProjectSubmitStartDate = projectSubmitStartDate.ToUtcTimeZone();
             this.ProjectSubmitEndDate = projectSubmitEndDate.ToEndDateTimeOffset();
-            this.ProjectEvaluationStartDate = projectEvaluationStartDate.ToEndDateTimeOffset();
+            this.ProjectEvaluationStartDate = projectEvaluationStartDate.ToUtcTimeZone();
             this.ProjectEvaluationEndDate = projectEvaluationEndDate.ToEndDateTimeOffset();
-            this.NegotiationStartDate = negotiationStartDate.ToEndDateTimeOffset();
+            this.NegotiationStartDate = negotiationStartDate.ToUtcTimeZone();
             this.NegotiationEndDate = negotiationEndDate.ToEndDateTimeOffset();
             this.AttendeeOrganizationMaxSellProjectsCount = attendeeOrganizationMaxSellProjectsCount;
             this.ProjectMaxBuyerEvaluationsCount = projectMaxBuyerEvaluationsCount;
             this.AudiovisualNegotiationsVirtualMeetingsJoinMinutes = audiovisualNegotiationsVirtualMeetingsJoinMinutes;
 
-            this.MusicProjectSubmitStartDate = musicProjectSubmitStartDate.ToEndDateTimeOffset();
+            this.MusicProjectSubmitStartDate = musicProjectSubmitStartDate.ToUtcTimeZone();
             this.MusicProjectSubmitEndDate = musicProjectSubmitEndDate.ToEndDateTimeOffset();
-            this.MusicCommissionEvaluationStartDate = musicCommissionEvaluationStartDate.ToEndDateTimeOffset();
+            this.MusicCommissionEvaluationStartDate = musicCommissionEvaluationStartDate.ToUtcTimeZone();
             this.MusicCommissionEvaluationEndDate = musicCommissionEvaluationEndDate.ToEndDateTimeOffset();
             this.MusicCommissionMinimumEvaluationsCount = musicCommissionMinimumEvaluationsCount;
             this.MusicCommissionMaximumApprovedBandsCount = musicCommissionMaximumApprovedBandsCount;
 
-            this.InnovationProjectSubmitStartDate = innovationProjectSubmitStartDate.ToEndDateTimeOffset();
+            this.InnovationProjectSubmitStartDate = innovationProjectSubmitStartDate.ToUtcTimeZone();
             this.InnovationProjectSubmitEndDate = innovationProjectSubmitEndDate.ToEndDateTimeOffset();
-            this.InnovationCommissionEvaluationStartDate = innovationCommissionEvaluationStartDate.ToEndDateTimeOffset();
+            this.InnovationCommissionEvaluationStartDate = innovationCommissionEvaluationStartDate.ToUtcTimeZone();
             this.InnovationCommissionEvaluationEndDate = innovationCommissionEvaluationEndDate.ToEndDateTimeOffset();
             this.InnovationCommissionMinimumEvaluationsCount = innovationCommissionMinimumEvaluationsCount;
             this.InnovationCommissionMaximumApprovedCompaniesCount = innovationCommissionMaximumApprovedCompaniesCount;
 
-            this.AudiovisualNegotiationsCreateStartDate = audiovisualNegotiationsCreateStartDate.ToEndDateTimeOffset();
+            this.AudiovisualNegotiationsCreateStartDate = audiovisualNegotiationsCreateStartDate.ToUtcTimeZone();
             this.AudiovisualNegotiationsCreateEndDate = audiovisualNegotiationsCreateEndDate.ToEndDateTimeOffset();
-            this.AudiovisualCommissionEvaluationStartDate = audiovisualCommissionEvaluationStartDate.ToEndDateTimeOffset();
+            this.AudiovisualCommissionEvaluationStartDate = audiovisualCommissionEvaluationStartDate.ToUtcTimeZone();
             this.AudiovisualCommissionEvaluationEndDate = audiovisualCommissionEvaluationEndDate.ToEndDateTimeOffset();
             this.AudiovisualCommissionMinimumEvaluationsCount = audiovisualCommissionMinimumEvaluationsCount;
             this.AudiovisualCommissionMaximumApprovedProjectsCount = audiovisualCommissionMaximumApprovedProjectsCount;
 
-            this.CartoonProjectSubmitStartDate = cartoonProjectSubmitStartDate.ToEndDateTimeOffset();
+            this.CartoonProjectSubmitStartDate = cartoonProjectSubmitStartDate.ToUtcTimeZone();
             this.CartoonProjectSubmitEndDate = cartoonProjectSubmitEndDate.ToEndDateTimeOffset();
-            this.CartoonCommissionEvaluationStartDate = cartoonCommissionEvaluationStartDate.ToEndDateTimeOffset();
+            this.CartoonCommissionEvaluationStartDate = cartoonCommissionEvaluationStartDate.ToUtcTimeZone();
             this.CartoonCommissionEvaluationEndDate = cartoonCommissionEvaluationEndDate.ToEndDateTimeOffset();
             this.CartoonCommissionMinimumEvaluationsCount = cartoonCommissionMinimumEvaluationsCount;
             this.CartoonCommissionMaximumApprovedProjectsCount = cartoonCommissionMaximumApprovedProjectsCount;
@@ -429,9 +427,11 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Actions
 
-        /// <summary>Deletes the specified user identifier.</summary>
+        /// <summary>
+        /// Deletes the specified user identifier.
+        /// </summary>
         /// <param name="userId">The user identifier.</param>
-        public void Delete(int userId)
+        public new void Delete(int userId)
         {
             this.IsDeleted = true;
             this.DeleteEditionEvents(userId);
