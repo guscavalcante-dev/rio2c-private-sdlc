@@ -93,13 +93,13 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         }
 
         /// <summary>
-        /// Converts to enddatetimeoffset.
+        /// Always use this function to save an EndDate at database!
         /// </summary>
         /// <param name="dt">The dt.</param>
         /// <returns></returns>
         public static DateTimeOffset ToEndDateTimeOffset(this DateTime dt)
         {
-            return dt.AddHours(23).AddMinutes(59).AddSeconds(59);
+            return dt.AddHours(23).AddMinutes(59).AddSeconds(59).ToUtcTimeZone();
         }
 
         /// <summary>Gets the day suffix.</summary>
