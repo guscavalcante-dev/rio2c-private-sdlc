@@ -8,7 +8,7 @@
             <div class="dropdown">
                 <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img src="~/Assets/themes/metronic/media/icons/svg/Tools/Calendar.svg" style="margin-right:5px;" />
-                    <span class="hide-edition-dropdown">@(editionDto.Name)</span>
+                    <span class="hide-edition-dropdown">@(editionDto?.Name)</span>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     @foreach (var edition in activeEditions)
