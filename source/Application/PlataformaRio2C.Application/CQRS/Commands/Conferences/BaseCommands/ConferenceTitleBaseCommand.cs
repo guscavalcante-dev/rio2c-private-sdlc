@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-27-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-02-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 03-28-2022
 // ***********************************************************************
 // <copyright file="ConferenceTitleBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
