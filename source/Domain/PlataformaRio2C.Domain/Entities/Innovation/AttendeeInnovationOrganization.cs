@@ -4,7 +4,7 @@
 // Created          : 06-29-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-04-2022
+// Last Modified On : 03-28-2022
 // ***********************************************************************
 // <copyright file="AttendeeInnovationOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -354,7 +354,7 @@ namespace PlataformaRio2C.Domain.Entities
                 this.AttendeeInnovationOrganizationFounders = new List<AttendeeInnovationOrganizationFounder>();
             }
 
-            var attendeeInnovationOrganizationFounderDb = this.AttendeeInnovationOrganizationFounders.FirstOrDefault(aoc => aoc.Fullname == fullName);
+            var attendeeInnovationOrganizationFounderDb = this.AttendeeInnovationOrganizationFounders.FirstOrDefault(aoc => aoc.Fullname.ToLower() == fullName.ToLower());
             if (attendeeInnovationOrganizationFounderDb != null)
             {
                 attendeeInnovationOrganizationFounderDb.Update(this, workDedication, fullName, curriculum, userId);
@@ -404,7 +404,7 @@ namespace PlataformaRio2C.Domain.Entities
                 this.AttendeeInnovationOrganizationCompetitors = new List<AttendeeInnovationOrganizationCompetitor>();
             }
 
-            var attendeeInnovationOrganizationCompetitorDb = this.AttendeeInnovationOrganizationCompetitors.FirstOrDefault(aoc => aoc.Name == name);
+            var attendeeInnovationOrganizationCompetitorDb = this.AttendeeInnovationOrganizationCompetitors.FirstOrDefault(aoc => aoc.Name.ToLower() == name.ToLower());
             if (attendeeInnovationOrganizationCompetitorDb != null)
             {
                 attendeeInnovationOrganizationCompetitorDb.Update(this, name, userId);
