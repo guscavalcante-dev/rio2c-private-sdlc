@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 03-28-2022
 // ***********************************************************************
 // <copyright file="ConferenceTitle.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,7 +21,7 @@ namespace PlataformaRio2C.Domain.Entities
     public class ConferenceTitle : Entity
     {
         public static readonly int ValueMinLength = 1;
-        public static readonly int ValueMaxLength = 65;
+        public static readonly int ValueMaxLength = 200;
 
         public int ConferenceId { get; private set; }
         public int LanguageId { get; private set; }
