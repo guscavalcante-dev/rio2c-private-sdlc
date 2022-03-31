@@ -154,7 +154,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         /// <returns></returns>
         public static string ToStringHourMinute(this DateTimeOffset dt)
         {
-            return dt.ToString("dd/MM/yyyy hh:mm");
+            return dt.ToString("dd/MM/yyyy HH:mm");
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                 return "";
             }
 
-            return dt?.ToString("dd/MM/yyyy hh:mm");
+            return dt?.ToString("dd/MM/yyyy HH:mm");
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         /// <returns></returns>
         public static string ToStringHourMinute(this DateTime dt)
         {
-            return dt.ToString("dd/MM/yyyy hh:mm");
+            return dt.ToString("dd/MM/yyyy HH:mm");
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                 return "";
             }
 
-            return dt?.ToString("dd/MM/yyyy hh:mm");
+            return dt?.ToString("dd/MM/yyyy HH:mm");
         }
 
         /// <summary>
