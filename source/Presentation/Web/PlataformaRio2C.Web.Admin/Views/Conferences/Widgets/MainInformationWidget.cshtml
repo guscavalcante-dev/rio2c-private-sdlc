@@ -58,7 +58,7 @@
                     @if (synopsisDto != null)
                     {
                         <div class="kt-widget__desc" style="word-wrap: break-word;">
-                            @Html.Raw(synopsisDto.ConferenceSynopsis.Value.Replace("\n", "<br />"))
+                            @Html.Raw(synopsisDto.ConferenceSynopsis?.Value?.Replace("\n", "<br />"))
                         </div>
                     }
                 </div>
