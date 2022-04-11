@@ -51,7 +51,7 @@ namespace PlataformaRio2C.Domain.Constants
 
         public static readonly string[] TicketBuyers =
         {
-            Speaker, Industry, Creator, Summit, Festvalia
+            Industry, Creator, Summit, Festvalia
         };
 
         public static readonly string[] Executives =
