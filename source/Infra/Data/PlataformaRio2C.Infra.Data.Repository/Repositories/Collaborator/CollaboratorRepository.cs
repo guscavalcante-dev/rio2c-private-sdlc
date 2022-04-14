@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-15-2021
+// Last Modified On : 04-14-2022
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -287,6 +287,41 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 outerWhere = outerWhere.Or(innerExecutiveEmailWhere);
                 outerWhere = outerWhere.Or(innerOrganizationNameWhere);
                 outerWhere = outerWhere.Or(innerHoldingNameWhere);
+                query = query.Where(outerWhere);
+            }
+
+            return query;
+        }
+
+        /// <summary>
+        /// Finds the by names.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> FindByNames(this IQueryable<Collaborator> query, string keywords, int? editionId)
+        {
+            if (!string.IsNullOrEmpty(keywords))
+            {
+                var outerWhere = PredicateBuilder.New<Collaborator>(false);
+                var innerExecutiveBadgeNameWhere = PredicateBuilder.New<Collaborator>(true);
+                var innerExecutiveNameWhere = PredicateBuilder.New<Collaborator>(true);
+                var innerExecutiveEmailWhere = PredicateBuilder.New<Collaborator>(true);
+
+                foreach (var keyword in keywords.Split(' '))
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        innerExecutiveBadgeNameWhere = innerExecutiveBadgeNameWhere.And(c => c.Badge.Contains(keyword));
+                        innerExecutiveNameWhere = innerExecutiveNameWhere.And(c => c.User.Name.Contains(keyword));
+                        innerExecutiveEmailWhere = innerExecutiveEmailWhere.And(c => c.User.Email.Contains(keyword));
+                    }
+                }
+
+                outerWhere = outerWhere.Or(innerExecutiveBadgeNameWhere);
+                outerWhere = outerWhere.Or(innerExecutiveNameWhere);
+                outerWhere = outerWhere.Or(innerExecutiveEmailWhere);
                 query = query.Where(outerWhere);
             }
 
@@ -1528,7 +1563,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             int page,
             int pageSize)
         {
-            var query = this.GetBaseQuery()
+            var query = this.GetBaseQuery(true)
                                 .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, false, showAllParticipants, editionId)
                                 .FindByKeywords(keywords, editionId)
                                 .HasProjectInNegotiation(editionId, filterByProjectsInNegotiation);
@@ -1566,6 +1601,45 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                             ImageUploadDate = aoc.AttendeeOrganization.Organization.ImageUploadDate
 
                                         })),
+                                CreateDate = c.CreateDate,
+                                UpdateDate = c.UpdateDate
+                            })
+                            .OrderBy(o => o.BadgeName)
+                            .ToListPagedAsync(page, pageSize);
+        }
+
+        /// <summary>
+        /// Finds all speakers API list dto paged.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="filterByProjectsInNegotiation">if set to <c>true</c> [filter by projects in negotiation].</param>
+        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
+        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<CollaboratorApiListDto>> FindAllSpeakersApiListDtoPaged(
+            int editionId,
+            string keywords,
+            bool filterByProjectsInNegotiation,
+            string collaboratorTypeName,
+            bool showAllParticipants,
+            int page,
+            int pageSize)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, false, showAllParticipants, editionId)
+                                .FindByNames(keywords, editionId);
+                                //.HasProjectInNegotiation(editionId, filterByProjectsInNegotiation);
+
+            return await query
+                            .Select(c => new CollaboratorApiListDto
+                            {
+                                Uid = c.Uid,
+                                BadgeName = c.Badge,
+                                Name = c.FirstName + " " + c.LastNames,
+                                ImageUploadDate = c.ImageUploadDate,
                                 CreateDate = c.CreateDate,
                                 UpdateDate = c.UpdateDate
                             })

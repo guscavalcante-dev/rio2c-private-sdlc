@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-09-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-24-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 04-14-2022
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1495,12 +1495,13 @@ var MyRio2cCommon = function () {
             width: '100%',
             allowClear: options.allowClear,
             placeholder: options.placeholder,
-            delay: 250,
+            //minimumInputLength: 3,
             ajax: {
                 url: MyRio2cCommon.getUrlWithCultureAndEdition(options.url),
                 dataType: 'json',
+                delay: 1000,
                 type: "GET",
-                quietMillis: 50,
+                //quietMillis: 50,
                 data: function (params) {
                     var query = {
                         keywords: params.term,
@@ -1511,6 +1512,7 @@ var MyRio2cCommon = function () {
                     return query;
                 },
                 processResults: function (data, params) {
+
                     params.page = params.page || 1;
 
                     return MyRio2cCommon.handleAjaxReturn({
