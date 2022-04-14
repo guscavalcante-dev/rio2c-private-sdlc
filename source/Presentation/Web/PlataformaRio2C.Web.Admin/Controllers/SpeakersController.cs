@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-15-2021
+// Last Modified On : 04-14-2022
 // ***********************************************************************
 // <copyright file="SpeakersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -709,7 +709,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersReadString)]
         public async Task<ActionResult> FindAllByFilters(string keywords, int? page = 1)
         {
-            var collaboratorsApiDtos = await this.collaboratorRepo.FindAllDropdownApiListDtoPaged(
+            var collaboratorsApiDtos = await this.collaboratorRepo.FindAllSpeakersApiListDtoPaged(
                 this.EditionDto.Id,
                 keywords,
                 false,
@@ -732,15 +732,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     Uid = c.Uid,
                     BadgeName = c.BadgeName?.Trim(),
                     Name = c.Name?.Trim(),
-                    Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.Uid, c.ImageUploadDate, true) : null,
-                    JobTitle = c.GetCollaboratorJobTitleBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value?.Trim(),
-                    Companies = c.OrganizationsDtos?.Select(od => new CollaboratorsDropdownOrganizationDto
-                    {
-                        Uid = od.Uid,
-                        TradeName = od.TradeName,
-                        CompanyName = od.CompanyName,
-                        Picture = od.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, od.Uid, od.ImageUploadDate, true) : null
-                    })?.ToList()
+                    Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.Uid, c.ImageUploadDate, true) : null
                 })?.ToList()
             }, JsonRequestBehavior.AllowGet);
         }
