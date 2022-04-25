@@ -38,6 +38,8 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
         private readonly string filesInnovationOrganizationsDirectory;
         private readonly string audioFilesDirectory;
 
+        private readonly string errorCroppingDirectory;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="FileAwsRepository"/> class.
         /// </summary>
@@ -53,6 +55,8 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
             this.filesLogisticsAirfareDirectory = ConfigurationManager.AppSettings["AwsFilesLogisticsAirfareDirectory"];
             this.filesInnovationOrganizationsDirectory = ConfigurationManager.AppSettings["AwsFilesInnovationOrganizationsDirectory"];
             this.audioFilesDirectory = ConfigurationManager.AppSettings["AwsAudioFilesDirectory"];
+
+            this.errorCroppingDirectory = "img/errorCropping/";
         }
 
         #region Get Url
@@ -281,6 +285,11 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
             if (fileRepositoryPathType.Uid == FileRepositoryPathType.AudioFile.Uid)
             {
                 return string.Format(this.audioFilesDirectory, args);
+            }
+
+            if(fileRepositoryPathType.Uid == FileRepositoryPathType.ErrorCropping.Uid)
+            {
+                return string.Format(this.errorCroppingDirectory, args);
             }
 
             return string.Empty;

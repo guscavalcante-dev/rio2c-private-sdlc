@@ -69,11 +69,11 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
             UploadLogo(fileUid, imageBytes, fileRepositoryPathType, true);
 
             // Thumbnail image 200x200
-            var croppedImage200 = CropImage(imageBytes, dataX, dataY, dataWidth, dataHeight, true, 200, 200);
+            var croppedImage200 = CropImage(imageBytes, dataX, dataY, dataWidth, dataHeight, true, 200, 200, fileUid);
             UploadLogo(fileUid, croppedImage200.GetBytes(), fileRepositoryPathType, false);
 
             // Thumbnail imagem 500x500
-            var croppedImage500 = CropImage(imageBytes, dataX, dataY, dataWidth, dataHeight, true, 500, 500);
+            var croppedImage500 = CropImage(imageBytes, dataX, dataY, dataWidth, dataHeight, true, 500, 500, fileUid);
             UploadLogo(fileUid, croppedImage500.GetBytes(), fileRepositoryPathType, false, "_500x500");
         }
 
@@ -153,13 +153,13 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
 
         #region Private Methods
 
-            /// <summary>Uploads the logo.</summary>
-            /// <param name="siteId">The site identifier.</param>
-            /// <param name="imageBytes">The image bytes.</param>
-            /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
-            /// <param name="isOriginalLogo">if set to <c>true</c> [is original logo].</param>
-            /// <param name="additionalFileInfo">The additional file information.</param>
-            private static void UploadLogo(Guid siteId, byte[] imageBytes, FileRepositoryPathType fileRepositoryPathType, bool isOriginalLogo, string additionalFileInfo = null)
+        /// <summary>Uploads the logo.</summary>
+        /// <param name="siteId">The site identifier.</param>
+        /// <param name="imageBytes">The image bytes.</param>
+        /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
+        /// <param name="isOriginalLogo">if set to <c>true</c> [is original logo].</param>
+        /// <param name="additionalFileInfo">The additional file information.</param>
+        private static void UploadLogo(Guid siteId, byte[] imageBytes, FileRepositoryPathType fileRepositoryPathType, bool isOriginalLogo, string additionalFileInfo = null)
         {
             IFileRepository fileRepo = new FileRepositoryFactory().Get();
 
@@ -200,7 +200,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
         /// <param name="basicCropImageWidth">Width of the basic crop image.</param>
         /// <param name="basicCropImageHeight">Height of the basic crop image.</param>
         /// <returns></returns>
-        private static WebImage CropImage(byte[] content, decimal? x, decimal? y, decimal? width, decimal? height, bool basicCropAfter, int? basicCropImageWidth, int? basicCropImageHeight)
+        private static WebImage CropImage(byte[] content, decimal? x, decimal? y, decimal? width, decimal? height, bool basicCropAfter, int? basicCropImageWidth, int? basicCropImageHeight, Guid? fileUid = null)
         {
             byte[] croppedImage = null;
             if (width.HasValue && height.HasValue && x.HasValue && y.HasValue)
@@ -215,9 +215,13 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
 
                     croppedImage = ImageHelper.CropImage(content, cropPointX, cropPointY, cropWidth, cropHeight);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw new Exception("Error croppping the image");
+                    //Uploads the original logo to ErrorCropping repository to debug later. This code must be deleted after RIO2CMY-564 is finished!. 25/04/2022
+                    UploadLogo(fileUid.Value, content, FileRepositoryPathType.ErrorCropping, true);
+
+                    throw new Exception("Error croppping the image: " + ex.GetInnerMessage());
+                    
                 }
             }
             else
