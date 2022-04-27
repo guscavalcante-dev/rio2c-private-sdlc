@@ -220,8 +220,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
                     //Uploads the original logo to ErrorCropping repository to debug later. This code must be deleted after RIO2CMY-564 is finished!. 25/04/2022
                     UploadLogo(fileUid.Value, content, FileRepositoryPathType.ErrorCropping, true);
 
-                    throw new Exception("Error croppping the image: " + ex.GetInnerMessage());
-                    
+                    throw new Exception($"Error croppping the image: {ex.GetInnerMessage()} | Parameters => content is not null: {content != null} ||| x:{x} ||| y:{y} ||| width:{width} ||| height:{height} ||| basicCropAfter:{basicCropAfter} ||| basicCropImageWidth:{basicCropImageWidth} ||| basicCropImageHeight:{basicCropImageHeight} ||| fileUid:{fileUid}");
                 }
             }
             else
