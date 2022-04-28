@@ -261,7 +261,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
         private static byte[] CropImage(Stream content, int x, int y, int width, int height)
         {
             //Parsing stream to bitmap
-            using (Bitmap sourceBitmap = new Bitmap(content))
+            using (Bitmap sourceBitmap = (Bitmap)Image.FromStream(content, true, false))
             {
                 var sourceBitmapFixed = FixOrientation(sourceBitmap);
 
