@@ -205,23 +205,12 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
             byte[] croppedImage = null;
             if (width.HasValue && height.HasValue && x.HasValue && y.HasValue)
             {
-                // Convert the crop values to int
-                try
-                {
-                    var cropWidth = Decimal.ToInt32(width.Value);
-                    var cropHeight = Decimal.ToInt32(height.Value);
-                    var cropPointX = Decimal.ToInt32(x.Value);
-                    var cropPointY = Decimal.ToInt32(y.Value);
+                var cropWidth = Decimal.ToInt32(width.Value);
+                var cropHeight = Decimal.ToInt32(height.Value);
+                var cropPointX = Decimal.ToInt32(x.Value);
+                var cropPointY = Decimal.ToInt32(y.Value);
 
-                    croppedImage = ImageHelper.CropImage(content, cropPointX, cropPointY, cropWidth, cropHeight);
-                }
-                catch (Exception ex)
-                {
-                    //Uploads the original logo to ErrorCropping repository to debug later. This code must be deleted after RIO2CMY-564 is finished!. 25/04/2022
-                    UploadLogo(fileUid.Value, content, FileRepositoryPathType.ErrorCropping, true);
-
-                    throw new Exception($"Error croppping the image: {ex.GetInnerMessage()} | Parameters => content is not null: {content != null} ||| x:{x} ||| y:{y} ||| width:{width} ||| height:{height} ||| basicCropAfter:{basicCropAfter} ||| basicCropImageWidth:{basicCropImageWidth} ||| basicCropImageHeight:{basicCropImageHeight} ||| fileUid:{fileUid}");
-                }
+                croppedImage = ImageHelper.CropImage(content, cropPointX, cropPointY, cropWidth, cropHeight);
             }
             else
             {
@@ -261,27 +250,34 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
         private static byte[] CropImage(Stream content, int x, int y, int width, int height)
         {
             //Parsing stream to bitmap
-            using (Bitmap sourceBitmap = (Bitmap)Image.FromStream(content, true, false))
+            using (Bitmap sourceBitmap = new Bitmap(content, false))
             {
                 var sourceBitmapFixed = FixOrientation(sourceBitmap);
 
                 //Get new dimensions
                 Rectangle cropRect = new Rectangle(x, y, width, height);
 
-                //Creating new bitmap with valid dimensions
-                using (Bitmap newBitMap = new Bitmap(cropRect.Width, cropRect.Height))
+                try
                 {
-                    using (Graphics g = Graphics.FromImage(newBitMap))
+                    //Creating new bitmap with valid dimensions
+                    using (Bitmap newBitMap = new Bitmap(cropRect.Width, cropRect.Height, PixelFormat.Format24bppRgb))
                     {
-                        g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                        g.SmoothingMode = SmoothingMode.HighQuality;
-                        g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                        g.CompositingQuality = CompositingQuality.HighQuality;
+                        using (Graphics g = Graphics.FromImage(newBitMap))
+                        {
+                            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                            g.SmoothingMode = SmoothingMode.HighQuality;
+                            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                            g.CompositingQuality = CompositingQuality.HighQuality;
 
-                        g.DrawImage(sourceBitmapFixed, new Rectangle(0, 0, newBitMap.Width, newBitMap.Height), cropRect, GraphicsUnit.Pixel);
+                            g.DrawImage(sourceBitmapFixed, new Rectangle(0, 0, newBitMap.Width, newBitMap.Height), cropRect, GraphicsUnit.Pixel);
 
-                        return GetBitmapBytes(newBitMap);
+                            return GetBitmapBytes(newBitMap);
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Error at new Bitmap() => {cropRect.Width} {cropRect.Height} {cropRect.ToString()} {ex.GetInnerMessage()} ");
                 }
             }
         }
