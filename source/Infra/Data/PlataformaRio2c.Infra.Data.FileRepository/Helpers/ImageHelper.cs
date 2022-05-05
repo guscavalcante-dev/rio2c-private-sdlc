@@ -205,23 +205,12 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
             byte[] croppedImage = null;
             if (width.HasValue && height.HasValue && x.HasValue && y.HasValue)
             {
-                // Convert the crop values to int
-                //try
-                //{
                 var cropWidth = Decimal.ToInt32(width.Value);
                 var cropHeight = Decimal.ToInt32(height.Value);
                 var cropPointX = Decimal.ToInt32(x.Value);
                 var cropPointY = Decimal.ToInt32(y.Value);
 
                 croppedImage = ImageHelper.CropImage(content, cropPointX, cropPointY, cropWidth, cropHeight);
-                //}
-                //catch (Exception ex)
-                //{
-                //    //Uploads the original logo to ErrorCropping repository to debug later. This code must be deleted after RIO2CMY-564 is finished!. 25/04/2022
-                //    UploadLogo(fileUid.Value, content, FileRepositoryPathType.ErrorCropping, true);
-
-                //    throw new Exception($"Error croppping the image: {ex.GetInnerMessage()} | Parameters => content is not null: {content != null} ||| x:{x} ||| y:{y} ||| width:{width} ||| height:{height} ||| basicCropAfter:{basicCropAfter} ||| basicCropImageWidth:{basicCropImageWidth} ||| basicCropImageHeight:{basicCropImageHeight} ||| fileUid:{fileUid}");
-                //}
             }
             else
             {
@@ -261,7 +250,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
         private static byte[] CropImage(Stream content, int x, int y, int width, int height)
         {
             //Parsing stream to bitmap
-            using (Bitmap sourceBitmap = new Bitmap(content, false)) //(Bitmap)Image.FromStream(content, false, false);
+            using (Bitmap sourceBitmap = new Bitmap(content, false))
             {
                 var sourceBitmapFixed = FixOrientation(sourceBitmap);
 
