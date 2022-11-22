@@ -4,7 +4,7 @@
 // Created          : 09-06-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 10-17-2022
+// Last Modified On : 11-22-2022
 // ***********************************************************************
 // <copyright file="OnboardCollaboratorData.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -154,7 +154,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.SharePublicEmail = !string.IsNullOrEmpty(collaborator.PublicEmail) ? (bool?)true : null;
             this.PublicEmail = collaborator?.PublicEmail;
             this.BirthDate = collaborator?.BirthDate;
-            this.PublicEmail = collaborator?.PublicEmail;
             
             this.Website = collaborator?.Website;
             this.Linkedin = collaborator?.Linkedin;
