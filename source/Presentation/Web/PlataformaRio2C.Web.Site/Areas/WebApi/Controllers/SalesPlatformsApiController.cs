@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 07-10-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-13-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 11-24-2022
 // ***********************************************************************
 // <copyright file="SalesPlatformsApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,8 +21,12 @@ using System.Web.Http.Description;
 using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
 
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 {
@@ -32,35 +36,44 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
     public class SalesPlatformsApiController : BaseApiController
     {
         private readonly IMediator commandBus;
+        private readonly IAttendeeSalesPlatformRepository attendeeSalesPlatformRepo;
+        private readonly ISalesPlatformServiceFactory salesPlatformServiceFactory;
 
-        /// <summary>Initializes a new instance of the <see cref="SalesPlatformsApiController"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SalesPlatformsApiController" /> class.
+        /// </summary>
         /// <param name="commandBus">The command bus.</param>
-        public SalesPlatformsApiController(IMediator commandBus)
+        /// <param name="attendeeSalesPlatformRepository">The attendee sales platform repository.</param>
+        /// <param name="salesPlatformServiceFactory">The sales platform service factory.</param>
+        public SalesPlatformsApiController(
+            IMediator commandBus,
+            IAttendeeSalesPlatformRepository attendeeSalesPlatformRepository,
+            ISalesPlatformServiceFactory salesPlatformServiceFactory)
         {
             this.commandBus = commandBus;
+            this.attendeeSalesPlatformRepo = attendeeSalesPlatformRepository;
+            this.salesPlatformServiceFactory = salesPlatformServiceFactory;
         }
 
         #region Inti requests
 
         /// <summary>
-        /// Intis this instance.
+        /// Endpoint for INTI webhook requests
         /// </summary>
         /// <returns></returns>
         [HttpPost]
         [Route("inti")]
-        //[Route("inti/{key?}")]
-        //public async Task<IHttpActionResult> Inti(string key)
         public async Task<IHttpActionResult> Inti()
         {
             try
             {
-                //TODO: Inti not sending APIKey as parameter. Check this after!
+                //TODO: Inti doesn't send APIKey as parameter. Fix this!
                 string key = "7A8C7EDC-3084-47D5-AD5A-DF6A128B341C";
 
                 var salesPlatformWebhooRequestUid = Guid.NewGuid();
                 var result = await this.commandBus.Send(new CreateSalesPlatformWebhookRequest(
                     salesPlatformWebhooRequestUid,
-                    "Inti",
+                    SalePlatformName.Inti,
                     key,
                     HttpContext.Current.Request.Url.AbsoluteUri,
                     Request.Headers.ToString(),
@@ -78,61 +91,17 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 return await BadRequest(ex.GetInnerMessage());
             }
 
-            return await Json(new { status = "success", message = "Inti event saved successfully." });
+            return await Json(new { status = "success", message = $"{SalePlatformName.Inti} event saved successfully." });
         }
-
-        ///// <summary>Ticket Sold.</summary>
-        ///// <returns></returns>
-        //[HttpPost]
-        //[Route("inti-ticket-sold")]
-        //public async Task<IHttpActionResult> IntiTicketSold()
-        //{            
-        //    var ctx = HttpContext.Current;
-        //    var json = String.Empty;
-        //    ctx.Request.InputStream.Position = 0;
-        //    using (var inputStream = new StreamReader(ctx.Request.InputStream)){
-        //        json = inputStream.ReadToEnd();
-        //    }
-        //    var dto = new JavaScriptSerializer().Deserialize<IntiPayload>(json);
-
-        //    var headers = Request.Headers.ToString();
-        //    var ip = HttpContext.Current.Request.GetIpAddress();
-        //    var salesPlatformWebhookRequestUid = Guid.NewGuid();
-        //    var result = await this.commandBus.Send(new CreateSalesPlatformWebhookRequest(
-        //        salesPlatformWebhookRequestUid,
-        //        "Inti",
-        //        dto.id.ToString(),
-        //        HttpContext.Current.Request.Url.AbsoluteUri,
-        //        headers,
-        //        json, // Request.Content.ReadAsStringAsync().Result,
-        //        ip)); 
-
-        //    return await Json(new { status = "success", message = "Received ticket sold" });
-        //}
-
-
-        //[HttpPost]
-        //[Route("receive-payload")]
-        //public async Task<IHttpActionResult> receivePayload()
-        //{
-        //    var ctx = HttpContext.Current;
-        //    var json = String.Empty;
-        //    ctx.Request.InputStream.Position = 0;
-        //    using (var inputStream = new StreamReader(ctx.Request.InputStream))
-        //    {
-        //        json = inputStream.ReadToEnd();
-        //    }
-
-        //    var content = json;
-
-        //    return await Json(new { status = "ok" });
-        //}
 
         #endregion
 
         #region Eventbrite requests
 
-        /// <summary>Tests this instance.</summary>
+        /// <summary>
+        /// Endpoint for EventBrite webhook requests
+        /// </summary>
+        /// <param name="key">The key.</param>
         /// <returns></returns>
         [HttpPost]
         [Route("eventbrite/{key?}")]
@@ -143,7 +112,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 var salesPlatformWebhooRequestUid = Guid.NewGuid();
                 var result = await this.commandBus.Send(new CreateSalesPlatformWebhookRequest(
                     salesPlatformWebhooRequestUid,
-                    "Eventbrite",
+                    SalePlatformName.Eventbrite,
                     key,
                     HttpContext.Current.Request.Url.AbsoluteUri,
                     Request.Headers.ToString(),
@@ -161,7 +130,55 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 return await BadRequest(ex.GetInnerMessage());
             }
 
-            return await Json(new { status = "success", message = "Eventbrite event saved successfully." });
+            return await Json(new { status = "success", message = $"{SalePlatformName.Eventbrite} event saved successfully." });
+        }
+
+        #endregion
+
+        #region Sympla requests
+
+        /// <summary>
+        /// Endpoint for Sympla webhook requests
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("sympla/{key?}")]
+        public async Task<IHttpActionResult> Sympla(string key)
+        {
+            try
+            {
+                var attendeeSalesPlatformDto = await this.attendeeSalesPlatformRepo.FindDtoByNameAsync(SalePlatformName.Sympla);
+                var salesPlatformService = salesPlatformServiceFactory.Get(attendeeSalesPlatformDto);
+                var salesPlatformAttendeeDtos = salesPlatformService.GetAttendeesByEventId(attendeeSalesPlatformDto?.AttendeeSalesPlatform?.SalesPlatformEventid);
+
+                //TODO: Remove this foreach and create a specific command wich receive "salesPlatformAttendeeDtos" as parameter
+                //and proccess all the payloads with only one command call.
+                foreach (var salesPlatformAttendeeDto in salesPlatformAttendeeDtos)
+                {
+                    var salesPlatformWebhooRequestUid = Guid.NewGuid();
+                    var result = await this.commandBus.Send(new CreateSalesPlatformWebhookRequest(
+                        salesPlatformWebhooRequestUid,
+                        SalePlatformName.Sympla,
+                        key,
+                        HttpContext.Current.Request.Url.AbsoluteUri,
+                        Request.Headers.ToString(),
+                        salesPlatformAttendeeDto.Payload,
+                        HttpContext.Current.Request.GetIpAddress()));
+                }
+            }
+            catch (DomainException ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return await BadRequest(ex.GetInnerMessage());
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return await BadRequest(ex.GetInnerMessage());
+            }
+
+            return await Json(new { status = "success", message = $"{SalePlatformName.Sympla} event saved successfully." });
         }
 
         #endregion

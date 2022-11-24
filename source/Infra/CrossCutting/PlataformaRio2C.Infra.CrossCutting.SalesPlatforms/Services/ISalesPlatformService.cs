@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 07-12-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-01-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 11-24-2022
 // ***********************************************************************
 // <copyright file="ISalesPlatformService.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,5 +21,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services
     public interface ISalesPlatformService
     {
         Tuple<string, List<SalesPlatformAttendeeDto>> ExecuteRequest();
+        List<SalesPlatformAttendeeDto> GetAttendeesByEventId(string eventId);
     }
 }

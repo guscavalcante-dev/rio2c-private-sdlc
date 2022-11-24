@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-30-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-01-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 11-24-2022
 // ***********************************************************************
 // <copyright file="SalesPlatformAttendeeDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,6 +15,7 @@ using System;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Models;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla.Models;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
 {
@@ -59,6 +60,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
         public bool IsTicketPrinted { get; private set; }
         public bool IsTicketUsed { get; private set; }
         public DateTime? TicketUpdateDate { get; private set; }
+
+        // Custom Fields
+        public string Payload { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="SalesPlatformAttendeeDto"/> class.</summary>
         public SalesPlatformAttendeeDto()
@@ -155,6 +159,54 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
             this.IsTicketPrinted = false;
             this.IsTicketUsed = false;
             this.TicketUpdateDate = intiPayload?.Timestamp;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SalesPlatformAttendeeDto"/> class.
+        /// </summary>
+        /// <param name="symplaPayload">The sympla payload.</param>
+        public SalesPlatformAttendeeDto(SymplaPayload symplaPayload)
+        {
+            // Event
+            this.EventId = null; //TODO: Não retorna pela rota "Listar participantes por evento"
+
+            // Order
+            this.OrderId = symplaPayload?.OrderId;
+
+            // Attendee
+            this.AttendeeId = symplaPayload?.Id.ToString();
+            this.SalesPlatformUpdateDate = DateTime.Now; //TODO: Retorna apenas pela rota "Listar pedidos por evento"
+            this.SalesPlatformAttendeeStatus = symplaPayload?.GetSalesPlatformAttendeeStatus();
+            this.IsCancelled = false;
+            this.IsCheckedIn = false;
+            this.TicketClassId = symplaPayload?.TicketName;
+            this.TicketClassName = symplaPayload?.TicketName;
+
+            // Profile
+            this.FirstName = symplaPayload?.FirstName;
+            this.LastName = symplaPayload?.LastName;
+            this.Name = $"{symplaPayload?.FirstName} {symplaPayload?.LastName}";
+            this.Email = symplaPayload?.Email;
+            this.Gender = "";
+            this.Age = null;
+            this.BirthDate = "";
+            this.CellPhone = "";
+            this.JobTitle = "";
+
+            // Barcode
+            this.Barcode = symplaPayload?.TicketNumQrCode;
+            this.IsBarcodePrinted = false;
+            this.IsBarcodeUsed = false;
+            this.BarcodeUpdateDate = null;
+
+            // TicketUrl - Sympla uses QRCode instead of TicketUrl          
+            this.TicketUrl = null;
+            this.IsTicketPrinted = false;
+            this.IsTicketUsed = false;
+            this.TicketUpdateDate = null;
+
+            // Custom Fields
+            this.Payload = symplaPayload?.OriginalPayload;
         }
     }
 }
