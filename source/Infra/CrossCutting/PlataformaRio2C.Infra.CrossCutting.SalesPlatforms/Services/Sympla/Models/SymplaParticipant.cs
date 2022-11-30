@@ -4,23 +4,25 @@
 // Created          : 11-24-2022
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 11-24-2022
+// Last Modified On : 11-30-2022
 // ***********************************************************************
-// <copyright file="SymplaPayload.cs" company="Softo">
+// <copyright file="SymplaParticipant.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 using Newtonsoft.Json;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla.Models
 {
     /// <summary>
     /// SymplaPayload is 'Participant' in Sympla platform
     /// </summary>
-    public class SymplaPayload
+    public class SymplaParticipant
     {
         [JsonProperty("id")]
         public int Id { get; set; }
@@ -64,9 +66,25 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla.Mode
         #region Custom Fields
 
         /// <summary>
-        /// The original payload received by API, without deserialization.
+        /// This property doesn't exists in original SymplaParticipant JSON. It's manually populated.
         /// </summary>
-        public string OriginalPayload { get; set; }
+        [JsonProperty("event_id")]
+        public string EventId { get; set; }
+
+        /// <summary>
+        /// This property doesn't exists in original SymplaParticipant JSON. It's manually populated.
+        /// </summary>
+        [JsonProperty("updated_date")]
+        public string UpdatedDateString { get; set; }
+
+        [JsonIgnore]
+        public DateTime UpdatedDate => DateTime.ParseExact(this.UpdatedDateString, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+
+        /// <summary>
+        /// The original payload string received by API, without deserialization.
+        /// </summary>
+        [JsonIgnore]
+        public string PayloadString { get; set; }
 
         /// <summary>
         /// Gets the sales platform action.
@@ -108,15 +126,38 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla.Mode
             }
         }
 
+        /// <summary>
+        /// Cancels the participant.
+        /// </summary>
+        public void CancelParticipant()
+        {
+            this.OrderStatus = SymplaAction.TicketCancelled;
+            this.UpdatedDateString = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        }
+
+        /// <summary>
+        /// Determines whether [has ownership change] [the specified other sympla participant].
+        /// </summary>
+        /// <param name="otherSymplaParticipant">The other sympla participant.</param>
+        /// <returns>
+        ///   <c>true</c> if [has ownership change] [the specified other sympla participant]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool HasOwnershipChange(SymplaParticipant otherSymplaParticipant)
+        {
+            return this.FirstName != otherSymplaParticipant.FirstName ||
+                   this.LastName != otherSymplaParticipant.LastName ||
+                   this.Email != otherSymplaParticipant.Email;
+        }
+
         #endregion
     }
 
     #region Helper classes
 
-    public class SymplaPagedPayload
+    public class SymplaParticipantsPaged
     {
         [JsonProperty("data")]
-        public List<SymplaPayload> Payloads;
+        public List<SymplaParticipant> Participants;
 
         [JsonProperty("pagination")]
         public Pagination Pagination;

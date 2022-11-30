@@ -4,7 +4,7 @@
 // Created          : 06-21-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 11-24-2022
+// Last Modified On : 11-30-2022
 // ***********************************************************************
 // <copyright file="IntiSalesPlatformService.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,10 +35,10 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti
         /// <summary>
         /// Initializes a new instance of the <see cref="IntiSalesPlatformService" /> class.
         /// </summary>
-        /// <param name="attendeeSalesPlatformDto">The attendee sales platform dto.</param>
-        public IntiSalesPlatformService(AttendeeSalesPlatformDto attendeeSalesPlatformDto)
+        /// <param name="salesPlatformDto">The sales platform dto.</param>
+        public IntiSalesPlatformService(SalesPlatformDto salesPlatformDto)
         {
-            this.apiKey = attendeeSalesPlatformDto.SalesPlatform.ApiKey;
+            this.apiKey = salesPlatformDto.ApiKey;
         }
 
         /// <summary>Initializes a new instance of the <see cref="EventbriteSalesPlatformService"/> class.</summary>
@@ -74,10 +74,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti
         /// <summary>
         /// Gets the attendees by event identifier.
         /// </summary>
-        /// <param name="eventId">The event identifier.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public List<SalesPlatformAttendeeDto> GetAttendeesByEventId(string eventId)
+        public List<SalesPlatformAttendeeDto> GetAttendees()
         {
             throw new NotImplementedException();
         }

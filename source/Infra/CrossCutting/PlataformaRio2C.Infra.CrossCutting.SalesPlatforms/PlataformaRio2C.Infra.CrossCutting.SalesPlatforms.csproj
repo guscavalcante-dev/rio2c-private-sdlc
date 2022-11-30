@@ -84,7 +84,8 @@
     <Compile Include="Services\Eventbrite\Models\EventbriteOrder.cs" />
     <Compile Include="Services\Eventbrite\Models\EventbritePayload.cs" />
     <Compile Include="Services\ISalesPlatformService.cs" />
-    <Compile Include="Services\Sympla\Models\SymplaPayload.cs" />
+    <Compile Include="Services\Sympla\Models\SymplaOrder.cs" />
+    <Compile Include="Services\Sympla\Models\SymplaParticipant.cs" />
     <Compile Include="Services\Sympla\Models\SymplaAction.cs" />
     <Compile Include="Services\Sympla\SymplaSalesPlatformService.cs" />
   </ItemGroup>

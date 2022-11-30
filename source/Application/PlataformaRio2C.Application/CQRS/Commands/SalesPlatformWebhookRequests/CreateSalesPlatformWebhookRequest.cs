@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 07-12-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-19-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 11-30-2022
 // ***********************************************************************
 // <copyright file="CreateSalesPlatformWebhookRequest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,15 +26,21 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string Header { get; private set; }
         public string Payload { get; private set; }
         public string IpAddress { get; private set; }
+        public DateTime? SalePlatformLastOrderUpdatedDate { get; private set; }
+        public string AttendeeSalesPlatformEventId { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="CreateSalesPlatformWebhookRequest"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateSalesPlatformWebhookRequest" /> class.
+        /// </summary>
         /// <param name="salesPlatformWebhookRequestUid">The sales platform webhook request uid.</param>
         /// <param name="salesPlatformName">Name of the sales platform.</param>
-        /// <param name="webhookSecurityKey">The webhoo security key.</param>
+        /// <param name="webhookSecurityKey">The webhook security key.</param>
         /// <param name="endpoint">The endpoint.</param>
         /// <param name="header">The header.</param>
         /// <param name="payload">The payload.</param>
         /// <param name="ipAddress">The ip address.</param>
+        /// <param name="salePlatformLastOrderUpdatedDate">The sale platform last order updated date.</param>
+        /// <param name="attendeeSalesPlatformEventId">The attendee sales platform event identifier.</param>
         public CreateSalesPlatformWebhookRequest(
             Guid salesPlatformWebhookRequestUid,
             string salesPlatformName,
@@ -42,7 +48,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string endpoint,
             string header,
             string payload,
-            string ipAddress)
+            string ipAddress,
+            DateTime? salePlatformLastOrderUpdatedDate = null,
+            string attendeeSalesPlatformEventId = null)
         {
             this.SalesPlatformWebhookRequestUid = salesPlatformWebhookRequestUid;
             this.SalesPlatformName = salesPlatformName;
@@ -51,6 +59,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Header = header;
             this.Payload = payload;
             this.IpAddress = ipAddress;
+            this.SalePlatformLastOrderUpdatedDate = salePlatformLastOrderUpdatedDate;
+            this.AttendeeSalesPlatformEventId = attendeeSalesPlatformEventId;
         }
     }
 }

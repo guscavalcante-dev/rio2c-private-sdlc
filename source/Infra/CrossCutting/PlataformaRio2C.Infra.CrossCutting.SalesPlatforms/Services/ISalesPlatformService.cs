@@ -21,6 +21,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services
     public interface ISalesPlatformService
     {
         Tuple<string, List<SalesPlatformAttendeeDto>> ExecuteRequest();
-        List<SalesPlatformAttendeeDto> GetAttendeesByEventId(string eventId);
+        List<SalesPlatformAttendeeDto> GetAttendees();
     }
 }

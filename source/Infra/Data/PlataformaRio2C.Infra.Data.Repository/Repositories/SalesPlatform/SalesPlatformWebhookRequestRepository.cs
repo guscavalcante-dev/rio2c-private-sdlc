@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 07-11-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-01-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 11-30-2022
 // ***********************************************************************
 // <copyright file="SalesPlatformWebhookRequestRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using LinqKit;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
@@ -53,38 +54,45 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>
+        /// Finds the by payload contains.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="salesPlatformAttendeeIds">The sales platform attendee ids.</param>
+        /// <returns></returns>
+        internal static IQueryable<SalesPlatformWebhookRequest> FindByPayloadContains(this IQueryable<SalesPlatformWebhookRequest> query, string[] salesPlatformAttendeeIds)
+        {
+            if (salesPlatformAttendeeIds?.Length > 0)
+            {
+                var outerWhere = PredicateBuilder.New<SalesPlatformWebhookRequest>(false);
+
+                foreach (var salesPlatformAttendeeId in salesPlatformAttendeeIds)
+                {
+                    outerWhere = outerWhere.Or(p => p.Payload.Contains(salesPlatformAttendeeId));
+                }
+
+                query = query.Where(outerWhere).AsQueryable();
+            }
+
+            return query;
+        }
+
+        /// <summary>
+        /// Finds the by sale platform identifier.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="salesPlatformId">The sales platform identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<SalesPlatformWebhookRequest> FindBySalePlatformId(this IQueryable<SalesPlatformWebhookRequest> query, int salesPlatformId)
+        {
+            query = query.Where(spwr => spwr.SalesPlatformId == salesPlatformId);
+
+            return query;
+        }
     }
 
     #endregion
-
-    //#region SalesPlatformBaseDto IQueryable Extensions
-
-    ///// <summary>
-    ///// SalesPlatformBaseDtoIQueryableExtensions
-    ///// </summary>
-    //internal static class SalesPlatformBaseDtoIQueryableExtensions
-    //{
-    //    /// <summary>
-    //    /// To the list paged.
-    //    /// </summary>
-    //    /// <param name="query">The query.</param>
-    //    /// <param name="page">The page.</param>
-    //    /// <param name="pageSize">Size of the page.</param>
-    //    /// <returns></returns>
-    //    internal static async Task<IPagedList<SalesPlatformDto>> ToListPagedAsync(this IQueryable<SalesPlatformDto> query, int page, int pageSize)
-    //    {
-    //        page++;
-
-    //        // Page the list
-    //        var pagedList = await query.ToPagedListAsync(page, pageSize);
-    //        if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
-    //            pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
-
-    //        return pagedList;
-    //    }
-    //}
-
-    //#endregion
 
     /// <summary>SalesPlatformWebhookRequestRepository</summary>
     public class SalesPlatformWebhookRequestRepository : Repository<PlataformaRio2CContext, SalesPlatformWebhookRequest>, ISalesPlatformWebhookRequestRepository
@@ -145,6 +153,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 });
 
             return await query.ToListAsync();
+        }
+
+        /// <summary>
+        /// Finds all webhook requests payloads by sale platform identifier and attendee ids.
+        /// </summary>
+        /// <param name="salePlatformId">The sale platform identifier.</param>
+        /// <param name="salesPlatformAttendeeIds">The sales platform attendee ids.</param>
+        /// <returns></returns>
+        public List<string> FindAllWebhookRequestsPayloadsBySalePlatformIdAndAttendeeIds(int salePlatformId, string[] salesPlatformAttendeeIds)
+        {
+            var query = this.GetBaseQuery()
+                                .FindBySalePlatformId(salePlatformId)
+                                .FindByPayloadContains(salesPlatformAttendeeIds)
+                                .Select(spwr => spwr.Payload);
+
+            return query.ToList();
         }
     }
 }

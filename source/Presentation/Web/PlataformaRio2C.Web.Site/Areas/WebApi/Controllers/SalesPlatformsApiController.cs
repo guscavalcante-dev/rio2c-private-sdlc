@@ -4,7 +4,7 @@
 // Created          : 07-10-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 11-24-2022
+// Last Modified On : 11-30-2022
 // ***********************************************************************
 // <copyright file="SalesPlatformsApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,7 +23,6 @@ using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms;
-using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
@@ -36,23 +35,27 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
     public class SalesPlatformsApiController : BaseApiController
     {
         private readonly IMediator commandBus;
-        private readonly IAttendeeSalesPlatformRepository attendeeSalesPlatformRepo;
+        private readonly ISalesPlatformRepository salesPlatformRepo;
         private readonly ISalesPlatformServiceFactory salesPlatformServiceFactory;
+        private readonly ISalesPlatformWebhookRequestRepository salesPlatformWebhookRequestRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SalesPlatformsApiController" /> class.
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
-        /// <param name="attendeeSalesPlatformRepository">The attendee sales platform repository.</param>
+        /// <param name="salesPlatformRepository">The attendee sales platform repository.</param>
         /// <param name="salesPlatformServiceFactory">The sales platform service factory.</param>
+        /// <param name="salesPlatformWebhookRequestRepository">The sales platform webhook request repository.</param>
         public SalesPlatformsApiController(
             IMediator commandBus,
-            IAttendeeSalesPlatformRepository attendeeSalesPlatformRepository,
-            ISalesPlatformServiceFactory salesPlatformServiceFactory)
+            ISalesPlatformRepository salesPlatformRepository,
+            ISalesPlatformServiceFactory salesPlatformServiceFactory,
+            ISalesPlatformWebhookRequestRepository salesPlatformWebhookRequestRepository)
         {
             this.commandBus = commandBus;
-            this.attendeeSalesPlatformRepo = attendeeSalesPlatformRepository;
+            this.salesPlatformRepo = salesPlatformRepository;
             this.salesPlatformServiceFactory = salesPlatformServiceFactory;
+            this.salesPlatformWebhookRequestRepo = salesPlatformWebhookRequestRepository;
         }
 
         #region Inti requests
@@ -148,13 +151,12 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         {
             try
             {
-                var attendeeSalesPlatformDto = await this.attendeeSalesPlatformRepo.FindDtoByNameAsync(SalePlatformName.Sympla);
-                var salesPlatformService = salesPlatformServiceFactory.Get(attendeeSalesPlatformDto);
-                var salesPlatformAttendeeDtos = salesPlatformService.GetAttendeesByEventId(attendeeSalesPlatformDto?.AttendeeSalesPlatform?.SalesPlatformEventid);
+                var salesPlatformDto = await this.salesPlatformRepo.FindDtoByNameAsync(SalePlatformName.Sympla);
+                var salesPlatformService = salesPlatformServiceFactory.Get(salesPlatformDto, this.salesPlatformWebhookRequestRepo);
+                var salesPlatformAttendeeDtos = salesPlatformService.GetAttendees();
 
-                //TODO: Remove this foreach and create a specific command wich receive "salesPlatformAttendeeDtos" as parameter
-                //and proccess all the payloads with only one command call.
-                foreach (var salesPlatformAttendeeDto in salesPlatformAttendeeDtos)
+                // This OrderBy is required to import atendees in chronological order and updates "AttendeeSalesPlatform.LastOrderUpdateDate" properly. Take care when changing this!
+                foreach (var salesPlatformAttendeeDto in salesPlatformAttendeeDtos.OrderBy(dto => dto.SalesPlatformUpdateDate))
                 {
                     var salesPlatformWebhooRequestUid = Guid.NewGuid();
                     var result = await this.commandBus.Send(new CreateSalesPlatformWebhookRequest(
@@ -164,7 +166,9 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                         HttpContext.Current.Request.Url.AbsoluteUri,
                         Request.Headers.ToString(),
                         salesPlatformAttendeeDto.Payload,
-                        HttpContext.Current.Request.GetIpAddress()));
+                        HttpContext.Current.Request.GetIpAddress(),
+                        salesPlatformAttendeeDto.SalesPlatformUpdateDate,
+                        salesPlatformAttendeeDto.EventId));
                 }
             }
             catch (DomainException ex)

@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 07-11-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-31-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 11-30-2022
 // ***********************************************************************
 // <copyright file="ISalesPlatformWebhookRequestRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,5 +23,6 @@ namespace PlataformaRio2C.Domain.Interfaces
     {
         Task<List<SalesPlatformWebhookRequest>> FindAllByPendingAsync();
         Task<List<SalesPlatformWebhookRequestDto>> FindAllDtoByPendingAsync();
+        List<string> FindAllWebhookRequestsPayloadsBySalePlatformIdAndAttendeeIds(int salePlatformId, string[] salesPlatformAttendeeIds);
     }    
 }

@@ -4,7 +4,7 @@
 // Created          : 11-24-2022
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 11-24-2022
+// Last Modified On : 11-30-2022
 // ***********************************************************************
 // <copyright file="SymplaSalesPlatformService.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,6 +23,7 @@ using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla.Models;
 using Newtonsoft.Json.Linq;
 using System.Linq;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Domain.Interfaces;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla
 {
@@ -32,14 +33,21 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla
         private readonly string apiUrl = "https://api.sympla.com.br/public/v3/";
         private readonly string apiKey;
         private readonly SalesPlatformWebhookRequestDto salesPlatformWebhookRequestDto;
+        private readonly SalesPlatformDto salesPlatformDto;
+        private readonly ISalesPlatformWebhookRequestRepository salesPlatformWebhookRequestRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SymplaSalesPlatformService" /> class.
         /// </summary>
-        /// <param name="attendeeSalesPlatformDto">The attendee sales platform dto.</param>
-        public SymplaSalesPlatformService(AttendeeSalesPlatformDto attendeeSalesPlatformDto)
+        /// <param name="salesPlatformDto">The attendee sales platform dto.</param>
+        /// <param name="salesPlatformWebhookRequestRepository">The sales platform webhook request repository.</param>
+        public SymplaSalesPlatformService(
+            SalesPlatformDto salesPlatformDto,
+            ISalesPlatformWebhookRequestRepository salesPlatformWebhookRequestRepository)
         {
-            this.apiKey = attendeeSalesPlatformDto.SalesPlatform.ApiKey;
+            this.apiKey = salesPlatformDto?.ApiKey;
+            this.salesPlatformDto = salesPlatformDto;
+            this.salesPlatformWebhookRequestRepo = salesPlatformWebhookRequestRepository;
         }
 
         /// <summary>Initializes a new instance of the <see cref="SymplaSalesPlatformService"/> class.</summary>
@@ -78,89 +86,208 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla
             };
 
             return new Tuple<string, List<SalesPlatformAttendeeDto>>(payload.GetSalesPlatformAction(), salesPlatformAttendeeDtos);
-
-            //TODO: Implementar Checkin e Checkout do participante. Precisa ver se a sympla envia esses eventos!
-            //var payload = this.DeserializePayload(this.salesPlatformWebhookRequestDto.SalesPlatformWebhookRequest.Payload);
-            //switch (payload.Config.Action)
-            //{
-            //    // Attendees updates
-            //    case SymplaAction.AttendeeUpdated:
-            //    case SymplaAction.AttendeeCheckedIn:
-            //    case SymplaAction.AttendeeCheckedOut:
-            //        return new Tuple<string, List<SalesPlatformAttendeeDto>>(payload.Config.GetSalesPlatformAction(), this.GetAttendee(payload.ApiUrl));
-
-            //    //// Orders updates
-            //    //case Action.EventbriteOrderPlaced:
-            //    //case Action.EventbriteOrderRefunded:
-            //    //case Action.EventbriteOrderUpdated:
-            //    //    return new Tuple<string, List<SalesPlatformAttendeeDto>>(payload.Config.GetAction(), this.GetOrder(payload.ApiUrl));
-
-            //    // Other Updates
-            //    default:
-            //        throw new DomainException($"Sympla action ({payload.Config.Action}) not configured.");
-            //}
         }
 
         /// <summary>
-        /// Gets the attendees by event identifier.
+        /// Gets the attendees.
         /// </summary>
-        /// <param name="eventId">The event identifier.</param>
         /// <returns></returns>
-        public List<SalesPlatformAttendeeDto> GetAttendeesByEventId(string eventId)
+        public List<SalesPlatformAttendeeDto> GetAttendees()
         {
-            var response = this.ExecuteRequest($"events/{eventId}/participants", HttpMethod.Get, null);
-            JObject responseJObject = JObject.Parse(response);
-            List<JToken> originalPayloads = responseJObject["data"].ToList();
-
-            var symplaPagedPayload = JsonConvert.DeserializeObject<SymplaPagedPayload>(response);
-
             var salesPlatformAttendeeDtos = new List<SalesPlatformAttendeeDto>();
-            foreach (var payload in symplaPagedPayload.Payloads)
-            {
-                // Populates the original payload received by API, without deserialization.
-                // It's necessary to save the original payload at database.
-                payload.OriginalPayload = originalPayloads.FirstOrDefault(s => s["id"].Value<int>() == payload.Id)?.ToString().ToJsonMinified(); 
 
-                salesPlatformAttendeeDtos.Add(new SalesPlatformAttendeeDto(payload));
+            foreach (var attendeeSalesPlatform in salesPlatformDto.AttendeeSalesPlatforms)
+            {
+                var symplaOrdersUpdated = this.GetUpdatedOrders(attendeeSalesPlatform.SalesPlatformEventid,
+                                                                attendeeSalesPlatform.LastSalesPlatformOrderDate);
+
+                foreach (var symplaOrder in symplaOrdersUpdated)
+                {
+                    var symplaParticipants = this.GetParticipantsByOrderId(attendeeSalesPlatform.SalesPlatformEventid, symplaOrder.Id);
+                    foreach (var participant in symplaParticipants)
+                    {
+                        // The properties below doesn't exists in the Participants API, so they have to be taken from Order
+                        participant.EventId = symplaOrder?.EventId.ToString();
+                        participant.UpdatedDateString = symplaOrder?.UpdatedDateString;
+
+                        salesPlatformAttendeeDtos.Add(new SalesPlatformAttendeeDto(participant));
+                    }
+                }
+
+                if (salesPlatformAttendeeDtos.Count > 0)
+                {
+                    // Checks if the current processing payloads already exists in the database
+                    // It's called here to sent only one request to database to get all existent webhooks created
+                    var existentSalesPlatformWebhookRequestPayloads = this.salesPlatformWebhookRequestRepo.FindAllWebhookRequestsPayloadsBySalePlatformIdAndAttendeeIds(
+                                                                                                            attendeeSalesPlatform.SalesPlatformId,
+                                                                                                            salesPlatformAttendeeDtos.Select(dto => dto.AttendeeId).ToArray());
+
+                    if (existentSalesPlatformWebhookRequestPayloads?.Count > 0)
+                    {
+                        var existentSymplaParticipants = existentSalesPlatformWebhookRequestPayloads.Select(payload => this.DeserializePayload(payload)).ToList();
+                        foreach (var existentSymplaParticipant in existentSymplaParticipants)
+                        {
+                            var salesPlatformAttendeeDto = salesPlatformAttendeeDtos.FirstOrDefault(dto => dto.AttendeeId == existentSymplaParticipant.Id.ToString());
+                            if(salesPlatformAttendeeDto == null)
+                            {
+                                continue;
+                            }
+
+                            var processingSymplaParticipant = this.DeserializePayload(salesPlatformAttendeeDto.Payload);
+
+                            // Check if ticket ownership has changed
+                            if (existentSymplaParticipant.HasOwnershipChange(processingSymplaParticipant))
+                            {
+                                #region Manually creates the "cancelation payload" when ticket ownership has changed, because Sympla doesn't send this event
+
+                                // Continues if already exists a cancellation payload at database
+                                if (existentSymplaParticipants.Any(sp => sp.Id == existentSymplaParticipant.Id && sp.OrderStatus == SymplaAction.TicketCancelled))
+                                {
+                                    continue;
+                                }
+
+                                existentSymplaParticipant.CancelParticipant();
+
+                                // This cancellation payload must be processed before creates the current participant, to cancel only old participant
+                                // Without this, the cancellation process was canceling the ticket from old and new participant, because both has the same AttendeeId
+                                salesPlatformAttendeeDtos.Insert(salesPlatformAttendeeDtos.IndexOf(salesPlatformAttendeeDto), new SalesPlatformAttendeeDto(existentSymplaParticipant));
+
+                                #endregion
+                            }
+                            else
+                            {
+                                // When ticket ownership is changed, all tickets from the Order returns as changed.
+                                // So is necessary to remove this unchanged tickets from the list to avoid duplicated imports
+                                salesPlatformAttendeeDtos.Remove(salesPlatformAttendeeDto);
+                            }
+                        }
+                    }
+                }
             }
 
             return salesPlatformAttendeeDtos;
         }
 
-        ///// <summary>Gets the attendee.</summary>
-        ///// <param name="apiUrl">The API URL.</param>
-        //public List<SalesPlatformAttendeeDto> GetAttendee(string apiUrl)
-        //{
-        //    var attendee = this.ExecuteRequest<EventbriteAttendee>(apiUrl, HttpMethod.Get, null);
-        //    if (attendee == null)
-        //    {
-        //        return null;
-        //    }
+        #region Participants
 
-        //    var attendees = new List<SalesPlatformAttendeeDto>();
-        //    attendees.Add(new SalesPlatformAttendeeDto(attendee));
+        /// <summary>
+        /// Gets the participants.
+        /// </summary>
+        /// <returns></returns>
+        private List<SymplaParticipant> GetParticipants(string eventId)
+        {
+            var symplaParticipants = new List<SymplaParticipant>();
+            bool hasNextPage = true;
+            int page = 1;
 
-        //    return attendees;
-        //}
+            while (hasNextPage)
+            {
+                var symplaParticipantsPaged = this.ExecuteRequest<SymplaParticipantsPaged>($"events/{eventId}/participants?page_size=200&page={page++}", HttpMethod.Get, null);
+                if (symplaParticipantsPaged.Participants.Count > 0)
+                {
+                    symplaParticipants.AddRange(symplaParticipantsPaged.Participants);
+                }
 
-        ///// <summary>Gets the order.</summary>
-        ///// <param name="apiUrl">The API URL.</param>
-        //public List<SalesPlatformAttendeeDto> GetOrder(string apiUrl)
-        //{
-        //    var response = this.ExecuteRequest<EventbriteOrder>(apiUrl + "?expand=attendees", HttpMethod.Get, null);
-        //    if (response == null)
-        //    {
-        //        return null;
-        //    }
+                hasNextPage = symplaParticipantsPaged.Pagination.HasNext;
+            }
 
-        //    var attendees = new List<SalesPlatformAttendeeDto>();
-        //    foreach (var attendee in response.Attendees)
-        //    {
-        //        attendees.Add(new SalesPlatformAttendeeDto(attendee));
-        //    }
+            return symplaParticipants;
+        }
 
-        //    return attendees;
-        //}
+        /// <summary>
+        /// Gets the participants by order identifier.
+        /// </summary>
+        /// <param name="orderId">The order identifier.</param>
+        /// <returns></returns>
+        private List<SymplaParticipant> GetParticipantsByOrderId(string eventId, string orderId)
+        {
+            var symplaParticipants = new List<SymplaParticipant>();
+            bool hasNextPage = true;
+            int page = 1;
+
+            while (hasNextPage)
+            {
+                var symplaParticipantsPaged = this.ExecuteRequest<SymplaParticipantsPaged>($"events/{eventId}/orders/{orderId}/participants?page_size=200&page={page}", HttpMethod.Get, null);
+
+                if (symplaParticipantsPaged.Participants.Count > 0)
+                {
+                    symplaParticipants.AddRange(symplaParticipantsPaged.Participants);
+                }
+
+                hasNextPage = symplaParticipantsPaged.Pagination.HasNext;
+            }
+
+            return symplaParticipants;
+        }
+
+        #endregion
+
+        #region Orders
+
+        /// <summary>
+        /// Gets the orders.
+        /// </summary>
+        /// <returns></returns>
+        private List<SymplaOrder> GetUpdatedOrders(string eventId, DateTime? lastOrderUpdatedDate)
+        {
+            var symplaOrdersUpdated = new List<SymplaOrder>();
+            var hasNoNextPageOrIsLastProcessedOrderFound = false;
+            int page = 1;
+
+            while (!hasNoNextPageOrIsLastProcessedOrderFound)
+            {
+                var symplaOrdersPaged = this.GetOrdersByPage(eventId, page++);
+
+                if (lastOrderUpdatedDate.HasValue)
+                {
+                    var ordersUpdated = symplaOrdersPaged.SymplaOrders.Where(so => so.UpdatedDate > lastOrderUpdatedDate).ToList();
+                    if (ordersUpdated.Count > 0)
+                    {
+                        symplaOrdersUpdated.AddRange(ordersUpdated);
+                    }
+                }
+                else
+                {
+                    symplaOrdersUpdated.AddRange(symplaOrdersPaged.SymplaOrders);
+                }
+
+                // Stops the search when it finds the last Order processed or reach at last page.
+                // Orders below this date has already been processed before!
+                hasNoNextPageOrIsLastProcessedOrderFound = symplaOrdersPaged.SymplaOrders.FirstOrDefault(so => so.UpdatedDate == lastOrderUpdatedDate) != null
+                                                            || !symplaOrdersPaged.Pagination.HasNext;
+            }
+
+            return symplaOrdersUpdated;
+        }
+
+        /// <summary>
+        /// Gets the orders by page.
+        /// </summary>
+        /// <param name="eventId">The event identifier.</param>
+        /// <param name="page">The page.</param>
+        /// <returns></returns>
+        private SymplaOrdersPaged GetOrdersByPage(string eventId, int page)
+        {
+            return this.ExecuteRequest<SymplaOrdersPaged>($"events/{eventId}/orders?status=true&field_sort=updated_date&sort=DESC&page_size=100&page={page}", HttpMethod.Get, null);
+        }
+
+        /// <summary>
+        /// Gets the order by identifier.
+        /// </summary>
+        /// <param name="eventId">The event identifier.</param>
+        /// <param name="orderId">The order identifier.</param>
+        /// <returns></returns>
+        private SymplaOrder GetOrderById(string eventId, string orderId)
+        {
+            var response = this.ExecuteRequest($"events/{eventId}/orders/{orderId}", HttpMethod.Get, null);
+
+            JObject jObject = JObject.Parse(response);
+            var symplaOrder = jObject.SelectToken("data", false)?.ToObject<SymplaOrder>(); // Get JSON inside "data" root node
+
+            return symplaOrder;
+        }
+
+        #endregion
 
         #region Private methods
 
@@ -169,11 +296,11 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla
         /// </summary>
         /// <param name="payload">The payload.</param>
         /// <returns></returns>
-        private SymplaPayload DeserializePayload(string payload)
+        private SymplaParticipant DeserializePayload(string payload)
         {
-            var symplaPayload = JsonConvert.DeserializeObject<SymplaPayload>(payload);
+            var symplaPayload = JsonConvert.DeserializeObject<SymplaParticipant>(payload);
 
-            symplaPayload.OriginalPayload = payload.ToJsonMinified();
+            symplaPayload.PayloadString = payload.ToJsonMinified();
 
             return symplaPayload;
         }
@@ -189,7 +316,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla
         {
             using (WebClient client = new WebClient())
             {
-                client.Headers.Add("s_token", this.apiKey); 
+                client.Headers.Add("s_token", this.apiKey);
 
                 ServicePointManager.Expect100Continue = false;
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |

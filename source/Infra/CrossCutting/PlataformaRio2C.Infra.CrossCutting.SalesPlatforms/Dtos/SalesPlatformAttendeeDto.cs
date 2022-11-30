@@ -12,10 +12,11 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
-using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Models;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla.Models;
+using Newtonsoft.Json;
+using System.Linq;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
 {
@@ -162,23 +163,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SalesPlatformAttendeeDto"/> class.
+        /// Initializes a new instance of the <see cref="SalesPlatformAttendeeDto" /> class.
         /// </summary>
         /// <param name="symplaPayload">The sympla payload.</param>
-        public SalesPlatformAttendeeDto(SymplaPayload symplaPayload)
+        /// <param name="eventId">The event identifier.</param>
+        public SalesPlatformAttendeeDto(SymplaParticipant symplaPayload)
         {
             // Event
-            this.EventId = null; //TODO: Não retorna pela rota "Listar participantes por evento"
+            this.EventId = symplaPayload?.EventId;
 
             // Order
             this.OrderId = symplaPayload?.OrderId;
 
             // Attendee
             this.AttendeeId = symplaPayload?.Id.ToString();
-            this.SalesPlatformUpdateDate = DateTime.Now; //TODO: Retorna apenas pela rota "Listar pedidos por evento"
+            this.SalesPlatformUpdateDate = symplaPayload.UpdatedDate;
             this.SalesPlatformAttendeeStatus = symplaPayload?.GetSalesPlatformAttendeeStatus();
             this.IsCancelled = false;
-            this.IsCheckedIn = false;
+            this.IsCheckedIn = symplaPayload?.Checkin?.Count(c => c.CheckIn) > 0;
             this.TicketClassId = symplaPayload?.TicketName;
             this.TicketClassName = symplaPayload?.TicketName;
 
@@ -187,11 +189,11 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
             this.LastName = symplaPayload?.LastName;
             this.Name = $"{symplaPayload?.FirstName} {symplaPayload?.LastName}";
             this.Email = symplaPayload?.Email;
-            this.Gender = "";
+            this.Gender = null;
             this.Age = null;
-            this.BirthDate = "";
-            this.CellPhone = "";
-            this.JobTitle = "";
+            this.BirthDate = null;
+            this.CellPhone = null;
+            this.JobTitle = null;
 
             // Barcode
             this.Barcode = symplaPayload?.TicketNumQrCode;
@@ -206,7 +208,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
             this.TicketUpdateDate = null;
 
             // Custom Fields
-            this.Payload = symplaPayload?.OriginalPayload;
+            this.Payload = JsonConvert.SerializeObject(symplaPayload, Formatting.None);
         }
     }
 }
