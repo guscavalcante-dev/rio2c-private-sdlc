@@ -48,9 +48,9 @@
                         @:- @Model.Organization.Document
                     }
                 </div>
-                @if (Model.AttendeeOrganization.IsVirtualMeeting.HasValue)
+                @if (Model.Organization.IsVirtualMeeting.HasValue)
                 {
-                    var isVirtualMeeting = Model.AttendeeOrganization.IsVirtualMeeting == true;
+                    var isVirtualMeeting = Model.Organization.IsVirtualMeeting == true;
                     var tooltipTile = string.Format(Messages.PlayerMeetingPreference, (isVirtualMeeting ? Labels.RemoteF : Labels.Presential).ToLowerInvariant());
 
                     <div class="kt-widget__subhead pt-0 mt-0">

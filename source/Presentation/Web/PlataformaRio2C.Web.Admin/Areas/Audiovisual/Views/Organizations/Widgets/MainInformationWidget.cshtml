@@ -62,12 +62,12 @@
                     @Model.Organization.Document
                 }
             </div>
-                @if (Model.AttendeeOrganization.IsVirtualMeeting.HasValue || Model.IsInCurrentEdition == false)
+                @if (Model.Organization.IsVirtualMeeting.HasValue || Model.IsInCurrentEdition == false)
                 {
                     <div class="kt-widget__subhead pt-0 mt-0">
-                        @if (Model.IsInCurrentEdition == true && Model.AttendeeOrganization.IsVirtualMeeting.HasValue)
+                        @if (Model.IsInCurrentEdition == true && Model.Organization.IsVirtualMeeting.HasValue)
                         {
-                            var isVirtualMeeting = Model.AttendeeOrganization.IsVirtualMeeting == true;
+                            var isVirtualMeeting = Model.Organization.IsVirtualMeeting == true;
                             var tooltipTile = string.Format(Messages.PlayerMeetingPreference, (isVirtualMeeting ? Labels.RemoteF : Labels.Presential).ToLowerInvariant());
 
                             <span class="kt-badge kt-badge--inline kt-badge--warning kt-font-boldest" data-toggle="tooltip" data-placement="right" title="@tooltipTile" style="cursor: pointer;">
