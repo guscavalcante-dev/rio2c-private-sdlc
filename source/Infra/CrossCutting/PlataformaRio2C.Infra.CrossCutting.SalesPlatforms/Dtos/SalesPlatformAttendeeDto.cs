@@ -210,5 +210,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
             // Custom Fields
             this.Payload = JsonConvert.SerializeObject(symplaPayload, Formatting.None);
         }
+
+        /// <summary>
+        /// Gets the payload.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T GetPayload<T>()
+        {
+            return JsonConvert.DeserializeObject<T>(this.Payload);
+        }
     }
 }

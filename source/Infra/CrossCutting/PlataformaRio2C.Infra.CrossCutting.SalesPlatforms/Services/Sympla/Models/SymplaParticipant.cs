@@ -127,26 +127,19 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla.Mode
         }
 
         /// <summary>
-        /// Cancels the participant.
+        /// Updates the participant.
         /// </summary>
-        public void CancelParticipant()
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastName">The last name.</param>
+        /// <param name="email">The email.</param>
+        public void UpdateParticipantAndCancelTicket(string firstName, string lastName, string email)
         {
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.Email = email;
+
             this.OrderStatus = SymplaAction.TicketCancelled;
             this.UpdatedDateString = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-        }
-
-        /// <summary>
-        /// Determines whether [has ownership change] [the specified other sympla participant].
-        /// </summary>
-        /// <param name="otherSymplaParticipant">The other sympla participant.</param>
-        /// <returns>
-        ///   <c>true</c> if [has ownership change] [the specified other sympla participant]; otherwise, <c>false</c>.
-        /// </returns>
-        public bool HasOwnershipChange(SymplaParticipant otherSymplaParticipant)
-        {
-            return this.FirstName != otherSymplaParticipant.FirstName ||
-                   this.LastName != otherSymplaParticipant.LastName ||
-                   this.Email != otherSymplaParticipant.Email;
         }
 
         #endregion

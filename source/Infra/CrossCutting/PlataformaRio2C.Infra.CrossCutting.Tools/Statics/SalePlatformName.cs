@@ -18,8 +18,8 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Statics
     /// <summary>SalePlatformName</summary>
     public class SalePlatformName
     {
-        public static string Eventbrite = "Eventbrite";
-        public static string Inti = "Inti";
-        public static string Sympla = "Sympla";
+        public const string Eventbrite = "Eventbrite";
+        public const string Inti = "Inti";
+        public const string Sympla = "Sympla";
     }
 }

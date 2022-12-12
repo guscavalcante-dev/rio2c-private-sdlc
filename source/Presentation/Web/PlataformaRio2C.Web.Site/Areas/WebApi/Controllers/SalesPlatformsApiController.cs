@@ -21,8 +21,6 @@ using System.Web.Http.Description;
 using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
@@ -35,27 +33,14 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
     public class SalesPlatformsApiController : BaseApiController
     {
         private readonly IMediator commandBus;
-        private readonly ISalesPlatformRepository salesPlatformRepo;
-        private readonly ISalesPlatformServiceFactory salesPlatformServiceFactory;
-        private readonly ISalesPlatformWebhookRequestRepository salesPlatformWebhookRequestRepo;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SalesPlatformsApiController" /> class.
+        /// Initializes a new instance of the <see cref="SalesPlatformsApiController"/> class.
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
-        /// <param name="salesPlatformRepository">The attendee sales platform repository.</param>
-        /// <param name="salesPlatformServiceFactory">The sales platform service factory.</param>
-        /// <param name="salesPlatformWebhookRequestRepository">The sales platform webhook request repository.</param>
-        public SalesPlatformsApiController(
-            IMediator commandBus,
-            ISalesPlatformRepository salesPlatformRepository,
-            ISalesPlatformServiceFactory salesPlatformServiceFactory,
-            ISalesPlatformWebhookRequestRepository salesPlatformWebhookRequestRepository)
+        public SalesPlatformsApiController(IMediator commandBus)
         {
             this.commandBus = commandBus;
-            this.salesPlatformRepo = salesPlatformRepository;
-            this.salesPlatformServiceFactory = salesPlatformServiceFactory;
-            this.salesPlatformWebhookRequestRepo = salesPlatformWebhookRequestRepository;
         }
 
         #region Inti requests
@@ -73,9 +58,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 //TODO: Inti doesn't send APIKey as parameter. Fix this!
                 string key = "7A8C7EDC-3084-47D5-AD5A-DF6A128B341C";
 
-                var salesPlatformWebhooRequestUid = Guid.NewGuid();
                 var result = await this.commandBus.Send(new CreateSalesPlatformWebhookRequest(
-                    salesPlatformWebhooRequestUid,
+                    Guid.NewGuid(),
                     SalePlatformName.Inti,
                     key,
                     HttpContext.Current.Request.Url.AbsoluteUri,
@@ -112,9 +96,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         {
             try
             {
-                var salesPlatformWebhooRequestUid = Guid.NewGuid();
                 var result = await this.commandBus.Send(new CreateSalesPlatformWebhookRequest(
-                    salesPlatformWebhooRequestUid,
+                    Guid.NewGuid(),
                     SalePlatformName.Eventbrite,
                     key,
                     HttpContext.Current.Request.Url.AbsoluteUri,
@@ -149,32 +132,28 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("sympla/{key?}")]
         public async Task<IHttpActionResult> Sympla(string key)
         {
+            var result = new AppValidationResult();
+
             try
             {
-                var salesPlatformDto = await this.salesPlatformRepo.FindDtoByNameAsync(SalePlatformName.Sympla);
-                var salesPlatformService = salesPlatformServiceFactory.Get(salesPlatformDto, this.salesPlatformWebhookRequestRepo);
-                var salesPlatformAttendeeDtos = salesPlatformService.GetAttendees();
-
-                // This OrderBy is required to import atendees in chronological order and updates "AttendeeSalesPlatform.LastOrderUpdateDate" properly. Take care when changing this!
-                foreach (var salesPlatformAttendeeDto in salesPlatformAttendeeDtos.OrderBy(dto => dto.SalesPlatformUpdateDate))
+                result = await this.commandBus.Send(new CreateSalesPlatformWebhookRequest(
+                    Guid.Empty, // Sympla generates Uids inside command handler
+                    SalePlatformName.Sympla,
+                    key,
+                    HttpContext.Current.Request.Url.AbsoluteUri,
+                    Request.Headers.ToString(),
+                    null,       // Sympla gets the payload inside command handler
+                    HttpContext.Current.Request.GetIpAddress()));
+                
+                if (!result.IsValid)
                 {
-                    var salesPlatformWebhooRequestUid = Guid.NewGuid();
-                    var result = await this.commandBus.Send(new CreateSalesPlatformWebhookRequest(
-                        salesPlatformWebhooRequestUid,
-                        SalePlatformName.Sympla,
-                        key,
-                        HttpContext.Current.Request.Url.AbsoluteUri,
-                        Request.Headers.ToString(),
-                        salesPlatformAttendeeDto.Payload,
-                        HttpContext.Current.Request.GetIpAddress(),
-                        salesPlatformAttendeeDto.SalesPlatformUpdateDate,
-                        salesPlatformAttendeeDto.EventId));
+                    throw new DomainException($"{SalePlatformName.Sympla} webhooks imported with some errors.");
                 }
             }
             catch (DomainException ex)
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return await BadRequest(ex.GetInnerMessage());
+                return await Json(new { status = "error", message = ex.GetInnerMessage(), errors = result?.Errors?.Select(e => new { e.Code, e.Message }) });
             }
             catch (Exception ex)
             {
@@ -182,7 +161,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 return await BadRequest(ex.GetInnerMessage());
             }
 
-            return await Json(new { status = "success", message = $"{SalePlatformName.Sympla} event saved successfully." });
+            return await Json(new { status = "success", message = $"{SalePlatformName.Sympla} webhooks imported successfully." });
         }
 
         #endregion

@@ -34,20 +34,16 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla
         private readonly string apiKey;
         private readonly SalesPlatformWebhookRequestDto salesPlatformWebhookRequestDto;
         private readonly SalesPlatformDto salesPlatformDto;
-        private readonly ISalesPlatformWebhookRequestRepository salesPlatformWebhookRequestRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SymplaSalesPlatformService" /> class.
         /// </summary>
         /// <param name="salesPlatformDto">The attendee sales platform dto.</param>
         /// <param name="salesPlatformWebhookRequestRepository">The sales platform webhook request repository.</param>
-        public SymplaSalesPlatformService(
-            SalesPlatformDto salesPlatformDto,
-            ISalesPlatformWebhookRequestRepository salesPlatformWebhookRequestRepository)
+        public SymplaSalesPlatformService(SalesPlatformDto salesPlatformDto)
         {
             this.apiKey = salesPlatformDto?.ApiKey;
             this.salesPlatformDto = salesPlatformDto;
-            this.salesPlatformWebhookRequestRepo = salesPlatformWebhookRequestRepository;
         }
 
         /// <summary>Initializes a new instance of the <see cref="SymplaSalesPlatformService"/> class.</summary>
@@ -94,6 +90,11 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla
         /// <returns></returns>
         public List<SalesPlatformAttendeeDto> GetAttendees()
         {
+            if (this.salesPlatformDto == null)
+            {
+                throw new DomainException("The sale platform is required.");
+            }
+
             var salesPlatformAttendeeDtos = new List<SalesPlatformAttendeeDto>();
 
             foreach (var attendeeSalesPlatform in salesPlatformDto.AttendeeSalesPlatforms)
@@ -111,56 +112,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla
                         participant.UpdatedDateString = symplaOrder?.UpdatedDateString;
 
                         salesPlatformAttendeeDtos.Add(new SalesPlatformAttendeeDto(participant));
-                    }
-                }
-
-                if (salesPlatformAttendeeDtos.Count > 0)
-                {
-                    // Checks if the current processing payloads already exists in the database
-                    // It's called here to sent only one request to database to get all existent webhooks created
-                    var existentSalesPlatformWebhookRequestPayloads = this.salesPlatformWebhookRequestRepo.FindAllWebhookRequestsPayloadsBySalePlatformIdAndAttendeeIds(
-                                                                                                            attendeeSalesPlatform.SalesPlatformId,
-                                                                                                            salesPlatformAttendeeDtos.Select(dto => dto.AttendeeId).ToArray());
-
-                    if (existentSalesPlatformWebhookRequestPayloads?.Count > 0)
-                    {
-                        var existentSymplaParticipants = existentSalesPlatformWebhookRequestPayloads.Select(payload => this.DeserializePayload(payload)).ToList();
-                        foreach (var existentSymplaParticipant in existentSymplaParticipants)
-                        {
-                            var salesPlatformAttendeeDto = salesPlatformAttendeeDtos.FirstOrDefault(dto => dto.AttendeeId == existentSymplaParticipant.Id.ToString());
-                            if(salesPlatformAttendeeDto == null)
-                            {
-                                continue;
-                            }
-
-                            var processingSymplaParticipant = this.DeserializePayload(salesPlatformAttendeeDto.Payload);
-
-                            // Check if ticket ownership has changed
-                            if (existentSymplaParticipant.HasOwnershipChange(processingSymplaParticipant))
-                            {
-                                #region Manually creates the "cancelation payload" when ticket ownership has changed, because Sympla doesn't send this event
-
-                                // Continues if already exists a cancellation payload at database
-                                if (existentSymplaParticipants.Any(sp => sp.Id == existentSymplaParticipant.Id && sp.OrderStatus == SymplaAction.TicketCancelled))
-                                {
-                                    continue;
-                                }
-
-                                existentSymplaParticipant.CancelParticipant();
-
-                                // This cancellation payload must be processed before creates the current participant, to cancel only old participant
-                                // Without this, the cancellation process was canceling the ticket from old and new participant, because both has the same AttendeeId
-                                salesPlatformAttendeeDtos.Insert(salesPlatformAttendeeDtos.IndexOf(salesPlatformAttendeeDto), new SalesPlatformAttendeeDto(existentSymplaParticipant));
-
-                                #endregion
-                            }
-                            else
-                            {
-                                // When ticket ownership is changed, all tickets from the Order returns as changed.
-                                // So is necessary to remove this unchanged tickets from the list to avoid duplicated imports
-                                salesPlatformAttendeeDtos.Remove(salesPlatformAttendeeDto);
-                            }
-                        }
                     }
                 }
             }
@@ -182,7 +133,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla
 
             while (hasNextPage)
             {
-                var symplaParticipantsPaged = this.ExecuteRequest<SymplaParticipantsPaged>($"events/{eventId}/participants?page_size=200&page={page++}", HttpMethod.Get, null);
+                var symplaParticipantsPaged = this.ExecuteRequest<SymplaParticipantsPaged>($"events/{eventId}/participants?cancelled_filter=include&page_size=200&page={page++}", HttpMethod.Get, null);
                 if (symplaParticipantsPaged.Participants.Count > 0)
                 {
                     symplaParticipants.AddRange(symplaParticipantsPaged.Participants);
@@ -207,7 +158,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla
 
             while (hasNextPage)
             {
-                var symplaParticipantsPaged = this.ExecuteRequest<SymplaParticipantsPaged>($"events/{eventId}/orders/{orderId}/participants?page_size=200&page={page}", HttpMethod.Get, null);
+                var symplaParticipantsPaged = this.ExecuteRequest<SymplaParticipantsPaged>($"events/{eventId}/orders/{orderId}/participants?cancelled_filter=include&page_size=200&page={page}", HttpMethod.Get, null);
 
                 if (symplaParticipantsPaged.Participants.Count > 0)
                 {

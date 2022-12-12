@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms
@@ -21,6 +20,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms
     public interface ISalesPlatformServiceFactory
     {
         ISalesPlatformService Get(SalesPlatformWebhookRequestDto salesPlatformWebhookRequestDto);
-        ISalesPlatformService Get(SalesPlatformDto salesPlatformDto, ISalesPlatformWebhookRequestRepository salesPlatformWebhookRequestRepository);
+        ISalesPlatformService Get(SalesPlatformDto salesPlatformDto);
     }
 }

@@ -17,7 +17,7 @@ using MediatR;
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>CreateSalesPlatformWebhookRequest</summary>
-    public class CreateSalesPlatformWebhookRequest : IRequest<Guid?>
+    public class CreateSalesPlatformWebhookRequest : IRequest<AppValidationResult>
     {
         public Guid SalesPlatformWebhookRequestUid { get; private set; }
         public string SalesPlatformName { get; private set; }
@@ -26,8 +26,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string Header { get; private set; }
         public string Payload { get; private set; }
         public string IpAddress { get; private set; }
-        public DateTime? SalePlatformLastOrderUpdatedDate { get; private set; }
-        public string AttendeeSalesPlatformEventId { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateSalesPlatformWebhookRequest" /> class.
@@ -39,8 +37,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="header">The header.</param>
         /// <param name="payload">The payload.</param>
         /// <param name="ipAddress">The ip address.</param>
-        /// <param name="salePlatformLastOrderUpdatedDate">The sale platform last order updated date.</param>
-        /// <param name="attendeeSalesPlatformEventId">The attendee sales platform event identifier.</param>
         public CreateSalesPlatformWebhookRequest(
             Guid salesPlatformWebhookRequestUid,
             string salesPlatformName,
@@ -48,9 +44,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string endpoint,
             string header,
             string payload,
-            string ipAddress,
-            DateTime? salePlatformLastOrderUpdatedDate = null,
-            string attendeeSalesPlatformEventId = null)
+            string ipAddress)
         {
             this.SalesPlatformWebhookRequestUid = salesPlatformWebhookRequestUid;
             this.SalesPlatformName = salesPlatformName;
@@ -59,8 +53,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Header = header;
             this.Payload = payload;
             this.IpAddress = ipAddress;
-            this.SalePlatformLastOrderUpdatedDate = salePlatformLastOrderUpdatedDate;
-            this.AttendeeSalesPlatformEventId = attendeeSalesPlatformEventId;
         }
     }
 }

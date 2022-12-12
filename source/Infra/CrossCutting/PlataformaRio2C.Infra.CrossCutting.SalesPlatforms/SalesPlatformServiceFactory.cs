@@ -18,8 +18,6 @@ using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
-using System;
-using PlataformaRio2C.Domain.Interfaces;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms
 {
@@ -61,10 +59,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms
         /// Gets the specified sales platform service by name.
         /// </summary>
         /// <param name="salesPlatformDto">The sales platform dto.</param>
-        /// <param name="salesPlatformWebhookRequestRepository">The sales platform webhook request repository.</param>
         /// <returns></returns>
         /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException">Unknown sales platform on webhook request.</exception>
-        public ISalesPlatformService Get(SalesPlatformDto salesPlatformDto, ISalesPlatformWebhookRequestRepository salesPlatformWebhookRequestRepository)
+        public ISalesPlatformService Get(SalesPlatformDto salesPlatformDto)
         {
             if (salesPlatformDto?.Name == SalePlatformName.Eventbrite)
             {
@@ -78,7 +75,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms
 
             if (salesPlatformDto?.Name == SalePlatformName.Sympla)
             {
-                return new SymplaSalesPlatformService(salesPlatformDto, salesPlatformWebhookRequestRepository);
+                return new SymplaSalesPlatformService(salesPlatformDto);
             }
 
             throw new DomainException("Unknown sales platform on webhook request.");
