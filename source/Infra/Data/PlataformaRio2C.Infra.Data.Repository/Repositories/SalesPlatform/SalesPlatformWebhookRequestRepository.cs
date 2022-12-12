@@ -154,21 +154,5 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return await query.ToListAsync();
         }
-
-        /// <summary>
-        /// Finds all webhook requests payloads by sale platform identifier and attendee ids.
-        /// </summary>
-        /// <param name="salePlatformId">The sale platform identifier.</param>
-        /// <param name="salesPlatformAttendeeIds">The sales platform attendee ids.</param>
-        /// <returns></returns>
-        public List<string> FindAllWebhookRequestsPayloadsBySalePlatformIdAndAttendeeIds(int salePlatformId, string[] salesPlatformAttendeeIds)
-        {
-            var query = this.GetBaseQuery()
-                                .FindBySalePlatformId(salePlatformId)
-                                .FindByPayloadContains(salesPlatformAttendeeIds)
-                                .Select(spwr => spwr.Payload);
-
-            return query.ToList();
-        }
     }
 }

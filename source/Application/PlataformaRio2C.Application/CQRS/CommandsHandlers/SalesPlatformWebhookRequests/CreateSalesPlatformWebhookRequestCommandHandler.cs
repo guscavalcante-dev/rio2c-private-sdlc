@@ -87,7 +87,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     {
                         #region Sympla
 
-                        var salesPlatformDto = await this.salesPlatformRepo.FindDtoByNameAsync(SalePlatformName.Sympla);
+                        var salesPlatformDto = await this.salesPlatformRepo.FindDtoByNameAsync(salesPlatform.Name);
                         var salesPlatformService = this.salesPlatformServiceFactory.Get(salesPlatformDto);
                         var salesPlatformAttendeeDtos = salesPlatformService.GetAttendees();
                         if (salesPlatformAttendeeDtos.Count > 0)
