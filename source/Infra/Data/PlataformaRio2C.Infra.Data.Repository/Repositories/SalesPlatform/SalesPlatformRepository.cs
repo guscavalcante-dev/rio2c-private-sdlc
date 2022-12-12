@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 07-12-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-31-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 11-30-2022
 // ***********************************************************************
 // <copyright file="SalesPlatformRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -66,35 +66,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
     #endregion
 
-    //#region SalesPlatformBaseDto IQueryable Extensions
-
-    ///// <summary>
-    ///// SalesPlatformBaseDtoIQueryableExtensions
-    ///// </summary>
-    //internal static class SalesPlatformBaseDtoIQueryableExtensions
-    //{
-    //    /// <summary>
-    //    /// To the list paged.
-    //    /// </summary>
-    //    /// <param name="query">The query.</param>
-    //    /// <param name="page">The page.</param>
-    //    /// <param name="pageSize">Size of the page.</param>
-    //    /// <returns></returns>
-    //    internal static async Task<IPagedList<SalesPlatformDto>> ToListPagedAsync(this IQueryable<SalesPlatformDto> query, int page, int pageSize)
-    //    {
-    //        page++;
-
-    //        // Page the list
-    //        var pagedList = await query.ToPagedListAsync(page, pageSize);
-    //        if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
-    //            pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
-
-    //        return pagedList;
-    //    }
-    //}
-
-    //#endregion
-
     /// <summary>SalesPlatformRepository</summary>
     public class SalesPlatformRepository : Repository<PlataformaRio2CContext, SalesPlatform>, ISalesPlatformRepository
     {
@@ -146,7 +117,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     CreationDate = sp.CreateDate,
                                     UpdateUserId = sp.UpdateUserId,
                                     UpdateDate = sp.UpdateDate,
-                                    SecurityStamp = sp.SecurityStamp
+                                    SecurityStamp = sp.SecurityStamp,
+                                    AttendeeSalesPlatforms = sp.AttendeeSalesPlatforms
                                 })
                                 .FirstOrDefaultAsync();
         }

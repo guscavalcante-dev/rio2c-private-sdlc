@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 07-12-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-01-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 11-30-2022
 // ***********************************************************************
 // <copyright file="EventbriteSalesPlatformService.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,20 +26,36 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite
     /// <summary>EventbriteSalesPlatformService</summary>
     public class EventbriteSalesPlatformService : ISalesPlatformService
     {
-        private string ApiUrl = "https://www.eventbriteapi.com/v3/";
-
-        private readonly string appKey;
+        private readonly string apiUrl = "https://www.eventbriteapi.com/v3/";
+        private readonly string apiKey;
         private readonly SalesPlatformWebhookRequestDto salesPlatformWebhookRequestDto;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventbriteSalesPlatformService" /> class.
+        /// </summary>
+        /// <param name="salesPlatformDto">The sales platform dto.</param>
+        public EventbriteSalesPlatformService(SalesPlatformDto salesPlatformDto)
+        {
+            this.apiKey = salesPlatformDto.ApiKey;
+        }
 
         /// <summary>Initializes a new instance of the <see cref="EventbriteSalesPlatformService"/> class.</summary>
         /// <param name="salesPlatformWebhookRequestDto">The sales platform webhook request dto.</param>
         public EventbriteSalesPlatformService(SalesPlatformWebhookRequestDto salesPlatformWebhookRequestDto)
         {
-            this.appKey = salesPlatformWebhookRequestDto.SalesPlatformDto.ApiKey;
+            this.apiKey = salesPlatformWebhookRequestDto.SalesPlatformDto.ApiKey;
             this.salesPlatformWebhookRequestDto = salesPlatformWebhookRequestDto;
         }
 
-        /// <summary>Executes the request.</summary>
+        /// <summary>
+        /// Executes the request.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException">
+        /// The webhook request is required.
+        /// or
+        /// Eventbrite action ({payload.Config.Action}) not configured.
+        /// </exception>
         public Tuple<string, List<SalesPlatformAttendeeDto>> ExecuteRequest()
         {
             if (this.salesPlatformWebhookRequestDto == null)
@@ -69,9 +85,21 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite
             }
         }
 
+        /// <summary>
+        /// Gets the attendees by event identifier.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public List<SalesPlatformAttendeeDto> GetAttendees()
+        {
+            throw new NotImplementedException();
+        }
+
+        #region Private methods
+
         /// <summary>Gets the attendee.</summary>
         /// <param name="apiUrl">The API URL.</param>
-        public List<SalesPlatformAttendeeDto> GetAttendee(string apiUrl)
+        private List<SalesPlatformAttendeeDto> GetAttendee(string apiUrl)
         {
             var attendee = this.ExecuteRequest<EventbriteAttendee>(apiUrl, HttpMethod.Get, null);
             if (attendee == null)
@@ -87,7 +115,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite
 
         /// <summary>Gets the order.</summary>
         /// <param name="apiUrl">The API URL.</param>
-        public List<SalesPlatformAttendeeDto> GetOrder(string apiUrl)
+        private List<SalesPlatformAttendeeDto> GetOrder(string apiUrl)
         {
             var response = this.ExecuteRequest<EventbriteOrder>(apiUrl + "?expand=attendees", HttpMethod.Get, null);
             if (response == null)
@@ -103,13 +131,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite
 
             return attendees;
         }
-
-        //public void GetEvent()
-        //{
-        //    var response = this.ExecuteRequest<Event>($"events/{this.eventId}/", HttpMethod.Get, null);
-        //}
-
-        #region Private methods
 
         /// <summary>Deserializes the payload.</summary>
         /// <param name="payload">The payload.</param>
@@ -130,7 +151,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite
             using (WebClient client = new WebClient())
             {
                 client.Headers.Add(HttpRequestHeader.ContentType, "application/json; charset=utf-8;");
-                client.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + this.appKey);
+                client.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + this.apiKey);
 
                 ServicePointManager.Expect100Continue = false;
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
@@ -147,43 +168,3 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite
         #endregion
     }
 }
-
-/*
-
---- Attendee status
-    + attending (i.e. checked into the Event)
-    + not_attending (i.e. not checked into the Event)
-    + unpaid
-
-
---- Statuses
-    + started     - order is created
-    + pending     - order is pending
-    + placed      - order is placed by the ticket buyer
-    + abandoned   - order is abandoned by the ticket buyer
-
---- Payload Examples:
-
---- Order
-{
-  "api_url": "https://www.eventbriteapi.com/v3/orders/975751475/",
-  "config": {
-    "action": "order.updated",
-    "endpoint_url": "https://288681c7.ngrok.io/api/v1.0/eventbrite/test",
-    "user_id": "315954824605",
-    "webhook_id": "1750106"
-  }
-}
-
-
---- Attendee
-{
-  "api_url": "https://www.eventbriteapi.com/v3/events/63245927271/attendees/1245580008/",
-  "config": {
-    "action": "attendee.updated",
-    "endpoint_url": "https://288681c7.ngrok.io/api/v1.0/eventbrite/test",
-    "user_id": "315954824605",
-    "webhook_id": "1750106"
-  }
-}
-*/

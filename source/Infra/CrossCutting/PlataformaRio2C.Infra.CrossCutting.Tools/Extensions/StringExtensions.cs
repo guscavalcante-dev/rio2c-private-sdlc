@@ -4,13 +4,14 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-28-2021
+// Last Modified On : 11-24-2022
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using Newtonsoft.Json;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
 using System;
 using System.Collections.Generic;
@@ -832,6 +833,16 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                 separator = ",";
 
             return string.Join(separator, list);
+        }
+
+        /// <summary>
+        /// Converts to jsonminified.
+        /// </summary>
+        /// <param name="s">The s.</param>
+        /// <returns></returns>
+        public static string ToJsonMinified(this string s)
+        {
+            return JsonConvert.SerializeObject(JsonConvert.DeserializeObject(s), Formatting.None);
         }
     }
 }

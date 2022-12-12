@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-31-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 12-12-2022
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorTicket.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,7 +14,6 @@
 using System;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -312,7 +311,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Validates the cell phone.</summary>
         public void ValidateCellPhone()
         {
-            if (this.CellPhone?.Trim().Length < CellPhoneMinLength || this.CellPhone?.Trim().Length > CellPhoneMaxLength)
+            if (!string.IsNullOrEmpty(this.CellPhone) && (this.CellPhone?.Trim().Length < CellPhoneMinLength || this.CellPhone?.Trim().Length > CellPhoneMaxLength)) 
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.CellPhone, CellPhoneMaxLength, CellPhoneMinLength), new string[] { "CellPhone" }));
             }
@@ -321,7 +320,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Validates the job title.</summary>
         public void ValidateJobTitle()
         {
-            if (this.JobTitle?.Trim().Length < JobTitleMinLength || this.JobTitle?.Trim().Length > JobTitleMaxLength)
+            if (!string.IsNullOrEmpty(this.JobTitle) && (this.JobTitle?.Trim().Length < JobTitleMinLength ||  this.JobTitle?.Trim().Length > JobTitleMaxLength))
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.JobTitle, JobTitleMaxLength, JobTitleMinLength), new string[] { "JobTitle" }));
             }

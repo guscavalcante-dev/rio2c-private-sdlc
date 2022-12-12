@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 07-12-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-31-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 11-30-2022
 // ***********************************************************************
 // <copyright file="SalesPlatformServiceFactory.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,8 @@ using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms
 {
@@ -27,19 +29,53 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms
         {
         }
 
-        /// <summary>Gets the specified sales platform webhook request dto.</summary>
+        /// <summary>
+        /// Gets the specified sales platform webhook request dto.
+        /// </summary>
         /// <param name="salesPlatformWebhookRequestDto">The sales platform webhook request dto.</param>
         /// <returns></returns>
+        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException">Unknown sales platform on webhook request.</exception>
         public ISalesPlatformService Get(SalesPlatformWebhookRequestDto salesPlatformWebhookRequestDto)
         {
-            if (salesPlatformWebhookRequestDto?.SalesPlatformDto?.Name == "Eventbrite")
+            if (salesPlatformWebhookRequestDto?.SalesPlatformDto?.Name == SalePlatformName.Eventbrite)
             {
                 return new EventbriteSalesPlatformService(salesPlatformWebhookRequestDto);
             }
 
-            if (salesPlatformWebhookRequestDto?.SalesPlatformDto?.Name == "Inti")
+            if (salesPlatformWebhookRequestDto?.SalesPlatformDto?.Name == SalePlatformName.Inti)
             {
                return new IntiSalesPlatformService(salesPlatformWebhookRequestDto);
+            }
+
+            if (salesPlatformWebhookRequestDto?.SalesPlatformDto?.Name == SalePlatformName.Sympla)
+            {
+                return new SymplaSalesPlatformService(salesPlatformWebhookRequestDto);
+            }
+
+            throw new DomainException("Unknown sales platform on webhook request.");
+        }
+
+        /// <summary>
+        /// Gets the specified sales platform service by name.
+        /// </summary>
+        /// <param name="salesPlatformDto">The sales platform dto.</param>
+        /// <returns></returns>
+        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException">Unknown sales platform on webhook request.</exception>
+        public ISalesPlatformService Get(SalesPlatformDto salesPlatformDto)
+        {
+            if (salesPlatformDto?.Name == SalePlatformName.Eventbrite)
+            {
+                return new EventbriteSalesPlatformService(salesPlatformDto);
+            }
+
+            if (salesPlatformDto?.Name == SalePlatformName.Inti)
+            {
+                return new IntiSalesPlatformService(salesPlatformDto);
+            }
+
+            if (salesPlatformDto?.Name == SalePlatformName.Sympla)
+            {
+                return new SymplaSalesPlatformService(salesPlatformDto);
             }
 
             throw new DomainException("Unknown sales platform on webhook request.");

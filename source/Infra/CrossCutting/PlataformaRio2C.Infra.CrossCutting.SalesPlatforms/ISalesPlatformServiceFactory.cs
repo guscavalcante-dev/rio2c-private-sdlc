@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 07-12-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-31-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 11-30-2022
 // ***********************************************************************
 // <copyright file="ISalesPlatformServiceFactory.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,5 +20,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms
     public interface ISalesPlatformServiceFactory
     {
         ISalesPlatformService Get(SalesPlatformWebhookRequestDto salesPlatformWebhookRequestDto);
+        ISalesPlatformService Get(SalesPlatformDto salesPlatformDto);
     }
 }

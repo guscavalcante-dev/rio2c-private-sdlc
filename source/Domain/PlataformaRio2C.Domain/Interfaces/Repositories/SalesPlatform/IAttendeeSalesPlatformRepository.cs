@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-31-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-31-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 11-24-2022
 // ***********************************************************************
 // <copyright file="IAttendeeSalesPlatformRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,5 +22,6 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface IAttendeeSalesPlatformRepository : IRepository<AttendeeSalesPlatform>
     {
         Task<List<AttendeeSalesPlatformDto>> FindAllDtoByIsActiveAsync();
+        Task<AttendeeSalesPlatformDto> FindDtoByNameAsync(string name);
     }    
 }
