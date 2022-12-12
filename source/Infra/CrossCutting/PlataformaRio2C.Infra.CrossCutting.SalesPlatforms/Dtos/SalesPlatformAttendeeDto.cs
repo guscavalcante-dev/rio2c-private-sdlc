@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-30-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-01-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 11-24-2022
 // ***********************************************************************
 // <copyright file="SalesPlatformAttendeeDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,9 +12,11 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
-using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Models;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla.Models;
+using Newtonsoft.Json;
+using System.Linq;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
 {
@@ -59,6 +61,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
         public bool IsTicketPrinted { get; private set; }
         public bool IsTicketUsed { get; private set; }
         public DateTime? TicketUpdateDate { get; private set; }
+
+        // Custom Fields
+        public string Payload { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="SalesPlatformAttendeeDto"/> class.</summary>
         public SalesPlatformAttendeeDto()
@@ -155,6 +160,65 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
             this.IsTicketPrinted = false;
             this.IsTicketUsed = false;
             this.TicketUpdateDate = intiPayload?.Timestamp;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SalesPlatformAttendeeDto" /> class.
+        /// </summary>
+        /// <param name="symplaPayload">The sympla payload.</param>
+        /// <param name="eventId">The event identifier.</param>
+        public SalesPlatformAttendeeDto(SymplaParticipant symplaPayload)
+        {
+            // Event
+            this.EventId = symplaPayload?.EventId;
+
+            // Order
+            this.OrderId = symplaPayload?.OrderId;
+
+            // Attendee
+            this.AttendeeId = symplaPayload?.Id.ToString();
+            this.SalesPlatformUpdateDate = symplaPayload.UpdatedDate;
+            this.SalesPlatformAttendeeStatus = symplaPayload?.GetSalesPlatformAttendeeStatus();
+            this.IsCancelled = false;
+            this.IsCheckedIn = symplaPayload?.Checkin?.Count(c => c.CheckIn) > 0;
+            this.TicketClassId = symplaPayload?.TicketName;
+            this.TicketClassName = symplaPayload?.TicketName;
+
+            // Profile
+            this.FirstName = symplaPayload?.FirstName;
+            this.LastName = symplaPayload?.LastName;
+            this.Name = $"{symplaPayload?.FirstName} {symplaPayload?.LastName}";
+            this.Email = symplaPayload?.Email;
+            this.Gender = null;
+            this.Age = null;
+            this.BirthDate = null;
+            this.CellPhone = null;
+            this.JobTitle = null;
+
+            // Barcode
+            this.Barcode = symplaPayload?.TicketNumQrCode;
+            this.IsBarcodePrinted = false;
+            this.IsBarcodeUsed = false;
+            this.BarcodeUpdateDate = null;
+
+            // TicketUrl - Sympla uses QRCode instead of TicketUrl          
+            this.TicketUrl = null;
+            this.IsTicketPrinted = false;
+            this.IsTicketUsed = false;
+            this.TicketUpdateDate = null;
+
+            // Custom Fields
+            this.Payload = JsonConvert.SerializeObject(symplaPayload, Formatting.None);
+        }
+
+        /// <summary>
+        /// Gets the payload.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T GetPayload<T>()
+        {
+            return JsonConvert.DeserializeObject<T>(this.Payload);
         }
     }
 }

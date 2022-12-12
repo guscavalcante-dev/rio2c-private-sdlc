@@ -3,15 +3,17 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 07-22-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 11-30-2022
 // ***********************************************************************
 // <copyright file="SalesPlatformDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Entities;
 using System;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -31,8 +33,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset UpdateDate { get; set; }
         public string SecurityStamp { get; set; }
 
-        //public UserAppViewModel Creator { get; set; }
-        //public UserAppViewModel Updated { get; set; }
+        public IEnumerable<AttendeeSalesPlatform> AttendeeSalesPlatforms { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="SalesPlatformDto"/> class.</summary>
         public SalesPlatformDto()

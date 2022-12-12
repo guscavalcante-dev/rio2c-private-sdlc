@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 07-12-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-31-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 11-30-2022
 // ***********************************************************************
 // <copyright file="SalesPlatformMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,6 +23,15 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         public SalesPlatformMap()
         {
             this.ToTable("SalesPlatforms");
+
+            this.Property(t => t.Name)
+                .HasMaxLength(SalesPlatform.NameMaxLenght);
+
+            this.Property(t => t.ApiKey)
+                .HasMaxLength(SalesPlatform.ApiKeyMaxLength);
+
+            this.Property(t => t.ApiSecret)
+                .HasMaxLength(SalesPlatform.ApiSecretMaxLength);
 
             // Relationships
             this.HasMany(t => t.AttendeeSalesPlatforms)
