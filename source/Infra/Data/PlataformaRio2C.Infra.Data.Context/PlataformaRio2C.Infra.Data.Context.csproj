@@ -476,6 +476,8 @@
     <Content Include="SqlScripts\Deltas\20210811_103400_0040_ChangesForInnovation.sql" />
     <Content Include="SqlScripts\Deltas\20210721_143900_0039_ChangesForInnovation.sql" />
     <Content Include="SqlScripts\Deltas\20220126_110000_0052_ChangeInnovationOrganizationSustainableDevelopmentObjectivesOptions.sql" />
+    <Content Include="SqlScripts\Deltas\20221212_102400_0059_ChangesForAttendeeOrganizations.sql" />
+    <Content Include="SqlScripts\Deltas\20221128_114400_0058_ChangesForAttendeeSalesPlatforms.sql" />
     <Content Include="SqlScripts\Deltas\20220212_105400_0057_ChangesForCartoon.sql" />
     <Content Include="SqlScripts\Deltas\20220204_133500_0056_ChangesAttendeeCartoonProjectCollaborators.sql" />
     <Content Include="SqlScripts\Deltas\20220204_133500_0055_ChangesAttendeeCartoonProjectEvaluations.sql" />

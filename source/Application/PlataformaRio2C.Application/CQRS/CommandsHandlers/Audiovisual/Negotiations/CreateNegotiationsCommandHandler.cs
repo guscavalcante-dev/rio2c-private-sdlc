@@ -278,7 +278,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                                         .Where(ns => ns.ProjectBuyerEvaluation == null 
                                                                      && ns.ProjectBuyerEvaluation?.ProjectId != projectBuyerEvaluation.ProjectId 
                                                                      && ns.ProjectBuyerEvaluation?.BuyerAttendeeOrganizationId != projectBuyerEvaluation.BuyerAttendeeOrganizationId
-                                                                     && ns.Room.IsVirtualMeeting == projectBuyerEvaluation.BuyerAttendeeOrganization.IsVirtualMeeting
+                                                                     && ns.Room.IsVirtualMeeting == projectBuyerEvaluation.BuyerAttendeeOrganization.Organization.IsVirtualMeeting
                                                                      && !roundsExceptions.Contains(ns.RoundNumber))?
                                                         .ToList();
 

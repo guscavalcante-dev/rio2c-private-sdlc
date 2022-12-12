@@ -82,7 +82,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.HoldingUid = entity?.Organization?.Holding?.Uid;
             this.Name = entity?.Organization?.Name;
             this.TradeName = entity?.Organization?.TradeName;
-            this.IsVirtualMeeting = entity?.AttendeeOrganization?.IsVirtualMeeting;
+            this.IsVirtualMeeting = entity?.Organization?.IsVirtualMeeting;
             this.IsVirtualMeetingRequired = organizationType?.Uid == OrganizationType.Player.Uid;
 
             this.UpdateModelsAndLists(holdingBaseDtos);

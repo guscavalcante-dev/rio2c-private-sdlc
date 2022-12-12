@@ -781,7 +781,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 }),
                                 Country = ao.Organization.Address.Country,
                                 State = ao.Organization.Address.State,
-                                IsVirtualMeeting = ao.IsVirtualMeeting
+                                IsVirtualMeeting = ao.Organization.IsVirtualMeeting
                             })
                             .FirstOrDefaultAsync();
         }

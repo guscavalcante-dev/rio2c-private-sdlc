@@ -445,7 +445,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 UpdateDate = o.UpdateDate,
                                 UpdateUserId = o.UpdateUserId,
                                 //Creator = h.Creator,
-                                IsVirtualMeeting = o.AttendeeOrganizations.FirstOrDefault(ao => !ao.IsDeleted && ao.EditionId == editionId).IsVirtualMeeting,
+                                IsVirtualMeeting = o.IsVirtualMeeting,
                                 HoldingBaseDto = o.Holding == null ? null : new HoldingBaseDto
                                 {
                                     Id = o.Holding.Id,
@@ -587,9 +587,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                                                                         && !aot.IsDeleted)),
                                 IsInOtherEdition = editionId.HasValue && o.AttendeeOrganizations.Any(ao => ao.EditionId != editionId
                                                                                                             && !ao.IsDeleted),
-                                
-                                IsVirtualMeeting = o.AttendeeOrganizations.FirstOrDefault(ao => ao.EditionId == editionId
-                                                                                                && !ao.IsDeleted).IsVirtualMeeting
+                                IsVirtualMeeting = o.IsVirtualMeeting
                             })
                             .ToListPagedAsync(page, pageSize);
         }

@@ -134,7 +134,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 return Json(new { status = "error", message = Messages.NegotiationPeriodClosed }, JsonRequestBehavior.AllowGet);
             }
 
-            if (negotiationDto?.ProjectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.AttendeeOrganization?.IsVirtualMeeting == false)
+            if (negotiationDto?.ProjectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.Organization?.IsVirtualMeeting == false)
             {
                 this.StatusMessageToastr(Messages.AccessDenied, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
                 return RedirectToAction("Index", "Meetings", new { Area = "Audiovisual", CollaboratorTypeUid = collaboratorTypeUid });

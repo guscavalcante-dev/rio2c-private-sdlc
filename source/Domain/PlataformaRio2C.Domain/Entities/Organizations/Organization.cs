@@ -48,6 +48,7 @@ namespace PlataformaRio2C.Domain.Entities
         public string Youtube { get; private set; }
         public int? AddressId { get; private set; }
         public DateTimeOffset? ImageUploadDate { get; private set; }
+        public bool? IsVirtualMeeting { get; private set; }
         
         public virtual Holding Holding { get; private set; }
         public virtual Address Address { get; private set; }
@@ -146,19 +147,22 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
             this.PhoneNumber = phoneNumber?.Trim();
             this.UpdateImageUploadDate(isImageUploaded, false);
+            this.IsVirtualMeeting = isVirtualMeeting;
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
             this.SynchronizeOrganizationRestrictionSpecifics(organizationRestrictionSpecifics, userId);
-            this.SynchronizeAttendeeOrganizations(edition, organizationType, isApiDisplayEnabled, apiHighlightPosition, null, true, isVirtualMeeting, userId);
+            this.SynchronizeAttendeeOrganizations(edition, organizationType, isApiDisplayEnabled, apiHighlightPosition, null, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
             this.SynchronizeOrganizationInterests(organizationInterests, userId);
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Organization"/> class for ticket buyer onboarding.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Organization" /> class for ticket buyer onboarding.
+        /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
         /// <param name="companyName">Name of the company.</param>
@@ -178,6 +182,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="addressZipCode">The address zip code.</param>
         /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="isVirtualMeeting">The is virtual meeting.</param>
         /// <param name="organizationDscriptions">The organization dscriptions.</param>
         /// <param name="userId">The user identifier.</param>
         public Organization(
@@ -210,16 +215,19 @@ namespace PlataformaRio2C.Domain.Entities
             this.Document = document?.Trim();
             this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
             this.UpdateImageUploadDate(isImageUploaded, false);
+            this.IsVirtualMeeting = isVirtualMeeting;
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeOrganizationDescriptions(organizationDscriptions, userId);
-            this.SynchronizeAttendeeOrganizations(edition, null, false, null, attendeeCollaborator, true, isVirtualMeeting, userId);
+            this.SynchronizeAttendeeOrganizations(edition, null, false, null, attendeeCollaborator, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.OnboardTicketBuyerAttendeeOrganizationData(edition, userId);
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Organization"/> class for producer onboarding.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Organization" /> class for producer onboarding.
+        /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
         /// <param name="companyName">Name of the company.</param>
@@ -239,6 +247,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="addressZipCode">The address zip code.</param>
         /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="isVirtualMeeting">The is virtual meeting.</param>
         /// <param name="organizationDescriptions">The organization descriptions.</param>
         /// <param name="organizationActivities">The organization activities.</param>
         /// <param name="targetAudiences">The target audiences.</param>
@@ -275,13 +284,14 @@ namespace PlataformaRio2C.Domain.Entities
             this.Document = document?.Trim();
             this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
             this.UpdateImageUploadDate(isImageUploaded, false);
+            this.IsVirtualMeeting = isVirtualMeeting;
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
-            this.SynchronizeAttendeeOrganizations(edition, null, false, null, attendeeCollaborator, true, isVirtualMeeting, userId);
+            this.SynchronizeAttendeeOrganizations(edition, null, false, null, attendeeCollaborator, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.OnboardProducerAttendeeOrganizationData(edition, userId);
         }
@@ -291,7 +301,9 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Updates the organization for admin.</summary>
+        /// <summary>
+        /// Updates the organization for admin.
+        /// </summary>
         /// <param name="holding">The holding.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="organizationType">Type of the organization.</param>
@@ -317,6 +329,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
+        /// <param name="isVirtualMeeting">The is virtual meeting.</param>
         /// <param name="organizationDscriptions">The organization dscriptions.</param>
         /// <param name="organizationRestrictionSpecifics">The organization restriction specifics.</param>
         /// <param name="organizationActivities">The organization activities.</param>
@@ -369,12 +382,13 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
             this.PhoneNumber = phoneNumber?.Trim();
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
+            this.IsVirtualMeeting = isVirtualMeeting;
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
             this.SynchronizeOrganizationDescriptions(organizationDscriptions, userId);
             this.SynchronizeOrganizationRestrictionSpecifics(organizationRestrictionSpecifics, userId);
-            this.SynchronizeAttendeeOrganizations(edition, organizationType, isApiDisplayEnabled, apiHighlightPosition, null, isAddingToCurrentEdition, isVirtualMeeting, userId);
+            this.SynchronizeAttendeeOrganizations(edition, organizationType, isApiDisplayEnabled, apiHighlightPosition, null, isAddingToCurrentEdition, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
@@ -417,17 +431,17 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.Holding = holding;
             this.HoldingId = holding?.Id;
-
             this.Name = name?.Trim();
             this.CompanyName = companyName?.Trim();
             this.TradeName = tradeName?.Trim();
             this.Document = document?.Trim();
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
+            this.IsVirtualMeeting = isVirtualMeeting;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
+            
             this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
-
-            this.SynchronizeAttendeeOrganizations(edition, organizationType, isApiDisplayEnabled, apiHighlightPosition, null, false, isVirtualMeeting, userId);  
+            this.SynchronizeAttendeeOrganizations(edition, organizationType, isApiDisplayEnabled, apiHighlightPosition, null, false, userId);  
         }
 
         /// <summary>
@@ -560,7 +574,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
-        /// <param name="isVirtualMeeting">if set to <c>true</c> [is virtual meeting].</param>
+        /// <param name="isVirtualMeeting">The is virtual meeting.</param>
         /// <param name="organizationDescriptions">The organization descriptions.</param>
         /// <param name="organizationActivities">The organization activities.</param>
         /// <param name="targetAudiences">The target audiences.</param>
@@ -597,13 +611,14 @@ namespace PlataformaRio2C.Domain.Entities
             this.Document = document?.Trim();
             this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
+            this.IsVirtualMeeting = isVirtualMeeting;
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
             this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
-            this.SynchronizeAttendeeOrganizations(edition, organizationType, null, null, null, true, isVirtualMeeting, userId);
+            this.SynchronizeAttendeeOrganizations(edition, organizationType, null, null, null, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.OnboardPlayerAttendeeOrganizationData(edition, userId);
         }
@@ -649,7 +664,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
-        /// <param name="isVirtualMeeting">if set to <c>true</c> [is virtual meeting].</param>
         /// <param name="organizationDescriptions">The organization descriptions.</param>
         /// <param name="userId">The user identifier.</param>
         public void OnboardTicketBuyerCompanyData(
@@ -682,11 +696,12 @@ namespace PlataformaRio2C.Domain.Entities
             this.Document = document?.Trim();
             this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
+            this.IsVirtualMeeting = isVirtualMeeting;
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
             this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
-            this.SynchronizeAttendeeOrganizations(edition, null, null, null, attendeeCollaborator, true, isVirtualMeeting, userId);
+            this.SynchronizeAttendeeOrganizations(edition, null, null, null, attendeeCollaborator, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.OnboardTicketBuyerAttendeeOrganizationData(edition, userId);
         }
@@ -714,7 +729,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
-        /// <param name="isVirtualMeeting">if set to <c>true</c> [is virtual meeting].</param>
+        /// <param name="isVirtualMeeting">The is virtual meeting.</param>
         /// <param name="organizationDescriptions">The organization descriptions.</param>
         /// <param name="organizationActivities">The organization activities.</param>
         /// <param name="targetAudiences">The target audiences.</param>
@@ -751,13 +766,14 @@ namespace PlataformaRio2C.Domain.Entities
             this.Document = document?.Trim();
             this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
+            this.IsVirtualMeeting = isVirtualMeeting;
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
             this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
-            this.SynchronizeAttendeeOrganizations(edition, null, null, null, attendeeCollaborator, true, isVirtualMeeting, userId);
+            this.SynchronizeAttendeeOrganizations(edition, null, null, null, attendeeCollaborator, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.OnboardProducerAttendeeOrganizationData(edition, userId);
         }
@@ -1018,7 +1034,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
         /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
-        /// <param name="isVirtualMeeting">The is virtual meeting.</param>
         /// <param name="userId">The user identifier.</param>
         private void SynchronizeAttendeeOrganizations(
             Edition edition, 
@@ -1027,7 +1042,6 @@ namespace PlataformaRio2C.Domain.Entities
             int? apiHighlightPosition,
             AttendeeCollaborator attendeeCollaborator, 
             bool isAddingToCurrentEdition, 
-            bool? isVirtualMeeting,
             int userId)
         {
             //// Synchronize only when is adding to current edition
@@ -1049,12 +1063,12 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeOrganization = this.AttendeeOrganizations.FirstOrDefault(ao => ao.EditionId == edition.Id);
             if (attendeeOrganization != null)
             {
-                attendeeOrganization.Restore(organizationType, isApiDisplayEnabled, apiHighlightPosition, isVirtualMeeting, userId);
+                attendeeOrganization.Restore(organizationType, isApiDisplayEnabled, apiHighlightPosition, userId);
                 attendeeCollaborator?.SynchronizeAttendeeOrganizationCollaborators(new List<AttendeeOrganization> { attendeeOrganization }, false, userId);
             }
             else
             {
-                var newAttendeeOrganization = new AttendeeOrganization(edition, this, organizationType, isApiDisplayEnabled, apiHighlightPosition, isVirtualMeeting, userId);
+                var newAttendeeOrganization = new AttendeeOrganization(edition, this, organizationType, isApiDisplayEnabled, apiHighlightPosition, userId);
                 this.AttendeeOrganizations.Add(newAttendeeOrganization);
                 attendeeCollaborator?.SynchronizeAttendeeOrganizationCollaborators(new List<AttendeeOrganization> { newAttendeeOrganization }, false, userId);
             }

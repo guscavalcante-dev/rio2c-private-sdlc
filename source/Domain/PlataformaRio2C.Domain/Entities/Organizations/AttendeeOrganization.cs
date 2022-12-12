@@ -30,7 +30,6 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset? OnboardingInterestsDate { get; private set; }
         public DateTimeOffset? ProjectSubmissionOrganizationDate { get; private set; }
         public int SellProjectsCount { get; set; }
-        public bool? IsVirtualMeeting { get; private set; }
 
         public virtual Edition Edition { get; private set; }
         public virtual Organization Organization { get; private set; }
@@ -48,7 +47,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="organizationType">Type of the organization.</param>
         /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
         /// <param name="apiHighlightPosition">The API highlight position.</param>
-        /// <param name="isVirtualMeeting">The is virtual meeting.</param>
         /// <param name="userId">The user identifier.</param>
         public AttendeeOrganization(
             Edition edition,
@@ -56,18 +54,12 @@ namespace PlataformaRio2C.Domain.Entities
             OrganizationType organizationType,
             bool? isApiDisplayEnabled,
             int? apiHighlightPosition,
-            bool? isVirtualMeeting,
             int userId)
         {
             this.Edition = edition;
             this.Organization = organization;
             this.SellProjectsCount = 0;
             this.SynchronizeAttendeeOrganizationTypes(organizationType, isApiDisplayEnabled, apiHighlightPosition, userId);
-
-            if (organizationType?.Name == OrganizationType.Player.Name)
-                this.IsVirtualMeeting = isVirtualMeeting;
-            else
-                this.IsVirtualMeeting = null;
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
@@ -107,9 +99,8 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="isVirtualMeeting">The is virtual meeting.</param>
         /// <param name="userId">The user identifier.</param>
-        public void Restore(OrganizationType organizationType, bool? isApiDisplayEnabled, int? apiHighlightPosition, bool? isVirtualMeeting, int userId)
+        public void Restore(OrganizationType organizationType, bool? isApiDisplayEnabled, int? apiHighlightPosition, int userId)
         {
-            this.IsVirtualMeeting = isVirtualMeeting;
             this.SynchronizeAttendeeOrganizationTypes(organizationType, isApiDisplayEnabled, apiHighlightPosition, userId);
 
             this.IsDeleted = false;

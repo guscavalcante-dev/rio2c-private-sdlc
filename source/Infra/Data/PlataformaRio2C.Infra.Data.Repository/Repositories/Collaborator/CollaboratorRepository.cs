@@ -759,7 +759,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                     {
                                                                                                         Name = aoc.AttendeeOrganization.Organization.Holding.Name
                                                                                                     },
-                                                                                                    IsVirtualMeeting = aoc.AttendeeOrganization.IsVirtualMeeting
+                                                                                                    IsVirtualMeeting = aoc.AttendeeOrganization.Organization.IsVirtualMeeting
                                                                                                 }
                                                                                             })),
 
@@ -1268,7 +1268,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                     {
                                                                                                         Name = aoc.AttendeeOrganization.Organization.Holding.Name
                                                                                                     },
-                                                                                                    IsVirtualMeeting = aoc.AttendeeOrganization.IsVirtualMeeting
+                                                                                                    IsVirtualMeeting = aoc.AttendeeOrganization.Organization.IsVirtualMeeting
                                                                                                 }
                                                                                             })),
 
@@ -1359,7 +1359,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                     {
                                                                                                         Name = aoc.AttendeeOrganization.Organization.Holding.Name
                                                                                                     },
-                                                                                                    IsVirtualMeeting = aoc.AttendeeOrganization.IsVirtualMeeting
+                                                                                                    IsVirtualMeeting = aoc.AttendeeOrganization.Organization.IsVirtualMeeting
                                                                                                 }
                                                                                             })),
                                 JobTitle = c.JobTitles.FirstOrDefault(jb => !jb.IsDeleted && jb.CollaboratorId == c.Id).Value
