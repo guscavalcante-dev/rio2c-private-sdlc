@@ -67,9 +67,9 @@
                                                     <small><i class="flaticon-profile"></i> @Labels.SeeDescription</small>
                                                 </a>
                                             </span>
-                                            @if (projectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.AttendeeOrganization?.IsVirtualMeeting != null)
+                                            @if (projectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.Organization?.IsVirtualMeeting != null)
                                             {
-                                                var isVirtualMeeting = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.AttendeeOrganization.IsVirtualMeeting == true;
+                                                var isVirtualMeeting = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.IsVirtualMeeting == true;
                                                 var tooltipTile = string.Format(Messages.PlayerMeetingPreference, (isVirtualMeeting ? Labels.RemoteF : Labels.Presential).ToLowerInvariant());
 
                                                 <div class="kt-widget__subhead pt-0 mt-0">
