@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-28-2021
+// Last Modified On : 12-14-2022
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -122,24 +122,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             {
                 var outerWhere = PredicateBuilder.New<Project>(false);
                 var innerProjectTitleNameWhere = PredicateBuilder.New<Project>(true);
-                var innerProjectSummaryNameWhere = PredicateBuilder.New<Project>(true);
-                var innerProjectInterestNameWhere = PredicateBuilder.New<Project>(true);
                 var innerSellerAttendeeOrganizationNameWhere = PredicateBuilder.New<Project>(true);
 
-                foreach (var keyword in keywords.Split(' '))
+                if (!string.IsNullOrEmpty(keywords))
                 {
-                    if (!string.IsNullOrEmpty(keyword))
-                    {
-                        innerProjectTitleNameWhere = innerProjectTitleNameWhere.Or(p => p.ProjectTitles.Any(pt => !pt.IsDeleted && pt.Value.Contains(keyword)));
-                        innerProjectSummaryNameWhere = innerProjectSummaryNameWhere.Or(p => p.ProjectSummaries.Any(pt => !pt.IsDeleted && pt.Value.Contains(keyword)));
-                        innerProjectInterestNameWhere = innerProjectInterestNameWhere.Or(p => p.ProjectInterests.Any(pi => !pi.IsDeleted && pi.Interest.Name.Contains(keyword)));
-                        innerSellerAttendeeOrganizationNameWhere = innerSellerAttendeeOrganizationNameWhere.Or(sao => sao.SellerAttendeeOrganization.Organization.Name.Contains(keyword));
-                    }
+                    innerProjectTitleNameWhere = innerProjectTitleNameWhere.Or(p => p.ProjectTitles.Any(pt => !pt.IsDeleted && pt.Value.Contains(keywords)));
+                    innerSellerAttendeeOrganizationNameWhere = innerSellerAttendeeOrganizationNameWhere.Or(sao => sao.SellerAttendeeOrganization.Organization.Name.Contains(keywords));
                 }
 
                 outerWhere = outerWhere.Or(innerProjectTitleNameWhere);
-                outerWhere = outerWhere.Or(innerProjectSummaryNameWhere);
-                outerWhere = outerWhere.Or(innerProjectInterestNameWhere);
                 outerWhere = outerWhere.Or(innerSellerAttendeeOrganizationNameWhere);
                 query = query.Where(outerWhere);
             }
