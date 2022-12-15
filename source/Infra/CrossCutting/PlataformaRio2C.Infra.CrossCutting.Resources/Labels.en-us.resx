@@ -386,7 +386,7 @@
     <value>Back</value>
   </data>
   <data name="BadgeName" xml:space="preserve">
-    <value>Badge name</value>
+    <value>Badge name/Social Networks/Website</value>
     <comment>Nome para credencial</comment>
   </data>
   <data name="Badges" xml:space="preserve">
