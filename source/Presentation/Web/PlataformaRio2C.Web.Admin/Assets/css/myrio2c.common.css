@@ -242,15 +242,24 @@ table.dataTable tbody tr.selected {
     color: #366cf3;
 }
 
-
 /*
-    Media
+    UserPic
 */
 .kt-userpic.my-userpic--43 img {
     width: 43px;
     height: 43px;
 }
 
+.kt-userpic.kt-userpic--md span {
+    width: 50px !important;
+    height: 50px !important;
+    font-size: 1.2rem !important;
+}
+
+
+/*
+    Media
+*/
 .kt-media.kt-media--circle span {
     border-radius: 50%;
 }

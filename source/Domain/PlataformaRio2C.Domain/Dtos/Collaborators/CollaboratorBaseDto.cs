@@ -28,8 +28,8 @@ namespace PlataformaRio2C.Domain.Dtos
 
         public bool? Active { get; set; }
         public string UserInterfaceLanguage { get; set; }
-
         public string FullName => this.FirstName + (!string.IsNullOrEmpty(this.LastNames) ? " " + this.LastNames : String.Empty);
+        public string NameAbbreviation => this.FullName.GetTwoLetterCode();
         public string FirstName { get; set; }
         public string LastNames { get; set; }
         public string Badge { get; set; }
@@ -38,7 +38,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public string CellPhone { get; set; }
         public string PublicEmail { get; set; }
         public string JobTitle { get; set; }
-
+        
         public HoldingBaseDto HoldingBaseDto { get; set; }
         public OrganizationBaseDto OrganizatioBaseDto { get; set; }
         public DateTimeOffset? ImageUploadDate { get; set; }

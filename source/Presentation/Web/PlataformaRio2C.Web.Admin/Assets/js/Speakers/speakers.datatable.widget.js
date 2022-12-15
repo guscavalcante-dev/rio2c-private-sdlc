@@ -38,11 +38,11 @@ var SpeakersDataTableWidget = function () {
                 }
             });
         })
-        .fail(function () {
-        })
-        .always(function () {
-            MyRio2cCommon.unblock();
-        });
+            .fail(function () {
+            })
+            .always(function () {
+                MyRio2cCommon.unblock();
+            });
     };
 
     var showSendInvitationEmailsModal = function () {
@@ -108,46 +108,46 @@ var SpeakersDataTableWidget = function () {
             processing: true,
             serverSide: true,
             buttons: [
-            {
-                extend: 'collection',
-                text: labels.actions,
-                buttons: [
-                    {
-                        text: sendInvitationEmail,
-                        action: function (e, dt, node, config) {
-                            $('.dt-button-background').remove();
-                            showSendInvitationEmailsModal();
-                        }
-                    },
-                    {
-                        text: exportToEventbrite,
-                        action: function (e, dt, node, config) {
-                            $('.dt-button-background').remove();
-                            eventbriteCsvExport = dt.ajax.params();
-                            eventbriteCsvExport.selectedCollaboratorsUids = $('#speakers-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
-                            eventbriteCsvExport.showAllEditions = $('#ShowAllEditions').prop('checked');
-                            eventbriteCsvExport.showAllParticipants = $('#ShowAllParticipants').prop('checked');
-                            eventbriteCsvExport.showHighlights = $('#ShowHighlights').prop('checked');
-                            eventbriteCsvExport.collaboratorTypeName = collaboratorTypeName;
+                {
+                    extend: 'collection',
+                    text: labels.actions,
+                    buttons: [
+                        {
+                            text: sendInvitationEmail,
+                            action: function (e, dt, node, config) {
+                                $('.dt-button-background').remove();
+                                showSendInvitationEmailsModal();
+                            }
+                        },
+                        {
+                            text: exportToEventbrite,
+                            action: function (e, dt, node, config) {
+                                $('.dt-button-background').remove();
+                                eventbriteCsvExport = dt.ajax.params();
+                                eventbriteCsvExport.selectedCollaboratorsUids = $('#speakers-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
+                                eventbriteCsvExport.showAllEditions = $('#ShowAllEditions').prop('checked');
+                                eventbriteCsvExport.showAllParticipants = $('#ShowAllParticipants').prop('checked');
+                                eventbriteCsvExport.showHighlights = $('#ShowHighlights').prop('checked');
+                                eventbriteCsvExport.collaboratorTypeName = collaboratorTypeName;
 
-                            SalesPlatformsExport.showExportEventbriteCsvModal(eventbriteCsvExport);
-                        }
-                    },
-                    {
-                        text: labels.selectAll,
-                        action: function (e, dt, node, config) {
-                            $('.dt-button-background').remove();
-                            table.rows().select();
-                        }
-                    },
-                    {
-                        text: labels.unselectAll,
-                        action: function (e, dt, node, config) {
-                            $('.dt-button-background').remove();
-                            table.rows().deselect();
-                        }
-                    }]
-            }],
+                                SalesPlatformsExport.showExportEventbriteCsvModal(eventbriteCsvExport);
+                            }
+                        },
+                        {
+                            text: labels.selectAll,
+                            action: function (e, dt, node, config) {
+                                $('.dt-button-background').remove();
+                                table.rows().select();
+                            }
+                        },
+                        {
+                            text: labels.unselectAll,
+                            action: function (e, dt, node, config) {
+                                $('.dt-button-background').remove();
+                                table.rows().deselect();
+                            }
+                        }]
+                }],
             order: [[0, "asc"]],
             sDom: '<"row"<"col-sm-6"l><"col-sm-6 text-right"B>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
             oSearch: {
@@ -201,7 +201,11 @@ var SpeakersDataTableWidget = function () {
                                         <td>';
 
                         if (!MyRio2cCommon.isNullOrEmpty(full.ImageUploadDate)) {
-                            html += '<img src="' + imageDirectory + full.Uid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
+                            html += '   <div class="text-center w-100">'
+                                + '             <div class="kt-userpic kt-userpic--md kt-userpic--brand">'
+                                + '                 <span>' + full.NameAbbreviation + '</span>'
+                                + '             </div>'
+                                + '     </div>';
                         }
                         else {
                             html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
@@ -219,7 +223,7 @@ var SpeakersDataTableWidget = function () {
                     }
                 },
                 {
-                     data: 'Email'
+                    data: 'Email'
                 },
                 {
                     data: 'Company',
@@ -331,7 +335,7 @@ var SpeakersDataTableWidget = function () {
                     className: "dt-center"
                 }
             ],
-            initComplete: function() {
+            initComplete: function () {
                 $('button.buttons-collection').attr('data-toggle', 'dropdown');
             }
         });
@@ -369,7 +373,7 @@ var SpeakersDataTableWidget = function () {
         refreshData: function () {
             refreshData();
         },
-        exportEventbriteCsv: function() {
+        exportEventbriteCsv: function () {
             exportEventbriteCsv();
         },
         showDetails: function (collaboratorUid) {
