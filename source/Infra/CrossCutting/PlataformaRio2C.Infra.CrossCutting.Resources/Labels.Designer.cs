@@ -691,7 +691,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nome para credencial.
+        ///   Looks up a localized string similar to Nome para credencial/Redes Sociais/Site.
         /// </summary>
         public static string BadgeName {
             get {

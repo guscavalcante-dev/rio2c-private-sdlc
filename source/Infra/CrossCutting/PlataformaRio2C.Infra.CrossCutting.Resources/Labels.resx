@@ -384,7 +384,7 @@
     <value>Voltar</value>
   </data>
   <data name="BadgeName" xml:space="preserve">
-    <value>Nome para credencial</value>
+    <value>Nome para credencial/Redes Sociais/Site</value>
     <comment>Nome para credencial</comment>
   </data>
   <data name="Badges" xml:space="preserve">
