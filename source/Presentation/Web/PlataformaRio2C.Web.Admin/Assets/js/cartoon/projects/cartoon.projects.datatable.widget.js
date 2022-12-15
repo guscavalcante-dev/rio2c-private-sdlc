@@ -130,15 +130,11 @@ var CartoonProjectsDataTableWidget = function () {
                                 <table class="image-side-text text-left">\
                                     <tr>\
                                         <td>';
-
-                        // TODO: Image isn't implemented at CartoonProject API, so we have to show CartoonProjectTitleAbbreviation for a while.
-                        //if (!MyRio2cCommon.isNullOrEmpty(row.ImageUploadDate)) {
-                        //    html += '<img src="' + imageDirectory + row.CartoonProjectUid + '_thumbnail.png?v=' + moment(row.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
-                        //}
-                        //else {
-                        //   html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
-                        //}
-                        html += '<span class="kt-badge kt-badge--inline kt-badge--info" style="width: 50px; height: 50px; font-weight: bold; font-size: 13px; background: rgba(54,108,243,.1); color: #366cf3;">' + row.CartoonProjectTitleAbbreviation + '</span>';
+                        html += '           <div class="text-center w-100">'
+                            + '                     <div class="kt-userpic kt-userpic--md kt-userpic--brand">'
+                            + '                         <span>' + row.CartoonProjectTitleAbbreviation + '</span>'
+                            + '                     </div>'
+                            + '             </div>';
 
                         html += '       <td> ' + data + '</td>\
                                     </tr>\
@@ -212,9 +208,9 @@ var CartoonProjectsDataTableWidget = function () {
                     }
                 },
                 {
-	                data: 'Actions',
-	                responsivePriority: -1,
-	                render: function (data, type, row, meta) {
+                    data: 'Actions',
+                    responsivePriority: -1,
+                    render: function (data, type, row, meta) {
                         var html = '\<span class="dropdown">';
                         html += '\      <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">';
                         html += '\          <i class="la la-ellipsis-h"></i>';
@@ -230,7 +226,7 @@ var CartoonProjectsDataTableWidget = function () {
                         html += '\  </span>';
 
                         return html;
-	                }
+                    }
                 }
             ],
             columnDefs: [
@@ -258,11 +254,11 @@ var CartoonProjectsDataTableWidget = function () {
                     orderable: true,
                 },
                 {
-	                targets: -1,
-	                //width: "6%",
+                    targets: -1,
+                    //width: "6%",
                     orderable: false,
-	                searchable: false,
-	                className: "dt-center"
+                    searchable: false,
+                    className: "dt-center"
                 }
             ],
             initComplete: function () {
@@ -282,7 +278,7 @@ var CartoonProjectsDataTableWidget = function () {
         $('#ProjectFormatUid').addClass('change-event-enabled');
 
         $('#EvaluationStatusUid').not('.change-event-enabled').on('change', function (e) {
-	        table.ajax.reload();
+            table.ajax.reload();
         });
         $('#EvaluationStatusUid').addClass('change-event-enabled');
 
@@ -300,8 +296,8 @@ var CartoonProjectsDataTableWidget = function () {
     // Details ------------------------------------------------------------------------------------
     var showDetails = function (attendeeCartoonProjectId, searchKeywords, projectFormatUid, evaluationStatusUid, page, pageSize) {
         if (MyRio2cCommon.isNullOrEmpty(attendeeCartoonProjectId)) {
-		    return;
-	    }
+            return;
+        }
 
         window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Cartoon/Projects/EvaluationDetails/' + attendeeCartoonProjectId
             + '?searchKeywords=' + searchKeywords
@@ -323,11 +319,11 @@ var CartoonProjectsDataTableWidget = function () {
             hiddenElement.download = resp.fileName;
             hiddenElement.click();
         })
-        .fail(function () {
-        })
-        .always(function () {
-            MyRio2cCommon.unblock();
-        });
+            .fail(function () {
+            })
+            .always(function () {
+                MyRio2cCommon.unblock();
+            });
     };
 
     return {
