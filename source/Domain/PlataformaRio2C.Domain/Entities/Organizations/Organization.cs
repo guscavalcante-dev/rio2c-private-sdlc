@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-09-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-19-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 12-17-2022
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -512,7 +512,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
             this.DeleteAttendeeOrganization(edition, organizationType, userId);
 
-            if (this.FindAllAttendeeOrganizationsNotDeleted(edition)?.Any() == false)
+            if (this.FindAllAttendeeOrganizationsNotDeleted()?.Any() == false)
             {
                 this.IsDeleted = true;
                 this.UpdateImageUploadDate(false, true);
@@ -1100,6 +1100,15 @@ namespace PlataformaRio2C.Domain.Entities
         private List<AttendeeOrganization> FindAllAttendeeOrganizationsNotDeleted(Edition edition)
         {
             return this.AttendeeOrganizations?.Where(ao => (edition == null || ao.EditionId == edition.Id) && !ao.IsDeleted)?.ToList();
+        }
+
+        /// <summary>
+        /// Finds all attendee organizations not deleted.
+        /// </summary>
+        /// <returns></returns>
+        private List<AttendeeOrganization> FindAllAttendeeOrganizationsNotDeleted()
+        {
+            return this.AttendeeOrganizations?.Where(ao => !ao.IsDeleted)?.ToList();
         }
 
         #endregion
