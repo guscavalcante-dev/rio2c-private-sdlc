@@ -4,7 +4,7 @@
 // Created          : 07-12-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 11-30-2022
+// Last Modified On : 12-16-2022
 // ***********************************************************************
 // <copyright file="SalesPlatformRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -118,7 +118,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     UpdateUserId = sp.UpdateUserId,
                                     UpdateDate = sp.UpdateDate,
                                     SecurityStamp = sp.SecurityStamp,
-                                    AttendeeSalesPlatforms = sp.AttendeeSalesPlatforms
+                                    AttendeeSalesPlatforms = sp.AttendeeSalesPlatforms.Where(asp => !asp.IsDeleted && asp.IsActive)
                                 })
                                 .FirstOrDefaultAsync();
         }
