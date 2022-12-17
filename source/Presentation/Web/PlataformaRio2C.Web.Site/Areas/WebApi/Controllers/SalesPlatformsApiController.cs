@@ -128,7 +128,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// </summary>
         /// <param name="key">The key.</param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         [Route("sympla/{key?}")]
         public async Task<IHttpActionResult> Sympla(string key)
         {
