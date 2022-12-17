@@ -4,7 +4,7 @@
 // Created          : 07-12-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 11-09-2022
+// Last Modified On : 12-16-2022
 // ***********************************************************************
 // <copyright file="CreateSalesPlatformWebhookRequestCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -199,13 +199,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
                                 return appValidationResult;
                             }
+                        }
 
-                            // Process pending created webhooks
-                            var processingResult = await this.eventBus.Send(new ProcessPendingPlatformWebhookRequestsAsync());
-                            if (!processingResult.IsValid)
-                            {
-                                return processingResult;
-                            }
+                        // Process pending created webhooks
+                        var processingResult = await this.eventBus.Send(new ProcessPendingPlatformWebhookRequestsAsync());
+                        if (!processingResult.IsValid)
+                        {
+                            return processingResult;
                         }
 
                         break;
