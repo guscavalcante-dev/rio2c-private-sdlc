@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-16-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-26-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 12-17-2022
 // ***********************************************************************
 // <copyright file="speakers.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -201,14 +201,14 @@ var SpeakersDataTableWidget = function () {
                                         <td>';
 
                         if (!MyRio2cCommon.isNullOrEmpty(full.ImageUploadDate)) {
+                            html += '<img src="' + imageDirectory + full.Uid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
+                        }
+                        else {
                             html += '   <div class="text-center w-100">'
                                 + '             <div class="kt-userpic kt-userpic--md kt-userpic--brand">'
                                 + '                 <span>' + full.NameAbbreviation + '</span>'
                                 + '             </div>'
                                 + '     </div>';
-                        }
-                        else {
-                            html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
                         }
 
                         html += '       <td> ' + full.FullName + '</td>\
