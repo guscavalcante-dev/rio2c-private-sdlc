@@ -4655,7 +4655,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Regulamento Rodadas de Negócio (PARTICIPANTE) - Rio2C 2022 (PDF).
+        ///   Looks up a localized string similar to Regulamento Rodadas de Negócio (PARTICIPANTE) - Rio2C 2023 (PDF).
         /// </summary>
         public static string ProducersRegulationPdf {
             get {
