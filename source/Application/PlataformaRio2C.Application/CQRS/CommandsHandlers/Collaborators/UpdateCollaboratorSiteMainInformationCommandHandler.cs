@@ -3,8 +3,8 @@
 // Author           : William Almado
 // Created          : 10-15-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-18-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 12-22-2022
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorSiteMainInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -103,7 +103,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.HasAnySpecialNeeds ?? false,
                 cmd.SpecialNeedsDescription,
                 cmd.HaveYouBeenToRio2CBefore,
-                this.editionRepo.GetAll(e => cmd.EditionsUids.Contains(e.Uid)).ToList(),
+                cmd.EditionsUids != null ? this.editionRepo.GetAll(e => cmd.EditionsUids.Contains(e.Uid)).ToList() : null,
                 await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty), 
                 cmd.CropperImage?.ImageFile != null,
                 cmd.UserId);
