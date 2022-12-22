@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-16-2021
+// Last Modified On : 12-22-2022
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -831,12 +831,17 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         private void DeleteCollaboratorParticipation(List<Edition> editionsParticipated, int userId)
         {
-            if (EditionParticipantions == null)
+            if(editionsParticipated == null)
+            {
+                editionsParticipated = new List<Edition>();
+            }
+
+            if (this.EditionParticipantions == null)
             {
                 return;
             }
 
-            foreach (var participation in EditionParticipantions)
+            foreach (var participation in this.EditionParticipantions)
             {
                 if (editionsParticipated.All(e => e.Id != participation.Id && !e.IsDeleted))
                 {

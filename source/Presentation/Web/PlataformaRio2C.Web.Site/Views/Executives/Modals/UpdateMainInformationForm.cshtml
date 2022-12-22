@@ -223,7 +223,7 @@
 <div class="form-group" data-additionalinfo="HaveYouBeenToRio2CBefore">
     <label class="control-label">@Labels.WhichEditionQ</label>
     <div class="row">
-        @foreach (var edition in Model.Editions)
+        @foreach (var edition in Model?.Editions)
         {
             <div class="col-10 ml-5">
                 <label class="kt-checkbox">
