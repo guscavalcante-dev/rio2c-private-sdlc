@@ -1,7 +1,14 @@
-﻿<h5 class="text-center font-weight-bold">
-    Convidados Rio2C 2020 |
+﻿@using System.Globalization
+@using PlataformaRio2C.Domain.Dtos
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    var brCulture = new CultureInfo("pt-BR");
+    var usCulture = new CultureInfo("en-US");
+}
+<h5 class="text-center font-weight-bold">
+    Convidados Rio2C @editionDto.Edition.UrlCode |
     <span class="text-primary font-italic">
-        Guests Rio2C 2020
+        Guests Rio2C @editionDto.Edition.UrlCode
     </span>
 </h5>
 <h4 class="mt-50 text-center font-weight-bold">
@@ -13,9 +20,39 @@
 <!--begin:: Image Authorization-->
 <ul class="text-justify list-unstyled">
     <li class="mt-20 pr-1">
-        Declaro, de forma espontânea e voluntária, sem ter sofrido qualquer tipo de coação física e/ou moral, nem qualquer outro constrangimento ilegal, estar ciente e concordar que autorizo, de forma irrevogável, irretratável e gratuita, a RIO CREATIVE CONFERENCES LTDA. (CNPJ/ME nº 26.079.220/0001-46), bem como seus respectivos sócios, diretores, representantes e terceiros contratados, a captar, reproduzir, expor, publicar e utilizar a imagem, som de voz, nome, dados biográficos, portfólio profissional, interpretações e atuações captadas durante minha participação no evento, abrangendo seu uso em todo território nacional e no exterior, por quaisquer veículos, processos e meios de comunicação, divulgação e publicação, físicos ou digitais, existentes ou que venham a ser criados, para a utilização publicitária, promocional e/ou institucional e sem limite de tempo ou número de utilizações, não cabendo, em qualquer tempo, direito à indenização. |
+        Pelo presente instrumento, eu, abaixo firmado(a) e identificado(a) como o palestrante ora inscrito(a) (“Palestrante”) ou, conforme o caso, como pessoa autorizada pelo Palestrante, autorizo a <span class="font-weight-bold">RIO CREATIVE CONFERENCES LTDA.</span>, sociedade limitada, inscrita no CNPJ/ME sob o número 26.079.220/0001-46, com sede na Cidade e Estado do Rio de Janeiro, na Rua dos Oitis, 48, Gávea, CEP 22.451-050, seus prepostos, colaboradores, contratados e/ou terceiros por ela autorizado (“Partes Autorizados”), <span class="font-weight-bold">a utilizar a imagem e voz do(a) Palestrante captados durante todo o evento Rio Creative Conference – Rio2C</span>, que ocorrerá no período compreendido entre os dias @editionDto.Edition.StartDate.ToBrazilTimeZone().Day a @editionDto.Edition.EndDate.ToBrazilTimeZone().Day de @editionDto.Edition.EndDate.ToBrazilTimeZone().ToString("MMMM", brCulture), @editionDto.Edition.EndDate.ToBrazilTimeZone().Year. | 
         <span class="text-primary font-italic">
-            I declare, spontaneously and voluntarily, not having suffered any kind of physical and/or moral coercion, to be aware and agree that I authorize, irrevocably, irreversibly and gratuitously, RIO CREATIVE CONFERENCES LTDA. (CNPJ/ME No. 26.079.220/0001-46) and its shareholders, officers, representatives and contracted third parties, to capture, reproduce, exhibit, publish and use the likeness, voice sound, name, biographical data, professional portfolio, interpretations and performances captured during my participation in the event, covering its use throughout the national territory and abroad, by any existing or future physical or digital vehicles, methods and means of communication, dissemination and publication, for advertising, promotional and/or institutional uses and without limits of time or number of uses, without any right to claim for compensation or damages, at any time.
+            By means of this instrument, I, duly identified and signing below, as the hereby registered speaker (“Speaker”) or, as the case may be, as a person authorized by the Speaker, authorize <span class="font-weight-bold">RIO CREATIVE CONFERENCES LTDA.</span>, limited liability company, enrolled with the CNPJ/ME under no. 26.079.220/0001-46, with its headquarters in the City and State of Rio de Janeiro at Rua dos Oitis, 48 its employees, subcontracts and any authorized third parties (“Authorized Party”) to <span class="font-weight-bold">use the likeness and voice of the Speaker, as recorded and registered during the event entitled Rio Creative Conference – Rio2C</span>, which will be held between @editionDto.Edition.EndDate.ToBrazilTimeZone().ToString("MMMM", usCulture) @editionDto.Edition.StartDate.ToBrazilTimeZone().Day<sup>@editionDto.Edition.StartDate.ToBrazilTimeZone().GetDaySuffix()</sup> – @editionDto.Edition.EndDate.ToBrazilTimeZone().Day<sup>@editionDto.Edition.EndDate.ToBrazilTimeZone().GetDaySuffix()</sup>, @editionDto.Edition.EndDate.ToBrazilTimeZone().Year.
+        </span>
+    </li>
+    <li class="mt-20 pr-1">
+        O material audiovisual resultante desta captação na qual couber a participação do(a) Palestrante, <span class="font-weight-bold">bem como o material audiovisual apresentado pelo(a) Palestrante</span>, poderão ser exibidos no Brasil e no exterior, em qualquer tipo de mídia, tais como: material impresso, CD (“compact disc”), CD ROM, CD-I (“compact disc” interativo), “home vídeo”, DAT (“digital audio tape”), DVD (“digital vídeo disc”), rádio, radiodifusão, televisão aberta, fechada e por assinatura, bem como disseminá-lo via Internet, independentemente do processo de transporte de sinal e suporte material que venha a ser utilizado para tais fins, sem limitação de tempo ou do número de utilizações/exibições, no Brasil ou no exterior, por meio de qualquer processo de transporte de sinal ou suporte material existente, sendo certo que o material criado destina-se à utilização exclusiva de divulgação, promoção e estudo do projeto supracitado. | 
+        <span class="text-primary font-italic">
+            The audiovisual production resulting from such recording and in which the Speaker participates, <span class="font-weight-bold">as well as the audiovisual material which the Speaker has presented at the event</span>, may be published both in Brazil and abroad, in any media, including but not limited to printed media, compact disc (CD), data compact disc (CD-ROM), interactive compact disc (CD-I), home video, digital audio tape (DAT), digital video disc/digital versatile disc (DVD), radio broadcast, TV broadcast, closed-channel TV, cable TV, subscription-based TV, as well as published online on the Internet, independently of the data/signal transmission process and/or the physical medium which happens to be used for such purpose, without limitation of duration or number of instances of use/publication/broadcast, in Brazil or abroad, through any means of signal transmission/data transfer or existing physical support medium, being hereby made clear that the material produced is destined exclusively for advertising, promotion and study of the aforementioned event.
+        </span>
+    </li>
+    <li class="mt-20 pr-1">
+        Declaro que a participação do(a) Palestrante no evento é espontânea e voluntária, não tendo sofrido nenhum tipo de coação física e/ou moral, nem qualquer outro constrangimento ilegal por parte das Partes Autorizadas. | 
+        <span class="text-primary font-italic">
+            I hereby declare that the Speaker’s participation in the event is spontaneous and voluntary, and that he/she has not suffered any physical and/or moral coercion or any other illegal constraint on the part of the Authorized Parties.
+        </span>
+    </li>
+    <li class="mt-20 pr-1">
+        Declaro que possuo os todos poderes necessários para conceder a autorização ora prevista neste instrumento. | 
+        <span class="text-primary font-italic">
+            I hereby declare that I have any and all necessary powers to grant the authorization provided for in this instrument.
+        </span>
+    </li>
+    <li class="mt-20 pr-1">
+        Fica desde já ajustado que o material ora autorizado não poderá ser utilizado pelas Partes Autorizadas com o objetivo de comercialização e/ou monetização direta. | 
+        <span class="text-primary font-italic">
+            It is hereby agreed that the material herein authorized may not be used by an Authorized Party for purposes of commercialization and/or direct monetary gain.
+        </span>
+    </li>
+    <li class="mt-20 pr-1">
+        Esta autorização vigorará por todo prazo de proteção autoral, conforme a Lei Federal nº 9.610/98 (“Lei de Direitos Autorais”). | 
+        <span class="text-primary font-italic">
+            This waiver shall remain in effect for the entire term of the copyright protection of the materials object hereof, as defined by the Brazilian Federal Law No. 9.610/98 (“Brazilian Copyright Law”).
         </span>
     </li>
 </ul>
