@@ -4,8 +4,6 @@
     Layout = "~/Views/Themes/Metronic/_Internal.cshtml";
     var editionDto = ViewBag.EditionDto as EditionDto;
     ViewBag.Title = string.Format(Labels.Welcome, editionDto?.UrlCode);
-    //var menuIndex = !isPlayer ? 4 : 
-    //                            3 + ((playerAttendeeOrganizations?.Count ?? 0) * 2) + 1;
     var menuIndex = 2;
 }
 <div class="kt-portlet">
