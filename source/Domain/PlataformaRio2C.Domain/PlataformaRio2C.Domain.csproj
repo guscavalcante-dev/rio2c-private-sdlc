@@ -363,6 +363,7 @@
     <Compile Include="Entities\Innovation\InnovationOrganizationTechnologyOption.cs" />
     <Compile Include="Entities\Innovation\AttendeeInnovationOrganizationTrack.cs" />
     <Compile Include="Entities\Innovation\InnovationOrganizationSustainableDevelopmentObjectivesOption.cs" />
+    <Compile Include="Entities\Innovation\InnovationOrganizationTrackOptionGroup.cs" />
     <Compile Include="Entities\Innovation\InnovationOrganizationTrackOption.cs" />
     <Compile Include="Entities\Innovation\AttendeeInnovationOrganizationEvaluation.cs" />
     <Compile Include="Entities\Innovation\AttendeeInnovationOrganizationCollaborator.cs" />
