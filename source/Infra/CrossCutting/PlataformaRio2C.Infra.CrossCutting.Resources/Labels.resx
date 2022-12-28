@@ -2921,6 +2921,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Carro à Disposição</value>
     <comment>Veículo à Disposição</comment>
   </data>
+  <data name="Vertical" xml:space="preserve">
+    <value>Vertical</value>
+  </data>
+  <data name="Verticals" xml:space="preserve">
+    <value>Verticais</value>
+  </data>
   <data name="VideoClip" xml:space="preserve">
     <value>Vídeo clip</value>
     <comment>Vídeo clip</comment>

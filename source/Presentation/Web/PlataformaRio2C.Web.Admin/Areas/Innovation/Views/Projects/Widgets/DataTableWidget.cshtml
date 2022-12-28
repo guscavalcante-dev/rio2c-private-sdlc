@@ -41,7 +41,7 @@
             </div>
             <div class="col-lg-3">
                 <label>@Labels.Track:</label>
-                @Html.DropDownList("InnovationOrganizationTrackUid", new SelectList(ViewBag.InnovationOrganizationTrackOptions, "Uid", "Name", ViewBag.InnovationOrganizationTrackUid), $"{string.Format(Labels.SelectAFEntity, Labels.Track.ToLowerInvariant())}...", new { @class = "form-control enable-select2" })
+                @Html.DropDownList("InnovationOrganizationTrackUid", new SelectList(ViewBag.InnovationOrganizationTrackOptions, "Uid", "Name", ViewBag.InnovationOrganizationTrackUid), $"{string.Format(Labels.SelectAFEntity, Labels.Vertical.ToLowerInvariant())}...", new { @class = "form-control enable-select2" })
             </div>
             <div class="col-lg-3">
                 <label>@Labels.Status:</label>
@@ -55,7 +55,7 @@
                 <tr>
                     <th class="col-md-3">@Labels.Company</th>
                     <th class="col-md-3">@Labels.Project</th>
-                    <th class="col-md-2">@Labels.Tracks</th>
+                    <th class="col-md-2">@Labels.Verticals</th>
                     <th class="dt-head-center dt-body-center col-md-1">@Labels.Evaluation</th>
                     <th class="dt-head-center dt-body-center col-md-1">@Labels.CreateDate</th>
                     <th class="dt-head-center dt-body-center col-md-1">@Labels.UpdateDate</th>

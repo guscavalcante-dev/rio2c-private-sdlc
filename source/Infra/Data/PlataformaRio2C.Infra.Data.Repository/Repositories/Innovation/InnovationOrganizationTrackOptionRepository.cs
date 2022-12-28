@@ -220,14 +220,33 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
-        /// find all as an asynchronous operation.
+        /// Find all as an asynchronous operation.
         /// </summary>
-        /// <returns>Task&lt;List&lt;InnovationOrganizationTrackOption&gt;&gt;.</returns>
+        /// <returns></returns>
         public async Task<List<InnovationOrganizationTrackOption>> FindAllAsync()
         {
             var query = this.GetBaseQuery()
                             .IsActive()
                             .Order();
+
+            return await query.ToListAsync();
+        }
+
+        /// <summary>
+        /// Finds all grouped dto asynchronous.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<InnovationOrganizationTrackOptionGroupedDto>> FindAllGroupedDtoAsync()
+        {
+            var query = this.GetBaseQuery()
+                            .IsActive()
+                            .Order()
+                            .GroupBy(ioto => ioto.InnovationOrganizationTrackOptionGroup)
+                            .Select(ioto => new InnovationOrganizationTrackOptionGroupedDto
+                            {
+                                InnovationOrganizationTrackOptionGroup = ioto.Key,
+                                InnovationOrganizationTrackOptions = ioto
+                            });
 
             return await query.ToListAsync();
         }

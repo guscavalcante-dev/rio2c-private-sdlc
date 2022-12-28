@@ -2911,6 +2911,12 @@
     <value>Vehicle at Guest's Disposal</value>
     <comment>Veículo à Disposição</comment>
   </data>
+  <data name="Vertical" xml:space="preserve">
+    <value>Vertical</value>
+  </data>
+  <data name="Verticals" xml:space="preserve">
+    <value>Verticals</value>
+  </data>
   <data name="VideoClip" xml:space="preserve">
     <value>Music video</value>
     <comment>Vídeo clip</comment>

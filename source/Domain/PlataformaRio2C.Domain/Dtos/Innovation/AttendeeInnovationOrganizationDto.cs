@@ -63,6 +63,16 @@ namespace PlataformaRio2C.Domain.Dtos
         }
 
         /// <summary>
+        /// Gets the attendee innovation organization track by track option group uid.
+        /// </summary>
+        /// <param name="trackOptionGroupUid">The track option group uid.</param>
+        /// <returns></returns>
+        public AttendeeInnovationOrganizationTrackDto GetAttendeeInnovationOrganizationTrackByTrackOptionGroupUid(Guid trackOptionGroupUid)
+        {
+            return this.AttendeeInnovationOrganizationTrackDtos?.FirstOrDefault(aiotDto => aiotDto.InnovationOrganizationTrackOption?.InnovationOrganizationTrackOptionGroup?.Uid == trackOptionGroupUid);
+        }
+
+        /// <summary>
         /// Gets the attendee innovation organization objective by objective option uid.
         /// </summary>
         /// <param name="objectiveOptionUid">The objective option uid.</param>
