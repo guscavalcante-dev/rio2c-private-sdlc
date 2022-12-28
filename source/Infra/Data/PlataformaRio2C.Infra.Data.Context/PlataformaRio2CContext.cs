@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-17-2021
+// Last Modified On : 12-27-2022
 // ***********************************************************************
 // <copyright file="PlataformaRio2CContext.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -186,6 +186,7 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new InnovationOrganizationObjectivesOptionMap());
             modelBuilder.Configurations.Add(new InnovationOrganizationTechnologyOptionMap());
             modelBuilder.Configurations.Add(new InnovationOrganizationTrackOptionMap());
+            modelBuilder.Configurations.Add(new InnovationOrganizationTrackOptionGroupMap());
             modelBuilder.Configurations.Add(new InnovationOrganizationSustainableDevelopmentObjectivesOptionMap());
             modelBuilder.Configurations.Add(new WorkDedicationMap());
             modelBuilder.Configurations.Add(new QuizMap());

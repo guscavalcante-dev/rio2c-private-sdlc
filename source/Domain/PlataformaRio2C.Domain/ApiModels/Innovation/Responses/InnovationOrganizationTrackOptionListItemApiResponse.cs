@@ -4,15 +4,13 @@
 // Created          : 07-21-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-21-2021
+// Last Modified On : 12-27-2022
 // ***********************************************************************
 // <copyright file="InnovationOrganizationTrackOptionListItemApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace PlataformaRio2C.Domain.ApiModels
@@ -22,5 +20,11 @@ namespace PlataformaRio2C.Domain.ApiModels
     {
         [JsonProperty("description", Order = 300)]
         public string Description { get; set; }
+
+        [JsonProperty("groupUid", Order = 400)]
+        public string GroupUid { get; set; }
+
+        [JsonProperty("groupName", Order = 500)]
+        public string GroupName { get; set; }
     }
 }

@@ -539,7 +539,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Startup, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            ViewBag.InnovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllAsync();
+            ViewBag.InnovationOrganizationTrackOptionGroupedDtos = await this.innovationOrganizationTrackOptionRepo.FindAllGroupedDtoAsync();
 
             return Json(new
             {

@@ -4,7 +4,7 @@
 // Created          : 07-13-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-13-2021
+// Last Modified On : 12-27-2022
 // ***********************************************************************
 // <copyright file="InnovationOrganizationTrackOptionMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,6 +23,11 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         public InnovationOrganizationTrackOptionMap()
         {
             this.ToTable("InnovationOrganizationTrackOptions");
+
+            // Relationships
+            this.HasOptional(i => i.InnovationOrganizationTrackOptionGroup)
+              .WithMany()
+              .HasForeignKey(i => i.InnovationOrganizationTrackOptionGroupId);
         }
     }
 }

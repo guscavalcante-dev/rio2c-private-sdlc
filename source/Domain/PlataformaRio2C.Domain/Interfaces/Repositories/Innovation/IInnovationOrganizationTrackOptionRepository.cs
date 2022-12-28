@@ -28,6 +28,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<InnovationOrganizationTrackOption> FindByIdAsync(int innovationOrganizationTrackOptionId);
         Task<InnovationOrganizationTrackOption> FindByUidAsync(Guid innovationOrganizationTrackOptionUid);
         Task<List<InnovationOrganizationTrackOption>> FindAllAsync();
+        Task<List<InnovationOrganizationTrackOptionGroupedDto>> FindAllGroupedDtoAsync();
         Task<List<InnovationOrganizationTrackOption>> FindAllByIdsAsync(List<int?> innovationOrganizationTrackOptionIds);
         Task<List<InnovationOrganizationTrackOption>> FindAllByUidsAsync(List<Guid?> innovationOrganizationTrackOptionUids);
         Task<List<InnovationOrganizationTrackOption>> FindAllByAttendeeCollaboratorIdAsync(int attendeeCollaboratorId);

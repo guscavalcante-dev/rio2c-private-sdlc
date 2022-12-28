@@ -4,7 +4,7 @@
 // Created          : 07-01-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-10-2021
+// Last Modified On : 12-27-2022
 // ***********************************************************************
 // <copyright file="InnovationFiltersApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,7 +35,9 @@ namespace PlataformaRio2C.Domain.ApiModels
         [JsonProperty("workDedications")]
         public List<ApiListItemBaseResponse> WorkDedications { get; set; }
 
-        [JsonProperty("organizationTracks")]
+        // "OrganizationTracks" was changed to "OrganizationCreativeEconomyThemes" by customer request.
+        // Original Documentation: Enquadre seu produto ou serviço em uma das verticais e temas da economia criativa abaixo*
+        [JsonProperty("organizationCreativeEconomyThemes")] 
         public List<InnovationOrganizationTrackOptionListItemApiResponse> InnovationOrganizationTrackOptions { get; set; }
 
     }

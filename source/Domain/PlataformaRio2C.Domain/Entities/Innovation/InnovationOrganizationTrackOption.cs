@@ -4,7 +4,7 @@
 // Created          : 07-12-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-12-2021
+// Last Modified On : 12-27-2022
 // ***********************************************************************
 // <copyright file="InnovationOrganizationTrackOption.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,11 +13,7 @@
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -28,11 +24,14 @@ namespace PlataformaRio2C.Domain.Entities
     /// <seealso cref="PlataformaRio2C.Domain.Entities.Entity" />
     public class InnovationOrganizationTrackOption : Entity
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int DisplayOrder { get; set; }
-        public bool HasAdditionalInfo { get; set; }
+        public string Name { get; private set; }
+        public string Description { get; private set; }
+        public int DisplayOrder { get; private set; }
+        public bool HasAdditionalInfo { get; private set; }
+        public bool IsActive { get; private set; }
+        public int? InnovationOrganizationTrackOptionGroupId { get; private set; }
 
+        public virtual InnovationOrganizationTrackOptionGroup InnovationOrganizationTrackOptionGroup { get; set; }
         public virtual List<AttendeeCollaboratorInnovationOrganizationTrack> AttendeeCollaboratorInnovationOrganizationTracks { get; set; }
 
         /// <summary>
@@ -43,7 +42,9 @@ namespace PlataformaRio2C.Domain.Entities
 
         }
 
-        /// <summary>Gets the name translation.</summary>
+        /// <summary>
+        /// Gets the name translation.
+        /// </summary>
         /// <param name="languageCode">The language code.</param>
         /// <returns></returns>
         public string GetNameTranslation(string languageCode)
@@ -51,12 +52,24 @@ namespace PlataformaRio2C.Domain.Entities
             return this.Name.GetSeparatorTranslation(languageCode, Language.Separator);
         }
 
-        /// <summary>Gets the description translation.</summary>
+        /// <summary>
+        /// Gets the description translation.
+        /// </summary>
         /// <param name="languageCode">The language code.</param>
         /// <returns></returns>
         public string GetDesctiptionTranslation(string languageCode)
         {
             return this.Description.GetSeparatorTranslation(languageCode, Language.Separator);
+        }
+
+        /// <summary>
+        /// Gets the innovation organization track option group name translation.
+        /// </summary>
+        /// <param name="languageCode">The language code.</param>
+        /// <returns></returns>
+        public string GetInnovationOrganizationTrackOptionGroupNameTranslation(string languageCode)
+        {
+            return this.InnovationOrganizationTrackOptionGroup?.Name?.GetSeparatorTranslation(languageCode, Language.Separator);
         }
 
         #region Valitations

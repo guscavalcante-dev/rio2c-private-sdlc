@@ -4,7 +4,7 @@
 // Created          : 07-13-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-13-2021
+// Last Modified On : 12-27-2022
 // ***********************************************************************
 // <copyright file="InnovationOrganizationTrackOptionRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -69,6 +69,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<InnovationOrganizationTrackOption> IsNotDeleted(this IQueryable<InnovationOrganizationTrackOption> query)
         {
             query = query.Where(ioto => !ioto.IsDeleted);
+
+            return query;
+        }
+
+        /// <summary>
+        /// Determines whether this instance is active.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<InnovationOrganizationTrackOption> IsActive(this IQueryable<InnovationOrganizationTrackOption> query)
+        {
+            query = query.Where(ioto => ioto.IsActive);
 
             return query;
         }
@@ -208,13 +220,33 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
-        /// find all as an asynchronous operation.
+        /// Find all as an asynchronous operation.
         /// </summary>
-        /// <returns>Task&lt;List&lt;InnovationOrganizationTrackOption&gt;&gt;.</returns>
+        /// <returns></returns>
         public async Task<List<InnovationOrganizationTrackOption>> FindAllAsync()
         {
             var query = this.GetBaseQuery()
+                            .IsActive()
                             .Order();
+
+            return await query.ToListAsync();
+        }
+
+        /// <summary>
+        /// Finds all grouped dto asynchronous.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<InnovationOrganizationTrackOptionGroupedDto>> FindAllGroupedDtoAsync()
+        {
+            var query = this.GetBaseQuery()
+                            .IsActive()
+                            .Order()
+                            .GroupBy(ioto => ioto.InnovationOrganizationTrackOptionGroup)
+                            .Select(ioto => new InnovationOrganizationTrackOptionGroupedDto
+                            {
+                                InnovationOrganizationTrackOptionGroup = ioto.Key,
+                                InnovationOrganizationTrackOptions = ioto
+                            });
 
             return await query.ToListAsync();
         }
