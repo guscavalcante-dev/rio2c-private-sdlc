@@ -4,7 +4,7 @@
 // Created          : 07-10-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 11-30-2022
+// Last Modified On : 12-29-2022
 // ***********************************************************************
 // <copyright file="SalesPlatformsApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,6 +21,9 @@ using System.Web.Http.Description;
 using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Domain.ApiModels;
+using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
@@ -33,14 +36,23 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
     public class SalesPlatformsApiController : BaseApiController
     {
         private readonly IMediator commandBus;
+        private readonly IUserRepository userRepo;
+        private readonly IEditionRepository editionRepo;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SalesPlatformsApiController"/> class.
+        /// Initializes a new instance of the <see cref="SalesPlatformsApiController" /> class.
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
-        public SalesPlatformsApiController(IMediator commandBus)
+        /// <param name="userRepository">The identity controller.</param>
+        /// <param name="editionRepository">The edition repository.</param>
+        public SalesPlatformsApiController(
+            IMediator commandBus,
+            IUserRepository userRepository,
+            IEditionRepository editionRepository)
         {
             this.commandBus = commandBus;
+            this.userRepo = userRepository;
+            this.editionRepo = editionRepository;
         }
 
         #region Inti requests
@@ -144,7 +156,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     Request.Headers.ToString(),
                     null,       // Sympla gets the payload inside command handler
                     HttpContext.Current.Request.GetIpAddress()));
-                
+
                 if (!result.IsValid)
                 {
                     throw new DomainException($"{SalePlatformName.Sympla} webhooks imported with some errors.");
@@ -168,9 +180,13 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
         #region Requests processing
 
-        /// <summary>Processes the requests.</summary>
+        /// <summary>
+        /// Processes the requests.
+        /// </summary>
         /// <param name="key">The key.</param>
         /// <returns></returns>
+        /// <exception cref="System.Exception">Invalid key to execute process webhook requests.</exception>
+        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException">Sales platform webhook requests processed with some errors.</exception>
         [HttpGet]
         [Route("processrequests/{key?}")]
         public async Task<IHttpActionResult> ProcessRequests(string key)
@@ -202,6 +218,74 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             }
 
             return await Json(new { status = "success", message = "Sales platform webhook requests processed successfully without errors." });
+        }
+
+        /// <summary>
+        /// Sends the producer welcome email.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="email">The email.</param>
+        /// <returns></returns>
+        /// <exception cref="System.Exception">Invalid key to send welcome email.</exception>
+        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
+        [HttpGet]
+        [Route("sendproducerwelcomeemail")]
+        public async Task<IHttpActionResult> SendProducerWelcomeEmail(string key, string email)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (key?.ToLowerInvariant() != ConfigurationManager.AppSettings["SendProducerWelcomeEmailApiKey"]?.ToLowerInvariant())
+                {
+                    throw new Exception("Invalid key to send welcome email.");
+                }
+
+                if (string.IsNullOrWhiteSpace(email))
+                {
+                    throw new DomainException("The email is required");
+                }
+
+                var user = await userRepo.FindUserByEmailAsync(email);
+                if (user == null)
+                {
+                    throw new DomainException($@"{Messages.UserNotFound}: {email}");
+                }
+
+                var currentEdition = await editionRepo.FindByIsCurrentAsync();
+                if (currentEdition == null)
+                {
+                    throw new DomainException(Messages.CurrentEditionNotFound);
+                }
+
+                result = await this.commandBus.Send(new SendProducerWelcomeEmailAsync(
+                        user.SecurityStamp,
+                        user.Id,
+                        user.Uid,
+                        user.Collaborator.FirstName,
+                        user.Collaborator.GetFullName(),
+                        user.Email,
+                        currentEdition,
+                        "pt-BR"
+                    ));
+
+                if (!result.IsValid)
+                {
+                    throw new DomainException(string.Format("Error when trying to send a producer welcome email to {0}", email));
+                }
+            }
+            catch (DomainException ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return await Json(new { status = ApiStatus.Error, message = ex.GetInnerMessage(), errors = result?.Errors?.Select(e => new { e.Code, e.Message }) });
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return await Json(new { status = ApiStatus.Error, message = string.Format("Error when trying to send a producer welcome email to {0}", email) });
+            }
+
+            return await Json(new { status = ApiStatus.Success, message = string.Format("An Producer welcome email has been sent sucessfully to {0}", email) });
         }
 
         #endregion
