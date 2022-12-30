@@ -4,7 +4,7 @@
 // Created          : 07-24-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-23-2022
+// Last Modified On : 12-30-2022
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -61,7 +61,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// <param name="innovationOrganizationObjectivesOptionRepository">The innovation organization objectives option repository.</param>
         /// <param name="innovationOrganizationTechnologyOptionRepository">The innovation organization technology option repository.</param>
         /// <param name="innovationOrganizationExperienceOptionRepository">The innovation organization experience option repository.</param>
-        /// <param name="userRepository">The user repository.</param>
         public ProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,

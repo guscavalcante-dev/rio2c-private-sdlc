@@ -9,7 +9,7 @@
 <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
         <h3 class="kt-portlet__head-title">
-            @Labels.ProductsOrServices
+            @Labels.VerticalsAndCreativeEconomyThemes
         </h3>
     </div>
 </div>
@@ -34,6 +34,7 @@
             {
                 if (!string.IsNullOrEmpty(trackOptionGroupedDto?.InnovationOrganizationTrackOptionGroup?.Name))
                 {
+                    <!-- Has group -->
                     <div class="kt-widget4__item pt-2 pb-2" style="align-items: flex-start;">
                         @{var attendeeInnovationOrganizationTrackDto = Model.GetAttendeeInnovationOrganizationTrackByTrackOptionGroupUid(trackOptionGroupedDto.InnovationOrganizationTrackOptionGroup.Uid);}
                         @if (attendeeInnovationOrganizationTrackDto != null)
@@ -69,9 +70,11 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Has group -->
                 }
                 else
                 {
+                    <!--Has not group-->
                     <div class="kt-widget4__item pt-2 pb-2" style="align-items: flex-start;">
                         @foreach (var innovationOrganizationTrackOption in trackOptionGroupedDto.InnovationOrganizationTrackOptions.OrderBy(ioto => ioto.DisplayOrder))
                         {
@@ -93,6 +96,7 @@
                             </div>
                         }
                     </div>
+                    <!--Has not group-->
                 }
             }
         </div>

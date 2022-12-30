@@ -4,7 +4,7 @@
 // Created          : 07-19-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-19-2021
+// Last Modified On : 12-30-2022
 // ***********************************************************************
 // <copyright file="UpdateInnovationCollaboratorTracks.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,7 +23,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>UpdateInnovationCollaboratorTracks</summary>
     public class UpdateInnovationCollaboratorTracks : BaseCommand
-    {
+    { 
         public Guid CollaboratorUid { get; set; }
        
         [Display(Name = "Tracks", ResourceType = typeof(Labels))]
@@ -48,8 +48,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateBaseProperties(attendeeCollaboratorTracksWidgetDto, innovationOrganizationTrackOptions);
         }
 
-        /// <summary>Updates the pre send properties.</summary>
-        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
+        /// <summary>
+        /// Updates the pre send properties.
+        /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <param name="userUid">The user uid.</param>
         /// <param name="editionId">The edition identifier.</param>
@@ -98,9 +99,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.AttendeeInnovationOrganizationTracks = new List<InnovationOrganizationTrackOptionBaseCommand>();
             foreach (var innovationOrganizationTrackOption in innovationOrganizationTrackOptions)
             {
-                var attendeeCollaboratorInnovationOrganizationTrackDto = entity?.AttendeeCollaboratorInnovationOrganizationTrackDtos?.FirstOrDefault(aot => aot.InnovationOrganizationTrackOption.Uid == innovationOrganizationTrackOption.Uid);
+                var attendeeCollaboratorInnovationOrganizationTrackDto = entity?.AttendeeCollaboratorInnovationOrganizationTrackDtos
+                                                                                    ?.FirstOrDefault(aot => aot.InnovationOrganizationTrackOption.Uid == innovationOrganizationTrackOption.Uid);
+
                 this.AttendeeInnovationOrganizationTracks.Add(attendeeCollaboratorInnovationOrganizationTrackDto != null ? new InnovationOrganizationTrackOptionBaseCommand(attendeeCollaboratorInnovationOrganizationTrackDto) :
-                                                                                                            new InnovationOrganizationTrackOptionBaseCommand(innovationOrganizationTrackOption));
+                                                                                                                           new InnovationOrganizationTrackOptionBaseCommand(innovationOrganizationTrackOption));
             }
         }
     }

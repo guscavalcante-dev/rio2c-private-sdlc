@@ -3,12 +3,13 @@
 @using System.Globalization
 @model AttendeeCollaboratorTracksWidgetDto
 @{
-    var trackOptions = ViewBag.InnovationOrganizationTrackOptions as List<InnovationOrganizationTrackOption>;
+    var trackOptionGroupedDtos = ViewBag.InnovationOrganizationTrackOptionGroupedDtos as List<InnovationOrganizationTrackOptionGroupedDto>;
+    var activeInnovationOrganizationTrackOptionsIds = trackOptionGroupedDtos.SelectMany(i => i.InnovationOrganizationTrackOptions.Select(ioto => ioto.Id));
 }
 <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
         <h3 class="kt-portlet__head-title">
-            @Labels.Tracks
+            @Labels.VerticalsAndCreativeEconomyThemes
         </h3>
     </div>
     <div class="kt-portlet__head-toolbar">
@@ -20,29 +21,77 @@
     </div>
 </div>
 <div class="kt-portlet__body">
-    @if (trackOptions?.Any() == true)
+    @if (trackOptionGroupedDtos?.Any() == true)
     {
         <div class="kt-widget4">
-            @foreach (var trackOption in trackOptions.OrderBy(a => a.DisplayOrder))
+            <!-- Shows older edition track options -->
+            @foreach (var innovationOrganizationTrackOptionDto in Model.AttendeeCollaboratorInnovationOrganizationTrackDtos.Where(dto => !activeInnovationOrganizationTrackOptionsIds.Contains(dto.InnovationOrganizationTrackOption.Id)))
             {
-                var attendeeCollaboratorInnovationOrganizationTrackDto = Model.GetAttendeeCollaboratorInnovationOrganizationTrackDtoByTrackOptionUid(trackOption.Uid);
                 <div class="kt-widget4__item pt-2 pb-2">
-                    @if (attendeeCollaboratorInnovationOrganizationTrackDto != null)
-                    {
-                        <div class="kt-widget4__pic kt-font-success">
-                            <i class="la la-check"></i>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="kt-widget4__pic kt-font-danger">
-                            <i class="la la-close"></i>
-                        </div>
-                    }
+                    <div class="kt-widget4__pic kt-font-success">
+                        <i class="la la-check"></i>
+                    </div>
                     <div class="kt-widget4__info">
-                        <span class="kt-widget4__title">@trackOption.GetNameTranslation(CultureInfo.CurrentCulture.ToString())</span>
+                        <span class="kt-widget4__title">@innovationOrganizationTrackOptionDto.InnovationOrganizationTrackOption.GetNameTranslation(CultureInfo.CurrentCulture.ToString())</span>
                     </div>
                 </div>
+            }
+            <!-- Shows only current edition active track options -->
+            @foreach (var trackOptionGroupedDto in trackOptionGroupedDtos.OrderBy(dto => dto.InnovationOrganizationTrackOptionGroup?.DisplayOrder).ToList())
+            {
+                if (!string.IsNullOrEmpty(trackOptionGroupedDto?.InnovationOrganizationTrackOptionGroup?.Name))
+                {
+                    <!-- Has group -->
+                    <div class="kt-widget4__item pt-2 pb-2" style="align-items: flex-start;">
+                        <div class="kt-widget4__info">
+                            <span class="kt-widget4__title">@(trackOptionGroupedDto?.InnovationOrganizationTrackOptionGroup?.Name)</span>
+                            <div class="row ml-0">
+                                @foreach (var innovationOrganizationTrackOption in trackOptionGroupedDto.InnovationOrganizationTrackOptions.OrderBy(ioto => ioto.DisplayOrder))
+                                {
+                                    <div class="align-content-between mr-3">
+                                        @{var attendeeInnovationOrganizationTrackOptionDto = Model.GetAttendeeCollaboratorInnovationOrganizationTrackDtoByTrackOptionUid(innovationOrganizationTrackOption.Uid);}
+                                        @if (attendeeInnovationOrganizationTrackOptionDto != null)
+                                        {
+                                            <i class="kt-font-success la la-check"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="kt-font-danger la la-close"></i>
+                                        }
+                                        @(innovationOrganizationTrackOption.GetNameTranslation(CultureInfo.CurrentCulture.ToString()))
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Has group -->
+                }
+                else
+                {
+                    <!-- Has not group -->
+                    <div class="kt-widget4__item pt-2 pb-2" style="align-items: flex-start;">
+                        @foreach (var innovationOrganizationTrackOption in trackOptionGroupedDto.InnovationOrganizationTrackOptions.OrderBy(ioto => ioto.DisplayOrder))
+                        {
+                            var attendeeInnovationOrganizationTrackDto = Model.GetAttendeeCollaboratorInnovationOrganizationTrackDtoByTrackOptionUid(innovationOrganizationTrackOption.Uid);
+                            if (attendeeInnovationOrganizationTrackDto != null)
+                            {
+                                <div class="kt-widget4__pic kt-font-success">
+                                    <i class="la la-check"></i>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="kt-widget4__pic kt-font-danger">
+                                    <i class="la la-close"></i>
+                                </div>
+                            }
+                            <div class="kt-widget4__info">
+                                <span class="kt-widget4__title">@innovationOrganizationTrackOption.GetNameTranslation(CultureInfo.CurrentCulture.ToString())</span>
+                            </div>
+                        }
+                    </div>
+                    <!-- Has not group -->
+                }
             }
         </div>
     }

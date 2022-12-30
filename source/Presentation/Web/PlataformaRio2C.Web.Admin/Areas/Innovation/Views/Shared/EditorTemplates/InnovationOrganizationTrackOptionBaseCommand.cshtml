@@ -16,7 +16,10 @@
         }
         <div>
             <span>@Model.InnovationOrganizationTrackOptionName.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')</span>
-            <span class="form-text text-muted">(@Model.InnovationOrganizationTrackOptionDescription.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|'))</span>
+            @if (!string.IsNullOrEmpty(Model.InnovationOrganizationTrackOptionDescription))
+            {
+                <span class="form-text text-muted">(@Model.InnovationOrganizationTrackOptionDescription.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|'))</span>
+            }
         </div>
         <span></span>
     </label>

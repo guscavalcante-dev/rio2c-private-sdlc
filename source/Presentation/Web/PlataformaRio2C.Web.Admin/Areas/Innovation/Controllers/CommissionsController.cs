@@ -4,7 +4,7 @@
 // Created          : 07-08-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-16-2021
+// Last Modified On : 12-30-2022
 // ***********************************************************************
 // <copyright file="CommissionsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,7 +24,6 @@ using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
@@ -163,6 +162,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
         #region Tracks Widget
 
+        /// <summary>
+        /// Shows the tracks widget.
+        /// </summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> ShowTracksWidget(Guid? collaboratorUid)
         {
@@ -172,7 +176,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            ViewBag.InnovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllAsync();
+            ViewBag.InnovationOrganizationTrackOptionGroupedDtos = await this.innovationOrganizationTrackOptionRepo.FindAllGroupedDtoAsync();
 
             return Json(new
             {
@@ -186,6 +190,12 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
         #region Update
 
+        /// <summary>
+        /// Shows the update tracks modal.
+        /// </summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <returns></returns>
+        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
         [HttpGet]
         public async Task<ActionResult> ShowUpdateTracksModal(Guid? collaboratorUid)
         {
@@ -218,9 +228,12 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        /// <summary>Updates the social networks.</summary>
+        /// <summary>
+        /// Updates the tracks.
+        /// </summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
+        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
         [HttpPost]
         public async Task<ActionResult> UpdateTracks(UpdateInnovationCollaboratorTracks cmd)
         {
@@ -278,6 +291,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
         #region Evaluations Widget
 
+        /// <summary>
+        /// Shows the evaluations widget.
+        /// </summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> ShowEvaluationsWidget(Guid? collaboratorUid)
         {
