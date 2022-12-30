@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
-                    @(Labels.Update + " " + Labels.Tracks)
+                    @(Labels.Update + " " + Labels.Verticals)
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -15,11 +15,6 @@
                     <div id="form-container">
                         @Html.Partial("Modals/UpdateTracksForm", Model)
                     </div>
-                    @*<div class="row">
-                        <div class="col-sm-12 text-right">
-                            @Labels.LastUpdateOn <b>@Model.UpdateDate.ToBrazilTimeZone().ToShortDateString() @Model.UpdateDate.ToBrazilTimeZone().ToLongTimeString()</b> @Labels.By <b>@Model.UpdaterBaseDto.Name</b>.
-                        </div>
-                    </div>*@
                 }
             </div>
             <div class="modal-footer">

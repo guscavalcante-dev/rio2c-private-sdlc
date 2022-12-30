@@ -6748,6 +6748,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Verticais e Temas da Economia Criativa.
+        /// </summary>
+        public static string VerticalsAndCreativeEconomyThemes {
+            get {
+                return ResourceManager.GetString("VerticalsAndCreativeEconomyThemes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vídeo clip.
         /// </summary>
         public static string VideoClip {

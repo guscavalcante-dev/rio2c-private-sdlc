@@ -728,6 +728,9 @@
   <data name="CreateProject" xml:space="preserve">
     <value>Create Project</value>
   </data>
+  <data name="VerticalsAndCreativeEconomyThemes" xml:space="preserve">
+    <value>Verticals and Creative Economy Themes</value>
+  </data>
   <data name="CreativeMotivation" xml:space="preserve">
     <value>Creative Motivation</value>
   </data>

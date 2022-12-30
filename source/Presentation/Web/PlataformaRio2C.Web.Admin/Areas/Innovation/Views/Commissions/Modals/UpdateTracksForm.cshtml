@@ -1,4 +1,5 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateInnovationCollaboratorTracks
+﻿@using System.Globalization
+@model PlataformaRio2C.Application.CQRS.Commands.UpdateInnovationCollaboratorTracks
 <div class="row">
     <div class="form-group col-md-12">
         @Html.ValidationMessage("AttendeeInnovationOrganizationTracks", new { @class = "text-danger" })
@@ -7,7 +8,20 @@
         </div>
         <div class="kt-section__content mt-3">
             <div class="kt-checkbox-list">
-                @Html.EditorFor(m => m.AttendeeInnovationOrganizationTracks)
+                @{ var groupedAttendeeInnovationOrganizationTracks = Model.AttendeeInnovationOrganizationTracks.GroupBy(aiot => aiot.InnovationOrganizationTrackOptionGroupName).ToList(); }
+                @foreach (var group in groupedAttendeeInnovationOrganizationTracks)
+                {
+                    <div class="mb-4">
+                        <div class="h3">@group.Key</div>
+                        <div class="pt-2 pl-2">
+                            @foreach (var itemFromGroup in group)
+                            {
+                                var itemFromModel = Model.AttendeeInnovationOrganizationTracks.FirstOrDefault(w => w.InnovationOrganizationTrackOptionUid == itemFromGroup.InnovationOrganizationTrackOptionUid);
+                                @Html.EditorFor(m => m.AttendeeInnovationOrganizationTracks[Model.AttendeeInnovationOrganizationTracks.IndexOf(itemFromModel)]);
+                            }
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </div>
