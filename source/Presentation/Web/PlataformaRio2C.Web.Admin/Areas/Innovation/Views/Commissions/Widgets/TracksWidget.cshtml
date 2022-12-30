@@ -24,18 +24,6 @@
     @if (trackOptionGroupedDtos?.Any() == true)
     {
         <div class="kt-widget4">
-            <!-- Shows older edition track options -->
-            @foreach (var innovationOrganizationTrackOptionDto in Model.AttendeeCollaboratorInnovationOrganizationTrackDtos.Where(dto => !activeInnovationOrganizationTrackOptionsIds.Contains(dto.InnovationOrganizationTrackOption.Id)))
-            {
-                <div class="kt-widget4__item pt-2 pb-2">
-                    <div class="kt-widget4__pic kt-font-success">
-                        <i class="la la-check"></i>
-                    </div>
-                    <div class="kt-widget4__info">
-                        <span class="kt-widget4__title">@innovationOrganizationTrackOptionDto.InnovationOrganizationTrackOption.GetNameTranslation(CultureInfo.CurrentCulture.ToString())</span>
-                    </div>
-                </div>
-            }
             <!-- Shows only current edition active track options -->
             @foreach (var trackOptionGroupedDto in trackOptionGroupedDtos.OrderBy(dto => dto.InnovationOrganizationTrackOptionGroup?.DisplayOrder).ToList())
             {
