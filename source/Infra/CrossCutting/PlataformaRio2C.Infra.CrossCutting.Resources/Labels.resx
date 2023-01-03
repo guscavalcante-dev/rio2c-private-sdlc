@@ -2930,6 +2930,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Verticals" xml:space="preserve">
     <value>Verticais</value>
   </data>
+  <data name="VerticalsAndCreativeEconomyThemes" xml:space="preserve">
+    <value>Verticais e Temas da Economia Criativa</value>
+  </data>
   <data name="VideoClip" xml:space="preserve">
     <value>Vídeo clip</value>
     <comment>Vídeo clip</comment>

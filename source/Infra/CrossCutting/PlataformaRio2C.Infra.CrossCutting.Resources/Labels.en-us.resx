@@ -2920,6 +2920,9 @@
   <data name="Verticals" xml:space="preserve">
     <value>Verticals</value>
   </data>
+  <data name="VerticalsAndCreativeEconomyThemes" xml:space="preserve">
+    <value>Verticals and Creative Economy Themes</value>
+  </data>
   <data name="VideoClip" xml:space="preserve">
     <value>Music video</value>
     <comment>Vídeo clip</comment>
