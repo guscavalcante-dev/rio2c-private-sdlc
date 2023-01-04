@@ -330,7 +330,8 @@ var InnovationProjectsDataTableWidget = function () {
     // Export -------------------------------------------------------------------------------------
     var exportExcel = function (url) {
         var jsonParameters = new Object();
-
+        jsonParameters.innovationOrganizationTrackOptionGroupUid = $('#InnovationOrganizationTrackOptionGroupUid').val();
+        jsonParameters.evaluationStatusUid = $('#EvaluationStatusUid').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition(url), jsonParameters, function (resp) {
 
