@@ -179,6 +179,7 @@
     <Compile Include="Repositories\Innovation\InnovationOrganizationObjectivesOptionRepository.cs" />
     <Compile Include="Repositories\Innovation\InnovationOrganizationTechnologyOptionRepository.cs" />
     <Compile Include="Repositories\Innovation\InnovationOrganizationSustainableDevelopmentObjectivesOptionRepository.cs" />
+    <Compile Include="Repositories\Innovation\InnovationOrganizationTrackOptionGroupRepository.cs" />
     <Compile Include="Repositories\Innovation\InnovationOrganizationTrackOptionRepository.cs" />
     <Compile Include="Repositories\Innovation\InnovationOrganizationExperienceOptionRepository.cs" />
     <Compile Include="Repositories\Innovation\WorkDedicationRepository.cs" />

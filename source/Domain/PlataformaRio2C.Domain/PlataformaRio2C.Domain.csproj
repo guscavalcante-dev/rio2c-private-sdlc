@@ -220,7 +220,7 @@
     <Compile Include="Dtos\Innovation\AttendeeInnovationOrganizationTrackDto.cs" />
     <Compile Include="Dtos\Innovation\AttendeeInnovationOrganizationJsonDto.cs" />
     <Compile Include="Dtos\Innovation\AttendeeInnovationOrganizationDto.cs" />
-    <Compile Include="Dtos\Innovation\InnovationOrganizationTrackOptionGroupedDto.cs" />
+    <Compile Include="Dtos\Innovation\InnovationOrganizationTrackOptionGroupDto.cs" />
     <Compile Include="Dtos\Innovation\InnovationOrganizationTrackOptionDto.cs" />
     <Compile Include="Dtos\Innovation\InnovationOrganizationGroupedByTrackDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticAccommodationDto.cs" />
@@ -478,6 +478,7 @@
     <Compile Include="Interfaces\Repositories\Innovation\IInnovationOrganizationSustainableDevelopmentObjectivesOptionRepository.cs" />
     <Compile Include="Interfaces\Repositories\Innovation\IInnovationOrganizationObjectivesOptionRepository.cs" />
     <Compile Include="Interfaces\Repositories\Innovation\IInnovationOrganizationTechnologyOptionRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Innovation\IInnovationOrganizationTrackOptionGroupRepository.cs" />
     <Compile Include="Interfaces\Repositories\Innovation\IInnovationOrganizationTrackOptionRepository.cs" />
     <Compile Include="Interfaces\Repositories\Innovation\IInnovationOrganizationExperienceOptionRepository.cs" />
     <Compile Include="Interfaces\Repositories\Innovation\IWorkDedicationRepository.cs" />

@@ -38,17 +38,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>
         /// Initializes a new instance of the <see cref="InnovationOrganizationTrackOptionBaseCommand" /> class.
         /// </summary>
-        /// <param name="entity">The entity.</param>
-        public InnovationOrganizationTrackOptionBaseCommand(AttendeeInnovationOrganizationTrackDto entity)
+        /// <param name="dto">The entity.</param>
+        public InnovationOrganizationTrackOptionBaseCommand(AttendeeInnovationOrganizationTrackDto dto)
         {
-            this.InnovationOrganizationTrackOptionUid = entity.InnovationOrganizationTrackOption.Uid;
-            this.InnovationOrganizationTrackOptionName = entity.InnovationOrganizationTrackOption.Name;
-            this.InnovationOrganizationTrackOptionDescription = entity.InnovationOrganizationTrackOption.Description;
-            this.InnovationOrganizationTrackOptionHasAdditionalInfo = entity.InnovationOrganizationTrackOption.HasAdditionalInfo;
-            this.AdditionalInfo = entity.AttendeeInnovationOrganizationTrack.AdditionalInfo;
+            this.InnovationOrganizationTrackOptionUid = dto.InnovationOrganizationTrackOption.Uid;
+            this.InnovationOrganizationTrackOptionName = dto.InnovationOrganizationTrackOption.Name;
+            this.InnovationOrganizationTrackOptionDescription = dto.InnovationOrganizationTrackOption.Description;
+            this.InnovationOrganizationTrackOptionHasAdditionalInfo = dto.InnovationOrganizationTrackOption.HasAdditionalInfo;
+            this.AdditionalInfo = dto.AttendeeInnovationOrganizationTrack.AdditionalInfo;
 
-            this.InnovationOrganizationTrackOptionGroupUid = entity?.InnovationOrganizationTrackOption?.InnovationOrganizationTrackOptionGroup?.Uid;
-            this.InnovationOrganizationTrackOptionGroupName = entity?.InnovationOrganizationTrackOption?.InnovationOrganizationTrackOptionGroup?.Name;
+            this.InnovationOrganizationTrackOptionGroupUid = dto?.InnovationOrganizationTrackOption?.InnovationOrganizationTrackOptionGroup?.Uid;
+            this.InnovationOrganizationTrackOptionGroupName = dto?.InnovationOrganizationTrackOption?.InnovationOrganizationTrackOptionGroup?.Name;
 
             this.IsChecked = true;
         }
@@ -56,34 +56,34 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>
         /// Initializes a new instance of the <see cref="InnovationOrganizationTrackOptionBaseCommand" /> class.
         /// </summary>
-        /// <param name="entity">The entity.</param>
-        public InnovationOrganizationTrackOptionBaseCommand(AttendeeCollaboratorInnovationOrganizationTrackDto entity)
+        /// <param name="dto">The entity.</param>
+        public InnovationOrganizationTrackOptionBaseCommand(AttendeeCollaboratorInnovationOrganizationTrackDto dto)
         {
-            this.InnovationOrganizationTrackOptionUid = entity.InnovationOrganizationTrackOption.Uid;
-            this.InnovationOrganizationTrackOptionName = entity.InnovationOrganizationTrackOption.Name;
-            this.InnovationOrganizationTrackOptionDescription = entity.InnovationOrganizationTrackOption.Description;
-            this.InnovationOrganizationTrackOptionHasAdditionalInfo = entity.InnovationOrganizationTrackOption.HasAdditionalInfo;
+            this.InnovationOrganizationTrackOptionUid = dto.InnovationOrganizationTrackOption.Uid;
+            this.InnovationOrganizationTrackOptionName = dto.InnovationOrganizationTrackOption.Name;
+            this.InnovationOrganizationTrackOptionDescription = dto.InnovationOrganizationTrackOption.Description;
+            this.InnovationOrganizationTrackOptionHasAdditionalInfo = dto.InnovationOrganizationTrackOption.HasAdditionalInfo;
 
-            this.InnovationOrganizationTrackOptionGroupUid = entity?.InnovationOrganizationTrackOption?.InnovationOrganizationTrackOptionGroup?.Uid;
-            this.InnovationOrganizationTrackOptionGroupName = entity?.InnovationOrganizationTrackOption?.InnovationOrganizationTrackOptionGroup?.Name;
+            this.InnovationOrganizationTrackOptionGroupUid = dto?.InnovationOrganizationTrackOption?.InnovationOrganizationTrackOptionGroup?.Uid;
+            this.InnovationOrganizationTrackOptionGroupName = dto?.InnovationOrganizationTrackOption?.InnovationOrganizationTrackOptionGroup?.Name;
 
             this.AdditionalInfo = "";
             this.IsChecked = true;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InnovationOrganizationTrackOptionBaseCommand" /> class.
+        /// Initializes a new instance of the <see cref="InnovationOrganizationTrackOptionBaseCommand"/> class.
         /// </summary>
-        /// <param name="entity">The activity.</param>
-        public InnovationOrganizationTrackOptionBaseCommand(InnovationOrganizationTrackOption entity)
+        /// <param name="dto">The entity.</param>
+        public InnovationOrganizationTrackOptionBaseCommand(InnovationOrganizationTrackOptionDto dto)
         {
-            this.InnovationOrganizationTrackOptionUid = entity.Uid;
-            this.InnovationOrganizationTrackOptionName = entity.Name;
-            this.InnovationOrganizationTrackOptionDescription = entity.Description;
-            this.InnovationOrganizationTrackOptionHasAdditionalInfo = entity.HasAdditionalInfo;
+            this.InnovationOrganizationTrackOptionUid = dto.InnovationOrganizationTrackOption.Uid;
+            this.InnovationOrganizationTrackOptionName = dto.InnovationOrganizationTrackOption.Name;
+            this.InnovationOrganizationTrackOptionDescription = dto.InnovationOrganizationTrackOption.Description;
+            this.InnovationOrganizationTrackOptionHasAdditionalInfo = dto.InnovationOrganizationTrackOption.HasAdditionalInfo;
 
-            this.InnovationOrganizationTrackOptionGroupUid = entity?.InnovationOrganizationTrackOptionGroup?.Uid;
-            this.InnovationOrganizationTrackOptionGroupName = entity?.InnovationOrganizationTrackOptionGroup?.Name;
+            this.InnovationOrganizationTrackOptionGroupUid = dto.InnovationOrganizationTrackOptionGroup?.Uid;
+            this.InnovationOrganizationTrackOptionGroupName = dto.InnovationOrganizationTrackOptionGroup?.Name;
 
             this.IsChecked = false;
         }

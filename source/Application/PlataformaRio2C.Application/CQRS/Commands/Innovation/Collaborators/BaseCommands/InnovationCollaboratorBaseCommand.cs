@@ -4,7 +4,7 @@
 // Created          : 07-08-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-08-2021
+// Last Modified On : 01-04-2023
 // ***********************************************************************
 // <copyright file="InnovationCollaboratorBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,15 +36,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         }
 
         /// <summary>
-        /// Updates the models and lists.
+        /// Updates the base properties.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        /// <param name="innovationOrganizationTrackOptions">The innovation organization track options.</param>
+        /// <param name="innovationOrganizationTrackOptionDtos">The innovation organization track option dto.</param>
         public void UpdateBaseProperties(
             AttendeeCollaboratorTracksWidgetDto entity, 
-            List<InnovationOrganizationTrackOption> innovationOrganizationTrackOptions)
+            List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos)
         {
-            this.UpdateInnovationOrganizationTrackOptions(entity, innovationOrganizationTrackOptions);
+            this.UpdateInnovationOrganizationTrackOptions(entity, innovationOrganizationTrackOptionDtos);
         }
 
         /// <summary>
@@ -52,41 +52,41 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="attendeeCollaboratorTracksWidgetDto">The attendee collaborator tracks widget dto.</param>
-        /// <param name="innovationOrganizationTrackOptions">The innovation organization track options.</param>
+        /// <param name="innovationOrganizationTrackOptionDtos">The innovation organization track option dtos.</param>
         public void UpdateBaseProperties(
             CollaboratorDto entity,
             AttendeeCollaboratorTracksWidgetDto attendeeCollaboratorTracksWidgetDto,
-            List<InnovationOrganizationTrackOption> innovationOrganizationTrackOptions)
+            List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos)
         {
             base.UpdateBaseProperties(entity);
-            this.UpdateInnovationOrganizationTrackOptions(attendeeCollaboratorTracksWidgetDto, innovationOrganizationTrackOptions);
+            this.UpdateInnovationOrganizationTrackOptions(attendeeCollaboratorTracksWidgetDto, innovationOrganizationTrackOptionDtos);
         }
 
         /// <summary>
         /// Updates the dropdown properties.
         /// </summary>
-        /// <param name="innovationOrganizationTrackOptions">The innovation organization track options.</param>
+        /// <param name="innovationOrganizationTrackOptionDtos">The innovation organization track option dtos.</param>
         public void UpdateDropdownProperties(
-            List<InnovationOrganizationTrackOption> innovationOrganizationTrackOptions)
+            List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos)
         {
-            this.UpdateInnovationOrganizationTrackOptions(null, innovationOrganizationTrackOptions);
+            this.UpdateInnovationOrganizationTrackOptions(null, innovationOrganizationTrackOptionDtos);
         }
 
         /// <summary>
         /// Updates the innovation organization track options.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        /// <param name="innovationOrganizationTrackOptions">The innovation organization track options.</param>
+        /// <param name="innovationOrganizationTrackOptionDtos">The innovation organization track option dtos.</param>
         private void UpdateInnovationOrganizationTrackOptions(
             AttendeeCollaboratorTracksWidgetDto entity, 
-            List<InnovationOrganizationTrackOption> innovationOrganizationTrackOptions)
+            List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos)
         {
             this.InnovationOrganizationTrackOptions = new List<InnovationOrganizationTrackOptionBaseCommand>();
-            foreach (var innovationOrganizationTrackOption in innovationOrganizationTrackOptions)
+            foreach (var innovationOrganizationTrackOptionDto in innovationOrganizationTrackOptionDtos)
             {
-                var attendeeCollaboratorInnovationOrganizationTrackDto = entity?.AttendeeCollaboratorInnovationOrganizationTrackDtos?.FirstOrDefault(aot => aot.InnovationOrganizationTrackOption.Uid == innovationOrganizationTrackOption.Uid);
+                var attendeeCollaboratorInnovationOrganizationTrackDto = entity?.AttendeeCollaboratorInnovationOrganizationTrackDtos?.FirstOrDefault(aot => aot.InnovationOrganizationTrackOption.Uid == innovationOrganizationTrackOptionDto.InnovationOrganizationTrackOption.Uid);
                 this.InnovationOrganizationTrackOptions.Add(attendeeCollaboratorInnovationOrganizationTrackDto != null ? new InnovationOrganizationTrackOptionBaseCommand(attendeeCollaboratorInnovationOrganizationTrackDto) :
-                                                                                                            new InnovationOrganizationTrackOptionBaseCommand(innovationOrganizationTrackOption));
+                                                                                                                         new InnovationOrganizationTrackOptionBaseCommand(innovationOrganizationTrackOptionDto));
             }
         }
     }

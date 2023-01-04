@@ -44,26 +44,34 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
         private readonly IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo;
+        private readonly IInnovationOrganizationTrackOptionGroupRepository innovationOrganizationTrackOptionGroupRepo;
         private readonly IAttendeeInnovationOrganizationRepository attendeeInnovationOrganizationRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="CommissionsController"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CommissionsController" /> class.
+        /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
+        /// <param name="innovationOrganizationTrackOptionRepository">The innovation organization track option repository.</param>
+        /// <param name="attendeeInnovationOrganizationRepository">The attendee innovation organization repository.</param>
+        /// <param name="innovationOrganizationTrackOptionGroupRepository">The innovation organization track option group repository.</param>
         public CommissionsController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             ICollaboratorRepository collaboratorRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
             IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepository,
-            IAttendeeInnovationOrganizationRepository attendeeInnovationOrganizationRepository)
+            IAttendeeInnovationOrganizationRepository attendeeInnovationOrganizationRepository,
+            IInnovationOrganizationTrackOptionGroupRepository innovationOrganizationTrackOptionGroupRepository)
             : base(commandBus, identityController)
         {
             this.collaboratorRepo = collaboratorRepository;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
             this.innovationOrganizationTrackOptionRepo = innovationOrganizationTrackOptionRepository;
             this.attendeeInnovationOrganizationRepo = attendeeInnovationOrganizationRepository;
+            this.innovationOrganizationTrackOptionGroupRepo = innovationOrganizationTrackOptionGroupRepository;
         }
 
         #region List
@@ -84,7 +92,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             #endregion
 
             searchViewModel.UpdateModelsAndLists(
-                await this.innovationOrganizationTrackOptionRepo.FindAllAsync(),
+                await this.innovationOrganizationTrackOptionGroupRepo.FindAllAsync(),
                 this.UserInterfaceLanguage);
 
             return View(searchViewModel);
@@ -98,10 +106,10 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// <param name="request">The request.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
-        /// <param name="innovationOrganizationTrackOptionUid">The innovation organization track option uid.</param>
+        /// <param name="innovationOrganizationTrackOptionGroupUid">The innovation organization track option uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllParticipants, Guid? innovationOrganizationTrackOptionUid)
+        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllParticipants, Guid? innovationOrganizationTrackOptionGroupUid)
         {
             var members = await this.collaboratorRepo.FindAllInnovationCommissionsByDataTable(
                 request.Start / request.Length,
@@ -114,7 +122,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                 showAllParticipants,
                 null,
                 this.EditionDto?.Id,
-                new List<Guid?>() { innovationOrganizationTrackOptionUid }
+                new List<Guid?>() { innovationOrganizationTrackOptionGroupUid }
             );
 
             var response = DataTablesResponse.Create(request, members.TotalItemCount, members.TotalItemCount, members);
@@ -176,7 +184,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            ViewBag.InnovationOrganizationTrackOptionGroupedDtos = await this.innovationOrganizationTrackOptionRepo.FindAllGroupedDtoAsync();
+            ViewBag.InnovationOrganizationTrackOptionGroupDtos = await this.innovationOrganizationTrackOptionGroupRepo.FindAllDtoAsync();
 
             return Json(new
             {
@@ -211,7 +219,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
                 cmd = new UpdateInnovationCollaboratorTracks(
                     attendeeCollaboratorTracksWidgetDto,
-                    await this.innovationOrganizationTrackOptionRepo.FindAllAsync());
+                    await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync());
             }
             catch (DomainException ex)
             {
@@ -462,7 +470,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
             try
             {
-                cmd = new CreateInnovationCollaborator(await this.innovationOrganizationTrackOptionRepo.FindAllAsync());
+                cmd = new CreateInnovationCollaborator(await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync());
             }
             catch (DomainException ex)
             {
@@ -515,7 +523,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
-                cmd.UpdateDropdownProperties(await this.innovationOrganizationTrackOptionRepo.FindAllAsync());
+                cmd.UpdateDropdownProperties(await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync());
 
                 return Json(new
                 {
@@ -555,7 +563,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                     await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
                     isAddingToCurrentEdition,
                     await this.attendeeCollaboratorRepo.FindTracksWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id),
-                    await this.innovationOrganizationTrackOptionRepo.FindAllAsync());
+                    await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync());
             }
             catch (DomainException ex)
             {
@@ -608,7 +616,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
-                cmd.UpdateDropdownProperties(await this.innovationOrganizationTrackOptionRepo.FindAllAsync());
+                cmd.UpdateDropdownProperties(await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync());
 
                 return Json(new
                 {

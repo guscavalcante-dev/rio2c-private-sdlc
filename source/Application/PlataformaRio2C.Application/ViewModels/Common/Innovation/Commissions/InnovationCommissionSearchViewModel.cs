@@ -4,7 +4,7 @@
 // Created          : 07-08-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-08-2021
+// Last Modified On : 01-04-2023
 // ***********************************************************************
 // <copyright file="InnovationCommissionSearchViewModel.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,12 +33,12 @@ namespace PlataformaRio2C.Application.ViewModels
         [Display(Name = "ShowAllParticipants", ResourceType = typeof(Labels))]
         public bool ShowAllParticipants { get; set; }
 
-        [Display(Name = "Track", ResourceType = typeof(Labels))]
-        public Guid? InnovationOrganizationTrackOptionUid { get; set; }
+        [Display(Name = "Vertical", ResourceType = typeof(Labels))]
+        public Guid? InnovationOrganizationTrackOptionGroupUid { get; set; }
 
 
-        [Display(Name = "Tracks", ResourceType = typeof(Labels))]
-        public IEnumerable<InnovationOrganizationTrackOption> InnovationOrganizationTrackOptions { get; private set; }
+        [Display(Name = "Verticals", ResourceType = typeof(Labels))]
+        public IEnumerable<InnovationOrganizationTrackOptionGroup> InnovationOrganizationTrackOptionGroups { get; private set; }
 
         public int? Page { get; set; }
         public int? PageSize { get; set; }
@@ -51,11 +51,11 @@ namespace PlataformaRio2C.Application.ViewModels
         /// <summary>
         /// Updates the models and lists.
         /// </summary>
-        /// <param name="innovationOrganizationTrackOptions">The innovation organization track options.</param>
+        /// <param name="innovationOrganizationTrackOptionGroups">The innovation organization track options.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
-        public void UpdateModelsAndLists(List<InnovationOrganizationTrackOption> innovationOrganizationTrackOptions, string userInterfaceLanguage)
+        public void UpdateModelsAndLists(List<InnovationOrganizationTrackOptionGroup> innovationOrganizationTrackOptionGroups, string userInterfaceLanguage)
         {
-            this.InnovationOrganizationTrackOptions = innovationOrganizationTrackOptions.GetSeparatorTranslation(i => i.Name, userInterfaceLanguage, '|')?.OrderBy(i => i.DisplayOrder)?.ToList();
+            this.InnovationOrganizationTrackOptionGroups = innovationOrganizationTrackOptionGroups.GetSeparatorTranslation(i => i.Name, userInterfaceLanguage, '|')?.OrderBy(i => i.DisplayOrder)?.ToList();
         }
     }
 }

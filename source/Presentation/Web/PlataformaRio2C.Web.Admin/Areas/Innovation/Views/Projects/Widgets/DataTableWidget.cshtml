@@ -40,8 +40,8 @@
                 @Html.TextBox("Search", null, new { @class = "form-control mr-1", autocomplete = "off", type = "search", placeholder = $"{Labels.Company} {Labels.Or.ToLowerInvariant()} {Labels.ProductName.ToLowerInvariant()}" })
             </div>
             <div class="col-lg-3">
-                <label>@Labels.Track:</label>
-                @Html.DropDownList("InnovationOrganizationTrackUid", new SelectList(ViewBag.InnovationOrganizationTrackOptions, "Uid", "Name", ViewBag.InnovationOrganizationTrackUid), $"{string.Format(Labels.SelectAFEntity, Labels.Vertical.ToLowerInvariant())}...", new { @class = "form-control enable-select2" })
+                <label>@Labels.Vertical:</label>
+                @Html.DropDownList("InnovationOrganizationTrackOptionGroupUid", new SelectList(ViewBag.InnovationOrganizationTrackOptionGroups, "Uid", "Name", ViewBag.InnovationOrganizationTrackOptionGroupUid), $"{string.Format(Labels.SelectAFEntity, Labels.Vertical.ToLowerInvariant())}...", new { @class = "form-control enable-select2" })
             </div>
             <div class="col-lg-3">
                 <label>@Labels.Status:</label>

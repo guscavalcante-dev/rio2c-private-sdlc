@@ -4,7 +4,7 @@
 // Created          : 06-29-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-28-2021
+// Last Modified On : 01-04-2023
 // ***********************************************************************
 // <copyright file="IAttendeeInnovationOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,7 +24,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface IAttendeeInnovationOrganizationRepository : IRepository<AttendeeInnovationOrganization>
     {
         Task<IPagedList<AttendeeInnovationOrganizationDto>> FindAllDtosPagedAsync(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionUids, Guid? evaluationStatusUid, int page, int pageSize);
-        Task<IPagedList<AttendeeInnovationOrganizationJsonDto>> FindAllJsonDtosPagedAsync(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionUids, Guid? evaluationStatusUid, int page, int pageSize, List<Tuple<string, string>> sortColumns);
+        Task<IPagedList<AttendeeInnovationOrganizationJsonDto>> FindAllJsonDtosPagedAsync(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionGroupUids, Guid? evaluationStatusUid, int page, int pageSize, List<Tuple<string, string>> sortColumns);
         Task<AttendeeInnovationOrganizationDto> FindDtoToEvaluateAsync(Guid attendeeInnovationOrganizationUid);
         Task<AttendeeInnovationOrganizationDto> FindDtoToEvaluateAsync(int attendeeInnovationOrganizationId);
         Task<AttendeeInnovationOrganizationDto> FindMainInformationWidgetDtoAsync(Guid attendeeInnovationOrganizationUid);
@@ -44,9 +44,9 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<AttendeeInnovationOrganization> FindByDocumentAndEditionIdAsync(string document, int editionId);
         Task<List<AttendeeInnovationOrganization>> FindAllByEditionIdAsync(int editionId);
         Task<int[]> FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(int editionId);
-        Task<int[]> FindAllInnovationOrganizationsIdsPagedAsync(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionUids, Guid? evaluationStatusUid, int page, int pageSize);
+        Task<int[]> FindAllInnovationOrganizationsIdsPagedAsync(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionGroupUids, Guid? evaluationStatusUid, int page, int pageSize);
         Task<int> CountAsync(int editionId, bool showAllEditions = false);
-        Task<int> CountPagedAsync(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionUids, Guid? evaluationStatusUid, int page, int pageSize);
+        Task<int> CountPagedAsync(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionGroupUids, Guid? evaluationStatusUid, int page, int pageSize);
         Task<List<InnovationOrganizationGroupedByTrackDto>> FindEditionCountPieWidgetDto(int editionId);
     }
 }
