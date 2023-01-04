@@ -133,8 +133,10 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonProperty("companyExperiences")]
         public List<InnovationOrganizationExperienceOptionApiDto> InnovationOrganizationExperienceOptionApiDtos { get; set; }
 
+        // "OrganizationTracks" was changed to "OrganizationVerticalsAndCreativeEconomyThemes" by customer request.
+        // Original Documentation: Enquadre seu produto ou serviço em uma das verticais e temas da economia criativa abaixo*
         [JsonRequired]
-        [JsonProperty("tracks")]
+        [JsonProperty("organizationVerticalsAndCreativeEconomyThemes")]
         public List<InnovationOrganizationTrackOptionApiDto> InnovationOrganizationTrackOptionApiDtos { get; set; }
 
         [JsonProperty("technologyExperiences")]

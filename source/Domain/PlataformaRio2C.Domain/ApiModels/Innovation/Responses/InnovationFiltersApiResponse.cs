@@ -35,9 +35,9 @@ namespace PlataformaRio2C.Domain.ApiModels
         [JsonProperty("workDedications")]
         public List<ApiListItemBaseResponse> WorkDedications { get; set; }
 
-        // "OrganizationTracks" was changed to "OrganizationCreativeEconomyThemes" by customer request.
+        // "OrganizationTracks" was changed to "OrganizationVerticalsAndCreativeEconomyThemes" by customer request.
         // Original Documentation: Enquadre seu produto ou serviço em uma das verticais e temas da economia criativa abaixo*
-        [JsonProperty("organizationCreativeEconomyThemes")] 
+        [JsonProperty("organizationVerticalsAndCreativeEconomyThemes")] 
         public List<InnovationOrganizationTrackOptionListItemApiResponse> InnovationOrganizationTrackOptions { get; set; }
 
     }
