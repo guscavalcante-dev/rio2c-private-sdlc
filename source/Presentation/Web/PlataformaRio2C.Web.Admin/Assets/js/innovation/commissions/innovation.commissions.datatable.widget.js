@@ -4,7 +4,7 @@
 // Created          : 07-08-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-08-2021
+// Last Modified On : 01-04-2023
 // ***********************************************************************
 // <copyright file="innovation.commissions.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -166,7 +166,7 @@ var InnovationCommissionsDataTableWidget = function () {
                 data: function (d) {
                     d.showAllEditions = $('#ShowAllEditions').prop('checked');
                     d.showAllParticipants = $('#ShowAllParticipants').prop('checked');
-                    d.innovationOrganizationTrackOptionUid = $('#InnovationOrganizationTrackOptionUid').val();
+                    d.innovationOrganizationTrackOptionGroupUid = $('#InnovationOrganizationTrackOptionGroupUid').val();
                 },
                 dataFilter: function (data) {
                     var jsonReturned = jQuery.parseJSON(data);
@@ -344,7 +344,7 @@ var InnovationCommissionsDataTableWidget = function () {
             }
         });
 
-        $('#InnovationOrganizationTrackOptionUid').on('change', function (e) {
+        $('#InnovationOrganizationTrackOptionGroupUid').on('change', function (e) {
             table.ajax.reload();
         });
 

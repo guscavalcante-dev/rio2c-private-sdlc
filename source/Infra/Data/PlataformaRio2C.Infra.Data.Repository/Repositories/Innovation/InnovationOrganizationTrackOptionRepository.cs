@@ -4,7 +4,7 @@
 // Created          : 07-13-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-27-2022
+// Last Modified On : 01-04-2023
 // ***********************************************************************
 // <copyright file="InnovationOrganizationTrackOptionRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,9 +19,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using LinqKit;
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using X.PagedList;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
@@ -233,19 +231,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
-        /// Finds all grouped dto asynchronous.
+        /// Finds all dto asynchronous.
         /// </summary>
         /// <returns></returns>
-        public async Task<List<InnovationOrganizationTrackOptionGroupedDto>> FindAllGroupedDtoAsync()
+        public async Task<List<InnovationOrganizationTrackOptionDto>> FindAllDtoAsync()
         {
             var query = this.GetBaseQuery()
                             .IsActive()
                             .Order()
-                            .GroupBy(ioto => ioto.InnovationOrganizationTrackOptionGroup)
-                            .Select(ioto => new InnovationOrganizationTrackOptionGroupedDto
+                            .Select(ioto => new InnovationOrganizationTrackOptionDto
                             {
-                                InnovationOrganizationTrackOptionGroup = ioto.Key,
-                                InnovationOrganizationTrackOptions = ioto
+                                InnovationOrganizationTrackOption = ioto,
+                                InnovationOrganizationTrackOptionGroup = ioto.InnovationOrganizationTrackOptionGroup
                             });
 
             return await query.ToListAsync();

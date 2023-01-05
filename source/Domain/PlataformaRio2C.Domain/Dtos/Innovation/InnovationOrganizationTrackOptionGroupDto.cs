@@ -6,7 +6,7 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 12-27-2022
 // ***********************************************************************
-// <copyright file="InnovationOrganizationTrackOptionGroupedDto.cs" company="Softo">
+// <copyright file="InnovationOrganizationTrackOptionGroupDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -17,14 +17,14 @@ using System.Collections.Generic;
 namespace PlataformaRio2C.Domain.Dtos
 {
     /// <summary>InnovationOrganizationTrackOptionGroupedDto</summary>
-    public class InnovationOrganizationTrackOptionGroupedDto
+    public class InnovationOrganizationTrackOptionGroupDto
     {
         public InnovationOrganizationTrackOptionGroup InnovationOrganizationTrackOptionGroup { get; set; }
 
         public IEnumerable<InnovationOrganizationTrackOption> InnovationOrganizationTrackOptions { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="InnovationOrganizationTrackOptionGroupedDto"/> class.</summary>
-        public InnovationOrganizationTrackOptionGroupedDto()
+        /// <summary>Initializes a new instance of the <see cref="InnovationOrganizationTrackOptionGroupDto"/> class.</summary>
+        public InnovationOrganizationTrackOptionGroupDto()
         {
         }
     }

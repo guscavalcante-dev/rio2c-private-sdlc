@@ -23,11 +23,24 @@
 <div class="row">
     <div class="form-group col-md-12">
         <div class="kt-section pt-4">
-            <h3 class="kt-section__title mb-0">@Labels.Tracks</h3>
+            <h3 class="kt-section__title mb-0">@Labels.VerticalsAndCreativeEconomyThemes</h3>
             @Html.ValidationMessageFor(m => m.InnovationOrganizationTrackOptions, "", new { @class = "text-danger" })
             <div class="kt-section__content mt-3">
                 <div class="kt-checkbox-list">
-                    @Html.EditorFor(m => m.InnovationOrganizationTrackOptions)
+                    @{ var groupedInnovationOrganizationTrackOptions = Model.InnovationOrganizationTrackOptions.GroupBy(aiot => aiot.InnovationOrganizationTrackOptionGroupName).ToList(); }
+                    @foreach (var group in groupedInnovationOrganizationTrackOptions)
+                    {
+                        <div class="mb-4">
+                            <div class="h5">@group.Key</div>
+                            <div class="pt-2 pl-2">
+                                @foreach (var itemFromGroup in group)
+                                {
+                                    var itemFromModel = Model.InnovationOrganizationTrackOptions.FirstOrDefault(w => w.InnovationOrganizationTrackOptionUid == itemFromGroup.InnovationOrganizationTrackOptionUid);
+                                    @Html.EditorFor(m => m.InnovationOrganizationTrackOptions[Model.InnovationOrganizationTrackOptions.IndexOf(itemFromModel)]);
+                                }
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

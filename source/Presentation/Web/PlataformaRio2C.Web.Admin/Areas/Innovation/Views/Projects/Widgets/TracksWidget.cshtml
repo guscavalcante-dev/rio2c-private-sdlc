@@ -3,8 +3,8 @@
 @using System.Globalization
 @model AttendeeInnovationOrganizationDto
 @{
-    var trackOptionGroupedDtos = ViewBag.InnovationOrganizationTrackOptionGroupedDtos as List<InnovationOrganizationTrackOptionGroupedDto>;
-    var activeInnovationOrganizationTrackOptionsIds = trackOptionGroupedDtos.SelectMany(i => i.InnovationOrganizationTrackOptions.Select(ioto => ioto.Id));
+    var trackOptionGroupDtos = ViewBag.InnovationOrganizationTrackOptionGroupDtos as List<InnovationOrganizationTrackOptionGroupDto>;
+    var activeInnovationOrganizationTrackOptionsIds = trackOptionGroupDtos.SelectMany(i => i.InnovationOrganizationTrackOptions.Select(ioto => ioto.Id));
 }
 <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
@@ -14,7 +14,7 @@
     </div>
 </div>
 <div class="kt-portlet__body">
-    @if (trackOptionGroupedDtos?.Any() == true)
+    @if (trackOptionGroupDtos?.Any() == true)
     {
         <div class="kt-widget4 rio2c-scroll" style="max-height: 220px;">
             <!-- Shows older edition track options -->
@@ -30,13 +30,13 @@
                 </div>
             }
             <!-- Shows only current edition active track options -->
-            @foreach (var trackOptionGroupedDto in trackOptionGroupedDtos.OrderBy(dto => dto.InnovationOrganizationTrackOptionGroup?.DisplayOrder).ToList())
+            @foreach (var trackOptionGroupDto in trackOptionGroupDtos.OrderBy(dto => dto.InnovationOrganizationTrackOptionGroup?.DisplayOrder).ToList())
             {
-                if (!string.IsNullOrEmpty(trackOptionGroupedDto?.InnovationOrganizationTrackOptionGroup?.Name))
+                if (!string.IsNullOrEmpty(trackOptionGroupDto?.InnovationOrganizationTrackOptionGroup?.Name))
                 {
                     <!-- Has group -->
                     <div class="kt-widget4__item pt-2 pb-2" style="align-items: flex-start;">
-                        @{var attendeeInnovationOrganizationTrackDto = Model.GetAttendeeInnovationOrganizationTrackByTrackOptionGroupUid(trackOptionGroupedDto.InnovationOrganizationTrackOptionGroup.Uid);}
+                        @{var attendeeInnovationOrganizationTrackDto = Model.GetAttendeeInnovationOrganizationTrackByTrackOptionGroupUid(trackOptionGroupDto.InnovationOrganizationTrackOptionGroup.Uid);}
                         @if (attendeeInnovationOrganizationTrackDto != null)
                         {
                             <div class="kt-widget4__pic kt-font-success">
@@ -50,9 +50,9 @@
                             </div>
                         }
                         <div class="kt-widget4__info">
-                            <span class="kt-widget4__title">@(trackOptionGroupedDto?.InnovationOrganizationTrackOptionGroup?.Name)</span>
+                            <span class="kt-widget4__title">@(trackOptionGroupDto?.InnovationOrganizationTrackOptionGroup?.Name)</span>
                             <div class="row ml-0">
-                                @foreach (var innovationOrganizationTrackOption in trackOptionGroupedDto.InnovationOrganizationTrackOptions.OrderBy(ioto => ioto.DisplayOrder))
+                                @foreach (var innovationOrganizationTrackOption in trackOptionGroupDto.InnovationOrganizationTrackOptions.OrderBy(ioto => ioto.DisplayOrder))
                                 {
                                     <div class="align-content-between mr-3">
                                         @{var attendeeInnovationOrganizationTrackOptionDto = Model.GetAttendeeInnovationOrganizationTrackByTrackOptionUid(innovationOrganizationTrackOption.Uid);}
@@ -74,9 +74,9 @@
                 }
                 else
                 {
-                    <!--Has not group-->
+                    <!--Has no group-->
                     <div class="kt-widget4__item pt-2 pb-2" style="align-items: flex-start;">
-                        @foreach (var innovationOrganizationTrackOption in trackOptionGroupedDto.InnovationOrganizationTrackOptions.OrderBy(ioto => ioto.DisplayOrder))
+                        @foreach (var innovationOrganizationTrackOption in trackOptionGroupDto.InnovationOrganizationTrackOptions.OrderBy(ioto => ioto.DisplayOrder))
                         {
                             var attendeeInnovationOrganizationTrackDto = Model.GetAttendeeInnovationOrganizationTrackByTrackOptionUid(innovationOrganizationTrackOption.Uid);
                             if (attendeeInnovationOrganizationTrackDto != null)
@@ -96,13 +96,13 @@
                             </div>
                         }
                     </div>
-                    <!--Has not group-->
+                    <!--Has no group-->
                 }
             }
         </div>
     }
     else
     {
-        <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Tracks, Labels.FoundF)</span>
+        <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Verticals, Labels.FoundF)</span>
     }
 </div>

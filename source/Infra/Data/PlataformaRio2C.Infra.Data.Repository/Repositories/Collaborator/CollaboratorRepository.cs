@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 04-14-2022
+// Last Modified On : 01-04-2023
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -102,12 +102,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             bool showAllParticipants,
             int? editionId)
         {
-            query = query.Where(c => c.User.Roles.Any(r => r.Name == Constants.Role.Admin) 
+            query = query.Where(c => c.User.Roles.Any(r => r.Name == Constants.Role.Admin)
                                      || ((showAllParticipants || c.User.Roles.Any(r => r.Name == Constants.Role.AdminPartial))
                                          && c.AttendeeCollaborators.Any(ac => (showAllEditions || ac.EditionId == editionId)
                                                                               && !ac.IsDeleted
                                                                               && !ac.Edition.IsDeleted
-                                                                              && (showAllParticipants 
+                                                                              && (showAllParticipants
                                                                                   || ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
                                                                                                                              && !act.CollaboratorType.IsDeleted
                                                                                                                              && Constants.CollaboratorType.Admins.Contains(act.CollaboratorType.Name))))));
@@ -385,8 +385,26 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             if (innovationOrganizationTrackUids?.Any(aiotUid => aiotUid != null) == true)
             {
                 query = query.Where(c => innovationOrganizationTrackUids.Any(iotUid =>
-                    c.AttendeeCollaborators.Any(ac => 
-                        ac.AttendeeCollaboratorInnovationOrganizationTracks.Any(aciot => aciot.InnovationOrganizationTrackOption.Uid == iotUid && !aciot.IsDeleted))));
+                                            c.AttendeeCollaborators.Any(ac =>
+                                                ac.AttendeeCollaboratorInnovationOrganizationTracks.Any(aciot => aciot.InnovationOrganizationTrackOption.Uid == iotUid && !aciot.IsDeleted))));
+            }
+
+            return query;
+        }
+
+        /// <summary>
+        /// Finds the by innovation organization track options groups uids.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="innovationOrganizationTrackOptionGroupUids">The innovation organization track option group uids.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> FindByInnovationOrganizationTrackOptionsGroupsUids(this IQueryable<Collaborator> query, List<Guid?> innovationOrganizationTrackOptionGroupUids)
+        {
+            if (innovationOrganizationTrackOptionGroupUids?.Any(aiotgUid => aiotgUid != null) == true)
+            {
+                query = query.Where(c => innovationOrganizationTrackOptionGroupUids.Any(iotgUid =>
+                                            c.AttendeeCollaborators.Any(ac =>
+                                                ac.AttendeeCollaboratorInnovationOrganizationTracks.Any(aciotg => aciotg.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup.Uid == iotgUid && !aciotg.IsDeleted))));
             }
 
             return query;
@@ -418,14 +436,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<Collaborator> FindByOrganizationTypeNames(this IQueryable<Collaborator> query, string[] organizationTypeNames, bool showAllEditions, bool showAllParticipants, int? editionId)
         {
-            if(organizationTypeNames?.Any(name => !string.IsNullOrEmpty(name)) == true)
+            if (organizationTypeNames?.Any(name => !string.IsNullOrEmpty(name)) == true)
             {
                 query = query.Where(c => showAllParticipants || c.AttendeeCollaborators.Any(ac => (showAllEditions || ac.EditionId == editionId)
                                                                                                   && !ac.IsDeleted
                                                                                                   && !ac.Edition.IsDeleted
-                                                                                                  && (showAllParticipants 
-                                                                                                      || ac.AttendeeOrganizationCollaborators.Any(aoc => !aoc.IsDeleted 
-                                                                                                                                                         && aoc.AttendeeOrganization.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted 
+                                                                                                  && (showAllParticipants
+                                                                                                      || ac.AttendeeOrganizationCollaborators.Any(aoc => !aoc.IsDeleted
+                                                                                                                                                         && aoc.AttendeeOrganization.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
                                                                                                                                                                                                                            && organizationTypeNames.Contains(aot.OrganizationType.Name))))));
             }
 
@@ -692,7 +710,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             this.SetProxyEnabled(false);
 
-            if(organizationTypeNames == null)
+            if (organizationTypeNames == null)
             {
                 organizationTypeNames = new string[] { };
             }
@@ -1199,7 +1217,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
         /// <param name="showHighlights">The show highlights.</param>
         /// <param name="editionId">The edition identifier.</param>
-        /// <param name="innovationOrganizationTrackOptionsUids">The innovation organization track options uids.</param>
+        /// <param name="innovationOrganizationTrackOptionGroupsUids">The innovation organization track option groups uids.</param>
         /// <returns></returns>
         public async Task<IPagedList<CollaboratorBaseDto>> FindAllInnovationCommissionsByDataTable(
             int page,
@@ -1212,13 +1230,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             bool showAllParticipants,
             bool? showHighlights,
             int? editionId,
-            List<Guid?> innovationOrganizationTrackOptionsUids)
+            List<Guid?> innovationOrganizationTrackOptionGroupsUids)
         {
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords, editionId)
                                 .FindByUids(collaboratorsUids)
                                 .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, showAllEditions, showAllParticipants, editionId)
-                                .FindByInnovationOrganizationTrackOptionsUids(innovationOrganizationTrackOptionsUids)
+                                .FindByInnovationOrganizationTrackOptionsGroupsUids(innovationOrganizationTrackOptionGroupsUids)
                                 .FindByHighlights(collaboratorTypeNames, showHighlights);
 
             return await query
@@ -1631,7 +1649,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery(true)
                                 .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, false, showAllParticipants, editionId)
                                 .FindByNames(keywords, editionId);
-                                //.HasProjectInNegotiation(editionId, filterByProjectsInNegotiation);
+            //.HasProjectInNegotiation(editionId, filterByProjectsInNegotiation);
 
             return await query
                             .Select(c => new CollaboratorApiListDto

@@ -4,7 +4,7 @@
 // Created          : 07-28-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-28-2021
+// Last Modified On : 01-05-2023
 // ***********************************************************************
 // <copyright file="innovation.projects.evaluation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,7 +26,7 @@ var InnovationProjectsEvaluationListWidget = function () {
     var enableShowPlugins = function () {
         KTApp.initTooltips();
         MyRio2cCommon.initScroll();
-        MyRio2cCommon.enableSelect2({ inputIdOrClass: '#InnovationOrganizationTrackOptionUid', allowClear: true, placeholder: translations.selectFPlaceholder.replace('{0}', translations.track) + '...' });
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: '#InnovationOrganizationTrackOptionGroupUid', allowClear: true, placeholder: translations.selectFPlaceholder.replace('{0}', translations.track) + '...' });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: '#EvaluationStatusUid', allowClear: true, placeholder: translations.selectPlaceholder.replace('{0}', translations.status) + '...' });
         enablePageSizeChangeEvent();
     };
@@ -38,7 +38,7 @@ var InnovationProjectsEvaluationListWidget = function () {
 
         var jsonParameters = new Object();
         jsonParameters.searchKeywords = $('#SearchKeywords').val();
-        jsonParameters.innovationOrganizationTrackOptionUid = $('#InnovationOrganizationTrackOptionUid').val();
+        jsonParameters.innovationOrganizationTrackOptionGroupUid = $('#InnovationOrganizationTrackOptionGroupUid').val();
         jsonParameters.evaluationStatusUid = $('#EvaluationStatusUid').val();
         jsonParameters.page = $('#Page').val();
         jsonParameters.pageSize = $('#PageSize').val();
@@ -74,10 +74,10 @@ var InnovationProjectsEvaluationListWidget = function () {
         });
         $('#SearchKeywords').addClass('search-event-enabled');
 
-        $('#InnovationOrganizationTrackOptionUid').not('.change-event-enabled').on('change', function () {
+        $('#InnovationOrganizationTrackOptionGroupUid').not('.change-event-enabled').on('change', function () {
             search();
         });
-        $('#InnovationOrganizationTrackOptionUid').addClass('change-event-enabled');
+        $('#InnovationOrganizationTrackOptionGroupUid').addClass('change-event-enabled');
 
         $('#EvaluationStatusUid').not('.change-event-enabled').on('change', function () {
             search();

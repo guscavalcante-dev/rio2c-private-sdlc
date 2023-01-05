@@ -4,7 +4,7 @@
 // Created          : 08-30-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-16-2021
+// Last Modified On : 01-04-2023
 // ***********************************************************************
 // <copyright file="AttendeeInnovationOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -157,6 +157,29 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
+        /// Finds the by innovation organization track option group uids.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="innovationOrganizationTrackOptionGroupUids">The innovation organization track option group uids.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeInnovationOrganization> FindByInnovationOrganizationTrackOptionGroupUids(this IQueryable<AttendeeInnovationOrganization> query, List<Guid?> innovationOrganizationTrackOptionGroupUids)
+        {
+            if (innovationOrganizationTrackOptionGroupUids?.Any(i => i.HasValue) == true)
+            {
+                query = query.Where(aio => innovationOrganizationTrackOptionGroupUids
+                                            .Any(iotUid =>
+                                                aio.AttendeeInnovationOrganizationTracks
+                                                    .Any(aiot =>
+                                                            !aio.IsDeleted &&
+                                                            !aiot.IsDeleted &&
+                                                            !aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup.IsDeleted &&
+                                                             aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup.Uid == iotUid)));
+            }
+
+            return query;
+        }
+
+        /// <summary>
         /// Finds the by is evaluated.
         /// </summary>
         /// <param name="query">The query.</param>
@@ -258,17 +281,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="innovationOrganizationTrackOptionUid">The innovation organization track option uid.</param>
+        /// <param name="innovationOrganizationTrackOptionGroupUids">The innovation organization track option group uids.</param>
         /// <returns></returns>
         private async Task<List<AttendeeInnovationOrganization>> FindAllAttendeeInnovationOrganizationsAsync(
             int editionId,
             string searchKeywords,
-            List<Guid?> innovationOrganizationTrackOptionUids)
+            List<Guid?> innovationOrganizationTrackOptionGroupUids)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
                                 .FindByKeywords(searchKeywords)
-                                .FindByInnovationOrganizationTrackOptionUids(innovationOrganizationTrackOptionUids);
+                                .FindByInnovationOrganizationTrackOptionGroupUids(innovationOrganizationTrackOptionGroupUids);
 
             return await query
                             .Order()
@@ -285,12 +308,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         private async Task<List<AttendeeInnovationOrganizationDto>> FindAllAttendeeInnovationOrganizationDtosAsync(
             int editionId,
             string searchKeywords,
-            List<Guid?> innovationOrganizationTrackOptionUids)
+            List<Guid?> innovationOrganizationTrackOptionGroupUids)
         {
             var query = this.GetBaseQuery()
                                .FindByEditionId(editionId)
                                .FindByKeywords(searchKeywords)
-                               .FindByInnovationOrganizationTrackOptionUids(innovationOrganizationTrackOptionUids)
+                               .FindByInnovationOrganizationTrackOptionGroupUids(innovationOrganizationTrackOptionGroupUids)
                                .Select(aio => new AttendeeInnovationOrganizationDto
                                {
                                    AttendeeInnovationOrganization = aio,
@@ -335,7 +358,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                        new AttendeeInnovationOrganizationTrackDto
                                                                                        {
                                                                                            AttendeeInnovationOrganizationTrack = aiot,
-                                                                                           InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption
+                                                                                           InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption,
+                                                                                           InnovationOrganizationTrackOptionGroup = aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup
                                                                                        }),
                                    AttendeeInnovationOrganizationEvaluationDtos = aio.AttendeeInnovationOrganizationEvaluations
                                                                                       .Where(aioe => !aioe.IsDeleted)
@@ -362,13 +386,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         private async Task<List<AttendeeInnovationOrganizationJsonDto>> FindAllJsonDtosAsync(
             int editionId,
             string searchKeywords,
-            List<Guid?> innovationOrganizationTrackOptionUids,
+            List<Guid?> innovationOrganizationTrackOptionGroupsUids,
             List<Tuple<string, string>> sortColumns)
         {
             var query = this.GetBaseQuery()
                                .FindByEditionId(editionId, false)
                                .FindByKeywords(searchKeywords)
-                               .FindByInnovationOrganizationTrackOptionUids(innovationOrganizationTrackOptionUids)
+                               .FindByInnovationOrganizationTrackOptionGroupUids(innovationOrganizationTrackOptionGroupsUids)
                                .DynamicOrder<AttendeeInnovationOrganization>(
                                    sortColumns,
                                    null,
@@ -417,12 +441,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<IPagedList<AttendeeInnovationOrganizationDto>> FindAllDtosPagedAsync(
             int editionId,
             string searchKeywords,
-            List<Guid?> innovationOrganizationTrackOptionUids,
+            List<Guid?> innovationOrganizationTrackOptionGroupUids,
             Guid? evaluationStatusUid,
             int page,
             int pageSize)
         {
-            var attendeeInnovationOrganizationsDtos = await this.FindAllAttendeeInnovationOrganizationDtosAsync(editionId, searchKeywords, innovationOrganizationTrackOptionUids);
+            var attendeeInnovationOrganizationsDtos = await this.FindAllAttendeeInnovationOrganizationDtosAsync(editionId, searchKeywords, innovationOrganizationTrackOptionGroupUids);
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
 
             IEnumerable<AttendeeInnovationOrganizationDto> attendeeInnovationOrganizationDtosResult = attendeeInnovationOrganizationsDtos;
@@ -472,7 +496,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="innovationOrganizationTrackOptionUid">The innovation organization track option uid.</param>
+        /// <param name="innovationOrganizationTrackOptionGroupUids">The innovation organization track option group uids.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
@@ -481,13 +505,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<IPagedList<AttendeeInnovationOrganizationJsonDto>> FindAllJsonDtosPagedAsync(
             int editionId,
             string searchKeywords,
-            List<Guid?> innovationOrganizationTrackOptionUids,
+            List<Guid?> innovationOrganizationTrackOptionGroupUids,
             Guid? evaluationStatusUid,
             int page,
             int pageSize,
             List<Tuple<string, string>> sortColumns)
         {
-            var attendeeInnovaitonOrganizationJsonDtos = await this.FindAllJsonDtosAsync(editionId, searchKeywords, innovationOrganizationTrackOptionUids, sortColumns);
+            var attendeeInnovaitonOrganizationJsonDtos = await this.FindAllJsonDtosAsync(editionId, searchKeywords, innovationOrganizationTrackOptionGroupUids, sortColumns);
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
 
             IEnumerable<AttendeeInnovationOrganizationJsonDto> attendeeInnovationOrganizationJsonDtosResult = attendeeInnovaitonOrganizationJsonDtos;
@@ -624,7 +648,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="innovationOrganizationTrackOptionUids">The innovation organization track option uids.</param>
+        /// <param name="innovationOrganizationTrackOptionGroupUids">The innovation organization track option group uids.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
@@ -632,12 +656,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<int[]> FindAllInnovationOrganizationsIdsPagedAsync(
             int editionId,
             string searchKeywords,
-            List<Guid?> innovationOrganizationTrackOptionUids,
+            List<Guid?> innovationOrganizationTrackOptionGroupUids,
             Guid? evaluationStatusUid,
             int page,
             int pageSize)
         {
-            var attendeeInnovationOrganizations = await this.FindAllAttendeeInnovationOrganizationsAsync(editionId, searchKeywords, innovationOrganizationTrackOptionUids);
+            var attendeeInnovationOrganizations = await this.FindAllAttendeeInnovationOrganizationsAsync(editionId, searchKeywords, innovationOrganizationTrackOptionGroupUids);
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
 
             IEnumerable<AttendeeInnovationOrganization> attendeeInnovationOrganizationResult = attendeeInnovationOrganizations;
@@ -703,14 +727,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="musicGenreUid">The music genre uid.</param>
+        /// <param name="innovationOrganizationTrackOptionGroupUids">The innovation organization track option group uids.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<int> CountPagedAsync(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionUids, Guid? evaluationStatusUid, int page, int pageSize)
+        public async Task<int> CountPagedAsync(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionGroupUids, Guid? evaluationStatusUid, int page, int pageSize)
         {
-            var attendeeInnovationOrganizations = await this.FindAllAttendeeInnovationOrganizationsAsync(editionId, searchKeywords, innovationOrganizationTrackOptionUids);
+            var attendeeInnovationOrganizations = await this.FindAllAttendeeInnovationOrganizationsAsync(editionId, searchKeywords, innovationOrganizationTrackOptionGroupUids);
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
             var approvedAttendeeInnovationOrganizationsIds = await this.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(editionId);
 
@@ -810,7 +834,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                        new AttendeeInnovationOrganizationTrackDto
                                                                                        {
                                                                                            AttendeeInnovationOrganizationTrack = aiot,
-                                                                                           InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption
+                                                                                           InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption,
+                                                                                           InnovationOrganizationTrackOptionGroup = aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup
                                                                                        })
                                });
 
@@ -872,7 +897,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                         new AttendeeInnovationOrganizationTrackDto
                                                                                         {
                                                                                             AttendeeInnovationOrganizationTrack = aiot,
-                                                                                            InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption
+                                                                                            InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption,
+                                                                                            InnovationOrganizationTrackOptionGroup = aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup
                                                                                         })
                                 });
 
@@ -905,7 +931,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                      new AttendeeInnovationOrganizationTrackDto
                                                                                      {
                                                                                          AttendeeInnovationOrganizationTrack = aiot,
-                                                                                         InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption
+                                                                                         InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption,
+                                                                                         InnovationOrganizationTrackOptionGroup = aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup
                                                                                      }),
                                    AttendeeInnovationOrganizationEvaluationDtos = aio.AttendeeInnovationOrganizationEvaluations
                                                                                       .Where(aioe => !aioe.IsDeleted)
@@ -937,7 +964,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                        new AttendeeInnovationOrganizationTrackDto
                                                                                        {
                                                                                            AttendeeInnovationOrganizationTrack = aiot,
-                                                                                           InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption
+                                                                                           InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption,
+                                                                                           InnovationOrganizationTrackOptionGroup = aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup
                                                                                        }),
                                    AttendeeInnovationOrganizationCompetitorDtos = aio.AttendeeInnovationOrganizationCompetitors.Select(aiot =>
                                                                                      new AttendeeInnovationOrganizationCompetitorDto
@@ -969,7 +997,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                       new AttendeeInnovationOrganizationTrackDto
                                                                                       {
                                                                                           AttendeeInnovationOrganizationTrack = aiot,
-                                                                                          InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption
+                                                                                          InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption,
+                                                                                          InnovationOrganizationTrackOptionGroup = aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup
                                                                                       })
                               });
 
@@ -995,7 +1024,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                      new AttendeeInnovationOrganizationTrackDto
                                                                                      {
                                                                                          AttendeeInnovationOrganizationTrack = aiot,
-                                                                                         InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption
+                                                                                         InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption,
+                                                                                         InnovationOrganizationTrackOptionGroup = aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup
                                                                                      }),
                                  AttendeeInnovationOrganizationObjectiveDtos = aio.AttendeeInnovationOrganizationObjectives.Select(aioo =>
                                                                                          new AttendeeInnovationOrganizationObjectiveDto
@@ -1027,7 +1057,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                      new AttendeeInnovationOrganizationTrackDto
                                                                                      {
                                                                                          AttendeeInnovationOrganizationTrack = aiot,
-                                                                                         InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption
+                                                                                         InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption,
+                                                                                         InnovationOrganizationTrackOptionGroup = aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup
                                                                                      }),
                                  AttendeeInnovationOrganizationExperienceDtos = aio.AttendeeInnovationOrganizationExperiences.Select(aioe =>
                                                                                         new AttendeeInnovationOrganizationExperienceDto
@@ -1061,7 +1092,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                      new AttendeeInnovationOrganizationTrackDto
                                                                                      {
                                                                                          AttendeeInnovationOrganizationTrack = aiot,
-                                                                                         InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption
+                                                                                         InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption,
+                                                                                         InnovationOrganizationTrackOptionGroup = aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup
                                                                                      }),
                                 AttendeeInnovationOrganizationTechnologyDtos = aio.AttendeeInnovationOrganizationTechnologies
                                                                                         .Where(aiot => !aiot.IsDeleted)
@@ -1098,7 +1130,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                      new AttendeeInnovationOrganizationTrackDto
                                                                                      {
                                                                                          AttendeeInnovationOrganizationTrack = aiot,
-                                                                                         InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption
+                                                                                         InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption,
+                                                                                         InnovationOrganizationTrackOptionGroup = aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup
                                                                                      }),
                                   AttendeeInnovationOrganizationEvaluationDtos = aio.AttendeeInnovationOrganizationEvaluations
                                                                                       .Where(aioe => !aioe.IsDeleted)
@@ -1140,7 +1173,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                      new AttendeeInnovationOrganizationTrackDto
                                                                                      {
                                                                                          AttendeeInnovationOrganizationTrack = aiot,
-                                                                                         InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption
+                                                                                         InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption,
+                                                                                         InnovationOrganizationTrackOptionGroup = aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup
                                                                                      }),
                                   AttendeeInnovationOrganizationEvaluationDtos = aio.AttendeeInnovationOrganizationEvaluations
                                                                                         .Where(aioe => !aioe.IsDeleted)
@@ -1176,7 +1210,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     new AttendeeInnovationOrganizationTrackDto
                                                                                     {
                                                                                         AttendeeInnovationOrganizationTrack = aiot,
-                                                                                        InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption
+                                                                                        InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption,
+                                                                                        InnovationOrganizationTrackOptionGroup = aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup
                                                                                     }),
                                  AttendeeInnovationOrganizationFounderDtos = aio.AttendeeInnovationOrganizationFounders
                                                                                      .Where(aiot => !aiot.IsDeleted)
@@ -1210,7 +1245,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                        new AttendeeInnovationOrganizationTrackDto
                                                                                        {
                                                                                            AttendeeInnovationOrganizationTrack = aiot,
-                                                                                           InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption
+                                                                                           InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption,
+                                                                                           InnovationOrganizationTrackOptionGroup = aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup
                                                                                        })
                              });
 

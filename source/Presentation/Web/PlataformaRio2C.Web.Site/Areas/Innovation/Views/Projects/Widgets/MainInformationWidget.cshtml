@@ -46,17 +46,18 @@
                             </div>
                         </div>
                         <div class="kt-widget__subhead pb-0">
-                            @Labels.Tracks:
+                            @Labels.Verticals
                             @if (Model.AttendeeInnovationOrganizationTrackDtos?.Any() == true)
                             {
                                 foreach (var attendeeInnovationOrganizationTrackDto in Model.AttendeeInnovationOrganizationTrackDtos)
                                 {
                                     <span class="kt-badge kt-badge--inline kt-badge--info">
-                                        @(attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOption.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
-                                        @if (attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOption.HasAdditionalInfo && !string.IsNullOrEmpty(attendeeInnovationOrganizationTrackDto.AttendeeInnovationOrganizationTrack.AdditionalInfo))
-                                        {
-                                            @attendeeInnovationOrganizationTrackDto.AttendeeInnovationOrganizationTrack.AdditionalInfo
-                                        }
+                                        @(attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOptionGroup.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                        @*@(attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOption.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                            @if (attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOption.HasAdditionalInfo && !string.IsNullOrEmpty(attendeeInnovationOrganizationTrackDto.AttendeeInnovationOrganizationTrack.AdditionalInfo))
+                                            {
+                                                @attendeeInnovationOrganizationTrackDto.AttendeeInnovationOrganizationTrack.AdditionalInfo
+                                            }*@
                                     </span>
                                 }
                             }
@@ -136,25 +137,25 @@
             <div class="kt-widget__item w-25 w-xs-100">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.AgentName</span>
-                    <span class="kt-widget__value"><span class="text-break">@(collaboratorDto?.Collaborator?.GetFullName() ?? "-")</span></span>
+                    <span class="kt-widget__value"><span class="text-break">@(!string.IsNullOrEmpty(collaboratorDto?.Collaborator?.GetFullName()) ? collaboratorDto?.Collaborator?.GetFullName() : "-")</span></span>
                 </div>
             </div>
             <div class="kt-widget__item w-25 w-xs-100">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.Email</span>
-                    <span class="kt-widget__value"><span class="text-break">@(collaboratorDto?.Collaborator?.PublicEmail ?? "-")</span></span>
+                    <span class="kt-widget__value"><span class="text-break">@(!string.IsNullOrEmpty(collaboratorDto?.Collaborator?.PublicEmail) ? collaboratorDto?.Collaborator?.PublicEmail : "-")</span></span>
                 </div>
             </div>
             <div class="kt-widget__item w-25 w-xs-100">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.PhoneNumber</span>
-                    <span class="kt-widget__value"><span class="text-break">@(collaboratorDto?.Collaborator?.PhoneNumber ?? "-")</span></span>
+                    <span class="kt-widget__value"><span class="text-break">@(!string.IsNullOrEmpty(collaboratorDto?.Collaborator?.PhoneNumber) ? collaboratorDto?.Collaborator?.PhoneNumber : "-")</span></span>
                 </div>
             </div>
             <div class="kt-widget__item w-25 w-xs-100">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.CellPhone</span>
-                    <span class="kt-widget__value"><span class="text-break">@(collaboratorDto?.Collaborator?.CellPhone ?? "-")</span></span>
+                    <span class="kt-widget__value"><span class="text-break">@(!string.IsNullOrEmpty(collaboratorDto?.Collaborator?.CellPhone) ? collaboratorDto?.Collaborator?.CellPhone : "-")</span></span>
                 </div>
             </div>
 

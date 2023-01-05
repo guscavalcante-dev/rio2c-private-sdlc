@@ -4,7 +4,7 @@
 // Created          : 07-19-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-19-2021
+// Last Modified On : 01-04-2023
 // ***********************************************************************
 // <copyright file="CreateInnovationCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,11 +12,8 @@
 // <summary></summary>
 // ***********************************************************************
 
-using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
-using System;
+using PlataformaRio2C.Domain.Dtos;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -27,9 +24,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// Initializes a new instance of the <see cref="CreateInnovationCollaborator"/> class.
         /// </summary>
         /// <param name="innovationOptions">The innovation options.</param>
-        public CreateInnovationCollaborator(List<InnovationOrganizationTrackOption> innovationOrganizationTrackOptions)
+        public CreateInnovationCollaborator(List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos)
         {
-            this.UpdateBaseProperties(null, innovationOrganizationTrackOptions);
+            this.UpdateBaseProperties(null, innovationOrganizationTrackOptionDtos);
         }
 
         /// <summary>
