@@ -4,7 +4,7 @@
 // Created          : 07-26-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-26-2021
+// Last Modified On : 01-05-2023
 // ***********************************************************************
 // <copyright file="AttendeeInnovationOrganizationDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -69,7 +69,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns></returns>
         public AttendeeInnovationOrganizationTrackDto GetAttendeeInnovationOrganizationTrackByTrackOptionGroupUid(Guid trackOptionGroupUid)
         {
-            return this.AttendeeInnovationOrganizationTrackDtos?.FirstOrDefault(aiotDto => aiotDto.InnovationOrganizationTrackOption?.InnovationOrganizationTrackOptionGroup?.Uid == trackOptionGroupUid);
+            return this.AttendeeInnovationOrganizationTrackDtos?.FirstOrDefault(aiotDto => aiotDto.InnovationOrganizationTrackOptionGroup?.Uid == trackOptionGroupUid);
         }
 
         /// <summary>

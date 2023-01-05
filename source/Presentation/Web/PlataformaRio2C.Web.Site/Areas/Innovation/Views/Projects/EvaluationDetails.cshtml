@@ -11,7 +11,7 @@
         Area = "Innovation",
         id = Model.AttendeeInnovationOrganization.Id,
         searchKeywords = ViewBag.SearchKeywords,
-        innovationOrganizationTrackOptionUid = ViewBag.InnovationOrganizationTrackOptionUid,
+        innovationOrganizationTrackOptionGroupUid = ViewBag.InnovationOrganizationTrackOptionGroupUid,
         evaluationStatusUid = ViewBag.EvaluationStatusUid,
         Page = ViewBag.Page,
         pageSize = ViewBag.PageSize
@@ -22,7 +22,7 @@
         Area = "Innovation",
         id = Model.AttendeeInnovationOrganization.Id,
         searchKeywords = ViewBag.SearchKeywords,
-        innovationOrganizationTrackOptionUid = ViewBag.InnovationOrganizationTrackOptionUid,
+        innovationOrganizationTrackOptionGroupUid = ViewBag.InnovationOrganizationTrackOptionGroupUid,
         evaluationStatusUid = ViewBag.EvaluationStatusUid,
         Page = ViewBag.Page,
         pageSize = ViewBag.PageSize
@@ -36,10 +36,10 @@
             <div class="mr-3">
                 <span>@currentInnovationProjectIndex @Labels.Of @totalInnovationProjectsCount @Labels.Projects</span>
             </div>
-            <button class="btn btn-outline-secondary mr-2" onclick="location.href='@previousStepEvent'">
+            <button class="btn btn-outline-secondary mr-2" onclick="location.href='@previousStepEvent'" @(currentInnovationProjectIndex == 1 ? "disabled" : "")>
                 <span class="font-weight-bold text-white"><</span>
             </button>
-            <button class="btn btn-outline-secondary" onclick="location.href='@nextStepEvent'">
+            <button class="btn btn-outline-secondary" onclick="location.href='@nextStepEvent'" @(currentInnovationProjectIndex == totalInnovationProjectsCount ? "disabled" : "")>
                 <span class="font-weight-bold text-white">></span>
             </button>
         </div>
@@ -48,11 +48,9 @@
 <div class="row">
     <div class="col-md-12">
         <div class="row">
-            <!--begin:Main Information Widget-->
             <div class="col-12">
                 <div id="ProjectMainInformationWidget" class="kt-portlet" style="min-height: 350px;"></div>
             </div>
-            <!--end:Main Information Widget-->
         </div>
         <div class="row">
             <div class="col-md-12">

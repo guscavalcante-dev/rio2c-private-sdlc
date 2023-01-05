@@ -4,7 +4,7 @@
 // Created          : 07-17-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-17-2021
+// Last Modified On : 01-05-2023
 // ***********************************************************************
 // <copyright file="AttendeeInnovationOrganizationTrackDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,6 +20,7 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>AttendeeInnovationOrganizationTrackDto</summary>
     public class AttendeeInnovationOrganizationTrackDto
     {
+        public InnovationOrganizationTrackOptionGroup InnovationOrganizationTrackOptionGroup { get; set; }
         public InnovationOrganizationTrackOption InnovationOrganizationTrackOption { get; set; }
         public AttendeeInnovationOrganizationTrack AttendeeInnovationOrganizationTrack { get; set; }
 

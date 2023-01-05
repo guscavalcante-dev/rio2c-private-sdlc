@@ -24,5 +24,6 @@ namespace PlataformaRio2C.Domain.Interfaces
     {
         Task<List<InnovationOrganizationTrackOptionGroup>> FindAllAsync();
         Task<List<InnovationOrganizationTrackOptionGroupDto>> FindAllDtoAsync();
+        Task<List<InnovationOrganizationTrackOptionGroup>> FindAllByAttendeeCollaboratorIdAsync(int attendeeCollaboratorId);
     }
 }

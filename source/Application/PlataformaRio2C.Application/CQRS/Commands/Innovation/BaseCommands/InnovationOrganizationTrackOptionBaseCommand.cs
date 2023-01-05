@@ -47,8 +47,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.InnovationOrganizationTrackOptionHasAdditionalInfo = dto.InnovationOrganizationTrackOption.HasAdditionalInfo;
             this.AdditionalInfo = dto.AttendeeInnovationOrganizationTrack.AdditionalInfo;
 
-            this.InnovationOrganizationTrackOptionGroupUid = dto?.InnovationOrganizationTrackOption?.InnovationOrganizationTrackOptionGroup?.Uid;
-            this.InnovationOrganizationTrackOptionGroupName = dto?.InnovationOrganizationTrackOption?.InnovationOrganizationTrackOptionGroup?.Name;
+            this.InnovationOrganizationTrackOptionGroupUid = dto?.InnovationOrganizationTrackOptionGroup?.Uid;
+            this.InnovationOrganizationTrackOptionGroupName = dto?.InnovationOrganizationTrackOptionGroup?.Name;
 
             this.IsChecked = true;
         }

@@ -7,9 +7,8 @@
     {
         Area = "Innovation",
         id = Model.AttendeeInnovationOrganization.Id,
-        //step = 0,
         searchKeywords = ViewBag.SearchKeywords,
-        innovationOrganizationTrackOptionUid = ViewBag.InnovationOrganizationTrackOptionUid,
+        innovationOrganizationTrackOptionGroupUid = ViewBag.InnovationOrganizationTrackOptionGroupUid,
         evaluationStatusUid = ViewBag.EvaluationStatusUid,
         Page = ViewBag.Page,
         pageSize = ViewBag.PageSize
@@ -48,17 +47,18 @@
                 </div>
                 <div class="row">
                     <div class="col-12 mt-3">
-                        <div style="font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; width: 50px; display: inline-block;">@Labels.Tracks:</div>
+                        <div class="mr-2" style="font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; width: 50px; display: inline-block;">@Labels.Verticals </div>
                         @if (Model.AttendeeInnovationOrganizationTrackDtos?.Any() == true)
                         {
                             foreach (var attendeeInnovationOrganizationTrackDto in Model.AttendeeInnovationOrganizationTrackDtos)
                             {
                                 <span class="kt-badge kt-badge--inline kt-badge--info mt-1">
-                                    @(attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOption.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
-                                    @if (attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOption.HasAdditionalInfo && !string.IsNullOrEmpty(attendeeInnovationOrganizationTrackDto.AttendeeInnovationOrganizationTrack.AdditionalInfo))
-                                    {
-                                        @attendeeInnovationOrganizationTrackDto.AttendeeInnovationOrganizationTrack.AdditionalInfo
-                                    }
+                                    @(attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOptionGroup.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                    @*@(attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOption.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                        @if (attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOption.HasAdditionalInfo && !string.IsNullOrEmpty(attendeeInnovationOrganizationTrackDto.AttendeeInnovationOrganizationTrack.AdditionalInfo))
+                                        {
+                                            @attendeeInnovationOrganizationTrackDto.AttendeeInnovationOrganizationTrack.AdditionalInfo
+                                        }*@
                                 </span>
                             }
                         }
@@ -68,22 +68,6 @@
                         }
                     </div>
                 </div>
-                @*<div class="row">
-                        <div class="col-12 mt-2">
-                            <div style="font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; width: 88px; display: inline-block;">@Labels.TargetAudience</div>
-                            @if (Model.AttendeeInnovationBandDto?.InnovationBandTargetAudienceDtos?.Any() == true)
-                            {
-                                foreach (var musicBandTargetAudienceDto in Model.AttendeeInnovationBandDto.InnovationBandTargetAudienceDtos)
-                                {
-                                    <span class="kt-badge kt-badge--inline kt-badge--primary">@(musicBandTargetAudienceDto.TargetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
-                                }
-                            }
-                            else
-                            {
-                                @:-
-                            }
-                        </div>
-                    </div>*@
                 <div class="row">
                     <div class="col-12 mt-4">
                         @Html.Partial("Shared/_Evaluation", Model)

@@ -64,6 +64,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>
+        /// Finds the by attendee collaborator identifier.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<InnovationOrganizationTrackOptionGroup> FindByAttendeeCollaboratorId(this IQueryable<InnovationOrganizationTrackOptionGroup> query, int attendeeCollaboratorId)
+        {
+            query = query.Where(iotog => iotog.InnovationOrganizationTrackOptions
+                                                .Any(ioto => ioto.AttendeeCollaboratorInnovationOrganizationTracks
+                                                                    .Where(aciot => !aciot.IsDeleted)
+                                                                    .Any(aciot => aciot.AttendeeCollaboratorId == attendeeCollaboratorId)));
+
+            return query;
+        }
     }
 
     #endregion
@@ -118,6 +134,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 InnovationOrganizationTrackOptionGroup = iotog,
                                 InnovationOrganizationTrackOptions = iotog.InnovationOrganizationTrackOptions
                             });
+
+            return await query.ToListAsync();
+        }
+
+        /// <summary>
+        /// Finds all by attendee collaborator identifier asynchronous.
+        /// </summary>
+        /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
+        /// <returns></returns>
+        public async Task<List<InnovationOrganizationTrackOptionGroup>> FindAllByAttendeeCollaboratorIdAsync(int attendeeCollaboratorId)
+        {
+            var query = this.GetBaseQuery()
+                            .FindByAttendeeCollaboratorId(attendeeCollaboratorId)
+                            .Order();
 
             return await query.ToListAsync();
         }

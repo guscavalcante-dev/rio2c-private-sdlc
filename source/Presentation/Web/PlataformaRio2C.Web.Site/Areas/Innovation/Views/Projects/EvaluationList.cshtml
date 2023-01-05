@@ -4,7 +4,7 @@
 @{
     ViewBag.Title = Labels.ProjectsEvaluation;
     var editionDto = ViewBag.EditionDto as EditionDto;
-    var innovationOrganizationTrackOptions = ViewBag.InnovationOrganizationTrackOptions as List<InnovationOrganizationTrackOption>;
+    var innovationOrganizationTrackOptionGroups = ViewBag.InnovationOrganizationTrackOptionGroups as List<InnovationOrganizationTrackOptionGroup>;
     var projectEvaluationStatuses = ViewBag.ProjectEvaluationStatuses as List<ProjectEvaluationStatus>;
 }
 <div class="kt-portlet">
@@ -21,12 +21,12 @@
         </div>
         <div class="row">
             <div class="col-12 col-sm-6 mt-2">
-                <select name="InnovationOrganizationTrackOptionUid" id="InnovationOrganizationTrackOptionUid" class="form-control">
-                    <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Track.ToLowerInvariant()))...</option>
-                    @foreach (var innovationOrganizationTrackOption in innovationOrganizationTrackOptions)
+                <select name="InnovationOrganizationTrackOptionGroupUid" id="InnovationOrganizationTrackOptionGroupUid" class="form-control">
+                    <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Vertical.ToLowerInvariant()))...</option>
+                    @foreach (var innovationOrganizationTrackOptionGroup in innovationOrganizationTrackOptionGroups)
                     {
-                        <option value="@innovationOrganizationTrackOption.Uid" @(innovationOrganizationTrackOption.Uid == ViewBag.InnovationOrganizationTrackOptionUid ? "selected" : string.Empty)>
-                            @innovationOrganizationTrackOption.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                        <option value="@innovationOrganizationTrackOptionGroup.Uid" @(innovationOrganizationTrackOptionGroup.Uid == ViewBag.InnovationOrganizationTrackOptionGroupUid ? "selected" : string.Empty)>
+                            @innovationOrganizationTrackOptionGroup.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
                         </option>
                     }
                 </select>

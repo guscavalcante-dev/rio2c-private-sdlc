@@ -74,7 +74,7 @@
                 }
                 else
                 {
-                    <!--Has not group-->
+                    <!--Has no group-->
                     <div class="kt-widget4__item pt-2 pb-2" style="align-items: flex-start;">
                         @foreach (var innovationOrganizationTrackOption in trackOptionGroupDto.InnovationOrganizationTrackOptions.OrderBy(ioto => ioto.DisplayOrder))
                         {
@@ -96,13 +96,13 @@
                             </div>
                         }
                     </div>
-                    <!--Has not group-->
+                    <!--Has no group-->
                 }
             }
         </div>
     }
     else
     {
-        <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Tracks, Labels.FoundF)</span>
+        <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Verticals, Labels.FoundF)</span>
     }
 </div>
