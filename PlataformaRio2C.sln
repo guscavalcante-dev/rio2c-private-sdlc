@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29509.3
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - Presentation", "0 - Presentation", "{B76F5DC6-5224-42B7-8E9C-3528DB520A4D}"
 EndProject
@@ -192,8 +192,10 @@ Global
 		{D9F58A23-B5EB-4250-83BE-08C8A34A98E6} = {DFF5E3F8-2E2F-47EB-B79E-3C0211CB5033}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {359C66AC-967C-49D7-A3E0-7E8A0A656AD1}
-		LessCompiler = aaa2f19f-23e9-41d7-9790-8e47cf17db1f
+		RESX_SaveFilesImmediatelyUponChange = False
+		RESX_NeutralResourcesLanguage = pt-BR
 		RESX_SortFileContentOnSave = True
+		LessCompiler = aaa2f19f-23e9-41d7-9790-8e47cf17db1f
+		SolutionGuid = {359C66AC-967C-49D7-A3E0-7E8A0A656AD1}
 	EndGlobalSection
 EndGlobal
