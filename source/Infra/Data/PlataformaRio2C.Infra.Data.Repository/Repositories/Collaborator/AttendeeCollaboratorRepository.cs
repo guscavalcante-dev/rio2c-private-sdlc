@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 10-13-2021
+// Last Modified On : 01-06-2023
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -567,7 +567,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     Collaborator = ac.Collaborator
                                 },
                                 AttendeeInnovationOrganizationEvaluationDtos = ac.Collaborator.User.AttendeeInnovationOrganizationEvaluations
-                                                                                        .Where(aioe => !aioe.IsDeleted)
+                                                                                        .Where(aioe => !aioe.IsDeleted && 
+                                                                                                        aioe.AttendeeInnovationOrganization.EditionId == editionId)
                                                                                         .OrderBy(aioe => aioe.CreateDate)
                                                                                         .Select(aioe => new AttendeeInnovationOrganizationEvaluationDto
                                                                                         {
@@ -601,7 +602,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     Collaborator = ac.Collaborator
                                 },
                                 AttendeeMusicBandEvaluationDtos = ac.Collaborator.User.AttendeeMusicBandEvaluations
-                                                                                        .Where(ambe => !ambe.IsDeleted)
+                                                                                        .Where(ambe => !ambe.IsDeleted &&
+                                                                                                        ambe.AttendeeMusicBand.EditionId == editionId)
                                                                                         .OrderBy(ambe => ambe.CreateDate)
                                                                                         .Select(ambe => new AttendeeMusicBandEvaluationDto
                                                                                         {
@@ -635,7 +637,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     Collaborator = ac.Collaborator
                                 },
                                 AttendeeCartoonProjectEvaluationDtos = ac.Collaborator.User.AttendeeCartoonProjectEvaluations
-                                                                                        .Where(aioe => !aioe.IsDeleted)
+                                                                                        .Where(aioe => !aioe.IsDeleted &&
+                                                                                                        aioe.AttendeeCartoonProject.EditionId == editionId)
                                                                                         .OrderBy(aioe => aioe.CreateDate)
                                                                                         .Select(aioe => new AttendeeCartoonProjectEvaluationDto
                                                                                         {
@@ -647,34 +650,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             })
                             .FirstOrDefaultAsync();
         }
-
-        //public async Task<AttendeeCollaboratorCartoonEvaluationsWidgetDto> FindCartoonEvaluationsWidgetDtoAsync(Guid collaboratorUid, int editionId)
-        //{
-        //    var query = this.GetBaseQuery(true)
-        //                        .FindByCollaboratorUid(collaboratorUid)
-        //                        .FindByEditionId(editionId, false);
-
-        //    return await query
-        //                    .Select(ac => new AttendeeCollaboratorCartoonEvaluationsWidgetDto
-        //                    {
-        //                        AttendeeCollaboratorDto = new AttendeeCollaboratorDto
-        //                        {
-        //                            AttendeeCollaborator = ac,
-        //                            Collaborator = ac.Collaborator
-        //                        },
-        //                        AttendeeCartoonProjectEvaluationDtos = ac.Collaborator.User.AttendeeMusicBandEvaluations
-        //                                                                                .Where(ambe => !ambe.IsDeleted)
-        //                                                                                .OrderBy(ambe => ambe.CreateDate)
-        //                                                                                .Select(ambe => new AttendeeMusicBandEvaluationDto
-        //                                                                                {
-        //                                                                                    AttendeeMusicBandEvaluation = ambe,
-        //                                                                                    AttendeeMusicBand = ambe.AttendeeMusicBand,
-        //                                                                                    MusicBand = ambe.AttendeeMusicBand.MusicBand,
-        //                                                                                    EvaluatorUser = ambe.EvaluatorUser
-        //                                                                                }).ToList()
-        //                    })
-        //                    .FirstOrDefaultAsync();
-        //}
 
         /// <summary>
         /// Finds the audiovisual commission evaluations widget dto asynchronous.
