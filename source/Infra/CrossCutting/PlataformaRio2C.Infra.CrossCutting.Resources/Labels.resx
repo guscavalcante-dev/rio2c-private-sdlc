@@ -2660,8 +2660,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Status</value>
   </data>
   <data name="StepByStepForAudiovisualProjectEnrollment" xml:space="preserve">
-    <value>Passo a passo para Inscrição de Projetos Audiovisual 2022 (PDF)</value>
-    <comment>Passo a passo para Inscrição de Projetos Audiovisual</comment>
+    <value>Passo a passo para Inscrição de Projetos Audiovisual {0} (PDF)</value>
+    
   </data>
   <data name="Steps" xml:space="preserve">
     <value>Passos</value>
@@ -2930,7 +2930,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Verticals" xml:space="preserve">
     <value>Verticais</value>
   </data>
-  <data name="VerticalsAndCreativeEconomyThemes" xml:space="preserve">
+  <data name="VerticalsAndCreativeEconomyThemes_Duplicate[1]" xml:space="preserve">
     <value>Verticais e Temas da Economia Criativa</value>
   </data>
   <data name="VideoClip" xml:space="preserve">

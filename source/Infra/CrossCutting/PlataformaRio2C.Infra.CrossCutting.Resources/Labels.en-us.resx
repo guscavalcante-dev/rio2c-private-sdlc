@@ -2651,7 +2651,7 @@
     <comment>Estado</comment>
   </data>
   <data name="StepByStepForAudiovisualProjectEnrollment" xml:space="preserve">
-    <value>Step By Step For Audiovisual Project Enrollment 2022 (PDF)</value>
+    <value>Step By Step For Audiovisual Project Enrollment {0} (PDF)</value>
   </data>
   <data name="Steps" xml:space="preserve">
     <value>Steps</value>
@@ -2920,7 +2920,7 @@
   <data name="Verticals" xml:space="preserve">
     <value>Verticals</value>
   </data>
-  <data name="VerticalsAndCreativeEconomyThemes" xml:space="preserve">
+  <data name="VerticalsAndCreativeEconomyThemes_Duplicate[1]" xml:space="preserve">
     <value>Verticals and Creative Economy Themes</value>
   </data>
   <data name="VideoClip" xml:space="preserve">

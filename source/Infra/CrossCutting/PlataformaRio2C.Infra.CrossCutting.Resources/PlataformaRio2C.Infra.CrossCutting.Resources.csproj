@@ -113,7 +113,7 @@
     <EmbeddedResource Include="Labels.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
-      <LastGenOutput>Labels1.Designer.cs</LastGenOutput>
+      <LastGenOutput>Labels.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Messages.en-us.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
