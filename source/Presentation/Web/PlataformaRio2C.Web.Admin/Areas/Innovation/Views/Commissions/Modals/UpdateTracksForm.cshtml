@@ -8,20 +8,7 @@
         </div>
         <div class="kt-section__content mt-3">
             <div class="kt-checkbox-list">
-                @{ var groupedAttendeeInnovationOrganizationTracks = Model.AttendeeInnovationOrganizationTracks.GroupBy(aiot => aiot.InnovationOrganizationTrackOptionGroupName).ToList(); }
-                @foreach (var group in groupedAttendeeInnovationOrganizationTracks)
-                {
-                    <div class="mb-4">
-                        <div class="h3">@group.Key</div>
-                        <div class="pt-2 pl-2">
-                            @foreach (var itemFromGroup in group)
-                            {
-                                var itemFromModel = Model.AttendeeInnovationOrganizationTracks.FirstOrDefault(w => w.InnovationOrganizationTrackOptionUid == itemFromGroup.InnovationOrganizationTrackOptionUid);
-                                @Html.EditorFor(m => m.AttendeeInnovationOrganizationTracks[Model.AttendeeInnovationOrganizationTracks.IndexOf(itemFromModel)]);
-                            }
-                        </div>
-                    </div>
-                }
+                @Html.EditorFor(m => m.AttendeeInnovationOrganizationTrackGroups)
             </div>
         </div>
     </div>

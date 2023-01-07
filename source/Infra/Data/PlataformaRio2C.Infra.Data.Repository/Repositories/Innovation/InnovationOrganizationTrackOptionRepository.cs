@@ -4,7 +4,7 @@
 // Created          : 07-13-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-04-2023
+// Last Modified On : 01-06-2023
 // ***********************************************************************
 // <copyright file="InnovationOrganizationTrackOptionRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -106,6 +106,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             query = query.Where(ioto => ioto.AttendeeCollaboratorInnovationOrganizationTracks
                                                 .Where(aciot => !aciot.IsDeleted)
                                                 .Any(aciot => aciot.AttendeeCollaboratorId == attendeeCollaboratorId));
+
+            return query;
+        }
+
+        /// <summary>
+        /// Finds the by groups uids.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="innovationOrganizationTrackOptionGroupsUids">The innovation organization track option groups uids.</param>
+        /// <returns></returns>
+        internal static IQueryable<InnovationOrganizationTrackOption> FindByGroupsUids(this IQueryable<InnovationOrganizationTrackOption> query, IEnumerable<Guid?> innovationOrganizationTrackOptionGroupsUids)
+        {
+            if (innovationOrganizationTrackOptionGroupsUids?.Any(i => i.HasValue) == true)
+            {
+                query = query.Where(ioto => innovationOrganizationTrackOptionGroupsUids.Contains(ioto.InnovationOrganizationTrackOptionGroup.Uid));
+            }
 
             return query;
         }
@@ -257,6 +273,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                             .FindByAttendeeCollaboratorId(attendeeCollaboratorId)
+                            .Order();
+
+            return await query.ToListAsync();
+        }
+
+        /// <summary>
+        /// Finds all by group uids asynchronous.
+        /// </summary>
+        /// <param name="InnovationOrganizationTrackOptionGroupsUids">The innovation organization track option group uids.</param>
+        /// <returns></returns>
+        public async Task<List<InnovationOrganizationTrackOption>> FindAllByGroupsUidsAsync(IEnumerable<Guid?> InnovationOrganizationTrackOptionGroupsUids)
+        {
+            var query = this.GetBaseQuery()
+                            .FindByGroupsUids(InnovationOrganizationTrackOptionGroupsUids)
                             .Order();
 
             return await query.ToListAsync();

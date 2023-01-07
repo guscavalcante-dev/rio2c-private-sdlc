@@ -4,7 +4,7 @@
 // Created          : 08-18-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-30-2022
+// Last Modified On : 01-06-2023
 // ***********************************************************************
 // <copyright file="InnovationOrganizationTrackBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -86,6 +86,19 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.InnovationOrganizationTrackOptionGroupName = dto.InnovationOrganizationTrackOptionGroup?.Name;
 
             this.IsChecked = false;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InnovationOrganizationTrackOptionBaseCommand" /> class.
+        /// </summary>
+        /// <param name="innovationOrganizationTrackOptionGroup">The innovation organization track option group.</param>
+        /// <param name="isChecked">if set to <c>true</c> [is checked].</param>
+        public InnovationOrganizationTrackOptionBaseCommand(InnovationOrganizationTrackOptionGroup innovationOrganizationTrackOptionGroup, bool isChecked)
+        {
+            this.InnovationOrganizationTrackOptionGroupUid = innovationOrganizationTrackOptionGroup?.Uid;
+            this.InnovationOrganizationTrackOptionGroupName = innovationOrganizationTrackOptionGroup?.Name;
+            
+            this.IsChecked = isChecked;
         }
 
         /// <summary>

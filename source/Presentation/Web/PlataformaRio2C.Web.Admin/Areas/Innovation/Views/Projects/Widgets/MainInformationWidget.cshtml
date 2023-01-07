@@ -49,12 +49,18 @@
                                 foreach (var attendeeInnovationOrganizationTrackDto in Model.AttendeeInnovationOrganizationTrackDtos)
                                 {
                                     <span class="kt-badge kt-badge--inline kt-badge--info">
-                                        @(attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOptionGroup.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
-                                        @*@(attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOption.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
-                                            @if (attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOption.HasAdditionalInfo && !string.IsNullOrEmpty(attendeeInnovationOrganizationTrackDto.AttendeeInnovationOrganizationTrack.AdditionalInfo))
+                                        @if (!string.IsNullOrEmpty(attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOptionGroup?.Name))
+                                        {
+                                            @attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOptionGroup.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|');
+                                        }
+                                        else
+                                        {
+                                            @attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOption.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|');
+                                            if (attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOption.HasAdditionalInfo && !string.IsNullOrEmpty(attendeeInnovationOrganizationTrackDto.AttendeeInnovationOrganizationTrack.AdditionalInfo))
                                             {
                                                 @attendeeInnovationOrganizationTrackDto.AttendeeInnovationOrganizationTrack.AdditionalInfo
-                                            }*@
+                                            }
+                                        }
                                     </span>
                                 }
                             }

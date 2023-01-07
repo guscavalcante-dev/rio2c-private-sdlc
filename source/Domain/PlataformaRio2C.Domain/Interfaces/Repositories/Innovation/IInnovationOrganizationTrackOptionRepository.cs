@@ -4,7 +4,7 @@
 // Created          : 07-13-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-04-2023
+// Last Modified On : 01-06-2023
 // ***********************************************************************
 // <copyright file="IInnovationOrganizationTrackOptionRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -31,5 +31,6 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<List<InnovationOrganizationTrackOption>> FindAllByIdsAsync(List<int?> innovationOrganizationTrackOptionIds);
         Task<List<InnovationOrganizationTrackOption>> FindAllByUidsAsync(List<Guid?> innovationOrganizationTrackOptionUids);
         Task<List<InnovationOrganizationTrackOption>> FindAllByAttendeeCollaboratorIdAsync(int attendeeCollaboratorId);
+        Task<List<InnovationOrganizationTrackOption>> FindAllByGroupsUidsAsync(IEnumerable<Guid?> innovationOrganizationTrackOptionGroupsUids);
     }
 }

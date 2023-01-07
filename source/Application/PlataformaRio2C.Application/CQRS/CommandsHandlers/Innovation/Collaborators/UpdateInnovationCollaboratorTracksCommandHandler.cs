@@ -4,7 +4,7 @@
 // Created          : 07-19-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-19-2021
+// Last Modified On : 01-06-2023
 // ***********************************************************************
 // <copyright file="UpdateInnovationCollaboratorTracksCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,10 +29,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IEditionRepository editionRepo;
         private readonly IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateInnovationCollaboratorTracksCommandHandler"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateInnovationCollaboratorTracksCommandHandler"/> class.
+        /// </summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
+        /// <param name="editionRepository">The edition repository.</param>
+        /// <param name="innovationOrganizationTrackOptionRepository">The innovation organization track option repository.</param>
         public UpdateInnovationCollaboratorTracksCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
@@ -66,12 +70,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            var innovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllAsync();
+            var innovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllByGroupsUidsAsync(cmd.AttendeeInnovationOrganizationTrackGroups
+                                                                                                                                    ?.Where(ioto => ioto.IsChecked)
+                                                                                                                                    ?.Select(ioto => ioto.InnovationOrganizationTrackOptionGroupUid));
 
-            collaborator.UpdateAttendeeCollaboratorInnovationOrganizationTracks(
-                edition, 
-                cmd.AttendeeInnovationOrganizationTracks?.Where(aiot => aiot.IsChecked)?.Select(aiot => new AttendeeInnovationOrganizationTrack(innovationOrganizationTrackOptions?.FirstOrDefault(ioto => ioto.Uid == aiot.InnovationOrganizationTrackOptionUid), aiot.AdditionalInfo, cmd.UserId))?.ToList(),
-                cmd.UserId);
+            collaborator.UpdateAttendeeCollaboratorInnovationOrganizationTracks(edition,
+                                                                                innovationOrganizationTrackOptions.Select(ioto => new AttendeeInnovationOrganizationTrack(ioto, string.Empty, cmd.UserId)).ToList(),
+                                                                                cmd.UserId);
+
             if (!collaborator.IsValid())
             {
                 this.AppValidationResult.Add(collaborator.ValidationResult);

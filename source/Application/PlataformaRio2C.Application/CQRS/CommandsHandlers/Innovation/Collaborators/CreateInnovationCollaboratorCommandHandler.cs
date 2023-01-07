@@ -4,7 +4,7 @@
 // Created          : 07-19-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-19-2021
+// Last Modified On : 01-07-2023
 // ***********************************************************************
 // <copyright file="CreateInnovationCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -85,7 +85,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             // Create if the user was not found in database
             if (user == null)
             {
-                var innovationOrganizationTrackOptions = await innovationOrganizationTrackOptionRepo.FindAllAsync();//FindAllByUidsAsync(cmd.InnovationOrganizationTrackOptionsUids);
+                var innovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllByGroupsUidsAsync(cmd.InnovationOrganizationTrackGroups
+                                                                                                                                    ?.Where(ioto => ioto.IsChecked)
+                                                                                                                                    ?.Select(ioto => ioto.InnovationOrganizationTrackOptionGroupUid));
 
                 var collaborator = new Collaborator(
                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
@@ -96,7 +98,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.PhoneNumber,
                     cmd.CellPhone,
                     cmd.Document,
-                    cmd.InnovationOrganizationTrackOptions?.Where(oa => oa.IsChecked)?.Select(aiot => new AttendeeInnovationOrganizationTrack(innovationOrganizationTrackOptions?.FirstOrDefault(ioto => ioto.Uid == aiot.InnovationOrganizationTrackOptionUid), aiot.AdditionalInfo, cmd.UserId))?.ToList(),
+                    innovationOrganizationTrackOptions.Select(ioto => new AttendeeInnovationOrganizationTrack(ioto, string.Empty, cmd.UserId)).ToList(),
                     cmd.UserId);
                 if (!collaborator.IsValid())
                 {
