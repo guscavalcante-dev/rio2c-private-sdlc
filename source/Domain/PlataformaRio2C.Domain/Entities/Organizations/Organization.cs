@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-17-2022
+// Last Modified On : 01-07-2023
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -600,7 +600,6 @@ namespace PlataformaRio2C.Domain.Entities
             bool addressIsManual,
             bool isImageUploaded,
             bool isImageDeleted,
-            bool? isVirtualMeeting,
             List<OrganizationDescription> organizationDescriptions,
             List<OrganizationActivity> organizationActivities,
             List<TargetAudience> targetAudiences,
@@ -611,7 +610,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.Document = document?.Trim();
             this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
-            this.IsVirtualMeeting = isVirtualMeeting;
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
