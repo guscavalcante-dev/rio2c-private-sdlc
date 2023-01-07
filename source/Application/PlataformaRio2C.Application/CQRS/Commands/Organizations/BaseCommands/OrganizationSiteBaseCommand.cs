@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 10-29-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-07-2023
 // ***********************************************************************
 // <copyright file="OrganizationSiteBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -135,6 +135,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdaterBaseDto = entity?.UpdaterDto;
             this.UpdateDate = entity?.UpdateDate;
             this.IsVirtualMeetingRequired = isVirtualMeetingRequired;
+            this.IsVirtualMeeting = entity?.IsVirtualMeeting;
         }
 
         /// <summary>Initializes a new instance of the <see cref="OrganizationSiteBaseCommand"/> class.</summary>

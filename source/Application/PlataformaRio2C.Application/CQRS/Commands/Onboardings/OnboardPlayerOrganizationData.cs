@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-08-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-07-2023
 // ***********************************************************************
 // <copyright file="OnboardPlayerOrganizationData.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,10 +13,8 @@
 // ***********************************************************************
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {

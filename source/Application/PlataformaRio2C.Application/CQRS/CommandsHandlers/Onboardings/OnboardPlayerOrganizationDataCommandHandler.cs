@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-06-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-07-2023
 // ***********************************************************************
 // <copyright file="OnboardPlayerOrganizationDataCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -113,7 +113,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 true, //TODO: get AddressIsManual from form
                 cmd.CropperImage?.ImageFile != null,
                 cmd.CropperImage?.IsImageDeleted == true,
-                cmd.IsVirtualMeeting,
                 cmd.Descriptions?.Select(d => new OrganizationDescription(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.OrganizationActivities?.Where(oa => oa.IsChecked)?.Select(oa => new OrganizationActivity(activities?.FirstOrDefault(a => a.Uid == oa.ActivityUid), oa.AdditionalInfo, cmd.UserId))?.ToList(),
                 cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<TargetAudience>(),
