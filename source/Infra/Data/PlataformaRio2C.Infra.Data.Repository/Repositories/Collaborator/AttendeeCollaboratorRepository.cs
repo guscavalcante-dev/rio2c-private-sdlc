@@ -508,7 +508,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                         .Select(aciot => new AttendeeCollaboratorInnovationOrganizationTrackDto
                                                                                         {
                                                                                             AttendeeCollaborator = aciot.AttendeeCollaborator,
-                                                                                            InnovationOrganizationTrackOption = aciot.InnovationOrganizationTrackOption
+                                                                                            InnovationOrganizationTrackOption = aciot.InnovationOrganizationTrackOption,
+                                                                                            InnovationOrganizationTrackOptionGroup = aciot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup
                                                                                         }).ToList()
                             })
                             .FirstOrDefaultAsync();

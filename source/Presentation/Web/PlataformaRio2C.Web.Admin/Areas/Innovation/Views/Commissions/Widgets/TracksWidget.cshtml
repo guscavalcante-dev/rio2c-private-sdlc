@@ -8,7 +8,7 @@
 <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
         <h3 class="kt-portlet__head-title">
-            @Labels.VerticalsAndCreativeEconomyThemes
+            @Labels.Verticals
         </h3>
     </div>
     <div class="kt-portlet__head-toolbar">
@@ -29,10 +29,23 @@
                 if (!string.IsNullOrEmpty(trackOptionGroupDto?.InnovationOrganizationTrackOptionGroup?.Name))
                 {
                     <!-- Has group -->
-                    <div class="kt-widget4__item pt-2 pb-2" style="align-items: flex-start;">
+                    <div class="kt-widget4__item" style="align-items: flex-start;">
+                        @{var attendeeInnovationOrganizationTrackDto = Model.GetAttendeeCollaboratorInnovationOrganizationTrackDtoByTrackOptionGroupUid(trackOptionGroupDto.InnovationOrganizationTrackOptionGroup.Uid);}
+                        @if (attendeeInnovationOrganizationTrackDto != null)
+                        {
+                            <div class="kt-widget4__pic kt-font-success">
+                                <i class="la la-check"></i>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="kt-widget4__pic kt-font-danger">
+                                <i class="la la-close"></i>
+                            </div>
+                        }
                         <div class="kt-widget4__info">
                             <span class="kt-widget4__title">@(trackOptionGroupDto?.InnovationOrganizationTrackOptionGroup?.Name)</span>
-                            <div class="row ml-0">
+                            @*<div class="row ml-0">
                                 @foreach (var innovationOrganizationTrackOption in trackOptionGroupDto.InnovationOrganizationTrackOptions.OrderBy(ioto => ioto.DisplayOrder))
                                 {
                                     <div class="align-content-between mr-3">
@@ -48,7 +61,7 @@
                                         @(innovationOrganizationTrackOption.GetNameTranslation(CultureInfo.CurrentCulture.ToString()))
                                     </div>
                                 }
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                     <!-- Has group -->
