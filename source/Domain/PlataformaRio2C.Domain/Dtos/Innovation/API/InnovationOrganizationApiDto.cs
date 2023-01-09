@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 28-06-2021
 //
-// Last Modified By : Rafael Franco
-// Last Modified On : 09-10-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-09-2023
 // ***********************************************************************
 // <copyright file="InnovationOrganizationApiDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
@@ -19,6 +20,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -133,10 +135,8 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonProperty("companyExperiences")]
         public List<InnovationOrganizationExperienceOptionApiDto> InnovationOrganizationExperienceOptionApiDtos { get; set; }
 
-        // "OrganizationTracks" was changed to "OrganizationVerticalsAndCreativeEconomyThemes" by customer request.
-        // Original Documentation: Enquadre seu produto ou serviço em uma das verticais e temas da economia criativa abaixo*
         [JsonRequired]
-        [JsonProperty("organizationVerticalsAndCreativeEconomyThemes")]
+        [JsonProperty("organizationVerticalsAndCreativeEconomyThemes")] // "OrganizationTracks" was changed to "OrganizationVerticalsAndCreativeEconomyThemes" by customer request.
         public List<InnovationOrganizationTrackOptionApiDto> InnovationOrganizationTrackOptionApiDtos { get; set; }
 
         [JsonProperty("technologyExperiences")]
@@ -180,6 +180,8 @@ namespace PlataformaRio2C.Domain.Dtos
         /// </summary>
         private void ValidateFieldsRequired()
         {
+            #region Validate Fields
+
             if (this.Name == null || this.Name?.Length == 0)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(Name)), new string[] { nameof(Name) }));
@@ -255,36 +257,77 @@ namespace PlataformaRio2C.Domain.Dtos
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(PresentationFile)), new string[] { nameof(PresentationFile) }));
             }
 
-            if (this.AttendeeInnovationOrganizationFounderApiDtos?.Count == 0)
+            #endregion
+
+            #region Validate Lists
+
+            if (this.AttendeeInnovationOrganizationFounderApiDtos == null || 
+                !this.AttendeeInnovationOrganizationFounderApiDtos.Any())
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, "founders"), new string[] { "founders" }));
             }
 
-            if (this.AttendeeInnovationOrganizationCompetitorApiDtos?.Count == 0)
+            if (this.AttendeeInnovationOrganizationCompetitorApiDtos == null || 
+                !this.AttendeeInnovationOrganizationCompetitorApiDtos.Any())
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, "competingCompanies"), new string[] { "competingCompanies" }));
             }
 
-            if (this.AttendeeInnovationOrganizationFounderApiDtos?.Count > 0)
+            if (this.InnovationOrganizationExperienceOptionApiDtos == null || 
+                !this.InnovationOrganizationExperienceOptionApiDtos.Any())
             {
-                foreach (var founder in this.AttendeeInnovationOrganizationFounderApiDtos)
-                {
-                    if (founder.Curriculum == null || founder.Curriculum?.Length == 0)
-                    {
-                        this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(founder.Curriculum)), new string[] { nameof(founder.Curriculum) }));
-                    }
-
-                    if (founder.FullName == null || founder.FullName?.Length == 0)
-                    {
-                        this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(founder.FullName)), new string[] { nameof(founder.FullName) }));
-                    }
-
-                    if (founder.WorkDedicationUid == null || founder.WorkDedicationUid == Guid.Empty)
-                    {
-                        this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(founder.WorkDedicationUid)), new string[] { nameof(founder.WorkDedicationUid) }));
-                    }
-                }
+                //Actually isn't required
+                //this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, "companyExperiences"), new string[] { "companyExperiences" }));
             }
+
+            if (this.InnovationOrganizationTrackOptionApiDtos == null || 
+                !this.InnovationOrganizationTrackOptionApiDtos.Any())
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, "organizationVerticalsAndCreativeEconomyThemes"), new string[] { "organizationVerticalsAndCreativeEconomyThemes" }));
+            }
+
+            if (this.InnovationOrganizationTechnologyOptionApiDtos == null || 
+                !this.InnovationOrganizationTechnologyOptionApiDtos.Any())
+            {
+                //Actually isn't required
+                //this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, "technologyExperiences"), new string[] { "technologyExperiences" }));
+            }
+
+            if (this.InnovationOrganizationObjectivesOptionApiDtos == null || 
+                !this.InnovationOrganizationObjectivesOptionApiDtos.Any())
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, "companyObjectives"), new string[] { "companyObjectives" }));
+            }
+
+            if (this.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos == null || 
+                !this.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos.Any())
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, "sustainableDevelopmentObjectives"), new string[] { "sustainableDevelopmentObjectives" }));
+            }
+
+            #endregion
+
+            #region Validate Childs
+
+            foreach (var attendeeInnovationOrganizationFounderApiDto in this.AttendeeInnovationOrganizationFounderApiDtos.Where(i => !i.IsValid()))
+            {
+                attendeeInnovationOrganizationFounderApiDto.ValidationResult.AddErrorsPrefixMessage(
+                    string.Format("{0}[{1}]", this.GetJsonPropertyAttributeName(nameof(AttendeeInnovationOrganizationFounderApiDtos)),
+                                               this.AttendeeInnovationOrganizationFounderApiDtos.IndexOf(attendeeInnovationOrganizationFounderApiDto)));
+
+                this.ValidationResult.Add(attendeeInnovationOrganizationFounderApiDto.ValidationResult);
+            }
+
+            foreach (var innovationOrganizationTrackOptionApiDto in this.InnovationOrganizationTrackOptionApiDtos.Where(i => !i.IsValid()))
+            {
+                innovationOrganizationTrackOptionApiDto.ValidationResult.AddErrorsPrefixMessage(
+                    string.Format("{0}[{1}]", this.GetJsonPropertyAttributeName(nameof(InnovationOrganizationTrackOptionApiDtos)),
+                                               this.InnovationOrganizationTrackOptionApiDtos.IndexOf(innovationOrganizationTrackOptionApiDto)));
+
+                this.ValidationResult.Add(innovationOrganizationTrackOptionApiDto.ValidationResult);
+            }
+
+            #endregion
         }
 
         /// <summary>
@@ -308,6 +351,9 @@ namespace PlataformaRio2C.Domain.Dtos
             }
         }
 
+        /// <summary>
+        /// Validates the when would you like participate business round.
+        /// </summary>
         private void ValidateWhenWouldYouLikeParticipateBusinessRound()
         {
             if(this.WouldYouLikeParticipateBusinessRound)
@@ -322,6 +368,18 @@ namespace PlataformaRio2C.Domain.Dtos
                     this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(BusinessFoundationYear)), new string[] { nameof(BusinessFoundationYear) }));
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets the name of the json property attribute.
+        /// </summary>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <returns></returns>
+        private string GetJsonPropertyAttributeName(string propertyName)
+        {
+            return typeof(InnovationOrganizationApiDto)
+                    .GetProperty(propertyName)?
+                    .GetCustomAttribute<JsonPropertyAttribute>()?.PropertyName;
         }
 
         #endregion

@@ -44,5 +44,10 @@ namespace PlataformaRio2C.Domain.Validation
                 _erros.Remove(error);
             return this;
         }
+
+        public void AddErrorsPrefixMessage(string prefixMessage)
+        {
+            _erros.ForEach(e => e.Message = $@"{prefixMessage}: {e.Message}");
+        }
     }
 }

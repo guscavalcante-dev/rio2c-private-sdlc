@@ -4,7 +4,7 @@
 // Created          : 06-29-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-28-2022
+// Last Modified On : 01-09-2023
 // ***********************************************************************
 // <copyright file="AttendeeInnovationOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -644,7 +644,7 @@ namespace PlataformaRio2C.Domain.Entities
                 this.AttendeeInnovationOrganizationTracks = new List<AttendeeInnovationOrganizationTrack>();
             }
 
-            var attendeeInnovationOrganizationTrackDb = this.AttendeeInnovationOrganizationTracks.FirstOrDefault(aoc => aoc.Uid == innovationOrganizationTrackOption.Uid);
+            var attendeeInnovationOrganizationTrackDb = this.AttendeeInnovationOrganizationTracks.FirstOrDefault(aoc => aoc.Uid == innovationOrganizationTrackOption?.Uid);
             if (attendeeInnovationOrganizationTrackDb != null)
             {
                 attendeeInnovationOrganizationTrackDb.Update(
