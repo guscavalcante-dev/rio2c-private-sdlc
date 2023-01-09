@@ -37,19 +37,19 @@ namespace PlataformaRio2C.Domain.Dtos
 
         [JsonRequired]
         [JsonProperty("name")]
-        public string Name { get; set; } 
+        public string Name { get; set; }
 
         [JsonRequired]
         [JsonProperty("document")]
-        public string Document { get; set; } 
+        public string Document { get; set; }
 
         [JsonRequired]
         [JsonProperty("serviceName")]
-        public string ServiceName { get; set; } 
+        public string ServiceName { get; set; }
 
         [JsonRequired]
         [JsonProperty("responsibleName")]
-        public string ResponsibleName { get; set; } 
+        public string ResponsibleName { get; set; }
 
         [JsonRequired]
         [JsonProperty("email")]
@@ -89,7 +89,7 @@ namespace PlataformaRio2C.Domain.Dtos
 
         [JsonRequired]
         [JsonProperty("wouldYouLikeParticipateBusinessRound", Order = 100)]
-        public bool WouldYouLikeParticipateBusinessRound { get;  set; }
+        public bool WouldYouLikeParticipateBusinessRound { get; set; }
 
         [JsonProperty("accumulatedRevenueForLastTwelveMonths", Order = 101)]
         public decimal? AccumulatedRevenueForLastTwelveMonths { get; set; }
@@ -261,45 +261,45 @@ namespace PlataformaRio2C.Domain.Dtos
 
             #region Validate Lists
 
-            if (this.AttendeeInnovationOrganizationFounderApiDtos == null || 
+            if (this.AttendeeInnovationOrganizationFounderApiDtos == null ||
                 !this.AttendeeInnovationOrganizationFounderApiDtos.Any())
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, "founders"), new string[] { "founders" }));
             }
 
-            if (this.AttendeeInnovationOrganizationCompetitorApiDtos == null || 
+            if (this.AttendeeInnovationOrganizationCompetitorApiDtos == null ||
                 !this.AttendeeInnovationOrganizationCompetitorApiDtos.Any())
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, "competingCompanies"), new string[] { "competingCompanies" }));
             }
 
-            if (this.InnovationOrganizationExperienceOptionApiDtos == null || 
+            if (this.InnovationOrganizationExperienceOptionApiDtos == null ||
                 !this.InnovationOrganizationExperienceOptionApiDtos.Any())
             {
                 //Actually isn't required
                 //this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, "companyExperiences"), new string[] { "companyExperiences" }));
             }
 
-            if (this.InnovationOrganizationTrackOptionApiDtos == null || 
+            if (this.InnovationOrganizationTrackOptionApiDtos == null ||
                 !this.InnovationOrganizationTrackOptionApiDtos.Any())
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, "organizationVerticalsAndCreativeEconomyThemes"), new string[] { "organizationVerticalsAndCreativeEconomyThemes" }));
             }
 
-            if (this.InnovationOrganizationTechnologyOptionApiDtos == null || 
+            if (this.InnovationOrganizationTechnologyOptionApiDtos == null ||
                 !this.InnovationOrganizationTechnologyOptionApiDtos.Any())
             {
                 //Actually isn't required
                 //this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, "technologyExperiences"), new string[] { "technologyExperiences" }));
             }
 
-            if (this.InnovationOrganizationObjectivesOptionApiDtos == null || 
+            if (this.InnovationOrganizationObjectivesOptionApiDtos == null ||
                 !this.InnovationOrganizationObjectivesOptionApiDtos.Any())
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, "companyObjectives"), new string[] { "companyObjectives" }));
             }
 
-            if (this.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos == null || 
+            if (this.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos == null ||
                 !this.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos.Any())
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, "sustainableDevelopmentObjectives"), new string[] { "sustainableDevelopmentObjectives" }));
@@ -309,22 +309,28 @@ namespace PlataformaRio2C.Domain.Dtos
 
             #region Validate Childs
 
-            foreach (var attendeeInnovationOrganizationFounderApiDto in this.AttendeeInnovationOrganizationFounderApiDtos.Where(i => !i.IsValid()))
+            if (this.AttendeeInnovationOrganizationFounderApiDtos?.Any() == true)
             {
-                attendeeInnovationOrganizationFounderApiDto.ValidationResult.AddErrorsPrefixMessage(
-                    string.Format("{0}[{1}]", this.GetJsonPropertyAttributeName(nameof(AttendeeInnovationOrganizationFounderApiDtos)),
-                                               this.AttendeeInnovationOrganizationFounderApiDtos.IndexOf(attendeeInnovationOrganizationFounderApiDto)));
+                foreach (var attendeeInnovationOrganizationFounderApiDto in this.AttendeeInnovationOrganizationFounderApiDtos.Where(i => !i.IsValid()))
+                {
+                    attendeeInnovationOrganizationFounderApiDto.ValidationResult.AddErrorsPrefixMessage(
+                        string.Format("{0}[{1}]", this.GetJsonPropertyAttributeName(nameof(AttendeeInnovationOrganizationFounderApiDtos)),
+                                                   this.AttendeeInnovationOrganizationFounderApiDtos.IndexOf(attendeeInnovationOrganizationFounderApiDto)));
 
-                this.ValidationResult.Add(attendeeInnovationOrganizationFounderApiDto.ValidationResult);
+                    this.ValidationResult.Add(attendeeInnovationOrganizationFounderApiDto.ValidationResult);
+                }
             }
 
-            foreach (var innovationOrganizationTrackOptionApiDto in this.InnovationOrganizationTrackOptionApiDtos.Where(i => !i.IsValid()))
+            if (this.InnovationOrganizationTrackOptionApiDtos?.Any() == true)
             {
-                innovationOrganizationTrackOptionApiDto.ValidationResult.AddErrorsPrefixMessage(
-                    string.Format("{0}[{1}]", this.GetJsonPropertyAttributeName(nameof(InnovationOrganizationTrackOptionApiDtos)),
-                                               this.InnovationOrganizationTrackOptionApiDtos.IndexOf(innovationOrganizationTrackOptionApiDto)));
+                foreach (var innovationOrganizationTrackOptionApiDto in this.InnovationOrganizationTrackOptionApiDtos.Where(i => !i.IsValid()))
+                {
+                    innovationOrganizationTrackOptionApiDto.ValidationResult.AddErrorsPrefixMessage(
+                        string.Format("{0}[{1}]", this.GetJsonPropertyAttributeName(nameof(InnovationOrganizationTrackOptionApiDtos)),
+                                                   this.InnovationOrganizationTrackOptionApiDtos.IndexOf(innovationOrganizationTrackOptionApiDto)));
 
-                this.ValidationResult.Add(innovationOrganizationTrackOptionApiDto.ValidationResult);
+                    this.ValidationResult.Add(innovationOrganizationTrackOptionApiDto.ValidationResult);
+                }
             }
 
             #endregion
@@ -356,9 +362,9 @@ namespace PlataformaRio2C.Domain.Dtos
         /// </summary>
         private void ValidateWhenWouldYouLikeParticipateBusinessRound()
         {
-            if(this.WouldYouLikeParticipateBusinessRound)
+            if (this.WouldYouLikeParticipateBusinessRound)
             {
-                if(!this.AccumulatedRevenueForLastTwelveMonths.HasValue)
+                if (!this.AccumulatedRevenueForLastTwelveMonths.HasValue)
                 {
                     this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(AccumulatedRevenueForLastTwelveMonths)), new string[] { nameof(AccumulatedRevenueForLastTwelveMonths) }));
                 }
