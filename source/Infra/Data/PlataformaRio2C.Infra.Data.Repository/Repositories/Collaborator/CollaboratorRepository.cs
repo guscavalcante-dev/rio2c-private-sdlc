@@ -79,7 +79,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<Collaborator> FindByEmail(this IQueryable<Collaborator> query, string email)
         {
-            query = query.Where(c => c.PublicEmail == email);
+            query = query.Where(c => c.User.Email == email);
 
             return query;
         }
