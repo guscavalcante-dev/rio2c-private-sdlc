@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-04-2023
+// Last Modified On : 01-10-2023
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -380,12 +380,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="query">The query.</param>
         /// <param name="innovationOrganizationTrackUids">The attendee innovation organization track uids.</param>
         /// <returns></returns>
-        internal static IQueryable<Collaborator> FindByInnovationOrganizationTrackOptionsUids(this IQueryable<Collaborator> query, List<Guid?> innovationOrganizationTrackUids)
+        internal static IQueryable<Collaborator> FindByInnovationOrganizationTrackOptionsUids(this IQueryable<Collaborator> query, int editionId, List<Guid?> innovationOrganizationTrackUids)
         {
             if (innovationOrganizationTrackUids?.Any(aiotUid => aiotUid != null) == true)
             {
                 query = query.Where(c => innovationOrganizationTrackUids.Any(iotUid =>
-                                            c.AttendeeCollaborators.Any(ac =>
+                                            c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId &&
                                                 ac.AttendeeCollaboratorInnovationOrganizationTracks.Any(aciot => aciot.InnovationOrganizationTrackOption.Uid == iotUid && !aciot.IsDeleted))));
             }
 
@@ -398,13 +398,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="query">The query.</param>
         /// <param name="innovationOrganizationTrackOptionGroupUids">The innovation organization track option group uids.</param>
         /// <returns></returns>
-        internal static IQueryable<Collaborator> FindByInnovationOrganizationTrackOptionsGroupsUids(this IQueryable<Collaborator> query, List<Guid?> innovationOrganizationTrackOptionGroupUids)
+        internal static IQueryable<Collaborator> FindByInnovationOrganizationTrackOptionsGroupsUids(this IQueryable<Collaborator> query, int? editionId, List<Guid?> innovationOrganizationTrackOptionGroupUids)
         {
             if (innovationOrganizationTrackOptionGroupUids?.Any(aiotgUid => aiotgUid != null) == true)
             {
                 query = query.Where(c => innovationOrganizationTrackOptionGroupUids.Any(iotgUid =>
-                                            c.AttendeeCollaborators.Any(ac =>
-                                                ac.AttendeeCollaboratorInnovationOrganizationTracks.Any(aciotg => aciotg.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup.Uid == iotgUid && !aciotg.IsDeleted))));
+                                            c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId && 
+                                                ac.AttendeeCollaboratorInnovationOrganizationTracks.Any(aciot => aciot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup.Uid == iotgUid && !aciot.IsDeleted))));
             }
 
             return query;
@@ -1236,7 +1236,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByKeywords(keywords, editionId)
                                 .FindByUids(collaboratorsUids)
                                 .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, showAllEditions, showAllParticipants, editionId)
-                                .FindByInnovationOrganizationTrackOptionsGroupsUids(innovationOrganizationTrackOptionGroupsUids)
+                                .FindByInnovationOrganizationTrackOptionsGroupsUids(editionId, innovationOrganizationTrackOptionGroupsUids)
                                 .FindByHighlights(collaboratorTypeNames, showHighlights);
 
             return await query
@@ -1269,8 +1269,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                                                 && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
                                                                                                                                                                            && collaboratorTypeNames.Contains(act.CollaboratorType.Name))) :
                                                                                    null,
-                                IsInOtherEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId
-                                                                                                           && !ac.IsDeleted),
+                                IsInOtherEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId && !ac.IsDeleted),
                                 AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
                                                                     .Where(at => !at.IsDeleted && at.EditionId == editionId)
                                                                     .SelectMany(at => at.AttendeeOrganizationCollaborators
@@ -1289,7 +1288,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                     IsVirtualMeeting = aoc.AttendeeOrganization.Organization.IsVirtualMeeting
                                                                                                 }
                                                                                             })),
-
+                                InnovationOrganizationTrackOptionGroupDtos = c.AttendeeCollaborators
+                                                                                .Where(at => !at.IsDeleted && at.EditionId == editionId)
+                                                                                .SelectMany(ac => ac.AttendeeCollaboratorInnovationOrganizationTracks
+                                                                                                        .Where(aciot => !aciot.IsDeleted && aciot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroupId != null)
+                                                                                                        .GroupBy(aciot => aciot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup.Name)
+                                                                                                        .Select(aciot => new InnovationOrganizationTrackOptionGroupDto
+                                                                                                        {
+                                                                                                            GroupName = aciot.Key
+                                                                                                        })),
                                 JobTitle = c.JobTitles.FirstOrDefault(jb => !jb.IsDeleted && jb.CollaboratorId == c.Id).Value
                             })
                             .ToListPagedAsync(page, pageSize);
