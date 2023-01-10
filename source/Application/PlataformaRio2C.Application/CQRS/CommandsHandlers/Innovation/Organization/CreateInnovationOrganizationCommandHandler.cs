@@ -123,63 +123,18 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             if (existentAttendeeInnovationOrganization != null)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.Startup, Labels.Document, cmd.Document), new string[] { "ToastrError" }));
-            }
-
-            if (!this.ValidationResult.IsValid)
-            {
                 this.AppValidationResult.Add(this.ValidationResult);
                 return this.AppValidationResult;
             }
 
+            var listsValidationResult = this.UpdateListsAndValidate(cmd);
+            if (!listsValidationResult.IsValid)
+            {
+                this.AppValidationResult.Add(listsValidationResult);
+                return this.AppValidationResult;
+            }
+
             #endregion
-
-            cmd.InnovationOrganizationExperienceOptionApiDtos = cmd.InnovationOrganizationExperienceOptionApiDtos?.Select(ta =>
-                                                                    new InnovationOrganizationExperienceOptionApiDto()
-                                                                    {
-                                                                        Uid = ta.Uid,
-                                                                        AdditionalInfo = ta.AdditionalInfo,
-                                                                        InnovationOrganizationExperienceOption = this.innovationOrganizationExperienceOptionRepo.FindByUid(ta.Uid)
-                                                                    }).ToList();
-
-            cmd.InnovationOrganizationTrackOptionApiDtos = cmd.InnovationOrganizationTrackOptionApiDtos?.Select(ta =>
-                                                                new InnovationOrganizationTrackOptionApiDto()
-                                                                {
-                                                                    Uid = ta.Uid,
-                                                                    AdditionalInfo = ta.AdditionalInfo,
-                                                                    InnovationOrganizationTrackOption = this.innovationOrganizationTrackOptionRepo.FindByUid(ta.Uid ?? Guid.Empty)
-                                                                }).ToList();
-
-            cmd.InnovationOrganizationObjectivesOptionApiDtos = cmd.InnovationOrganizationObjectivesOptionApiDtos?.Select(ta =>
-                                                                   new InnovationOrganizationObjectivesOptionApiDto()
-                                                                   {
-                                                                       Uid = ta.Uid,
-                                                                       AdditionalInfo = ta.AdditionalInfo,
-                                                                       InnovationOrganizationObjectivesOption = this.innovationOrganizationObjectivesOptionRepo.FindByUid(ta.Uid)
-                                                                   }).ToList();
-
-            cmd.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos = cmd.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos?.Select(ta =>
-                                                                   new InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto()
-                                                                   {
-                                                                       Uid = ta.Uid,
-                                                                       AdditionalInfo = ta.AdditionalInfo,
-                                                                       InnovationOrganizationSustainableDevelopmentObjectivesOption = this.innovationOrganizationSustainableDevelopmentObjectivesOptionRepo.FindByUid(ta.Uid)
-                                                                   }).ToList();
-
-            cmd.InnovationOrganizationTechnologyOptionApiDtos = cmd.InnovationOrganizationTechnologyOptionApiDtos?.Select(ta =>
-                                                                    new InnovationOrganizationTechnologyOptionApiDto()
-                                                                    {
-                                                                        Uid = ta.Uid,
-                                                                        AdditionalInfo = ta.AdditionalInfo,
-                                                                        InnovationOrganizationTechnologyOption = this.innovationOrganizationTechnologyOptionRepo.FindByUid(ta.Uid)
-                                                                    }).ToList();
-
-            cmd.AttendeeInnovationOrganizationFounderApiDtos = cmd.AttendeeInnovationOrganizationFounderApiDtos?.Select(ta =>
-                                                                    new AttendeeInnovationOrganizationFounderApiDto()
-                                                                    {
-                                                                        Curriculum = ta.Curriculum,
-                                                                        FullName = ta.FullName,
-                                                                        WorkDedication = this.workDedicationRepo.FindByUid(ta.WorkDedicationUid)
-                                                                    }).ToList();
 
             var collaboratorDto = await collaboratorRepo.FindByEmailAsync(cmd.Email, editionDto.Id);
             if (collaboratorDto == null)
@@ -388,6 +343,139 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             return this.AppValidationResult;
+        }
+
+        private ValidationResult UpdateListsAndValidate(CreateInnovationOrganization cmd)
+        {
+            ValidationResult validationResult = new ValidationResult();
+
+            // ---------------------------------------------------
+            // InnovationOrganizationExperienceOptionApiDtos
+            // ---------------------------------------------------
+            cmd.InnovationOrganizationExperienceOptionApiDtos = cmd.InnovationOrganizationExperienceOptionApiDtos?.Select(dto =>
+                                                                    new InnovationOrganizationExperienceOptionApiDto()
+                                                                    {
+                                                                        Uid = dto.Uid,
+                                                                        AdditionalInfo = dto.AdditionalInfo,
+                                                                        InnovationOrganizationExperienceOption = this.innovationOrganizationExperienceOptionRepo.FindByUid(dto.Uid)
+                                                                    }).ToList();
+
+            if (cmd.InnovationOrganizationExperienceOptionApiDtos.Any(dto => dto.InnovationOrganizationExperienceOption == null))
+            {
+                var uidsNotFound = cmd.InnovationOrganizationExperienceOptionApiDtos.Where(dto => dto.InnovationOrganizationExperienceOption == null).Select(dto => dto.Uid);
+
+                validationResult.Add(new ValidationError(string.Format(
+                    Messages.EntityNotAction,
+                    $@"{InnovationOrganizationApiDto.GetJsonPropertyAttributeName(nameof(InnovationOrganizationApiDto.InnovationOrganizationExperienceOptionApiDtos))}: {string.Join(", ", uidsNotFound)}",
+                    Labels.FoundM)));
+            }
+
+            // ---------------------------------------------------
+            // InnovationOrganizationTrackOptionApiDtos
+            // ---------------------------------------------------
+            cmd.InnovationOrganizationTrackOptionApiDtos = cmd.InnovationOrganizationTrackOptionApiDtos?.Select(dto =>
+                                                                new InnovationOrganizationTrackOptionApiDto()
+                                                                {
+                                                                    Uid = dto.Uid,
+                                                                    AdditionalInfo = dto.AdditionalInfo,
+                                                                    InnovationOrganizationTrackOption = this.innovationOrganizationTrackOptionRepo.FindByUid(dto.Uid ?? Guid.Empty)
+                                                                }).ToList();
+
+            if (cmd.InnovationOrganizationTrackOptionApiDtos.Any(dto => dto.InnovationOrganizationTrackOption == null))
+            {
+                var uidsNotFound = cmd.InnovationOrganizationTrackOptionApiDtos.Where(dto => dto.InnovationOrganizationTrackOption == null).Select(dto => dto.Uid);
+
+                validationResult.Add(new ValidationError(string.Format(
+                    Messages.EntityNotAction,
+                    $@"{InnovationOrganizationApiDto.GetJsonPropertyAttributeName(nameof(InnovationOrganizationApiDto.InnovationOrganizationTrackOptionApiDtos))}: {string.Join(", ", uidsNotFound)}",
+                    Labels.FoundM)));
+            }
+
+            // ---------------------------------------------------
+            // InnovationOrganizationObjectivesOptionApiDtos 
+            // ---------------------------------------------------
+            cmd.InnovationOrganizationObjectivesOptionApiDtos = cmd.InnovationOrganizationObjectivesOptionApiDtos?.Select(dto =>
+                                                                   new InnovationOrganizationObjectivesOptionApiDto()
+                                                                   {
+                                                                       Uid = dto.Uid,
+                                                                       AdditionalInfo = dto.AdditionalInfo,
+                                                                       InnovationOrganizationObjectivesOption = this.innovationOrganizationObjectivesOptionRepo.FindByUid(dto.Uid)
+                                                                   }).ToList();
+
+            if (cmd.InnovationOrganizationObjectivesOptionApiDtos.Any(dto => dto.InnovationOrganizationObjectivesOption == null))
+            {
+                var uidsNotFound = cmd.InnovationOrganizationObjectivesOptionApiDtos.Where(dto => dto.InnovationOrganizationObjectivesOption == null).Select(dto => dto.Uid);
+
+                validationResult.Add(new ValidationError(string.Format(
+                    Messages.EntityNotAction,
+                    $@"{InnovationOrganizationApiDto.GetJsonPropertyAttributeName(nameof(InnovationOrganizationApiDto.InnovationOrganizationObjectivesOptionApiDtos))}: {string.Join(", ", uidsNotFound)}",
+                    Labels.FoundM)));
+            }
+
+            // --------------------------------------------------------------------
+            // InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos 
+            // --------------------------------------------------------------------
+            cmd.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos = cmd.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos?.Select(dto =>
+                                                                   new InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto()
+                                                                   {
+                                                                       Uid = dto.Uid,
+                                                                       AdditionalInfo = dto.AdditionalInfo,
+                                                                       InnovationOrganizationSustainableDevelopmentObjectivesOption = this.innovationOrganizationSustainableDevelopmentObjectivesOptionRepo.FindByUid(dto.Uid)
+                                                                   }).ToList();
+
+            if (cmd.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos.Any(dto => dto.InnovationOrganizationSustainableDevelopmentObjectivesOption == null))
+            {
+                var uidsNotFound = cmd.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos.Where(dto => dto.InnovationOrganizationSustainableDevelopmentObjectivesOption == null).Select(dto => dto.Uid);
+
+                validationResult.Add(new ValidationError(string.Format(
+                    Messages.EntityNotAction,
+                    $@"{InnovationOrganizationApiDto.GetJsonPropertyAttributeName(nameof(InnovationOrganizationApiDto.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos))}: {string.Join(", ", uidsNotFound)}",
+                    Labels.FoundM)));
+            }
+
+            // ---------------------------------------------------
+            // InnovationOrganizationTechnologyOptionApiDtos
+            // ---------------------------------------------------
+            cmd.InnovationOrganizationTechnologyOptionApiDtos = cmd.InnovationOrganizationTechnologyOptionApiDtos?.Select(dto =>
+                                                                    new InnovationOrganizationTechnologyOptionApiDto()
+                                                                    {
+                                                                        Uid = dto.Uid,
+                                                                        AdditionalInfo = dto.AdditionalInfo,
+                                                                        InnovationOrganizationTechnologyOption = this.innovationOrganizationTechnologyOptionRepo.FindByUid(dto.Uid)
+                                                                    }).ToList();
+
+            if (cmd.InnovationOrganizationTechnologyOptionApiDtos.Any(dto => dto.InnovationOrganizationTechnologyOption == null))
+            {
+                var uidsNotFound = cmd.InnovationOrganizationTechnologyOptionApiDtos.Where(dto => dto.InnovationOrganizationTechnologyOption == null).Select(dto => dto.Uid);
+
+                validationResult.Add(new ValidationError(string.Format(
+                    Messages.EntityNotAction,
+                    $@"{InnovationOrganizationApiDto.GetJsonPropertyAttributeName(nameof(InnovationOrganizationApiDto.InnovationOrganizationTechnologyOptionApiDtos))}: {string.Join(", ", uidsNotFound)}",
+                    Labels.FoundM)));
+            }
+
+            // ---------------------------------------------------
+            // AttendeeInnovationOrganizationFounderApiDtos
+            // ---------------------------------------------------
+            cmd.AttendeeInnovationOrganizationFounderApiDtos = cmd.AttendeeInnovationOrganizationFounderApiDtos?.Select(dto =>
+                                                                    new AttendeeInnovationOrganizationFounderApiDto()
+                                                                    {
+                                                                        Curriculum = dto.Curriculum,
+                                                                        FullName = dto.FullName,
+                                                                        WorkDedication = this.workDedicationRepo.FindByUid(dto.WorkDedicationUid)
+                                                                    }).ToList();
+
+            if (cmd.AttendeeInnovationOrganizationFounderApiDtos.Any(dto => dto.WorkDedication == null))
+            {
+                var uidsNotFound = cmd.AttendeeInnovationOrganizationFounderApiDtos.Where(dto => dto.WorkDedication == null).Select(dto => dto.WorkDedicationUid);
+
+                validationResult.Add(new ValidationError(string.Format(
+                    Messages.EntityNotAction,
+                    $@"{Labels.WorkDedication}: {string.Join(", ", uidsNotFound)}",
+                    Labels.FoundM)));
+            }
+
+            return validationResult;
         }
     }
 }

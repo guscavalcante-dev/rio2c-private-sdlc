@@ -314,7 +314,7 @@ namespace PlataformaRio2C.Domain.Dtos
                 foreach (var attendeeInnovationOrganizationFounderApiDto in this.AttendeeInnovationOrganizationFounderApiDtos.Where(i => !i.IsValid()))
                 {
                     attendeeInnovationOrganizationFounderApiDto.ValidationResult.AddErrorsPrefixMessage(
-                        string.Format("{0}[{1}]", this.GetJsonPropertyAttributeName(nameof(AttendeeInnovationOrganizationFounderApiDtos)),
+                        string.Format("{0}[{1}]", GetJsonPropertyAttributeName(nameof(AttendeeInnovationOrganizationFounderApiDtos)),
                                                    this.AttendeeInnovationOrganizationFounderApiDtos.IndexOf(attendeeInnovationOrganizationFounderApiDto)));
 
                     this.ValidationResult.Add(attendeeInnovationOrganizationFounderApiDto.ValidationResult);
@@ -326,7 +326,7 @@ namespace PlataformaRio2C.Domain.Dtos
                 foreach (var innovationOrganizationTrackOptionApiDto in this.InnovationOrganizationTrackOptionApiDtos.Where(i => !i.IsValid()))
                 {
                     innovationOrganizationTrackOptionApiDto.ValidationResult.AddErrorsPrefixMessage(
-                        string.Format("{0}[{1}]", this.GetJsonPropertyAttributeName(nameof(InnovationOrganizationTrackOptionApiDtos)),
+                        string.Format("{0}[{1}]", GetJsonPropertyAttributeName(nameof(InnovationOrganizationTrackOptionApiDtos)),
                                                    this.InnovationOrganizationTrackOptionApiDtos.IndexOf(innovationOrganizationTrackOptionApiDto)));
 
                     this.ValidationResult.Add(innovationOrganizationTrackOptionApiDto.ValidationResult);
@@ -381,7 +381,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         /// <returns></returns>
-        private string GetJsonPropertyAttributeName(string propertyName)
+        public static string GetJsonPropertyAttributeName(string propertyName)
         {
             return typeof(InnovationOrganizationApiDto)
                     .GetProperty(propertyName)?
