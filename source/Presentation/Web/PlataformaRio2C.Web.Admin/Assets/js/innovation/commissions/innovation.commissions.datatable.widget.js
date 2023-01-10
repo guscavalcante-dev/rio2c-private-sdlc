@@ -4,7 +4,7 @@
 // Created          : 07-08-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-04-2023
+// Last Modified On : 01-10-2023
 // ***********************************************************************
 // <copyright file="innovation.commissions.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -128,19 +128,6 @@ var InnovationCommissionsDataTableWidget = function () {
                             showSendInvitationEmailsModal();
                         }
                     },
-                    //{
-                    //    text: exportToEventbrite,
-                    //    action: function (e, dt, node, config) {
-                    //        $('.dt-button-background').remove();
-                    //        eventbriteCsvExport = dt.ajax.params();
-                    //        eventbriteCsvExport.selectedCollaboratorsUids = $('#innovation-commissions-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
-                    //        eventbriteCsvExport.showAllEditions = $('#ShowAllEditions').prop('checked');
-                    //        eventbriteCsvExport.showAllParticipants = $('#ShowAllParticipants').prop('checked');
-                    //        eventbriteCsvExport.collaboratorTypeName = collaboratorTypeName;
-
-                    //        SalesPlatformsExport.showExportEventbriteCsvModal(eventbriteCsvExport);
-                    //    }
-                    //},
                     {
                         text: labels.selectAll,
                         action: function (e, dt, node, config) {
@@ -248,6 +235,24 @@ var InnovationCommissionsDataTableWidget = function () {
                     }
                 },
                 {
+                    data: 'Verticals',
+                    render: function (data, type, row, meta) {
+                        var html = '<ul class="m-0 pl-4">';
+
+                        //loop through all the row details to build output string
+                        for (var item in row.InnovationOrganizationTrackOptionGroupDtos) {
+                            if (row.InnovationOrganizationTrackOptionGroupDtos.hasOwnProperty(item)) {
+                                var r = row.InnovationOrganizationTrackOptionGroupDtos[item];
+                                html += '<li>' + r.GroupName + '</li>';
+                            }
+                        }
+
+                        html += '</ul>';
+
+                        return html;
+                    }
+                },
+                {
                     data: 'CreateDate',
                     render: function (data) {
 	                    return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
@@ -313,15 +318,15 @@ var InnovationCommissionsDataTableWidget = function () {
                     className: "dt-center"
                 },
                 {
-                    targets: [2],
+                    targets: [2, 3],
                     orderable: false
                 },
                 {
-                    targets: [3],
+                    targets: [4],
                     className: "dt-center"
                 },
                 {
-                    targets: [4, 5],
+                    targets: [5, 6],
                     className: "dt-center",
                     orderable: false
                 },
