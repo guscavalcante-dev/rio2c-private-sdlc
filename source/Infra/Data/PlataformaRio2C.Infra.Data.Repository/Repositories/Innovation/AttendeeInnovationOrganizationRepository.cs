@@ -4,7 +4,7 @@
 // Created          : 08-30-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-04-2023
+// Last Modified On : 01-11-2023
 // ***********************************************************************
 // <copyright file="AttendeeInnovationOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -410,13 +410,26 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                    Grade = aio.Grade,
                                    EvaluationsCount = aio.AttendeeInnovationOrganizationEvaluations.Count(aioe => !aioe.IsDeleted),
                                    InnovationOrganizationTracksNames = aio.AttendeeInnovationOrganizationTracks
-                                                                            .Where(aiot => !aio.IsDeleted &&
-                                                                                            !aiot.IsDeleted &&
-                                                                                            !aiot.InnovationOrganizationTrackOption.IsDeleted)
+                                                                            .Where(aiot => !aio.IsDeleted && !aiot.IsDeleted && !aiot.InnovationOrganizationTrackOption.IsDeleted)
                                                                             .OrderBy(aiot => aiot.InnovationOrganizationTrackOption.DisplayOrder)
                                                                             .Select(aiot => aiot.InnovationOrganizationTrackOption.Name)
                                                                             .ToList(),
 
+                                   InnovationOrganizationTrackOptionGroupDtos = aio.AttendeeInnovationOrganizationTracks
+                                                                                    .Where(aiot => !aio.IsDeleted && 
+                                                                                                    !aiot.IsDeleted && 
+                                                                                                    !aiot.InnovationOrganizationTrackOption.IsDeleted &&
+                                                                                                    (aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup != null ? 
+                                                                                                        !aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup.IsDeleted : 
+                                                                                                        true))
+                                                                                    .OrderBy(aiot => aiot.InnovationOrganizationTrackOption.DisplayOrder)
+                                                                                    .GroupBy(aiot => aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup.Name)
+                                                                                    .Select(aiotg => new InnovationOrganizationTrackOptionGroupDto
+                                                                                    {
+                                                                                        GroupName = aiotg.Key,
+                                                                                        InnovationOrganizationTrackOptionNames = aiotg.Select(s => s.InnovationOrganizationTrackOption.Name)
+                                                                                    })
+                                                                                    .ToList(),
                                    CreateDate = aio.CreateDate,
                                    UpdateDate = aio.UpdateDate
                                });
