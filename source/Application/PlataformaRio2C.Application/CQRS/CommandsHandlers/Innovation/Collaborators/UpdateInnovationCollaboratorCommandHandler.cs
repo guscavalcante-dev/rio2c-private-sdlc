@@ -4,7 +4,7 @@
 // Updated          : 08-19-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-19-2021
+// Last Modified On : 01-11-2023
 // ***********************************************************************
 // <copyright file="UpdateInnovationCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -83,7 +83,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            var innovationOrganizationTrackOptions = await innovationOrganizationTrackOptionRepo.FindAllAsync();
+            var innovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllByGroupsUidsAsync(cmd.InnovationOrganizationTrackGroups
+                                                                                                                                   ?.Where(ioto => ioto.IsChecked)
+                                                                                                                                   ?.Select(ioto => ioto.InnovationOrganizationTrackOptionGroupUid));
 
             collaborator.UpdateInnovationCommission(
                 await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
@@ -91,7 +93,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.FirstName,
                 cmd.LastNames,
                 cmd.Email,
-                cmd.InnovationOrganizationTrackGroups?.Where(oa => oa.IsChecked)?.Select(aiot => new AttendeeInnovationOrganizationTrack(innovationOrganizationTrackOptions?.FirstOrDefault(ioto => ioto.Uid == aiot.InnovationOrganizationTrackOptionUid), aiot.AdditionalInfo, cmd.UserId))?.ToList(),
+                innovationOrganizationTrackOptions.Select(ioto => new AttendeeInnovationOrganizationTrack(ioto, string.Empty, cmd.UserId)).ToList(),
                 cmd.UserId);
 
             if (!collaborator.IsValid())

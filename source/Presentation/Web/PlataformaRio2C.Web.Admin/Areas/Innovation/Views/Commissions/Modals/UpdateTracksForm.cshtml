@@ -2,7 +2,7 @@
 @model PlataformaRio2C.Application.CQRS.Commands.UpdateInnovationCollaboratorTracks
 <div class="row">
     <div class="form-group col-md-12">
-        @Html.ValidationMessage("AttendeeInnovationOrganizationTracks", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(m => m.AttendeeInnovationOrganizationTrackGroups, "", new { @class = "text-danger" })
         <div class="error">
             <span></span>
         </div>
