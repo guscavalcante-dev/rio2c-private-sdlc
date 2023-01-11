@@ -4,7 +4,7 @@
 // Created          : 07-24-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-04-2023
+// Last Modified On : 01-11-2023
 // ***********************************************************************
 // <copyright file="innovation.projects.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -152,9 +152,32 @@ var InnovationProjectsDataTableWidget = function () {
                         var html = '<ul class="m-0 pl-4">';
 
                         //loop through all the row details to build output string
-                        for (var item in row.InnovationOrganizationTracksNames) {
-                            if (row.InnovationOrganizationTracksNames.hasOwnProperty(item)) {
-                                html += '<li>' + row.InnovationOrganizationTracksNames[item] + '</li>';
+                        for (var groupIndex in row.InnovationOrganizationTrackOptionGroupDtos) {
+                            if (row.InnovationOrganizationTrackOptionGroupDtos.hasOwnProperty(groupIndex)) {
+
+                                var innovationOrganizationTrackOptionGroupDto = row.InnovationOrganizationTrackOptionGroupDtos[groupIndex];
+                                var innovationOrganizationTrackOptionNames = innovationOrganizationTrackOptionGroupDto.InnovationOrganizationTrackOptionNames;
+
+                                if (MyRio2cCommon.isNullOrEmpty(innovationOrganizationTrackOptionGroupDto.GroupName)) {
+                                    // Has no group, shows only track option name
+                                    for (var trackOptionIndex in innovationOrganizationTrackOptionNames) {
+                                        if (innovationOrganizationTrackOptionNames.hasOwnProperty(trackOptionIndex)) {
+                                            html += '<li>' + innovationOrganizationTrackOptionNames[trackOptionIndex] + '</li>';
+                                        }
+                                    }
+                                }
+                                else {
+                                    // Has group, shows group name and track option name
+                                    html += '<li>' + innovationOrganizationTrackOptionGroupDto.GroupName + '</li>';
+
+                                    html += '<ul class="m-0 pl-4">';
+                                    for (var trackOptionIndex in innovationOrganizationTrackOptionNames) {
+                                        if (innovationOrganizationTrackOptionNames.hasOwnProperty(trackOptionIndex)) {
+                                            html += '<li>' + innovationOrganizationTrackOptionNames[trackOptionIndex] + '</li>';
+                                        }
+                                    }
+                                    html += '</ul>'
+                                }
                             }
                         }
 

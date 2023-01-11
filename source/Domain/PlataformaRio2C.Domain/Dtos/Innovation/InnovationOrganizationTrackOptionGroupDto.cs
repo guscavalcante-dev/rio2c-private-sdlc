@@ -4,7 +4,7 @@
 // Created          : 12-27-2022
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-10-2023
+// Last Modified On : 01-11-2023
 // ***********************************************************************
 // <copyright file="InnovationOrganizationTrackOptionGroupDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,6 +20,7 @@ namespace PlataformaRio2C.Domain.Dtos
     public class InnovationOrganizationTrackOptionGroupDto
     {
         public string GroupName { get; set; }
+        public IEnumerable<string> InnovationOrganizationTrackOptionNames { get; set; }
 
         public InnovationOrganizationTrackOptionGroup InnovationOrganizationTrackOptionGroup { get; set; }
         public IEnumerable<InnovationOrganizationTrackOption> InnovationOrganizationTrackOptions { get; set; }
