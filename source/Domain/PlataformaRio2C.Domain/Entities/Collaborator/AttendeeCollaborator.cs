@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-16-2021
+// Last Modified On : 01-11-2023
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1359,7 +1359,7 @@ namespace PlataformaRio2C.Domain.Entities
             // Create or update
             foreach (var attendeeInnovationOrganizationTrack in attendeeInnovationOrganizationTracks)
             {
-                var attendeeCollaboratorInnovationOrganizationTrackDb = this.AttendeeCollaboratorInnovationOrganizationTracks.FirstOrDefault(aciot => aciot.InnovationOrganizationTrackOption.Uid == attendeeInnovationOrganizationTrack.InnovationOrganizationTrackOption.Uid);
+                var attendeeCollaboratorInnovationOrganizationTrackDb = this.AttendeeCollaboratorInnovationOrganizationTracks.FirstOrDefault(aciot => aciot.InnovationOrganizationTrackOption.Uid == attendeeInnovationOrganizationTrack.InnovationOrganizationTrackOption?.Uid);
                 if (attendeeCollaboratorInnovationOrganizationTrackDb != null)
                 {
                     attendeeCollaboratorInnovationOrganizationTrackDb.Update(userId);
