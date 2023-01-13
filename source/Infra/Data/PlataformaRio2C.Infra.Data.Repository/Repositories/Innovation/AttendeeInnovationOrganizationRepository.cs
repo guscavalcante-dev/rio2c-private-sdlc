@@ -202,6 +202,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>
+        /// Shows the business rounds.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="showBusinessRounds">if set to <c>true</c> [show business rounds].</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeInnovationOrganization> ShowBusinessRounds(this IQueryable<AttendeeInnovationOrganization> query, bool showBusinessRounds = false)
+        {
+            if (showBusinessRounds)
+            {
+                query = query.Where(p => p.WouldYouLikeParticipateBusinessRound == true);
+            }
+
+            return query;
+        }
     }
 
     #endregion
@@ -282,16 +298,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="innovationOrganizationTrackOptionGroupUids">The innovation organization track option group uids.</param>
+        /// <param name="showBusinessRounds">if set to <c>true</c> [show business rounds].</param>
         /// <returns></returns>
         private async Task<List<AttendeeInnovationOrganization>> FindAllAttendeeInnovationOrganizationsAsync(
             int editionId,
             string searchKeywords,
-            List<Guid?> innovationOrganizationTrackOptionGroupUids)
+            List<Guid?> innovationOrganizationTrackOptionGroupUids,
+            bool showBusinessRounds)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
                                 .FindByKeywords(searchKeywords)
-                                .FindByInnovationOrganizationTrackOptionGroupUids(innovationOrganizationTrackOptionGroupUids);
+                                .FindByInnovationOrganizationTrackOptionGroupUids(innovationOrganizationTrackOptionGroupUids)
+                                .ShowBusinessRounds(showBusinessRounds);
 
             return await query
                             .Order()
@@ -303,17 +322,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="innovationOrganizationTrackOptionUid">The innovation organization track option uid.</param>
-        /// <returns></returns> 
+        /// <param name="innovationOrganizationTrackOptionGroupUids">The innovation organization track option group uids.</param>
+        /// <param name="showBusinessRounds">if set to <c>true</c> [show business rounds].</param>
+        /// <returns></returns>
         private async Task<List<AttendeeInnovationOrganizationDto>> FindAllAttendeeInnovationOrganizationDtosAsync(
             int editionId,
             string searchKeywords,
-            List<Guid?> innovationOrganizationTrackOptionGroupUids)
+            List<Guid?> innovationOrganizationTrackOptionGroupUids,
+            bool showBusinessRounds)
         {
             var query = this.GetBaseQuery()
                                .FindByEditionId(editionId)
                                .FindByKeywords(searchKeywords)
                                .FindByInnovationOrganizationTrackOptionGroupUids(innovationOrganizationTrackOptionGroupUids)
+                               .ShowBusinessRounds(showBusinessRounds)
                                .Select(aio => new AttendeeInnovationOrganizationDto
                                {
                                    AttendeeInnovationOrganization = aio,
@@ -380,20 +402,23 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="innovationOrganizationTrackOptionUid">The innovation organization track option uid.</param>
+        /// <param name="innovationOrganizationTrackOptionGroupsUids">The innovation organization track option groups uids.</param>
+        /// <param name="showBusinessRounds">if set to <c>true</c> [show business rounds].</param>
         /// <param name="sortColumns">The sort columns.</param>
         /// <returns></returns>
         private async Task<List<AttendeeInnovationOrganizationJsonDto>> FindAllJsonDtosAsync(
             int editionId,
             string searchKeywords,
             List<Guid?> innovationOrganizationTrackOptionGroupsUids,
+            bool showBusinessRounds,
             List<Tuple<string, string>> sortColumns)
         {
             var query = this.GetBaseQuery()
                                .FindByEditionId(editionId, false)
                                .FindByKeywords(searchKeywords)
                                .FindByInnovationOrganizationTrackOptionGroupUids(innovationOrganizationTrackOptionGroupsUids)
-                               .DynamicOrder<AttendeeInnovationOrganization>(
+                               .ShowBusinessRounds(showBusinessRounds)
+                               .DynamicOrder(
                                    sortColumns,
                                    null,
                                    new List<string> { "CreateDate", "UpdateDate" },
@@ -431,7 +456,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     })
                                                                                     .ToList(),
                                    CreateDate = aio.CreateDate,
-                                   UpdateDate = aio.UpdateDate
+                                   UpdateDate = aio.UpdateDate,
+                                   WouldYouLikeParticipateBusinessRound = aio.WouldYouLikeParticipateBusinessRound
                                });
 
             return await query
@@ -445,8 +471,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="innovationOrganizationTrackOptionUid">The innovation organization track option uid.</param>
+        /// <param name="innovationOrganizationTrackOptionGroupUids">The innovation organization track option group uids.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showBusinessRounds">if set to <c>true</c> [show business rounds].</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
@@ -456,10 +483,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             string searchKeywords,
             List<Guid?> innovationOrganizationTrackOptionGroupUids,
             Guid? evaluationStatusUid,
+            bool showBusinessRounds,
             int page,
             int pageSize)
         {
-            var attendeeInnovationOrganizationsDtos = await this.FindAllAttendeeInnovationOrganizationDtosAsync(editionId, searchKeywords, innovationOrganizationTrackOptionGroupUids);
+            var attendeeInnovationOrganizationsDtos = await this.FindAllAttendeeInnovationOrganizationDtosAsync(editionId, searchKeywords, innovationOrganizationTrackOptionGroupUids, showBusinessRounds);
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
 
             IEnumerable<AttendeeInnovationOrganizationDto> attendeeInnovationOrganizationDtosResult = attendeeInnovationOrganizationsDtos;
@@ -511,6 +539,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="innovationOrganizationTrackOptionGroupUids">The innovation organization track option group uids.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showBusinessRounds">if set to <c>true</c> [show business rounds].</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="sortColumns">The sort columns.</param>
@@ -520,11 +549,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             string searchKeywords,
             List<Guid?> innovationOrganizationTrackOptionGroupUids,
             Guid? evaluationStatusUid,
+            bool showBusinessRounds,
             int page,
             int pageSize,
             List<Tuple<string, string>> sortColumns)
         {
-            var attendeeInnovaitonOrganizationJsonDtos = await this.FindAllJsonDtosAsync(editionId, searchKeywords, innovationOrganizationTrackOptionGroupUids, sortColumns);
+            var attendeeInnovaitonOrganizationJsonDtos = await this.FindAllJsonDtosAsync(editionId, searchKeywords, innovationOrganizationTrackOptionGroupUids, showBusinessRounds, sortColumns);
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
 
             IEnumerable<AttendeeInnovationOrganizationJsonDto> attendeeInnovationOrganizationJsonDtosResult = attendeeInnovaitonOrganizationJsonDtos;
@@ -671,10 +701,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             string searchKeywords,
             List<Guid?> innovationOrganizationTrackOptionGroupUids,
             Guid? evaluationStatusUid,
+            bool showBusinessRounds,
             int page,
             int pageSize)
         {
-            var attendeeInnovationOrganizations = await this.FindAllAttendeeInnovationOrganizationsAsync(editionId, searchKeywords, innovationOrganizationTrackOptionGroupUids);
+            var attendeeInnovationOrganizations = await this.FindAllAttendeeInnovationOrganizationsAsync(editionId, searchKeywords, innovationOrganizationTrackOptionGroupUids, showBusinessRounds);
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
 
             IEnumerable<AttendeeInnovationOrganization> attendeeInnovationOrganizationResult = attendeeInnovationOrganizations;
@@ -745,9 +776,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<int> CountPagedAsync(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionGroupUids, Guid? evaluationStatusUid, int page, int pageSize)
+        public async Task<int> CountPagedAsync(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionGroupUids, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize)
         {
-            var attendeeInnovationOrganizations = await this.FindAllAttendeeInnovationOrganizationsAsync(editionId, searchKeywords, innovationOrganizationTrackOptionGroupUids);
+            var attendeeInnovationOrganizations = await this.FindAllAttendeeInnovationOrganizationsAsync(editionId, searchKeywords, innovationOrganizationTrackOptionGroupUids, showBusinessRounds);
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
             var approvedAttendeeInnovationOrganizationsIds = await this.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(editionId);
 

@@ -6,6 +6,8 @@
     var totalInnovationProjectsCount = ViewBag.InnovationProjectsTotalCount as int?;
     var currentInnovationProjectIndex = ViewBag.CurrentInnovationProjectIndex as int?;
 
+    var viewModel = ViewBag.InnovationProjectSearchViewModel as InnovationProjectSearchViewModel;
+
     var previousStepEvent = Url.Action("PreviousEvaluationDetails", "Projects", new
     {
         Area = "Innovation",
@@ -13,6 +15,7 @@
         searchKeywords = ViewBag.SearchKeywords,
         innovationOrganizationTrackOptionGroupUid = ViewBag.InnovationOrganizationTrackOptionGroupUid,
         evaluationStatusUid = ViewBag.EvaluationStatusUid,
+        showBusinessRounds = ViewBag.ShowBusinessRounds,
         Page = ViewBag.Page,
         pageSize = ViewBag.PageSize
     });
@@ -24,6 +27,7 @@
         searchKeywords = ViewBag.SearchKeywords,
         innovationOrganizationTrackOptionGroupUid = ViewBag.InnovationOrganizationTrackOptionGroupUid,
         evaluationStatusUid = ViewBag.EvaluationStatusUid,
+        showBusinessRounds = ViewBag.ShowBusinessRounds,
         Page = ViewBag.Page,
         pageSize = ViewBag.PageSize
     });

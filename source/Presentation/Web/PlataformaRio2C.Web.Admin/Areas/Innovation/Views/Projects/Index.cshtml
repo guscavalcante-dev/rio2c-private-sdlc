@@ -37,13 +37,15 @@
             projectAccepted: '@Labels.ProjectAccepted',
             projectRefused: '@Labels.ProjectRefused',
             vote: '@Labels.Vote',
-            votes: '@Labels.Votes'
+            votes: '@Labels.Votes',
+            businessRound: '@Labels.BusinessRound',
         };
 
         var isProjectEvaluationClosed = @(Json.Encode(!editionDto.IsInnovationProjectEvaluationOpen()));
         var searchKeywords = '@ViewBag.SearchKeywords';
         var innovationOrganizationTrackOptionGroupUid = '@ViewBag.InnovationOrganizationTrackOptionGroupUid';
         var evaluationStatusUid = '@ViewBag.EvaluationStatusUid';
+        var showBusinessRounds = '@ViewBag.showBusinessRounds';
 
         // Pagination -----------------------------------------------------------------------------
         var initialPage = @(ViewBag.Page?.ToString() ?? "null");

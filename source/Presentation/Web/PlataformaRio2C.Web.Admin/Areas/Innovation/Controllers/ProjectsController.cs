@@ -4,7 +4,7 @@
 // Created          : 07-24-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-30-2022
+// Last Modified On : 01-11-2023
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,6 +34,7 @@ using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 using System.Text;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Application.ViewModels;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 {
@@ -117,13 +118,16 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             return View();
         }
 
-        /// <summary>Shows the list widget.</summary>
+        /// <summary>
+        /// Shows the list widget.
+        /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="innovationOrganizationTrackOptionGroupUid">The music genre uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showBusinessRounds">The show business rounds.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowListWidget(IDataTablesRequest request, Guid? innovationOrganizationTrackOptionGroupUid, Guid? evaluationStatusUid)
+        public async Task<ActionResult> ShowListWidget(IDataTablesRequest request, Guid? innovationOrganizationTrackOptionGroupUid, Guid? evaluationStatusUid, bool? showBusinessRounds)
         {
             int page = request.Start / request.Length;
             int pageSize = request.Length;
@@ -134,6 +138,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                 request.Search?.Value,
                 new List<Guid?> { innovationOrganizationTrackOptionGroupUid },
                 evaluationStatusUid,
+                showBusinessRounds ?? false,
                 page,
                 pageSize,
                 request.GetSortColumns());
@@ -187,25 +192,38 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                 searchKeywords = request.Search?.Value,
                 innovationOrganizationTrackOptionGroupUid,
                 evaluationStatusUid,
+                showBusinessRounds,
                 page,
                 pageSize
             }, JsonRequestBehavior.AllowGet);
-        }              
+        }
 
-        /// <summary>Export to Excel the evaluation list widget.</summary>
+        /// <summary>
+        /// Export to Excel the evaluation list widget.
+        /// </summary>
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="innovationOrganizationTrackOptionGroupUid">The music genre uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showBusinessRounds">The show business rounds.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ExportEvaluationListWidget(string searchKeywords, Guid? innovationOrganizationTrackOptionGroupUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 1000)
+        public async Task<ActionResult> ExportEvaluationListWidget(string searchKeywords, Guid? innovationOrganizationTrackOptionGroupUid, Guid? evaluationStatusUid, bool? showBusinessRounds, int? page = 1, int? pageSize = 1000)
         {
             StringBuilder data = new StringBuilder();
             data.AppendLine($"{Labels.Startup}; {Labels.Project}; {Labels.ProductsOrServices}; {Labels.Status}; {Labels.Votes}; {Labels.Average}");
 
-            var attendeeInnovationOrganizationJsonDtos = await this.attendeeInnovationOrganizationRepo.FindAllJsonDtosPagedAsync(this.EditionDto.Id, searchKeywords, new List<Guid?> { innovationOrganizationTrackOptionGroupUid }, evaluationStatusUid, 1, 10000, new List<Tuple<string, string>>());
+            var attendeeInnovationOrganizationJsonDtos = await this.attendeeInnovationOrganizationRepo.FindAllJsonDtosPagedAsync(
+                this.EditionDto.Id, 
+                searchKeywords, 
+                new List<Guid?> { innovationOrganizationTrackOptionGroupUid }, 
+                evaluationStatusUid, 
+                showBusinessRounds ?? false,
+                1, 
+                10000, 
+                new List<Tuple<string, string>>());
+
             var approvedAttendeeInnovationOrganizationIds = await this.attendeeInnovationOrganizationRepo.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(this.EditionDto.Id);
 
             foreach (var attendeeInnovationOrganizationJsonDto in attendeeInnovationOrganizationJsonDtos)
@@ -225,20 +243,32 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        /// <summary>Export to Excel the evaluators list widget.</summary>
+        /// <summary>
+        /// Export to Excel the evaluators list widget.
+        /// </summary>
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="innovationOrganizationTrackOptionGroupUid">The music genre uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showBusinessRounds">The show business rounds.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ExportEvaluatorsListWidget(string searchKeywords, Guid? innovationOrganizationTrackOptionGroupUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 1000)
+        public async Task<ActionResult> ExportEvaluatorsListWidget(string searchKeywords, Guid? innovationOrganizationTrackOptionGroupUid, Guid? evaluationStatusUid, bool? showBusinessRounds, int? page = 1, int? pageSize = 1000)
         {
             StringBuilder data = new StringBuilder();
             data.AppendLine($"{Labels.Startup}; {Labels.Project}; {Labels.Evaluation}; {Labels.Evaluator};");
 
-            var attendeeInnovationOrganizationJsonDtos = await this.attendeeInnovationOrganizationRepo.FindAllJsonDtosPagedAsync(this.EditionDto.Id, searchKeywords, new List<Guid?> { innovationOrganizationTrackOptionGroupUid }, evaluationStatusUid, 1, 1000, new List<Tuple<string, string>>());
+            var attendeeInnovationOrganizationJsonDtos = await this.attendeeInnovationOrganizationRepo.FindAllJsonDtosPagedAsync(
+                this.EditionDto.Id, 
+                searchKeywords, 
+                new List<Guid?> { innovationOrganizationTrackOptionGroupUid }, 
+                evaluationStatusUid,
+                showBusinessRounds ?? false,
+                1, 
+                1000, 
+                new List<Tuple<string, string>>());
+
             foreach (var attendeeInnovationOrganizationJsonDto in attendeeInnovationOrganizationJsonDtos)
             {
                 var attendeeInnovationEvaluationDto = await this.attendeeInnovationOrganizationRepo.FindEvaluatorsWidgetDtoAsync(attendeeInnovationOrganizationJsonDto.AttendeeInnovationOrganizationUid);
@@ -338,18 +368,19 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="innovationOrganizationTrackOptionGroupUid">The innovation organization track option group uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showBusinessRounds">The show business rounds.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> EvaluationDetails(int? id, string searchKeywords = null, Guid? innovationOrganizationTrackOptionGroupUid = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 10)
+        public async Task<ActionResult> EvaluationDetails(InnovationProjectSearchViewModel searchForm)
         {
-            if (!page.HasValue || page <= 0)
+            if (!searchForm.Page.HasValue || searchForm.Page <= 0)
             {
-                page++;
+                searchForm.Page++;
             }
 
-            var attendeeInnovationOrganizationDto = await this.attendeeInnovationOrganizationRepo.FindDtoToEvaluateAsync(id ?? 0);
+            var attendeeInnovationOrganizationDto = await this.attendeeInnovationOrganizationRepo.FindDtoToEvaluateAsync(searchForm.Id ?? 0);
             if (attendeeInnovationOrganizationDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
@@ -360,28 +391,42 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.InnovationProjects, new List<BreadcrumbItemHelper>{
                 new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "Innovation" })),
-                new BreadcrumbItemHelper(attendeeInnovationOrganizationDto?.InnovationOrganization?.Name ?? Labels.Project, Url.Action("EvaluationDetails", "Projects", new { Area = "Innovation", id }))
+                new BreadcrumbItemHelper(attendeeInnovationOrganizationDto?.InnovationOrganization?.Name ?? Labels.Project, Url.Action("EvaluationDetails", "Projects", new { Area = "Innovation", searchForm.Id }))
             });
 
             #endregion
 
             var allProjectsIds = await this.attendeeInnovationOrganizationRepo.FindAllInnovationOrganizationsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
-                searchKeywords,
-                new List<Guid?> { innovationOrganizationTrackOptionGroupUid },
-                evaluationStatusUid,
-                page.Value,
-                pageSize.Value);
-            var currentProjectIdIndex = Array.IndexOf(allProjectsIds, id.Value) + 1; //Index start at 0, its a fix to "start at 1"
+                searchForm.Search,
+                new List<Guid?> { searchForm.InnovationOrganizationTrackOptionGroupUid },
+                searchForm.EvaluationStatusUid,
+                searchForm.ShowBusinessRounds ?? false,
+                searchForm.Page.Value,
+                searchForm.PageSize.Value);
 
-            ViewBag.SearchKeywords = searchKeywords;
-            ViewBag.InnovationOrganizationTrackOptionGroupUid = innovationOrganizationTrackOptionGroupUid;
-            ViewBag.EvaluationStatusUid = evaluationStatusUid;
-            ViewBag.Page = page;
-            ViewBag.PageSize = pageSize;
+            var currentProjectIdIndex = Array.IndexOf(allProjectsIds, searchForm.Id.Value) + 1; //Index start at 0, its a fix to "start at 1"
+
+
+            ViewBag.InnovationProjectSearchViewModel = searchForm; //TODO: Ainda não está sendo utilizado! Implementar corretamente na view e nos JS!
+
+            ViewBag.SearchKeywords = searchForm.Search;
+            ViewBag.InnovationOrganizationTrackOptionGroupUid = searchForm.InnovationOrganizationTrackOptionGroupUid;
+            ViewBag.EvaluationStatusUid = searchForm.EvaluationStatusUid;
+            ViewBag.ShowBusinessRounds = searchForm.ShowBusinessRounds;
+            ViewBag.Page = searchForm.Page;
+            ViewBag.PageSize = searchForm.PageSize;
             ViewBag.CurrentInnovationProjectIndex = currentProjectIdIndex;
 
-            ViewBag.InnovationProjectsTotalCount = await this.attendeeInnovationOrganizationRepo.CountPagedAsync(this.EditionDto.Edition.Id, searchKeywords, new List<Guid?> { innovationOrganizationTrackOptionGroupUid }, evaluationStatusUid, page.Value, pageSize.Value);
+            ViewBag.InnovationProjectsTotalCount = await this.attendeeInnovationOrganizationRepo.CountPagedAsync(
+                this.EditionDto.Edition.Id,
+                searchForm.Search, 
+                new List<Guid?> { searchForm.InnovationOrganizationTrackOptionGroupUid },
+                searchForm.EvaluationStatusUid,
+                searchForm.ShowBusinessRounds ?? false,
+                searchForm.Page.Value,
+                searchForm.PageSize.Value);
+
             ViewBag.ApprovedAttendeeInnovationOrganizationsIds = await this.attendeeInnovationOrganizationRepo.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(this.EditionDto.Edition.Id);
 
             return View(attendeeInnovationOrganizationDto);
@@ -394,37 +439,42 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="innovationOrganizationTrackOptionGroupUid">The innovation organization track option group uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showBusinessRounds">The show business rounds.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> PreviousEvaluationDetails(int? id, string searchKeywords = null, Guid? innovationOrganizationTrackOptionGroupUid = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 10)
+        public async Task<ActionResult> PreviousEvaluationDetails(InnovationProjectSearchViewModel searchForm)
         {
             var allInnovationProjectsIds = await this.attendeeInnovationOrganizationRepo.FindAllInnovationOrganizationsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
-                searchKeywords,
-                new List<Guid?> { innovationOrganizationTrackOptionGroupUid },
-                evaluationStatusUid,
-                page.Value,
-                pageSize.Value);
+                searchForm.Search,
+                new List<Guid?> { searchForm.InnovationOrganizationTrackOptionGroupUid },
+                searchForm.EvaluationStatusUid,
+                searchForm.ShowBusinessRounds ?? false,
+                searchForm.Page.Value,
+                searchForm.PageSize.Value);
 
-            var currentInnovationProjectIdIndex = Array.IndexOf(allInnovationProjectsIds, id.Value);
+            var currentInnovationProjectIdIndex = Array.IndexOf(allInnovationProjectsIds, searchForm.Id.Value);
             var previousProjectId = allInnovationProjectsIds.ElementAtOrDefault(currentInnovationProjectIdIndex - 1);
             if (previousProjectId == 0)
             {
-                previousProjectId = id.Value;
+                previousProjectId = searchForm.Id.Value;
             }
+            searchForm.Id = previousProjectId;
 
-            return RedirectToAction("EvaluationDetails",
-                new
-                {
-                    id = previousProjectId,
-                    searchKeywords,
-                    innovationOrganizationTrackOptionGroupUid,
-                    evaluationStatusUid,
-                    page,
-                    pageSize
-                });
+            return RedirectToAction("EvaluationDetails", searchForm
+                //new
+                //{
+                //    id = previousProjectId,
+                //    searchKeywords,
+                //    innovationOrganizationTrackOptionGroupUid,
+                //    evaluationStatusUid,
+                //    showBusinessRounds,
+                //    page,
+                //    pageSize
+                //}
+                );
         }
 
         /// <summary>
@@ -434,37 +484,42 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="innovationOrganizationTrackOptionGroupUid">The innovation organization track option group uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showBusinessRounds">The show business rounds.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> NextEvaluationDetails(int? id, string searchKeywords = null, Guid? innovationOrganizationTrackOptionGroupUid = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 10)
+        public async Task<ActionResult> NextEvaluationDetails(InnovationProjectSearchViewModel searchForm)
         {
             var allInnovationProjectsIds = await this.attendeeInnovationOrganizationRepo.FindAllInnovationOrganizationsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
-                searchKeywords,
-                new List<Guid?> { innovationOrganizationTrackOptionGroupUid },
-                evaluationStatusUid,
-                page.Value,
-                pageSize.Value);
+                searchForm.Search,
+                new List<Guid?> { searchForm.InnovationOrganizationTrackOptionGroupUid },
+                searchForm.EvaluationStatusUid,
+                searchForm.ShowBusinessRounds ?? false,
+                searchForm.Page.Value,
+                searchForm.PageSize.Value);
 
-            var currentInnovationProjectIdIndex = Array.IndexOf(allInnovationProjectsIds, id.Value);
+            var currentInnovationProjectIdIndex = Array.IndexOf(allInnovationProjectsIds, searchForm.Id.Value);
             var nextProjectId = allInnovationProjectsIds.ElementAtOrDefault(currentInnovationProjectIdIndex + 1);
             if (nextProjectId == 0)
             {
-                nextProjectId = id.Value;
+                nextProjectId = searchForm.Id.Value;
             }
+            searchForm.Id = nextProjectId;
 
-            return RedirectToAction("EvaluationDetails",
-                new
-                {
-                    id = nextProjectId,
-                    searchKeywords,
-                    innovationOrganizationTrackOptionGroupUid,
-                    evaluationStatusUid,
-                    page,
-                    pageSize
-                });
+            return RedirectToAction("EvaluationDetails", searchForm
+                //new
+                //{
+                //    id = nextProjectId,
+                //    searchKeywords,
+                //    innovationOrganizationTrackOptionGroupUid,
+                //    evaluationStatusUid,
+                //    showBusinessRounds,
+                //    page,
+                //    pageSize
+                //}
+                );
         }
 
         #endregion

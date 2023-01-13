@@ -76,6 +76,7 @@ var InnovationProjectsDataTableWidget = function () {
                 data: function (d) {
                     d.innovationOrganizationTrackOptionGroupUid = $('#InnovationOrganizationTrackOptionGroupUid').val();
                     d.evaluationStatusUid = $('#EvaluationStatusUid').val();
+                    d.showBusinessRounds = $('#ShowBusinessRounds').prop('checked');
                 },
                 dataFilter: function (data) {
                     var jsonReturned = JSON.parse(data);
@@ -104,6 +105,7 @@ var InnovationProjectsDataTableWidget = function () {
                             searchKeywords = jsonReturned.searchKeywords;
                             innovationOrganizationTrackOptionGroupUid = jsonReturned.innovationOrganizationTrackOptionGroupUid;
                             evaluationStatusUid = jsonReturned.evaluationStatusUid;
+                            showBusinessRounds = jsonReturned.showBusinessRounds;
                             initialPage = jsonReturned.page;
                             initialPageSize = jsonReturned.pageSize;
 
@@ -141,6 +143,10 @@ var InnovationProjectsDataTableWidget = function () {
                         html += '       <td> ' + data + '</td>\
                                     </tr>\
                                 </table>';
+
+                        if (row.WouldYouLikeParticipateBusinessRound) {
+                            html += '<span class="kt-badge kt-badge--inline kt-badge--info mt-2">' + translations.businessRound + '</span>';
+                        }
 
                         return html;
                     }
@@ -258,7 +264,7 @@ var InnovationProjectsDataTableWidget = function () {
                         html += '\          <i class="la la-ellipsis-h"></i>';
                         html += '\      </a>';
                         html += '\      <div class="dropdown-menu dropdown-menu-right">';
-                        html += '\          <button class="dropdown-item" onclick="InnovationProjectsDataTableWidget.showDetails(\'' + row.AttendeeInnovationOrganizationId + '\', \'' + searchKeywords + '\', \'' + innovationOrganizationTrackOptionGroupUid + '\', \'' + evaluationStatusUid + '\', \'' + initialPage + '\', \'' + initialPageSize + '\');">';
+                        html += '\          <button class="dropdown-item" onclick="InnovationProjectsDataTableWidget.showDetails(\'' + row.AttendeeInnovationOrganizationId + '\', \'' + searchKeywords + '\', \'' + innovationOrganizationTrackOptionGroupUid + '\', \'' + evaluationStatusUid + '\', \'' + showBusinessRounds + '\', \'' + initialPage + '\', \'' + initialPageSize + '\');">';
                         html += '\              <i class="la la-eye"></i>' + labels.view + '';
                         html += '\          </button>';
                         html += '\          <button class="dropdown-item" onclick="InnovationProjectsDelete.showModal(\'' + row.InnovationOrganizationUid + '\');">';
@@ -336,7 +342,7 @@ var InnovationProjectsDataTableWidget = function () {
     };
 
     // Details ------------------------------------------------------------------------------------
-    var showDetails = function (attendeeInnovationOrganizationId, searchKeywords, innovationOrganizationTrackOptionGroupUid, evaluationStatusUid, page, pageSize) {
+    var showDetails = function (attendeeInnovationOrganizationId, searchKeywords, innovationOrganizationTrackOptionGroupUid, evaluationStatusUid, showBusinessRounds, page, pageSize) {
         if (MyRio2cCommon.isNullOrEmpty(attendeeInnovationOrganizationId)) {
 		    return;
 	    }
@@ -345,6 +351,7 @@ var InnovationProjectsDataTableWidget = function () {
             + '?searchKeywords=' + searchKeywords
             + '&innovationOrganizationTrackOptionGroupUid=' + innovationOrganizationTrackOptionGroupUid
             + '&evaluationStatusUid=' + evaluationStatusUid
+            + '&showBusinessRounds=' + showBusinessRounds
             + '&page=' + page
             + '&pageSize=' + pageSize
         );
@@ -355,6 +362,7 @@ var InnovationProjectsDataTableWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.innovationOrganizationTrackOptionGroupUid = $('#InnovationOrganizationTrackOptionGroupUid').val();
         jsonParameters.evaluationStatusUid = $('#EvaluationStatusUid').val();
+        jsonParameters.showBusinessRounds = $('#ShowBusinessRounds').prop('checked');
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition(url), jsonParameters, function (resp) {
 
@@ -378,8 +386,8 @@ var InnovationProjectsDataTableWidget = function () {
         refreshData: function () {
             refreshData();
         },
-        showDetails: function (attendeeInnovationOrganizationId, searchKeywords, innovationOrganizationTrackOptionGroupUid, evaluationStatusUid, page, pageSize) {
-            showDetails(attendeeInnovationOrganizationId, searchKeywords, innovationOrganizationTrackOptionGroupUid, evaluationStatusUid, page, pageSize);
+        showDetails: function (attendeeInnovationOrganizationId, searchKeywords, innovationOrganizationTrackOptionGroupUid, evaluationStatusUid, showBusinessRounds, page, pageSize) {
+            showDetails(attendeeInnovationOrganizationId, searchKeywords, innovationOrganizationTrackOptionGroupUid, evaluationStatusUid, showBusinessRounds, page, pageSize);
         },
         exportExcelReportByProject: function () {
             exportExcel('/Innovation/Projects/ExportEvaluationListWidget');

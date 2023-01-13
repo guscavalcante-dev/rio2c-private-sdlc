@@ -388,5 +388,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 
             return baseType.ImplementsGeneric(interfaceType, out matchedType);
         }
+
+        /// <summary>
+        /// Converts object to json.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <returns></returns>
+        public static string ToJson(this object obj)
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+        }
     }
 }

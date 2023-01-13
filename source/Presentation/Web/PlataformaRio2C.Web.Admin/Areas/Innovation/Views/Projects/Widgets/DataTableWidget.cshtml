@@ -33,7 +33,7 @@
     <div class="kt-portlet__body">
         <!--begin: SearchForm-->
         <div class="form-group row">
-            <div class="col-lg-6">
+            <div class="col-lg-4">
                 <label>@Labels.Search:</label>
                 @Html.Hidden("Page", ViewBag.Page as int?)
                 @Html.Hidden("PageSize", ViewBag.PageSize as int?)
@@ -46,6 +46,17 @@
             <div class="col-lg-3">
                 <label>@Labels.Status:</label>
                 @Html.DropDownList("EvaluationStatusUid", new SelectList(ViewBag.ProjectEvaluationStatuses, "Uid", "Name", ViewBag.EvaluationStatusUid), $"{string.Format(Labels.SelectAMEntity, Labels.Status.ToLowerInvariant())}...", new { @class = "form-control enable-select2" })
+            </div>
+            <div class="col-lg-2">
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <div class="kt-checkbox-list">
+                        <label class="kt-checkbox mt-2">
+                            @Html.CheckBox("ShowBusinessRounds", new { @class = "enable-datatable-reload" }) @Labels.ShowBusinessRounds
+                            <span></span>
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
         <!--end: SearchForm-->

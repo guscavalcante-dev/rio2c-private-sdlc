@@ -5857,6 +5857,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exibir somente rodadas de negócio.
+        /// </summary>
+        public static string ShowBusinessRounds {
+            get {
+                return ResourceManager.GetString("ShowBusinessRounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exibir voos.
         /// </summary>
         public static string ShowFlights {
@@ -6100,7 +6109,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Passo a passo para Inscrição de Projetos Audiovisual 2022 (PDF).
+        ///   Looks up a localized string similar to Passo a passo para Inscrição de Projetos Audiovisual {0} (PDF).
         /// </summary>
         public static string StepByStepForAudiovisualProjectEnrollment {
             get {
@@ -6753,6 +6762,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string VerticalsAndCreativeEconomyThemes {
             get {
                 return ResourceManager.GetString("VerticalsAndCreativeEconomyThemes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verticais e Temas da Economia Criativa.
+        /// </summary>
+        public static string VerticalsAndCreativeEconomyThemes_Duplicate_1_ {
+            get {
+                return ResourceManager.GetString("VerticalsAndCreativeEconomyThemes_Duplicate[1]", resourceCulture);
             }
         }
         
