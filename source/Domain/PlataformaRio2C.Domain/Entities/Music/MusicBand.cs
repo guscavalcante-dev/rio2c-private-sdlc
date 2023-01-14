@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 02-26-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-04-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-14-2023
 // ***********************************************************************
 // <copyright file="MusicBand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -54,7 +54,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<ReleasedMusicProject> ReleasedMusicProjects { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MusicBand"/> class.
+        /// Initializes a new instance of the <see cref="MusicBand" /> class.
         /// </summary>
         /// <param name="musicBandType">Type of the music band.</param>
         /// <param name="edition">The edition.</param>
@@ -65,6 +65,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="instagram">The instagram.</param>
         /// <param name="twitter">The twitter.</param>
         /// <param name="youtube">The youtube.</param>
+        /// <param name="wouldYouLikeParticipateBusinessRound">if set to <c>true</c> [would you like participate business round].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="musicProjectApiDto">The music project API dto.</param>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
@@ -84,6 +85,7 @@ namespace PlataformaRio2C.Domain.Entities
             string instagram,
             string twitter,
             string youtube,
+            bool wouldYouLikeParticipateBusinessRound,
             bool isImageUploaded,
             MusicProjectApiDto musicProjectApiDto,
             AttendeeCollaborator attendeeCollaborator,
@@ -106,12 +108,12 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateImageUploadDate(isImageUploaded, false);
             base.SetCreateDate(userId);
 
-            this.SynchronizeAttendeeMusicBandsCollaborators(edition, attendeeCollaborator, musicProjectApiDto, userId);  
-            this.AddMusicBandGenresDtos(musicGenreApiDtos, userId);
-            this.AddMusicBandTargetAudienceDtos(targetAudienceApiDtos, userId);
-            this.AddMusicBandMembersDtos(musicBandMemberApiDtos, userId);
-            this.AddMusicBandTeamMembersDtos(musicBandTeamMemberApiDtos, userId);
-            this.AddReleasedMusicProjectsDtos(releasedMusicProjectApiDtos, userId);
+            this.SynchronizeAttendeeMusicBands(edition, attendeeCollaborator, musicProjectApiDto, wouldYouLikeParticipateBusinessRound, userId);  
+            this.SynchronizeMusicBandGenres(musicGenreApiDtos, userId);
+            this.SynchronizeMusicBandTargetAudience(targetAudienceApiDtos, userId);
+            this.SynchronizeMusicBandMembers(musicBandMemberApiDtos, userId);
+            this.SynchronizeMusicBandTeamMembers(musicBandTeamMemberApiDtos, userId);
+            this.SynchronizeReleasedMusicProjects(releasedMusicProjectApiDtos, userId);
         }
 
         /// <summary>Initializes a new instance of the <see cref="MusicBand"/> class.</summary>
@@ -152,17 +154,18 @@ namespace PlataformaRio2C.Domain.Entities
         #region Attendee Music Bands
 
         /// <summary>
-        /// Synchronizes the attendee music bands collaborators.
+        /// Synchronizes the attendee music bands.
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
-        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
-        /// <param name="userId">The user identifier.</param>
         /// <param name="musicProjectApiDto">The music project API dto.</param>
-        private void SynchronizeAttendeeMusicBandsCollaborators(
-            Edition edition, 
-            AttendeeCollaborator attendeeCollaborator, 
-            MusicProjectApiDto musicProjectApiDto, 
+        /// <param name="wouldYouLikeParticipateBusinessRound">if set to <c>true</c> [would you like participate business round].</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeAttendeeMusicBands(
+            Edition edition,
+            AttendeeCollaborator attendeeCollaborator,
+            MusicProjectApiDto musicProjectApiDto,
+            bool wouldYouLikeParticipateBusinessRound,
             int userId)
         {
             if (this.AttendeeMusicBands == null)
@@ -184,8 +187,8 @@ namespace PlataformaRio2C.Domain.Entities
             else
             {
                 var newAttendeeMusicBand = new AttendeeMusicBand(
-                    edition, 
-                    this, 
+                    edition,
+                    this,
                     musicProjectApiDto.VideoUrl,
                     musicProjectApiDto.Music1Url,
                     musicProjectApiDto.Music2Url,
@@ -193,6 +196,7 @@ namespace PlataformaRio2C.Domain.Entities
                     musicProjectApiDto.Clipping1,
                     musicProjectApiDto.Clipping2,
                     musicProjectApiDto.Clipping3,
+                    wouldYouLikeParticipateBusinessRound,
                     userId);
                 this.AttendeeMusicBands.Add(newAttendeeMusicBand);
                 attendeeCollaborator?.SynchronizeAttendeeMusicBandCollaborators(new List<AttendeeMusicBand> { newAttendeeMusicBand }, false, userId);
@@ -244,15 +248,13 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Music Band Members
-
         /// <summary>
         /// Synchronizes the attendee music bands.
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
         /// <param name="userId">The user identifier.</param>
-        private void AddMusicBandMembersDtos(List<MusicBandMemberApiDto> musicBandMemberApiDtos, int userId)
+        private void SynchronizeMusicBandMembers(List<MusicBandMemberApiDto> musicBandMemberApiDtos, int userId)
         {
             if (this.MusicBandMembers == null)
             {
@@ -265,16 +267,12 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        #endregion
-
-        #region Music Band Team Members
-
         /// <summary>
-        /// Adds the music band team members.
+        /// Synchronizes the music band team members.
         /// </summary>
         /// <param name="musicBandTeamMemberApiDtos">The music band team member API dtos.</param>
         /// <param name="userId">The user identifier.</param>
-        private void AddMusicBandTeamMembersDtos(List<MusicBandTeamMemberApiDto> musicBandTeamMemberApiDtos, int userId)
+        private void SynchronizeMusicBandTeamMembers(List<MusicBandTeamMemberApiDto> musicBandTeamMemberApiDtos, int userId)
         {
             if (this.MusicBandTeamMembers == null)
             {
@@ -287,16 +285,12 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        #endregion
-
-        #region Released Music Projects
-
         /// <summary>
-        /// Adds the released music projects.
+        /// Synchronizes the released music projects.
         /// </summary>
         /// <param name="releasedMusicProjectApiDtos">The released music project API dtos.</param>
         /// <param name="userId">The user identifier.</param>
-        private void AddReleasedMusicProjectsDtos(List<ReleasedMusicProjectApiDto> releasedMusicProjectApiDtos, int userId)
+        private void SynchronizeReleasedMusicProjects(List<ReleasedMusicProjectApiDto> releasedMusicProjectApiDtos, int userId)
         {
             if (this.ReleasedMusicProjects == null)
             {
@@ -309,16 +303,12 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        #endregion
-
-        #region Music Band Genres
-
         /// <summary>
-        /// Adds the music band genres.
+        /// Synchronizes the music band genres.
         /// </summary>
         /// <param name="musicGenreApiDtos">The music genre API dtos.</param>
         /// <param name="userId">The user identifier.</param>
-        private void AddMusicBandGenresDtos(List<MusicGenreApiDto> musicGenreApiDtos, int userId)
+        private void SynchronizeMusicBandGenres(List<MusicGenreApiDto> musicGenreApiDtos, int userId)
         {
             if (this.MusicBandGenres == null)
             {
@@ -331,16 +321,12 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        #endregion
-
-        #region Music Band Target Audiences
-
         /// <summary>
-        /// Adds the music band target audience.
+        /// Synchronizes the music band target audience.
         /// </summary>
         /// <param name="targetAudienceApiDtos">The target audience API dtos.</param>
         /// <param name="userId">The user identifier.</param>
-        private void AddMusicBandTargetAudienceDtos(List<TargetAudienceApiDto> targetAudienceApiDtos, int userId)
+        private void SynchronizeMusicBandTargetAudience(List<TargetAudienceApiDto> targetAudienceApiDtos, int userId)
         {
             if (this.MusicBandTargetAudiences == null)
             {
@@ -352,8 +338,6 @@ namespace PlataformaRio2C.Domain.Entities
                 this.MusicBandTargetAudiences.Add(new MusicBandTargetAudience(this, targetAudience.TargetAudience, userId));
             }
         }
-
-        #endregion
 
         #region Validations
 

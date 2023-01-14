@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 03-01-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-14-2023
 // ***********************************************************************
 // <copyright file="MusicBandsApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -87,11 +87,11 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// Creates the music band.
         /// </summary>
         /// <param name="key">The key.</param>
-        /// <param name="request">The request.</param>
+        /// <param name="musicBandApiDto">The music band API dto.</param>
         /// <returns></returns>
-        [HttpPost]
-        [Route("createmusicband/{key?}")]
-        public async Task<IHttpActionResult> CreateMusicBand(string key, HttpRequestMessage request)
+        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
+        [Route("createmusicband/{key?}"), HttpPost]
+        public async Task<IHttpActionResult> CreateMusicBand(string key, [FromBody] MusicBandApiDto musicBandApiDto)
         {
             var validationResult = new AppValidationResult();
 
@@ -118,7 +118,6 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
                 #endregion
 
-                var musicBandApiDto = JsonConvert.DeserializeObject<MusicBandApiDto>(request.Content.ReadAsStringAsync().Result);
                 if (musicBandApiDto == null)
                 {
                     throw new DomainException(Messages.IncorrectJsonStructure);
@@ -140,6 +139,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                         musicBandApiDto.Instagram,
                         musicBandApiDto.Twitter,
                         musicBandApiDto.Youtube,
+                        musicBandApiDto.WouldYouLikeParticipateBusinessRound ?? false,
                         musicBandApiDto.MusicProjectApiDto,
                         musicBandApiDto.MusicBandResponsibleApiDto,
                         musicBandApiDto.MusicBandMembersApiDtos,
@@ -167,7 +167,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 {
                     status = ApiStatus.Error,
                     message = ex.GetInnerMessage(),
-                    errors = validationResult?.Errors?.Select(e => new { e.Code, e.Message })
+                    errors = validationResult?.Errors?.Select(e => new { e.Message })
                 });
             }
             catch (JsonSerializationException ex)
@@ -176,7 +176,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 {
                     status = ApiStatus.Error,
                     message = ex.GetInnerMessage(),
-                    errors = validationResult?.Errors?.Select(e => new { e.Code, e.Message })
+                    errors = validationResult?.Errors?.Select(e => new { e.Message })
                 });
             }
             catch (Exception ex)

@@ -4,7 +4,7 @@
 // Created          : 06-28-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-09-2023
+// Last Modified On : 01-14-2023
 // ***********************************************************************
 // <copyright file="CreateInnovationOrganizationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -345,6 +345,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             return this.AppValidationResult;
         }
 
+        /// <summary>
+        /// Updates the lists and validate.
+        /// </summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
         private ValidationResult UpdateListsAndValidate(CreateInnovationOrganization cmd)
         {
             ValidationResult validationResult = new ValidationResult();
