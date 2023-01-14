@@ -491,6 +491,7 @@
     <Content Include="SqlScripts\Deltas\20211014_105600_0047_ChangesForVirtualMeetings.sql" />
     <Content Include="SqlScripts\Deltas\20211013_143100_0046_ChangesForRooms.sql" />
     <Content Include="SqlScripts\Deltas\20220124_100700_0049_ChangesForCartoon.sql" />
+    <Content Include="SqlScripts\Deltas\20230113_145700_0062_ChangesForAttendeeMusicBands.sql" />
     <Content Include="SqlScripts\Deltas\20230106_073000_0061_ChangesForInnovationOrganizationTrackOptions.sql" />
     <Content Include="SqlScripts\Migrations\Music\02_CreateMigrateMusicProjectsTable.sql" />
     <Content Include="SqlScripts\Migrations\Music\03_MigrateMusicProjects.sql" />

@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-16-2021
+// Last Modified On : 01-14-2023
 // ***********************************************************************
 // <copyright file="AttendeeMusicBand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,6 +28,7 @@ namespace PlataformaRio2C.Domain.Entities
         public int EvaluationsCount { get; private set; }
         public DateTimeOffset? LastEvaluationDate { get; private set; }
         public DateTimeOffset? EvaluationEmailSendDate { get; private set; }
+        public bool WouldYouLikeParticipateBusinessRound { get; private set; }
 
         public virtual Edition Edition { get; private set; }
         public virtual MusicBand MusicBand { get; private set; }
@@ -36,9 +37,19 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<MusicProject> MusicProjects { get; private set; }
         public virtual ICollection<AttendeeMusicBandEvaluation> AttendeeMusicBandEvaluations { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="AttendeeMusicBand"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttendeeMusicBand" /> class.
+        /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="musicBand">The music band.</param>
+        /// <param name="videoUrl">The video URL.</param>
+        /// <param name="music1Url">The music1 URL.</param>
+        /// <param name="music2Url">The music2 URL.</param>
+        /// <param name="release">The release.</param>
+        /// <param name="clipping1">The clipping1.</param>
+        /// <param name="clipping2">The clipping2.</param>
+        /// <param name="clipping3">The clipping3.</param>
+        /// <param name="wouldYouLikeParticipateBusinessRound">if set to <c>true</c> [would you like participate business round].</param>
         /// <param name="userId">The user identifier.</param>
         public AttendeeMusicBand(
             Edition edition,
@@ -50,12 +61,14 @@ namespace PlataformaRio2C.Domain.Entities
             string clipping1,
             string clipping2,
             string clipping3,
+            bool wouldYouLikeParticipateBusinessRound,
             int userId)
         {
             this.Edition = edition;
             this.MusicBand = musicBand;
             this.EditionId = edition.Id;
             this.MusicBandId = musicBand.Id;
+            this.WouldYouLikeParticipateBusinessRound = wouldYouLikeParticipateBusinessRound;
 
             this.CreateProject(
                 videoUrl,
@@ -68,9 +81,7 @@ namespace PlataformaRio2C.Domain.Entities
                 false,
                 userId);
 
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
+            base.SetCreateDate(userId);
         }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeMusicBand"/> class.</summary>
@@ -263,8 +274,6 @@ namespace PlataformaRio2C.Domain.Entities
                 clipping2,
                 clipping3,
                 userId));
-
-            //this.UpdateProjectsCount();
         }
 
         /// <summary>Gets the last created music project.</summary>
