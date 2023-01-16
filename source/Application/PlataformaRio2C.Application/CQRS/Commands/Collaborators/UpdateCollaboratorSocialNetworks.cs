@@ -4,7 +4,7 @@
 // Created          : 01-16-2020
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-28-2021
+// Last Modified On : 01-16-2023
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorSocialNetworks.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,6 +22,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     public class UpdateCollaboratorSocialNetworks : BaseCommand
     {
         public Guid CollaboratorUid { get; set; }
+        public string CollaboratorTypeName { get; set; }
 
         [Display(Name = "Website", ResourceType = typeof(Labels))]
         [StringLength(300, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
@@ -42,9 +43,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Display(Name = "YouTube")]
         [StringLength(300, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Youtube { get; set; }
-
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public string CollaboratorTypeName { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateCollaboratorSocialNetworks" /> class.
