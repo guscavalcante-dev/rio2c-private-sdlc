@@ -4,7 +4,7 @@
 // Created          : 23-03-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-10-2021
+// Last Modified On : 01-14-2023
 // ***********************************************************************
 // <copyright file="CreateMusicBand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,6 +29,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string Instagram { get; private set; }
         public string Twitter { get; private set; }
         public string Youtube { get; private set; }
+        public bool WouldYouLikeParticipateBusinessRound { get; private set; }
+
         public MusicProjectApiDto MusicProjectApiDto { get; set; }
         public MusicBandResponsibleApiDto MusicBandResponsibleApiDto { get; set; }
         public List<MusicBandMemberApiDto> MusicBandMembersApiDtos { get; set; }
@@ -38,7 +40,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<TargetAudienceApiDto> TargetAudiencesApiDtos { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateMusicBand"/> class.
+        /// Initializes a new instance of the <see cref="CreateMusicBand" /> class.
         /// </summary>
         /// <param name="musicBandTypeUid">The music band type uid.</param>
         /// <param name="name">The name.</param>
@@ -49,6 +51,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="instagram">The instagram.</param>
         /// <param name="twitter">The twitter.</param>
         /// <param name="youtube">The youtube.</param>
+        /// <param name="wouldYouLikeParticipateBusinessRound">if set to <c>true</c> [would you like participate business round].</param>
         /// <param name="musicProjectApiDto">The music project API dto.</param>
         /// <param name="musicBandResponsibleApiDto">The music band responsible API dto.</param>
         /// <param name="musicBandMembersApiDtos">The music band members API dtos.</param>
@@ -66,6 +69,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string instagram,
             string twitter,
             string youtube,
+            bool wouldYouLikeParticipateBusinessRound,
             MusicProjectApiDto musicProjectApiDto,
             MusicBandResponsibleApiDto musicBandResponsibleApiDto,
             List<MusicBandMemberApiDto> musicBandMembersApiDtos,
@@ -83,6 +87,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Instagram = instagram;
             this.Twitter = twitter;
             this.Youtube = youtube;
+            this.WouldYouLikeParticipateBusinessRound = wouldYouLikeParticipateBusinessRound;
             this.MusicProjectApiDto = musicProjectApiDto;
             this.MusicBandResponsibleApiDto = musicBandResponsibleApiDto;
             this.MusicBandMembersApiDtos = musicBandMembersApiDtos;

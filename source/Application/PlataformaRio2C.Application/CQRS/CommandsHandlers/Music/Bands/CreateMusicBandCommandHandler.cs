@@ -4,7 +4,7 @@
 // Created          : 23-03-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 23-03-2021
+// Last Modified On : 01-14-2023
 // ***********************************************************************
 // <copyright file="CreateMusicBandCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,7 +20,9 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -99,22 +101,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
+            var listsValidationResult = this.UpdateListsAndValidate(cmd);
+            if (!listsValidationResult.IsValid)
+            {
+                this.AppValidationResult.Add(listsValidationResult);
+                return this.AppValidationResult;
+            }
+
             #endregion
-
-            cmd.TargetAudiencesApiDtos = cmd.TargetAudiencesApiDtos.Select(ta =>
-                                                    new TargetAudienceApiDto()
-                                                    {
-                                                        Uid = ta.Uid,
-                                                        TargetAudience = targetAudienceRepo.Get(ta.Uid)
-                                                    }).ToList();
-
-            cmd.MusicGenresApiDtos = cmd.MusicGenresApiDtos.Select(mg =>
-                                                    new MusicGenreApiDto()
-                                                    {
-                                                        Uid = mg.Uid,
-                                                        AdditionalInfo = mg.AdditionalInfo,
-                                                        MusicGenre = musicGenreRepo.Get(mg.Uid)
-                                                    }).ToList();
 
             var musicBandType = musicBandTypeRepo.Get(cmd.MusicBandTypeUid);
 
@@ -210,6 +204,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 }
             }
 
+            // TODO: Music Band has no Update method because the MyRio2C customer hasn't defined the fields that will validate if a band already exists!
+            // Defining this later is important to prevent a band from registering several times!
+
             var musicBand = new MusicBand(
                 musicBandType,
                 editionDto.Edition,
@@ -220,6 +217,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.Instagram,
                 cmd.Twitter,
                 cmd.Youtube,
+                cmd.WouldYouLikeParticipateBusinessRound,
                 !string.IsNullOrEmpty(cmd.ImageFile),
                 cmd.MusicProjectApiDto,
                 collaboratorDto?.EditionAttendeeCollaborator,
@@ -250,6 +248,59 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             return this.AppValidationResult;
+        }
+
+        /// <summary>
+        /// Updates the lists and validate.
+        /// </summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        private ValidationResult UpdateListsAndValidate(CreateMusicBand cmd)
+        {
+            ValidationResult validationResult = new ValidationResult();
+
+            // ---------------------------------------------------
+            // TargetAudiencesApiDtos
+            // ---------------------------------------------------
+            cmd.TargetAudiencesApiDtos = cmd.TargetAudiencesApiDtos.Select(ta =>
+                                                   new TargetAudienceApiDto()
+                                                   {
+                                                       Uid = ta.Uid,
+                                                       TargetAudience = this.targetAudienceRepo.Get(ta.Uid)
+                                                   }).ToList();
+
+            if (cmd.TargetAudiencesApiDtos.Any(dto => dto.TargetAudience == null))
+            {
+                var uidsNotFound = cmd.TargetAudiencesApiDtos.Where(dto => dto.TargetAudience == null).Select(dto => dto.Uid);
+
+                validationResult.Add(new ValidationError(string.Format(
+                    Messages.EntityNotAction,
+                    $@"{MusicBandApiDto.GetJsonPropertyAttributeName(nameof(MusicBandApiDto.TargetAudiencesApiDtos))}: {string.Join(", ", uidsNotFound)}",
+                    Labels.FoundM)));
+            }
+
+            // ---------------------------------------------------
+            // MusicGenresApiDtos
+            // ---------------------------------------------------
+            cmd.MusicGenresApiDtos = cmd.MusicGenresApiDtos.Select(mg =>
+                                                    new MusicGenreApiDto()
+                                                    {
+                                                        Uid = mg.Uid,
+                                                        AdditionalInfo = mg.AdditionalInfo,
+                                                        MusicGenre = this.musicGenreRepo.Get(mg.Uid)
+                                                    }).ToList();
+
+            if (cmd.MusicGenresApiDtos.Any(dto => dto.MusicGenre == null))
+            {
+                var uidsNotFound = cmd.MusicGenresApiDtos.Where(dto => dto.MusicGenre == null).Select(dto => dto.Uid);
+
+                validationResult.Add(new ValidationError(string.Format(
+                    Messages.EntityNotAction,
+                    $@"{MusicBandApiDto.GetJsonPropertyAttributeName(nameof(MusicBandApiDto.MusicGenresApiDtos))}: {string.Join(", ", uidsNotFound)}",
+                    Labels.FoundM)));
+            }
+
+            return validationResult;
         }
     }
 }

@@ -4,7 +4,7 @@
 // Created          : 23-03-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-10-2021
+// Last Modified On : 01-14-2023
 // ***********************************************************************
 // <copyright file="MusicBandApiDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,8 +13,10 @@
 // ***********************************************************************
 using Newtonsoft.Json;
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -41,6 +43,10 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonRequired]
         [JsonProperty("mainMusicInfluences")]
         public string MainMusicInfluences { get; set; }
+
+        [JsonRequired]
+        [JsonProperty("wouldYouLikeParticipateBusinessRound")]
+        public bool? WouldYouLikeParticipateBusinessRound { get; set; }
 
         /// <summary>
         /// Don't remove order. This is for JSON beauty design. 
@@ -108,7 +114,24 @@ namespace PlataformaRio2C.Domain.Dtos
         {
             this.ValidationResult = new ValidationResult();
 
+            if (!this.WouldYouLikeParticipateBusinessRound.HasValue)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, GetJsonPropertyAttributeName(nameof(WouldYouLikeParticipateBusinessRound)))));
+            }
+
             return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>
+        /// Gets the name of the json property attribute.
+        /// </summary>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <returns></returns>
+        public static string GetJsonPropertyAttributeName(string propertyName)
+        {
+            return typeof(MusicBandApiDto)
+                    .GetProperty(propertyName)?
+                    .GetCustomAttribute<JsonPropertyAttribute>()?.PropertyName;
         }
 
         #endregion
