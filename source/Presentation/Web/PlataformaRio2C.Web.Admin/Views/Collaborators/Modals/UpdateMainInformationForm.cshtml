@@ -207,7 +207,7 @@
         {
             <div class="col-10 ml-5">
                 <label class="kt-checkbox">
-                    <input type="checkbox" name="EditionsUids" id="EditionsUids" value="@edition.Uid" @if (Model.EditionsUids.Contains(edition.Uid)) { <text> checked</text> } @Html.GetUnobtrusiveValidationAttributesFor(m => m.CollaboratorGenderUid)> @edition.Name
+                    <input type="checkbox" name="EditionsUids" id="EditionsUids" value="@edition.Uid" @if (Model?.EditionsUids != null && Model.EditionsUids.Contains(edition.Uid)) { <text> checked</text> } @Html.GetUnobtrusiveValidationAttributesFor(m => m.CollaboratorGenderUid)> @edition.Name
                     <span></span>
                 </label>
             </div>
