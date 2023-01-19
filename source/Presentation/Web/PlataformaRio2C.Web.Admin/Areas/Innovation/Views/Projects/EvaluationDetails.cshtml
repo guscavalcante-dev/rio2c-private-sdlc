@@ -12,24 +12,24 @@
     {
         Area = "Innovation",
         id = Model.AttendeeInnovationOrganization.Id,
-        searchKeywords = ViewBag.SearchKeywords,
-        innovationOrganizationTrackOptionGroupUid = ViewBag.InnovationOrganizationTrackOptionGroupUid,
-        evaluationStatusUid = ViewBag.EvaluationStatusUid,
-        showBusinessRounds = ViewBag.ShowBusinessRounds,
-        Page = ViewBag.Page,
-        pageSize = ViewBag.PageSize
+        searchKeywords = viewModel.Search,
+        innovationOrganizationTrackOptionGroupUid = viewModel.InnovationOrganizationTrackOptionGroupUid,
+        evaluationStatusUid = viewModel.EvaluationStatusUid,
+        showBusinessRounds = viewModel.ShowBusinessRounds,
+        Page = viewModel.Page,
+        pageSize = viewModel.PageSize
     });
 
     var nextStepEvent = Url.Action("NextEvaluationDetails", "Projects", new
     {
         Area = "Innovation",
         id = Model.AttendeeInnovationOrganization.Id,
-        searchKeywords = ViewBag.SearchKeywords,
-        innovationOrganizationTrackOptionGroupUid = ViewBag.InnovationOrganizationTrackOptionGroupUid,
-        evaluationStatusUid = ViewBag.EvaluationStatusUid,
-        showBusinessRounds = ViewBag.ShowBusinessRounds,
-        Page = ViewBag.Page,
-        pageSize = ViewBag.PageSize
+        searchKeywords = viewModel.Search,
+        innovationOrganizationTrackOptionGroupUid = viewModel.InnovationOrganizationTrackOptionGroupUid,
+        evaluationStatusUid = viewModel.EvaluationStatusUid,
+        showBusinessRounds = viewModel.ShowBusinessRounds,
+        Page = viewModel.Page,
+        pageSize = viewModel.PageSize
     });
 }
 @Html.Hidden("AggregateId", Model.AttendeeInnovationOrganization.Uid)

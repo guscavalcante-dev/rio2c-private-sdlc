@@ -61,7 +61,6 @@ var InnovationProjectsDataTableWidget = function () {
             pageLength: pageLength,
             responsive: true,
             sScrollY: "520",
-            //bScrollCollapse: false,
             searchDelay: 2000,
             processing: true,
             serverSide: true,

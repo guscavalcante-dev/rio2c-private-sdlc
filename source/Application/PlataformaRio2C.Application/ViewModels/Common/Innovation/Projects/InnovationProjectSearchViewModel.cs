@@ -34,7 +34,7 @@ namespace PlataformaRio2C.Application.ViewModels
         public Guid? EvaluationStatusUid { get; set; }
 
         [Display(Name = nameof(Labels.ShowPitchings), ResourceType = typeof(Labels))]
-        public bool? ShowBusinessRounds { get; set; }
+        public bool ShowBusinessRounds { get; set; }
         
         public int? Page { get; set; }
         public int? PageSize { get; set; }
@@ -45,7 +45,7 @@ namespace PlataformaRio2C.Application.ViewModels
         public List<ProjectEvaluationStatus> ProjectEvaluationStatuses;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InnovationProjectSearchViewModel" /> class.
+        /// Initializes a new instance of the <see cref="InnovationProjectSearchViewModel"/> class.
         /// </summary>
         /// <param name="search">The search.</param>
         /// <param name="innovationOrganizationTrackOptionGroupUid">The innovation organization track option group uid.</param>
@@ -58,7 +58,7 @@ namespace PlataformaRio2C.Application.ViewModels
             string search,
             Guid? innovationOrganizationTrackOptionGroupUid,
             Guid? evaluationStatusUid,
-            bool? showBusinessRounds,
+            bool showBusinessRounds,
             int? page = 1,
             int? pageSize = 10,
             int? id = null)

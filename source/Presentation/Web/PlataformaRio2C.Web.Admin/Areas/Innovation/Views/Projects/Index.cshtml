@@ -1,5 +1,5 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
-@model CollaboratorSearchViewModel
+@model InnovationProjectSearchViewModel
 @{
     ViewBag.Title = Labels.ProjectsForPitching;
     var editionDto = ViewBag.EditionDto as EditionDto;
@@ -30,7 +30,7 @@
     @Scripts.Render("~/bundles/js/innovation.projects.list.widget.js")
     @Scripts.Render("~/bundles/js/innovation.projects.editioncount.widget.js")
     @Scripts.Render("~/bundles/js/innovation.projects.delete.js")
-<script>
+    <script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
             underEvaluation: '@Labels.UnderEvaluation',
@@ -42,20 +42,20 @@
         };
 
         var isProjectEvaluationClosed = @(Json.Encode(!editionDto.IsInnovationProjectEvaluationOpen()));
-        var searchKeywords = '@ViewBag.SearchKeywords';
-        var innovationOrganizationTrackOptionGroupUid = '@ViewBag.InnovationOrganizationTrackOptionGroupUid';
-        var evaluationStatusUid = '@ViewBag.EvaluationStatusUid';
-        var showBusinessRounds = '@ViewBag.showBusinessRounds';
+        var searchKeywords = '@Model.Search';
+        var innovationOrganizationTrackOptionGroupUid = '@Model.InnovationOrganizationTrackOptionGroupUid';
+        var evaluationStatusUid = '@Model.EvaluationStatusUid';
+        var showBusinessRounds = '@Model.ShowBusinessRounds';
 
         // Pagination -----------------------------------------------------------------------------
-        var initialPage = @(ViewBag.Page?.ToString() ?? "null");
-        var initialPageSize = @(ViewBag.PageSize?.ToString() ?? "null");
+        var initialPage = @(Model.Page?.ToString() ?? "null");
+        var initialPageSize = @(Model.PageSize?.ToString() ?? "null");
 
         jQuery(document).ready(function () {
            InnovationProjectsDataTableWidget.init();
            InnovationProjectsTotalCountWidget.init();
            InnovationProjectsEditionCountWidget.init();
         });
-</script>
+    </script>
 
 }
