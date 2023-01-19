@@ -4,7 +4,7 @@
 // Created          : 11-24-2022
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 11-30-2022
+// Last Modified On : 01-19-2023
 // ***********************************************************************
 // <copyright file="SymplaParticipant.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -46,7 +46,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla.Mode
         public string TicketName { get; set; }
 
         [JsonProperty("ticket_sale_price")]
-        public int TicketSalePrice { get; set; }
+        public decimal? TicketSalePrice { get; set; }
 
         [JsonProperty("first_name")]
         public string FirstName { get; set; }
