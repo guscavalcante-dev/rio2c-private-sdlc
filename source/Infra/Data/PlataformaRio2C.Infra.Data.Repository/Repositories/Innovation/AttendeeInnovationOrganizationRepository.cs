@@ -416,11 +416,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                             .ToList(),
 
                                    InnovationOrganizationTrackOptionGroupDtos = aio.AttendeeInnovationOrganizationTracks
-                                                                                    .Where(aiot => !aio.IsDeleted && 
-                                                                                                    !aiot.IsDeleted && 
+                                                                                    .Where(aiot => !aio.IsDeleted &&
+                                                                                                    !aiot.IsDeleted &&
                                                                                                     !aiot.InnovationOrganizationTrackOption.IsDeleted &&
-                                                                                                    (aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup != null ? 
-                                                                                                        !aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup.IsDeleted : 
+                                                                                                    (aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup != null ?
+                                                                                                        !aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup.IsDeleted :
                                                                                                         true))
                                                                                     .OrderBy(aiot => aiot.InnovationOrganizationTrackOption.DisplayOrder)
                                                                                     .GroupBy(aiot => aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup.Name)
@@ -1054,6 +1054,30 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
+        /// Finds the sustainable development widget dto asynchronous.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganizationUid">The attendee innovation organization uid.</param>
+        /// <returns></returns>
+        public async Task<AttendeeInnovationOrganizationDto> FindSustainableDevelopmentWidgetDtoAsync(Guid attendeeInnovationOrganizationUid)
+        {
+            var query = this.GetBaseQuery()
+                              .FindByUids(new List<Guid?> { attendeeInnovationOrganizationUid })
+                              .Select(aio => new AttendeeInnovationOrganizationDto
+                              {
+                                  AttendeeInnovationOrganization = aio,
+                                  InnovationOrganization = aio.InnovationOrganization,
+                                  AttendeeInnovationOrganizationSustainableDevelopmentObjectiveDto = aio.AttendeeInnovationOrganizationSustainableDevelopmentObjective.Select(aiosdo =>
+                                  new AttendeeInnovationOrganizationSustainableDevelopmentObjectiveDto
+                                  {
+                                      AttendeeInnovationOrganizationSustainableDevelopmentObjective = aiosdo,
+                                      InnovationOrganizationSustainableDevelopmentObjectivesOption = aiosdo.InnovationOrganizationSustainableDevelopmentObjectiveOption
+                                  })
+                              });
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+        /// <summary>
         /// Finds the experiences widget dto asynchronous.
         /// </summary>
         /// <param name="attendeeInnovationOrganizationUid">The attendee innovation organization uid.</param>
@@ -1153,8 +1177,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                           AttendeeInnovationOrganizationEvaluation = aioe,
                                                                                           EvaluatorUser = aioe.EvaluatorUser
                                                                                       }).ToList(),
-                                  //Current AttendeeInnovationOrganizationEvaluation by user Id
-                                  AttendeeInnovationOrganizationEvaluationDto = aio.AttendeeInnovationOrganizationEvaluations
+                              //Current AttendeeInnovationOrganizationEvaluation by user Id
+                              AttendeeInnovationOrganizationEvaluationDto = aio.AttendeeInnovationOrganizationEvaluations
                                                                                    .Where(aioe => !aioe.IsDeleted && aioe.EvaluatorUserId == userId)
                                                                                    .Select(aioe => new AttendeeInnovationOrganizationEvaluationDto
                                                                                    {

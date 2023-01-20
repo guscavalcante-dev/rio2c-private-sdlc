@@ -728,9 +728,6 @@
   <data name="CreateProject" xml:space="preserve">
     <value>Create Project</value>
   </data>
-  <data name="VerticalsAndCreativeEconomyThemes" xml:space="preserve">
-    <value>Verticals and Creative Economy Themes</value>
-  </data>
   <data name="CreativeMotivation" xml:space="preserve">
     <value>Creative Motivation</value>
   </data>
@@ -2695,6 +2692,9 @@
     <value>Summary</value>
     <comment>Sinopse</comment>
   </data>
+  <data name="SustainableDevelopmentObjectives" xml:space="preserve">
+    <value>Sustainable Development Objectives</value>
+  </data>
   <data name="Synopsis" xml:space="preserve">
     <value>Synopsis</value>
   </data>
@@ -2919,6 +2919,9 @@
   </data>
   <data name="Verticals" xml:space="preserve">
     <value>Verticals</value>
+  </data>
+  <data name="VerticalsAndCreativeEconomyThemes" xml:space="preserve">
+    <value>Verticals and Creative Economy Themes</value>
   </data>
   <data name="VerticalsAndCreativeEconomyThemes_Duplicate[1]" xml:space="preserve">
     <value>Verticals and Creative Economy Themes</value>

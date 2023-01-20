@@ -728,9 +728,6 @@
   <data name="CreateProject" xml:space="preserve">
     <value>Criar Projeto</value>
   </data>
-  <data name="VerticalsAndCreativeEconomyThemes" xml:space="preserve">
-    <value>Verticais e Temas da Economia Criativa</value>
-  </data>
   <data name="CreativeMotivation" xml:space="preserve">
     <value>Motivação Criativa</value>
   </data>
@@ -2705,6 +2702,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Sinopse</value>
     <comment>Sinopse</comment>
   </data>
+  <data name="SustainableDevelopmentObjectives" xml:space="preserve">
+    <value>Objetivos de Desenvolvimento Sustentável (ODS)</value>
+  </data>
   <data name="Synopsis" xml:space="preserve">
     <value>Ementa</value>
   </data>
@@ -2929,6 +2929,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   </data>
   <data name="Verticals" xml:space="preserve">
     <value>Verticais</value>
+  </data>
+  <data name="VerticalsAndCreativeEconomyThemes" xml:space="preserve">
+    <value>Verticais e Temas da Economia Criativa</value>
   </data>
   <data name="VerticalsAndCreativeEconomyThemes_Duplicate[1]" xml:space="preserve">
     <value>Verticais e Temas da Economia Criativa</value>
