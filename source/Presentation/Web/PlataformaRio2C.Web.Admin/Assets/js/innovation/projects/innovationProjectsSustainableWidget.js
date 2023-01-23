@@ -39,17 +39,15 @@ var InnovationProjectsSustainableDevelopmentWidget = function () {
                     enableShowPlugins();
                 },
                 // Error
-                onError: function() {
+                onError: function () {
                 }
             });
         })
-        .fail(function () {
-            //showAlert();
-            //MyRio2cCommon.unblock(widgetElementId);
-        })
-        .always(function() {
-            MyRio2cCommon.unblock({ idOrClass: widgetElementId });
-        });
+            .fail(function () {
+            })
+            .always(function () {
+                MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+            });
     };
 
     return {
@@ -57,6 +55,6 @@ var InnovationProjectsSustainableDevelopmentWidget = function () {
             debugger;
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
-        },      
+        },
     };
 }();
