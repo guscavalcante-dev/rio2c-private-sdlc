@@ -26,6 +26,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string Header { get; private set; }
         public string Payload { get; private set; }
         public string IpAddress { get; private set; }
+        public bool ReimportAllAttendees { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateSalesPlatformWebhookRequest" /> class.
@@ -37,6 +38,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="header">The header.</param>
         /// <param name="payload">The payload.</param>
         /// <param name="ipAddress">The ip address.</param>
+        /// <param name="reimportAllAttendees">if set to <c>true</c> [reimport all attendees].</param>
         public CreateSalesPlatformWebhookRequest(
             Guid salesPlatformWebhookRequestUid,
             string salesPlatformName,
@@ -44,7 +46,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string endpoint,
             string header,
             string payload,
-            string ipAddress)
+            string ipAddress,
+            bool reimportAllAttendees = false)
         {
             this.SalesPlatformWebhookRequestUid = salesPlatformWebhookRequestUid;
             this.SalesPlatformName = salesPlatformName;
@@ -53,6 +56,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Header = header;
             this.Payload = payload;
             this.IpAddress = ipAddress;
+            this.ReimportAllAttendees = reimportAllAttendees;
         }
     }
 }
