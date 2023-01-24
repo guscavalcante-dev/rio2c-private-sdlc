@@ -4,7 +4,7 @@
 // Created          : 07-12-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-16-2022
+// Last Modified On : 01-24-2023
 // ***********************************************************************
 // <copyright file="CreateSalesPlatformWebhookRequestCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -176,7 +176,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                                                                                                         .Contains(spaDto.Payload)).ToList();
                             }
 
-                            foreach (var salesPlatformAttendeeDto in salesPlatformAttendeeDtosToCreate.OrderBy(dto => dto.SalesPlatformUpdateDate))
+                            foreach (var salesPlatformAttendeeDto in salesPlatformAttendeeDtosToCreate)
                             {
                                 #region Create payloads into database
 
