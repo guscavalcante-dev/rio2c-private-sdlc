@@ -4,7 +4,7 @@
 // Created          : 07-12-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-16-2022
+// Last Modified On : 01-24-2023
 // ***********************************************************************
 // <copyright file="CreateSalesPlatformWebhookRequestCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -89,7 +89,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
                         var salesPlatformDto = await this.salesPlatformRepo.FindDtoByNameAsync(salesPlatform.Name);
                         var salesPlatformService = this.salesPlatformServiceFactory.Get(salesPlatformDto);
-                        var salesPlatformAttendeeDtos = salesPlatformService.GetAttendees();
+                        var salesPlatformAttendeeDtos = salesPlatformService.GetAttendees(cmd.ReimportAllAttendees);
                         if (salesPlatformAttendeeDtos.Count > 0)
                         {
                             List<SalesPlatformAttendeeDto> salesPlatformAttendeeDtosToCreate = new List<SalesPlatformAttendeeDto>();
@@ -166,6 +166,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                 #endregion
                             }
 
+                            if (cmd.ReimportAllAttendees)
+                            {
+                                var salesPlatformWebhookRequestDtos = await this.salesPlatformWebhookRequestRepo.FindAllDtoBySalesPlatformIdAsync(salesPlatform.Id);
+
+                                // Remove previously imported payloads from list to import
+                                salesPlatformAttendeeDtosToCreate = salesPlatformAttendeeDtosToCreate.Where(spaDto => !salesPlatformWebhookRequestDtos
+                                                                                                                        .Select(spwrDto => spwrDto.Payload)
+                                                                                                                        .Contains(spaDto.Payload)).ToList();
+                            }
+
                             foreach (var salesPlatformAttendeeDto in salesPlatformAttendeeDtosToCreate)
                             {
                                 #region Create payloads into database
@@ -183,7 +193,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                 this.salesPlatformWebhookRequestRepo.Create(salesPlatformWebhookRequest);
 
                                 // Updates last sales platform order date
-                                salesPlatform.UpdateLastSalesPlatformOrderDate(salesPlatformAttendeeDto.EventId, salesPlatformAttendeeDto.SalesPlatformUpdateDate);
+                                salesPlatform.UpdateLastSalesPlatformOrderDate(salesPlatformAttendeeDto.EventId, 
+                                                                               salesPlatformAttendeeDto.SalesPlatformUpdateDate);
                                 this.salesPlatformRepo.Update(salesPlatform);
 
                                 #endregion

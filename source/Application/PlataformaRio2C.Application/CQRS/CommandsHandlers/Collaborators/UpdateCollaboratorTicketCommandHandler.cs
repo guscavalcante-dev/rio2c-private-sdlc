@@ -15,6 +15,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -81,11 +82,19 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.SalesPlatformAttendeeDto.IsTicketPrinted,
                 cmd.SalesPlatformAttendeeDto.IsTicketUsed,
                 cmd.SalesPlatformAttendeeDto.TicketUpdateDate,
-                1);
+            1);
+
             if (!cmd.Collaborator.IsValid())
             {
                 this.AppValidationResult.Add(cmd.Collaborator.ValidationResult);
                 return this.AppValidationResult;
+            }
+
+            var attendeeCollaborator = cmd.Collaborator.GetAttendeeCollaboratorByEditionId(cmd.Edition.Id);
+            bool sendWelcomeEmail = attendeeCollaborator != null && !attendeeCollaborator.WelcomeEmailSendDate.HasValue;
+            if (sendWelcomeEmail)
+            {
+                cmd.Collaborator?.SendWelcomeEmailSendDate(cmd.Edition.Id, 1);
             }
 
             this.CollaboratorRepo.Update(cmd.Collaborator);
@@ -94,8 +103,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #region Send welcome email
 
-            var attendeeCollaborator = cmd.Collaborator.GetAttendeeCollaboratorByEditionId(cmd.Edition.Id);
-            if (attendeeCollaborator != null && !attendeeCollaborator.WelcomeEmailSendDate.HasValue)
+            if (sendWelcomeEmail)
             {
                 await this.CommandBus.Send(new SendProducerWelcomeEmailAsync(
                     cmd.Collaborator.User.SecurityStamp,
