@@ -4,7 +4,7 @@
 // Created          : 11-24-2022
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 11-24-2022
+// Last Modified On : 01-19-2023
 // ***********************************************************************
 // <copyright file="SymplaOrder.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,7 +36,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla.Mode
         public string TransactionType { get; set; }
 
         [JsonProperty("order_total_sale_price")]
-        public int OrderTotalSalePrice { get; set; }
+        public decimal? OrderTotalSalePrice { get; set; }
 
         [JsonProperty("buyer_first_name")]
         public string BuyerFirstName { get; set; }

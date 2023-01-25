@@ -74,9 +74,10 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti
         /// <summary>
         /// Gets the attendees by event identifier.
         /// </summary>
+        /// <param name="reimportAllAttendees">if set to <c>true</c> [reimport all attendees].</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public List<SalesPlatformAttendeeDto> GetAttendees()
+        public List<SalesPlatformAttendeeDto> GetAttendees(bool reimportAllAttendees = false)
         {
             throw new NotImplementedException();
         }

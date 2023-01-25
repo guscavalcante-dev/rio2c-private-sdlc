@@ -1098,7 +1098,7 @@
     <comment>Voo</comment>
   </data>
   <data name="FondFP" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ForgotPassword" xml:space="preserve">
     <value>Esqueceu a senha</value>
@@ -1935,7 +1935,7 @@
     <comment>Players cadastrados</comment>
   </data>
   <data name="PlayersRegulationPdf" xml:space="preserve">
-    <value>Regulamento Rodadas de Negócio (PLAYER) - Rio2C 2022 (PDF)</value>
+    <value>Regulamento Rodadas de Negócio (PLAYER) - Rio2C 2023 (PDF)</value>
   </data>
   <data name="PlayersSelectedForEvaluation" xml:space="preserve">
     <value>Players selecionados para avaliação</value>
@@ -2661,7 +2661,6 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   </data>
   <data name="StepByStepForAudiovisualProjectEnrollment" xml:space="preserve">
     <value>Passo a passo para Inscrição de Projetos Audiovisual {0} (PDF)</value>
-    
   </data>
   <data name="Steps" xml:space="preserve">
     <value>Passos</value>

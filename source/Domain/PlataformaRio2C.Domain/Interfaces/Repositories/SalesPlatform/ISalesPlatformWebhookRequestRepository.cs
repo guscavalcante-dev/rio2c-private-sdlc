@@ -23,5 +23,6 @@ namespace PlataformaRio2C.Domain.Interfaces
     {
         Task<List<SalesPlatformWebhookRequest>> FindAllByPendingAsync();
         Task<List<SalesPlatformWebhookRequestDto>> FindAllDtoByPendingAsync();
+        Task<List<SalesPlatformWebhookRequestDto>> FindAllDtoBySalesPlatformIdAsync(int salesPlatformId);
     }    
 }

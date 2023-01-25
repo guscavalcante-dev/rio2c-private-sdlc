@@ -139,10 +139,12 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// Endpoint for Sympla webhook requests
         /// </summary>
         /// <param name="key">The key.</param>
+        /// <param name="reimportAllAttendees">if set to <c>true</c> [reimport all attendees].</param>
         /// <returns></returns>
+        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
         [HttpGet]
         [Route("sympla/{key?}")]
-        public async Task<IHttpActionResult> Sympla(string key)
+        public async Task<IHttpActionResult> Sympla(string key, bool reimportAllAttendees = false)
         {
             var result = new AppValidationResult();
 
@@ -155,7 +157,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     HttpContext.Current.Request.Url.AbsoluteUri,
                     Request.Headers.ToString(),
                     null,       // Sympla gets the payload inside command handler
-                    HttpContext.Current.Request.GetIpAddress()));
+                    HttpContext.Current.Request.GetIpAddress(),
+                    reimportAllAttendees));
 
                 if (!result.IsValid)
                 {

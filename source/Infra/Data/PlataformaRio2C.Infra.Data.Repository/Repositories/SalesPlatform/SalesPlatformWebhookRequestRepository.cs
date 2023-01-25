@@ -154,5 +154,24 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return await query.ToListAsync();
         }
+
+        /// <summary>
+        /// Finds all dto by sales platform identifier asynchronous.
+        /// </summary>
+        /// <param name="salesPlatformId">The sales platform identifier.</param>
+        /// <returns></returns>
+        public async Task<List<SalesPlatformWebhookRequestDto>> FindAllDtoBySalesPlatformIdAsync(int salesPlatformId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindBySalePlatformId(salesPlatformId)
+                                .OrderBy(spwr => spwr.CreateDate)
+                                .Select(spwr => new SalesPlatformWebhookRequestDto
+                                {
+                                    Uid = spwr.Uid,
+                                    Payload = spwr.Payload
+                                });
+
+            return await query.ToListAsync();
+        }
     }
 }

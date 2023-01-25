@@ -84,6 +84,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.SalesPlatformAttendeeDto.IsTicketUsed,
                     cmd.SalesPlatformAttendeeDto.TicketUpdateDate,
                     1);
+
+                collaborator?.SendWelcomeEmailSendDate(cmd.Edition.Id, cmd.UserId);
+
                 if (!collaborator.IsValid())
                 {
                     this.AppValidationResult.Add(collaborator.ValidationResult);

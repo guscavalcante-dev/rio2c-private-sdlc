@@ -87,8 +87,10 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla
         /// <summary>
         /// Gets the attendees.
         /// </summary>
+        /// <param name="reimportAllAttendees">if set to <c>true</c> [reimport all attendees].</param>
         /// <returns></returns>
-        public List<SalesPlatformAttendeeDto> GetAttendees()
+        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException">The sale platform is required.</exception>
+        public List<SalesPlatformAttendeeDto> GetAttendees(bool reimportAllAttendees = false)
         {
             if (this.salesPlatformDto == null)
             {
@@ -99,10 +101,17 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla
 
             foreach (var attendeeSalesPlatform in salesPlatformDto.AttendeeSalesPlatforms)
             {
-                var symplaOrdersUpdated = this.GetUpdatedOrders(attendeeSalesPlatform.SalesPlatformEventid,
-                                                                attendeeSalesPlatform.LastSalesPlatformOrderDate);
+                List<SymplaOrder> symplaOrders = new List<SymplaOrder>();
+                if (reimportAllAttendees)
+                {
+                    symplaOrders = this.GetAllOrders(attendeeSalesPlatform.SalesPlatformEventid);
+                }
+                else
+                {
+                    symplaOrders = this.GetUpdatedOrders(attendeeSalesPlatform.SalesPlatformEventid, attendeeSalesPlatform.LastSalesPlatformOrderDate);
+                }
 
-                foreach (var symplaOrder in symplaOrdersUpdated)
+                foreach (var symplaOrder in symplaOrders)
                 {
                     var symplaParticipants = this.GetParticipantsByOrderId(attendeeSalesPlatform.SalesPlatformEventid, symplaOrder.Id);
                     foreach (var participant in symplaParticipants)
@@ -176,8 +185,10 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla
         #region Orders
 
         /// <summary>
-        /// Gets the orders.
+        /// Gets the updated orders.
         /// </summary>
+        /// <param name="eventId">The event identifier.</param>
+        /// <param name="lastOrderUpdatedDate">The last order updated date.</param>
         /// <returns></returns>
         private List<SymplaOrder> GetUpdatedOrders(string eventId, DateTime? lastOrderUpdatedDate)
         {
@@ -209,6 +220,30 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla
             }
 
             return symplaOrdersUpdated;
+        }
+
+        /// <summary>
+        /// Gets all orders.
+        /// </summary>
+        /// <param name="eventId">The event identifier.</param>
+        /// <returns></returns>
+        private List<SymplaOrder> GetAllOrders(string eventId)
+        {
+            var symplaOrders = new List<SymplaOrder>();
+            var hasNoNextPageOrIsLastProcessedOrderFound = false;
+            int page = 1;
+
+            while (!hasNoNextPageOrIsLastProcessedOrderFound)
+            {
+                var symplaOrdersPaged = this.GetOrdersByPage(eventId, page++);
+               symplaOrders.AddRange(symplaOrdersPaged.SymplaOrders);
+
+                // Stops the search when it finds the last Order processed or reach at last page.
+                // Orders below this date has already been processed before!
+                hasNoNextPageOrIsLastProcessedOrderFound = !symplaOrdersPaged.Pagination.HasNext;
+            }
+
+            return symplaOrders;
         }
 
         /// <summary>

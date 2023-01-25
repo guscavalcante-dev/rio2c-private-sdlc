@@ -20,6 +20,7 @@ namespace PlataformaRio2C.Domain.Dtos
     public class SalesPlatformWebhookRequestDto
     {
         public Guid Uid { get; set; }
+        public string Payload { get; set; }
 
         public SalesPlatformWebhookRequest SalesPlatformWebhookRequest { get; set; }
         public SalesPlatformDto SalesPlatformDto { get; set; }
