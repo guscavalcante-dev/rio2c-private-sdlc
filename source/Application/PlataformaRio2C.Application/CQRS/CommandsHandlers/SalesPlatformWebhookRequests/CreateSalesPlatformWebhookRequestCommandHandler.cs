@@ -76,7 +76,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.uow.BeginTransaction();
 
             var salesPlatform = await this.salesPlatformRepo.FindByNameAsync(cmd.SalesPlatformName);
-            if(salesPlatform == null)
+            if (salesPlatform == null)
             {
                 throw new DomainException(string.Format("Sales platform {0} not found", cmd.SalesPlatformName));
             }
@@ -192,10 +192,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
                                 this.salesPlatformWebhookRequestRepo.Create(salesPlatformWebhookRequest);
 
-                                // Updates last sales platform order date
-                                salesPlatform.UpdateLastSalesPlatformOrderDate(salesPlatformAttendeeDto.EventId, 
-                                                                               salesPlatformAttendeeDto.SalesPlatformUpdateDate);
-                                this.salesPlatformRepo.Update(salesPlatform);
+                                // Sympla platform doesn't return "NotAttending" status, its created only in MyRio, so, cannot save this date at database.
+                                if (salesPlatformAttendeeDto.SalesPlatformAttendeeStatus != SalesPlatformAttendeeStatus.NotAttending)
+                                {
+                                    // Updates last sales platform order date
+                                    salesPlatform.UpdateLastSalesPlatformOrderDate(salesPlatformAttendeeDto.EventId,
+                                                                                   salesPlatformAttendeeDto.SalesPlatformUpdateDate);
+
+                                    this.salesPlatformRepo.Update(salesPlatform);
+                                }
 
                                 #endregion
                             }
