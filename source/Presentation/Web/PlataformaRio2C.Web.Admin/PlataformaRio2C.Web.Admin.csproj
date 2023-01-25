@@ -894,7 +894,7 @@
     <Content Include="Assets\js\innovation\projects\innovation.projects.founders.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.evaluators.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.businessinformation.widget.js" />
-    <Content Include="Assets\js\innovation\projects\innovationProjectsSustainableWidget.js" />
+    <Content Include="Assets\js\innovation\projects\innovation.projects.sustainable.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.technologies.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.maininformation.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.objectives.widget.js" />

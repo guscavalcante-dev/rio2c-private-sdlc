@@ -968,7 +968,7 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/innovation/projects/innovation.projects.founders.widget.js",
                 "~/Assets/js/innovation/projects/innovation.projects.businessinformation.widget.js",
                 "~/Assets/js/innovation/projects/innovation.projects.presentation.widget.js",
-                 "~/Assets/js/innovation/projects/innovationProjectsSustainableWidget.js"
+                 "~/Assets/js/innovation/projects/innovation.projects.sustainable.widget.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/js/innovation.projects.evaluation.widget.js").Include(

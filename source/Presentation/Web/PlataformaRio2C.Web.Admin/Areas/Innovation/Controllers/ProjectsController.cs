@@ -75,7 +75,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             IInnovationOrganizationObjectivesOptionRepository innovationOrganizationObjectivesOptionRepository,
             IInnovationOrganizationTechnologyOptionRepository innovationOrganizationTechnologyOptionRepository,
             IInnovationOrganizationExperienceOptionRepository innovationOrganizationExperienceOptionRepository,
-            IInnovationOrganizationSustainableDevelopmentObjectivesOptionRepository innovationOrganizationSustainableDevelopmentObjectivesOptionRepo
+            IInnovationOrganizationSustainableDevelopmentObjectivesOptionRepository innovationOrganizationSustainableDevelopmentObjectivesOptionRepository
             )
             : base(commandBus, identityController)
         {
@@ -86,7 +86,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             this.innovationOrganizationObjectivesOptionRepo = innovationOrganizationObjectivesOptionRepository;
             this.innovationOrganizationTechnologyOptionRepo = innovationOrganizationTechnologyOptionRepository;
             this.innovationOrganizationExperienceOptionRepo = innovationOrganizationExperienceOptionRepository;
-            this.innovationOrganizationSustainableDevelopmentObjectivesOptionRepo = innovationOrganizationSustainableDevelopmentObjectivesOptionRepo;
+            this.innovationOrganizationSustainableDevelopmentObjectivesOptionRepo = innovationOrganizationSustainableDevelopmentObjectivesOptionRepository;
         }
 
         #region List
