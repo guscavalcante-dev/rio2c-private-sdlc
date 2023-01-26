@@ -49,6 +49,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         private readonly IInnovationOrganizationObjectivesOptionRepository innovationOrganizationObjectivesOptionRepo;
         private readonly IInnovationOrganizationTechnologyOptionRepository innovationOrganizationTechnologyOptionRepo;
         private readonly IInnovationOrganizationExperienceOptionRepository innovationOrganizationExperienceOptionRepo;
+        private readonly IInnovationOrganizationSustainableDevelopmentObjectivesOptionRepository innovationOrganizationSustainableDevelopmentObjectivesOptionRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectsController" /> class.
@@ -73,7 +74,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             IInnovationOrganizationTrackOptionGroupRepository innovationOrganizationTrackOptionGroupRepository,
             IInnovationOrganizationObjectivesOptionRepository innovationOrganizationObjectivesOptionRepository,
             IInnovationOrganizationTechnologyOptionRepository innovationOrganizationTechnologyOptionRepository,
-            IInnovationOrganizationExperienceOptionRepository innovationOrganizationExperienceOptionRepository
+            IInnovationOrganizationExperienceOptionRepository innovationOrganizationExperienceOptionRepository,
+            IInnovationOrganizationSustainableDevelopmentObjectivesOptionRepository innovationOrganizationSustainableDevelopmentObjectivesOptionRepository
             )
             : base(commandBus, identityController)
         {
@@ -84,6 +86,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             this.innovationOrganizationObjectivesOptionRepo = innovationOrganizationObjectivesOptionRepository;
             this.innovationOrganizationTechnologyOptionRepo = innovationOrganizationTechnologyOptionRepository;
             this.innovationOrganizationExperienceOptionRepo = innovationOrganizationExperienceOptionRepository;
+            this.innovationOrganizationSustainableDevelopmentObjectivesOptionRepo = innovationOrganizationSustainableDevelopmentObjectivesOptionRepository;
         }
 
         #region List
@@ -579,6 +582,36 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                 pages = new List<dynamic>
                 {
                     new { page = this.RenderRazorViewToString("Widgets/ObjectivesWidget", objectivesWidgetDto), divIdOrClass = "#ProjectObjectivesWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Sustainable Development Objectives Widget
+
+        /// <summary>
+        /// Shows the sustainable development objectives widget.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganizationUid">The attendee innovation organization uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowSustainableDevelopmentWidget(Guid? attendeeInnovationOrganizationUid)
+        {
+            var sustainableDevelopmentWidgetDto = await this.attendeeInnovationOrganizationRepo.FindSustainableDevelopmentWidgetDtoAsync(attendeeInnovationOrganizationUid ?? Guid.Empty);
+            if (sustainableDevelopmentWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Startup, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+            
+            ViewBag.InnovationOrganizationSustainableDevelopmentObjectivesOptions = await this.innovationOrganizationSustainableDevelopmentObjectivesOptionRepo.FindAllAsync();
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/SustainableDevelopmentWidget", sustainableDevelopmentWidgetDto), divIdOrClass = "#ProjectsSustainableDevelopmentWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }

@@ -213,6 +213,7 @@
     <Compile Include="Dtos\Innovation\AttendeeInnovationOrganizationEvaluationDto.cs" />
     <Compile Include="Dtos\Innovation\AttendeeInnovationOrganizationFounderDto.cs" />
     <Compile Include="Dtos\Innovation\AttendeeInnovationOrganizationCompetitorDto.cs" />
+    <Compile Include="Dtos\Innovation\AttendeeInnovationOrganizationSustainableDevelopmentObjectiveDto.cs" />
     <Compile Include="Dtos\Innovation\AttendeeInnovationOrganizationTechnologyDto.cs" />
     <Compile Include="Dtos\Innovation\AttendeeInnovationOrganizationExperienceDto.cs" />
     <Compile Include="Dtos\Innovation\AttendeeInnovationOrganizationObjectiveDto.cs" />

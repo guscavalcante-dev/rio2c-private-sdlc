@@ -6208,6 +6208,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Objetivos de Desenvolvimento Sustentável (ODS).
+        /// </summary>
+        public static string SustainableDevelopmentObjectives {
+            get {
+                return ResourceManager.GetString("SustainableDevelopmentObjectives", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ementa.
         /// </summary>
         public static string Synopsis {

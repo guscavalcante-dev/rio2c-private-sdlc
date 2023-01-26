@@ -1,0 +1,50 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Entities;
+@using System.Globalization
+@model AttendeeInnovationOrganizationDto
+@{
+    var objectiveOptions = ViewBag.InnovationOrganizationSustainableDevelopmentObjectivesOptions as List<InnovationOrganizationSustainableDevelopmentObjectivesOption>;
+}
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            @Labels.SustainableDevelopmentObjectives
+        </h3>
+    </div>
+</div>
+<div class="kt-portlet__body">
+    @if (objectiveOptions?.Any() == true)
+    {
+        <div class="kt-widget4 rio2c-scroll" style="max-height: 220px;">
+            @foreach (var objectiveOption in objectiveOptions.OrderBy(a => a.DisplayOrder))
+            {
+                var attendeeInnovationOrganizationSustainableDto = Model.GetAttendeeInnovationOrganizationSustainableDevelopmentObjectiveOptionUid(objectiveOption.Uid);
+                <div class="kt-widget4__item pt-2 pb-2">
+                    @if (attendeeInnovationOrganizationSustainableDto != null)
+                    {
+                        <div class="kt-widget4__pic kt-font-success">
+                            <i class="la la-check"></i>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="kt-widget4__pic kt-font-danger">
+                            <i class="la la-close"></i>
+                        </div>
+                    }
+                    <div class="kt-widget4__info">
+                        <span class="kt-widget4__title">@objectiveOption.GetNameTranslation(CultureInfo.CurrentCulture.ToString())</span>
+                        @if (objectiveOption.HasAdditionalInfo && !string.IsNullOrEmpty(attendeeInnovationOrganizationSustainableDto?.AttendeeInnovationOrganizationSustainableDevelopmentObjective?.AdditionalInfo))
+                        {
+                            @("» " + attendeeInnovationOrganizationSustainableDto.AttendeeInnovationOrganizationSustainableDevelopmentObjective.AdditionalInfo)
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.SustainableDevelopmentObjectives, Labels.FoundF)</span>
+    }
+</div>

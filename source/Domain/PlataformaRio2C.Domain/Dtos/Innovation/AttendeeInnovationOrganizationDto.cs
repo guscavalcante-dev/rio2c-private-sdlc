@@ -33,6 +33,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<AttendeeInnovationOrganizationTechnologyDto> AttendeeInnovationOrganizationTechnologyDtos { get; set; }
         public IEnumerable<AttendeeInnovationOrganizationObjectiveDto> AttendeeInnovationOrganizationObjectiveDtos { get; set; }
         public IEnumerable<AttendeeInnovationOrganizationEvaluationDto> AttendeeInnovationOrganizationEvaluationDtos { get; set; }
+        public IEnumerable<AttendeeInnovationOrganizationSustainableDevelopmentObjectiveDto> AttendeeInnovationOrganizationSustainableDevelopmentObjectiveDto { get; set; }
 
         /// <summary>
         /// Gets the attendee innovation organization evaluation by user identifier.
@@ -80,6 +81,16 @@ namespace PlataformaRio2C.Domain.Dtos
         public AttendeeInnovationOrganizationObjectiveDto GetAttendeeInnovationOrganizationObjectiveByObjectiveOptionUid(Guid objectiveOptionUid)
         {
             return this.AttendeeInnovationOrganizationObjectiveDtos?.FirstOrDefault(aiotDto => aiotDto.InnovationOrganizationObjectivesOption.Uid == objectiveOptionUid);
+        }
+
+        /// <summary>
+        /// Gets the attendee innovation organization objective by objective option uid.
+        /// </summary>
+        /// <param name="objectiveOptionUid">The objective option uid.</param>
+        /// <returns></returns>
+        public AttendeeInnovationOrganizationSustainableDevelopmentObjectiveDto GetAttendeeInnovationOrganizationSustainableDevelopmentObjectiveOptionUid(Guid objectiveOptionUid)
+        {
+            return this.AttendeeInnovationOrganizationSustainableDevelopmentObjectiveDto?.FirstOrDefault(aiosDto => aiosDto.InnovationOrganizationSustainableDevelopmentObjectivesOption.Uid == objectiveOptionUid);
         }
 
         /// <summary>

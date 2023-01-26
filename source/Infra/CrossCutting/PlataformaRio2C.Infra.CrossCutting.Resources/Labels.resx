@@ -2701,6 +2701,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Sinopse</value>
     <comment>Sinopse</comment>
   </data>
+  <data name="SustainableDevelopmentObjectives" xml:space="preserve">
+    <value>Objetivos de Desenvolvimento Sustentável (ODS)</value>
+  </data>
   <data name="Synopsis" xml:space="preserve">
     <value>Ementa</value>
   </data>
