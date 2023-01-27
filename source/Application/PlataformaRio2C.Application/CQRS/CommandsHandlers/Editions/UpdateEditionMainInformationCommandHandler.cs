@@ -93,7 +93,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.SellStartDate.Value,
                 cmd.SellEndDate.Value,
                 cmd.OneToOneMeetingsScheduleDate.Value,
-                cmd.UserId);
+                cmd.UserId,
+                cmd.SpeakersApiHighlightPositionsCount);
 
             if (!edition.IsValid())
             {

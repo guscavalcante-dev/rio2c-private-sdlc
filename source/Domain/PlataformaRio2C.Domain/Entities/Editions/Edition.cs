@@ -37,6 +37,7 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset SellStartDate { get; private set; }
         public DateTimeOffset SellEndDate { get; private set; }      
         public DateTimeOffset OneToOneMeetingsScheduleDate { get; private set; }
+        public int? SpeakersApiHighlightPositionsCount { get; private set; }
 
         #endregion
 
@@ -99,11 +100,7 @@ namespace PlataformaRio2C.Domain.Entities
         public int CartoonCommissionMaximumApprovedProjectsCount { get; private set; }
 
         #endregion
-
-        #region Speakers
-        public int SpeakersApiHighlightPositionsCount { get; private set; }
-        #endregion
-
+              
         #endregion
 
         public virtual ICollection<AttendeeOrganization> AttendeeOrganizations { get; private set; }
@@ -295,7 +292,8 @@ namespace PlataformaRio2C.Domain.Entities
             DateTime sellStartDate,
             DateTime sellEndDate,
             DateTime oneToOneMeetingsScheduleDate,
-            int userId)
+            int userId,
+            int? speakersApiHighlightPositionsCount)
         {
             this.Name = name;
             this.UrlCode = urlCode;
@@ -306,6 +304,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SellStartDate = sellStartDate.ToUtcTimeZone();
             this.SellEndDate = sellEndDate.ToEndDateTimeOffset();
             this.OneToOneMeetingsScheduleDate = oneToOneMeetingsScheduleDate.ToUtcTimeZone();
+            this.SpeakersApiHighlightPositionsCount = speakersApiHighlightPositionsCount;
 
             base.SetUpdateDate(userId);
         }

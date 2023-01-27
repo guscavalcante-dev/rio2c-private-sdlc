@@ -2603,6 +2603,9 @@
     <value>Speakers</value>
     <comment>Palestrantes</comment>
   </data>
+  <data name="SpeakersApiHighlightPositionsCount" xml:space="preserve">
+    <value>Speakers API Featured Position Count</value>
+  </data>
   <data name="SpeakersRoles" xml:space="preserve">
     <value>Speakers Roles</value>
     <comment>Funções dos Palestrantes</comment>

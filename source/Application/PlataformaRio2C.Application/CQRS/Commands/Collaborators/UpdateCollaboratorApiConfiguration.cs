@@ -97,8 +97,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             // If the parameter comes null. Set default 5
             if (speakersApiHighlightPositionsCount == null)
                 ApiHighlightPositions = new[] { 1, 2, 3, 4, 5 };
-
-            ApiHighlightPositions = Enumerable.Range(1, speakersApiHighlightPositionsCount.Value).ToArray();
+            else
+                ApiHighlightPositions = Enumerable.Range(1, speakersApiHighlightPositionsCount.Value).ToArray();
         }
     }
 }
