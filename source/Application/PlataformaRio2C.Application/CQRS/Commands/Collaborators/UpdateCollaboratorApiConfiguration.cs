@@ -82,7 +82,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string collaboratorTypeName,
             int userId,
             Guid userUid,
-            int? editionId,
+            int editionId,
             Guid? editionUid,
             string userInterfaceLanguage)
         {
@@ -92,13 +92,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Generates the count speakers API highlight positions.</summary>
         /// <param name="speakersApiHighlightPositionsCount">The speakers API highlight positions count.</param>
-        private void GenerateCountSpeakersApiHighlightPositions(int? speakersApiHighlightPositionsCount)
+        private void GenerateCountSpeakersApiHighlightPositions(int speakersApiHighlightPositionsCount)
         {
-            // If the parameter comes null. Set default 5
-            if (speakersApiHighlightPositionsCount == null)
-                ApiHighlightPositions = new[] { 1, 2, 3, 4, 5 };
-            else
-                ApiHighlightPositions = Enumerable.Range(1, speakersApiHighlightPositionsCount.Value).ToArray();
+            ApiHighlightPositions = Enumerable.Range(1, speakersApiHighlightPositionsCount).ToArray();
         }
     }
 }

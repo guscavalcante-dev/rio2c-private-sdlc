@@ -65,7 +65,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = nameof(SpeakersApiHighlightPositionsCount), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public int? SpeakersApiHighlightPositionsCount { get; set; }
+        public int SpeakersApiHighlightPositionsCount { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EditionMainInformationBaseCommand"/> class.

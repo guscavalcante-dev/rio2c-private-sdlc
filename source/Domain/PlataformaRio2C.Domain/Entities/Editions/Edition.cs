@@ -37,7 +37,7 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset SellStartDate { get; private set; }
         public DateTimeOffset SellEndDate { get; private set; }      
         public DateTimeOffset OneToOneMeetingsScheduleDate { get; private set; }
-        public int? SpeakersApiHighlightPositionsCount { get; private set; }
+        public int SpeakersApiHighlightPositionsCount { get; private set; }
 
         #endregion
 
@@ -293,7 +293,7 @@ namespace PlataformaRio2C.Domain.Entities
             DateTime sellEndDate,
             DateTime oneToOneMeetingsScheduleDate,
             int userId,
-            int? speakersApiHighlightPositionsCount)
+            int speakersApiHighlightPositionsCount)
         {
             this.Name = name;
             this.UrlCode = urlCode;

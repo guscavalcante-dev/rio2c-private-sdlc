@@ -36,7 +36,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset SellStartDate { get; private set; }
         public DateTimeOffset SellEndDate { get; private set; }
         public DateTimeOffset OneToOneMeetingsScheduleDate { get; private set; }
-        public int? SpeakersApiHighlightPositionsCount { get; set; }
+        public int SpeakersApiHighlightPositionsCount { get; set; }
 
         #endregion
 
@@ -121,7 +121,7 @@ namespace PlataformaRio2C.Domain.Dtos
             this.SellStartDate = entity.SellStartDate;
             this.SellEndDate = entity.SellEndDate;
             this.OneToOneMeetingsScheduleDate = entity.OneToOneMeetingsScheduleDate;
-            this.SpeakersApiHighlightPositionsCount = entity.SpeakersApiHighlightPositionsCount ?? 5;
+            this.SpeakersApiHighlightPositionsCount = entity.SpeakersApiHighlightPositionsCount;
 
             // Audiovisual - Negotiations
             this.ProjectSubmitStartDate = entity.ProjectSubmitStartDate;
