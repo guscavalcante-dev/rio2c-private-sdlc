@@ -4,7 +4,7 @@
 // Created          : 06-28-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-27-2022
+// Last Modified On : 01-27-2023
 // ***********************************************************************
 // <copyright file="InnovationApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -94,7 +94,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
         /// <response code="200">OK</response>
         /// <response code="500">Internal Server Error</response>
-        [Route("create-startup/{key}"), HttpPost]
+        [Route("create-startup/{key?}"), HttpPost]
         [SwaggerResponse(System.Net.HttpStatusCode.OK)]
         [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> CreateStartup(string key,  [FromBody] InnovationOrganizationApiDto innovationOrganizationApiDto)

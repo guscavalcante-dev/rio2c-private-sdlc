@@ -4,7 +4,7 @@
 // Created          : 01-11-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-11-2023
+// Last Modified On : 01-27-2023
 // ***********************************************************************
 // <copyright file="InnovationProjectSearchViewModel.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,6 +18,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Application.ViewModels
 {
@@ -43,6 +44,8 @@ namespace PlataformaRio2C.Application.ViewModels
         public List<InnovationOrganizationTrackOptionGroup> InnovationOrganizationTrackOptionGroups;
 
         public List<ProjectEvaluationStatus> ProjectEvaluationStatuses;
+
+        public X.PagedList.IPagedList<AttendeeInnovationOrganizationDto> AttendeeInnovationOrganizationDtos;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InnovationProjectSearchViewModel"/> class.
@@ -75,6 +78,15 @@ namespace PlataformaRio2C.Application.ViewModels
         /// <summary>Initializes a new instance of the <see cref="InnovationProjectSearchViewModel"/> class.</summary>
         public InnovationProjectSearchViewModel()
         {
+            if (!this.Page.HasValue)
+            {
+                this.Page = 1;
+            }
+
+            if (!this.PageSize.HasValue)
+            {
+                this.PageSize = 12;
+            }
         }
 
         /// <summary>

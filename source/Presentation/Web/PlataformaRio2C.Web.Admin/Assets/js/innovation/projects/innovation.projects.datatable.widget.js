@@ -4,7 +4,7 @@
 // Created          : 07-24-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-11-2023
+// Last Modified On : 01-27-2023
 // ***********************************************************************
 // <copyright file="innovation.projects.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -263,7 +263,7 @@ var InnovationProjectsDataTableWidget = function () {
                         html += '\          <i class="la la-ellipsis-h"></i>';
                         html += '\      </a>';
                         html += '\      <div class="dropdown-menu dropdown-menu-right">';
-                        html += '\          <button class="dropdown-item" onclick="InnovationProjectsDataTableWidget.showDetails(\'' + row.AttendeeInnovationOrganizationId + '\', \'' + searchKeywords + '\', \'' + innovationOrganizationTrackOptionGroupUid + '\', \'' + evaluationStatusUid + '\', \'' + showBusinessRounds + '\', \'' + initialPage + '\', \'' + initialPageSize + '\');">';
+                        html += '\          <button class="dropdown-item" onclick="InnovationProjectsDataTableWidget.showDetails(\'' + row.AttendeeInnovationOrganizationId + '\', \'' + searchKeywords + '\', \'' + initialPage + '\', \'' + initialPageSize + '\');">';
                         html += '\              <i class="la la-eye"></i>' + labels.view + '';
                         html += '\          </button>';
                         html += '\          <button class="dropdown-item" onclick="InnovationProjectsDelete.showModal(\'' + row.InnovationOrganizationUid + '\');">';
@@ -341,16 +341,16 @@ var InnovationProjectsDataTableWidget = function () {
     };
 
     // Details ------------------------------------------------------------------------------------
-    var showDetails = function (attendeeInnovationOrganizationId, searchKeywords, innovationOrganizationTrackOptionGroupUid, evaluationStatusUid, showBusinessRounds, page, pageSize) {
+    var showDetails = function (attendeeInnovationOrganizationId, searchKeywords, page, pageSize) {
         if (MyRio2cCommon.isNullOrEmpty(attendeeInnovationOrganizationId)) {
 		    return;
 	    }
 
         window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Projects/EvaluationDetails/' + attendeeInnovationOrganizationId
-            + '?searchKeywords=' + searchKeywords
-            + '&innovationOrganizationTrackOptionGroupUid=' + innovationOrganizationTrackOptionGroupUid
-            + '&evaluationStatusUid=' + evaluationStatusUid
-            + '&showBusinessRounds=' + showBusinessRounds
+            + '?search=' + searchKeywords
+            + '&innovationOrganizationTrackOptionGroupUid=' + $('#InnovationOrganizationTrackOptionGroupUid').val()
+            + '&evaluationStatusUid=' + $('#EvaluationStatusUid').val()
+            + '&showBusinessRounds=' + $('#ShowBusinessRounds').prop('checked')
             + '&page=' + page
             + '&pageSize=' + pageSize
         );
@@ -385,8 +385,8 @@ var InnovationProjectsDataTableWidget = function () {
         refreshData: function () {
             refreshData();
         },
-        showDetails: function (attendeeInnovationOrganizationId, searchKeywords, innovationOrganizationTrackOptionGroupUid, evaluationStatusUid, showBusinessRounds, page, pageSize) {
-            showDetails(attendeeInnovationOrganizationId, searchKeywords, innovationOrganizationTrackOptionGroupUid, evaluationStatusUid, showBusinessRounds, page, pageSize);
+        showDetails: function (attendeeInnovationOrganizationId, searchKeywords, page, pageSize) {
+            showDetails(attendeeInnovationOrganizationId, searchKeywords, page, pageSize);
         },
         exportExcelReportByProject: function () {
             exportExcel('/Innovation/Projects/ExportEvaluationListWidget');

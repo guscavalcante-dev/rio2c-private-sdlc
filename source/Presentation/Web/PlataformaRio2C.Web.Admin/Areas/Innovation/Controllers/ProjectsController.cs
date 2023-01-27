@@ -4,7 +4,7 @@
 // Created          : 07-24-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-11-2023
+// Last Modified On : 01-27-2023
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -59,7 +59,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// <param name="innovationOrganizationRepository">The innovation organization repository.</param>
         /// <param name="evaluationStatusRepository">The evaluation status repository.</param>
         /// <param name="attendeeInnovationOrganizationRepository">The attendee innovation organization repository.</param>
-        /// <param name="innovationOrganizationTrackOptionRepository">The innovation organization track option repository.</param>
         /// <param name="innovationOrganizationTrackOptionGroupRepository">The innovation organization track option group repository.</param>
         /// <param name="innovationOrganizationObjectivesOptionRepository">The innovation organization objectives option repository.</param>
         /// <param name="innovationOrganizationTechnologyOptionRepository">The innovation organization technology option repository.</param>
@@ -70,7 +69,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             IInnovationOrganizationRepository innovationOrganizationRepository,
             IProjectEvaluationStatusRepository evaluationStatusRepository,
             IAttendeeInnovationOrganizationRepository attendeeInnovationOrganizationRepository,
-            IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepository,
             IInnovationOrganizationTrackOptionGroupRepository innovationOrganizationTrackOptionGroupRepository,
             IInnovationOrganizationObjectivesOptionRepository innovationOrganizationObjectivesOptionRepository,
             IInnovationOrganizationTechnologyOptionRepository innovationOrganizationTechnologyOptionRepository,
@@ -90,10 +88,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         #region List
 
         /// <summary>
-        /// Indexes the specified innovation organization track option group uid.
+        /// Indexes the specified search view model.
         /// </summary>
-        /// <param name="innovationOrganizationTrackOptionGroupUid">The innovation organization track option group uid.</param>
-        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> Index(InnovationProjectSearchViewModel searchViewModel)
@@ -379,7 +376,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
             #endregion
 
-            var allProjectsIds = await this.attendeeInnovationOrganizationRepo.FindAllInnovationOrganizationsIdsPagedAsync(
+            var allInnovationOrganizationsIds = await this.attendeeInnovationOrganizationRepo.FindAllInnovationOrganizationsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchViewModel.Search,
                 new List<Guid?> { searchViewModel.InnovationOrganizationTrackOptionGroupUid },
@@ -388,7 +385,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                 searchViewModel.Page.Value,
                 searchViewModel.PageSize.Value);
 
-            var currentProjectIdIndex = Array.IndexOf(allProjectsIds, searchViewModel.Id.Value) + 1; //Index start at 0, its a fix to "start at 1"
+            var currentProjectIdIndex = Array.IndexOf(allInnovationOrganizationsIds, searchViewModel.Id.Value) + 1; //Index start at 0, its a fix to "start at 1"
 
             ViewBag.InnovationProjectSearchViewModel = searchViewModel;
             ViewBag.CurrentInnovationProjectIndex = currentProjectIdIndex;

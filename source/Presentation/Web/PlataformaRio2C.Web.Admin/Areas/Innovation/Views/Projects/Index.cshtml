@@ -30,7 +30,7 @@
     @Scripts.Render("~/bundles/js/innovation.projects.list.widget.js")
     @Scripts.Render("~/bundles/js/innovation.projects.editioncount.widget.js")
     @Scripts.Render("~/bundles/js/innovation.projects.delete.js")
-    <script>
+<script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
             underEvaluation: '@Labels.UnderEvaluation',
@@ -45,7 +45,7 @@
         var searchKeywords = '@Model.Search';
         var innovationOrganizationTrackOptionGroupUid = '@Model.InnovationOrganizationTrackOptionGroupUid';
         var evaluationStatusUid = '@Model.EvaluationStatusUid';
-        var showBusinessRounds = '@Model.ShowBusinessRounds';
+        var showBusinessRounds = @(Json.Encode(Model.ShowBusinessRounds));
 
         // Pagination -----------------------------------------------------------------------------
         var initialPage = @(Model.Page?.ToString() ?? "null");
@@ -56,6 +56,6 @@
            InnovationProjectsTotalCountWidget.init();
            InnovationProjectsEditionCountWidget.init();
         });
-    </script>
+</script>
 
 }

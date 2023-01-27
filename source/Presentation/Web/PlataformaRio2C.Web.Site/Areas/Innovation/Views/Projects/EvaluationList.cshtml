@@ -1,46 +1,53 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Domain.Entities
 @using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
+@model InnovationProjectSearchViewModel
 @{
     ViewBag.Title = Labels.ProjectsEvaluation;
     var editionDto = ViewBag.EditionDto as EditionDto;
-    var innovationOrganizationTrackOptionGroups = ViewBag.InnovationOrganizationTrackOptionGroups as List<InnovationOrganizationTrackOptionGroup>;
-    var projectEvaluationStatuses = ViewBag.ProjectEvaluationStatuses as List<ProjectEvaluationStatus>;
 }
 <div class="kt-portlet">
     <div class="kt-portlet__body">
         <div class="row">
             <div class="col-10 col-lg-11 mt-2">
-                @Html.Hidden("Page", ViewBag.Page as int?)
-                @Html.Hidden("PageSize", ViewBag.PageSize as int?)
-                @Html.TextBox("SearchKeywords", null, new { @class = "form-control mr-1", type = "search", placeholder = Labels.Search })
+                @Html.HiddenFor(m => m.Page)
+                @Html.HiddenFor(m => m.PageSize)
+                @Html.TextBoxFor(m => m.Search, new { @class = "form-control mr-1", type = "search", placeholder = Labels.Search })
             </div>
             <div class="col-2 col-lg-1 mt-2">
                 <button type="button" class="btn btn-primary btn-icon" onclick="ProjectsBuyerEvaluationListWidget.search();"><i class="fa fa-search"></i></button>
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-sm-6 mt-2">
+            <div class="col-12 col-sm-4 mt-2">
                 <select name="InnovationOrganizationTrackOptionGroupUid" id="InnovationOrganizationTrackOptionGroupUid" class="form-control">
                     <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Vertical.ToLowerInvariant()))...</option>
-                    @foreach (var innovationOrganizationTrackOptionGroup in innovationOrganizationTrackOptionGroups)
+                    @foreach (var innovationOrganizationTrackOptionGroup in Model.InnovationOrganizationTrackOptionGroups)
                     {
-                        <option value="@innovationOrganizationTrackOptionGroup.Uid" @(innovationOrganizationTrackOptionGroup.Uid == ViewBag.InnovationOrganizationTrackOptionGroupUid ? "selected" : string.Empty)>
-                            @innovationOrganizationTrackOptionGroup.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                        <option value="@innovationOrganizationTrackOptionGroup.Uid" @(innovationOrganizationTrackOptionGroup.Uid == Model.InnovationOrganizationTrackOptionGroupUid ? "selected" : string.Empty)>
+                            @innovationOrganizationTrackOptionGroup.Name
                         </option>
                     }
                 </select>
             </div>
-            <div class="col-12 col-sm-6 mt-2">
+            <div class="col-12 col-sm-4 mt-2">
                 <select name="EvaluationStatusUid" id="EvaluationStatusUid" class="form-control">
                     <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Status.ToLowerInvariant()))...</option>
-                    @foreach (var evaluationStatus in projectEvaluationStatuses)
+                    @foreach (var evaluationStatus in Model.ProjectEvaluationStatuses)
                     {
-                        <option value="@evaluationStatus.Uid" @(evaluationStatus.Uid == ViewBag.EvaluationStatusUid ? "selected" : string.Empty)>
-                            @evaluationStatus.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                        <option value="@evaluationStatus.Uid" @(evaluationStatus.Uid == Model.EvaluationStatusUid ? "selected" : string.Empty)>
+                            @evaluationStatus.Name
                         </option>
                     }
                 </select>
+            </div>
+            <div class="col-12 col-sm-4 mt-2">
+                <div class="kt-checkbox-list">
+                    <label class="kt-checkbox mt-3">
+                        @Html.CheckBoxFor(m => m.ShowBusinessRounds, new { @class = "enable-datatable-reload" }) @Labels.ShowBusinessRounds
+                        <span></span>
+                    </label>
+                </div>
             </div>
         </div>
     </div>
@@ -85,17 +92,18 @@
     @Scripts.Render("~/bundles/js/select2.js")
     @Scripts.Render("~/bundles/js/innovation.projects.evaluation.list.widget.js")
     @Scripts.Render("~/bundles/js/innovation.projects.evaluation.widget.js")
-<script>
+    <script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
             selectPlaceholder: '@Labels.SelectAMEntity',
             selectFPlaceholder: '@Labels.SelectAFEntity',
             track: '@Html.Raw(Labels.Track.ToLowerInvariant())',
+            vertical: '@Html.Raw(Labels.Vertical.ToLowerInvariant())',
             status: '@Labels.Status.ToLowerInvariant()'
         };
 
         jQuery(document).ready(function () {
             InnovationProjectsEvaluationListWidget.init();
         });
-</script>
+    </script>
 }
