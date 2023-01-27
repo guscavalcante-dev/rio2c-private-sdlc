@@ -44,6 +44,12 @@
                             <div class="kt-widget__subhead pt-0">
                                 @(Model.InnovationOrganization?.Document ?? "-")
                             </div>
+                            @if (Model.AttendeeInnovationOrganization?.WouldYouLikeParticipateBusinessRound == true)
+                            {
+                                <div class="kt-widget__subhead pt-0 mt-0 pb-0">
+                                    <span class="kt-badge kt-badge--inline kt-badge--info">@Labels.BusinessRound</span>
+                                </div>
+                            }
                         </div>
                         <div class="kt-widget__subhead pb-0">
                             @Labels.Verticals
@@ -53,11 +59,6 @@
                                 {
                                     <span class="kt-badge kt-badge--inline kt-badge--info">
                                         @(attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOptionGroup.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
-                                        @*@(attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOption.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
-                                            @if (attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOption.HasAdditionalInfo && !string.IsNullOrEmpty(attendeeInnovationOrganizationTrackDto.AttendeeInnovationOrganizationTrack.AdditionalInfo))
-                                            {
-                                                @attendeeInnovationOrganizationTrackDto.AttendeeInnovationOrganizationTrack.AdditionalInfo
-                                            }*@
                                     </span>
                                 }
                             }

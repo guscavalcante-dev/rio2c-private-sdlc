@@ -57,17 +57,26 @@
                             {
                                 <span class="kt-badge kt-badge--inline kt-badge--info mt-1">
                                     @(attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOptionGroup?.Name?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
-                                    @*@(attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOption.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
-                                        @if (attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOption.HasAdditionalInfo && !string.IsNullOrEmpty(attendeeInnovationOrganizationTrackDto.AttendeeInnovationOrganizationTrack.AdditionalInfo))
-                                        {
-                                            @attendeeInnovationOrganizationTrackDto.AttendeeInnovationOrganizationTrack.AdditionalInfo
-                                        }*@
                                 </span>
                             }
                         }
                         else
                         {
                             @:-
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-2">
+                        @if (Model.AttendeeInnovationOrganization?.WouldYouLikeParticipateBusinessRound == true)
+                        {
+                            <div class="row">
+                                <div class="col-12">
+                                    <span class="kt-badge kt-badge--inline kt-badge--info mt-1">
+                                        @Labels.BusinessRound
+                                    </span>
+                                </div>
+                            </div>
                         }
                     </div>
                 </div>
