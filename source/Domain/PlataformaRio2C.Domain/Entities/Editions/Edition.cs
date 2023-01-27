@@ -86,7 +86,7 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset AudiovisualCommissionEvaluationEndDate { get; private set; }
         public int AudiovisualCommissionMinimumEvaluationsCount { get; private set; }
         public int AudiovisualCommissionMaximumApprovedProjectsCount { get; private set; }
-
+        
         #endregion
 
         #region Cartoon - Commissions
@@ -98,6 +98,10 @@ namespace PlataformaRio2C.Domain.Entities
         public int CartoonCommissionMinimumEvaluationsCount { get; private set; }
         public int CartoonCommissionMaximumApprovedProjectsCount { get; private set; }
 
+        #endregion
+
+        #region Speakers
+        public int SpeakersApiHighlightPositionsCount { get; private set; }
         #endregion
 
         #endregion
