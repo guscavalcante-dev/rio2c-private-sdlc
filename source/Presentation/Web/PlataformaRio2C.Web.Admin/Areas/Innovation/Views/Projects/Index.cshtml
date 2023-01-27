@@ -1,5 +1,5 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
-@model CollaboratorSearchViewModel
+@model InnovationProjectSearchViewModel
 @{
     ViewBag.Title = Labels.ProjectsForPitching;
     var editionDto = ViewBag.EditionDto as EditionDto;
@@ -37,17 +37,19 @@
             projectAccepted: '@Labels.ProjectAccepted',
             projectRefused: '@Labels.ProjectRefused',
             vote: '@Labels.Vote',
-            votes: '@Labels.Votes'
+            votes: '@Labels.Votes',
+            businessRound: '@Labels.BusinessRound',
         };
 
         var isProjectEvaluationClosed = @(Json.Encode(!editionDto.IsInnovationProjectEvaluationOpen()));
-        var searchKeywords = '@ViewBag.SearchKeywords';
-        var innovationOrganizationTrackOptionGroupUid = '@ViewBag.InnovationOrganizationTrackOptionGroupUid';
-        var evaluationStatusUid = '@ViewBag.EvaluationStatusUid';
+        var searchKeywords = '@Model.Search';
+        var innovationOrganizationTrackOptionGroupUid = '@Model.InnovationOrganizationTrackOptionGroupUid';
+        var evaluationStatusUid = '@Model.EvaluationStatusUid';
+        var showBusinessRounds = @(Json.Encode(Model.ShowBusinessRounds));
 
         // Pagination -----------------------------------------------------------------------------
-        var initialPage = @(ViewBag.Page?.ToString() ?? "null");
-        var initialPageSize = @(ViewBag.PageSize?.ToString() ?? "null");
+        var initialPage = @(Model.Page?.ToString() ?? "null");
+        var initialPageSize = @(Model.PageSize?.ToString() ?? "null");
 
         jQuery(document).ready(function () {
            InnovationProjectsDataTableWidget.init();

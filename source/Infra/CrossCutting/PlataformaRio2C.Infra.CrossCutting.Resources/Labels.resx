@@ -2551,6 +2551,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Exibir todos os patrocinadores</value>
     <comment>Exibir todos os patrocinadores</comment>
   </data>
+  <data name="ShowBusinessRounds" xml:space="preserve">
+    <value>Exibir somente rodadas de negócio</value>
+  </data>
   <data name="ShowFlights" xml:space="preserve">
     <value>Exibir voos</value>
     <comment>Exibir voos</comment>

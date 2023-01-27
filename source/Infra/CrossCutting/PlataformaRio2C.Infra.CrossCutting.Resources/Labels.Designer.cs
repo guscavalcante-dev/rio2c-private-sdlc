@@ -5857,6 +5857,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exibir somente rodadas de negócio.
+        /// </summary>
+        public static string ShowBusinessRounds {
+            get {
+                return ResourceManager.GetString("ShowBusinessRounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exibir voos.
         /// </summary>
         public static string ShowFlights {

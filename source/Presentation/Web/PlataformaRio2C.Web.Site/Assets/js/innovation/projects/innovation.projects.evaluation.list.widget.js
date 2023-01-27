@@ -4,7 +4,7 @@
 // Created          : 07-28-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-05-2023
+// Last Modified On : 01-27-2023
 // ***********************************************************************
 // <copyright file="innovation.projects.evaluation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,7 +26,7 @@ var InnovationProjectsEvaluationListWidget = function () {
     var enableShowPlugins = function () {
         KTApp.initTooltips();
         MyRio2cCommon.initScroll();
-        MyRio2cCommon.enableSelect2({ inputIdOrClass: '#InnovationOrganizationTrackOptionGroupUid', allowClear: true, placeholder: translations.selectFPlaceholder.replace('{0}', translations.track) + '...' });
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: '#InnovationOrganizationTrackOptionGroupUid', allowClear: true, placeholder: translations.selectFPlaceholder.replace('{0}', translations.vertical) + '...' });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: '#EvaluationStatusUid', allowClear: true, placeholder: translations.selectPlaceholder.replace('{0}', translations.status) + '...' });
         enablePageSizeChangeEvent();
     };
@@ -40,6 +40,7 @@ var InnovationProjectsEvaluationListWidget = function () {
         jsonParameters.searchKeywords = $('#SearchKeywords').val();
         jsonParameters.innovationOrganizationTrackOptionGroupUid = $('#InnovationOrganizationTrackOptionGroupUid').val();
         jsonParameters.evaluationStatusUid = $('#EvaluationStatusUid').val();
+        jsonParameters.showBusinessRounds = $('#ShowBusinessRounds').prop('checked');
         jsonParameters.page = $('#Page').val();
         jsonParameters.pageSize = $('#PageSize').val();
 
@@ -83,6 +84,11 @@ var InnovationProjectsEvaluationListWidget = function () {
             search();
         });
         $('#EvaluationStatusUid').addClass('change-event-enabled');
+
+        $('#ShowBusinessRounds').not('.change-event-enabled').on('change', function () {
+            search();
+        });
+        $('#ShowBusinessRounds').addClass('change-event-enabled');
     };
 
     // Pagination ---------------------------------------------------------------------------------

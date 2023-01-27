@@ -2544,6 +2544,9 @@
     <value>Show all sponsors</value>
     <comment>Exibir todos os patrocinadores</comment>
   </data>
+  <data name="ShowBusinessRounds" xml:space="preserve">
+    <value>Show business bounds</value>
+  </data>
   <data name="ShowFlights" xml:space="preserve">
     <value>Show flights</value>
     <comment>Exibir voos</comment>

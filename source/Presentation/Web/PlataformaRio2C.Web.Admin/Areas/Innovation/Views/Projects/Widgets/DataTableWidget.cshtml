@@ -1,4 +1,5 @@
-﻿@{
+﻿@model InnovationProjectSearchViewModel
+@{
     ViewBag.Title = Labels.Innovation;
 }
 <!--begin:: DataTable Widget-->
@@ -15,7 +16,7 @@
 
         <div class="kt-portlet__head-label">
             <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                    
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span>@Labels.ExportToExcel</span>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -33,19 +34,30 @@
     <div class="kt-portlet__body">
         <!--begin: SearchForm-->
         <div class="form-group row">
-            <div class="col-lg-6">
+            @Html.HiddenFor(m => m.Page)
+            @Html.HiddenFor(m => m.PageSize)
+            <div class="col-lg-4">
                 <label>@Labels.Search:</label>
-                @Html.Hidden("Page", ViewBag.Page as int?)
-                @Html.Hidden("PageSize", ViewBag.PageSize as int?)
-                @Html.TextBox("Search", null, new { @class = "form-control mr-1", autocomplete = "off", type = "search", placeholder = $"{Labels.Company} {Labels.Or.ToLowerInvariant()} {Labels.ProductName.ToLowerInvariant()}" })
+                @Html.TextBoxFor(m => m.Search, new { type = "search", @class = "form-control mr-1", autocomplete = "off", placeholder = $"{Labels.Company} {Labels.Or.ToLowerInvariant()} {Labels.ProductName.ToLowerInvariant()}" })
             </div>
             <div class="col-lg-3">
                 <label>@Labels.Vertical:</label>
-                @Html.DropDownList("InnovationOrganizationTrackOptionGroupUid", new SelectList(ViewBag.InnovationOrganizationTrackOptionGroups, "Uid", "Name", ViewBag.InnovationOrganizationTrackOptionGroupUid), $"{string.Format(Labels.SelectAFEntity, Labels.Vertical.ToLowerInvariant())}...", new { @class = "form-control enable-select2" })
+                @Html.DropDownListFor(m => m.InnovationOrganizationTrackOptionGroupUid, new SelectList(Model.InnovationOrganizationTrackOptionGroups, "Uid", "Name", Model.InnovationOrganizationTrackOptionGroupUid), $"{string.Format(Labels.SelectAFEntity, Labels.Vertical.ToLowerInvariant())}...", new { @class = "form-control enable-select2" })
             </div>
             <div class="col-lg-3">
                 <label>@Labels.Status:</label>
-                @Html.DropDownList("EvaluationStatusUid", new SelectList(ViewBag.ProjectEvaluationStatuses, "Uid", "Name", ViewBag.EvaluationStatusUid), $"{string.Format(Labels.SelectAMEntity, Labels.Status.ToLowerInvariant())}...", new { @class = "form-control enable-select2" })
+                @Html.DropDownListFor(m => m.EvaluationStatusUid, new SelectList(Model.ProjectEvaluationStatuses, "Uid", "Name", Model.EvaluationStatusUid), $"{string.Format(Labels.SelectAMEntity, Labels.Status.ToLowerInvariant())}...", new { @class = "form-control enable-select2" })
+            </div>
+            <div class="col-lg-2">
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <div class="kt-checkbox-list">
+                        <label class="kt-checkbox mt-2">
+                            @Html.CheckBoxFor(m => m.ShowBusinessRounds, new { @class = "enable-datatable-reload" }) @Labels.ShowBusinessRounds
+                            <span></span>
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
         <!--end: SearchForm-->
