@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-01-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-11-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-27-2023
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorTicketCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -90,18 +90,20 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            var attendeeCollaborator = cmd.Collaborator.GetAttendeeCollaboratorByEditionId(cmd.Edition.Id);
-            bool sendWelcomeEmail = attendeeCollaborator != null && !attendeeCollaborator.WelcomeEmailSendDate.HasValue;
-            if (sendWelcomeEmail)
-            {
-                cmd.Collaborator?.SendWelcomeEmailSendDate(cmd.Edition.Id, 1);
-            }
-
             this.CollaboratorRepo.Update(cmd.Collaborator);
             this.Uow.SaveChanges();
             this.AppValidationResult.Data = cmd.Collaborator;
 
             #region Send welcome email
+
+            var attendeeCollaborator = cmd.Collaborator.GetAttendeeCollaboratorByEditionId(cmd.Edition.Id);
+            bool sendWelcomeEmail = attendeeCollaborator != null && !attendeeCollaborator.WelcomeEmailSendDate.HasValue;
+            if (sendWelcomeEmail)
+            {
+                cmd.Collaborator?.SendWelcomeEmailSendDate(cmd.Edition.Id, 1);
+                this.CollaboratorRepo.Update(cmd.Collaborator);
+                this.Uow.SaveChanges();
+            }
 
             if (sendWelcomeEmail)
             {
