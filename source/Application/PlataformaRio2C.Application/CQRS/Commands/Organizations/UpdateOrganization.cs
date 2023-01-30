@@ -69,7 +69,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
             this.OrganizationUid = entity.Uid;
             this.IsAddingToCurrentEdition = isAddingToCurrentEdition ?? false;
-            this.UpdaterBaseDto = entity.UpdaterDto;
+            this.UpdaterBaseDto = entity.UpdaterBaseDto;
             this.UpdateDate = entity.UpdateDate;
             this.UpdateBaseProperties(
                 entity, 

@@ -92,7 +92,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.OnboardingCollaboratorDate = entity.EditionAttendeeCollaboratorBaseDto?.OnboardingCollaboratorDate;
             this.PlayerTermsAcceptanceDate = entity.EditionAttendeeCollaboratorBaseDto?.PlayerTermsAcceptanceDate;
             this.ProducerTermsAcceptanceDate = entity.EditionAttendeeCollaboratorBaseDto?.ProducerTermsAcceptanceDate;
-            this.UpdaterBaseDto = entity.UpdaterDto;
+            this.UpdaterBaseDto = entity.UpdaterBaseDto;
             this.UpdateDate = entity.UpdateDate;
             base.UpdateDropdownProperties(roles, collaboratorTypes, userInterfaceLanguage);
         }

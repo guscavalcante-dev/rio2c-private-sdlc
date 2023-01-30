@@ -14,6 +14,7 @@
 using PlataformaRio2C.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -22,14 +23,8 @@ namespace PlataformaRio2C.Domain.Dtos
     /// </summary>
     public class CollaboratorDto : CollaboratorBaseDto
     {
-        public string Website { get; set; }
-        public string Linkedin { get; set; }
-        public string Twitter { get; set; }
-        public string Instagram { get; set; }
-        public string Youtube { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
-
         public DateTime? BirthDate { get; set; }
         public int? CollaboratorGenderId { get; set; }
         public CollaboratorGender Gender { get; set; }
@@ -46,14 +41,9 @@ namespace PlataformaRio2C.Domain.Dtos
         public int CreateUserId { get; set; }
         public int UpdateUserId { get; set; }
 
-        public bool IsInCurrentEdition => EditionAttendeeCollaboratorBaseDto != null;
+        public bool IsInCurrentEdition => this.EditionAttendeeCollaboratorBaseDto != null;
 
-        public UserBaseDto CreatorDto { get; set; }
-        public UserBaseDto UpdaterDto { get; set; }
         public AttendeeCollaboratorBaseDto EditionAttendeeCollaboratorBaseDto { get; set; }
-
-        public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }
-        public IEnumerable<CollaboratorMiniBioBaseDto> MiniBiosDtos { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CollaboratorDto"/> class.

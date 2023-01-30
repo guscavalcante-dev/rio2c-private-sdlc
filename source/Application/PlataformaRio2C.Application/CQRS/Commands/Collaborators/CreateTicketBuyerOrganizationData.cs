@@ -153,7 +153,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Descriptions = new List<OrganizationDescriptionBaseCommand>();
             foreach (var languageDto in languagesDtos)
             {
-                var description = entity?.DescriptionsDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
+                var description = entity?.OrganizationDescriptionBaseDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
                 this.Descriptions.Add(description != null ? new OrganizationDescriptionBaseCommand(description, isDescriptionRequired) : 
                                                             new OrganizationDescriptionBaseCommand(languageDto, isDescriptionRequired));
             }

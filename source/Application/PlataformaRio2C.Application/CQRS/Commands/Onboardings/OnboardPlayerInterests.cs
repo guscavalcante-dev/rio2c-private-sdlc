@@ -45,7 +45,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isRestrictionSpecificRequired)
         {
             this.OrganizationUid = entity.Uid;
-            this.UpdaterBaseDto = entity.UpdaterDto;
+            this.UpdaterBaseDto = entity.UpdaterBaseDto;
             this.UpdateDate = entity.UpdateDate;
             this.UpdateRestrictionSpecifics(entity, languagesDtos, isRestrictionSpecificRequired);
             this.UpdateInterests(entity, interestsDtos);
@@ -86,7 +86,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.RestrictionSpecifics = new List<OrganizationRestrictionSpecificsBaseCommand>();
             foreach (var languageDto in languagesDtos)
             {
-                var restrictionSpecific = entity?.RestrictionSpecificsDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
+                var restrictionSpecific = entity?.OrganizationRestrictionSpecificBaseDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
                 this.RestrictionSpecifics.Add(restrictionSpecific != null ? new OrganizationRestrictionSpecificsBaseCommand(restrictionSpecific, isRestrictionSpecificRequired) :
                                                                             new OrganizationRestrictionSpecificsBaseCommand(languageDto, isRestrictionSpecificRequired));
             }

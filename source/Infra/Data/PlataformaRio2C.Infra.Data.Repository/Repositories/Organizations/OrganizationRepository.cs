@@ -452,7 +452,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     Uid = o.Holding.Uid,
                                     Name = o.Holding.Name
                                 },
-                                UpdaterDto = new UserBaseDto
+                                UpdaterBaseDto = new UserBaseDto
                                 {
                                     Id = o.Updater.Id,
                                     Uid = o.Updater.Uid,
@@ -469,7 +469,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     Address1 = o.Address.Address1,
                                     AddressZipCode = o.Address.ZipCode,
                                 },
-                                DescriptionsDtos = o.OrganizationDescriptions.Select(d => new OrganizationDescriptionDto
+                                OrganizationDescriptionBaseDtos = o.OrganizationDescriptions.Select(d => new OrganizationDescriptionDto
                                 {
                                     Id = d.Id,
                                     Uid = d.Uid,
@@ -482,7 +482,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         Code = d.Language.Code
                                     }
                                 }),
-                                RestrictionSpecificsDtos = o.OrganizationRestrictionSpecifics.Select(d => new OrganizationRestrictionSpecificDto
+                                OrganizationRestrictionSpecificBaseDtos = o.OrganizationRestrictionSpecifics.Select(d => new OrganizationRestrictionSpecificDto
                                 {
                                     Id = d.Id,
                                     Uid = d.Uid,
@@ -743,7 +743,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 Instagram = o.Instagram,
                                 Youtube = o.Youtube,
                                 ImageUploadDate = o.ImageUploadDate,
-                                DescriptionsDtos = o.OrganizationDescriptions.Select(d => new OrganizationDescriptionDto
+                                OrganizationDescriptionBaseDtos = o.OrganizationDescriptions.Select(d => new OrganizationDescriptionDto
                                 {
                                     Id = d.Id,
                                     Uid = d.Uid,
@@ -794,7 +794,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                         LastNames = aoc.AttendeeCollaborator.Collaborator.LastNames,
                                                                                         Badge = aoc.AttendeeCollaborator.Collaborator.Badge,
                                                                                         ImageUploadDate = aoc.AttendeeCollaborator.Collaborator.ImageUploadDate,
-                                                                                        JobTitlesDtos = aoc.AttendeeCollaborator.Collaborator.JobTitles.Select(jt => new CollaboratorJobTitleBaseDto
+                                                                                        JobTitleBaseDtos = aoc.AttendeeCollaborator.Collaborator.JobTitles.Select(jt => new CollaboratorJobTitleBaseDto
                                                                                         {
                                                                                             Id = jt.Id,
                                                                                             Uid = jt.Uid,
@@ -807,7 +807,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                 Code = jt.Language.Code
                                                                                             }
                                                                                         }),
-                                                                                        MiniBiosDtos = aoc.AttendeeCollaborator.Collaborator.MiniBios.Select(jt => new CollaboratorMiniBioBaseDto
+                                                                                        MiniBioBaseDtos = aoc.AttendeeCollaborator.Collaborator.MiniBios.Select(jt => new CollaboratorMiniBioBaseDto
                                                                                         {
                                                                                             Id = jt.Id,
                                                                                             Uid = jt.Uid,
