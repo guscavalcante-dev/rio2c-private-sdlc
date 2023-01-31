@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 11-24-2022
+// Last Modified On : 01-29-2023
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -804,7 +804,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         }
 
         /// <summary>
-        /// Converts to string.
+        /// Converts Array to string.
         /// </summary>
         /// <param name="array">The array.</param>
         /// <param name="separator">The separator.</param>
@@ -814,13 +814,13 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         public static string ToString(this string[] array, string separator)
         {
             if (string.IsNullOrEmpty(separator))
-                separator = ",";
+                separator = ", ";
 
             return string.Join(separator, array);
         }
 
         /// <summary>
-        /// Converts to string.
+        /// Converts List to string.
         /// </summary>
         /// <param name="list">The list.</param>
         /// <param name="separator">The separator.</param>
@@ -830,9 +830,41 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         public static string ToString(this List<string> list, string separator)
         {
             if (string.IsNullOrEmpty(separator))
-                separator = ",";
+                separator = ", ";
 
             return string.Join(separator, list);
+        }
+
+        /// <summary>
+        /// Converts IEnumerable to string.
+        /// </summary>
+        /// <param name="list">The list.</param>
+        /// <param name="separator">The separator.</param>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public static string ToString(this IEnumerable<string> list, string separator = ", ")
+        {
+            return string.Join(separator, list);
+        }
+
+        /// <summary>
+        /// Converts string to array.
+        /// </summary>
+        /// <param name="s">The s.</param>
+        /// <param name="separator">The separator.</param>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public static string[] ToArray(this string s, char separator = ';')
+        {
+            var splitted = s?.Split(separator);
+            if (splitted == null || splitted.Length <= 0)
+            {
+                return new string[] { s };
+            }
+
+            return splitted;
         }
 
         /// <summary>

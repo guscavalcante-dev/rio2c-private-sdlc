@@ -317,6 +317,9 @@
     <value>A data deve estar entre {1} e {0}.</value>
     <comment>A data deve estar entre {1} e {0}.</comment>
   </data>
+  <data name="DearAllAttachedIsTheReporRegisteredInTheEdition" xml:space="preserve">
+    <value>Prezados, segue em anexo o {0} cadastrados na edição {1}</value>
+  </data>
   <data name="DescribeRestrictionSpecifics" xml:space="preserve">
     <value>Descreve as restrições e/ou especificações sobre o conteúdo desejado.</value>
     <comment>Descreve as restrições e/ou especificações sobre o conteúdo desejado.</comment>
@@ -371,6 +374,10 @@
   <data name="EntityNotAction" xml:space="preserve">
     <value>{0} não {1}.</value>
     <comment>{0} não {1}.</comment>
+  </data>
+  <data name="EntitySentSuccessfullyToEmails" xml:space="preserve">
+    <value>{0} enviado com sucesso para os e-mails {1}</value>
+    <comment>{0} enviado com sucesso para os e-mails {1}</comment>
   </data>
   <data name="ErrorPage" xml:space="preserve">
     <value>&lt;h4 class="h4-error-page"&gt;Ocorreu um erro ao acessar essa página.&lt;/h4&gt; 
@@ -698,7 +705,7 @@
     <comment>Perfil incompleto!</comment>
   </data>
   <data name="ProfileUpdatedSuccessfully" xml:space="preserve">
-    <value>Perfil atualizado com sucesso! </value>
+    <value>Perfil atualizado com sucesso!</value>
   </data>
   <data name="ProjectBudget" xml:space="preserve">
     <value>Orçamento do projeto &lt;small&gt;(apenas para projetos em desenvolvimento/produção)&lt;/small&gt;</value>

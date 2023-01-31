@@ -255,7 +255,6 @@
     <Compile Include="Repositories\Room\RoomRepository.cs" />
     <Compile Include="Repositories\SalesPlatform\SalesPlatformWebhookRequestRepository.cs" />
     <Compile Include="Repositories\SalesPlatform\SalesPlatformRepository.cs" />
-    <Compile Include="Repositories\Speaker\SpeakerRepository.cs" />
     <Compile Include="Repositories\User\RoleRepository.cs" />
     <Compile Include="Repositories\User\UserRoleRepository.cs" />
     <Compile Include="Repositories\User\UserUseTermRepository.cs" />
@@ -267,7 +266,9 @@
     <Compile Include="Repositories\Player\PlayerRepository.cs" />
     <Compile Include="Repositories\Holding\HoldingRepository.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Repositories\Speaker\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-20-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-31-2023
 // ***********************************************************************
 // <copyright file="CollaboratorMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -62,6 +62,10 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.HasRequired(t => t.Updater)
                 .WithMany(e => e.UpdatedCollaborators)
                 .HasForeignKey(d => d.UpdateUserId);
+
+            this.HasRequired(t => t.Creator)
+               .WithMany(e => e.CreatedCollaborators)
+               .HasForeignKey(d => d.CreateUserId);
 
             this.HasOptional(t => t.Address)
                 .WithMany(e => e.Collaborators)

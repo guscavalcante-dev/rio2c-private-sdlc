@@ -84,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiModels\ApiBaseRequest.cs" />
+    <Compile Include="ApiModels\ApiReportBaseRequest.cs" />
     <Compile Include="ApiModels\Cartoon\Requests\CartoonFiltersApiRequest.cs" />
     <Compile Include="ApiModels\Cartoon\Responses\CartoonFiltersApiResponse.cs" />
     <Compile Include="ApiModels\Conferences\Requests\ConferencesFiltersApiRequest.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="ApiModels\EditionEvents\Responses\EditionEventBaseApiResponse.cs" />
     <Compile Include="ApiModels\Rooms\Responses\RoomBaseApiResponse.cs" />
     <Compile Include="ApiModels\Speakers\Requests\SpeakerApiRequest.cs" />
+    <Compile Include="ApiModels\Speakers\Requests\SpeakersReportApiRequest.cs" />
     <Compile Include="ApiModels\Speakers\Responses\SpeakerApiResponse.cs" />
     <Compile Include="ApiModels\Pillars\Responses\PillarBaseApiResponse.cs" />
     <Compile Include="ApiModels\Tracks\Responses\TrackBaseApiResponse.cs" />
@@ -526,7 +528,6 @@
     <Compile Include="Interfaces\Repositories\SalesPlatform\IAttendeeSalesPlatformRepository.cs" />
     <Compile Include="Interfaces\Repositories\SalesPlatform\ISalesPlatformWebhookRequestRepository.cs" />
     <Compile Include="Interfaces\Repositories\SalesPlatform\ISalesPlatformRepository.cs" />
-    <Compile Include="Interfaces\Repositories\Speaker\ISpeakerRepository.cs" />
     <Compile Include="Interfaces\Repositories\SubscribeLists\ISubscribeListRepository.cs" />
     <Compile Include="Interfaces\Repositories\User\IConnectionRepository.cs" />
     <Compile Include="Interfaces\Services\IConferenceService.cs" />
@@ -812,6 +813,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dtos\Reports\" />
+    <Folder Include="Interfaces\Repositories\Speaker\" />
     <Folder Include="Specifications\Interests\" />
   </ItemGroup>
   <ItemGroup>

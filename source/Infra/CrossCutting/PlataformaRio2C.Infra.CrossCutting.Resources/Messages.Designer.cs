@@ -556,6 +556,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Prezados, segue em anexo o {0} cadastrados na edição {1}.
+        /// </summary>
+        public static string DearAllAttachedIsTheReporRegisteredInTheEdition {
+            get {
+                return ResourceManager.GetString("DearAllAttachedIsTheReporRegisteredInTheEdition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Descreve as restrições e/ou especificações sobre o conteúdo desejado..
         /// </summary>
         public static string DescribeRestrictionSpecifics {
@@ -678,6 +687,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string EntityNotAction {
             get {
                 return ResourceManager.GetString("EntityNotAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} enviado com sucesso para os e-mails {1}.
+        /// </summary>
+        public static string EntitySentSuccessfullyToEmails {
+            get {
+                return ResourceManager.GetString("EntitySentSuccessfullyToEmails", resourceCulture);
             }
         }
         
@@ -1509,7 +1527,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Perfil atualizado com sucesso! .
+        ///   Looks up a localized string similar to Perfil atualizado com sucesso!.
         /// </summary>
         public static string ProfileUpdatedSuccessfully {
             get {

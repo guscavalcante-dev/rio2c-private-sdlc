@@ -1222,6 +1222,9 @@
   <data name="Hour" xml:space="preserve">
     <value>Hour</value>
   </data>
+  <data name="Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
   <data name="IfAlreadyHaveLogin" xml:space="preserve">
     <value>If you already have a login and password</value>
   </data>
@@ -1300,6 +1303,9 @@
   </data>
   <data name="InProgress" xml:space="preserve">
     <value>In progress</value>
+  </data>
+  <data name="Instagram" xml:space="preserve">
+    <value>Instagram</value>
   </data>
   <data name="Interest" xml:space="preserve">
     <value>Interest</value>
@@ -1397,6 +1403,9 @@
   <data name="LecturerMemberOneOrMany" xml:space="preserve">
     <value>Panel Members and Listeners</value>
   </data>
+  <data name="LinkedIn" xml:space="preserve">
+    <value>LinkedIn</value>
+  </data>
   <data name="LinksForPromoTeaser" xml:space="preserve">
     <value>Link for Promo/Teaser</value>
     <comment>Link para Promo/Teaser</comment>
@@ -1443,6 +1452,12 @@
   </data>
   <data name="LogLines" xml:space="preserve">
     <value>Logline</value>
+  </data>
+  <data name="Logo500x500" xml:space="preserve">
+    <value>Logo (500 x 500)</value>
+  </data>
+  <data name="LogoOriginal" xml:space="preserve">
+    <value>Logo (Original)</value>
   </data>
   <data name="LogoSize" xml:space="preserve">
     <value>&lt;strong&gt;Maximum size: 10 M&lt;/strong&gt;</value>
@@ -1854,6 +1869,12 @@
   <data name="Photo" xml:space="preserve">
     <value>Photo</value>
     <comment>Foto</comment>
+  </data>
+  <data name="Photo500x500" xml:space="preserve">
+    <value>Photo (500 x 500)</value>
+  </data>
+  <data name="PhotoOriginal" xml:space="preserve">
+    <value>Photo (Original)</value>
   </data>
   <data name="PhotosForPublicity" xml:space="preserve">
     <value>Photos for Publicity</value>
@@ -2563,6 +2584,9 @@
     <value>Show one-to-one meetings</value>
     <comment>Exibir rodadas de negócio</comment>
   </data>
+  <data name="ShowOnWebsite" xml:space="preserve">
+    <value>Show on website?</value>
+  </data>
   <data name="ShowPitchings" xml:space="preserve">
     <value>Show pitchings only</value>
     <comment>Exibir somente pitchings</comment>
@@ -2605,6 +2629,9 @@
   <data name="Speakers" xml:space="preserve">
     <value>Speakers</value>
     <comment>Palestrantes</comment>
+  </data>
+  <data name="SpeakersReport" xml:space="preserve">
+    <value>Speakers Report</value>
   </data>
   <data name="SpeakersRoles" xml:space="preserve">
     <value>Speakers Roles</value>
@@ -2839,6 +2866,9 @@
     <value>Transport</value>
     <comment>Transporte</comment>
   </data>
+  <data name="Twitter" xml:space="preserve">
+    <value>Twitter</value>
+  </data>
   <data name="Type" xml:space="preserve">
     <value>Type</value>
     <comment>Tipo</comment>
@@ -3024,7 +3054,7 @@
     <comment>Em qual edição?</comment>
   </data>
   <data name="WhichSpecialNeedsQ" xml:space="preserve">
-    <value>Please, inform.</value>
+    <value>Which?</value>
     <comment>Qual?</comment>
   </data>
   <data name="With" xml:space="preserve">
@@ -3049,6 +3079,9 @@
   <data name="You" xml:space="preserve">
     <value>You</value>
     <comment>Você</comment>
+  </data>
+  <data name="YouTube" xml:space="preserve">
+    <value>YouTube</value>
   </data>
   <data name="ZipCode" xml:space="preserve">
     <value>Zip code</value>

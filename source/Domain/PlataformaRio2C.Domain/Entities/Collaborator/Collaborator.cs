@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-22-2022
+// Last Modified On : 01-31-2023
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -65,6 +65,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         public virtual User User { get; private set; }
         public virtual Address Address { get; private set; }
+        public virtual User Creator { get; private set; }
         public virtual User Updater { get; private set; }
         public virtual CollaboratorGender Gender { get; private set; }
         public virtual CollaboratorRole Role { get; private set; }

@@ -181,7 +181,7 @@
     <comment>Esta Edição não pode ser desativada enquanto for a edição atual.</comment>
   </data>
   <data name="CanNotEditASubmittedProjectForPlayerEvaluation" xml:space="preserve">
-    <value>Can not edit a submitted project for player evaluation.</value>
+    <value>Can not edit a submitted project for player evaluation</value>
   </data>
   <data name="CanNotUncheckCurrentEdition" xml:space="preserve">
     <value>This Edition cannot be unchecked as current as there is no other edition marked as current to replace it. Set some other edition as current and try again.</value>
@@ -206,10 +206,10 @@
     <comment>Clique aqui para alterar sua senha</comment>
   </data>
   <data name="ClosedProducerRegistration" xml:space="preserve">
-    <value>Closed producer registration</value>
+    <value>Closed producer registration!</value>
   </data>
   <data name="ClosedSendingToPlayers" xml:space="preserve">
-    <value>Closed sending to players</value>
+    <value>Closed sending to players.</value>
   </data>
   <data name="CollaboratorMustHaveAPlayer" xml:space="preserve">
     <value>Collaborator must have at least one Player.</value>
@@ -318,6 +318,9 @@
     <value>The date must be between {1} and {0}.</value>
     <comment>A data deve estar entre {1} e {0}.</comment>
   </data>
+  <data name="DearAllAttachedIsTheReporRegisteredInTheEdition" xml:space="preserve">
+    <value>Dear all, attached is the {0} registered in the {1} edition</value>
+  </data>
   <data name="DescribeRestrictionSpecifics" xml:space="preserve">
     <value>Describe the desired content restriction and/or specifics.</value>
     <comment>Descreve as restrições e/ou especificações sobre o conteúdo desejado.</comment>
@@ -373,6 +376,9 @@
     <value>{0} not {1}.</value>
     <comment>{0} não {1}.</comment>
   </data>
+  <data name="EntitySentSuccessfullyToEmails" xml:space="preserve">
+    <value>{0} sent successfully to e-mails {1}</value>
+  </data>
   <data name="ErrorPage" xml:space="preserve">
     <value>&lt;h4 class="h4-error-page"&gt;An error has been occurred while accessing this page.&lt;/h4&gt; 
 &lt;h4 class="h4-error-page"&gt;The Rio2C team has been notified and will work so that this will not happen again. &lt;/h4&gt;
@@ -426,7 +432,7 @@
     <comment>Período de avaliação aberto.</comment>
   </data>
   <data name="EvaluationSavesSuccessfully" xml:space="preserve">
-    <value>Evaluation saved successfully</value>
+    <value>Evaluation saved successfully!</value>
   </data>
   <data name="FileTypeMustBe" xml:space="preserve">
     <value>The file type must be {0}.</value>
@@ -704,7 +710,7 @@
     <comment>Perfil incompleto!</comment>
   </data>
   <data name="ProfileUpdatedSuccessfully" xml:space="preserve">
-    <value>Profile update was concluded!</value>
+    <value>Profile updated successfully!</value>
   </data>
   <data name="ProjectBudget" xml:space="preserve">
     <value>Project budget &lt;small&gt;(only for projects under development/production)&lt;/small&gt;</value>
@@ -1064,7 +1070,7 @@
     <comment>Você recebeu uma mensagem de &lt;b&gt;{0}&lt;/b&gt;.&lt;br /&gt;&lt;br /&gt;Clique aqui para ser direcionado para a sua caixa de mensagens.</comment>
   </data>
   <data name="YourPasswordHasBeenChangedSuccessfully" xml:space="preserve">
-    <value>Your password has been changed successfully.</value>
+    <value>Your password has been changed successfully!</value>
   </data>
   <data name="YoutubeUrl" xml:space="preserve">
     <value>The Youtube url.</value>
