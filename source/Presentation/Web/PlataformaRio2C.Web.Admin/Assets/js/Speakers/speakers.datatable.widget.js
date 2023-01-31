@@ -285,7 +285,7 @@ var SpeakersDataTableWidget = function () {
                                               <i class="la la-ellipsis-h"></i>\
                                             </a>\
                                             <div class="dropdown-menu dropdown-menu-right">';
-
+                        
                         if (!full.IsInCurrentEdition) {
                             html += '<button class="dropdown-item" onclick="SpeakersUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         }
@@ -294,7 +294,7 @@ var SpeakersDataTableWidget = function () {
                         }
 
                         if (full.IsInCurrentEdition && full.IsInOtherEdition) {
-                            html += '<button class="dropdown-item" onclick="SpeakersDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + removeFromEdition + '</button>';
+                            html += '<button class="dropdown-item" onclick="SpeakersDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-remove"></i> ' + removeFromEdition + '</button>';
                         }
                         else {
                             html += '<button class="dropdown-item" onclick="SpeakersDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
