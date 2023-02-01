@@ -22,6 +22,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>ICityRepository</summary>
     public interface ICityRepository : IRepository<City>
     {
-        Task<List<CityBaseDto>> FindAllBaseDtosByStateUidAsync(Guid stateUid);
+        Task<List<CityBaseDto>> FindAllBaseDtosByStateUidAsync(Guid stateUid);       
+        Task<City> FindByNameAsync(string name);
     }
 }

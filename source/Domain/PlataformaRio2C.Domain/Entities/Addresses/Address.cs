@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-22-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified By : Elton Assunção
+// Last Modified On : 01-02-2023
 // ***********************************************************************
 // <copyright file="Address.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,7 +22,7 @@ namespace PlataformaRio2C.Domain.Entities
     public class Address : Entity
     {
         public static readonly int Address1MinLength = 1;
-        public static readonly int Address1MaxLength = 200;
+        public static readonly int Address1MaxLength = 500;
         public static readonly int ZipCodeMinLength = 1;
         public static readonly int ZipCodeMaxLength = 10;
 

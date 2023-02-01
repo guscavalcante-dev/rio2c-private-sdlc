@@ -171,7 +171,12 @@ namespace PlataformaRio2C.Domain.Dtos
                 Document = "56.998.566/0001-09",
                 Email = "email@email.com",
                 PhoneNumber = "+55 14 99999-9999",
-                CellPhone = "+55 11 88888-8888"
+                CellPhone = "+55 11 88888-8888",
+                Address= "Jardim Maringa",
+                Country="BRASIL",
+                State= "MT",
+                City= "Várzea Grande",
+                ZipCode= "78120-540"
             };
 
             i.MusicBandMembersApiDtos = new List<MusicBandMemberApiDto>()

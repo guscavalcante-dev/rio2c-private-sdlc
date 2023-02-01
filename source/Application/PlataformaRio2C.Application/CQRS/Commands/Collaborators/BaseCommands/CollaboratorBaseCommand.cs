@@ -59,9 +59,30 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string CollaboratorTypeName { get; set; }
         public IEnumerable<CollaboratorType> CollaboratorTypes { get; set; }
 
+        [Display(Name = "Address", ResourceType = typeof(Labels))]
+        [StringLength(500, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string Address { get; private set; }
+
+        [Display(Name = "Country", ResourceType = typeof(Labels))]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string Country { get; private set; }
+
+        [Display(Name = "State", ResourceType = typeof(Labels))]
+        [StringLength(100, MinimumLength = 2, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string State { get; private set; }
+
+        [Display(Name = "City", ResourceType = typeof(Labels))]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string City { get; private set; }
+
+        [Display(Name = "ZipCode", ResourceType = typeof(Labels))]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string ZipCode { get; private set; }
+
         /// <summary>Initializes a new instance of the <see cref="CollaboratorBaseCommand"/> class.</summary>
         public CollaboratorBaseCommand()
         {
+            
         }
 
         /// <summary>Updates the base properties.</summary>
@@ -113,6 +134,21 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             this.CollaboratorTypeName = collabboratorTypeName;
             this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
+        }
+
+        /// <summary>Updates the address.</summary>
+        /// <param name="address">The address.</param>
+        /// <param name="country">The country.</param>
+        /// <param name="state">The state.</param>
+        /// <param name="city">The city.</param>
+        /// <param name="zipCode">The zip code.</param>
+        internal void UpdateAddress(string address, string country, string state, string city, string zipCode)
+        {
+            this.Address = address;
+            this.Country = country;
+            this.State = state;
+            this.City = city;
+            this.ZipCode = zipCode;
         }
     }
 }

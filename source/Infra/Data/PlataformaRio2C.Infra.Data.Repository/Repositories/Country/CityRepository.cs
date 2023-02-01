@@ -42,6 +42,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the by name asynchronous.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="name">The name.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
+        internal static IQueryable<City> FindByNameAsync(this IQueryable<City> query, string name)
+        {
+            query = query.Where(c => c.Name.Contains(name));
+
+            return query;
+        }
+
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
@@ -127,6 +140,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     UpdateDate = s.UpdateDate,
                     UpdateUserId = s.UpdateUserId
                 }).ToListAsync();
+        }
+
+        /// <summary>Finds the by name asynchronous.</summary>
+        /// <param name="name">The name.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
+        public async Task<City> FindByNameAsync(string name)
+        {
+            var query = this.GetBaseQuery()
+                .FindByNameAsync(name);
+
+            return await query.FirstOrDefaultAsync();
         }
     }
 }

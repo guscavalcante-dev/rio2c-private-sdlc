@@ -78,6 +78,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
+            #region finds by Address
+            Country country = await this.countryRepo.FindByNameAsync(cmd.City);
+            State state = await this.stateRepo.FindByNameAsync(cmd.City);
+            City city = await this.cityRepo.FindByNameAsync(cmd.City);
+            #endregion
+
             // Create if the user was not found in database
             if (user == null)
             {
@@ -91,6 +97,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.CellPhone,
                     cmd.Document,
                     cmd.UserId);
+
+                collaborator.UpdateAddress(country, state?.Uid, state?.Name)
+
                 if (!collaborator.IsValid())
                 {
                     this.AppValidationResult.Add(collaborator.ValidationResult);

@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 03-30-2021
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 03-30-2021
+// Last Modified By : Elton Assunção
+// Last Modified On : 01-02-2023
 // ***********************************************************************
 // <copyright file="MusicBandResponsibleApiDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,6 +35,21 @@ namespace PlataformaRio2C.Domain.Dtos
 
         [JsonProperty(PropertyName = "document", Order = 500)]
         public string Document { get; set; }
+
+        [JsonProperty(PropertyName = "address", Order = 500)]
+        public string Address { get; internal set; }
+
+        [JsonProperty(PropertyName = "country", Order = 600)]
+        public string Country { get; internal set; }
+
+        [JsonProperty(PropertyName = "state", Order = 700)]
+        public string State { get; internal set; }
+
+        [JsonProperty(PropertyName = "city", Order = 800)]
+        public string City { get; internal set; }
+
+        [JsonProperty(PropertyName = "zipCode", Order = 900)]
+        public string ZipCode { get; internal set; }
 
         /// <summary>Initializes a new instance of the <see cref="MusicBandResponsibleApiDto"/> class.</summary>
         public MusicBandResponsibleApiDto()

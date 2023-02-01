@@ -123,21 +123,28 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     #region Creates new Collaborator and User
 
                     var createCollaboratorCommand = new CreateTinyCollaborator();
-                    
+
                     createCollaboratorCommand.UpdateBaseProperties(
-                        cmd.MusicBandResponsibleApiDto.Name, 
+                        cmd.MusicBandResponsibleApiDto.Name,
                         null,
                         cmd.MusicBandResponsibleApiDto.Email,
                         cmd.MusicBandResponsibleApiDto.PhoneNumber,
                         cmd.MusicBandResponsibleApiDto.CellPhone,
                         cmd.MusicBandResponsibleApiDto.Document);
-                    
+
+                    createCollaboratorCommand.UpdateAddress(
+                        cmd.MusicBandResponsibleApiDto.Address,
+                        cmd.MusicBandResponsibleApiDto.Country,
+                        cmd.MusicBandResponsibleApiDto.State,
+                        cmd.MusicBandResponsibleApiDto.City,
+                        cmd.MusicBandResponsibleApiDto.ZipCode);
+
                     createCollaboratorCommand.UpdatePreSendProperties(
                         CollaboratorType.Music.Name, //"Music" is fixed because in [dbo].[MigrateMusicProjects] procedure, its is fixed too!
-                        cmd.UserId, 
-                        cmd.UserUid, 
+                        cmd.UserId,
+                        cmd.UserUid,
                         editionDto.Edition.Id,
-                        editionDto.Edition.Uid, 
+                        editionDto.Edition.Uid,
                         "");
 
                     var commandResult = await base.CommandBus.Send(createCollaboratorCommand);
@@ -173,6 +180,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         cmd.MusicBandResponsibleApiDto.PhoneNumber,
                         cmd.MusicBandResponsibleApiDto.CellPhone,
                         cmd.MusicBandResponsibleApiDto.Document);
+
+                    updateCollaboratorCommand.UpdateAddress(
+                        cmd.MusicBandResponsibleApiDto.Address,
+                        cmd.MusicBandResponsibleApiDto.Country,
+                        cmd.MusicBandResponsibleApiDto.State,
+                        cmd.MusicBandResponsibleApiDto.City,
+                        cmd.MusicBandResponsibleApiDto.ZipCode);
 
                     updateCollaboratorCommand.UpdatePreSendProperties(
                         CollaboratorType.Music.Name,
