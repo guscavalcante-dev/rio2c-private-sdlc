@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-16-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 12-17-2022
+// Last Modified By : Elton Assunção
+// Last Modified On : 02-01-2023
 // ***********************************************************************
 // <copyright file="speakers.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -285,7 +285,7 @@ var SpeakersDataTableWidget = function () {
                                               <i class="la la-ellipsis-h"></i>\
                                             </a>\
                                             <div class="dropdown-menu dropdown-menu-right">';
-
+                        
                         if (!full.IsInCurrentEdition) {
                             html += '<button class="dropdown-item" onclick="SpeakersUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         }
@@ -294,7 +294,7 @@ var SpeakersDataTableWidget = function () {
                         }
 
                         if (full.IsInCurrentEdition && full.IsInOtherEdition) {
-                            html += '<button class="dropdown-item" onclick="SpeakersDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + removeFromEdition + '</button>';
+                            html += '<button class="dropdown-item" onclick="SpeakersDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-remove"></i> ' + removeFromEdition + '</button>';
                         }
                         else {
                             html += '<button class="dropdown-item" onclick="SpeakersDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
