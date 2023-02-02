@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-06-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-16-2020
+// Last Modified By : Elton Assunção
+// Last Modified On : 02-01-2023
 // ***********************************************************************
 // <copyright file="EditionDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,6 +36,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset SellStartDate { get; private set; }
         public DateTimeOffset SellEndDate { get; private set; }
         public DateTimeOffset OneToOneMeetingsScheduleDate { get; private set; }
+        public int SpeakersApiHighlightPositionsCount { get; set; }
 
         #endregion
 
@@ -45,7 +46,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset ProjectSubmitStartDate { get; private set; }
         public DateTimeOffset ProjectSubmitEndDate { get; private set; }
         public DateTimeOffset ProjectEvaluationStartDate { get; private set; }
-        public DateTimeOffset ProjectEvaluationEndDate { get; private set; }  
+        public DateTimeOffset ProjectEvaluationEndDate { get; private set; }
         public DateTimeOffset NegotiationStartDate { get; private set; }
         public DateTimeOffset NegotiationEndDate { get; private set; }
         public DateTimeOffset? AudiovisualNegotiationsCreateStartDate { get; private set; }
@@ -74,7 +75,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset AudiovisualCommissionEvaluationEndDate { get; private set; }
         public int AudiovisualCommissionMinimumEvaluationsCount { get; private set; }
         public int AudiovisualCommissionMaximumApprovedProjectsCount { get; private set; }
-        
+
         // Cartoon - Commissions
         public DateTimeOffset CartoonProjectSubmitStartDate { get; private set; }
         public DateTimeOffset CartoonProjectSubmitEndDate { get; private set; }
@@ -120,6 +121,7 @@ namespace PlataformaRio2C.Domain.Dtos
             this.SellStartDate = entity.SellStartDate;
             this.SellEndDate = entity.SellEndDate;
             this.OneToOneMeetingsScheduleDate = entity.OneToOneMeetingsScheduleDate;
+            this.SpeakersApiHighlightPositionsCount = entity.SpeakersApiHighlightPositionsCount;
 
             // Audiovisual - Negotiations
             this.ProjectSubmitStartDate = entity.ProjectSubmitStartDate;
@@ -130,7 +132,7 @@ namespace PlataformaRio2C.Domain.Dtos
             this.NegotiationEndDate = entity.NegotiationEndDate;
             this.AttendeeOrganizationMaxSellProjectsCount = entity.AttendeeOrganizationMaxSellProjectsCount;
             this.ProjectMaxBuyerEvaluationsCount = entity.ProjectMaxBuyerEvaluationsCount;
-            
+
             // Music - Commissions
             this.MusicProjectSubmitStartDate = entity.MusicProjectSubmitStartDate;
             this.MusicProjectSubmitEndDate = entity.MusicProjectSubmitEndDate;

@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 08-20-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-24-2021
+// Last Modified By : Elton Assunção
+// Last Modified On : 02-01-2023
 // ***********************************************************************
 // <copyright file="EditionMainInformationBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -63,6 +63,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public DateTime? OneToOneMeetingsScheduleDate { get; set; }
 
+        [Display(Name = nameof(SpeakersApiHighlightPositionsCount), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public int SpeakersApiHighlightPositionsCount { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="EditionMainInformationBaseCommand"/> class.
         /// </summary>
@@ -90,15 +94,16 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             if (editionDto?.Edition == null)
                 return;
 
-            this.Name = editionDto.Edition.Name;
-            this.UrlCode = editionDto.Edition.UrlCode;
-            this.IsCurrent = editionDto.Edition.IsCurrent;
-            this.IsActive = editionDto.Edition.IsActive;
-            this.StartDate = editionDto.Edition.StartDate.ToBrazilTimeZone();
-            this.EndDate = editionDto.Edition.EndDate.ToBrazilTimeZone();
-            this.SellStartDate = editionDto.Edition.SellStartDate.ToBrazilTimeZone();
-            this.SellEndDate = editionDto.Edition.SellEndDate.ToBrazilTimeZone();
-            this.OneToOneMeetingsScheduleDate = editionDto.Edition.OneToOneMeetingsScheduleDate.ToBrazilTimeZone();
+            this.Name = editionDto.Name;
+            this.UrlCode = editionDto.UrlCode;
+            this.IsCurrent = editionDto.IsCurrent;
+            this.IsActive = editionDto.IsActive;
+            this.StartDate = editionDto.StartDate.ToBrazilTimeZone();
+            this.EndDate = editionDto.EndDate.ToBrazilTimeZone();
+            this.SellStartDate = editionDto.SellStartDate.ToBrazilTimeZone();
+            this.SellEndDate = editionDto.SellEndDate.ToBrazilTimeZone();
+            this.OneToOneMeetingsScheduleDate = editionDto.OneToOneMeetingsScheduleDate.ToBrazilTimeZone();
+            this.SpeakersApiHighlightPositionsCount = editionDto.SpeakersApiHighlightPositionsCount;
         }
     }
 }

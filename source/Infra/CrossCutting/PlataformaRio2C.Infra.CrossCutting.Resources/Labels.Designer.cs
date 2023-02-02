@@ -1816,7 +1816,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exbir na edição {0} do site.
+        ///   Looks up a localized string similar to Exibir na edição {0} do site.
         /// </summary>
         public static string DisplayOnSiteEdition {
             get {
@@ -5997,6 +5997,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Speakers {
             get {
                 return ResourceManager.GetString("Speakers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade no Destaque da API de Palestrantes.
+        /// </summary>
+        public static string SpeakersApiHighlightPositionsCount {
+            get {
+                return ResourceManager.GetString("SpeakersApiHighlightPositionsCount", resourceCulture);
             }
         }
         

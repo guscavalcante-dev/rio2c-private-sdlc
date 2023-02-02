@@ -847,8 +847,8 @@
     <comment>Exibir no site</comment>
   </data>
   <data name="DisplayOnSiteEdition" xml:space="preserve">
-    <value>Exbir na edição {0} do site</value>
-    <comment>Exbir na edição {0} do site</comment>
+    <value>Exibir na edição {0} do site</value>
+    <comment>Exibir na edição {0} do site</comment>
   </data>
   <data name="DisplayOrder" xml:space="preserve">
     <value>Ordem de exibição</value>
@@ -2612,6 +2612,10 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Speakers" xml:space="preserve">
     <value>Palestrantes</value>
     <comment>Palestrantes</comment>
+  </data>
+  <data name="SpeakersApiHighlightPositionsCount" xml:space="preserve">
+    <value>Quantidade no Destaque da API de Palestrantes</value>
+    <comment>Quantidade de Posição no Destaque da API de Palestrantes</comment>
   </data>
   <data name="SpeakersRoles" xml:space="preserve">
     <value>Funções dos Palestrantes</value>
