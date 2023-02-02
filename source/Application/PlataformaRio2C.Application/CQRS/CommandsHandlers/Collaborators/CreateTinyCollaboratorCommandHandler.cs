@@ -98,7 +98,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.Document,
                     cmd.UserId);
 
-                collaborator.UpdateAddress(country, state?.Uid, state?.Name)
+                collaborator.UpdateAddress(country, state?.Uid, state?.Name, state.gu)
 
                 if (!collaborator.IsValid())
                 {
