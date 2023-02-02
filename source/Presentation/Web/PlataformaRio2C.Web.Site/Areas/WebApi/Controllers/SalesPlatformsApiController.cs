@@ -4,7 +4,7 @@
 // Created          : 07-10-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-29-2022
+// Last Modified On : 02-02-2023
 // ***********************************************************************
 // <copyright file="SalesPlatformsApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -162,7 +162,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
                 if (!result.IsValid)
                 {
-                    throw new DomainException($"{SalePlatformName.Sympla} webhooks imported with some errors.");
+                    throw new DomainException($"{SalePlatformName.Sympla} webhooks imported with some errors: {result.Errors.Select(e => e.Message).Distinct().ToString("; ")}");
                 }
             }
             catch (DomainException ex)
