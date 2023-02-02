@@ -292,8 +292,8 @@ namespace PlataformaRio2C.Domain.Entities
             DateTime sellStartDate,
             DateTime sellEndDate,
             DateTime oneToOneMeetingsScheduleDate,
-            int userId,
-            int speakersApiHighlightPositionsCount)
+            int speakersApiHighlightPositionsCount,
+            int userId)
         {
             this.Name = name;
             this.UrlCode = urlCode;

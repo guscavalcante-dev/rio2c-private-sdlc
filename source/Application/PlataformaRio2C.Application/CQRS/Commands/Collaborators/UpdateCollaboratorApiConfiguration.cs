@@ -44,7 +44,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public UpdateCollaboratorApiConfiguration(
             AttendeeCollaboratorApiConfigurationWidgetDto entity,
             string collaboratorTypeName,
-            List<AttendeeCollaboratorApiConfigurationWidgetDto> attendeeCollaboratorApiConfigurationWidgetDtos)
+            List<AttendeeCollaboratorApiConfigurationWidgetDto> attendeeCollaboratorApiConfigurationWidgetDtos,
+            int speakersApiHighlightPositionsCount)
         {
             var attendeeCollaboratorTypeDto = entity?.GetAttendeeCollaboratorTypeDtoByCollaboratorTypeName(collaboratorTypeName);
 
@@ -53,7 +54,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.ApiHighlightPosition = attendeeCollaboratorTypeDto?.AttendeeCollaboratorType?.ApiHighlightPosition;
 
             this.UpdateBaseModels(attendeeCollaboratorApiConfigurationWidgetDtos);
-            this.GenerateCountSpeakersApiHighlightPositions(entity.AttendeeCollaborator.Edition.SpeakersApiHighlightPositionsCount);
+            this.GenerateCountSpeakersApiHighlightPositions(speakersApiHighlightPositionsCount);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorApiConfiguration"/> class.</summary>
@@ -94,7 +95,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="speakersApiHighlightPositionsCount">The speakers API highlight positions count.</param>
         private void GenerateCountSpeakersApiHighlightPositions(int speakersApiHighlightPositionsCount)
         {
-            ApiHighlightPositions = Enumerable.Range(1, speakersApiHighlightPositionsCount).ToArray();
+            this.ApiHighlightPositions = Enumerable.Range(1, speakersApiHighlightPositionsCount).ToArray();
         }
     }
 }
