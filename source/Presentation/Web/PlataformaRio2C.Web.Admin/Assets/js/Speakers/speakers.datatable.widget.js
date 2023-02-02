@@ -226,23 +226,31 @@ var SpeakersDataTableWidget = function () {
                     data: 'Email'
                 },
                 {
-                    data: 'Company',
-                    render: function (data, type, row, meta) {
-                        var html = '<ul class="m-0 pl-4">';
-
-                        //loop through all the row details to build output string
-                        for (var item in row.AttendeeOrganizationBasesDtos) {
-                            if (row.AttendeeOrganizationBasesDtos.hasOwnProperty(item)) {
-                                var r = row.AttendeeOrganizationBasesDtos[item];
-                                html += '<li>' + r.DisplayName + '</li>';
-                            }
-                        }
-
-                        html += '</ul>';
-
-                        return html;
+                    data: 'IsApiDisplayEnabled',
+                    render: function (data) {                        
+                        if (data == true)
+                            return '<span class="kt-pricing-1__icon kt-font-success"><i class="fa flaticon2-checkmark"></i></span>';
+                        return '<span class="kt-pricing-1__icon kt-font-danger"><i class="fa flaticon2-cross"></i></span>';
                     }
                 },
+                //{
+                //    data: 'Company',
+                //    render: function (data, type, row, meta) {
+                //        var html = '<ul class="m-0 pl-4">';
+
+                //        //loop through all the row details to build output string
+                //        for (var item in row.AttendeeOrganizationBasesDtos) {
+                //            if (row.AttendeeOrganizationBasesDtos.hasOwnProperty(item)) {
+                //                var r = row.AttendeeOrganizationBasesDtos[item];
+                //                html += '<li>' + r.DisplayName + '</li>';
+                //            }
+                //        }
+
+                //        html += '</ul>';
+
+                //        return html;
+                //    }
+                //},
                 //{
                 //    data: 'CreateDate',
                 //    render: function (data) {

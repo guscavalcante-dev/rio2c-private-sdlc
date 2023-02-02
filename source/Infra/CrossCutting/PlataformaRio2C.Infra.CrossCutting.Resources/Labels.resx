@@ -271,6 +271,10 @@
     <value>e</value>
     <comment>e</comment>
   </data>
+  <data name="Api" xml:space="preserve">
+    <value>API</value>
+    <comment>API</comment>
+  </data>
   <data name="ApiConfigurations" xml:space="preserve">
     <value>Configurações da API</value>
     <comment>Configurações da API</comment>
