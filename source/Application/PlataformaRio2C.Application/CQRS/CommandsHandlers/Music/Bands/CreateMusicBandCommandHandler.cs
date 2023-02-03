@@ -4,7 +4,7 @@
 // Created          : 23-03-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-14-2023
+// Last Modified On : 02-03-2023
 // ***********************************************************************
 // <copyright file="CreateMusicBandCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,9 +20,7 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
-using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -198,15 +196,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         }
                     }
 
-                    collaboratorDto = await collaboratorRepo.FindByEmailAsync(cmd.MusicBandResponsibleApiDto.Email, editionDto.Id);
-
                     #endregion
                 }
+
+                collaboratorDto = await collaboratorRepo.FindByEmailAsync(cmd.MusicBandResponsibleApiDto.Email, editionDto.Id);
             }
 
             // TODO: Music Band has no Update method because the MyRio2C customer hasn't defined the fields that will validate if a band already exists!
-            // Defining this later is important to prevent a band from registering several times!
-
+            // Defining this is important to prevent a band from registering several times!
             var musicBand = new MusicBand(
                 musicBandType,
                 editionDto.Edition,
