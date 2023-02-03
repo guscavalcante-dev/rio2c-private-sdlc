@@ -35,6 +35,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool IsInCurrentEdition { get; set; }
         public bool IsInOtherEdition { get; set; }
 
+        public bool IsApiDisplayEnabled { get; set; }
+
         /// <summary>Initializes a new instance of the <see cref="OrganizationBaseDto"/> class.</summary>
         public OrganizationBaseDto()
         {

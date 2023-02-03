@@ -552,7 +552,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords)
-                                .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, showAllEditions, showAllOrganizations, editionId);
+                                .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, showAllEditions, showAllOrganizations, editionId);                               
 
             return await query
                             .DynamicOrder<Organization>(
@@ -587,7 +587,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                                                                         && !aot.IsDeleted)),
                                 IsInOtherEdition = editionId.HasValue && o.AttendeeOrganizations.Any(ao => ao.EditionId != editionId
                                                                                                             && !ao.IsDeleted),
-                                IsVirtualMeeting = o.IsVirtualMeeting
+                                IsVirtualMeeting = o.IsVirtualMeeting,
+
+                                IsApiDisplayEnabled = o.AttendeeOrganizations.Where(ac => !ac.IsDeleted && ac.EditionId == editionId).FirstOrDefault()
+                                                        .AttendeeOrganizationTypes.Where(act => !act.IsDeleted && act.OrganizationType.Uid == organizationTypeUid).FirstOrDefault()
+                                                        .IsApiDisplayEnabled,
                             })
                             .ToListPagedAsync(page, pageSize);
         }

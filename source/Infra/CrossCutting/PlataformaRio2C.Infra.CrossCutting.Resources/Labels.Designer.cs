@@ -430,6 +430,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to API.
+        /// </summary>
+        public static string Api {
+            get {
+                return ResourceManager.GetString("Api", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configurações da API.
         /// </summary>
         public static string ApiConfigurations {

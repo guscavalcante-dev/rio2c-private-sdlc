@@ -132,7 +132,14 @@ var AudiovisualPlayersDataTableWidget = function () {
                 { data: 'HoldingBaseDto.Name' },
                 { data: 'Document' },
                 { data: 'Website' },
-                { data: 'PhoneNumber' },
+                {
+                    data: 'IsApiDisplayEnabled',
+                    render: function (data) {
+                        if (data == true)
+                            return '<span class="kt-pricing-1__icon kt-font-success"><i class="fa flaticon2-checkmark"></i></span>';
+                        return '<span class="kt-pricing-1__icon kt-font-danger"><i class="fa flaticon2-cross"></i></span>';
+                    }
+                },
                 {
                     data: 'CreateDate',
                     render: function (data) {
