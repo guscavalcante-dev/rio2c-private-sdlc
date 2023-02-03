@@ -4,7 +4,7 @@
 // Created          : 08-30-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 11-24-2022
+// Last Modified On : 02-02-2023
 // ***********************************************************************
 // <copyright file="SalesPlatformAttendeeDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -64,6 +64,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
 
         // Custom Fields
         public string Payload { get; private set; }
+        public bool IsOwnershipChange { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="SalesPlatformAttendeeDto"/> class.</summary>
         public SalesPlatformAttendeeDto()
@@ -209,6 +210,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
 
             // Custom Fields
             this.Payload = JsonConvert.SerializeObject(symplaPayload, Formatting.None);
+            this.IsOwnershipChange = symplaPayload.IsOwnershipChange;
         }
 
         /// <summary>
