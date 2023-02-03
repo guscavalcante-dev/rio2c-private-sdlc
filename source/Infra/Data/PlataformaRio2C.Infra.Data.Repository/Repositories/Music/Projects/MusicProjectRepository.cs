@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-16-2021
+// Last Modified On : 02-03-2023
 // ***********************************************************************
 // <copyright file="MusicProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -765,12 +765,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         AttendeeMusicBand = mp.AttendeeMusicBand,
                                         AttendeeMusicBandCollaboratorDto = mp.AttendeeMusicBand.AttendeeMusicBandCollaborators
                                                                                 .Where(amb => !amb.IsDeleted && !amb.AttendeeCollaborator.IsDeleted && !amb.AttendeeCollaborator.Collaborator.IsDeleted)
-                                                                                .Select(amb => new AttendeeMusicBandCollaboratorDto
+                                                                                .Select(ambc => new AttendeeMusicBandCollaboratorDto
                                                                                 {
-                                                                                    AttendeeMusicBandCollaborator = amb,
-                                                                                    AttendeeCollaborator = amb.AttendeeCollaborator,
-                                                                                    Collaborator = amb.AttendeeCollaborator.Collaborator,
-                                                                                    User = amb.AttendeeCollaborator.Collaborator.User
+                                                                                    AttendeeMusicBandCollaborator = ambc,
+                                                                                    AttendeeCollaborator = ambc.AttendeeCollaborator,
+                                                                                    Collaborator = ambc.AttendeeCollaborator.Collaborator,
+                                                                                    User = ambc.AttendeeCollaborator.Collaborator.User
                                                                                 })
                                                                                 .FirstOrDefault()
                                     }
