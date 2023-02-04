@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-13-2021
+// Last Modified On : 01-31-2023
 // ***********************************************************************
 // <copyright file="CollaboratorDataBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

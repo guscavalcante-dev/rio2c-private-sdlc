@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 04-24-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-31-2023
 // ***********************************************************************
 // <copyright file="UpdateAdministrator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

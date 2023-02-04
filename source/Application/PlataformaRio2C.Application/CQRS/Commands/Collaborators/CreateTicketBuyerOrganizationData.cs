@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 10-14-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-31-2023
 // ***********************************************************************
 // <copyright file="CreateTicketBuyerOrganizationData.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
