@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-03-2023
+// Last Modified On : 02-06-2023
 // ***********************************************************************
 // <copyright file="AttendeeMusicBand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,7 +15,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Domain.Validation;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
