@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-19-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 09-16-2021
+// Last Modified By : Elton Assunção
+// Last Modified On : 02-06-2023
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -181,7 +181,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             innerHoldingNameWhere = innerHoldingNameWhere.And(o => o.Holding.Name.Contains(keyword));
                             innerDocumentWhere = innerDocumentWhere.And(o => o.Document.Contains(keyword));
                         }
-                            
+
                     }
                 }
 
@@ -219,8 +219,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         query = query.Where(o => o.AttendeeOrganizations
                                                         .Any(ao => ao.EditionId == editionId
                                                                    && !ao.IsDeleted
-                                                                   && ao.ProjectBuyerEvaluations.Any(pbe => !pbe.IsDeleted 
-                                                                                                            && !pbe.Project.IsDeleted 
+                                                                   && ao.ProjectBuyerEvaluations.Any(pbe => !pbe.IsDeleted
+                                                                                                            && !pbe.Project.IsDeleted
                                                                                                             && pbe.ProjectEvaluationStatus.Uid == ProjectEvaluationStatus.Accepted.Uid
                                                                                                             && pbe.Negotiations.Any(n => !n.IsDeleted))));
                     }
@@ -244,7 +244,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         query = query.Where(o => o.AttendeeOrganizations
                                                         .Any(ao => ao.EditionId == editionId
                                                                    && !ao.IsDeleted
-                                                                   && ao.ProjectBuyerEvaluations.Any(pbe => !pbe.IsDeleted 
+                                                                   && ao.ProjectBuyerEvaluations.Any(pbe => !pbe.IsDeleted
                                                                                                             && !pbe.Project.IsDeleted
                                                                                                             && pbe.ProjectEvaluationStatus.Uid == ProjectEvaluationStatus.Accepted.Uid
                                                                                                             && (!pbe.Negotiations.Any() || pbe.Negotiations.All(n => n.IsDeleted)))));
@@ -457,7 +457,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     Id = o.Updater.Id,
                                     Uid = o.Updater.Uid,
                                     Name = o.Updater.Name,
-                                    Email =o.Updater.Email 
+                                    Email = o.Updater.Email
                                 },
                                 AddressBaseDto = o.Address.IsDeleted ? null : new AddressBaseDto
                                 {
@@ -541,18 +541,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
         public async Task<IPagedList<OrganizationBaseDto>> FindAllByDataTable(
-            int page, 
-            int pageSize, 
-            string keywords, 
-            List<Tuple<string, string>> sortColumns, 
-            Guid organizationTypeUid, 
+            int page,
+            int pageSize,
+            string keywords,
+            List<Tuple<string, string>> sortColumns,
+            Guid organizationTypeUid,
             bool showAllEditions,
             bool showAllOrganizations,
             int? editionId)
         {
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords)
-                                .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, showAllEditions, showAllOrganizations, editionId);                               
+                                .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, showAllEditions, showAllOrganizations, editionId);
 
             return await query
                             .DynamicOrder<Organization>(
@@ -656,13 +656,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         public async Task<IPagedList<OrganizationApiListDto>> FindAllPublicApiPaged(
-            int editionId, 
-            string keywords, 
-            Guid organizationTypeUid, 
+            int editionId,
+            string keywords,
+            Guid organizationTypeUid,
             List<Guid> activitiesUids,
             List<Guid> targetAudiencesUids,
             List<Guid> interestsUids,
-            int page, 
+            int page,
             int pageSize)
         {
             var query = this.GetBaseQuery()
@@ -705,7 +705,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByCompanyName(companyName)
                                 .FindByTradeName(tradeName)
                                 .FindByEqualDocument(document);
-                                //.FindByNotOrganiationsTypesNames(new List<string> { Domain.Constants.OrganizationType.AudiovisualBuyer });
+            //.FindByNotOrganiationsTypesNames(new List<string> { Domain.Constants.OrganizationType.AudiovisualBuyer });
 
             return await query
                             .Select(o => new OrganizationApiListDto
