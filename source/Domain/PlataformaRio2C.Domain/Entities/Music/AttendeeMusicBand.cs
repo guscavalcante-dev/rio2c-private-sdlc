@@ -302,7 +302,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidationResult = new ValidationResult();
 
             this.ValidateAttendeeMusicBandEvaluations();
-            this.ValidateAttendeeMusicBandCollaborators();
+            //this.ValidateAttendeeMusicBandCollaborators();
 
             return this.ValidationResult.IsValid;
         }
