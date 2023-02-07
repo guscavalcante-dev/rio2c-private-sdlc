@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-19-2019
 //
-// Last Modified By : Elton Assunção
-// Last Modified On : 02-06-2023
+// Last Modified By : Renan Valentim
+// Last Modified On : 02-07-2023
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -580,18 +580,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 ImageUploadDate = o.ImageUploadDate,
                                 CreateDate = o.CreateDate,
                                 UpdateDate = o.UpdateDate,
+                                IsVirtualMeeting = o.IsVirtualMeeting,
                                 IsInCurrentEdition = editionId.HasValue && o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
                                                                                                                 && !ao.Edition.IsDeleted
                                                                                                                 && !ao.IsDeleted
                                                                                                                 && ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == organizationTypeUid
-                                                                                                                                                        && !aot.IsDeleted)),
+                                                                                                                                                            && !aot.IsDeleted)),
                                 IsInOtherEdition = editionId.HasValue && o.AttendeeOrganizations.Any(ao => ao.EditionId != editionId
                                                                                                             && !ao.IsDeleted),
-                                IsVirtualMeeting = o.IsVirtualMeeting,
 
-                                IsApiDisplayEnabled = o.AttendeeOrganizations.Where(ac => !ac.IsDeleted && ac.EditionId == editionId).FirstOrDefault()
-                                                        .AttendeeOrganizationTypes.Where(act => !act.IsDeleted && act.OrganizationType.Uid == organizationTypeUid).FirstOrDefault()
-                                                        .IsApiDisplayEnabled,
+                                IsApiDisplayEnabled = o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
+                                                                                        && ao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
+                                                                                                                                   && aot.OrganizationType.Uid == organizationTypeUid
+                                                                                                                                   && aot.IsApiDisplayEnabled)),
                             })
                             .ToListPagedAsync(page, pageSize);
         }

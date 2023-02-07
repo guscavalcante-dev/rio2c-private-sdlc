@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-19-2019
 //
-// Last Modified By : Elton Assunção
-// Last Modified On : 02-06-2023
+// Last Modified By : Renan Valentim
+// Last Modified On : 02-07-2023
 // ***********************************************************************
 // <copyright file="audiovisual.players.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -136,8 +136,9 @@ var AudiovisualPlayersDataTableWidget = function () {
                     data: 'IsApiDisplayEnabled',
                     render: function (data) {
                         if (data == true)
-                            return '<span class="kt-pricing-1__icon kt-font-success"><i class="fa flaticon2-checkmark"></i></span>';
-                        return '<span class="kt-pricing-1__icon kt-font-danger"><i class="fa flaticon2-cross"></i></span>';
+                            return '<span class="kt-pricing-1__icon kt-font-success" data-toggle="tooltip" data-placement="right" style="cursor: pointer;" title="' + showingOnSiteEdition + '"><i class="fa flaticon2-check-mark"></i></span>';
+                        else
+                            return '<span class="kt-pricing-1__icon kt-font-danger" data-toggle="tooltip" data-placement="right" style="cursor: pointer;" title="' + notShowingOnSiteEdition + '"><i class="fa flaticon2-cross"></i></span>';
                     }
                 },
                 {
