@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-26-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 01-10-2023
+// Last Modified By : Elton Assunção
+// Last Modified On : 02-03-2023
 // ***********************************************************************
 // <copyright file="CollaboratorBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -38,7 +38,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public string CellPhone { get; set; }
         public string PublicEmail { get; set; }
         public string JobTitle { get; set; }
-        
+        public bool IsApiDisplayEnabled { get; set; }
+        public int? ApiHighlightPosition { get; set; }
         public HoldingBaseDto HoldingBaseDto { get; set; }
         public OrganizationBaseDto OrganizatioBaseDto { get; set; }
         public DateTimeOffset? ImageUploadDate { get; set; }
@@ -127,7 +128,7 @@ namespace PlataformaRio2C.Domain.Dtos
 
         [ScriptIgnore]
         public AttendeeCollaborator EditionAttendeeCollaborator { get; set; }
-
+        
         #endregion
 
         /// <summary>Gets the collaborator job title base dto by language code.</summary>
