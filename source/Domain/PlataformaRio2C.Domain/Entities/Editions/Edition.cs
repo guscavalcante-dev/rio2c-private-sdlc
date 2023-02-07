@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 03-17-2022
+// Last Modified By : Elton Assunção
+// Last Modified On : 02-01-2023
 // ***********************************************************************
 // <copyright file="Edition.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -37,6 +37,7 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset SellStartDate { get; private set; }
         public DateTimeOffset SellEndDate { get; private set; }      
         public DateTimeOffset OneToOneMeetingsScheduleDate { get; private set; }
+        public int SpeakersApiHighlightPositionsCount { get; private set; }
 
         #endregion
 
@@ -86,7 +87,7 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset AudiovisualCommissionEvaluationEndDate { get; private set; }
         public int AudiovisualCommissionMinimumEvaluationsCount { get; private set; }
         public int AudiovisualCommissionMaximumApprovedProjectsCount { get; private set; }
-
+        
         #endregion
 
         #region Cartoon - Commissions
@@ -99,7 +100,7 @@ namespace PlataformaRio2C.Domain.Entities
         public int CartoonCommissionMaximumApprovedProjectsCount { get; private set; }
 
         #endregion
-
+              
         #endregion
 
         public virtual ICollection<AttendeeOrganization> AttendeeOrganizations { get; private set; }
@@ -291,6 +292,7 @@ namespace PlataformaRio2C.Domain.Entities
             DateTime sellStartDate,
             DateTime sellEndDate,
             DateTime oneToOneMeetingsScheduleDate,
+            int speakersApiHighlightPositionsCount,
             int userId)
         {
             this.Name = name;
@@ -302,6 +304,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SellStartDate = sellStartDate.ToUtcTimeZone();
             this.SellEndDate = sellEndDate.ToEndDateTimeOffset();
             this.OneToOneMeetingsScheduleDate = oneToOneMeetingsScheduleDate.ToUtcTimeZone();
+            this.SpeakersApiHighlightPositionsCount = speakersApiHighlightPositionsCount;
 
             base.SetUpdateDate(userId);
         }

@@ -25,6 +25,24 @@
                         <!--begin: Timeline item-->
                         <div class="kt-timeline-v1__item">
                             @{
+                                date = new DateTime(2023, 1, 30);
+                            }
+                            <div class="kt-timeline-v1__item-circle">
+                                <div class="kt-bg-danger"></div>
+                            </div>
+                            <span class="kt-timeline-v1__item-time kt-font-brand">@date.ToShortDateString()</span>
+                            <div class="kt-timeline-v1__item-content">
+                                <div class="kt-timeline-v1__item-body">
+                                    <a href="https://www.rio2c.com/cadastro-bandas/" target="_blank">
+                                        <img class="r2c-we-connected-banner" src="https://assets.my.rio2c.com/img/we-connected/@(date.ToString("yyyyMMdd"))_timeline-pitching-show-@(ViewBag.UserInterfaceLanguage).png?v=@(date.ToString("yyyyMMdd"))" />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end: Timeline item-->
+                        <!--begin: Timeline item-->
+                        <div class="kt-timeline-v1__item">
+                            @{
                                 date = new DateTime(2023, 1, 18);
                             }
                             <div class="kt-timeline-v1__item-circle">
@@ -157,14 +175,14 @@
                             <span class="kt-timeline-v1__item-time kt-font-brand">@date.ToShortDateString()</span>
                             <div class="kt-timeline-v1__item-content">
                                 @*<div class="kt-timeline-v1__item-title">
-                                        Users Joined Today
-                                    </div>*@
+                    Users Joined Today
+                </div>*@
                                 <div class="kt-timeline-v1__item-body">
                                     <img class="r2c-we-connected-banner" src="https://assets.my.rio2c.com/img/we-connected/@(date.ToString("yyyyMMdd"))_dashboard-banner-@(ViewBag.UserInterfaceLanguage).png?v=@(date.ToString("yyyyMMdd"))" />
                                 </div>
                                 @*<div class="kt-timeline-v1__item-actions">
-                                        <a href="#" class="btn btn-sm btn-label-brand btn-bold">Show more ...</a>
-                                    </div>*@
+                    <a href="#" class="btn btn-sm btn-label-brand btn-bold">Show more ...</a>
+                </div>*@
                             </div>
                         </div>
                         <!--end: Timeline item-->
@@ -179,16 +197,16 @@
                             <span class="kt-timeline-v1__item-time kt-font-brand">@date.ToShortDateString()</span>
                             <div class="kt-timeline-v1__item-content">
                                 @*<div class="kt-timeline-v1__item-title">
-                                        New Members Joined!
-                                    </div>*@
+                    New Members Joined!
+                </div>*@
                                 <div class="kt-timeline-v1__item-body">
                                     <a href="@(ViewBag.UserInterfaceLanguage == "en-us" ? "https://www.rio2c.com/en/notice" : "https://www.rio2c.com/comunicado/")" target="_blank">
                                         <img class="r2c-we-connected-banner" src="https://assets.my.rio2c.com/img/we-connected/@(date.ToString("yyyyMMdd"))_dashboard-banner-@(ViewBag.UserInterfaceLanguage).png?v=@(date.ToString("yyyyMMdd"))" />
                                     </a>
                                 </div>
                                 @*<div class="kt-timeline-v1__item-actions">
-                                        <a href="#" class="btn btn-sm btn-brand">Check all</a>
-                                    </div>*@
+                    <a href="#" class="btn btn-sm btn-brand">Check all</a>
+                </div>*@
                             </div>
                         </div>
                         <!--end: Timeline item-->
@@ -203,14 +221,14 @@
                             <span class="kt-timeline-v1__item-time kt-font-brand">@date.ToShortDateString()</span>
                             <div class="kt-timeline-v1__item-content">
                                 @*<div class="kt-timeline-v1__item-title">
-                                        New Members Joined!
-                                    </div>*@
+                    New Members Joined!
+                </div>*@
                                 <div class="kt-timeline-v1__item-body">
                                     <img class="r2c-we-connected-banner" src="https://assets.my.rio2c.com/img/we-connected/@(date.ToString("yyyyMMdd"))_dashboard-banner-@(ViewBag.UserInterfaceLanguage).png?v=@(date.ToString("yyyyMMdd"))" />
                                 </div>
                                 @*<div class="kt-timeline-v1__item-actions">
-                                        <a href="#" class="btn btn-sm btn-brand">Check all</a>
-                                    </div>*@
+                    <a href="#" class="btn btn-sm btn-brand">Check all</a>
+                </div>*@
                             </div>
                         </div>
                         <!--end: Timeline item-->
@@ -225,14 +243,14 @@
                             <span class="kt-timeline-v1__item-time kt-font-brand">@date.ToShortDateString()</span>
                             <div class="kt-timeline-v1__item-content">
                                 @*<div class="kt-timeline-v1__item-title">
-                                        New Members Joined!
-                                    </div>*@
+                    New Members Joined!
+                </div>*@
                                 <div class="kt-timeline-v1__item-body">
                                     <img class="r2c-we-connected-banner" src="https://assets.my.rio2c.com/img/we-connected/@(date.ToString("yyyyMMdd"))_dashboard-banner-@(ViewBag.UserInterfaceLanguage).png?v=@(date.ToString("yyyyMMdd"))" />
                                 </div>
                                 @*<div class="kt-timeline-v1__item-actions">
-                                        <a href="#" class="btn btn-sm btn-brand">Check all</a>
-                                    </div>*@
+                    <a href="#" class="btn btn-sm btn-brand">Check all</a>
+                </div>*@
                             </div>
                         </div>
                         <!--end: Timeline item-->
@@ -247,16 +265,16 @@
                             <span class="kt-timeline-v1__item-time kt-font-brand">@date.ToShortDateString()</span>
                             <div class="kt-timeline-v1__item-content">
                                 @*<div class="kt-timeline-v1__item-title">
-                                        New Members Joined!
-                                    </div>*@
+                    New Members Joined!
+                </div>*@
                                 <div class="kt-timeline-v1__item-body">
                                     <div class="embed-responsive embed-responsive-16by9">
                                         <p align="center"><iframe class="embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/DEmAn2QqkT4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
                                     </div>
                                 </div>
                                 @*<div class="kt-timeline-v1__item-actions">
-                                        <a href="#" class="btn btn-sm btn-brand">Check all</a>
-                                    </div>*@
+                    <a href="#" class="btn btn-sm btn-brand">Check all</a>
+                </div>*@
                             </div>
                         </div>
                         <!--end: Timeline item-->

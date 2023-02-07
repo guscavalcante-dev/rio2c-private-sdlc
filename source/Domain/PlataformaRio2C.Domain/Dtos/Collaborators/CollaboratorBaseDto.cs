@@ -40,6 +40,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public string Twitter { get; set; }
         public string Instagram { get; set; }
         public string Youtube { get; set; }
+        public bool IsApiDisplayEnabled { get; set; }
+        public int? ApiHighlightPosition { get; set; }
         public DateTimeOffset? ImageUploadDate { get; set; }
         public DateTimeOffset CreateDate { get; set; }
         public DateTimeOffset UpdateDate { get; set; }

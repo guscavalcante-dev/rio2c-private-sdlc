@@ -4,7 +4,7 @@
 // Created          : 07-12-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-24-2023
+// Last Modified On : 02-02-2023
 // ***********************************************************************
 // <copyright file="CreateSalesPlatformWebhookRequestCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -192,8 +192,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
                                 this.salesPlatformWebhookRequestRepo.Create(salesPlatformWebhookRequest);
 
-                                // Sympla platform doesn't return "NotAttending" status, its created only in MyRio, so, cannot save this date at database.
-                                if (salesPlatformAttendeeDto.SalesPlatformAttendeeStatus != SalesPlatformAttendeeStatus.NotAttending)
+                                // Sympla platform doesn't send ownership change cancellation webhook, its created only in MyRio platform with a manually generated date.
+                                // So, cannot save this date at database to avoid skipping date ranges.
+                                if (!salesPlatformAttendeeDto.IsOwnershipChange)
                                 {
                                     // Updates last sales platform order date
                                     salesPlatform.UpdateLastSalesPlatformOrderDate(salesPlatformAttendeeDto.EventId,

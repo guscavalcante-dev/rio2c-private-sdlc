@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-29-2023
+// Last Modified On : 02-02-2023
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -843,8 +843,11 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         /// <returns>
         /// A <see cref="System.String" /> that represents this instance.
         /// </returns>
-        public static string ToString(this IEnumerable<string> list, string separator = ", ")
+        public static string ToString(this IEnumerable<string> list, string separator)
         {
+            if (string.IsNullOrEmpty(separator))
+                separator = ", ";
+
             return string.Join(separator, list);
         }
 

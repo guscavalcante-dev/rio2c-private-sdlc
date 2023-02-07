@@ -430,6 +430,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to API.
+        /// </summary>
+        public static string Api {
+            get {
+                return ResourceManager.GetString("Api", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configurações da API.
         /// </summary>
         public static string ApiConfigurations {
@@ -1816,7 +1825,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exbir na edição {0} do site.
+        ///   Looks up a localized string similar to Exibir na edição {0} do site.
         /// </summary>
         public static string DisplayOnSiteEdition {
             get {
@@ -6078,6 +6087,14 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string SpeakersReport {
             get {
                 return ResourceManager.GetString("SpeakersReport", resourceCulture);
+		}
+		
+		/// <summary>
+        ///   Looks up a localized string similar to Quantidade no Destaque da API de Palestrantes.
+        /// </summary>
+        public static string SpeakersApiHighlightPositionsCount {
+            get {
+                return ResourceManager.GetString("SpeakersApiHighlightPositionsCount", resourceCulture);
             }
         }
         

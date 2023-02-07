@@ -255,7 +255,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 cmd = new UpdateCollaboratorApiConfiguration(
                     apiConfigurationWidgetDto, 
                     Constants.CollaboratorType.Speaker,
-                    await this.attendeeCollaboratorRepo.FindAllApiConfigurationWidgetDtoByHighlight(this.EditionDto.Id, Constants.CollaboratorType.Speaker));
+                    await this.attendeeCollaboratorRepo.FindAllApiConfigurationWidgetDtoByHighlight(this.EditionDto.Id, Constants.CollaboratorType.Speaker),
+                    this.EditionDto.SpeakersApiHighlightPositionsCount);
             }
             catch (DomainException ex)
             {

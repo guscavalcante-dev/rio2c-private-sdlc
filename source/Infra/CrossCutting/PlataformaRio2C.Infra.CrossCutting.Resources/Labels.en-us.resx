@@ -271,6 +271,9 @@
     <value>and</value>
     <comment>e</comment>
   </data>
+  <data name="Api" xml:space="preserve">
+    <value>API</value>
+  </data>
   <data name="ApiConfigurations" xml:space="preserve">
     <value>API Configurations</value>
     <comment>Configurações da API</comment>
@@ -2632,6 +2635,9 @@
   </data>
   <data name="SpeakersReport" xml:space="preserve">
     <value>Speakers Report</value>
+ </data>
+  <data name="SpeakersApiHighlightPositionsCount" xml:space="preserve">
+    <value>Speakers API Featured Position Count</value>
   </data>
   <data name="SpeakersRoles" xml:space="preserve">
     <value>Speakers Roles</value>

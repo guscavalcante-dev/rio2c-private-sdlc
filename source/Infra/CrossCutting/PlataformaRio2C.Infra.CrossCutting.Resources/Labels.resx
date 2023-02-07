@@ -271,6 +271,10 @@
     <value>e</value>
     <comment>e</comment>
   </data>
+  <data name="Api" xml:space="preserve">
+    <value>API</value>
+    <comment>API</comment>
+  </data>
   <data name="ApiConfigurations" xml:space="preserve">
     <value>Configurações da API</value>
     <comment>Configurações da API</comment>
@@ -847,8 +851,8 @@
     <comment>Exibir no site</comment>
   </data>
   <data name="DisplayOnSiteEdition" xml:space="preserve">
-    <value>Exbir na edição {0} do site</value>
-    <comment>Exbir na edição {0} do site</comment>
+    <value>Exibir na edição {0} do site</value>
+    <comment>Exibir na edição {0} do site</comment>
   </data>
   <data name="DisplayOrder" xml:space="preserve">
     <value>Ordem de exibição</value>
@@ -2639,6 +2643,10 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   </data>
   <data name="SpeakersReport" xml:space="preserve">
     <value>Relatório de Palestrantes</value>
+  </data>
+  <data name="SpeakersApiHighlightPositionsCount" xml:space="preserve">
+    <value>Quantidade no Destaque da API de Palestrantes</value>
+    <comment>Quantidade de Posição no Destaque da API de Palestrantes</comment>
   </data>
   <data name="SpeakersRoles" xml:space="preserve">
     <value>Funções dos Palestrantes</value>

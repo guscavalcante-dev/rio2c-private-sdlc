@@ -31,7 +31,7 @@
     @Scripts.Render("~/bundles/js/speakers.create.js")
     @Scripts.Render("~/bundles/js/speakers.update.js")
     @Scripts.Render("~/bundles/js/speakers.delete.js")
-    <script>
+<script>
         var collaboratorTypeName = '@PlataformaRio2C.Domain.Entities.CollaboratorType.Speaker.Name';
 
         // Page translations ----------------------------------------------------------------------
@@ -42,6 +42,8 @@
         var sendInvitationEmail = '@Labels.SendInvitationEmail';
         var exportToEventbrite = '@Labels.ExportToEventbrite';
         var confirmToSendInvitationEmails = '@Messages.ConfirmToSendInvitationEmails';
+        var showingOnSiteEdition = '@string.Format(Messages.ShowingOnSiteEdition, ViewBag.EditionDto.UrlCode)';
+        var notShowingOnSiteEdition = '@string.Format(Messages.NotShowingOnSiteEdition, ViewBag.EditionDto.UrlCode)';
 
         // Pagination -----------------------------------------------------------------------------
         var initialPage = @(Model.Page?.ToString() ?? "null");
@@ -52,5 +54,5 @@
             SpeakersEditionCountWidget.init();
             SpeakersDataTableWidget.init();
         });
-    </script>
+</script>
 }
