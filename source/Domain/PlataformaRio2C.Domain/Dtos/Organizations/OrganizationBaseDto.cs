@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-25-2021
+// Last Modified By : Elton Assunção
+// Last Modified On : 02-06-2023
 // ***********************************************************************
 // <copyright file="OrganizationBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,6 +34,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset UpdateDate { get; set; }
         public bool IsInCurrentEdition { get; set; }
         public bool IsInOtherEdition { get; set; }
+
+        public bool IsApiDisplayEnabled { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="OrganizationBaseDto"/> class.</summary>
         public OrganizationBaseDto()

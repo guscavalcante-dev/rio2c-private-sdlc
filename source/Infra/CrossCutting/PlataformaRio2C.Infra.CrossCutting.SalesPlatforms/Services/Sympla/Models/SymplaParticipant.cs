@@ -4,7 +4,7 @@
 // Created          : 11-24-2022
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-19-2023
+// Last Modified On : 02-02-2023
 // ***********************************************************************
 // <copyright file="SymplaParticipant.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -86,6 +86,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla.Mode
         [JsonIgnore]
         public string PayloadString { get; set; }
 
+        [JsonIgnore]
+        public bool IsOwnershipChange { get; set; }
+
         /// <summary>
         /// Gets the sales platform action.
         /// </summary>
@@ -140,6 +143,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla.Mode
 
             this.OrderStatus = SymplaAction.TicketCancelled;
             this.UpdatedDateString = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            this.IsOwnershipChange = true;
         }
 
         #endregion

@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-14-2023
+// Last Modified On : 02-06-2023
 // ***********************************************************************
 // <copyright file="AttendeeMusicBand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,7 +14,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Validation;
 
 namespace PlataformaRio2C.Domain.Entities
@@ -302,6 +301,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidationResult = new ValidationResult();
 
             this.ValidateAttendeeMusicBandEvaluations();
+            //this.ValidateAttendeeMusicBandCollaborators();
 
             return this.ValidationResult.IsValid;
         }
@@ -319,6 +319,17 @@ namespace PlataformaRio2C.Domain.Entities
             foreach (var attendeeMusicBandEvaluation in this.FindAllAttendeeMusicBandEvaluationsNotDeleted()?.Where(d => !d.IsValid())?.ToList())
             {
                 this.ValidationResult.Add(attendeeMusicBandEvaluation.ValidationResult);
+            }
+        }
+
+        /// <summary>
+        /// Validates the attendee music band collaborators.
+        /// </summary>
+        public void ValidateAttendeeMusicBandCollaborators()
+        {
+            if (this.FindAllAttendeeMusicBandCollaboratorsNotDeleted()?.Any() != true)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Responsible), new string[] { "AttendeeMusicBandCollaborators" }));
             }
         }
 

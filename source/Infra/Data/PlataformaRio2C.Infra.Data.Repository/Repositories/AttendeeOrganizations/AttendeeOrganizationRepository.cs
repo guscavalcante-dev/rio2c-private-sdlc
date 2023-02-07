@@ -4,7 +4,7 @@
 // Created          : 08-28-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-16-2021
+// Last Modified On : 02-06-2023
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -702,7 +702,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<AttendeeOrganizationExecutiveWidgetDto> FindAdminExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, Guid organizationTypeUid, int editionId)
+        public async Task<AttendeeOrganizationExecutiveWidgetDto> FindAdminExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, Guid organizationTypeUid, Guid collaboratorTypeUid, int editionId)
         {
             var query = this.GetBaseQuery(true)
                                 .FindByOrganizationUid(organizationUid)
@@ -712,15 +712,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Select(ao => new AttendeeOrganizationExecutiveWidgetDto
                             {
                                 AttendeeOrganization = ao,
-                                IsInCurrentEdition = ao.AttendeeOrganizationTypes.Any(aot =>
-                                                                                              aot.OrganizationType.Uid == organizationTypeUid
+                                IsInCurrentEdition = ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == organizationTypeUid
                                                                                               && aot.AttendeeOrganization.EditionId == editionId
                                                                                               && !aot.IsDeleted),
                                 AttendeeCollaboratorsDtos = ao.AttendeeOrganizationCollaborators
                                                                     .Where(aoc => !aoc.IsDeleted
-                                                                                    && aoc.AttendeeCollaborator.Edition.Id == editionId
                                                                                     && !aoc.AttendeeCollaborator.IsDeleted
-                                                                                    && !aoc.AttendeeCollaborator.Collaborator.IsDeleted)
+                                                                                    && !aoc.AttendeeCollaborator.Collaborator.IsDeleted
+                                                                                    && aoc.AttendeeCollaborator.Edition.Id == editionId
+                                                                                    && (collaboratorTypeUid != Guid.Empty ?
+                                                                                            aoc.AttendeeCollaborator.AttendeeCollaboratorTypes.Any(act => 
+                                                                                                !act.IsDeleted && 
+                                                                                                act.CollaboratorType.Uid == collaboratorTypeUid) : true))
                                                                     .Select(aoc => new AttendeeCollaboratorDto
                                                                     {
                                                                         AttendeeCollaborator = aoc.AttendeeCollaborator,
@@ -804,9 +807,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 AttendeeOrganization = ao,
                                 AttendeeCollaboratorsDtos = ao.AttendeeOrganizationCollaborators
                                                                     .Where(aoc => !aoc.IsDeleted
-                                                                                                          && aoc.AttendeeCollaborator.Edition.Id == editionId
-                                                                                                          && !aoc.AttendeeCollaborator.IsDeleted
-                                                                                                          && !aoc.AttendeeCollaborator.Collaborator.IsDeleted)
+                                                                                    && aoc.AttendeeCollaborator.Edition.Id == editionId
+                                                                                    && !aoc.AttendeeCollaborator.IsDeleted
+                                                                                    && !aoc.AttendeeCollaborator.Collaborator.IsDeleted)
                                                                     .Select(aoc => new AttendeeCollaboratorDto
                                                                     {
                                                                         AttendeeCollaborator = aoc.AttendeeCollaborator,
