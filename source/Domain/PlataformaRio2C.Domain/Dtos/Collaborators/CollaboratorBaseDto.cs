@@ -39,6 +39,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public string PublicEmail { get; set; }
         public string JobTitle { get; set; }
         public bool IsApiDisplayEnabled { get; set; }
+        public int? ApiHighlightPosition { get; set; }
         public HoldingBaseDto HoldingBaseDto { get; set; }
         public OrganizationBaseDto OrganizatioBaseDto { get; set; }
         public DateTimeOffset? ImageUploadDate { get; set; }

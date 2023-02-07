@@ -746,17 +746,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 ImageUploadDate = c.ImageUploadDate,
                                 CreateDate = c.CreateDate,
                                 UpdateDate = c.UpdateDate,
+
                                 EditionAttendeeCollaborator = editionId.HasValue ? c.AttendeeCollaborators.FirstOrDefault(ac => ac.EditionId == editionId
                                                                                                                                 && !ac.Edition.IsDeleted
                                                                                                                                 && !ac.IsDeleted
                                                                                                                                 && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
                                                                                                                                                                            && collaboratorTypeNames.Contains(act.CollaboratorType.Name))) :
                                                                                    null,
-                                IsApiDisplayEnabled = c.AttendeeCollaborators.Where(ac => !ac.IsDeleted && ac.EditionId == editionId).FirstOrDefault()
-                                                        .AttendeeCollaboratorTypes.Where(act => !act.IsDeleted && collaboratorTypeNames.Contains(act.CollaboratorType.Name)).FirstOrDefault()
-                                                        .IsApiDisplayEnabled,
+
+                                IsApiDisplayEnabled = c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId
+                                                                                        && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
+                                                                                                                                    && collaboratorTypeNames.Contains(act.CollaboratorType.Name)
+                                                                                                                                    && act.IsApiDisplayEnabled)),
                                 IsInOtherEdition = c.User.Roles.Any(r => r.Name == Constants.Role.Admin)
                                                    || (editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId && !ac.IsDeleted)),
+
                                 AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
                                                                     .Where(at => !at.IsDeleted && at.EditionId == editionId)
                                                                     .SelectMany(at => at.AttendeeOrganizationCollaborators
