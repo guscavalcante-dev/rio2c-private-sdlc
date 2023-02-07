@@ -6084,10 +6084,12 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Relatório de Palestrantes.
         /// </summary>
-        public static string SpeakersReport {
+        public static string SpeakersReport
+        {
             get {
                 return ResourceManager.GetString("SpeakersReport", resourceCulture);
-		}
+            }
+        }
 		
 		/// <summary>
         ///   Looks up a localized string similar to Quantidade no Destaque da API de Palestrantes.
