@@ -4,7 +4,7 @@
 // Created          : 10-29-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-07-2023
+// Last Modified On : 01-31-2023
 // ***********************************************************************
 // <copyright file="OrganizationSiteBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -132,7 +132,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateActivities(entity, activities);
             this.UpdateCropperImage(entity, isImageRequired);
             this.UpdateDropdownProperties(countriesBaseDtos, targetAudiences);
-            this.UpdaterBaseDto = entity?.UpdaterDto;
+            this.UpdaterBaseDto = entity?.UpdaterBaseDto;
             this.UpdateDate = entity?.UpdateDate;
             this.IsVirtualMeetingRequired = isVirtualMeetingRequired;
             this.IsVirtualMeeting = entity?.IsVirtualMeeting;
@@ -160,7 +160,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Descriptions = new List<OrganizationDescriptionBaseCommand>();
             foreach (var languageDto in languagesDtos)
             {
-                var description = entity?.DescriptionsDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
+                var description = entity?.OrganizationDescriptionBaseDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
                 this.Descriptions.Add(description != null ? new OrganizationDescriptionBaseCommand(description, isDescriptionRequired) : 
                                                             new OrganizationDescriptionBaseCommand(languageDto, isDescriptionRequired));
             }

@@ -852,6 +852,25 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         }
 
         /// <summary>
+        /// Converts string to array.
+        /// </summary>
+        /// <param name="s">The s.</param>
+        /// <param name="separator">The separator.</param>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public static string[] ToArray(this string s, char separator = ';')
+        {
+            var splitted = s?.Split(separator);
+            if (splitted == null || splitted.Length <= 0)
+            {
+                return new string[] { s };
+            }
+
+            return splitted;
+        }
+
+        /// <summary>
         /// Converts to jsonminified.
         /// </summary>
         /// <param name="s">The s.</param>

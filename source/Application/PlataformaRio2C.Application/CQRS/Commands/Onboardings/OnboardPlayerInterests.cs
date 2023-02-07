@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-09-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-31-2023
 // ***********************************************************************
 // <copyright file="OnboardPlayerInterests.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -45,7 +45,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isRestrictionSpecificRequired)
         {
             this.OrganizationUid = entity.Uid;
-            this.UpdaterBaseDto = entity.UpdaterDto;
+            this.UpdaterBaseDto = entity.UpdaterBaseDto;
             this.UpdateDate = entity.UpdateDate;
             this.UpdateRestrictionSpecifics(entity, languagesDtos, isRestrictionSpecificRequired);
             this.UpdateInterests(entity, interestsDtos);
@@ -86,7 +86,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.RestrictionSpecifics = new List<OrganizationRestrictionSpecificsBaseCommand>();
             foreach (var languageDto in languagesDtos)
             {
-                var restrictionSpecific = entity?.RestrictionSpecificsDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
+                var restrictionSpecific = entity?.OrganizationRestrictionSpecificBaseDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
                 this.RestrictionSpecifics.Add(restrictionSpecific != null ? new OrganizationRestrictionSpecificsBaseCommand(restrictionSpecific, isRestrictionSpecificRequired) :
                                                                             new OrganizationRestrictionSpecificsBaseCommand(languageDto, isRestrictionSpecificRequired));
             }

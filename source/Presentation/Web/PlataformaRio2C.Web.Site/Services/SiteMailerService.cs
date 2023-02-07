@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-02-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-26-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-26-2023
 // ***********************************************************************
 // <copyright file="SiteMailerService.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -143,6 +143,36 @@ namespace PlataformaRio2C.Web.Site.Services
             });
         }
 
+        /// <summary>
+        /// Sends the speakers report email.
+        /// </summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        public MvcMailMessage SendSpeakersReportEmail(SendSpeakersReportEmailAsync cmd)
+        {
+            this.SetCulture(cmd.UserInterfaceLanguage);
+
+            this.ViewData = new ViewDataDictionary(cmd);
+
+            return Populate(x =>
+            {
+                x.Subject = this.GetSubject(Labels.SpeakersReport, cmd.Edition?.Name);
+                x.ViewName = "SpeakersReportEmail";
+                x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
+                x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
+
+                if (!string.IsNullOrEmpty(cmd.FilePath))
+                {
+                    x.Attachments.Add(new Attachment(cmd.FilePath));
+                }
+
+                if (!string.IsNullOrEmpty(this.GetBccEmailRecipient(true)))
+                {
+                    x.Bcc.Add(this.GetBccEmailRecipient(true));
+                }
+            });
+        }
+
         #region Private methods
 
         /// <summary>
@@ -165,7 +195,7 @@ namespace PlataformaRio2C.Web.Site.Services
         /// <returns></returns>
         private string GetToEmailRecipient(string email)
         {
-            return environment.ToLower() != "prod" ? this.toEmail : 
+            return environment.ToLower() != "prod" ? this.toEmail :
                                                      email;
         }
 

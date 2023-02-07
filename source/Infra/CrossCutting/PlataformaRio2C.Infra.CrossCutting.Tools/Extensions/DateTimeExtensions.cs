@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-13-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-26-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-31-2023
 // ***********************************************************************
 // <copyright file="DateTimeExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -225,6 +225,16 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             }
             
             return dt?.ToString($"dd '{separator}' MMMM '{separator}' yyyy");
+        }
+
+        /// <summary>
+        /// Converts to string filename timestamp (dd-MM-yyyy_HH-mm-ss).
+        /// </summary>
+        /// <param name="dt">The dt.</param>
+        /// <returns></returns>
+        public static string ToStringFileNameTimestamp(this DateTime dt)
+        {
+            return dt.ToBrazilTimeZone().ToString("dd-MM-yyyy_HH-mm-ss");
         }
     }
 }

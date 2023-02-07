@@ -7772,6 +7772,7 @@
     <Content Include="Views\Agendas\Shared\_LogisticAccommodationPopover.cshtml" />
     <Content Include="Views\Agendas\Shared\_LogisticTransferPopover.cshtml" />
     <Content Include="Views\Themes\Metronic\_EditionSelector.cshtml" />
+    <Content Include="Views\SiteMailerService\SpeakersReportEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-18-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-25-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-28-2023
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,8 +27,10 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset? OnboardingCollaboratorDate { get; set; }
         public DateTimeOffset? PlayerTermsAcceptanceDate { get; set; }
         public DateTimeOffset? ProducerTermsAcceptanceDate { get; set; }
+        public DateTimeOffset? SpeakerTermsAcceptanceDate { get; set; }
 
         public CollaboratorBaseDto CollaboratorBaseDto { get; set; }
+        public AttendeeCollaboratorTypeDto AttendeeCollaboratorTypeDto { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeCollaboratorBaseDto"/> class.</summary>
         public AttendeeCollaboratorBaseDto()

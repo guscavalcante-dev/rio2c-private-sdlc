@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-26-2019
 //
-// Last Modified By : Elton Assunção
-// Last Modified On : 02-03-2023
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-31-2023
 // ***********************************************************************
 // <copyright file="CollaboratorBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,11 +25,8 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         public int Id { get; set; }
         public Guid Uid { get; set; }
-
         public bool? Active { get; set; }
         public string UserInterfaceLanguage { get; set; }
-        public string FullName => this.FirstName + (!string.IsNullOrEmpty(this.LastNames) ? " " + this.LastNames : String.Empty);
-        public string NameAbbreviation => this.FullName.GetTwoLetterCode();
         public string FirstName { get; set; }
         public string LastNames { get; set; }
         public string Badge { get; set; }
@@ -38,26 +35,44 @@ namespace PlataformaRio2C.Domain.Dtos
         public string CellPhone { get; set; }
         public string PublicEmail { get; set; }
         public string JobTitle { get; set; }
+        public string Website { get; set; }
+        public string Linkedin { get; set; }
+        public string Twitter { get; set; }
+        public string Instagram { get; set; }
+        public string Youtube { get; set; }
         public bool IsApiDisplayEnabled { get; set; }
         public int? ApiHighlightPosition { get; set; }
-        public HoldingBaseDto HoldingBaseDto { get; set; }
-        public OrganizationBaseDto OrganizatioBaseDto { get; set; }
         public DateTimeOffset? ImageUploadDate { get; set; }
         public DateTimeOffset CreateDate { get; set; }
         public DateTimeOffset UpdateDate { get; set; }
+        public bool IsInOtherEdition { get; set; }
+
+        public HoldingBaseDto HoldingBaseDto { get; set; }
+        public OrganizationBaseDto OrganizatioBaseDto { get; set; }
+        public UserBaseDto UserBaseDto { get; set; }
+        public UserBaseDto CreatorBaseDto { get; set; }
+        public UserBaseDto UpdaterBaseDto { get; set; }
+
+        public IEnumerable<AttendeeOrganizationBaseDto> AttendeeOrganizationBasesDtos { get; set; }
+        public IEnumerable<CollaboratorJobTitleBaseDto> JobTitleBaseDtos { get; set; }
+        public IEnumerable<CollaboratorMiniBioBaseDto> MiniBioBaseDtos { get; set; }
+
+        //TODO: BaseDtos can only have another BaseDtos. These properties shouldn't be here! Refactor this!
+        public IEnumerable<Role> Roles { get; set; }
+        public IEnumerable<AttendeeCollaboratorTypeDto> AttendeeCollaboratorTypeDtos { get; set; }
+        public IEnumerable<InnovationOrganizationTrackOptionGroupDto> InnovationOrganizationTrackOptionGroupDtos { get; set; }
+        [ScriptIgnore]
+        public AttendeeCollaborator EditionAttendeeCollaborator { get; set; }
+
+        #region Extension Methods and Extension Properties
+
         public DateTimeOffset? WelcomeEmailSentDate => this.EditionAttendeeCollaborator?.WelcomeEmailSendDate;
         public DateTimeOffset? CurrentEditionOnboardingFinishDate => this.EditionAttendeeCollaborator?.OnboardingFinishDate;
         public DateTimeOffset? SpeakerCurrentEditionOnboardingFinishDate => this.EditionAttendeeCollaborator?.SpeakerTermsAcceptanceDate;
         public bool IsInCurrentEdition => this.EditionAttendeeCollaborator != null;
-        public bool IsInOtherEdition { get; set; }
-
-        public UserBaseDto UserBaseDto { get; set; }
-
-        public IEnumerable<AttendeeOrganizationBaseDto> AttendeeOrganizationBasesDtos { get; set; }
-        public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }
-        public IEnumerable<Role> Roles { get; set; }
-        public IEnumerable<AttendeeCollaboratorTypeDto> AttendeeCollaboratorTypeDtos { get; set; }
-        public IEnumerable<InnovationOrganizationTrackOptionGroupDto> InnovationOrganizationTrackOptionGroupDtos { get; set; }
+        public bool IsAdminFull => this.Roles?.Any(r => r.Name == Constants.Role.Admin) ?? false;
+        public string FullName => this.FirstName + (!string.IsNullOrEmpty(this.LastNames) ? " " + this.LastNames : String.Empty);
+        public string NameAbbreviation => this.FullName.GetTwoLetterCode();
 
         public List<string> TranslatedCollaboratorTypes
         {
@@ -90,20 +105,6 @@ namespace PlataformaRio2C.Domain.Dtos
         }
 
         /// <summary>
-        /// Gets a value indicating whether this instance is admin full.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if this instance is admin full; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsAdminFull
-        {
-            get
-            {
-                return this.Roles?.Any(r => r.Name == Constants.Role.Admin) ?? false;
-            }
-        }
-
-        /// <summary>
         /// Translates this instance.
         /// </summary>
         public void Translate()
@@ -124,28 +125,35 @@ namespace PlataformaRio2C.Domain.Dtos
             this.AttendeeCollaboratorTypeDtos = this.AttendeeCollaboratorTypeDtos?.OrderBy(act => act.CollaboratorType.Description);
         }
 
-        #region Json ignored properties 
-
-        [ScriptIgnore]
-        public AttendeeCollaborator EditionAttendeeCollaborator { get; set; }
-        
-        #endregion
-
         /// <summary>Gets the collaborator job title base dto by language code.</summary>
-        /// <param name="languageCode">The language code.</param>
+        /// <param name="culture">The language code.</param>
         /// <returns></returns>
-        public CollaboratorJobTitleBaseDto GetCollaboratorJobTitleBaseDtoByLanguageCode(string languageCode)
+        public CollaboratorJobTitleBaseDto GetCollaboratorJobTitleBaseDtoByLanguageCode(string culture)
         {
-            if (string.IsNullOrEmpty(languageCode))
+            if (string.IsNullOrEmpty(culture))
             {
-                languageCode = "pt-br";
+                culture = "pt-br";
             }
 
-            return this.JobTitlesDtos?.FirstOrDefault(jtd => jtd.LanguageDto.Code == languageCode) ??
-                   this.JobTitlesDtos?.FirstOrDefault(jtd => jtd.LanguageDto.Code == "pt-br");
+            return this.JobTitleBaseDtos?.FirstOrDefault(jtd => jtd.LanguageDto.Code == culture) ??
+                   this.JobTitleBaseDtos?.FirstOrDefault(jtd => jtd.LanguageDto.Code == "pt-br");
         }
 
-        /// <summary>Initializes a new instance of the <see cref="CollaboratorBaseDto"/> class.</summary>
+        /// <summary>
+        /// Gets the mini bio base dto by language code.
+        /// </summary>
+        /// <param name="culture">The culture.</param>
+        /// <returns></returns>
+        public CollaboratorMiniBioBaseDto GetMiniBioBaseDtoByLanguageCode(string culture)
+        {
+            return this.MiniBioBaseDtos?.FirstOrDefault(mbd => mbd.LanguageDto.Code?.ToLowerInvariant() == culture?.ToLowerInvariant());
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CollaboratorBaseDto" /> class.
+        /// </summary>
         public CollaboratorBaseDto()
         {
         }
