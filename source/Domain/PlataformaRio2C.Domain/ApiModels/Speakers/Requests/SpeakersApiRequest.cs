@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-18-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-13-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 02-07-2023
 // ***********************************************************************
 // <copyright file="SpeakersApiRequest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,5 +20,14 @@ namespace PlataformaRio2C.Domain.ApiModels
     {
         [JsonProperty("highlights")]
         public int? Highlights { get; set; }
+
+        [JsonProperty("conferencesUids")]
+        public string ConferencesUids { get; set; }
+
+        [JsonProperty("conferencesDates")]
+        public string ConferencesDates { get; set; }
+
+        [JsonProperty("conferencesRoomsUids")]
+        public string ConferencesRoomsUids { get; set; }
     }
 }

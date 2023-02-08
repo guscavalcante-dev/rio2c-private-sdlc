@@ -4,7 +4,7 @@
 // Created          : 12-18-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-27-2023
+// Last Modified On : 02-07-2023
 // ***********************************************************************
 // <copyright file="CollaboratorApiListDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -32,6 +32,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<CollaboratorMiniBioBaseDto> MiniBiosDtos { get; set; }
         public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }
         public IEnumerable<OrganizationApiListDto> OrganizationsDtos { get; set; }
+        public IEnumerable<ConferenceDto> ConferencesDtos { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CollaboratorApiListDto"/> class.</summary>
         public CollaboratorApiListDto()

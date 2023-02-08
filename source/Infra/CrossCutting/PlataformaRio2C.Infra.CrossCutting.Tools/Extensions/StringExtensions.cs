@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-02-2023
+// Last Modified On : 02-08-2023
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -340,6 +340,35 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         public static List<DateTimeOffset> ToListDateTimeOffset(this string s, char separator, string dateFormat, bool? truncateTime = false)
         {
             var list = new List<DateTimeOffset>();
+
+            var splitted = s?.Split(separator);
+            if (splitted == null || splitted.Length <= 0)
+            {
+                return list;
+            }
+
+            foreach (var split in splitted)
+            {
+                if (DateTime.TryParseExact(split, dateFormat, null, DateTimeStyles.None, out DateTime dateTime))
+                {
+                    list.Add(truncateTime != true ? dateTime.ToUtcTimeZone() : new DateTimeOffset(dateTime.ToUtcTimeZone().Date, TimeSpan.Zero));
+                }
+            }
+
+            return list;
+        }
+
+        /// <summary>
+        /// Converts to listnullabledatetimeoffset.
+        /// </summary>
+        /// <param name="s">The s.</param>
+        /// <param name="separator">The separator.</param>
+        /// <param name="dateFormat">The date format.</param>
+        /// <param name="truncateTime">The truncate time.</param>
+        /// <returns></returns>
+        public static List<DateTimeOffset?> ToListNullableDateTimeOffset(this string s, char separator, string dateFormat, bool? truncateTime = false)
+        {
+            var list = new List<DateTimeOffset?>();
 
             var splitted = s?.Split(separator);
             if (splitted == null || splitted.Length <= 0)

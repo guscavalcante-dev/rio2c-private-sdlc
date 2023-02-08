@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 01-08-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-26-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 02-07-2023
 // ***********************************************************************
 // <copyright file="ConferencesApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -103,7 +103,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "No active languages found." } });
             }
 
-            var collaboratorsApiDtos = await this.conferenceRepo.FindAllPublicApiPaged(
+            var conferenceDtos = await this.conferenceRepo.FindAllPublicApiPaged(
                 edition.Id,
                 request?.Keywords,
                 request?.EditionDates?.ToListDateTimeOffset(',', "yyyy-MM-dd", true),
@@ -119,13 +119,13 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             {
                 Status = ApiStatus.Success,
                 Error = null,
-                HasPreviousPage = collaboratorsApiDtos.HasPreviousPage,
-                HasNextPage = collaboratorsApiDtos.HasNextPage,
-                TotalItemCount = collaboratorsApiDtos.TotalItemCount,
-                PageCount = collaboratorsApiDtos.PageCount,
-                PageNumber = collaboratorsApiDtos.PageNumber,
-                PageSize = collaboratorsApiDtos.PageSize,
-                Conferences = collaboratorsApiDtos?.Select(c => new ConferencesApiListItem
+                HasPreviousPage = conferenceDtos.HasPreviousPage,
+                HasNextPage = conferenceDtos.HasNextPage,
+                TotalItemCount = conferenceDtos.TotalItemCount,
+                PageCount = conferenceDtos.PageCount,
+                PageNumber = conferenceDtos.PageNumber,
+                PageSize = conferenceDtos.PageSize,
+                Conferences = conferenceDtos?.Select(c => new ConferencesApiListItem
                 {
                     Uid = c.Conference.Uid,
                     Event = new EditionEventBaseApiResponse
