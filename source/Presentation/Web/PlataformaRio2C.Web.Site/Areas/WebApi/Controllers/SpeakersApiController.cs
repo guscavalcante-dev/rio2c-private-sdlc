@@ -23,6 +23,7 @@ using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.ApiModels;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
@@ -110,6 +111,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 request?.Highlights,
                 request?.ConferencesUids?.ToListNullableGuid(','),
                 request?.ConferencesDates?.ToListNullableDateTimeOffset(',', "yyyy-MM-dd", true),
+                request?.ConferencesRoomsUids?.ToListNullableGuid(','),
                 Domain.Constants.CollaboratorType.Speaker,
                 request?.Page ?? 1,
                 request?.PageSize ?? 10);
@@ -139,7 +141,13 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                         StartTime = co.StartDate.ToBrazilTimeZone().ToString("HH:mm"),
                         EndTime = co.EndDate.ToBrazilTimeZone().ToString("HH:mm"),
                         Title = co.GetConferenceTitleDtoByLanguageCode(requestLanguage?.Code)?.ConferenceTitle?.Value?.Trim() ??
-                                co.GetConferenceTitleDtoByLanguageCode(defaultLanguage?.Code)?.ConferenceTitle?.Value?.Trim()
+                                co.GetConferenceTitleDtoByLanguageCode(defaultLanguage?.Code)?.ConferenceTitle?.Value?.Trim(),
+                        Room = co.RoomDto != null ? new RoomBaseApiResponse
+                        {
+                            Uid = co.RoomDto.Uid,
+                            Name = co.RoomDto.GetRoomNameByLanguageCode(requestLanguage?.Code ?? defaultLanguage?.Code)?.RoomName?.Value?.Trim()
+                        } : null,
+
                     })?.ToList()
                 })?.ToList()
             });

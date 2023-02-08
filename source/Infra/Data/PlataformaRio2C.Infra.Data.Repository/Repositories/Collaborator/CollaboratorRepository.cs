@@ -485,6 +485,24 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>
+        /// Finds the by conferences rooms uids.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="roomsUids">The rooms uids.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> FindByConferencesRoomsUids(this IQueryable<Collaborator> query, List<Guid?> roomsUids)
+        {
+            if (roomsUids?.Any(d => d.HasValue) == true)
+            {
+                query = query.Where(c => c.AttendeeCollaborators.Any(ac => !ac.IsDeleted &&
+                                                                            ac.ConferenceParticipants.Any(cp => !cp.IsDeleted &&
+                                                                                                                roomsUids.Contains(cp.Conference.Room.Uid))));
+            }
+
+            return query;
+        }
     }
 
     #endregion
@@ -1450,13 +1468,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         public async Task<IPagedList<CollaboratorApiListDto>> FindAllPublicApiPaged(
-            int editionId, 
-            string keywords, 
-            int? highlights, 
-            List<Guid?> conferencesUids, 
-            List<DateTimeOffset?> conferencesDates, 
-            string collaboratorTypeName, 
-            int page, 
+            int editionId,
+            string keywords,
+            int? highlights,
+            List<Guid?> conferencesUids,
+            List<DateTimeOffset?> conferencesDates,
+            List<Guid?> roomsUids,
+            string collaboratorTypeName,
+            int page,
             int pageSize)
         {
             var query = this.GetBaseQuery()
@@ -1465,7 +1484,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByKeywords(keywords, editionId)
                                 .FindByApiHighlights(collaboratorTypeName, highlights)
                                 .FindByConferencesDates(conferencesDates)
-                                .FindByConferencesUids(conferencesUids);
+                                .FindByConferencesUids(conferencesUids)
+                                .FindByConferencesRoomsUids(roomsUids);
 
             return await query
                             .Select(c => new CollaboratorApiListDto
@@ -1512,6 +1532,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                 Code = ct.Language.Code
                                                                                             }
                                                                                         }),
+                                                                                        RoomDto = new RoomDto
+                                                                                        {
+                                                                                            Uid = cp.Conference.Room.Uid,
+                                                                                            RoomNameDtos = cp.Conference.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
+                                                                                            {
+                                                                                                RoomName = rn,
+                                                                                                LanguageDto = new LanguageDto
+                                                                                                {
+                                                                                                    Id = rn.Language.Id,
+                                                                                                    Uid = rn.Language.Uid,
+                                                                                                    Code = rn.Language.Code
+                                                                                                }
+                                                                                            })
+                                                                                        }
                                                                                     }))
                             })
                             .OrderBy(o => o.ApiHighlightPosition ?? 99)

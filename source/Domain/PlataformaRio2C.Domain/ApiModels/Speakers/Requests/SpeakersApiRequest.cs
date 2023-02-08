@@ -20,9 +20,14 @@ namespace PlataformaRio2C.Domain.ApiModels
     {
         [JsonProperty("highlights")]
         public int? Highlights { get; set; }
+
         [JsonProperty("conferencesUids")]
         public string ConferencesUids { get; set; }
+
         [JsonProperty("conferencesDates")]
         public string ConferencesDates { get; set; }
+
+        [JsonProperty("conferencesRoomsUids")]
+        public string ConferencesRoomsUids { get; set; }
     }
 }

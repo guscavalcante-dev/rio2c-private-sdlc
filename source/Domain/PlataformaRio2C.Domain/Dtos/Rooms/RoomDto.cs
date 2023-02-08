@@ -11,6 +11,7 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Domain.Entities;
@@ -20,6 +21,9 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>RoomDto</summary>
     public class RoomDto
     {
+        public Guid Uid { get; set; }
+        public string Name { get; set; }
+
         public Room Room { get; set; }
         public IEnumerable<RoomNameDto> RoomNameDtos { get; set; }
         public IEnumerable<ConferenceDto> ConferenceDtos { get; set; }

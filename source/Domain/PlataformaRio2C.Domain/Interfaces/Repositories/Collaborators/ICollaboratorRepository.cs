@@ -38,7 +38,7 @@ namespace PlataformaRio2C.Domain.Interfaces
 
         #region Api
 
-        Task<IPagedList<CollaboratorApiListDto>> FindAllPublicApiPaged(int editionId, string keywords, int? highlights, List<Guid?> conferencesUids, List<DateTimeOffset?> conferencesDates, string collaboratorTypeName, int page, int pageSize);
+        Task<IPagedList<CollaboratorApiListDto>> FindAllPublicApiPaged(int editionId, string keywords, int? highlights, List<Guid?> conferencesUids, List<DateTimeOffset?> conferencesDates, List<Guid?> roomsUids, string collaboratorTypeName, int page, int pageSize);
         Task<SpeakerCollaboratorDto> FindPublicApiDtoAsync(Guid collaboratorUid, int editionId, string collaboratorTypeName);
         Task<List<Collaborator>> FindAllByHightlightPosition(int editionId, Guid collaboratorTypeUid, int apiHighlightPosition, Guid? organizationUid);
         Task<List<CollaboratorDto>> FindAllSpeakersByEditionId(int editionId);

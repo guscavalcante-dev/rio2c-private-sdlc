@@ -131,5 +131,8 @@ namespace PlataformaRio2C.Domain.ApiModels
 
         [JsonProperty("endTime", Order = 108)]
         public string EndTime { get; set; }
+
+        [JsonProperty("room", Order = 200)]
+        public RoomBaseApiResponse Room { get; set; }
     }
 }
