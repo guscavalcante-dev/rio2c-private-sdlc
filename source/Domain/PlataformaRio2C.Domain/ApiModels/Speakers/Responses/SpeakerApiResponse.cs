@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-18-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 02-07-2023
 // ***********************************************************************
 // <copyright file="SpeakerApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -112,5 +112,24 @@ namespace PlataformaRio2C.Domain.ApiModels
 
         [JsonProperty("durationMinutes", Order = 109)]
         public int DurationMinutes { get; set; }
+    }
+
+    /// <summary>SpeakerConferenceBaseApiResponse</summary>
+    public class SpeakerConferenceBaseApiResponse
+    {
+        [JsonProperty("uid", Order = 101)]
+        public Guid Uid { get; set; }
+
+        [JsonProperty("title", Order = 103)]
+        public string Title { get; set; }
+
+        [JsonProperty("date", Order = 106)]
+        public string Date { get; set; }
+
+        [JsonProperty("startTime", Order = 107)]
+        public string StartTime { get; set; }
+
+        [JsonProperty("endTime", Order = 108)]
+        public string EndTime { get; set; }
     }
 }

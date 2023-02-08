@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Elton Assunção
-// Last Modified On : 02-03-2023
+// Last Modified By : Renan Valentim
+// Last Modified On : 02-08-2023
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -445,6 +445,42 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                       || ac.AttendeeOrganizationCollaborators.Any(aoc => !aoc.IsDeleted
                                                                                                                                                          && aoc.AttendeeOrganization.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
                                                                                                                                                                                                                            && organizationTypeNames.Contains(aot.OrganizationType.Name))))));
+            }
+
+            return query;
+        }
+
+        /// <summary>
+        /// Finds the by conferences dates.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="conferencesDates">The conferences dates.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> FindByConferencesDates(this IQueryable<Collaborator> query, List<DateTimeOffset?> conferencesDates)
+        {
+            if (conferencesDates?.Any(d => d.HasValue) == true)
+            {
+                query = query.Where(c => c.AttendeeCollaborators.Any(ac => !ac.IsDeleted &&
+                                                                            ac.ConferenceParticipants.Any(cp => !cp.IsDeleted &&
+                                                                                                                conferencesDates.Contains(DbFunctions.TruncateTime(cp.Conference.StartDate)))));
+            }
+
+            return query;
+        }
+
+        /// <summary>
+        /// Finds the by conferences uids.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="conferencesUids">The conferences uids.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> FindByConferencesUids(this IQueryable<Collaborator> query, List<Guid?> conferencesUids)
+        {
+            if (conferencesUids?.Any(d => d.HasValue) == true)
+            {
+                query = query.Where(c => c.AttendeeCollaborators.Any(ac => !ac.IsDeleted &&
+                                                                            ac.ConferenceParticipants.Any(cp => !cp.IsDeleted &&
+                                                                                                                conferencesUids.Contains(cp.Conference.Uid))));
             }
 
             return query;
@@ -1401,21 +1437,35 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         #region Api
 
-        /// <summary>Finds all public API paged.</summary>
+        /// <summary>
+        /// Finds all public API paged.
+        /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="keywords">The keywords.</param>
         /// <param name="highlights">The highlights.</param>
+        /// <param name="conferencesUids">The conferences uids.</param>
+        /// <param name="conferencesDates">The conferences dates.</param>
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<CollaboratorApiListDto>> FindAllPublicApiPaged(int editionId, string keywords, int? highlights, string collaboratorTypeName, int page, int pageSize)
+        public async Task<IPagedList<CollaboratorApiListDto>> FindAllPublicApiPaged(
+            int editionId, 
+            string keywords, 
+            int? highlights, 
+            List<Guid?> conferencesUids, 
+            List<DateTimeOffset?> conferencesDates, 
+            string collaboratorTypeName, 
+            int page, 
+            int pageSize)
         {
             var query = this.GetBaseQuery()
                                 .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, false, false, editionId)
                                 .IsApiDisplayEnabled(editionId, collaboratorTypeName)
                                 .FindByKeywords(keywords, editionId)
-                                .FindByApiHighlights(collaboratorTypeName, highlights);
+                                .FindByApiHighlights(collaboratorTypeName, highlights)
+                                .FindByConferencesDates(conferencesDates)
+                                .FindByConferencesUids(conferencesUids);
 
             return await query
                             .Select(c => new CollaboratorApiListDto
@@ -1426,6 +1476,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 ApiHighlightPosition = c.AttendeeCollaborators.Where(ac => !ac.IsDeleted && ac.EditionId == editionId).FirstOrDefault()
                                                         .AttendeeCollaboratorTypes.Where(act => !act.IsDeleted && act.CollaboratorType.Name == collaboratorTypeName).FirstOrDefault()
                                                         .ApiHighlightPosition,
+                                CreateDate = c.CreateDate,
+                                UpdateDate = c.UpdateDate,
                                 ImageUploadDate = c.ImageUploadDate,
                                 JobTitlesDtos = c.JobTitles.Where(jb => !jb.IsDeleted).Select(d => new CollaboratorJobTitleBaseDto
                                 {
@@ -1440,8 +1492,27 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         Code = d.Language.Code
                                     }
                                 }),
-                                CreateDate = c.CreateDate,
-                                UpdateDate = c.UpdateDate,
+                                ConferencesDtos = c.AttendeeCollaborators
+                                                            .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                            .SelectMany(ac => ac.ConferenceParticipants
+                                                                                    .Where(cp => !cp.IsDeleted && !cp.Conference.IsDeleted)
+                                                                                    .Select(cp => new ConferenceDto
+                                                                                    {
+                                                                                        Uid = cp.Conference.Uid,
+                                                                                        StartDate = cp.Conference.StartDate,
+                                                                                        EndDate = cp.Conference.EndDate,
+                                                                                        ConferenceTitleDtos = cp.Conference.ConferenceTitles.Where(ct => !ct.IsDeleted).Select(ct => new ConferenceTitleDto
+                                                                                        {
+                                                                                            ConferenceTitle = ct,
+                                                                                            LanguageDto = new LanguageBaseDto
+                                                                                            {
+                                                                                                Id = ct.Language.Id,
+                                                                                                Uid = ct.Language.Uid,
+                                                                                                Name = ct.Language.Name,
+                                                                                                Code = ct.Language.Code
+                                                                                            }
+                                                                                        }),
+                                                                                    }))
                             })
                             .OrderBy(o => o.ApiHighlightPosition ?? 99)
                             .ThenBy(o => o.BadgeName)

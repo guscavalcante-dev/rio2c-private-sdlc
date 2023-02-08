@@ -4,7 +4,7 @@
 // Created          : 12-18-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-31-2023
+// Last Modified On : 02-07-2023
 // ***********************************************************************
 // <copyright file="SpeakersApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -108,6 +108,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 edition.Id,
                 request?.Keywords,
                 request?.Highlights,
+                request?.ConferencesUids?.ToListNullableGuid(','),
+                request?.ConferencesDates?.ToListNullableDateTimeOffset(',', "yyyy-MM-dd", true),
                 Domain.Constants.CollaboratorType.Speaker,
                 request?.Page ?? 1,
                 request?.PageSize ?? 10);
@@ -129,7 +131,16 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     Name = c.Name?.Trim(),
                     HighlightPosition = c.ApiHighlightPosition,
                     Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.Uid, c.ImageUploadDate, true, "_500x500") : null,
-                    JobTitle = c.GetCollaboratorJobTitleBaseDtoByLanguageCode(requestLanguage?.Code ?? defaultLanguage?.Code)?.Value?.Trim()
+                    JobTitle = c.GetCollaboratorJobTitleBaseDtoByLanguageCode(requestLanguage?.Code ?? defaultLanguage?.Code)?.Value?.Trim(),
+                    Conferences = c.ConferencesDtos.Select(co => new SpeakerConferenceBaseApiResponse
+                    {
+                        Uid = co.Uid,
+                        Date = co.StartDate.ToBrazilTimeZone().ToString("yyyy-MM-dd"),
+                        StartTime = co.StartDate.ToBrazilTimeZone().ToString("HH:mm"),
+                        EndTime = co.EndDate.ToBrazilTimeZone().ToString("HH:mm"),
+                        Title = co.GetConferenceTitleDtoByLanguageCode(requestLanguage?.Code)?.ConferenceTitle?.Value?.Trim() ??
+                                co.GetConferenceTitleDtoByLanguageCode(defaultLanguage?.Code)?.ConferenceTitle?.Value?.Trim()
+                    })?.ToList()
                 })?.ToList()
             });
         }
@@ -337,9 +348,9 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                             c.GetConferenceTitleDtoByLanguageCode(defaultLanguage?.Code)?.ConferenceTitle?.Value?.Trim(),
                     Synopsis = c.GetConferenceSynopsisDtoByLanguageCode(requestLanguage?.Code)?.ConferenceSynopsis?.Value?.Trim() ??
                                c.GetConferenceSynopsisDtoByLanguageCode(defaultLanguage?.Code)?.ConferenceSynopsis?.Value?.Trim(),
-                    Date = c.Conference.StartDate.ToString("yyyy-MM-dd"),
-                    StartTime = c.Conference.StartDate.ToString("HH:mm"),
-                    EndTime = c.Conference.EndDate.ToString("HH:mm"),
+                    Date = c.Conference.StartDate.ToBrazilTimeZone().ToString("yyyy-MM-dd"),
+                    StartTime = c.Conference.StartDate.ToBrazilTimeZone().ToString("HH:mm"),
+                    EndTime = c.Conference.EndDate.ToBrazilTimeZone().ToString("HH:mm"),
                     DurationMinutes = (int)((c.Conference.EndDate - c.Conference.StartDate).TotalMinutes),
                     Room = c.RoomDto != null ? new RoomBaseApiResponse
                     {
