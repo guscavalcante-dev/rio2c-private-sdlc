@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-07-2023
+// Last Modified On : 02-14-2022
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -718,7 +718,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 Document = o.Document,
                                 ImageUploadDate = o.ImageUploadDate,
                                 CreateDate = o.CreateDate,
-                                UpdateDate = o.UpdateDate,
+                                UpdateDate = o.UpdateDate
                             })
                             .OrderBy(o => o.TradeName)
                             .ToListPagedAsync(page, pageSize);
