@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-15-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 02-22-2023
 // ***********************************************************************
 // <copyright file="ImageHelper.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -98,7 +98,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
             byte[] imageBytes = null;
 
             // The file was uploaded
-            if (!string.IsNullOrEmpty(base64Image))
+            if (!string.IsNullOrEmpty(base64Image) && base64Image.IsBase64String())
             {
                 imageBytes = Convert.FromBase64String(base64Image);
             }
