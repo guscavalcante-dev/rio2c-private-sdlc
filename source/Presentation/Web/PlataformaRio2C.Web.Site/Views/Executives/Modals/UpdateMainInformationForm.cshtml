@@ -223,14 +223,17 @@
 <div class="form-group" data-additionalinfo="HaveYouBeenToRio2CBefore">
     <label class="control-label">@Labels.WhichEditionQ</label>
     <div class="row">
-        @foreach (var edition in Model?.Editions)
+        @if (Model?.Editions?.Any(e => e != null) == true)
         {
-            <div class="col-10 ml-5">
-                <label class="kt-checkbox">
-                    <input type="checkbox" name="EditionsUids" id="EditionsUids" value="@edition.Uid" @if (Model.EditionsUids.Contains(edition.Uid)) { <text> checked</text> } @Html.GetUnobtrusiveValidationAttributesFor(m => m.CollaboratorGenderUid)> @edition.Name
-                    <span></span>
-                </label>
-            </div>
+            foreach (var edition in Model.Editions)
+            {
+                <div class="col-10 ml-5">
+                    <label class="kt-checkbox">
+                        <input type="checkbox" name="EditionsUids" id="EditionsUids" value="@edition.Uid" @if (Model.EditionsUids?.Contains(edition.Uid) == true) { <text> checked</text> }> @edition.Name
+                        <span></span>
+                    </label>
+                </div>
+            }
         }
         <div class="col-md-12">
             @Html.ValidationMessageFor(m => m.HasEditionSelected, "", new { @class = "text-danger" })
