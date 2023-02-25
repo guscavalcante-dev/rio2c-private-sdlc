@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 10-14-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 02-14-2022
 // ***********************************************************************
 // <copyright file="CreateTicketBuyerOrganizationDataCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -115,7 +115,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     true, //TODO: get AddressIsManual from form
                     cmd.CropperImage?.ImageFile != null,
                     cmd.CropperImage?.IsImageDeleted == true,
-                    cmd.IsVirtualMeeting,
                     cmd.Descriptions?.Select(d => new OrganizationDescription(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                     cmd.UserId);
                 if (!organization.IsValid())

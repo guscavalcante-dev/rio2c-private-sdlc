@@ -19,7 +19,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Labels {
@@ -426,6 +426,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string And {
             get {
                 return ResourceManager.GetString("And", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to API.
+        /// </summary>
+        public static string Api {
+            get {
+                return ResourceManager.GetString("Api", resourceCulture);
             }
         }
         
@@ -1816,7 +1825,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exbir na edição {0} do site.
+        ///   Looks up a localized string similar to Exibir na edição {0} do site.
         /// </summary>
         public static string DisplayOnSiteEdition {
             get {
@@ -2707,6 +2716,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Id.
+        /// </summary>
+        public static string Id {
+            get {
+                return ResourceManager.GetString("Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Se já tiver login e senha.
         /// </summary>
         public static string IfAlreadyHaveLogin {
@@ -2892,6 +2910,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string InProgress {
             get {
                 return ResourceManager.GetString("InProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Instagram.
+        /// </summary>
+        public static string Instagram {
+            get {
+                return ResourceManager.GetString("Instagram", resourceCulture);
             }
         }
         
@@ -3121,6 +3148,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to LinkedIn.
+        /// </summary>
+        public static string LinkedIn {
+            get {
+                return ResourceManager.GetString("LinkedIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Link para Promo/Teaser.
         /// </summary>
         public static string LinksForPromoTeaser {
@@ -3243,6 +3279,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string LogLines {
             get {
                 return ResourceManager.GetString("LogLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logo (500 x 500).
+        /// </summary>
+        public static string Logo500x500 {
+            get {
+                return ResourceManager.GetString("Logo500x500", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logo (Original).
+        /// </summary>
+        public static string LogoOriginal {
+            get {
+                return ResourceManager.GetString("LogoOriginal", resourceCulture);
             }
         }
         
@@ -4215,6 +4269,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Photo {
             get {
                 return ResourceManager.GetString("Photo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Foto (500 x 500).
+        /// </summary>
+        public static string Photo500x500 {
+            get {
+                return ResourceManager.GetString("Photo500x500", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Foto (Original).
+        /// </summary>
+        public static string PhotoOriginal {
+            get {
+                return ResourceManager.GetString("PhotoOriginal", resourceCulture);
             }
         }
         
@@ -5902,6 +5974,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exibir no site?.
+        /// </summary>
+        public static string ShowOnWebsite {
+            get {
+                return ResourceManager.GetString("ShowOnWebsite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exibir somente pitchings.
         /// </summary>
         public static string ShowPitchings {
@@ -5997,6 +6078,25 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Speakers {
             get {
                 return ResourceManager.GetString("Speakers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Relatório de Palestrantes.
+        /// </summary>
+        public static string SpeakersReport
+        {
+            get {
+                return ResourceManager.GetString("SpeakersReport", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Looks up a localized string similar to Quantidade no Destaque da API de Palestrantes.
+        /// </summary>
+        public static string SpeakersApiHighlightPositionsCount {
+            get {
+                return ResourceManager.GetString("SpeakersApiHighlightPositionsCount", resourceCulture);
             }
         }
         
@@ -6559,6 +6659,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Twitter.
+        /// </summary>
+        public static string Twitter {
+            get {
+                return ResourceManager.GetString("Twitter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tipo.
         /// </summary>
         public static string Type {
@@ -7059,6 +7168,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string You {
             get {
                 return ResourceManager.GetString("You", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to YouTube.
+        /// </summary>
+        public static string YouTube {
+            get {
+                return ResourceManager.GetString("YouTube", resourceCulture);
             }
         }
         

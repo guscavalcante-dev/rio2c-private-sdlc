@@ -4,7 +4,7 @@
 // Created          : 09-06-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 11-22-2022
+// Last Modified On : 01-31-2023
 // ***********************************************************************
 // <copyright file="OnboardCollaboratorData.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -247,7 +247,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.JobTitles = new List<CollaboratorJobTitleBaseCommand>();
             foreach (var languageDto in languagesDtos)
             {
-                var jobTitle = entity?.JobTitlesDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
+                var jobTitle = entity?.JobTitleBaseDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
                 this.JobTitles.Add(jobTitle != null ? new CollaboratorJobTitleBaseCommand(jobTitle, isJobTitleRequired) :
                                                       new CollaboratorJobTitleBaseCommand(languageDto, isJobTitleRequired));
             }
@@ -262,7 +262,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.MiniBios = new List<CollaboratorMiniBioBaseCommand>();
             foreach (var languageDto in languagesDtos)
             {
-                var miniBio = entity?.MiniBiosDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
+                var miniBio = entity?.MiniBioBaseDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
                 this.MiniBios.Add(miniBio != null ? new CollaboratorMiniBioBaseCommand(miniBio, isMiniBioRequired) :
                                                     new CollaboratorMiniBioBaseCommand(languageDto, isMiniBioRequired));
             }

@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-18-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-18-2019
+// Last Modified By : Elton Assunção
+// Last Modified On : 02-01-2023
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorApiConfiguration.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,17 +33,19 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public string CollaboratorTypeName { get; private set; }
 
-        public int[] ApiHighlightPositions = new[] { 1, 2, 3, 4, 5 };
-        public List<AttendeeCollaboratorApiConfigurationWidgetDto> AttendeeCollaboratorApiConfigurationWidgetDtos {  get; private set; }
+        public int[] ApiHighlightPositions { get; private set; }
+
+        public List<AttendeeCollaboratorApiConfigurationWidgetDto> AttendeeCollaboratorApiConfigurationWidgetDtos { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorApiConfiguration"/> class.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
         /// <param name="attendeeCollaboratorApiConfigurationWidgetDtos">The attendee collaborator API configuration widget dtos.</param>
         public UpdateCollaboratorApiConfiguration(
-            AttendeeCollaboratorApiConfigurationWidgetDto entity, 
+            AttendeeCollaboratorApiConfigurationWidgetDto entity,
             string collaboratorTypeName,
-            List<AttendeeCollaboratorApiConfigurationWidgetDto> attendeeCollaboratorApiConfigurationWidgetDtos)
+            List<AttendeeCollaboratorApiConfigurationWidgetDto> attendeeCollaboratorApiConfigurationWidgetDtos,
+            int speakersApiHighlightPositionsCount)
         {
             var attendeeCollaboratorTypeDto = entity?.GetAttendeeCollaboratorTypeDtoByCollaboratorTypeName(collaboratorTypeName);
 
@@ -52,6 +54,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.ApiHighlightPosition = attendeeCollaboratorTypeDto?.AttendeeCollaboratorType?.ApiHighlightPosition;
 
             this.UpdateBaseModels(attendeeCollaboratorApiConfigurationWidgetDtos);
+            this.GenerateCountSpeakersApiHighlightPositions(speakersApiHighlightPositionsCount);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorApiConfiguration"/> class.</summary>
@@ -80,12 +83,19 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string collaboratorTypeName,
             int userId,
             Guid userUid,
-            int? editionId,
+            int editionId,
             Guid? editionUid,
             string userInterfaceLanguage)
         {
             this.CollaboratorTypeName = collaboratorTypeName;
             this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, userInterfaceLanguage);
+        }
+
+        /// <summary>Generates the count speakers API highlight positions.</summary>
+        /// <param name="speakersApiHighlightPositionsCount">The speakers API highlight positions count.</param>
+        private void GenerateCountSpeakersApiHighlightPositions(int speakersApiHighlightPositionsCount)
+        {
+            this.ApiHighlightPositions = Enumerable.Range(1, speakersApiHighlightPositionsCount).ToArray();
         }
     }
 }

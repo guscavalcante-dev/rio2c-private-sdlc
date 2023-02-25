@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-25-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-31-2023
 // ***********************************************************************
 // <copyright file="PlayersApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -210,7 +210,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 TradeName = organizationApiDto.TradeName,
                 CompanyName = organizationApiDto.CompanyName,
                 Picture = organizationApiDto.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, organizationApiDto.Uid, organizationApiDto.ImageUploadDate, true) : null,
-                DescriptionsApiResponses = organizationApiDto.DescriptionsDtos?.Select(dd => new LanguageValueApiResponse
+                DescriptionsApiResponses = organizationApiDto.OrganizationDescriptionBaseDtos?.Select(dd => new LanguageValueApiResponse
                 {
                     Culture = dd.LanguageDto.Code,
                     Value = HttpUtility.HtmlDecode(dd.Value)
@@ -231,12 +231,12 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     BadgeName = cd.Badge,
                     Name = cd.FullName,
                     Picture = cd.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, cd.Uid, cd.ImageUploadDate, true) : null,
-                    JobTitlesApiResponses = cd.JobTitlesDtos?.Select(jtd => new LanguageValueApiResponse
+                    JobTitlesApiResponses = cd.JobTitleBaseDtos?.Select(jtd => new LanguageValueApiResponse
                     {
                         Culture = jtd.LanguageDto.Code,
                         Value = HttpUtility.HtmlDecode(jtd.Value)
                     })?.ToList(),
-                    MiniBiosApiResponses = cd.MiniBiosDtos?.Select(jtd => new LanguageValueApiResponse
+                    MiniBiosApiResponses = cd.MiniBioBaseDtos?.Select(jtd => new LanguageValueApiResponse
                     {
                         Culture = jtd.LanguageDto.Code,
                         Value = HttpUtility.HtmlDecode(jtd.Value)

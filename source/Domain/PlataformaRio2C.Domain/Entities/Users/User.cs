@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-17-2021
+// Last Modified On : 01-29-2023
 // ***********************************************************************
 // <copyright file="User.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -56,6 +56,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<Holding> UpdatedHoldings { get; set; }
         public virtual ICollection<Organization> UpdatedOrganizations { get; set; }
         public virtual ICollection<Collaborator> UpdatedCollaborators { get; set; }
+        public virtual ICollection<Collaborator> CreatedCollaborators { get; set; }
         public virtual ICollection<UserUnsubscribedList> UserUnsubscribedLists { get; set; }
         public virtual ICollection<Message> RecipientMessages { get; set; }
         public virtual ICollection<Negotiation> UpdatedNegotiations { get; set; }

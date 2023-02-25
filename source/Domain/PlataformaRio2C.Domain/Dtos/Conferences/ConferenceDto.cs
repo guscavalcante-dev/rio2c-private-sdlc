@@ -3,14 +3,15 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-27-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-27-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 02-07-2023
 // ***********************************************************************
 // <copyright file="ConferenceDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Domain.Entities;
@@ -20,6 +21,10 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>ConferenceDto</summary>
     public class ConferenceDto
     {
+        public Guid Uid { get; set; }
+        public DateTimeOffset StartDate { get; set; }
+        public DateTimeOffset EndDate { get; set; }
+
         public Conference Conference { get; set; }
         public EditionEvent EditionEvent { get; set; }
         public RoomDto RoomDto { get; set; }

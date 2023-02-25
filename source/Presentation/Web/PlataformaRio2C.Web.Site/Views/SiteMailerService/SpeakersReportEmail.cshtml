@@ -1,0 +1,42 @@
+﻿@using Mvc.Mailer
+@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Statics
+@model PlataformaRio2C.Application.CQRS.Commands.SendSpeakersReportEmailAsync
+@{
+    var defaultFontColor = "#F2388F";
+}
+<td valign="top">
+    <h1>
+        <span class="text-center">@Labels.SpeakersReport</span>
+    </h1>
+    <p>
+        <span>
+            @(string.Format(Messages.DearAllAttachedIsTheReporRegisteredInTheEdition, Labels.SpeakersReport.ToLower(), Model.Edition.Name))
+        </span><br />
+    </p>
+</td>
+@section Styles {
+    <style type="text/css">
+        /*
+            Media
+        */
+        .kt-widget__img {
+            max-width: 150px;
+            border-radius: 50%;
+            border: 1px solid #c6c6c6;
+        }
+
+        .kt-media span {
+            border-radius: 50%;
+            background: rgba(93,120,255,.1);
+            color: #5d78ff;
+            display: inline-block;
+            align-items: center;
+            font-weight: 600;
+            width: 150px;
+            height: 85px;
+            padding-top: 65px;
+            font-size: 3.0rem;
+        }
+    </style>
+}

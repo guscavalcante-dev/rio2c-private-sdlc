@@ -3,7 +3,7 @@
 <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
         <h3 class="kt-portlet__head-title">
-            @(Model.Edition?.Name ?? "-")
+            @(Model.Name ?? "-")
         </h3>
     </div>
     <div class="kt-portlet__head-toolbar">
@@ -20,7 +20,7 @@
             <h3 class="kt-heading kt-heading--sm mb-0">@Labels.UrlCode</h3>
             <div class="row mt-3">
                 <div class="col-12">
-                    @(Model.Edition.UrlCode)
+                    @(Model.UrlCode)
                 </div>
             </div>
         </div>
@@ -28,7 +28,7 @@
             <h3 class="kt-heading kt-heading--sm mb-0">@Labels.IsCurrent</h3>
             <div class="row mt-3">
                 <div class="col-12">
-                    @(Model.Edition.IsCurrent.ToYesOrNoString())
+                    @(Model.IsCurrent.ToYesOrNoString())
                 </div>
             </div>
         </div>
@@ -36,7 +36,7 @@
             <h3 class="kt-heading kt-heading--sm mb-0">@Labels.IsActiveF</h3>
             <div class="row mt-3">
                 <div class="col-12">
-                    @(Model.Edition.IsActive.ToYesOrNoString())
+                    @(Model.IsActive.ToYesOrNoString())
                 </div>
             </div>
         </div>
@@ -46,7 +46,7 @@
             <h3 class="kt-heading kt-heading--sm mb-0">@Labels.StartDate</h3>
             <div class="row mt-3">
                 <div class="col-12">
-                    @(Model.Edition.StartDate.ToBrazilTimeZone().ToShortDateString())
+                    @(Model.StartDate.ToBrazilTimeZone().ToShortDateString())
                 </div>
             </div>
         </div>
@@ -54,7 +54,7 @@
             <h3 class="kt-heading kt-heading--sm mb-0">@Labels.EndDate</h3>
             <div class="row mt-3">
                 <div class="col-12">
-                    @(Model.Edition.EndDate.ToBrazilTimeZone().ToShortDateString())
+                    @(Model.EndDate.ToBrazilTimeZone().ToShortDateString())
                 </div>
             </div>
         </div>
@@ -64,7 +64,7 @@
             <h3 class="kt-heading kt-heading--sm mb-0">@Labels.SellStartDate</h3>
             <div class="row mt-3">
                 <div class="col-12">
-                    @(Model.Edition.SellStartDate.ToBrazilTimeZone().ToShortDateString())
+                    @(Model.SellStartDate.ToBrazilTimeZone().ToShortDateString())
                 </div>
             </div>
         </div>
@@ -72,7 +72,7 @@
             <h3 class="kt-heading kt-heading--sm mb-0">@Labels.SellEndDate</h3>
             <div class="row mt-3">
                 <div class="col-12">
-                    @(Model.Edition.SellEndDate.ToBrazilTimeZone().ToShortDateString())
+                    @(Model.SellEndDate.ToBrazilTimeZone().ToShortDateString())
                 </div>
             </div>
         </div>
@@ -82,7 +82,15 @@
             <h3 class="kt-heading kt-heading--sm mb-0">@Labels.OneToOneMeetingsScheduleDate</h3>
             <div class="row mt-3">
                 <div class="col-12">
-                    @(Model.Edition.OneToOneMeetingsScheduleDate.ToBrazilTimeZone().ToShortDateString())
+                    @(Model.OneToOneMeetingsScheduleDate.ToBrazilTimeZone().ToShortDateString())
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.SpeakersApiHighlightPositionsCount</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.SpeakersApiHighlightPositionsCount)
                 </div>
             </div>
         </div>

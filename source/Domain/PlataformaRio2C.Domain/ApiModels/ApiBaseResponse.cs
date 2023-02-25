@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-25-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-10-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-29-2023
 // ***********************************************************************
 // <copyright file="ApiBaseResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,7 +21,10 @@ namespace PlataformaRio2C.Domain.ApiModels
         [JsonProperty("status", Order = 10000)]
         public string Status { get; set; }
 
-        [JsonProperty("error", Order = 10001)]
+        [JsonProperty("message", Order = 10001)]
+        public string Message { get; set; }
+
+        [JsonProperty("error", Order = 10002)]
         public ApiError Error { get; set; }
     }
 
