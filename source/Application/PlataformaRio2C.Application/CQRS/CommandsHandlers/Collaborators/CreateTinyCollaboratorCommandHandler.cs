@@ -30,26 +30,40 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IUserRepository userRepo;
         private readonly IEditionRepository editionRepo;
         private readonly ICollaboratorTypeRepository collaboratorTypeRepo;
+        private readonly ICountryRepository countryRepo;
+        private readonly IStateRepository stateRepo;
+        private readonly ICityRepository cityRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="CreateTinyCollaboratorCommandHandler"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateTinyCollaboratorCommandHandler" /> class.
+        /// </summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="userRepository">The user repository.</param>
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="collaboratorTypeRepository">The collaborator type repository.</param>
+        /// <param name="countryRepository">The country repository.</param>
+        /// <param name="stateRepository">The state repository.</param>
+        /// <param name="cityRepository">The city repository.</param>
         public CreateTinyCollaboratorCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             ICollaboratorRepository collaboratorRepository,
             IUserRepository userRepository,
             IEditionRepository editionRepository,
-            ICollaboratorTypeRepository collaboratorTypeRepository)
+            ICollaboratorTypeRepository collaboratorTypeRepository,
+            ICountryRepository countryRepository,
+            IStateRepository stateRepository,
+            ICityRepository cityRepository)
             : base(eventBus, uow, collaboratorRepository)
         {
             this.userRepo = userRepository;
             this.editionRepo = editionRepository;
             this.collaboratorTypeRepo = collaboratorTypeRepository;
+            this.countryRepo = countryRepository;
+            this.stateRepo = stateRepository;
+            this.cityRepo= cityRepository;
         }
 
         /// <summary>Handles the specified create tiny collaborator.</summary>
@@ -79,9 +93,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             #region finds by Address
+
+            City city = await this.cityRepo.FindByNameAsync(cmd.City);
+
             Country country = await this.countryRepo.FindByNameAsync(cmd.City);
             State state = await this.stateRepo.FindByNameAsync(cmd.City);
-            City city = await this.cityRepo.FindByNameAsync(cmd.City);
+            
+
             #endregion
 
             // Create if the user was not found in database

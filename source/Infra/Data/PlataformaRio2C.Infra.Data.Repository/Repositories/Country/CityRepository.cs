@@ -150,7 +150,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<City> FindByNameAsync(string name)
         {
             var query = this.GetBaseQuery()
-                .FindByNameAsync(name);
+                            .FindByNameAsync(name);
 
             return await query.FirstOrDefaultAsync();
         }

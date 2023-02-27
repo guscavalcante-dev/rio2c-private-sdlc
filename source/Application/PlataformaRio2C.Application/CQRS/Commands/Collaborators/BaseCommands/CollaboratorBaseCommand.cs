@@ -142,7 +142,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="state">The state.</param>
         /// <param name="city">The city.</param>
         /// <param name="zipCode">The zip code.</param>
-        internal void UpdateAddress(string address, string country, string state, string city, string zipCode)
+        internal void UpdateAddress(
+            string address,
+            string country,
+            string state,
+            string city,
+            string zipCode)
         {
             this.Address = address;
             this.Country = country;
