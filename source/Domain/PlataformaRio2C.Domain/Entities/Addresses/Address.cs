@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-22-2019
 //
-// Last Modified By : Elton Assunção
-// Last Modified On : 01-02-2023
+// Last Modified By : Renan Valentim
+// Last Modified On : 02-27-2023
 // ***********************************************************************
 // <copyright file="Address.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -105,7 +105,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Address1 = address1?.Trim();
             this.ZipCode = addressZipCode?.Trim();
             this.IsGeoLocationUpdated = false;
-            this.IsManual = IsManual;
+            this.IsManual = isManual;
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;

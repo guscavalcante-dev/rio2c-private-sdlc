@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-21-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 02-27-2023
 // ***********************************************************************
 // <copyright file="CountryRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,6 +36,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<Country> IsNotDeleted(this IQueryable<Country> query)
         {
             query = query.Where(h => !h.IsDeleted);
+
+            return query;
+        }
+
+        /// <summary>
+        /// Finds the country by name.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="name">The name.</param>
+        /// <returns></returns>
+        internal static IQueryable<Country> FindByName(this IQueryable<Country> query, string name)
+        {
+            query = query.Where(c => c.Name.Contains(name));
 
             return query;
         }
@@ -71,9 +84,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     }
 
     #endregion
-    
+
     /// <summary>CountryRepository</summary>
-    public class CountryRepository: Repository<PlataformaRio2CContext, PlataformaRio2C.Domain.Entities.Country>, ICountryRepository
+    public class CountryRepository : Repository<PlataformaRio2CContext, Country>, ICountryRepository
     {
         /// <summary>Initializes a new instance of the <see cref="CountryRepository"/> class.</summary>
         /// <param name="context">The context.</param>
@@ -121,6 +134,24 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             })
                             .OrderBy(c => c.Ordering).ThenBy(c => c.Name)
                             .ToListAsync();
+        }
+
+        /// <summary>
+        /// Finds the country by name asynchronous.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns></returns>
+        public async Task<Country> FindByNameAsync(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return null;
+            }
+
+            var query = this.GetBaseQuery()
+                            .FindByName(name);
+
+            return await query.FirstOrDefaultAsync();
         }
     }
 }

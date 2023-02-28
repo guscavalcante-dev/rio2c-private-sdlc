@@ -4,7 +4,7 @@
 // Created          : 23-03-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-14-2023
+// Last Modified On : 02-27-2023
 // ***********************************************************************
 // <copyright file="MusicBandApiDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -117,6 +117,11 @@ namespace PlataformaRio2C.Domain.Dtos
             if (!this.WouldYouLikeParticipateBusinessRound.HasValue)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, GetJsonPropertyAttributeName(nameof(WouldYouLikeParticipateBusinessRound)))));
+            }
+
+            if (!this.MusicBandResponsibleApiDto.IsValid())
+            {
+                this.ValidationResult.Add(this.MusicBandResponsibleApiDto.ValidationResult);
             }
 
             return this.ValidationResult.IsValid;

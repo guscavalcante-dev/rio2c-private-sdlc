@@ -4,7 +4,7 @@
 // Created          : 23-03-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-03-2023
+// Last Modified On : 02-27-2023
 // ***********************************************************************
 // <copyright file="CreateMusicBandCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -128,9 +128,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         cmd.MusicBandResponsibleApiDto.Email,
                         cmd.MusicBandResponsibleApiDto.PhoneNumber,
                         cmd.MusicBandResponsibleApiDto.CellPhone,
-                        cmd.MusicBandResponsibleApiDto.Document);
-
-                    createCollaboratorCommand.UpdateAddress(
+                        cmd.MusicBandResponsibleApiDto.Document,
                         cmd.MusicBandResponsibleApiDto.Address,
                         cmd.MusicBandResponsibleApiDto.Country,
                         cmd.MusicBandResponsibleApiDto.State,
@@ -177,9 +175,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         cmd.MusicBandResponsibleApiDto.Email,
                         cmd.MusicBandResponsibleApiDto.PhoneNumber,
                         cmd.MusicBandResponsibleApiDto.CellPhone,
-                        cmd.MusicBandResponsibleApiDto.Document);
-
-                    updateCollaboratorCommand.UpdateAddress(
+                        cmd.MusicBandResponsibleApiDto.Document,
                         cmd.MusicBandResponsibleApiDto.Address,
                         cmd.MusicBandResponsibleApiDto.Country,
                         cmd.MusicBandResponsibleApiDto.State,

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-31-2023
+// Last Modified On : 02-27-2023
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -172,7 +172,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
-            
+
             this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
 
             //TODO: Refactor this!
@@ -293,7 +293,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.FirstName = firstName?.Trim();
             this.LastNames = lastNames?.Trim();
             this.PublicEmail = email?.Trim();
-            
+
             this.PhoneNumber = phoneNumber?.Trim();
             this.CellPhone = cellPhone?.Trim();
             this.Document = document?.Trim();
@@ -832,7 +832,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         private void DeleteCollaboratorParticipation(List<Edition> editionsParticipated, int userId)
         {
-            if(editionsParticipated == null)
+            if (editionsParticipated == null)
             {
                 editionsParticipated = new List<Edition>();
             }
@@ -1931,8 +1931,8 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="attendeeInnovationOrganizationTracks">The attendee innovation organization tracks.</param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateAttendeeCollaboratorInnovationOrganizationTracks(
-            Edition edition, 
-            List<AttendeeInnovationOrganizationTrack> attendeeInnovationOrganizationTracks, 
+            Edition edition,
+            List<AttendeeInnovationOrganizationTrack> attendeeInnovationOrganizationTracks,
             int userId)
         {
             var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition?.Id ?? 0);
@@ -2132,9 +2132,9 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateYoutube();
             this.ValidateJobTitles();
             this.ValidateMiniBios();
-            //this.ValidateAddress();
             this.ValidateUser();
             this.ValidateAttendeeCollaborators();
+            //this.ValidateAddress();
             //this.ValidateGender();
             //this.ValidateIndustry();
             //this.ValidateRole();

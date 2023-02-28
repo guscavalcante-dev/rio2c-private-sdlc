@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-03-2023
+// Last Modified On : 02-27-2023
 // ***********************************************************************
 // <copyright file="MusicProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -770,7 +770,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     AttendeeMusicBandCollaborator = ambc,
                                                                                     AttendeeCollaborator = ambc.AttendeeCollaborator,
                                                                                     Collaborator = ambc.AttendeeCollaborator.Collaborator,
-                                                                                    User = ambc.AttendeeCollaborator.Collaborator.User
+                                                                                    User = ambc.AttendeeCollaborator.Collaborator.User,
+                                                                                    AddressDto = new AddressDto 
+                                                                                    {
+                                                                                        Address = ambc.AttendeeCollaborator.Collaborator.Address,
+                                                                                        City = ambc.AttendeeCollaborator.Collaborator.Address.City,
+                                                                                        State = ambc.AttendeeCollaborator.Collaborator.Address.State,
+                                                                                        Country = ambc.AttendeeCollaborator.Collaborator.Address.Country
+                                                                                    }
                                                                                 })
                                                                                 .FirstOrDefault()
                                     }

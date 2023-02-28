@@ -2,6 +2,7 @@
 @using PlataformaRio2C.Domain.Statics
 @using Constants = PlataformaRio2C.Domain.Constants;
 @using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using System.Globalization
 @model MusicProjectDto
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
@@ -13,16 +14,6 @@
     <div class="kt-portlet__head-label">
         <h3 class="kt-portlet__head-title">@Labels.Responsible</h3>
     </div>
-    @*@if (isMusicCommission && isProjectSubmissionOpen)
-        {
-            <div class="kt-portlet__head-toolbar">
-                <div class="kt-portlet__head-actions">
-                    <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="ProjectsLinksWidget.showUpdateModal();">
-                        <i class="flaticon2-edit"></i>
-                    </button>
-                </div>
-            </div>
-        }*@
 </div>
 <div class="kt-portlet__body">
     <div class="kt-widget kt-widget--user-profile-3">
@@ -52,38 +43,16 @@
                     </span>
                 </div>
                 <div class="kt-widget__subhead">
-                    <a class="text-break"><i class="la la-envelope-o"></i>@(attendeeMusicBandCollaboratorDto?.User?.Email ?? "-")</a>
-                    @if (!string.IsNullOrEmpty(attendeeMusicBandCollaboratorDto?.Collaborator?.CellPhone))
-                    {
-                        <br /><a class="text-break"><i class="la la-mobile-phone"></i>@(attendeeMusicBandCollaboratorDto.Collaborator.CellPhone)</a>
-                    }
-                    @if (!string.IsNullOrEmpty(attendeeMusicBandCollaboratorDto?.Collaborator?.PhoneNumber))
-                    {
-                        <br /><a class="text-break"><i class="la la-phone"></i>@(attendeeMusicBandCollaboratorDto.Collaborator.PhoneNumber)</a>
-                    }
+                    <a class="text-break"><i class="la la-envelope-o"></i>@(!string.IsNullOrEmpty(attendeeMusicBandCollaboratorDto?.User?.Email) ? attendeeMusicBandCollaboratorDto.User.Email : "-")</a>
+                    <br /><a class="text-break"><i class="la la-mobile-phone"></i>@(!string.IsNullOrEmpty(attendeeMusicBandCollaboratorDto?.Collaborator?.CellPhone) ? attendeeMusicBandCollaboratorDto.Collaborator.CellPhone : "-")</a>
+                    <br /><a class="text-break"><i class="la la-phone"></i>@(!string.IsNullOrEmpty(attendeeMusicBandCollaboratorDto?.Collaborator?.PhoneNumber) ? attendeeMusicBandCollaboratorDto.Collaborator.PhoneNumber : "-")</a>
+                    @{ var address = attendeeMusicBandCollaboratorDto?.AddressDto?.GetDisplayAddress(CultureInfo.CurrentCulture.ToString()); }
+                    <br /><a class="text-break"><i class="la la-map-marker"></i>@(!string.IsNullOrEmpty(address) ? address : "-")</a>
                 </div>
-                @*@{
-                        var jobTitleDto = Model.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
-                    }
-                    @if (jobTitleDto != null)
-                    {
-                        <div class="kt-widget__subhead pt-0">
-                            @jobTitleDto.Value
-                        </div>
-                    }*@
-                @*<div class="kt-widget__info" style="display: block;">
-                    @{
-                        var miniBioDto = Model.GetMiniBioDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
-                    }
-                    @if (miniBioDto != null)
-                    {
-                        <div class="kt-widget__desc" style="word-wrap: break-word;">
-                            @Html.Raw(miniBioDto.Value)
-                        </div>
-                    }*@
+
             </div>
         </div>
-        <div class="kt-widget__bottom">
+        <div class="kt-widget__bottom mt-3">
             <div class="kt-widget__item w-50 w-xs-100">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.FullName</span>

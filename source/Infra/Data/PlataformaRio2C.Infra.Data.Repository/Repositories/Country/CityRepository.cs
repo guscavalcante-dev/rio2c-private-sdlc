@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 02-27-2023
 // ***********************************************************************
 // <copyright file="CityRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -38,19 +38,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<City> FindByStateUid(this IQueryable<City> query, Guid stateUid)
         {
             query = query.Where(c => c.State.Uid == stateUid);
-
-            return query;
-        }
-
-        /// <summary>Finds the by name asynchronous.</summary>
-        /// <param name="query">The query.</param>
-        /// <param name="name">The name.</param>
-        /// <returns>
-        ///   <br />
-        /// </returns>
-        internal static IQueryable<City> FindByNameAsync(this IQueryable<City> query, string name)
-        {
-            query = query.Where(c => c.Name.Contains(name));
 
             return query;
         }
@@ -140,19 +127,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     UpdateDate = s.UpdateDate,
                     UpdateUserId = s.UpdateUserId
                 }).ToListAsync();
-        }
-
-        /// <summary>Finds the by name asynchronous.</summary>
-        /// <param name="name">The name.</param>
-        /// <returns>
-        ///   <br />
-        /// </returns>
-        public async Task<City> FindByNameAsync(string name)
-        {
-            var query = this.GetBaseQuery()
-                            .FindByNameAsync(name);
-
-            return await query.FirstOrDefaultAsync();
         }
     }
 }
