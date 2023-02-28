@@ -4,7 +4,7 @@
 // Created          : 23-03-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-14-2023
+// Last Modified On : 02-27-2023
 // ***********************************************************************
 // <copyright file="MusicBandApiDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -119,6 +119,11 @@ namespace PlataformaRio2C.Domain.Dtos
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, GetJsonPropertyAttributeName(nameof(WouldYouLikeParticipateBusinessRound)))));
             }
 
+            if (!this.MusicBandResponsibleApiDto.IsValid())
+            {
+                this.ValidationResult.Add(this.MusicBandResponsibleApiDto.ValidationResult);
+            }
+
             return this.ValidationResult.IsValid;
         }
 
@@ -171,7 +176,12 @@ namespace PlataformaRio2C.Domain.Dtos
                 Document = "56.998.566/0001-09",
                 Email = "email@email.com",
                 PhoneNumber = "+55 14 99999-9999",
-                CellPhone = "+55 11 88888-8888"
+                CellPhone = "+55 11 88888-8888",
+                Address= "Jardim Maringa",
+                Country="BRASIL",
+                State= "MT",
+                City= "Várzea Grande",
+                ZipCode= "78120-540"
             };
 
             i.MusicBandMembersApiDtos = new List<MusicBandMemberApiDto>()

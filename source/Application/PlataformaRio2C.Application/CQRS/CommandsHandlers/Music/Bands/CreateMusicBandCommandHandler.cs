@@ -4,7 +4,7 @@
 // Created          : 23-03-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-03-2023
+// Last Modified On : 02-27-2023
 // ***********************************************************************
 // <copyright file="CreateMusicBandCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -121,21 +121,26 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     #region Creates new Collaborator and User
 
                     var createCollaboratorCommand = new CreateTinyCollaborator();
-                    
+
                     createCollaboratorCommand.UpdateBaseProperties(
-                        cmd.MusicBandResponsibleApiDto.Name, 
+                        cmd.MusicBandResponsibleApiDto.Name,
                         null,
                         cmd.MusicBandResponsibleApiDto.Email,
                         cmd.MusicBandResponsibleApiDto.PhoneNumber,
                         cmd.MusicBandResponsibleApiDto.CellPhone,
-                        cmd.MusicBandResponsibleApiDto.Document);
-                    
+                        cmd.MusicBandResponsibleApiDto.Document,
+                        cmd.MusicBandResponsibleApiDto.Address,
+                        cmd.MusicBandResponsibleApiDto.Country,
+                        cmd.MusicBandResponsibleApiDto.State,
+                        cmd.MusicBandResponsibleApiDto.City,
+                        cmd.MusicBandResponsibleApiDto.ZipCode);
+
                     createCollaboratorCommand.UpdatePreSendProperties(
                         CollaboratorType.Music.Name, //"Music" is fixed because in [dbo].[MigrateMusicProjects] procedure, its is fixed too!
-                        cmd.UserId, 
-                        cmd.UserUid, 
+                        cmd.UserId,
+                        cmd.UserUid,
                         editionDto.Edition.Id,
-                        editionDto.Edition.Uid, 
+                        editionDto.Edition.Uid,
                         "");
 
                     var commandResult = await base.CommandBus.Send(createCollaboratorCommand);
@@ -170,7 +175,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         cmd.MusicBandResponsibleApiDto.Email,
                         cmd.MusicBandResponsibleApiDto.PhoneNumber,
                         cmd.MusicBandResponsibleApiDto.CellPhone,
-                        cmd.MusicBandResponsibleApiDto.Document);
+                        cmd.MusicBandResponsibleApiDto.Document,
+                        cmd.MusicBandResponsibleApiDto.Address,
+                        cmd.MusicBandResponsibleApiDto.Country,
+                        cmd.MusicBandResponsibleApiDto.State,
+                        cmd.MusicBandResponsibleApiDto.City,
+                        cmd.MusicBandResponsibleApiDto.ZipCode);
 
                     updateCollaboratorCommand.UpdatePreSendProperties(
                         CollaboratorType.Music.Name,

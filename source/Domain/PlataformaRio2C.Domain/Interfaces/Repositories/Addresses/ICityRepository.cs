@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 02-27-2023
 // ***********************************************************************
 // <copyright file="ICityRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

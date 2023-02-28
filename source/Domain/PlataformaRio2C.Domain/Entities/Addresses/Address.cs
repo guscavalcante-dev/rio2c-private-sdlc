@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-22-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 02-27-2023
 // ***********************************************************************
 // <copyright file="Address.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,7 +22,7 @@ namespace PlataformaRio2C.Domain.Entities
     public class Address : Entity
     {
         public static readonly int Address1MinLength = 1;
-        public static readonly int Address1MaxLength = 200;
+        public static readonly int Address1MaxLength = 500;
         public static readonly int ZipCodeMinLength = 1;
         public static readonly int ZipCodeMaxLength = 10;
 
@@ -105,7 +105,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Address1 = address1?.Trim();
             this.ZipCode = addressZipCode?.Trim();
             this.IsGeoLocationUpdated = false;
-            this.IsManual = IsManual;
+            this.IsManual = isManual;
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
@@ -215,9 +215,11 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.ValidateAddress1();
             this.ValidateZipCode();
-            this.ValidateCountry();
-            this.ValidateState();
-            this.ValidateCity();
+
+            //TODO: Needs to enable this validations, but needs many tests because Country, State and City is not required in some cases.
+            //this.ValidateCountry();
+            //this.ValidateState();
+            //this.ValidateCity();
 
             return this.ValidationResult.IsValid;
         }
@@ -248,7 +250,6 @@ namespace PlataformaRio2C.Domain.Entities
                 this.ValidationResult.Add(this.City.ValidationResult);
             }
         }
-
 
         /// <summary>Validates the address1.</summary>
         public void ValidateAddress1()

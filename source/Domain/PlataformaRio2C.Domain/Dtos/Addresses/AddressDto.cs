@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 03-17-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-17-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 02-27-2023
 // ***********************************************************************
 // <copyright file="AddressBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -85,6 +85,19 @@ namespace PlataformaRio2C.Domain.Dtos
             }
 
             return address;
+        }
+
+        /// <summary>
+        /// Gets the display address.
+        /// </summary>
+        /// <returns></returns>
+        public string GetDisplayAddress(string culture)
+        {
+            return (!string.IsNullOrEmpty(this.Address?.Address1)   ? (this.Address.Address1) : string.Empty) +
+                   (!string.IsNullOrEmpty(this.City?.Name)          ? (", " + this.City.Name) : string.Empty) +
+                   (!string.IsNullOrEmpty(this.State?.Code)         ? (", " + this.State.Code) : string.Empty) +
+                   (!string.IsNullOrEmpty(this.Country?.Name)       ? (", " + this.Country.Name.GetSeparatorTranslation(culture, '|')) : string.Empty) +
+                   (!string.IsNullOrEmpty(this.Address?.ZipCode)    ? (", " + this.Address.ZipCode) : string.Empty);
         }
     }
 }

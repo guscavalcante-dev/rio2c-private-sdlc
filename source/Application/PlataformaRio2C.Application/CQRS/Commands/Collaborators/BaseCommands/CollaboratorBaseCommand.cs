@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-26-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-12-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 02-27-2023
 // ***********************************************************************
 // <copyright file="CollaboratorBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -59,12 +59,41 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string CollaboratorTypeName { get; set; }
         public IEnumerable<CollaboratorType> CollaboratorTypes { get; set; }
 
+        #region Address
+
+        public bool IsUpdatingAddress { get; private set; } = false;
+
+        [Display(Name = "Address", ResourceType = typeof(Labels))]
+        [StringLength(500, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string Address { get; set; }
+
+        [Display(Name = "Country", ResourceType = typeof(Labels))]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string Country { get; set; }
+
+        [Display(Name = "State", ResourceType = typeof(Labels))]
+        [StringLength(100, MinimumLength = 2, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string State { get; set; }
+
+        [Display(Name = "City", ResourceType = typeof(Labels))]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string City { get; set; }
+
+        [Display(Name = "ZipCode", ResourceType = typeof(Labels))]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string ZipCode { get; set; }
+
+        #endregion
+
         /// <summary>Initializes a new instance of the <see cref="CollaboratorBaseCommand"/> class.</summary>
         public CollaboratorBaseCommand()
         {
+            
         }
 
-        /// <summary>Updates the base properties.</summary>
+        /// <summary>
+        /// Updates the base properties.
+        /// </summary>
         /// <param name="entity">The entity.</param>
         public void UpdateBaseProperties(
             CollaboratorDto entity)
@@ -80,6 +109,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="firstName">The first name.</param>
         /// <param name="lastName">The last name.</param>
         /// <param name="email">The email.</param>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="document">The document.</param>
         public void UpdateBaseProperties(
             string firstName,
             string lastName,
@@ -96,7 +128,51 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Document = document;
         }
 
-        /// <summary>Updates the pre send properties.</summary>
+        /// <summary>
+        /// Updates the base properties.
+        /// </summary>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastName">The last name.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="document">The document.</param>
+        /// <param name="address">The address.</param>
+        /// <param name="country">The country.</param>
+        /// <param name="state">The state.</param>
+        /// <param name="city">The city.</param>
+        /// <param name="zipCode">The zip code.</param>
+        public void UpdateBaseProperties(
+            string firstName,
+            string lastName,
+            string email,
+            string phoneNumber,
+            string cellPhone,
+            string document,
+            string address,
+            string country,
+            string state,
+            string city,
+            string zipCode)
+        {
+            this.FirstName = firstName;
+            this.LastNames = lastName;
+            this.Email = email;
+            this.PhoneNumber = phoneNumber;
+            this.CellPhone = cellPhone;
+            this.Document = document;
+
+            this.Address = address;
+            this.Country = country;
+            this.State = state;
+            this.City = city;
+            this.ZipCode = zipCode;
+            this.IsUpdatingAddress = true;
+        }
+
+        /// <summary>
+        /// Updates the pre send properties.
+        /// </summary>
         /// <param name="collabboratorTypeName">Name of the collabborator type.</param>
         /// <param name="userId">The user identifier.</param>
         /// <param name="userUid">The user uid.</param>
@@ -112,7 +188,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string userInterfaceLanguage)
         {
             this.CollaboratorTypeName = collabboratorTypeName;
-            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
+            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, userInterfaceLanguage);
         }
     }
 }
