@@ -215,9 +215,11 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.ValidateAddress1();
             this.ValidateZipCode();
-            this.ValidateCountry();
-            this.ValidateState();
-            this.ValidateCity();
+
+            //TODO: Needs to enable this validations, but needs many tests because Country, State and City is not required in some cases.
+            //this.ValidateCountry();
+            //this.ValidateState();
+            //this.ValidateCity();
 
             return this.ValidationResult.IsValid;
         }
@@ -248,7 +250,6 @@ namespace PlataformaRio2C.Domain.Entities
                 this.ValidationResult.Add(this.City.ValidationResult);
             }
         }
-
 
         /// <summary>Validates the address1.</summary>
         public void ValidateAddress1()

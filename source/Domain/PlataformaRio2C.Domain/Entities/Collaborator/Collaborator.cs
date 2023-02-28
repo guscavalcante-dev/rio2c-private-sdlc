@@ -2134,7 +2134,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateMiniBios();
             this.ValidateUser();
             this.ValidateAttendeeCollaborators();
-            //this.ValidateAddress();
+            this.ValidateAddress();
             //this.ValidateGender();
             //this.ValidateIndustry();
             //this.ValidateRole();
