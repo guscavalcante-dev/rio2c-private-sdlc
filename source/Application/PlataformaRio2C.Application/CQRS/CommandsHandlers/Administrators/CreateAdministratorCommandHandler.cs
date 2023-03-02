@@ -16,6 +16,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;
@@ -70,10 +71,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #region Initial validations
 
-            var user = await this.userRepo.GetAsync(u => u.Email == cmd.Email.Trim() && !u.IsDeleted);
+            var user = await this.userRepo.GetAsync(u => u.Email == cmd.Email.Trim());
 
             // Return error only if the user is not deleted
-            if (user != null)
+            if (user != null && !user.IsDeleted)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.User.ToLowerInvariant(), $"{Labels.TheM.ToLowerInvariant()} {Labels.Email.ToLowerInvariant()}", cmd.Email), new string[] { "Email" }));
             }
@@ -86,25 +87,45 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            var collaborator = new Collaborator(
-                await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
-                await this.collaboratorTypeRepo.FindAllByNamesAsync(cmd.CollaboratorTypeNames),
-                await this.roleRepo.FindByNameAsync(cmd.RoleName),
-                cmd.FirstName,
-                cmd.LastNames,
-                cmd.Email,
-                cmd.PasswordHash,
-                cmd.UserId);
-
-            if (!collaborator.IsValid())
+            // Create if the user was not found in database
+            if (user == null)
             {
-                this.AppValidationResult.Add(collaborator.ValidationResult);
-                return this.AppValidationResult;
-            }
+                var collaborator = new Collaborator(
+                    await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
+                    await this.collaboratorTypeRepo.FindAllByNamesAsync(cmd.CollaboratorTypeNames),
+                    await this.roleRepo.FindByNameAsync(cmd.RoleName),
+                    cmd.FirstName,
+                    cmd.LastNames,
+                    cmd.Email,
+                    cmd.PasswordHash,
+                    cmd.UserId);
 
-            this.CollaboratorRepo.Create(collaborator);
-            this.Uow.SaveChanges();
-            this.AppValidationResult.Data = collaborator;
+                if (!collaborator.IsValid())
+                {
+                    this.AppValidationResult.Add(collaborator.ValidationResult);
+                    return this.AppValidationResult;
+                }
+
+                this.CollaboratorRepo.Create(collaborator);
+                this.Uow.SaveChanges();
+                this.AppValidationResult.Data = collaborator;
+            }
+            else
+            {
+                var updateCmd = new UpdateAdministrator 
+                {
+                    CollaboratorUid = user.Collaborator.Uid,
+                    IsAddingToCurrentEdition = true,
+                    FirstName = cmd.FirstName,
+                    LastNames = cmd.LastNames,
+                    Email = cmd.Email,
+                    RoleName = cmd.RoleName,
+                    CollaboratorTypeNames = cmd.CollaboratorTypeNames
+                };
+                updateCmd.UpdatePreSendProperties("", cmd.UserId, cmd.UserUid, cmd.EditionId, cmd.EditionUid, cmd.UserInterfaceLanguage);
+
+                this.AppValidationResult = await this.CommandBus.Send(updateCmd, cancellationToken);
+            }
 
             return this.AppValidationResult;
         }
