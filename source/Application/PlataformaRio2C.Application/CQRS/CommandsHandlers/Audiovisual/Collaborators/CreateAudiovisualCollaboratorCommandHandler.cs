@@ -67,10 +67,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #region Initial validations
 
-            var user = await this.userRepo.GetAsync(u => u.Email == cmd.Email.Trim() && !u.IsDeleted);
+            var user = await this.userRepo.GetAsync(u => u.Email == cmd.Email.Trim());
 
             // Return error only if the user is not deleted
-            if (user != null)
+            if (user != null && !user.IsDeleted)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.User.ToLowerInvariant(), $"{Labels.TheM.ToLowerInvariant()} {Labels.Email.ToLowerInvariant()}", cmd.Email), new string[] { "Email" }));
             }
