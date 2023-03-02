@@ -31,6 +31,8 @@ using PlataformaRio2C.Web.Site.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Application.ViewModels;
+using PlataformaRio2C.Domain.Dtos;
+using X.PagedList;
 
 namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
 {
@@ -192,7 +194,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
                     status = "success",
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Widgets/EvaluationListWidget", null), divIdOrClass = "#InnovationProjectEvaluationListWidget" },
+                        new { page = this.RenderRazorViewToString("Widgets/EvaluationListWidget", new List<AttendeeInnovationOrganizationDto>()), divIdOrClass = "#InnovationProjectEvaluationListWidget" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
