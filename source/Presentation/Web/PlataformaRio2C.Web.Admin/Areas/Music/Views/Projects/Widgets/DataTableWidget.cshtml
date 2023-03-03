@@ -10,15 +10,12 @@
             </span>
             <h3 class="kt-portlet__head-title">
                 @Labels.Projects
-
             </h3>
-
         </div>
-
         <div class="kt-portlet__head-label">
             <div class="dropdown">
                 <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                    
-                    <span>Exportar para Excel</span>
+                    <span>@Labels.ExportToExcel</span>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a href="javascript:;" class="dropdown-item" onclick="MusicProjectsDataTableWidget.exportExcelReportByProject()">
@@ -35,7 +32,7 @@
     <div class="kt-portlet__body">
         <!--begin: SearchForm-->
         <div class="form-group row">
-            <div class="col-lg-6">
+            <div class="col-lg-4">
                 <label>@Labels.Search:</label>
                 @Html.Hidden("Page", ViewBag.Page as int?)
                 @Html.Hidden("PageSize", ViewBag.PageSize as int?)
@@ -48,6 +45,17 @@
             <div class="col-lg-3">
                 <label>@Labels.Status:</label>
                 @Html.DropDownList("EvaluationStatusUid", new SelectList(ViewBag.ProjectEvaluationStatuses, "Uid", "Name", ViewBag.EvaluationStatusUid), $"{string.Format(Labels.SelectAMEntity, Labels.Status.ToLowerInvariant())}...", new { @class = "form-control enable-select2" })
+            </div>
+            <div class="col-lg-2">
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <div class="kt-checkbox-list">
+                        <label class="kt-checkbox mt-2">
+                            @Html.CheckBox("ShowBusinessRounds", ((bool)ViewBag.ShowBusinessRounds), new { @class = "enable-datatable-reload" }) @Labels.ShowBusinessRounds
+                            <span></span>
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
         <!--end: SearchForm-->

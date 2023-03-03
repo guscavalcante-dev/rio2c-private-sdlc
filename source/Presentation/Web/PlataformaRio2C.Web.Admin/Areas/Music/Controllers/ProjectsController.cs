@@ -4,7 +4,7 @@
 // Created          : 03-01-2020
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-31-2021
+// Last Modified On : 03-03-2023
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -78,7 +78,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Index(Guid? musicGenreUid, Guid? evaluationStatusUid)
+        public async Task<ActionResult> Index(Guid? musicGenreUid, Guid? evaluationStatusUid, bool? showBusinessRounds = false)
         {
             #region Breadcrumb
 
@@ -96,6 +96,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
             ViewBag.MusicGenres = (await this.musicGenreRepo.FindAllAsync()).GetSeparatorTranslation(m => m.Name, this.UserInterfaceLanguage, '|');
             ViewBag.ProjectEvaluationStatuses = (await this.evaluationStatusRepo.FindAllAsync()).GetSeparatorTranslation(m => m.Name, this.UserInterfaceLanguage, '|');
+            ViewBag.ShowBusinessRounds = showBusinessRounds;
 
             return View();
         }
@@ -106,7 +107,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowListWidget(IDataTablesRequest request, Guid? musicGenreUid, Guid? evaluationStatusUid)
+        public async Task<ActionResult> ShowListWidget(IDataTablesRequest request, Guid? musicGenreUid, Guid? evaluationStatusUid, bool? showBusinessRounds)
         {
             int page = request.Start / request.Length;
             int pageSize = request.Length;
@@ -117,6 +118,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 request.Search?.Value,
                 musicGenreUid,
                 evaluationStatusUid,
+                showBusinessRounds ?? false,
                 page,
                 pageSize,
                 request.GetSortColumns());
@@ -156,6 +158,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             ViewBag.EvaluationStatusUid = evaluationStatusUid;
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
+            ViewBag.ShowBusinessRounds = showBusinessRounds;
 
             IDictionary<string, object> additionalParameters = new Dictionary<string, object>();
             if (musicProjectJsonDtos.TotalItemCount <= 0)
@@ -184,6 +187,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 searchKeywords = request.Search?.Value,
                 musicGenreUid,
                 evaluationStatusUid,
+                showBusinessRounds,
                 page,
                 pageSize
             }, JsonRequestBehavior.AllowGet);
@@ -197,7 +201,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ExportEvaluationListWidget(string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 1000)
+        public async Task<ActionResult> ExportEvaluationListWidget(string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool? showBusinessRounds, int? page = 1, int? pageSize = 1000)
         {
             StringBuilder data = new StringBuilder();
             bool ptBR = this.UserInterfaceLanguage == "pt-br";
@@ -206,7 +210,16 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             else
                 data.AppendLine("Music Band; Participant profile; Musical style; Target Audience; Create Date; Qty. Evaluation; Status;");
 
-            var musicProjectJsonDtos = await this.musicProjectRepo.FindAllJsonDtosPagedAsync(this.EditionDto.Id, searchKeywords, musicGenreUid, evaluationStatusUid, 1, 10000, new List<Tuple<string, string>>());
+            var musicProjectJsonDtos = await this.musicProjectRepo.FindAllJsonDtosPagedAsync(
+                this.EditionDto.Id, 
+                searchKeywords, 
+                musicGenreUid, 
+                evaluationStatusUid, 
+                showBusinessRounds ?? false, 
+                1, 
+                10000, 
+                new List<Tuple<string, string>>());
+
             var approvedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Id);
 
             foreach (var item in musicProjectJsonDtos)
@@ -243,7 +256,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ExportEvaluatorsListWidget(string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 1000)
+        public async Task<ActionResult> ExportEvaluatorsListWidget(string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool? showBusinessRounds, int? page = 1, int? pageSize = 1000)
         {
             StringBuilder data = new StringBuilder();
             bool ptBR = this.UserInterfaceLanguage == "pt-br";
@@ -252,8 +265,17 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             else
                 data.AppendLine("Music Band; Avaliation; Evaluator; Grade;");
 
-            var musicProjectJsonDtos = await this.musicProjectRepo.FindAllJsonDtosPagedAsync(this.EditionDto.Id, "", musicGenreUid, evaluationStatusUid, 1, 1000, new List<Tuple<string, string>>());
-            var approvedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Id);
+            var musicProjectJsonDtos = await this.musicProjectRepo.FindAllJsonDtosPagedAsync(
+                this.EditionDto.Id,
+                searchKeywords, 
+                musicGenreUid, 
+                evaluationStatusUid, 
+                showBusinessRounds ?? false,
+                1, 
+                1000, 
+                new List<Tuple<string, string>>());
+
+            //var approvedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Id);
 
             foreach (var item in musicProjectJsonDtos)
             {
@@ -355,21 +377,17 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="musicGenreUid">The music genre uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showBusinessRounds">The show business rounds.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> EvaluationDetails(int? id, string searchKeywords = null, Guid? musicGenreUid = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 12)
+        public async Task<ActionResult> EvaluationDetails(int? id, string searchKeywords = null, Guid? musicGenreUid = null, Guid? evaluationStatusUid = null, bool? showBusinessRounds = false, int? page = 1, int? pageSize = 12)
         {
             if (!page.HasValue || page <= 0)
             {
                 page++;
             }
-
-            //if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
-            //{
-            //    return RedirectToAction("Index", "Projects", new { Area = "Music" });
-            //}
 
             var musicProjectDto = await this.musicProjectRepo.FindDtoToEvaluateAsync(id ?? 0);
             if (musicProjectDto == null)
@@ -393,6 +411,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 searchKeywords,
                 musicGenreUid,
                 evaluationStatusUid,
+                showBusinessRounds ?? false,
                 page.Value,
                 pageSize.Value);
             var currentMusicProjectIdIndex = Array.IndexOf(allMusicProjectsIds, id.Value) + 1; //Index start at 0, its a fix to "start at 1"
@@ -400,11 +419,21 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             ViewBag.SearchKeywords = searchKeywords;
             ViewBag.MusicGenreUid = musicGenreUid;
             ViewBag.EvaluationStatusUid = evaluationStatusUid;
+            ViewBag.ShowBusinessRounds = showBusinessRounds;
+
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
             ViewBag.CurrentMusicProjectIndex = currentMusicProjectIdIndex;
 
-            ViewBag.MusicProjectsTotalCount = await this.musicProjectRepo.CountPagedAsync(this.EditionDto.Edition.Id, searchKeywords, musicGenreUid, evaluationStatusUid, page.Value, pageSize.Value);
+            ViewBag.MusicProjectsTotalCount = await this.musicProjectRepo.CountPagedAsync(
+                this.EditionDto.Edition.Id, 
+                searchKeywords, 
+                musicGenreUid, 
+                evaluationStatusUid, 
+                showBusinessRounds ?? false, 
+                page.Value, 
+                pageSize.Value);
+
             ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id);
 
             return View(musicProjectDto);
@@ -418,17 +447,19 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="musicGenreUid">The music genre uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showBusinessRounds">The show business rounds.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> PreviousEvaluationDetails(int? id, string searchKeywords = null, Guid? musicGenreUid = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 12)
+        public async Task<ActionResult> PreviousEvaluationDetails(int? id, string searchKeywords = null, Guid? musicGenreUid = null, Guid? evaluationStatusUid = null, bool? showBusinessRounds = false, int? page = 1, int? pageSize = 12)
         {
             var allMusicProjectsIds = await this.musicProjectRepo.FindAllMusicProjectsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
                 musicGenreUid,
                 evaluationStatusUid,
+                showBusinessRounds ?? false,
                 page.Value,
                 pageSize.Value);
 
@@ -446,6 +477,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     searchKeywords,
                     musicGenreUid,
                     evaluationStatusUid,
+                    showBusinessRounds,
                     page,
                     pageSize
                 });
@@ -458,17 +490,19 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="musicGenreUid">The music genre uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showBusinessRounds">The show business rounds.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> NextEvaluationDetails(int? id, string searchKeywords = null, Guid? musicGenreUid = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 12)
+        public async Task<ActionResult> NextEvaluationDetails(int? id, string searchKeywords = null, Guid? musicGenreUid = null, Guid? evaluationStatusUid = null, bool? showBusinessRounds = false, int? page = 1, int? pageSize = 12)
         {
             var allMusicProjectsIds = await this.musicProjectRepo.FindAllMusicProjectsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
                 musicGenreUid,
                 evaluationStatusUid,
+                showBusinessRounds ?? false,
                 page.Value,
                 pageSize.Value);
 
@@ -486,6 +520,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     searchKeywords,
                     musicGenreUid,
                     evaluationStatusUid,
+                    showBusinessRounds,
                     page,
                     pageSize
                 });

@@ -4,7 +4,7 @@
 // Created          : 07-24-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-27-2023
+// Last Modified On : 03-03-2023
 // ***********************************************************************
 // <copyright file="innovation.projects.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -364,7 +364,6 @@ var InnovationProjectsDataTableWidget = function () {
         jsonParameters.showBusinessRounds = $('#ShowBusinessRounds').prop('checked');
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition(url), jsonParameters, function (resp) {
-
             var hiddenElement = document.createElement('a');
             hiddenElement.href = 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURI(resp.fileContent);
             hiddenElement.download = resp.fileName;
