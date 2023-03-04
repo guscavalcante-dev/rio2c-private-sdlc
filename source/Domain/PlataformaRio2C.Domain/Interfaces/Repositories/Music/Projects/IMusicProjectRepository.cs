@@ -23,7 +23,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IMusicProjectRepository</summary>
     public interface IMusicProjectRepository : IRepository<MusicProject>
     {
-        Task<IPagedList<MusicProjectDto>> FindAllDtosPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize);
+        Task<IPagedList<MusicProjectDto>> FindAllDtosPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize);
         Task<IPagedList<MusicProjectJsonDto>> FindAllJsonDtosPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize, List<Tuple<string, string>> sortColumns);
         Task<MusicProjectDto> FindDtoToEvaluateAsync(Guid musicProjectUid);
         Task<MusicProjectDto> FindDtoToEvaluateAsync(int musicProjectId);

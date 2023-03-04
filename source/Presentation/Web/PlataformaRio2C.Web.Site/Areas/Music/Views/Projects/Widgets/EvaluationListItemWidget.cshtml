@@ -7,10 +7,10 @@
     {
         Area = "Music",
         id = Model.MusicProject.Id,
-        //step = 0,
         searchKeywords = ViewBag.SearchKeywords,
         musicGenreUid = ViewBag.MusicGenreUid,
         evaluationStatusUid = ViewBag.EvaluationStatusUid,
+        showBusinessRounds = ViewBag.ShowBusinessRounds,
         Page = ViewBag.Page,
         pageSize = ViewBag.PageSize
     });
@@ -81,6 +81,20 @@
                         else
                         {
                             @:-
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-2">
+                        @if (Model.AttendeeMusicBandDto?.AttendeeMusicBand?.WouldYouLikeParticipateBusinessRound == true)
+                        {
+                            <div class="row">
+                                <div class="col-12">
+                                    <span class="kt-badge kt-badge--inline kt-badge--info mt-1">
+                                        @Labels.BusinessRound
+                                    </span>
+                                </div>
+                            </div>
                         }
                     </div>
                 </div>

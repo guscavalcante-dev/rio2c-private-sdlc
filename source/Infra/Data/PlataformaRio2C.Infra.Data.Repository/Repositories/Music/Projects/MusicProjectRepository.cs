@@ -347,15 +347,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="musicGenreUid">The music genre uid.</param>
-        /// <param name="page">The page.</param>
-        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="showBusinessRounds">if set to <c>true</c> [show business rounds].</param>
         /// <returns></returns>
-        private async Task<List<MusicProjectDto>> FindAllMusicProjectDtosAsync(int editionId, string searchKeywords, Guid? musicGenreUid)
+        private async Task<List<MusicProjectDto>> FindAllMusicProjectDtosAsync(int editionId, string searchKeywords, Guid? musicGenreUid, bool showBusinessRounds)
         {
             var query = this.GetBaseQuery()
                                .FindByEditionId(editionId)
                                .FindByKeywords(searchKeywords)
                                .FindByMusicGenreUid(musicGenreUid)
+                               .ShowBusinessRounds(showBusinessRounds)
                                .Select(mp => new MusicProjectDto
                                {
                                    MusicProject = mp,
@@ -445,17 +445,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         #endregion
 
-        /// <summary>Finds all dtos to evaluate asynchronous.</summary>
+        /// <summary>
+        /// Finds all dtos to evaluate asynchronous.
+        /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="musicGenreUid">The music genre uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showBusinessRounds">if set to <c>true</c> [show business rounds].</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<MusicProjectDto>> FindAllDtosPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize)
+        public async Task<IPagedList<MusicProjectDto>> FindAllDtosPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize)
         {
-            var musicProjectsDtos = await this.FindAllMusicProjectDtosAsync(editionId, searchKeywords, musicGenreUid);
+            var musicProjectsDtos = await this.FindAllMusicProjectDtosAsync(editionId, searchKeywords, musicGenreUid, showBusinessRounds);
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
             var approvedMusicBandsIds = await this.FindAllApprovedAttendeeMusicBandsIdsAsync(editionId);
 

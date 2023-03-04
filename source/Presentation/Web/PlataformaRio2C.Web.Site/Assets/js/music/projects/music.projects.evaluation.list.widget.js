@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 02-26-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-28-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 03-04-2023
 // ***********************************************************************
 // <copyright file="music.projects.evaluation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -40,6 +40,7 @@ var MusicProjectsEvaluationListWidget = function () {
         jsonParameters.searchKeywords = $('#SearchKeywords').val();
         jsonParameters.musicGenreUid = $('#MusicGenreUid').val();
         jsonParameters.evaluationStatusUid = $('#EvaluationStatusUid').val();
+        jsonParameters.showBusinessRounds = $('#ShowBusinessRounds').prop('checked');
         jsonParameters.page = $('#Page').val();
         jsonParameters.pageSize = $('#PageSize').val();
 
@@ -83,6 +84,11 @@ var MusicProjectsEvaluationListWidget = function () {
             search();
         });
         $('#EvaluationStatusUid').addClass('change-event-enabled');
+
+        $('#ShowBusinessRounds').not('.change-event-enabled').on('change', function () {
+            search();
+        });
+        $('#ShowBusinessRounds').addClass('change-event-enabled');
     };
 
     // Pagination ---------------------------------------------------------------------------------

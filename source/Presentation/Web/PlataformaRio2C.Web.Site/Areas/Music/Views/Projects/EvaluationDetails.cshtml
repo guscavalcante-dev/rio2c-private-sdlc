@@ -13,6 +13,7 @@
         searchKeywords = ViewBag.SearchKeywords,
         musicGenreUid = ViewBag.MusicGenreUid,
         evaluationStatusUid = ViewBag.EvaluationStatusUid,
+        showBusinessRounds = ViewBag.ShowBusinessRounds,
         Page = ViewBag.Page,
         pageSize = ViewBag.PageSize
     });
@@ -24,6 +25,7 @@
         searchKeywords = ViewBag.SearchKeywords,
         musicGenreUid = ViewBag.MusicGenreUid,
         evaluationStatusUid = ViewBag.EvaluationStatusUid,
+        showBusinessRounds = ViewBag.ShowBusinessRounds,
         Page = ViewBag.Page,
         pageSize = ViewBag.PageSize
     });
@@ -36,10 +38,10 @@
             <div class="mr-3">
                 <span>@currentMusicProjectIndex @Labels.Of @totalMusicProjectsCount @Labels.Projects</span>
             </div>
-            <button class="btn btn-outline-secondary mr-2" onclick="location.href='@previousStepEvent'">
+            <button class="btn btn-outline-secondary mr-2" onclick="location.href='@previousStepEvent'" @(currentMusicProjectIndex == 1 ? "disabled" : "")>
                 <span class="font-weight-bold text-white"><</span>
             </button>
-            <button class="btn btn-outline-secondary" onclick="location.href='@nextStepEvent'">
+            <button class="btn btn-outline-secondary" onclick="location.href='@nextStepEvent'" @(currentMusicProjectIndex == totalMusicProjectsCount ? "disabled" : "")>
                 <span class="font-weight-bold text-white">></span>
             </button>
         </div>
