@@ -4,7 +4,7 @@
 // Created          : 07-24-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-27-2023
+// Last Modified On : 03-03-2023
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -188,10 +188,10 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         }
 
         /// <summary>
-        /// Export to Excel the evaluation list widget.
+        /// Exports the evaluation list widget.
         /// </summary>
         /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="innovationOrganizationTrackOptionGroupUid">The music genre uid.</param>
+        /// <param name="innovationOrganizationTrackOptionGroupUid">The innovation organization track option group uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="showBusinessRounds">The show business rounds.</param>
         /// <param name="page">The page.</param>
@@ -233,10 +233,10 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         }
 
         /// <summary>
-        /// Export to Excel the evaluators list widget.
+        /// Exports the evaluators list widget.
         /// </summary>
         /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="innovationOrganizationTrackOptionGroupUid">The music genre uid.</param>
+        /// <param name="innovationOrganizationTrackOptionGroupUid">The innovation organization track option group uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="showBusinessRounds">The show business rounds.</param>
         /// <param name="page">The page.</param>

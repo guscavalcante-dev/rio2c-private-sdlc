@@ -28,7 +28,15 @@
                     <div class="kt-pagination kt-pagination--brand justify-content-center justify-content-sm-between">
                         @Html.PagedListPager(
                             Model,
-                            page => Url.Action("ShowEvaluationListWidget", "Projects", new { Area = "Music", searchKeywords = ViewBag.SearchKeywords, musicGenreUid = ViewBag.MusicGenreUid, evaluationStatusUid = ViewBag.EvaluationStatusUid, page, pageSize = ViewBag.PageSize }),
+                            page => Url.Action("ShowEvaluationListWidget", "Projects", new {
+                                Area = "Music",
+                                searchKeywords = ViewBag.SearchKeywords,
+                                musicGenreUid = ViewBag.MusicGenreUid,
+                                evaluationStatusUid = ViewBag.EvaluationStatusUid,
+                                showBusinessRounds = ViewBag.ShowBusinessRounds,
+                                page,
+                                pageSize = ViewBag.PageSize
+                            }),
                             PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
                                 new PagedListRenderOptions
                                 {
@@ -38,7 +46,6 @@
                                     DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
                                     DisplayLinkToNextPage = PagedListDisplayMode.Always,
                                     DisplayLinkToLastPage = PagedListDisplayMode.Always,
-                                    //ContainerDivClasses = new string[] { "kt-pagination kt-pagination--brand" },
                                     UlElementClasses = new string[] { "kt-pagination__links" },
                                     LiElementClasses = new string[] { "" },
                                     PreviousElementClass = "kt-pagination__link--prev",

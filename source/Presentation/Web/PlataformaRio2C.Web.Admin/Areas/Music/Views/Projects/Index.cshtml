@@ -30,7 +30,7 @@
     @Scripts.Render("~/bundles/js/music.projects.list.widget.js")
     @Scripts.Render("~/bundles/js/music.projects.editioncount.widget.js")
     @Scripts.Render("~/bundles/js/music.projects.delete.js")
-<script>
+    <script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
             underEvaluation: '@Labels.UnderEvaluation',
@@ -38,13 +38,15 @@
             projectAccepted: '@Labels.ProjectAccepted',
             projectRefused: '@Labels.ProjectRefused',
             vote: '@Labels.Vote',
-            votes: '@Labels.Votes'
+            votes: '@Labels.Votes',
+            businessRound: '@Labels.BusinessRound'
         };
 
         var isProjectEvaluationClosed = @(Json.Encode(!editionDto.IsMusicProjectEvaluationOpen()));
         var searchKeywords = '@ViewBag.SearchKeywords';
         var musicGenreUid = '@ViewBag.MusicGenreUid';
         var evaluationStatusUid = '@ViewBag.EvaluationStatusUid';
+        var showBusinessRounds = @(Json.Encode(ViewBag.ShowBusinessRounds));
 
         // Pagination -----------------------------------------------------------------------------
         var initialPage = @(ViewBag.Page?.ToString() ?? "null");
@@ -55,6 +57,6 @@
             MusicProjectsTotalCountWidget.init();
             MusicProjectsEditionCountWidget.init();
         });
-</script>
+    </script>
 
 }

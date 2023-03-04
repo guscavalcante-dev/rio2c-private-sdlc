@@ -4,7 +4,7 @@
 // Created          : 03-01-2020
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-31-2021
+// Last Modified On : 03-03-2023
 // ***********************************************************************
 // <copyright file="music.projects.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -79,6 +79,7 @@ var MusicProjectsDataTableWidget = function () {
                 data: function (d) {
                     d.musicGenreUid = $('#MusicGenreUid').val();
                     d.evaluationStatusUid = $('#EvaluationStatusUid').val();
+                    d.showBusinessRounds = $('#ShowBusinessRounds').prop('checked');
                 },
                 dataFilter: function (data) {
                     var jsonReturned = JSON.parse(data);
@@ -107,6 +108,7 @@ var MusicProjectsDataTableWidget = function () {
                             searchKeywords = jsonReturned.searchKeywords;
                             musicGenreUid = jsonReturned.musicGenreUid;
                             evaluationStatusUid = jsonReturned.evaluationStatusUid;
+                            showBusinessRounds = jsonReturned.showBusinessRounds;
                             initialPage = jsonReturned.page;
                             initialPageSize = jsonReturned.pageSize;
 
@@ -144,6 +146,10 @@ var MusicProjectsDataTableWidget = function () {
                         html += '       <td> ' + data + '</td>\
                                     </tr>\
                                 </table>';
+
+                        if (row.WouldYouLikeParticipateBusinessRound) {
+                            html += '<span class="kt-badge kt-badge--inline kt-badge--info mt-2">' + translations.businessRound + '</span>';
+                        }
 
                         return html;
                     }
@@ -256,7 +262,7 @@ var MusicProjectsDataTableWidget = function () {
                         html += '\          <i class="la la-ellipsis-h"></i>';
                         html += '\      </a>';
                         html += '\      <div class="dropdown-menu dropdown-menu-right">';
-                        html += '\          <button class="dropdown-item" onclick="MusicProjectsDataTableWidget.showDetails(\'' + row.MusicProjectId + '\', \'' + searchKeywords + '\', \'' + musicGenreUid + '\', \'' + evaluationStatusUid + '\', \'' + initialPage + '\', \'' + initialPageSize + '\');">';
+                        html += '\          <button class="dropdown-item" onclick="MusicProjectsDataTableWidget.showDetails(\'' + row.MusicProjectId + '\', \'' + searchKeywords + '\', \'' + initialPage + '\', \'' + initialPageSize + '\');">';
                         html += '\              <i class="la la-eye"></i>' + labels.view + '';
                         html += '\          </button>';
                         html += '\          <button class="dropdown-item" onclick="MusicProjectsDelete.showModal(\'' + row.MusicProjectUid + '\');">';
@@ -334,15 +340,16 @@ var MusicProjectsDataTableWidget = function () {
     };
 
     // Details ------------------------------------------------------------------------------------
-    var showDetails = function (musicProjectUid, searchKeywords, musicGenreUid, evaluationStatusUid, page, pageSize) {
+    var showDetails = function (musicProjectUid, searchKeywords, page, pageSize) {
 	    if (MyRio2cCommon.isNullOrEmpty(musicProjectUid)) {
 		    return;
 	    }
 
         window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/EvaluationDetails/' + musicProjectUid
             + '?searchKeywords=' + searchKeywords
-            + '&musicGenreUid=' + musicGenreUid
-            + '&evaluationStatusUid=' + evaluationStatusUid
+            + '&musicGenreUid=' + $('#MusicGenreUid').val()
+            + '&evaluationStatusUid=' + $('#EvaluationStatusUid').val()
+            + '&showBusinessRounds=' + $('#ShowBusinessRounds').prop('checked')
             + '&page=' + page
             + '&pageSize=' + pageSize
         );
@@ -351,6 +358,10 @@ var MusicProjectsDataTableWidget = function () {
     // Export -------------------------------------------------------------------------------------
     var exportExcel = function (url) {
         var jsonParameters = new Object();
+        jsonParameters.musicGenreUid = $('#MusicGenreUid').val();
+        jsonParameters.evaluationStatusUid = $('#EvaluationStatusUid').val();
+        jsonParameters.showBusinessRounds = $('#ShowBusinessRounds').prop('checked');
+
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition(url), jsonParameters, function (resp) {
 
             var hiddenElement = document.createElement('a');
@@ -373,8 +384,8 @@ var MusicProjectsDataTableWidget = function () {
         refreshData: function () {
             refreshData();
         },
-        showDetails: function (musicProjectUid, searchKeywords, musicGenreUid, evaluationStatusUid, page, pageSize) {
-            showDetails(musicProjectUid, searchKeywords, musicGenreUid, evaluationStatusUid, page, pageSize);
+        showDetails: function (musicProjectUid, searchKeywords, page, pageSize) {
+            showDetails(musicProjectUid, searchKeywords, page, pageSize);
         },
         exportExcelReportByProject: function () {
             exportExcel('/Music/Projects/ExportEvaluationListWidget');

@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-sm-6 mt-2">
+            <div class="col-12 col-sm-4 mt-2">
                 <select name="MusicGenreUid" id="MusicGenreUid" class="form-control">
                     <option value="">@(string.Format(Labels.SelectAMEntity, Labels.MusicGenre.ToLowerInvariant()))...</option>
                     @foreach (var musicGenre in musicGenres)
@@ -31,7 +31,7 @@
                     }
                 </select>
             </div>
-            <div class="col-12 col-sm-6 mt-2">
+            <div class="col-12 col-sm-4 mt-2">
                 <select name="EvaluationStatusUid" id="EvaluationStatusUid" class="form-control">
                     <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Status.ToLowerInvariant()))...</option>
                     @foreach (var evaluationStatus in projectEvaluationStatuses)
@@ -41,6 +41,14 @@
                         </option>
                     }
                 </select>
+            </div>
+            <div class="col-12 col-sm-4 mt-2">
+                <div class="kt-checkbox-list">
+                    <label class="kt-checkbox mt-3">
+                        @Html.CheckBox("ShowBusinessRounds", ((bool)ViewBag.ShowBusinessRounds), new { @class = "enable-datatable-reload" }) @Labels.ShowBusinessRounds
+                        <span></span>
+                    </label>
+                </div>
             </div>
         </div>
     </div>

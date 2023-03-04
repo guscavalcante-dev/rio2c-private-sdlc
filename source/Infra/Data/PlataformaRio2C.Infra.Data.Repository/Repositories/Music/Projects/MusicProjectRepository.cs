@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-27-2023
+// Last Modified On : 03-03-2023
 // ***********************************************************************
 // <copyright file="MusicProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -163,6 +163,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>
+        /// Shows the business rounds.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="showBusinessRounds">if set to <c>true</c> [show business rounds].</param>
+        /// <returns></returns>
+        internal static IQueryable<MusicProject> ShowBusinessRounds(this IQueryable<MusicProject> query, bool showBusinessRounds = false)
+        {
+            if (showBusinessRounds)
+            {
+                query = query.Where(mp => mp.AttendeeMusicBand.WouldYouLikeParticipateBusinessRound == true);
+            }
+
+            return query;
+        }
+
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
@@ -310,13 +326,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="musicGenreUid">The music genre uid.</param>
+        /// <param name="showBusinessRounds">if set to <c>true</c> [show business rounds].</param>
         /// <returns></returns>
-        private async Task<List<MusicProject>> FindAllMusicProjectsAsync(int editionId, string searchKeywords, Guid? musicGenreUid)
+        private async Task<List<MusicProject>> FindAllMusicProjectsAsync(int editionId, string searchKeywords, Guid? musicGenreUid, bool showBusinessRounds)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
                                 .FindByKeywords(searchKeywords)
-                                .FindByMusicGenreUid(musicGenreUid);
+                                .FindByMusicGenreUid(musicGenreUid)
+                                .ShowBusinessRounds(showBusinessRounds);
 
             return await query
                             .Order()
@@ -329,15 +347,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="musicGenreUid">The music genre uid.</param>
-        /// <param name="page">The page.</param>
-        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="showBusinessRounds">if set to <c>true</c> [show business rounds].</param>
         /// <returns></returns>
-        private async Task<List<MusicProjectDto>> FindAllMusicProjectDtosAsync(int editionId, string searchKeywords, Guid? musicGenreUid)
+        private async Task<List<MusicProjectDto>> FindAllMusicProjectDtosAsync(int editionId, string searchKeywords, Guid? musicGenreUid, bool showBusinessRounds)
         {
             var query = this.GetBaseQuery()
                                .FindByEditionId(editionId)
                                .FindByKeywords(searchKeywords)
                                .FindByMusicGenreUid(musicGenreUid)
+                               .ShowBusinessRounds(showBusinessRounds)
                                .Select(mp => new MusicProjectDto
                                {
                                    MusicProject = mp,
@@ -386,12 +404,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="musicGenreUid">The music genre uid.</param>
         /// <param name="sortColumns">The sort columns.</param>
         /// <returns></returns>
-        private async Task<List<MusicProjectJsonDto>> FindAllJsonDtosAsync(int editionId, string searchKeywords, Guid? musicGenreUid, List<Tuple<string, string>> sortColumns)
+        private async Task<List<MusicProjectJsonDto>> FindAllJsonDtosAsync(int editionId, string searchKeywords, Guid? musicGenreUid, bool showBusinessRounds, List<Tuple<string, string>> sortColumns)
         {
             var query = this.GetBaseQuery()
                                .FindByEditionId(editionId, false)
                                .FindByKeywords(searchKeywords)
                                .FindByMusicGenreUid(musicGenreUid)
+                               .ShowBusinessRounds(showBusinessRounds)
                                .DynamicOrder<MusicProject>(
                                    sortColumns,
                                    null,
@@ -416,7 +435,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                        .OrderBy(mbg => mbg.TargetAudience.DisplayOrder)
                                                                        .Select(mbg => mbg.TargetAudience.Name).ToList(),
                                    CreateDate = mp.CreateDate,
-                                   UpdateDate = mp.UpdateDate
+                                   UpdateDate = mp.UpdateDate,
+                                   WouldYouLikeParticipateBusinessRound = mp.AttendeeMusicBand.WouldYouLikeParticipateBusinessRound
                                });
 
             return await query
@@ -425,17 +445,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         #endregion
 
-        /// <summary>Finds all dtos to evaluate asynchronous.</summary>
+        /// <summary>
+        /// Finds all dtos to evaluate asynchronous.
+        /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="musicGenreUid">The music genre uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showBusinessRounds">if set to <c>true</c> [show business rounds].</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<MusicProjectDto>> FindAllDtosPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize)
+        public async Task<IPagedList<MusicProjectDto>> FindAllDtosPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize)
         {
-            var musicProjectsDtos = await this.FindAllMusicProjectDtosAsync(editionId, searchKeywords, musicGenreUid);
+            var musicProjectsDtos = await this.FindAllMusicProjectDtosAsync(editionId, searchKeywords, musicGenreUid, showBusinessRounds);
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
             var approvedMusicBandsIds = await this.FindAllApprovedAttendeeMusicBandsIdsAsync(editionId);
 
@@ -486,6 +509,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="musicGenreUid">The music genre uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showBusinessRounds">if set to <c>true</c> [show business rounds].</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="sortColumns">The sort columns.</param>
@@ -495,11 +519,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             string searchKeywords,
             Guid? musicGenreUid,
             Guid? evaluationStatusUid,
+            bool showBusinessRounds,
             int page,
             int pageSize,
             List<Tuple<string, string>> sortColumns)
         {
-            var musicProjectJsonDtos = await this.FindAllJsonDtosAsync(editionId, searchKeywords, musicGenreUid, sortColumns);
+            var musicProjectJsonDtos = await this.FindAllJsonDtosAsync(editionId, searchKeywords, musicGenreUid, showBusinessRounds, sortColumns);
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
             var approvedMusicBandsIds = await this.FindAllApprovedAttendeeMusicBandsIdsAsync(editionId);
 
@@ -987,12 +1012,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="musicGenreUid">The music genre uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showBusinessRounds">if set to <c>true</c> [show business rounds].</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<int[]> FindAllMusicProjectsIdsPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize)
+        public async Task<int[]> FindAllMusicProjectsIdsPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize)
         {
-            var musicProjects = await this.FindAllMusicProjectsAsync(editionId, searchKeywords, musicGenreUid);
+            var musicProjects = await this.FindAllMusicProjectsAsync(editionId, searchKeywords, musicGenreUid, showBusinessRounds);
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
             var approvedMusicBandsIds = await this.FindAllApprovedAttendeeMusicBandsIdsAsync(editionId);
 
@@ -1061,12 +1087,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="musicGenreUid">The music genre uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showBusinessRounds">if set to <c>true</c> [show business rounds].</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<int> CountPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize)
+        public async Task<int> CountPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize)
         {
-            var musicProjects = await this.FindAllMusicProjectsAsync(editionId, searchKeywords, musicGenreUid);
+            var musicProjects = await this.FindAllMusicProjectsAsync(editionId, searchKeywords, musicGenreUid, showBusinessRounds);
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
             var approvedMusicBandsIds = await this.FindAllApprovedAttendeeMusicBandsIdsAsync(editionId);
 

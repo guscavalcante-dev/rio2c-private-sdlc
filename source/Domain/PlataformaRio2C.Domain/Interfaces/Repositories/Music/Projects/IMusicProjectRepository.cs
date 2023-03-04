@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 02-26-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-01-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 03-03-2023
 // ***********************************************************************
 // <copyright file="IMusicProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,8 +23,8 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IMusicProjectRepository</summary>
     public interface IMusicProjectRepository : IRepository<MusicProject>
     {
-        Task<IPagedList<MusicProjectDto>> FindAllDtosPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize);
-        Task<IPagedList<MusicProjectJsonDto>> FindAllJsonDtosPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize, List<Tuple<string, string>> sortColumns);
+        Task<IPagedList<MusicProjectDto>> FindAllDtosPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize);
+        Task<IPagedList<MusicProjectJsonDto>> FindAllJsonDtosPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize, List<Tuple<string, string>> sortColumns);
         Task<MusicProjectDto> FindDtoToEvaluateAsync(Guid musicProjectUid);
         Task<MusicProjectDto> FindDtoToEvaluateAsync(int musicProjectId);
         Task<MusicProjectDto> FindMainInformationWidgetDtoAsync(Guid musicProjectUid);
@@ -40,9 +40,9 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<List<MusicProjectDto>> FindAllApprovedAttendeeMusicBandsAsync(int editionId);
         Task<int[]> FindAllApprovedAttendeeMusicBandsIdsAsync(int editionId);
         Task<int[]> FindAllMusicProjectsIdsAsync(int editionId);
-        Task<int[]> FindAllMusicProjectsIdsPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize);
+        Task<int[]> FindAllMusicProjectsIdsPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize);
         Task<int> CountAsync(int editionId, bool showAllEditions = false);
-        Task<int> CountPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize);
+        Task<int> CountPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize);
         Task<List<MusicBandGroupedByGenreDto>> FindEditionCountPieWidgetDto(int editionId);
     }
 }
