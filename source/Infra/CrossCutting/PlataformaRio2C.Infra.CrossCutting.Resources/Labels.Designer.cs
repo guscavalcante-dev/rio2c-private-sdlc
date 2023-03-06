@@ -700,7 +700,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nome para credencial/Redes Sociais/Site.
+        ///   Looks up a localized string similar to Nome para credencial.
         /// </summary>
         public static string BadgeName {
             get {
@@ -6082,21 +6082,20 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Relatório de Palestrantes.
-        /// </summary>
-        public static string SpeakersReport
-        {
-            get {
-                return ResourceManager.GetString("SpeakersReport", resourceCulture);
-            }
-        }
-		
-		/// <summary>
         ///   Looks up a localized string similar to Quantidade no Destaque da API de Palestrantes.
         /// </summary>
         public static string SpeakersApiHighlightPositionsCount {
             get {
                 return ResourceManager.GetString("SpeakersApiHighlightPositionsCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Relatório de Palestrantes.
+        /// </summary>
+        public static string SpeakersReport {
+            get {
+                return ResourceManager.GetString("SpeakersReport", resourceCulture);
             }
         }
         
