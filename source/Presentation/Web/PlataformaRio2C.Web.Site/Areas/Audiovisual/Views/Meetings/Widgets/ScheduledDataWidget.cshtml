@@ -5,6 +5,7 @@
 @using PlataformaRio2c.Infra.Data.FileRepository.Helpers
 @model List<NegotiationGroupedByDateDto>
 @{
+    var editionDto = ViewBag.EditionDto as EditionDto;
     var brazilUtc = @DateTimeExtensions.GetBrazilUtc();
     var isPlayerExecutive = (ViewBag.CollaboratorTypeUid as Guid?) == CollaboratorType.AudiovisualPlayerExecutive.Uid;
 }
@@ -53,7 +54,7 @@
                                         <td class="col-md-4">
                                             <div class="row align-items-center">
                                                 @{
-                                                    var organization = isPlayerExecutive ? negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.SellerAttendeeOrganizationDto?.Organization : 
+                                                    var organization = isPlayerExecutive ? negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.SellerAttendeeOrganizationDto?.Organization :
                                                                                             negotiationDto?.ProjectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.Organization;
                                                     <div class="col-md-2">
                                                         <div class="kt-widget kt-widget--user-profile-3">
@@ -109,5 +110,12 @@
 }
 else
 {
-    <div class="col-12 text-center mt-30">@string.Format(Messages.EntityNotAction, Labels.ScheduledNegotiations, Labels.FoundFP)</div>
+    if (DateTime.UtcNow < editionDto.OneToOneMeetingsScheduleDate)
+    {
+        <div class="col-12 text-center mt-30">@string.Format(Messages.AgendaAvailableFrom, editionDto?.OneToOneMeetingsScheduleDate.ToBrazilTimeZone().ToShortDateString())</div>
+    }
+    else
+    {
+        <div class="col-12 text-center mt-30">@string.Format(Messages.EntityNotAction, Labels.ScheduledNegotiations, Labels.FoundFP)</div>
+    }
 }

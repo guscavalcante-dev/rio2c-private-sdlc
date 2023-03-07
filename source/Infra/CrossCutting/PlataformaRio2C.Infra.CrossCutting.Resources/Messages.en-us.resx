@@ -135,6 +135,9 @@
   <data name="AddressIsRequired" xml:space="preserve">
     <value>Address required.</value>
   </data>
+  <data name="AgendaAvailableFrom" xml:space="preserve">
+    <value>The agenda will be available from {0}</value>
+  </data>
   <data name="AtLeastOneCreatorMustBeMarkedAsResponsible" xml:space="preserve">
     <value>At least one Creator must be marked as Responsible</value>
   </data>

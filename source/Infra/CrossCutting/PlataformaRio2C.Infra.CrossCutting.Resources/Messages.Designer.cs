@@ -106,6 +106,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A agenda estará disponível a partir de {0}.
+        /// </summary>
+        public static string AgendaAvailableFrom {
+            get {
+                return ResourceManager.GetString("AgendaAvailableFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ao menos um criador deve estar marcado como Responsável.
         /// </summary>
         public static string AtLeastOneCreatorMustBeMarkedAsResponsible {

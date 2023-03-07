@@ -13,6 +13,7 @@
 // ***********************************************************************
 using MediatR;
 using PlataformaRio2C.Application.ViewModels;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
@@ -86,6 +87,22 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowScheduledDataWidget(ScheduledSearchViewModel searchViewModel)
         {
+            if (DateTime.UtcNow < this.EditionDto.OneToOneMeetingsScheduleDate)
+            {
+                return new JsonResult()
+                {
+                    Data = new
+                    {
+                        status = "success",
+                        pages = new List<dynamic>
+                        {
+                            new { page = this.RenderRazorViewToString("Widgets/ScheduledDataWidget", new List<NegotiationGroupedByDateDto>()), divIdOrClass = "#AudiovisualMeetingsScheduledWidget" },
+                        }
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+
             var negotiationsDtos = await this.negotiationRepo.FindCollaboratorScheduledWidgetDtoAsync(
                 this.EditionDto.Id,
                 searchViewModel.BuyerOrganizationUid,
