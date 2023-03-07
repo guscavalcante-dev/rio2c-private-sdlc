@@ -4,6 +4,7 @@
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var isExecutive = userAccessControlDto?.HasAnyCollaboratorType(PlataformaRio2C.Domain.Constants.CollaboratorType.Executives) == true;
     var isIndustry = userAccessControlDto?.HasCollaboratorType(PlataformaRio2C.Domain.Constants.CollaboratorType.Industry) == true;
+    var isSpeaker= userAccessControlDto?.HasCollaboratorType(PlataformaRio2C.Domain.Constants.CollaboratorType.Speaker) == true;
 }
 <div class="row">
     <div class="form-group col-lg-4 text-center">
@@ -36,7 +37,6 @@
                 @Html.TextBoxFor(m => m.CellPhone, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.CellPhone, "", new { @class = "text-danger" })
             </div>
-
             <div class="form-group col-md-6 col-xl-6">
                 @Html.LabelFor(m => m.PhoneNumber, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
                 @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
@@ -160,7 +160,7 @@
         @Html.EditorFor(m => m.MiniBios)
     </div>
 </div>
-@if (isExecutive || isIndustry)
+@if (isExecutive || isIndustry || isSpeaker)
 {
     <div class="form-group row">
         <div class="col-md-12">
