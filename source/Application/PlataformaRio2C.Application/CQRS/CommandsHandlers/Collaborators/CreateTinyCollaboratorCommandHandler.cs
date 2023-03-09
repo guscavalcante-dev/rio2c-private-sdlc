@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-27-2023
+// Last Modified On : 03-09-2023
 // ***********************************************************************
 // <copyright file="CreateTinyCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -153,7 +153,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.Country,
                     cmd.State,
                     cmd.City,
-                    cmd.ZipCode);
+                    cmd.ZipCode,
+                    cmd.IsUpdatingAddress);
 
                 updateCmd.UpdatePreSendProperties(
                     cmd.CollaboratorTypeName,

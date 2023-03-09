@@ -4,7 +4,7 @@
 // Created          : 23-03-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-27-2023
+// Last Modified On : 03-09-2023
 // ***********************************************************************
 // <copyright file="CreateMusicBandCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -133,7 +133,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         cmd.MusicBandResponsibleApiDto.Country,
                         cmd.MusicBandResponsibleApiDto.State,
                         cmd.MusicBandResponsibleApiDto.City,
-                        cmd.MusicBandResponsibleApiDto.ZipCode);
+                        cmd.MusicBandResponsibleApiDto.ZipCode,
+                        true);
 
                     createCollaboratorCommand.UpdatePreSendProperties(
                         CollaboratorType.Music.Name, //"Music" is fixed because in [dbo].[MigrateMusicProjects] procedure, its is fixed too!
@@ -180,7 +181,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         cmd.MusicBandResponsibleApiDto.Country,
                         cmd.MusicBandResponsibleApiDto.State,
                         cmd.MusicBandResponsibleApiDto.City,
-                        cmd.MusicBandResponsibleApiDto.ZipCode);
+                        cmd.MusicBandResponsibleApiDto.ZipCode,
+                        true);
 
                     updateCollaboratorCommand.UpdatePreSendProperties(
                         CollaboratorType.Music.Name,
