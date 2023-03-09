@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-27-2023
+// Last Modified On : 03-09-2023
 // ***********************************************************************
 // <copyright file="CollaboratorBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -142,6 +142,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="state">The state.</param>
         /// <param name="city">The city.</param>
         /// <param name="zipCode">The zip code.</param>
+        /// <param name="isUpdatingAddress">if set to <c>true</c> [is updating address].</param>
         public void UpdateBaseProperties(
             string firstName,
             string lastName,
@@ -153,7 +154,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string country,
             string state,
             string city,
-            string zipCode)
+            string zipCode, 
+            bool isUpdatingAddress)
         {
             this.FirstName = firstName;
             this.LastNames = lastName;
@@ -167,7 +169,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.State = state;
             this.City = city;
             this.ZipCode = zipCode;
-            this.IsUpdatingAddress = true;
+            this.IsUpdatingAddress = isUpdatingAddress;
         }
 
         /// <summary>
