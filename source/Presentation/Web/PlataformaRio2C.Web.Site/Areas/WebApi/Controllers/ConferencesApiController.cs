@@ -4,7 +4,7 @@
 // Created          : 01-08-2020
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-07-2023
+// Last Modified On : 10-03-2023
 // ***********************************************************************
 // <copyright file="ConferencesApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -297,9 +297,9 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                         collaboratorApiDto.GetConferenceTitleDtoByLanguageCode(defaultLanguage?.Code)?.ConferenceTitle?.Value?.Trim(),
                 Synopsis = collaboratorApiDto.GetConferenceSynopsisDtoByLanguageCode(requestLanguage?.Code)?.ConferenceSynopsis?.Value?.Trim() ??
                            collaboratorApiDto.GetConferenceSynopsisDtoByLanguageCode(defaultLanguage?.Code)?.ConferenceSynopsis?.Value?.Trim(),
-                Date = collaboratorApiDto.Conference.StartDate.ToString("yyyy-MM-dd"),
-                StartTime = collaboratorApiDto.Conference.StartDate.ToString("HH:mm"),
-                EndTime = collaboratorApiDto.Conference.EndDate.ToString("HH:mm"),
+                Date = collaboratorApiDto.Conference.StartDate.ToBrazilTimeZone().ToString("yyyy-MM-dd"),
+                StartTime = collaboratorApiDto.Conference.StartDate.ToBrazilTimeZone().ToString("HH:mm"),
+                EndTime = collaboratorApiDto.Conference.EndDate.ToBrazilTimeZone().ToString("HH:mm"),
                 DurationMinutes = (int)((collaboratorApiDto.Conference.EndDate - collaboratorApiDto.Conference.StartDate).TotalMinutes),
                 Room = collaboratorApiDto.RoomDto != null ? new RoomBaseApiResponse
                 {
