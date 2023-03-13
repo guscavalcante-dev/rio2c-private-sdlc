@@ -14,7 +14,7 @@
     <script>
         jQuery(document).ready(function () {
             MyRio2cCommon.enableTooltips();
-    });
+        });
     </script>
 }
 <div class="row">
@@ -129,6 +129,13 @@
                                                                                                 {
                                                                                                     color = "danger";
                                                                                                     icon = "fa-thumbs-down";
+                                                                                                }
+                                                                                                else if (editionDto?.IsAudiovisualProjectSubmitEnded() == true &&
+                                                                                                    projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == ProjectEvaluationStatus.UnderEvaluation.Code)
+                                                                                                {
+                                                                                                    color = "danger";
+                                                                                                    icon = "fa-thumbs-down";
+                                                                                                    projectBuyerEvaluationDto.ProjectEvaluationStatus = ProjectEvaluationStatus.Refused;
                                                                                                 }
                                                                                                 <div class="kt-widget__button">
                                                                                                     <span class="btn btn-label-@(color) btn-sm">

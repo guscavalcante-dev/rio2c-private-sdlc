@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 11-11-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-07-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 03-13-2023
 // ***********************************************************************
 // <copyright file="ProjectEvaluationStatus.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System;
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -26,9 +27,9 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Configurations
 
-        public static ProjectEvaluationStatus UnderEvaluation = new ProjectEvaluationStatus(1, new Guid("44368049-923D-41C6-9EAB-A9CECA05C296"), "UnderEvaluation");
-        public static ProjectEvaluationStatus Accepted = new ProjectEvaluationStatus(2, new Guid("3DFA9E93-CAB8-4A5E-83D1-BF945DD7C137"), "Accepted");
-        public static ProjectEvaluationStatus Refused = new ProjectEvaluationStatus(3, new Guid("CA9C8F5D-C368-4A50-B85C-49C7CFD48625"), "Refused");
+        public static ProjectEvaluationStatus UnderEvaluation = new ProjectEvaluationStatus(1, new Guid("44368049-923D-41C6-9EAB-A9CECA05C296"), "UnderEvaluation", Labels.UnderEvaluation);
+        public static ProjectEvaluationStatus Accepted = new ProjectEvaluationStatus(2, new Guid("3DFA9E93-CAB8-4A5E-83D1-BF945DD7C137"), "Accepted", Labels.ProjectAccepted);
+        public static ProjectEvaluationStatus Refused = new ProjectEvaluationStatus(3, new Guid("CA9C8F5D-C368-4A50-B85C-49C7CFD48625"), "Refused", Labels.ProjectRefused);
 
         #endregion
 
@@ -41,14 +42,19 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="ProjectEvaluationStatus"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProjectEvaluationStatus" /> class.
+        /// </summary>
+        /// <param name="projectEvaluationStatusId">The project evaluation status identifier.</param>
         /// <param name="projectEvaluationStatusUid">The project evaluation status uid.</param>
         /// <param name="code">The code.</param>
-        private ProjectEvaluationStatus(int projectEvaluationStatusId, Guid projectEvaluationStatusUid, string code)
+        /// <param name="name">The name.</param>
+        private ProjectEvaluationStatus(int projectEvaluationStatusId, Guid projectEvaluationStatusUid, string code, string name)
         {
             this.Id = projectEvaluationStatusId;
             this.Uid = projectEvaluationStatusUid;
             this.Code = code?.Trim();
+            this.Name = name?.Trim();
         }
 
         #region Validations
