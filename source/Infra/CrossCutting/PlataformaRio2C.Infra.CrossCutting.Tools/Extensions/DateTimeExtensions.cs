@@ -4,7 +4,7 @@
 // Created          : 12-13-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-31-2023
+// Last Modified On : 03-16-2023
 // ***********************************************************************
 // <copyright file="DateTimeExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -125,7 +125,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             // Add seconds
             if (timeSplit?.Length == 3)
             {
-                dt = dt.AddSeconds(int.Parse(timeSplit[2]));
+                dt = dt.AddSeconds(timeSplit[2].ToIntNotNull());
             }
             else if (!isStart)
             {
@@ -135,13 +135,13 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             // Add minutes
             if (timeSplit?.Length >= 2)
             {
-                dt = dt.AddMinutes(int.Parse(timeSplit[1]));
+                dt = dt.AddMinutes(timeSplit[1].ToIntNotNull());
             }
 
             // Add hours
             if (timeSplit?.Length >= 1)
             {
-                dt = dt.AddHours(int.Parse(timeSplit[0]));
+                dt = dt.AddHours(timeSplit[0].ToIntNotNull());
             }
 
             return dt;

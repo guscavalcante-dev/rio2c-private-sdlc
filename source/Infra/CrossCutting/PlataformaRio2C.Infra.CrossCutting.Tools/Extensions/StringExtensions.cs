@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-08-2023
+// Last Modified On : 03-16-2023
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -174,7 +174,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                    s?.Substring(0, limit - 1);
         }
 
-        /// <summary>Converts the string representation of a number to an integer.</summary>
+        /// <summary>
+        /// Converts the string representation of a number to an integer.
+        /// </summary>
         /// <param name="s">The s.</param>
         /// <returns></returns>
         public static int? ToInt(this string s)
@@ -183,6 +185,22 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             if (!int.TryParse(s, NumberStyles.None, null, out output))
             {
                 return null;
+            }
+
+            return output;
+        }
+
+        /// <summary>
+        /// Converts the string representation of a number to an integer.
+        /// </summary>
+        /// <param name="s">The s.</param>
+        /// <returns></returns>
+        public static int ToIntNotNull(this string s)
+        {
+            int output;
+            if (!int.TryParse(s, NumberStyles.None, null, out output))
+            {
+                return 0;
             }
 
             return output;
