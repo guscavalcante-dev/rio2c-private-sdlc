@@ -4,7 +4,7 @@
 // Created          : 08-15-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-22-2023
+// Last Modified On : 03-17-2023
 // ***********************************************************************
 // <copyright file="ImageHelper.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,6 +21,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Helpers;
 using PlataformaRio2C.Domain.Statics;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
@@ -250,9 +251,30 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
         private static byte[] CropImage(Stream content, int x, int y, int width, int height)
         {
             //Parsing stream to bitmap
-            using (Bitmap sourceBitmap = new Bitmap(content, false))
+            Bitmap sourceBitmap = null;
+
+            try
+            {
+                sourceBitmap = new Bitmap(content, false);
+            }
+            catch
+            {
+                throw new DomainException(Messages.InvalidImageFormat);
+            }
+
+            using (sourceBitmap)
             {
                 var sourceBitmapFixed = FixOrientation(sourceBitmap);
+
+                if (width <= 0)
+                {
+                    width = 200;
+                }
+
+                if (height <= 0)
+                {
+                    height = 200;
+                }
 
                 //Get new dimensions
                 Rectangle cropRect = new Rectangle(x, y, width, height);
@@ -277,7 +299,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception($"Error at new Bitmap() => {cropRect.Width} {cropRect.Height} {cropRect.ToString()} {ex.GetInnerMessage()} ");
+                    throw new DomainException($"Error at new Bitmap() => {cropRect.Width} {cropRect.Height} {cropRect.ToString()} {ex.GetInnerMessage()} ");
                 }
             }
         }

@@ -4,7 +4,7 @@
 // Created          : 10-09-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-28-2021
+// Last Modified On : 03-17-2023
 // ***********************************************************************
 // <copyright file="ExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -200,6 +200,15 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
+                cmd.UpdateModelsAndLists(
+                    await this.attendeeCollaboratorRepo.FindSiteMainInformationWidgetDtoByCollaboratorUidAndByEditionIdAsync(cmd.CollaboratorUid, this.EditionDto.Id),
+                    await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
+                    this.EditionDto.Id,
+                    this.UserInterfaceLanguage);
+
                 return Json(new
                 {
                     status = "error",
@@ -346,7 +355,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
         #endregion
 
         #endregion
-
 
         #region Company Widget
 
