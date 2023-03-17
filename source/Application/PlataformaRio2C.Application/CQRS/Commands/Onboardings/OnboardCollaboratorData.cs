@@ -4,7 +4,7 @@
 // Created          : 09-06-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-31-2023
+// Last Modified On : 03-17-2023
 // ***********************************************************************
 // <copyright file="OnboardCollaboratorData.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -192,14 +192,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
         }
 
-        /// <summary>Updates the data.</summary>
+        /// <summary>
+        /// Updates the models and lists.
+        /// </summary>
         /// <param name="genders">The genders.</param>
         /// <param name="industries">The industries.</param>
         /// <param name="roles">The roles.</param>
         /// <param name="editionsDtos">The editions dtos.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
-        public void UpdateData(List<CollaboratorGender> genders,
+        public void UpdateModelsAndLists(
+            List<CollaboratorGender> genders,
             List<CollaboratorIndustry> industries,
             List<CollaboratorRole> roles,
             List<EditionDto> editionsDtos,

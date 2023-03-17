@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-16-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-16-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 03-17-202
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorSiteMainInformation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -113,12 +113,20 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public IEnumerable<EditionDto> Editions { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorSiteMainInformation"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateCollaboratorSiteMainInformation" /> class.
+        /// </summary>
         /// <param name="entity">The entity.</param>
+        /// <param name="genders">The genders.</param>
+        /// <param name="industries">The industries.</param>
+        /// <param name="roles">The roles.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
+        /// <param name="editionsDtos">The editions dtos.</param>
+        /// <param name="currentEditionId">The current edition identifier.</param>
         /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
         /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
         public UpdateCollaboratorSiteMainInformation(
             AttendeeCollaboratorSiteMainInformationWidgetDto entity, 
             List<CollaboratorGender> genders, 
@@ -185,6 +193,33 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         }
 
         /// <summary>
+        /// Updates the models and lists.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="genders">The genders.</param>
+        /// <param name="industries">The industries.</param>
+        /// <param name="roles">The roles.</param>
+        /// <param name="languagesDtos">The languages dtos.</param>
+        /// <param name="editionsDtos">The editions dtos.</param>
+        /// <param name="currentEditionId">The current edition identifier.</param>
+        /// <param name="">The .</param>
+        /// <returns></returns>
+        public void UpdateModelsAndLists(
+            AttendeeCollaboratorSiteMainInformationWidgetDto entity,
+            List<CollaboratorGender> genders,
+            List<CollaboratorIndustry> industries,
+            List<CollaboratorRole> roles,
+            List<EditionDto> editionsDtos,
+            int currentEditionId,
+            string userInterfaceLanguage)
+        {
+            this.UpdateGenders(genders, userInterfaceLanguage);
+            this.UpdateIndustries(industries, userInterfaceLanguage);
+            this.UpdateRoles(roles, userInterfaceLanguage);
+            this.UpdateEditions(editionsDtos, entity.Collaborator, currentEditionId);
+        }
+
+        /// <summary>
         /// Updates the editions.
         /// </summary>
         /// <param name="editions">The editions.</param>
@@ -196,12 +231,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
             if (!collaborator.EditionParticipantions.Any(p => !p.IsDeleted))
             {
-                EditionsUids = new List<Guid>();
+                this.EditionsUids = new List<Guid>();
                 return;
-            }           
-            
-            HaveYouBeenToRio2CBefore = true;
-            EditionsUids = editions.Where(e => collaborator.EditionParticipantions.Any(p => p.EditionId == e.Id && !p.IsDeleted)).Select(e => e.Uid).ToList();
+            }
+
+            this.HaveYouBeenToRio2CBefore = true;
+            this.EditionsUids = editions.Where(e => collaborator.EditionParticipantions.Any(p => p.EditionId == e.Id && !p.IsDeleted)).Select(e => e.Uid).ToList();
         }
         
         /// <summary>

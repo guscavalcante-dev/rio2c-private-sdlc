@@ -3,8 +3,8 @@
 // Author           : Fabio Seixas
 // Created          : 08-29-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-06-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 03-17-2023
 // ***********************************************************************
 // <copyright file="OnboardingController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -520,13 +520,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
 
                 this.StatusMessageToastr(ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);                
-                cmd.UpdateData(                
+                
+                cmd.UpdateModelsAndLists(                
                     await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
-                    EditionDto.Id,
-                    UserInterfaceLanguage);
+                    this.EditionDto.Id,
+                    this.UserInterfaceLanguage);
 
                 return View(cmd);
             }
@@ -534,7 +535,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);                
-                cmd.UpdateData(                
+                cmd.UpdateModelsAndLists(                
                     await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),

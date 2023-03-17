@@ -29,7 +29,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     public class UpdateCollaboratorSiteMainInformationCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<UpdateCollaboratorSiteMainInformation, AppValidationResult>
     {
         private readonly IEditionRepository editionRepo;
-        private readonly ILanguageRepository languageRepo;        
+        private readonly ILanguageRepository languageRepo;
         private readonly ICollaboratorGenderRepository genderRepo;
         private readonly ICollaboratorIndustryRepository industryRepo;
         private readonly ICollaboratorRoleRepository roleRepo;
@@ -104,7 +104,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.SpecialNeedsDescription,
                 cmd.HaveYouBeenToRio2CBefore,
                 cmd.EditionsUids != null ? this.editionRepo.GetAll(e => cmd.EditionsUids.Contains(e.Uid)).ToList() : null,
-                await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty), 
+                await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                 cmd.CropperImage?.ImageFile != null,
                 cmd.UserId);
 
@@ -138,10 +138,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             return this.AppValidationResult;
-
-            //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
-
-            //return Task.FromResult(propertyId); // use it when the methed is not async
         }
     }
 }
