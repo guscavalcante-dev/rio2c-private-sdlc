@@ -41,7 +41,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public int CreateUserId { get; set; }
         public int UpdateUserId { get; set; }
 
-        public bool IsInCurrentEdition => this.EditionAttendeeCollaboratorBaseDto != null;
+        public new bool IsInCurrentEdition => this.EditionAttendeeCollaboratorBaseDto != null;
+        public DateTimeOffset? SpeakerCurrentEditionOnboardingFinishDate => this.EditionAttendeeCollaboratorBaseDto?.SpeakerTermsAcceptanceDate;
 
         public AttendeeCollaboratorBaseDto EditionAttendeeCollaboratorBaseDto { get; set; }
 

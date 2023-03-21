@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 04-14-2022
+// Last Modified On : 03-21-2023
 // ***********************************************************************
 // <copyright file="SpeakersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,7 +26,6 @@ using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
@@ -36,6 +35,10 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
+using PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults;
+using PlataformaRio2C.Domain.ApiModels;
+using ClosedXML.Excel;
+using System.IO;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
@@ -48,14 +51,16 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
         private readonly IFileRepository fileRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="SpeakersController"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SpeakersController" /> class.
+        /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
         /// <param name="fileRepository">The file repository.</param>
         public SpeakersController(
-            IMediator commandBus, 
+            IMediator commandBus,
             IdentityAutenticationService identityController,
             ICollaboratorRepository collaboratorRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
@@ -99,19 +104,16 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
         public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllParticipants, bool? showHighlights)
         {
-            var speakers = await this.collaboratorRepo.FindAllByDataTable(
+            var speakers = await this.collaboratorRepo.FindAllSpeakersByDataTable(
                 request.Start / request.Length,
                 request.Length,
                 request.Search?.Value,
                 request.GetSortColumns(),
-                new List<Guid>(),
-                new string[] { Constants.CollaboratorType.Speaker },
-                null,
                 showAllEditions,
                 showAllParticipants,
                 showHighlights,
-                this.EditionDto?.Id
-            );
+                this.EditionDto?.Id,
+                false);
 
             var response = DataTablesResponse.Create(request, speakers.TotalItemCount, speakers.TotalItemCount, speakers);
 
@@ -120,6 +122,215 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 status = "success",
                 dataTable = response
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Exports to excel.
+        /// </summary>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <param name="showHighlights">The show highlights.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
+        public async Task<ActionResult> ExportToExcel(string searchKeywords, bool showAllEditions, bool showAllParticipants, bool? showHighlights)
+        {
+            string fileName = Labels.SpeakersReport + "_" + DateTime.UtcNow.ToStringFileNameTimestamp();
+            string filePath = Path.Combine(Path.GetTempPath(), fileName + ".xlsx");
+
+            try
+            {
+                var speakers = await this.collaboratorRepo.FindAllSpeakersByDataTable(
+                     1,
+                     10000,
+                     searchKeywords,
+                     new List<Tuple<string, string>>(), //request.GetSortColumns(),
+                     showAllEditions,
+                     showAllParticipants,
+                     showHighlights,
+                     this.EditionDto?.Id,
+                     true);
+
+                using (var workbook = new XLWorkbook())
+                {
+                    var worksheet = workbook.Worksheets.Add(Labels.Contacts);
+
+                    #region Header
+
+                    var lineIndex = 1;
+                    var columnIndex = 0;
+                    var skipFinalAdjustmentsColumnIndexes = new List<int>();
+
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Id;
+                    worksheet.Column(columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                    skipFinalAdjustmentsColumnIndexes.Add(columnIndex);
+
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Name;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.BadgeName;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Email;
+
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.CellPhone;
+                    worksheet.Column(columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                    skipFinalAdjustmentsColumnIndexes.Add(columnIndex);
+
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.PhoneNumber;
+                    worksheet.Column(columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                    skipFinalAdjustmentsColumnIndexes.Add(columnIndex);
+
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.JobTitle;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.MiniBio;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Photo500x500;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.PhotoOriginal;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Website;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.LinkedIn;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Instagram;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.YouTube;
+
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Company + " - " + Labels.CompanyName;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Company + " - " + Labels.TradeName;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Company + " - " + Labels.CompanyResume;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Company + " - " + Labels.Logo500x500;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Company + " - " + Labels.LogoOriginal;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Company + " - " + Labels.Website;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Company + " - " + Labels.LinkedIn;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Company + " - " + Labels.Instagram;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Company + " - " + Labels.Twitter;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Company + " - " + Labels.YouTube;
+
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.TermsAcceptanceDate;
+                    worksheet.Column(columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                    skipFinalAdjustmentsColumnIndexes.Add(columnIndex);
+
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.OnboardingFinishDate;
+                    worksheet.Column(columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                    skipFinalAdjustmentsColumnIndexes.Add(columnIndex);
+
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.ShowOnWebsite;
+                    worksheet.Column(columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                    skipFinalAdjustmentsColumnIndexes.Add(columnIndex);
+
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.HighlightPosition;
+                    worksheet.Column(columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                    skipFinalAdjustmentsColumnIndexes.Add(columnIndex);
+
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Creator;
+                    worksheet.Column(columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                    skipFinalAdjustmentsColumnIndexes.Add(columnIndex);
+
+                    #endregion
+
+                    if (speakers.Any())
+                    {
+                        #region Rows
+
+                        foreach (var collaboratorDto in speakers)
+                        {
+                            lineIndex++;
+                            columnIndex = 0;
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.Id;
+                            worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.FullName ?? "-";
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.Badge ?? "-";
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.Email ?? "-";
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.CellPhone ?? "-";
+                            worksheet.Cell(lineIndex, columnIndex).Style.NumberFormat.Format = "00000";
+                            worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.PhoneNumber ?? "-";
+                            worksheet.Cell(lineIndex, columnIndex).Style.NumberFormat.Format = "00000";
+                            worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.GetCollaboratorJobTitleBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value ?? "-";
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.GetMiniBioBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value ?? "-";
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.ImageUploadDate.HasValue ?
+                                this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, collaboratorDto.Uid, collaboratorDto.ImageUploadDate, true, "_500x500") : "-";
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.ImageUploadDate.HasValue ?
+                                this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, collaboratorDto.Uid, collaboratorDto.ImageUploadDate, true) : "-";
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.Website ?? "-";
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.Linkedin ?? "-";
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.Instagram ?? "-";
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.Youtube ?? "-";
+
+                            #region Organization
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.AttendeeOrganizationBasesDtos.Select(ao => ao.OrganizationBaseDto.Name ?? "-")?.ToString(", ");
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.AttendeeOrganizationBasesDtos.Select(ao => ao.OrganizationBaseDto.TradeName ?? "-")?.ToString(", ");
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.AttendeeOrganizationBasesDtos.Select(ao => ao.OrganizationBaseDto.GetOrganizationDescriptionBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value ?? "-")?.ToString(", ");
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.AttendeeOrganizationBasesDtos.Select(ao => ao.OrganizationBaseDto.ImageUploadDate.HasValue ?
+                                this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, ao.OrganizationBaseDto.Uid, ao.OrganizationBaseDto.ImageUploadDate, true, "_500x500") : "-")?.ToString(", ");
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.AttendeeOrganizationBasesDtos.Select(ao => ao.OrganizationBaseDto.ImageUploadDate.HasValue ?
+                                this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, ao.OrganizationBaseDto.Uid, ao.OrganizationBaseDto.ImageUploadDate, true) : "-")?.ToString(", ");
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.AttendeeOrganizationBasesDtos.Select(ao => ao.OrganizationBaseDto.Website ?? "-")?.ToString(", ");
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.AttendeeOrganizationBasesDtos.Select(ao => ao.OrganizationBaseDto.Linkedin ?? "-")?.ToString(", ");
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.AttendeeOrganizationBasesDtos.Select(ao => ao.OrganizationBaseDto.Instagram ?? "-")?.ToString(", ");
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.AttendeeOrganizationBasesDtos.Select(ao => ao.OrganizationBaseDto.Twitter ?? "-")?.ToString(", ");
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.AttendeeOrganizationBasesDtos.Select(ao => ao.OrganizationBaseDto.Youtube ?? "-")?.ToString(", ");
+
+                            #endregion
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto?.EditionAttendeeCollaboratorBaseDto?.SpeakerTermsAcceptanceDate?.ToStringHourMinute() ?? "-";
+                            worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto?.EditionAttendeeCollaboratorBaseDto?.OnboardingFinishDate?.ToStringHourMinute() ?? "-";
+                            worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto?.EditionAttendeeCollaboratorBaseDto?.AttendeeCollaboratorTypeDto?.IsApiDisplayEnabled.ToYesOrNoString();
+                            worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto?.EditionAttendeeCollaboratorBaseDto?.AttendeeCollaboratorTypeDto?.ApiHighlightPosition?.ToString() ?? "-";
+                            worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto?.CreatorBaseDto?.Email ?? "-";
+                            worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                        }
+
+                        for (var adjustColumnIndex = 1; adjustColumnIndex <= columnIndex; adjustColumnIndex++)
+                        {
+                            if (!skipFinalAdjustmentsColumnIndexes.Contains(adjustColumnIndex))
+                            {
+                                worksheet.Column(adjustColumnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Left);
+                            }
+
+                            worksheet.Column(adjustColumnIndex).Style.Alignment.WrapText = false;
+                            worksheet.Column(adjustColumnIndex).Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center);
+                            worksheet.Column(adjustColumnIndex).AdjustToContents();
+                        }
+
+                        #endregion
+                    }
+
+                    workbook.SaveAs(filePath);
+                }
+
+                // It's necessary to save workbook to file to run "AdjustToContents()" correctly.
+                // Without this, "AdjustToContents()" doesn't work and columns be with minimun width.
+                var fileBytes = System.IO.File.ReadAllBytes(filePath);
+                var workbookResult = new XLWorkbook(new MemoryStream(fileBytes));
+
+                return new ExcelResult(workbookResult, fileName);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = ApiStatus.Error, message = Messages.WeFoundAndError });
+            }
+            finally
+            {
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+            }
         }
 
         #endregion
@@ -253,7 +464,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd = new UpdateCollaboratorApiConfiguration(
-                    apiConfigurationWidgetDto, 
+                    apiConfigurationWidgetDto,
                     Constants.CollaboratorType.Speaker,
                     await this.attendeeCollaboratorRepo.FindAllApiConfigurationWidgetDtoByHighlight(this.EditionDto.Id, Constants.CollaboratorType.Speaker),
                     this.EditionDto.SpeakersApiHighlightPositionsCount);
@@ -433,7 +644,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
                 Constants.CollaboratorType.Speaker,
                 null,
-                true, 
+                true,
                 this.EditionDto.Id);
 
             return Json(new
@@ -459,7 +670,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
                 Constants.CollaboratorType.Speaker,
                 null,
-                false, 
+                false,
                 this.EditionDto.Id);
 
             return Json(new

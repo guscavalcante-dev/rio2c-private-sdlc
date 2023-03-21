@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-16-2019
 //
-// Last Modified By : Elton Assunção
-// Last Modified On : 02-01-2023
+// Last Modified By : Renan Valentim
+// Last Modified On : 03-21-2023
 // ***********************************************************************
 // <copyright file="speakers.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,9 +16,7 @@ var SpeakersDataTableWidget = function () {
 
     var widgetElementId = '#SpeakersDataTableWidget';
     var tableElementId = '#speakers-list-table';
-    var modalId = '#ExportEventbriteCsvModal';
     var table;
-    var eventbriteCsvExport;
 
     // Invitation email ---------------------------------------------------------------------------
     var sendInvitationEmails = function () {
@@ -113,24 +111,17 @@ var SpeakersDataTableWidget = function () {
                     text: labels.actions,
                     buttons: [
                         {
+                            text: exportToExcelText,
+                            action: function (e, dt, node, config) {
+                                $('.dt-button-background').remove();
+                                exportToExcel();
+                            }
+                        },
+                        {
                             text: sendInvitationEmail,
                             action: function (e, dt, node, config) {
                                 $('.dt-button-background').remove();
                                 showSendInvitationEmailsModal();
-                            }
-                        },
-                        {
-                            text: exportToEventbrite,
-                            action: function (e, dt, node, config) {
-                                $('.dt-button-background').remove();
-                                eventbriteCsvExport = dt.ajax.params();
-                                eventbriteCsvExport.selectedCollaboratorsUids = $('#speakers-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
-                                eventbriteCsvExport.showAllEditions = $('#ShowAllEditions').prop('checked');
-                                eventbriteCsvExport.showAllParticipants = $('#ShowAllParticipants').prop('checked');
-                                eventbriteCsvExport.showHighlights = $('#ShowHighlights').prop('checked');
-                                eventbriteCsvExport.collaboratorTypeName = collaboratorTypeName;
-
-                                SalesPlatformsExport.showExportEventbriteCsvModal(eventbriteCsvExport);
                             }
                         },
                         {
@@ -353,6 +344,31 @@ var SpeakersDataTableWidget = function () {
         window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/Details/' + collaboratorUid);
     };
 
+    // Export to Excel ----------------------------------------------------------------------------
+    var exportToExcel = function () {
+        MyRio2cCommon.block();
+
+        var jsonParameters = new Object();
+        jsonParameters.searchKeywords = $('#Search').val();
+        jsonParameters.showAllEditions = $('#ShowAllEditions').prop('checked');
+        jsonParameters.showAllParticipants = $('#ShowAllParticipants').prop('checked');
+        jsonParameters.showHighlights = $('#ShowHighlights').prop('checked');
+
+        //TODO: Needs to upgrade DataTables from current v1.10.19 to v2 to get columns names and send 'jsonParameters.sortColumns'
+        //var table = $(tableElementId).DataTable();
+        //var order = table.order();
+        //var column = table.column(order[0][0]).header();
+        //var columnName = $(column).html();
+        //jsonParameters.sortColumns = {
+        //    columnName: columnName,
+        //    order: order[0][1]
+        //};
+
+        location.href = '/Speakers/ExportToExcel?' + jQuery.param(jsonParameters);
+
+        MyRio2cCommon.unblock();
+    };
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
@@ -363,6 +379,9 @@ var SpeakersDataTableWidget = function () {
         },
         exportEventbriteCsv: function () {
             exportEventbriteCsv();
+        },
+        exportToExcel: function () {
+            exportToExcel();
         },
         showDetails: function (collaboratorUid) {
             showDetails(collaboratorUid);

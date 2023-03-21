@@ -68,7 +68,7 @@ namespace PlataformaRio2C.Domain.Dtos
 
         public DateTimeOffset? WelcomeEmailSentDate => this.EditionAttendeeCollaborator?.WelcomeEmailSendDate;
         public DateTimeOffset? CurrentEditionOnboardingFinishDate => this.EditionAttendeeCollaborator?.OnboardingFinishDate;
-        public DateTimeOffset? SpeakerCurrentEditionOnboardingFinishDate => this.EditionAttendeeCollaborator?.SpeakerTermsAcceptanceDate;
+//        public DateTimeOffset? SpeakerCurrentEditionOnboardingFinishDate => this.EditionAttendeeCollaborator?.SpeakerTermsAcceptanceDate;
         public bool IsInCurrentEdition => this.EditionAttendeeCollaborator != null;
         public bool IsAdminFull => this.Roles?.Any(r => r.Name == Constants.Role.Admin) ?? false;
         public string FullName => this.FirstName + (!string.IsNullOrEmpty(this.LastNames) ? " " + this.LastNames : String.Empty);
