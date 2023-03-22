@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 02-25-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 03-22-2023
 // ***********************************************************************
 // <copyright file="music.commissions.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -254,7 +254,7 @@ var MusicCommissionsDataTableWidget = function () {
                             return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                         }
 
-                        return '';
+                        return '-';
                     }
                 },
                 {
@@ -264,7 +264,7 @@ var MusicCommissionsDataTableWidget = function () {
                             return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                         }
 
-                        return '';
+                        return '-';
                     }
                 },
                 {

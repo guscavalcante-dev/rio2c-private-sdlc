@@ -4,7 +4,7 @@
 // Created          : 12-16-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-21-2023
+// Last Modified On : 03-22-2023
 // ***********************************************************************
 // <copyright file="speakers.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -229,7 +229,7 @@ var SpeakersDataTableWidget = function () {
                             return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                         }
 
-                        return '';
+                        return '-';
                     }
                 },
                 {
@@ -239,7 +239,7 @@ var SpeakersDataTableWidget = function () {
                             return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                         }
 
-                        return '';
+                        return '-';
                     }
                 },
                 {

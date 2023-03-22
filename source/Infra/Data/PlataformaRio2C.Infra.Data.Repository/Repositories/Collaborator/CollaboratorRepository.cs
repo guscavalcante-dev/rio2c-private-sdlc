@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-21-2023
+// Last Modified On : 03-22-2023
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -521,25 +521,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        internal static async Task<IPagedList<CollaboratorBaseDto>> ToListPagedAsync(this IQueryable<CollaboratorBaseDto> query, int page, int pageSize)
-        {
-            page++;
-
-            // Page the list
-            var pagedList = await query.ToPagedListAsync(page, pageSize);
-            if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
-                pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
-
-            return pagedList;
-        }
-
-        /// <summary>
-        /// To the list paged.
-        /// </summary>
-        /// <param name="query">The query.</param>
-        /// <param name="page">The page.</param>
-        /// <param name="pageSize">Size of the page.</param>
-        /// <returns></returns>
         internal static async Task<IPagedList<CollaboratorDto>> ToListPagedAsync(this IQueryable<CollaboratorDto> query, int page, int pageSize)
         {
             page++;
@@ -686,18 +667,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     })
                                                                                 .ToList(),
                                         EditionAttendeeCollaborator = c.AttendeeCollaborators.FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId),
-                                        EditionAttendeeCollaboratorBaseDto = c.AttendeeCollaborators.Where(ac => !ac.IsDeleted && ac.EditionId == editionId).Select(ac => new AttendeeCollaboratorBaseDto
-                                        {
-                                            Id = ac.Id,
-                                            Uid = ac.Uid,
-                                            WelcomeEmailSendDate = ac.WelcomeEmailSendDate,
-                                            OnboardingStartDate = ac.OnboardingStartDate,
-                                            OnboardingFinishDate = ac.OnboardingFinishDate,
-                                            OnboardingUserDate = ac.OnboardingUserDate,
-                                            OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
-                                            PlayerTermsAcceptanceDate = ac.PlayerTermsAcceptanceDate,
-                                            ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate
-                                        }).FirstOrDefault(),
+                                        EditionAttendeeCollaboratorBaseDto = c.AttendeeCollaborators
+                                                                                .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                                                .Select(ac => new AttendeeCollaboratorBaseDto
+                                                                                {
+                                                                                    Id = ac.Id,
+                                                                                    Uid = ac.Uid,
+                                                                                    WelcomeEmailSendDate = ac.WelcomeEmailSendDate,
+                                                                                    OnboardingStartDate = ac.OnboardingStartDate,
+                                                                                    OnboardingFinishDate = ac.OnboardingFinishDate,
+                                                                                    OnboardingUserDate = ac.OnboardingUserDate,
+                                                                                    OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
+                                                                                    PlayerTermsAcceptanceDate = ac.PlayerTermsAcceptanceDate,
+                                                                                    ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate,
+                                                                                    SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
+                                                                                }).FirstOrDefault(),
                                         UpdaterBaseDto = new UserBaseDto
                                         {
                                             Id = c.Updater.Id,
@@ -768,7 +752,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="showHighlights">The show highlights.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<IPagedList<CollaboratorBaseDto>> FindAllByDataTable(
+        public async Task<IPagedList<CollaboratorDto>> FindAllByDataTable(
             int page,
             int pageSize,
             string keywords,
@@ -805,7 +789,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 },
                                 new List<string> { "User.Name", "User.Email", "CreateDate", "UpdateDate" },
                                 "User.Name")
-                            .Select(c => new CollaboratorBaseDto
+                            .Select(c => new CollaboratorDto
                             {
                                 Id = c.Id,
                                 Uid = c.Uid,
@@ -824,15 +808,23 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                                                 && !ac.Edition.IsDeleted
                                                                                                                                 && !ac.IsDeleted
                                                                                                                                 && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
-                                                                                                                                                                           && collaboratorTypeNames.Contains(act.CollaboratorType.Name))) :
-                                                                                   null,
+                                                                                                                                                                           && collaboratorTypeNames.Contains(act.CollaboratorType.Name))) : null,
 
-                                IsApiDisplayEnabled = c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId
-                                                                                        && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
-                                                                                                                                    && collaboratorTypeNames.Contains(act.CollaboratorType.Name)
-                                                                                                                                    && act.IsApiDisplayEnabled)),
-                                IsInOtherEdition = c.User.Roles.Any(r => r.Name == Constants.Role.Admin)
-                                                   || (editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId && !ac.IsDeleted)),
+                                EditionAttendeeCollaboratorBaseDto = c.AttendeeCollaborators
+                                                                                .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                                                .Select(ac => new AttendeeCollaboratorBaseDto
+                                                                                {
+                                                                                    Id = ac.Id,
+                                                                                    Uid = ac.Uid,
+                                                                                    WelcomeEmailSendDate = ac.WelcomeEmailSendDate,
+                                                                                    OnboardingStartDate = ac.OnboardingStartDate,
+                                                                                    OnboardingFinishDate = ac.OnboardingFinishDate,
+                                                                                    OnboardingUserDate = ac.OnboardingUserDate,
+                                                                                    OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
+                                                                                    PlayerTermsAcceptanceDate = ac.PlayerTermsAcceptanceDate,
+                                                                                    ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate,
+                                                                                    SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
+                                                                                }).FirstOrDefault(),
 
                                 AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
                                                                     .Where(at => !at.IsDeleted && at.EditionId == editionId)
@@ -860,6 +852,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                     IsVirtualMeeting = aoc.AttendeeOrganization.Organization.IsVirtualMeeting
                                                                                                 }
                                                                                             })),
+
+                                IsApiDisplayEnabled = c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId
+                                                                                        && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
+                                                                                                                                    && collaboratorTypeNames.Contains(act.CollaboratorType.Name)
+                                                                                                                                    && act.IsApiDisplayEnabled)),
+
+                                IsInOtherEdition = c.User.Roles.Any(r => r.Name == Constants.Role.Admin)
+                                                   || (editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId && !ac.IsDeleted)),
 
                                 JobTitle = c.JobTitles.FirstOrDefault(jb => !jb.IsDeleted && jb.CollaboratorId == c.Id).Value,
                                 Active = c.User.Active,
@@ -978,10 +978,25 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     }
                 }),
                 EditionAttendeeCollaborator = editionId.HasValue ? c.AttendeeCollaborators.FirstOrDefault(ac => ac.EditionId == editionId
-                                                                                                                                && !ac.Edition.IsDeleted
-                                                                                                                                && !ac.IsDeleted
-                                                                                                                                && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted)) :
-                                                                                   null,
+                                                                                                                && !ac.Edition.IsDeleted
+                                                                                                                && !ac.IsDeleted
+                                                                                                                && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted)) : null,
+
+                EditionAttendeeCollaboratorBaseDto = c.AttendeeCollaborators
+                                                            .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                            .Select(ac => new AttendeeCollaboratorBaseDto
+                                                            {
+                                                                Id = ac.Id,
+                                                                Uid = ac.Uid,
+                                                                WelcomeEmailSendDate = ac.WelcomeEmailSendDate,
+                                                                OnboardingStartDate = ac.OnboardingStartDate,
+                                                                OnboardingFinishDate = ac.OnboardingFinishDate,
+                                                                OnboardingUserDate = ac.OnboardingUserDate,
+                                                                OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
+                                                                PlayerTermsAcceptanceDate = ac.PlayerTermsAcceptanceDate,
+                                                                ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate,
+                                                                SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
+                                                            }).FirstOrDefault(),
             }).FirstOrDefaultAsync();
         }
 
@@ -1086,7 +1101,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<IPagedList<CollaboratorBaseDto>> FindAllAdminsByDataTable(
+        public async Task<IPagedList<CollaboratorDto>> FindAllAdminsByDataTable(
             int page,
             int pageSize,
             string keywords,
@@ -1105,7 +1120,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByAdminRoleNameAndAdminCollaboratorTypeNameAndByEditionId(roleName, collaboratorTypeName, showAllEditions, showAllParticipants, editionId);
 
             var collaborators = await query
-                                        .DynamicOrder<Collaborator>(
+                                        .DynamicOrder(
                                             sortColumns,
                                             new List<Tuple<string, string>>
                                             {
@@ -1114,7 +1129,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                             },
                                             new List<string> { "User.Name", "User.Email", "CreateDate", "UpdateDate" },
                                             "User.Name")
-                                        .Select(c => new CollaboratorBaseDto
+                                        .Select(c => new CollaboratorDto
                                         {
                                             Id = c.Id,
                                             Uid = c.Uid,
@@ -1135,18 +1150,30 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                             CreateDate = c.CreateDate,
                                             UpdateDate = c.UpdateDate,
                                             UserInterfaceLanguage = userInterfaceLanguage,
-
-                                            IsInOtherEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId
-                                                                                                 && !ac.IsDeleted),
-
                                             Roles = c.User.Roles,
-
+                                            IsInOtherEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId && !ac.IsDeleted),
                                             EditionAttendeeCollaborator = c.AttendeeCollaborators.FirstOrDefault(ac => ac.EditionId == editionId
                                                                                                                         && !ac.Edition.IsDeleted
                                                                                                                         && !ac.IsDeleted
                                                                                                                         && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
                                                                                                                                                                    && (c.User.Roles.Any(r => r.Name == Constants.Role.Admin)
                                                                                                                                                                        || Constants.CollaboratorType.Admins.Contains(act.CollaboratorType.Name)))),
+
+                                            EditionAttendeeCollaboratorBaseDto = c.AttendeeCollaborators
+                                                                                        .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                                                        .Select(ac => new AttendeeCollaboratorBaseDto
+                                                                                        {
+                                                                                            Id = ac.Id,
+                                                                                            Uid = ac.Uid,
+                                                                                            WelcomeEmailSendDate = ac.WelcomeEmailSendDate,
+                                                                                            OnboardingStartDate = ac.OnboardingStartDate,
+                                                                                            OnboardingFinishDate = ac.OnboardingFinishDate,
+                                                                                            OnboardingUserDate = ac.OnboardingUserDate,
+                                                                                            OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
+                                                                                            PlayerTermsAcceptanceDate = ac.PlayerTermsAcceptanceDate,
+                                                                                            ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate,
+                                                                                            SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
+                                                                                        }).FirstOrDefault(),
 
                                             AttendeeCollaboratorTypeDtos = c.AttendeeCollaborators
                                                                                 .FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId)
@@ -1299,7 +1326,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="innovationOrganizationTrackOptionGroupsUids">The innovation organization track option groups uids.</param>
         /// <returns></returns>
-        public async Task<IPagedList<CollaboratorBaseDto>> FindAllInnovationCommissionsByDataTable(
+        public async Task<IPagedList<CollaboratorDto>> FindAllInnovationCommissionsByDataTable(
             int page,
             int pageSize,
             string keywords,
@@ -1320,7 +1347,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByHighlights(collaboratorTypeNames, showHighlights);
 
             return await query
-                            .DynamicOrder<Collaborator>(
+                            .DynamicOrder(
                                 sortColumns,
                                 new List<Tuple<string, string>>
                                 {
@@ -1329,7 +1356,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 },
                                 new List<string> { "User.Name", "User.Email", "CreateDate", "UpdateDate" },
                                 "User.Name")
-                            .Select(c => new CollaboratorBaseDto
+                            .Select(c => new CollaboratorDto
                             {
                                 Id = c.Id,
                                 Uid = c.Uid,
@@ -1343,13 +1370,31 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 ImageUploadDate = c.ImageUploadDate,
                                 CreateDate = c.CreateDate,
                                 UpdateDate = c.UpdateDate,
+                                IsInOtherEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId && !ac.IsDeleted),
+                                JobTitle = c.JobTitles.FirstOrDefault(jb => !jb.IsDeleted && jb.CollaboratorId == c.Id).Value,
+
                                 EditionAttendeeCollaborator = editionId.HasValue ? c.AttendeeCollaborators.FirstOrDefault(ac => ac.EditionId == editionId
                                                                                                                                 && !ac.Edition.IsDeleted
                                                                                                                                 && !ac.IsDeleted
                                                                                                                                 && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
-                                                                                                                                                                           && collaboratorTypeNames.Contains(act.CollaboratorType.Name))) :
-                                                                                   null,
-                                IsInOtherEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId && !ac.IsDeleted),
+                                                                                                                                                                           && collaboratorTypeNames.Contains(act.CollaboratorType.Name))) : null,
+
+                                EditionAttendeeCollaboratorBaseDto = c.AttendeeCollaborators
+                                                                                .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                                                .Select(ac => new AttendeeCollaboratorBaseDto
+                                                                                {
+                                                                                    Id = ac.Id,
+                                                                                    Uid = ac.Uid,
+                                                                                    WelcomeEmailSendDate = ac.WelcomeEmailSendDate,
+                                                                                    OnboardingStartDate = ac.OnboardingStartDate,
+                                                                                    OnboardingFinishDate = ac.OnboardingFinishDate,
+                                                                                    OnboardingUserDate = ac.OnboardingUserDate,
+                                                                                    OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
+                                                                                    PlayerTermsAcceptanceDate = ac.PlayerTermsAcceptanceDate,
+                                                                                    ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate,
+                                                                                    SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
+                                                                                }).FirstOrDefault(),
+                                
                                 AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
                                                                     .Where(at => !at.IsDeleted && at.EditionId == editionId)
                                                                     .SelectMany(at => at.AttendeeOrganizationCollaborators
@@ -1368,6 +1413,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                     IsVirtualMeeting = aoc.AttendeeOrganization.Organization.IsVirtualMeeting
                                                                                                 }
                                                                                             })),
+
                                 InnovationOrganizationTrackOptionGroupDtos = c.AttendeeCollaborators
                                                                                 .Where(at => !at.IsDeleted && at.EditionId == editionId)
                                                                                 .SelectMany(ac => ac.AttendeeCollaboratorInnovationOrganizationTracks
@@ -1376,8 +1422,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                         .Select(aciot => new InnovationOrganizationTrackOptionGroupDto
                                                                                                         {
                                                                                                             GroupName = aciot.Key
-                                                                                                        })),
-                                JobTitle = c.JobTitles.FirstOrDefault(jb => !jb.IsDeleted && jb.CollaboratorId == c.Id).Value
+                                                                                                        }))
                             })
                             .ToListPagedAsync(page, pageSize);
         }
@@ -1397,7 +1442,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="interestsUids">The interests uids.</param>
         /// <returns></returns>
-        public async Task<IPagedList<CollaboratorBaseDto>> FindAllAudiovisualCommissionsByDataTable(
+        public async Task<IPagedList<CollaboratorDto>> FindAllAudiovisualCommissionsByDataTable(
             int page,
             int pageSize,
             string keywords,
@@ -1427,7 +1472,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 },
                                 new List<string> { "User.Name", "User.Email", "CreateDate", "UpdateDate" },
                                 "User.Name")
-                            .Select(c => new CollaboratorBaseDto
+                            .Select(c => new CollaboratorDto
                             {
                                 Id = c.Id,
                                 Uid = c.Uid,
@@ -1441,14 +1486,31 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 ImageUploadDate = c.ImageUploadDate,
                                 CreateDate = c.CreateDate,
                                 UpdateDate = c.UpdateDate,
+                                IsInOtherEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId && !ac.IsDeleted),
+                                JobTitle = c.JobTitles.FirstOrDefault(jb => !jb.IsDeleted && jb.CollaboratorId == c.Id).Value,
+
                                 EditionAttendeeCollaborator = editionId.HasValue ? c.AttendeeCollaborators.FirstOrDefault(ac => ac.EditionId == editionId
                                                                                                                                 && !ac.Edition.IsDeleted
                                                                                                                                 && !ac.IsDeleted
                                                                                                                                 && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
-                                                                                                                                                                           && collaboratorTypeNames.Contains(act.CollaboratorType.Name))) :
-                                                                                   null,
-                                IsInOtherEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId
-                                                                                                           && !ac.IsDeleted),
+                                                                                                                                                                           && collaboratorTypeNames.Contains(act.CollaboratorType.Name))) : null,
+
+                                EditionAttendeeCollaboratorBaseDto = c.AttendeeCollaborators
+                                                                                .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                                                .Select(ac => new AttendeeCollaboratorBaseDto
+                                                                                {
+                                                                                    Id = ac.Id,
+                                                                                    Uid = ac.Uid,
+                                                                                    WelcomeEmailSendDate = ac.WelcomeEmailSendDate,
+                                                                                    OnboardingStartDate = ac.OnboardingStartDate,
+                                                                                    OnboardingFinishDate = ac.OnboardingFinishDate,
+                                                                                    OnboardingUserDate = ac.OnboardingUserDate,
+                                                                                    OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
+                                                                                    PlayerTermsAcceptanceDate = ac.PlayerTermsAcceptanceDate,
+                                                                                    ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate,
+                                                                                    SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
+                                                                                }).FirstOrDefault(),
+                                
                                 AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
                                                                     .Where(at => !at.IsDeleted && at.EditionId == editionId)
                                                                     .SelectMany(at => at.AttendeeOrganizationCollaborators
@@ -1466,8 +1528,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                     },
                                                                                                     IsVirtualMeeting = aoc.AttendeeOrganization.Organization.IsVirtualMeeting
                                                                                                 }
-                                                                                            })),
-                                JobTitle = c.JobTitles.FirstOrDefault(jb => !jb.IsDeleted && jb.CollaboratorId == c.Id).Value
+                                                                                            }))
                             })
                             .ToListPagedAsync(page, pageSize);
         }
@@ -1909,16 +1970,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                         Code = d.Language.Code
                                                     }
                                                 }),
-                                                EditionAttendeeCollaboratorBaseDto = c.AttendeeCollaborators.Where(ac => !ac.IsDeleted && ac.EditionId == editionId).Select(ac => new AttendeeCollaboratorBaseDto
-                                                {
-                                                    OnboardingFinishDate = ac.OnboardingFinishDate,
-                                                    SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate,
-                                                    AttendeeCollaboratorTypeDto = ac.AttendeeCollaboratorTypes.Where(act => !act.IsDeleted && act.CollaboratorType.Uid == CollaboratorType.Speaker.Uid).Select(act => new AttendeeCollaboratorTypeDto
-                                                    {
-                                                        IsApiDisplayEnabled = act.IsApiDisplayEnabled,
-                                                        ApiHighlightPosition = act.ApiHighlightPosition
-                                                    }).FirstOrDefault()
-                                                }).FirstOrDefault(),
+                                                EditionAttendeeCollaboratorBaseDto = c.AttendeeCollaborators
+                                                                                        .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                                                        .Select(ac => new AttendeeCollaboratorBaseDto
+                                                                                        {
+                                                                                            OnboardingFinishDate = ac.OnboardingFinishDate,
+                                                                                            SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate,
+                                                                                            AttendeeCollaboratorTypeDto = ac.AttendeeCollaboratorTypes
+                                                                                                                                .Where(act => !act.IsDeleted && act.CollaboratorType.Uid == CollaboratorType.Speaker.Uid)
+                                                                                                                                .Select(act => new AttendeeCollaboratorTypeDto
+                                                                                                                                {
+                                                                                                                                    IsApiDisplayEnabled = act.IsApiDisplayEnabled,
+                                                                                                                                    ApiHighlightPosition = act.ApiHighlightPosition
+                                                                                                                                }).FirstOrDefault()
+                                                                                        }).FirstOrDefault(),
                                                 AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
                                                                                     .Where(at => !at.IsDeleted && at.EditionId == editionId)
                                                                                     .SelectMany(at => at.AttendeeOrganizationCollaborators
@@ -1983,19 +2048,35 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                 ImageUploadDate = c.ImageUploadDate,
                                                 CreateDate = c.CreateDate,
                                                 UpdateDate = c.UpdateDate,
+                                                JobTitle = c.JobTitles.FirstOrDefault(jb => !jb.IsDeleted && jb.CollaboratorId == c.Id).Value,
+                                                Active = c.User.Active,
+                                                UserBaseDto = new UserBaseDto
+                                                {
+                                                    Id = c.User.Id,
+                                                    Uid = c.User.Uid
+                                                },
+
+                                                IsApiDisplayEnabled = c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId
+                                                                                                        && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
+                                                                                                                                                    && collaboratorTypeNames.Contains(act.CollaboratorType.Name)
+                                                                                                                                                    && act.IsApiDisplayEnabled)),
+
+                                                IsInOtherEdition = c.User.Roles.Any(r => r.Name == Constants.Role.Admin)
+                                                                    || (editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId && !ac.IsDeleted)),
+
                                                 EditionAttendeeCollaborator = editionId.HasValue ? c.AttendeeCollaborators.FirstOrDefault(ac => ac.EditionId == editionId
                                                                                                                                                 && !ac.Edition.IsDeleted
                                                                                                                                                 && !ac.IsDeleted
                                                                                                                                                 && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
                                                                                                                                                                                             && collaboratorTypeNames.Contains(act.CollaboratorType.Name))) : null,
 
-
                                                 EditionAttendeeCollaboratorBaseDto = c.AttendeeCollaborators
                                                                                         .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
                                                                                         .Select(ac => new AttendeeCollaboratorBaseDto
                                                                                         {
-                                                                                            OnboardingFinishDate = ac.OnboardingFinishDate,
                                                                                             SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate,
+                                                                                            WelcomeEmailSendDate = ac.WelcomeEmailSendDate,
+                                                                                            OnboardingFinishDate = ac.OnboardingFinishDate,
                                                                                             AttendeeCollaboratorTypeDto = ac.AttendeeCollaboratorTypes
                                                                                                                                 .Where(act => !act.IsDeleted && act.CollaboratorType.Uid == CollaboratorType.Speaker.Uid)
                                                                                                                                 .Select(act => new AttendeeCollaboratorTypeDto
@@ -2003,21 +2084,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                                                     IsApiDisplayEnabled = act.IsApiDisplayEnabled,
                                                                                                                                     ApiHighlightPosition = act.ApiHighlightPosition
                                                                                                                                 }).FirstOrDefault()
-                                                                                        }).FirstOrDefault(),
-
-                                                IsApiDisplayEnabled = c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId
-                                                                                                        && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
-                                                                                                                                                    && collaboratorTypeNames.Contains(act.CollaboratorType.Name)
-                                                                                                                                                    && act.IsApiDisplayEnabled)),
-                                                IsInOtherEdition = c.User.Roles.Any(r => r.Name == Constants.Role.Admin)
-                                                                    || (editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId && !ac.IsDeleted)),
-                                                JobTitle = c.JobTitles.FirstOrDefault(jb => !jb.IsDeleted && jb.CollaboratorId == c.Id).Value,
-                                                Active = c.User.Active,
-                                                UserBaseDto = new UserBaseDto
-                                                {
-                                                    Id = c.User.Id,
-                                                    Uid = c.User.Uid
-                                                }
+                                                                                        }).FirstOrDefault()
                                             })
                                             .ToListPagedAsync(page, pageSize);
 

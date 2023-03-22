@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-21-2023
+// Last Modified On : 03-22-2023
 // ***********************************************************************
 // <copyright file="ICollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,12 +28,12 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<int> CountAllByDataTable(string collaboratorTypeName, string organizationTypeName, bool showAllEditions, int? editionId);
         Task<Collaborator> FindBySalesPlatformAttendeeIdAsync(string salesPlatformAttendeeId);
         Task<CollaboratorDto> FindByEmailAsync(string email, int? editionId);
-        Task<IPagedList<CollaboratorBaseDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> collaboratorsUids, string[] collaboratorTypeNames, string[] organizationTypeNames, bool showAllEditions, bool showAllParticipants, bool? showHighlights, int? editionId);
+        Task<IPagedList<CollaboratorDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> collaboratorsUids, string[] collaboratorTypeNames, string[] organizationTypeNames, bool showAllEditions, bool showAllParticipants, bool? showHighlights, int? editionId);
         Task<IPagedList<CollaboratorApiListDto>> FindAllDropdownApiListDtoPaged(int editionId, string keywords, bool filterByProjectsInNegotiation, string collaboratorTypeName, bool showAllParticipants, int page, int pageSize);
         Task<IPagedList<LogisticJsonDto>> FindAllLogisticsByDatatable(int editionId, int page, int pageSize, string searchValue, List<Tuple<string, string>> getSortColumns, bool showAllParticipants, bool showAllSponsors);
-        Task<IPagedList<CollaboratorBaseDto>> FindAllAdminsByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, string collaboratorTypeName, string roleName, bool showAllEditions, bool showAllParticipants, string userInterfaceLanguage, int? editionId);
-        Task<IPagedList<CollaboratorBaseDto>> FindAllInnovationCommissionsByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> collaboratorsUids, string[] collaboratorTypeNames, bool showAllEditions, bool showAllParticipants, bool? showHighlights, int? editionId, List<Guid?> innovationOrganizationTrackOptionsUids);
-        Task<IPagedList<CollaboratorBaseDto>> FindAllAudiovisualCommissionsByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> collaboratorsUids, string[] collaboratorTypeNames, bool showAllEditions, bool showAllParticipants, bool? showHighlights, int? editionId, List<Guid?> interestsUids);
+        Task<IPagedList<CollaboratorDto>> FindAllAdminsByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, string collaboratorTypeName, string roleName, bool showAllEditions, bool showAllParticipants, string userInterfaceLanguage, int? editionId);
+        Task<IPagedList<CollaboratorDto>> FindAllInnovationCommissionsByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> collaboratorsUids, string[] collaboratorTypeNames, bool showAllEditions, bool showAllParticipants, bool? showHighlights, int? editionId, List<Guid?> innovationOrganizationTrackOptionsUids);
+        Task<IPagedList<CollaboratorDto>> FindAllAudiovisualCommissionsByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> collaboratorsUids, string[] collaboratorTypeNames, bool showAllEditions, bool showAllParticipants, bool? showHighlights, int? editionId, List<Guid?> interestsUids);
 
         #region Speakers
 

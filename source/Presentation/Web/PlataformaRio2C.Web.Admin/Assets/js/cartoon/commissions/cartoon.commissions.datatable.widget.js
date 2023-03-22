@@ -4,7 +4,7 @@
 // Created          : 01-29-2022
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-29-2022
+// Last Modified On : 03-22-2023
 // ***********************************************************************
 // <copyright file="cartoon.commissions.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -254,7 +254,7 @@ var CartoonCommissionsDataTableWidget = function () {
                             return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                         }
 
-                        return '';
+                        return '-';
                     }
                 },
                 {
@@ -264,7 +264,7 @@ var CartoonCommissionsDataTableWidget = function () {
                             return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                         }
 
-                        return '';
+                        return '-';
                     }
                 },
                 {

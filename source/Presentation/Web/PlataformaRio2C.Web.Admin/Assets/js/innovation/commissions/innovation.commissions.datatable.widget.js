@@ -4,7 +4,7 @@
 // Created          : 07-08-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-10-2023
+// Last Modified On : 03-22-2023
 // ***********************************************************************
 // <copyright file="innovation.commissions.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -265,7 +265,7 @@ var InnovationCommissionsDataTableWidget = function () {
                             return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                         }
 
-                        return '';
+                        return '-';
                     }
                 },
                 {
@@ -275,7 +275,7 @@ var InnovationCommissionsDataTableWidget = function () {
                             return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                         }
 
-                        return '';
+                        return '-';
                     }
                 },
                 {
