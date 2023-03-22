@@ -3,8 +3,8 @@
 // Author           : William Almado
 // Created          : 10-15-2019
 //
-// Last Modified By : William Almado
-// Last Modified On : 10-15-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 03-22-2023
 // ***********************************************************************
 // <copyright file="CollaboratorSiteMainInformationDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,7 +16,7 @@ using System.Collections.Generic;
 namespace PlataformaRio2C.Domain.Dtos
 {
     /// <summary>CollaboratorSiteMainInformationDto</summary>
-    public class CollaboratorSiteMainInformationWidgetDto : CollaboratorBaseDto
+    public class CollaboratorSiteMainInformationWidgetDto : CollaboratorDto
     {
         public int CreateUserId { get; set; }
         public int UpdateUserId { get; set; }

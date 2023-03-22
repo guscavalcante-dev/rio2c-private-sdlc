@@ -4,7 +4,7 @@
 // Created          : 01-27-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-31-2023
+// Last Modified On : 03-21-2023
 // ***********************************************************************
 // <copyright file="SendSpeakersReportCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -71,7 +71,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.Uow.BeginTransaction();
 
-            var collaboratorDtos = await this.collaboratorRepo.FindAllSpeakersByEditionId(cmd.EditionId ?? 0);
+            var collaboratorDtos = await this.collaboratorRepo.FindAllSpeakersByDataTable(
+                1,
+                10000,
+                "",   
+                null, 
+                false,
+                false,
+                false,
+                cmd.EditionId ?? 0,
+                exportToExcel:true);
 
             #region Initial validations
 

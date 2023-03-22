@@ -183,7 +183,6 @@
     <Compile Include="Dtos\Collaborators\SpeakerCollaboratorDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorApiDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorApiListDto.cs" />
-    <Compile Include="Dtos\Collaborators\CollaboratorBaseDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorSiteMainInformationWidgetDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorMiniBioBaseDto.cs" />

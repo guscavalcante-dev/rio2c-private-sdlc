@@ -4,7 +4,7 @@
 // Created          : 08-14-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-14-2021
+// Last Modified On : 03-22-2023
 // ***********************************************************************
 // <copyright file="audiovisual.commissions.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -247,7 +247,7 @@ var AudiovisualCommissionsDataTableWidget = function () {
                             return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                         }
 
-                        return '';
+                        return '-';
                     }
                 },
                 {
@@ -257,7 +257,7 @@ var AudiovisualCommissionsDataTableWidget = function () {
                             return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                         }
 
-                        return '';
+                        return '-';
                     }
                 },
                 {

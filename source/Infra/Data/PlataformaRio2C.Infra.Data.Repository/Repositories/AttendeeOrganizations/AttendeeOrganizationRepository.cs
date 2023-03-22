@@ -4,7 +4,7 @@
 // Created          : 08-28-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-06-2023
+// Last Modified On : 03-22-2023
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1078,7 +1078,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                     {
                                                                         Id = aoc.Id,
                                                                         Uid = aoc.Uid,
-                                                                        CollaboratorBaseDto = new CollaboratorBaseDto
+                                                                        CollaboratorBaseDto = new CollaboratorDto
                                                                         {
                                                                             Id = aoc.AttendeeCollaborator.Collaborator.Id,
                                                                             Uid = aoc.AttendeeCollaborator.Collaborator.Uid,
@@ -1320,7 +1320,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                     {
                                                                         Id = aoc.Id,
                                                                         Uid = aoc.Uid,
-                                                                        CollaboratorBaseDto = new CollaboratorBaseDto
+                                                                        CollaboratorBaseDto = new CollaboratorDto
                                                                         {
                                                                             Id = aoc.AttendeeCollaborator.Collaborator.Id,
                                                                             Uid = aoc.AttendeeCollaborator.Collaborator.Uid,
