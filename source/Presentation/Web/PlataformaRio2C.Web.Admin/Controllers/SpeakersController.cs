@@ -179,6 +179,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     skipFinalAdjustmentsColumnIndexes.Add(columnIndex);
 
                     worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.JobTitle;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Conferences;
                     worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.MiniBio;
                     worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Photo500x500;
                     worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.PhotoOriginal;
@@ -245,6 +246,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                             worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
 
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.GetCollaboratorJobTitleBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value ?? "-";
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.GetConferencesTitles(this.UserInterfaceLanguage)?.Select(ct => ct?.ConferenceTitle?.Value)?.ToList()?.ToString("; ") ?? "-";
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.GetMiniBioBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value ?? "-";
 
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.ImageUploadDate.HasValue ?

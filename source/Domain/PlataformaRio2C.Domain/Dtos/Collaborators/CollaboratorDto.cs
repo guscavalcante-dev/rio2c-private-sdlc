@@ -82,7 +82,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<Role> Roles { get; set; }
         public IEnumerable<AttendeeCollaboratorTypeDto> AttendeeCollaboratorTypeDtos { get; set; }
         public IEnumerable<InnovationOrganizationTrackOptionGroupDto> InnovationOrganizationTrackOptionGroupDtos { get; set; }
-        
+        public IEnumerable<ConferenceDto> ConferencesDtos { get; set; }
+
         [ScriptIgnore]
         public AttendeeCollaborator EditionAttendeeCollaborator { get; set; }
 
@@ -171,6 +172,16 @@ namespace PlataformaRio2C.Domain.Dtos
         public CollaboratorMiniBioBaseDto GetMiniBioBaseDtoByLanguageCode(string culture)
         {
             return this.MiniBioBaseDtos?.FirstOrDefault(mbd => mbd.LanguageDto.Code?.ToLowerInvariant() == culture?.ToLowerInvariant());
+        }
+
+        /// <summary>
+        /// Gets the conferences titles.
+        /// </summary>
+        /// <param name="culture">The culture.</param>
+        /// <returns></returns>
+        public List<ConferenceTitleDto> GetConferencesTitles(string culture)
+        {
+            return this.ConferencesDtos?.Select(c => c.GetConferenceTitleDtoByLanguageCode(culture)).ToList();
         }
 
         #endregion
