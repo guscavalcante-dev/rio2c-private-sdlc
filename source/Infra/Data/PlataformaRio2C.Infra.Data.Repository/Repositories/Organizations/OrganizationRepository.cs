@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-14-2022
+// Last Modified On : 03-23-2023
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -94,7 +94,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="showAllOrganizations">if set to <c>true</c> [show all organizations].</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        internal static IQueryable<Organization> FindByOrganizationTypeUidAndByEditionId(this IQueryable<Organization> query, Guid organizationTypeUid, bool showAllEditions, bool showAllOrganizations, int? editionId)
+        internal static IQueryable<Organization> FindByOrganizationTypeUidAndByEditionId(this IQueryable<Organization> query, Guid? organizationTypeUid, bool showAllEditions, bool showAllOrganizations, int? editionId)
         {
             if (showAllEditions && showAllOrganizations)
             {
@@ -208,7 +208,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <returns></returns>
-        internal static IQueryable<Organization> FindByCustomFilter(this IQueryable<Organization> query, string customFilter, int editionId, Guid organizationTypeUid)
+        internal static IQueryable<Organization> FindByCustomFilter(this IQueryable<Organization> query, string customFilter, int editionId, Guid? organizationTypeUid)
         {
             if (!string.IsNullOrEmpty(customFilter))
             {
@@ -610,7 +610,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query.CountAsync();
         }
 
-        /// <summary>Finds all dropdown API list dto paged.</summary>
+        /// <summary>
+        /// Finds all dropdown API list dto paged.
+        /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="keywords">The keywords.</param>
         /// <param name="customFilter">The custom filter.</param>
@@ -622,12 +624,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             int editionId,
             string keywords,
             string customFilter,
-            Guid organizationTypeUid,
+            Guid? organizationTypeUid,
             int page,
             int pageSize)
         {
             var query = this.GetBaseQuery()
-                                .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, false, false, editionId)
+                                .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, false, organizationTypeUid.HasValue ? false : true, editionId)
                                 .FindByKeywords(keywords, true)
                                 .FindByCustomFilter(customFilter, editionId, organizationTypeUid);
 

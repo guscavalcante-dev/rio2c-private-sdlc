@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-13-2021
+// Last Modified On : 03-23-2023
 // ***********************************************************************
 // <copyright file="CollaboratorsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -487,7 +487,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         public async Task<ActionResult> ShowCompanyWidget(Guid? collaboratorUid, Guid? organizationTypeUid)
         {
             ViewBag.OrganizationTypeUid = organizationTypeUid;
-            ViewBag.OrganizationTypeForDropdownSearch = organizationTypeUid == OrganizationType.Player.Uid ? "Players" : "Producers";
+            ViewBag.OrganizationTypeForDropdownSearch = organizationTypeUid == OrganizationType.Player.Uid ? "Players" :
+                                                        organizationTypeUid == OrganizationType.Producer.Uid ? "Producers" :
+                                                        "Companies";
 
             var companyWidgetDto = await this.attendeeCollaboratorRepo.FindSiteCompanyWidgetDtoByCollaboratorUidAndByEditionIdAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
             if (companyWidgetDto == null)
