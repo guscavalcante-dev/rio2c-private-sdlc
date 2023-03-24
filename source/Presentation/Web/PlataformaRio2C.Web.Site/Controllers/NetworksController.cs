@@ -137,8 +137,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
             Guid? collaboratorRoleUid,
             Guid? collaboratorIndustryUid, 
             bool? isModal = false, 
-            int? page = 1, int? 
-            pageSize = 15)
+            int? page = 1, 
+            int? pageSize = 15)
         {
             var attendeeCollaborators = await this.attendeeCollaboratorRepo.FindAllNetworkDtoByEditionIdPagedAsync(
                 this.EditionDto.Id, 
