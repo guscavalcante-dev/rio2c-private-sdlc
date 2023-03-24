@@ -4,7 +4,7 @@
 // Created          : 12-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-13-2021
+// Last Modified On : 03-23-2023
 // ***********************************************************************
 // <copyright file="CompaniesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,10 +23,11 @@ using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Application;
 using System.Linq;
-using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Statics;
+using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2c.Infra.Data.FileRepository;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
@@ -34,14 +35,25 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     [AjaxAuthorize(Order = 1, Roles = Domain.Constants.Role.AnyAdmin)]
     public class CompaniesController : BaseController
     {
-        /// <summary>Initializes a new instance of the <see cref="CompaniesController"/> class.</summary>
+        private readonly IOrganizationRepository organizationRepo;
+        private readonly IFileRepository fileRepo;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CompaniesController" /> class.
+        /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
+        /// <param name="organizationRepository">The organization repository.</param>
+        /// <param name="fileRepository">The file repository.</param>
         public CompaniesController(
             IMediator commandBus, 
-            IdentityAutenticationService identityController)
+            IdentityAutenticationService identityController,
+            IOrganizationRepository organizationRepository,
+            IFileRepository fileRepository)
             : base(commandBus, identityController)
         {
+            this.organizationRepo = organizationRepository;
+            this.fileRepo = fileRepository;
         }
 
         #region Ticket Buyers Companies Autocomplete
@@ -79,6 +91,46 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 {
                     new { page = this.RenderRazorViewToString("/Views/Companies/Shared/_TicketBuyerCompanyInfoForm.cshtml", cmd), divIdOrClass = "#form-container" },
                 }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Finds
+
+        /// <summary>Finds all by filters.</summary>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="customFilter">The custom filter.</param>
+        /// <param name="page">The page.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> FindAllByFilters(string keywords, string customFilter, int? page = 1)
+        {
+            var collaboratorsApiDtos = await this.organizationRepo.FindAllDropdownApiListDtoPaged(
+                this.EditionDto.Id,
+                keywords,
+                customFilter,
+                null,
+                page.Value,
+                10);
+
+            return Json(new
+            {
+                status = "success",
+                HasPreviousPage = collaboratorsApiDtos.HasPreviousPage,
+                HasNextPage = collaboratorsApiDtos.HasNextPage,
+                TotalItemCount = collaboratorsApiDtos.TotalItemCount,
+                PageCount = collaboratorsApiDtos.PageCount,
+                PageNumber = collaboratorsApiDtos.PageNumber,
+                PageSize = collaboratorsApiDtos.PageSize,
+                Organizations = collaboratorsApiDtos?.Select(c => new OrganizationDropdownDto
+                {
+                    Uid = c.Uid,
+                    Name = c.Name,
+                    TradeName = c.TradeName,
+                    CompanyName = c.CompanyName,
+                    Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, c.Uid, c.ImageUploadDate, true) : null
+                })?.ToList()
             }, JsonRequestBehavior.AllowGet);
         }
 
