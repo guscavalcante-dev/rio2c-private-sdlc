@@ -4,7 +4,7 @@
 // Created          : 12-16-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-22-2023
+// Last Modified On : 03-29-2023
 // ***********************************************************************
 // <copyright file="speakers.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -110,13 +110,13 @@ var SpeakersDataTableWidget = function () {
                     extend: 'collection',
                     text: labels.actions,
                     buttons: [
-                        {
-                            text: exportToExcelText,
-                            action: function (e, dt, node, config) {
-                                $('.dt-button-background').remove();
-                                exportToExcel();
-                            }
-                        },
+                        //{
+                        //    text: exportToExcelText,
+                        //    action: function (e, dt, node, config) {
+                        //        $('.dt-button-background').remove();
+                        //        exportToExcel();
+                        //    }
+                        //},
                         {
                             text: sendInvitationEmail,
                             action: function (e, dt, node, config) {
