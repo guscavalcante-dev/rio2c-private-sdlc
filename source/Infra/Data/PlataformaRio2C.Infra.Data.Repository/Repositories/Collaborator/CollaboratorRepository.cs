@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-22-2023
+// Last Modified On : 03-30-2023
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1559,7 +1559,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             int? editionId,
             bool exportToExcel = false)
         {
-            string[] collaboratorTypeNames = new string[] { Constants.CollaboratorType.Speaker };
+            string[] collaboratorTypeNames = new string[] { CollaboratorType.Speaker.Name };
 
             this.SetProxyEnabled(false);
 
@@ -1621,7 +1621,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                     }
                                                 }),
                                                 EditionAttendeeCollaboratorBaseDto = c.AttendeeCollaborators
-                                                                                        .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                                                        .Where(ac => !ac.IsDeleted && ac.EditionId == editionId && ac.AttendeeCollaboratorTypes.Any(act => act.CollaboratorType.Uid == CollaboratorType.Speaker.Uid))
                                                                                         .Select(ac => new AttendeeCollaboratorBaseDto
                                                                                         {
                                                                                             OnboardingFinishDate = ac.OnboardingFinishDate,
@@ -1739,7 +1739,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                                                                                                             && collaboratorTypeNames.Contains(act.CollaboratorType.Name))) : null,
 
                                                 EditionAttendeeCollaboratorBaseDto = c.AttendeeCollaborators
-                                                                                        .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                                                        .Where(ac => !ac.IsDeleted && ac.EditionId == editionId && ac.AttendeeCollaboratorTypes.Any(act =>  act.CollaboratorType.Uid == CollaboratorType.Speaker.Uid))
                                                                                         .Select(ac => new AttendeeCollaboratorBaseDto
                                                                                         {
                                                                                             SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate,
