@@ -595,6 +595,9 @@
     <value>Commission</value>
     <comment>Comissão</comment>
   </data>
+  <data name="CommonQuestions" xml:space="preserve">
+    <value>Common Questions</value>
+  </data>
   <data name="Companies" xml:space="preserve">
     <value>Companies</value>
     <comment>Empresas</comment>
@@ -1224,6 +1227,9 @@
   </data>
   <data name="Hour" xml:space="preserve">
     <value>Hour</value>
+  </data>
+  <data name="HowToGet" xml:space="preserve">
+    <value>How to get</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Id</value>
@@ -2012,6 +2018,9 @@
     <value>Press</value>
     <comment>Imprensa</comment>
   </data>
+  <data name="PressAccreditation" xml:space="preserve">
+    <value>Press Accreditation</value>
+  </data>
   <data name="PressCenter" xml:space="preserve">
     <value>Press Center</value>
     <comment>Imprensa</comment>
@@ -2029,6 +2038,9 @@
   </data>
   <data name="PrintSchedules" xml:space="preserve">
     <value>Print Schedules</value>
+  </data>
+  <data name="PrivacyAndPolicy" xml:space="preserve">
+    <value>Privacy &amp; Onbudsman policy</value>
   </data>
   <data name="Proceed" xml:space="preserve">
     <value>Proceed</value>
@@ -2633,12 +2645,12 @@
     <value>Speakers</value>
     <comment>Palestrantes</comment>
   </data>
-  <data name="SpeakersReport" xml:space="preserve">
-    <value>Speakers Report</value>
- </data>
   <data name="SpeakersApiHighlightPositionsCount" xml:space="preserve">
     <value>Speakers API Featured Position Count</value>
   </data>
+  <data name="SpeakersReport" xml:space="preserve">
+    <value>Speakers Report</value>
+ </data>
   <data name="SpeakersRoles" xml:space="preserve">
     <value>Speakers Roles</value>
     <comment>Funções dos Palestrantes</comment>
@@ -2720,6 +2732,9 @@
   <data name="Success" xml:space="preserve">
     <value>Success</value>
     <comment>Sucesso</comment>
+  </data>
+  <data name="Suggestions" xml:space="preserve">
+    <value>Suggestions</value>
   </data>
   <data name="Summaries" xml:space="preserve">
     <value>Summary</value>
@@ -3055,6 +3070,9 @@
     <value>When</value>
     <comment>Quando</comment>
   </data>
+  <data name="WhereToStay" xml:space="preserve">
+    <value>Where to stay</value>
+  </data>
   <data name="WhichEditionQ" xml:space="preserve">
     <value>When?</value>
     <comment>Em qual edição?</comment>
@@ -3074,6 +3092,9 @@
   <data name="WorkDuration" xml:space="preserve">
     <value>Length</value>
     <comment>Duração da obra</comment>
+  </data>
+  <data name="WorkWithUs" xml:space="preserve">
+    <value>Work with us</value>
   </data>
   <data name="Year" xml:space="preserve">
     <value>Year</value>
