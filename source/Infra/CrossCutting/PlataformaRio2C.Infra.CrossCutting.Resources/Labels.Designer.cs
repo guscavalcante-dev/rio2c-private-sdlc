@@ -1204,6 +1204,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Perguntas Frequentes.
+        /// </summary>
+        public static string CommonQuestions {
+            get {
+                return ResourceManager.GetString("CommonQuestions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Empresas.
         /// </summary>
         public static string Companies {
@@ -2712,6 +2721,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Hour {
             get {
                 return ResourceManager.GetString("Hour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Como chegar.
+        /// </summary>
+        public static string HowToGet {
+            get {
+                return ResourceManager.GetString("HowToGet", resourceCulture);
             }
         }
         
@@ -4601,6 +4619,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Credenciamento de Imprensa.
+        /// </summary>
+        public static string PressAccreditation {
+            get {
+                return ResourceManager.GetString("PressAccreditation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Imprensa.
         /// </summary>
         public static string PressCenter {
@@ -4642,6 +4669,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string PrintSchedules {
             get {
                 return ResourceManager.GetString("PrintSchedules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Política de privacidade &amp; Ouvidoria.
+        /// </summary>
+        public static string PrivacyAndPolicy {
+            get {
+                return ResourceManager.GetString("PrivacyAndPolicy", resourceCulture);
             }
         }
         
@@ -6298,6 +6334,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sugestões.
+        /// </summary>
+        public static string Suggestions {
+            get {
+                return ResourceManager.GetString("Suggestions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resumo.
         /// </summary>
         public static string Summaries {
@@ -7099,6 +7144,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Onde se hospedar.
+        /// </summary>
+        public static string WhereToStay {
+            get {
+                return ResourceManager.GetString("WhereToStay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Em qual edição?.
         /// </summary>
         public static string WhichEditionQ {
@@ -7140,6 +7194,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string WorkDuration {
             get {
                 return ResourceManager.GetString("WorkDuration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trabalhe conosco.
+        /// </summary>
+        public static string WorkWithUs {
+            get {
+                return ResourceManager.GetString("WorkWithUs", resourceCulture);
             }
         }
         

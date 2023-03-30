@@ -594,6 +594,9 @@
     <value>Comissão</value>
     <comment>Comissão</comment>
   </data>
+  <data name="CommonQuestions" xml:space="preserve">
+    <value>Perguntas Frequentes</value>
+  </data>
   <data name="Companies" xml:space="preserve">
     <value>Empresas</value>
     <comment>Empresas</comment>
@@ -1225,6 +1228,9 @@
   </data>
   <data name="Hour" xml:space="preserve">
     <value>Horário</value>
+  </data>
+  <data name="HowToGet" xml:space="preserve">
+    <value>Como chegar</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Id</value>
@@ -2017,6 +2023,9 @@
     <value>Imprensa</value>
     <comment>Imprensa</comment>
   </data>
+  <data name="PressAccreditation" xml:space="preserve">
+    <value>Credenciamento de Imprensa</value>
+  </data>
   <data name="PressCenter" xml:space="preserve">
     <value>Imprensa</value>
     <comment>Imprensa</comment>
@@ -2034,6 +2043,9 @@
   </data>
   <data name="PrintSchedules" xml:space="preserve">
     <value>Imprimir Agenda</value>
+  </data>
+  <data name="PrivacyAndPolicy" xml:space="preserve">
+    <value>Política de privacidade &amp; Ouvidoria</value>
   </data>
   <data name="Proceed" xml:space="preserve">
     <value>Prosseguir</value>
@@ -2641,12 +2653,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Palestrantes</value>
     <comment>Palestrantes</comment>
   </data>
-  <data name="SpeakersReport" xml:space="preserve">
-    <value>Relatório de Palestrantes</value>
-  </data>
   <data name="SpeakersApiHighlightPositionsCount" xml:space="preserve">
     <value>Quantidade no Destaque da API de Palestrantes</value>
     <comment>Quantidade de Posição no Destaque da API de Palestrantes</comment>
+  </data>
+  <data name="SpeakersReport" xml:space="preserve">
+    <value>Relatório de Palestrantes</value>
   </data>
   <data name="SpeakersRoles" xml:space="preserve">
     <value>Funções dos Palestrantes</value>
@@ -2731,6 +2743,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Success" xml:space="preserve">
     <value>Sucesso</value>
     <comment>Sucesso</comment>
+  </data>
+  <data name="Suggestions" xml:space="preserve">
+    <value>Sugestões</value>
   </data>
   <data name="Summaries" xml:space="preserve">
     <value>Resumo</value>
@@ -3067,6 +3082,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Quando</value>
     <comment>Quando</comment>
   </data>
+  <data name="WhereToStay" xml:space="preserve">
+    <value>Onde se hospedar</value>
+  </data>
   <data name="WhichEditionQ" xml:space="preserve">
     <value>Em qual edição?</value>
     <comment>Em qual edição?</comment>
@@ -3086,6 +3104,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="WorkDuration" xml:space="preserve">
     <value>Duração da obra</value>
     <comment>Duração da obra</comment>
+  </data>
+  <data name="WorkWithUs" xml:space="preserve">
+    <value>Trabalhe conosco</value>
   </data>
   <data name="Year" xml:space="preserve">
     <value>Ano</value>
