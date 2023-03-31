@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-30-2023
+// Last Modified On : 03-31-2023
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1673,6 +1673,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                 .Where(cp => !cp.IsDeleted && !cp.Conference.IsDeleted)
                                                                                                 .Select(cp => new ConferenceDto
                                                                                                 {
+                                                                                                    StartDate = cp.Conference.StartDate,
+                                                                                                    EndDate = cp.Conference.EndDate,
                                                                                                     ConferenceTitleDtos = cp.Conference.ConferenceTitles.Where(ct => !ct.IsDeleted).Select(ct => new ConferenceTitleDto
                                                                                                     {
                                                                                                         ConferenceTitle = ct,
@@ -1683,7 +1685,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                             Name = ct.Language.Name,
                                                                                                             Code = ct.Language.Code
                                                                                                         }
-                                                                                                    })
+                                                                                                    }),
+                                                                                                    RoomDto = new RoomDto
+                                                                                                    {
+                                                                                                        RoomNameDtos =  cp.Conference.Room.RoomNames.Select(rn => new RoomNameDto
+                                                                                                        {
+                                                                                                            RoomName = rn,
+                                                                                                            LanguageDto = new LanguageBaseDto
+                                                                                                            {
+                                                                                                                Id = rn.Language.Id,
+                                                                                                                Uid = rn.Language.Uid,
+                                                                                                                Name = rn.Language.Name,
+                                                                                                                Code = rn.Language.Code
+                                                                                                            }
+                                                                                                        })
+                                                                                                    }
                                                                                                 })),
                                             })
                                             .OrderBy(o => o.EditionAttendeeCollaboratorBaseDto.AttendeeCollaboratorTypeDto.ApiHighlightPosition ?? 99)

@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-22-2023
+// Last Modified On : 03-31-2023
 // ***********************************************************************
 // <copyright file="CollaboratorDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web.Script.Serialization;
 
 namespace PlataformaRio2C.Domain.Dtos
@@ -182,6 +183,23 @@ namespace PlataformaRio2C.Domain.Dtos
         public List<ConferenceTitleDto> GetConferencesTitles(string culture)
         {
             return this.ConferencesDtos?.Select(c => c.GetConferenceTitleDtoByLanguageCode(culture)).ToList();
+        }
+
+        /// <summary>
+        /// Gets the conferences titles with room and date string.
+        /// </summary>
+        /// <param name="culture">The culture.</param>
+        /// <returns></returns>
+        public string GetConferencesTitlesWithRoomAndDateString(string culture)
+        {
+            return this.ConferencesDtos?.Select(c => string.Format(@"{0} - {1}/{2} | {3} | {4}",
+                                                                        c.StartDate.ToStringDateBrazilTimeZone(),
+                                                                        c.StartDate.ToStringHourBrazilTimeZone(),
+                                                                        c.EndDate.ToStringHourBrazilTimeZone(),
+                                                                        c.GetRoomNameDtoByLanguageCode(culture)?.RoomName?.Value ?? "-",
+                                                                        c.GetConferenceTitleDtoByLanguageCode(culture).ConferenceTitle?.Value ?? "-"                                                                        
+                                                                    )).ToString("; ");
+
         }
 
         #endregion

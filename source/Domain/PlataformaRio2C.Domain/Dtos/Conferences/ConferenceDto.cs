@@ -4,7 +4,7 @@
 // Created          : 12-27-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-07-2023
+// Last Modified On : 03-31-2023
 // ***********************************************************************
 // <copyright file="ConferenceDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -53,7 +53,7 @@ namespace PlataformaRio2C.Domain.Dtos
                 languageCode = "pt-br";
             }
 
-            return this.ConferenceTitleDtos?.FirstOrDefault(ctd => ctd.LanguageDto.Code == languageCode);
+            return this.ConferenceTitleDtos?.FirstOrDefault(ctDto => ctDto.LanguageDto.Code == languageCode);
         }
 
         /// <summary>Gets the conference synopsis dto by language code.</summary>
@@ -61,7 +61,22 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns></returns>
         public ConferenceSynopsisDto GetConferenceSynopsisDtoByLanguageCode(string languageCode)
         {
-            return this.ConferenceSynopsisDtos?.FirstOrDefault(ctd => ctd.LanguageDto.Code == languageCode);
+            return this.ConferenceSynopsisDtos?.FirstOrDefault(csDto => csDto.LanguageDto.Code == languageCode);
+        }
+
+        /// <summary>
+        /// Gets the room name dto by language code.
+        /// </summary>
+        /// <param name="languageCode">The language code.</param>
+        /// <returns></returns>
+        public RoomNameDto GetRoomNameDtoByLanguageCode(string languageCode)
+        {
+            if (string.IsNullOrEmpty(languageCode))
+            {
+                languageCode = "pt-br";
+            }
+
+            return this.RoomDto?.RoomNameDtos?.FirstOrDefault(rnDto => rnDto.LanguageDto.Code == languageCode);
         }
     }
 }
