@@ -4,7 +4,7 @@
 // Created          : 12-16-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-29-2023
+// Last Modified On : 03-31-2023
 // ***********************************************************************
 // <copyright file="speakers.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -110,13 +110,14 @@ var SpeakersDataTableWidget = function () {
                     extend: 'collection',
                     text: labels.actions,
                     buttons: [
-                        //{
-                        //    text: exportToExcelText,
-                        //    action: function (e, dt, node, config) {
-                        //        $('.dt-button-background').remove();
-                        //        exportToExcel();
-                        //    }
-                        //},
+                        {
+                            name: 'btnExportToExcel',
+                            text: exportToExcelText,
+                            action: function (e, dt, node, config) {
+                                $('.dt-button-background').remove();
+                                exportToExcel();
+                            }
+                        },
                         {
                             text: sendInvitationEmail,
                             action: function (e, dt, node, config) {
@@ -261,7 +262,7 @@ var SpeakersDataTableWidget = function () {
                                               <i class="la la-ellipsis-h"></i>\
                                             </a>\
                                             <div class="dropdown-menu dropdown-menu-right">';
-                        
+
                         if (!full.IsInCurrentEdition) {
                             html += '<button class="dropdown-item" onclick="SpeakersUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         }
@@ -290,7 +291,7 @@ var SpeakersDataTableWidget = function () {
                     width: "25%",
                     className: "dt-center"
                 },
-               
+
                 {
                     targets: [2],
                     className: "dt-center"
@@ -316,8 +317,14 @@ var SpeakersDataTableWidget = function () {
             ],
             initComplete: function () {
                 $('button.buttons-collection').attr('data-toggle', 'dropdown');
+
+                if (!isAdminFull) {
+                    table.buttons(0, 'btnExportToExcel:name').remove();
+                }
             }
         });
+
+        
 
         $('#Search').keyup(function (e) {
             if (e.keyCode === 13) {
