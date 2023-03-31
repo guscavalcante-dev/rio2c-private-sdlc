@@ -1,6 +1,8 @@
 ﻿@model SpeakerSearchViewModel
 @{
     ViewBag.Title = Labels.Speakers;
+    var adminAccessControlDto = ViewBag.AdminAccessControlDto as PlataformaRio2C.Domain.Dtos.AdminAccessControlDto;
+    var isAdminFull = adminAccessControlDto?.IsAdmin() == true;
 }
 <!--begin:: Quick Stats-->
 <div class="row">
@@ -33,6 +35,7 @@
     @Scripts.Render("~/bundles/js/speakers.delete.js")
 <script>
         var collaboratorTypeName = '@PlataformaRio2C.Domain.Entities.CollaboratorType.Speaker.Name';
+        var isAdminFull = @Json.Encode(isAdminFull);
 
         // Page translations ----------------------------------------------------------------------
         var addToEdition = '@string.Format(Labels.AddToEdition, ViewBag.EditionDto.UrlCode)';
