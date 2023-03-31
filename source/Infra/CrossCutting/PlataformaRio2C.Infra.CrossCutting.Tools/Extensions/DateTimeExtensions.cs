@@ -4,7 +4,7 @@
 // Created          : 12-13-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-16-2023
+// Last Modified On : 03-31-2023
 // ***********************************************************************
 // <copyright file="DateTimeExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -170,6 +170,26 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             }
 
             return dt?.ToString("dd/MM/yyyy HH:mm");
+        }
+
+        /// <summary>
+        /// Converts to stringdatebraziltimezone.
+        /// </summary>
+        /// <param name="dt">The dt.</param>
+        /// <returns></returns>
+        public static string ToStringDateBrazilTimeZone(this DateTimeOffset dt)
+        {
+            return dt.ToBrazilTimeZone().ToString("dd/MM/yyyy");
+        }
+
+        /// <summary>
+        /// Converts to stringdatebraziltimezone.
+        /// </summary>
+        /// <param name="dt">The dt.</param>
+        /// <returns></returns>
+        public static string ToStringHourBrazilTimeZone(this DateTimeOffset dt)
+        {
+            return dt.ToBrazilTimeZone().ToString("HH:mm");
         }
 
         /// <summary>

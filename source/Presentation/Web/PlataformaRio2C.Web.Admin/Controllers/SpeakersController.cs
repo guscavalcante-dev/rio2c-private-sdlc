@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-21-2023
+// Last Modified On : 03-31-2023
 // ***********************************************************************
 // <copyright file="SpeakersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -246,7 +246,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                             worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
 
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.GetCollaboratorJobTitleBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value ?? "-";
-                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.GetConferencesTitles(this.UserInterfaceLanguage)?.Select(ct => ct?.ConferenceTitle?.Value)?.ToList()?.ToString("; ") ?? "-";
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.GetConferencesTitlesWithRoomAndDateString(this.UserInterfaceLanguage) ?? "-";
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.GetMiniBioBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value ?? "-";
 
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = collaboratorDto.ImageUploadDate.HasValue ?
