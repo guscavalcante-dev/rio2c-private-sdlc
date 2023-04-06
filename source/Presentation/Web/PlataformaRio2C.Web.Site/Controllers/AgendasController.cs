@@ -195,7 +195,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             if(negotiationsDtos.Count == 0)
             {
-                return RedirectToAction("NotFound", "Error", new { Area = "" });
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.ScheduledOneToOneMeetings, Labels.FoundFP) }, JsonRequestBehavior.AllowGet);
             }
 
             var pdf = new PlataformaRio2CDocument(new PlayerAudiovisualMeetingsDocumentTemplate(negotiationsDtos, this.UserInterfaceLanguage));
