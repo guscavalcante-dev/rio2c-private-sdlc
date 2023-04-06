@@ -28,6 +28,12 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<int> CountAllByDataTable(Guid organizationTypeId, bool showAllEditions, int? editionId);
         Task<IPagedList<OrganizationApiListDto>> FindAllDropdownApiListDtoPaged(int editionId, string keywords, string customFilter, Guid? organizationTypeUid, int page, int pageSize);
 
+        #region Players
+
+        Task<IPagedList<OrganizationDto>> FindAllPlayersByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, bool showAllOrganizations, int? editionId, bool exportToExcel = false);
+
+        #endregion
+
         #region Api
 
         Task<IPagedList<OrganizationApiListDto>> FindAllPublicApiPaged(int editionId, string keywords, Guid organizationTypeUid, List<Guid> activitiesUids, List<Guid> targetAudiencesUids, List<Guid> interestsUids, int page, int pageSize);

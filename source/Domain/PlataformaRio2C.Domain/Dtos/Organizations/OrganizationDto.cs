@@ -11,7 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -23,6 +25,20 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<OrganizationInterestDto> OrganizationInterestDtos { get; set; }
         public IEnumerable<CollaboratorDto> CollaboratorsDtos { get; set; }
         public IEnumerable<AttendeeOrganizationTypeDto> AttendeeOrganizationTypesDtos { get; set; }
+
+        #region Helpers
+
+        /// <summary>
+        /// Gets all interests by interest group uid.
+        /// </summary>
+        /// <param name="interestGroupUid">The interest group uid.</param>
+        /// <returns></returns>
+        public List<OrganizationInterestDto> GetAllInterestsByInterestGroupUid(Guid interestGroupUid)
+        {
+            return this.OrganizationInterestDtos?.Where(oiDto => oiDto.InterestGroup.Uid == interestGroupUid)?.ToList();
+        }
+
+        #endregion
 
         /// <summary>Initializes a new instance of the <see cref="HoldingDto"/> class.</summary>
         public OrganizationDto()

@@ -364,6 +364,35 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
     #endregion
 
+    #region OrganizationDto IQueryable Extensions
+
+    /// <summary>
+    /// OrganizationDtoIQueryableExtensions
+    /// </summary>
+    internal static class OrganizationDtoIQueryableExtensions
+    {
+        /// <summary>
+        /// Converts to listpagedasync.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        internal static async Task<IPagedList<OrganizationDto>> ToListPagedAsync(this IQueryable<OrganizationDto> query, int page, int pageSize)
+        {
+            page++;
+
+            // Page the list
+            var pagedList = await query.ToPagedListAsync(page, pageSize);
+            if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
+                pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
+
+            return pagedList;
+        }
+    }
+
+    #endregion
+
     #region OrganizationApiListDto IQueryable Extensions
 
     /// <summary>
@@ -555,7 +584,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, showAllEditions, showAllOrganizations, editionId);
 
             return await query
-                            .DynamicOrder<Organization>(
+                            .DynamicOrder(
                                 sortColumns,
                                 new List<Tuple<string, string>>
                                 {
@@ -581,6 +610,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 CreateDate = o.CreateDate,
                                 UpdateDate = o.UpdateDate,
                                 IsVirtualMeeting = o.IsVirtualMeeting,
+
                                 IsInCurrentEdition = editionId.HasValue && o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
                                                                                                                 && !ao.Edition.IsDeleted
                                                                                                                 && !ao.IsDeleted
@@ -645,6 +675,164 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .OrderBy(o => o.Name)
                             .ToListPagedAsync(page, pageSize);
         }
+
+        #region Players
+
+        /// <summary>
+        /// Finds all players by data table.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="showAllOrganizations">if set to <c>true</c> [show all organizations].</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="exportToExcel">if set to <c>true</c> [export to excel].</param>
+        /// <returns></returns>
+        public async Task<IPagedList<OrganizationDto>> FindAllPlayersByDataTable(
+            int page,
+            int pageSize,
+            string keywords,
+            List<Tuple<string, string>> sortColumns,
+            bool showAllEditions,
+            bool showAllOrganizations,
+            int? editionId,
+            bool exportToExcel = false)
+        {
+            Guid playerOrganizationTypeUid = OrganizationType.Player.Uid;
+
+            var query = this.GetBaseQuery()
+                                .FindByKeywords(keywords)
+                                .FindByOrganizationTypeUidAndByEditionId(playerOrganizationTypeUid, showAllEditions, showAllOrganizations, editionId);
+
+            IPagedList<OrganizationDto> organizationDtos;
+
+            if (exportToExcel)
+            {
+                #region Report Select Query
+
+                organizationDtos = await query
+                                               //.DynamicOrder(
+                                               //    sortColumns,
+                                               //    new List<Tuple<string, string>>
+                                               //    {
+                                               //         new Tuple<string, string>("HoldingBaseDto.Name", "Holding.Name")
+                                               //    },
+                                               //    new List<string> { "Name", "Holding.Name", "Document", "Website", "PhoneNumber", "CreateDate", "UpdateDate" },
+                                               //    "Name")
+                                               .Select(o => new OrganizationDto
+                                               {
+                                                   Id = o.Id,
+                                                   Uid = o.Uid,
+                                                   Name = o.Name,
+                                                   CompanyName = o.CompanyName,
+                                                   TradeName = o.CompanyName,
+                                                   Document = o.Document,
+                                                   Website = o.Website,
+                                                   Instagram = o.Instagram,
+                                                   Youtube = o.Youtube,
+                                                   Linkedin = o.Linkedin,
+                                                   Twitter = o.Twitter,
+                                                   OrganizationDescriptionBaseDtos = o.OrganizationDescriptions.Select(d => new OrganizationDescriptionDto
+                                                   {
+                                                       Id = d.Id,
+                                                       Uid = d.Uid,
+                                                       Value = d.Value,
+                                                       LanguageDto = new LanguageBaseDto
+                                                       {
+                                                           Id = d.Language.Id,
+                                                           Uid = d.Language.Uid,
+                                                           Name = d.Language.Name,
+                                                           Code = d.Language.Code
+                                                       }
+                                                   }),
+                                                   OrganizationInterestDtos = o.OrganizationInterests.Where(ota => !ota.IsDeleted).Select(oi => new OrganizationInterestDto
+                                                   {
+                                                       OrganizationInterest = oi,
+                                                       Interest = oi.Interest,
+                                                       InterestGroup = oi.Interest.InterestGroup
+                                                   }),
+
+                                                   ImageUploadDate = o.ImageUploadDate,
+                                                   IsVirtualMeeting = o.IsVirtualMeeting,
+                                                   IsApiDisplayEnabled = o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
+                                                                                                          && ao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
+                                                                                                                                                     && aot.OrganizationType.Uid == playerOrganizationTypeUid
+                                                                                                                                                     && aot.IsApiDisplayEnabled)),
+
+
+                                                   //PhoneNumber = o.PhoneNumber,
+                                                   //CreateDate = o.CreateDate,
+                                                   //UpdateDate = o.UpdateDate,
+                                                   //IsInCurrentEdition = editionId.HasValue && o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
+                                                   //                                                                                && !ao.Edition.IsDeleted
+                                                   //                                                                                && !ao.IsDeleted
+                                                   //                                                                                && ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == playerOrganizationTypeUid
+                                                   //                                                                                                                            && !aot.IsDeleted)),
+                                                   //IsInOtherEdition = editionId.HasValue && o.AttendeeOrganizations.Any(ao => ao.EditionId != editionId
+                                                   //                                                                            && !ao.IsDeleted),
+
+                                                  
+                                               })
+                                               .ToListPagedAsync(page, pageSize);
+
+                #endregion
+            }
+            else
+            {
+                #region DataTable Select Query
+
+                organizationDtos = await query
+                                                .DynamicOrder(
+                                                    sortColumns,
+                                                    new List<Tuple<string, string>>
+                                                    {
+                                                        new Tuple<string, string>("HoldingBaseDto.Name", "Holding.Name")
+                                                    },
+                                                    new List<string> { "Name", "Holding.Name", "Document", "Website", "PhoneNumber", "CreateDate", "UpdateDate" },
+                                                    "Name")
+                                                .Select(o => new OrganizationDto
+                                                {
+                                                    Id = o.Id,
+                                                    Uid = o.Uid,
+                                                    Name = o.Name,
+                                                    HoldingBaseDto = o.Holding == null ? null : new HoldingBaseDto
+                                                    {
+                                                        Id = o.Holding.Id,
+                                                        Uid = o.Holding.Uid,
+                                                        Name = o.Holding.Name
+                                                    },
+                                                    Document = o.Document,
+                                                    Website = o.Website,
+                                                    PhoneNumber = o.PhoneNumber,
+                                                    ImageUploadDate = o.ImageUploadDate,
+                                                    CreateDate = o.CreateDate,
+                                                    UpdateDate = o.UpdateDate,
+                                                    IsVirtualMeeting = o.IsVirtualMeeting,
+
+                                                    IsInCurrentEdition = editionId.HasValue && o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
+                                                                                                                                    && !ao.Edition.IsDeleted
+                                                                                                                                    && !ao.IsDeleted
+                                                                                                                                    && ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == playerOrganizationTypeUid
+                                                                                                                                                                                && !aot.IsDeleted)),
+                                                    IsInOtherEdition = editionId.HasValue && o.AttendeeOrganizations.Any(ao => ao.EditionId != editionId
+                                                                                                                                && !ao.IsDeleted),
+
+                                                    IsApiDisplayEnabled = o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
+                                                                                                            && ao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
+                                                                                                                                                       && aot.OrganizationType.Uid == playerOrganizationTypeUid
+                                                                                                                                                       && aot.IsApiDisplayEnabled)),
+                                                })
+                                                .ToListPagedAsync(page, pageSize);
+
+                #endregion
+            }
+
+            return organizationDtos;
+        }
+
+        #endregion
 
         #region Api
 

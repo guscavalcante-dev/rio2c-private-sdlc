@@ -4489,6 +4489,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Relatório de Players.
+        /// </summary>
+        public static string PlayersReport {
+            get {
+                return ResourceManager.GetString("PlayersReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Players selecionados para avaliação.
         /// </summary>
         public static string PlayersSelectedForEvaluation {

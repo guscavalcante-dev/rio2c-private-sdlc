@@ -1963,6 +1963,9 @@
     <value>One-to-One Meetings’ Regulation (PLAYER) - Rio2C 2022 (PDF)</value>
     <comment>PLAYER_Regulamento Rodadas de Negócio - Rio2C 2020.pdf</comment>
   </data>
+  <data name="PlayersReport" xml:space="preserve">
+    <value>Players Report</value>
+  </data>
   <data name="PlayersSelectedForEvaluation" xml:space="preserve">
     <value>Players selected for evaluation</value>
     <comment>Players selecionados para avaliação</comment>
