@@ -4,7 +4,7 @@
 // Created          : 10-14-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-14-2022
+// Last Modified On : 04-06-2022
 // ***********************************************************************
 // <copyright file="CreateTicketBuyerOrganizationDataCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -152,7 +152,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 var existingOrganizationByName = this.OrganizationRepo.Get(o => o.TradeName == cmd.TradeName && !o.IsDeleted);
                 if (existingOrganizationByName != null)
                 {
-                    this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.APlayer, Labels.TheName, cmd.CompanyName), new string[] { "CompanyName" }));
+                    this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.Company, Labels.TheName, cmd.CompanyName), new string[] { "CompanyName" }));
                 }
 
                 if (!this.ValidationResult.IsValid)
