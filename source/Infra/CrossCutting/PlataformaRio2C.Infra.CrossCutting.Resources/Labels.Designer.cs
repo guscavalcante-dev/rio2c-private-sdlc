@@ -4664,6 +4664,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Imprimir rodadas de negócio.
+        /// </summary>
+        public static string PrintOneToOneMeetings {
+            get {
+                return ResourceManager.GetString("PrintOneToOneMeetings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Imprimir Agenda.
         /// </summary>
         public static string PrintSchedules {
@@ -5565,6 +5574,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ScheduledNegotiations {
             get {
                 return ResourceManager.GetString("ScheduledNegotiations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rodadas de Negócio agendadas.
+        /// </summary>
+        public static string ScheduledOneToOneMeetings {
+            get {
+                return ResourceManager.GetString("ScheduledOneToOneMeetings", resourceCulture);
             }
         }
         
