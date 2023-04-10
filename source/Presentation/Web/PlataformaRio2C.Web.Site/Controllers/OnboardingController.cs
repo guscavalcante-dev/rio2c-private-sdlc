@@ -4,7 +4,7 @@
 // Created          : 08-29-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-17-2023
+// Last Modified On : 04-10-2023
 // ***********************************************************************
 // <copyright file="OnboardingController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -958,7 +958,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <summary>Sets the view bags.</summary>
         private void SetViewBags()
         {
-            var isPlayer = ViewBag.IsPlayer = this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.AudiovisualPlayerExecutive);
+            bool isPlayer = this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.AudiovisualPlayerExecutive) == true;
+            ViewBag.IsPlayer = isPlayer;
 
             if (isPlayer)
             {
