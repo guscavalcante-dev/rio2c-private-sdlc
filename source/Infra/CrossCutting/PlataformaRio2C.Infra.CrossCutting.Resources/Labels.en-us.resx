@@ -2039,6 +2039,9 @@
   <data name="Print" xml:space="preserve">
     <value>Print</value>
   </data>
+  <data name="PrintOneToOneMeetings" xml:space="preserve">
+    <value>Print One to One Meetings</value>
+  </data>
   <data name="PrintSchedules" xml:space="preserve">
     <value>Print Schedules</value>
   </data>
@@ -2417,6 +2420,9 @@
   <data name="ScheduledNegotiations" xml:space="preserve">
     <value>Scheduled negotiations</value>
     <comment>Negociações agendadas</comment>
+  </data>
+  <data name="ScheduledOneToOneMeetings" xml:space="preserve">
+    <value>Scheduled One to One Meetings</value>
   </data>
   <data name="ScheduleManually" xml:space="preserve">
     <value>Schedule Manually</value>

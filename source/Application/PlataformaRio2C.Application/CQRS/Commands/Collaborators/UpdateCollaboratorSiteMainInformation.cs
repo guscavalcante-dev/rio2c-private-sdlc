@@ -4,7 +4,7 @@
 // Created          : 12-16-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-17-202
+// Last Modified On : 04-11-2023
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorSiteMainInformation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -213,10 +213,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             int currentEditionId,
             string userInterfaceLanguage)
         {
-            this.UpdateGenders(genders, userInterfaceLanguage);
-            this.UpdateIndustries(industries, userInterfaceLanguage);
-            this.UpdateRoles(roles, userInterfaceLanguage);
-            this.UpdateEditions(editionsDtos, entity.Collaborator, currentEditionId);
+            this.UpdateGenders(genders ?? new List<CollaboratorGender>(), userInterfaceLanguage);
+            this.UpdateIndustries(industries ?? new List<CollaboratorIndustry>(), userInterfaceLanguage);
+            this.UpdateRoles(roles ?? new List<CollaboratorRole>(), userInterfaceLanguage);
+            this.UpdateEditions(editionsDtos ?? new List<EditionDto>(), entity.Collaborator, currentEditionId);
         }
 
         /// <summary>

@@ -27,30 +27,10 @@ var AgendasWidget = function () {
             return;
         }
 
-        //MyRio2cCommon.block();
-        //MyRio2cCommon.block();
-
         var jsonParameters = new Object();
         jsonParameters.startDate = moment(calendar.view.activeStart).unix();
         jsonParameters.endDate = moment(calendar.view.activeEnd).unix();
         jsonParameters.showOneToOneMeetings = $('#ShowOneToOneMeetings').is(':checked');
-        //$.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Agendas/PrintAudiovisualMeetingsToPdfAsync'), jsonParameters, function (data) {
-        //    MyRio2cCommon.handleAjaxReturn({
-        //        data: data,
-        //        // Success
-        //        onSuccess: function () {
-        //        },
-        //        // Error
-        //        onError: function () {
-        //        }
-        //    });
-        //})
-        //    .fail(function () {
-        //    })
-        //    .always(function () {
-        //        //MyRio2cCommon.unblock();
-        //    });
-
 
         window.open(
             MyRio2cCommon.getUrlWithCultureAndEdition('/Agendas/PrintAudiovisualMeetingsToPdfAsync') +
@@ -58,8 +38,6 @@ var AgendasWidget = function () {
             '&endDate=' + jsonParameters.endDate +
             '&showOneToOneMeetings=' + jsonParameters.showOneToOneMeetings,
             '_blank')
-
-        //MyRio2cCommon.unblock();
     }
 
     // Calendar Data ------------------------------------------------------------------------------
@@ -112,14 +90,14 @@ var AgendasWidget = function () {
                     buttonText: translations.fourDaysButton
                 }
             },
-            customButtons: {
-                printButton: {
-                    text: translations.printButton,
-                    click: function (info) {
-                        printToPdf(info);
-                    }
-                }
-            },
+            //customButtons: {
+            //    printButton: {
+            //        text: translations.printButton,
+            //        click: function (info) {
+            //            printToPdf(info);
+            //        }
+            //    }
+            //},
             viewSkeletonRender: function (info) {
                 calendarEl.querySelectorAll('.fc-button').forEach((button) => {
                     if (button.innerText === translations.printButton) {
@@ -221,6 +199,8 @@ var AgendasWidget = function () {
                                             }
                                         })
                                     );
+
+                                    changePrintButtonVisibility(data.events.length > 0);
                                 },
                                 // Error
                                 onError: function () {
@@ -414,6 +394,20 @@ var AgendasWidget = function () {
 
         calendar.render();
     };
+
+    var changePrintButtonVisibility = function (hasScheduledAudiovisualMeetings) {
+        if (hasScheduledAudiovisualMeetings && (isBuyer || isSeller)) {
+            calendar.setOption("customButtons",
+                {
+                    printButton: {
+                        text: translations.printButton,
+                        click: function (info) {
+                            printToPdf(info);
+                        }
+                    }
+                });
+        }
+    }
 
     var reload = function () {
         calendar.refetchEvents();

@@ -2044,6 +2044,9 @@
   <data name="Print" xml:space="preserve">
     <value>Imprimir</value>
   </data>
+  <data name="PrintOneToOneMeetings" xml:space="preserve">
+    <value>Imprimir rodadas de negócio</value>
+  </data>
   <data name="PrintSchedules" xml:space="preserve">
     <value>Imprimir Agenda</value>
   </data>
@@ -2425,6 +2428,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="ScheduledNegotiations" xml:space="preserve">
     <value>Negociações agendadas</value>
     <comment>Negociações agendadas</comment>
+  </data>
+  <data name="ScheduledOneToOneMeetings" xml:space="preserve">
+    <value>Rodadas de Negócio agendadas</value>
   </data>
   <data name="ScheduleManually" xml:space="preserve">
     <value>Agendar Manualmente</value>

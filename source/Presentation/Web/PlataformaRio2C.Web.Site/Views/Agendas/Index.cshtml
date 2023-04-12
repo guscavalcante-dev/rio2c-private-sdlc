@@ -1,8 +1,12 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
+@using Constants = PlataformaRio2C.Domain.Constants;
 @model AgendaSearchViewModel
 @{
     ViewBag.Title = Labels.Diary;
     var editionDto = ViewBag.EditionDto as EditionDto;
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var isSeller = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true;
+    var isBuyer = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.AudiovisualPlayerExecutive) == true;
 }
 <div class="row">
     <div class="col-12">
@@ -84,19 +88,21 @@
 @section Scripts {
     @Scripts.Render("~/bundles/js/fullcalendar.js")
     @Scripts.Render("~/bundles/js/agendas.widget.js")
-    <script>
+<script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
             fourDaysButton: '4 @Labels.Days.ToLowerInvariant()',
-            printButton: '@Labels.Print'
+            printButton: '@Html.Raw(Labels.PrintOneToOneMeetings)'
         };
 
         // Variables ------------------------------------------------------------------------------
         var editionStartDate = '@(editionDto?.Edition?.StartDate.ToBrazilTimeZone().ToString("yyyy-MM-dd"))';
+        var isBuyer = @Json.Encode(isBuyer);
+        var isSeller = @Json.Encode(isSeller);
 
         jQuery(document).ready(function () {
             AgendasWidget.init();
         });
-    </script>
+</script>
 
 }
