@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-07-2023
+// Last Modified On : 04-12-2023
 // ***********************************************************************
 // <copyright file="audiovisual.players.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -54,8 +54,22 @@ var AudiovisualPlayersDataTableWidget = function () {
             searchDelay: 2000,
             processing: true,
             serverSide: true,
+            buttons: [
+                {
+                    extend: 'collection',
+                    text: labels.actions,
+                    buttons: [
+                        {
+                            name: 'btnExportToExcel',
+                            text: exportToExcelText,
+                            action: function (e, dt, node, config) {
+                                $('.dt-button-background').remove();
+                                exportToExcel();
+                            }
+                        }]
+                }],
             order: [[0, "asc"]],
-            sDom: '<"row"<"col-sm-6"l>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+            sDom: '<"row"<"col-sm-6"l><"col-sm-6 text-right"B>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
             oSearch: {
                 sSearch: $('#Search').val()
             },
@@ -213,7 +227,10 @@ var AudiovisualPlayersDataTableWidget = function () {
                     searchable: false,
                     className: "dt-center"
                 }
-            ]
+            ],
+            initComplete: function () {
+                $('button.buttons-collection').attr('data-toggle', 'dropdown');
+            }
         });
 
         $('#Search').keyup(function (e) {
@@ -241,6 +258,30 @@ var AudiovisualPlayersDataTableWidget = function () {
         window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Players/Details/' + playerUid);
     };
 
+    // Export to Excel ----------------------------------------------------------------------------
+    var exportToExcel = function () {
+        MyRio2cCommon.block();
+
+        var jsonParameters = new Object();
+        jsonParameters.searchKeywords = $('#Search').val();
+        jsonParameters.showAllEditions = $('#ShowAllEditions').prop('checked');
+        jsonParameters.showAllOrganizations = $('#ShowAllOrganizations').prop('checked');
+
+        //TODO: Needs to upgrade DataTables from current v1.10.19 to v2 to get columns names and send 'jsonParameters.sortColumns'
+        //var table = $(tableElementId).DataTable();
+        //var order = table.order();
+        //var column = table.column(order[0][0]).header();
+        //var columnName = $(column).html();
+        //jsonParameters.sortColumns = {
+        //    columnName: columnName,
+        //    order: order[0][1]
+        //};
+
+        location.href = '/Audiovisual/Players/ExportToExcel?' + jQuery.param(jsonParameters);
+
+        MyRio2cCommon.unblock();
+    };
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
@@ -251,6 +292,9 @@ var AudiovisualPlayersDataTableWidget = function () {
         },
         showDetails: function (playerUid) {
             showDetails(playerUid);
+        },
+        exportToExcel: function () {
+            exportToExcel();
         }
     };
 }();

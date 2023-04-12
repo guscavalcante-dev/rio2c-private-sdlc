@@ -1968,6 +1968,9 @@
   <data name="PlayersRegulationPdf" xml:space="preserve">
     <value>Regulamento Rodadas de Negócio (PLAYER) - Rio2C 2023 (PDF)</value>
   </data>
+  <data name="PlayersReport" xml:space="preserve">
+    <value>Relatório de Players</value>
+  </data>
   <data name="PlayersSelectedForEvaluation" xml:space="preserve">
     <value>Players selecionados para avaliação</value>
     <comment>Players selecionados para avaliação</comment>

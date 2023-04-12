@@ -226,21 +226,13 @@
     <Compile Include="Repositories\Projects\ProjectPlayerEvaluationRepository.cs" />
     <Compile Include="Repositories\Projects\ProjectTitleRepository.cs" />
     <Compile Include="Repositories\Projects\ProjectRepository.cs" />
-    <Compile Include="Repositories\Producer\ProducerDescriptionRepository.cs" />
-    <Compile Include="Repositories\Producer\ProducerTargetAudienceRepository.cs" />
-    <Compile Include="Repositories\Producer\ProducerActivityRepository.cs" />
-    <Compile Include="Repositories\Player\PlayerTargetAudienceRepository.cs" />
-    <Compile Include="Repositories\Player\PlayerActivityRepository.cs" />
     <Compile Include="Repositories\Common\TargetAudienceRepository.cs" />
-    <Compile Include="Repositories\Player\PlayerRestrictionsSpecificsRepository.cs" />
     <Compile Include="Repositories\Collaborator\CollaboratorJobTitleRepository.cs" />
     <Compile Include="Repositories\Collaborator\CollaboratorMiniBioRepository.cs" />
     <Compile Include="Repositories\Collaborator\CollaboratorRepository.cs" />
     <Compile Include="Repositories\Common\ActivityRepository.cs" />
     <Compile Include="Repositories\Common\InterestGroupRepository.cs" />
     <Compile Include="Repositories\Common\InterestRepository.cs" />
-    <Compile Include="Repositories\Player\PlayerInterestRepository.cs" />
-    <Compile Include="Repositories\Producer\ProducerRepository.cs" />
     <Compile Include="Repositories\Quiz\QuizAnswerRepository.cs" />
     <Compile Include="Repositories\Quiz\QuizOptionRepository.cs" />
     <Compile Include="Repositories\Quiz\QuizQuestionReposiotry.cs" />
@@ -258,12 +250,10 @@
     <Compile Include="Repositories\User\RoleRepository.cs" />
     <Compile Include="Repositories\User\UserRoleRepository.cs" />
     <Compile Include="Repositories\User\UserUseTermRepository.cs" />
-    <Compile Include="Repositories\Player\PlayerDescriptionRepository.cs" />
     <Compile Include="Repositories\Common\ImageFileRepository.cs" />
     <Compile Include="Repositories\Common\EditionRepository.cs" />
     <Compile Include="Repositories\Common\LanguageRepository.cs" />
     <Compile Include="Repositories\User\UserRepository.cs" />
-    <Compile Include="Repositories\Player\PlayerRepository.cs" />
     <Compile Include="Repositories\Holding\HoldingRepository.cs" />
   </ItemGroup>
   <ItemGroup>

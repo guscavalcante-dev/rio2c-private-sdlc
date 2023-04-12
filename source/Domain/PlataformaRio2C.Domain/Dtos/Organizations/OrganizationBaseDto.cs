@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-19-2019
 //
-// Last Modified By : Elton Assunção
-// Last Modified On : 02-06-2023
+// Last Modified By : Renan Valentim
+// Last Modified On : 04-12-2023
 // ***********************************************************************
 // <copyright file="OrganizationBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -43,6 +43,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool IsInCurrentEdition { get; set; }
         public bool IsInOtherEdition { get; set; }
 		public bool IsApiDisplayEnabled { get; set; }
+        public int ReceivedProjectsCount { get; set; }
 		
         public HoldingBaseDto HoldingBaseDto { get; set; }
         public UserBaseDto CreatorBaseDto { get; set; }
