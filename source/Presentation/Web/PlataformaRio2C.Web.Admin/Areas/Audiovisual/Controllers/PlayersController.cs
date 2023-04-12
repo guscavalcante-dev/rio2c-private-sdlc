@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-16-2021
+// Last Modified On : 04-12-2023
 // ***********************************************************************
 // <copyright file="PlayersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -41,7 +41,6 @@ using ClosedXML.Excel;
 using PlataformaRio2C.Domain.ApiModels;
 using PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults;
 using System.IO;
-using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 {
@@ -156,7 +155,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     new List<Tuple<string, string>>(), //request.GetSortColumns(),
                     showAllEditions,
                     showAllOrganizations,
-                    this.EditionDto.Id);
+                    this.EditionDto.Id,
+                    true);
 
                 using (var workbook = new XLWorkbook())
                 {
@@ -187,16 +187,15 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Interest + " - " + Labels.Platforms;
                     worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Interest + " - " + Labels.Format;
                     worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Interest + " - " + Labels.Genre;
-                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Interest + " - " + Labels.TargetAudience;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Interest + " - " + Labels.SubGenre;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.TargetAudience;
                     worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.LogoOriginal;
-                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.ShowOnWebsite;
-                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.OnboardingStartDate;
-                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.OnboardingFinishDate;
-                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.ReceivedProjects;
 
-                    //worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.CellPhone;
-                    //worksheet.Column(columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
-                    //skipFinalAdjustmentsColumnIndexes.Add(columnIndex);
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.ShowOnWebsite;
+                    skipFinalAdjustmentsColumnIndexes.Add(columnIndex);
+
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.ReceivedProjects;
+                    skipFinalAdjustmentsColumnIndexes.Add(columnIndex);
 
                     #endregion
 
@@ -204,77 +203,42 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     {
                         #region Rows
 
-                        foreach (var organizationBaseDto in players)
+                        foreach (var organizationDto in players)
                         {
                             lineIndex++;
                             columnIndex = 0;
 
-                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto.Id;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.Id;
+                            worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.Name ?? "-";
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.CompanyName ?? "-";
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.TradeName ?? "-";
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.Document ?? "-";
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.Website ?? "-";
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.Instagram ?? "-";
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.Youtube ?? "-";
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.Linkedin ?? "-";
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.Twitter ?? "-";
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetOrganizationDescriptionBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value ?? "-";
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.LookingFor.Uid, this.UserInterfaceLanguage);
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.ProjectStatus.Uid, this.UserInterfaceLanguage);
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.Platforms.Uid, this.UserInterfaceLanguage);
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.Format.Uid, this.UserInterfaceLanguage);
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.Genre.Uid, this.UserInterfaceLanguage);
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.SubGenre.Uid, this.UserInterfaceLanguage);
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.OrganizationTargetAudiencesDtos?.Select(otaDto => otaDto.TargetAudienceName?.GetSeparatorTranslation(this.UserInterfaceLanguage, '|'))?.ToString("; ");
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.ImageUploadDate.HasValue ?
+                                this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, organizationDto.Uid, organizationDto.ImageUploadDate, true, "_500x500") 
+                                    : "-";
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.IsApiDisplayEnabled.ToYesOrNoString();
                             worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
 
-
-
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto.FullName ?? "-";
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto.Badge ?? "-";
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto.Email ?? "-";
-
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto.CellPhone ?? "-";
-                            //worksheet.Cell(lineIndex, columnIndex).Style.NumberFormat.Format = "00000";
-                            //worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
-
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto.PhoneNumber ?? "-";
-                            //worksheet.Cell(lineIndex, columnIndex).Style.NumberFormat.Format = "00000";
-                            //worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
-
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto.GetCollaboratorJobTitleBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value ?? "-";
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto.GetConferencesTitlesWithRoomAndDateString(this.UserInterfaceLanguage) ?? "-";
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto.GetMiniBioBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value ?? "-";
-
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto.ImageUploadDate.HasValue ?
-                            //    this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, organizationBaseDto.Uid, organizationBaseDto.ImageUploadDate, true, "_500x500") : "-";
-
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto.ImageUploadDate.HasValue ?
-                            //    this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, organizationBaseDto.Uid, organizationBaseDto.ImageUploadDate, true) : "-";
-
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto.Website ?? "-";
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto.Linkedin ?? "-";
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto.Instagram ?? "-";
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto.Youtube ?? "-";
-
-                            //#region Organization
-
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto.AttendeeOrganizationBasesDtos.Select(ao => ao.OrganizationBaseDto.Name ?? "-")?.ToString(", ");
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto.AttendeeOrganizationBasesDtos.Select(ao => ao.OrganizationBaseDto.TradeName ?? "-")?.ToString(", ");
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto.AttendeeOrganizationBasesDtos.Select(ao => ao.OrganizationBaseDto.GetOrganizationDescriptionBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value ?? "-")?.ToString(", ");
-
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto.AttendeeOrganizationBasesDtos.Select(ao => ao.OrganizationBaseDto.ImageUploadDate.HasValue ?
-                            //    this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, ao.OrganizationBaseDto.Uid, ao.OrganizationBaseDto.ImageUploadDate, true, "_500x500") : "-")?.ToString(", ");
-
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto.AttendeeOrganizationBasesDtos.Select(ao => ao.OrganizationBaseDto.ImageUploadDate.HasValue ?
-                            //    this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, ao.OrganizationBaseDto.Uid, ao.OrganizationBaseDto.ImageUploadDate, true) : "-")?.ToString(", ");
-
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto.AttendeeOrganizationBasesDtos.Select(ao => ao.OrganizationBaseDto.Website ?? "-")?.ToString(", ");
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto.AttendeeOrganizationBasesDtos.Select(ao => ao.OrganizationBaseDto.Linkedin ?? "-")?.ToString(", ");
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto.AttendeeOrganizationBasesDtos.Select(ao => ao.OrganizationBaseDto.Instagram ?? "-")?.ToString(", ");
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto.AttendeeOrganizationBasesDtos.Select(ao => ao.OrganizationBaseDto.Twitter ?? "-")?.ToString(", ");
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto.AttendeeOrganizationBasesDtos.Select(ao => ao.OrganizationBaseDto.Youtube ?? "-")?.ToString(", ");
-
-                            //#endregion
-
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto?.EditionAttendeeCollaboratorBaseDto?.SpeakerTermsAcceptanceDate?.ToStringHourMinute() ?? "-";
-                            //worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
-
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto?.EditionAttendeeCollaboratorBaseDto?.OnboardingFinishDate?.ToStringHourMinute() ?? "-";
-                            //worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
-
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto?.EditionAttendeeCollaboratorBaseDto?.AttendeeCollaboratorTypeDto?.IsApiDisplayEnabled.ToYesOrNoString();
-                            //worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
-
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto?.EditionAttendeeCollaboratorBaseDto?.AttendeeCollaboratorTypeDto?.ApiHighlightPosition?.ToString() ?? "-";
-                            //worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
-
-                            //worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationBaseDto?.CreatorBaseDto?.Email ?? "-";
-                            //worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.ReceivedProjectsCount;
+                            worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
                         }
 
                         for (var adjustColumnIndex = 1; adjustColumnIndex <= columnIndex; adjustColumnIndex++)

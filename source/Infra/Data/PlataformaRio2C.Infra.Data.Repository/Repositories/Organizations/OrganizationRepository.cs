@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-23-2023
+// Last Modified On : 04-12-2023
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -713,14 +713,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 #region Report Select Query
 
                 organizationDtos = await query
-                                               //.DynamicOrder(
-                                               //    sortColumns,
-                                               //    new List<Tuple<string, string>>
-                                               //    {
-                                               //         new Tuple<string, string>("HoldingBaseDto.Name", "Holding.Name")
-                                               //    },
-                                               //    new List<string> { "Name", "Holding.Name", "Document", "Website", "PhoneNumber", "CreateDate", "UpdateDate" },
-                                               //    "Name")
+                                               .OrderBy(o => o.Name)
                                                .Select(o => new OrganizationDto
                                                {
                                                    Id = o.Id,
@@ -734,6 +727,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                    Youtube = o.Youtube,
                                                    Linkedin = o.Linkedin,
                                                    Twitter = o.Twitter,
+
                                                    OrganizationDescriptionBaseDtos = o.OrganizationDescriptions.Select(d => new OrganizationDescriptionDto
                                                    {
                                                        Id = d.Id,
@@ -753,27 +747,25 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                        Interest = oi.Interest,
                                                        InterestGroup = oi.Interest.InterestGroup
                                                    }),
-
+                                                   OrganizationTargetAudiencesDtos = o.OrganizationTargetAudiences.Where(ota => !ota.IsDeleted).Select(oa => new OrganizationTargetAudienceDto
+                                                   {
+                                                       OrganizationTargetAudienceId = oa.Id,
+                                                       OrganizationTargetAudienceUid = oa.Uid,
+                                                       TargetAudienceId = oa.TargetAudience.Id,
+                                                       TargetAudienceUid = oa.TargetAudience.Uid,
+                                                       TargetAudienceName = oa.TargetAudience.Name
+                                                   }),
                                                    ImageUploadDate = o.ImageUploadDate,
                                                    IsVirtualMeeting = o.IsVirtualMeeting,
                                                    IsApiDisplayEnabled = o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
                                                                                                           && ao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
                                                                                                                                                      && aot.OrganizationType.Uid == playerOrganizationTypeUid
                                                                                                                                                      && aot.IsApiDisplayEnabled)),
-
-
-                                                   //PhoneNumber = o.PhoneNumber,
-                                                   //CreateDate = o.CreateDate,
-                                                   //UpdateDate = o.UpdateDate,
-                                                   //IsInCurrentEdition = editionId.HasValue && o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
-                                                   //                                                                                && !ao.Edition.IsDeleted
-                                                   //                                                                                && !ao.IsDeleted
-                                                   //                                                                                && ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == playerOrganizationTypeUid
-                                                   //                                                                                                                            && !aot.IsDeleted)),
-                                                   //IsInOtherEdition = editionId.HasValue && o.AttendeeOrganizations.Any(ao => ao.EditionId != editionId
-                                                   //                                                                            && !ao.IsDeleted),
-
-                                                  
+                                                   ReceivedProjectsCount = o.AttendeeOrganizations
+                                                                                .Where(ao => ao.EditionId == editionId)
+                                                                                .Sum(ao => ao.ProjectBuyerEvaluations.Count(pbe => !pbe.Project.IsDeleted &&
+                                                                                                                                   pbe.Project.FinishDate != null &&
+                                                                                                                                   !pbe.IsDeleted))
                                                })
                                                .ToListPagedAsync(page, pageSize);
 

@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-07-2023
+// Last Modified On : 04-12-2023
 // ***********************************************************************
 // <copyright file="audiovisual.players.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -69,7 +69,7 @@ var AudiovisualPlayersDataTableWidget = function () {
                         }]
                 }],
             order: [[0, "asc"]],
-            sDom: '<"row"<"col-sm-6"l>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+            sDom: '<"row"<"col-sm-6"l><"col-sm-6 text-right"B>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
             oSearch: {
                 sSearch: $('#Search').val()
             },
@@ -227,7 +227,10 @@ var AudiovisualPlayersDataTableWidget = function () {
                     searchable: false,
                     className: "dt-center"
                 }
-            ]
+            ],
+            initComplete: function () {
+                $('button.buttons-collection').attr('data-toggle', 'dropdown');
+            }
         });
 
         $('#Search').keyup(function (e) {
