@@ -4,7 +4,7 @@
 // Created          : 08-15-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-17-2023
+// Last Modified On : 04-15-2023
 // ***********************************************************************
 // <copyright file="ImageHelper.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -129,16 +129,19 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
             fileRepo.DeleteImages(fileUid, fileRepositoryPathType);
         }
 
-        /// <summary>Gets the image URL.</summary>
+        /// <summary>
+        /// Gets the image URL.
+        /// </summary>
         /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
         /// <param name="imageUid">The image uid.</param>
         /// <param name="imageUploadDate">The image upload date.</param>
         /// <param name="isThumbnail">if set to <c>true</c> [is thumbnail].</param>
+        /// <param name="additionalFileInfo">The additional file information.</param>
         /// <returns></returns>
-        public static string GetImageUrl(FileRepositoryPathType fileRepositoryPathType, Guid imageUid, DateTimeOffset? imageUploadDate, bool isThumbnail)
+        public static string GetImageUrl(FileRepositoryPathType fileRepositoryPathType, Guid imageUid, DateTimeOffset? imageUploadDate, bool isThumbnail, string additionalFileInfo = "")
         {
             var fileRepo = new FileRepositoryFactory().Get();
-            return fileRepo.GetImageUrl(fileRepositoryPathType, imageUid, imageUploadDate, isThumbnail);
+            return fileRepo.GetImageUrl(fileRepositoryPathType, imageUid, imageUploadDate, isThumbnail, additionalFileInfo);
         }
 
         /// <summary>

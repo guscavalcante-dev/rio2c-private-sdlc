@@ -13,44 +13,32 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
-                    <!--begin:Main Information Widget-->
                     <div class="col-12">
                         <div id="MainInformationWidget" class="kt-portlet" style="min-height: 325px;"></div>
                     </div>
-                    <!--end:Main Information Widget-->
                 </div>
                 <div class="row">
-                    <!--begin:Social Networks Widget-->
                     <div class="col-12">
                         <div id="SocialNetworksWidget" class="kt-portlet" style="min-height: 325px;"></div>
                     </div>
-                    <!--end:Social Networks Widget-->
                 </div>
                 <div class="row">
-                    <!--begin:Company Widget-->
                     <div class="col-12">
                         <div id="CollaboratorCompanyWidget" class="kt-portlet" style="min-height: 325px;"></div>
                     </div>
-                    <!--end:Company Widget-->
                 </div>
                 <div class="row">
-                    <!--begin:Participants Widget-->
                     <div class="col-6">
                         <div id="SpeakerParticipantsWidget" class="kt-portlet" style="min-height: 325px;"></div>
                     </div>
-                    <!--end:Participants Widget-->
-                    <!--begin:Conferences Widget-->
                     <div class="col-6">
                         <div id="SpeakerConferencesWidget" class="kt-portlet" style="min-height: 325px;"></div>
                     </div>
-                    <!--end:Conferences Widget-->
                 </div>
                 <div class="row">
-                    <!--begin:Logistic Info Widget-->
                     <div class="col-12">
                         <div id="LogisticsInfoWidget" class="kt-portlet kt-portlet--tabs" style="min-height: 350px;"></div>
                     </div>
-                    <!--end:Logistic Info Widget-->
                 </div>
             </div>
         </div>
@@ -58,20 +46,21 @@
     <!--end: Main Container-->
     <!--begin: Right Container-->
     <div class="col-md-4 col-lg-3">
-        <!--begin:Onboarding Info Widget-->
         <div class="row">
             <div class="col-12">
                 <div id="OnboardingInfoWidget" class="kt-portlet" style="min-height: 325px;"></div>
             </div>
         </div>
-        <!--end:Onboarding Info Widget-->
-        <!--begin:Api Configurations Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="CollaboratorImagesWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-12">
                 <div id="SpeakerApiConfigurationWidget" class="kt-portlet" style="min-height: 325px;"></div>
             </div>
         </div>
-        <!--end:Api Configurations Widget-->
     </div>
     <!--end: Right Container-->
 </div>
@@ -100,6 +89,7 @@
             CollaboratorsSocialNetworksWidget.init('@(CollaboratorType.Speaker)');
             CollaboratorsOnboardingInfoWidget.init('@(CollaboratorType.Speaker)');
             CollaboratorsCompanyWidget.init();
+            CollaboratorsImagesWidget.init();
             SpeakersParticipantsWidget.init();
             SpeakersConferencesWidget.init();
             SpeakersApiConfigurationWidget.init();

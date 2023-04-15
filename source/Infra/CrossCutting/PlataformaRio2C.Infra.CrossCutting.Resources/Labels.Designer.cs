@@ -4862,6 +4862,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fotos de Perfil.
+        /// </summary>
+        public static string ProfilePhotos {
+            get {
+                return ResourceManager.GetString("ProfilePhotos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Programação.
         /// </summary>
         public static string Program {
@@ -6537,6 +6546,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ThreeDotsToAnimation {
             get {
                 return ResourceManager.GetString("ThreeDotsToAnimation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Miniatura.
+        /// </summary>
+        public static string Thumbnail {
+            get {
+                return ResourceManager.GetString("Thumbnail", resourceCulture);
             }
         }
         

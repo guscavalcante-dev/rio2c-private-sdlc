@@ -867,6 +867,7 @@
     <Content Include="Assets\js\cartoon\projects\cartoon.projects.maininformation.widget.js" />
     <Content Include="Assets\js\cartoon\projects\cartoon.projects.totalcount.widget.js" />
     <Content Include="Assets\js\collaborators\collaborators.onboardinginfo.widget.js" />
+    <Content Include="Assets\js\collaborators\collaborators.images.widget.js" />
     <Content Include="Assets\js\collaborators\collaborators.socialnetworks.widget.js" />
     <Content Include="Assets\js\collaborators\collaborators.maininformation.widget.js" />
     <Content Include="Assets\js\collaborators\collaborators.company.widget.js" />
@@ -9947,6 +9948,7 @@
     <Content Include="Views\Collaborators\Modals\AssociateCompanyForm.cshtml" />
     <Content Include="Views\Collaborators\Modals\AssociateCompanyModal.cshtml" />
     <Content Include="Views\AdminMailerService\CartoonCommissionWelcomeEmail.cshtml" />
+    <Content Include="Views\Collaborators\Widgets\CollaboratorImagesWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-23-2023
+// Last Modified On : 04-15-2023
 // ***********************************************************************
 // <copyright file="CollaboratorsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -332,8 +332,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowSocialNetworksWidget(Guid? collaboratorUid, string collaboratorType)
         {
-            var socialNetworksWidgetDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByEditionIdAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
-            if (socialNetworksWidgetDto == null)
+            var attendeeCollaboratorSiteDetailsDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByEditionIdAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
+            if (attendeeCollaboratorSiteDetailsDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
@@ -345,7 +345,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/SocialNetworksWidget", socialNetworksWidgetDto), divIdOrClass = "#SocialNetworksWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/SocialNetworksWidget", attendeeCollaboratorSiteDetailsDto), divIdOrClass = "#SocialNetworksWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -680,6 +680,34 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         }
 
         #endregion
+
+        #endregion
+
+        #region Collaborator Images Widget
+
+        /// <summary>
+        /// Shows the collaborator images widget.
+        /// </summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowCollaboratorImagesWidget(Guid? collaboratorUid)
+        {
+            var attendeeCollaboratorSiteDetailsDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByEditionIdAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
+            if (attendeeCollaboratorSiteDetailsDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/CollaboratorImagesWidget", attendeeCollaboratorSiteDetailsDto), divIdOrClass = "#CollaboratorImagesWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
         #endregion
     }
