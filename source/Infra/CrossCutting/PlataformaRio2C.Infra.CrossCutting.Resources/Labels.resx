@@ -2120,6 +2120,9 @@
     <value>Perfil</value>
     <comment>Perfil</comment>
   </data>
+  <data name="ProfilePhotos" xml:space="preserve">
+    <value>Fotos de Perfil</value>
+  </data>
   <data name="Program" xml:space="preserve">
     <value>Programação</value>
     <comment>Programação</comment>
@@ -2824,6 +2827,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   </data>
   <data name="ThreeDotsToAnimation" xml:space="preserve">
     <value>&lt;span&gt;.&lt;/span&gt;&lt;span&gt;.&lt;/span&gt;&lt;span&gt;.&lt;/span&gt;</value>
+  </data>
+  <data name="Thumbnail" xml:space="preserve">
+    <value>Miniatura</value>
   </data>
   <data name="Ticket" xml:space="preserve">
     <value>Ingresso</value>

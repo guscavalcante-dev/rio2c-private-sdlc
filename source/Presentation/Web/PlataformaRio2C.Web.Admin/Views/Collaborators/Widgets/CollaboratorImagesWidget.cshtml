@@ -1,0 +1,92 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Statics
+@model AttendeeCollaboratorSiteDetailsDto
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">@Labels.ProfilePhotos</h3>
+    </div>
+</div>
+<div class="kt-portlet__body">
+    <div class="kt-widget kt-widget--user-profile-3">
+        <div class="kt-widget__top">
+            <div class="col-md-12">
+                <div class="row justify-content-center">
+                    <h3 class="kt-heading kt-heading--sm mb-1 mt-0">@Labels.PhotoOriginal</h3>
+                </div>
+                @if (Model.Collaborator?.HasImage() == true)
+                {
+                    <div class="row justify-content-center">
+                        <div class="kt-widget__media">
+                            <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, Model.Collaborator.Uid, Model.Collaborator.ImageUploadDate, false)" alt="image">
+                        </div>
+                    </div>
+
+                }
+                else
+                {
+                    <div class="row mt-3">
+                        <div class="col-12 text-center">
+                            <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.PhotoOriginal, Labels.FoundM)</span>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+    <div class="kt-widget kt-widget--user-profile-3 mt-4">
+        <div class="kt-widget__top">
+            <div class="col-md-12">
+                <div class="row justify-content-center">
+                    <h3 class="kt-heading kt-heading--sm mb-1 mt-0">@Labels.Photo500x500</h3>
+                </div>
+                @if (Model.Collaborator?.HasImage() == true)
+                {
+                    <div class="row justify-content-center">
+                        <div class="kt-widget__media">
+                            <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, Model.Collaborator.Uid, Model.Collaborator.ImageUploadDate, true, "_500x500")" alt="image">
+                        </div>
+                    </div>
+
+                }
+                else
+                {
+                    <div class="row mt-3">
+                        <div class="col-12 text-center">
+                            <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Photo500x500, Labels.FoundM)</span>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+    <div class="kt-widget kt-widget--user-profile-3 mt-4">
+        <div class="kt-widget__top">
+            <div class="col-md-12">
+                <div class="row justify-content-center">
+                    <h3 class="kt-heading kt-heading--sm mb-1 mt-0">@Labels.Thumbnail</h3>
+                </div>
+                @if (Model.Collaborator?.HasImage() == true)
+                {
+                    <div class="row justify-content-center">
+                        <div class="kt-widget__media">
+                            <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, Model.Collaborator.Uid, Model.Collaborator.ImageUploadDate, true)" alt="image">
+                        </div>
+                    </div>
+
+                }
+                else
+                {
+                    <div class="row mt-3">
+                        <div class="col-12 text-center">
+                            <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Thumbnail, Labels.FoundM)</span>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>

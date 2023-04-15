@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-13-2021
+// Last Modified On : 04-15-2023
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -540,6 +540,7 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/collaborators/collaborators.socialnetworks.widget.js",
                 "~/Assets/js/collaborators/collaborators.onboardinginfo.widget.js",
                 "~/Assets/js/collaborators/collaborators.company.widget.js",
+                "~/Assets/js/collaborators/collaborators.images.widget.js",
                 "~/Assets/js/speakers/speakers.conferences.widget.js",
                 "~/Assets/js/speakers/speakers.participants.widget.js",
                 "~/Assets/js/companies/companyinfo.autocomplete.js",
