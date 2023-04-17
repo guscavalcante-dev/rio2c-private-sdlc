@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-31-2021
+// Last Modified On : 04-17-2023
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -41,7 +41,9 @@ using PlataformaRio2C.Infra.Report.Models;
 using PlataformaRio2C.Web.Admin.Controllers;
 using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
-using System.Text;
+using ClosedXML.Excel;
+using PlataformaRio2C.Domain.ApiModels;
+using PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 {
@@ -192,6 +194,118 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 page,
                 pageSize
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Exports to excel.
+        /// </summary>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="showPitchings">if set to <c>true</c> [show pitchings].</param>
+        /// <param name="interestUid">The interest uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ExportEvaluatorsReportToExcel(string searchKeywords, bool showPitchings, Guid? interestUid, Guid? evaluationStatusUid)
+        {
+            string fileName = $@"{Labels.AudioVisual} - {Labels.EvaluationsByEvaluator}_{DateTime.UtcNow.ToStringFileNameTimestamp()}";
+            string filePath = Path.Combine(Path.GetTempPath(), fileName + ".xlsx");
+
+            try
+            {
+                var projectsBaseDtos = await this.projectRepo.FindAllBaseDtosPagedAsync(
+                    1,
+                    10000,
+                    new List<Tuple<string, string>>(), //request.GetSortColumns(),
+                    searchKeywords,
+                    showPitchings,
+                    interestUid,
+                    evaluationStatusUid,
+                    this.UserInterfaceLanguage,
+                    this.EditionDto.Id,
+                    true);
+
+                using (var workbook = new XLWorkbook())
+                {
+                    var worksheet = workbook.Worksheets.Add(Labels.Contacts);
+
+                    #region Header
+
+                    var lineIndex = 1;
+                    var columnIndex = 0;
+                    var skipFinalAdjustmentsColumnIndexes = new List<int>();
+
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Producer;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Project;
+
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Evaluation;
+                    worksheet.Column(columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                    skipFinalAdjustmentsColumnIndexes.Add(columnIndex);
+
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Evaluator;
+
+                    #endregion
+
+                    if (projectsBaseDtos.Any())
+                    {
+                        #region Rows
+
+                        foreach (var projectBaseDto in projectsBaseDtos)
+                        {
+                            if (projectBaseDto?.ProjectCommissionEvaluationDtos != null)
+                            {
+                                foreach (var projectCommissionEvaluationDto in projectBaseDto.ProjectCommissionEvaluationDtos)
+                                {
+                                    lineIndex++;
+                                    columnIndex = 0;
+
+                                    worksheet.Cell(lineIndex, columnIndex += 1).Value = projectBaseDto.ProducerName;
+                                    worksheet.Cell(lineIndex, columnIndex += 1).Value = projectBaseDto.ProjectName;
+
+                                    worksheet.Cell(lineIndex, columnIndex += 1).Value = projectCommissionEvaluationDto.CommissionEvaluation.Grade;
+                                    worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+
+                                    worksheet.Cell(lineIndex, columnIndex += 1).Value = projectCommissionEvaluationDto.EvaluatorUser.Name;
+                                }
+                            }
+                        }
+
+                        for (var adjustColumnIndex = 1; adjustColumnIndex <= columnIndex; adjustColumnIndex++)
+                        {
+                            if (!skipFinalAdjustmentsColumnIndexes.Contains(adjustColumnIndex))
+                            {
+                                worksheet.Column(adjustColumnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Left);
+                            }
+
+                            worksheet.Column(adjustColumnIndex).Style.Alignment.WrapText = false;
+                            worksheet.Column(adjustColumnIndex).Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center);
+                            worksheet.Column(adjustColumnIndex).AdjustToContents();
+                        }
+
+                        #endregion
+                    }
+
+                    workbook.SaveAs(filePath);
+                }
+
+                // It's necessary to save workbook to file to run "AdjustToContents()" correctly.
+                // Without this, "AdjustToContents()" doesn't work and columns be with minimun width.
+                var fileBytes = System.IO.File.ReadAllBytes(filePath);
+                var workbookResult = new XLWorkbook(new MemoryStream(fileBytes));
+
+                return new ExcelResult(workbookResult, fileName);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = ApiStatus.Error, message = Messages.WeFoundAndError });
+            }
+            finally
+            {
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+            }
         }
 
         #endregion

@@ -1008,6 +1008,9 @@
     <value>Evaluations</value>
     <comment>Avaliações</comment>
   </data>
+  <data name="EvaluationsByEvaluator" xml:space="preserve">
+    <value>Evaluations by Evaluator</value>
+  </data>
   <data name="Evaluator" xml:space="preserve">
     <value>Evaluator</value>
     <comment>Avaliador</comment>

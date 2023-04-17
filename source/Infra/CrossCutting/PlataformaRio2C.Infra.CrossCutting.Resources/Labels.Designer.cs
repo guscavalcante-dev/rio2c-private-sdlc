@@ -2212,6 +2212,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Avaliações por Jurado.
+        /// </summary>
+        public static string EvaluationsByEvaluator {
+            get {
+                return ResourceManager.GetString("EvaluationsByEvaluator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Avaliador.
         /// </summary>
         public static string Evaluator {

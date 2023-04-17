@@ -4,7 +4,7 @@
 // Created          : 12-13-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-31-2021
+// Last Modified On : 04-17-2023
 // ***********************************************************************
 // <copyright file="audiovisual.projects.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -420,6 +420,17 @@ var AudiovisualProjectsDataTableWidget = function () {
         );
     };
 
+    // Export -------------------------------------------------------------------------------------
+    var exportEvaluatorsReportToExcel = function () {
+        var jsonParameters = new Object();
+        jsonParameters.searchKeywords = $('#Search').val();
+        jsonParameters.showPitchings = $('#ShowPitchings').prop('checked');
+        jsonParameters.interestUid = $('#InterestUid').val();
+        jsonParameters.evaluationStatusUid = $('#EvaluationStatusUid').val();
+
+        location.href = '/Audiovisual/Projects/ExportEvaluatorsReportToExcel?' + jQuery.param(jsonParameters);
+    };
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
@@ -430,6 +441,9 @@ var AudiovisualProjectsDataTableWidget = function () {
         },
         showDetails: function (projectId, searchKeywords, interestUid, evaluationStatusUid, showPitchings, page, pageSize) {
             showDetails(projectId, searchKeywords, interestUid, evaluationStatusUid, showPitchings, page, pageSize);
+        },
+        exportEvaluatorsReportToExcel: function () {
+            exportEvaluatorsReportToExcel();
         }
     };
 }();

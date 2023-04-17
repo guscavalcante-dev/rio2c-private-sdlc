@@ -1010,6 +1010,9 @@
     <value>Avaliações</value>
     <comment>Avaliações</comment>
   </data>
+  <data name="EvaluationsByEvaluator" xml:space="preserve">
+    <value>Avaliações por Jurado</value>
+  </data>
   <data name="Evaluator" xml:space="preserve">
     <value>Avaliador</value>
     <comment>Avaliador</comment>
