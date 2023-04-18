@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-14-2022
+// Last Modified On : 04-17-2023
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -701,8 +701,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="keywords">The keywords.</param>
         /// <param name="showPitchings">if set to <c>true</c> [show pitchings].</param>
         /// <param name="interestUid">The interest uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="languageCode">The language code.</param>
         /// <param name="editionId">The edition identifier.</param>
+        /// <param name="exportToExcel">if set to <c>true</c> [export to excel].</param>
         /// <returns></returns>
         public async Task<IPagedList<ProjectBaseDto>> FindAllBaseDtosPagedAsync(
             int page,
@@ -713,9 +715,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             Guid? interestUid,
             Guid? evaluationStatusUid,
             string languageCode,
-            int editionId)
+            int editionId,
+            bool exportToExcel = false)
         {
-            var projectBaseDtos = await this.FindAllProjectBaseDtosByFilters(sortColumns, keywords, showPitchings, interestUid, languageCode, editionId);
+            var projectBaseDtos = await this.FindAllProjectBaseDtosByFilters(sortColumns, keywords, showPitchings, interestUid, languageCode, editionId, exportToExcel);
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
 
             IEnumerable<ProjectBaseDto> projectBaseDtosResult = projectBaseDtos;
@@ -1073,9 +1076,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="keywords">The keywords.</param>
         /// <param name="showPitchings">if set to <c>true</c> [show pitchings].</param>
         /// <param name="interestUid">The interest uid.</param>
-        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="languageCode">The language code.</param>
         /// <param name="editionId">The edition identifier.</param>
+        /// <param name="exportToExcel">if set to <c>true</c> [export to excel].</param>
         /// <returns></returns>
         private async Task<List<ProjectBaseDto>> FindAllProjectBaseDtosByFilters(
             List<Tuple<string, string>> sortColumns,
@@ -1083,7 +1086,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             bool showPitchings,
             Guid? interestUid,
             string languageCode,
-            int editionId)
+            int editionId,
+            bool exportToExcel = false)
         {
             this.SetProxyEnabled(false);
 
@@ -1092,43 +1096,74 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .IsFinished()
                             .IsPitching(showPitchings)
                             .FindByKeywords(keywords)
-                            .FindByInterestUid(interestUid)
-                            .DynamicOrder<Project>(
-                                sortColumns,
-                                null,
-                                new List<string> { "CreateDate", "FinishDate" },
-                                "FinishDate")
-                            .Select(p => new ProjectBaseDto
-                            {
-                                Id = p.Id,
-                                Uid = p.Uid,
-                                ProjectName = p.ProjectTitles.Where(t => t.Language.Code == languageCode).Select(t => t.Value).FirstOrDefault(),
-                                ProducerName = p.SellerAttendeeOrganization.Organization.Name,
-                                ProducerImageUploadDate = p.SellerAttendeeOrganization.Organization.ImageUploadDate,
-                                ProducerUid = p.SellerAttendeeOrganization.Organization.Uid,
-                                ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted && i.Interest.InterestGroup.Uid == InterestGroup.Genre.Uid).Select(i => new ProjectInterestDto
-                                {
-                                    Interest = i.Interest,
-                                    InterestGroup = i.Interest.InterestGroup
-                                }),
-                                ProjectTargetAudienceDtos = p.ProjectTargetAudiences.Where(ta => !ta.IsDeleted).Select(ta => new ProjectTargetAudienceDto
-                                {
-                                    TargetAudience = ta.TargetAudience
-                                }),
-                                IsPitching = p.IsPitching,
-                                CreateDate = p.CreateDate,
-                                FinishDate = p.FinishDate,
-                                CommissionGrade = p.CommissionGrade,
-                                CommissionEvaluationsCount = p.CommissionEvaluationsCount
-                            });
+                            .FindByInterestUid(interestUid);
 
-            var result = await query
-                            //.Order()
-                            .ToListAsync();
+            List<ProjectBaseDto> projectBaseDtos;
+
+            if (exportToExcel)
+            {
+                #region Report Select Query
+
+                projectBaseDtos = await query
+                                            .Select(p => new ProjectBaseDto
+                                            {
+                                                Id = p.Id,
+                                                Uid = p.Uid,
+                                                ProjectName = p.ProjectTitles.Where(t => t.Language.Code == languageCode).Select(t => t.Value).FirstOrDefault(),
+                                                ProducerName = p.SellerAttendeeOrganization.Organization.Name,
+                                                ProjectCommissionEvaluationDtos = p.CommissionEvaluations.Where(ce => !ce.IsDeleted).Select(ce => new ProjectCommissionEvaluationDto
+                                                {
+                                                    CommissionEvaluation = ce,
+                                                    EvaluatorUser = ce.EvaluatorUser
+                                                }),
+                                            })
+                                            .OrderBy(p => p.ProducerName)
+                                            .ThenBy(p => p.ProjectName)
+                                            .ToListAsync();
+
+                #endregion
+            }
+            else
+            {
+                #region DataTable Select Query
+
+                projectBaseDtos = await query
+                                            .Select(p => new ProjectBaseDto
+                                            {
+                                                Id = p.Id,
+                                                Uid = p.Uid,
+                                                ProjectName = p.ProjectTitles.Where(t => t.Language.Code == languageCode).Select(t => t.Value).FirstOrDefault(),
+                                                ProducerName = p.SellerAttendeeOrganization.Organization.Name,
+                                                ProducerImageUploadDate = p.SellerAttendeeOrganization.Organization.ImageUploadDate,
+                                                ProducerUid = p.SellerAttendeeOrganization.Organization.Uid,
+                                                ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted && i.Interest.InterestGroup.Uid == InterestGroup.Genre.Uid).Select(i => new ProjectInterestDto
+                                                {
+                                                    Interest = i.Interest,
+                                                    InterestGroup = i.Interest.InterestGroup
+                                                }),
+                                                ProjectTargetAudienceDtos = p.ProjectTargetAudiences.Where(ta => !ta.IsDeleted).Select(ta => new ProjectTargetAudienceDto
+                                                {
+                                                    TargetAudience = ta.TargetAudience
+                                                }),
+                                                IsPitching = p.IsPitching,
+                                                CreateDate = p.CreateDate,
+                                                FinishDate = p.FinishDate,
+                                                CommissionGrade = p.CommissionGrade,
+                                                CommissionEvaluationsCount = p.CommissionEvaluationsCount
+                                            })
+                                            .DynamicOrder(
+                                                sortColumns,
+                                                null,
+                                                new List<string> { "CreateDate", "FinishDate" },
+                                                "FinishDate")
+                                            .ToListAsync();
+
+                #endregion
+            }
 
             this.SetProxyEnabled(true);
 
-            return result;
+            return projectBaseDtos;
         }
 
         /// <summary>

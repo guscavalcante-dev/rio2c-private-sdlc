@@ -10,6 +10,21 @@
                 @Labels.Projects
             </h3>
         </div>
+        <div class="kt-portlet__head-label">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span>@Labels.ExportToExcel</span>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    @*<a href="javascript:;" class="dropdown-item" onclick="InnovationProjectsDataTableWidget.exportExcelReportByProject()">
+                        <span class="kt-nav__link-text">@Labels.ReportByProject</span>
+                    </a>*@
+                    <a href="javascript:;" class="dropdown-item" onclick="AudiovisualProjectsDataTableWidget.exportEvaluatorsReportToExcel()">
+                        <span class="kt-nav__link-text">@Labels.ReportByEvaluator</span>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="kt-portlet__body">
         <!--begin: SearchForm-->
