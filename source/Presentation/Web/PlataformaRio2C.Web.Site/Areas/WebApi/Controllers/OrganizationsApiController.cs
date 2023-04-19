@@ -4,7 +4,7 @@
 // Created          : 10-14-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-27-2021
+// Last Modified On : 04-19-2023
 // ***********************************************************************
 // <copyright file="OrganizationsApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Microsoft.AspNet.Identity;
 using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Domain.ApiModels;
 using PlataformaRio2C.Domain.Interfaces;
@@ -59,26 +60,15 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("organizations")]
         public async Task<IHttpActionResult> Organizations([FromUri]OrganizationsApiRequest request)
         {
-            //var editions = this.editionRepo.FindAllByIsActive(false);
-            //if (editions?.Any() == false)
-            //{
-            //    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." }});
-            //}
-
-            //// Get edition from request otherwise get current
-            //var edition = request?.Edition.HasValue == true ? editions?.FirstOrDefault(e => e.UrlCode == request.Edition) : 
-            //                                                  editions?.FirstOrDefault(e => e.IsCurrent);
-            //if (edition == null)
-            //{
-            //    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." }});
-            //}
+            int? userId = this.User?.Identity?.GetUserId<int>();
 
             var organizationsApiDtos = await this.organizationRepo.FindAllOrganizationsApiPaged(
                 null, // NOT BEING USED
                 request?.CompanyName,
                 request?.TradeName,
                 request?.GetCompanyNumber(),
-                Guid.Empty, //Required only on Web.Admin.OrganizationsApiController
+                Guid.Empty, //Required only on Web.Admin.OrganizationsApiController,
+                userId,
                 true,
                 true,
                 request?.Page ?? 1, 

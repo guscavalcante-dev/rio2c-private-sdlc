@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 04-12-2023
+// Last Modified On : 04-19-2023
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -112,41 +112,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 query = query.Where(o => o.AttendeeOrganizations.Any(ao => !ao.IsDeleted
                                                                            && (showAllOrganizations || ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == organizationTypeUid
                                                                                                                                                && !aot.IsDeleted))));
-            }
-
-            return query;
-        }
-
-        /// <summary>Finds the by not organiations types names.</summary>
-        /// <param name="query">The query.</param>
-        /// <param name="organizationTypeNames">The organization type names.</param>
-        /// <returns></returns>
-        internal static IQueryable<Organization> FindByNotOrganiationsTypesNames(this IQueryable<Organization> query, List<string> organizationTypeNames)
-        {
-
-            if (organizationTypeNames?.Any() == true)
-            {
-                query = query.Where(o => o.AttendeeOrganizations.Any() != true
-                                         || !o.AttendeeOrganizations.Any(ao => !ao.IsDeleted
-                                                                               && ao.AttendeeOrganizationTypes.Any(aot => organizationTypeNames.Contains(aot.OrganizationType.Name)
-                                                                                                                          && !aot.IsDeleted)));
-            }
-
-            return query;
-        }
-
-        /// <summary>Finds the by edition identifier.</summary>
-        /// <param name="query">The query.</param>
-        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <returns></returns>
-        internal static IQueryable<Organization> FindByEditionId(this IQueryable<Organization> query, bool showAllEditions, int? editionId)
-        {
-            if (!showAllEditions && editionId.HasValue)
-            {
-                query = query.Where(o => o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
-                                                                           && !ao.IsDeleted
-                                                                           && !ao.Edition.IsDeleted));
             }
 
             return query;
@@ -331,6 +296,25 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>
+        /// Finds the by attendee organization collaborators.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="collaboratorId">The user identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<Organization> HasAttendeeOrganizationCollaborators(this IQueryable<Organization> query, int? collaboratorId)
+        {
+            if (collaboratorId.HasValue)
+            {
+                query = query.Where(o => o.AttendeeOrganizations.Any(ao => !ao.IsDeleted
+                                                                           && !ao.Edition.IsDeleted
+                                                                           && ao.AttendeeOrganizationCollaborators.Any(aoc => aoc.AttendeeCollaborator.CollaboratorId == collaboratorId)));
+            }
+
+            return query;
+        }
+
     }
 
     #endregion
@@ -881,14 +865,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<OrganizationApiListDto>> FindAllOrganizationsApiPaged(int? editionId, string companyName, string tradeName, string document, Guid organizationTypeUid, bool showAllEditions, bool showAllOrganizations, int page, int pageSize)
+        public async Task<IPagedList<OrganizationApiListDto>> FindAllOrganizationsApiPaged(int? editionId, string companyName, string tradeName, string document, Guid organizationTypeUid, int? collaboratorId, bool showAllEditions, bool showAllOrganizations, int page, int pageSize)
         {
             var query = this.GetBaseQuery()
                                 .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, showAllEditions, showAllOrganizations, editionId)
                                 .FindByCompanyName(companyName)
                                 .FindByTradeName(tradeName)
-                                .FindByEqualDocument(document);
-            //.FindByNotOrganiationsTypesNames(new List<string> { Domain.Constants.OrganizationType.AudiovisualBuyer });
+                                .FindByEqualDocument(document)
+                                .HasAttendeeOrganizationCollaborators(collaboratorId);
 
             return await query
                             .Select(o => new OrganizationApiListDto
