@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 05-15-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-26-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 04-20-2023
 // ***********************************************************************
 // <copyright file="UpdateNegotiationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -83,7 +83,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var project = await this.projectRepo.GetAsync(cmd.ProjectUid ?? Guid.Empty);
             var negotiationConfig = await this.negotiationConfigRepo.GetAsync(cmd.NegotiationConfigUid ?? Guid.Empty);
             var negotiationRoomConfig = await this.negotiationRoomConfigRepo.GetAsync(cmd.NegotiationRoomConfigUid ?? Guid.Empty);
-            var negotiationsInThisRoom = await this.NegotiationRepo.FindManualScheduledNegotiationsByRoomIdAsync(negotiationRoomConfig?.Room?.Id ?? 0);
+            var manualScheduledNegotiationsInThisRoom = await this.NegotiationRepo.FindManualScheduledNegotiationsByRoomIdAsync(negotiationRoomConfig?.Room?.Id ?? 0);
 
             var startDatePreview = negotiationConfig.StartDate.Date.JoinDateAndTime(cmd.StartTime, true).ToUtcTimeZone();
             var endDatePreview = startDatePreview.Add(negotiationConfig.TimeOfEachRound);
@@ -91,7 +91,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #region Overbooking Validations
 
             // Available tables check
-            var negotiationsGroupedByRoomAndStartDate = negotiationsInThisRoom.GroupBy(n => n.StartDate);
+            var negotiationsGroupedByRoomAndStartDate = manualScheduledNegotiationsInThisRoom.GroupBy(n => n.StartDate);
             var hasNoMoreTablesAvailable = negotiationsGroupedByRoomAndStartDate.Any(n => n.Count(w => w.StartDate == startDatePreview) >= negotiationRoomConfig.CountManualTables);
             if (hasNoMoreTablesAvailable)
             {
@@ -189,7 +189,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            var negotiationsInThisRoomAndStartDate = negotiationsInThisRoom.Where(n => n.StartDate == startDatePreview).ToList();
+            var negotiationsInThisRoomAndStartDate = manualScheduledNegotiationsInThisRoom.Where(n => n.StartDate == startDatePreview).ToList();
             
             var negotiation = await this.GetNegotiationByUid(cmd.NegotiationUid);
             negotiation.Update(
