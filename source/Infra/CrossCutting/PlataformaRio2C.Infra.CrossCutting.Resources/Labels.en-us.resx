@@ -369,6 +369,9 @@
     <value>Audiovisual Subscription Project Report</value>
     <comment>Relatório de Inscrição de Projeto Audiovisual</comment>
   </data>
+  <data name="AudiovisualVirtualMeetingJoinDate" xml:space="preserve">
+    <value>Audiovisual virtual meeting join date</value>
+  </data>
   <data name="Automatic" xml:space="preserve">
     <value>Automatic</value>
     <comment>Automático</comment>
