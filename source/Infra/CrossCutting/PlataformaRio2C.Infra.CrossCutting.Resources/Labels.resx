@@ -368,6 +368,9 @@
     <value>Relatório de Inscrição de Projeto Audiovisual</value>
     <comment>Relatório de Inscrição de Projeto Audiovisual</comment>
   </data>
+  <data name="AudiovisualVirtualMeetingJoinDate" xml:space="preserve">
+    <value>Data de ingresso na reunião virtual</value>
+  </data>
   <data name="Automatic" xml:space="preserve">
     <value>Automático</value>
     <comment>Automático</comment>
@@ -2962,12 +2965,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Data de Edição</comment>
   </data>
   <data name="UpdatedF" xml:space="preserve">
-    <value>editada</value>
-    <comment>editada</comment>
+    <value>atualizada</value>
+    
   </data>
   <data name="UpdatedM" xml:space="preserve">
-    <value>editado</value>
-    <comment>editado</comment>
+    <value>atualizado</value>
+    
   </data>
   <data name="UrlCode" xml:space="preserve">
     <value>Código da URL</value>

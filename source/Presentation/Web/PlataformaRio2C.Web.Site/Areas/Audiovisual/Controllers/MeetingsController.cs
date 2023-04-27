@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 07-28-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-01-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 04-27-2023
 // ***********************************************************************
 // <copyright file="MeetingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using MediatR;
+using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Interfaces;
@@ -175,6 +176,22 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             });
 
             #endregion
+
+            var cmd = new UpdateVirtualMeetingJoinDate();
+
+            cmd.UpdatePreSendProperties(
+                this.UserAccessControlDto.User.Id,
+                this.UserAccessControlDto.User.Uid,
+                this.EditionDto.Id,
+                this.EditionDto.Uid,
+                this.UserInterfaceLanguage,
+                true);
+
+            var result = await this.CommandBus.Send(cmd);
+            if (!result.IsValid)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.AudiovisualVirtualMeetingJoinDate, Labels.UpdatedF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+            }
 
             return View(negotiationDto);
         }

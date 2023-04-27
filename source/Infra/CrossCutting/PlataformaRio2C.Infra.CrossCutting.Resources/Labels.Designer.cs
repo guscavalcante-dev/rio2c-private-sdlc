@@ -655,6 +655,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data de ingresso na reunião virtual.
+        /// </summary>
+        public static string AudiovisualVirtualMeetingJoinDate {
+            get {
+                return ResourceManager.GetString("AudiovisualVirtualMeetingJoinDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Automático.
         /// </summary>
         public static string Automatic {
@@ -6865,7 +6874,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to editada.
+        ///   Looks up a localized string similar to atualizada.
         /// </summary>
         public static string UpdatedF {
             get {
@@ -6874,7 +6883,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to editado.
+        ///   Looks up a localized string similar to atualizado.
         /// </summary>
         public static string UpdatedM {
             get {
