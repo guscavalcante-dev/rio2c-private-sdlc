@@ -177,7 +177,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 
             #endregion
 
-            var cmd = new UpdateVirtualMeetingJoinDate();
+            var cmd = new CreateAttendeeNegotiationCollaborator(id ?? Guid.Empty);
 
             cmd.UpdatePreSendProperties(
                 this.UserAccessControlDto.User.Id,

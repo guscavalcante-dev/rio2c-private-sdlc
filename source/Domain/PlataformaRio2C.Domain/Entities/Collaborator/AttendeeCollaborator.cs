@@ -32,7 +32,6 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset? PlayerTermsAcceptanceDate { get; private set; }
         public DateTimeOffset? ProducerTermsAcceptanceDate { get; private set; }
         public DateTimeOffset? SpeakerTermsAcceptanceDate { get; private set; }
-        public DateTimeOffset? AudiovisualVirtualMeetingJoinDate { get; private set; }
 
         public virtual Edition Edition { get; private set; }
         public virtual Collaborator Collaborator { get; private set; }
@@ -373,20 +372,6 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.WelcomeEmailSendDate = this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
-        }
-
-        /// <summary>
-        /// Joins the audiovisual virtual meeting.
-        /// </summary>
-        /// <param name="userId">The user identifier.</param>
-        public void JoinAudiovisualVirtualMeeting(int userId)
-        {
-            if (!this.AudiovisualVirtualMeetingJoinDate.HasValue)
-            {
-                this.AudiovisualVirtualMeetingJoinDate = DateTime.UtcNow;
-                this.UpdateDate = DateTime.UtcNow;
-                this.UpdateUserId = userId;
-            }
         }
 
         #region Administrators

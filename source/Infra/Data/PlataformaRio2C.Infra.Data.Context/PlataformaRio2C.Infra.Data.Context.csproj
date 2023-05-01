@@ -79,6 +79,7 @@
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Mapping\Audiovisual\CommissionEvaluationMap.cs" />
     <Compile Include="Mapping\Audiovisual\CommissionAttendeeCollaboratorInterestMap.cs" />
+    <Compile Include="Mapping\Audiovisual\Negotiation\AttendeeNegotiationCollaboratorMap.cs" />
     <Compile Include="Mapping\Cartoon\AttendeeCartoonProjectMap.cs" />
     <Compile Include="Mapping\Cartoon\CartoonProjectOrganizationMap.cs" />
     <Compile Include="Mapping\Cartoon\CartoonProjectCreatorMap.cs" />

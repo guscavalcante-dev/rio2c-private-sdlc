@@ -132,6 +132,7 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new NegotiationMap());
             modelBuilder.Configurations.Add(new NegotiationConfigMap());
             modelBuilder.Configurations.Add(new NegotiationRoomConfigMap());
+            modelBuilder.Configurations.Add(new AttendeeNegotiationCollaboratorMap());
 
             // Music
             modelBuilder.Configurations.Add(new MusicBandMap());

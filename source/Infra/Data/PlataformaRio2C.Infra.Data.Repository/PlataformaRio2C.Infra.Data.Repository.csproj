@@ -149,6 +149,7 @@
     <Compile Include="Base\Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Address\AddressRepository.cs" />
+    <Compile Include="Repositories\Audiovisual\Negotiation\AttendeeNegotiationCollaboratorRepository.cs" />
     <Compile Include="Repositories\Cartoon\AttendeeCartoonProjectRepository.cs" />
     <Compile Include="Repositories\Cartoon\CartoonProjectRepository.cs" />
     <Compile Include="Repositories\Cartoon\CartoonProjectFormatRepository.cs" />
