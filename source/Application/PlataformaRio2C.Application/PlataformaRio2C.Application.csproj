@@ -205,7 +205,7 @@
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\Collaborators\UpdateAudiovisualCollaboratorAdminMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\Collaborators\UpdateAudiovisualCollaboratorSocialNetworksCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\Collaborators\UpdateAudiovisualCollaboratorInterestsCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Audiovisual\Meetings\UpdateVirtualMeetingJoinDateCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Audiovisual\Negotiations\CreateAttendeeNegotiationCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationConfigs\DeleteNegotiationConfigCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationConfigs\NegotiationConfigBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationConfigs\CreateNegotiationConfigCommandHandler.cs" />
@@ -391,7 +391,7 @@
     <Compile Include="CQRS\Commands\Audiovisual\Collaborators\UpdateAudiovisualCollaboratorAdminMainInformation.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\Collaborators\UpdateAudiovisualCollaboratorSocialNetworks.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\Collaborators\UpdateAudiovisualCollaboratorInterests.cs" />
-    <Compile Include="CQRS\Commands\Audiovisual\Meetings\UpdateVirtualMeetingJoinDate.cs" />
+    <Compile Include="CQRS\Commands\Audiovisual\Negotiations\CreateAttendeeNegotiationCollaborator.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\NegotiationConfigs\UpdateNegotiationConfigMainInformation.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\NegotiationConfigs\DeleteNegotiationConfig.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\NegotiationConfigs\CreateNegotiationConfig.cs" />
