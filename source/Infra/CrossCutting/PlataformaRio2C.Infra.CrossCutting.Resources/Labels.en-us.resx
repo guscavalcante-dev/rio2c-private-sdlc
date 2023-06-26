@@ -2620,6 +2620,9 @@
   <data name="ShowOnWebsite" xml:space="preserve">
     <value>Show on website?</value>
   </data>
+  <data name="ShowParticipants" xml:space="preserve">
+    <value>Show participants</value>
+  </data>
   <data name="ShowPitchings" xml:space="preserve">
     <value>Show pitchings only</value>
     <comment>Exibir somente pitchings</comment>

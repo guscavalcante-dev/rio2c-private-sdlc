@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 03-06-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-26-2021
+// Last Modified By : Renan valentim
+// Last Modified On : 06-26-2023
 // ***********************************************************************
 // <copyright file="MeetingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,7 +25,6 @@ using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
@@ -250,15 +249,18 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="roomUid">The room uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowScheduledDataWidget(Guid? buyerOrganizationUid, Guid? sellerOrganizationUid, string projectKeywords, DateTime? date, Guid? roomUid)
+        public async Task<ActionResult> ShowScheduledDataWidget(ScheduledSearchViewModel searchViewModel) //Guid? buyerOrganizationUid, Guid? sellerOrganizationUid, string projectKeywords, DateTime? date, Guid? roomUid
         {
             var negotiations = await this.negotiationRepo.FindScheduledWidgetDtoAsync(
                 this.EditionDto.Id,
-                buyerOrganizationUid,
-                sellerOrganizationUid,
-                projectKeywords,
-                date,
-                roomUid);
+                searchViewModel.BuyerOrganizationUid,
+                searchViewModel.SellerOrganizationUid,
+                searchViewModel.ProjectKeywords,
+                searchViewModel.Date,
+                searchViewModel.RoomUid,
+                searchViewModel.ShowParticipants);
+
+            ViewBag.ShowParticipants = searchViewModel.ShowParticipants;
 
             return new JsonResult()
             {
