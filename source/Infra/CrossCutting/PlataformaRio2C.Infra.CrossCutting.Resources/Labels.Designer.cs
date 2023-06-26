@@ -6073,6 +6073,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exibir participantes.
+        /// </summary>
+        public static string ShowParticipants {
+            get {
+                return ResourceManager.GetString("ShowParticipants", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exibir somente pitchings.
         /// </summary>
         public static string ShowPitchings {

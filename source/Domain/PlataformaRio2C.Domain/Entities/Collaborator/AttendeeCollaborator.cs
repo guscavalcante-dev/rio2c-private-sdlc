@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-26-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 01-11-2023
+// Last Modified By : Renan valentim
+// Last Modified On : 06-26-2023
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -46,6 +46,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<Logistic> Logistics { get; private set; }
         public virtual ICollection<AttendeeCollaboratorInnovationOrganizationTrack> AttendeeCollaboratorInnovationOrganizationTracks { get; private set; }
         public virtual ICollection<CommissionAttendeeCollaboratorInterest> CommissionAttendeeCollaboratorInterests { get; private set; }
+        public virtual ICollection<AttendeeNegotiationCollaborator> AttendeeNegotiationCollaborators { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.

@@ -2628,6 +2628,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="ShowOnWebsite" xml:space="preserve">
     <value>Exibir no site?</value>
   </data>
+  <data name="ShowParticipants" xml:space="preserve">
+    <value>Exibir participantes</value>
+  </data>
   <data name="ShowPitchings" xml:space="preserve">
     <value>Exibir somente pitchings</value>
     <comment>Exibir somente pitchings</comment>

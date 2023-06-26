@@ -917,6 +917,9 @@
     <value>Showing on site {0} edition</value>
     <comment>Exibindo na edição {0} do site</comment>
   </data>
+  <data name="ShowParticipantsTooltipHelpText" xml:space="preserve">
+    <value>Check to display the participants who joined the &lt;b&gt;virtual business rounds&lt;/b&gt;.&lt;/br&gt;Only &lt;b&gt;Virtual&lt;/b&gt; type rooms will display the participants</value>
+  </data>
   <data name="SomethingIsWrong" xml:space="preserve">
     <value>Something is wrong.</value>
   </data>

@@ -510,3 +510,12 @@ table.dataTable tbody tr.selected {
     letter-spacing: 0.1em !important;
     color: #FFFFFF !important;
 }
+
+
+/*
+    Colors
+*/
+
+.bg-light-yellow {
+    background-color: #FFFFE0;
+}

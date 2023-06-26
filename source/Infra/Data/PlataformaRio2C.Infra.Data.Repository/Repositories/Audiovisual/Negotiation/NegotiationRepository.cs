@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-26-2021
+// Last Modified By : Renan valentim
+// Last Modified On : 06-26-2023
 // ***********************************************************************
 // <copyright file="NegotiationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -473,9 +473,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             Guid? sellerOrganizationUid,
             string projectKeywords,
             DateTime? negotiationDate,
-            Guid? roomUid)
+            Guid? roomUid,
+            bool showParticipants)
         {
-            var query = this.GetBaseQuery()
+            this.SetProxyEnabled(false);
+
+            var query = this.GetBaseQuery(true)
                                 .FindByEditionId(editionId)
                                 .FindByBuyerOrganizationUid(buyerOrganizationUid)
                                 .FindBySellerOrganizationUid(sellerOrganizationUid)
@@ -494,11 +497,25 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization)
                                 .Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization);
 
-            return (await query.ToListAsync())
-                                .GroupBy(n => n.StartDate.ToBrazilTimeZone().Date)
-                                .Select(nd => new NegotiationGroupedByDateDto(nd.Key, nd.ToList()))
-                                .OrderBy(ngd => ngd.Date)
-                                .ToList();
+            if (showParticipants)
+            {
+                query = query.Include(n => n.AttendeeNegotiationCollaborators);
+                query = query.Include(n => n.AttendeeNegotiationCollaborators.Select(anc => anc.AttendeeCollaborator));
+                query = query.Include(n => n.AttendeeNegotiationCollaborators.Select(anc => anc.AttendeeCollaborator.Collaborator));
+                query = query.Include(n => n.AttendeeNegotiationCollaborators.Select(anc => anc.AttendeeCollaborator.AttendeeOrganizationCollaborators));
+                query = query.Include(n => n.AttendeeNegotiationCollaborators.Select(anc => anc.AttendeeCollaborator.AttendeeOrganizationCollaborators.Select(aoc => aoc.AttendeeOrganization)));
+                query = query.Include(n => n.AttendeeNegotiationCollaborators.Select(anc => anc.AttendeeCollaborator.AttendeeOrganizationCollaborators.Select(aoc => aoc.AttendeeOrganization.Organization)));
+            }
+
+            var negotiationsGroupedByDateDtos = (await query.ToListAsync())
+                                                    .GroupBy(n => n.StartDate.ToBrazilTimeZone().Date)
+                                                    .Select(nd => new NegotiationGroupedByDateDto(nd.Key, nd.ToList()))
+                                                    .OrderBy(ngd => ngd.Date)
+                                                    .ToList();
+
+            this.SetProxyEnabled(true);
+
+            return negotiationsGroupedByDateDtos;
         }
 
         /// <summary>

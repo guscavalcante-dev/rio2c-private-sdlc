@@ -1,4 +1,5 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
+@model ScheduledSearchViewModel
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
 }
@@ -27,31 +28,40 @@
         <div class="kt-portlet__body">
             <!--begin: SearchForm-->
             <div class="row">
-                <div class="col-12 col-md-6 mt-2">
-                    @Html.DropDownList("SearchBuyerOrganizationUid", Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.Player.ToLowerInvariant())}", new { @class = "form-control" })
+                <div class="col-12 col-md-4 mt-2">
+                    @Html.DropDownListFor(m => m.BuyerOrganizationUid, Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.Player.ToLowerInvariant())}", new { @class = "form-control" })
                 </div>
-                <div class="col-12 col-md-6 mt-2">
-                    @Html.DropDownList("SearchSellerOrganizationUid", Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAFEntity, Labels.Producer.ToLowerInvariant())}", new { @class = "form-control" })
+                <div class="col-12 col-md-4 mt-2">
+                    @Html.DropDownListFor(m => m.SellerOrganizationUid, Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAFEntity, Labels.Producer.ToLowerInvariant())}", new { @class = "form-control" })
+                </div>
+                <div class="col-12 col-md-4 mt-2">
+                    @Html.TextBoxFor(m => m.ProjectKeywords, null, new { type = "search", @class = "form-control", autocomplete = "off", placeholder = $"{Labels.Project}" })
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 col-md-4 mt-2">
-                    @Html.TextBox("SearchProjectKeywords", null, new { type = "search", @class = "form-control", autocomplete = "off", placeholder = $"{Labels.Project}" })
+                    @Html.TextBoxFor(m => m.Date, null, new { @class = "form-control enable-datepicker", type = "search", data_date_start_date = editionDto?.StartDate.ToBrazilTimeZone().ToShortDateString(), data_date_end_date = editionDto?.EndDate.ToBrazilTimeZone().ToShortDateString(), placeholder = Labels.Date })
+                </div>
+                <div class="col-12 col-md-4 mt-2">
+                    @Html.DropDownListFor(m => m.RoomUid, new SelectList(ViewBag.Rooms, "Uid", "Name", null), $"{string.Format(Labels.SelectAMEntity, Labels.Room.ToLowerInvariant())}", new { @class = "form-control enable-select2" })
                 </div>
                 <div class="col-12 col-md-3 mt-2">
-                    @Html.TextBox("SearchDate", null, new { @class = "form-control enable-datepicker", type = "search", data_date_start_date = editionDto?.StartDate.ToBrazilTimeZone().ToShortDateString(), data_date_end_date = editionDto?.EndDate.ToBrazilTimeZone().ToShortDateString(), placeholder = Labels.Date })
+                    <div class="kt-checkbox-inline  mt-2">
+                        <label class="kt-checkbox">
+                            @Html.CheckBoxFor(m => m.ShowParticipants, new { @class = "enable-datatable-reload" }) @Labels.ShowParticipants
+                            <span></span>
+                            <label class="kt-pricing-1__icon" data-toggle="tooltip" data-placement="right" style="cursor: pointer;" title="@Messages.ShowParticipantsTooltipHelpText"><i class="fa fa-question-circle"></i></label>
+                        </label>
+                    </div>
                 </div>
-                <div class="col-12 col-md-3 mt-2">
-                    @Html.DropDownList("SearchRoomUid", new SelectList(ViewBag.Rooms, "Uid", "Name", null), $"{string.Format(Labels.SelectAMEntity, Labels.Room.ToLowerInvariant())}", new { @class = "form-control enable-select2" })
-                </div>
-                <div class="form-group col-2 col-md-1 mt-2">
-                    <button type="button" class="btn btn-primary btn-icon" onclick="AudiovisualMeetingsScheduledWidget.search();"><i class="fa fa-search"></i></button>
+                <div class="col-12 col-md-1 mt-2">
+                    <button type="button" class="btn btn-primary btn-icon float-md-right" onclick="AudiovisualMeetingsScheduledWidget.search();"><i class="fa fa-search"></i></button>
                 </div>
             </div>
-            <!--end: SearchForm-->
-            <!--begin:: Result-->
-            <div id="AudiovisualMeetingsScheduledWidget" class="mt-2" style="min-height: 500px;"></div>
-            <!--end:: Result-->
         </div>
+        <!--end: SearchForm-->
+        <!--begin:: Result-->
+        <div id="AudiovisualMeetingsScheduledWidget" class="mt-2" style="min-height: 500px;"></div>
+        <!--end:: Result-->
     </div>
 </div>

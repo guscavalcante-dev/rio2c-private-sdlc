@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 03-07-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-25-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 06-26-2023
 // ***********************************************************************
 // <copyright file="audiovisual.meetings.scheduled.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,44 +22,52 @@ var AudiovisualMeetingsScheduledWidget = function () {
 
     // Search form  -------------------------------------------------------------------------------
     var enableSearchEvents = function () {
-	    $('#SearchBuyerOrganizationUid').not('.change-event-enabled').on('change', function () {
+	    $('#BuyerOrganizationUid').not('.change-event-enabled').on('change', function () {
 		    AudiovisualMeetingsScheduledWidget.search();
 	    });
-	    $('#SearchBuyerOrganizationUid').addClass('change-event-enabled');
+	    $('#BuyerOrganizationUid').addClass('change-event-enabled');
 
-	    $('#SearchSellerOrganizationUid').not('.change-event-enabled').on('change', function () {
+	    $('#SellerOrganizationUid').not('.change-event-enabled').on('change', function () {
 		    AudiovisualMeetingsScheduledWidget.search();
 	    });
-        $('#SearchSellerOrganizationUid').addClass('change-event-enabled');
+        $('#SellerOrganizationUid').addClass('change-event-enabled');
 
-	    $('#SearchProjectKeywords').not('.search-event-enabled').on('search', function () {
+	    $('#ProjectKeywords').not('.search-event-enabled').on('search', function () {
 	        AudiovisualMeetingsScheduledWidget.search();
 	    });
-        $('#SearchProjectKeywords').addClass('search-event-enabled');
+        $('#ProjectKeywords').addClass('search-event-enabled');
 
-        $('#SearchDate').not('.change-event-enabled').on('change', function () {
+        $('#Date').not('.change-event-enabled').on('change', function () {
 	        AudiovisualMeetingsScheduledWidget.search();
         });
-        $('#SearchDate').addClass('change-event-enabled');
+        $('#Date').addClass('change-event-enabled');
 
-        $('#SearchRoomUid').not('.change-event-enabled').on('change', function () {
+        $('#RoomUid').not('.change-event-enabled').on('change', function () {
 	        AudiovisualMeetingsScheduledWidget.search();
         });
-        $('#SearchRoomUid').addClass('change-event-enabled');
+        $('#RoomUid').addClass('change-event-enabled');
+
+        $('#ShowParticipants').not('.change-event-enabled').on('change', function () {
+            AudiovisualMeetingsScheduledWidget.search();
+        });
+        $('#ShowParticipants').addClass('change-event-enabled');
     };
 
     var enableSearchForm = function () {
         enableSearchEvents();
 
-        MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#SearchBuyerOrganizationUid', url: '/Players/FindAllByFilters', customFilter: 'HasProjectNegotiationScheduled', placeholder: translations.playerDropdownPlaceholder });
-        MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#SearchSellerOrganizationUid', url: '/Audiovisual/Producers/FindAllByFilters', customFilter: 'HasProjectNegotiationScheduled', placeholder: translations.producerDropdownPlaceholder });
+        MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#BuyerOrganizationUid', url: '/Players/FindAllByFilters', customFilter: 'HasProjectNegotiationScheduled', placeholder: translations.playerDropdownPlaceholder });
+        MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#SellerOrganizationUid', url: '/Audiovisual/Producers/FindAllByFilters', customFilter: 'HasProjectNegotiationScheduled', placeholder: translations.producerDropdownPlaceholder });
 	    MyRio2cCommon.enableDatePicker({ inputIdOrClass: '.enable-datepicker' });
-        MyRio2cCommon.enableSelect2({ inputIdOrClass: '#SearchRoomUid', allowClear: true, placeholder: translations.roomDropdownPlaceholder });
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: '#RoomUid', allowClear: true, placeholder: translations.roomDropdownPlaceholder });
     }
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
-        KTApp.initTooltips();
+        $('[data-toggle="tooltip"]').tooltip({
+            html: true,
+            placement: 'bottom'
+        });
         MyRio2cCommon.initScroll();
     };
 
@@ -69,12 +77,13 @@ var AudiovisualMeetingsScheduledWidget = function () {
         }
 
         var jsonParameters = new Object();
-        jsonParameters.buyerOrganizationUid = $('#SearchBuyerOrganizationUid').val();
-        jsonParameters.sellerOrganizationUid = $('#SearchSellerOrganizationUid').val();
-        jsonParameters.projectKeywords = $('#SearchProjectKeywords').val();
-        jsonParameters.roomUid = $('#SearchRoomUid').val();
+        jsonParameters.buyerOrganizationUid = $('#BuyerOrganizationUid').val();
+        jsonParameters.sellerOrganizationUid = $('#SellerOrganizationUid').val();
+        jsonParameters.projectKeywords = $('#ProjectKeywords').val();
+        jsonParameters.roomUid = $('#RoomUid').val();
+        jsonParameters.showParticipants = $('#ShowParticipants').prop('checked');
 
-        var date = $('#SearchDate').val();
+        var date = $('#Date').val();
         if (!MyRio2cCommon.isNullOrEmpty(date)) {
             jsonParameters.date = moment(date, "L", MyRio2cCommon.getGlobalVariable('userInterfaceLanguageUppercase')).format('YYYY-MM-DD');
         }

@@ -1,5 +1,8 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @model List<NegotiationGroupedByDateDto>
+@{
+    var showParticipants = ViewBag.ShowParticipants as bool?;
+}
 @if (Model?.Any() == true)
 {
     foreach (var negotiationGroupedByDateDto in Model)
@@ -76,9 +79,6 @@
                                                                                     <i class="la la-ellipsis-h"></i>
                                                                                 </a>
                                                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                                                    @*<button class="dropdown-item" onclick="AudiovisualMeetingParametersRoomsWidget.showUpdateModal('');">
-                                                                                            <i class="la la-edit"></i>@Labels.Edit
-                                                                                        </button>*@
                                                                                     <button class="dropdown-item" onclick="AudiovisualMeetingsUpdate.showModal('@(negotiation?.Uid)');">
                                                                                         <i class="la la-edit"></i>@Labels.Edit
                                                                                     </button>
@@ -89,6 +89,57 @@
                                                                             </span>
                                                                         </td>
                                                                     </tr>
+                                                                    if (showParticipants == true && negotiationGroupedByRoomDto.Room.IsVirtualMeeting == true)
+                                                                    {
+                                                                        <tr>
+                                                                            <td colspan="6">
+                                                                                <div class="row">
+                                                                                    <table class="w-100" style="margin-left: 10px; margin-right: 10px; border:dashed; border-color:lightgray">
+                                                                                        @if (negotiation.AttendeeNegotiationCollaborators?.Any() == true)
+                                                                                        {
+                                                                                            <thead>
+                                                                                                <tr class="bg-light-yellow">
+                                                                                                    <th colspan="2" class="text-center">@Labels.Participants.ToUpper()</th>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <th>@Labels.Name</th>
+                                                                                                    <th>@Labels.AudiovisualVirtualMeetingJoinDate</th>
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                                @foreach (var attendeeNegotiationCollaborator in negotiation.AttendeeNegotiationCollaborators)
+                                                                                                {
+                                                                                                    <tr>
+                                                                                                        <td>
+                                                                                                            @attendeeNegotiationCollaborator.AttendeeCollaborator.Collaborator.GetFullName()
+
+                                                                                                            @foreach (var attendeeOrganizationCollaborator in attendeeNegotiationCollaborator.AttendeeCollaborator.AttendeeOrganizationCollaborators)
+                                                                                                            {
+                                                                                                                <span class="kt-badge kt-badge--inline kt-badge--warning kt-font-boldest ml-3">@attendeeOrganizationCollaborator.AttendeeOrganization.Organization.TradeName</span>
+                                                                                                            }
+                                                                                                        </td>
+                                                                                                        <td>
+                                                                                                            @attendeeNegotiationCollaborator.CreateDate.ToStringHourMinute()
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                }
+                                                                                            </tbody>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <tbody>
+                                                                                                <tr class="bg-light-yellow">
+                                                                                                    <td colspan="2">
+                                                                                                        <div class="col-12 text-center">@string.Format(Messages.EntityNotAction, Labels.Participants, Labels.FoundMP)</div>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        }
+                                                                                    </table>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
                                                                 }
                                                             </tbody>
                                                         </table>

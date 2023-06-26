@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 04-27-2022
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 04-27-2022
+// Last Modified By : Renan valentim
+// Last Modified On : 06-26-2023
 // ***********************************************************************
 // <copyright file="AttendeeNegotiationCollaboratorMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,13 +25,13 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.ToTable("AttendeeNegotiationCollaborators");
 
             // Relationships
-            this.HasRequired(t => t.Negotiation)
-                .WithMany()
-                .HasForeignKey(t => t.NegotiationId);
+            this.HasRequired(anc => anc.Negotiation)
+                .WithMany(n => n.AttendeeNegotiationCollaborators)
+                .HasForeignKey(anc => anc.NegotiationId);
 
-            this.HasRequired(t => t.AttendeeCollaborator)
-                .WithMany()
-                .HasForeignKey(t => t.AttendeeCollaboratorId);
+            this.HasRequired(anc => anc.AttendeeCollaborator)
+                .WithMany(ac => ac.AttendeeNegotiationCollaborators)
+                .HasForeignKey(anc => anc.AttendeeCollaboratorId);
         }
     }
 }

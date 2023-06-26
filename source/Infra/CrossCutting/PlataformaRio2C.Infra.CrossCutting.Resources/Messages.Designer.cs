@@ -2085,6 +2085,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Marque para exibir os participantes que ingressaram nas &lt;b&gt;rodadas de negócio virtuais&lt;/b&gt;.&lt;/br&gt;Somente salas do tipo &lt;b&gt;Virtual&lt;/b&gt; exibirão os participantes.
+        /// </summary>
+        public static string ShowParticipantsTooltipHelpText {
+            get {
+                return ResourceManager.GetString("ShowParticipantsTooltipHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Algo está incorreto..
         /// </summary>
         public static string SomethingIsWrong {
