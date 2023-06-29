@@ -3,8 +3,8 @@
 // Author           : William Sergio Almado Junior
 // Created          : 12-27-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-24-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 06-29-2023
 // ***********************************************************************
 // <copyright file="ProjectDocumentTemplate.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

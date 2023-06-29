@@ -44,7 +44,7 @@
                     @Html.DropDownList("SearchRoomUid", new SelectList(ViewBag.Rooms, "Uid", "Name", null), $"{string.Format(Labels.SelectAMEntity, Labels.Room.ToLowerInvariant())}", new { @class = "form-control enable-select2" })
                 </div>
                 <div class="form-group col-2 col-md-1 mt-2">
-                    <button type="button" class="btn btn-primary btn-icon" onclick="AudiovisualMeetingsScheduledWidget.search();"><i class="fa fa-search"></i></button>
+                    <button type="button" class="btn btn-primary btn-icon" onclick="AudiovisualMeetingsReportWidget.search();"><i class="fa fa-search"></i></button>
                 </div>
             </div>
             <!--end: SearchForm-->

@@ -35,6 +35,8 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Admin.Controllers;
 using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
+using PlataformaRio2C.Application.TemplateDocuments;
+using PlataformaRio2C.Infra.Report.Models;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 {
@@ -249,7 +251,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="roomUid">The room uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowScheduledDataWidget(ScheduledSearchViewModel searchViewModel) //Guid? buyerOrganizationUid, Guid? sellerOrganizationUid, string projectKeywords, DateTime? date, Guid? roomUid
+        public async Task<ActionResult> ShowScheduledDataWidget(ScheduledSearchViewModel searchViewModel)
         {
             var negotiations = await this.negotiationRepo.FindScheduledWidgetDtoAsync(
                 this.EditionDto.Id,
@@ -272,8 +274,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                         new { page = this.RenderRazorViewToString("Widgets/ScheduledDataWidget", negotiations), divIdOrClass = "#AudiovisualMeetingsScheduledWidget" },
                     }
                 },
-                //ContentType = contentType,
-                //ContentEncoding = contentEncoding,
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet,
                 MaxJsonLength = Int32.MaxValue
             };
@@ -1109,25 +1109,22 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             return View();
         }
 
-        #region Scheduled Widget
-
-        /// <summary>Shows the scheduled data widget.</summary>
-        /// <param name="buyerOrganizationUid">The buyer organization uid.</param>
-        /// <param name="sellerOrganizationUid">The seller organization uid.</param>
-        /// <param name="projectKeywords">The project keywords.</param>
-        /// <param name="date">The date.</param>
-        /// <param name="roomUid">The room uid.</param>
+        /// <summary>
+        /// Shows the report data widget.
+        /// </summary>
+        /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowReportDataWidget(Guid? buyerOrganizationUid, Guid? sellerOrganizationUid, string projectKeywords, DateTime? date, Guid? roomUid)
+        public async Task<ActionResult> ShowReportDataWidget(ScheduledSearchViewModel searchViewModel)
         {
             var negotiationDtos = await this.negotiationRepo.FindReportWidgetDtoAsync(
                 this.EditionDto.Id,
-                buyerOrganizationUid,
-                sellerOrganizationUid,
-                projectKeywords,
-                date,
-                roomUid);
+                searchViewModel.BuyerOrganizationUid,
+                searchViewModel.SellerOrganizationUid,
+                searchViewModel.ProjectKeywords,
+                searchViewModel.Date,
+                searchViewModel.RoomUid,
+                searchViewModel.ShowParticipants);
 
             return new JsonResult()
             {
@@ -1139,34 +1136,27 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                         new { page = this.RenderRazorViewToString("Widgets/ReportDataWidget", negotiationDtos), divIdOrClass = "#AudiovisualMeetingsReportWidget" },
                     }
                 },
-                //ContentType = contentType,
-                //ContentEncoding = contentEncoding,
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet,
                 MaxJsonLength = Int32.MaxValue
             };
         }
 
-        #endregion
-
-        #region Export Excel
-
-        /// <summary>Exports the report excel.</summary>
-        /// <param name="buyerOrganizationUid">The buyer organization uid.</param>
-        /// <param name="sellerOrganizationUid">The seller organization uid.</param>
-        /// <param name="projectKeywords">The project keywords.</param>
-        /// <param name="date">The date.</param>
-        /// <param name="roomUid">The room uid.</param>
+        /// <summary>
+        /// Exports the report to excel.
+        /// </summary>
+        /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ExportReportExcel(Guid? buyerOrganizationUid, Guid? sellerOrganizationUid, string projectKeywords, DateTime? date, Guid? roomUid)
+        public async Task<ActionResult> ExportReportToExcel(ScheduledSearchViewModel searchViewModel)
         {
             var negotiationDtos = await this.negotiationRepo.FindReportWidgetDtoAsync(
                 this.EditionDto.Id,
-                buyerOrganizationUid,
-                sellerOrganizationUid,
-                projectKeywords,
-                date,
-                roomUid);
+                searchViewModel.BuyerOrganizationUid,
+                searchViewModel.SellerOrganizationUid,
+                searchViewModel.ProjectKeywords,
+                searchViewModel.Date,
+                searchViewModel.RoomUid,
+                searchViewModel.ShowParticipants);
 
             var workbook = new XLWorkbook();
             var worksheet = workbook.Worksheets.Add(Labels.CalendarReport);
@@ -1299,7 +1289,32 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             return new ExcelResult(workbook, Labels.CalendarReport + "_" + DateTime.UtcNow.ToBrazilTimeZone().ToString("yyyyMMdd"));
         }
 
-        #endregion
+        /// <summary>
+        /// Exports the report to PDF.
+        /// </summary>
+        /// <param name="searchViewModel">The search view model.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ExportReportToPdf(ScheduledSearchViewModel searchViewModel)
+        {
+            var negotiationsDtos = await this.negotiationRepo.FindReportWidgetDtoAsync(
+                this.EditionDto.Id,
+                searchViewModel.BuyerOrganizationUid,
+                searchViewModel.SellerOrganizationUid,
+                searchViewModel.ProjectKeywords,
+                searchViewModel.Date,
+                searchViewModel.RoomUid,
+                searchViewModel.ShowParticipants);
+
+            if (negotiationsDtos.Count == 0)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.ScheduledOneToOneMeetings, Labels.FoundFP) }, JsonRequestBehavior.AllowGet);
+            }
+
+            var pdf = new PlataformaRio2CDocument(new ScheduledMeetingsReportDocumentTemplate(negotiationsDtos, this.UserInterfaceLanguage, this.EditionDto));
+            var fileName = $"{Labels.ScheduledNegotiations.RemoveFilenameInvalidChars().Trim()}_{DateTime.Now.ToStringHourMinute()}.pdf".RemoveFilenameInvalidChars();
+            return File(pdf.GetStream(), "application/pdf", fileName);
+        }
 
         #endregion
     }

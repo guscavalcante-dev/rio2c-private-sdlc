@@ -1083,8 +1083,11 @@
     <comment>Exportar para Eventbrite</comment>
   </data>
   <data name="ExportToExcel" xml:space="preserve">
-    <value>Export to Excel</value>
+    <value>Export Excel</value>
     <comment>Exportar para Excel</comment>
+  </data>
+  <data name="ExportToPdf" xml:space="preserve">
+    <value>Export PDF</value>
   </data>
   <data name="Finish" xml:space="preserve">
     <value>Finish</value>
@@ -2429,6 +2432,9 @@
   <data name="ScheduledNegotiations" xml:space="preserve">
     <value>Scheduled negotiations</value>
     <comment>Negociações agendadas</comment>
+  </data>
+  <data name="ScheduledNegotiationsReport" xml:space="preserve">
+    <value>Scheduled Negotiations Report</value>
   </data>
   <data name="ScheduledOneToOneMeetings" xml:space="preserve">
     <value>Scheduled One to One Meetings</value>

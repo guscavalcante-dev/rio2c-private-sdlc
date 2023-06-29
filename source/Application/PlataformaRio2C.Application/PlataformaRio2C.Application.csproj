@@ -698,8 +698,9 @@
     <Compile Include="Services\Common\QuizAnswerAppService.cs" />
     <Compile Include="Services\Common\LogisticsAppService.cs" />
     <Compile Include="Services\Emails\IMailerService.cs" />
-    <Compile Include="TemplateDocuments\PlayerAudiovisualMeetingsDocumentTemplate.cs" />
-    <Compile Include="TemplateDocuments\ProjectDocumentTemplate.cs" />
+    <Compile Include="TemplateDocuments\Meetings\ScheduledMeetingsReportDocumentTemplate.cs" />
+    <Compile Include="TemplateDocuments\Players\PlayerAudiovisualMeetingsDocumentTemplate.cs" />
+    <Compile Include="TemplateDocuments\Projects\ProjectDocumentTemplate.cs" />
     <Compile Include="ViewModels\Admin\ConfigNetworkRio2C\ConfigNetworkRio2CAppViewModel.cs" />
     <Compile Include="ViewModels\Admin\Dashboard\DataItemChartAppViewModel.cs" />
     <Compile Include="ViewModels\Admin\FinancialReport\ItemFinancialReportAppViewModel.cs" />
