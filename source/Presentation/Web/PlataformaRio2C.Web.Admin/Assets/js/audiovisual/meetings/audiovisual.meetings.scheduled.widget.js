@@ -17,33 +17,30 @@ var AudiovisualMeetingsScheduledWidget = function () {
     var widgetElementId = '#AudiovisualMeetingsScheduledWidget';
     var widgetElement = $(widgetElementId);
 
-    //var updateModalId = '#UpdateMainInformationModal';
-    //var updateFormId = '#UpdateMainInformationForm';
-
     // Search form  -------------------------------------------------------------------------------
     var enableSearchEvents = function () {
-	    $('#BuyerOrganizationUid').not('.change-event-enabled').on('change', function () {
-		    AudiovisualMeetingsScheduledWidget.search();
-	    });
-	    $('#BuyerOrganizationUid').addClass('change-event-enabled');
+        $('#BuyerOrganizationUid').not('.change-event-enabled').on('change', function () {
+            AudiovisualMeetingsScheduledWidget.search();
+        });
+        $('#BuyerOrganizationUid').addClass('change-event-enabled');
 
-	    $('#SellerOrganizationUid').not('.change-event-enabled').on('change', function () {
-		    AudiovisualMeetingsScheduledWidget.search();
-	    });
+        $('#SellerOrganizationUid').not('.change-event-enabled').on('change', function () {
+            AudiovisualMeetingsScheduledWidget.search();
+        });
         $('#SellerOrganizationUid').addClass('change-event-enabled');
 
-	    $('#ProjectKeywords').not('.search-event-enabled').on('search', function () {
-	        AudiovisualMeetingsScheduledWidget.search();
-	    });
+        $('#ProjectKeywords').not('.search-event-enabled').on('search', function () {
+            AudiovisualMeetingsScheduledWidget.search();
+        });
         $('#ProjectKeywords').addClass('search-event-enabled');
 
         $('#Date').not('.change-event-enabled').on('change', function () {
-	        AudiovisualMeetingsScheduledWidget.search();
+            AudiovisualMeetingsScheduledWidget.search();
         });
         $('#Date').addClass('change-event-enabled');
 
         $('#RoomUid').not('.change-event-enabled').on('change', function () {
-	        AudiovisualMeetingsScheduledWidget.search();
+            AudiovisualMeetingsScheduledWidget.search();
         });
         $('#RoomUid').addClass('change-event-enabled');
 
@@ -58,8 +55,25 @@ var AudiovisualMeetingsScheduledWidget = function () {
 
         MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#BuyerOrganizationUid', url: '/Players/FindAllByFilters', customFilter: 'HasProjectNegotiationScheduled', placeholder: translations.playerDropdownPlaceholder });
         MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#SellerOrganizationUid', url: '/Audiovisual/Producers/FindAllByFilters', customFilter: 'HasProjectNegotiationScheduled', placeholder: translations.producerDropdownPlaceholder });
-	    MyRio2cCommon.enableDatePicker({ inputIdOrClass: '.enable-datepicker' });
+        MyRio2cCommon.enableDatePicker({ inputIdOrClass: '.enable-datepicker' });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: '#RoomUid', allowClear: true, placeholder: translations.roomDropdownPlaceholder });
+    }
+
+    var getJsonParameters = function () {
+
+        var jsonParameters = new Object();
+        jsonParameters.buyerOrganizationUid = $('#BuyerOrganizationUid').val();
+        jsonParameters.sellerOrganizationUid = $('#SellerOrganizationUid').val();
+        jsonParameters.projectKeywords = $('#ProjectKeywords').val();
+        jsonParameters.roomUid = $('#RoomUid').val();
+        jsonParameters.showParticipants = $('#ShowParticipants').prop('checked');
+
+        var date = $('#Date').val();
+        if (!MyRio2cCommon.isNullOrEmpty(date)) {
+            jsonParameters.date = moment(date, "L", MyRio2cCommon.getGlobalVariable('userInterfaceLanguageUppercase')).format('YYYY-MM-DD');
+        }
+
+        return jsonParameters;
     }
 
     // Show ---------------------------------------------------------------------------------------
@@ -76,17 +90,7 @@ var AudiovisualMeetingsScheduledWidget = function () {
             return;
         }
 
-        var jsonParameters = new Object();
-        jsonParameters.buyerOrganizationUid = $('#BuyerOrganizationUid').val();
-        jsonParameters.sellerOrganizationUid = $('#SellerOrganizationUid').val();
-        jsonParameters.projectKeywords = $('#ProjectKeywords').val();
-        jsonParameters.roomUid = $('#RoomUid').val();
-        jsonParameters.showParticipants = $('#ShowParticipants').prop('checked');
-
-        var date = $('#Date').val();
-        if (!MyRio2cCommon.isNullOrEmpty(date)) {
-            jsonParameters.date = moment(date, "L", MyRio2cCommon.getGlobalVariable('userInterfaceLanguageUppercase')).format('YYYY-MM-DD');
-        }
+        var jsonParameters = getJsonParameters();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Meetings/ShowScheduledDataWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -96,27 +100,36 @@ var AudiovisualMeetingsScheduledWidget = function () {
                     enableShowPlugins();
                 },
                 // Error
-                onError: function() {
+                onError: function () {
                 }
             });
         })
-        .fail(function () {
-            //showAlert();
-            //MyRio2cCommon.unblock(widgetElementId);
-        })
-        .always(function() {
-            MyRio2cCommon.unblock({ idOrClass: widgetElementId });
-        });
+            .fail(function () {
+                //showAlert();
+                //MyRio2cCommon.unblock(widgetElementId);
+            })
+            .always(function () {
+                MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+            });
     };
+
+    // Export to PDF ------------------------------------------------------------------------------
+    var exportToPdf = function () {
+        var jsonParameters = getJsonParameters();
+        location.href = '/Audiovisual/Meetings/ExportReportToPdf?' + jQuery.param(jsonParameters);
+    }
 
     return {
         init: function () {
-	        enableSearchForm();
-	        AudiovisualMeetingsScheduledWidget.search();
+            enableSearchForm();
+            AudiovisualMeetingsScheduledWidget.search();
         },
-        search: function() {
-	        MyRio2cCommon.block({ idOrClass: widgetElementId });
-	        show();
+        search: function () {
+            MyRio2cCommon.block({ idOrClass: widgetElementId });
+            show();
+        },
+        exportToPdf: function () {
+            exportToPdf();
         }
     };
 }();

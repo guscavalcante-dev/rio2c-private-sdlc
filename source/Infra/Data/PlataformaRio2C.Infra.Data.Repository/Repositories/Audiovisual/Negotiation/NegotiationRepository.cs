@@ -478,7 +478,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             this.SetProxyEnabled(false);
 
-            var query = this.GetBaseQuery(true)
+            var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
                                 .FindByBuyerOrganizationUid(buyerOrganizationUid)
                                 .FindBySellerOrganizationUid(sellerOrganizationUid)
@@ -642,13 +642,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         .ToListAsync();
         }
 
-        /// <summary>Finds the report widget dto asynchronous.</summary>
+        /// <summary>
+        /// Finds the report widget dto asynchronous.
+        /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="buyerOrganizationUid">The buyer organization uid.</param>
         /// <param name="sellerOrganizationUid">The seller organization uid.</param>
         /// <param name="projectKeywords">The project keywords.</param>
         /// <param name="negotiationDate">The negotiation date.</param>
         /// <param name="roomUid">The room uid.</param>
+        /// <param name="showParticipants">if set to <c>true</c> [show participants].</param>
         /// <returns></returns>
         public async Task<List<NegotiationReportGroupedByDateDto>> FindReportWidgetDtoAsync(
             int editionId,
@@ -656,8 +659,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             Guid? sellerOrganizationUid,
             string projectKeywords,
             DateTime? negotiationDate,
-            Guid? roomUid)
+            Guid? roomUid,
+            bool showParticipants)
         {
+            this.SetProxyEnabled(false);
+
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
                                 .FindByBuyerOrganizationUid(buyerOrganizationUid)
@@ -677,11 +683,25 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization)
                                 .Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization);
 
-            return (await query.ToListAsync())
-                                .GroupBy(n => n.StartDate.ToBrazilTimeZone().Date)
-                                .Select(nd => new NegotiationReportGroupedByDateDto(nd.Key, nd.ToList()))
-                                .OrderBy(ngd => ngd.Date)
-                                .ToList();
+            if (showParticipants)
+            {
+                query = query.Include(n => n.AttendeeNegotiationCollaborators);
+                query = query.Include(n => n.AttendeeNegotiationCollaborators.Select(anc => anc.AttendeeCollaborator));
+                query = query.Include(n => n.AttendeeNegotiationCollaborators.Select(anc => anc.AttendeeCollaborator.Collaborator));
+                query = query.Include(n => n.AttendeeNegotiationCollaborators.Select(anc => anc.AttendeeCollaborator.AttendeeOrganizationCollaborators));
+                query = query.Include(n => n.AttendeeNegotiationCollaborators.Select(anc => anc.AttendeeCollaborator.AttendeeOrganizationCollaborators.Select(aoc => aoc.AttendeeOrganization)));
+                query = query.Include(n => n.AttendeeNegotiationCollaborators.Select(anc => anc.AttendeeCollaborator.AttendeeOrganizationCollaborators.Select(aoc => aoc.AttendeeOrganization.Organization)));
+            }
+
+            var negotiationReportGroupedByDateDtos = (await query.ToListAsync())
+                                                        .GroupBy(n => n.StartDate.ToBrazilTimeZone().Date)
+                                                        .Select(nd => new NegotiationReportGroupedByDateDto(nd.Key, nd.ToList()))
+                                                        .OrderBy(ngd => ngd.Date)
+                                                        .ToList();
+
+            this.SetProxyEnabled(true);
+
+            return negotiationReportGroupedByDateDtos;
         }
 
         /// <summary>

@@ -112,8 +112,7 @@ var AudiovisualMeetingsReportWidget = function () {
 		    jsonParameters.date = moment(date, "L", MyRio2cCommon.getGlobalVariable('userInterfaceLanguageUppercase')).format('YYYY-MM-DD');
 	    }
 
-	    //$('#btnExportToExcel').addClass('disabled');
-        location.href = '/Audiovisual/Meetings/ExportReportExcel?' + jQuery.param(jsonParameters);
+        location.href = '/Audiovisual/Meetings/ExportReportToExcel?' + jQuery.param(jsonParameters);
     }
 
     return {

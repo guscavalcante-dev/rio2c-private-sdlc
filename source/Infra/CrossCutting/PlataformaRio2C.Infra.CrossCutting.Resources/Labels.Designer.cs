@@ -2383,11 +2383,20 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exportar para Excel.
+        ///   Looks up a localized string similar to Exportar Excel.
         /// </summary>
         public static string ExportToExcel {
             get {
                 return ResourceManager.GetString("ExportToExcel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exportar PDF.
+        /// </summary>
+        public static string ExportToPdf {
+            get {
+                return ResourceManager.GetString("ExportToPdf", resourceCulture);
             }
         }
         
@@ -5610,6 +5619,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ScheduledNegotiations {
             get {
                 return ResourceManager.GetString("ScheduledNegotiations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Relatório de Negociações Agendadas.
+        /// </summary>
+        public static string ScheduledNegotiationsReport {
+            get {
+                return ResourceManager.GetString("ScheduledNegotiationsReport", resourceCulture);
             }
         }
         

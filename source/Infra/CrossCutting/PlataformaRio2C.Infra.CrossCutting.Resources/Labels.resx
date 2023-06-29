@@ -1085,8 +1085,11 @@
     <comment>Exportar para Eventbrite</comment>
   </data>
   <data name="ExportToExcel" xml:space="preserve">
-    <value>Exportar para Excel</value>
+    <value>Exportar Excel</value>
     <comment>Exportar para Excel</comment>
+  </data>
+  <data name="ExportToPdf" xml:space="preserve">
+    <value>Exportar PDF</value>
   </data>
   <data name="Finish" xml:space="preserve">
     <value>Concluir</value>
@@ -2437,6 +2440,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="ScheduledNegotiations" xml:space="preserve">
     <value>Negociações agendadas</value>
     <comment>Negociações agendadas</comment>
+  </data>
+  <data name="ScheduledNegotiationsReport" xml:space="preserve">
+    <value>Relatório de Negociações Agendadas</value>
   </data>
   <data name="ScheduledOneToOneMeetings" xml:space="preserve">
     <value>Rodadas de Negócio agendadas</value>
