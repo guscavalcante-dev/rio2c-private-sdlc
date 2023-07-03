@@ -1320,6 +1320,9 @@
     <value>Data de início de envio de projeto de inovação</value>
     <comment>Data de início de envio de projeto de inovação</comment>
   </data>
+  <data name="InnovationVerticals" xml:space="preserve">
+    <value>Verticais de Inovação</value>
+  </data>
   <data name="InProgress" xml:space="preserve">
     <value>Em andamento</value>
   </data>
