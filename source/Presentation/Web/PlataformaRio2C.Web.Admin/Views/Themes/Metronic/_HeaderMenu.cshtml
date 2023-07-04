@@ -163,6 +163,9 @@
                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Projects",  "Innovation")" aria-haspopup="true">
                         <a href="@Url.Action("Index", "Projects", new { Area = "Innovation" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Projects</span></a>
                     </li>
+                    <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "TracksGroups",  "Innovation")" aria-haspopup="true">
+                        <a href="@Url.Action("Index", "TracksGroups", new { Area = "Innovation" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Verticals</span></a>
+                    </li>
                 </ul>
             </div>
         </li>

@@ -1319,6 +1319,9 @@
     <value>Innovation project submission start date</value>
     <comment>Data de início de envio de projeto de inovação</comment>
   </data>
+  <data name="InnovationVerticals" xml:space="preserve">
+    <value>Innovation Verticals</value>
+  </data>
   <data name="InProgress" xml:space="preserve">
     <value>In progress</value>
   </data>

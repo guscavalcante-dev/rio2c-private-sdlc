@@ -2950,6 +2950,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Verticais de Inovação.
+        /// </summary>
+        public static string InnovationVerticals {
+            get {
+                return ResourceManager.GetString("InnovationVerticals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Em andamento.
         /// </summary>
         public static string InProgress {
