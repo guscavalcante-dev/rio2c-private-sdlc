@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Renan Valentim
-// Created          : 07-03-2023
+// Created          : 07-04-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-03-2023
+// Last Modified On : 07-04-2023
 // ***********************************************************************
-// <copyright file="TracksGroupsController.cs" company="Softo">
+// <copyright file="TracksController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -32,23 +32,23 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 {
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminInnovation)]
-    public class TracksGroupsController : BaseController
+    public class TracksController : BaseController
     {
-        private readonly IInnovationOrganizationTrackOptionGroupRepository innovationOrganizationTrackOptionGroupRepo;
+        private readonly IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TracksGroupsController"/> class.
+        /// Initializes a new instance of the <see cref="TracksController"/> class.
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityControlle">The identity controlle.</param>
-        /// <param name="innovationOrganizationTrackOptionGroupRepository">The innovation organization track option group repository.</param>
-        public TracksGroupsController(
+        /// <param name="innovationOrganizationTrackOptionRepository">The innovation organization track option repository.</param>
+        public TracksController(
             IMediator commandBus, 
             IdentityAutenticationService identityControlle,
-            IInnovationOrganizationTrackOptionGroupRepository innovationOrganizationTrackOptionGroupRepository) 
+            IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepository) 
             : base(commandBus, identityControlle)
         {
-            this.innovationOrganizationTrackOptionGroupRepo = innovationOrganizationTrackOptionGroupRepository;
+            this.innovationOrganizationTrackOptionRepo = innovationOrganizationTrackOptionRepository;
         }
 
         #region List
@@ -59,13 +59,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Index(InnovationTrackGroupSearchViewModel searchViewModel)
+        public async Task<ActionResult> Index(InnovationTrackSearchViewModel searchViewModel)
         {
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.InnovationVerticals, new List<BreadcrumbItemHelper>{
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CreativeEconomyThemes, new List<BreadcrumbItemHelper>{
                 new BreadcrumbItemHelper(Labels.Innovation, null),
-                new BreadcrumbItemHelper(Labels.Verticals, Url.Action("Index", "TracksGroups", new { Area = "Innovation" }))
+                new BreadcrumbItemHelper(Labels.CreativeEconomyThemes, Url.Action("Index", "Tracks", new { Area = "Innovation" }))
             });
 
             #endregion
@@ -86,13 +86,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             int pageSize = request.Length;
             page++; //Necessary because DataTable is zero index based.
 
-            var innovationOrganizationTrackOptionGroupDtos = await this.innovationOrganizationTrackOptionGroupRepo.FindAllByDataTable(
+            var innovationOrganizationTrackOptionDtos = await this.innovationOrganizationTrackOptionRepo.FindAllByDataTable(
                 page,
                 pageSize,
                 request.Search?.Value,
                 request.GetSortColumns());
 
-            var response = DataTablesResponse.Create(request, innovationOrganizationTrackOptionGroupDtos.TotalItemCount, innovationOrganizationTrackOptionGroupDtos.TotalItemCount, innovationOrganizationTrackOptionGroupDtos);
+            var response = DataTablesResponse.Create(request, innovationOrganizationTrackOptionDtos.TotalItemCount, innovationOrganizationTrackOptionDtos.TotalItemCount, innovationOrganizationTrackOptionDtos);
 
             return Json(new
             {
@@ -110,14 +110,14 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowTotalCountWidget()
         {
-            var tracksCount = await this.innovationOrganizationTrackOptionGroupRepo.CountAllByDataTable(true, this.EditionDto.Id);
+            var tracksCount = await this.innovationOrganizationTrackOptionRepo.CountAllByDataTable(true, this.EditionDto.Id);
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", tracksCount), divIdOrClass = "#InnovationTracksGroupsTotalCountWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", tracksCount), divIdOrClass = "#InnovationTracksTotalCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -130,14 +130,14 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// <returns></returns>
         public async Task<ActionResult> ShowEditionCountWidget()
         {
-            var tracksCount = await this.innovationOrganizationTrackOptionGroupRepo.CountAllByDataTable(false, this.EditionDto.Id);
+            var tracksCount = await this.innovationOrganizationTrackOptionRepo.CountAllByDataTable(false, this.EditionDto.Id);
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", tracksCount), divIdOrClass = "#InnovationTracksGroupsEditionCountWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", tracksCount), divIdOrClass = "#InnovationTracksEditionCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }

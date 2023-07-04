@@ -1,21 +1,21 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Renan Valentim
-// Created          : 07-03-2023
+// Created          : 07-04-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-03-2023
+// Last Modified On : 07-04-2023
 // ***********************************************************************
-// <copyright file="innovation.tracks.groups.datatable.widget" company="Softo">
+// <copyright file="innovation.tracks.datatable.widget" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var InnovationTracksGroupsDataTableWidget = function () {
+var InnovationTracksDataTableWidget = function () {
 
-    var widgetElementId = '#InnovationTracksGroupsDataTableWidget';
-    var tableElementId = '#innovation-tracks-groups-list-table';
+    var widgetElementId = '#InnovationTracksDataTableWidget';
+    var tableElementId = '#innovation-tracks-list-table';
     var table;
 
     // Init datatable -----------------------------------------------------------------------------
@@ -85,11 +85,11 @@ var InnovationTracksGroupsDataTableWidget = function () {
                 sSearch: $('#Search').val()
             },
             ajax: {
-                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/TracksGroups/Search'),
+                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Tracks/Search'),
                 data: function (d) {
                     //d.showAllEditions = $('#ShowAllEditions').prop('checked');
                     //d.showAllParticipants = $('#ShowAllParticipants').prop('checked');
-                    //d.innovationOrganizationTrackOptionGroupUid = $('#InnovationOrganizationTrackOptionGroupUid').val();
+                    //d.innovationOrganizationTrackOptionUid = $('#InnovationOrganizationTrackOptionUid').val();
                 },
                 dataFilter: function (data) {
                     var jsonReturned = jQuery.parseJSON(data);
@@ -124,24 +124,10 @@ var InnovationTracksGroupsDataTableWidget = function () {
             },
             columns: [
                 {
-                    data: 'GroupName',
+                    data: 'Name',
                 },
                 {
-                    data: 'InnovationOrganizationTracksNames',
-                    render: function (data, type, row, meta) {
-                        var html = '<ul class="m-0 pl-4">';
-
-                        //loop through all the row details to build output string
-                        for (var rowIndex in row.InnovationOrganizationTrackOptionNames) {
-                            if (row.InnovationOrganizationTrackOptionNames.hasOwnProperty(rowIndex)) {
-                                html += '<li>' + row.InnovationOrganizationTrackOptionNames[rowIndex] + '</li>';
-                            }
-                        }
-
-                        html += '</ul>';
-
-                        return html;
-                    }
+                    data: 'GroupName',
                 },
                 {
                     data: 'CreateDate',
@@ -167,17 +153,17 @@ var InnovationTracksGroupsDataTableWidget = function () {
                                             <div class="dropdown-menu dropdown-menu-right">';
 
                         if (!full.IsInCurrentEdition) {
-                            html += '<button class="dropdown-item" onclick="InnovationTracksGroupsUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
+                            html += '<button class="dropdown-item" onclick="InnovationTracksUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         }
                         else {
-                            html += '<button class="dropdown-item" onclick="InnovationTracksGroupsDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
+                            html += '<button class="dropdown-item" onclick="InnovationTracksDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
                         }
 
                         if (full.IsInCurrentEdition && full.IsInOtherEdition) {
-                            html += '<button class="dropdown-item" onclick="InnovationTracksGroupsDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-minus"></i> ' + removeFromEdition + '</button>';
+                            html += '<button class="dropdown-item" onclick="InnovationTracksDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-minus"></i> ' + removeFromEdition + '</button>';
                         }
                         else {
-                            html += '<button class="dropdown-item" onclick="InnovationTracksGroupsDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+                            html += '<button class="dropdown-item" onclick="InnovationTracksDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
                         }
 
                         html += '\
@@ -197,7 +183,7 @@ var InnovationTracksGroupsDataTableWidget = function () {
                 {
                     targets: [1],
                     width: "25%",
-                    orderable: false
+                    orderable: true
                 },
                 {
                     targets: [2, 3],
@@ -238,12 +224,12 @@ var InnovationTracksGroupsDataTableWidget = function () {
         table.ajax.reload();
     };
 
-    var showDetails = function (trackGroupUid) {
-        if (MyRio2cCommon.isNullOrEmpty(trackGroupUid)) {
+    var showDetails = function (trackUid) {
+        if (MyRio2cCommon.isNullOrEmpty(trackUid)) {
             return;
         }
 
-        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/TracksGroups/Details/' + trackGroupUid);
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Tracks/Details/' + trackUid);
     };
 
     return {
@@ -254,8 +240,8 @@ var InnovationTracksGroupsDataTableWidget = function () {
         refreshData: function () {
             refreshData();
         },
-        showDetails: function (trackGroupUid) {
-            showDetails(trackGroupUid);
+        showDetails: function (trackUid) {
+            showDetails(trackUid);
         }
     };
 }();

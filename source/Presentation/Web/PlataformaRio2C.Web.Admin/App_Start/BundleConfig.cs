@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-03-2023
+// Last Modified On : 07-04-2023
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -982,18 +982,37 @@ namespace PlataformaRio2C.Web.Admin
 
             #region Tracks
 
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.tracks.list.js").Include(
+                "~/Assets/js/innovation/tracks/innovation.tracks.editioncount.widget.js",
+                "~/Assets/js/innovation/tracks/innovation.tracks.totalcount.widget.js",
+                "~/Assets/js/innovation/tracks/innovation.tracks.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.tracks.details.js").Include(
+                "~/Assets/js/collaborators/innovation.tracks.maininformation.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.tracks.create.js").Include(
+                "~/Assets/js/innovation/tracks/innovation.tracks.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.tracks.update.js").Include(
+                "~/Assets/js/innovation/tracks/innovation.tracks.update.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.tracks.delete.js").Include(
+                "~/Assets/js/innovation/tracks/innovation.tracks.delete.js"));
+
+            #endregion
+
+            #region Tracks Groups
+
             bundles.Add(new ScriptBundle("~/bundles/js/innovation.tracks.groups.list.js").Include(
+                "~/Assets/js/innovation/tracksgroups/innovation.tracks.groups.editioncount.widget.js",
                 "~/Assets/js/innovation/tracksgroups/innovation.tracks.groups.totalcount.widget.js",
                 "~/Assets/js/innovation/tracksgroups/innovation.tracks.groups.datatable.widget.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/innovation.tracks.groups.editioncount.js").Include(
-                "~/Assets/js/innovation/tracksgroups/innovation.tracks.groups.editioncount.widget.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.tracks.groups.details.js").Include(
+                "~/Assets/js/collaborators/innovation.tracks.groups.maininformation.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/innovation.tracks.groups.create.js").Include(
                 "~/Assets/js/innovation/tracksgroups/innovation.tracks.groups.create.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/innovation.tracks.groups.details.js").Include(
-                "~/Assets/js/collaborators/innovation.tracks.groups.maininformation.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/innovation.tracks.groups.update.js").Include(
                 "~/Assets/js/innovation/tracksgroups/innovation.tracks.groups.update.js"));

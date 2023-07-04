@@ -21,6 +21,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using PlataformaRio2C.Domain.Dtos;
 using X.PagedList;
+using LinqKit;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -121,6 +123,34 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             if (innovationOrganizationTrackOptionGroupsUids?.Any(i => i.HasValue) == true)
             {
                 query = query.Where(ioto => innovationOrganizationTrackOptionGroupsUids.Contains(ioto.InnovationOrganizationTrackOptionGroup.Uid));
+            }
+
+            return query;
+        }
+
+        /// <summary>
+        /// Finds the by keywords.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <returns></returns>
+        internal static IQueryable<InnovationOrganizationTrackOption> FindByKeywords(this IQueryable<InnovationOrganizationTrackOption> query, string keywords)
+        {
+            if (!string.IsNullOrEmpty(keywords))
+            {
+                var outerWhere = PredicateBuilder.New<InnovationOrganizationTrackOption>(false);
+                var innerNameWhere = PredicateBuilder.New<InnovationOrganizationTrackOption>(true);
+
+                foreach (var keyword in keywords.Split(' '))
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        innerNameWhere = innerNameWhere.And(t => t.Name.Contains(keyword));
+                    }
+                }
+
+                outerWhere = outerWhere.Or(innerNameWhere);
+                query = query.Where(outerWhere);
             }
 
             return query;
@@ -290,6 +320,66 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Order();
 
             return await query.ToListAsync();
+        }
+
+        /// <summary>
+        /// Finds all by data table.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<InnovationOrganizationTrackOptionDto>> FindAllByDataTable(
+            int page, 
+            int pageSize, 
+            string keywords, 
+            List<Tuple<string, string>> sortColumns)
+        {
+            this.SetProxyEnabled(false);
+
+            var query = this.GetBaseQuery(true)
+                            .FindByKeywords(keywords)
+                            .IsActive();
+
+            var innovationOrganizationTrackOptionDtos = await query
+                             .DynamicOrder(
+                                sortColumns,
+                                new List<Tuple<string, string>>
+                                {
+                                    new Tuple<string, string>("GroupName", "InnovationOrganizationTrackOptionGroup.Name")
+                                },
+                                new List<string> { "Name", "InnovationOrganizationTrackOptionGroup.Name", "CreateDate", "UpdateDate" },
+                                "Name")
+                             .Select(ioto => new InnovationOrganizationTrackOptionDto
+                             {
+                                 Id = ioto.Id,
+                                 Uid = ioto.Uid,
+                                 Name = ioto.Name,
+                                 GroupName = ioto.InnovationOrganizationTrackOptionGroup.Name,
+                                 CreateDate = ioto.CreateDate,
+                                 UpdateDate = ioto.UpdateDate
+                             })
+                            .ToPagedListAsync(page, pageSize);
+
+            this.SetProxyEnabled(true);
+
+            return innovationOrganizationTrackOptionDtos;
+        }
+
+        /// <summary>
+        /// Counts all by data table.
+        /// </summary>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<int> CountAllByDataTable(bool showAllEditions, int editionId)
+        {
+            var query = this.GetBaseQuery();
+            //.FindByEditionId(showAllEditions, editionId); TODO: This table doesn't have EditionId column. If necessary, implement this!
+
+            return await query
+                            .CountAsync();
         }
     }
 }

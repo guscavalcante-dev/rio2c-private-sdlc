@@ -378,6 +378,7 @@
     <Compile Include="Areas\Cartoon\Controllers\ProjectsController.cs" />
     <Compile Include="Areas\Innovation\Controllers\CommissionsController.cs" />
     <Compile Include="Areas\Innovation\Controllers\ProjectsController.cs" />
+    <Compile Include="Areas\Innovation\Controllers\TracksController.cs" />
     <Compile Include="Areas\Innovation\Controllers\TracksGroupsController.cs" />
     <Compile Include="Areas\Innovation\InnovationAreaRegistration.cs" />
     <Compile Include="Areas\Music\Controllers\CommissionsController.cs" />
@@ -904,6 +905,13 @@
     <Content Include="Assets\js\innovation\projects\innovation.projects.experiences.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.tracks.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.presentation.widget.js" />
+    <Content Include="Assets\js\innovation\tracks\innovation.tracks.create.js" />
+    <Content Include="Assets\js\innovation\tracks\innovation.tracks.datatable.widget.js" />
+    <Content Include="Assets\js\innovation\tracks\innovation.tracks.delete.js" />
+    <Content Include="Assets\js\innovation\tracks\innovation.tracks.editioncount.widget.js" />
+    <Content Include="Assets\js\innovation\tracks\innovation.tracks.maininformation.widget.js" />
+    <Content Include="Assets\js\innovation\tracks\innovation.tracks.totalcount.widget.js" />
+    <Content Include="Assets\js\innovation\tracks\innovation.tracks.update.js" />
     <Content Include="Assets\js\innovation\tracksgroups\innovation.tracks.groups.create.js" />
     <Content Include="Assets\js\innovation\tracksgroups\innovation.tracks.groups.datatable.widget.js" />
     <Content Include="Assets\js\innovation\tracksgroups\innovation.tracks.groups.delete.js" />
@@ -8376,6 +8384,10 @@
     <Content Include="Areas\Innovation\Views\TracksGroups\Widgets\DataTableWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\TracksGroups\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\TracksGroups\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\Tracks\Index.cshtml" />
+    <Content Include="Areas\Innovation\Views\Tracks\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\Tracks\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\Tracks\Widgets\TotalCountWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -9969,6 +9981,7 @@
     <Folder Include="Areas\Innovation\Views\Projects\Modals\" />
     <Folder Include="Areas\Innovation\Views\Projects\Shared\" />
     <Folder Include="Areas\Innovation\Views\TracksGroups\Modals\" />
+    <Folder Include="Areas\Innovation\Views\Tracks\Modals\" />
     <Folder Include="Areas\Music\Views\Shared\" />
     <Folder Include="Scripts\ckeditor\images\" />
     <Folder Include="Scripts\ckeditor\plugins\a11yhelp\lang\" />
