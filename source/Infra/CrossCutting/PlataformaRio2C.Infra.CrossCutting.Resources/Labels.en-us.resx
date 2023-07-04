@@ -737,6 +737,9 @@
   <data name="CreateProject" xml:space="preserve">
     <value>Create Project</value>
   </data>
+  <data name="CreativeEconomyThemes" xml:space="preserve">
+    <value>Creative Economy Themes</value>
+  </data>
   <data name="CreativeMotivation" xml:space="preserve">
     <value>Creative Motivation</value>
   </data>
@@ -2828,6 +2831,9 @@
     <value>The</value>
     <comment>O</comment>
   </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
   <data name="TheName" xml:space="preserve">
     <value>the name</value>
     <comment>o nome</comment>
@@ -3008,9 +3014,6 @@
     <value>Verticals</value>
   </data>
   <data name="VerticalsAndCreativeEconomyThemes" xml:space="preserve">
-    <value>Verticals and Creative Economy Themes</value>
-  </data>
-  <data name="VerticalsAndCreativeEconomyThemes_Duplicate[1]" xml:space="preserve">
     <value>Verticals and Creative Economy Themes</value>
   </data>
   <data name="VideoClip" xml:space="preserve">

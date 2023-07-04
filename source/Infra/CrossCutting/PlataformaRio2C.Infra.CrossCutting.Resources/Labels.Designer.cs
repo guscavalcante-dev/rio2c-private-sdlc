@@ -1555,6 +1555,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Temas da Economia Criativa.
+        /// </summary>
+        public static string CreativeEconomyThemes {
+            get {
+                return ResourceManager.GetString("CreativeEconomyThemes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Motivação Criativa.
         /// </summary>
         public static string CreativeMotivation {
@@ -6586,6 +6595,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tema.
+        /// </summary>
+        public static string Theme {
+            get {
+                return ResourceManager.GetString("Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to o nome.
         /// </summary>
         public static string TheName {
@@ -7023,15 +7041,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string VerticalsAndCreativeEconomyThemes {
             get {
                 return ResourceManager.GetString("VerticalsAndCreativeEconomyThemes", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Verticais e Temas da Economia Criativa.
-        /// </summary>
-        public static string VerticalsAndCreativeEconomyThemes_Duplicate_1_ {
-            get {
-                return ResourceManager.GetString("VerticalsAndCreativeEconomyThemes_Duplicate[1]", resourceCulture);
             }
         }
         

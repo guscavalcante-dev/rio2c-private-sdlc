@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using PlataformaRio2C.Domain.Dtos;
+using X.PagedList;
 
 namespace PlataformaRio2C.Domain.Interfaces
 {
@@ -32,5 +33,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<List<InnovationOrganizationTrackOption>> FindAllByUidsAsync(List<Guid?> innovationOrganizationTrackOptionUids);
         Task<List<InnovationOrganizationTrackOption>> FindAllByAttendeeCollaboratorIdAsync(int attendeeCollaboratorId);
         Task<List<InnovationOrganizationTrackOption>> FindAllByGroupsUidsAsync(IEnumerable<Guid?> innovationOrganizationTrackOptionGroupsUids);
+        Task<IPagedList<InnovationOrganizationTrackOptionDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns);
+        Task<int> CountAllByDataTable(bool showAllEditions, int editionId);
     }
 }

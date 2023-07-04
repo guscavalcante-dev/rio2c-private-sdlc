@@ -217,7 +217,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                  Uid = iotog.Uid,
                                  GroupName = iotog.Name,
                                  CreateDate = iotog.CreateDate,
-                                 UpdateDate = iotog.UpdateDate
+                                 UpdateDate = iotog.UpdateDate,
+                                 InnovationOrganizationTrackOptionNames = iotog.InnovationOrganizationTrackOptions.Select(ioto => ioto.Name)
                              })
                             .ToPagedListAsync(page, pageSize);
 

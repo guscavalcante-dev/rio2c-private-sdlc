@@ -749,7 +749,8 @@
     <Compile Include="ViewModels\Common\Holdings\HoldingSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Innovation\Commissions\InnovationCommissionSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Innovation\Projects\InnovationProjectSearchViewModel.cs" />
-    <Compile Include="ViewModels\Common\Innovation\TrackGroups\InnovationTrackGroupSearchViewModel.cs" />
+    <Compile Include="ViewModels\Common\Innovation\Tracks\InnovationTrackSearchViewModel.cs" />
+    <Compile Include="ViewModels\Common\Innovation\Tracks\InnovationTrackGroupSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\LogisticRequest\LogisticRequestSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\LogisticSponsor\LogisticSponsorSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Mail\MailAppViewModel.cs" />
