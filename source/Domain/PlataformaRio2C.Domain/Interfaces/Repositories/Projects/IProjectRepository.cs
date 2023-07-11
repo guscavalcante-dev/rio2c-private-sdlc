@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 04-17-2023
+// Last Modified On : 07-11-2023
 // ***********************************************************************
 // <copyright file="IProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,7 +29,9 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<Project> FindByUidAsync(Guid projectUid);
         Task<List<ProjectDto>> FindAllDtosToSellAsync(Guid attendeeOrganizationUid, bool showAll);
         Task<IPagedList<ProjectDto>> FindAllDtosToEvaluateAsync(Guid attendeeCollaboratorUid, string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int page, int pageSize);
-        Task<IPagedList<ProjectBaseDto>> FindAllBaseDtosPagedAsync(int page, int pageSize, List<Tuple<string, string>> sortColumns, string keywords, bool showPitchings, Guid? interestUid, Guid? evaluationStatusUid, string languageCode, int editionId, bool exportToExcel = false);        
+        Task<IPagedList<ProjectBaseDto>> FindAllByDataTableAsync(int page, int pageSize, List<Tuple<string, string>> sortColumns, string keywords, bool showPitchings, Guid? interestUid, Guid? evaluationStatusUid, string languageCode, int editionId);
+        Task<IPagedList<ProjectBaseDto>> FindAllEvaluatorsReportByDataTableAsync(int page, int pageSize, List<Tuple<string, string>> sortColumns, string keywords, bool showPitchings, Guid? interestUid, Guid? evaluationStatusUid, string languageCode, int editionId);
+        Task<IPagedList<ProjectBaseDto>> FindAllProjectsReportByDataTableAsync(int page, int pageSize, List<Tuple<string, string>> sortColumns, string keywords, bool showPitchings, Guid? interestUid, Guid? evaluationStatusUid, string languageCode, int editionId);
         Task<IPagedList<ProjectDto>> FindAllDtosPagedAsync(int editionId, string searchKeywords, List<Guid?> interestUids, Guid? evaluationStatusUid, bool showPitchings, int page, int pageSize);
         Task<List<ProjectDto>> FindAllDtosByFiltersAsync(string keywords, bool showPitchings, List<Guid?> interestUids, List<Guid> projectUids, string languageCode, int editionId);
         Task<List<Project>> FindAllByEditionIdAsync(int editionId);

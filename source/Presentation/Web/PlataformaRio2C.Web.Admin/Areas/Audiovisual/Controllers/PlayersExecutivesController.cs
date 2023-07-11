@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-16-2021
+// Last Modified On : 07-10-2023
 // ***********************************************************************
 // <copyright file="PlayersExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -37,6 +37,13 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Web.Admin.Controllers;
+using ClosedXML.Excel;
+using PlataformaRio2C.Domain.ApiModels;
+using PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults;
+using System.IO;
+using Org.BouncyCastle.Asn1.Ocsp;
+using System.Xml;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 {
@@ -98,8 +105,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             return View(searchViewModel);
         }
 
-        #region DataTable Widget
-
         /// <summary>Searches the specified request.</summary>
         /// <param name="request">The request.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
@@ -132,7 +137,153 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        #endregion
+        /// <summary>
+        /// Exports the evaluators report to excel.
+        /// </summary>
+        /// <param name="searchViewModel">The search view model.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ExportPlayersExecutivesReportToExcel(CollaboratorSearchViewModel searchViewModel)
+        {
+            string fileName = $@"{Labels.AudioVisual} - {Labels.PlayersExecutivesReport}_{DateTime.UtcNow.ToStringFileNameTimestamp()}";
+            string filePath = Path.Combine(Path.GetTempPath(), fileName + ".xlsx");
+
+            try
+            {
+                var playerExecutiveReportDtos = await this.collaboratorRepo.FindAllPlayersExecutivesReportByDataTable(
+                    1,
+                    10000,
+                    searchViewModel.Search,
+                    new List<Tuple<string, string>>(), //request.GetSortColumns(),
+                    searchViewModel.ShowAllEditions,
+                    searchViewModel.ShowAllParticipants,
+                    false,
+                    this.EditionDto?.Id
+                );
+
+                using (var workbook = new XLWorkbook())
+                {
+                    var worksheet = workbook.Worksheets.Add(Labels.PlayersExecutives);
+
+                    #region Header
+
+                    var lineIndex = 1;
+                    var columnIndex = 0;
+                    var skipFinalAdjustmentsColumnIndexes = new List<int>();
+
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = $@"{Labels.Player} - {Labels.Name}";
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = $@"{Labels.Player} - {Labels.TradeName}";
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.FirstName;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.LastNames;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.BadgeName;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.CellPhone;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.PhoneNumber;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.AccessEmail;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.PublicEmail;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Website;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.LinkedIn;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Twitter;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Instagram;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.YouTube;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.BirthDate;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.CollaboratorIndustry;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Role;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Gender;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.JobTitles;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.MiniBio;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.PastEditions;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.HasAnySpecialNeeds;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.WhichSpecialNeedsQ;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.OnboardingStartDate;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.OnboardingFinishDate;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Photo;
+
+                    skipFinalAdjustmentsColumnIndexes.Add(columnIndex);
+
+                    #endregion
+
+                    if (playerExecutiveReportDtos.Any())
+                    {
+                        #region Rows
+
+                        foreach (var playerExecutiveReportDto in playerExecutiveReportDtos)
+                        {
+                            lineIndex++;
+                            columnIndex = 0;
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = playerExecutiveReportDto.AttendeeOrganizationBasesDtos?.Select(ao => ao.OrganizationBaseDto.Name)?.ToString(", ");
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = playerExecutiveReportDto.AttendeeOrganizationBasesDtos?.Select(ao => ao.OrganizationBaseDto.TradeName)?.ToString(", ");
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = playerExecutiveReportDto.FirstName;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = playerExecutiveReportDto.LastNames;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = playerExecutiveReportDto.Badge;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = playerExecutiveReportDto.CellPhone;
+                            worksheet.Cell(lineIndex, columnIndex).Style.NumberFormat.Format = "00000";
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = playerExecutiveReportDto.PhoneNumber;
+                            worksheet.Cell(lineIndex, columnIndex).Style.NumberFormat.Format = "00000";
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = playerExecutiveReportDto.Email;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = playerExecutiveReportDto.PublicEmail;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = playerExecutiveReportDto.Website;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = playerExecutiveReportDto.Linkedin;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = playerExecutiveReportDto.Twitter;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = playerExecutiveReportDto.Instagram;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = playerExecutiveReportDto.Youtube;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = playerExecutiveReportDto.BirthDate?.ToShortDateString();
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = playerExecutiveReportDto.Industry?.GetTranslatedName(this.UserInterfaceLanguage);
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = playerExecutiveReportDto.Role?.GetTranslatedName(this.UserInterfaceLanguage);
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = playerExecutiveReportDto.Gender?.GetTranslatedName(this.UserInterfaceLanguage);
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = playerExecutiveReportDto.GetJobTitleBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = playerExecutiveReportDto.GetMiniBioBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = playerExecutiveReportDto.EditionParticipationBaseDtos?.Select(cep => cep.EditionUrlCode.ToString())?.ToString(", ");
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = playerExecutiveReportDto.HasAnySpecialNeeds?.ToYesOrNoString();
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = playerExecutiveReportDto.SpecialNeedsDescription;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = playerExecutiveReportDto.OnboardingStartDate?.ToStringHourMinute();
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = playerExecutiveReportDto.OnboardingFinishDate?.ToStringHourMinute();
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = playerExecutiveReportDto.ImageUploadDate.HasValue ?
+                                this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, playerExecutiveReportDto.Uid, playerExecutiveReportDto.ImageUploadDate, true) : "";
+                        }
+
+                        for (var adjustColumnIndex = 1; adjustColumnIndex <= columnIndex; adjustColumnIndex++)
+                        {
+                            if (!skipFinalAdjustmentsColumnIndexes.Contains(adjustColumnIndex))
+                            {
+                                worksheet.Column(adjustColumnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Left);
+                            }
+
+                            worksheet.Column(adjustColumnIndex).Style.Alignment.WrapText = false;
+                            worksheet.Column(adjustColumnIndex).Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center);
+                            worksheet.Column(adjustColumnIndex).AdjustToContents();
+                        }
+
+                        #endregion
+                    }
+
+                    var range = worksheet.Range(worksheet.FirstCellUsed().Address, worksheet.LastCellUsed().Address);
+                    var table = range.CreateTable();
+                    table.Theme = XLTableTheme.TableStyleMedium9;
+                    
+                    workbook.SaveAs(filePath);
+                }
+
+                // It's necessary to save workbook to file to run "AdjustToContents()" correctly.
+                // Without this, "AdjustToContents()" doesn't work and columns be with minimun width.
+                var fileBytes = System.IO.File.ReadAllBytes(filePath);
+                var workbookResult = new XLWorkbook(new MemoryStream(fileBytes));
+
+                return new ExcelResult(workbookResult, fileName);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = ApiStatus.Error, message = Messages.WeFoundAndError });
+            }
+            finally
+            {
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+            }
+        }
 
         #endregion
 

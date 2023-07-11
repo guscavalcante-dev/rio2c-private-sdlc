@@ -269,6 +269,7 @@
     <Compile Include="Dtos\Organizations\OrganizationActivityDto.cs" />
     <Compile Include="Dtos\Places\PlaceDto.cs" />
     <Compile Include="Dtos\Places\PlaceJsonDto.cs" />
+    <Compile Include="Dtos\PlayersExecutives\PlayerExecutiveReportDto.cs" />
     <Compile Include="Dtos\Projects\ProjectBuyerEvaluationBaseDto.cs" />
     <Compile Include="Dtos\Projects\ProjectCommissionEvaluationDto.cs" />
     <Compile Include="Dtos\Projects\ProjectDropdownDto.cs" />

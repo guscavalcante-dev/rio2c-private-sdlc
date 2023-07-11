@@ -97,6 +97,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email de Acesso.
+        /// </summary>
+        public static string AccessEmail {
+            get {
+                return ResourceManager.GetString("AccessEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hospedagem.
         /// </summary>
         public static string Accommodation {
@@ -1753,6 +1762,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Detalhado.
+        /// </summary>
+        public static string Detailed {
+            get {
+                return ResourceManager.GetString("Detailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Relatório de Projetos (Detalhado).
+        /// </summary>
+        public static string DetailedProjectsReport {
+            get {
+                return ResourceManager.GetString("DetailedProjectsReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Detalhes.
         /// </summary>
         public static string Details {
@@ -2230,11 +2257,11 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Avaliações por Jurado.
+        ///   Looks up a localized string similar to Relatório de Avaliações por Jurado.
         /// </summary>
-        public static string EvaluationsByEvaluator {
+        public static string EvaluationsByEvaluatorReport {
             get {
-                return ResourceManager.GetString("EvaluationsByEvaluator", resourceCulture);
+                return ResourceManager.GetString("EvaluationsByEvaluatorReport", resourceCulture);
             }
         }
         
@@ -4516,6 +4543,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Relatório de Executivos de Players.
+        /// </summary>
+        public static string PlayersExecutivesReport {
+            get {
+                return ResourceManager.GetString("PlayersExecutivesReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Players cadastrados.
         /// </summary>
         public static string PlayersRegistered {
@@ -5128,6 +5164,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ProjectSubscriptions {
             get {
                 return ResourceManager.GetString("ProjectSubscriptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email Público.
+        /// </summary>
+        public static string PublicEmail {
+            get {
+                return ResourceManager.GetString("PublicEmail", resourceCulture);
             }
         }
         

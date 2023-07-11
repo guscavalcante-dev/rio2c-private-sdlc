@@ -131,6 +131,9 @@
     <value>Login information</value>
     <comment>Dados de acesso</comment>
   </data>
+  <data name="AccessEmail" xml:space="preserve">
+    <value>Access Email</value>
+  </data>
   <data name="Accommodation" xml:space="preserve">
     <value>Accommodation</value>
     <comment>Hospedagem</comment>
@@ -816,6 +819,12 @@
   <data name="DeselectAll" xml:space="preserve">
     <value>Deselect All</value>
   </data>
+  <data name="Detailed" xml:space="preserve">
+    <value>Detailed</value>
+  </data>
+  <data name="DetailedProjectsReport" xml:space="preserve">
+    <value>Projects Report (Detailed)</value>
+  </data>
   <data name="Details" xml:space="preserve">
     <value>Details</value>
   </data>
@@ -1014,8 +1023,8 @@
     <value>Evaluations</value>
     <comment>Avaliações</comment>
   </data>
-  <data name="EvaluationsByEvaluator" xml:space="preserve">
-    <value>Evaluations by Evaluator</value>
+  <data name="EvaluationsByEvaluatorReport" xml:space="preserve">
+    <value>Evaluations by Evaluator Report</value>
   </data>
   <data name="Evaluator" xml:space="preserve">
     <value>Evaluator</value>
@@ -1970,6 +1979,9 @@
     <value>Players Executives</value>
     <comment>Executivos dos Players</comment>
   </data>
+  <data name="PlayersExecutivesReport" xml:space="preserve">
+    <value>Players Executives Report</value>
+  </data>
   <data name="PlayersRegistered" xml:space="preserve">
     <value>Players registered</value>
     <comment>Players registered</comment>
@@ -2226,6 +2238,9 @@
   <data name="ProjectSubscriptions" xml:space="preserve">
     <value>Project Subscriptions</value>
     <comment>Inscrições de Projeto</comment>
+  </data>
+  <data name="PublicEmail" xml:space="preserve">
+    <value>Public Email</value>
   </data>
   <data name="Quiz" xml:space="preserve">
     <value>Quiz</value>
