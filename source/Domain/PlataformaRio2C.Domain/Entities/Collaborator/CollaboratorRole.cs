@@ -3,10 +3,10 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-26-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 07-11-2023
 // ***********************************************************************
-// <copyright file="TicketType.cs" company="Softo">
+// <copyright file="CollaboratorRole.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -44,6 +44,16 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
+        }
+
+        /// <summary>
+        /// Gets the name of the translated.
+        /// </summary>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <returns></returns>
+        public string GetTranslatedName(string userInterfaceLanguage)
+        {
+            return this.Name?.GetSeparatorTranslation(userInterfaceLanguage, '|');
         }
 
         #region Validations

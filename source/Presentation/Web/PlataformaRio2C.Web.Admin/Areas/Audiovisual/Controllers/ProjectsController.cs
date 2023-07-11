@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 04-17-2023
+// Last Modified On : 07-10-2023
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -130,7 +130,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             int pageSize = request.Length;
             page++; //Necessary because DataTable is zero index based.
 
-            var projectsBaseDtos = await this.projectRepo.FindAllBaseDtosPagedAsync(
+            var projectsBaseDtos = await this.projectRepo.FindAllByDataTableAsync(
                 page,
                 pageSize,
                 request.GetSortColumns(),
@@ -197,32 +197,28 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         }
 
         /// <summary>
-        /// Exports to excel.
+        /// Exports the evaluators report to excel.
         /// </summary>
-        /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="showPitchings">if set to <c>true</c> [show pitchings].</param>
-        /// <param name="interestUid">The interest uid.</param>
-        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ExportEvaluatorsReportToExcel(string searchKeywords, bool showPitchings, Guid? interestUid, Guid? evaluationStatusUid)
+        public async Task<ActionResult> ExportEvaluatorsReportToExcel(AudiovisualProjectSearchViewModel searchViewModel)
         {
-            string fileName = $@"{Labels.AudioVisual} - {Labels.EvaluationsByEvaluator}_{DateTime.UtcNow.ToStringFileNameTimestamp()}";
+            string fileName = $@"{Labels.AudioVisual} - {Labels.EvaluationsByEvaluatorReport}_{DateTime.UtcNow.ToStringFileNameTimestamp()}";
             string filePath = Path.Combine(Path.GetTempPath(), fileName + ".xlsx");
 
             try
             {
-                var projectsBaseDtos = await this.projectRepo.FindAllBaseDtosPagedAsync(
+                var projectsBaseDtos = await this.projectRepo.FindAllEvaluatorsReportByDataTableAsync(
                     1,
                     10000,
                     new List<Tuple<string, string>>(), //request.GetSortColumns(),
-                    searchKeywords,
-                    showPitchings,
-                    interestUid,
-                    evaluationStatusUid,
+                    searchViewModel.Search,
+                    searchViewModel.ShowPitchings,
+                    searchViewModel.InterestUid,
+                    searchViewModel.EvaluationStatusUid,
                     this.UserInterfaceLanguage,
-                    this.EditionDto.Id,
-                    true);
+                    this.EditionDto.Id);
 
                 using (var workbook = new XLWorkbook())
                 {
@@ -306,6 +302,126 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     System.IO.File.Delete(filePath);
                 }
             }
+        }
+
+        /// <summary>
+        /// Exports the detailed projects report to excel.
+        /// </summary>
+        /// <param name="searchViewModel">The search view model.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ExportDetailedProjectsReportToExcel(AudiovisualProjectSearchViewModel searchViewModel)
+        {
+            //TODO: This report was started in task [RIO2CMY-796] but after technical analysis it was verified that it was not a "project report", but a "Player Executives".
+            //This information was not explicit in the task, it was only after we received the example .xlsx that we realized what the customer really needed.
+            //Do not delete this code! It's working! Just remove the retun Json below and change the select fields that will be exported!
+            return Json(new { status = ApiStatus.Error, message = Texts.NotFoundErrorMessage });
+
+            #region Disabled but working!
+
+#pragma warning disable CS0162 // Unreachable code detected
+            string fileName = $@"{Labels.AudioVisual} - {Labels.DetailedProjectsReport}_{DateTime.UtcNow.ToStringFileNameTimestamp()}";
+
+            string filePath = Path.Combine(Path.GetTempPath(), fileName + ".xlsx");
+
+            try
+            {
+                var projectsBaseDtos = await this.projectRepo.FindAllProjectsReportByDataTableAsync(
+                    1,
+                    10000,
+                    new List<Tuple<string, string>>(), //request.GetSortColumns(),
+                    searchViewModel.Search,
+                    searchViewModel.ShowPitchings,
+                    searchViewModel.InterestUid,
+                    searchViewModel.EvaluationStatusUid,
+                    this.UserInterfaceLanguage,
+                    this.EditionDto.Id);
+
+                using (var workbook = new XLWorkbook())
+                {
+                    var worksheet = workbook.Worksheets.Add(Labels.Contacts);
+
+                    #region Header
+
+                    var lineIndex = 1;
+                    var columnIndex = 0;
+                    var skipFinalAdjustmentsColumnIndexes = new List<int>();
+
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Producer;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Project;
+
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Evaluation;
+                    worksheet.Column(columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                    skipFinalAdjustmentsColumnIndexes.Add(columnIndex);
+
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Evaluator;
+
+                    #endregion
+
+                    if (projectsBaseDtos.Any())
+                    {
+                        #region Rows
+
+                        foreach (var projectBaseDto in projectsBaseDtos)
+                        {
+                            if (projectBaseDto?.ProjectCommissionEvaluationDtos != null)
+                            {
+                                foreach (var projectCommissionEvaluationDto in projectBaseDto.ProjectCommissionEvaluationDtos)
+                                {
+                                    lineIndex++;
+                                    columnIndex = 0;
+
+                                    worksheet.Cell(lineIndex, columnIndex += 1).Value = projectBaseDto.ProducerName;
+                                    worksheet.Cell(lineIndex, columnIndex += 1).Value = projectBaseDto.ProjectName;
+
+                                    worksheet.Cell(lineIndex, columnIndex += 1).Value = projectCommissionEvaluationDto.CommissionEvaluation.Grade;
+                                    worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+
+                                    worksheet.Cell(lineIndex, columnIndex += 1).Value = projectCommissionEvaluationDto.EvaluatorUser.Name;
+                                }
+                            }
+                        }
+
+                        for (var adjustColumnIndex = 1; adjustColumnIndex <= columnIndex; adjustColumnIndex++)
+                        {
+                            if (!skipFinalAdjustmentsColumnIndexes.Contains(adjustColumnIndex))
+                            {
+                                worksheet.Column(adjustColumnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Left);
+                            }
+
+                            worksheet.Column(adjustColumnIndex).Style.Alignment.WrapText = false;
+                            worksheet.Column(adjustColumnIndex).Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center);
+                            worksheet.Column(adjustColumnIndex).AdjustToContents();
+                        }
+
+                        #endregion
+                    }
+
+                    workbook.SaveAs(filePath);
+                }
+
+                // It's necessary to save workbook to file to run "AdjustToContents()" correctly.
+                // Without this, "AdjustToContents()" doesn't work and columns be with minimun width.
+                var fileBytes = System.IO.File.ReadAllBytes(filePath);
+                var workbookResult = new XLWorkbook(new MemoryStream(fileBytes));
+
+                return new ExcelResult(workbookResult, fileName);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = ApiStatus.Error, message = Messages.WeFoundAndError });
+            }
+            finally
+            {
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+            }
+#pragma warning restore CS0162 // Unreachable code detected
+
+            #endregion
         }
 
         #endregion

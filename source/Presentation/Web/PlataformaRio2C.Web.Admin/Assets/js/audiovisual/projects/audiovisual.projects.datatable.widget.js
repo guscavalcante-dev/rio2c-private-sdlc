@@ -4,7 +4,7 @@
 // Created          : 12-13-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 04-17-2023
+// Last Modified On : 07-10-2023
 // ***********************************************************************
 // <copyright file="audiovisual.projects.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -421,14 +421,24 @@ var AudiovisualProjectsDataTableWidget = function () {
     };
 
     // Export -------------------------------------------------------------------------------------
-    var exportEvaluatorsReportToExcel = function () {
+    var getJsonParameters = function () {
         var jsonParameters = new Object();
-        jsonParameters.searchKeywords = $('#Search').val();
+        jsonParameters.search = $('#Search').val();
         jsonParameters.showPitchings = $('#ShowPitchings').prop('checked');
         jsonParameters.interestUid = $('#InterestUid').val();
         jsonParameters.evaluationStatusUid = $('#EvaluationStatusUid').val();
 
+        return jsonParameters;
+    };
+
+    var exportEvaluatorsReportToExcel = function () {
+        var jsonParameters = getJsonParameters();
         location.href = '/Audiovisual/Projects/ExportEvaluatorsReportToExcel?' + jQuery.param(jsonParameters);
+    };
+
+    var exportDetailedProjectsReportToExcel = function () {
+        var jsonParameters = getJsonParameters();
+        location.href = '/Audiovisual/Projects/ExportDetailedProjectsReportToExcel?' + jQuery.param(jsonParameters);
     };
 
     return {
@@ -444,6 +454,9 @@ var AudiovisualProjectsDataTableWidget = function () {
         },
         exportEvaluatorsReportToExcel: function () {
             exportEvaluatorsReportToExcel();
+        },
+        exportDetailedProjectsReportToExcel: function () {
+            exportDetailedProjectsReportToExcel();
         }
     };
 }();

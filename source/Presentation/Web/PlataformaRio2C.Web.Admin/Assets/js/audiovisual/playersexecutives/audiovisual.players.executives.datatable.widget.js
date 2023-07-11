@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 10-04-2021
+// Last Modified On : 07-11-2023
 // ***********************************************************************
 // <copyright file="audiovisual.players.executives.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -346,6 +346,17 @@ var PlayersExecutivesDataTableWidget = function () {
         window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PlayersExecutives/Details/' + commissionUid);
     };
 
+    // Export -------------------------------------------------------------------------------------
+    var exportPlayersExecutivesReportToExcel = function () {
+
+        var jsonParameters = new Object();
+        jsonParameters.search = $('#Search').val();
+        jsonParameters.showAllEditions = $('#ShowAllEditions').prop('checked');
+        jsonParameters.showAllParticipants = $('#ShowAllParticipants').prop('checked');
+
+        location.href = '/Audiovisual/PlayersExecutives/ExportPlayersExecutivesReportToExcel?' + jQuery.param(jsonParameters);
+    };
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
@@ -359,6 +370,9 @@ var PlayersExecutivesDataTableWidget = function () {
         },
         showDetails: function (commissionUid) {
             showDetails(commissionUid);
+        },
+        exportPlayersExecutivesReportToExcel: function () {
+            exportPlayersExecutivesReportToExcel();
         }
     };
 }();

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-31-2023
+// Last Modified On : 07-10-2023
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1532,6 +1532,136 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             })
                             .ToListPagedAsync(page, pageSize);
         }
+
+        #region Players Executives
+
+        /// <summary>
+        /// Finds all players executives report by data table.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <param name="showHighlights">The show highlights.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<PlayerExecutiveReportDto>> FindAllPlayersExecutivesReportByDataTable(
+            int page,
+            int pageSize,
+            string keywords,
+            List<Tuple<string, string>> sortColumns,
+            bool showAllEditions,
+            bool showAllParticipants,
+            bool? showHighlights,
+            int? editionId)
+        {
+            this.SetProxyEnabled(false);
+
+            string[] collaboratorTypeNames = new string[] { CollaboratorType.AudiovisualPlayerExecutive.Name };
+            string[] organizationTypeNames = new string[] { OrganizationType.Player.Name };
+
+            var query = this.GetBaseQuery()
+                                .FindByKeywords(keywords, editionId)
+                                .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, showAllEditions, showAllParticipants, editionId)
+                                .FindByHighlights(collaboratorTypeNames, showHighlights)
+                                .FindByOrganizationTypeNames(organizationTypeNames, showAllEditions, showAllParticipants, editionId);
+
+            var collaborators = await query
+                            .DynamicOrder(
+                                sortColumns,
+                                new List<Tuple<string, string>>
+                                {
+                                    new Tuple<string, string>("FullName", "User.Name"),
+                                    new Tuple<string, string>("Email", "User.Email"),
+                                },
+                                new List<string> { "User.Name", "User.Email", "CreateDate", "UpdateDate" },
+                                "User.Name")
+                            .Select(c => new PlayerExecutiveReportDto
+                            {
+                                Id = c.Id,
+                                Uid = c.Uid,
+                                FirstName = c.FirstName,
+                                LastNames = c.LastNames,
+                                Badge = c.Badge,
+                                Email = c.User.Email,
+                                PhoneNumber = c.PhoneNumber,
+                                CellPhone = c.CellPhone,
+                                PublicEmail = c.PublicEmail,
+                                Website = c.Website,
+                                Linkedin = c.Linkedin,
+                                Twitter = c.Twitter,
+                                Instagram = c.Instagram,
+                                Youtube = c.Youtube,
+                                BirthDate = c.BirthDate,
+                                ImageUploadDate = c.ImageUploadDate,
+                                Industry = c.Industry,
+                                Role = c.Role,
+                                Gender = c.Gender,
+                                HasAnySpecialNeeds = c.HasAnySpecialNeeds,
+                                SpecialNeedsDescription = c.SpecialNeedsDescription,
+                                EditionAttendeeCollaborator = c.AttendeeCollaborators.FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId),
+                                JobTitleBaseDtos = c.JobTitles.Select(d => new CollaboratorJobTitleBaseDto
+                                {
+                                    Id = d.Id,
+                                    Uid = d.Uid,
+                                    Value = d.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = d.Language.Id,
+                                        Uid = d.Language.Uid,
+                                        Name = d.Language.Name,
+                                        Code = d.Language.Code
+                                    }
+                                }),
+                                MiniBioBaseDtos = c.MiniBios.Select(d => new CollaboratorMiniBioBaseDto
+                                {
+                                    Id = d.Id,
+                                    Uid = d.Uid,
+                                    Value = d.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = d.Language.Id,
+                                        Uid = d.Language.Uid,
+                                        Name = d.Language.Name,
+                                        Code = d.Language.Code
+                                    }
+                                }),
+                                EditionParticipationBaseDtos = c.EditionParticipantions.Where(d => !d.IsDeleted).Select(d => new CollaboratorEditionParticipationBaseDto
+                                {
+                                    EditionUrlCode = d.Edition.UrlCode
+                                }),
+                                AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
+                                                                    .Where(at => !at.IsDeleted && at.EditionId == editionId)
+                                                                    .SelectMany(at => at.AttendeeOrganizationCollaborators
+                                                                                            .Where(aoc => !aoc.IsDeleted
+                                                                                                            && (organizationTypeNames.Any(ctn => !string.IsNullOrEmpty(ctn)) == true ?
+                                                                                                                    //Search by OrganizationType
+                                                                                                                    aoc.AttendeeOrganization.AttendeeOrganizationTypes
+                                                                                                                        .Where(aot => !aot.IsDeleted)
+                                                                                                                        .Any(aot => organizationTypeNames.Contains(aot.OrganizationType.Name))
+                                                                                                                    :
+                                                                                                                    //Return true because isn't searching by OrganizationType
+                                                                                                                    true))
+                                                                                            .Select(aoc => new AttendeeOrganizationBaseDto
+                                                                                            {
+                                                                                                Uid = aoc.AttendeeOrganization.Uid,
+                                                                                                OrganizationBaseDto = new OrganizationBaseDto
+                                                                                                {
+                                                                                                    Name = aoc.AttendeeOrganization.Organization.Name,
+                                                                                                    TradeName = aoc.AttendeeOrganization.Organization.TradeName
+                                                                                                }
+                                                                                            }))
+                            })
+                            .ToPagedListAsync(page, pageSize);
+
+            this.SetProxyEnabled(true);
+
+            return collaborators;
+        }
+
+        #endregion
 
         #region Speakers
 
