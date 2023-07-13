@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-06-2019
 //
-// Last Modified By : Elton Assunção
-// Last Modified On : 02-01-2023
+// Last Modified By : Renan Valentim
+// Last Modified On : 07-13-2023
 // ***********************************************************************
 // <copyright file="EditionDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -77,12 +77,12 @@ namespace PlataformaRio2C.Domain.Dtos
         public int AudiovisualCommissionMaximumApprovedProjectsCount { get; private set; }
 
         // Cartoon - Commissions
-        public DateTimeOffset CartoonProjectSubmitStartDate { get; private set; }
-        public DateTimeOffset CartoonProjectSubmitEndDate { get; private set; }
-        public DateTimeOffset CartoonCommissionEvaluationStartDate { get; private set; }
-        public DateTimeOffset CartoonCommissionEvaluationEndDate { get; private set; }
-        public int CartoonCommissionMinimumEvaluationsCount { get; private set; }
-        public int CartoonCommissionMaximumApprovedProjectsCount { get; private set; }
+        public DateTimeOffset? CartoonProjectSubmitStartDate { get; private set; }
+        public DateTimeOffset? CartoonProjectSubmitEndDate { get; private set; }
+        public DateTimeOffset? CartoonCommissionEvaluationStartDate { get; private set; }
+        public DateTimeOffset? CartoonCommissionEvaluationEndDate { get; private set; }
+        public int? CartoonCommissionMinimumEvaluationsCount { get; private set; }
+        public int? CartoonCommissionMaximumApprovedProjectsCount { get; private set; }
 
         #endregion
 

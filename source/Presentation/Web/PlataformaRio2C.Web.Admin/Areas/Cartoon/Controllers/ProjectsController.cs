@@ -4,7 +4,7 @@
 // Created          : 02-09-2022
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-09-2022
+// Last Modified On : 07-13-2023
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -150,7 +150,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
                     evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid))
                 {
                     additionalParameters.Add("noRecordsFoundMessage",
-                        $"{string.Format(Messages.TheEvaluationPeriodRunsFrom, this.EditionDto.CartoonCommissionEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(), this.EditionDto.CartoonCommissionEvaluationEndDate.ToBrazilTimeZone().ToShortDateString())}.</br>{Messages.TheProjectsWillReceiveFinalGradeAtPeriodEnds}");
+                        $"{string.Format(Messages.TheEvaluationPeriodRunsFrom, this.EditionDto.CartoonCommissionEvaluationStartDate?.ToBrazilTimeZone().ToShortDateString(), this.EditionDto.CartoonCommissionEvaluationEndDate?.ToBrazilTimeZone().ToShortDateString())}.</br>{Messages.TheProjectsWillReceiveFinalGradeAtPeriodEnds}");
                 }
                 else if (!this.EditionDto.IsCartoonProjectEvaluationOpen() &&
                     evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)

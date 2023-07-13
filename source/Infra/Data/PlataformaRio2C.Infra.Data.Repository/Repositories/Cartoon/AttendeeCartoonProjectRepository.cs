@@ -4,7 +4,7 @@
 // Created          : 08-30-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-16-2021
+// Last Modified On : 07-13-2023
 // ***********************************************************************
 // <copyright file="AttendeeCartoonProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -650,7 +650,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return await query
                             .OrderByDescending(aio => aio.Grade)
-                            .Take(edition.CartoonCommissionMaximumApprovedProjectsCount)//VOLTAR AQUI
+                            .Take(edition.CartoonCommissionMaximumApprovedProjectsCount ?? 0)
                             .Select(aio => aio.Id)
                             .ToArrayAsync();
         }

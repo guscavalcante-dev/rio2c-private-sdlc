@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Elton Assunção
-// Last Modified On : 02-01-2023
+// Last Modified By : Renan Valentim
+// Last Modified On : 07-13-2023
 // ***********************************************************************
 // <copyright file="Edition.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -92,12 +92,12 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Cartoon - Commissions
 
-        public DateTimeOffset CartoonProjectSubmitStartDate { get; private set; }
-        public DateTimeOffset CartoonProjectSubmitEndDate { get; private set; }
-        public DateTimeOffset CartoonCommissionEvaluationStartDate { get; private set; }
-        public DateTimeOffset CartoonCommissionEvaluationEndDate { get; private set; }
-        public int CartoonCommissionMinimumEvaluationsCount { get; private set; }
-        public int CartoonCommissionMaximumApprovedProjectsCount { get; private set; }
+        public DateTimeOffset? CartoonProjectSubmitStartDate { get; private set; }
+        public DateTimeOffset? CartoonProjectSubmitEndDate { get; private set; }
+        public DateTimeOffset? CartoonCommissionEvaluationStartDate { get; private set; }
+        public DateTimeOffset? CartoonCommissionEvaluationEndDate { get; private set; }
+        public int? CartoonCommissionMinimumEvaluationsCount { get; private set; }
+        public int? CartoonCommissionMaximumApprovedProjectsCount { get; private set; }
 
         #endregion
               
@@ -153,7 +153,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="cartoonCommissionEvaluationStartDate">The cartoon commission evaluation start date.</param>
         /// <param name="cartoonCommissionEvaluationEndDate">The cartoon commission evaluation end date.</param>
         /// <param name="cartoonCommissionMinimumEvaluationsCount">The cartoon commission minimum evaluations count.</param>
-        /// <param name="CartoonCommissionMaximumApprovedProjectsCount">The cartoon commission maximum approved companies count.</param>
+        /// <param name="cartoonCommissionMaximumApprovedProjectsCount">The cartoon commission maximum approved companies count.</param>
         /// <param name="userId">The user identifier.</param>
         public Edition(
             Guid uid,
@@ -198,12 +198,12 @@ namespace PlataformaRio2C.Domain.Entities
             int audiovisualCommissionMinimumEvaluationsCount,
             int audiovisualCommissionMaximumApprovedProjectsCount,
 
-            DateTime cartoonProjectSubmitStartDate,
-            DateTime cartoonProjectSubmitEndDate,
-            DateTime cartoonCommissionEvaluationStartDate,
-            DateTime cartoonCommissionEvaluationEndDate,
-            int cartoonCommissionMinimumEvaluationsCount,
-            int CartoonCommissionMaximumApprovedProjectsCount,
+            DateTime? cartoonProjectSubmitStartDate,
+            DateTime? cartoonProjectSubmitEndDate,
+            DateTime? cartoonCommissionEvaluationStartDate,
+            DateTime? cartoonCommissionEvaluationEndDate,
+            int? cartoonCommissionMinimumEvaluationsCount,
+            int? cartoonCommissionMaximumApprovedProjectsCount,
 
             int userId)
         {
@@ -254,12 +254,12 @@ namespace PlataformaRio2C.Domain.Entities
             this.AudiovisualCommissionMaximumApprovedProjectsCount = audiovisualCommissionMaximumApprovedProjectsCount;
 
             // Cartoon - Commissions
-            this.CartoonProjectSubmitStartDate = cartoonProjectSubmitStartDate.ToUtcTimeZone();
-            this.CartoonProjectSubmitEndDate = cartoonProjectSubmitEndDate.ToEndDateTimeOffset();
-            this.CartoonCommissionEvaluationStartDate = cartoonCommissionEvaluationStartDate.ToUtcTimeZone();
-            this.CartoonCommissionEvaluationEndDate = cartoonCommissionEvaluationEndDate.ToEndDateTimeOffset();
+            this.CartoonProjectSubmitStartDate = cartoonProjectSubmitStartDate?.ToUtcTimeZone();
+            this.CartoonProjectSubmitEndDate = cartoonProjectSubmitEndDate?.ToEndDateTimeOffset();
+            this.CartoonCommissionEvaluationStartDate = cartoonCommissionEvaluationStartDate?.ToUtcTimeZone();
+            this.CartoonCommissionEvaluationEndDate = cartoonCommissionEvaluationEndDate?.ToEndDateTimeOffset();
             this.CartoonCommissionMinimumEvaluationsCount = cartoonCommissionMinimumEvaluationsCount;
-            this.CartoonCommissionMaximumApprovedProjectsCount = CartoonCommissionMaximumApprovedProjectsCount;
+            this.CartoonCommissionMaximumApprovedProjectsCount = cartoonCommissionMaximumApprovedProjectsCount;
 
             base.SetCreateDate(userId);
         }
@@ -344,7 +344,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="cartoonCommissionEvaluationStartDate">The cartoon commission evaluation start date.</param>
         /// <param name="cartoonCommissionEvaluationEndDate">The cartoon commission evaluation end date.</param>
         /// <param name="cartoonCommissionMinimumEvaluationsCount">The cartoon commission minimum evaluations count.</param>
-        /// <param name="cartoonCommissionMaximumApprovedProjectsCount">The cartoon commission maximum approved companies count.</param>
+        /// <param name="cartoonCommissionMaximumApprovedProjectsCount">The cartoon commission maximum approved projects count.</param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateDatesInformation(     
             DateTime projectSubmitStartDate,
@@ -378,12 +378,12 @@ namespace PlataformaRio2C.Domain.Entities
             int audiovisualCommissionMinimumEvaluationsCount,
             int audiovisualCommissionMaximumApprovedProjectsCount,
 
-            DateTime cartoonProjectSubmitStartDate,
-            DateTime cartoonProjectSubmitEndDate,
-            DateTime cartoonCommissionEvaluationStartDate,
-            DateTime cartoonCommissionEvaluationEndDate,
-            int cartoonCommissionMinimumEvaluationsCount,
-            int cartoonCommissionMaximumApprovedProjectsCount,
+            DateTime? cartoonProjectSubmitStartDate,
+            DateTime? cartoonProjectSubmitEndDate,
+            DateTime? cartoonCommissionEvaluationStartDate,
+            DateTime? cartoonCommissionEvaluationEndDate,
+            int? cartoonCommissionMinimumEvaluationsCount,
+            int? cartoonCommissionMaximumApprovedProjectsCount,
 
             int userId)
         {
@@ -418,10 +418,10 @@ namespace PlataformaRio2C.Domain.Entities
             this.AudiovisualCommissionMinimumEvaluationsCount = audiovisualCommissionMinimumEvaluationsCount;
             this.AudiovisualCommissionMaximumApprovedProjectsCount = audiovisualCommissionMaximumApprovedProjectsCount;
 
-            this.CartoonProjectSubmitStartDate = cartoonProjectSubmitStartDate.ToUtcTimeZone();
-            this.CartoonProjectSubmitEndDate = cartoonProjectSubmitEndDate.ToEndDateTimeOffset();
-            this.CartoonCommissionEvaluationStartDate = cartoonCommissionEvaluationStartDate.ToUtcTimeZone();
-            this.CartoonCommissionEvaluationEndDate = cartoonCommissionEvaluationEndDate.ToEndDateTimeOffset();
+            this.CartoonProjectSubmitStartDate = cartoonProjectSubmitStartDate?.ToUtcTimeZone();
+            this.CartoonProjectSubmitEndDate = cartoonProjectSubmitEndDate?.ToEndDateTimeOffset();
+            this.CartoonCommissionEvaluationStartDate = cartoonCommissionEvaluationStartDate?.ToUtcTimeZone();
+            this.CartoonCommissionEvaluationEndDate = cartoonCommissionEvaluationEndDate?.ToEndDateTimeOffset();
             this.CartoonCommissionMinimumEvaluationsCount = cartoonCommissionMinimumEvaluationsCount;
             this.CartoonCommissionMaximumApprovedProjectsCount = cartoonCommissionMaximumApprovedProjectsCount;
 

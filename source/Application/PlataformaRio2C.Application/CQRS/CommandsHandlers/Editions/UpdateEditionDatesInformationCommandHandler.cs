@@ -4,7 +4,7 @@
 // Created          : 03-20-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-16-2021
+// Last Modified On : 07-13-2023
 // ***********************************************************************
 // <copyright file="UpdateEditionDatesInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -109,12 +109,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.AudiovisualCommissionMinimumEvaluationsCount.Value,
                 cmd.AudiovisualCommissionMaximumApprovedProjectsCount.Value,
 
-                cmd.CartoonProjectSubmitStartDate.Value,
-                cmd.CartoonProjectSubmitEndDate.Value,
-                cmd.CartoonCommissionEvaluationStartDate.Value,
-                cmd.CartoonCommissionEvaluationEndDate.Value,
-                cmd.CartoonCommissionMinimumEvaluationsCount.Value,
-                cmd.CartoonCommissionMaximumApprovedProjectsCount.Value,
+                cmd.CartoonProjectSubmitStartDate,
+                cmd.CartoonProjectSubmitEndDate,
+                cmd.CartoonCommissionEvaluationStartDate,
+                cmd.CartoonCommissionEvaluationEndDate,
+                cmd.CartoonCommissionMinimumEvaluationsCount,
+                cmd.CartoonCommissionMaximumApprovedProjectsCount,
 
                 cmd.UserId);
 
