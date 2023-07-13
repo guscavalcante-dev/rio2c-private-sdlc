@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 08-20-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-24-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 07-13-2023
 // ***********************************************************************
 // <copyright file="EditionDateBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -161,29 +161,29 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         #region Cartoon - Commissions
 
         [Display(Name = nameof(CartoonProjectSubmitStartDate), ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public DateTime? CartoonProjectSubmitStartDate { get; set; }
 
         [Display(Name = nameof(CartoonProjectSubmitEndDate), ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [GreaterThanOrEqualTo(nameof(CartoonProjectSubmitStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
+        //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        //[GreaterThanOrEqualTo(nameof(CartoonProjectSubmitStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
         public DateTime? CartoonProjectSubmitEndDate { get; set; }
 
         [Display(Name = nameof(CartoonCommissionEvaluationStartDate), ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public DateTime? CartoonCommissionEvaluationStartDate { get; set; }
 
         [Display(Name = nameof(CartoonCommissionEvaluationEndDate), ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [GreaterThanOrEqualTo(nameof(CartoonCommissionEvaluationStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
+        //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        //[GreaterThanOrEqualTo(nameof(CartoonCommissionEvaluationStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
         public DateTime? CartoonCommissionEvaluationEndDate { get; set; }
 
         [Display(Name = nameof(CartoonCommissionMaximumApprovedProjectsCount), ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public int? CartoonCommissionMaximumApprovedProjectsCount { get; set; }
 
         [Display(Name = nameof(CartoonCommissionMinimumEvaluationsCount), ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public int? CartoonCommissionMinimumEvaluationsCount { get; set; }
 
         #endregion

@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 01-06-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-24-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 07-13-2023
 // ***********************************************************************
 // <copyright file="CreateEditionCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -117,12 +117,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.EditionDate.AudiovisualCommissionMinimumEvaluationsCount.Value,
                 cmd.EditionDate.AudiovisualCommissionMaximumApprovedProjectsCount.Value,
 
-                cmd.EditionDate.CartoonProjectSubmitStartDate.Value,
-                cmd.EditionDate.CartoonProjectSubmitEndDate.Value,
-                cmd.EditionDate.CartoonCommissionEvaluationStartDate.Value,
-                cmd.EditionDate.CartoonCommissionEvaluationEndDate.Value,
-                cmd.EditionDate.CartoonCommissionMinimumEvaluationsCount.Value,
-                cmd.EditionDate.CartoonCommissionMaximumApprovedProjectsCount.Value,
+                cmd.EditionDate.CartoonProjectSubmitStartDate,
+                cmd.EditionDate.CartoonProjectSubmitEndDate,
+                cmd.EditionDate.CartoonCommissionEvaluationStartDate,
+                cmd.EditionDate.CartoonCommissionEvaluationEndDate,
+                cmd.EditionDate.CartoonCommissionMinimumEvaluationsCount,
+                cmd.EditionDate.CartoonCommissionMaximumApprovedProjectsCount,
 
                 cmd.UserId);
 
