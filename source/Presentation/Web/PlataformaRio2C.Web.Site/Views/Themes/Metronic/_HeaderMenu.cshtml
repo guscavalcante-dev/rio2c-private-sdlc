@@ -192,10 +192,11 @@
                 projectsUrl = Url.Action("Index", "Projects", new { Area = "Cartoon" });
             }
         }
-        <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "Projects", "Cartoon")" aria-haspopup="true">
+        //Disabled on https://softohq.atlassian.net/browse/RIO2CMY-801
+        @*<li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "Projects", "Cartoon")" aria-haspopup="true">
             <a class="kt-menu__link" href="@projectsUrl">
                 <span class="kt-menu__link-text">@Labels.Cartoonito</span>
             </a>
-        </li>
+        </li>*@
     }
 </ul>
