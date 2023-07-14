@@ -6,16 +6,16 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 07-03-2023
 // ***********************************************************************
-// <copyright file="innovation.tracks.groups.datatable.widget" company="Softo">
+// <copyright file="innovation.trackoptions.groups.datatable.widget" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var InnovationTracksGroupsDataTableWidget = function () {
+var InnovationTrackOptionGroupsDataTableWidget = function () {
 
-    var widgetElementId = '#InnovationTracksGroupsDataTableWidget';
-    var tableElementId = '#innovation-tracks-groups-list-table';
+    var widgetElementId = '#InnovationTrackOptionGroupsDataTableWidget';
+    var tableElementId = '#innovation-trackoption-groups-list-table';
     var table;
 
     // Init datatable -----------------------------------------------------------------------------
@@ -85,7 +85,7 @@ var InnovationTracksGroupsDataTableWidget = function () {
                 sSearch: $('#Search').val()
             },
             ajax: {
-                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/TracksGroups/Search'),
+                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/TrackOptionGroups/Search'),
                 data: function (d) {
                     //d.showAllEditions = $('#ShowAllEditions').prop('checked');
                     //d.showAllParticipants = $('#ShowAllParticipants').prop('checked');
@@ -167,17 +167,17 @@ var InnovationTracksGroupsDataTableWidget = function () {
                                             <div class="dropdown-menu dropdown-menu-right">';
 
                         if (!full.IsInCurrentEdition) {
-                            html += '<button class="dropdown-item" onclick="InnovationTracksGroupsUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
+                            html += '<button class="dropdown-item" onclick="InnovationTrackOptionGroupsUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         }
                         else {
-                            html += '<button class="dropdown-item" onclick="InnovationTracksGroupsDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
+                            html += '<button class="dropdown-item" onclick="InnovationTrackOptionGroupsDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
                         }
 
                         if (full.IsInCurrentEdition && full.IsInOtherEdition) {
-                            html += '<button class="dropdown-item" onclick="InnovationTracksGroupsDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-minus"></i> ' + removeFromEdition + '</button>';
+                            html += '<button class="dropdown-item" onclick="InnovationTrackOptionGroupsDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-minus"></i> ' + removeFromEdition + '</button>';
                         }
                         else {
-                            html += '<button class="dropdown-item" onclick="InnovationTracksGroupsDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+                            html += '<button class="dropdown-item" onclick="InnovationTrackOptionGroupsDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
                         }
 
                         html += '\
@@ -243,7 +243,7 @@ var InnovationTracksGroupsDataTableWidget = function () {
             return;
         }
 
-        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/TracksGroups/Details/' + trackGroupUid);
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/TrackOptionGroups/Details/' + trackGroupUid);
     };
 
     return {

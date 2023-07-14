@@ -6,12 +6,12 @@
 <div class="row">
     <!--begin:: Total Count Widget-->
     <div class="col-sm-6">
-        <div id="InnovationTracksGroupsTotalCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <div id="InnovationTrackOptionGroupsTotalCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
     </div>
     <!--end:: Total Count Widget-->
     <!--begin:: Edition Count-->
     <div class="col-sm-6">
-        <div id="InnovationTracksGroupsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <div id="InnovationTrackOptionGroupsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
     </div>
     <!--end:: Edition Count-->
 </div>
@@ -26,10 +26,10 @@
     @Scripts.Render("~/bundles/js/chart.js")
     @Scripts.Render("~/bundles/js/select2.js")
     @Scripts.Render("~/bundles/js/bootbox.js")
-    @Scripts.Render("~/bundles/js/innovation.tracks.groups.list.js")
-    @Scripts.Render("~/bundles/js/innovation.tracks.groups.create.js")
-    @Scripts.Render("~/bundles/js/innovation.tracks.groups.update.js")
-    @Scripts.Render("~/bundles/js/innovation.tracks.groups.delete.js")
+    @Scripts.Render("~/bundles/js/innovation.trackoption.groups.list.js")
+    @Scripts.Render("~/bundles/js/innovation.trackoption.groups.create.js")
+    @Scripts.Render("~/bundles/js/innovation.trackoption.groups.update.js")
+    @Scripts.Render("~/bundles/js/innovation.trackoption.groups.delete.js")
     <script>
         // Page translations ----------------------------------------------------------------------
         var addToEdition = '@string.Format(Labels.AddToEdition, ViewBag.EditionDto.UrlCode)';
@@ -41,9 +41,9 @@
         var initialPageSize = @(Model.PageSize?.ToString() ?? "null");
 
         jQuery(document).ready(function () {
-            InnovationTracksGroupsTotalCountWidget.init();
-            InnovationTracksGroupsEditionCountWidget.init();
-            InnovationTracksGroupsDataTableWidget.init();
+            InnovationTrackOptionGroupsTotalCountWidget.init();
+            InnovationTrackOptionGroupsEditionCountWidget.init();
+            InnovationTrackOptionGroupsDataTableWidget.init();
         });
     </script>
 }
