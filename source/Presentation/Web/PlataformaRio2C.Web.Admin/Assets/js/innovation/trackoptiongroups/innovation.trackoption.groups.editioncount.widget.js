@@ -6,16 +6,16 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 07-03-2023
 // ***********************************************************************
-// <copyright file="innovation.tracks.groups.editioncount.widget.js" company="Softo">
+// <copyright file="innovation.trackoptions.groups.editioncount.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var InnovationTracksGroupsEditionCountWidget = function () {
+var InnovationTrackOptionGroupsEditionCountWidget = function () {
 
-    var widgetElementId = '#InnovationTracksGroupsEditionCountWidget';
-    var chartElementId = 'InnovationTracksGroupsEditionCountChart';
+    var widgetElementId = '#InnovationTrackOptionGroupsEditionCountWidget';
+    var chartElementId = 'InnovationTrackOptionGroupsEditionCountChart';
     var widgetElement = $(widgetElementId);
 
     // Show ---------------------------------------------------------------------------------------
@@ -117,7 +117,7 @@ var InnovationTracksGroupsEditionCountWidget = function () {
     var show = function () {
         var jsonParameters = new Object();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/TracksGroups/ShowEditionCountWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/TrackOptionGroups/ShowEditionCountWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
