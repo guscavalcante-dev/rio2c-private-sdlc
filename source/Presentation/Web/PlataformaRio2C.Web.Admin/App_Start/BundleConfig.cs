@@ -980,24 +980,24 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
-            #region Tracks
+            #region Track Options
 
-            bundles.Add(new ScriptBundle("~/bundles/js/innovation.tracks.list.js").Include(
-                "~/Assets/js/innovation/tracks/innovation.tracks.editioncount.widget.js",
-                "~/Assets/js/innovation/tracks/innovation.tracks.totalcount.widget.js",
-                "~/Assets/js/innovation/tracks/innovation.tracks.datatable.widget.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.trackoptions.list.js").Include(
+                "~/Assets/js/innovation/trackoptions/innovation.trackoptions.editioncount.widget.js",
+                "~/Assets/js/innovation/trackoptions/innovation.trackoptions.totalcount.widget.js",
+                "~/Assets/js/innovation/trackoptions/innovation.trackoptions.datatable.widget.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/innovation.tracks.details.js").Include(
-                "~/Assets/js/collaborators/innovation.tracks.maininformation.widget.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.trackoptions.details.js").Include(
+                "~/Assets/js/collaborators/innovation.trackoptions.maininformation.widget.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/innovation.tracks.create.js").Include(
-                "~/Assets/js/innovation/tracks/innovation.tracks.create.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.trackoptions.create.js").Include(
+                "~/Assets/js/innovation/trackoptions/innovation.trackoptions.create.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/innovation.tracks.update.js").Include(
-                "~/Assets/js/innovation/tracks/innovation.tracks.update.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.trackoptions.update.js").Include(
+                "~/Assets/js/innovation/trackoptions/innovation.trackoptions.update.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/innovation.tracks.delete.js").Include(
-                "~/Assets/js/innovation/tracks/innovation.tracks.delete.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.trackoptions.delete.js").Include(
+                "~/Assets/js/innovation/trackoptions/innovation.trackoptions.delete.js"));
 
             #endregion
 

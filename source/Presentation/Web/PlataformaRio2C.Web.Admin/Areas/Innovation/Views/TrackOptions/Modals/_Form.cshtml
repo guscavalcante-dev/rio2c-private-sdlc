@@ -1,0 +1,27 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model PlataformaRio2C.Application.CQRS.Commands.CreateInnovationOrganizationTrackOption
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+}
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.InnovationOrganizationOptionGroupUid, new { @class = "control-label" })
+        <select name="@Html.NameFor(m => m.InnovationOrganizationOptionGroupUid)" id="@Html.IdFor(m => m.InnovationOrganizationOptionGroupUid)" @Html.GetUnobtrusiveValidationAttributesFor(m => m.InnovationOrganizationOptionGroupUid) class="form-control enable-select2">
+            <option value="" data-start-date="" data-end-date="">@(Labels.Select)...</option>
+            @foreach (var trackOptionGroup in Model.InnovationOrganizationTrackOptionGroupDtos)
+            {
+                <option value="@trackOptionGroup.Uid" @(trackOptionGroup.Uid == Model.InnovationOrganizationOptionGroupUid ? "selected" : "")>
+                    @trackOptionGroup.GroupName
+                </option>
+            }
+        </select>
+        @Html.ValidationMessageFor(m => m.InnovationOrganizationOptionGroupUid, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-12">
+        @Html.LabelFor(m => m.Name, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+    </div>
+</div>

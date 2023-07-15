@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Renan Valentim
-// Created          : 07-03-2023
+// Created          : 07-04-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-14-2023
+// Last Modified On : 07-15-2023
 // ***********************************************************************
-// <copyright file="TrackOptionGroupsController.cs" company="Softo">
+// <copyright file="TrackOptionsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -37,22 +37,26 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 {
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminInnovation)]
-    public class TrackOptionGroupsController : BaseController
+    public class TrackOptionsController : BaseController
     {
+        private readonly IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo;
         private readonly IInnovationOrganizationTrackOptionGroupRepository innovationOrganizationTrackOptionGroupRepo;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TrackOptionGroupsController"/> class.
+        /// Initializes a new instance of the <see cref="TrackOptionsController" /> class.
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityControlle">The identity controlle.</param>
+        /// <param name="innovationOrganizationTrackOptionRepository">The innovation organization track option repository.</param>
         /// <param name="innovationOrganizationTrackOptionGroupRepository">The innovation organization track option group repository.</param>
-        public TrackOptionGroupsController(
+        public TrackOptionsController(
             IMediator commandBus, 
             IdentityAutenticationService identityControlle,
+            IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepository,
             IInnovationOrganizationTrackOptionGroupRepository innovationOrganizationTrackOptionGroupRepository) 
             : base(commandBus, identityControlle)
         {
+            this.innovationOrganizationTrackOptionRepo = innovationOrganizationTrackOptionRepository;
             this.innovationOrganizationTrackOptionGroupRepo = innovationOrganizationTrackOptionGroupRepository;
         }
 
@@ -64,13 +68,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Index(InnovationTrackOptionGroupSearchViewModel searchViewModel)
+        public async Task<ActionResult> Index(InnovationTrackOptionSearchViewModel searchViewModel)
         {
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.InnovationVerticals, new List<BreadcrumbItemHelper>{
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CreativeEconomyThemes, new List<BreadcrumbItemHelper>{
                 new BreadcrumbItemHelper(Labels.Innovation, null),
-                new BreadcrumbItemHelper(Labels.Verticals, Url.Action("Index", "TrackOptionGroups", new { Area = "Innovation" }))
+                new BreadcrumbItemHelper(Labels.CreativeEconomyThemes, Url.Action("Index", "TrackOptions", new { Area = "Innovation" }))
             });
 
             #endregion
@@ -82,7 +86,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// Searches the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request)
@@ -91,13 +94,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             int pageSize = request.Length;
             page++; //Necessary because DataTable is zero index based.
 
-            var innovationOrganizationTrackOptionGroupDtos = await this.innovationOrganizationTrackOptionGroupRepo.FindAllByDataTable(
+            var innovationOrganizationTrackOptionDtos = await this.innovationOrganizationTrackOptionRepo.FindAllByDataTable(
                 page,
                 pageSize,
                 request.Search?.Value,
                 request.GetSortColumns());
 
-            var response = DataTablesResponse.Create(request, innovationOrganizationTrackOptionGroupDtos.TotalItemCount, innovationOrganizationTrackOptionGroupDtos.TotalItemCount, innovationOrganizationTrackOptionGroupDtos);
+            var response = DataTablesResponse.Create(request, innovationOrganizationTrackOptionDtos.TotalItemCount, innovationOrganizationTrackOptionDtos.TotalItemCount, innovationOrganizationTrackOptionDtos);
 
             return Json(new
             {
@@ -110,19 +113,21 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
         #region Total Count Widget
 
-        /// <summary>Shows the total count widget.</summary>
+        /// <summary>
+        /// Shows the total count widget.
+        /// </summary>
         /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> ShowTotalCountWidget()
         {
-            var tracksCount = await this.innovationOrganizationTrackOptionGroupRepo.CountAllByDataTable(true, this.EditionDto.Id);
+            var tracksCount = await this.innovationOrganizationTrackOptionRepo.CountAllByDataTable(true, this.EditionDto.Id);
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", tracksCount), divIdOrClass = "#InnovationTrackOptionGroupsTotalCountWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", tracksCount), divIdOrClass = "#InnovationTrackOptionsTotalCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -131,18 +136,20 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
         #region Edition Count Widget
 
-        /// <summary>Shows the edition count widget.</summary>
+        /// <summary>
+        /// Shows the edition count widget.
+        /// </summary>
         /// <returns></returns>
         public async Task<ActionResult> ShowEditionCountWidget()
         {
-            var tracksCount = await this.innovationOrganizationTrackOptionGroupRepo.CountAllByDataTable(false, this.EditionDto.Id);
+            var tracksCount = await this.innovationOrganizationTrackOptionRepo.CountAllByDataTable(false, this.EditionDto.Id);
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", tracksCount), divIdOrClass = "#InnovationTrackOptionGroupsEditionCountWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", tracksCount), divIdOrClass = "#InnovationTrackOptionsEditionCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -156,7 +163,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()
         {
-            var cmd = new CreateInnovationOrganizationTrackOptionGroup();
+            var cmd = new CreateInnovationOrganizationTrackOption(await this.innovationOrganizationTrackOptionGroupRepo.FindAllDtoAsync());
 
             return Json(new
             {
@@ -175,7 +182,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// <returns></returns>
         /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
         [HttpPost]
-        public async Task<ActionResult> Create(CreateInnovationOrganizationTrackOptionGroup cmd)
+        public async Task<ActionResult> Create(CreateInnovationOrganizationTrackOption cmd)
         {
             var result = new AppValidationResult();
 
@@ -205,6 +212,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                     var target = error.Target ?? "";
                     ModelState.AddModelError(target, error.Message);
                 }
+
+                cmd.UpdateDropdowns(await this.innovationOrganizationTrackOptionGroupRepo.FindAllDtoAsync());
 
                 return Json(new
                 {

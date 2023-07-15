@@ -6,7 +6,7 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 07-03-2023
 // ***********************************************************************
-// <copyright file="InnovationTrackSearchViewModel.cs" company="Softo">
+// <copyright file="InnovationTrackOptionGroupSearchViewModel.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -16,8 +16,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PlataformaRio2C.Application.ViewModels
 {
-    /// <summary>InnovationTrackSearchViewModel</summary>
-    public class InnovationTrackGroupSearchViewModel
+    public class InnovationTrackOptionGroupSearchViewModel
     {
         [Display(Name = nameof(Labels.Search), ResourceType = typeof(Labels))]
         public string Search { get; set; }
@@ -25,12 +24,12 @@ namespace PlataformaRio2C.Application.ViewModels
         public int? PageSize { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InnovationTrackGroupSearchViewModel"/> class.
+        /// Initializes a new instance of the <see cref="InnovationTrackOptionGroupSearchViewModel"/> class.
         /// </summary>
         /// <param name="search">The search.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
-        public InnovationTrackGroupSearchViewModel(
+        public InnovationTrackOptionGroupSearchViewModel(
             string search,
             int? page = 1,
             int? pageSize = 10)
@@ -40,8 +39,8 @@ namespace PlataformaRio2C.Application.ViewModels
             this.PageSize = pageSize;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="InnovationTrackGroupSearchViewModel"/> class.</summary>
-        public InnovationTrackGroupSearchViewModel()
+        /// <summary>Initializes a new instance of the <see cref="InnovationTrackOptionGroupSearchViewModel"/> class.</summary>
+        public InnovationTrackOptionGroupSearchViewModel()
         {
             if (!this.Page.HasValue)
             {

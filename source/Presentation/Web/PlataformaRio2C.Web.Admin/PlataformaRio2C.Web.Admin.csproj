@@ -378,7 +378,7 @@
     <Compile Include="Areas\Cartoon\Controllers\ProjectsController.cs" />
     <Compile Include="Areas\Innovation\Controllers\CommissionsController.cs" />
     <Compile Include="Areas\Innovation\Controllers\ProjectsController.cs" />
-    <Compile Include="Areas\Innovation\Controllers\TracksController.cs" />
+    <Compile Include="Areas\Innovation\Controllers\TrackOptionsController.cs" />
     <Compile Include="Areas\Innovation\Controllers\TrackOptionGroupsController.cs" />
     <Compile Include="Areas\Innovation\InnovationAreaRegistration.cs" />
     <Compile Include="Areas\Music\Controllers\CommissionsController.cs" />
@@ -905,13 +905,13 @@
     <Content Include="Assets\js\innovation\projects\innovation.projects.experiences.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.tracks.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.presentation.widget.js" />
-    <Content Include="Assets\js\innovation\tracks\innovation.tracks.create.js" />
-    <Content Include="Assets\js\innovation\tracks\innovation.tracks.datatable.widget.js" />
-    <Content Include="Assets\js\innovation\tracks\innovation.tracks.delete.js" />
-    <Content Include="Assets\js\innovation\tracks\innovation.tracks.editioncount.widget.js" />
-    <Content Include="Assets\js\innovation\tracks\innovation.tracks.maininformation.widget.js" />
-    <Content Include="Assets\js\innovation\tracks\innovation.tracks.totalcount.widget.js" />
-    <Content Include="Assets\js\innovation\tracks\innovation.tracks.update.js" />
+    <Content Include="Assets\js\innovation\trackoptions\innovation.trackoptions.create.js" />
+    <Content Include="Assets\js\innovation\trackoptions\innovation.trackoptions.datatable.widget.js" />
+    <Content Include="Assets\js\innovation\trackoptions\innovation.trackoptions.delete.js" />
+    <Content Include="Assets\js\innovation\trackoptions\innovation.trackoptions.editioncount.widget.js" />
+    <Content Include="Assets\js\innovation\trackoptions\innovation.trackoptions.maininformation.widget.js" />
+    <Content Include="Assets\js\innovation\trackoptions\innovation.trackoptions.totalcount.widget.js" />
+    <Content Include="Assets\js\innovation\trackoptions\innovation.trackoptions.update.js" />
     <Content Include="Assets\js\innovation\trackoptiongroups\innovation.trackoption.groups.create.js" />
     <Content Include="Assets\js\innovation\trackoptiongroups\innovation.trackoption.groups.datatable.widget.js" />
     <Content Include="Assets\js\innovation\trackoptiongroups\innovation.trackoption.groups.delete.js" />
@@ -8384,12 +8384,14 @@
     <Content Include="Areas\Innovation\Views\TrackOptionGroups\Widgets\DataTableWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\TrackOptionGroups\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\TrackOptionGroups\Widgets\TotalCountWidget.cshtml" />
-    <Content Include="Areas\Innovation\Views\Tracks\Index.cshtml" />
-    <Content Include="Areas\Innovation\Views\Tracks\Widgets\DataTableWidget.cshtml" />
-    <Content Include="Areas\Innovation\Views\Tracks\Widgets\EditionCountWidget.cshtml" />
-    <Content Include="Areas\Innovation\Views\Tracks\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\TrackOptions\Index.cshtml" />
+    <Content Include="Areas\Innovation\Views\TrackOptions\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\TrackOptions\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\TrackOptions\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\TrackOptionGroups\Modals\_Form.cshtml" />
     <Content Include="Areas\Innovation\Views\TrackOptionGroups\Modals\CreateModal.cshtml" />
+    <Content Include="Areas\Innovation\Views\TrackOptions\Modals\CreateModal.cshtml" />
+    <Content Include="Areas\Innovation\Views\TrackOptions\Modals\_Form.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -9982,7 +9984,6 @@
     <Folder Include="Areas\Cartoon\Views\Projects\Shared\" />
     <Folder Include="Areas\Innovation\Views\Projects\Modals\" />
     <Folder Include="Areas\Innovation\Views\Projects\Shared\" />
-    <Folder Include="Areas\Innovation\Views\Tracks\Modals\" />
     <Folder Include="Areas\Music\Views\Shared\" />
     <Folder Include="Scripts\ckeditor\images\" />
     <Folder Include="Scripts\ckeditor\plugins\a11yhelp\lang\" />

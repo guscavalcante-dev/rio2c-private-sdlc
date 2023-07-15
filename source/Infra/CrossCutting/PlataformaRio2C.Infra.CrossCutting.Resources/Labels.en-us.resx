@@ -3028,6 +3028,9 @@
   <data name="Verticals" xml:space="preserve">
     <value>Verticals</value>
   </data>
+  <data name="CreativeEconomyTheme" xml:space="preserve">
+    <value>Creative Economy Theme</value>
+  </data>
   <data name="VerticalsAndCreativeEconomyThemes" xml:space="preserve">
     <value>Verticals and Creative Economy Themes</value>
   </data>

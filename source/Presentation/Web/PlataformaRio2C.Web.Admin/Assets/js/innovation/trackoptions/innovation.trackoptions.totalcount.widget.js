@@ -6,16 +6,16 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 07-04-2023
 // ***********************************************************************
-// <copyright file="innovation.tracks.editioncount.widget.js" company="Softo">
+// <copyright file="innovation.trackoptions.totalcount.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var InnovationTracksEditionCountWidget = function () {
+var InnovationTrackOptionsTotalCountWidget = function () {
 
-    var widgetElementId = '#InnovationTracksEditionCountWidget';
-    var chartElementId = 'InnovationTracksEditionCountChart';
+    var widgetElementId = '#InnovationTrackOptionsTotalCountWidget';
+    var chartElementId = 'InnovationTrackOptionsTotalCountChart';
     var widgetElement = $(widgetElementId);
 
     // Show ---------------------------------------------------------------------------------------
@@ -27,8 +27,8 @@ var InnovationTracksEditionCountWidget = function () {
         var ctx = document.getElementById(chartElementId).getContext("2d");
 
         var gradient = ctx.createLinearGradient(0, 0, 0, 240);
-        gradient.addColorStop(0, Chart.helpers.color('#d1f1ec').alpha(1).rgbString());
-        gradient.addColorStop(1, Chart.helpers.color('#d1f1ec').alpha(0.3).rgbString());
+        gradient.addColorStop(0, Chart.helpers.color('#ffefce').alpha(1).rgbString());
+        gradient.addColorStop(1, Chart.helpers.color('#ffefce').alpha(0.3).rgbString());
 
         var config = {
             type: 'line',
@@ -36,7 +36,7 @@ var InnovationTracksEditionCountWidget = function () {
                 labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October"],
                 datasets: [{
                     backgroundColor: gradient,
-                    borderColor: KTApp.getStateColor('success'),
+                    borderColor: KTApp.getStateColor('warning'),
                     pointBackgroundColor: Chart.helpers.color('#000000').alpha(0).rgbString(),
                     pointBorderColor: Chart.helpers.color('#000000').alpha(0).rgbString(),
                     pointHoverBackgroundColor: KTApp.getStateColor('danger'),
@@ -117,7 +117,7 @@ var InnovationTracksEditionCountWidget = function () {
     var show = function () {
         var jsonParameters = new Object();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Tracks/ShowEditionCountWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/TrackOptions/ShowTotalCountWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -125,11 +125,13 @@ var InnovationTracksEditionCountWidget = function () {
                     enableShowPlugins();
                 },
                 // Error
-                onError: function () {
+                onError: function() {
                 }
             });
         })
         .fail(function () {
+            //showAlert();
+            //MyRio2cCommon.unblock(widgetElementId);
         })
         .always(function() {
             MyRio2cCommon.unblock({ idOrClass: widgetElementId });
