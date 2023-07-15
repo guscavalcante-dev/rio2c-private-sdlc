@@ -6,16 +6,16 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 07-04-2023
 // ***********************************************************************
-// <copyright file="innovation.tracks.datatable.widget" company="Softo">
+// <copyright file="innovation.trackoptions.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var InnovationTracksDataTableWidget = function () {
+var InnovationTrackOptionsDataTableWidget = function () {
 
-    var widgetElementId = '#InnovationTracksDataTableWidget';
-    var tableElementId = '#innovation-tracks-list-table';
+    var widgetElementId = '#InnovationTrackOptionsDataTableWidget';
+    var tableElementId = '#innovation-trackoptions-list-table';
     var table;
 
     // Init datatable -----------------------------------------------------------------------------
@@ -85,7 +85,7 @@ var InnovationTracksDataTableWidget = function () {
                 sSearch: $('#Search').val()
             },
             ajax: {
-                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Tracks/Search'),
+                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/TrackOptions/Search'),
                 data: function (d) {
                     //d.showAllEditions = $('#ShowAllEditions').prop('checked');
                     //d.showAllParticipants = $('#ShowAllParticipants').prop('checked');
@@ -229,7 +229,7 @@ var InnovationTracksDataTableWidget = function () {
             return;
         }
 
-        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Tracks/Details/' + trackUid);
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/TrackOptions/Details/' + trackUid);
     };
 
     return {

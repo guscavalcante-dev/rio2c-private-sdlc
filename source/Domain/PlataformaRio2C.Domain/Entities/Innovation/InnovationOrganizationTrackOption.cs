@@ -4,7 +4,7 @@
 // Created          : 07-12-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-27-2022
+// Last Modified On : 07-15-2023
 // ***********************************************************************
 // <copyright file="InnovationOrganizationTrackOption.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System.Collections.Generic;
 
@@ -24,6 +25,9 @@ namespace PlataformaRio2C.Domain.Entities
     /// <seealso cref="PlataformaRio2C.Domain.Entities.Entity" />
     public class InnovationOrganizationTrackOption : Entity
     {
+        public static readonly int NameMinLength = 1;
+        public static readonly int NameMaxLength = 100;
+
         public string Name { get; private set; }
         public string Description { get; private set; }
         public int DisplayOrder { get; private set; }
@@ -33,6 +37,26 @@ namespace PlataformaRio2C.Domain.Entities
 
         public virtual InnovationOrganizationTrackOptionGroup InnovationOrganizationTrackOptionGroup { get; set; }
         public virtual List<AttendeeCollaboratorInnovationOrganizationTrack> AttendeeCollaboratorInnovationOrganizationTracks { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InnovationOrganizationTrackOption"/> class.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="innovationOrganizationTrackOptionGroup">The innovation organization track option group.</param>
+        /// <param name="userId">The user identifier.</param>
+        public InnovationOrganizationTrackOption(
+            string name, 
+            InnovationOrganizationTrackOptionGroup innovationOrganizationTrackOptionGroup, 
+            int userId)
+        {
+            this.Name = name;
+            this.Description = "";
+            this.InnovationOrganizationTrackOptionGroupId = innovationOrganizationTrackOptionGroup?.Id;
+            this.InnovationOrganizationTrackOptionGroup = innovationOrganizationTrackOptionGroup;
+
+            this.IsActive = true;
+            this.SetCreateDate(userId);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InnovationOrganizationTrackOption"/> class.
@@ -85,7 +109,37 @@ namespace PlataformaRio2C.Domain.Entities
                 this.ValidationResult = new ValidationResult();
             }
 
+            this.ValidateName();
+            this.ValidateInnovationOrganizationTrackOptionGroup();
+
             return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>
+        /// Validates the name.
+        /// </summary>
+        public void ValidateName()
+        {
+            if (string.IsNullOrEmpty(this.Name?.Trim()))
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Name), new string[] { nameof(Name) }));
+            }
+
+            if (this.Name?.Trim().Length < NameMinLength || this.Name?.Trim().Length > NameMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, NameMaxLength, NameMinLength), new string[] { nameof(Name) }));
+            }
+        }
+
+        /// <summary>
+        /// Validates the innovation organization track option group.
+        /// </summary>
+        public void ValidateInnovationOrganizationTrackOptionGroup()
+        {
+            if (this.InnovationOrganizationTrackOptionGroup == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Vertical), new string[] { nameof(InnovationOrganizationTrackOptionGroupId) }));
+            }
         }
 
         #endregion

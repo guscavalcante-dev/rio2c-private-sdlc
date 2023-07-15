@@ -1,21 +1,21 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Rafael Dantas Ruiz
-// Created          : 12-27-2019
+// Author           : Renan Valentim
+// Created          : 07-03-2023
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-05-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 07-14-2023
 // ***********************************************************************
-// <copyright file="conferences.create.js" company="Softo">
+// <copyright file="innovation.trackoptions.create.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var ConferencesCreate = function () {
+var InnovationTrackOptionsCreate = function () {
 
-    var modalId = '#CreateConferenceModal';
-    var formId = '#CreateConferenceForm';
+    var modalId = '#CreateTrackOptionModal';
+    var formId = '#CreateTrackOptionForm';
 
     // Enable form validation ---------------------------------------------------------------------
     var enableFormValidation = function () {
@@ -24,13 +24,7 @@ var ConferencesCreate = function () {
 
     // Enable plugins -----------------------------------------------------------------------------
     var enablePlugins = function () {
-        if (typeof (ConferencesEditionEvents) !== 'undefined') {
-            ConferencesEditionEvents.init();
-        }
-
         MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
-        MyRio2cCommon.enableDatePicker({ inputIdOrClass: formId + ' .enable-datepicker' });
-        MyRio2cCommon.enableTimePicker({ inputIdOrClass: formId + ' .enable-timepicker' });
         enableAjaxForm();
         enableFormValidation();
     };
@@ -41,7 +35,7 @@ var ConferencesCreate = function () {
 
         var jsonParameters = new Object();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Conferences/ShowCreateModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/TrackOptions/ShowCreateModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -68,16 +62,16 @@ var ConferencesCreate = function () {
             onSuccess: function (data) {
                 $(modalId).modal('hide');
 
-                if (typeof (ConferencesDataTableWidget) !== 'undefined') {
-                    ConferencesDataTableWidget.refreshData();
+                if (typeof (InnovationTrackOptionsDataTableWidget) !== 'undefined') {
+                    InnovationTrackOptionsDataTableWidget.refreshData();
                 }
 
-                if (typeof (ConferencesTotalCountWidget) !== 'undefined') {
-                    ConferencesTotalCountWidget.init();
+                if (typeof (InnovationTrackOptionsTotalCountWidget) !== 'undefined') {
+	                InnovationTrackOptionsTotalCountWidget.init();
                 }
 
-                if (typeof (ConferencesEditionCountWidget) !== 'undefined') {
-                    ConferencesEditionCountWidget.init();
+                if (typeof (InnovationTrackOptionsEditionCountWidget) !== 'undefined') {
+	                InnovationTrackOptionsEditionCountWidget.init();
                 }
             },
             onError: function (data) {

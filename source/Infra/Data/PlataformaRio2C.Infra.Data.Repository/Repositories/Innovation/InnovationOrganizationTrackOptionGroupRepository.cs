@@ -4,7 +4,7 @@
 // Created          : 07-13-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-03-2023
+// Last Modified On : 07-15-2023
 // ***********************************************************************
 // <copyright file="InnovationOrganizationTrackOptionGroupRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -161,8 +161,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Order()
                             .Select(iotog => new InnovationOrganizationTrackOptionGroupDto
                             {
+                                Id = iotog.Id,
+                                Uid = iotog.Uid,
+                                GroupName = iotog.Name,
                                 InnovationOrganizationTrackOptionGroup = iotog,
-                                InnovationOrganizationTrackOptions = iotog.InnovationOrganizationTrackOptions
+                                InnovationOrganizationTrackOptions = iotog.InnovationOrganizationTrackOptions,
                             });
 
             return await query.ToListAsync();
