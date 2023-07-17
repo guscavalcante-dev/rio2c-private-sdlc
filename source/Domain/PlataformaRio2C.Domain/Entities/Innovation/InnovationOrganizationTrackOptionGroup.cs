@@ -64,6 +64,29 @@ namespace PlataformaRio2C.Domain.Entities
             return this.Name.GetSeparatorTranslation(languageCode, Language.Separator);
         }
 
+        /// <summary>
+        /// Deletes the specified user identifier.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        public new void Delete(int userId)
+        {
+            this.DeleteInnovationOrganizationTrackOptions(userId);
+
+            base.Delete(userId);
+        }
+
+        /// <summary>
+        /// Deletes the innovation organization track options.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteInnovationOrganizationTrackOptions(int userId)
+        {
+            foreach (var innovationOrganizationTrackOption in this.InnovationOrganizationTrackOptions)
+            {
+                innovationOrganizationTrackOption?.Delete(userId);
+            }
+        }
+
         #region Valitations
 
         /// <summary>
