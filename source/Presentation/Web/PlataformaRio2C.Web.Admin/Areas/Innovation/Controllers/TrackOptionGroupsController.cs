@@ -16,6 +16,7 @@ using DataTables.AspNet.Mvc5;
 using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
@@ -207,100 +208,103 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
         #region Update
 
-        ///// <summary>Shows the update main information modal.</summary>
-        ///// <param name="trackUid">The track uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? trackUid)
-        //{
-        //    UpdateTrackMainInformation cmd;
+        /// <summary>
+        /// Shows the update main information modal.
+        /// </summary>
+        /// <param name="innovationOrganizationTrackOptionGroupUid">The innovation organization track option group uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? innovationOrganizationTrackOptionGroupUid)
+        {
+            UpdateInnovationOrganizationTrackOptionGroupMainInformation cmd;
 
-        //    try
-        //    {
-        //        var mainInformationWidgetDto = await this.trackRepo.FindDtoAsync(trackUid ?? Guid.Empty, this.EditionDto.Id);
-        //        if (mainInformationWidgetDto == null)
-        //        {
-        //            throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Track, Labels.FoundF.ToLowerInvariant()));
-        //        }
+            try
+            {
+                var mainInformationWidgetDto = await this.innovationOrganizationTrackOptionGroupRepo.FindMainInformationWidgetDtoAsync(innovationOrganizationTrackOptionGroupUid ?? Guid.Empty);
+                if (mainInformationWidgetDto == null)
+                {
+                    return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Vertical, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+                }
 
-        //        cmd = new UpdateTrackMainInformation(
-        //            mainInformationWidgetDto,
-        //            await this.languageRepo.FindAllDtosAsync());
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-        //    }
+                cmd = new UpdateInnovationOrganizationTrackOptionGroupMainInformation(mainInformationWidgetDto);
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
-        ///// <summary>Updates the main information.</summary>
-        ///// <param name="cmd">The command.</param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public async Task<ActionResult> UpdateMainInformation(UpdateTrackMainInformation cmd)
-        //{
-        //    var result = new AppValidationResult();
+        /// <summary>
+        /// Updates the specified command.
+        /// </summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
+        [HttpPost]
+        public async Task<ActionResult> UpdateMainInformation(UpdateInnovationOrganizationTrackOptionGroupMainInformation cmd)
+        {
+            var result = new AppValidationResult();
 
-        //    try
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
 
-        //        cmd.UpdatePreSendProperties(
-        //            this.AdminAccessControlDto.User.Id,
-        //            this.AdminAccessControlDto.User.Uid,
-        //            this.EditionDto.Id,
-        //            this.EditionDto.Uid,
-        //            this.UserInterfaceLanguage);
-        //        result = await this.CommandBus.Send(cmd);
-        //        if (!result.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        foreach (var error in result.Errors)
-        //        {
-        //            var target = error.Target ?? "";
-        //            ModelState.AddModelError(target, error.Message);
-        //        }
+                cmd.UpdatePreSendProperties(
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
 
-        //        return Json(new
-        //        {
-        //            status = "error",
-        //            message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
-        //            pages = new List<dynamic>
-        //            {
-        //                new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationForm", cmd), divIdOrClass = "#form-container" },
-        //            }
-        //        }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-        //    }
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Track, Labels.UpdatedF) });
-        //}
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Member, Labels.UpdatedM) });
+        }
 
         #endregion
 
         #endregion
 
-        #region Conferences Widget
+        #region Track Options Widget
 
         ///// <summary>Shows the conferences widget.</summary>
         ///// <param name="trackUid">The track uid.</param>

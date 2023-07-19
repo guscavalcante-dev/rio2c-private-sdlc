@@ -1,12 +1,12 @@
-﻿// ***********************************************************************
+﻿//************************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Renan Valentim
-// Created          : 07-17-2023
+// Created          : 07-19-2023
 //
 // Last Modified By : Renan Valentim
 // Last Modified On : 07-19-2023
 // ***********************************************************************
-// <copyright file="DeleteInnovationOrganizationTrackOptionGroupCommandHandler.cs" company="Softo">
+// <copyright file="UpdateInnovationOrganizationTrackOptionGroupMainInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -20,28 +20,34 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>DeleteInnovationOrganizationTrackOptionGroupCommandHandler</summary>
-    public class DeleteInnovationOrganizationTrackOptionGroupCommandHandler : InnovationOrganizationTrackOptionGroupBaseCommandHandler, IRequestHandler<DeleteInnovationOrganizationTrackOptionGroup, AppValidationResult>
+    public class UpdateInnovationOrganizationTrackOptionGroupMainInformationCommandHandler : InnovationOrganizationTrackOptionGroupBaseCommandHandler, IRequestHandler<UpdateInnovationOrganizationTrackOptionGroupMainInformation, AppValidationResult>
     {
+        private readonly IEditionRepository editionRepo;
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="DeleteInnovationOrganizationTrackOptionGroupCommandHandler" /> class.
+        /// Initializes a new instance of the <see cref="UpdateInnovationOrganizationTrackOptionGroupMainInformationCommandHandler"/> class.
         /// </summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="innovationOrganizationTrackOptionGroupRepository">The innovation organization track option group repository.</param>
-        public DeleteInnovationOrganizationTrackOptionGroupCommandHandler(
+        /// <param name="editionRepository">The edition repository.</param>
+        public UpdateInnovationOrganizationTrackOptionGroupMainInformationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            IInnovationOrganizationTrackOptionGroupRepository innovationOrganizationTrackOptionGroupRepository)
+            IInnovationOrganizationTrackOptionGroupRepository innovationOrganizationTrackOptionGroupRepository,
+            IEditionRepository editionRepository)
             : base(eventBus, uow, innovationOrganizationTrackOptionGroupRepository)
         {
+            this.editionRepo = editionRepository;
         }
 
-        /// <summary>Handles the specified delete track.</summary>
+        /// <summary>
+        /// Handles the specified command.
+        /// </summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(DeleteInnovationOrganizationTrackOptionGroup cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(UpdateInnovationOrganizationTrackOptionGroupMainInformation cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
@@ -57,7 +63,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            innovationOrganizationTrackOptionGroup.Delete(cmd.UserId);
+            innovationOrganizationTrackOptionGroup.UpdateMainInformation(cmd.Name, cmd.UserId);
+
             if (!innovationOrganizationTrackOptionGroup.IsValid())
             {
                 this.AppValidationResult.Add(innovationOrganizationTrackOptionGroup.ValidationResult);
@@ -66,6 +73,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             this.InnovationOrganizationTrackOptionGroupRepo.Update(innovationOrganizationTrackOptionGroup);
             this.Uow.SaveChanges();
+            this.AppValidationResult.Data = innovationOrganizationTrackOptionGroup;
 
             return this.AppValidationResult;
         }

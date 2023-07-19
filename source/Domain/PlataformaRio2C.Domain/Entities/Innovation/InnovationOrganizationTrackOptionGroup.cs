@@ -4,7 +4,7 @@
 // Created          : 12-27-2022
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-14-2023
+// Last Modified On : 07-19-2023
 // ***********************************************************************
 // <copyright file="InnovationOrganizationTrackOptionGroup.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,7 +14,6 @@
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using System;
 using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Entities
@@ -29,9 +28,9 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int NameMinLength = 1;
         public static readonly int NameMaxLength = 100;
 
-        public string Name { get; set; }
-        public int DisplayOrder { get; set; }
-        public bool IsActive { get; set; }
+        public string Name { get; private set; }
+        public int DisplayOrder { get; private set; }
+        public bool IsActive { get; private set; }
 
         public virtual List<InnovationOrganizationTrackOption> InnovationOrganizationTrackOptions { get; set; }
 
@@ -54,6 +53,17 @@ namespace PlataformaRio2C.Domain.Entities
         public InnovationOrganizationTrackOptionGroup()
         {
 
+        }
+
+        /// <summary>
+        /// Updates the main information.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateMainInformation(string name, int userId)
+        {
+            this.Name = name;
+            this.SetUpdateDate(userId);
         }
 
         /// <summary>Gets the name translation.</summary>
