@@ -8392,6 +8392,8 @@
     <Content Include="Areas\Innovation\Views\TrackOptionGroups\Modals\CreateModal.cshtml" />
     <Content Include="Areas\Innovation\Views\TrackOptions\Modals\CreateModal.cshtml" />
     <Content Include="Areas\Innovation\Views\TrackOptions\Modals\_Form.cshtml" />
+    <Content Include="Areas\Innovation\Views\TrackOptionGroups\Details.cshtml" />
+    <Content Include="Areas\Innovation\Views\TrackOptionGroups\Widgets\MainInformationWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

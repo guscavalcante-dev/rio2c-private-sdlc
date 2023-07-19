@@ -4,7 +4,7 @@
 // Created          : 01-03-2022
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-03-2023
+// Last Modified On : 07-19-2023
 // ***********************************************************************
 // <copyright file="IInnovationOrganizationTrackOptionGroupRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,6 +23,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IInnovationOrganizationTrackOptionGroupRepository</summary>
     public interface IInnovationOrganizationTrackOptionGroupRepository : IRepository<InnovationOrganizationTrackOptionGroup>
     {
+        Task<InnovationOrganizationTrackOptionGroupDto> FindMainInformationWidgetDtoAsync(Guid innovationOrganizationTrackOptionGroupUid);
         Task<List<InnovationOrganizationTrackOptionGroup>> FindAllAsync();
         Task<List<InnovationOrganizationTrackOptionGroupDto>> FindAllDtoAsync();
         Task<List<InnovationOrganizationTrackOptionGroup>> FindAllByAttendeeCollaboratorIdAsync(int attendeeCollaboratorId);
