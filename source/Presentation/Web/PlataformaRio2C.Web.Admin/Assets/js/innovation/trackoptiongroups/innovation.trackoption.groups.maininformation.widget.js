@@ -59,8 +59,8 @@ var InnovationTrackOptionGroupsMainInformationWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (TracksMainInformationWidget) !== 'undefined') {
-                    TracksMainInformationWidget.init();
+                if (typeof (InnovationTrackOptionGroupsMainInformationWidget) !== 'undefined') {
+                    InnovationTrackOptionGroupsMainInformationWidget.init();
                 }
             },
             onError: function (data) {
