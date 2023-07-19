@@ -4,7 +4,7 @@
 // Created          : 07-03-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-03-2023
+// Last Modified On : 07-19-2023
 // ***********************************************************************
 // <copyright file="innovation.trackoptions.groups.datatable.widget" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -165,13 +165,8 @@ var InnovationTrackOptionGroupsDataTableWidget = function () {
                                               <i class="la la-ellipsis-h"></i>\
                                             </a>\
                                             <div class="dropdown-menu dropdown-menu-right">';
-
-                        if (!full.IsInCurrentEdition) {
-                            html += '<button class="dropdown-item" onclick="InnovationTrackOptionGroupsUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
-                        }
-                        else {
-                            html += '<button class="dropdown-item" onclick="InnovationTrackOptionGroupsDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
-                        }
+                        
+                        html += '<button class="dropdown-item" onclick="InnovationTrackOptionGroupsDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
 
                         if (full.IsInCurrentEdition && full.IsInOtherEdition) {
                             html += '<button class="dropdown-item" onclick="InnovationTrackOptionGroupsDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-minus"></i> ' + removeFromEdition + '</button>';
@@ -238,12 +233,12 @@ var InnovationTrackOptionGroupsDataTableWidget = function () {
         table.ajax.reload();
     };
 
-    var showDetails = function (trackGroupUid) {
-        if (MyRio2cCommon.isNullOrEmpty(trackGroupUid)) {
+    var showDetails = function (innovationOrganizationTrackOptionGroupUid) {
+        if (MyRio2cCommon.isNullOrEmpty(innovationOrganizationTrackOptionGroupUid)) {
             return;
         }
 
-        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/TrackOptionGroups/Details/' + trackGroupUid);
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/TrackOptionGroups/Details/' + innovationOrganizationTrackOptionGroupUid);
     };
 
     return {
@@ -254,8 +249,8 @@ var InnovationTrackOptionGroupsDataTableWidget = function () {
         refreshData: function () {
             refreshData();
         },
-        showDetails: function (trackGroupUid) {
-            showDetails(trackGroupUid);
+        showDetails: function (innovationOrganizationTrackOptionGroupUid) {
+            showDetails(innovationOrganizationTrackOptionGroupUid);
         }
     };
 }();

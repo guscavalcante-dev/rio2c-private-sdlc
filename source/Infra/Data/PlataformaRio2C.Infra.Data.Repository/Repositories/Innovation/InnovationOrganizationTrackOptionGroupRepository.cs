@@ -4,7 +4,7 @@
 // Created          : 07-13-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-15-2023
+// Last Modified On : 07-19-2023
 // ***********************************************************************
 // <copyright file="InnovationOrganizationTrackOptionGroupRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -110,6 +110,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>
+        /// Finds the by uid.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="uid">The uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<InnovationOrganizationTrackOptionGroup> FindByUid(this IQueryable<InnovationOrganizationTrackOptionGroup> query, Guid uid)
+        {
+            query = query.Where(iotog => iotog.Uid == uid);
+
+            return query;
+        }
     }
 
     #endregion
@@ -135,6 +148,28 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return @readonly
                         ? consult.AsNoTracking()
                         : consult;
+        }
+
+        /// <summary>
+        /// Finds the main information widget dto asynchronous.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<InnovationOrganizationTrackOptionGroupDto> FindMainInformationWidgetDtoAsync(Guid innovationOrganizationTrackOptionGroupUid)
+        {
+            var query = this.GetBaseQuery()
+                            .IsActive()
+                            .Order()
+                            .FindByUid(innovationOrganizationTrackOptionGroupUid)
+                            .Select(iotog => new InnovationOrganizationTrackOptionGroupDto
+                            {
+                                Id = iotog.Id,
+                                Uid = iotog.Uid,
+                                GroupName = iotog.Name,
+                                CreateDate = iotog.CreateDate,
+                                UpdateDate = iotog.UpdateDate
+                            });
+
+            return await query.FirstOrDefaultAsync();
         }
 
         /// <summary>
