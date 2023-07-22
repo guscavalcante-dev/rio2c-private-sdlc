@@ -558,8 +558,8 @@
     <value>Clique aqui para logar.</value>
   </data>
   <data name="Clipping" xml:space="preserve">
-    <value>Na Mídia</value>
-    <comment>Na Mídia</comment>
+    <value>Clipping</value>
+    
   </data>
   <data name="Close" xml:space="preserve">
     <value>Fechar</value>
@@ -740,6 +740,9 @@
   </data>
   <data name="CreateProject" xml:space="preserve">
     <value>Criar Projeto</value>
+  </data>
+  <data name="CreativeEconomyTheme" xml:space="preserve">
+    <value>Tema da Economia Criativa</value>
   </data>
   <data name="CreativeEconomyThemes" xml:space="preserve">
     <value>Temas da Economia Criativa</value>
@@ -1028,6 +1031,10 @@
   <data name="EvaluationsByEvaluatorReport" xml:space="preserve">
     <value>Relatório de Avaliações por Jurado</value>
   </data>
+  <data name="EvaluationsByProjectReport" xml:space="preserve">
+    <value>Relatório de Avaliações Projeto</value>
+    
+  </data>
   <data name="Evaluator" xml:space="preserve">
     <value>Avaliador</value>
     <comment>Avaliador</comment>
@@ -1102,6 +1109,9 @@
   </data>
   <data name="ExportToPdf" xml:space="preserve">
     <value>Exportar PDF</value>
+  </data>
+  <data name="Facebook" xml:space="preserve">
+    <value>Facebook</value>
   </data>
   <data name="Finish" xml:space="preserve">
     <value>Concluir</value>
@@ -1605,6 +1615,9 @@
   <data name="MusicBands" xml:space="preserve">
     <value>Bandas</value>
     <comment>Bandas</comment>
+  </data>
+  <data name="MusicBandsReport" xml:space="preserve">
+    <value>Relatório de Bandas</value>
   </data>
   <data name="MusicBandStaff" xml:space="preserve">
     <value>Equipe</value>
@@ -2221,6 +2234,9 @@
     <value>Projetos lançados</value>
     <comment>Projetos lançados</comment>
   </data>
+  <data name="ProjectsReport" xml:space="preserve">
+    <value>Relatório de Projetos</value>
+  </data>
   <data name="ProjectsSubmission" xml:space="preserve">
     <value>Inscrição de projetos</value>
     <comment>Inscrição de projetos</comment>
@@ -2343,14 +2359,6 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="RemoveFromEdition" xml:space="preserve">
     <value>Remover de {0}</value>
     <comment>Remover de {0}</comment>
-  </data>
-  <data name="ReportByEvaluator" xml:space="preserve">
-    <value>Relatório por Jurado</value>
-    <comment>Relatório por Jurado</comment>
-  </data>
-  <data name="ReportByProject" xml:space="preserve">
-    <value>Relatório por Projeto</value>
-    <comment>Relatório por Projeto</comment>
   </data>
   <data name="Reports" xml:space="preserve">
     <value>Relatórios</value>
@@ -3039,9 +3047,6 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   </data>
   <data name="Verticals" xml:space="preserve">
     <value>Verticais</value>
-  </data>
-  <data name="CreativeEconomyTheme" xml:space="preserve">
-    <value>Tema da Economia Criativa</value>
   </data>
   <data name="VerticalsAndCreativeEconomyThemes" xml:space="preserve">
     <value>Verticais e Temas da Economia Criativa</value>

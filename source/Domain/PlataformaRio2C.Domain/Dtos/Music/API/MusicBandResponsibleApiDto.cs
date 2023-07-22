@@ -39,23 +39,23 @@ namespace PlataformaRio2C.Domain.Dtos
 
         [JsonRequired]
         [JsonProperty(PropertyName = "address", Order = 600)]
-        public string Address { get; internal set; }
+        public string Address { get; set; }
 
         [JsonRequired]
         [JsonProperty(PropertyName = "country", Order = 700)]
-        public string Country { get; internal set; }
+        public string Country { get; set; }
 
         [JsonRequired]
         [JsonProperty(PropertyName = "state", Order = 800)]
-        public string State { get; internal set; }
+        public string State { get; set; }
 
         [JsonRequired]
         [JsonProperty(PropertyName = "city", Order = 900)]
-        public string City { get; internal set; }
+        public string City { get; set; }
 
         [JsonRequired]
         [JsonProperty(PropertyName = "zipCode", Order = 1000)]
-        public string ZipCode { get; internal set; }
+        public string ZipCode { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="MusicBandResponsibleApiDto"/> class.</summary>
         public MusicBandResponsibleApiDto()

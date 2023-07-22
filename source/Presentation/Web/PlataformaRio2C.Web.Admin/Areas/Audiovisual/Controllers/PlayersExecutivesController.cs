@@ -145,7 +145,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ExportPlayersExecutivesReportToExcel(CollaboratorSearchViewModel searchViewModel)
         {
-            string fileName = $@"{Labels.AudioVisual} - {Labels.PlayersExecutivesReport}_{DateTime.UtcNow.ToStringFileNameTimestamp()}";
+            string fileName = $@"{Labels.PlayersExecutivesReport}_{DateTime.UtcNow.ToStringFileNameTimestamp()}";
             string filePath = Path.Combine(Path.GetTempPath(), fileName + ".xlsx");
 
             try

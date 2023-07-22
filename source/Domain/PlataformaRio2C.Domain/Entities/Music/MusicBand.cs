@@ -42,6 +42,9 @@ namespace PlataformaRio2C.Domain.Entities
         public string Twitter { get; private set; }
         public string Youtube { get; private set; }
         public DateTimeOffset? ImageUploadDate { get; private set; }
+
+        //TODO: Delete this field!
+        [Obsolete("Initially in the Music Band Registration this field was used, but we refactored it to record the image in the AWS bucket. Actually the image is stored at 'ImageUploadDate' property.")]
         public string ImageUrl { get; set; }
 
         public virtual MusicBandType MusicBandType { get; private set; }

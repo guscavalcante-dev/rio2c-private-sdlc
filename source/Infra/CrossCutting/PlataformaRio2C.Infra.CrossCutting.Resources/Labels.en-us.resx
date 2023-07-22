@@ -740,6 +740,9 @@
   <data name="CreateProject" xml:space="preserve">
     <value>Create Project</value>
   </data>
+  <data name="CreativeEconomyTheme" xml:space="preserve">
+    <value>Creative Economy Theme</value>
+  </data>
   <data name="CreativeEconomyThemes" xml:space="preserve">
     <value>Creative Economy Themes</value>
   </data>
@@ -1026,6 +1029,10 @@
   <data name="EvaluationsByEvaluatorReport" xml:space="preserve">
     <value>Evaluations by Evaluator Report</value>
   </data>
+  <data name="EvaluationsByProjectReport" xml:space="preserve">
+    <value>Evaluations by Project Report</value>
+    <comment>Relatório por projeto</comment>
+  </data>
   <data name="Evaluator" xml:space="preserve">
     <value>Evaluator</value>
     <comment>Avaliador</comment>
@@ -1100,6 +1107,9 @@
   </data>
   <data name="ExportToPdf" xml:space="preserve">
     <value>Export PDF</value>
+  </data>
+  <data name="Facebook" xml:space="preserve">
+    <value>Facebook</value>
   </data>
   <data name="Finish" xml:space="preserve">
     <value>Finish</value>
@@ -1604,6 +1614,9 @@
   <data name="MusicBands" xml:space="preserve">
     <value>Music Bands</value>
     <comment>Bandas</comment>
+  </data>
+  <data name="MusicBandsReport" xml:space="preserve">
+    <value>Music Bands Report</value>
   </data>
   <data name="MusicBandStaff" xml:space="preserve">
     <value>Staff</value>
@@ -2216,6 +2229,9 @@
     <value>Projects released</value>
     <comment>Projetos lançados</comment>
   </data>
+  <data name="ProjectsReport" xml:space="preserve">
+    <value>Projects Report</value>
+  </data>
   <data name="ProjectsSubmission" xml:space="preserve">
     <value>Projects submission</value>
     <comment>Inscrição de projetos</comment>
@@ -2334,14 +2350,6 @@
   <data name="RemoveFromEdition" xml:space="preserve">
     <value>Remove from {0}</value>
     <comment>Remover de {0}</comment>
-  </data>
-  <data name="ReportByEvaluator" xml:space="preserve">
-    <value>Report by Evaluator</value>
-    <comment>Relatório por jurado</comment>
-  </data>
-  <data name="ReportByProject" xml:space="preserve">
-    <value>Report by Project</value>
-    <comment>Relatório por projeto</comment>
   </data>
   <data name="Reports" xml:space="preserve">
     <value>Reports</value>
@@ -3027,9 +3035,6 @@
   </data>
   <data name="Verticals" xml:space="preserve">
     <value>Verticals</value>
-  </data>
-  <data name="CreativeEconomyTheme" xml:space="preserve">
-    <value>Creative Economy Theme</value>
   </data>
   <data name="VerticalsAndCreativeEconomyThemes" xml:space="preserve">
     <value>Verticals and Creative Economy Themes</value>

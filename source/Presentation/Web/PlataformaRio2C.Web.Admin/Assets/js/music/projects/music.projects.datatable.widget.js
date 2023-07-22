@@ -238,7 +238,6 @@ var MusicProjectsDataTableWidget = function () {
                         html += '</table>';
 
                         return html;
-
                     }
                 },
                 {
@@ -356,24 +355,34 @@ var MusicProjectsDataTableWidget = function () {
     };
 
     // Export -------------------------------------------------------------------------------------
-    var exportExcel = function (url) {
+    var exportReportToCsv = function (url) {
         var jsonParameters = new Object();
+        jsonParameters.search = $('#Search').val();
         jsonParameters.musicGenreUid = $('#MusicGenreUid').val();
         jsonParameters.evaluationStatusUid = $('#EvaluationStatusUid').val();
         jsonParameters.showBusinessRounds = $('#ShowBusinessRounds').prop('checked');
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition(url), jsonParameters, function (resp) {
-
             var hiddenElement = document.createElement('a');
             hiddenElement.href = 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURI(resp.fileContent);
             hiddenElement.download = resp.fileName;
             hiddenElement.click();
         })
-        .fail(function () {
-        })
-        .always(function () {
-            MyRio2cCommon.unblock();
-        });
+            .fail(function () {
+            })
+            .always(function () {
+                MyRio2cCommon.unblock();
+            });
+    };
+
+    var exportReportToExcel = function (url) {
+        var jsonParameters = new Object();
+        jsonParameters.search = $('#Search').val();
+        jsonParameters.musicGenreUid = $('#MusicGenreUid').val();
+        jsonParameters.evaluationStatusUid = $('#EvaluationStatusUid').val();
+        jsonParameters.showBusinessRounds = $('#ShowBusinessRounds').prop('checked');
+
+        location.href = url + jQuery.param(jsonParameters);
     };
 
     return {
@@ -387,11 +396,14 @@ var MusicProjectsDataTableWidget = function () {
         showDetails: function (musicProjectUid, searchKeywords, page, pageSize) {
             showDetails(musicProjectUid, searchKeywords, page, pageSize);
         },
-        exportExcelReportByProject: function () {
-            exportExcel('/Music/Projects/ExportEvaluationListWidget');
+        exportEvaluationsByProjectReportToExcel: function () {
+            exportReportToCsv('/Music/Projects/ExportEvaluationsByProjectReportToExcel');
         },
-        exportExcelReportByEvaluators: function () {
-            exportExcel('/Music/Projects/ExportEvaluatorsListWidget');
+        exportEvaluationsByEvaluatorsReportToExcel: function () {
+            exportReportToCsv('/Music/Projects/ExportEvaluationsByEvaluatorsReportToExcel');
+        },
+        exportProjectsReportToExcel: function () {
+            exportReportToExcel('/Music/Projects/ExportProjectsReportToExcel?');
         }
     };
 }();
