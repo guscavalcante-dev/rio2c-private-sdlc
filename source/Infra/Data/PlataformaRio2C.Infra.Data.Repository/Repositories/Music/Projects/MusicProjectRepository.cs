@@ -321,14 +321,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
-        /// Finds all music projects asynchronous.
+        /// Gets the data table base query.
+        /// This is a pattern designed by Softo developers to centralize Data Table and Reports query wich shares from the same SearchForm.
+        /// It's useful in cases of implementing new filters in the Data Table. It automates the implementation of these same filters for dependent reports as well.
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="musicGenreUid">The music genre uid.</param>
         /// <param name="showBusinessRounds">if set to <c>true</c> [show business rounds].</param>
         /// <returns></returns>
-        private async Task<List<MusicProject>> FindAllMusicProjectsAsync(int editionId, string searchKeywords, Guid? musicGenreUid, bool showBusinessRounds)
+        private IQueryable<MusicProject> GetDataTableBaseQuery(int editionId, string searchKeywords, Guid? musicGenreUid, bool showBusinessRounds)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
@@ -336,111 +338,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByMusicGenreUid(musicGenreUid)
                                 .ShowBusinessRounds(showBusinessRounds);
 
-            return await query
-                            .Order()
-                            .ToListAsync();
-        }
-
-        /// <summary>
-        /// Finds all music project dtos asynchronous.
-        /// </summary>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="musicGenreUid">The music genre uid.</param>
-        /// <param name="showBusinessRounds">if set to <c>true</c> [show business rounds].</param>
-        /// <returns></returns>
-        private async Task<List<MusicProjectDto>> FindAllMusicProjectDtosAsync(int editionId, string searchKeywords, Guid? musicGenreUid, bool showBusinessRounds)
-        {
-            var query = this.GetBaseQuery()
-                               .FindByEditionId(editionId)
-                               .FindByKeywords(searchKeywords)
-                               .FindByMusicGenreUid(musicGenreUid)
-                               .ShowBusinessRounds(showBusinessRounds)
-                               .Select(mp => new MusicProjectDto
-                               {
-                                   MusicProject = mp,
-                                   AttendeeMusicBandDto = new MusicBandDto
-                                   {
-                                       AttendeeMusicBand = mp.AttendeeMusicBand,
-                                       MusicBand = mp.AttendeeMusicBand.MusicBand,
-                                       MusicBandType = mp.AttendeeMusicBand.MusicBand.MusicBandType,
-                                       MusicBandGenreDtos = mp.AttendeeMusicBand.MusicBand.MusicBandGenres
-                                                                   .Where(mbg => !mbg.IsDeleted && !mbg.MusicGenre.IsDeleted)
-                                                                   .OrderBy(mbg => mbg.MusicGenre.DisplayOrder)
-                                                                   .Select(mbg => new MusicBandGenreDto
-                                                                   {
-                                                                       MusicBandGenre = mbg,
-                                                                       MusicGenre = mbg.MusicGenre
-                                                                   }),
-                                       MusicBandTargetAudienceDtos = mp.AttendeeMusicBand.MusicBand.MusicBandTargetAudiences
-                                                                           .Where(mbta => !mbta.IsDeleted && !mbta.TargetAudience.IsDeleted)
-                                                                           .OrderBy(mbta => mbta.TargetAudience.DisplayOrder)
-                                                                           .Select(mbta => new MusicBandTargetAudienceDto
-                                                                           {
-                                                                               MusicBandTargetAudience = mbta,
-                                                                               TargetAudience = mbta.TargetAudience
-                                                                           }),
-                                       AttendeeMusicBandEvaluationsDtos = mp.AttendeeMusicBand.AttendeeMusicBandEvaluations
-                                                                                   .Where(ambe => !ambe.IsDeleted)
-                                                                                   .Select(ambe => new AttendeeMusicBandEvaluationDto
-                                                                                   {
-                                                                                       AttendeeMusicBandEvaluation = ambe,
-                                                                                       EvaluatorUser = ambe.EvaluatorUser
-                                                                                   }).ToList()
-                                   }
-                               });
-
-            return await query
-                            .Order()
-                            .ToListAsync();
-            //.ToListPagedAsync(page, pageSize);
-        }
-
-        /// <summary>
-        /// Finds all json dtos asynchronous.
-        /// </summary>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="musicGenreUid">The music genre uid.</param>
-        /// <param name="sortColumns">The sort columns.</param>
-        /// <returns></returns>
-        private async Task<List<MusicProjectJsonDto>> FindAllJsonDtosAsync(int editionId, string searchKeywords, Guid? musicGenreUid, bool showBusinessRounds, List<Tuple<string, string>> sortColumns)
-        {
-            var query = this.GetBaseQuery()
-                               .FindByEditionId(editionId, false)
-                               .FindByKeywords(searchKeywords)
-                               .FindByMusicGenreUid(musicGenreUid)
-                               .ShowBusinessRounds(showBusinessRounds)
-                               .DynamicOrder<MusicProject>(
-                                   sortColumns,
-                                   null,
-                                   new List<string> { "CreateDate", "UpdateDate" }, "CreateDate")
-                               .Select(mp => new MusicProjectJsonDto
-                               {
-                                   MusicProjectId = mp.Id,
-                                   MusicProjectUid = mp.Uid,
-                                   AttendeeMusicBandId = mp.AttendeeMusicBand.Id,
-                                   MusicBandUid = mp.AttendeeMusicBand.MusicBand.Uid,
-                                   MusicBandName = mp.AttendeeMusicBand.MusicBand.Name,
-                                   MusicBandTypeName = mp.AttendeeMusicBand.MusicBand.MusicBandType.Name,
-                                   ImageUploadDate = mp.AttendeeMusicBand.MusicBand.ImageUploadDate,
-                                   Grade = mp.AttendeeMusicBand.Grade,
-                                   EvaluationsCount = mp.AttendeeMusicBand.AttendeeMusicBandEvaluations.Count(ambe => !ambe.IsDeleted),
-                                   MusicGenreNames = mp.AttendeeMusicBand.MusicBand.MusicBandGenres
-                                                           .Where(mbg => !mbg.IsDeleted && !mbg.MusicGenre.IsDeleted)
-                                                           .OrderBy(mbg => mbg.MusicGenre.DisplayOrder)
-                                                           .Select(mbg => mbg.MusicGenre.Name).ToList(),
-                                   MusicTargetAudiencesNames = mp.AttendeeMusicBand.MusicBand.MusicBandTargetAudiences
-                                                                       .Where(mbg => !mbg.IsDeleted && !mbg.TargetAudience.IsDeleted)
-                                                                       .OrderBy(mbg => mbg.TargetAudience.DisplayOrder)
-                                                                       .Select(mbg => mbg.TargetAudience.Name).ToList(),
-                                   CreateDate = mp.CreateDate,
-                                   UpdateDate = mp.UpdateDate,
-                                   WouldYouLikeParticipateBusinessRound = mp.AttendeeMusicBand.WouldYouLikeParticipateBusinessRound
-                               });
-
-            return await query
-                            .ToListAsync();
+            return query;
         }
 
         #endregion
@@ -458,7 +356,43 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<IPagedList<MusicProjectDto>> FindAllDtosPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize)
         {
-            var musicProjectsDtos = await this.FindAllMusicProjectDtosAsync(editionId, searchKeywords, musicGenreUid, showBusinessRounds);
+            var musicProjectsDtos = await this.GetDataTableBaseQuery(editionId, searchKeywords, musicGenreUid, showBusinessRounds)
+                                           .Select(mp => new MusicProjectDto
+                                           {
+                                               MusicProject = mp,
+                                               AttendeeMusicBandDto = new MusicBandDto
+                                               {
+                                                   AttendeeMusicBand = mp.AttendeeMusicBand,
+                                                   MusicBand = mp.AttendeeMusicBand.MusicBand,
+                                                   MusicBandType = mp.AttendeeMusicBand.MusicBand.MusicBandType,
+                                                   MusicBandGenreDtos = mp.AttendeeMusicBand.MusicBand.MusicBandGenres
+                                                                               .Where(mbg => !mbg.IsDeleted && !mbg.MusicGenre.IsDeleted)
+                                                                               .OrderBy(mbg => mbg.MusicGenre.DisplayOrder)
+                                                                               .Select(mbg => new MusicBandGenreDto
+                                                                               {
+                                                                                   MusicBandGenre = mbg,
+                                                                                   MusicGenre = mbg.MusicGenre
+                                                                               }),
+                                                   MusicBandTargetAudienceDtos = mp.AttendeeMusicBand.MusicBand.MusicBandTargetAudiences
+                                                                                       .Where(mbta => !mbta.IsDeleted && !mbta.TargetAudience.IsDeleted)
+                                                                                       .OrderBy(mbta => mbta.TargetAudience.DisplayOrder)
+                                                                                       .Select(mbta => new MusicBandTargetAudienceDto
+                                                                                       {
+                                                                                           MusicBandTargetAudience = mbta,
+                                                                                           TargetAudience = mbta.TargetAudience
+                                                                                       }),
+                                                   AttendeeMusicBandEvaluationsDtos = mp.AttendeeMusicBand.AttendeeMusicBandEvaluations
+                                                                                               .Where(ambe => !ambe.IsDeleted)
+                                                                                               .Select(ambe => new AttendeeMusicBandEvaluationDto
+                                                                                               {
+                                                                                                   AttendeeMusicBandEvaluation = ambe,
+                                                                                                   EvaluatorUser = ambe.EvaluatorUser
+                                                                                               }).ToList()
+                                               }
+                                           })
+                                           .Order()
+                                           .ToListAsync();
+
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
             var approvedMusicBandsIds = await this.FindAllApprovedAttendeeMusicBandsIdsAsync(editionId);
 
@@ -503,7 +437,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
-        /// Finds all json dtos paged asynchronous.
+        /// Finds all by data table asynchronous.
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
@@ -514,7 +448,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="sortColumns">The sort columns.</param>
         /// <returns></returns>
-        public async Task<IPagedList<MusicProjectJsonDto>> FindAllJsonDtosPagedAsync(
+        public async Task<IPagedList<MusicProjectJsonDto>> FindAllByDataTableAsync(
             int editionId,
             string searchKeywords,
             Guid? musicGenreUid,
@@ -524,7 +458,38 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             int pageSize,
             List<Tuple<string, string>> sortColumns)
         {
-            var musicProjectJsonDtos = await this.FindAllJsonDtosAsync(editionId, searchKeywords, musicGenreUid, showBusinessRounds, sortColumns);
+            this.SetProxyEnabled(false);
+
+            var musicProjectJsonDtos = await this.GetDataTableBaseQuery(editionId, searchKeywords, musicGenreUid, showBusinessRounds)
+                                                   .DynamicOrder(
+                                                       sortColumns,
+                                                       null,
+                                                       new List<string> { "CreateDate", "UpdateDate" }, "CreateDate")
+                                                   .Select(mp => new MusicProjectJsonDto
+                                                   {
+                                                       MusicProjectId = mp.Id,
+                                                       MusicProjectUid = mp.Uid,
+                                                       AttendeeMusicBandId = mp.AttendeeMusicBand.Id,
+                                                       MusicBandUid = mp.AttendeeMusicBand.MusicBand.Uid,
+                                                       MusicBandName = mp.AttendeeMusicBand.MusicBand.Name,
+                                                       MusicBandTypeName = mp.AttendeeMusicBand.MusicBand.MusicBandType.Name,
+                                                       ImageUploadDate = mp.AttendeeMusicBand.MusicBand.ImageUploadDate,
+                                                       Grade = mp.AttendeeMusicBand.Grade,
+                                                       EvaluationsCount = mp.AttendeeMusicBand.AttendeeMusicBandEvaluations.Count(ambe => !ambe.IsDeleted),
+                                                       MusicGenreNames = mp.AttendeeMusicBand.MusicBand.MusicBandGenres
+                                                                               .Where(mbg => !mbg.IsDeleted && !mbg.MusicGenre.IsDeleted)
+                                                                               .OrderBy(mbg => mbg.MusicGenre.DisplayOrder)
+                                                                               .Select(mbg => mbg.MusicGenre.Name).ToList(),
+                                                       MusicTargetAudiencesNames = mp.AttendeeMusicBand.MusicBand.MusicBandTargetAudiences
+                                                                                           .Where(mbg => !mbg.IsDeleted && !mbg.TargetAudience.IsDeleted)
+                                                                                           .OrderBy(mbg => mbg.TargetAudience.DisplayOrder)
+                                                                                           .Select(mbg => mbg.TargetAudience.Name).ToList(),
+                                                       CreateDate = mp.CreateDate,
+                                                       UpdateDate = mp.UpdateDate,
+                                                       WouldYouLikeParticipateBusinessRound = mp.AttendeeMusicBand.WouldYouLikeParticipateBusinessRound
+                                                   })
+                                                   .ToListAsync();
+
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
             var approvedMusicBandsIds = await this.FindAllApprovedAttendeeMusicBandsIdsAsync(editionId);
 
@@ -564,7 +529,156 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 #endregion
             }
 
+            this.SetProxyEnabled(true);
+
             return await musicProjectJsonDtosResult
+                            .ToPagedListAsync(page, pageSize);
+        }
+
+        /// <summary>
+        /// Finds all music projects report by data table.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="musicGenreUid">The music genre uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showBusinessRounds">if set to <c>true</c> [show business rounds].</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<MusicProjectReportDto>> FindAllMusicProjectsReportByDataTable(
+            int editionId,
+            string searchKeywords,
+            Guid? musicGenreUid,
+            Guid? evaluationStatusUid,
+            bool showBusinessRounds,
+            int page,
+            int pageSize,
+            List<Tuple<string, string>> sortColumns)
+        {
+            this.SetProxyEnabled(false);
+
+            var musicProjectReportDtos = await this.GetDataTableBaseQuery(editionId, searchKeywords, musicGenreUid, showBusinessRounds)
+                                                   .DynamicOrder(
+                                                       sortColumns,
+                                                       null,
+                                                       new List<string> { "CreateDate", "UpdateDate" }, "CreateDate")
+                                                   .Select(mp => new MusicProjectReportDto
+                                                   {
+                                                       AttendeeMusicBandId = mp.AttendeeMusicBand.Id,
+                                                       MusicBandUid = mp.AttendeeMusicBand.MusicBand.Uid,
+                                                       MusicBandId = mp.AttendeeMusicBand.MusicBand.Id,
+                                                       MusicBandName = mp.AttendeeMusicBand.MusicBand.Name,
+                                                       FormationDate = mp.AttendeeMusicBand.MusicBand.FormationDate,
+                                                       MainMusicInfluences = mp.AttendeeMusicBand.MusicBand.MainMusicInfluences,
+                                                       Facebook = mp.AttendeeMusicBand.MusicBand.Facebook,
+                                                       Instagram = mp.AttendeeMusicBand.MusicBand.Instagram,
+                                                       Twitter = mp.AttendeeMusicBand.MusicBand.Twitter,
+                                                       YouTube = mp.AttendeeMusicBand.MusicBand.Youtube,
+                                                       CreateDate = mp.AttendeeMusicBand.MusicBand.CreateDate,
+                                                       UpdateDate = mp.AttendeeMusicBand.MusicBand.UpdateDate,
+                                                       ImageUploadDate = mp.AttendeeMusicBand.MusicBand.ImageUploadDate,
+                                                       WouldYouLikeParticipateBusinessRound = mp.AttendeeMusicBand.WouldYouLikeParticipateBusinessRound,
+                                                       MusicBandType = mp.AttendeeMusicBand.MusicBand.MusicBandType,
+                                                       MusicProjectApiDto = new MusicProjectApiDto
+                                                       {
+                                                           Clipping1 = mp.Clipping1,
+                                                           Clipping2 = mp.Clipping2,
+                                                           Clipping3 = mp.Clipping3,
+                                                           Music1Url = mp.Music1Url,
+                                                           Music2Url = mp.Music2Url,
+                                                           Release = mp.Release,
+                                                           VideoUrl = mp.VideoUrl
+                                                       },
+                                                       MusicBandResponsibleApiDto = mp.AttendeeMusicBand.AttendeeMusicBandCollaborators.Select(ambc => new MusicBandResponsibleApiDto
+                                                       {
+                                                           Name = ambc.AttendeeCollaborator.Collaborator.FirstName,
+                                                           Email = ambc.AttendeeCollaborator.Collaborator.User.Email,
+                                                           Document = ambc.AttendeeCollaborator.Collaborator.Document,
+                                                           CellPhone = ambc.AttendeeCollaborator.Collaborator.CellPhone,
+                                                           PhoneNumber = ambc.AttendeeCollaborator.Collaborator.PhoneNumber,
+                                                           Country = ambc.AttendeeCollaborator.Collaborator.Address.Country.Name,
+                                                           State = ambc.AttendeeCollaborator.Collaborator.Address.State.Name,
+                                                           City = ambc.AttendeeCollaborator.Collaborator.Address.City.Name,
+                                                           Address = ambc.AttendeeCollaborator.Collaborator.Address.Address1,
+                                                           ZipCode = ambc.AttendeeCollaborator.Collaborator.Address.ZipCode
+                                                       }).FirstOrDefault(),
+                                                       MusicBandMembersApiDtos = mp.AttendeeMusicBand.MusicBand.MusicBandMembers.Select(mbm => new MusicBandMemberApiDto
+                                                       {
+                                                           Name = mbm.Name,
+                                                           MusicInstrumentName = mbm.MusicInstrumentName
+                                                       }),
+                                                       MusicBandTeamMembersApiDtos = mp.AttendeeMusicBand.MusicBand.MusicBandTeamMembers.Select(mbm => new MusicBandTeamMemberApiDto
+                                                       {
+                                                           Name = mbm.Name,
+                                                           Role = mbm.Role
+                                                       }),
+                                                       ReleasedMusicProjectsApiDtos = mp.AttendeeMusicBand.MusicBand.ReleasedMusicProjects.Select(rmp => new ReleasedMusicProjectApiDto
+                                                       {
+                                                           Name = rmp.Name,
+                                                           Year = rmp.Year
+                                                       }),
+                                                       MusicGenresApiDtos = mp.AttendeeMusicBand.MusicBand.MusicBandGenres
+                                                                               .Where(mbg => !mbg.IsDeleted && !mbg.MusicGenre.IsDeleted)
+                                                                               .OrderBy(mbg => mbg.MusicGenre.DisplayOrder)
+                                                                               .Select(mbg => new MusicGenreApiDto
+                                                                               {
+                                                                                   MusicGenre = mbg.MusicGenre,
+                                                                                   AdditionalInfo = mbg.AdditionalInfo
+                                                                               }),
+                                                       TargetAudiencesApiDtos = mp.AttendeeMusicBand.MusicBand.MusicBandTargetAudiences
+                                                                                           .Where(mbg => !mbg.IsDeleted && !mbg.TargetAudience.IsDeleted)
+                                                                                           .OrderBy(mbg => mbg.TargetAudience.DisplayOrder)
+                                                                                           .Select(mbg => new TargetAudienceApiDto
+                                                                                           {
+                                                                                               TargetAudience = mbg.TargetAudience
+                                                                                           })
+                                                   })
+                                                   .ToListAsync();
+
+            var editionDto = await this.editioRepo.FindDtoAsync(editionId);
+            var approvedMusicBandsIds = await this.FindAllApprovedAttendeeMusicBandsIdsAsync(editionId);
+
+            IEnumerable<MusicProjectReportDto> musicProjectReportDtosResult = musicProjectReportDtos;
+            if (editionDto.IsMusicProjectEvaluationOpen())
+            {
+                #region Evaluation is Open
+
+                if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
+                {
+                    musicProjectReportDtosResult = new List<MusicProjectReportDto>(); //Returns a empty list
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
+                {
+                    musicProjectReportDtosResult = new List<MusicProjectReportDto>(); //Returns a empty list
+                }
+
+                #endregion
+            }
+            else
+            {
+                #region Evaluation is Closed
+
+                if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
+                {
+                    musicProjectReportDtosResult = musicProjectReportDtos.Where(w => approvedMusicBandsIds.Contains(w.AttendeeMusicBandId));
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
+                {
+                    musicProjectReportDtosResult = musicProjectReportDtos.Where(w => !approvedMusicBandsIds.Contains(w.AttendeeMusicBandId));
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
+                {
+                    musicProjectReportDtosResult = new List<MusicProjectReportDto>();
+                }
+
+                #endregion
+            }
+
+            this.SetProxyEnabled(true);
+
+            return await musicProjectReportDtosResult
                             .ToPagedListAsync(page, pageSize);
         }
 
@@ -1018,7 +1132,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<int[]> FindAllMusicProjectsIdsPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize)
         {
-            var musicProjects = await this.FindAllMusicProjectsAsync(editionId, searchKeywords, musicGenreUid, showBusinessRounds);
+            var musicProjects = await this.GetDataTableBaseQuery(editionId, searchKeywords, musicGenreUid, showBusinessRounds)
+                                            .Order()
+                                            .ToListAsync(); 
+            
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
             var approvedMusicBandsIds = await this.FindAllApprovedAttendeeMusicBandsIdsAsync(editionId);
 
@@ -1093,7 +1210,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<int> CountPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize)
         {
-            var musicProjects = await this.FindAllMusicProjectsAsync(editionId, searchKeywords, musicGenreUid, showBusinessRounds);
+            var musicProjects = await this.GetDataTableBaseQuery(editionId, searchKeywords, musicGenreUid, showBusinessRounds)
+                                            .Order()
+                                            .ToListAsync();
+
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
             var approvedMusicBandsIds = await this.FindAllApprovedAttendeeMusicBandsIdsAsync(editionId);
 

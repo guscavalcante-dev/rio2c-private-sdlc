@@ -34,6 +34,13 @@ using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 using System.Text;
 using PlataformaRio2C.Domain.Dtos;
+using ClosedXML.Excel;
+using PlataformaRio2C.Application.ViewModels;
+using PlataformaRio2C.Domain.ApiModels;
+using PlataformaRio2C.Domain.Statics;
+using PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults;
+using System.IO;
+using PlataformaRio2c.Infra.Data.FileRepository;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 {
@@ -46,9 +53,10 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         private readonly IMusicGenreRepository musicGenreRepo;
         private readonly IProjectEvaluationStatusRepository evaluationStatusRepo;
         private readonly IMusicBandRepository musicBandRepo;
+        private readonly IFileRepository fileRepo;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProjectsController"/> class.
+        /// Initializes a new instance of the <see cref="ProjectsController" /> class.
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
@@ -56,29 +64,33 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="musicGenreRepository">The music genre repository.</param>
         /// <param name="evaluationStatusRepository">The evaluation status repository.</param>
         /// <param name="musicBandRepository">The music band repository.</param>
+        /// <param name="fileRepository">The file repository.</param>
         public ProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
             IMusicProjectRepository musicProjectRepository,
             IMusicGenreRepository musicGenreRepository,
             IProjectEvaluationStatusRepository evaluationStatusRepository,
-            IMusicBandRepository musicBandRepository)
+            IMusicBandRepository musicBandRepository,
+            IFileRepository fileRepository)
             : base(commandBus, identityController)
         {
             this.musicProjectRepo = musicProjectRepository;
             this.musicGenreRepo = musicGenreRepository;
             this.evaluationStatusRepo = evaluationStatusRepository;
             this.musicBandRepo = musicBandRepository;
+            this.fileRepo = fileRepository;
         }
 
         #region List
 
-        /// <summary>Indexes the specified search keywords.</summary>
-        /// <param name="musicGenreUid">The music genre uid.</param>
-        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <summary>
+        /// Indexes the specified search view model.
+        /// </summary>
+        /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Index(Guid? musicGenreUid, Guid? evaluationStatusUid, bool? showBusinessRounds = false)
+        public async Task<ActionResult> Index(MusicProjectSearchViewModel searchViewModel)
         {
             #region Breadcrumb
 
@@ -89,36 +101,33 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
             #endregion
 
-            ViewBag.MusicGenreUid = musicGenreUid;
-            ViewBag.EvaluationStatusUid = evaluationStatusUid;
-            ViewBag.Page = 1;
-            ViewBag.PageSize = 10;
+            searchViewModel.UpdateModelsAndLists(
+                await this.musicGenreRepo.FindAllAsync(),
+                await this.evaluationStatusRepo.FindAllAsync(),
+                this.UserInterfaceLanguage);
 
-            ViewBag.MusicGenres = (await this.musicGenreRepo.FindAllAsync()).GetSeparatorTranslation(m => m.Name, this.UserInterfaceLanguage, '|');
-            ViewBag.ProjectEvaluationStatuses = (await this.evaluationStatusRepo.FindAllAsync()).GetSeparatorTranslation(m => m.Name, this.UserInterfaceLanguage, '|');
-            ViewBag.ShowBusinessRounds = showBusinessRounds;
-
-            return View();
+            return View(searchViewModel);
         }
 
-        /// <summary>Shows the list widget.</summary>
+        /// <summary>
+        /// Shows the list widget.
+        /// </summary>
         /// <param name="request">The request.</param>
-        /// <param name="musicGenreUid">The music genre uid.</param>
-        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowListWidget(IDataTablesRequest request, Guid? musicGenreUid, Guid? evaluationStatusUid, bool? showBusinessRounds)
+        public async Task<ActionResult> ShowListWidget(IDataTablesRequest request, MusicProjectSearchViewModel searchViewModel)
         {
             int page = request.Start / request.Length;
             int pageSize = request.Length;
             page++; //Necessary because DataTable is zero index based.
 
-            var musicProjectJsonDtos = await this.musicProjectRepo.FindAllJsonDtosPagedAsync(
+            var musicProjectJsonDtos = await this.musicProjectRepo.FindAllByDataTableAsync(
                 this.EditionDto.Id,
                 request.Search?.Value,
-                musicGenreUid,
-                evaluationStatusUid,
-                showBusinessRounds ?? false,
+                searchViewModel.MusicGenreUid,
+                searchViewModel.EvaluationStatusUid,
+                searchViewModel.ShowBusinessRounds,
                 page,
                 pageSize,
                 request.GetSortColumns());
@@ -154,24 +163,18 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 #endregion
             }
 
-            ViewBag.MusicGenreUid = musicGenreUid;
-            ViewBag.EvaluationStatusUid = evaluationStatusUid;
-            ViewBag.Page = page;
-            ViewBag.PageSize = pageSize;
-            ViewBag.ShowBusinessRounds = showBusinessRounds;
-
             IDictionary<string, object> additionalParameters = new Dictionary<string, object>();
             if (musicProjectJsonDtos.TotalItemCount <= 0)
             {
                 if (this.EditionDto.IsMusicProjectEvaluationOpen() && (
-                    evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid ||
-                    evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid))
+                    searchViewModel.EvaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid ||
+                    searchViewModel.EvaluationStatusUid == ProjectEvaluationStatus.Refused.Uid))
                 {
                     additionalParameters.Add("noRecordsFoundMessage",
                         $"{string.Format(Messages.TheEvaluationPeriodRunsFrom, this.EditionDto.MusicCommissionEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(), this.EditionDto.MusicCommissionEvaluationEndDate.ToBrazilTimeZone().ToShortDateString())}.</br>{Messages.TheProjectsWillReceiveFinalGradeAtPeriodEnds}");
                 }
                 else if (!this.EditionDto.IsMusicProjectEvaluationOpen() &&
-                    evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
+                    searchViewModel.EvaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
                 {
                     additionalParameters.Add("noRecordsFoundMessage",
                         $"{Messages.EvaluationPeriodClosed}<br/>{string.Format(Messages.ProjectsNotFoundWithStatus, Labels.UnderEvaluation)}");
@@ -185,23 +188,21 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 status = "success",
                 dataTable = response,
                 searchKeywords = request.Search?.Value,
-                musicGenreUid,
-                evaluationStatusUid,
-                showBusinessRounds,
+                searchViewModel.MusicGenreUid,
+                searchViewModel.EvaluationStatusUid,
+                searchViewModel.ShowBusinessRounds,
                 page,
                 pageSize
             }, JsonRequestBehavior.AllowGet);
         }
 
-        /// <summary>Export to Excel the evaluation list widget.</summary>
-        /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="musicGenreUid">The music genre uid.</param>
-        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
-        /// <param name="page">The page.</param>
-        /// <param name="pageSize">Size of the page.</param>
+        /// <summary>
+        /// Exports the evaluations by project report to excel.
+        /// </summary>
+        /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ExportEvaluationListWidget(string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool? showBusinessRounds, int? page = 1, int? pageSize = 1000)
+        public async Task<ActionResult> ExportEvaluationsByProjectReportToExcel(MusicProjectSearchViewModel searchViewModel)
         {
             StringBuilder data = new StringBuilder();
             bool ptBR = this.UserInterfaceLanguage == "pt-br";
@@ -210,12 +211,12 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             else
                 data.AppendLine("Music Band; Participant profile; Musical style; Target Audience; Create Date; Qty. Evaluation; Status;");
 
-            var musicProjectJsonDtos = await this.musicProjectRepo.FindAllJsonDtosPagedAsync(
-                this.EditionDto.Id, 
-                searchKeywords, 
-                musicGenreUid, 
-                evaluationStatusUid, 
-                showBusinessRounds ?? false, 
+            var musicProjectJsonDtos = await this.musicProjectRepo.FindAllByDataTableAsync(
+                this.EditionDto.Id,
+                searchViewModel.Search, 
+                searchViewModel.MusicGenreUid, 
+                searchViewModel.EvaluationStatusUid,
+                searchViewModel.ShowBusinessRounds, 
                 1, 
                 10000, 
                 new List<Tuple<string, string>>());
@@ -248,15 +249,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        /// <summary>Export to Excel the evaluators list widget.</summary>
-        /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="musicGenreUid">The music genre uid.</param>
-        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
-        /// <param name="page">The page.</param>
-        /// <param name="pageSize">Size of the page.</param>
+        /// <summary>
+        /// Exports the evaluations by evaluators report to excel.
+        /// </summary>
+        /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ExportEvaluatorsListWidget(string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool? showBusinessRounds, int? page = 1, int? pageSize = 1000)
+        public async Task<ActionResult> ExportEvaluationsByEvaluatorsReportToExcel(MusicProjectSearchViewModel searchViewModel)
         {
             StringBuilder data = new StringBuilder();
             bool ptBR = this.UserInterfaceLanguage == "pt-br";
@@ -265,17 +264,15 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             else
                 data.AppendLine("Music Band; Avaliation; Evaluator; Grade;");
 
-            var musicProjectJsonDtos = await this.musicProjectRepo.FindAllJsonDtosPagedAsync(
+            var musicProjectJsonDtos = await this.musicProjectRepo.FindAllByDataTableAsync(
                 this.EditionDto.Id,
-                searchKeywords, 
-                musicGenreUid, 
-                evaluationStatusUid, 
-                showBusinessRounds ?? false,
+                searchViewModel.Search, 
+                searchViewModel.MusicGenreUid, 
+                searchViewModel.EvaluationStatusUid,
+                searchViewModel.ShowBusinessRounds,
                 1, 
                 1000, 
                 new List<Tuple<string, string>>());
-
-            //var approvedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Id);
 
             foreach (var item in musicProjectJsonDtos)
             {
@@ -297,6 +294,181 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 fileName = "MusicProjects_" + dtFileName + ".csv",
                 fileContent = data.ToString()
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Exports the projects report to excel.
+        /// </summary>
+        /// <param name="searchViewModel">The search view model.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ExportProjectsReportToExcel(MusicProjectSearchViewModel searchViewModel)
+        {
+            string fileName = $@"{Labels.MusicBandsReport}_{DateTime.UtcNow.ToStringFileNameTimestamp()}";
+            string filePath = Path.Combine(Path.GetTempPath(), fileName + ".xlsx");
+
+            try
+            {
+                var musicProjectReportDtos = await this.musicProjectRepo.FindAllMusicProjectsReportByDataTable(
+                    this.EditionDto.Id,
+                    searchViewModel.Search,
+                    searchViewModel.MusicGenreUid,
+                    searchViewModel.EvaluationStatusUid,
+                    searchViewModel.ShowBusinessRounds,
+                    1,
+                    1000,
+                    new List<Tuple<string, string>>()
+                );
+
+                var approvedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Id);
+
+                using (var workbook = new XLWorkbook())
+                {
+                    var worksheet = workbook.Worksheets.Add(Labels.MusicProjects);
+
+                    #region Header
+
+                    var lineIndex = 1;
+                    var columnIndex = 0;
+                    var skipFinalAdjustmentsColumnIndexes = new List<int>();
+
+                    // DataTable Columns
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.MusicBand;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.BandType;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.MusicGenre;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.TargetAudience;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Evaluation;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.CreateDate;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.UpdateDate;
+
+                    // Extra Columns
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.MusicBandFormationYear;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.BusinessRound;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Facebook;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Instagram;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Twitter;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.YouTube;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.VideoClip;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = $@"{Labels.Music} 1";
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = $@"{Labels.Music} 2";
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = $@"{Labels.Clipping} 1";
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = $@"{Labels.Clipping} 2";
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = $@"{Labels.Clipping} 3";
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Release;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = $@"{Labels.Responsible} - {Labels.Name}";
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = $@"{Labels.Responsible} - {Labels.Email}";
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = $@"{Labels.Responsible} - {Labels.PhoneNumber}";
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = $@"{Labels.Responsible} - {Labels.CellPhone}";
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = $@"{Labels.Responsible} - {Labels.Document}";
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = $@"{Labels.Responsible} - {Labels.Address}";
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = $@"{Labels.Responsible} - {Labels.Country}";
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = $@"{Labels.Responsible} - {Labels.State}";
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = $@"{Labels.Responsible} - {Labels.City}";
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = $@"{Labels.Responsible} - {Labels.ZipCode}";
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.MusicBandMembers;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.MusicBandTeamMember;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.ProjectsReleased;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.MainMusicInfluences;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Photo;
+
+                    skipFinalAdjustmentsColumnIndexes.Add(columnIndex);
+
+                    #endregion
+
+                    if (musicProjectReportDtos.Any())
+                    {
+                        #region Rows
+
+                        foreach (var musicProjectReportDto in musicProjectReportDtos)
+                        {
+                            lineIndex++;
+                            columnIndex = 0;
+
+                            // DataTable Columns
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.MusicBandName;//AttendeeOrganizationBasesDtos?.Select(ao => ao.OrganizationBaseDto.Name)?.ToString(", ");
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.MusicBandType.GetNameTranslation(this.UserInterfaceLanguage);
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.MusicGenresApiDtos?.Select(mg => $"{mg.MusicGenre.GetNameTranslation(this.UserInterfaceLanguage)}" + (mg.MusicGenre.HasAdditionalInfo ? $" ({mg.AdditionalInfo})" : ""))?.ToString("; ");
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.TargetAudiencesApiDtos?.Select(ta => $"{ta.TargetAudience.GetNameTranslation(this.UserInterfaceLanguage)}")?.ToString("; ");
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = this.EditionDto.IsMusicProjectEvaluationOpen() ? Labels.UnderEvaluation :
+                                (approvedAttendeeMusicBandsIds.Contains(musicProjectReportDto.MusicBandId) ? Labels.ProjectAccepted : Labels.ProjectRefused);
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.CreateDate.ToStringHourMinute();
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.UpdateDate.ToStringHourMinute();
+
+                            // Extra Columns
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.FormationDate;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.WouldYouLikeParticipateBusinessRound.ToYesOrNoString();
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.Facebook;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.Instagram;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.Twitter;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.YouTube;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.MusicProjectApiDto.VideoUrl;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.MusicProjectApiDto.Music1Url;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.MusicProjectApiDto.Music2Url;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.MusicProjectApiDto.Clipping1;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.MusicProjectApiDto.Clipping2;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.MusicProjectApiDto.Clipping3;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.MusicProjectApiDto.Release;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.MusicBandResponsibleApiDto?.Name;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.MusicBandResponsibleApiDto?.Email;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.MusicBandResponsibleApiDto?.PhoneNumber;
+                            worksheet.Cell(lineIndex, columnIndex).Style.NumberFormat.Format = "00000";
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.MusicBandResponsibleApiDto?.CellPhone;
+                            worksheet.Cell(lineIndex, columnIndex).Style.NumberFormat.Format = "00000";
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.MusicBandResponsibleApiDto?.Document;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.MusicBandResponsibleApiDto?.Address;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.MusicBandResponsibleApiDto?.Country;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.MusicBandResponsibleApiDto?.State;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.MusicBandResponsibleApiDto?.City;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.MusicBandResponsibleApiDto?.ZipCode;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.MusicBandMembersApiDtos?.Select(mbm => $"{mbm.Name} ({mbm.MusicInstrumentName})")?.ToString("; ");
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.MusicBandTeamMembersApiDtos?.Select(mbtm => $"{mbtm.Name} ({mbtm.Role})")?.ToString("; ");
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.ReleasedMusicProjectsApiDtos?.Select(rmp => $"{rmp.Name} ({rmp.Year})")?.ToString("; ");
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.MainMusicInfluences;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.ImageUploadDate.HasValue ?
+                                this.fileRepo.GetImageUrl(FileRepositoryPathType.MusicBandImage, musicProjectReportDto.MusicBandUid, musicProjectReportDto.ImageUploadDate, true) : "";
+                        }
+
+                        for (var adjustColumnIndex = 1; adjustColumnIndex <= columnIndex; adjustColumnIndex++)
+                        {
+                            if (!skipFinalAdjustmentsColumnIndexes.Contains(adjustColumnIndex))
+                            {
+                                worksheet.Column(adjustColumnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Left);
+                            }
+
+                            worksheet.Column(adjustColumnIndex).Style.Alignment.WrapText = false;
+                            worksheet.Column(adjustColumnIndex).Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center);
+                            worksheet.Column(adjustColumnIndex).AdjustToContents();
+                        }
+
+                        #endregion
+                    }
+
+                    var range = worksheet.Range(worksheet.FirstCellUsed().Address, worksheet.LastCellUsed().Address);
+                    var table = range.CreateTable();
+                    table.Theme = XLTableTheme.TableStyleMedium9;
+
+                    workbook.SaveAs(filePath);
+                }
+
+                // It's necessary to save workbook to file to run "AdjustToContents()" correctly.
+                // Without this, "AdjustToContents()" doesn't work and columns be with minimun width.
+                var fileBytes = System.IO.File.ReadAllBytes(filePath);
+                var workbookResult = new XLWorkbook(new MemoryStream(fileBytes));
+
+                return new ExcelResult(workbookResult, fileName);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = ApiStatus.Error, message = Messages.WeFoundAndError });
+            }
+            finally
+            {
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+            }
         }
 
         #endregion
@@ -438,7 +610,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
             return View(musicProjectDto);
         }
-
 
         /// <summary>
         /// Previouses the evaluation details.

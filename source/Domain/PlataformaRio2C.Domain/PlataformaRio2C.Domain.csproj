@@ -256,6 +256,7 @@
     <Compile Include="Dtos\Music\MusicBandGenreDto.cs" />
     <Compile Include="Dtos\Music\API\MusicBandApiDto.cs" />
     <Compile Include="Dtos\Music\MusicBandGroupedByGenreDto.cs" />
+    <Compile Include="Dtos\Music\MusicProjectReportDto.cs" />
     <Compile Include="Dtos\Music\MusicProjectJsonDto.cs" />
     <Compile Include="Dtos\Music\MusicProjectEvaluationDto.cs" />
     <Compile Include="Dtos\Music\MusicProjectDto.cs" />

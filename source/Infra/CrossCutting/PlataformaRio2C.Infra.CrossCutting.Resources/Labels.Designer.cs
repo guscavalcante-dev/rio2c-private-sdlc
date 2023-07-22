@@ -1123,7 +1123,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Na Mídia.
+        ///   Looks up a localized string similar to Clipping.
         /// </summary>
         public static string Clipping {
             get {
@@ -2275,6 +2275,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Relatório de Avaliações Projeto.
+        /// </summary>
+        public static string EvaluationsByProjectReport {
+            get {
+                return ResourceManager.GetString("EvaluationsByProjectReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Avaliador.
         /// </summary>
         public static string Evaluator {
@@ -2442,6 +2451,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ExportToPdf {
             get {
                 return ResourceManager.GetString("ExportToPdf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Facebook.
+        /// </summary>
+        public static string Facebook {
+            get {
+                return ResourceManager.GetString("Facebook", resourceCulture);
             }
         }
         
@@ -3657,6 +3675,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string MusicBands {
             get {
                 return ResourceManager.GetString("MusicBands", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Relatório de Bandas.
+        /// </summary>
+        public static string MusicBandsReport {
+            get {
+                return ResourceManager.GetString("MusicBandsReport", resourceCulture);
             }
         }
         
@@ -5123,6 +5150,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Relatório de Projetos.
+        /// </summary>
+        public static string ProjectsReport {
+            get {
+                return ResourceManager.GetString("ProjectsReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inscrição de projetos.
         /// </summary>
         public static string ProjectsSubmission {
@@ -5412,24 +5448,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string RemoveFromEdition {
             get {
                 return ResourceManager.GetString("RemoveFromEdition", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Relatório por Jurado.
-        /// </summary>
-        public static string ReportByEvaluator {
-            get {
-                return ResourceManager.GetString("ReportByEvaluator", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Relatório por Projeto.
-        /// </summary>
-        public static string ReportByProject {
-            get {
-                return ResourceManager.GetString("ReportByProject", resourceCulture);
             }
         }
         

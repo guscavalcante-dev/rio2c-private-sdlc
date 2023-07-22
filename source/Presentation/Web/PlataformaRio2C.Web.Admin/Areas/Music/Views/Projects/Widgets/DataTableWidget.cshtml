@@ -1,4 +1,6 @@
-﻿@{
+﻿@using PlataformaRio2C.Domain.Dtos
+@model MusicProjectSearchViewModel
+@{
     ViewBag.Title = Labels.Music;
 }
 <!--begin:: DataTable Widget-->
@@ -14,15 +16,18 @@
         </div>
         <div class="kt-portlet__head-label">
             <div class="dropdown">
-                <button class="btn btn-brand dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                    
+                <button class="btn btn-brand dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span>@Labels.ExportToExcel</span>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a href="javascript:;" class="dropdown-item" onclick="MusicProjectsDataTableWidget.exportExcelReportByProject()">
-                        <span class="kt-nav__link-text">Relatório por Projeto</span>
+                    <a href="javascript:;" class="dropdown-item" onclick="MusicProjectsDataTableWidget.exportProjectsReportToExcel()">
+                        <span class="kt-nav__link-text">@Labels.ProjectsReport</span>
                     </a>
-                    <a href="javascript:;" class="dropdown-item" onclick="MusicProjectsDataTableWidget.exportExcelReportByEvaluators()">
-                        <span class="kt-nav__link-text">Relatório por Jurado</span>
+                    <a href="javascript:;" class="dropdown-item" onclick="MusicProjectsDataTableWidget.exportEvaluationsByProjectReportToExcel()">
+                        <span class="kt-nav__link-text">@Labels.EvaluationsByProjectReport</span>
+                    </a>
+                    <a href="javascript:;" class="dropdown-item" onclick="MusicProjectsDataTableWidget.exportEvaluationsByEvaluatorsReportToExcel()">
+                        <span class="kt-nav__link-text">@Labels.EvaluationsByEvaluatorReport</span>
                     </a>
                 </div>
             </div>
@@ -33,25 +38,25 @@
         <!--begin: SearchForm-->
         <div class="form-group row">
             <div class="col-lg-4">
-                <label>@Labels.Search:</label>
-                @Html.Hidden("Page", ViewBag.Page as int?)
-                @Html.Hidden("PageSize", ViewBag.PageSize as int?)
-                @Html.TextBox("Search", null, new { @class = "form-control mr-1", autocomplete = "off", type = "search", placeholder = $"{Labels.MusicBand}, {Labels.BandType.ToLowerInvariant()}, {Labels.MusicGenre.ToLowerInvariant()} {Labels.Or.ToLowerInvariant()} {Labels.TargetAudience.ToLowerInvariant()}" })
+                @Html.Hidden("Page", Model.Page as int?)
+                @Html.Hidden("PageSize", Model.PageSize as int?)
+                @Html.LabelFor(m => m.Search, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Search, new { @class = "form-control mr-1", autocomplete = "off", type = "search", placeholder = $"{Labels.MusicBand}, {Labels.BandType.ToLowerInvariant()}, {Labels.MusicGenre.ToLowerInvariant()} {Labels.Or.ToLowerInvariant()} {Labels.TargetAudience.ToLowerInvariant()}" })
             </div>
             <div class="col-lg-3">
-                <label>@Labels.MusicGenre:</label>
-                @Html.DropDownList("MusicGenreUid", new SelectList(ViewBag.MusicGenres, "Uid", "Name", ViewBag.MusicGenreUid), $"{string.Format(Labels.SelectAMEntity, Labels.MusicGenre.ToLowerInvariant())}...", new { @class = "form-control enable-select2" })
+                @Html.LabelFor(m => m.MusicGenreUid, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.MusicGenreUid, new SelectList(Model.MusicGenres, "Uid", "Name", Model.MusicGenreUid), $"{string.Format(Labels.SelectAMEntity, Labels.MusicGenre.ToLowerInvariant())}...", new { @class = "form-control enable-select2" })
             </div>
             <div class="col-lg-3">
-                <label>@Labels.Status:</label>
-                @Html.DropDownList("EvaluationStatusUid", new SelectList(ViewBag.ProjectEvaluationStatuses, "Uid", "Name", ViewBag.EvaluationStatusUid), $"{string.Format(Labels.SelectAMEntity, Labels.Status.ToLowerInvariant())}...", new { @class = "form-control enable-select2" })
+                @Html.LabelFor(m => m.EvaluationStatusUid, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.EvaluationStatusUid, new SelectList(Model.ProjectEvaluationStatuses, "Uid", "Name", Model.EvaluationStatusUid), $"{string.Format(Labels.SelectAMEntity, Labels.Status.ToLowerInvariant())}...", new { @class = "form-control enable-select2" })
             </div>
             <div class="col-lg-2">
                 <div class="form-group">
                     <label>&nbsp;</label>
                     <div class="kt-checkbox-list">
                         <label class="kt-checkbox mt-2">
-                            @Html.CheckBox("ShowBusinessRounds", ((bool)ViewBag.ShowBusinessRounds), new { @class = "enable-datatable-reload" }) @Labels.ShowBusinessRounds
+                            @Html.CheckBoxFor(m => m.ShowBusinessRounds, new { @class = "enable-datatable-reload" }) @Labels.ShowBusinessRounds
                             <span></span>
                         </label>
                     </div>
