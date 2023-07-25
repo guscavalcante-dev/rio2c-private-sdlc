@@ -8393,6 +8393,8 @@
     <Content Include="Areas\Innovation\Views\TrackOptionGroups\Details.cshtml" />
     <Content Include="Areas\Innovation\Views\TrackOptionGroups\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\TrackOptionGroups\Modals\UpdateMainInformationModal.cshtml" />
+    <Content Include="Areas\Innovation\Views\TrackOptions\Details.cshtml" />
+    <Content Include="Areas\Innovation\Views\TrackOptions\Widgets\MainInformationWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
