@@ -59,8 +59,8 @@ var InnovationTrackOptionsMainInformationWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (TracksMainInformationWidget) !== 'undefined') {
-                    TracksMainInformationWidget.init();
+                if (typeof (InnovationTrackOptionsMainInformationWidget) !== 'undefined') {
+                    InnovationTrackOptionsMainInformationWidget.init();
                 }
             },
             onError: function (data) {
@@ -74,6 +74,7 @@ var InnovationTrackOptionsMainInformationWidget = function () {
     };
 
     var enableUpdatePlugins = function () {
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2' });
         enableAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };

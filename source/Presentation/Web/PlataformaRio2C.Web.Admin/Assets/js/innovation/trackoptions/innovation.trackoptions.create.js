@@ -4,7 +4,7 @@
 // Created          : 07-03-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-14-2023
+// Last Modified On : 07-25-2023
 // ***********************************************************************
 // <copyright file="innovation.trackoptions.create.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,16 +17,11 @@ var InnovationTrackOptionsCreate = function () {
     var modalId = '#CreateTrackOptionModal';
     var formId = '#CreateTrackOptionForm';
 
-    // Enable form validation ---------------------------------------------------------------------
-    var enableFormValidation = function () {
-        MyRio2cCommon.enableFormValidation({ formIdOrClass: formId, enableHiddenInputsValidation: true, enableMaxlength: true });
-    };
-
     // Enable plugins -----------------------------------------------------------------------------
     var enablePlugins = function () {
         MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
         enableAjaxForm();
-        enableFormValidation();
+        MyRio2cCommon.enableFormValidation({ formIdOrClass: formId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
 
     // Show modal ---------------------------------------------------------------------------------
