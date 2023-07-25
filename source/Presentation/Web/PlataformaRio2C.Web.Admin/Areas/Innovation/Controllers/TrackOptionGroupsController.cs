@@ -4,7 +4,7 @@
 // Created          : 07-03-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-17-2023
+// Last Modified On : 07-25-2023
 // ***********************************************************************
 // <copyright file="TrackOptionGroupsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -287,7 +287,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/_CreateForm", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -297,7 +297,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Member, Labels.UpdatedM) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Vertical, Labels.UpdatedM) });
         }
 
         #endregion

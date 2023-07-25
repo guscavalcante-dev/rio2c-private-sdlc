@@ -993,9 +993,6 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/innovation.trackoptions.create.js").Include(
                 "~/Assets/js/innovation/trackoptions/innovation.trackoptions.create.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/innovation.trackoptions.update.js").Include(
-                "~/Assets/js/innovation/trackoptions/innovation.trackoptions.update.js"));
-
             bundles.Add(new ScriptBundle("~/bundles/js/innovation.trackoptions.delete.js").Include(
                 "~/Assets/js/innovation/trackoptions/innovation.trackoptions.delete.js"));
 
@@ -1013,9 +1010,6 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/innovation.trackoption.groups.create.js").Include(
                 "~/Assets/js/innovation/trackoptiongroups/innovation.trackoption.groups.create.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/innovation.trackoption.groups.update.js").Include(
-                "~/Assets/js/innovation/trackoptiongroups/innovation.trackoption.groups.update.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/innovation.trackoption.groups.delete.js").Include(
                 "~/Assets/js/innovation/trackoptiongroups/innovation.trackoption.groups.delete.js"));

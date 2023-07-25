@@ -8389,12 +8389,13 @@
     <Content Include="Areas\Innovation\Views\TrackOptionGroups\Modals\_CreateForm.cshtml" />
     <Content Include="Areas\Innovation\Views\TrackOptionGroups\Modals\CreateModal.cshtml" />
     <Content Include="Areas\Innovation\Views\TrackOptions\Modals\CreateModal.cshtml" />
-    <Content Include="Areas\Innovation\Views\TrackOptions\Modals\_Form.cshtml" />
     <Content Include="Areas\Innovation\Views\TrackOptionGroups\Details.cshtml" />
     <Content Include="Areas\Innovation\Views\TrackOptionGroups\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\TrackOptionGroups\Modals\UpdateMainInformationModal.cshtml" />
     <Content Include="Areas\Innovation\Views\TrackOptions\Details.cshtml" />
     <Content Include="Areas\Innovation\Views\TrackOptions\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\TrackOptions\Modals\UpdateMainInformationModal.cshtml" />
+    <Content Include="Areas\Innovation\Views\TrackOptions\Modals\_CreateForm.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

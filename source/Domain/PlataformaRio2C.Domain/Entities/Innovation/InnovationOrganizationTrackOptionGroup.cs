@@ -4,7 +4,7 @@
 // Created          : 12-27-2022
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-19-2023
+// Last Modified On : 07-25-2023
 // ***********************************************************************
 // <copyright file="InnovationOrganizationTrackOptionGroup.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -55,6 +55,8 @@ namespace PlataformaRio2C.Domain.Entities
 
         }
 
+        #region Update
+
         /// <summary>
         /// Updates the main information.
         /// </summary>
@@ -65,6 +67,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.Name = name;
             this.SetUpdateDate(userId);
         }
+
+        #endregion
 
         /// <summary>Gets the name translation.</summary>
         /// <param name="languageCode">The language code.</param>

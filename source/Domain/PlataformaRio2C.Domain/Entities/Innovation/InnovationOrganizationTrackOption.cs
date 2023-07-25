@@ -4,7 +4,7 @@
 // Created          : 07-12-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-15-2023
+// Last Modified On : 07-25-2023
 // ***********************************************************************
 // <copyright file="InnovationOrganizationTrackOption.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -65,6 +65,28 @@ namespace PlataformaRio2C.Domain.Entities
         {
 
         }
+
+        #region Update
+
+        /// <summary>
+        /// Updates the main information.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="innovationOrganizationTrackOptionGroup">The innovation organization track option group.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateMainInformation(
+            string name, 
+            InnovationOrganizationTrackOptionGroup innovationOrganizationTrackOptionGroup,
+            int userId)
+        {
+            this.Name = name;
+            this.InnovationOrganizationTrackOptionGroup = innovationOrganizationTrackOptionGroup;
+            this.InnovationOrganizationTrackOptionGroupId = innovationOrganizationTrackOptionGroup.Id;
+
+            this.SetUpdateDate(userId);
+        }
+
+        #endregion
 
         /// <summary>
         /// Gets the name translation.

@@ -210,6 +210,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 Id = ioto.Id,
                                 Uid = ioto.Uid,
                                 Name = ioto.Name,
+                                GroupUid = ioto.InnovationOrganizationTrackOptionGroup.Uid,
+                                GroupName = ioto.InnovationOrganizationTrackOptionGroup.Name,
                                 CreateDate = ioto.CreateDate,
                                 UpdateDate = ioto.UpdateDate
                             });

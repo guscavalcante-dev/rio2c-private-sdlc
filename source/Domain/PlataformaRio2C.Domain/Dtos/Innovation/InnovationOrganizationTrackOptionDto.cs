@@ -4,7 +4,7 @@
 // Created          : 12-27-2022
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-04-2023
+// Last Modified On : 07-25-2023
 // ***********************************************************************
 // <copyright file="InnovationOrganizationTrackOptionDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,7 +22,10 @@ namespace PlataformaRio2C.Domain.Dtos
         public int Id { get; set; }
         public Guid Uid { get; set; }
         public string Name { get; set; }
+
+        public Guid GroupUid { get; set; }
         public string GroupName { get; set; }
+
         public DateTimeOffset CreateDate { get; set; }
         public DateTimeOffset UpdateDate { get; set; }
 
