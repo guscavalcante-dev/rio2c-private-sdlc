@@ -4,7 +4,7 @@
 // Created          : 07-04-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-04-2023
+// Last Modified On : 07-25-2023
 // ***********************************************************************
 // <copyright file="innovation.trackoptions.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -152,18 +152,13 @@ var InnovationTrackOptionsDataTableWidget = function () {
                                             </a>\
                                             <div class="dropdown-menu dropdown-menu-right">';
 
-                        if (!full.IsInCurrentEdition) {
-                            html += '<button class="dropdown-item" onclick="InnovationTracksUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
-                        }
-                        else {
-                            html += '<button class="dropdown-item" onclick="InnovationTracksDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
-                        }
+                        html += '<button class="dropdown-item" onclick="InnovationTrackOptionsDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
 
                         if (full.IsInCurrentEdition && full.IsInOtherEdition) {
-                            html += '<button class="dropdown-item" onclick="InnovationTracksDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-minus"></i> ' + removeFromEdition + '</button>';
+                            html += '<button class="dropdown-item" onclick="InnovationTrackOptionsDataTableWidget.showModal(\'' + full.Uid + '\', true);"><i class="la la-minus"></i> ' + removeFromEdition + '</button>';
                         }
                         else {
-                            html += '<button class="dropdown-item" onclick="InnovationTracksDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+                            html += '<button class="dropdown-item" onclick="InnovationTrackOptionsDataTableWidget.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
                         }
 
                         html += '\
@@ -224,12 +219,12 @@ var InnovationTrackOptionsDataTableWidget = function () {
         table.ajax.reload();
     };
 
-    var showDetails = function (trackUid) {
-        if (MyRio2cCommon.isNullOrEmpty(trackUid)) {
+    var showDetails = function (innovationOrganizationTrackOptionUid) {
+        if (MyRio2cCommon.isNullOrEmpty(innovationOrganizationTrackOptionUid)) {
             return;
         }
 
-        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/TrackOptions/Details/' + trackUid);
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/TrackOptions/Details/' + innovationOrganizationTrackOptionUid);
     };
 
     return {
@@ -240,8 +235,8 @@ var InnovationTrackOptionsDataTableWidget = function () {
         refreshData: function () {
             refreshData();
         },
-        showDetails: function (trackUid) {
-            showDetails(trackUid);
+        showDetails: function (innovationOrganizationTrackOptionUid) {
+            showDetails(innovationOrganizationTrackOptionUid);
         }
     };
 }();

@@ -4,7 +4,7 @@
 // Created          : 07-13-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-06-2023
+// Last Modified On : 07-25-2023
 // ***********************************************************************
 // <copyright file="InnovationOrganizationTrackOptionRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -59,6 +59,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             {
                 query = query.Where(ioto => innovationOrganizationTrackOptionsUids.Contains(ioto.Uid));
             }
+
+            return query;
+        }
+
+        /// <summary>
+        /// Finds the by uid.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="innovationOrganizationTrackOptionsUid">The innovation organization track options uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<InnovationOrganizationTrackOption> FindByUid(this IQueryable<InnovationOrganizationTrackOption> query, Guid innovationOrganizationTrackOptionsUid)
+        {
+            query = query.Where(ioto => ioto.Uid == innovationOrganizationTrackOptionsUid);
 
             return query;
         }
@@ -180,6 +193,28 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return @readonly
                         ? consult.AsNoTracking()
                         : consult;
+        }
+
+        /// <summary>
+        /// Finds the main information widget dto asynchronous.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<InnovationOrganizationTrackOptionDto> FindMainInformationWidgetDtoAsync(Guid innovationOrganizationTrackOptionUid)
+        {
+            var query = this.GetBaseQuery()
+                            .IsActive()
+                            .Order()
+                            .FindByUid(innovationOrganizationTrackOptionUid)
+                            .Select(ioto => new InnovationOrganizationTrackOptionDto
+                            {
+                                Id = ioto.Id,
+                                Uid = ioto.Uid,
+                                Name = ioto.Name,
+                                CreateDate = ioto.CreateDate,
+                                UpdateDate = ioto.UpdateDate
+                            });
+
+            return await query.FirstOrDefaultAsync();
         }
 
         /// <summary>
