@@ -50,12 +50,8 @@ var InnovationTrackOptionGroupsDelete = function () {
         });
     };
 
-    var showModal = function (collaboratorUid, isDeletingFromCurrentEdition) {
+    var showModal = function (innovationOrganizationTrackOptionGroupUid) {
         var message = labels.deleteConfirmationMessage;
-
-        if (isDeletingFromCurrentEdition) {
-            message = labels.deleteCurrentEditionConfirmationMessage;
-        }
 
         bootbox.dialog({
             message: message,
@@ -70,7 +66,7 @@ var InnovationTrackOptionGroupsDelete = function () {
                     label: labels.remove,
                     className: "btn btn-danger",
                     callback: function () {
-                        executeDelete(collaboratorUid);
+                        executeDelete(innovationOrganizationTrackOptionGroupUid);
                     }
                 }
             }
@@ -78,8 +74,8 @@ var InnovationTrackOptionGroupsDelete = function () {
     };
 
     return {
-        showModal: function (collaboratorUid, isDeletingFromCurrentEdition) {
-            showModal(collaboratorUid, isDeletingFromCurrentEdition);
+        showModal: function (innovationOrganizationTrackOptionGroupUid) {
+            showModal(innovationOrganizationTrackOptionGroupUid);
         }
     };
 }();

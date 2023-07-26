@@ -274,6 +274,7 @@
     <Compile Include="CQRS\CommandsHandlers\Innovation\TrackOptions\CreateInnovationOrganizationTrackOptionCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Innovation\TrackOptionGroups\BaseCommandHandlers\InnovationOrganizationTrackOptionGroupBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Innovation\TrackOptionGroups\CreateInnovationOrganizationTrackOptionGroupCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Innovation\TrackOptions\DeleteInnovationOrganizationTrackOptionCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Innovation\TrackOptions\UpdateInnovationOrganizationTrackOptionMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\DisassociateOrganizationCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\AssociateOrganizationCollaboratorCommandHandler.cs" />
@@ -439,6 +440,7 @@
     <Compile Include="CQRS\Commands\Innovation\TrackOptionGroups\DeleteInnovationOrganizationTrackOptionGroup.cs" />
     <Compile Include="CQRS\Commands\Innovation\TrackOptionGroups\CreateInnovationOrganizationTrackOptionGroup.cs" />
     <Compile Include="CQRS\Commands\Innovation\TrackOptions\CreateInnovationOrganizationTrackOption.cs" />
+    <Compile Include="CQRS\Commands\Innovation\TrackOptions\DeleteInnovationOrganizationTrackOption.cs" />
     <Compile Include="CQRS\Commands\Innovation\TrackOptions\UpdateInnovationOrganizationTrackOptionMainInformation.cs" />
     <Compile Include="CQRS\Commands\Organizations\DisassociateOrganizationCollaborator.cs" />
     <Compile Include="CQRS\Commands\Organizations\AssociateOrganizationCollaborator.cs" />
