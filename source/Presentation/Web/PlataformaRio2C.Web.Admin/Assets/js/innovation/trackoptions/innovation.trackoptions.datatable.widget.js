@@ -153,13 +153,8 @@ var InnovationTrackOptionsDataTableWidget = function () {
                                             <div class="dropdown-menu dropdown-menu-right">';
 
                         html += '<button class="dropdown-item" onclick="InnovationTrackOptionsDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
-
-                        if (full.IsInCurrentEdition && full.IsInOtherEdition) {
-                            html += '<button class="dropdown-item" onclick="InnovationTrackOptionsDataTableWidget.showModal(\'' + full.Uid + '\', true);"><i class="la la-minus"></i> ' + removeFromEdition + '</button>';
-                        }
-                        else {
-                            html += '<button class="dropdown-item" onclick="InnovationTrackOptionsDataTableWidget.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
-                        }
+                        
+                        html += '<button class="dropdown-item" onclick="InnovationTrackOptionsDelete.showModal(\'' + full.Uid + '\');"><i class="la la-remove"></i> ' + labels.remove + '</button>';
 
                         html += '\
                                             </div>\
