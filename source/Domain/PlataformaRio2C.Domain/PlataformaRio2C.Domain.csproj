@@ -225,6 +225,7 @@
     <Compile Include="Dtos\Innovation\InnovationOrganizationTrackOptionGroupDto.cs" />
     <Compile Include="Dtos\Innovation\InnovationOrganizationTrackOptionDto.cs" />
     <Compile Include="Dtos\Innovation\InnovationOrganizationGroupedByTrackDto.cs" />
+    <Compile Include="Dtos\Innovation\AttendeeInnovationOrganizationReportDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticAccommodationDto.cs" />
     <Compile Include="Dtos\Logistics\AttendeePlaceDropdownDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticDto.cs" />

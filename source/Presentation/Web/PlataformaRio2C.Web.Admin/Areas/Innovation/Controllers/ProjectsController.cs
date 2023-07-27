@@ -4,7 +4,7 @@
 // Created          : 07-24-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-03-2023
+// Last Modified On : 07-27-2023
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,6 +35,13 @@ using Constants = PlataformaRio2C.Domain.Constants;
 using System.Text;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Application.ViewModels;
+using ClosedXML.Excel;
+using PlataformaRio2C.Domain.ApiModels;
+using PlataformaRio2C.Domain.Statics;
+using PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults;
+using System.IO;
+using PlataformaRio2c.Infra.Data.FileRepository;
+using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 {
@@ -51,6 +58,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         private readonly IInnovationOrganizationTechnologyOptionRepository innovationOrganizationTechnologyOptionRepo;
         private readonly IInnovationOrganizationExperienceOptionRepository innovationOrganizationExperienceOptionRepo;
         private readonly IInnovationOrganizationSustainableDevelopmentObjectivesOptionRepository innovationOrganizationSustainableDevelopmentObjectivesOptionRepo;
+        private readonly IFileRepository fileRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectsController" /> class.
@@ -64,6 +72,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// <param name="innovationOrganizationObjectivesOptionRepository">The innovation organization objectives option repository.</param>
         /// <param name="innovationOrganizationTechnologyOptionRepository">The innovation organization technology option repository.</param>
         /// <param name="innovationOrganizationExperienceOptionRepository">The innovation organization experience option repository.</param>
+        /// <param name="innovationOrganizationSustainableDevelopmentObjectivesOptionRepository">The innovation organization sustainable development objectives option repository.</param>
+        /// <param name="fileRepository">The file repository.</param>
         public ProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
@@ -74,7 +84,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             IInnovationOrganizationObjectivesOptionRepository innovationOrganizationObjectivesOptionRepository,
             IInnovationOrganizationTechnologyOptionRepository innovationOrganizationTechnologyOptionRepository,
             IInnovationOrganizationExperienceOptionRepository innovationOrganizationExperienceOptionRepository,
-            IInnovationOrganizationSustainableDevelopmentObjectivesOptionRepository innovationOrganizationSustainableDevelopmentObjectivesOptionRepository
+            IInnovationOrganizationSustainableDevelopmentObjectivesOptionRepository innovationOrganizationSustainableDevelopmentObjectivesOptionRepository,
+            IFileRepository fileRepository
             )
             : base(commandBus, identityController)
         {
@@ -86,6 +97,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             this.innovationOrganizationTechnologyOptionRepo = innovationOrganizationTechnologyOptionRepository;
             this.innovationOrganizationExperienceOptionRepo = innovationOrganizationExperienceOptionRepository;
             this.innovationOrganizationSustainableDevelopmentObjectivesOptionRepo = innovationOrganizationSustainableDevelopmentObjectivesOptionRepository;
+            this.fileRepo = fileRepository;
         }
 
         #region List
@@ -128,7 +140,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             int pageSize = request.Length;
             page++; //Necessary because DataTable is zero index based.
 
-            var attendeeInnovationOrganizationJsonDtos = await this.attendeeInnovationOrganizationRepo.FindAllJsonDtosPagedAsync(
+            var attendeeInnovationOrganizationJsonDtos = await this.attendeeInnovationOrganizationRepo.FindAllByDataTableAsync(
                 this.EditionDto.Id,
                 request.Search?.Value,
                 new List<Guid?> { searchViewModel.InnovationOrganizationTrackOptionGroupUid },
@@ -187,28 +199,25 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
+        #region Reports
+
         /// <summary>
-        /// Exports the evaluation list widget.
+        /// Exports the evaluations by project report to excel.
         /// </summary>
-        /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="innovationOrganizationTrackOptionGroupUid">The innovation organization track option group uid.</param>
-        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
-        /// <param name="showBusinessRounds">The show business rounds.</param>
-        /// <param name="page">The page.</param>
-        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ExportEvaluationListWidget(string searchKeywords, Guid? innovationOrganizationTrackOptionGroupUid, Guid? evaluationStatusUid, bool? showBusinessRounds, int? page = 1, int? pageSize = 1000)
+        public async Task<ActionResult> ExportEvaluationsByProjectReportToExcel(InnovationProjectSearchViewModel searchViewModel)
         {
             StringBuilder data = new StringBuilder();
             data.AppendLine($"{Labels.Startup}; {Labels.Project}; {Labels.ProductsOrServices}; {Labels.Status}; {Labels.Votes}; {Labels.Average}");
 
-            var attendeeInnovationOrganizationJsonDtos = await this.attendeeInnovationOrganizationRepo.FindAllJsonDtosPagedAsync(
-                this.EditionDto.Id, 
-                searchKeywords, 
-                new List<Guid?> { innovationOrganizationTrackOptionGroupUid }, 
-                evaluationStatusUid, 
-                showBusinessRounds ?? false,
+            var attendeeInnovationOrganizationJsonDtos = await this.attendeeInnovationOrganizationRepo.FindAllByDataTableAsync(
+                this.EditionDto.Id,
+                searchViewModel.Search, 
+                new List<Guid?> { searchViewModel.InnovationOrganizationTrackOptionGroupUid },
+                searchViewModel.EvaluationStatusUid,
+                searchViewModel.ShowBusinessRounds,
                 1, 
                 10000, 
                 new List<Tuple<string, string>>());
@@ -227,35 +236,30 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
             return Json(new
             {
-                fileName = "InnovationProjects_"+ DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv",
+                fileName = $@"{Labels.Innovation} - {Labels.EvaluationsByProjectReport}_{DateTime.UtcNow.ToStringFileNameTimestamp()}.csv",
                 fileContent = data.ToString()
             }, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
-        /// Exports the evaluators list widget.
+        /// Exports the evaluations by evaluators report to excel.
         /// </summary>
-        /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="innovationOrganizationTrackOptionGroupUid">The innovation organization track option group uid.</param>
-        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
-        /// <param name="showBusinessRounds">The show business rounds.</param>
-        /// <param name="page">The page.</param>
-        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ExportEvaluatorsListWidget(string searchKeywords, Guid? innovationOrganizationTrackOptionGroupUid, Guid? evaluationStatusUid, bool? showBusinessRounds, int? page = 1, int? pageSize = 1000)
+        public async Task<ActionResult> ExportEvaluationsByEvaluatorsReportToExcel(InnovationProjectSearchViewModel searchViewModel)
         {
             StringBuilder data = new StringBuilder();
             data.AppendLine($"{Labels.Startup}; {Labels.Project}; {Labels.Evaluation}; {Labels.Evaluator};");
 
-            var attendeeInnovationOrganizationJsonDtos = await this.attendeeInnovationOrganizationRepo.FindAllJsonDtosPagedAsync(
-                this.EditionDto.Id, 
-                searchKeywords, 
-                new List<Guid?> { innovationOrganizationTrackOptionGroupUid }, 
-                evaluationStatusUid,
-                showBusinessRounds ?? false,
+            var attendeeInnovationOrganizationJsonDtos = await this.attendeeInnovationOrganizationRepo.FindAllByDataTableAsync(
+                this.EditionDto.Id,
+                searchViewModel.Search, 
+                new List<Guid?> { searchViewModel.InnovationOrganizationTrackOptionGroupUid },
+                searchViewModel.EvaluationStatusUid,
+                searchViewModel.ShowBusinessRounds,
                 1, 
-                1000, 
+                10000, 
                 new List<Tuple<string, string>>());
 
             foreach (var attendeeInnovationOrganizationJsonDto in attendeeInnovationOrganizationJsonDtos)
@@ -274,10 +278,199 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
             return Json(new
             {
-                fileName = "MusicProjects_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv",
+                fileName = $@"{Labels.Innovation} - {Labels.EvaluationsByEvaluatorReport}_{DateTime.UtcNow.ToStringFileNameTimestamp()}.csv",
                 fileContent = data.ToString()
             }, JsonRequestBehavior.AllowGet);
         }
+
+        /// <summary>
+        /// Exports the projects report to excel.
+        /// </summary>
+        /// <param name="searchViewModel">The search view model.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ExportProjectsReportToExcel(InnovationProjectSearchViewModel searchViewModel)
+        {
+            string fileName = $@"{Labels.InnovationProjects}_{DateTime.UtcNow.ToStringFileNameTimestamp()}";
+            string filePath = Path.Combine(Path.GetTempPath(), fileName + ".xlsx");
+
+            try
+            {
+                var attendeeInnovationOrganizationReportDtos = await this.attendeeInnovationOrganizationRepo.FindAllInnovationProjectsReportByDataTable(
+                    this.EditionDto.Id,
+                    searchViewModel.Search,
+                    new List<Guid?> { searchViewModel.InnovationOrganizationTrackOptionGroupUid },
+                    searchViewModel.EvaluationStatusUid,
+                    searchViewModel.ShowBusinessRounds,
+                    1,
+                    10000,
+                    new List<Tuple<string, string>>()
+                );
+
+                var approvedAttendeeInnovationOrganizationsIds = await this.attendeeInnovationOrganizationRepo.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(this.EditionDto.Id);
+
+                using (var workbook = new XLWorkbook())
+                {
+                    var worksheet = workbook.Worksheets.Add(Labels.InnovationProjects);
+
+                    #region Header
+
+                    var lineIndex = 1;
+                    var columnIndex = 0;
+                    var skipFinalAdjustmentsColumnIndexes = new List<int>();
+
+                    // DataTable Columns
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Company;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.ProductOrServiceName;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Description;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Verticals;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.CreativeEconomyThemes;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.BusinessRound;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.CreateDate;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.UpdateDate;
+
+                    // Extra Columns
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Document;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.AgentName;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Email;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.PhoneNumber;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.CellPhone;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.FoundationYear;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.AccumulatedRevenueForLast3Months;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Website;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.BusinessDefinition;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.BusinessFocus;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.BusinessDifferentials;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.BusinessStage;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.BusinessEconomicModel;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.BusinessOperationalModel;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Competitors;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.UsedTechnologies;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.ExperiencesThatCompanyHasParticipatedIn;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.PitchingParticipationObjectives;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.SustainableDevelopmentObjectives;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = $"{Labels.Founders} - {Labels.Name}";
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = $"{Labels.Founders} - {Labels.Curriculum}";
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.PresentationVideo;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.PresentationFile;
+                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Photo;
+
+                    skipFinalAdjustmentsColumnIndexes.Add(columnIndex);
+
+                    #endregion
+
+                    if (attendeeInnovationOrganizationReportDtos.Any())
+                    {
+                        #region Rows
+
+                        foreach (var attendeeInnovationOrganizationReportDto in attendeeInnovationOrganizationReportDtos)
+                        {
+                            lineIndex++;
+                            columnIndex = 0;
+
+                            // DataTable Columns
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.CompanyName;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.ServiceName;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.Description;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.AttendeeInnovationOrganizationTrackDtos.Select(aiotDto => aiotDto.GetNameTranslation(this.UserInterfaceLanguage)).ToString("; ");
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.AttendeeInnovationOrganizationTrackDtos.Select(aiotDto => aiotDto.GetGroupNameTranslation(this.UserInterfaceLanguage)).ToString("; ");
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.WouldYouLikeParticipateBusinessRound?.ToYesOrNoString();
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.CreateDate?.ToStringHourMinute();
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.UpdateDate?.ToStringHourMinute();
+
+                            // Extra Columns
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.Document;
+                            worksheet.Cell(lineIndex, columnIndex).Style.NumberFormat.Format = "00000";
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.ResponsibleCollaboratorDto.FullName;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.ResponsibleCollaboratorDto.Email;
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.ResponsibleCollaboratorDto.PhoneNumber;
+                            worksheet.Cell(lineIndex, columnIndex).Style.NumberFormat.Format = "00000";
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.ResponsibleCollaboratorDto.CellPhone;
+                            worksheet.Cell(lineIndex, columnIndex).Style.NumberFormat.Format = "00000";
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.FoundationYear;
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.AccumulatedRevenue;
+                            worksheet.Cell(lineIndex, columnIndex).Style.NumberFormat.Format = "R$0.00";
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.Website;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.BusinessDefinition;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.BusinessFocus;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.BusinessDifferentials;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.BusinessStage;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.BusinessEconomicModel;
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.BusinessOperationalModel;
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.AttendeeInnovationOrganizationCompetitorDtos.Select(dto => dto.Name);
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.AttendeeInnovationOrganizationTechnologyDtos.Select(dto => $"{dto.GetNameTranslation(this.UserInterfaceLanguage)}" + (!string.IsNullOrEmpty(dto.AdditionalInfo) ? $" ({dto.AdditionalInfo})" : "")).ToString("; ");
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.AttendeeInnovationOrganizationExperienceDtos.Select(dto => $"{dto.GetNameTranslation(this.UserInterfaceLanguage)}" + (!string.IsNullOrEmpty(dto.AdditionalInfo) ? $" ({dto.AdditionalInfo})" : "")).ToString("; ");
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.AttendeeInnovationOrganizationObjectiveDtos.Select(dto => $"{dto.GetNameTranslation(this.UserInterfaceLanguage)}" + (!string.IsNullOrEmpty(dto.AdditionalInfo) ? $" ({dto.AdditionalInfo})" : "")).ToString("; ");
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.AttendeeInnovationOrganizationSustainableDevelopmentObjectiveDtos.Select(dto => $"{dto.GetNameTranslation(this.UserInterfaceLanguage)}" + (!string.IsNullOrEmpty(dto.AdditionalInfo) ? $" ({dto.AdditionalInfo})" : "")).ToString("; ");
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.AttendeeInnovationOrganizationFounderDtos.Select(dto => $"{dto.Name} ({dto.GetWorkDedicationNameTranslation(this.UserInterfaceLanguage)})").ToString("; ");
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.AttendeeInnovationOrganizationFounderDtos.Select(dto => dto.Curriculum).ToString("; ");
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.VideoUrl;
+                            
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.PresentationUploadDate.HasValue ?
+                                FileHelper.GetFileUrl(
+                                    FileRepositoryPathType.InnovationOrganizationPresentationFile, 
+                                    attendeeInnovationOrganizationReportDto.AttendeeInnovationOrganizationUid, 
+                                    attendeeInnovationOrganizationReportDto.PresentationUploadDate, 
+                                    attendeeInnovationOrganizationReportDto.PresentationFileExtension) 
+                                : "";
+
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.ImageUploadDate.HasValue ?
+                                this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, attendeeInnovationOrganizationReportDto.InnovationOrganizationUid, attendeeInnovationOrganizationReportDto.ImageUploadDate, true) : "";
+                        }
+
+                        for (var adjustColumnIndex = 1; adjustColumnIndex <= columnIndex; adjustColumnIndex++)
+                        {
+                            if (!skipFinalAdjustmentsColumnIndexes.Contains(adjustColumnIndex))
+                            {
+                                worksheet.Column(adjustColumnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Left);
+                            }
+
+                            worksheet.Column(adjustColumnIndex).Style.Alignment.WrapText = false;
+                            worksheet.Column(adjustColumnIndex).Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center);
+                            worksheet.Column(adjustColumnIndex).AdjustToContents();
+                        }
+
+                        #endregion
+                    }
+
+                    var range = worksheet.Range(worksheet.FirstCellUsed().Address, worksheet.LastCellUsed().Address);
+                    var table = range.CreateTable();
+                    table.Theme = XLTableTheme.TableStyleMedium9;
+
+                    workbook.SaveAs(filePath);
+                }
+
+                // It's necessary to save workbook to file to run "AdjustToContents()" correctly.
+                // Without this, "AdjustToContents()" doesn't work and columns be with minimun width.
+                var fileBytes = System.IO.File.ReadAllBytes(filePath);
+                var workbookResult = new XLWorkbook(new MemoryStream(fileBytes));
+
+                return new ExcelResult(workbookResult, fileName);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = ApiStatus.Error, message = Messages.WeFoundAndError });
+            }
+            finally
+            {
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+            }
+        }
+
+        #endregion
 
         #endregion
 
@@ -460,8 +653,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
             return RedirectToAction("EvaluationDetails", searchViewModel);
         }
-
-        #endregion
 
         #region Main Information Widget
 
@@ -835,6 +1026,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                 }
             }, JsonRequestBehavior.AllowGet);
         }
+
+        #endregion
 
         #endregion
 

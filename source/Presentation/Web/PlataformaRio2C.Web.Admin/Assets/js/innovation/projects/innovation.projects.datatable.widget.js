@@ -357,11 +357,18 @@ var InnovationProjectsDataTableWidget = function () {
     };
 
     // Export -------------------------------------------------------------------------------------
-    var exportExcel = function (url) {
+    var getJsonParameters = function () {
         var jsonParameters = new Object();
+        jsonParameters.search = $('#Search').val();
         jsonParameters.innovationOrganizationTrackOptionGroupUid = $('#InnovationOrganizationTrackOptionGroupUid').val();
         jsonParameters.evaluationStatusUid = $('#EvaluationStatusUid').val();
         jsonParameters.showBusinessRounds = $('#ShowBusinessRounds').prop('checked');
+
+        return jsonParameters;
+    }
+
+    var exportReportToCsv = function (url) {
+        var jsonParameters = getJsonParameters();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition(url), jsonParameters, function (resp) {
             var hiddenElement = document.createElement('a');
@@ -376,6 +383,11 @@ var InnovationProjectsDataTableWidget = function () {
         });
     };
 
+    var exportReportToExcel = function (url) {
+        var jsonParameters = getJsonParameters();
+        location.href = url + jQuery.param(jsonParameters);
+    };
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
@@ -387,11 +399,14 @@ var InnovationProjectsDataTableWidget = function () {
         showDetails: function (attendeeInnovationOrganizationId, searchKeywords, page, pageSize) {
             showDetails(attendeeInnovationOrganizationId, searchKeywords, page, pageSize);
         },
-        exportExcelReportByProject: function () {
-            exportExcel('/Innovation/Projects/ExportEvaluationListWidget');
+        exportEvaluationsByProjectReportToExcel: function () {
+            exportReportToCsv('/Innovation/Projects/ExportEvaluationsByProjectReportToExcel');
         },
-        exportExcelReportByEvaluators: function () {
-            exportExcel('/Innovation/Projects/ExportEvaluatorsListWidget');
+        exportEvaluationsByEvaluatorsReportToExcel: function () {
+            exportReportToCsv('/Innovation/Projects/ExportEvaluationsByEvaluatorsReportToExcel');
+        },
+        exportProjectsReportToExcel: function () {
+            exportReportToExcel('/Innovation/Projects/ExportProjectsReportToExcel?');
         }
     };
 }();

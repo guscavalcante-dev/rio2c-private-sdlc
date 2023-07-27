@@ -4,7 +4,7 @@
 // Created          : 07-17-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-17-2021
+// Last Modified On : 07-27-2023
 // ***********************************************************************
 // <copyright file="AttendeeInnovationOrganizationCompetitorDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,6 +19,8 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>AttendeeInnovationOrganizationCompetitorDto</summary>
     public class AttendeeInnovationOrganizationCompetitorDto //: CollaboratorDto
     {
+        public string Name { get; set; }
+
         public AttendeeInnovationOrganization AttendeeInnovationOrganization { get; set; }
         public AttendeeInnovationOrganizationCompetitor AttendeeInnovationOrganizationCompetitor { get; set; }
 
