@@ -4,7 +4,7 @@
 // Created          : 08-30-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-11-2023
+// Last Modified On : 07-27-2023
 // ***********************************************************************
 // <copyright file="AttendeeInnovationOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -293,6 +293,24 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
+        /// Gets the data table base query.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="innovationOrganizationTrackOptionGroupsUids">The innovation organization track option groups uids.</param>
+        /// <param name="showBusinessRounds">if set to <c>true</c> [show business rounds].</param>
+        /// <returns></returns>
+        private IQueryable<AttendeeInnovationOrganization> GetDataTableBaseQuery(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionGroupsUids, bool showBusinessRounds)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId, false)
+                                .FindByKeywords(searchKeywords)
+                                .FindByInnovationOrganizationTrackOptionGroupUids(innovationOrganizationTrackOptionGroupsUids)
+                                .ShowBusinessRounds(showBusinessRounds);
+            return query;
+        }
+
+        /// <summary>
         /// Finds all attendee innovation organizations asynchronous.
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
@@ -397,73 +415,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ToListAsync();
         }
 
-        /// <summary>
-        /// Finds all json dtos asynchronous.
-        /// </summary>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="innovationOrganizationTrackOptionGroupsUids">The innovation organization track option groups uids.</param>
-        /// <param name="showBusinessRounds">if set to <c>true</c> [show business rounds].</param>
-        /// <param name="sortColumns">The sort columns.</param>
-        /// <returns></returns>
-        private async Task<List<AttendeeInnovationOrganizationJsonDto>> FindAllJsonDtosAsync(
-            int editionId,
-            string searchKeywords,
-            List<Guid?> innovationOrganizationTrackOptionGroupsUids,
-            bool showBusinessRounds,
-            List<Tuple<string, string>> sortColumns)
-        {
-            var query = this.GetBaseQuery()
-                               .FindByEditionId(editionId, false)
-                               .FindByKeywords(searchKeywords)
-                               .FindByInnovationOrganizationTrackOptionGroupUids(innovationOrganizationTrackOptionGroupsUids)
-                               .ShowBusinessRounds(showBusinessRounds)
-                               .DynamicOrder(
-                                   sortColumns,
-                                   null,
-                                   new List<string> { "CreateDate", "UpdateDate" },
-                                   "CreateDate")
-                               .Select(aio => new AttendeeInnovationOrganizationJsonDto
-                               {
-                                   AttendeeInnovationOrganizationId = aio.Id,
-                                   AttendeeInnovationOrganizationUid = aio.Uid,
-                                   InnovationOrganizationId = aio.InnovationOrganization.Id,
-                                   InnovationOrganizationUid = aio.InnovationOrganization.Uid,
-                                   InnovationOrganizationName = aio.InnovationOrganization.Name,
-                                   InnovationOrganizationServiceName = aio.InnovationOrganization.ServiceName,
-                                   ImageUploadDate = aio.InnovationOrganization.ImageUploadDate,
-                                   Grade = aio.Grade,
-                                   EvaluationsCount = aio.AttendeeInnovationOrganizationEvaluations.Count(aioe => !aioe.IsDeleted),
-                                   InnovationOrganizationTracksNames = aio.AttendeeInnovationOrganizationTracks
-                                                                            .Where(aiot => !aio.IsDeleted && !aiot.IsDeleted && !aiot.InnovationOrganizationTrackOption.IsDeleted)
-                                                                            .OrderBy(aiot => aiot.InnovationOrganizationTrackOption.DisplayOrder)
-                                                                            .Select(aiot => aiot.InnovationOrganizationTrackOption.Name)
-                                                                            .ToList(),
-
-                                   InnovationOrganizationTrackOptionGroupDtos = aio.AttendeeInnovationOrganizationTracks
-                                                                                    .Where(aiot => !aio.IsDeleted &&
-                                                                                                    !aiot.IsDeleted &&
-                                                                                                    !aiot.InnovationOrganizationTrackOption.IsDeleted &&
-                                                                                                    (aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup != null ?
-                                                                                                        !aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup.IsDeleted :
-                                                                                                        true))
-                                                                                    .OrderBy(aiot => aiot.InnovationOrganizationTrackOption.DisplayOrder)
-                                                                                    .GroupBy(aiot => aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup.Name)
-                                                                                    .Select(aiotg => new InnovationOrganizationTrackOptionGroupDto
-                                                                                    {
-                                                                                        GroupName = aiotg.Key,
-                                                                                        InnovationOrganizationTrackOptionNames = aiotg.Select(s => s.InnovationOrganizationTrackOption.Name)
-                                                                                    })
-                                                                                    .ToList(),
-                                   CreateDate = aio.CreateDate,
-                                   UpdateDate = aio.UpdateDate,
-                                   WouldYouLikeParticipateBusinessRound = aio.WouldYouLikeParticipateBusinessRound
-                               });
-
-            return await query
-                            .ToListAsync();
-        }
-
         #endregion
 
         /// <summary>
@@ -544,7 +495,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="sortColumns">The sort columns.</param>
         /// <returns></returns>
-        public async Task<IPagedList<AttendeeInnovationOrganizationJsonDto>> FindAllJsonDtosPagedAsync(
+        public async Task<IPagedList<AttendeeInnovationOrganizationJsonDto>> FindAllByDataTableAsync(
             int editionId,
             string searchKeywords,
             List<Guid?> innovationOrganizationTrackOptionGroupUids,
@@ -554,7 +505,49 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             int pageSize,
             List<Tuple<string, string>> sortColumns)
         {
-            var attendeeInnovaitonOrganizationJsonDtos = await this.FindAllJsonDtosAsync(editionId, searchKeywords, innovationOrganizationTrackOptionGroupUids, showBusinessRounds, sortColumns);
+            var attendeeInnovaitonOrganizationJsonDtos = await this.GetDataTableBaseQuery(editionId, searchKeywords, innovationOrganizationTrackOptionGroupUids, showBusinessRounds)
+                                                                   .DynamicOrder(
+                                                                       sortColumns,
+                                                                       null,
+                                                                       new List<string> { "CreateDate", "UpdateDate" },
+                                                                       "CreateDate")
+                                                                   .Select(aio => new AttendeeInnovationOrganizationJsonDto
+                                                                   {
+                                                                       AttendeeInnovationOrganizationId = aio.Id,
+                                                                       AttendeeInnovationOrganizationUid = aio.Uid,
+                                                                       InnovationOrganizationId = aio.InnovationOrganization.Id,
+                                                                       InnovationOrganizationUid = aio.InnovationOrganization.Uid,
+                                                                       InnovationOrganizationName = aio.InnovationOrganization.Name,
+                                                                       InnovationOrganizationServiceName = aio.InnovationOrganization.ServiceName,
+                                                                       ImageUploadDate = aio.InnovationOrganization.ImageUploadDate,
+                                                                       Grade = aio.Grade,
+                                                                       EvaluationsCount = aio.AttendeeInnovationOrganizationEvaluations.Count(aioe => !aioe.IsDeleted),
+                                                                       InnovationOrganizationTracksNames = aio.AttendeeInnovationOrganizationTracks
+                                                                                                                .Where(aiot => !aio.IsDeleted && !aiot.IsDeleted && !aiot.InnovationOrganizationTrackOption.IsDeleted)
+                                                                                                                .OrderBy(aiot => aiot.InnovationOrganizationTrackOption.DisplayOrder)
+                                                                                                                .Select(aiot => aiot.InnovationOrganizationTrackOption.Name)
+                                                                                                                .ToList(),
+
+                                                                       InnovationOrganizationTrackOptionGroupDtos = aio.AttendeeInnovationOrganizationTracks
+                                                                                                                        .Where(aiot => !aio.IsDeleted &&
+                                                                                                                                        !aiot.IsDeleted &&
+                                                                                                                                        !aiot.InnovationOrganizationTrackOption.IsDeleted &&
+                                                                                                                                        (aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup != null ?
+                                                                                                                                            !aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup.IsDeleted :
+                                                                                                                                            true))
+                                                                                                                        .OrderBy(aiot => aiot.InnovationOrganizationTrackOption.DisplayOrder)
+                                                                                                                        .GroupBy(aiot => aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup.Name)
+                                                                                                                        .Select(aiotg => new InnovationOrganizationTrackOptionGroupDto
+                                                                                                                        {
+                                                                                                                            GroupName = aiotg.Key,
+                                                                                                                            InnovationOrganizationTrackOptionNames = aiotg.Select(s => s.InnovationOrganizationTrackOption.Name)
+                                                                                                                        })
+                                                                                                                        .ToList(),
+                                                                       CreateDate = aio.CreateDate,
+                                                                       UpdateDate = aio.UpdateDate,
+                                                                       WouldYouLikeParticipateBusinessRound = aio.WouldYouLikeParticipateBusinessRound
+                                                                   }).ToListAsync();
+
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
 
             IEnumerable<AttendeeInnovationOrganizationJsonDto> attendeeInnovationOrganizationJsonDtosResult = attendeeInnovaitonOrganizationJsonDtos;
@@ -596,6 +589,152 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             }
 
             return await attendeeInnovationOrganizationJsonDtosResult
+                            .ToPagedListAsync(page, pageSize);
+        }
+
+        /// <summary>
+        /// Finds all innovation projects report by data table.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="innovationOrganizationTrackOptionGroupUids">The innovation organization track option group uids.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showBusinessRounds">if set to <c>true</c> [show business rounds].</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<AttendeeInnovationOrganizationReportDto>> FindAllInnovationProjectsReportByDataTable(
+            int editionId,
+            string searchKeywords,
+            List<Guid?> innovationOrganizationTrackOptionGroupUids,
+            Guid? evaluationStatusUid,
+            bool showBusinessRounds,
+            int page,
+            int pageSize,
+            List<Tuple<string, string>> sortColumns)
+        {
+            var attendeeInnovaitonOrganizationReportDtos = await this.GetDataTableBaseQuery(editionId, searchKeywords, innovationOrganizationTrackOptionGroupUids, showBusinessRounds)
+                                                                        .DynamicOrder(
+                                                                            sortColumns,
+                                                                            null,
+                                                                            new List<string> { "CreateDate", "UpdateDate" },
+                                                                            "CreateDate")
+                                                                        .Select(aio => new AttendeeInnovationOrganizationReportDto
+                                                                        {
+                                                                            AttendeeInnovationOrganizationId = aio.Id,
+                                                                            AttendeeInnovationOrganizationUid = aio.Uid,
+                                                                            AccumulatedRevenue = aio.AccumulatedRevenue,
+                                                                            BusinessDefinition = aio.BusinessDefinition,
+                                                                            BusinessDifferentials = aio.BusinessDifferentials,
+                                                                            BusinessEconomicModel = aio.BusinessEconomicModel,
+                                                                            BusinessFocus = aio.BusinessFocus,
+                                                                            BusinessOperationalModel = aio.BusinessOperationalModel,
+                                                                            BusinessStage = aio.BusinessStage,
+                                                                            PresentationUploadDate = aio.PresentationUploadDate,
+                                                                            PresentationFileExtension = aio.PresentationFileExtension,
+                                                                            VideoUrl = aio.VideoUrl,
+                                                                            WouldYouLikeParticipateBusinessRound = aio.WouldYouLikeParticipateBusinessRound,
+                                                                            InnovationOrganizationId = aio.InnovationOrganization.Id,
+                                                                            InnovationOrganizationUid = aio.InnovationOrganization.Uid,
+                                                                            Description = aio.InnovationOrganization.Description,
+                                                                            Document = aio.InnovationOrganization.Document,
+                                                                            FoundationYear = aio.InnovationOrganization.FoundationYear,
+                                                                            CompanyName = aio.InnovationOrganization.Name,
+                                                                            ImageUploadDate = aio.InnovationOrganization.ImageUploadDate,
+                                                                            ServiceName = aio.InnovationOrganization.ServiceName,
+                                                                            Website = aio.InnovationOrganization.Website,
+                                                                            CreateDate = aio.CreateDate,
+                                                                            UpdateDate = aio.UpdateDate,
+                                                                            ResponsibleCollaboratorDto = aio.AttendeeInnovationOrganizationCollaborators
+                                                                                                                .Where(aioc => aioc.AttendeeCollaborator.EditionId == editionId)
+                                                                                                                .Select(aioc => new CollaboratorDto
+                                                                                                                {
+                                                                                                                    FirstName = aioc.AttendeeCollaborator.Collaborator.FirstName,
+                                                                                                                    LastNames = aioc.AttendeeCollaborator.Collaborator.LastNames,
+                                                                                                                    PublicEmail = aioc.AttendeeCollaborator.Collaborator.PublicEmail,
+                                                                                                                    PhoneNumber = aioc.AttendeeCollaborator.Collaborator.PhoneNumber,
+                                                                                                                    CellPhone = aioc.AttendeeCollaborator.Collaborator.CellPhone
+                                                                                                                }).FirstOrDefault(),
+                                                                            AttendeeInnovationOrganizationTrackDtos = aio.AttendeeInnovationOrganizationTracks.Select(aiot => new AttendeeInnovationOrganizationTrackDto
+                                                                            {
+                                                                                Name = aiot.InnovationOrganizationTrackOption.Name,
+                                                                                AdditionalInfo = aiot.AdditionalInfo,
+                                                                                GroupName = aiot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup.Name
+                                                                            }),
+                                                                            AttendeeInnovationOrganizationCompetitorDtos = aio.AttendeeInnovationOrganizationCompetitors.Select(aioc => new AttendeeInnovationOrganizationCompetitorDto
+                                                                            {
+                                                                                Name = aioc.Name
+                                                                            }),
+                                                                            AttendeeInnovationOrganizationFounderDtos = aio.AttendeeInnovationOrganizationFounders.Select(aiof => new AttendeeInnovationOrganizationFounderDto
+                                                                            {
+                                                                                Name = aiof.Fullname,
+                                                                                Curriculum = aiof.Curriculum,
+                                                                                WorkDedicationName = aiof.WorkDedication.Name
+                                                                            }),
+                                                                            AttendeeInnovationOrganizationExperienceDtos = aio.AttendeeInnovationOrganizationExperiences.Select(aioe => new AttendeeInnovationOrganizationExperienceDto
+                                                                            {
+                                                                                Name = aioe.InnovationOrganizationExperienceOption.Name,
+                                                                                AdditionalInfo = aioe.AdditionalInfo
+                                                                            }),
+                                                                            AttendeeInnovationOrganizationTechnologyDtos = aio.AttendeeInnovationOrganizationTechnologies.Select(aiot => new AttendeeInnovationOrganizationTechnologyDto
+                                                                            {
+                                                                                Name = aiot.InnovationOrganizationTechnologyOption.Name,
+                                                                                AdditionalInfo = aiot.AdditionalInfo
+                                                                            }),
+                                                                            AttendeeInnovationOrganizationObjectiveDtos = aio.AttendeeInnovationOrganizationObjectives.Select(aioo => new AttendeeInnovationOrganizationObjectiveDto
+                                                                            {
+                                                                                Name = aioo.InnovationOrganizationObjectivesOption.Name,
+                                                                                AdditionalInfo = aioo.AdditionalInfo
+                                                                            }),
+                                                                            AttendeeInnovationOrganizationSustainableDevelopmentObjectiveDtos = aio.AttendeeInnovationOrganizationSustainableDevelopmentObjective.Select(aiosdo => new AttendeeInnovationOrganizationSustainableDevelopmentObjectiveDto
+                                                                            {
+                                                                                Name = aiosdo.InnovationOrganizationSustainableDevelopmentObjectiveOption.Name,
+                                                                                AdditionalInfo = aiosdo.AdditionalInfo
+                                                                            })
+                                                                        }).ToListAsync();
+
+            var editionDto = await this.editioRepo.FindDtoAsync(editionId);
+
+            IEnumerable<AttendeeInnovationOrganizationReportDto> attendeeInnovationOrganizationReportDtosResult = attendeeInnovaitonOrganizationReportDtos;
+            if (editionDto.IsInnovationProjectEvaluationOpen())
+            {
+                #region Evaluation is Open
+
+                if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
+                {
+                    attendeeInnovationOrganizationReportDtosResult = new List<AttendeeInnovationOrganizationReportDto>(); //Returns a empty list
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
+                {
+                    attendeeInnovationOrganizationReportDtosResult = new List<AttendeeInnovationOrganizationReportDto>(); //Returns a empty list
+                }
+
+                #endregion
+            }
+            else
+            {
+                #region Evaluation is Closed
+
+                var approvedInnovationOrganizationsIds = await this.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(editionId);
+
+                if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
+                {
+                    attendeeInnovationOrganizationReportDtosResult = attendeeInnovaitonOrganizationReportDtos.Where(w => approvedInnovationOrganizationsIds.Contains(w.AttendeeInnovationOrganizationId));
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
+                {
+                    attendeeInnovationOrganizationReportDtosResult = attendeeInnovaitonOrganizationReportDtos.Where(w => !approvedInnovationOrganizationsIds.Contains(w.AttendeeInnovationOrganizationId));
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
+                {
+                    attendeeInnovationOrganizationReportDtosResult = new List<AttendeeInnovationOrganizationReportDto>();
+                }
+
+                #endregion
+            }
+
+            return await attendeeInnovationOrganizationReportDtosResult
                             .ToPagedListAsync(page, pageSize);
         }
 
@@ -1208,8 +1347,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                           AttendeeInnovationOrganizationEvaluation = aioe,
                                                                                           EvaluatorUser = aioe.EvaluatorUser
                                                                                       }).ToList(),
-                              //Current AttendeeInnovationOrganizationEvaluation by user Id
-                              AttendeeInnovationOrganizationEvaluationDto = aio.AttendeeInnovationOrganizationEvaluations
+                                  //Current AttendeeInnovationOrganizationEvaluation by user Id
+                                  AttendeeInnovationOrganizationEvaluationDto = aio.AttendeeInnovationOrganizationEvaluations
                                                                                    .Where(aioe => !aioe.IsDeleted && aioe.EvaluatorUserId == userId)
                                                                                    .Select(aioe => new AttendeeInnovationOrganizationEvaluationDto
                                                                                    {

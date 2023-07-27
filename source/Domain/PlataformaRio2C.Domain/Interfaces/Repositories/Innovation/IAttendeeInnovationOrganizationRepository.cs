@@ -4,7 +4,7 @@
 // Created          : 06-29-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-11-2023
+// Last Modified On : 07-27-2023
 // ***********************************************************************
 // <copyright file="IAttendeeInnovationOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,7 +24,8 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface IAttendeeInnovationOrganizationRepository : IRepository<AttendeeInnovationOrganization>
     {
         Task<IPagedList<AttendeeInnovationOrganizationDto>> FindAllDtosPagedAsync(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionUids, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize);
-        Task<IPagedList<AttendeeInnovationOrganizationJsonDto>> FindAllJsonDtosPagedAsync(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionGroupUids, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize, List<Tuple<string, string>> sortColumns);
+        Task<IPagedList<AttendeeInnovationOrganizationJsonDto>> FindAllByDataTableAsync(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionGroupUids, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize, List<Tuple<string, string>> sortColumns);
+        Task<IPagedList<AttendeeInnovationOrganizationReportDto>> FindAllInnovationProjectsReportByDataTable(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionGroupUids, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize, List<Tuple<string, string>> sortColumns);
         Task<int[]> FindAllInnovationOrganizationsIdsPagedAsync(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionGroupUids, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize);
         Task<int> CountPagedAsync(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionGroupUids, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize);
         Task<AttendeeInnovationOrganizationDto> FindDtoToEvaluateAsync(Guid attendeeInnovationOrganizationUid);

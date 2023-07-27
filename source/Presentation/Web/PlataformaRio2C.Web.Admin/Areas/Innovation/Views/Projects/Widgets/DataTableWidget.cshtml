@@ -19,10 +19,13 @@
                     <span>@Labels.ExportToExcel</span>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a href="javascript:;" class="dropdown-item" onclick="InnovationProjectsDataTableWidget.exportExcelReportByProject()">
+                    <a href="javascript:;" class="dropdown-item" onclick="InnovationProjectsDataTableWidget.exportProjectsReportToExcel()">
+                        <span class="kt-nav__link-text">@Labels.ProjectsReport</span>
+                    </a>
+                    <a href="javascript:;" class="dropdown-item" onclick="InnovationProjectsDataTableWidget.exportEvaluationsByProjectReportToExcel()">
                         <span class="kt-nav__link-text">@Labels.EvaluationsByProjectReport</span>
                     </a>
-                    <a href="javascript:;" class="dropdown-item" onclick="InnovationProjectsDataTableWidget.exportExcelReportByEvaluators()">
+                    <a href="javascript:;" class="dropdown-item" onclick="InnovationProjectsDataTableWidget.exportEvaluationsByEvaluatorsReportToExcel()">
                         <span class="kt-nav__link-text">@Labels.EvaluationsByEvaluatorReport</span>
                     </a>
                 </div>
@@ -64,7 +67,7 @@
             <thead>
                 <tr>
                     <th class="col-md-3">@Labels.Company</th>
-                    <th class="col-md-3">@Labels.Project</th>
+                    <th class="col-md-3">@Labels.ProductOrServiceName</th>
                     <th class="col-md-2">@Labels.VerticalsAndCreativeEconomyThemes</th>
                     <th class="dt-head-center dt-body-center col-md-1">@Labels.Evaluation</th>
                     <th class="dt-head-center dt-body-center col-md-1">@Labels.CreateDate</th>

@@ -196,6 +196,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
+        #region Reports
+
         /// <summary>
         /// Exports the evaluations by project report to excel.
         /// </summary>
@@ -244,7 +246,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             var dtFileName = ptBR ? DateTime.Now.ToString("yyMMddHHmmss") : DateTime.Now.ToString("yyddMMHHmmss");
             return Json(new
             {
-                fileName = "MusicProjects_" + dtFileName + ".csv",
+                fileName = $@"{Labels.Music} - {Labels.EvaluationsByProjectReport}_{DateTime.UtcNow.ToStringFileNameTimestamp()}.csv",
                 fileContent = data.ToString()
             }, JsonRequestBehavior.AllowGet);
         }
@@ -271,7 +273,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 searchViewModel.EvaluationStatusUid,
                 searchViewModel.ShowBusinessRounds,
                 1, 
-                1000, 
+                10000, 
                 new List<Tuple<string, string>>());
 
             foreach (var item in musicProjectJsonDtos)
@@ -288,10 +290,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 }
             }
 
-            var dtFileName = ptBR ? DateTime.Now.ToString("yyMMddHHmmss") : DateTime.Now.ToString("yyddMMHHmmss");
             return Json(new
             {
-                fileName = "MusicProjects_" + dtFileName + ".csv",
+                fileName = $@"{Labels.Music} - {Labels.EvaluationsByEvaluatorReport}_{DateTime.UtcNow.ToStringFileNameTimestamp()}.csv",
                 fileContent = data.ToString()
             }, JsonRequestBehavior.AllowGet);
         }
@@ -316,7 +317,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     searchViewModel.EvaluationStatusUid,
                     searchViewModel.ShowBusinessRounds,
                     1,
-                    1000,
+                    10000,
                     new List<Tuple<string, string>>()
                 );
 
@@ -470,6 +471,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 }
             }
         }
+
+        #endregion
 
         #endregion
 
@@ -696,8 +699,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     pageSize
                 });
         }
-
-        #endregion
 
         #region Main Information Widget
 
@@ -1019,6 +1020,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 }
             }, JsonRequestBehavior.AllowGet);
         }
+
+        #endregion
 
         #endregion
 

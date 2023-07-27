@@ -355,12 +355,18 @@ var MusicProjectsDataTableWidget = function () {
     };
 
     // Export -------------------------------------------------------------------------------------
-    var exportReportToCsv = function (url) {
+    var getJsonParameters = function () {
         var jsonParameters = new Object();
         jsonParameters.search = $('#Search').val();
         jsonParameters.musicGenreUid = $('#MusicGenreUid').val();
         jsonParameters.evaluationStatusUid = $('#EvaluationStatusUid').val();
         jsonParameters.showBusinessRounds = $('#ShowBusinessRounds').prop('checked');
+
+        return jsonParameters;
+    }
+
+    var exportReportToCsv = function (url) {
+        var jsonParameters = getJsonParameters();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition(url), jsonParameters, function (resp) {
             var hiddenElement = document.createElement('a');
@@ -376,11 +382,7 @@ var MusicProjectsDataTableWidget = function () {
     };
 
     var exportReportToExcel = function (url) {
-        var jsonParameters = new Object();
-        jsonParameters.search = $('#Search').val();
-        jsonParameters.musicGenreUid = $('#MusicGenreUid').val();
-        jsonParameters.evaluationStatusUid = $('#EvaluationStatusUid').val();
-        jsonParameters.showBusinessRounds = $('#ShowBusinessRounds').prop('checked');
+        var jsonParameters = getJsonParameters();
 
         location.href = url + jQuery.param(jsonParameters);
     };
