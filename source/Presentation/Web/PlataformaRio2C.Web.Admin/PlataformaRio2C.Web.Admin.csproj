@@ -905,6 +905,7 @@
     <Content Include="Assets\js\innovation\projects\innovation.projects.experiences.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.tracks.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.presentation.widget.js" />
+    <Content Include="Assets\js\innovation\trackoptiongroups\innovation.trackoption.groups.trackoptions.widget.js" />
     <Content Include="Assets\js\innovation\trackoptions\innovation.trackoptions.create.js" />
     <Content Include="Assets\js\innovation\trackoptions\innovation.trackoptions.datatable.widget.js" />
     <Content Include="Assets\js\innovation\trackoptions\innovation.trackoptions.delete.js" />
@@ -8396,6 +8397,7 @@
     <Content Include="Areas\Innovation\Views\TrackOptions\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\TrackOptions\Modals\UpdateMainInformationModal.cshtml" />
     <Content Include="Areas\Innovation\Views\TrackOptions\Modals\_CreateForm.cshtml" />
+    <Content Include="Areas\Innovation\Views\TrackOptionGroups\Widgets\TrackOptionsWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

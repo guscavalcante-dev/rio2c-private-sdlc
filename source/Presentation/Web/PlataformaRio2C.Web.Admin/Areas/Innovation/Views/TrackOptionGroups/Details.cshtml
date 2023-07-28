@@ -13,13 +13,13 @@
             </div>
         </div>
         <!--end:Main Information Widget-->
-        <!--begin:Conferences Widget-->
-        <!--<div class="row">
+        <!--begin:Track Options Widget-->
+        <div class="row">
             <div class="col-12">
-                <div id="TrackConferencesWidget" class="kt-portlet" style="min-height: 325px;"></div>
+                <div id="InnovationTrackOptionGroupsTrackOptionsWidget" class="kt-portlet" style="min-height: 325px;"></div>
             </div>
-        </div>-->
-        <!--end:Conferences Widget-->
+        </div>
+        <!--end:Track Options Widget-->
     </div>
 </div>
 @section Styles {
@@ -27,11 +27,9 @@
 @section Scripts {
     @Scripts.Render("~/bundles/js/innovation.trackoption.groups.details.js")
     <script>
-        // Page translations ----------------------------------------------------------------------
-
         jQuery(document).ready(function () {
             InnovationTrackOptionGroupsMainInformationWidget.init();
-            //TracksConferencesWidget.init();
+            InnovationTrackOptionGroupsTrackOptionsWidget.init();
         });
     </script>
 }

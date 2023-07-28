@@ -1,0 +1,49 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model IEnumerable<InnovationOrganizationTrackOptionDto>
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            @(string.Format(Messages.RelatedEntitiesM, Labels.CreativeEconomyThemes))
+        </h3>
+    </div>
+</div>
+<div class="kt-portlet__body">
+    <div class="row">
+        @if (Model?.Any() == true)
+        {
+            <div class="col-12">
+                <table class="table table-sm table-head-bg-brand table-body-scroll">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>@Labels.Title</th>
+                            <th class="text-center">@Labels.CreateDate</th>
+                            <th class="text-center">@Labels.UpdateDate</th>
+                        </tr>
+                    </thead>
+                    <tbody class="rio2c-scroll" style="height: 200px;">
+                        @foreach (var innovationOrganizationTrackOptionDto in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="@Url.Action("Details", "TrackOptions", new { Area = "Innovation", id = innovationOrganizationTrackOptionDto.Uid })" target="_blank">
+                                        @(innovationOrganizationTrackOptionDto.GetNameTranslation(ViewBag.UserInterfaceLanguage))
+                                    </a>
+                                </td>
+                                <td class="text-center ">
+                                    @(innovationOrganizationTrackOptionDto.CreateDate.ToBrazilTimeZone().ToShortDateString()) @(innovationOrganizationTrackOptionDto.CreateDate.ToBrazilTimeZone().ToShortTimeString())
+                                </td>
+                                <td class="text-center">
+                                    @(innovationOrganizationTrackOptionDto.UpdateDate.ToBrazilTimeZone().ToShortDateString()) @(innovationOrganizationTrackOptionDto.UpdateDate.ToBrazilTimeZone().ToShortTimeString())
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="col-12 text-center mt-30">@string.Format(Messages.EntityNotAction, Labels.CreativeEconomyThemes, Labels.FoundMP)</div>
+        }
+    </div>
+</div>
