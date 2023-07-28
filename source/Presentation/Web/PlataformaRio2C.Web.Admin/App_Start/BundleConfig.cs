@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-25-2023
+// Last Modified On : 07-28-2023
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1006,7 +1006,8 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/innovation/trackoptiongroups/innovation.trackoption.groups.datatable.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/innovation.trackoption.groups.details.js").Include(
-                "~/Assets/js/innovation/trackoptiongroups/innovation.trackoption.groups.maininformation.widget.js"));
+                "~/Assets/js/innovation/trackoptiongroups/innovation.trackoption.groups.maininformation.widget.js",
+                "~/Assets/js/innovation/trackoptiongroups/innovation.trackoption.groups.trackoptions.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/innovation.trackoption.groups.create.js").Include(
                 "~/Assets/js/innovation/trackoptiongroups/innovation.trackoption.groups.create.js"));

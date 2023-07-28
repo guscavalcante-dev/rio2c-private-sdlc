@@ -882,6 +882,9 @@
     <value>{0} Relacionadas</value>
     <comment>{0} Relacionadas</comment>
   </data>
+  <data name="RelatedEntitiesM" xml:space="preserve">
+    <value>{0} Relacionados</value>
+  </data>
   <data name="RestrictionSpecifics" xml:space="preserve">
     <value>Restrições e/ou especificações sobre o conteúdo desejado</value>
     <comment>Restrições e/ou especificações sobre o conteúdo desejado</comment>

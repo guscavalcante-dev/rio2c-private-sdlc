@@ -4,7 +4,7 @@
 // Created          : 07-03-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-25-2023
+// Last Modified On : 07-28-2023
 // ***********************************************************************
 // <copyright file="TrackOptionGroupsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -306,27 +306,29 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
         #region Track Options Widget
 
-        ///// <summary>Shows the conferences widget.</summary>
-        ///// <param name="trackUid">The track uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowConferencesWidget(Guid? trackUid)
-        //{
-        //    var conferencesWidgetDto = await this.trackRepo.FindConferenceWidgetDtoAsync(trackUid ?? Guid.Empty, this.EditionDto.Id);
-        //    if (conferencesWidgetDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Room, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
+        /// <summary>
+        /// Shows the track options widget.
+        /// </summary>
+        /// <param name="innovationOrganizationTrackOptionGroupUid">The innovation organization track option group uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowTrackOptionsWidget(Guid? innovationOrganizationTrackOptionGroupUid)
+        {
+            var trackOptionsWidgetDto = await this.innovationOrganizationTrackOptionGroupRepo.FindTrackOptionsWidgetDtoAsync(innovationOrganizationTrackOptionGroupUid ?? Guid.Empty);
+            if (trackOptionsWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Vertical, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("~/Views/Conferences/Widgets/RelatedConferencesWidget.cshtml", conferencesWidgetDto.ConferenceDtos), divIdOrClass = "#TrackConferencesWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/TrackOptionsWidget", trackOptionsWidgetDto.InnovationOrganizationTrackOptionDtos), divIdOrClass = "#InnovationTrackOptionGroupsTrackOptionsWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
         #endregion
 

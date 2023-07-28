@@ -2004,6 +2004,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} Relacionados.
+        /// </summary>
+        public static string RelatedEntitiesM {
+            get {
+                return ResourceManager.GetString("RelatedEntitiesM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Restrições e/ou especificações sobre o conteúdo desejado.
         /// </summary>
         public static string RestrictionSpecifics {
