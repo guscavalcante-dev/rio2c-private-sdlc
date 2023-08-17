@@ -4,7 +4,7 @@
 // Created          : 08-15-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 10-23-2021
+// Last Modified On : 08-17-2023
 // ***********************************************************************
 // <copyright file="FileRepositoryPathType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,6 +34,7 @@ namespace PlataformaRio2C.Domain.Statics
         public static FileRepositoryPathType LogisticAirfareFile = new FileRepositoryPathType(new Guid("90DD5AB8-1210-4278-96EC-FFB414535CB4"));
         public static FileRepositoryPathType InnovationOrganizationPresentationFile = new FileRepositoryPathType(new Guid("319ECD0E-9B1B-4563-B98A-C09D59453EF3"));
         public static FileRepositoryPathType AudioFile = new FileRepositoryPathType(new Guid("14EF53C3-C034-487F-8C08-A467167AD286"));
+        public static FileRepositoryPathType WeConnectMediaFile = new FileRepositoryPathType(new Guid("95DC4522-A697-49B4-BD2A-44924509B8FA"));
 
         public static FileRepositoryPathType ErrorCropping = new FileRepositoryPathType(new Guid("14EF53C3-C034-487F-8C08-A467167AD287"));
     }

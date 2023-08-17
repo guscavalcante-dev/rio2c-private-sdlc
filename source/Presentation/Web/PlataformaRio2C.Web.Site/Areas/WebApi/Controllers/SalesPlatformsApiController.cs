@@ -4,7 +4,7 @@
 // Created          : 07-10-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-02-2023
+// Last Modified On : 08-17-2023
 // ***********************************************************************
 // <copyright file="SalesPlatformsApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,15 +14,11 @@
 using System;
 using System.Configuration;
 using System.Linq;
-using System.Reflection.Emit;
-using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Elmah.Assertions;
 using MediatR;
-using Newtonsoft.Json;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.ApiModels;
@@ -293,73 +289,6 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             }
 
             return await Json(new { status = ApiStatus.Success, message = string.Format("An Producer welcome email has been sent sucessfully to {0}", email) });
-        }
-
-        #endregion
-
-        #region Instagram
-
-        [HttpGet]
-        [Route("instagram")]
-        public async Task<IHttpActionResult> Instagram(
-            [FromUri(Name = "hub.mode")] string mode, 
-            [FromUri(Name = "hub.challenge")] string challenge, 
-            [FromUri(Name = "hub.verify_token")] string verifyToken)
-        {
-            var result = new AppValidationResult();
-            
-            try
-            {
-                //result = await this.commandBus.Send(new CreateSalesPlatformWebhookRequest(
-                //    Guid.Empty, // Sympla generates Uids inside command handler
-                //    SalePlatformName.Sympla,
-                //    key,
-                //    HttpContext.Current.Request.Url.AbsoluteUri,
-                //    Request.Headers.ToString(),
-                //    null,       // Sympla gets the payload inside command handler
-                //    HttpContext.Current.Request.GetIpAddress(),
-                //    reimportAllAttendees));
-
-                //if (!result.IsValid)
-                //{
-                //    throw new DomainException($"{SalePlatformName.Sympla} webhooks imported with some errors: {result.Errors.Select(e => e.Message).Distinct().ToString("; ")}");
-                //}
-            }
-            catch (DomainException ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return await Json(new { status = "error", message = ex.GetInnerMessage(), errors = result?.Errors?.Select(e => new { e.Code, e.Message }) });
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return await BadRequest(ex.GetInnerMessage());
-            }
-
-            return Ok(Convert.ToInt32(challenge)); //new { status = "success", message = $"{Labels.Instagram} webhook imported successfully." }
-        }
-
-        [DataContract]
-        public class InstagramRequestVerificationRequest
-        {
-            [DataMember(Name = "hub.mode")]
-            public string Mode { get; set; }
-            [DataMember(Name = "hub.challenge")]
-            public string Challenge { get; set; }
-            [DataMember(Name = "hub.verify_token")]
-            public string VerifyToken { get; set; }
-
-            public InstagramRequestVerificationRequest(string challenge, string verifyToken)
-            {
-                this.Mode = "subscribe";
-                this.Challenge = challenge;
-                this.VerifyToken = verifyToken;
-            }
-
-            public InstagramRequestVerificationRequest()
-            {
-
-            }
         }
 
         #endregion

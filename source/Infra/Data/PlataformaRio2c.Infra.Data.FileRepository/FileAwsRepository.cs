@@ -4,7 +4,7 @@
 // Created          : 08-15-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 10-23-2021
+// Last Modified On : 08-17-2023
 // ***********************************************************************
 // <copyright file="FileAwsRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -37,6 +37,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
         private readonly string filesLogisticsAirfareDirectory;
         private readonly string filesInnovationOrganizationsDirectory;
         private readonly string audioFilesDirectory;
+        private readonly string weConnectMediaFilesDirectory;
 
         private readonly string errorCroppingDirectory;
 
@@ -55,6 +56,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
             this.filesLogisticsAirfareDirectory = ConfigurationManager.AppSettings["AwsFilesLogisticsAirfareDirectory"];
             this.filesInnovationOrganizationsDirectory = ConfigurationManager.AppSettings["AwsFilesInnovationOrganizationsDirectory"];
             this.audioFilesDirectory = ConfigurationManager.AppSettings["AwsAudioFilesDirectory"];
+            this.weConnectMediaFilesDirectory = ConfigurationManager.AppSettings["AwsWeConnectMediaFilesDirectory"];
 
             this.errorCroppingDirectory = "img/errorCropping/";
         }
@@ -290,6 +292,11 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
             if(fileRepositoryPathType.Uid == FileRepositoryPathType.ErrorCropping.Uid)
             {
                 return string.Format(this.errorCroppingDirectory, args);
+            }
+
+            if (fileRepositoryPathType.Uid == FileRepositoryPathType.WeConnectMediaFile.Uid)
+            {
+                return string.Format(this.weConnectMediaFilesDirectory, args);
             }
 
             return string.Empty;

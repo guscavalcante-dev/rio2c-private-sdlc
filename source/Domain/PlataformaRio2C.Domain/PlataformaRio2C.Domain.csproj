@@ -299,6 +299,7 @@
     <Compile Include="Dtos\SalesPlatforms\SalesPlatformDto.cs" />
     <Compile Include="Dtos\SalesPlatformWebhookRequests\SalesPlatformWebhookRequestDto.cs" />
     <Compile Include="Dtos\Agendas\AgendaBaseEventJsonDto.cs" />
+    <Compile Include="Dtos\SocialMediaPlatform\SocialMediaPlatformDto.cs" />
     <Compile Include="Dtos\States\StateBaseDto.cs" />
     <Compile Include="Dtos\Countries\CountryBaseDto.cs" />
     <Compile Include="Dtos\OrganizationDescriptions\OrganizationDescriptionBaseDto.cs" />
@@ -448,6 +449,8 @@
     <Compile Include="Entities\Common\TrackName.cs" />
     <Compile Include="Entities\Common\Track.cs" />
     <Compile Include="Entities\Users\Connection.cs" />
+    <Compile Include="Entities\WeConnect\SocialMediaPlatform.cs" />
+    <Compile Include="Entities\WeConnect\WeConnectPublication.cs" />
     <Compile Include="Enums\NegotiationTypeCodes.cs" />
     <Compile Include="Enums\StatusProjectCodes.cs" />
     <Compile Include="Interfaces\IMailCollaboratorRepository.cs" />
@@ -532,6 +535,8 @@
     <Compile Include="Interfaces\Repositories\SalesPlatform\ISalesPlatformRepository.cs" />
     <Compile Include="Interfaces\Repositories\SubscribeLists\ISubscribeListRepository.cs" />
     <Compile Include="Interfaces\Repositories\User\IConnectionRepository.cs" />
+    <Compile Include="Interfaces\Repositories\WeConnect\IWeConnectPublicationRepository.cs" />
+    <Compile Include="Interfaces\Repositories\WeConnect\ISocialMediaPlatformRepository.cs" />
     <Compile Include="Interfaces\Services\IConferenceService.cs" />
     <Compile Include="Interfaces\Services\ICountryService.cs" />
     <Compile Include="Interfaces\Services\IMailService.cs" />
