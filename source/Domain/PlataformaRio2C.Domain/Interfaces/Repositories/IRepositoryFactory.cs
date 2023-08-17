@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 08-16-2023
 // ***********************************************************************
 // <copyright file="IRepositoryFactory.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,79 +15,81 @@ namespace PlataformaRio2C.Domain.Interfaces
 {
     public interface IRepositoryFactory
     {
-        //IImageFileRepository ImageFileRepository { get; }
         ILanguageRepository LanguageRepository { get; }
         IHoldingRepository HoldingRepository { get; }
-        //IPlayerRepository PlayerRepository { get; }
-        //IPlayerDescriptionRepository PlayerDescriptionRepository { get; }
+
+        #region Collaborator
+
         ICollaboratorRepository CollaboratorRepository { get; }
-        //ICollaboratorProducerRepository CollaboratorProducerRepository { get; }
-        IInterestRepository InterestRepository { get; }
-        IInterestGroupRepository InterestGroupRepository { get; }
-        IEditionRepository EditionRepository { get; }
-        IUserRepository UserRepository { get; }
-        IActivityRepository ActivityRepository { get; }
-        ITargetAudienceRepository TargetAudienceRepository { get; }
-        //IPlayerRestrictionsSpecificsRepository PlayerRestrictionsSpecificsRepository { get; }        
-        //IPlayerActivityRepository PlayerActivityRepository { get; }
-        //IPlayerTargetAudienceRepository PlayerTargetAudienceRepository { get; }
-        IRoleRepository RoleRepository { get; }
-        //IProducerRepository ProducerRepository { get; }
         ICollaboratorJobTitleRepository CollaboratorJobTitleRepository { get; }
         ICollaboratorMiniBioRepository CollaboratorMiniBioRepository { get; }
+
+        #endregion
+
+        #region User
+
+        IUserRepository UserRepository { get; }
+        IRoleRepository RoleRepository { get; }
+
         IUserRoleRepository UserRoleRepository { get; }
-        //IPlayerInterestRepository PlayerInterestRepository { get; }
-        //IProducerDescriptionRepository ProducerDescriptionRepository { get; }
-        //IProducerActivityRepository ProducerActivityRepository { get; }
-        //IProducerTargetAudienceRepository ProducerTargetAudienceRepository { get; }
-        
-        //IProjectTitleRepository ProjectTitleRepository { get; }
-        //IProjectLogLineRepository ProjectLogLineRepository { get; }
-        //IProjectSummaryRepository ProjectSummaryRepository { get; }
-        //IProjectProductionPlanRepository ProjectProductionPlanRepository { get; }
-        //IProjectInterestRepository ProjectInterestRepository { get; }
-        //IProjectLinkImageRepository ProjectLinkImageRepository { get; }
-        //IProjectLinkTeaserRepository ProjectLinkTeaserRepository { get; }
-        //IProjectAdditionalInformationRepository ProjectAdditionalInformationRepository { get; }
-        //IProjectPlayerRepository ProjectPlayerRepository { get; }
+
+        #endregion
+
+        #region Interest & Interest Group
+
+        IInterestRepository InterestRepository { get; }
+        IInterestGroupRepository InterestGroupRepository { get; }
+
+        #endregion
+
+        IEditionRepository EditionRepository { get; }
+        IActivityRepository ActivityRepository { get; }
+        ITargetAudienceRepository TargetAudienceRepository { get; }
         IProjectStatusRepository ProjectStatusRepository { get; }
-        //IProjectPlayerEvaluationRepository ProjectPlayerEvaluationRepository { get; }
+
+        #region Logistic
+
         ILogisticRepository LogisticRepository { get; }
         ILogisticAirfareRepository LogisticAirfareRepository { get; }
         ILogisticAccommodationRepository LogisticAccommodationRepository { get; }
         ILogisticTransferRepository LogisticTransferRepository { get; }
-        IConferenceRepository ConferenceRepository { get; }
-        //IConferenceLecturerRepository ConferenceLecturerRepository { get; }
-        //IConferenceSynopsisRepository ConferenceSynopsisRepository { get; }
-        //IConferenceTitleRepository ConferenceTitleRepository { get; }
-        IMessageRepository MessageRepository { get; }
-        IRoomRepository RoomRepository { get; }
-        //ILecturerRepository LecturerRepository { get; }
-        //ILecturerJobTitleRepository LecturerJobTitleRepository { get; }
-        //IRoleLecturerRepository RoleLecturerRepository { get; }
-        //IRoleLecturerTitleRepository RoleLecturerTitleRepository { get; }
-        INegotiationRepository NegotiationRepository { get; }
-        IRoomNameRepository RoomNameRepository { get; }
-        INegotiationConfigRepository NegotiationConfigRepository { get; }
 
+        #endregion
+
+        IConferenceRepository ConferenceRepository { get; }
+        IMessageRepository MessageRepository { get; }
+
+        #region Room
+
+        IRoomRepository RoomRepository { get; }
+        IRoomNameRepository RoomNameRepository { get; }
+
+        #endregion
+
+        #region Negotiation
+
+        INegotiationRepository NegotiationRepository { get; }
+        INegotiationConfigRepository NegotiationConfigRepository { get; }
         INegotiationRoomConfigRepository NegotiationRoomConfigRepository { get; }
 
-        //IMailRepository MailRepository { get; }
-        //IMailCollaboratorRepository MailCollaboratorRepository { get; }
+        #endregion
+
+        #region Address
 
         ICountryRepository CountryRepository { get; }
         IStateRepository StateRepository { get; }
         ICityRepository CityRepository { get; }
-
         IAddressRepository AddressRepository { get; }
+
+        #endregion
+
+        #region Quiz
 
         IQuizRepository QuizRepository { get; }
         IQuizAnswerRepository QuizAnswerRepository { get; }
         IQuizOptionRepository QuizOptionRepository { get; }
         IQuizQuestionRepository QuizQuestionRepository { get; }
 
-        //ISpeakerRepository SpeakerRepository { get; }
-
-        //IMusicalCommissionRepository MusicalCommissionRepository { get; }
+        #endregion
     }
 }
