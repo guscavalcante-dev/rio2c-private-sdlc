@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -64,11 +65,20 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             
             try
             {
+                #region Initial Validations
+
+                if (key.ToLowerInvariant() != ConfigurationManager.AppSettings["SyncInstagramPublicationsApiKey"].ToLowerInvariant())
+                {
+                    throw new DomainException(Messages.AccessDenied);
+                }
+
                 var applicationUser = await identityController.FindByEmailAsync(Domain.Entities.User.BatchProcessUser.Email);
                 if (applicationUser == null)
                 {
                     throw new DomainException(Messages.UserNotFound);
                 }
+
+                #endregion
 
                 var cmd = new SynchronizeWeConnectPublications(
                     SocialMediaPlatformName.Instagram, 
