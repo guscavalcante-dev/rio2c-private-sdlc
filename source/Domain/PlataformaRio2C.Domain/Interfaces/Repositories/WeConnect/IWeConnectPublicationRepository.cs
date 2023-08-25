@@ -14,6 +14,9 @@
 using PlataformaRio2C.Domain.Entities;
 using System.Threading.Tasks;
 using PlataformaRio2C.Domain.Dtos;
+using System.Collections.Generic;
+using System;
+using X.PagedList;
 
 namespace PlataformaRio2C.Domain.Interfaces
 {
@@ -21,5 +24,6 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface IWeConnectPublicationRepository : IRepository<WeConnectPublication>
     {
         Task<WeConnectPublication> FindBySocialMediaPlatformPublicationIdAsync(string socialMediaPlatformPublicationId);
+        Task<IPagedList<WeConnectPublicationDto>> FindAllDtosPagedAsync(int page, int pageSize);
     }    
 }

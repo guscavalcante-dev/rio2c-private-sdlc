@@ -4,7 +4,7 @@
 // Created          : 08-16-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-16-2023
+// Last Modified On : 08-23-2023
 // ***********************************************************************
 // <copyright file="WeConnectPublication.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -51,6 +51,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isVideo">if set to <c>true</c> [is video].</param>
         /// <param name="isFixedOnTop">if set to <c>true</c> [is fixed on top].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="publicationCreateDate">The publication create date.</param>
         /// <param name="socialMediaPlatform">The social media platform.</param>
         /// <param name="userId">The user identifier.</param>
         public WeConnectPublication(
@@ -59,6 +60,7 @@ namespace PlataformaRio2C.Domain.Entities
             bool isVideo,
             bool isFixedOnTop,
             bool isImageUploaded,
+            DateTime? publicationCreateDate,
             SocialMediaPlatform socialMediaPlatform,
             int userId)
         {
@@ -72,6 +74,12 @@ namespace PlataformaRio2C.Domain.Entities
             this.SocialMediaPlatform = socialMediaPlatform;
 
             base.SetCreateDate(userId);
+
+            // Makes Create and Update date same as Social Media Platform Publication date for ordenation purposes
+            if (publicationCreateDate.HasValue)
+            {
+                this.CreateDate = this.UpdateDate = new DateTimeOffset(publicationCreateDate.Value);
+            }
         }
 
         /// <summary>

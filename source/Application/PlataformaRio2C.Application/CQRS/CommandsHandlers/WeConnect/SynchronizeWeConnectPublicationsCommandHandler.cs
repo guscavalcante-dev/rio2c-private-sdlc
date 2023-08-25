@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,13 +21,11 @@ using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
 using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
@@ -88,7 +87,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             HttpClientHandler handler = new HttpClientHandler { Credentials = new System.Net.NetworkCredential() };
             HttpClient client = new HttpClient(handler);
 
-            foreach (var socialMediaPlatformPublicationDto in socialMediaPlatformPublicationDtos)
+            foreach (var socialMediaPlatformPublicationDto in socialMediaPlatformPublicationDtos.OrderByDescending(dto => dto.CreatedAt))
             {
                 var weConnectPublication = await this.weConnectPublicationRepo.FindBySocialMediaPlatformPublicationIdAsync(socialMediaPlatformPublicationDto.Id);
                 if (weConnectPublication == null)
@@ -99,6 +98,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         socialMediaPlatformPublicationDto.IsVideo,
                         false,
                         !string.IsNullOrEmpty(socialMediaPlatformPublicationDto.PublicationMediaUrl),
+                        socialMediaPlatformPublicationDto.CreatedAt,
                         await socialMediaPlatformRepo.FindByNameAsync(socialMediaPlatformDto.Name),
                         cmd.UserId);
 

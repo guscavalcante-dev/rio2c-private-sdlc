@@ -326,6 +326,7 @@
     <Compile Include="Dtos\PresentationFormats\PresentationFormatJsonDto.cs" />
     <Compile Include="Dtos\Tracks\TrackDto.cs" />
     <Compile Include="Dtos\Tracks\TrackJsonDto.cs" />
+    <Compile Include="Dtos\WeConnect\WeConnectPublicationDto.cs" />
     <Compile Include="Entities\Addresses\Address.cs" />
     <Compile Include="Entities\Audiovisual\CommissionEvaluation.cs" />
     <Compile Include="Entities\Audiovisual\CommissionAttendeeCollaboratorInterest.cs" />

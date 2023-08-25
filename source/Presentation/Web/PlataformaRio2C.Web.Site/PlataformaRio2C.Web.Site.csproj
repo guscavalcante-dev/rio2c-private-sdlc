@@ -899,6 +899,7 @@
     <Content Include="Assets\js\agendas\agendas.widget.js" />
     <Content Include="Assets\js\companies\companyinfo.autocomplete.js" />
     <Content Include="Assets\js\projects\projects.projectinfo.js" />
+    <Content Include="Assets\js\weconnect\weconnect.widget.js" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.css" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.min.css" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.rtl.css" />
@@ -7775,6 +7776,7 @@
     <Content Include="Views\Agendas\Shared\_LogisticTransferPopover.cshtml" />
     <Content Include="Views\Themes\Metronic\_EditionSelector.cshtml" />
     <Content Include="Views\SiteMailerService\SpeakersReportEmail.cshtml" />
+    <Content Include="Views\Home\Shared\_WeConnectPublications.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

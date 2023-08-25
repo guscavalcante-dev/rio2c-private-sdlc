@@ -8,40 +8,24 @@
         @{ Html.RenderPartial("Shared/_DashboardMenu"); }
     </div>
     <!--end:Left panel-->
+    <!--begin:We Connect Widget-->
     <div class="col-md-8 col-lg-8">
-        <!--begin:We Connected-->
-        @Html.Partial("Widgets/WeConnectedWidget")
-        <!--end:We Connected-->
-        @*
-            <!--begin:Welcome -->
-            <div class="kt-portlet">
-                <div class="kt-portlet__head">
-                    <div class="kt-portlet__head-label">
-                        <h3 class="kt-portlet__head-title">
-                            @ViewBag.Title
-                        </h3>
-                    </div>
-                </div>
-                <div class="kt-portlet__body">
-                    <div class="kt-widget3">
-                        @Html.Raw(Texts.WelcomeContent)
-
-                    </div>
-                </div>
-            </div>
-            <!--end:Welcome -->
-        *@
+        <div id="WeConnectWidget"></div>
     </div>
+    <!--end:We Connect Widget-->
 </div>
 @section Styles {
 }
 @section Scripts {
+    @Scripts.Render("~/bundles/js/weconnect.widget.js")
     <script>
-        jQuery(document).ready(function () {
+        $(document).ready(function () {
             @if (ViewBag.ShowEmailSettings == true)
             {
                 <text>AccountsEmailSettings.showUpdateModal();</text>
             }
+
+            WeConnectWidget.init();
         });
     </script>
 }

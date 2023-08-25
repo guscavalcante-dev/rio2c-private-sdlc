@@ -753,6 +753,7 @@
     <Compile Include="ViewModels\Common\Reports\ReportsAudiovisualSearchViewModel.cs" />
     <Compile Include="ViewModels\Admin\Project\ProjectDetailAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Speakers\SpeakerSearchViewModel.cs" />
+    <Compile Include="ViewModels\Common\WeConnect\WeConnectSearchViewModel.cs" />
     <Compile Include="ViewModels\Conferences\ConferenceSearchViewModel.cs" />
     <Compile Include="ViewModels\ConferenceParticipantRoles\ConferenceParticipantRoleSearchViewModel.cs" />
     <Compile Include="ViewModels\Editions\EditionSearchViewModel.cs" />

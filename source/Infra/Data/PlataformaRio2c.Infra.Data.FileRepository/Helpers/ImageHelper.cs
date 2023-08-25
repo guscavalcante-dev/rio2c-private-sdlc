@@ -4,7 +4,7 @@
 // Created          : 08-15-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 04-15-2023
+// Last Modified On : 08-23-2023
 // ***********************************************************************
 // <copyright file="ImageHelper.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -142,6 +142,21 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
         {
             var fileRepo = new FileRepositoryFactory().Get();
             return fileRepo.GetImageUrl(fileRepositoryPathType, imageUid, imageUploadDate, isThumbnail, additionalFileInfo);
+        }
+
+        /// <summary>
+        /// Gets the video URL.
+        /// </summary>
+        /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
+        /// <param name="objectUid">The object uid.</param>
+        /// <param name="uploadDate">The upload date.</param>
+        /// <param name="videoExtension">The video extension.</param>
+        /// <param name="additionalFileInfo">The additional file information.</param>
+        /// <returns></returns>
+        public static string GetVideoUrl(FileRepositoryPathType fileRepositoryPathType, Guid objectUid, DateTimeOffset? uploadDate, string videoExtension = ".mp4", string additionalFileInfo = "")
+        {
+            var fileRepo = new FileRepositoryFactory().Get();
+            return fileRepo.GetFileUrl(fileRepositoryPathType, objectUid, uploadDate, fileExtension: videoExtension, additionalFileInfo: additionalFileInfo);
         }
 
         /// <summary>

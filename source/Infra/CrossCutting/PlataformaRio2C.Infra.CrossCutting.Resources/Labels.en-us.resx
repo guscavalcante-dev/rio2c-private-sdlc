@@ -740,6 +740,9 @@
   <data name="CreateProject" xml:space="preserve">
     <value>Create Project</value>
   </data>
+  <data name="CreativeEconomyTheme" xml:space="preserve">
+    <value>Creative Economy Theme</value>
+  </data>
   <data name="CreativeEconomyThemes" xml:space="preserve">
     <value>Creative Economy Themes</value>
   </data>
@@ -1467,6 +1470,9 @@
   </data>
   <data name="LoadingSelectedPlayers" xml:space="preserve">
     <value>Loading selected players...</value>
+  </data>
+  <data name="LoadMore" xml:space="preserve">
+    <value>Load more...</value>
   </data>
   <data name="Local" xml:space="preserve">
     <value>Local</value>
@@ -2491,6 +2497,9 @@
   <data name="SeeMiniBio" xml:space="preserve">
     <value>See Mini-bio</value>
   </data>
+  <data name="SeeOnInstagram" xml:space="preserve">
+    <value>See on Instagram</value>
+  </data>
   <data name="SeeReason" xml:space="preserve">
     <value>See reason</value>
   </data>
@@ -3027,9 +3036,6 @@
   </data>
   <data name="Verticals" xml:space="preserve">
     <value>Verticals</value>
-  </data>
-  <data name="CreativeEconomyTheme" xml:space="preserve">
-    <value>Creative Economy Theme</value>
   </data>
   <data name="VerticalsAndCreativeEconomyThemes" xml:space="preserve">
     <value>Verticals and Creative Economy Themes</value>

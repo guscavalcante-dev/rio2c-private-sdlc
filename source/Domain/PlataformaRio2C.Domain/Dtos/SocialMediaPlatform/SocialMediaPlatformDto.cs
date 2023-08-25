@@ -4,7 +4,7 @@
 // Created          : 08-15-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-15-2023
+// Last Modified On : 08-22-2023
 // ***********************************************************************
 // <copyright file="SocialMediaPlatformDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,6 +22,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public string Name { get; set; }
         public string ApiKey { get; set; }
         public string EndpointUrl { get; set; }
+        public string PublicationsRootUrl { get; set; }
         public bool IsSyncActive { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="SocialMediaPlatformDto"/> class.</summary>

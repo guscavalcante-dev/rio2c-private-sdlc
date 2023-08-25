@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms.Services.Instagram.Models;
+using System;
 using System.Linq;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms.Dtos
@@ -24,6 +25,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms.Dtos
         public string PublicationMediaUrl { get; set; }
         public string PublicationText { get; set; }
         public bool IsVideo { get; set; }
+        public DateTime CreatedAt { get; set; } 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SocialMediaPlatformPublicationDto"/> class.
@@ -31,11 +33,12 @@ namespace PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms.Dtos
         /// <param name="node">The node.</param>
         public SocialMediaPlatformPublicationDto(Node node)
         {
-            this.Id = node.Id;
+            this.Id = node.Shortcode;
             this.ThumbnailUrl = node.ThumbnailSrc;
             this.PublicationMediaUrl = node.IsVideo == true ? node.VideoUrl : node.DisplayUrl;
             this.PublicationText = node.EdgeMediaToCaption.Edges.FirstOrDefault().Node.Text;
             this.IsVideo = node.IsVideo;
+            this.CreatedAt = DateTimeOffset.FromUnixTimeSeconds(node.TakenAtTimestamp).LocalDateTime;
         }
     }
 }

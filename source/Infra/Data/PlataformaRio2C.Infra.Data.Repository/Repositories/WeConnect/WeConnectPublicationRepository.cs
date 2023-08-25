@@ -15,9 +15,11 @@ using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
+using X.PagedList;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -63,6 +65,35 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>
+        /// Converts to listpagedasync.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        internal static async Task<IPagedList<WeConnectPublicationDto>> ToListPagedAsync(this IQueryable<WeConnectPublicationDto> query, int page, int pageSize)
+        {
+            // Page the list
+            var pagedList = await query.ToPagedListAsync(page, pageSize);
+            if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
+                pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
+
+            return pagedList;
+        }
+
+        /// <summary>
+        /// Orders the specified query.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<WeConnectPublicationDto> Order(this IQueryable<WeConnectPublicationDto> query)
+        {
+            query = query.OrderByDescending(wcpDto => wcpDto.CreateDate);
+
+            return query;
+        }
     }
 
     #endregion
@@ -102,22 +133,32 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FirstOrDefaultAsync();
         }
 
-        ///// <summary>Finds the dto by name asynchronous.</summary>
-        ///// <param name="name">The name.</param>
-        ///// <returns></returns>
-        //public async Task<WeConnectPublicationDto> FindDtoByNameAsync(string name)
-        //{
-        //    return await this.GetBaseQuery()
-        //                        .FindByName(name)
-        //                        .Select(smp => new WeConnectPublicationDto
-        //                        {
-        //                            Uid = smp.Uid,
-        //                            Name = smp.Name,
-        //                            ApiKey = smp.ApiKey,
-        //                            EndpointUrl = smp.EndpointUrl,
-        //                            IsSyncActive = smp.IsSyncActive
-        //                        })
-        //                        .FirstOrDefaultAsync();
-        //}
+        /// <summary>
+        /// Finds all dtos paged asynchronous.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<WeConnectPublicationDto>> FindAllDtosPagedAsync(int page, int pageSize)
+        {
+            return await this.GetBaseQuery()
+                                .Select(wcp => new WeConnectPublicationDto
+                                {
+                                    Uid = wcp.Uid,
+                                    PublicationText = wcp.PublicationText,
+                                    SocialMediaPlatformPublicationId = wcp.SocialMediaPlatformPublicationId,
+                                    ImageUploadDate = wcp.ImageUploadDate,
+                                    CreateDate= wcp.CreateDate,
+                                    IsFixedOnTop= wcp.IsFixedOnTop,
+                                    IsVideo = wcp.IsVideo,
+                                    SocialMediaPlatformDto = new SocialMediaPlatformDto 
+                                    { 
+                                        Name = wcp.SocialMediaPlatform.Name,
+                                        PublicationsRootUrl = wcp.SocialMediaPlatform.PublicationsRootUrl
+                                    }
+                                })
+                                .Order()
+                                .ToListPagedAsync(page, pageSize);
+        }
     }
 }

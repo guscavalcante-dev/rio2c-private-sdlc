@@ -4,17 +4,15 @@
 // Created          : 08-16-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-16-2023
+// Last Modified On : 08-24-2023
 // ***********************************************************************
 // <copyright file="SocialMediaPlatform.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
-using System;
 using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Entities
@@ -29,10 +27,12 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int NameMaxLenght = 50;
         public static readonly int ApiKeyMaxLenght = 200;
         public static readonly int EndpointUrlMaxLenght = 1000;
+        public static readonly int PublicationsRootUrlMaxLenght = 500;
 
         public string Name { get; private set; }
         public string ApiKey { get; private set; }
         public string EndpointUrl { get; private set; }
+        public string PublicationsRootUrl { get; private set; }
         public bool IsSyncActive { get; private set; }
 
         public virtual List<WeConnectPublication> WeConnectPublications { get; private set; }
@@ -56,6 +56,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateName();
             this.ValidateApiKey();
             this.ValidateEndpointUrl();
+            this.ValidatePublicationsRootUrl();
 
             return this.ValidationResult.IsValid;
         }
@@ -93,6 +94,16 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
+        /// <summary>
+        /// Validates the publications root URL.
+        /// </summary>
+        private void ValidatePublicationsRootUrl()
+        {
+            if (this.PublicationsRootUrl.Length > PublicationsRootUrlMaxLenght)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(PublicationsRootUrl), PublicationsRootUrlMaxLenght, 1), new string[] { nameof(PublicationsRootUrl) }));
+            }
+        }
         #endregion
     }
 }

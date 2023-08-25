@@ -741,6 +741,9 @@
   <data name="CreateProject" xml:space="preserve">
     <value>Criar Projeto</value>
   </data>
+  <data name="CreativeEconomyTheme" xml:space="preserve">
+    <value>Tema da Economia Criativa</value>
+  </data>
   <data name="CreativeEconomyThemes" xml:space="preserve">
     <value>Temas da Economia Criativa</value>
   </data>
@@ -1468,6 +1471,9 @@
   </data>
   <data name="LoadingSelectedPlayers" xml:space="preserve">
     <value>Carregando players selecionados...</value>
+  </data>
+  <data name="LoadMore" xml:space="preserve">
+    <value>Carregar mais...</value>
   </data>
   <data name="Local" xml:space="preserve">
     <value>Local</value>
@@ -2500,6 +2506,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="SeeMiniBio" xml:space="preserve">
     <value>Ver mini-biografia</value>
   </data>
+  <data name="SeeOnInstagram" xml:space="preserve">
+    <value>Ver no Instagram</value>
+  </data>
   <data name="SeeReason" xml:space="preserve">
     <value>Ver motivo</value>
   </data>
@@ -3039,9 +3048,6 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   </data>
   <data name="Verticals" xml:space="preserve">
     <value>Verticais</value>
-  </data>
-  <data name="CreativeEconomyTheme" xml:space="preserve">
-    <value>Tema da Economia Criativa</value>
   </data>
   <data name="VerticalsAndCreativeEconomyThemes" xml:space="preserve">
     <value>Verticais e Temas da Economia Criativa</value>
