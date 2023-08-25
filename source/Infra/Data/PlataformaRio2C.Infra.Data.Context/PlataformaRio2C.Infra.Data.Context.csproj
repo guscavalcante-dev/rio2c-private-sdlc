@@ -231,6 +231,8 @@
     <Compile Include="Mapping\Player\PlayerDescriptionMap.cs" />
     <Compile Include="Mapping\Player\PlayerMap.cs" />
     <Compile Include="Mapping\User\UserMap.cs" />
+    <Compile Include="Mapping\WeConnect\SocialMediaPlatformMap.cs" />
+    <Compile Include="Mapping\WeConnect\WeConnectPublicationMap.cs" />
     <Compile Include="Migrations\201710131419397_Initial.cs" />
     <Compile Include="Migrations\201710131419397_Initial.Designer.cs">
       <DependentUpon>201710131419397_Initial.cs</DependentUpon>
@@ -494,6 +496,7 @@
     <Content Include="SqlScripts\Deltas\20220124_100700_0049_ChangesForCartoon.sql" />
     <Content Include="SqlScripts\Deltas\20230113_145700_0062_ChangesForAttendeeMusicBands.sql" />
     <Content Include="SqlScripts\Deltas\20230106_073000_0061_ChangesForInnovationOrganizationTrackOptions.sql" />
+    <Content Include="SqlScripts\Deltas\20230816_082900_0067_ChangesForWeConnectPublications.sql" />
     <Content Include="SqlScripts\Deltas\20230713_143100_0066_ChangesForEditions.sql" />
     <Content Include="SqlScripts\Deltas\20230426_171700_0065_ChangesForAttendeeCollaborators.sql" />
     <Content Include="SqlScripts\Deltas\20230228_095700_0064_ChangesForAddresses.sql" />

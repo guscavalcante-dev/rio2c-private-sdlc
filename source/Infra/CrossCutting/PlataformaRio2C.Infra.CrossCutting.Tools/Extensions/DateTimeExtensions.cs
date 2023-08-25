@@ -4,7 +4,7 @@
 // Created          : 12-13-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-31-2023
+// Last Modified On : 08-23-2023
 // ***********************************************************************
 // <copyright file="DateTimeExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -255,6 +255,31 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         public static string ToStringFileNameTimestamp(this DateTime dt)
         {
             return dt.ToBrazilTimeZone().ToString("dd-MM-yyyy_HH-mm-ss");
+        }
+
+        /// <summary>
+        /// Converts to shortdatestring.
+        /// </summary>
+        /// <param name="dt">The dt.</param>
+        /// <returns></returns>
+        public static string ToShortDateString(this DateTimeOffset dt)
+        {
+            return dt.ToString("dd/MM/yyyy");
+        }
+
+        /// <summary>
+        /// Converts to shortdatestring.
+        /// </summary>
+        /// <param name="dt">The dt.</param>
+        /// <returns></returns>
+        public static string ToShortDateString(this DateTimeOffset? dt)
+        {
+            if (dt == null)
+            {
+                return "";
+            }
+
+            return dt?.ToString("dd/MM/yyyy");
         }
     }
 }

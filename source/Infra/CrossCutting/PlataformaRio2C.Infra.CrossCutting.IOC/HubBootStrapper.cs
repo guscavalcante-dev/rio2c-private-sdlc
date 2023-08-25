@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-28-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 08-16-2023
 // ***********************************************************************
 // <copyright file="HubBootStrapper.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,12 +13,10 @@
 // ***********************************************************************
 using System;
 using System.Linq;
-using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.HubApplication.CQRS.CommandsHandlers;
 using PlataformaRio2C.Infra.CrossCutting.CQRS;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Services.Log;
-using PlataformaRio2C.Infra.Data.Repository;
 using PlataformaRio2C.Infra.Data.Repository.Repositories;
 using SimpleInjector;
 using SimpleInjector.Lifestyles;
@@ -48,7 +46,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
             }
             catch (Exception e)
             {
-
                 throw;
             }
 
@@ -79,7 +76,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
                 container.Register(reg.service, reg.implementation, Lifestyle.Scoped);
             }
 
-            container.Register<IRepositoryFactory, RepositoryFactory>(Lifestyle.Scoped);
+            // Disabled at 2023-08-17 for test purposes.
+            // The lines above already register all the repositories, so, this factory isn't necessary.
+            //container.Register<IRepositoryFactory, RepositoryFactory>(Lifestyle.Scoped);
         }
     }
 }

@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-28-2021
+// Last Modified On : 08-22-2023
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -265,6 +265,13 @@ namespace PlataformaRio2C.Web.Site
 
             bundles.Add(new ScriptBundle("~/bundles/js/agendas.widget.js").Include(
                 "~/Assets/js/agendas/agendas.widget.js"));
+
+            #endregion
+
+            #region WeConnect
+
+            bundles.Add(new ScriptBundle("~/bundles/js/weconnect.widget.js").Include(
+              "~/Assets/js/weconnect/weconnect.widget.js"));
 
             #endregion
 

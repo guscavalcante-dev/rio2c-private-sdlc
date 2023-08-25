@@ -393,6 +393,7 @@
     <Compile Include="CQRS\CommandsHandlers\Tracks\DeleteTrackCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Tracks\TrackBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationConfigs\UpdateNegotiationConfigMainInformationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\WeConnect\SynchronizeWeConnectPublicationsCommandHandler.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\Collaborators\BaseCommands\AudiovisualCollaboratorBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\Collaborators\UpdateAudiovisualCollaborator.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\Collaborators\CreateAudiovisualCollaborator.cs" />
@@ -616,6 +617,7 @@
     <Compile Include="CQRS\Commands\Tracks\CreateTrack.cs" />
     <Compile Include="CQRS\Commands\Tracks\DeleteTrack.cs" />
     <Compile Include="CQRS\Commands\Tracks\UpdateTrackMainInformation.cs" />
+    <Compile Include="CQRS\Commands\WeConnect\SynchronizeWeConnectPublications.cs" />
     <Compile Include="CQRS\QueriesHandlers\Collaborators\FindAllCollaboratorIndustryAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Collaborators\FindAllCollaboratorRoleAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Collaborators\FindAllCollaboratorGenderAsyncQueryHandler.cs" />
@@ -758,6 +760,7 @@
     <Compile Include="ViewModels\Common\Reports\ReportsAudiovisualSearchViewModel.cs" />
     <Compile Include="ViewModels\Admin\Project\ProjectDetailAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Speakers\SpeakerSearchViewModel.cs" />
+    <Compile Include="ViewModels\Common\WeConnect\WeConnectSearchViewModel.cs" />
     <Compile Include="ViewModels\Conferences\ConferenceSearchViewModel.cs" />
     <Compile Include="ViewModels\ConferenceParticipantRoles\ConferenceParticipantRoleSearchViewModel.cs" />
     <Compile Include="ViewModels\Editions\EditionSearchViewModel.cs" />
@@ -800,6 +803,10 @@
     <ProjectReference Include="..\..\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.SalesPlatforms\PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.csproj">
       <Project>{73e650a2-a5c8-4035-b206-586c4e4b0846}</Project>
       <Name>PlataformaRio2C.Infra.CrossCutting.SalesPlatforms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms\PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms.csproj">
+      <Project>{33EC5478-C17A-4A12-A0B6-C11B8B061455}</Project>
+      <Name>PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.SystemParameter\PlataformaRio2C.Infra.CrossCutting.SystemParameter.csproj">
       <Project>{0c86c61e-c23c-4469-90a1-6ed8e75814db}</Project>

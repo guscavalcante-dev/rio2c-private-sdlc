@@ -1,0 +1,50 @@
+﻿@using PlataformaRio2C.Domain.Constants
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Statics
+@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@model List<WeConnectPublicationDto>
+
+@if (Model != null && Model.Any())
+{
+    foreach (var weConnectPublicationDto in Model)
+    {
+        <div class="kt-timeline-v1__item">
+            <div class="kt-timeline-v1__item-circle">
+                <div class="kt-bg-danger"></div>
+            </div>
+            <span class="kt-timeline-v1__item-time kt-font-brand">@weConnectPublicationDto.CreateDate.ToShortDateString()</span>
+            <div class="kt-timeline-v1__item-content">
+                <div class="kt-timeline-v1__item-body">
+                    <div class="kt-portlet kt-widget19 mb-0">
+                        <div class="kt-portlet__body kt-portlet__body--fit kt-portlet__body--unfill">
+                            <div class="kt-portlet-fit--top kt-portlet-fit--sides" style="min-height: 300px;">
+                                @if (weConnectPublicationDto.IsVideo)
+                                {
+                                    <video class="r2c-we-connected-banner-video" controls controlsList="nodownload">
+                                        <source src="@ImageHelper.GetVideoUrl(FileRepositoryPathType.WeConnectMediaFile, weConnectPublicationDto.Uid, weConnectPublicationDto.ImageUploadDate)" type="video/mp4" />
+                                    </video>
+                                }
+                                else
+                                {
+                                    <a href="" target="_blank">
+                                        <img class="r2c-we-connected-banner" src="@ImageHelper.GetImageUrl(FileRepositoryPathType.WeConnectMediaFile, weConnectPublicationDto.Uid, weConnectPublicationDto.ImageUploadDate, false)" />
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                        <div class="kt-portlet__body">
+                            <div class="kt-widget19__wrapper">
+                                <div class="kt-widget19__text">
+                                    @weConnectPublicationDto.PublicationText
+                                </div>
+                            </div>
+                            <div class="kt-widget19__action text-center">
+                                <a href="@weConnectPublicationDto.GetPublicationUrl()" class="btn btn-label-instagram btn-pill" target="_blank"><i class="socicon-instagram"></i>@Labels.SeeOnInstagram</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

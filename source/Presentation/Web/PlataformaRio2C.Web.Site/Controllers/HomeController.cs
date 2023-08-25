@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-28-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-05-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 08-25-2023
 // ***********************************************************************
 // <copyright file="HomeController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,6 +29,9 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Web.Site.Services;
 using Constants = PlataformaRio2C.Domain.Constants;
+using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Application.ViewModels;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -37,14 +40,21 @@ namespace PlataformaRio2C.Web.Site.Controllers
     [AuthorizeCollaboratorType(Order = 2)]
     public class HomeController : BaseController
     {
-        /// <summary>Initializes a new instance of the <see cref="HomeController"/> class.</summary>
+        private readonly IWeConnectPublicationRepository weConnectPublicationRepo;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HomeController" /> class.
+        /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
+        /// <param name="weConnectPublicationRepository">The we connect publication repository.</param>
         public HomeController(
             IMediator commandBus, 
-            IdentityAutenticationService identityController)
+            IdentityAutenticationService identityController,
+            IWeConnectPublicationRepository weConnectPublicationRepository)
             : base(commandBus, identityController)
         {
+            this.weConnectPublicationRepo = weConnectPublicationRepository;
         }
 
         #region Dashboard
@@ -64,31 +74,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
             ViewBag.ShowEmailSettings = showEmailSettings;
 
             return View("Index");
-
-            //try
-            //{
-
-
-            //    //return RedirectToAction("Index", "Home", new { Area = "Player" });
-
-            //    //var userId = User.Identity.GetUserId<int>();
-
-            //    //if (await this.identityController.IsInRoleAsync(userId, "Player"))
-            //    //{
-            //    //    return RedirectToAction("Index", "Home", new { Area = "Player" });
-            //    //}
-
-            //    //if (await this.identityController.IsInRoleAsync(userId, "Producer"))
-            //    //{
-            //    //    return RedirectToAction("Index", "Home", new { Area = "Producer" });
-            //    //}
-
-            //    //return RedirectToAction("LogOff", "Account");
-            //}
-            //catch (Exception)
-            //{
-            //    return RedirectToAction("LogOff", "Account");
-            //}
         }
 
         #endregion
@@ -224,6 +209,53 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
 
             return RedirectToAction("Index", "Home");
+        }
+
+        #endregion
+
+        #region We Connect
+
+        /// <summary>
+        /// Shows the we connect widget.
+        /// </summary>
+        /// <param name="weConnectSearchViewModel">The we connect search view model.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowWeConnectWidget(WeConnectSearchViewModel weConnectSearchViewModel)
+        {
+            var weConnectPublicationsDtos = await this.weConnectPublicationRepo.FindAllDtosPagedAsync(
+                weConnectSearchViewModel.Page.Value,
+                weConnectSearchViewModel.PageSize.Value);
+
+            return Json(new
+            {
+                status = "success",
+                hasNextPage = weConnectPublicationsDtos.HasNextPage,
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/WeConnectedWidget", weConnectPublicationsDtos), divIdOrClass = "#WeConnectWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Wes the connect widget load more.
+        /// </summary>
+        /// <param name="weConnectSearchViewModel">The we connect search view model.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> WeConnectWidgetLoadMore(WeConnectSearchViewModel weConnectSearchViewModel)
+        {
+            var weConnectPublicationsDtos = await this.weConnectPublicationRepo.FindAllDtosPagedAsync(
+                weConnectSearchViewModel.Page.Value,
+                weConnectSearchViewModel.PageSize.Value);
+
+            return Json(new
+            {
+                status = "success",
+                hasNextPage = weConnectPublicationsDtos.HasNextPage,
+                page = this.RenderRazorViewToString("Shared/_WeConnectPublications", weConnectPublicationsDtos.ToList())
+            }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

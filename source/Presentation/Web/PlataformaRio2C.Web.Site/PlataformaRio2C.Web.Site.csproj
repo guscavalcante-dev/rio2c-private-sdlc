@@ -249,6 +249,7 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Text.Encodings.Web, Version=5.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\System.Text.Encodings.Web.5.0.1\lib\net461\System.Text.Encodings.Web.dll</HintPath>
@@ -372,6 +373,7 @@
     <Compile Include="Areas\WebApi\Controllers\OrganizationsApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\PlayersApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\NetworksApiController.cs" />
+    <Compile Include="Areas\WebApi\Controllers\WeConnectApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\SalesPlatformsApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\ConferencesApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\SpeakersApiController.cs" />
@@ -897,6 +899,7 @@
     <Content Include="Assets\js\agendas\agendas.widget.js" />
     <Content Include="Assets\js\companies\companyinfo.autocomplete.js" />
     <Content Include="Assets\js\projects\projects.projectinfo.js" />
+    <Content Include="Assets\js\weconnect\weconnect.widget.js" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.css" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.min.css" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.rtl.css" />
@@ -7773,6 +7776,7 @@
     <Content Include="Views\Agendas\Shared\_LogisticTransferPopover.cshtml" />
     <Content Include="Views\Themes\Metronic\_EditionSelector.cshtml" />
     <Content Include="Views\SiteMailerService\SpeakersReportEmail.cshtml" />
+    <Content Include="Views\Home\Shared\_WeConnectPublications.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -3355,6 +3355,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Carregar mais....
+        /// </summary>
+        public static string LoadMore {
+            get {
+                return ResourceManager.GetString("LoadMore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Local.
         /// </summary>
         public static string Local {
@@ -5808,6 +5817,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string SeeMiniBio {
             get {
                 return ResourceManager.GetString("SeeMiniBio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ver no Instagram.
+        /// </summary>
+        public static string SeeOnInstagram {
+            get {
+                return ResourceManager.GetString("SeeOnInstagram", resourceCulture);
             }
         }
         

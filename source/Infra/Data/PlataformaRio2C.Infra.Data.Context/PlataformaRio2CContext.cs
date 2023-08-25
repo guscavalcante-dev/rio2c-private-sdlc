@@ -190,6 +190,8 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new InnovationOrganizationTrackOptionGroupMap());
             modelBuilder.Configurations.Add(new InnovationOrganizationSustainableDevelopmentObjectivesOptionMap());
             modelBuilder.Configurations.Add(new WorkDedicationMap());
+
+            // Quiz
             modelBuilder.Configurations.Add(new QuizMap());
             modelBuilder.Configurations.Add(new QuizQuestionMap());
             modelBuilder.Configurations.Add(new QuizOptionMap());
@@ -203,6 +205,10 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new AttendeeCartoonProjectMap());
             modelBuilder.Configurations.Add(new AttendeeCartoonProjectCollaboratorMap());
             modelBuilder.Configurations.Add(new AttendeeCartoonProjectEvaluationMap());
+
+            // WeConnect
+            modelBuilder.Configurations.Add(new WeConnectPublicationMap());
+            modelBuilder.Configurations.Add(new SocialMediaPlatformMap());
 
             base.OnModelCreating(modelBuilder);
         }

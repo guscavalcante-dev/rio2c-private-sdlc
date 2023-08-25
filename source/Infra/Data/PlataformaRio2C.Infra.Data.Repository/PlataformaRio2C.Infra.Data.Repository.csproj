@@ -243,6 +243,8 @@
     <Compile Include="Repositories\SentEmails\SentEmailRepository.cs" />
     <Compile Include="Repositories\SubscribeLists\SubscribeListRepository.cs" />
     <Compile Include="Repositories\User\ConnectionRepository.cs" />
+    <Compile Include="Repositories\WeConnect\WeConnectPublicationRepository.cs" />
+    <Compile Include="Repositories\WeConnect\SocialMediaPlatformRepository.cs" />
     <Compile Include="RepositoryFactory.cs" />
     <Compile Include="Repositories\Room\RoomNameRepository.cs" />
     <Compile Include="Repositories\Room\RoomRepository.cs" />

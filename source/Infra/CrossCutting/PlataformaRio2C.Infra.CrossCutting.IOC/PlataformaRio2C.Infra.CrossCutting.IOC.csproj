@@ -155,6 +155,10 @@
       <Project>{73E650A2-A5C8-4035-B206-586C4E4B0846}</Project>
       <Name>PlataformaRio2C.Infra.CrossCutting.SalesPlatforms</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms\PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms.csproj">
+      <Project>{33EC5478-C17A-4A12-A0B6-C11B8B061455}</Project>
+      <Name>PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PlataformaRio2C.Infra.CrossCutting.SystemParameter\PlataformaRio2C.Infra.CrossCutting.SystemParameter.csproj">
       <Project>{0C86C61E-C23C-4469-90A1-6ED8E75814DB}</Project>
       <Name>PlataformaRio2C.Infra.CrossCutting.SystemParameter</Name>

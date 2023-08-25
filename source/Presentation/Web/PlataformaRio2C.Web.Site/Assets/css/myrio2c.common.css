@@ -289,16 +289,6 @@ a.r2c-login__footer-link, a.r2c-footer-link {
 
 
 /*
-    weconnected
-*/
-
-.r2c-we-connected-banner {
-    width: 100%;
-    height: auto;
-}
-
-
-/*
     Media
 */
 
@@ -557,4 +547,59 @@ a.r2c-login__footer-link, a.r2c-footer-link {
     border: 1px solid #EBEDF2 !important;
     min-height: 65px !important;
     border-radius: 4px;
+}
+
+
+
+/*
+    We Connected
+*/
+
+.r2c-we-connected-banner {
+    width: 100%;
+    height: auto;
+    max-height:355px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    object-fit: scale-down;
+}
+
+.r2c-we-connected-banner-video {
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    max-height: 355px;
+}
+
+/* WeConnect Gray Content Background */
+.kt-timeline-v1 .kt-timeline-v1__items .kt-timeline-v1__item .kt-timeline-v1__item-content {
+    padding: 0.1rem !important;
+}
+
+/* WeConnect Date Position */
+.kt-timeline-v1 .kt-timeline-v1__items .kt-timeline-v1__item.kt-timeline-v1__item--right .kt-timeline-v1__item-time {
+    left: 2.57rem;
+}
+
+.kt-widget19 .kt-widget19__wrapper {
+    margin-bottom: 1rem;
+}
+
+    .kt-widget19 .kt-widget19__wrapper .kt-widget19__content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 0 1.75rem 0;
+    }
+
+    .kt-widget19 .kt-widget19__wrapper .kt-widget19__text {
+        text-align: justify;
+        color: #74788d;
+        font-size: 1.1rem;
+        font-weight: 400;
+    }
+
+.kt-widget19 .kt-widget19__action {
+    margin-top: 1.5rem;
 }
