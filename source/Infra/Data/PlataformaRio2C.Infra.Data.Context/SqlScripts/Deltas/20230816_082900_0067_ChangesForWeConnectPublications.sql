@@ -66,6 +66,7 @@ BEGIN TRY
 					   ,[Name]
 					   ,[ApiKey]
 					   ,[EndpointUrl]
+					   ,[PublicationsRootUrl]
 					   ,[IsSyncActive]
 					   ,[IsDeleted]
 					   ,[CreateDate]
@@ -73,7 +74,7 @@ BEGIN TRY
 					   ,[UpdateDate]
 					   ,[UpdateUserId])
 				 VALUES
-					   (1, ''00000001-5A48-4A0B-A720-11AF5051F0CC'', ''Instagram'', NULL, ''https://www.instagram.com/api/v1/users/web_profile_info/?username=rio2c'', ''https://www.instagram.com/p/'' 1, 0, GETDATE(), 1, GETDATE(), 1)
+					   (1, ''00000001-5A48-4A0B-A720-11AF5051F0CC'', ''Instagram'', NULL, ''https://www.instagram.com/api/v1/users/web_profile_info/?username=rio2c'', ''https://www.instagram.com/p/'', 1, 0, GETDATE(), 1, GETDATE(), 1)
 			  SET IDENTITY_INSERT [dbo].[SocialMediaPlatforms] OFF;')
 
 	COMMIT TRAN -- Transaction Success!
