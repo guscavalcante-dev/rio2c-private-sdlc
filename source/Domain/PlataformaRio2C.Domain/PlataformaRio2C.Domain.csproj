@@ -86,7 +86,9 @@
     <Compile Include="ApiModels\ApiBaseRequest.cs" />
     <Compile Include="ApiModels\ApiReportBaseRequest.cs" />
     <Compile Include="ApiModels\Audiovisual\Requests\AudiovisualCommissionsApiRequest.cs" />
+    <Compile Include="ApiModels\Audiovisual\Requests\AudiovisualCommissionApiRequest.cs" />
     <Compile Include="ApiModels\Audiovisual\Responses\AudiovisualCommissionsApiResponse.cs" />
+    <Compile Include="ApiModels\Audiovisual\Responses\AudiovisualCommissionApiResponse.cs" />
     <Compile Include="ApiModels\Cartoon\Requests\CartoonFiltersApiRequest.cs" />
     <Compile Include="ApiModels\Cartoon\Responses\CartoonFiltersApiResponse.cs" />
     <Compile Include="ApiModels\Conferences\Requests\ConferencesFiltersApiRequest.cs" />

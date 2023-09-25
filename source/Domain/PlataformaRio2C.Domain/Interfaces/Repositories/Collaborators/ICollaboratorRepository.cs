@@ -29,15 +29,15 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<Collaborator> FindBySalesPlatformAttendeeIdAsync(string salesPlatformAttendeeId);
         Task<CollaboratorDto> FindByEmailAsync(string email, int? editionId);
         Task<IPagedList<CollaboratorDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> collaboratorsUids, string[] collaboratorTypeNames, string[] organizationTypeNames, bool showAllEditions, bool showAllParticipants, bool? showHighlights, int? editionId);
-        Task<IPagedList<CollaboratorApiListDto>> FindAllDropdownApiListDtoPaged(int editionId, string keywords, bool filterByProjectsInNegotiation, string collaboratorTypeName, bool showAllParticipants, int page, int pageSize);
         Task<IPagedList<LogisticJsonDto>> FindAllLogisticsByDatatable(int editionId, int page, int pageSize, string searchValue, List<Tuple<string, string>> getSortColumns, bool showAllParticipants, bool showAllSponsors);
         Task<IPagedList<CollaboratorDto>> FindAllAdminsByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, string collaboratorTypeName, string roleName, bool showAllEditions, bool showAllParticipants, string userInterfaceLanguage, int? editionId);
         Task<IPagedList<CollaboratorDto>> FindAllInnovationCommissionsByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> collaboratorsUids, string[] collaboratorTypeNames, bool showAllEditions, bool showAllParticipants, bool? showHighlights, int? editionId, List<Guid?> innovationOrganizationTrackOptionsUids);
 
         #region Audiovisual Commissions
 
-        Task<IPagedList<CollaboratorDto>> FindAllAudiovisualCommissionsByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> collaboratorsUids, string[] collaboratorTypeNames, bool showAllEditions, bool showAllParticipants, bool? showHighlights, int? editionId, List<Guid?> interestsUids);
-        Task<IPagedList<CollaboratorDto>> FindAllAudiovisualCommissionsPublicApiPaged(int? editionId, string keywords, int page, int pageSize);
+        Task<IPagedList<CollaboratorDto>> FindAllAudiovisualCommissionMembersByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, string[] collaboratorTypeNames, bool showAllEditions, bool showAllParticipants, int? editionId, List<Guid?> interestsUids);
+        Task<IPagedList<CollaboratorDto>> FindAllAudiovisualCommissionMembersApiPaged(int? editionId, string keywords, int page, int pageSize);
+        Task<CollaboratorDto> FindAudiovisualCommissionMemberApi(Guid collaboratorUid, int editionId); 
 
         #endregion
 
@@ -51,13 +51,13 @@ namespace PlataformaRio2C.Domain.Interfaces
 
         Task<IPagedList<CollaboratorApiListDto>> FindAllSpeakersApiListDtoPaged(int editionId, string keywords, bool filterByProjectsInNegotiation, string collaboratorTypeName, bool showAllParticipants, int page, int pageSize);
         Task<IPagedList<CollaboratorDto>> FindAllSpeakersByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, bool showAllParticipants, bool? showHighlights, int? editionId, bool exportToExcel = false);
+        Task<IPagedList<CollaboratorApiListDto>> FindAllSpeakersApiPaged(int editionId, string keywords, int? highlights, List<Guid?> conferencesUids, List<DateTimeOffset?> conferencesDates, List<Guid?> roomsUids, string collaboratorTypeName, int page, int pageSize);
+        Task<SpeakerCollaboratorDto> FindSpeakerApi(Guid collaboratorUid, int editionId, string collaboratorTypeName);
 
         #endregion
 
         #region Api
-
-        Task<IPagedList<CollaboratorApiListDto>> FindAllPublicApiPaged(int editionId, string keywords, int? highlights, List<Guid?> conferencesUids, List<DateTimeOffset?> conferencesDates, List<Guid?> roomsUids, string collaboratorTypeName, int page, int pageSize);
-        Task<SpeakerCollaboratorDto> FindPublicApiDtoAsync(Guid collaboratorUid, int editionId, string collaboratorTypeName);
+        Task<IPagedList<CollaboratorApiListDto>> FindAllDropdownApiListDtoPaged(int editionId, string keywords, bool filterByProjectsInNegotiation, string collaboratorTypeName, bool showAllParticipants, int page, int pageSize);
         Task<List<Collaborator>> FindAllByHightlightPosition(int editionId, Guid collaboratorTypeUid, int apiHighlightPosition, Guid? organizationUid);
 
         #endregion

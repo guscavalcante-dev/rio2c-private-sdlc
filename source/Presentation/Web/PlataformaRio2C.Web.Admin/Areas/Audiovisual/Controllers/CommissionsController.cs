@@ -110,16 +110,14 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllParticipants, Guid? interestUid)
         {
-            var members = await this.collaboratorRepo.FindAllAudiovisualCommissionsByDataTable(
+            var members = await this.collaboratorRepo.FindAllAudiovisualCommissionMembersByDataTable(
                 request.Start / request.Length,
                 request.Length,
                 request.Search?.Value,
                 request.GetSortColumns(),
-                null,
                 new string[] { Constants.CollaboratorType.CommissionAudiovisual },
                 showAllEditions,
                 showAllParticipants,
-                null,
                 this.EditionDto?.Id,
                 new List<Guid?>() { interestUid }
             );

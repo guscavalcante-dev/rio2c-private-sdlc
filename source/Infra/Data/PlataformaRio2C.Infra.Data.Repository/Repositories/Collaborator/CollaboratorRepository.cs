@@ -522,6 +522,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static async Task<IPagedList<CollaboratorDto>> ToListPagedAsync(this IQueryable<CollaboratorDto> query, int page, int pageSize)
         {
+            if (page == 0)
+                page++;
+
             // Page the list
             var pagedList = await query.ToPagedListAsync(page, pageSize);
             if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
@@ -1431,29 +1434,23 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="keywords">The keywords.</param>
-        /// <param name="collaboratorsUids">The collaborators uids.</param>
         /// <param name="collaboratorTypeNames">The collaborator type names.</param>
         /// <param name="interestsUids">The interests uids.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
-        /// <param name="showHighlights">The show highlights.</param>
         /// <returns></returns>
         private IQueryable<Collaborator> GetAudiovisualCommissionsBaseQuery(
             int? editionId,
             string keywords,
             string[] collaboratorTypeNames,
-            List<Guid> collaboratorsUids,
             List<Guid?> interestsUids,
             bool showAllEditions,
-            bool showAllParticipants,
-            bool? showHighlights)
+            bool showAllParticipants)
         {
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords, editionId)
-                                .FindByUids(collaboratorsUids)
                                 .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, showAllEditions, showAllParticipants, editionId)
-                                .FindByInterestsUids(interestsUids)
-                                .FindByHighlights(collaboratorTypeNames, showHighlights);
+                                .FindByInterestsUids(interestsUids);
 
             return query;
         }
@@ -1473,16 +1470,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="interestsUids">The interests uids.</param>
         /// <returns></returns>
-        public async Task<IPagedList<CollaboratorDto>> FindAllAudiovisualCommissionsByDataTable(
+        public async Task<IPagedList<CollaboratorDto>> FindAllAudiovisualCommissionMembersByDataTable(
             int page,
             int pageSize,
             string keywords,
             List<Tuple<string, string>> sortColumns,
-            List<Guid> collaboratorsUids,
             string[] collaboratorTypeNames,
             bool showAllEditions,
             bool showAllParticipants,
-            bool? showHighlights,
             int? editionId,
             List<Guid?> interestsUids)
         {
@@ -1490,11 +1485,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 editionId,
                 keywords,
                 collaboratorTypeNames,
-                collaboratorsUids,
                 interestsUids,
                 showAllEditions,
-                showAllParticipants,
-                showHighlights);
+                showAllParticipants);
 
             return await baseQuery
                             .DynamicOrder(
@@ -1581,7 +1574,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="interestsUids">The interests uids.</param>
         /// <returns></returns>
-        public async Task<IPagedList<CollaboratorDto>> FindAllAudiovisualCommissionsPublicApiPaged(
+        public async Task<IPagedList<CollaboratorDto>> FindAllAudiovisualCommissionMembersApiPaged(
             int? editionId,
             string keywords,
             int page,
@@ -1592,8 +1585,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 keywords,
                 new string[] { Constants.CollaboratorType.CommissionAudiovisual },
                 null,
-                null,
-                false,
                 false,
                 false);
 
@@ -1608,6 +1599,43 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             })
                             .OrderBy(c => c.FirstName)
                             .ToListPagedAsync(page, pageSize);
+        }
+
+        /// <summary>
+        /// Finds the audiovisual commission member API.
+        /// </summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<CollaboratorDto> FindAudiovisualCommissionMemberApi(Guid collaboratorUid, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(collaboratorUid)
+                                .FindByCollaboratorTypeNameAndByEditionId(new string[] { Constants.CollaboratorType.CommissionAudiovisual }, false, false, editionId);
+
+            return await query
+                            .Select(c => new CollaboratorDto
+                            {
+                                Uid = c.Uid,
+                                FirstName = c.FirstName,
+                                LastNames = c.LastNames,
+                                ImageUploadDate = c.ImageUploadDate,
+                                MiniBioBaseDtos = c.MiniBios.Where(mb => !mb.IsDeleted).Select(d => new CollaboratorMiniBioBaseDto
+                                {
+                                    Id = d.Id,
+                                    Uid = d.Uid,
+                                    Value = d.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = d.Language.Id,
+                                        Uid = d.Language.Uid,
+                                        Name = d.Language.Name,
+                                        Code = d.Language.Code
+                                    }
+                                }),
+                            })
+                            .OrderBy(o => o.FirstName)
+                            .FirstOrDefaultAsync();
         }
 
         #endregion
@@ -1743,6 +1771,44 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         #endregion
 
         #region Speakers
+
+        /// <summary>
+        /// Finds all speakers API list dto paged.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="filterByProjectsInNegotiation">if set to <c>true</c> [filter by projects in negotiation].</param>
+        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
+        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<CollaboratorApiListDto>> FindAllSpeakersApiListDtoPaged(
+            int editionId,
+            string keywords,
+            bool filterByProjectsInNegotiation,
+            string collaboratorTypeName,
+            bool showAllParticipants,
+            int page,
+            int pageSize)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, false, showAllParticipants, editionId)
+                                .FindByNames(keywords);
+
+            return await query
+                            .Select(c => new CollaboratorApiListDto
+                            {
+                                Uid = c.Uid,
+                                BadgeName = c.Badge,
+                                Name = c.FirstName + " " + c.LastNames,
+                                ImageUploadDate = c.ImageUploadDate,
+                                CreateDate = c.CreateDate,
+                                UpdateDate = c.UpdateDate
+                            })
+                            .OrderBy(o => o.BadgeName)
+                            .ToListPagedAsync(page, pageSize);
+        }
 
         /// <summary>
         /// Finds all speakers by data table.
@@ -1989,23 +2055,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return collaboratorDtos;
         }
 
-        #endregion
-
-        #region Api
-
         /// <summary>
-        /// Finds all public API paged.
+        /// Finds all speakers API paged.
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="keywords">The keywords.</param>
         /// <param name="highlights">The highlights.</param>
         /// <param name="conferencesUids">The conferences uids.</param>
         /// <param name="conferencesDates">The conferences dates.</param>
+        /// <param name="roomsUids">The rooms uids.</param>
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<CollaboratorApiListDto>> FindAllPublicApiPaged(
+        public async Task<IPagedList<CollaboratorApiListDto>> FindAllSpeakersApiPaged(
             int editionId,
             string keywords,
             int? highlights,
@@ -2091,12 +2154,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ToListPagedAsync(page, pageSize);
         }
 
-        /// <summary>Finds the public API dto asynchronous.</summary>
+        /// <summary>
+        /// Finds the speaker API.
+        /// </summary>
         /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
         /// <returns></returns>
-        public async Task<SpeakerCollaboratorDto> FindPublicApiDtoAsync(Guid collaboratorUid, int editionId, string collaboratorTypeName)
+        public async Task<SpeakerCollaboratorDto> FindSpeakerApi(Guid collaboratorUid, int editionId, string collaboratorTypeName)
         {
             var query = this.GetBaseQuery()
                                 .FindByUid(collaboratorUid)
@@ -2219,6 +2284,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        #endregion
+
+        #region Api
+
         /// <summary>Finds all dropdown API list dto paged.</summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="keywords">The keywords.</param>
@@ -2275,44 +2344,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                             ImageUploadDate = aoc.AttendeeOrganization.Organization.ImageUploadDate
 
                                         })),
-                                CreateDate = c.CreateDate,
-                                UpdateDate = c.UpdateDate
-                            })
-                            .OrderBy(o => o.BadgeName)
-                            .ToListPagedAsync(page, pageSize);
-        }
-
-        /// <summary>
-        /// Finds all speakers API list dto paged.
-        /// </summary>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <param name="keywords">The keywords.</param>
-        /// <param name="filterByProjectsInNegotiation">if set to <c>true</c> [filter by projects in negotiation].</param>
-        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
-        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
-        /// <param name="page">The page.</param>
-        /// <param name="pageSize">Size of the page.</param>
-        /// <returns></returns>
-        public async Task<IPagedList<CollaboratorApiListDto>> FindAllSpeakersApiListDtoPaged(
-            int editionId,
-            string keywords,
-            bool filterByProjectsInNegotiation,
-            string collaboratorTypeName,
-            bool showAllParticipants,
-            int page,
-            int pageSize)
-        {
-            var query = this.GetBaseQuery(true)
-                                .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, false, showAllParticipants, editionId)
-                                .FindByNames(keywords);
-
-            return await query
-                            .Select(c => new CollaboratorApiListDto
-                            {
-                                Uid = c.Uid,
-                                BadgeName = c.Badge,
-                                Name = c.FirstName + " " + c.LastNames,
-                                ImageUploadDate = c.ImageUploadDate,
                                 CreateDate = c.CreateDate,
                                 UpdateDate = c.UpdateDate
                             })

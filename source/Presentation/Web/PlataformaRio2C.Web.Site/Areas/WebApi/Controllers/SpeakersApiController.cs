@@ -105,7 +105,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "No active languages found." } });
             }
 
-            var collaboratorsApiDtos = await this.collaboratorRepo.FindAllPublicApiPaged(
+            var collaboratorsApiDtos = await this.collaboratorRepo.FindAllSpeakersApiPaged(
                 edition.Id,
                 request?.Keywords,
                 request?.Highlights,
@@ -283,7 +283,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "No active languages found." } });
             }
 
-            var speakerCollaboratorApiDto = await this.collaboratorRepo.FindPublicApiDtoAsync(
+            var speakerCollaboratorApiDto = await this.collaboratorRepo.FindSpeakerApi(
                 request?.Uid ?? Guid.Empty,
                 edition.Id,
                 Domain.Constants.CollaboratorType.Speaker);
