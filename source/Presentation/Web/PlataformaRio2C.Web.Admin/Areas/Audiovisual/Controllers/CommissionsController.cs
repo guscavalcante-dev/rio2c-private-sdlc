@@ -115,7 +115,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 request.Length,
                 request.Search?.Value,
                 request.GetSortColumns(),
-                new List<Guid>(),
+                null,
                 new string[] { Constants.CollaboratorType.CommissionAudiovisual },
                 showAllEditions,
                 showAllParticipants,

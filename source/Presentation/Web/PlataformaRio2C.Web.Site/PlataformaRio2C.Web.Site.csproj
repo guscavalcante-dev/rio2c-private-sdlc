@@ -366,13 +366,13 @@
     <Compile Include="Areas\Producer\ProducerAreaRegistration.cs" />
     <Compile Include="Areas\WebApi\Controllers\BaseApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\CartoonApiController.cs" />
-    <Compile Include="Areas\WebApi\Controllers\Contracts\ResponseApi.cs" />
     <Compile Include="Areas\WebApi\Controllers\InnovationApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\MusicBandsApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\ProjectsApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\OrganizationsApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\PlayersApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\NetworksApiController.cs" />
+    <Compile Include="Areas\WebApi\Controllers\AudiovisualApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\WeConnectApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\SalesPlatformsApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\ConferencesApiController.cs" />

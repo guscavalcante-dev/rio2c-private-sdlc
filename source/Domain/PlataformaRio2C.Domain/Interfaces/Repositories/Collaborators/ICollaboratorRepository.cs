@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-11-2023
+// Last Modified On : 09-21-2023
 // ***********************************************************************
 // <copyright file="ICollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,7 +33,13 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<IPagedList<LogisticJsonDto>> FindAllLogisticsByDatatable(int editionId, int page, int pageSize, string searchValue, List<Tuple<string, string>> getSortColumns, bool showAllParticipants, bool showAllSponsors);
         Task<IPagedList<CollaboratorDto>> FindAllAdminsByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, string collaboratorTypeName, string roleName, bool showAllEditions, bool showAllParticipants, string userInterfaceLanguage, int? editionId);
         Task<IPagedList<CollaboratorDto>> FindAllInnovationCommissionsByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> collaboratorsUids, string[] collaboratorTypeNames, bool showAllEditions, bool showAllParticipants, bool? showHighlights, int? editionId, List<Guid?> innovationOrganizationTrackOptionsUids);
+
+        #region Audiovisual Commissions
+
         Task<IPagedList<CollaboratorDto>> FindAllAudiovisualCommissionsByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> collaboratorsUids, string[] collaboratorTypeNames, bool showAllEditions, bool showAllParticipants, bool? showHighlights, int? editionId, List<Guid?> interestsUids);
+        Task<IPagedList<CollaboratorDto>> FindAllAudiovisualCommissionsPublicApiPaged(int? editionId, string keywords, int page, int pageSize);
+
+        #endregion
 
         #region Players Executives
 
@@ -53,22 +59,6 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<IPagedList<CollaboratorApiListDto>> FindAllPublicApiPaged(int editionId, string keywords, int? highlights, List<Guid?> conferencesUids, List<DateTimeOffset?> conferencesDates, List<Guid?> roomsUids, string collaboratorTypeName, int page, int pageSize);
         Task<SpeakerCollaboratorDto> FindPublicApiDtoAsync(Guid collaboratorUid, int editionId, string collaboratorTypeName);
         Task<List<Collaborator>> FindAllByHightlightPosition(int editionId, Guid collaboratorTypeUid, int apiHighlightPosition, Guid? organizationUid);
-
-        #endregion
-
-        #region Old
-
-        //Collaborator GetById(int id);
-        //Collaborator GetStatusRegisterCollaboratorByUserId(int id);
-        //Collaborator GetWithProducerByUserId(int id);
-        //Collaborator GetWithPlayerAndProducerUserId(int id);
-        //Collaborator GetWithPlayerAndProducerUid(Guid id);
-        //Collaborator GetImage(Guid uid);
-        //IEnumerable<Collaborator> GetOptions(Expression<Func<Collaborator, bool>> filter);
-        //IEnumerable<Collaborator> GetCollaboratorProducerOptions(Expression<Func<Collaborator, bool>> filter);
-        //IEnumerable<Collaborator> GetCollaboratorPlayerOptions(Expression<Func<Collaborator, bool>> filter);
-        //IEnumerable<Collaborator> GetOptionsChat(int userId);
-        //Collaborator GetBySchedule(Expression<Func<Collaborator, bool>> filter);
 
         #endregion
     }    

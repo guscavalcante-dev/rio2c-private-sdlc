@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-10-2023
+// Last Modified On : 09-21-2023
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -298,9 +298,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="query">The query.</param>
         /// <param name="keywords">The keywords.</param>
-        /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        internal static IQueryable<Collaborator> FindByNames(this IQueryable<Collaborator> query, string keywords, int? editionId)
+        internal static IQueryable<Collaborator> FindByNames(this IQueryable<Collaborator> query, string keywords)
         {
             if (!string.IsNullOrEmpty(keywords))
             {
@@ -523,8 +522,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static async Task<IPagedList<CollaboratorDto>> ToListPagedAsync(this IQueryable<CollaboratorDto> query, int page, int pageSize)
         {
-            page++;
-
             // Page the list
             var pagedList = await query.ToPagedListAsync(page, pageSize);
             if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
@@ -1427,6 +1424,40 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ToListPagedAsync(page, pageSize);
         }
 
+        #region Audiovisual Commissions
+
+        /// <summary>
+        /// Gets the audiovisual commissions base query.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="collaboratorsUids">The collaborators uids.</param>
+        /// <param name="collaboratorTypeNames">The collaborator type names.</param>
+        /// <param name="interestsUids">The interests uids.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <param name="showHighlights">The show highlights.</param>
+        /// <returns></returns>
+        private IQueryable<Collaborator> GetAudiovisualCommissionsBaseQuery(
+            int? editionId,
+            string keywords,
+            string[] collaboratorTypeNames,
+            List<Guid> collaboratorsUids,
+            List<Guid?> interestsUids,
+            bool showAllEditions,
+            bool showAllParticipants,
+            bool? showHighlights)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByKeywords(keywords, editionId)
+                                .FindByUids(collaboratorsUids)
+                                .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, showAllEditions, showAllParticipants, editionId)
+                                .FindByInterestsUids(interestsUids)
+                                .FindByHighlights(collaboratorTypeNames, showHighlights);
+
+            return query;
+        }
+
         /// <summary>
         /// Finds all audiovisual commissions by data table.
         /// </summary>
@@ -1455,15 +1486,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             int? editionId,
             List<Guid?> interestsUids)
         {
-            var query = this.GetBaseQuery()
-                                .FindByKeywords(keywords, editionId)
-                                .FindByUids(collaboratorsUids)
-                                .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, showAllEditions, showAllParticipants, editionId)
-                                .FindByInterestsUids(interestsUids)
-                                .FindByHighlights(collaboratorTypeNames, showHighlights);
+            var baseQuery = this.GetAudiovisualCommissionsBaseQuery(
+                editionId,
+                keywords,
+                collaboratorTypeNames,
+                collaboratorsUids,
+                interestsUids,
+                showAllEditions,
+                showAllParticipants,
+                showHighlights);
 
-            return await query
-                            .DynamicOrder<Collaborator>(
+            return await baseQuery
+                            .DynamicOrder(
                                 sortColumns,
                                 new List<Tuple<string, string>>
                                 {
@@ -1532,6 +1566,51 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             })
                             .ToListPagedAsync(page, pageSize);
         }
+
+        /// <summary>
+        /// Finds all audiovisual commissions public API paged.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="collaboratorsUids">The collaborators uids.</param>
+        /// <param name="collaboratorTypeNames">The collaborator type names.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <param name="showHighlights">The show highlights.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="interestsUids">The interests uids.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<CollaboratorDto>> FindAllAudiovisualCommissionsPublicApiPaged(
+            int? editionId,
+            string keywords,
+            int page,
+            int pageSize)
+        {
+            var baseQuery = this.GetAudiovisualCommissionsBaseQuery(
+                editionId,
+                keywords,
+                new string[] { Constants.CollaboratorType.CommissionAudiovisual },
+                null,
+                null,
+                false,
+                false,
+                false);
+
+            return await baseQuery
+                            .Select(c => new CollaboratorDto
+                            {
+                                Id = c.Id,
+                                Uid = c.Uid,
+                                FirstName = c.FirstName,
+                                LastNames = c.LastNames,
+                                ImageUploadDate = c.ImageUploadDate
+                            })
+                            .OrderBy(c => c.FirstName)
+                            .ToListPagedAsync(page, pageSize);
+        }
+
+        #endregion
 
         #region Players Executives
 
@@ -2225,8 +2304,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery(true)
                                 .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, false, showAllParticipants, editionId)
-                                .FindByNames(keywords, editionId);
-            //.HasProjectInNegotiation(editionId, filterByProjectsInNegotiation);
+                                .FindByNames(keywords);
 
             return await query
                             .Select(c => new CollaboratorApiListDto
