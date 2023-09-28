@@ -809,10 +809,11 @@
     <Content Include="Assets\components\odometer\themes\odometer-theme-plaza.css" />
     <Content Include="Assets\components\odometer\themes\odometer-theme-slot-machine.css" />
     <Content Include="Assets\components\odometer\themes\odometer-theme-train-station.css" />
-    <Content Include="Assets\img\bg-2.jpg" />
-    <Content Include="Assets\img\bg-3.jpg" />
-    <Content Include="Assets\img\bg-footer-template-document-project.jpg" />
-    <Content Include="Assets\img\bg-template-document-project.jpg" />
+    <Content Include="Assets\img\bg-2.png" />
+    <Content Include="Assets\img\bg-3.png" />
+    <Content Include="Assets\img\bg-footer-template-document-project.png" />
+    <Content Include="Assets\img\bg-template-document-project.png" />
+    <Content Include="Assets\img\header.png" />
     <Content Include="Assets\img\logo-rio2c-footer.png" />
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
@@ -1064,7 +1065,6 @@
     <Content Include="Assets\css\myrio2c.common.responsive.css" />
     <Content Include="Assets\css\myrio2c.common.css" />
     <Content Include="Assets\img\favicon.png" />
-    <Content Include="Assets\img\header.jpg" />
     <Content Include="Assets\img\logo_rio2c_color.png" />
     <Content Include="Assets\img\logo_rio2c_white.png" />
     <Content Include="Assets\js\holdings\holdings.update.js" />

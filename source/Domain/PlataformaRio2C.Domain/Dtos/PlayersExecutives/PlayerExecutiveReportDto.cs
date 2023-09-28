@@ -43,6 +43,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset? ImageUploadDate { get; set; }
         public bool? HasAnySpecialNeeds { get; set; }
         public string SpecialNeedsDescription { get; set; }
+        //public string SpecialNeedsDescription { get; set; }
 
         public AttendeeCollaborator EditionAttendeeCollaborator { get; set; }
         public CollaboratorIndustry Industry { get; set; }
