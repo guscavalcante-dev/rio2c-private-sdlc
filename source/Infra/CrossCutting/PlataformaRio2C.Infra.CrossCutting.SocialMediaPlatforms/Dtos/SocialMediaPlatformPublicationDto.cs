@@ -4,7 +4,7 @@
 // Created          : 08-12-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-12-2023
+// Last Modified On : 10-02-2023
 // ***********************************************************************
 // <copyright file="SocialMediaPlatformPublicationDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,7 +21,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms.Dtos
     public class SocialMediaPlatformPublicationDto
     {
         public string Id { get; set; }
-        public string ThumbnailUrl { get; set; }
         public string PublicationMediaUrl { get; set; }
         public string PublicationText { get; set; }
         public bool IsVideo { get; set; }
@@ -30,15 +29,14 @@ namespace PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms.Dtos
         /// <summary>
         /// Initializes a new instance of the <see cref="SocialMediaPlatformPublicationDto"/> class.
         /// </summary>
-        /// <param name="node">The node.</param>
-        public SocialMediaPlatformPublicationDto(Node node)
+        /// <param name="publication">The node.</param>
+        public SocialMediaPlatformPublicationDto(Publication publication)
         {
-            this.Id = node.Shortcode;
-            this.ThumbnailUrl = node.ThumbnailSrc;
-            this.PublicationMediaUrl = node.IsVideo == true ? node.VideoUrl : node.DisplayUrl;
-            this.PublicationText = node.EdgeMediaToCaption.Edges.FirstOrDefault().Node.Text;
-            this.IsVideo = node.IsVideo;
-            this.CreatedAt = DateTimeOffset.FromUnixTimeSeconds(node.TakenAtTimestamp).LocalDateTime;
+            this.Id = publication.ShortCode;
+            this.PublicationMediaUrl = publication.MediaUrl;
+            this.PublicationText = publication.Caption;
+            this.IsVideo = publication.IsVideo;
+            this.CreatedAt = publication.Timestamp;
         }
     }
 }

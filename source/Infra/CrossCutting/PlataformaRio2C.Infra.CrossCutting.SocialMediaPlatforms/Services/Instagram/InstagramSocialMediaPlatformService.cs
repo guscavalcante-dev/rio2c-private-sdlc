@@ -4,7 +4,7 @@
 // Created          : 08-12-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-12-2023
+// Last Modified On : 10-02-2023
 // ***********************************************************************
 // <copyright file="InstagramSocialMediaPlatformService.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -48,13 +48,13 @@ namespace PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms.Services.Insta
         /// <returns></returns>
         public List<SocialMediaPlatformPublicationDto> GetPosts()
         {
-            var instagramResponse = this.ExecuteRequest<InstagramResponse>("", HttpMethod.Get, null);
+            var instagramResponse = this.ExecuteRequest<InstagramResponse>(HttpMethod.Get, null);
 
             List<SocialMediaPlatformPublicationDto> result = new List<SocialMediaPlatformPublicationDto>();
 
-            foreach (var edge in instagramResponse?.Data?.User?.EdgeOwnerToTimelineMedia?.Edges)
+            foreach (var publication in instagramResponse?.Publications)
             {
-                result.Add(new SocialMediaPlatformPublicationDto(edge.Node));
+                result.Add(new SocialMediaPlatformPublicationDto(publication));
             }
             
             return result;
@@ -70,14 +70,16 @@ namespace PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms.Services.Insta
         /// <param name="httpMethod">The HTTP method.</param>
         /// <param name="jsonString">The json string.</param>
         /// <returns></returns>
-        private T ExecuteRequest<T>(string path, HttpMethod httpMethod, string jsonString)
+        private T ExecuteRequest<T>(HttpMethod httpMethod, string jsonString)
         {
             using (WebClient client = new WebClient() { Encoding = Encoding.UTF8 })
             {
-                // This user-agent is necessary because the V1 API is only available on mobile devices.
-                client.Headers.Add("user-agent", "Instagram 219.0.0.12.117 Android");
+                client.Headers.Add(HttpRequestHeader.ContentType, "application/json; charset=utf-8;");
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
+                                                       SecurityProtocolType.Tls11 |
+                                                       SecurityProtocolType.Tls12;
 
-                string url = this.apiUrl + path;
+                string url = this.apiUrl + this.apiKey;
                 var response = httpMethod == HttpMethod.Get ? client.DownloadString(url) :
                                                               client.UploadString(url, httpMethod.ToString(), jsonString);
 
