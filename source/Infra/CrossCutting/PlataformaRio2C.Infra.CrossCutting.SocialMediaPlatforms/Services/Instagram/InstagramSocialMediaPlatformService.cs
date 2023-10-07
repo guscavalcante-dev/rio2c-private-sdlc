@@ -75,9 +75,8 @@ namespace PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms.Services.Insta
             using (WebClient client = new WebClient() { Encoding = Encoding.UTF8 })
             {
                 client.Headers.Add(HttpRequestHeader.ContentType, "application/json; charset=utf-8;");
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
-                                                       SecurityProtocolType.Tls11 |
-                                                       SecurityProtocolType.Tls12;
+                ServicePointManager.Expect100Continue = true;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
                 string url = this.apiUrl + this.apiKey;
                 var response = httpMethod == HttpMethod.Get ? client.DownloadString(url) :
