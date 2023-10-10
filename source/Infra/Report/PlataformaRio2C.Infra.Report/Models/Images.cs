@@ -32,7 +32,7 @@ namespace PlataformaRio2C.Infra.Report.Models
                 if (_background == null)
                 {
                     MemoryStream img = new MemoryStream();
-                    string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets\\img\\bg-template-document-project.jpg");
+                    string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets\\img\\bg-template-document-project.png");
                     var fileName = System.Drawing.Image.FromFile(path);
                     fileName.Save(img, System.Drawing.Imaging.ImageFormat.Bmp);
                     _background = Image.GetInstance(img.ToArray());
@@ -53,7 +53,7 @@ namespace PlataformaRio2C.Infra.Report.Models
                 if (_backgroundFooter == null)
                 {
                     MemoryStream img = new MemoryStream();
-                    string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets\\img\\bg-footer-template-document-project.jpg");
+                    string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets\\img\\bg-footer-template-document-project.png");
                     var fileName = System.Drawing.Image.FromFile(path);
                     fileName.Save(img, System.Drawing.Imaging.ImageFormat.Bmp);
 

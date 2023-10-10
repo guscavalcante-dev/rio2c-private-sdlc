@@ -807,12 +807,12 @@
     <Content Include="Assets\css\pages\onboarding\wizard-2.css" />
     <Content Include="Assets\css\pages\projects\projects.wizard-2.css" />
     <Content Include="Assets\css\pages\projects\projects.wizard-3.css" />
-    <Content Include="Assets\img\bg-2.jpg" />
-    <Content Include="Assets\img\bg-3.jpg" />
-    <Content Include="Assets\img\bg-footer-template-document-project.jpg" />
-    <Content Include="Assets\img\bg-template-document-project.jpg" />
+    <Content Include="Assets\img\bg-2.png" />
+    <Content Include="Assets\img\bg-3.png" />
+    <Content Include="Assets\img\bg-footer-template-document-project.png" />
+    <Content Include="Assets\img\bg-template-document-project.png" />
     <Content Include="Assets\img\favicon.png" />
-    <Content Include="Assets\img\header.jpg" />
+    <Content Include="Assets\img\header.png" />
     <Content Include="Assets\img\logo-rio2c-footer.png" />
     <Content Include="Assets\img\logo_rio2c_color.png" />
     <Content Include="Assets\img\logo_rio2c_white.png" />
