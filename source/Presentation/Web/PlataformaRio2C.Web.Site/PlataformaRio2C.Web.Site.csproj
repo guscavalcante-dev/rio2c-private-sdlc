@@ -807,17 +807,12 @@
     <Content Include="Assets\css\pages\onboarding\wizard-2.css" />
     <Content Include="Assets\css\pages\projects\projects.wizard-2.css" />
     <Content Include="Assets\css\pages\projects\projects.wizard-3.css" />
-    <Content Include="Assets\img\bg-2.png" />
-    <Content Include="Assets\img\bg-3.png" />
     <Content Include="Assets\img\bg-footer-template-document-project.png" />
     <Content Include="Assets\img\bg-template-document-project.png" />
     <Content Include="Assets\img\favicon.png" />
     <Content Include="Assets\img\header.png" />
-    <Content Include="Assets\img\logo-rio2c-footer.png" />
     <Content Include="Assets\img\logo_rio2c_color.png" />
     <Content Include="Assets\img\logo_rio2c_white.png" />
-    <Content Include="Assets\img\rio2cmarket-en-us.png" />
-    <Content Include="Assets\img\rio2cmarket-pt-br.png" />
     <Content Include="Assets\js\accounts\accounts.emailsettings.js" />
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />

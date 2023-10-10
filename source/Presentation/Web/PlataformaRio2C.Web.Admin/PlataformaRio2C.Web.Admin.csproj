@@ -809,12 +809,9 @@
     <Content Include="Assets\components\odometer\themes\odometer-theme-plaza.css" />
     <Content Include="Assets\components\odometer\themes\odometer-theme-slot-machine.css" />
     <Content Include="Assets\components\odometer\themes\odometer-theme-train-station.css" />
-    <Content Include="Assets\img\bg-2.png" />
-    <Content Include="Assets\img\bg-3.png" />
     <Content Include="Assets\img\bg-footer-template-document-project.png" />
     <Content Include="Assets\img\bg-template-document-project.png" />
     <Content Include="Assets\img\header.png" />
-    <Content Include="Assets\img\logo-rio2c-footer.png" />
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
     <Content Include="Assets\js\audiovisual\commissions\audiovisual.commissions.create.js" />
