@@ -807,7 +807,9 @@
     <Content Include="Assets\css\pages\onboarding\wizard-2.css" />
     <Content Include="Assets\css\pages\projects\projects.wizard-2.css" />
     <Content Include="Assets\css\pages\projects\projects.wizard-3.css" />
+    <Content Include="Assets\img\bg-error-page.png" />
     <Content Include="Assets\img\bg-footer-template-document-project.png" />
+    <Content Include="Assets\img\bg-login-page.png" />
     <Content Include="Assets\img\bg-template-document-project.png" />
     <Content Include="Assets\img\favicon.png" />
     <Content Include="Assets\img\header.png" />

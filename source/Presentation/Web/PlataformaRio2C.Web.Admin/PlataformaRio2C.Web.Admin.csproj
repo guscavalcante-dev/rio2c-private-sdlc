@@ -809,7 +809,9 @@
     <Content Include="Assets\components\odometer\themes\odometer-theme-plaza.css" />
     <Content Include="Assets\components\odometer\themes\odometer-theme-slot-machine.css" />
     <Content Include="Assets\components\odometer\themes\odometer-theme-train-station.css" />
+    <Content Include="Assets\img\bg-error-page.png" />
     <Content Include="Assets\img\bg-footer-template-document-project.png" />
+    <Content Include="Assets\img\bg-login-page.png" />
     <Content Include="Assets\img\bg-template-document-project.png" />
     <Content Include="Assets\img\header.png" />
     <Content Include="Assets\js\accounts\accounts.password.js" />
