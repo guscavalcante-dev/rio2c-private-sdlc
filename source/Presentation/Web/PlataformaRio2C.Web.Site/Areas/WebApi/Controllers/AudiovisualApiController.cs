@@ -4,34 +4,23 @@
 // Created          : 09-21-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-21-2023
+// Last Modified On : 10-16-2023
 // ***********************************************************************
 // <copyright file="AudiovisualApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Globalization;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web.Http;
 using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository;
-using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.ApiModels;
-using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
-using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using AppValidationResult = PlataformaRio2C.Application.AppValidationResult;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Http;
 
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 {
@@ -42,7 +31,6 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
     public class AudiovisualApiController : BaseApiController
     {
         private readonly IMediator commandBus;
-        private readonly IdentityAutenticationService identityController;
         private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IEditionRepository editionRepo;
         private readonly ILanguageRepository languageRepo;
@@ -52,21 +40,18 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// Initializes a new instance of the <see cref="AudiovisualApiController" /> class.
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
-        /// <param name="identityController">The identity controller.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="languageRepository">The language repository.</param>
         /// <param name="fileRepository">The file repository.</param>
         public AudiovisualApiController(
             IMediator commandBus,
-            IdentityAutenticationService identityController,
             ICollaboratorRepository collaboratorRepository,
             IEditionRepository editionRepository,
             ILanguageRepository languageRepository,
             IFileRepository fileRepository)
         {
             this.commandBus = commandBus;
-            this.identityController = identityController;
             this.collaboratorRepo = collaboratorRepository;
             this.editionRepo = editionRepository;
             this.languageRepo = languageRepository;
@@ -128,6 +113,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     Uid = c.Uid,
                     Name = c.FullName?.Trim(),
                     Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.Uid, c.ImageUploadDate, true, "_500x500") : null,
+                    JobTitle = c.GetCollaboratorJobTitleBaseDtoByLanguageCode(requestLanguage?.Code ?? defaultLanguage?.Code)?.Value?.Trim(),
+                    OrganizationsNames = c.AttendeeOrganizationBasesDtos.Select(ao => ao.OrganizationBaseDto.Name ?? "-")?.ToString(", ")
                 })?.ToList()
             });
         }
@@ -175,7 +162,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             {
                 return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00004", Message = "Commission Member not found." } });
             }
-                     
+
             return await Json(new AudiovisualCommissionApiResponse
             {
                 Status = ApiStatus.Success,
