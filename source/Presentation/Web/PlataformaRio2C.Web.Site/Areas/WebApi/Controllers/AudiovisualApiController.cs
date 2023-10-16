@@ -170,6 +170,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 Uid = collaboratorDto.Uid,
                 Name = collaboratorDto.FullName,
                 Picture = collaboratorDto.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, collaboratorDto.Uid, collaboratorDto.ImageUploadDate, true, "_500x500") : null,
+                JobTitle = collaboratorDto.GetCollaboratorJobTitleBaseDtoByLanguageCode(requestLanguage?.Code ?? defaultLanguage?.Code)?.Value?.Trim(),
+                OrganizationsNames = collaboratorDto.AttendeeOrganizationBasesDtos.Select(ao => ao.OrganizationBaseDto.Name ?? "-")?.ToString(", "),
                 MiniBio = collaboratorDto.GetMiniBioBaseDtoByLanguageCode(request.Culture ?? defaultLanguage.Code)?.Value?.Trim()
             });
         }
