@@ -104,7 +104,11 @@
     <Compile Include="ApiModels\Innovation\Responses\InnovationOrganizationSustainableDevelopmentObjectivesOptionListItemApiResponse.cs" />
     <Compile Include="ApiModels\Innovation\Responses\InnovationOrganizationTrackOptionListItemApiResponse.cs" />
     <Compile Include="ApiModels\LanguageValueApiResponse.cs" />
+    <Compile Include="ApiModels\MusicBands\Requests\MusicCommissionApiRequest.cs" />
+    <Compile Include="ApiModels\MusicBands\Requests\MusicCommissionsApiRequest.cs" />
     <Compile Include="ApiModels\MusicBands\Requests\MusicFiltersApiRequest.cs" />
+    <Compile Include="ApiModels\MusicBands\Responses\MusicCommissionApiResponse.cs" />
+    <Compile Include="ApiModels\MusicBands\Responses\MusicCommissionsApiResponse.cs" />
     <Compile Include="ApiModels\MusicBands\Responses\MusicFiltersApiResponse.cs" />
     <Compile Include="ApiModels\PresentationFormats\Responses\PresentationFormatBaseApiResponse.cs" />
     <Compile Include="ApiModels\EditionEvents\Responses\EditionEventBaseApiResponse.cs" />

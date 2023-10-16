@@ -69,6 +69,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("commissions")]
         public async Task<IHttpActionResult> Commissions([FromUri] AudiovisualCommissionsApiRequest request)
         {
+            #region Basic API Validations
+
             var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
             if (editions?.Any() == false)
             {
@@ -91,6 +93,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             {
                 return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "No active languages found." } });
             }
+
+            #endregion
 
             var collaboratorDtos = await this.collaboratorRepo.FindAllAudiovisualCommissionMembersApiPaged(
                 edition.Id,
@@ -132,6 +136,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("commissions/details/{uid?}")]
         public async Task<IHttpActionResult> CommissionDetails([FromUri] AudiovisualCommissionApiRequest request)
         {
+            #region Basic API Validations
+
             var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
             if (editions?.Any() == false)
             {
@@ -154,6 +160,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             {
                 return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "No active languages found." } });
             }
+
+            #endregion
 
             var collaboratorDto = await this.collaboratorRepo.FindAudiovisualCommissionMemberApi(
                 request?.Uid ?? Guid.Empty,

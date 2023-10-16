@@ -1456,17 +1456,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
-        /// Finds all audiovisual commissions by data table.
+        /// Finds all audiovisual commission members by data table.
         /// </summary>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="keywords">The keywords.</param>
         /// <param name="sortColumns">The sort columns.</param>
-        /// <param name="collaboratorsUids">The collaborators uids.</param>
         /// <param name="collaboratorTypeNames">The collaborator type names.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
-        /// <param name="showHighlights">The show highlights.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="interestsUids">The interests uids.</param>
         /// <returns></returns>
@@ -1561,18 +1559,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
-        /// Finds all audiovisual commissions public API paged.
+        /// Finds all audiovisual commission members API paged.
         /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="keywords">The keywords.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
-        /// <param name="keywords">The keywords.</param>
-        /// <param name="collaboratorsUids">The collaborators uids.</param>
-        /// <param name="collaboratorTypeNames">The collaborator type names.</param>
-        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
-        /// <param name="showHighlights">The show highlights.</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <param name="interestsUids">The interests uids.</param>
         /// <returns></returns>
         public async Task<IPagedList<CollaboratorDto>> FindAllAudiovisualCommissionMembersApiPaged(
             int? editionId,
@@ -1696,6 +1688,97 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             })
                             .OrderBy(o => o.FirstName)
                             .FirstOrDefaultAsync();
+        }
+
+        #endregion
+
+        #region Music Commissions
+
+        /// <summary>
+        /// Gets the music commissions base query.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="collaboratorTypeNames">The collaborator type names.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <returns></returns>
+        private IQueryable<Collaborator> GetMusicCommissionsBaseQuery(
+            int? editionId,
+            string keywords,
+            string[] collaboratorTypeNames,
+            bool showAllEditions,
+            bool showAllParticipants)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByKeywords(keywords, editionId)
+                                .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, showAllEditions, showAllParticipants, editionId);
+
+            return query;
+        }
+
+        /// <summary>
+        /// Finds all music commission members API paged.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<CollaboratorDto>> FindAllMusicCommissionMembersApiPaged(
+            int? editionId,
+            string keywords,
+            int page,
+            int pageSize)
+        {
+            var baseQuery = this.GetMusicCommissionsBaseQuery(
+                editionId,
+                keywords,
+                new string[] { Constants.CollaboratorType.CommissionMusic },
+                false,
+                false);
+
+            return await baseQuery
+                            .Select(c => new CollaboratorDto
+                            {
+                                Id = c.Id,
+                                Uid = c.Uid,
+                                FirstName = c.FirstName,
+                                LastNames = c.LastNames,
+                                ImageUploadDate = c.ImageUploadDate,
+                                JobTitleBaseDtos = c.JobTitles.Where(jb => !jb.IsDeleted).Select(d => new CollaboratorJobTitleBaseDto
+                                {
+                                    Id = d.Id,
+                                    Uid = d.Uid,
+                                    Value = d.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = d.Language.Id,
+                                        Uid = d.Language.Uid,
+                                        Name = d.Language.Name,
+                                        Code = d.Language.Code
+                                    }
+                                }),
+                                AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
+                                                                            .Where(at => !at.IsDeleted && at.EditionId == editionId)
+                                                                            .SelectMany(at => at.AttendeeOrganizationCollaborators
+                                                                                                    .Where(aoc => !aoc.IsDeleted)
+                                                                                                    .Select(aoc => new AttendeeOrganizationBaseDto
+                                                                                                    {
+                                                                                                        Uid = aoc.AttendeeOrganization.Uid,
+                                                                                                        OrganizationBaseDto = new OrganizationBaseDto
+                                                                                                        {
+                                                                                                            Name = aoc.AttendeeOrganization.Organization.Name,
+                                                                                                            TradeName = aoc.AttendeeOrganization.Organization.TradeName,
+                                                                                                            HoldingBaseDto = aoc.AttendeeOrganization.Organization.Holding == null ? null : new HoldingBaseDto
+                                                                                                            {
+                                                                                                                Name = aoc.AttendeeOrganization.Organization.Holding.Name
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }))
+                            })
+                            .OrderBy(c => c.FirstName)
+                            .ToListPagedAsync(page, pageSize);
         }
 
         #endregion
