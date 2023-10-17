@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-31-2023
+// Last Modified On : 10-16-2023
 // ***********************************************************************
 // <copyright file="CollaboratorDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -70,7 +70,6 @@ namespace PlataformaRio2C.Domain.Dtos
         public List<Guid> EditionsUids { get; set; }
 
         public HoldingBaseDto HoldingBaseDto { get; set; }
-        public OrganizationBaseDto OrganizatioBaseDto { get; set; }
         public UserBaseDto UserBaseDto { get; set; }
         public UserBaseDto CreatorBaseDto { get; set; }
         public UserBaseDto UpdaterBaseDto { get; set; }

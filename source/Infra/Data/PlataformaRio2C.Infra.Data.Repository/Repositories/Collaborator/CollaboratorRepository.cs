@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-21-2023
+// Last Modified On : 10-16-2023
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1595,7 +1595,37 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 Uid = c.Uid,
                                 FirstName = c.FirstName,
                                 LastNames = c.LastNames,
-                                ImageUploadDate = c.ImageUploadDate
+                                ImageUploadDate = c.ImageUploadDate,
+                                JobTitleBaseDtos = c.JobTitles.Where(jb => !jb.IsDeleted).Select(d => new CollaboratorJobTitleBaseDto
+                                {
+                                    Id = d.Id,
+                                    Uid = d.Uid,
+                                    Value = d.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = d.Language.Id,
+                                        Uid = d.Language.Uid,
+                                        Name = d.Language.Name,
+                                        Code = d.Language.Code
+                                    }
+                                }),
+                                AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
+                                                                            .Where(at => !at.IsDeleted && at.EditionId == editionId)
+                                                                            .SelectMany(at => at.AttendeeOrganizationCollaborators
+                                                                                                    .Where(aoc => !aoc.IsDeleted)
+                                                                                                    .Select(aoc => new AttendeeOrganizationBaseDto
+                                                                                                    {
+                                                                                                        Uid = aoc.AttendeeOrganization.Uid,
+                                                                                                        OrganizationBaseDto = new OrganizationBaseDto
+                                                                                                        {
+                                                                                                            Name = aoc.AttendeeOrganization.Organization.Name,
+                                                                                                            TradeName = aoc.AttendeeOrganization.Organization.TradeName,
+                                                                                                            HoldingBaseDto = aoc.AttendeeOrganization.Organization.Holding == null ? null : new HoldingBaseDto
+                                                                                                            {
+                                                                                                                Name = aoc.AttendeeOrganization.Organization.Holding.Name
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }))
                             })
                             .OrderBy(c => c.FirstName)
                             .ToListPagedAsync(page, pageSize);
