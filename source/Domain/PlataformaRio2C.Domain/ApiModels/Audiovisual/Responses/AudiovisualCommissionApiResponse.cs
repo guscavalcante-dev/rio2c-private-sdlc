@@ -4,7 +4,7 @@
 // Created          : 09-22-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-22-2023
+// Last Modified On : 10-16-2023
 // ***********************************************************************
 // <copyright file="AudiovisualCommissionApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,7 +28,13 @@ namespace PlataformaRio2C.Domain.ApiModels
         [JsonProperty("picture", Order = 300)]
         public string Picture { get; set; }
 
-        [JsonProperty("miniBio", Order = 400)]
+        [JsonProperty("jobTitle", Order = 400)]
+        public string JobTitle { get; set; }
+
+        [JsonProperty("organizationsNames", Order = 500)]
+        public string OrganizationsNames { get; set; }
+
+        [JsonProperty("miniBio", Order = 600)]
         public string MiniBio { get; set; }
     }
 }

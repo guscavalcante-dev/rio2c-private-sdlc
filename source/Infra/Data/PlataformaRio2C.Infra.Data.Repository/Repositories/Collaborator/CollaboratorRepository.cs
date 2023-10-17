@@ -1650,7 +1650,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 FirstName = c.FirstName,
                                 LastNames = c.LastNames,
                                 ImageUploadDate = c.ImageUploadDate,
-                                MiniBioBaseDtos = c.MiniBios.Where(mb => !mb.IsDeleted).Select(d => new CollaboratorMiniBioBaseDto
+                                JobTitleBaseDtos = c.JobTitles.Where(jb => !jb.IsDeleted).Select(d => new CollaboratorJobTitleBaseDto
                                 {
                                     Id = d.Id,
                                     Uid = d.Uid,
@@ -1663,6 +1663,36 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         Code = d.Language.Code
                                     }
                                 }),
+                                AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
+                                                                            .Where(at => !at.IsDeleted && at.EditionId == editionId)
+                                                                            .SelectMany(at => at.AttendeeOrganizationCollaborators
+                                                                                                    .Where(aoc => !aoc.IsDeleted)
+                                                                                                    .Select(aoc => new AttendeeOrganizationBaseDto
+                                                                                                    {
+                                                                                                        Uid = aoc.AttendeeOrganization.Uid,
+                                                                                                        OrganizationBaseDto = new OrganizationBaseDto
+                                                                                                        {
+                                                                                                            Name = aoc.AttendeeOrganization.Organization.Name,
+                                                                                                            TradeName = aoc.AttendeeOrganization.Organization.TradeName,
+                                                                                                            HoldingBaseDto = aoc.AttendeeOrganization.Organization.Holding == null ? null : new HoldingBaseDto
+                                                                                                            {
+                                                                                                                Name = aoc.AttendeeOrganization.Organization.Holding.Name
+                                                                                                            }
+                                                                                                        }
+                                                                                                    })),
+                                MiniBioBaseDtos = c.MiniBios.Where(mb => !mb.IsDeleted).Select(d => new CollaboratorMiniBioBaseDto
+                                {
+                                    Id = d.Id,
+                                    Uid = d.Uid,
+                                    Value = d.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = d.Language.Id,
+                                        Uid = d.Language.Uid,
+                                        Name = d.Language.Name,
+                                        Code = d.Language.Code
+                                    }
+                                })
                             })
                             .OrderBy(o => o.FirstName)
                             .FirstOrDefaultAsync();
