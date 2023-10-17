@@ -37,7 +37,13 @@ namespace PlataformaRio2C.Domain.Interfaces
 
         Task<IPagedList<CollaboratorDto>> FindAllAudiovisualCommissionMembersByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, string[] collaboratorTypeNames, bool showAllEditions, bool showAllParticipants, int? editionId, List<Guid?> interestsUids);
         Task<IPagedList<CollaboratorDto>> FindAllAudiovisualCommissionMembersApiPaged(int? editionId, string keywords, int page, int pageSize);
-        Task<CollaboratorDto> FindAudiovisualCommissionMemberApi(Guid collaboratorUid, int editionId); 
+        Task<CollaboratorDto> FindAudiovisualCommissionMemberApi(Guid collaboratorUid, int editionId);
+
+        #endregion
+
+        #region Music Commissions
+
+        Task<IPagedList<CollaboratorDto>> FindAllMusicCommissionMembersApiPaged(int? editionId, string keywords, int page, int pageSize);
 
         #endregion
 
@@ -57,6 +63,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         #endregion
 
         #region Api
+
         Task<IPagedList<CollaboratorApiListDto>> FindAllDropdownApiListDtoPaged(int editionId, string keywords, bool filterByProjectsInNegotiation, string collaboratorTypeName, bool showAllParticipants, int page, int pageSize);
         Task<List<Collaborator>> FindAllByHightlightPosition(int editionId, Guid collaboratorTypeUid, int apiHighlightPosition, Guid? organizationUid);
 

@@ -1,21 +1,25 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Web.Domain
+// Assembly         : PlataformaRio2C.Domain
 // Author           : Renan Valentim
-// Created          : 09-21-2023
+// Created          : 10-16-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-21-2023
+// Last Modified On : 10-16-2023
 // ***********************************************************************
-// <copyright file="AudiovisualCommissionsApiRequest.cs" company="Softo">
+// <copyright file="MusicCommissionApiRequest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
+using Newtonsoft.Json;
 
 namespace PlataformaRio2C.Domain.ApiModels
 {
-    /// <summary>AudiovisualCommissionsApiRequest</summary>
-    public class AudiovisualCommissionsApiRequest : ApiPageBaseRequest
+    /// <summary>MusicCommissionApiRequest</summary>
+    public class MusicCommissionApiRequest : ApiBaseRequest
     {
+        [JsonProperty("uid")]
+        public Guid? Uid { get; set; }
     }
 }

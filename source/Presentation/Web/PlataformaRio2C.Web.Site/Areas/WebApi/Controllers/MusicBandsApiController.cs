@@ -4,7 +4,7 @@
 // Created          : 03-01-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-14-2023
+// Last Modified On : 10-16-2023
 // ***********************************************************************
 // <copyright file="MusicBandsApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,17 +13,20 @@
 // ***********************************************************************
 using MediatR;
 using Newtonsoft.Json;
+using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.ApiModels;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using PlataformaRio2C.Infra.Data.Repository.Repositories;
 using System;
 using System.Configuration;
 using System.Linq;
@@ -40,6 +43,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
     public class MusicBandsApiController : BaseApiController
     {
         private readonly IMediator commandBus;
+        private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IdentityAutenticationService identityController;
         private readonly IEditionRepository editionRepo;
         private readonly ILanguageRepository languageRepo;
@@ -48,11 +52,13 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         private readonly ITargetAudienceRepository targetAudiencesRepo;
         private readonly IMusicBandRepository musicBandRepo;
         private readonly IUnitOfWork uow;
+        private readonly IFileRepository fileRepo;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MusicBandsApiController"/> class.
+        /// Initializes a new instance of the <see cref="MusicBandsApiController" /> class.
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
+        /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="languageRepository">The language repository.</param>
@@ -61,8 +67,10 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <param name="targetAudiencesRepository">The target audiences repository.</param>
         /// <param name="musicBandRepository">The music band repository.</param>
         /// <param name="unitOfWork">The unit of work.</param>
+        /// <param name="fileRepository">The file repository.</param>
         public MusicBandsApiController(
             IMediator commandBus,
+            ICollaboratorRepository collaboratorRepository,
             IdentityAutenticationService identityController,
             IEditionRepository editionRepository,
             ILanguageRepository languageRepository,
@@ -70,9 +78,11 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             IMusicGenreRepository musicGenresRepository,
             ITargetAudienceRepository targetAudiencesRepository,
             IMusicBandRepository musicBandRepository,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork,
+            IFileRepository fileRepository)
         {
             this.commandBus = commandBus;
+            this.collaboratorRepo = collaboratorRepository;
             this.identityController = identityController;
             this.editionRepo = editionRepository;
             this.languageRepo = languageRepository;
@@ -81,6 +91,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             this.targetAudiencesRepo = targetAudiencesRepository;
             this.musicBandRepo = musicBandRepository;
             this.uow = unitOfWork;
+            this.fileRepo = fileRepository;
         }
 
         /// <summary>
@@ -259,6 +270,73 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00004", Message = "Music filters api failed." } });
             }
         }
+
+        #region Commissions
+
+        /// <summary>
+        /// Commissionses the specified request.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("commissions")]
+        public async Task<IHttpActionResult> Commissions([FromUri] MusicCommissionsApiRequest request)
+        {
+            #region Basic API Validations
+
+            var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
+            if (editions?.Any() == false)
+            {
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." } });
+            }
+
+            // Get edition from request otherwise get current
+            var edition = request?.Edition.HasValue == true ? editions?.FirstOrDefault(e => e.UrlCode == request.Edition) :
+                                                              editions?.FirstOrDefault(e => e.IsCurrent);
+            if (edition == null)
+            {
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." } });
+            }
+
+            // Get language from request otherwise get default
+            var languages = await this.languageRepo.FindAllDtosAsync();
+            var requestLanguage = languages?.FirstOrDefault(l => l.Code == request?.Culture);
+            var defaultLanguage = languages?.FirstOrDefault(l => l.IsDefault);
+            if (requestLanguage == null && defaultLanguage == null)
+            {
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "No active languages found." } });
+            }
+
+            #endregion
+
+            var collaboratorDtos = await this.collaboratorRepo.FindAllMusicCommissionMembersApiPaged(
+                edition.Id,
+                request?.Keywords,
+                request?.Page ?? 1,
+                request?.PageSize ?? 10);
+
+            return await Json(new MusicCommissionsApiResponse
+            {
+                Status = ApiStatus.Success,
+                Error = null,
+                HasPreviousPage = collaboratorDtos.HasPreviousPage,
+                HasNextPage = collaboratorDtos.HasNextPage,
+                TotalItemCount = collaboratorDtos.TotalItemCount,
+                PageCount = collaboratorDtos.PageCount,
+                PageNumber = collaboratorDtos.PageNumber,
+                PageSize = collaboratorDtos.PageSize,
+                Commissions = collaboratorDtos?.Select(c => new MusicCommissionListApiItem
+                {
+                    Uid = c.Uid,
+                    Name = c.FullName?.Trim(),
+                    Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.Uid, c.ImageUploadDate, true, "_500x500") : null,
+                    JobTitle = c.GetCollaboratorJobTitleBaseDtoByLanguageCode(requestLanguage?.Code ?? defaultLanguage?.Code)?.Value?.Trim(),
+                    OrganizationsNames = c.AttendeeOrganizationBasesDtos.Select(ao => ao.OrganizationBaseDto.Name ?? "-")?.ToString(", ")
+                })?.ToList()
+            });
+        }
+
+        #endregion
 
         /// <summary>
         /// Migrates the images to aws.
