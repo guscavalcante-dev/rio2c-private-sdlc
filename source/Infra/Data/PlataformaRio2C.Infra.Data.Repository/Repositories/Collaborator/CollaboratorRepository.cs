@@ -1781,6 +1781,73 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ToListPagedAsync(page, pageSize);
         }
 
+        /// <summary>
+        /// Finds the music commission member API.
+        /// </summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<CollaboratorDto> FindMusicCommissionMemberApi(Guid collaboratorUid, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(collaboratorUid)
+                                .FindByCollaboratorTypeNameAndByEditionId(new string[] { Constants.CollaboratorType.CommissionMusic }, false, false, editionId);
+
+            return await query
+                            .Select(c => new CollaboratorDto
+                            {
+                                Uid = c.Uid,
+                                FirstName = c.FirstName,
+                                LastNames = c.LastNames,
+                                ImageUploadDate = c.ImageUploadDate,
+                                JobTitleBaseDtos = c.JobTitles.Where(jb => !jb.IsDeleted).Select(d => new CollaboratorJobTitleBaseDto
+                                {
+                                    Id = d.Id,
+                                    Uid = d.Uid,
+                                    Value = d.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = d.Language.Id,
+                                        Uid = d.Language.Uid,
+                                        Name = d.Language.Name,
+                                        Code = d.Language.Code
+                                    }
+                                }),
+                                AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
+                                                                            .Where(at => !at.IsDeleted && at.EditionId == editionId)
+                                                                            .SelectMany(at => at.AttendeeOrganizationCollaborators
+                                                                                                    .Where(aoc => !aoc.IsDeleted)
+                                                                                                    .Select(aoc => new AttendeeOrganizationBaseDto
+                                                                                                    {
+                                                                                                        Uid = aoc.AttendeeOrganization.Uid,
+                                                                                                        OrganizationBaseDto = new OrganizationBaseDto
+                                                                                                        {
+                                                                                                            Name = aoc.AttendeeOrganization.Organization.Name,
+                                                                                                            TradeName = aoc.AttendeeOrganization.Organization.TradeName,
+                                                                                                            HoldingBaseDto = aoc.AttendeeOrganization.Organization.Holding == null ? null : new HoldingBaseDto
+                                                                                                            {
+                                                                                                                Name = aoc.AttendeeOrganization.Organization.Holding.Name
+                                                                                                            }
+                                                                                                        }
+                                                                                                    })),
+                                MiniBioBaseDtos = c.MiniBios.Where(mb => !mb.IsDeleted).Select(d => new CollaboratorMiniBioBaseDto
+                                {
+                                    Id = d.Id,
+                                    Uid = d.Uid,
+                                    Value = d.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = d.Language.Id,
+                                        Uid = d.Language.Uid,
+                                        Name = d.Language.Name,
+                                        Code = d.Language.Code
+                                    }
+                                })
+                            })
+                            .OrderBy(o => o.FirstName)
+                            .FirstOrDefaultAsync();
+        }
+
         #endregion
 
         #region Players Executives

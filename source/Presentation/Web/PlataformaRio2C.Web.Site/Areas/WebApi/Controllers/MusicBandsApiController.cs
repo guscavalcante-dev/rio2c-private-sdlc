@@ -336,6 +336,63 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             });
         }
 
+        /// <summary>
+        /// Commissions the details.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("commissions/details/{uid?}")]
+        public async Task<IHttpActionResult> CommissionDetails([FromUri] MusicCommissionApiRequest request)
+        {
+            #region Basic API Validations
+
+            var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
+            if (editions?.Any() == false)
+            {
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." } });
+            }
+
+            // Get edition from request otherwise get current
+            var edition = request?.Edition.HasValue == true ? editions?.FirstOrDefault(e => e.UrlCode == request.Edition) :
+                                                              editions?.FirstOrDefault(e => e.IsCurrent);
+            if (edition == null)
+            {
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." } });
+            }
+
+            // Get language from request otherwise get default
+            var languages = await this.languageRepo.FindAllDtosAsync();
+            var requestLanguage = languages?.FirstOrDefault(l => l.Code == request?.Culture);
+            var defaultLanguage = languages?.FirstOrDefault(l => l.IsDefault);
+            if (requestLanguage == null && defaultLanguage == null)
+            {
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "No active languages found." } });
+            }
+
+            #endregion
+
+            var collaboratorDto = await this.collaboratorRepo.FindMusicCommissionMemberApi(
+                request?.Uid ?? Guid.Empty,
+                edition.Id);
+            if (collaboratorDto == null)
+            {
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00004", Message = "Commission Member not found." } });
+            }
+
+            return await Json(new MusicCommissionApiResponse
+            {
+                Status = ApiStatus.Success,
+                Error = null,
+                Uid = collaboratorDto.Uid,
+                Name = collaboratorDto.FullName,
+                Picture = collaboratorDto.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, collaboratorDto.Uid, collaboratorDto.ImageUploadDate, true, "_500x500") : null,
+                JobTitle = collaboratorDto.GetCollaboratorJobTitleBaseDtoByLanguageCode(requestLanguage?.Code ?? defaultLanguage?.Code)?.Value?.Trim(),
+                OrganizationsNames = collaboratorDto.AttendeeOrganizationBasesDtos.Select(ao => ao.OrganizationBaseDto.Name ?? "-")?.ToString(", "),
+                MiniBio = collaboratorDto.GetMiniBioBaseDtoByLanguageCode(request.Culture ?? defaultLanguage.Code)?.Value?.Trim()
+            });
+        }
+
         #endregion
 
         /// <summary>
