@@ -161,6 +161,9 @@
       <HintPath>..\..\..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.OpenApi, Version=1.6.9.0, Culture=neutral, PublicKeyToken=3f5743946376f042, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Microsoft.OpenApi.1.6.9\lib\netstandard2.0\Microsoft.OpenApi.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Owin, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Microsoft.Owin.4.2.2\lib\net45\Microsoft.Owin.dll</HintPath>
     </Reference>
@@ -388,6 +391,7 @@
     <Compile Include="Controllers\NetworksController.cs" />
     <Compile Include="Controllers\StatesController.cs" />
     <Compile Include="Filters\AuthorizeCollaboratorTypeAttribute.cs" />
+    <Compile Include="Filters\SwaggerCustomSchemaFilter.cs" />
     <Compile Include="Helpers\OnboardingAllowedRoutesHelper.cs" />
     <Compile Include="Hub\SimpleInjectorHubActivator.cs" />
     <Compile Include="Services\TalentPlatformService.cs" />

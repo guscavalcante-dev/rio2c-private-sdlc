@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-16-2023
+// Last Modified On : 10-23-2023
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -131,6 +131,22 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             }
             // Return char and concat substring.
             return char.ToUpper(s[0]) + s.Substring(1);
+        }
+
+        /// <summary>
+        /// Lowercases the first.
+        /// </summary>
+        /// <param name="s">The s.</param>
+        /// <returns></returns>
+        public static string LowercaseFirst(this string s)
+        {
+            // Check for empty string.
+            if (string.IsNullOrEmpty(s))
+            {
+                return string.Empty;
+            }
+            // Return char and concat substring.
+            return char.ToLower(s[0]) + s.Substring(1);
         }
 
         /// <summary>Uppercases the first of each word.</summary>

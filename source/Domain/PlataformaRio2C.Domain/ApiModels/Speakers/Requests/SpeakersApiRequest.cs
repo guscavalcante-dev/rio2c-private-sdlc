@@ -4,7 +4,7 @@
 // Created          : 12-18-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-07-2023
+// Last Modified On : 10-23-2023
 // ***********************************************************************
 // <copyright file="SpeakersApiRequest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using Newtonsoft.Json;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 
 namespace PlataformaRio2C.Domain.ApiModels
 {
@@ -19,15 +20,19 @@ namespace PlataformaRio2C.Domain.ApiModels
     public class SpeakersApiRequest : ApiPageBaseRequest
     {
         [JsonProperty("highlights")]
+        [SwaggerParameterDescription(description: "Show the Highlights.", "0=Hide | 1=Show")]
         public int? Highlights { get; set; }
 
         [JsonProperty("conferencesUids")]
+        [SwaggerParameterDescription(description: "The Conferences Uids separated by comma.")]
         public string ConferencesUids { get; set; }
 
         [JsonProperty("conferencesDates")]
+        [SwaggerParameterDescription("The Conferences Dates separated by comma.", "2022, 2023")]
         public string ConferencesDates { get; set; }
 
         [JsonProperty("conferencesRoomsUids")]
+        [SwaggerParameterDescription(description: "The Conferences Rooms Uids separated by comma.")]
         public string ConferencesRoomsUids { get; set; }
     }
 }

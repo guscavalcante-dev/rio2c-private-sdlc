@@ -98,8 +98,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <summary>
         /// Creates the Music Band
         /// </summary>
-        /// <param name="key">The key is required</param>
-        /// <param name="musicBandApiDto">The music band API dto.</param>
+        /// <param name="key">The API Key</param>
+        /// <param name="musicBandApiDto">The musicBandApiDto</param>
         /// <returns></returns>
         /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
         [Route("createmusicband/{key?}"), HttpPost]

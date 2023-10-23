@@ -4,7 +4,7 @@
 // Created          : 10-16-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 10-16-2023
+// Last Modified On : 10-23-2023
 // ***********************************************************************
 // <copyright file="MusicCommissionApiRequest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System;
 using Newtonsoft.Json;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 
 namespace PlataformaRio2C.Domain.ApiModels
 {
@@ -20,6 +21,7 @@ namespace PlataformaRio2C.Domain.ApiModels
     public class MusicCommissionApiRequest : ApiBaseRequest
     {
         [JsonProperty("uid")]
+        [SwaggerParameterDescription(description: "The Music Commision Member Uid")]
         public Guid? Uid { get; set; }
     }
 }

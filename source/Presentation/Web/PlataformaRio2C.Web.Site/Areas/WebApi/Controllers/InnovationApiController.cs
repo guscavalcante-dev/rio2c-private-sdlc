@@ -88,8 +88,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <summary>
         /// Creates the Startup
         /// </summary>
-        /// <param name="key">The key is required</param>
-        /// <param name="innovationOrganizationApiDto">The innovationOrganizationApiDto is required</param>
+        /// <param name="key">The API Key</param>
+        /// <param name="innovationOrganizationApiDto">The innovationOrganizationApiDto</param>
         /// <returns></returns>
         [Route("create-startup/{key?}"), HttpPost]
         [SwaggerResponse(System.Net.HttpStatusCode.OK)]

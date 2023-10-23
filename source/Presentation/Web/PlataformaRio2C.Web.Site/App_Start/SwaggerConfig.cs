@@ -36,7 +36,9 @@ namespace PlataformaRio2C.Web.Site
                         //
  
                         c.SingleApiVersion("v1", "PlataformaRio2C.Web.Site");
-                        c.OperationFilter<SwaggerCustomParameterFilter>();
+                        c.SchemaFilter<SwaggerCustomSchemaFilter>();
+                        //c.OperationFilter<SwaggerCustomOperationFilter>();
+                        //c.DocumentFilter<SwaggerCustomDocumentFilter>();
 
                         // If you want the output Swagger docs to be indented properly, enable the "PrettyPrint" option.
                         //
