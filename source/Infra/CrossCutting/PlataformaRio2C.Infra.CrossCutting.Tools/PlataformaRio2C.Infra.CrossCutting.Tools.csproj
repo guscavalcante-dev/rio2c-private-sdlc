@@ -155,6 +155,7 @@
     <Compile Include="Attributes\PermissionGroupAttribute.cs" />
     <Compile Include="Attributes\CkEditorMaxCharsAttribute.cs" />
     <Compile Include="Attributes\RadioButtonRequiredIfAttribute.cs" />
+    <Compile Include="Attributes\SwaggerParameterDescriptionAttribute.cs" />
     <Compile Include="Attributes\ValidCompanyNumberAttribute.cs" />
     <Compile Include="Attributes\RequiredImageOptionalAttribute.cs" />
     <Compile Include="Attributes\RequiredIfOneWithValueAndOtherEmptyAttribute.cs" />

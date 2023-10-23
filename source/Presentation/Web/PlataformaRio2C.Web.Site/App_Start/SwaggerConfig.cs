@@ -3,6 +3,7 @@ using WebActivatorEx;
 using PlataformaRio2C.Web.Site;
 using Swashbuckle.Application;
 using System.Configuration;
+using PlataformaRio2C.Web.Site.Filters;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
@@ -22,7 +23,7 @@ namespace PlataformaRio2C.Web.Site
                         // resolve correctly. You can workaround this by providing your own code to determine the root URL.
                         //
                         c.RootUrl(req => GetRootUrlFromAppConfig());
-
+                        
                         // If schemes are not explicitly provided in a Swagger 2.0 document, then the scheme used to access
                         // the docs is taken as the default. If your API supports multiple schemes and you want to be explicit
                         // about them, you can use the "Schemes" option as shown below.
@@ -35,6 +36,9 @@ namespace PlataformaRio2C.Web.Site
                         //
  
                         c.SingleApiVersion("v1", "PlataformaRio2C.Web.Site");
+                        c.SchemaFilter<SwaggerCustomSchemaFilter>();
+                        //c.OperationFilter<SwaggerCustomOperationFilter>();
+                        //c.DocumentFilter<SwaggerCustomDocumentFilter>();
 
                         // If you want the output Swagger docs to be indented properly, enable the "PrettyPrint" option.
                         //
@@ -63,7 +67,7 @@ namespace PlataformaRio2C.Web.Site
                         //c.BasicAuth("basic")
                         //    .Description("Basic HTTP Authentication");
                         //
-						// NOTE: You must also configure 'EnableApiKeySupport' below in the SwaggerUI section
+                        // NOTE: You must also configure 'EnableApiKeySupport' below in the SwaggerUI section
                         //c.ApiKey("apiKey")
                         //    .Description("API Key Authentication")
                         //    .Name("apiKey")

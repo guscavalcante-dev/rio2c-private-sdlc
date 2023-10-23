@@ -31,6 +31,7 @@ using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using Swashbuckle.Swagger.Annotations;
 using AppValidationResult = PlataformaRio2C.Application.AppValidationResult;
 
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
@@ -75,11 +76,14 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
         #region List
 
-        /// <summary>Speakerses the specified request.</summary>
+        /// <summary>
+        /// Get the Speakers
+        /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("speakers")]
+        [Route("speakers"), HttpGet]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK)]
+        [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> Speakers([FromUri] SpeakersApiRequest request)
         {
             var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
@@ -158,13 +162,13 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         #region Report
 
         /// <summary>
-        /// Send speakers report by email
+        /// Send the Speakers report by email
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
-        [HttpGet]
-        [Route("speakersReport")]
+        [Route("speakersReport"), HttpGet]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK)]
+        [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> SpeakersReport([FromUri] SpeakersReportApiRequest request)
         {
             var validationResult = new AppValidationResult();
@@ -253,11 +257,14 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
         #region Details
 
-        /// <summary>Speakers the specified request.</summary>
+        /// <summary>
+        /// Get the Speaker details
+        /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("speaker/{uid?}")]
+        [Route("speaker/{uid?}"), HttpGet]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK)]
+        [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> Speaker([FromUri] SpeakerApiRequest request)
         {
             var editions = await this.editionRepo.FindAllByIsActiveAsync(false);

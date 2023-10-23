@@ -110,6 +110,7 @@
     <Compile Include="ApiModels\MusicBands\Responses\MusicCommissionApiResponse.cs" />
     <Compile Include="ApiModels\MusicBands\Responses\MusicCommissionsApiResponse.cs" />
     <Compile Include="ApiModels\MusicBands\Responses\MusicFiltersApiResponse.cs" />
+    <Compile Include="ApiModels\Players\Requests\PlayersFiltersApiRequest.cs" />
     <Compile Include="ApiModels\PresentationFormats\Responses\PresentationFormatBaseApiResponse.cs" />
     <Compile Include="ApiModels\EditionEvents\Responses\EditionEventBaseApiResponse.cs" />
     <Compile Include="ApiModels\Rooms\Responses\RoomBaseApiResponse.cs" />

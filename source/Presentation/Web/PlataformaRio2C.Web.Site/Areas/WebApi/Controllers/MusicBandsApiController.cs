@@ -27,6 +27,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 using PlataformaRio2C.Infra.Data.Repository.Repositories;
+using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Configuration;
 using System.Linq;
@@ -95,13 +96,15 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         }
 
         /// <summary>
-        /// Creates the music band.
+        /// Creates the Music Band
         /// </summary>
-        /// <param name="key">The key.</param>
-        /// <param name="musicBandApiDto">The music band API dto.</param>
+        /// <param name="key">The API Key</param>
+        /// <param name="musicBandApiDto">The musicBandApiDto</param>
         /// <returns></returns>
         /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
         [Route("createmusicband/{key?}"), HttpPost]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK)]
+        [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> CreateMusicBand(string key, [FromBody] MusicBandApiDto musicBandApiDto)
         {
             var validationResult = new AppValidationResult();
@@ -200,12 +203,13 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         }
 
         /// <summary>
-        /// Get music API filters
+        /// Get the Music Bands API filters
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("filters")]
+        [Route("filters"), HttpGet]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK)]
+        [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> Filters([FromUri] MusicFiltersApiRequest request)
         {
             try
@@ -274,12 +278,13 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         #region Commissions
 
         /// <summary>
-        /// Commissionses the specified request.
+        /// Get the Music Bands Commission Members
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("commissions")]
+        [Route("commissions"), HttpGet]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK)]
+        [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> Commissions([FromUri] MusicCommissionsApiRequest request)
         {
             #region Basic API Validations
@@ -337,12 +342,13 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         }
 
         /// <summary>
-        /// Commissions the details.
+        /// Get the Music Bands Comission Member details
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("commissions/details/{uid?}")]
+        [Route("commissions/details/{uid?}"), HttpGet]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK)]
+        [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> CommissionDetails([FromUri] MusicCommissionApiRequest request)
         {
             #region Basic API Validations
@@ -396,13 +402,15 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         #endregion
 
         /// <summary>
-        /// Migrates the images to aws.
+        /// Migrates database images to aws.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("migrateimagestoaws")]
+        [NonAction]
+        [Route("migrateimagestoaws"), HttpGet]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK)]
+        [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> MigrateImagesToAWS(string key, HttpRequestMessage request)
         {
             if (key.ToLowerInvariant() != "4f6d4f34-c9ef-4721-bf50-363e370d7d4e")
