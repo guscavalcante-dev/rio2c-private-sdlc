@@ -55,6 +55,5 @@ namespace PlataformaRio2C.Domain.Entities
         {
             return this.Name?.GetSeparatorTranslation(languageCode, Language.Separator);
         }
-
     }
 }

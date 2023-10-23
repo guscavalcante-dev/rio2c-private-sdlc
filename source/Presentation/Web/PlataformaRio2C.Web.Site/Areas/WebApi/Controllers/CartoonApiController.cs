@@ -67,10 +67,10 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         }
 
         /// <summary>
-        /// Creates the cartoon project.
+        /// Creates the Cartoon Project
         /// </summary>
-        /// <param name="key">A Key é obrigatório para a autorização</param>
-        /// <param name="cartoonProjectApiDto">Objeto cartoonProjectApiDto é obrigatório.</param>
+        /// <param name="key">The key is required</param>
+        /// <param name="cartoonProjectApiDto">The cartoonProjectApiDto is required</param>
         /// <remarks>
         /// No objeto innovationOrganizationApiDto existem algums campos obrigatórios.
         /// 
@@ -141,8 +141,6 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// ----------------------------------------
         /// 
         /// </remarks>
-        /// <response code="200">OK</response>
-        /// <response code="500">Internal Server Error</response>
         [Route("create-cartoon-project/{key?}"), HttpPost]
         [SwaggerResponse(System.Net.HttpStatusCode.OK)]
         [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
@@ -240,7 +238,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         }
 
         /// <summary>
-        /// Get Cartoon API filters.
+        /// Get the Cartoon API filters
         /// </summary>
         /// <param name="request">The request.</param>
         /// <remarks>
@@ -255,10 +253,9 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// 
         /// Objeto para listagem: projectFormats     
         /// </remarks>
-        /// <response code="200">OK</response>
-        /// <response code="500">Internal Server Error</response>
-        [HttpGet]
-        [Route("filters")]
+        [Route("filters"), HttpGet]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK)]
+        [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> Filters([FromUri] CartoonFiltersApiRequest request)
         {
             try

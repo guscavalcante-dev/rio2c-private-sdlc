@@ -17,6 +17,7 @@ using PlataformaRio2C.Domain.ApiModels;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -61,12 +62,13 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         #region List
 
         /// <summary>
-        /// Commissionses the specified request.
+        /// Get the Audiovisual Commission Members
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("commissions")]
+        [Route("commissions"), HttpGet]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK)]
+        [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> Commissions([FromUri] AudiovisualCommissionsApiRequest request)
         {
             #region Basic API Validations
@@ -128,12 +130,13 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         #region Details
 
         /// <summary>
-        /// Commissions the details.
+        /// Get the Audiovisual Comission Member details
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("commissions/details/{uid?}")]
+        [Route("commissions/details/{uid?}"), HttpGet]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK)]
+        [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> CommissionDetails([FromUri] AudiovisualCommissionApiRequest request)
         {
             #region Basic API Validations

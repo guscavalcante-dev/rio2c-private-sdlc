@@ -21,6 +21,7 @@ using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using Swashbuckle.Swagger.Annotations;
 
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 {
@@ -73,11 +74,14 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
         #region List
 
-        /// <summary>Conferenceses the specified request.</summary>
+        /// <summary>
+        /// Get the Conferences
+        /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("conferences")]
+        [Route("conferences"), HttpGet]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK)]
+        [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> Conferences([FromUri]ConferencesApiRequest request)
         {
             var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
@@ -167,14 +171,20 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             });
         }
 
-        /// <summary>Filters for conferences.</summary>
+        /// <summary>
+        /// Get the Conferences API filters
+        /// </summary>
+        /// <param name="request">The request.</param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("conferences/filters")]
+        [Route("conferences/filters"), HttpGet]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK)]
+        [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> Filters([FromUri]ConferencesFiltersApiRequest request)
         {
             try
             {
+                #region Initial Validations
+
                 var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
                 if (editions?.Any() == false)
                 {
@@ -188,6 +198,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 {
                     return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." } });
                 }
+
+                #endregion
 
                 var editionEvents = await this.editionEventRepo.FindAllByEditionIdAsync(edition.Id);
                 var roomDtos = await this.roomRepo.FindAllDtoByEditionIdAsync(edition.Id);
@@ -245,11 +257,14 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
         #region Details
 
-        /// <summary>Conferences the specified request.</summary>
+        /// <summary>
+        /// Get the Conference details
+        /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("conference/{uid?}")]
+        [Route("conference/{uid?}"), HttpGet]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK)]
+        [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> Conference([FromUri]ConferenceApiRequest request)
         {
             var editions = await this.editionRepo.FindAllByIsActiveAsync(false);

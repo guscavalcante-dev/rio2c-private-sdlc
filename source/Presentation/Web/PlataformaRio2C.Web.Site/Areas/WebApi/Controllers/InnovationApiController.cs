@@ -86,14 +86,11 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         }
 
         /// <summary>
-        /// Create the startup
+        /// Creates the Startup
         /// </summary>
-        /// <param name="key">A Key é obrigatório para a autorização</param>
-        /// <param name="innovationOrganizationApiDto">Objeto innovationOrganizationApiDto é obrigatório.</param>
+        /// <param name="key">The key is required</param>
+        /// <param name="innovationOrganizationApiDto">The innovationOrganizationApiDto is required</param>
         /// <returns></returns>
-        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
-        /// <response code="200">OK</response>
-        /// <response code="500">Internal Server Error</response>
         [Route("create-startup/{key?}"), HttpPost]
         [SwaggerResponse(System.Net.HttpStatusCode.OK)]
         [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
@@ -210,14 +207,13 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         }
 
         /// <summary>
-        /// Get innovation API filters
+        /// Get the Innovation API filters
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        /// <response code="200">OK</response>
-        /// <response code="500">Internal Server Error</response>
-        [HttpGet]
-        [Route("filters")]
+        [Route("filters"), HttpGet]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK)]
+        [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> Filters([FromUri] InnovationFiltersApiRequest request)
         {
             try
