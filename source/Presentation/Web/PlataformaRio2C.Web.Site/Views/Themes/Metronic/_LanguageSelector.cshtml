@@ -11,13 +11,14 @@
     <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim">
         <ul class="kt-nav kt-margin-t-10 kt-margin-b-10">
             @foreach (var culture in CultureHelper.Cultures)
-                {
-                    var listCulture = new CultureInfo(culture);
-                    var nativeName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(listCulture.NativeName);
-                    var cultureItem = culture.ToLowerInvariant();
+            {
+                var listCulture = new CultureInfo(culture);
+                var nativeName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(listCulture.NativeName);
+                var cultureItem = culture.ToLowerInvariant();
 
-                    <li class="kt-nav__item"> @*kt-nav__item--active*@
-                    <a href="/@cultureItem" class="kt-nav__link">
+                <li class="kt-nav__item">
+                    @*kt-nav__item--active*@
+                    <a href=" @Url.Action("SetCulture","Home", new { Area = "", culture = cultureItem, returnUrl =  this.Request.RawUrl })" class="kt-nav__link">
                         <span class="kt-nav__link-icon"><img src="~/Assets/themes/metronic/media/flags/@(CultureHelper.GetCultureFlagImage(listCulture.Name))" alt="@(nativeName)" /></span>
                         <span class="kt-nav__link-text">@(nativeName)</span>
                     </a>
