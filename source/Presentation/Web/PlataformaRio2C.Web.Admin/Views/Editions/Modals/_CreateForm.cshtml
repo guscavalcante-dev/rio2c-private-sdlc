@@ -271,23 +271,6 @@
 <h3 class="kt-section__title mt-30 mb-4">@Labels.AudiovisualCommission</h3>
 <div class="row">
     <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.EditionDate.AudiovisualNegotiationsCreateStartDate, new { @class = "control-label" })
-        @Html.TextBox("EditionDate.AudiovisualNegotiationsCreateStartDate", Model.EditionDate.AudiovisualNegotiationsCreateStartDate?.ToShortDateString(), new
-        {
-            @class = "form-control enable-datepicker"
-        })
-        @Html.ValidationMessageFor(m => m.EditionDate.AudiovisualNegotiationsCreateStartDate, "", new { @class = "text-danger" })
-    </div>
-    <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.EditionDate.AudiovisualNegotiationsCreateEndDate, new { @class = "control-label" })
-        @Html.TextBox("EditionDate.AudiovisualNegotiationsCreateEndDate", Model.EditionDate.AudiovisualNegotiationsCreateEndDate?.ToShortDateString(), new
-        {
-            @class = "form-control enable-datepicker"
-        })
-    </div>
-</div>
-<div class="row">
-    <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.AudiovisualCommissionEvaluationStartDate, new { @class = "control-label" })
         @Html.TextBox("EditionDate.AudiovisualCommissionEvaluationStartDate", Model.EditionDate.AudiovisualCommissionEvaluationStartDate?.ToShortDateString(), new
         {

@@ -142,8 +142,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="innovationCommissionEvaluationEndDate">The innovation commission evaluation end date.</param>
         /// <param name="innovationCommissionMinimumEvaluationsCount">The innovation commission minimum evaluations count.</param>
         /// <param name="innovationCommissionMaximumApprovedCompaniesCount">The innovation commission maximum approved companies count.</param>
-        /// <param name="audiovisualNegotiationsCreateStartDate">The audiovisual negotiations create start date.</param>
-        /// <param name="audiovisualNegotiationsCreateEndDate">The audiovisual negotiations create end date.</param>
         /// <param name="audiovisualCommissionEvaluationStartDate">The audiovisual commission evaluation start date.</param>
         /// <param name="audiovisualCommissionEvaluationEndDate">The audiovisual commission evaluation end date.</param>
         /// <param name="audiovisualCommissionMinimumEvaluationsCount">The audiovisual commission minimum evaluations count.</param>
@@ -190,9 +188,7 @@ namespace PlataformaRio2C.Domain.Entities
             DateTime innovationCommissionEvaluationEndDate,
             int innovationCommissionMinimumEvaluationsCount,
             int innovationCommissionMaximumApprovedCompaniesCount,
-
-            DateTime audiovisualNegotiationsCreateStartDate,
-            DateTime audiovisualNegotiationsCreateEndDate,
+                        
             DateTime audiovisualCommissionEvaluationStartDate,
             DateTime audiovisualCommissionEvaluationEndDate,
             int audiovisualCommissionMinimumEvaluationsCount,
@@ -245,9 +241,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.InnovationCommissionMinimumEvaluationsCount = innovationCommissionMinimumEvaluationsCount;
             this.InnovationCommissionMaximumApprovedCompaniesCount = innovationCommissionMaximumApprovedCompaniesCount;
 
-            // Audiovisual - Commissions
-            this.AudiovisualNegotiationsCreateStartDate = audiovisualNegotiationsCreateStartDate.ToUtcTimeZone();
-            this.AudiovisualNegotiationsCreateEndDate = audiovisualNegotiationsCreateEndDate.ToEndDateTimeOffset();
+            // Audiovisual - Commissions           
             this.AudiovisualCommissionEvaluationStartDate = audiovisualCommissionEvaluationStartDate.ToUtcTimeZone();
             this.AudiovisualCommissionEvaluationEndDate = audiovisualCommissionEvaluationEndDate.ToEndDateTimeOffset();
             this.AudiovisualCommissionMinimumEvaluationsCount = audiovisualCommissionMinimumEvaluationsCount;
@@ -333,8 +327,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="innovationCommissionEvaluationEndDate">The innovation commission evaluation end date.</param>
         /// <param name="innovationCommissionMinimumEvaluationsCount">The innovation commission minimum evaluations count.</param>
         /// <param name="innovationCommissionMaximumApprovedCompaniesCount">The innovation commission maximum approved companies count.</param>
-        /// <param name="audiovisualNegotiationsCreateStartDate">The audiovisual negotiations create start date.</param>
-        /// <param name="audiovisualNegotiationsCreateEndDate">The audiovisual negotiations create end date.</param>
         /// <param name="audiovisualCommissionEvaluationStartDate">The audiovisual commission evaluation start date.</param>
         /// <param name="audiovisualCommissionEvaluationEndDate">The audiovisual commission evaluation end date.</param>
         /// <param name="audiovisualCommissionMinimumEvaluationsCount">The audiovisual commission minimum evaluations count.</param>
@@ -370,9 +362,7 @@ namespace PlataformaRio2C.Domain.Entities
             DateTime innovationCommissionEvaluationEndDate,
             int innovationCommissionMinimumEvaluationsCount,
             int innovationCommissionMaximumApprovedCompaniesCount,
-
-            DateTime audiovisualNegotiationsCreateStartDate,
-            DateTime audiovisualNegotiationsCreateEndDate,
+                       
             DateTime audiovisualCommissionEvaluationStartDate,
             DateTime audiovisualCommissionEvaluationEndDate,
             int audiovisualCommissionMinimumEvaluationsCount,
@@ -411,8 +401,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.InnovationCommissionMinimumEvaluationsCount = innovationCommissionMinimumEvaluationsCount;
             this.InnovationCommissionMaximumApprovedCompaniesCount = innovationCommissionMaximumApprovedCompaniesCount;
 
-            this.AudiovisualNegotiationsCreateStartDate = audiovisualNegotiationsCreateStartDate.ToUtcTimeZone();
-            this.AudiovisualNegotiationsCreateEndDate = audiovisualNegotiationsCreateEndDate.ToEndDateTimeOffset();
             this.AudiovisualCommissionEvaluationStartDate = audiovisualCommissionEvaluationStartDate.ToUtcTimeZone();
             this.AudiovisualCommissionEvaluationEndDate = audiovisualCommissionEvaluationEndDate.ToEndDateTimeOffset();
             this.AudiovisualCommissionMinimumEvaluationsCount = audiovisualCommissionMinimumEvaluationsCount;
