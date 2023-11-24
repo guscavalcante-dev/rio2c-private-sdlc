@@ -134,16 +134,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [GreaterThanOrEqualTo(nameof(NegotiationStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
         public DateTime? NegotiationEndDate { get; set; }
-
-        [Display(Name = nameof(AudiovisualNegotiationsCreateStartDate), ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public DateTime? AudiovisualNegotiationsCreateStartDate { get; set; }
-
-        [Display(Name = nameof(AudiovisualNegotiationsCreateEndDate), ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [GreaterThanOrEqualTo(nameof(AudiovisualNegotiationsCreateStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
-        public DateTime? AudiovisualNegotiationsCreateEndDate { get; set; }
-
+                
         [Display(Name = nameof(AttendeeOrganizationMaxSellProjectsCount), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public int? AttendeeOrganizationMaxSellProjectsCount { get; set; }
@@ -243,8 +234,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.InnovationCommissionMinimumEvaluationsCount = editionDto.Edition.InnovationCommissionMinimumEvaluationsCount;
 
             // Audiovisual - Commissions
-            this.AudiovisualNegotiationsCreateStartDate = editionDto.Edition.AudiovisualNegotiationsCreateStartDate.ToBrazilTimeZone();
-            this.AudiovisualNegotiationsCreateEndDate = editionDto.Edition.AudiovisualNegotiationsCreateEndDate.ToBrazilTimeZone();
             this.AudiovisualCommissionEvaluationStartDate = editionDto.Edition.AudiovisualCommissionEvaluationStartDate.ToBrazilTimeZone();
             this.AudiovisualCommissionEvaluationEndDate = editionDto.Edition.AudiovisualCommissionEvaluationEndDate.ToBrazilTimeZone();
             this.AudiovisualCommissionMaximumApprovedProjectsCount = editionDto.Edition.AudiovisualCommissionMaximumApprovedProjectsCount;

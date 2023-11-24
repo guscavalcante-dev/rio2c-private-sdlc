@@ -72,7 +72,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 
             if (!collaboratorTypeUid.HasValue)
             {
-                collaboratorTypeUid = this.UserAccessControlDto.EditionCollaboratorTypes.FirstOrDefault().Uid;
+                collaboratorTypeUid = this.UserAccessControlDto.EditionCollaboratorTypes.FirstOrDefault()?.Uid;
             }
 
             ViewBag.CollaboratorTypeUid = collaboratorTypeUid;
