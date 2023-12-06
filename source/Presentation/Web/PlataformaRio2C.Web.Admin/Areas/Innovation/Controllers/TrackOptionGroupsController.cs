@@ -69,8 +69,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         {
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.InnovationVerticals, new List<BreadcrumbItemHelper>{
-                new BreadcrumbItemHelper(Labels.Innovation, null),
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.StartupsVerticals, new List<BreadcrumbItemHelper>{
+                new BreadcrumbItemHelper(Labels.Startups, null),
                 new BreadcrumbItemHelper(Labels.Verticals, Url.Action("Index", "TrackOptionGroups", new { Area = "Innovation" }))
             });
 
@@ -169,8 +169,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.InnovationVerticals, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Innovation, null),
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.StartupsVerticals, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Startups, null),
                 new BreadcrumbItemHelper(Labels.Verticals, Url.Action("Index", "TrackOptionGroups", new { Area = "Innovation" })),
                 new BreadcrumbItemHelper(innovationOrganizationTrackOptionGroupDto.GroupName, Url.Action("Details", "TrackOptionGroups", new { id }))
             });

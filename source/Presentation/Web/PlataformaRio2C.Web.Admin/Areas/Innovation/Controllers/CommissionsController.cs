@@ -84,8 +84,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         {
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.InnovationCommission, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Innovation, null),
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.StartupsCommission, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Startups, null),
                 new BreadcrumbItemHelper(Labels.Commission, Url.Action("Index", "Commissions", new { Area = "Innovation" }))
             });
 
@@ -155,8 +155,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.InnovationCommission, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Innovation, null),
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.StartupsCommission, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Startups, null),
                 new BreadcrumbItemHelper(Labels.Commission, Url.Action("Index", "Commissions", new { Area = "Innovation" })),
                 new BreadcrumbItemHelper(attendeeCollaboratorDto.Collaborator.GetFullName(), Url.Action("Details", "Commissions", new { Area = "Innovation", id }))
             });

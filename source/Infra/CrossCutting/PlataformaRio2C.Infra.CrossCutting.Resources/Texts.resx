@@ -499,7 +499,7 @@ O MyRio2C também é um canal de comunicação do Rio2C com você, trazendo info
   </data>
   <data name="WelcomeLogin" xml:space="preserve">
     <value>O maior evento de criatividade e inovação da América Latina.</value>
-    <comment>O maior evento de criatividade e inovação da América Latina.</comment>
+    
   </data>
   <data name="WelcomeText" xml:space="preserve">
     <value>&lt;p&gt;Olá @{Name},&lt;/p&gt;

@@ -243,7 +243,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
                 var musicBandTypes = await this.musicBandTypesRepo.FindAllAsync();
                 var musicGenres = await this.musicGenresRepo.FindAllAsync();
-                var targetAudiences = await this.targetAudiencesRepo.FindAllByProjectTypeIdAsync(ProjectType.Inovation.Id);
+                var targetAudiences = await this.targetAudiencesRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id);
 
                 return await Json(new MusicFiltersApiResponse
                 {

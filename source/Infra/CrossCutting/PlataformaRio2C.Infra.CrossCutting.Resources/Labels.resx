@@ -1306,44 +1306,40 @@
     <value>Informações</value>
     <comment>Informações</comment>
   </data>
-  <data name="Innovation" xml:space="preserve">
-    <value>Inovação</value>
-    <comment>Inovação</comment>
+  <data name="StartupsCommission" xml:space="preserve">
+    <value>Comissão de Startups</value>
+    
   </data>
-  <data name="InnovationCommission" xml:space="preserve">
-    <value>Comissão de Inovação</value>
-    <comment>Comissão de Inovação</comment>
+  <data name="StartupsCommissionEvaluationEndDate" xml:space="preserve">
+    <value>Data de término da avaliação de startups</value>
+    
   </data>
-  <data name="InnovationCommissionEvaluationEndDate" xml:space="preserve">
-    <value>Data de término da avaliação de projeto de inovação</value>
-    <comment>Data de término da avaliação de projeto de inovação</comment>
+  <data name="StartupsCommissionEvaluationStartDate" xml:space="preserve">
+    <value>Data de início da avaliação de startups</value>
+    
   </data>
-  <data name="InnovationCommissionEvaluationStartDate" xml:space="preserve">
-    <value>Data de início da avaliação de projeto de inovação</value>
-    <comment>Data de início da avaliação de projeto de inovação</comment>
+  <data name="StartupsCommissionMaximumApprovedCompaniesCount" xml:space="preserve">
+    <value>Quantidade máxima de startups aprovadas</value>
+    
   </data>
-  <data name="InnovationCommissionMaximumApprovedCompaniesCount" xml:space="preserve">
-    <value>Quantidade máxima de empresas aprovadas</value>
-    <comment>Quantidade máxima de empresas aprovadas</comment>
+  <data name="StartupsCommissionMinimumEvaluationsCount" xml:space="preserve">
+    <value>Quantidade mínima de votos para gerar média de Startups</value>
+    
   </data>
-  <data name="InnovationCommissionMinimumEvaluationsCount" xml:space="preserve">
-    <value>Quantidade mínima de votos para gerar média</value>
-    <comment>Quantidade mínima de votos para gerar média</comment>
+  <data name="StartupsProjects" xml:space="preserve">
+    <value>Projetos de Startup</value>
+    
   </data>
-  <data name="InnovationProjects" xml:space="preserve">
-    <value>Projetos de Inovação</value>
-    <comment>Projetos de Inovação</comment>
+  <data name="StartupsProjectSubmitEndDate" xml:space="preserve">
+    <value>Data de término de cadastro de startups</value>
+    
   </data>
-  <data name="InnovationProjectSubmitEndDate" xml:space="preserve">
-    <value>Data de término de envio de projeto de inovação</value>
-    <comment>Data de término de envio de projeto de inovação</comment>
+  <data name="StartupsProjectSubmitStartDate" xml:space="preserve">
+    <value>Data de início de cadastro de startups</value>
+    
   </data>
-  <data name="InnovationProjectSubmitStartDate" xml:space="preserve">
-    <value>Data de início de envio de projeto de inovação</value>
-    <comment>Data de início de envio de projeto de inovação</comment>
-  </data>
-  <data name="InnovationVerticals" xml:space="preserve">
-    <value>Verticais de Inovação</value>
+  <data name="StartupsVerticals" xml:space="preserve">
+    <value>Verticais de Startup</value>
   </data>
   <data name="InProgress" xml:space="preserve">
     <value>Em andamento</value>
@@ -2756,11 +2752,10 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   </data>
   <data name="Startup" xml:space="preserve">
     <value>Startup</value>
-    <comment>Startup</comment>
   </data>
   <data name="Startups" xml:space="preserve">
     <value>Startups</value>
-    <comment>Startups</comment>
+    
   </data>
   <data name="State" xml:space="preserve">
     <value>Estado</value>
