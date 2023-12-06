@@ -112,8 +112,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         {
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.InnovationProjects, new List<BreadcrumbItemHelper>{
-                new BreadcrumbItemHelper(Labels.Innovation, null),
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.StartupsProjects, new List<BreadcrumbItemHelper>{
+                new BreadcrumbItemHelper(Labels.Startups, null),
                 new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "Innovation" }))
             });
 
@@ -236,7 +236,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
             return Json(new
             {
-                fileName = $@"{Labels.Innovation} - {Labels.EvaluationsByProjectReport}_{DateTime.UtcNow.ToStringFileNameTimestamp()}.csv",
+                fileName = $@"{Labels.Startups} - {Labels.EvaluationsByProjectReport}_{DateTime.UtcNow.ToStringFileNameTimestamp()}.csv",
                 fileContent = data.ToString()
             }, JsonRequestBehavior.AllowGet);
         }
@@ -278,7 +278,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
             return Json(new
             {
-                fileName = $@"{Labels.Innovation} - {Labels.EvaluationsByEvaluatorReport}_{DateTime.UtcNow.ToStringFileNameTimestamp()}.csv",
+                fileName = $@"{Labels.Startups} - {Labels.EvaluationsByEvaluatorReport}_{DateTime.UtcNow.ToStringFileNameTimestamp()}.csv",
                 fileContent = data.ToString()
             }, JsonRequestBehavior.AllowGet);
         }
@@ -291,7 +291,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         [HttpGet]
         public async Task<ActionResult> ExportProjectsReportToExcel(InnovationProjectSearchViewModel searchViewModel)
         {
-            string fileName = $@"{Labels.InnovationProjects}_{DateTime.UtcNow.ToStringFileNameTimestamp()}";
+            string fileName = $@"{Labels.StartupsProjects}_{DateTime.UtcNow.ToStringFileNameTimestamp()}";
             string filePath = Path.Combine(Path.GetTempPath(), fileName + ".xlsx");
 
             try
@@ -311,7 +311,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
                 using (var workbook = new XLWorkbook())
                 {
-                    var worksheet = workbook.Worksheets.Add(Labels.InnovationProjects);
+                    var worksheet = workbook.Worksheets.Add(Labels.StartupsProjects);
 
                     #region Header
 
@@ -565,7 +565,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.InnovationProjects, new List<BreadcrumbItemHelper>{
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.StartupsProjects, new List<BreadcrumbItemHelper>{
                 new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "Innovation" })),
                 new BreadcrumbItemHelper(attendeeInnovationOrganizationDto?.InnovationOrganization?.Name ?? Labels.Project, Url.Action("EvaluationDetails", "Projects", new { Area = "Innovation", searchViewModel.Id }))
             });

@@ -73,7 +73,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CreativeEconomyThemes, new List<BreadcrumbItemHelper>{
-                new BreadcrumbItemHelper(Labels.Innovation, null),
+                new BreadcrumbItemHelper(Labels.Startups, null),
                 new BreadcrumbItemHelper(Labels.CreativeEconomyThemes, Url.Action("Index", "TrackOptions", new { Area = "Innovation" }))
             });
 
@@ -176,7 +176,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CreativeEconomyThemes, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Innovation, null),
+                new BreadcrumbItemHelper(Labels.Startups, null),
                 new BreadcrumbItemHelper(Labels.CreativeEconomyThemes, Url.Action("Index", "TrackOptions", new { Area = "Innovation" })),
                 new BreadcrumbItemHelper(innovationOrganizationTrackOptionDto.Name, Url.Action("Details", "TrackOptions", new { id }))
             });

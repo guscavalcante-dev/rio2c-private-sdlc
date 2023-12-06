@@ -103,7 +103,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
         {
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Innovation, new List<BreadcrumbItemHelper> {
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Startups, new List<BreadcrumbItemHelper> {
                 new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "Innovation" }))
             });
 
@@ -133,8 +133,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
 
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.InnovationProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Innovation, Url.Action("EvaluationList", "Projects", new { Area = "Innovation" })),
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.StartupsProjects, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Startups, Url.Action("EvaluationList", "Projects", new { Area = "Innovation" })),
             });
 
             #endregion
@@ -284,8 +284,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
 
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.InnovationProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Innovation, Url.Action("EvaluationList", "Projects", new { Area = "Innovation", searchViewModel.Search, searchViewModel.InnovationOrganizationTrackOptionGroupUid, searchViewModel.EvaluationStatusUid, searchViewModel.Page, searchViewModel.PageSize })),
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.StartupsProjects, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Startups, Url.Action("EvaluationList", "Projects", new { Area = "Innovation", searchViewModel.Search, searchViewModel.InnovationOrganizationTrackOptionGroupUid, searchViewModel.EvaluationStatusUid, searchViewModel.Page, searchViewModel.PageSize })),
                 new BreadcrumbItemHelper(attendeeInnovationOrganizationDto?.InnovationOrganization?.Name ?? Labels.Project, Url.Action("EvaluationDetails", "Projects", new { Area = "Innovation", searchViewModel.Id }))
             });
 
