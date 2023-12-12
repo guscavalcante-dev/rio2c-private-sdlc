@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-28-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 12-11-2023
 // ***********************************************************************
 // <copyright file="BaseController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -273,18 +273,15 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }
 
             var adminActiveEditions = activeEditions.Where(e => AdminAccessControlDto.EditionAttendeeCollaborators != null
-                                                               && AdminAccessControlDto.EditionAttendeeCollaborators
-                                                                    .Select(eac => eac.EditionId)
-                                                                    .Contains(e.Id)
-                                                                    ).ToList();
+                                                                && AdminAccessControlDto.EditionAttendeeCollaborators.Select(eac => eac.EditionId).Contains(e.Id)).ToList();
 
             if (adminActiveEditions == null)
             {
                 return false;
             }
 
-            //If user doesn't participating at current edition (this.EditionDto.Edition.Id), redirects user to last participated edition.
-            if (!adminActiveEditions.Select(e => e.Id).Contains(this.EditionDto.Edition.Id))
+            //If user isn't Admin and doesn't participating at current edition, redirects user to last participated edition.
+            if (!AdminAccessControlDto.IsAdmin() && !adminActiveEditions.Select(e => e.Id).Contains(this.EditionDto.Edition.Id))
             {
                 if (AdminAccessControlDto?.EditionAttendeeCollaborators?.Any() != true)
                 {
@@ -318,51 +315,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 return true;
             }
-
-            return false;
-
-            //var activeEditions = (List<EditionDto>)ViewBag.ActiveEditions;
-            //if (activeEditions?.Any() != true)
-            //{
-            //    return false;
-            //}
-
-            //var adminAccessControlDto = (AdminAccessControlDto)ViewBag.AdminAccessControlDto;
-            //if (adminAccessControlDto == null)
-            //{
-            //    return false;
-            //}
-
-            //var userActiveEditions = activeEditions.Where(e => adminAccessControlDto.EditionAttendeeCollaborators
-            //                                                        .Select(eac => eac.EditionId)
-            //                                                        .Contains(e.Id)
-            //                                                        ).ToList();
-
-            ////If user doesn't participating at current edition (this.EditionDto.Edition.Id), redirects user to last participated edition.
-            //if (!userActiveEditions.Select(e => e.Id).Contains(this.EditionDto.Edition.Id))
-            //{
-            //    var lastParticipatedEditionId = adminAccessControlDto.EditionAttendeeCollaborators?.Max(ac => ac.EditionId);
-            //    var activeEditionDtos = this.CommandBus.Send(new FindAllEditionsDtosAsync()).Result;
-            //    var lastParticipatedEdition = activeEditionDtos.FirstOrDefault(w => w.Id == lastParticipatedEditionId);
-
-            //    ViewBag.EditionDto = this.EditionDto = lastParticipatedEdition;
-
-            //    var routes = new RouteValueDictionary(RouteData.Values);
-
-            //    // Add or change culture on routes
-            //    if (!routes.ContainsKey("edition"))
-            //    {
-            //        routes.Add("edition", lastParticipatedEdition.UrlCode);
-            //    }
-            //    else
-            //    {
-            //        routes["edition"] = lastParticipatedEdition.UrlCode;
-            //    }
-
-            //    this.beginExecuteCoreActionResult = this.RedirectToRoute(routes);
-
-            //    return true;
-            //}
 
             return false;
         }
