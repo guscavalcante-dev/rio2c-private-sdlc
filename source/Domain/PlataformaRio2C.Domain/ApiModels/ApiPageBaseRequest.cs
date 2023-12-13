@@ -4,7 +4,7 @@
 // Created          : 09-25-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 10-23-2023
+// Last Modified On : 12-13-2023
 // ***********************************************************************
 // <copyright file="ApiPageBaseRequest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,7 +28,7 @@ namespace PlataformaRio2C.Domain.ApiModels
         public int? Page { get; set; }
 
         [JsonProperty("pageSize")]
-        [SwaggerParameterDescription( "The page size.", "10")]
+        [SwaggerParameterDescription("The page size.", "10")]
         public int? PageSize { get; set; }
     }
 }

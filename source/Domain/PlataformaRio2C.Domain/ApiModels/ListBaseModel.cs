@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-25-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-10-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 12-13-2023
 // ***********************************************************************
 // <copyright file="ListBaseModel.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,8 @@
 // <summary></summary>
 // ***********************************************************************
 using Newtonsoft.Json;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using System;
 
 namespace PlataformaRio2C.Domain.ApiModels
 {
@@ -35,5 +37,13 @@ namespace PlataformaRio2C.Domain.ApiModels
 
         [JsonProperty("pageSize", Order = 9006)]
         public int PageSize { get; set; }
+
+        [JsonProperty("timeStamp", Order = 9007)]
+        public string TimeStamp { get; set; }
+
+        public ListBaseModel()
+        {
+            this.TimeStamp = DateTimeOffset.UtcNow.ToBrazilTimeZone().ToString("s");
+        }
     }
 }
