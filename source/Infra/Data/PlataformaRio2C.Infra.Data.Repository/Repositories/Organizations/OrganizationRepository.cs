@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 04-19-2023
+// Last Modified On : 12-13-2023
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -162,6 +162,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
                 query = query.Where(outerWhere);
                 //query = query.AsExpandable().Where(predicate);
+            }
+
+            return query;
+        }
+
+        /// <summary>
+        /// Finds the by create or update date.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="modifiedAfterDate">The modified after date.</param>
+        /// <returns></returns>
+        internal static IQueryable<Organization> FindByCreateOrUpdateDate(this IQueryable<Organization> query, DateTime? modifiedAfterDate)
+        {
+            if (modifiedAfterDate.HasValue)
+            {
+                query = query.Where(o => o.CreateDate >= modifiedAfterDate || o.UpdateDate >= modifiedAfterDate);
             }
 
             return query;
@@ -812,13 +828,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         #region Api
 
-        /// <summary>Finds all public API paged.</summary>
+        /// <summary>
+        /// Finds all public API paged.
+        /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="keywords">The keywords.</param>
         /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <param name="activitiesUids">The activities uids.</param>
         /// <param name="targetAudiencesUids">The target audiences uids.</param>
         /// <param name="interestsUids">The interests uids.</param>
+        /// <param name="modifiedAfterDate">The modified after date.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
@@ -829,6 +848,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             List<Guid> activitiesUids,
             List<Guid> targetAudiencesUids,
             List<Guid> interestsUids,
+            DateTime? modifiedAfterDate,
             int page,
             int pageSize)
         {
@@ -836,7 +856,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, false, false, editionId)
                                 .IsApiDisplayEnabled(editionId, organizationTypeUid)
                                 .FindByFiltersUids(activitiesUids, targetAudiencesUids, interestsUids)
-                                .FindByKeywords(keywords);
+                                .FindByKeywords(keywords)
+                                .FindByCreateOrUpdateDate(modifiedAfterDate);
 
             return await query
                             .Select(o => new OrganizationApiListDto

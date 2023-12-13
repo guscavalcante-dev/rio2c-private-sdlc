@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-21-2023
+// Last Modified On : 12-13-2023
 // ***********************************************************************
 // <copyright file="ICollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -58,7 +58,7 @@ namespace PlataformaRio2C.Domain.Interfaces
 
         Task<IPagedList<CollaboratorApiListDto>> FindAllSpeakersApiListDtoPaged(int editionId, string keywords, bool filterByProjectsInNegotiation, string collaboratorTypeName, bool showAllParticipants, int page, int pageSize);
         Task<IPagedList<CollaboratorDto>> FindAllSpeakersByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, bool showAllParticipants, bool? showHighlights, int? editionId, bool exportToExcel = false);
-        Task<IPagedList<CollaboratorApiListDto>> FindAllSpeakersApiPaged(int editionId, string keywords, int? highlights, List<Guid?> conferencesUids, List<DateTimeOffset?> conferencesDates, List<Guid?> roomsUids, string collaboratorTypeName, int page, int pageSize);
+        Task<IPagedList<CollaboratorApiListDto>> FindAllSpeakersApiPaged(int editionId, string keywords, int? highlights, List<Guid?> conferencesUids, List<DateTimeOffset?> conferencesDates, List<Guid?> roomsUids, string collaboratorTypeName, DateTime? modifiedAfterDate, int page, int pageSize);
         Task<SpeakerCollaboratorDto> FindSpeakerApi(Guid collaboratorUid, int editionId, string collaboratorTypeName);
 
         #endregion

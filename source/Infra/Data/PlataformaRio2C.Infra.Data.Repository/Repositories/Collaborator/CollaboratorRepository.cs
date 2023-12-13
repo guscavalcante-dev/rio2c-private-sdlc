@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 10-16-2023
+// Last Modified On : 12-13-2023
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -498,6 +498,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 query = query.Where(c => c.AttendeeCollaborators.Any(ac => !ac.IsDeleted &&
                                                                             ac.ConferenceParticipants.Any(cp => !cp.IsDeleted &&
                                                                                                                 roomsUids.Contains(cp.Conference.Room.Uid))));
+            }
+
+            return query;
+        }
+
+        /// <summary>
+        /// Finds the by create or update date.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="modifiedAfterDate">The modified after date.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> FindByCreateOrUpdateDate(this IQueryable<Collaborator> query, DateTime? modifiedAfterDate)
+        {
+            if (modifiedAfterDate.HasValue)
+            {
+                query = query.Where(o => o.CreateDate >= modifiedAfterDate || o.UpdateDate >= modifiedAfterDate);
             }
 
             return query;
@@ -2275,6 +2291,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="conferencesDates">The conferences dates.</param>
         /// <param name="roomsUids">The rooms uids.</param>
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
+        /// <param name="modifiedAfterDate">The modified after date.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
@@ -2286,6 +2303,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             List<DateTimeOffset?> conferencesDates,
             List<Guid?> roomsUids,
             string collaboratorTypeName,
+            DateTime? modifiedAfterDate,
             int page,
             int pageSize)
         {
@@ -2296,7 +2314,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByApiHighlights(collaboratorTypeName, highlights)
                                 .FindByConferencesDates(conferencesDates)
                                 .FindByConferencesUids(conferencesUids)
-                                .FindByConferencesRoomsUids(roomsUids);
+                                .FindByConferencesRoomsUids(roomsUids)
+                                .FindByCreateOrUpdateDate(modifiedAfterDate);
 
             return await query
                             .Select(c => new CollaboratorApiListDto

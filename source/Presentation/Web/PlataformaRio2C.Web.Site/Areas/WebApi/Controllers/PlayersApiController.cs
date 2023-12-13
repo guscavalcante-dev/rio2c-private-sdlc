@@ -4,7 +4,7 @@
 // Created          : 09-25-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-31-2023
+// Last Modified On : 12-13-2023
 // ***********************************************************************
 // <copyright file="PlayersApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -105,6 +105,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 request?.ActivitiesUids?.ToListGuid(','),
                 request?.TargetAudiencesUids?.ToListGuid(','),
                 request?.InterestsUids?.ToListGuid(','),
+                request?.ModifiedAfterDate?.ToUniversalTime(),
                 request?.Page ?? 1, 
                 request?.PageSize ?? 10);
 

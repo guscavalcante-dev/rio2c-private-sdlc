@@ -4,7 +4,7 @@
 // Created          : 12-18-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-07-2023
+// Last Modified On : 12-13-2023
 // ***********************************************************************
 // <copyright file="SpeakersApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,7 +23,6 @@ using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.ApiModels;
-using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
@@ -117,6 +116,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 request?.ConferencesDates?.ToListNullableDateTimeOffset(',', "yyyy-MM-dd", true),
                 request?.ConferencesRoomsUids?.ToListNullableGuid(','),
                 Domain.Constants.CollaboratorType.Speaker,
+                request?.ModifiedAfterDate?.ToUniversalTime(),
                 request?.Page ?? 1,
                 request?.PageSize ?? 10);
 
