@@ -117,6 +117,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 request?.ConferencesRoomsUids?.ToListNullableGuid(','),
                 Domain.Constants.CollaboratorType.Speaker,
                 request?.ModifiedAfterDate?.ToUniversalTime(),
+                request?.ShowDetails ?? false,
                 request?.Page ?? 1,
                 request?.PageSize ?? 10);
 

@@ -2292,6 +2292,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="roomsUids">The rooms uids.</param>
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
         /// <param name="modifiedAfterDate">The modified after date.</param>
+        /// <param name="showDetails">if set to <c>true</c> [show details].</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
@@ -2304,6 +2305,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             List<Guid?> roomsUids,
             string collaboratorTypeName,
             DateTime? modifiedAfterDate,
+            bool showDetails,
             int page,
             int pageSize)
         {
@@ -2343,10 +2345,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     }
                                 }),
                                 ConferencesDtos = c.AttendeeCollaborators
-                                                            .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
-                                                            .SelectMany(ac => ac.ConferenceParticipants
-                                                                                    .Where(cp => !cp.IsDeleted && !cp.Conference.IsDeleted)
-                                                                                    .Select(cp => new ConferenceDto
+                                                                    .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                                    .SelectMany(ac => ac.ConferenceParticipants
+                                                                                            .Where(cp => !cp.IsDeleted && !cp.Conference.IsDeleted)
+                                                                                            .Select(cp => new ConferenceDto
                                                                                     {
                                                                                         Uid = cp.Conference.Uid,
                                                                                         StartDate = cp.Conference.StartDate,
