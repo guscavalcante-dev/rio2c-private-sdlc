@@ -35,5 +35,9 @@ namespace PlataformaRio2C.Domain.ApiModels
         [JsonProperty("modifiedAfterDate")]
         [SwaggerParameterDescription("Returns only registers created or updated after this date.", "YYYY-MM-DDTHH:mm:ss")]
         public DateTime? ModifiedAfterDate { get; set; }
+
+        [JsonProperty("showDetails")]
+        [SwaggerParameterDescription(description: "Shows extra fields.", "0=Hide | 1=Show")]
+        public bool? ShowDetails { get; set; }
     }
 }

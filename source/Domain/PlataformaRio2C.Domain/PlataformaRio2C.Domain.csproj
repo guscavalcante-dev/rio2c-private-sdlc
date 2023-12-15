@@ -111,6 +111,7 @@
     <Compile Include="ApiModels\MusicBands\Responses\MusicCommissionsApiResponse.cs" />
     <Compile Include="ApiModels\MusicBands\Responses\MusicFiltersApiResponse.cs" />
     <Compile Include="ApiModels\Players\Requests\PlayersFiltersApiRequest.cs" />
+    <Compile Include="ApiModels\Players\Responses\PlayerCollaboratorApiResponse.cs" />
     <Compile Include="ApiModels\PresentationFormats\Responses\PresentationFormatBaseApiResponse.cs" />
     <Compile Include="ApiModels\EditionEvents\Responses\EditionEventBaseApiResponse.cs" />
     <Compile Include="ApiModels\Rooms\Responses\RoomBaseApiResponse.cs" />
@@ -281,6 +282,7 @@
     <Compile Include="Dtos\Places\PlaceDto.cs" />
     <Compile Include="Dtos\Places\PlaceJsonDto.cs" />
     <Compile Include="Dtos\PlayersExecutives\PlayerExecutiveReportDto.cs" />
+    <Compile Include="Dtos\Players\PlayerOrganizationApiDto.cs" />
     <Compile Include="Dtos\Projects\ProjectBuyerEvaluationBaseDto.cs" />
     <Compile Include="Dtos\Projects\ProjectCommissionEvaluationDto.cs" />
     <Compile Include="Dtos\Projects\ProjectDropdownDto.cs" />

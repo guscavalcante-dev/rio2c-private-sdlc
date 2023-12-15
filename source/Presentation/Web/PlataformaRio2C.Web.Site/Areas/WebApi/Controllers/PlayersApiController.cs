@@ -4,7 +4,7 @@
 // Created          : 09-25-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-13-2023
+// Last Modified On : 12-15-2023
 // ***********************************************************************
 // <copyright file="PlayersApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -78,55 +78,92 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("players"), HttpGet]
         [SwaggerResponse(System.Net.HttpStatusCode.OK)]
         [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
-        public async Task<IHttpActionResult> Players([FromUri]PlayersApiRequest request)
+        public async Task<IHttpActionResult> Players([FromUri] PlayersApiRequest request)
         {
             #region Initial Validations
 
             var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
             if (editions?.Any() == false)
             {
-                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." }});
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." } });
             }
 
             // Get edition from request otherwise get current
-            var edition = request?.Edition.HasValue == true ? editions?.FirstOrDefault(e => e.UrlCode == request.Edition) : 
+            var edition = request?.Edition.HasValue == true ? editions?.FirstOrDefault(e => e.UrlCode == request.Edition) :
                                                               editions?.FirstOrDefault(e => e.IsCurrent);
             if (edition == null)
             {
-                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." }});
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." } });
             }
 
             #endregion
 
-            var organizationsApiDtos = await this.organizationRepo.FindAllPublicApiPaged(
+            var playerOrganizationApiDtos = await this.organizationRepo.FindAllPlayersPublicApiPaged(
                 edition.Id,
                 request?.Keywords,
-                OrganizationType.Player.Uid,
                 request?.ActivitiesUids?.ToListGuid(','),
                 request?.TargetAudiencesUids?.ToListGuid(','),
                 request?.InterestsUids?.ToListGuid(','),
                 request?.ModifiedAfterDate?.ToUniversalTime(),
-                request?.Page ?? 1, 
+                request?.ShowDetails ?? false,
+                request?.Page ?? 1,
                 request?.PageSize ?? 10);
 
             return await Json(new PlayersApiResponse
             {
                 Status = ApiStatus.Success,
                 Error = null,
-                HasPreviousPage = organizationsApiDtos.HasPreviousPage,
-                HasNextPage = organizationsApiDtos.HasNextPage,
-                TotalItemCount = organizationsApiDtos.TotalItemCount,
-                PageCount = organizationsApiDtos.PageCount,
-                PageNumber = organizationsApiDtos.PageNumber,
-                PageSize = organizationsApiDtos.PageSize,
-                Players = organizationsApiDtos?.Select(o => new PlayersApiListItem
+                HasPreviousPage = playerOrganizationApiDtos.HasPreviousPage,
+                HasNextPage = playerOrganizationApiDtos.HasNextPage,
+                TotalItemCount = playerOrganizationApiDtos.TotalItemCount,
+                PageCount = playerOrganizationApiDtos.PageCount,
+                PageNumber = playerOrganizationApiDtos.PageNumber,
+                PageSize = playerOrganizationApiDtos.PageSize,
+                Players = playerOrganizationApiDtos?.Select(o => new PlayersApiListItem
                 {
                     Uid = o.Uid,
                     Name = o.TradeName,
                     TradeName = o.TradeName,
                     CompanyName = o.CompanyName,
                     HighlightPosition = o.ApiHighlightPosition,
-                    Picture = o.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, o.Uid, o.ImageUploadDate, true) : null
+                    Picture = o.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, o.Uid, o.ImageUploadDate, true) : null,
+                    DescriptionsApiResponses = o.OrganizationDescriptionBaseDtos?.Select(dto => new LanguageValueApiResponse
+                    {
+                        Culture = dto.LanguageDto.Code,
+                        Value = HttpUtility.HtmlDecode(dto.Value)
+                    })?.ToList(),
+                    InterestGroupApiResponses = o.OrganizationInterestDtos?.GroupBy(dto => new 
+                    {
+                        InterestGroupId = dto.InterestGroup.Id,
+                        InterestGroupUid = dto.InterestGroup.Uid,
+                        InterestGroupName = dto.InterestGroup.Name
+                    })?.Select(ig => new InterestGroupApiResponse
+                    {
+                        Uid = ig.Key.InterestGroupUid,
+                        Name = ig.Key.InterestGroupName,
+                        InterestsApiResponses = ig.Select(i => new InterestApiResponse
+                        {
+                            Uid = i.Interest.Uid,
+                            Name = i.Interest.Name
+                        })?.ToList()
+                    })?.ToList(),
+                    CollaboratorsApiResponses = o.CollaboratorsDtos?.Select(cd => new PlayerCollaboratorApiResponse
+                    {
+                        Uid = cd.Uid,
+                        BadgeName = cd.Badge,
+                        Name = cd.FullName,
+                        Picture = cd.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, cd.Uid, cd.ImageUploadDate, true) : null,
+                        JobTitlesApiResponses = cd.JobTitleBaseDtos?.Select(jtd => new LanguageValueApiResponse
+                        {
+                            Culture = jtd.LanguageDto.Code,
+                            Value = HttpUtility.HtmlDecode(jtd.Value)
+                        })?.ToList(),
+                        MiniBiosApiResponses = cd.MiniBioBaseDtos?.Select(jtd => new LanguageValueApiResponse
+                        {
+                            Culture = jtd.LanguageDto.Code,
+                            Value = HttpUtility.HtmlDecode(jtd.Value)
+                        })?.ToList()
+                    })?.ToList()
                 })?.ToList()
             });
         }
@@ -218,12 +255,12 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("player/{uid?}"), HttpGet]
         [SwaggerResponse(System.Net.HttpStatusCode.OK)]
         [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
-        public async Task<IHttpActionResult> Player([FromUri]PlayerApiRequest request)
+        public async Task<IHttpActionResult> Player([FromUri] PlayerApiRequest request)
         {
             var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
             if (editions?.Any() == false)
             {
-                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." }});
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." } });
             }
 
             // Get edition from request otherwise get current
@@ -231,13 +268,12 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 editions?.FirstOrDefault(e => e.IsCurrent);
             if (edition == null)
             {
-                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." }});
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." } });
             }
 
-            var organizationApiDto = await this.organizationRepo.FindApiDtoByUidAsync(
+            var organizationApiDto = await this.organizationRepo.FindPlayerPublicApiDtoByUid(
                 request?.Uid ?? Guid.Empty,
-                edition.Id,
-                OrganizationType.Player.Uid);
+                edition.Id);
             if (organizationApiDto == null)
             {
                 return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "Player not found." } });

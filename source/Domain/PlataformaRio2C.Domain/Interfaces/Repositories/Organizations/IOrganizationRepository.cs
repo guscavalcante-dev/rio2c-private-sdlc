@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-13-2023
+// Last Modified On : 12-15-2023
 // ***********************************************************************
 // <copyright file="IOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -31,14 +31,14 @@ namespace PlataformaRio2C.Domain.Interfaces
         #region Players
 
         Task<IPagedList<OrganizationDto>> FindAllPlayersByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, bool showAllOrganizations, int? editionId, bool exportToExcel = false);
+        Task<IPagedList<PlayerOrganizationApiDto>> FindAllPlayersPublicApiPaged(int editionId, string keywords, List<Guid> activitiesUids, List<Guid> targetAudiencesUids, List<Guid> interestsUids, DateTime? modifiedAfterDate, bool showDetails, int page, int pageSize);
+        Task<OrganizationDto> FindPlayerPublicApiDtoByUid(Guid organizationUid, int editionId);
 
         #endregion
 
         #region Api
 
-        Task<IPagedList<OrganizationApiListDto>> FindAllPublicApiPaged(int editionId, string keywords, Guid organizationTypeUid, List<Guid> activitiesUids, List<Guid> targetAudiencesUids, List<Guid> interestsUids, DateTime? modifiedAfterDate, int page, int pageSize);
         Task<IPagedList<OrganizationApiListDto>> FindAllOrganizationsApiPaged(int? editionId, string companyName, string tradeName, string document, Guid organizationTypeUid, int? collaboratorId, bool showAllEditions, bool showAllOrganizations, int page, int pageSize);
-        Task<OrganizationDto> FindApiDtoByUidAsync(Guid organizationUid, int editionId, Guid organizationTypeUid);
         Task<List<Organization>> FindAllByHightlightPosition(int editionId, Guid organizationTypeUid, int apiHighlightPosition, Guid? organizationUid);
 
         #endregion

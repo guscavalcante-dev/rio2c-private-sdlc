@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-30-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 12-15-2023
 // ***********************************************************************
 // <copyright file="PlayerApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -40,27 +40,5 @@ namespace PlataformaRio2C.Domain.ApiModels
 
         [JsonProperty("collaborators")]
         public List<PlayerCollaboratorApiResponse> CollaboratorsApiResponses { get; set; }
-    }
-
-    /// <summary>PlayerCollaboratorApiResponse</summary>
-    public class PlayerCollaboratorApiResponse
-    {
-        [JsonProperty("uid")]
-        public Guid Uid { get; set; }
-
-        [JsonProperty("badgeName")]
-        public string BadgeName { get; set; }
-
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        [JsonProperty("picture")]
-        public string Picture { get; set; }
-
-        [JsonProperty("jobTitles")]
-        public List<LanguageValueApiResponse> JobTitlesApiResponses { get; set; }
-
-        [JsonProperty("miniBios")]
-        public List<LanguageValueApiResponse> MiniBiosApiResponses { get; set; }
     }
 }
