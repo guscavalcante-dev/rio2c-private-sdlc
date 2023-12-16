@@ -13,6 +13,7 @@
 // ***********************************************************************
 using Newtonsoft.Json;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
 using System;
 
 namespace PlataformaRio2C.Domain.ApiModels
@@ -37,7 +38,7 @@ namespace PlataformaRio2C.Domain.ApiModels
         public string ConferencesRoomsUids { get; set; }
 
         [JsonProperty("modifiedAfterDate")]
-        [SwaggerParameterDescription("Returns only registers created or updated after this date.", "YYYY-MM-DDTHH:mm:ss")]
+        [SwaggerParameterDescription("Returns only registers created or updated after this date. (UTC)", PublicApiDateTimeFormat.Default)]
         public DateTime? ModifiedAfterDate { get; set; }
     }
 }

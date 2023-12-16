@@ -207,6 +207,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Log\LogService.cs" />
     <Compile Include="Attributes\RequiredIfOneNotEmptyAndOtherEmptyAttribute.cs" />
+    <Compile Include="Statics\PublicApiDateTimeFormat.cs" />
     <Compile Include="Statics\SocialMediaPlatformName.cs" />
     <Compile Include="Statics\SalePlatformName.cs" />
     <Compile Include="Statics\FileMimeType.cs" />

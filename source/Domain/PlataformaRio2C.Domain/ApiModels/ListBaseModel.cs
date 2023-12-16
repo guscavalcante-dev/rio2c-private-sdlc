@@ -13,6 +13,7 @@
 // ***********************************************************************
 using Newtonsoft.Json;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
 using System;
 
 namespace PlataformaRio2C.Domain.ApiModels
@@ -43,7 +44,7 @@ namespace PlataformaRio2C.Domain.ApiModels
 
         public ListBaseModel()
         {
-            this.TimeStamp = DateTimeOffset.UtcNow.ToBrazilTimeZone().ToString("s");
+            this.TimeStamp = DateTimeOffset.UtcNow.ToString(PublicApiDateTimeFormat.Default);
         }
     }
 }
