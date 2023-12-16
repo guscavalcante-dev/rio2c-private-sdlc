@@ -18,6 +18,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Mvc;
 using PlataformaRio2C.Web.Admin.App_Start;
 using PlataformaRio2C.Web.Admin.Areas.WebApi;
 using PlataformaRio2C.Web.Admin.Models;
+using System.Net;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -34,6 +35,7 @@ namespace PlataformaRio2C.Web.Admin
         public void Configuration(IAppBuilder app)
         {
             //Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("pt-BR");
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             SimpleInjectorInitializer.Initialize();
 
