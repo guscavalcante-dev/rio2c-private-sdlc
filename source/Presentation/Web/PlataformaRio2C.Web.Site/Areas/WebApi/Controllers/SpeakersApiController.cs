@@ -116,7 +116,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 request?.ConferencesDates?.ToListNullableDateTimeOffset(',', "yyyy-MM-dd", true),
                 request?.ConferencesRoomsUids?.ToListNullableGuid(','),
                 Domain.Constants.CollaboratorType.Speaker,
-                request?.ModifiedAfterDate?.ToUniversalTime(),
+                request?.ModifiedAfterDate.ToUtcDateKind(),
                 request?.Page ?? 1,
                 request?.PageSize ?? 10);
 

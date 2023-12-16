@@ -177,7 +177,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             if (modifiedAfterDate.HasValue)
             {
-                query = query.Where(o => o.CreateDate >= modifiedAfterDate || o.UpdateDate >= modifiedAfterDate);
+                query = query.Where(o => o.CreateDate > modifiedAfterDate || o.UpdateDate > modifiedAfterDate);
             }
 
             return query;
