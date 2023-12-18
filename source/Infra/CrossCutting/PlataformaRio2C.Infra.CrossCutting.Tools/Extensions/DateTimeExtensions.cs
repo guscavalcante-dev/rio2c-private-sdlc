@@ -4,7 +4,7 @@
 // Created          : 12-13-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-23-2023
+// Last Modified On : 12-16-2023
 // ***********************************************************************
 // <copyright file="DateTimeExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -80,7 +80,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(BrazilTimeZone);
             return TimeZoneInfo.ConvertTimeToUtc(dt, userTimeZone);
         }
-
 
         /// <summary>
         /// Converts to enddatetime.
@@ -280,6 +279,22 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             }
 
             return dt?.ToString("dd/MM/yyyy");
+        }
+
+        /// <summary>
+        /// Converts to UTC date kind.
+        /// </summary>
+        /// <param name="dt">The dt.</param>
+        /// <returns></returns>
+        public static DateTime? ToUtcDateKind(this DateTime? dt)
+        {
+            if (dt.HasValue && dt.Value.Kind == DateTimeKind.Unspecified)
+            {
+                // Specify the date kind when Unspecified because SQL set it automatically, resulting on different date from original
+                dt = DateTime.SpecifyKind(dt.Value, DateTimeKind.Utc);
+            }
+
+            return dt;
         }
     }
 }
