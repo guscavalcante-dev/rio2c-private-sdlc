@@ -979,8 +979,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     CompanyName = o.CompanyName,
                     TradeName = o.TradeName,
                     ImageUploadDate = o.ImageUploadDate,
-                    ApiHighlightPosition = o.AttendeeOrganizations.Where(ao => !ao.IsDeleted && ao.EditionId == editionId).FirstOrDefault()
-                                                        .AttendeeOrganizationTypes.Where(aot => !aot.IsDeleted && aot.OrganizationType.Uid == playerOrganizationTypeUid).FirstOrDefault()
+                    ApiHighlightPosition = o.AttendeeOrganizations
+                                                .FirstOrDefault(ao => !ao.IsDeleted && ao.EditionId == editionId)
+                                                    .AttendeeOrganizationTypes.FirstOrDefault(aot => !aot.IsDeleted && aot.OrganizationType.Uid == playerOrganizationTypeUid)
                                                         .ApiHighlightPosition,
                     CreateDate = o.CreateDate,
                     UpdateDate = o.UpdateDate

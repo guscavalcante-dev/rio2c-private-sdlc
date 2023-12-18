@@ -14,6 +14,7 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Domain.ApiModels
 {
