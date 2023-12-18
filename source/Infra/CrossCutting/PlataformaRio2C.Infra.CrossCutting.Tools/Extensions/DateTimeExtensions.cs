@@ -288,7 +288,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         /// <returns></returns>
         public static DateTime? ToUtcDateKind(this DateTime? dt)
         {
-            if (dt.Value.Kind == DateTimeKind.Unspecified)
+            if (dt.HasValue && dt.Value.Kind == DateTimeKind.Unspecified)
             {
                 // Specify the date kind when Unspecified because SQL set it automatically, resulting on different date from original
                 dt = DateTime.SpecifyKind(dt.Value, DateTimeKind.Utc);
