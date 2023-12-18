@@ -105,6 +105,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 request?.TargetAudiencesUids?.ToListGuid(','),
                 request?.InterestsUids?.ToListGuid(','),
                 request?.ModifiedAfterDate.ToUtcDateKind(),
+                request?.ShowDetails ?? false,
                 request?.Page ?? 1, 
                 request?.PageSize ?? 10);
 

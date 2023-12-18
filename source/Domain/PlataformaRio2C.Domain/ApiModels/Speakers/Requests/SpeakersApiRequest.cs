@@ -42,7 +42,7 @@ namespace PlataformaRio2C.Domain.ApiModels
         public DateTime? ModifiedAfterDate { get; set; }
 
         [JsonProperty("showDetails")]
-        [SwaggerParameterDescription(description: "Shows extra fields.", "0=Hide | 1=Show")]
+        [SwaggerParameterDescription(description: "Shows extra fields.")]
         public bool? ShowDetails { get; set; }
     }
 }
