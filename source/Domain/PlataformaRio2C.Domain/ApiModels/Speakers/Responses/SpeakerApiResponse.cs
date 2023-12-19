@@ -46,16 +46,16 @@ namespace PlataformaRio2C.Domain.ApiModels
         public string Site { get; set; }
 
         [JsonProperty("socialNetworks", Order = 700)]
-        public List<SpeakerSocialNetworkApiResponse> SocialNetworks { get; set; }
+        public IEnumerable<SpeakerSocialNetworkApiResponse> SocialNetworks { get; set; }
 
         [JsonProperty("tracks", Order = 701)]
-        public List<TrackBaseApiResponse> Tracks { get; set; }
+        public IEnumerable<TrackBaseApiResponse> Tracks { get; set; }
 
         [JsonProperty("companies", Order = 702)]
-        public List<SpeakerOrganizationApiResponse> Companies { get; set; }
+        public IEnumerable<SpeakerOrganizationApiResponse> Companies { get; set; }
 
         [JsonProperty("conferences", Order = 703)]
-        public List<SpeakerConferenceApiResponse> Conferences { get; set; }
+        public IEnumerable<SpeakerConferenceApiResponse> Conferences { get; set; }
     }
 
     /// <summary>SpeakerSocialNetworkApiResponse</summary>

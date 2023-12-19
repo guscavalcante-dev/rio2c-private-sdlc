@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.ApiModels;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
@@ -46,7 +47,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// Gets the social networks.
         /// </summary>
         /// <returns></returns>
-        public List<SpeakerSocialNetworkApiResponse> GetSocialNetworks()
+        public IEnumerable<SpeakerSocialNetworkApiResponse> GetSocialNetworks()
         {
             var socialNetworks = new List<SpeakerSocialNetworkApiResponse>();
 
@@ -99,6 +100,50 @@ namespace PlataformaRio2C.Domain.Dtos
 
             return this.JobTitlesDtos?.FirstOrDefault(jtd => jtd.LanguageDto.Code == languageCode) ??
                    this.JobTitlesDtos?.FirstOrDefault(jtd => jtd.LanguageDto.Code == "pt-br");
+        }
+
+        /// <summary>
+        /// Gets the track base API response by language code.
+        /// </summary>
+        /// <param name="languageCode">The language code.</param>
+        /// <returns></returns>
+        public IEnumerable<TrackBaseApiResponse> GetTrackBaseApiResponseByLanguageCode(string languageCode)
+        {
+            return this.TracksDtos?.Select(td => new TrackBaseApiResponse
+            {
+                Uid = td.Track.Uid,
+                Name = td.Track.GetNameByLanguageCode(languageCode),
+                Color = td.Track.Color
+            })?.OrderBy(t => t.Name);
+        }
+
+        /// <summary>
+        /// Gets the conferences API response by language code.
+        /// </summary>
+        /// <param name="languageCode">The language code.</param>
+        /// <returns></returns>
+        public IEnumerable<SpeakerConferenceApiResponse> GetConferencesApiResponseByLanguageCode(string languageCode)
+        {
+            return this.ConferencesDtos?.Select(c => new SpeakerConferenceApiResponse
+            {
+                Uid = c.Uid,
+                Event = new EditionEventBaseApiResponse
+                {
+                    Uid = c.EditionEvent.Uid,
+                    Name = c.EditionEvent.Name.GetSeparatorTranslation(languageCode, Language.Separator)?.Trim()
+                },
+                Title = c.GetConferenceTitleDtoByLanguageCode(languageCode)?.ConferenceTitle?.Value?.Trim(),
+                Synopsis = c.GetConferenceSynopsisDtoByLanguageCode(languageCode)?.ConferenceSynopsis?.Value?.Trim(),
+                Date = c.StartDate.ToBrazilTimeZone().ToString("yyyy-MM-dd"),
+                StartTime = c.StartDate.ToBrazilTimeZone().ToString("HH:mm"),
+                EndTime = c.EndDate.ToBrazilTimeZone().ToString("HH:mm"),
+                DurationMinutes = (int)((c.EndDate - c.StartDate).TotalMinutes),
+                Room = c.RoomDto != null ? new RoomBaseApiResponse
+                {
+                    Uid = c.RoomDto.Uid,
+                    Name = c.RoomDto.GetRoomNameByLanguageCode(languageCode)?.RoomName?.Value?.Trim()
+                } : null
+            });
         }
 
         /// <summary>

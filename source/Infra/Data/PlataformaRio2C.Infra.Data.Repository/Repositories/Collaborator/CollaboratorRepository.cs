@@ -2616,7 +2616,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     .Where(cp => !cp.IsDeleted && !cp.Conference.IsDeleted)
                                                                                     .Select(cp => new ConferenceDto
                                                                                     {
-                                                                                        Conference = cp.Conference,
+                                                                                        Uid = cp.Conference.Uid,
+                                                                                        StartDate = cp.Conference.StartDate,
+                                                                                        EndDate = cp.Conference.EndDate,
                                                                                         EditionEvent = cp.Conference.EditionEvent,
                                                                                         RoomDto = new RoomDto
                                                                                         {
