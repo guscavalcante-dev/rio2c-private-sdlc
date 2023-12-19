@@ -559,7 +559,6 @@
   </data>
   <data name="Clipping" xml:space="preserve">
     <value>Clipping</value>
-    
   </data>
   <data name="Close" xml:space="preserve">
     <value>Fechar</value>
@@ -1033,7 +1032,6 @@
   </data>
   <data name="EvaluationsByProjectReport" xml:space="preserve">
     <value>Relatório de Avaliações Projeto</value>
-    
   </data>
   <data name="Evaluator" xml:space="preserve">
     <value>Avaliador</value>
@@ -1308,35 +1306,27 @@
   </data>
   <data name="StartupsCommission" xml:space="preserve">
     <value>Comissão de Startups</value>
-    
   </data>
   <data name="StartupsCommissionEvaluationEndDate" xml:space="preserve">
     <value>Data de término da avaliação de startups</value>
-    
   </data>
   <data name="StartupsCommissionEvaluationStartDate" xml:space="preserve">
     <value>Data de início da avaliação de startups</value>
-    
   </data>
   <data name="StartupsCommissionMaximumApprovedCompaniesCount" xml:space="preserve">
     <value>Quantidade máxima de startups aprovadas</value>
-    
   </data>
   <data name="StartupsCommissionMinimumEvaluationsCount" xml:space="preserve">
     <value>Quantidade mínima de votos para gerar média de Startups</value>
-    
   </data>
   <data name="StartupsProjects" xml:space="preserve">
     <value>Projetos de Startup</value>
-    
   </data>
   <data name="StartupsProjectSubmitEndDate" xml:space="preserve">
     <value>Data de término de cadastro de startups</value>
-    
   </data>
   <data name="StartupsProjectSubmitStartDate" xml:space="preserve">
     <value>Data de início de cadastro de startups</value>
-    
   </data>
   <data name="StartupsVerticals" xml:space="preserve">
     <value>Verticais de Startup</value>
@@ -1999,14 +1989,13 @@
   </data>
   <data name="PlayersExecutivesReport" xml:space="preserve">
     <value>Relatório de Executivos de Players</value>
-    
   </data>
   <data name="PlayersRegistered" xml:space="preserve">
     <value>Players cadastrados</value>
     <comment>Players cadastrados</comment>
   </data>
   <data name="PlayersRegulationPdf" xml:space="preserve">
-    <value>Regulamento Rodadas de Negócio (PLAYER) - Rio2C 2023 (PDF)</value>
+    <value>Regulamento Rodadas de Negócio (PLAYER) - Rio2C 2024 (PDF)</value>
   </data>
   <data name="PlayersReport" xml:space="preserve">
     <value>Relatório de Players</value>
@@ -2128,7 +2117,7 @@
     <comment>Produtoras cadastradas</comment>
   </data>
   <data name="ProducersRegulationPdf" xml:space="preserve">
-    <value>Regulamento Rodadas de Negócio (PARTICIPANTE) - Rio2C 2023 (PDF)</value>
+    <value>Regulamento Rodadas de Negócio (PARTICIPANTE) - Rio2C 2024 (PDF)</value>
   </data>
   <data name="ProducersSpaceSlash" xml:space="preserve">
     <value>Produtores / Empresas</value>
@@ -2755,7 +2744,6 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   </data>
   <data name="Startups" xml:space="preserve">
     <value>Startups</value>
-    
   </data>
   <data name="State" xml:space="preserve">
     <value>Estado</value>
@@ -3009,11 +2997,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   </data>
   <data name="UpdatedF" xml:space="preserve">
     <value>atualizada</value>
-    
   </data>
   <data name="UpdatedM" xml:space="preserve">
     <value>atualizado</value>
-    
   </data>
   <data name="UrlCode" xml:space="preserve">
     <value>Código da URL</value>
