@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-30-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 12-15-2023
 // ***********************************************************************
 // <copyright file="PlayerApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,47 +20,31 @@ namespace PlataformaRio2C.Domain.ApiModels
     /// <summary>PlayerApiResponse</summary>
     public class PlayerApiResponse : ApiBaseResponse
     {
-        [JsonProperty("uid")]
+        [JsonProperty("uid", Order = 100)]
         public Guid Uid { get; set; }
 
-        [JsonProperty("name")]
-        public string TradeName { get; set; }
-
-        [JsonProperty("companyName")]
-        public string CompanyName { get; set; }
-
-        [JsonProperty("picture")]
-        public string Picture { get; set; }
-
-        [JsonProperty("descriptions")]
-        public List<LanguageValueApiResponse> DescriptionsApiResponses { get; set; }
-
-        [JsonProperty("interestsGroups")]
-        public List<InterestGroupApiResponse> InterestGroupApiResponses { get; set; }
-
-        [JsonProperty("collaborators")]
-        public List<PlayerCollaboratorApiResponse> CollaboratorsApiResponses { get; set; }
-    }
-
-    /// <summary>PlayerCollaboratorApiResponse</summary>
-    public class PlayerCollaboratorApiResponse
-    {
-        [JsonProperty("uid")]
-        public Guid Uid { get; set; }
-
-        [JsonProperty("badgeName")]
-        public string BadgeName { get; set; }
-
-        [JsonProperty("name")]
+        [JsonProperty("name", Order = 200)]
         public string Name { get; set; }
 
-        [JsonProperty("picture")]
+        [JsonProperty("highlightPosition", Order = 300)]
+        public int? HighlightPosition { get; set; }
+
+        [JsonProperty("tradeName", Order = 400)]
+        public string TradeName { get; set; }
+
+        [JsonProperty("companyName", Order = 500)]
+        public string CompanyName { get; set; }
+
+        [JsonProperty("picture", Order = 600)]
         public string Picture { get; set; }
 
-        [JsonProperty("jobTitles")]
-        public List<LanguageValueApiResponse> JobTitlesApiResponses { get; set; }
+        [JsonProperty("descriptions", Order = 700)]
+        public IEnumerable<LanguageValueApiResponse> DescriptionsApiResponses { get; set; }
 
-        [JsonProperty("miniBios")]
-        public List<LanguageValueApiResponse> MiniBiosApiResponses { get; set; }
+        [JsonProperty("interestsGroups", Order = 800)]
+        public IEnumerable<InterestGroupApiResponse> InterestGroupApiResponses { get; set; }
+
+        [JsonProperty("collaborators", Order = 900)]
+        public IEnumerable<PlayerCollaboratorApiResponse> PlayerCollaboratorApiResponses { get; set; }
     }
 }

@@ -25,6 +25,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using PlataformaRio2C.Web.Site.Hub;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Mvc;
+using System.Net;
 
 [assembly: OwinStartupAttribute(typeof(PlataformaRio2C.Web.Site.Startup))]
 namespace PlataformaRio2C.Web.Site
@@ -36,6 +37,8 @@ namespace PlataformaRio2C.Web.Site
         /// <param name="app">The application.</param>
         public void Configuration(IAppBuilder app)
         {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
             var hubConfiguration = new HubConfiguration();
             hubConfiguration.EnableDetailedErrors = true;
             GlobalHost.Configuration.MaxIncomingWebSocketMessageSize = null;

@@ -4,7 +4,7 @@
 // Created          : 12-18-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-13-2023
+// Last Modified On : 12-15-2023
 // ***********************************************************************
 // <copyright file="SpeakersApiRequest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -40,5 +40,9 @@ namespace PlataformaRio2C.Domain.ApiModels
         [JsonProperty("modifiedAfterDate")]
         [SwaggerParameterDescription("Returns only registers created or updated after this date. (UTC)", PublicApiDateTimeFormat.Default)]
         public DateTime? ModifiedAfterDate { get; set; }
+
+        [JsonProperty("showDetails")]
+        [SwaggerParameterDescription(description: "Shows extra fields.")]
+        public bool? ShowDetails { get; set; }
     }
 }

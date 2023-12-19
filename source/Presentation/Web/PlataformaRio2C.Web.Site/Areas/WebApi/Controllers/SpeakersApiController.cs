@@ -23,6 +23,7 @@ using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.ApiModels;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
@@ -107,8 +108,9 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             {
                 return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "No active languages found." } });
             }
+            string currentLanguageCode = requestLanguage?.Code ?? defaultLanguage?.Code;
 
-            var collaboratorsApiDtos = await this.collaboratorRepo.FindAllSpeakersApiPaged(
+            var speakerCollaboratorApiDtos = await this.collaboratorRepo.FindAllSpeakersPublicApiPaged(
                 edition.Id,
                 request?.Keywords,
                 request?.Highlights,
@@ -117,6 +119,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 request?.ConferencesRoomsUids?.ToListNullableGuid(','),
                 Domain.Constants.CollaboratorType.Speaker,
                 request?.ModifiedAfterDate.ToUtcDateKind(),
+                request?.ShowDetails ?? false,
                 request?.Page ?? 1,
                 request?.PageSize ?? 10);
 
@@ -124,35 +127,32 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             {
                 Status = ApiStatus.Success,
                 Error = null,
-                HasPreviousPage = collaboratorsApiDtos.HasPreviousPage,
-                HasNextPage = collaboratorsApiDtos.HasNextPage,
-                TotalItemCount = collaboratorsApiDtos.TotalItemCount,
-                PageCount = collaboratorsApiDtos.PageCount,
-                PageNumber = collaboratorsApiDtos.PageNumber,
-                PageSize = collaboratorsApiDtos.PageSize,
-                Speakers = collaboratorsApiDtos?.Select(c => new SpeakerListApiItem
+                HasPreviousPage = speakerCollaboratorApiDtos.HasPreviousPage,
+                HasNextPage = speakerCollaboratorApiDtos.HasNextPage,
+                TotalItemCount = speakerCollaboratorApiDtos.TotalItemCount,
+                PageCount = speakerCollaboratorApiDtos.PageCount,
+                PageNumber = speakerCollaboratorApiDtos.PageNumber,
+                PageSize = speakerCollaboratorApiDtos.PageSize,
+                SpeakerApiResponses = speakerCollaboratorApiDtos?.Select(dto => new SpeakerApiResponse
                 {
-                    Uid = c.Uid,
-                    BadgeName = c.BadgeName?.Trim(),
-                    Name = c.Name?.Trim(),
-                    HighlightPosition = c.ApiHighlightPosition,
-                    Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.Uid, c.ImageUploadDate, true, "_500x500") : null,
-                    JobTitle = c.GetCollaboratorJobTitleBaseDtoByLanguageCode(requestLanguage?.Code ?? defaultLanguage?.Code)?.Value?.Trim(),
-                    Conferences = c.ConferencesDtos.Select(co => new SpeakerConferenceBaseApiResponse
+                    Uid = dto.Uid,
+                    BadgeName = dto.BadgeName?.Trim(),
+                    Name = dto.Name?.Trim(),
+                    HighlightPosition = dto.ApiHighlightPosition,
+                    Picture = dto.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, dto.Uid, dto.ImageUploadDate, true, "_500x500") : null,
+                    MiniBio = dto.GetCollaboratorMiniBioBaseDtoByLanguageCode(currentLanguageCode)?.Value?.Trim(),
+                    JobTitle = dto.GetCollaboratorJobTitleBaseDtoByLanguageCode(currentLanguageCode)?.Value?.Trim(),
+                    Site = dto.Website?.GetUrlWithProtocol(),
+                    SocialNetworks = dto.GetSocialNetworks(),
+                    Tracks = dto.GetTrackBaseApiResponseByLanguageCode(currentLanguageCode),
+                    Companies = dto.OrganizationsDtos?.Select(od => new SpeakerOrganizationApiResponse
                     {
-                        Uid = co.Uid,
-                        Date = co.StartDate.ToBrazilTimeZone().ToString("yyyy-MM-dd"),
-                        StartTime = co.StartDate.ToBrazilTimeZone().ToString("HH:mm"),
-                        EndTime = co.EndDate.ToBrazilTimeZone().ToString("HH:mm"),
-                        Title = co.GetConferenceTitleDtoByLanguageCode(requestLanguage?.Code)?.ConferenceTitle?.Value?.Trim() ??
-                                co.GetConferenceTitleDtoByLanguageCode(defaultLanguage?.Code)?.ConferenceTitle?.Value?.Trim(),
-                        Room = co.RoomDto != null ? new RoomBaseApiResponse
-                        {
-                            Uid = co.RoomDto.Uid,
-                            Name = co.RoomDto.GetRoomNameByLanguageCode(requestLanguage?.Code ?? defaultLanguage?.Code)?.RoomName?.Value?.Trim()
-                        } : null,
-
-                    })?.ToList()
+                        Uid = od.Uid,
+                        TradeName = od.TradeName,
+                        CompanyName = od.CompanyName,
+                        Picture = od.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, od.Uid, od.ImageUploadDate, true) : null
+                    })?.OrderBy(s => s.TradeName),
+                    Conferences = dto.GetConferencesApiResponseByLanguageCode(currentLanguageCode)
                 })?.ToList()
             });
         }
@@ -289,8 +289,9 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             {
                 return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "No active languages found." } });
             }
+            string currentLanguageCode = requestLanguage?.Code ?? defaultLanguage?.Code;
 
-            var speakerCollaboratorApiDto = await this.collaboratorRepo.FindSpeakerApi(
+            var speakerCollaboratorApiDto = await this.collaboratorRepo.FindSpeakerPublicApiDtoByUid(
                 request?.Uid ?? Guid.Empty,
                 edition.Id,
                 Domain.Constants.CollaboratorType.Speaker);
@@ -299,80 +300,29 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00004", Message = "Speaker not found." } });
             }
 
-            #region Social networks
-
-            var socialNetworks = new List<SpeakerSocialNetworkApiResponse>();
-
-            if (!string.IsNullOrEmpty(speakerCollaboratorApiDto.Linkedin))
-            {
-                socialNetworks.Add(new SpeakerSocialNetworkApiResponse { Slug = "LinkedIn", Url = speakerCollaboratorApiDto.Linkedin.GetLinkedinUrl() });
-            }
-
-            if (!string.IsNullOrEmpty(speakerCollaboratorApiDto.Twitter))
-            {
-                socialNetworks.Add(new SpeakerSocialNetworkApiResponse { Slug = "Twitter", Url = speakerCollaboratorApiDto.Twitter.GetTwitterUrl() });
-            }
-
-            if (!string.IsNullOrEmpty(speakerCollaboratorApiDto.Instagram))
-            {
-                socialNetworks.Add(new SpeakerSocialNetworkApiResponse { Slug = "Instagram", Url = speakerCollaboratorApiDto.Instagram.GetInstagramUrl() });
-            }
-
-            if (!string.IsNullOrEmpty(speakerCollaboratorApiDto.Youtube))
-            {
-                socialNetworks.Add(new SpeakerSocialNetworkApiResponse { Slug = "YouTube", Url = speakerCollaboratorApiDto.Youtube.GetUrlWithProtocol() });
-            }
-
-            #endregion
-
             return await Json(new SpeakerApiResponse
             {
                 Status = ApiStatus.Success,
                 Error = null,
+                
                 Uid = speakerCollaboratorApiDto.Uid,
                 BadgeName = speakerCollaboratorApiDto.BadgeName?.Trim(),
                 Name = speakerCollaboratorApiDto.Name?.Trim(),
                 HighlightPosition = speakerCollaboratorApiDto.ApiHighlightPosition,
                 Picture = speakerCollaboratorApiDto.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, speakerCollaboratorApiDto.Uid, speakerCollaboratorApiDto.ImageUploadDate, true, "_500x500") : null,
-                MiniBio = speakerCollaboratorApiDto.GetCollaboratorMiniBioBaseDtoByLanguageCode(request?.Culture)?.Value?.Trim(),
-                JobTitle = speakerCollaboratorApiDto.GetCollaboratorJobTitleBaseDtoByLanguageCode(request?.Culture)?.Value?.Trim(),
+                MiniBio = speakerCollaboratorApiDto.GetCollaboratorMiniBioBaseDtoByLanguageCode(currentLanguageCode)?.Value?.Trim(),
+                JobTitle = speakerCollaboratorApiDto.GetCollaboratorJobTitleBaseDtoByLanguageCode(currentLanguageCode)?.Value?.Trim(),
                 Site = speakerCollaboratorApiDto.Website?.GetUrlWithProtocol(),
-                SocialNetworks = socialNetworks,
-                Tracks = speakerCollaboratorApiDto.TracksDtos?.Select(td => new TrackBaseApiResponse
-                {
-                    Uid = td.Track.Uid,
-                    Name = td.Track.GetNameByLanguageCode(request?.Culture),
-                    Color = td.Track.Color
-                })?.OrderBy(t => t.Name)?.ToList(),
+                SocialNetworks = speakerCollaboratorApiDto.GetSocialNetworks(),
+                Tracks = speakerCollaboratorApiDto.GetTrackBaseApiResponseByLanguageCode(currentLanguageCode),
                 Companies = speakerCollaboratorApiDto.OrganizationsDtos?.Select(od => new SpeakerOrganizationApiResponse
                 {
                     Uid = od.Uid,
                     TradeName = od.TradeName,
                     CompanyName = od.CompanyName,
                     Picture = od.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, od.Uid, od.ImageUploadDate, true) : null
-                })?.OrderBy(c => c.TradeName)?.ToList(),
-                Conferences = speakerCollaboratorApiDto.ConferencesDtos?.Select(c => new SpeakerConferenceApiResponse
-                {
-                    Uid = c.Conference.Uid,
-                    Event = new EditionEventBaseApiResponse
-                    {
-                        Uid = c.EditionEvent.Uid,
-                        Name = c.EditionEvent.Name.GetSeparatorTranslation(requestLanguage?.Code ?? defaultLanguage?.Code, Language.Separator)?.Trim()
-                    },
-                    Title = c.GetConferenceTitleDtoByLanguageCode(requestLanguage?.Code)?.ConferenceTitle?.Value?.Trim() ??
-                            c.GetConferenceTitleDtoByLanguageCode(defaultLanguage?.Code)?.ConferenceTitle?.Value?.Trim(),
-                    Synopsis = c.GetConferenceSynopsisDtoByLanguageCode(requestLanguage?.Code)?.ConferenceSynopsis?.Value?.Trim() ??
-                               c.GetConferenceSynopsisDtoByLanguageCode(defaultLanguage?.Code)?.ConferenceSynopsis?.Value?.Trim(),
-                    Date = c.Conference.StartDate.ToBrazilTimeZone().ToString("yyyy-MM-dd"),
-                    StartTime = c.Conference.StartDate.ToBrazilTimeZone().ToString("HH:mm"),
-                    EndTime = c.Conference.EndDate.ToBrazilTimeZone().ToString("HH:mm"),
-                    DurationMinutes = (int)((c.Conference.EndDate - c.Conference.StartDate).TotalMinutes),
-                    Room = c.RoomDto != null ? new RoomBaseApiResponse
-                    {
-                        Uid = c.RoomDto.Room.Uid,
-                        Name = c.RoomDto.GetRoomNameByLanguageCode(requestLanguage?.Code ?? defaultLanguage?.Code)?.RoomName?.Value?.Trim()
-                    } : null
-                })?.ToList()
+                })?.OrderBy(c => c.TradeName),
+                Conferences = speakerCollaboratorApiDto.GetConferencesApiResponseByLanguageCode(currentLanguageCode)
             });
         }
 

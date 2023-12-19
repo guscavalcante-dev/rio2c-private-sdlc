@@ -34,7 +34,6 @@ namespace PlataformaRio2C.Web.Admin
         /// <param name="app">The application.</param>
         public void Configuration(IAppBuilder app)
         {
-            //Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("pt-BR");
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             SimpleInjectorInitializer.Initialize();

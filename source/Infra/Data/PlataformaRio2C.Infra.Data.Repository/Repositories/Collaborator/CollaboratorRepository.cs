@@ -577,6 +577,33 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
     #endregion
 
+    #region SpeakerCollaboratorApiDto IQueryable Extensions
+
+    /// <summary>
+    /// SpeakerCollaboratorApiDtoIQueryableExtensions
+    /// </summary>
+    internal static class SpeakerCollaboratorApiDtoIQueryableExtensions
+    {
+        /// <summary>
+        /// Converts to listpagedasync.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        internal static async Task<IPagedList<SpeakerCollaboratorApiDto>> ToListPagedAsync(this IQueryable<SpeakerCollaboratorApiDto> query, int page, int pageSize)
+        {
+            // Page the list
+            var pagedList = await query.ToPagedListAsync(page, pageSize);
+            if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
+                pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
+
+            return pagedList;
+        }
+    }
+
+    #endregion
+
     /// <summary>CollaboratorRepository</summary>
     public class CollaboratorRepository : Repository<PlataformaRio2CContext, Collaborator>, ICollaboratorRepository
     {
@@ -2282,7 +2309,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
-        /// Finds all speakers API paged.
+        /// Finds all speakers public API paged.
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="keywords">The keywords.</param>
@@ -2292,10 +2319,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="roomsUids">The rooms uids.</param>
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
         /// <param name="modifiedAfterDate">The modified after date.</param>
+        /// <param name="showDetails">if set to <c>true</c> [show details].</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<CollaboratorApiListDto>> FindAllSpeakersApiPaged(
+        public async Task<IPagedList<SpeakerCollaboratorApiDto>> FindAllSpeakersPublicApiPaged(
             int editionId,
             string keywords,
             int? highlights,
@@ -2304,6 +2332,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             List<Guid?> roomsUids,
             string collaboratorTypeName,
             DateTime? modifiedAfterDate,
+            bool showDetails,
             int page,
             int pageSize)
         {
@@ -2317,80 +2346,199 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByConferencesRoomsUids(roomsUids)
                                 .FindByCreateOrUpdateDate(modifiedAfterDate);
 
-            return await query
-                            .Select(c => new CollaboratorApiListDto
-                            {
-                                Uid = c.Uid,
-                                BadgeName = c.Badge,
-                                Name = c.FirstName + " " + c.LastNames,
-                                ApiHighlightPosition = c.AttendeeCollaborators.Where(ac => !ac.IsDeleted && ac.EditionId == editionId).FirstOrDefault()
-                                                        .AttendeeCollaboratorTypes.Where(act => !act.IsDeleted && act.CollaboratorType.Name == collaboratorTypeName).FirstOrDefault()
-                                                        .ApiHighlightPosition,
-                                CreateDate = c.CreateDate,
-                                UpdateDate = c.UpdateDate,
-                                ImageUploadDate = c.ImageUploadDate,
-                                JobTitlesDtos = c.JobTitles.Where(jb => !jb.IsDeleted).Select(d => new CollaboratorJobTitleBaseDto
-                                {
-                                    Id = d.Id,
-                                    Uid = d.Uid,
-                                    Value = d.Value,
-                                    LanguageDto = new LanguageBaseDto
-                                    {
-                                        Id = d.Language.Id,
-                                        Uid = d.Language.Uid,
-                                        Name = d.Language.Name,
-                                        Code = d.Language.Code
-                                    }
-                                }),
-                                ConferencesDtos = c.AttendeeCollaborators
-                                                            .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
-                                                            .SelectMany(ac => ac.ConferenceParticipants
-                                                                                    .Where(cp => !cp.IsDeleted && !cp.Conference.IsDeleted)
-                                                                                    .Select(cp => new ConferenceDto
+            IQueryable<SpeakerCollaboratorApiDto> filteredQuery;
+            if (showDetails)
+            {
+                #region Detailed Query
+
+                filteredQuery = query.Select(c => new SpeakerCollaboratorApiDto
+                {
+                    Uid = c.Uid,
+                    BadgeName = c.Badge,
+                    Name = c.FirstName + " " + c.LastNames,
+                    ApiHighlightPosition = c.AttendeeCollaborators
+                                                            .FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                                .AttendeeCollaboratorTypes
+                                                                    .FirstOrDefault(act => !act.IsDeleted && act.CollaboratorType.Name == collaboratorTypeName)
+                                                                        .ApiHighlightPosition,
+                    ImageUploadDate = c.ImageUploadDate,
+                    Website = c.Website,
+                    Linkedin = c.Linkedin,
+                    Twitter = c.Twitter,
+                    Instagram = c.Instagram,
+                    Youtube = c.Youtube,
+                    CreateDate = c.CreateDate,
+                    UpdateDate = c.UpdateDate,
+                    MiniBiosDtos = c.MiniBios
+                                        .Where(mb => !mb.IsDeleted)
+                                        .Select(d => new CollaboratorMiniBioBaseDto
+                                        {
+                                            Id = d.Id,
+                                            Uid = d.Uid,
+                                            Value = d.Value,
+                                            LanguageDto = new LanguageBaseDto
+                                            {
+                                                Id = d.Language.Id,
+                                                Uid = d.Language.Uid,
+                                                Name = d.Language.Name,
+                                                Code = d.Language.Code
+                                            }
+                                        }),
+                    JobTitlesDtos = c.JobTitles
+                                        .Where(jb => !jb.IsDeleted)
+                                        .Select(d => new CollaboratorJobTitleBaseDto
+                                        {
+                                            Id = d.Id,
+                                            Uid = d.Uid,
+                                            Value = d.Value,
+                                            LanguageDto = new LanguageBaseDto
+                                            {
+                                                Id = d.Language.Id,
+                                                Uid = d.Language.Uid,
+                                                Name = d.Language.Name,
+                                                Code = d.Language.Code
+                                            }
+                                        }),
+                    OrganizationsDtos = c.AttendeeCollaborators
+                                            .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                            .SelectMany(ac => ac.AttendeeOrganizationCollaborators
+                                                                    .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted && !aoc.AttendeeOrganization.Organization.IsDeleted)
+                                                                    .Select(aoc => new OrganizationApiListDto
+                                                                    {
+                                                                        Uid = aoc.AttendeeOrganization.Organization.Uid,
+                                                                        Name = aoc.AttendeeOrganization.Organization.Name,
+                                                                        CompanyName = aoc.AttendeeOrganization.Organization.CompanyName,
+                                                                        TradeName = aoc.AttendeeOrganization.Organization.TradeName,
+                                                                        ImageUploadDate = aoc.AttendeeOrganization.Organization.ImageUploadDate
+                                                                    })),
+                    TracksDtos = c.AttendeeCollaborators
+                                            .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                            .SelectMany(ac => ac.ConferenceParticipants
+                                                                    .Where(cp => !cp.IsDeleted && !cp.Conference.IsDeleted)
+                                                                    .SelectMany(cp => cp.Conference.ConferenceTracks
+                                                                                            .Where(ct => !ct.IsDeleted && !ct.Track.IsDeleted)
+                                                                                            .Select(ct => new TrackDto
+                                                                                            {
+                                                                                                Track = ct.Track
+                                                                                            }))).Distinct(),
+                    ConferencesDtos = c.AttendeeCollaborators
+                                                        .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                        .SelectMany(ac => ac.ConferenceParticipants
+                                                                                .Where(cp => !cp.IsDeleted && !cp.Conference.IsDeleted)
+                                                                                .Select(cp => new ConferenceDto
+                                                                                {
+                                                                                    Uid = cp.Conference.Uid,
+                                                                                    StartDate = cp.Conference.StartDate,
+                                                                                    EndDate = cp.Conference.EndDate,
+                                                                                    EditionEvent = cp.Conference.EditionEvent,
+                                                                                    ConferenceTitleDtos = cp.Conference.ConferenceTitles.Where(ct => !ct.IsDeleted).Select(ct => new ConferenceTitleDto
                                                                                     {
-                                                                                        Uid = cp.Conference.Uid,
-                                                                                        StartDate = cp.Conference.StartDate,
-                                                                                        EndDate = cp.Conference.EndDate,
-                                                                                        ConferenceTitleDtos = cp.Conference.ConferenceTitles.Where(ct => !ct.IsDeleted).Select(ct => new ConferenceTitleDto
+                                                                                        ConferenceTitle = ct,
+                                                                                        LanguageDto = new LanguageBaseDto
                                                                                         {
-                                                                                            ConferenceTitle = ct,
-                                                                                            LanguageDto = new LanguageBaseDto
-                                                                                            {
-                                                                                                Id = ct.Language.Id,
-                                                                                                Uid = ct.Language.Uid,
-                                                                                                Name = ct.Language.Name,
-                                                                                                Code = ct.Language.Code
-                                                                                            }
-                                                                                        }),
-                                                                                        RoomDto = new RoomDto
-                                                                                        {
-                                                                                            Uid = cp.Conference.Room.Uid,
-                                                                                            RoomNameDtos = cp.Conference.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
-                                                                                            {
-                                                                                                RoomName = rn,
-                                                                                                LanguageDto = new LanguageDto
-                                                                                                {
-                                                                                                    Id = rn.Language.Id,
-                                                                                                    Uid = rn.Language.Uid,
-                                                                                                    Code = rn.Language.Code
-                                                                                                }
-                                                                                            })
+                                                                                            Id = ct.Language.Id,
+                                                                                            Uid = ct.Language.Uid,
+                                                                                            Name = ct.Language.Name,
+                                                                                            Code = ct.Language.Code
                                                                                         }
-                                                                                    }))
-                            })
+                                                                                    }),
+                                                                                    RoomDto = new RoomDto
+                                                                                    {
+                                                                                        Uid = cp.Conference.Room.Uid,
+                                                                                        RoomNameDtos = cp.Conference.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
+                                                                                        {
+                                                                                            RoomName = rn,
+                                                                                            LanguageDto = new LanguageDto
+                                                                                            {
+                                                                                                Id = rn.Language.Id,
+                                                                                                Uid = rn.Language.Uid,
+                                                                                                Code = rn.Language.Code
+                                                                                            }
+                                                                                        })
+                                                                                    },
+                                                                                    ConferenceSynopsisDtos = cp.Conference.ConferenceSynopses.Where(cs => !cs.IsDeleted).Select(cs => new ConferenceSynopsisDto
+                                                                                    {
+                                                                                        ConferenceSynopsis = cs,
+                                                                                        LanguageDto = new LanguageBaseDto
+                                                                                        {
+                                                                                            Id = cs.Language.Id,
+                                                                                            Uid = cs.Language.Uid,
+                                                                                            Name = cs.Language.Name,
+                                                                                            Code = cs.Language.Code
+                                                                                        }
+                                                                                    })
+                                                                                })),
+                });
+
+                #endregion
+            }
+            else
+            {
+                #region Simple Query
+
+                filteredQuery = query.Select(c => new SpeakerCollaboratorApiDto
+                {
+                    Uid = c.Uid,
+                    BadgeName = c.Badge,
+                    Name = c.FirstName + " " + c.LastNames,
+                    ApiHighlightPosition = c.AttendeeCollaborators
+                                                            .FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                                .AttendeeCollaboratorTypes
+                                                                    .FirstOrDefault(act => !act.IsDeleted && act.CollaboratorType.Name == collaboratorTypeName)
+                                                                        .ApiHighlightPosition,
+                    CreateDate = c.CreateDate,
+                    UpdateDate = c.UpdateDate,
+                    ImageUploadDate = c.ImageUploadDate,
+                    Website = c.Website,
+                    MiniBiosDtos = c.MiniBios
+                                        .Where(mb => !mb.IsDeleted)
+                                        .Select(d => new CollaboratorMiniBioBaseDto
+                                        {
+                                            Id = d.Id,
+                                            Uid = d.Uid,
+                                            Value = d.Value,
+                                            LanguageDto = new LanguageBaseDto
+                                            {
+                                                Id = d.Language.Id,
+                                                Uid = d.Language.Uid,
+                                                Name = d.Language.Name,
+                                                Code = d.Language.Code
+                                            }
+                                        }),
+                    JobTitlesDtos = c.JobTitles
+                                        .Where(jb => !jb.IsDeleted)
+                                        .Select(d => new CollaboratorJobTitleBaseDto
+                                        {
+                                            Id = d.Id,
+                                            Uid = d.Uid,
+                                            Value = d.Value,
+                                            LanguageDto = new LanguageBaseDto
+                                            {
+                                                Id = d.Language.Id,
+                                                Uid = d.Language.Uid,
+                                                Name = d.Language.Name,
+                                                Code = d.Language.Code
+                                            }
+                                        })
+                });
+
+                #endregion
+            }
+
+            return await filteredQuery
                             .OrderBy(o => o.ApiHighlightPosition ?? 99)
                             .ThenBy(o => o.BadgeName)
                             .ToListPagedAsync(page, pageSize);
         }
 
         /// <summary>
-        /// Finds the speaker API.
+        /// Finds the speaker public API dto by uid.
         /// </summary>
         /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
         /// <returns></returns>
-        public async Task<SpeakerCollaboratorDto> FindSpeakerApi(Guid collaboratorUid, int editionId, string collaboratorTypeName)
+        public async Task<SpeakerCollaboratorApiDto> FindSpeakerPublicApiDtoByUid(Guid collaboratorUid, int editionId, string collaboratorTypeName)
         {
             var query = this.GetBaseQuery()
                                 .FindByUid(collaboratorUid)
@@ -2398,7 +2546,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .IsApiDisplayEnabled(editionId, collaboratorTypeName);
 
             return await query
-                            .Select(c => new SpeakerCollaboratorDto
+                            .Select(c => new SpeakerCollaboratorApiDto
                             {
                                 Uid = c.Uid,
                                 BadgeName = c.Badge,
@@ -2412,6 +2560,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 Twitter = c.Twitter,
                                 Instagram = c.Instagram,
                                 Youtube = c.Youtube,
+                                CreateDate = c.CreateDate,
+                                UpdateDate = c.UpdateDate,
                                 MiniBiosDtos = c.MiniBios.Where(mb => !mb.IsDeleted).Select(d => new CollaboratorMiniBioBaseDto
                                 {
                                     Id = d.Id,
@@ -2466,7 +2616,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     .Where(cp => !cp.IsDeleted && !cp.Conference.IsDeleted)
                                                                                     .Select(cp => new ConferenceDto
                                                                                     {
-                                                                                        Conference = cp.Conference,
+                                                                                        Uid = cp.Conference.Uid,
+                                                                                        StartDate = cp.Conference.StartDate,
+                                                                                        EndDate = cp.Conference.EndDate,
                                                                                         EditionEvent = cp.Conference.EditionEvent,
                                                                                         RoomDto = new RoomDto
                                                                                         {
@@ -2505,8 +2657,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                             }
                                                                                         })
                                                                                     })),
-                                CreateDate = c.CreateDate,
-                                UpdateDate = c.UpdateDate,
                             })
                             .OrderBy(o => o.ApiHighlightPosition ?? 99)
                             .ThenBy(o => o.BadgeName)

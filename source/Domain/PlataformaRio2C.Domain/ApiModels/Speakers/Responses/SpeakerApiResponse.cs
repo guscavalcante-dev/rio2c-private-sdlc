@@ -14,6 +14,7 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Domain.ApiModels
 {
@@ -45,16 +46,16 @@ namespace PlataformaRio2C.Domain.ApiModels
         public string Site { get; set; }
 
         [JsonProperty("socialNetworks", Order = 700)]
-        public List<SpeakerSocialNetworkApiResponse> SocialNetworks { get; set; }
+        public IEnumerable<SpeakerSocialNetworkApiResponse> SocialNetworks { get; set; }
 
         [JsonProperty("tracks", Order = 701)]
-        public List<TrackBaseApiResponse> Tracks { get; set; }
+        public IEnumerable<TrackBaseApiResponse> Tracks { get; set; }
 
         [JsonProperty("companies", Order = 702)]
-        public List<SpeakerOrganizationApiResponse> Companies { get; set; }
+        public IEnumerable<SpeakerOrganizationApiResponse> Companies { get; set; }
 
         [JsonProperty("conferences", Order = 703)]
-        public List<SpeakerConferenceApiResponse> Conferences { get; set; }
+        public IEnumerable<SpeakerConferenceApiResponse> Conferences { get; set; }
     }
 
     /// <summary>SpeakerSocialNetworkApiResponse</summary>
@@ -112,27 +113,5 @@ namespace PlataformaRio2C.Domain.ApiModels
 
         [JsonProperty("durationMinutes", Order = 109)]
         public int DurationMinutes { get; set; }
-    }
-
-    /// <summary>SpeakerConferenceBaseApiResponse</summary>
-    public class SpeakerConferenceBaseApiResponse
-    {
-        [JsonProperty("uid", Order = 101)]
-        public Guid Uid { get; set; }
-
-        [JsonProperty("title", Order = 103)]
-        public string Title { get; set; }
-
-        [JsonProperty("date", Order = 106)]
-        public string Date { get; set; }
-
-        [JsonProperty("startTime", Order = 107)]
-        public string StartTime { get; set; }
-
-        [JsonProperty("endTime", Order = 108)]
-        public string EndTime { get; set; }
-
-        [JsonProperty("room", Order = 200)]
-        public RoomBaseApiResponse Room { get; set; }
     }
 }
