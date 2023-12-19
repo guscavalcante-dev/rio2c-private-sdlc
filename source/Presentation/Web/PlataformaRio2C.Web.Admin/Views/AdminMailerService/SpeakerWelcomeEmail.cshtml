@@ -15,14 +15,12 @@
         <span>
             Seja bem-vindo(a) ao <span style="font-weight: 800;">Rio2C</span> - o maior encontro de criatividade da América Latina. Agradecemos antecipadamente a sua presença
             na edição <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span>
-            (dias 11 a 16 de Abril de 2023).
-            @*(dias @Model.Edition.StartDate.ToBrazilTimeZone().Day a @Model.Edition.EndDate.ToBrazilTimeZone().Day de @Model.Edition.EndDate.ToBrazilTimeZone().ToString("MMMM", brCulture), @Model.Edition.EndDate.ToBrazilTimeZone().Year).*@
+            (dias 04 a 09 de Junho de @Model.Edition.UrlCode).
         </span><br />
-               <span style="font-style: italic; color: @defaultFontColor;">
-                   Welcome to <span style="font-weight: 800;">Rio2C</span> - the largest creativity meeting in Latin America. hank  you  in advance for your presence at the <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span> edition
-                   (April 11<sup>th</sup> – 16<sup>th</sup>, 2023).
-                   @*(@Model.Edition.EndDate.ToBrazilTimeZone().ToString("MMMM", usCulture) @Model.Edition.StartDate.ToBrazilTimeZone().Day<sup>@Model.Edition.StartDate.ToBrazilTimeZone().GetDaySuffix()</sup> – @Model.Edition.EndDate.ToBrazilTimeZone().Day<sup>@Model.Edition.EndDate.ToBrazilTimeZone().GetDaySuffix()</sup>, @Model.Edition.EndDate.ToBrazilTimeZone().Year).*@
-               </span>
+        <span style="font-style: italic; color: @defaultFontColor;">
+            Welcome to <span style="font-weight: 800;">Rio2C</span> - the largest creativity meeting in Latin America. hank  you  in advance for your presence at the <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span> edition
+            (June 04<sup>th</sup> – 09<sup>th</sup>, @Model.Edition.UrlCode).
+        </span>
     </p>
     <p>
         <span>

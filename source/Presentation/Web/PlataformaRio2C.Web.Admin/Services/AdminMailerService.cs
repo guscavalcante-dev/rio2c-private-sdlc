@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-29-2023
+// Last Modified On : 12-19-2023
 // ***********************************************************************
 // <copyright file="AdminMailerService.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -192,7 +192,7 @@ namespace PlataformaRio2C.Web.Admin.Services
 
             return Populate(x =>
             {
-                x.Subject = this.GetSubject(string.Format("Complete seu cadastro na Comissão de Inovação do {0} | Complete your registration at {0} Innovation Commission", cmd.Edition.Name), null);
+                x.Subject = this.GetSubject(string.Format("Complete seu cadastro na Comissão de Startup do {0} | Complete your registration at {0} Startup Commission", cmd.Edition.Name), null);
                 x.ViewName = "InnovationCommissionWelcomeEmail";
                 x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
                 x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
