@@ -1002,7 +1002,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="organizationUid">The organization uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<OrganizationDto> FindPlayerPublicApiDtoByUid(Guid organizationUid, int editionId)
+        public async Task<PlayerOrganizationApiDto> FindPlayerPublicApiDtoByUid(Guid organizationUid, int editionId)
         {
             Guid playerOrganizationTypeUid = OrganizationType.Player.Uid;
 
@@ -1012,16 +1012,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     .IsApiDisplayEnabled(editionId, playerOrganizationTypeUid);
 
             return await query
-                            .Select(o => new OrganizationDto
+                            .Select(o => new PlayerOrganizationApiDto
                             {
                                 Uid = o.Uid,
                                 CompanyName = o.CompanyName,
                                 TradeName = o.TradeName,
-                                Website = o.Website,
-                                Linkedin = o.Linkedin,
-                                Twitter = o.Twitter,
-                                Instagram = o.Instagram,
-                                Youtube = o.Youtube,
                                 ImageUploadDate = o.ImageUploadDate,
                                 OrganizationDescriptionBaseDtos = o.OrganizationDescriptions.Select(d => new OrganizationDescriptionDto
                                 {
@@ -1036,7 +1031,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         Code = d.Language.Code
                                     }
                                 }),
-                                OrganizationInterestDtos = o.OrganizationInterests.Where(ota => !ota.IsDeleted)
+                                OrganizationInterestDtos = o.OrganizationInterests
+                                                                .Where(ota => !ota.IsDeleted)
                                                                 .OrderBy(oi => oi.Interest.InterestGroup.DisplayOrder)
                                                                 .ThenBy(oi => oi.Interest.DisplayOrder)
                                                                 .Select(oi => new OrganizationInterestDto

@@ -114,26 +114,4 @@ namespace PlataformaRio2C.Domain.ApiModels
         [JsonProperty("durationMinutes", Order = 109)]
         public int DurationMinutes { get; set; }
     }
-
-    /// <summary>SpeakerConferenceBaseApiResponse</summary>
-    public class SpeakerConferenceBaseApiResponse
-    {
-        [JsonProperty("uid", Order = 101)]
-        public Guid Uid { get; set; }
-
-        [JsonProperty("title", Order = 103)]
-        public string Title { get; set; }
-
-        [JsonProperty("date", Order = 106)]
-        public string Date { get; set; }
-
-        [JsonProperty("startTime", Order = 107)]
-        public string StartTime { get; set; }
-
-        [JsonProperty("endTime", Order = 108)]
-        public string EndTime { get; set; }
-
-        [JsonProperty("room", Order = 200)]
-        public RoomBaseApiResponse Room { get; set; }
-    }
 }

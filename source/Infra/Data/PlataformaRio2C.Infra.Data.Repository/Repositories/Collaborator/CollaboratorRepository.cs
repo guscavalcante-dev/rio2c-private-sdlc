@@ -2489,19 +2489,37 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     CreateDate = c.CreateDate,
                     UpdateDate = c.UpdateDate,
                     ImageUploadDate = c.ImageUploadDate,
-                    JobTitlesDtos = c.JobTitles.Where(jb => !jb.IsDeleted).Select(d => new CollaboratorJobTitleBaseDto
-                    {
-                        Id = d.Id,
-                        Uid = d.Uid,
-                        Value = d.Value,
-                        LanguageDto = new LanguageBaseDto
-                        {
-                            Id = d.Language.Id,
-                            Uid = d.Language.Uid,
-                            Name = d.Language.Name,
-                            Code = d.Language.Code
-                        }
-                    })
+                    Website = c.Website,
+                    MiniBiosDtos = c.MiniBios
+                                        .Where(mb => !mb.IsDeleted)
+                                        .Select(d => new CollaboratorMiniBioBaseDto
+                                        {
+                                            Id = d.Id,
+                                            Uid = d.Uid,
+                                            Value = d.Value,
+                                            LanguageDto = new LanguageBaseDto
+                                            {
+                                                Id = d.Language.Id,
+                                                Uid = d.Language.Uid,
+                                                Name = d.Language.Name,
+                                                Code = d.Language.Code
+                                            }
+                                        }),
+                    JobTitlesDtos = c.JobTitles
+                                        .Where(jb => !jb.IsDeleted)
+                                        .Select(d => new CollaboratorJobTitleBaseDto
+                                        {
+                                            Id = d.Id,
+                                            Uid = d.Uid,
+                                            Value = d.Value,
+                                            LanguageDto = new LanguageBaseDto
+                                            {
+                                                Id = d.Language.Id,
+                                                Uid = d.Language.Uid,
+                                                Name = d.Language.Name,
+                                                Code = d.Language.Code
+                                            }
+                                        })
                 });
 
                 #endregion
@@ -2514,13 +2532,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
-        /// Finds the speaker API.
+        /// Finds the speaker public API dto by uid.
         /// </summary>
         /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
         /// <returns></returns>
-        public async Task<SpeakerCollaboratorApiDto> FindSpeakerApi(Guid collaboratorUid, int editionId, string collaboratorTypeName)
+        public async Task<SpeakerCollaboratorApiDto> FindSpeakerPublicApiDtoByUid(Guid collaboratorUid, int editionId, string collaboratorTypeName)
         {
             var query = this.GetBaseQuery()
                                 .FindByUid(collaboratorUid)

@@ -21,37 +21,6 @@ namespace PlataformaRio2C.Domain.ApiModels
     public class PlayersApiResponse : ListBaseModel
     {
         [JsonProperty("players")]
-        public List<PlayersApiListItem> Players { get; set; }
-    }
-
-    /// <summary>PlayersApiListItem</summary>
-    public class PlayersApiListItem
-    {
-        [JsonProperty("uid", Order = 100)]
-        public Guid Uid { get; set; }
-
-        [JsonProperty("name", Order = 200)]
-        public string Name { get; set; }
-
-        [JsonProperty("companyName", Order = 300)]
-        public string CompanyName { get; set; }
-
-        [JsonProperty("tradeName", Order = 400)]
-        public string TradeName { get; set; }
-        
-        [JsonProperty("picture", Order = 500)]
-        public string Picture { get; set; }
-
-        [JsonProperty("highlightPosition", Order = 600)]
-        public int? HighlightPosition { get; set; }
-
-        [JsonProperty("descriptions", Order = 700)]
-        public List<LanguageValueApiResponse> DescriptionsApiResponses { get; set; }
-
-        [JsonProperty("interestsGroups", Order = 800)]
-        public List<InterestGroupApiResponse> InterestGroupApiResponses { get; set; }
-
-        [JsonProperty("collaborators", Order = 900)]
-        public List<PlayerCollaboratorApiResponse> CollaboratorsApiResponses { get; set; }
+        public List<PlayerApiResponse> Players { get; set; }
     }
 }

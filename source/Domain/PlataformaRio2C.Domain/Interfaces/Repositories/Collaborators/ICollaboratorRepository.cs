@@ -59,7 +59,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<IPagedList<CollaboratorApiListDto>> FindAllSpeakersApiListDtoPaged(int editionId, string keywords, bool filterByProjectsInNegotiation, string collaboratorTypeName, bool showAllParticipants, int page, int pageSize);
         Task<IPagedList<CollaboratorDto>> FindAllSpeakersByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, bool showAllParticipants, bool? showHighlights, int? editionId, bool exportToExcel = false);
         Task<IPagedList<SpeakerCollaboratorApiDto>> FindAllSpeakersPublicApiPaged(int editionId, string keywords, int? highlights, List<Guid?> conferencesUids, List<DateTimeOffset?> conferencesDates, List<Guid?> roomsUids, string collaboratorTypeName, DateTime? modifiedAfterDate, bool showDetails, int page, int pageSize);
-        Task<SpeakerCollaboratorApiDto> FindSpeakerApi(Guid collaboratorUid, int editionId, string collaboratorTypeName);
+        Task<SpeakerCollaboratorApiDto> FindSpeakerPublicApiDtoByUid(Guid collaboratorUid, int editionId, string collaboratorTypeName);
 
         #endregion
 

@@ -21,6 +21,6 @@ namespace PlataformaRio2C.Domain.ApiModels
     public class SpeakersApiResponse : ListBaseModel
     {
         [JsonProperty("speakers")]
-        public List<SpeakerApiResponse> Speakers { get; set; }
+        public List<SpeakerApiResponse> SpeakerApiResponses { get; set; }
     }
 }

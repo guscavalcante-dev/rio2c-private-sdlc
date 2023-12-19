@@ -119,35 +119,17 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 PageCount = playerOrganizationApiDtos.PageCount,
                 PageNumber = playerOrganizationApiDtos.PageNumber,
                 PageSize = playerOrganizationApiDtos.PageSize,
-                Players = playerOrganizationApiDtos?.Select(o => new PlayersApiListItem
+                Players = playerOrganizationApiDtos?.Select(dto => new PlayerApiResponse
                 {
-                    Uid = o.Uid,
-                    Name = o.TradeName,
-                    TradeName = o.TradeName,
-                    CompanyName = o.CompanyName,
-                    HighlightPosition = o.ApiHighlightPosition,
-                    Picture = o.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, o.Uid, o.ImageUploadDate, true) : null,
-                    DescriptionsApiResponses = o.OrganizationDescriptionBaseDtos?.Select(dto => new LanguageValueApiResponse
-                    {
-                        Culture = dto.LanguageDto.Code,
-                        Value = HttpUtility.HtmlDecode(dto.Value)
-                    })?.ToList(),
-                    InterestGroupApiResponses = o.OrganizationInterestDtos?.GroupBy(dto => new 
-                    {
-                        InterestGroupId = dto.InterestGroup.Id,
-                        InterestGroupUid = dto.InterestGroup.Uid,
-                        InterestGroupName = dto.InterestGroup.Name
-                    })?.Select(ig => new InterestGroupApiResponse
-                    {
-                        Uid = ig.Key.InterestGroupUid,
-                        Name = ig.Key.InterestGroupName,
-                        InterestsApiResponses = ig.Select(i => new InterestApiResponse
-                        {
-                            Uid = i.Interest.Uid,
-                            Name = i.Interest.Name
-                        })?.ToList()
-                    })?.ToList(),
-                    CollaboratorsApiResponses = o.CollaboratorsDtos?.Select(cd => new PlayerCollaboratorApiResponse
+                    Uid = dto.Uid,
+                    Name = dto.TradeName,
+                    TradeName = dto.TradeName,
+                    CompanyName = dto.CompanyName,
+                    HighlightPosition = dto.ApiHighlightPosition,
+                    Picture = dto.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, dto.Uid, dto.ImageUploadDate, true) : null,
+                    DescriptionsApiResponses = dto.GetDescriptionsApiResponses(),
+                    InterestGroupApiResponses = dto.GetInterestGroupApiResponses(),
+                    PlayerCollaboratorApiResponses = dto.CollaboratorsDtos?.Select(cd => new PlayerCollaboratorApiResponse
                     {
                         Uid = cd.Uid,
                         BadgeName = cd.Badge,
@@ -163,7 +145,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                             Culture = jtd.LanguageDto.Code,
                             Value = HttpUtility.HtmlDecode(jtd.Value)
                         })?.ToList()
-                    })?.ToList()
+                    })
                 })?.ToList()
             });
         }
@@ -271,45 +253,29 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." } });
             }
 
-            var organizationApiDto = await this.organizationRepo.FindPlayerPublicApiDtoByUid(
+            var playerOrganizationApiDto = await this.organizationRepo.FindPlayerPublicApiDtoByUid(
                 request?.Uid ?? Guid.Empty,
                 edition.Id);
-            if (organizationApiDto == null)
+            if (playerOrganizationApiDto == null)
             {
                 return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "Player not found." } });
             }
-
-            var interestsGroups = organizationApiDto?.OrganizationInterestDtos?.GroupBy(oid => new
-            {
-                InterestGroupId = oid.InterestGroup.Id,
-                InterestGroupUid = oid.InterestGroup.Uid,
-                InterestGroupName = oid.InterestGroup.Name
-            });
 
             return await Json(new PlayerApiResponse
             {
                 Status = ApiStatus.Success,
                 Error = null,
-                Uid = organizationApiDto.Uid,
-                TradeName = organizationApiDto.TradeName,
-                CompanyName = organizationApiDto.CompanyName,
-                Picture = organizationApiDto.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, organizationApiDto.Uid, organizationApiDto.ImageUploadDate, true) : null,
-                DescriptionsApiResponses = organizationApiDto.OrganizationDescriptionBaseDtos?.Select(dd => new LanguageValueApiResponse
+                Uid = playerOrganizationApiDto.Uid,
+                TradeName = playerOrganizationApiDto.TradeName,
+                CompanyName = playerOrganizationApiDto.CompanyName,
+                Picture = playerOrganizationApiDto.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, playerOrganizationApiDto.Uid, playerOrganizationApiDto.ImageUploadDate, true) : null,
+                DescriptionsApiResponses = playerOrganizationApiDto.OrganizationDescriptionBaseDtos?.Select(dd => new LanguageValueApiResponse
                 {
                     Culture = dd.LanguageDto.Code,
                     Value = HttpUtility.HtmlDecode(dd.Value)
                 })?.ToList(),
-                InterestGroupApiResponses = interestsGroups?.Select(ig => new InterestGroupApiResponse
-                {
-                    Uid = ig.Key.InterestGroupUid,
-                    Name = ig.Key.InterestGroupName,
-                    InterestsApiResponses = ig.Select(i => new InterestApiResponse
-                    {
-                        Uid = i.Interest.Uid,
-                        Name = i.Interest.Name
-                    })?.ToList()
-                })?.ToList(),
-                CollaboratorsApiResponses = organizationApiDto.CollaboratorsDtos?.Select(cd => new PlayerCollaboratorApiResponse
+                InterestGroupApiResponses = playerOrganizationApiDto.GetInterestGroupApiResponses(),
+                PlayerCollaboratorApiResponses = playerOrganizationApiDto.CollaboratorsDtos?.Select(cd => new PlayerCollaboratorApiResponse
                 {
                     Uid = cd.Uid,
                     BadgeName = cd.Badge,

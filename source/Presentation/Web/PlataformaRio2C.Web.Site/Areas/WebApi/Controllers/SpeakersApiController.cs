@@ -132,7 +132,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 PageCount = speakerCollaboratorApiDtos.PageCount,
                 PageNumber = speakerCollaboratorApiDtos.PageNumber,
                 PageSize = speakerCollaboratorApiDtos.PageSize,
-                Speakers = speakerCollaboratorApiDtos?.Select(c => new SpeakerApiResponse
+                SpeakerApiResponses = speakerCollaboratorApiDtos?.Select(c => new SpeakerApiResponse
                 {
                     Uid = c.Uid,
                     BadgeName = c.BadgeName?.Trim(),
@@ -315,7 +315,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "No active languages found." } });
             }
 
-            var speakerCollaboratorApiDto = await this.collaboratorRepo.FindSpeakerApi(
+            var speakerCollaboratorApiDto = await this.collaboratorRepo.FindSpeakerPublicApiDtoByUid(
                 request?.Uid ?? Guid.Empty,
                 edition.Id,
                 Domain.Constants.CollaboratorType.Speaker);

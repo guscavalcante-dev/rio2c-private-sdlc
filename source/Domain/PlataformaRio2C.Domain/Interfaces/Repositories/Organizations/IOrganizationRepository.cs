@@ -32,7 +32,7 @@ namespace PlataformaRio2C.Domain.Interfaces
 
         Task<IPagedList<OrganizationDto>> FindAllPlayersByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, bool showAllOrganizations, int? editionId, bool exportToExcel = false);
         Task<IPagedList<PlayerOrganizationApiDto>> FindAllPlayersPublicApiPaged(int editionId, string keywords, List<Guid> activitiesUids, List<Guid> targetAudiencesUids, List<Guid> interestsUids, DateTime? modifiedAfterDate, bool showDetails, int page, int pageSize);
-        Task<OrganizationDto> FindPlayerPublicApiDtoByUid(Guid organizationUid, int editionId);
+        Task<PlayerOrganizationApiDto> FindPlayerPublicApiDtoByUid(Guid organizationUid, int editionId);
 
         #endregion
 
