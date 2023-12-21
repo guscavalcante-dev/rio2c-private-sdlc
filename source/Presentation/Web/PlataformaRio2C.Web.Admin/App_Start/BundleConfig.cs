@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System.Web.Optimization;
+using Xceed.Document.NET;
 
 namespace PlataformaRio2C.Web.Admin
 {
@@ -911,6 +912,26 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/music.projects.delete.js").Include(
                 "~/Assets/js/music/projects/music.projects.delete.js"));
+
+            #endregion
+
+            #region Players - Executives
+            bundles.Add(new ScriptBundle("~/bundles/js/music.players.executives.list.js").Include(
+                "~/Assets/js/music/playersexecutives/music.players.executives.totalcount.widget.js",
+                "~/Assets/js/music/playersexecutives/music.players.executives.datatable.widget.js",
+                "~/Assets/js/salesplatforms/salesplatforms.export.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.players.executives.editioncount.js").Include(
+                "~/Assets/js/music/playersexecutives/music.players.executives.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.players.executives.create.js").Include(
+               "~/Assets/js/music/playersexecutives/music.players.executives.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.players.executives.update.js").Include(
+               "~/Assets/js/music/playersexecutives/music.players.executives.update.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.players.executives.delete.js").Include(
+               "~/Assets/js/music/playersexecutives/music.players.executives.delete.js"));
 
             #endregion
 

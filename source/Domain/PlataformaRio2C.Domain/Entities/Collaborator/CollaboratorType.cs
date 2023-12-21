@@ -56,6 +56,9 @@ namespace PlataformaRio2C.Domain.Entities
         public static CollaboratorType Innovation = new CollaboratorType(new Guid("E1A6AEEE-15FD-4BDB-B899-ACC462F30258"), "Innovation");
         public static CollaboratorType Cartoon = new CollaboratorType(new Guid("A1BBA990-1A08-4381-B233-E0AECE6532DB"), "Cartoon");
 
+        public static CollaboratorType MusicPlayer = new CollaboratorType(new Guid("EE8141AF-2BBF-44B0-87D4-A15C9C68CACA"), "Player | Music");
+        public static CollaboratorType MusicPlayerExecutive = new CollaboratorType(new Guid("C8960F1B-BE37-42B7-8021-3F6099C8C8D8"), "Executive | Music Player");
+
         #endregion
 
         public string Name { get; private set; }

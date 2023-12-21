@@ -1,0 +1,67 @@
+﻿@model CollaboratorSearchViewModel
+@{
+    ViewBag.Title = Labels.PlayersExecutives;
+}
+<!--begin:: Quick Stats-->
+<div class="row">
+    <div class="col-sm-6">
+        <!--begin:: Total Count Widget-->
+        <div id="PlayersExecutivesTotalCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <!--end:: Total Count Widget-->
+    </div>
+    <div class="col-sm-6">
+        <!--begin:: Edition Count-->
+        <div id="PlayersExecutivesEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <!--end:: Edition Count-->
+    </div>
+</div>
+<!--end:: Quick Stats-->
+@Html.Partial("Widgets/DataTablewidget", Model)
+@section Styles {
+    @Styles.Render("~/bundles/css/dataTables.css")
+    @Styles.Render("~/bundles/css/cropper.css")
+    @Styles.Render("~/bundles/css/select2.css")
+    @Styles.Render("~/bundles/css/bootstrap-datepicker.css")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/dataTables.js")
+    @Scripts.Render("~/bundles/js/chart.js")
+    @Scripts.Render("~/bundles/js/cropper.js")
+    @Scripts.Render("~/bundles/js/select2.js")
+    @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/dynamic.list.js")
+    @Scripts.Render("~/bundles/js/bootstrap-datepicker.js")
+    @Scripts.Render("~/bundles/js/accounts.update.userstatus.js")
+    @Scripts.Render("~/bundles/js/music.players.executives.list.js")
+    @Scripts.Render("~/bundles/js/music.players.executives.editioncount.js")
+    @Scripts.Render("~/bundles/js/attendeeorganizations.form.js")
+    @Scripts.Render("~/bundles/js/music.players.executives.create.js")
+    @Scripts.Render("~/bundles/js/music.players.executives.update.js")
+    @Scripts.Render("~/bundles/js/music.players.executives.delete.js")
+    @Scripts.Render("~/bundles/js/addresses.form.js")
+    <script>
+         //TODO: 866 - verify o type CollaboratorType and  OrganizationType
+        var collaboratorTypeName = '@PlataformaRio2C.Domain.Entities.CollaboratorType.MusicPlayerExecutive.Name';
+
+        // Page translations ----------------------------------------------------------------------
+        var addToEdition = '@string.Format(Labels.AddToEdition, ViewBag.EditionDto.UrlCode)';
+        var removeFromEdition = '@string.Format(Labels.RemoveFromEdition, ViewBag.EditionDto.UrlCode)';
+        var theFieldIsRequired = '@Messages.TheFieldIsRequired';
+        var ticketType = '@Labels.Ticket';
+        var sendInvitationEmail = '@Labels.SendInvitationEmail';
+        var exportToEventbrite = '@Labels.ExportToEventbrite';
+        var confirmToSendInvitationEmails = '@Messages.ConfirmToSendInvitationEmails';
+        var virtual = '@Labels.Virtual';
+        var presential = '@Labels.Presential';
+
+        // Pagination -----------------------------------------------------------------------------
+        var initialPage = @(Model.Page?.ToString() ?? "null");
+        var initialPageSize = @(Model.PageSize?.ToString() ?? "null");
+
+        jQuery(document).ready(function () {
+            MusicPlayersExecutivesTotalCountWidget.init();
+            MusicPlayersExecutivesEditionCountWidget.init();
+            MusicPlayersExecutivesDataTableWidget.init();
+        });
+    </script>
+}
