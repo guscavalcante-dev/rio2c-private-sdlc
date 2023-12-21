@@ -382,6 +382,7 @@
     <Compile Include="Areas\Innovation\Controllers\TrackOptionGroupsController.cs" />
     <Compile Include="Areas\Innovation\InnovationAreaRegistration.cs" />
     <Compile Include="Areas\Music\Controllers\CommissionsController.cs" />
+    <Compile Include="Areas\Music\Controllers\PlayersExecutivesController.cs" />
     <Compile Include="Areas\Music\Controllers\ProjectsController.cs" />
     <Compile Include="Areas\Music\MusicAreaRegistration.cs" />
     <Compile Include="Areas\WebApi\Controllers\BaseApiController.cs" />
@@ -977,6 +978,12 @@
     <Content Include="Assets\js\administrators\administrators.totalcount.widget.js" />
     <Content Include="Assets\js\administrators\administrators.update.js" />
     <Content Include="Assets\js\music\commissions\music.commissions.evaluations.widget.js" />
+    <Content Include="Assets\js\music\playersexecutives\music.players.executives.create.js" />
+    <Content Include="Assets\js\music\playersexecutives\music.players.executives.delete.js" />
+    <Content Include="Assets\js\music\playersexecutives\music.players.executives.update.js" />
+    <Content Include="Assets\js\music\playersexecutives\music.players.executives.editioncount.widget.js" />
+    <Content Include="Assets\js\music\playersexecutives\music.players.executives.datatable.widget.js" />
+    <Content Include="Assets\js\music\playersexecutives\music.players.executives.totalcount.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.clipping.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.datatable.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.editioncount.pie.widget.js" />
@@ -8171,6 +8178,13 @@
     <Content Include="Areas\Music\Views\web.config" />
     <Content Include="Areas\Music\Views\Commissions\Details.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Index.cshtml" />
+    <Content Include="Areas\Music\Views\PlayersExecutives\Index.cshtml" />
+    <Content Include="Areas\Music\Views\PlayersExecutives\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Areas\Music\Views\PlayersExecutives\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Areas\Music\Views\PlayersExecutives\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Areas\Music\Views\PlayersExecutives\Modals\CreateModal.cshtml" />
+    <Content Include="Areas\Music\Views\PlayersExecutives\Modals\_Form.cshtml" />
+    <Content Include="Areas\Music\Views\PlayersExecutives\Modals\UpdateModal.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
