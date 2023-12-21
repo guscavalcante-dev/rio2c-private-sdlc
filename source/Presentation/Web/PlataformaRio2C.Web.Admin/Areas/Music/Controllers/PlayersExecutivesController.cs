@@ -119,7 +119,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 request.GetSortColumns(),
                 new List<Guid>(),
                 new string[] { CollaboratorType.PlayerExecutiveMusic.Name },
-                new string[] { OrganizationType.AudiovisualPlayer.Name },
+                new string[] { OrganizationType.MusicPlayer.Name },
                 showAllEditions,
                 showAllParticipants,
                 showHighlights,
@@ -290,7 +290,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         {
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
                 CollaboratorType.PlayerExecutiveMusic.Name,
-                OrganizationType.AudiovisualPlayer.Name,
+                OrganizationType.MusicPlayer.Name,
                 true,
                 this.EditionDto.Id);
 
@@ -311,7 +311,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         {
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
                 CollaboratorType.PlayerExecutiveMusic.Name,
-                OrganizationType.AudiovisualPlayer.Name,
+                OrganizationType.MusicPlayer.Name,
                 false,
                 this.EditionDto.Id);
 
@@ -338,7 +338,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             var attendeeCollaboratorDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByCollaboratorTypeUidAsync(
                 id ?? Guid.Empty,
                 CollaboratorType.PlayerExecutiveMusic.Uid,
-                OrganizationType.AudiovisualPlayer.Uid);
+                OrganizationType.MusicPlayer.Uid);
 
             if (attendeeCollaboratorDto == null)
             {
@@ -455,7 +455,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         {
             CreateCollaborator cmd = new CreateCollaborator(
                     //TODO: 866 - verify type CollaboratorType and  OrganizationType
-                    await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.AudiovisualPlayer.Uid),
+                    await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.MusicPlayer.Uid),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
@@ -498,7 +498,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
                 cmd.UpdatePreSendProperties(
                     CollaboratorType.PlayerExecutiveMusic.Name,
-                    OrganizationType.AudiovisualPlayer.Name,
+                    OrganizationType.MusicPlayer.Name,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -552,7 +552,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 cmd = new UpdateCollaborator(
                     await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
                     //TODO: 866 - verify type CollaboratorType and  OrganizationType
-                    await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.AudiovisualPlayer.Uid),
+                    await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.MusicPlayer.Uid),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
