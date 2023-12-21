@@ -4,7 +4,7 @@
 // Created          : 03-08-2020
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-06-2023
+// Last Modified On : 12-21-2023
 // ***********************************************************************
 // <copyright file="OrganizationsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -869,7 +869,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             ViewBag.OrganizationTypeUid = organizationTypeUid;
             ViewBag.CollaboratorTypeForDropdownSearch = organizationTypeUid == OrganizationType.Player.Uid ? "PlayersExecutives" : "ProducersExecutives";
 
-            Guid collaboratorTypeUid = organizationTypeUid == OrganizationType.Player.Uid ? CollaboratorType.AudiovisualPlayerExecutive.Uid : 
+            Guid collaboratorTypeUid = organizationTypeUid == OrganizationType.Player.Uid ? CollaboratorType.PlayerExecutiveAudiovisual.Uid : 
                                             organizationTypeUid == OrganizationType.Producer.Uid ? CollaboratorType.Industry.Uid : 
                                                 Guid.Empty;
 
@@ -949,7 +949,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
                 if (cmd.OrganizationTypeUid == OrganizationType.Player.Uid)
                 {
-                    cmd.CollaboratorTypeName = CollaboratorType.AudiovisualPlayerExecutive.Name;
+                    cmd.CollaboratorTypeName = CollaboratorType.PlayerExecutiveAudiovisual.Name;
                 }
                 else if (cmd.OrganizationTypeUid == OrganizationType.Producer.Uid)
                 {
@@ -1018,7 +1018,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
                 if (cmd.OrganizationTypeUid == OrganizationType.Player.Uid)
                 {
-                    cmd.CollaboratorTypeName = CollaboratorType.AudiovisualPlayerExecutive.Name;
+                    cmd.CollaboratorTypeName = CollaboratorType.PlayerExecutiveAudiovisual.Name;
                 }
                 else if (cmd.OrganizationTypeUid == OrganizationType.Producer.Uid)
                 {

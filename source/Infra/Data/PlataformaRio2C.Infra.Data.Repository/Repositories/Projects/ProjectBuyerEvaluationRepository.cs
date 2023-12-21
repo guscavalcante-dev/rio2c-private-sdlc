@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-10-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 12-21-2023
 // ***********************************************************************
 // <copyright file="ProjectBuyerEvaluationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -196,7 +196,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                 && !aoc.AttendeeOrganization.IsDeleted
                                                                                 && !aoc.AttendeeCollaborator.IsDeleted
                                                                                 && !aoc.AttendeeCollaborator.Collaborator.IsDeleted
-                                                                                && aoc.AttendeeCollaborator.AttendeeCollaboratorTypes.Any(act => act.CollaboratorType.Uid == CollaboratorType.AudiovisualPlayerExecutive.Uid)
+                                                                                && aoc.AttendeeCollaborator.AttendeeCollaboratorTypes.Any(act => act.CollaboratorType.Uid == CollaboratorType.PlayerExecutiveAudiovisual.Uid)
                                                                                 && !aoc.AttendeeCollaborator.Collaborator.User.UserUnsubscribedLists.Any(uul => !uul.IsDeleted
                                                                                                                                                                 && uul.SubscribeList.Code == SubscribeList.ProjectBuyerEvaluationEmail.Code))
                                                                 .Select(aoc => new EmailRecipientDto

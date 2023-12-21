@@ -1919,7 +1919,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             this.SetProxyEnabled(false);
 
-            string[] collaboratorTypeNames = new string[] { CollaboratorType.AudiovisualPlayerExecutive.Name };
+            string[] collaboratorTypeNames = new string[] { CollaboratorType.PlayerExecutiveAudiovisual.Name };
             string[] organizationTypeNames = new string[] { OrganizationType.Player.Name };
 
             var query = this.GetBaseQuery()

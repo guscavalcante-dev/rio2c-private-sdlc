@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-16-2021
+// Last Modified On : 12-21-2023
 // ***********************************************************************
 // <copyright file="DeleteCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,7 +23,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>
         /// This parameter is only necessary when deleting Producers or Players Executives.
-        /// TODO: This will be deleted when split the CollaboratorType.AudiovisualExecutive to AudiovisualPlayerExecutive and AudiovisualProducerExecutive
+        /// TODO: This will be deleted when split the CollaboratorType.AudiovisualExecutive to PlayerExecutiveAudiovisual and ProducerExecutiveAudiovisual
         /// </summary>
         public string OrganizationTypeName { get; set; }
 
@@ -37,7 +37,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// </summary>
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
         /// <param name="organizationTypeName">This parameter is only necessary when deleting Producers or Players Executives.
-        /// This will be deleted when split the CollaboratorType.AudiovisualExecutive to AudiovisualPlayerExecutive and AudiovisualProducerExecutive</param>
+        /// This will be deleted when split the CollaboratorType.AudiovisualExecutive to n and ProducerExecutiveAudiovisual</param>
         /// <param name="userId">The user identifier.</param>
         /// <param name="userUid">The user uid.</param>
         /// <param name="editionId">The edition identifier.</param>

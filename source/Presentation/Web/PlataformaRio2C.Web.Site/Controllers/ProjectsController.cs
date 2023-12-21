@@ -36,7 +36,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 {
     /// <summary>ProjectsController</summary>
     [AjaxAuthorize(Order = 1)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AudiovisualPlayerExecutive + "," + Constants.CollaboratorType.Industry)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.PlayerExecutiveAudiovisual + "," + Constants.CollaboratorType.Industry)]
     public class ProjectsController : BaseController
     {
         private readonly IProjectRepository projectRepo;
@@ -1479,7 +1479,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AudiovisualPlayerExecutive)]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.PlayerExecutiveAudiovisual)]
         [HttpGet]
         public async Task<ActionResult> EvaluationList(string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 10)
         {
@@ -1515,7 +1515,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AudiovisualPlayerExecutive)]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.PlayerExecutiveAudiovisual)]
         [HttpGet]
         public async Task<ActionResult> ShowEvaluationListWidget(string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 10)
         {
@@ -1551,7 +1551,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <summary>Shows the evaluation list item widget.</summary>
         /// <param name="projectUid">The project uid.</param>
         /// <returns></returns>
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AudiovisualPlayerExecutive)]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.PlayerExecutiveAudiovisual)]
         [HttpGet]
         public async Task<ActionResult> ShowEvaluationListItemWidget(Guid? projectUid)
         {
@@ -1586,7 +1586,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <summary>Evaluations the details.</summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AudiovisualPlayerExecutive)]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.PlayerExecutiveAudiovisual)]
         public async Task<ActionResult> EvaluationDetails(Guid? id)
         {
             if (this.EditionDto?.IsProjectBuyerEvaluationStarted() != true)

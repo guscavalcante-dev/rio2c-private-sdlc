@@ -4,7 +4,7 @@
 // Created          : 09-04-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-28-2021
+// Last Modified On : 12-21-2023
 // ***********************************************************************
 // <copyright file="UserAccessControlDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -235,7 +235,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is player terms acceptance finished]; otherwise, <c>false</c>.</returns>
         public bool IsPlayerTermsAcceptanceFinished()
         {
-            return !this.HasCollaboratorType(Constants.CollaboratorType.AudiovisualPlayerExecutive)                                              // Not Player //TODO: Change to check attendee organization type (must be dto)
+            return !this.HasCollaboratorType(Constants.CollaboratorType.PlayerExecutiveAudiovisual)                                              // Not Player //TODO: Change to check attendee organization type (must be dto)
                    || this.EditionAttendeeCollaborator?.PlayerTermsAcceptanceDate != null;                                                 // Or has accepted the player terms
                    //|| !this.HasPlayerOrganization()
         }
@@ -284,7 +284,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is player organizatiosn onboarding finished]; otherwise, <c>false</c>.</returns>
         public bool IsPlayerOrganizationsOnboardingFinished()
         {
-            return !this.HasCollaboratorType(Constants.CollaboratorType.AudiovisualPlayerExecutive)                                              // Is Player
+            return !this.HasCollaboratorType(Constants.CollaboratorType.PlayerExecutiveAudiovisual)                                              // Is Player
                     || (this.EditionAttendeeOrganizations?.Any() == false                                                                  // No organization related
                         || (this.EditionAttendeeOrganizations?.Any() == true                                                               // or has at least one organization linked
                             && this.EditionAttendeeOrganizations?.Where(ao => ao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted && aot.OrganizationType.Name == OrganizationType.Player.Name))
@@ -296,7 +296,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is player organization interests onboarding pending]; otherwise, <c>false</c>.</returns>
         public bool IsPlayerOrganizationInterestsOnboardingPending()
         {
-            return this.HasCollaboratorType(Constants.CollaboratorType.AudiovisualPlayerExecutive)                                                // Is Player
+            return this.HasCollaboratorType(Constants.CollaboratorType.PlayerExecutiveAudiovisual)                                                // Is Player
                    && this.EditionAttendeeOrganizations?.Any() == true                                                                      // Has at least one organization linked
                    && this.EditionAttendeeOrganizations?.Where(ao => ao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted && aot.OrganizationType.Name == OrganizationType.Player.Name))
                                                         .Any(ao => ao.OnboardingOrganizationDate.HasValue                                   // and at least one organization onboarded
@@ -308,7 +308,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is player organizations interests onboarding finished]; otherwise, <c>false</c>.</returns>
         public bool IsPlayerOrganizationsInterestsOnboardingFinished()
         {
-            return !this.HasCollaboratorType(Constants.CollaboratorType.AudiovisualPlayerExecutive)                                              // Is Player 
+            return !this.HasCollaboratorType(Constants.CollaboratorType.PlayerExecutiveAudiovisual)                                              // Is Player 
                    || (this.EditionAttendeeOrganizations?.Any() == false                                                                   // No organization related
                        || (this.EditionAttendeeOrganizations?.Any() == true                                                                // or has at least one organization linked
                            && this.EditionAttendeeOrganizations?.Where(ao => ao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted && aot.OrganizationType.Name == OrganizationType.Player.Name))
@@ -320,7 +320,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is ticket buyer organization onboarding pending]; otherwise, <c>false</c>.</returns>
         public bool IsTicketBuyerOrganizationOnboardingPending()
         {
-            return !this.HasCollaboratorType(Constants.CollaboratorType.AudiovisualPlayerExecutive)                                              // Is player
+            return !this.HasCollaboratorType(Constants.CollaboratorType.PlayerExecutiveAudiovisual)                                              // Is player
                    && this.HasAnyCollaboratorType(Constants.CollaboratorType.TicketBuyers)                                                 // Is ticket buyer
                    && (!this.EditionAttendeeCollaborator.OnboardingOrganizationDataSkippedDate.HasValue                                    // Not skipped the onboarding of company data
                        && (this.EditionAttendeeOrganizations?.Any() == false                                                               // No organization related

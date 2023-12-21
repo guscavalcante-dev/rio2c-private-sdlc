@@ -4,7 +4,7 @@
 // Created          : 09-26-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-29-2022
+// Last Modified On : 12-21-2023
 // ***********************************************************************
 // <copyright file="CollaboratorType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,10 +25,10 @@ namespace PlataformaRio2C.Domain.Constants
         public const string AdminEditorial = "Admin | Editorial";
         public const string AdminConferences = "Admin | Conferences";
 
-        public const string AudiovisualPlayerExecutive = "Executive | Audiovisual Player";
-        public const string ExecutiveMusic = "Executive | Music";
-        public const string ExecutiveInnovation = "Executive | Innovation";
-        public const string ExecutiveCartoon = "Executive | Cartoon";
+        public const string PlayerExecutiveAudiovisual = "Player Executive | Audiovisual";
+        public const string PlayerExecutiveMusic = "Player Executive | Music";
+        public const string PlayerExecutiveInnovation = "Player Executive | Innovation";
+        public const string PlayerExecutiveCartoon = "Player Executive | Cartoon";
 
         public const string CommissionAudiovisual = "Commission | Audiovisual";
         public const string CommissionMusic = "Commission | Music";
@@ -56,41 +56,41 @@ namespace PlataformaRio2C.Domain.Constants
 
         public static readonly string[] Executives =
         {
-            AudiovisualPlayerExecutive, ExecutiveMusic, ExecutiveInnovation, ExecutiveCartoon
+            PlayerExecutiveAudiovisual, PlayerExecutiveMusic, PlayerExecutiveInnovation, PlayerExecutiveCartoon
         };
 
         public static readonly string[] Audiovisuals =
         {
-            AdminAudiovisual, CommissionAudiovisual, AudiovisualPlayerExecutive, Industry
+            AdminAudiovisual, CommissionAudiovisual, PlayerExecutiveAudiovisual, Industry
         };
 
         public static readonly string[] Musics =
         {
-            AdminMusic, CommissionMusic, ExecutiveMusic, Music
+            AdminMusic, CommissionMusic, PlayerExecutiveMusic, Music
         };
 
         public static readonly string[] Innovations =
         {
-            AdminInnovation, CommissionInnovation, ExecutiveInnovation, Innovation
+            AdminInnovation, CommissionInnovation, PlayerExecutiveInnovation, Innovation
         };
 
         public static readonly string[] Cartoons =
         {
-            AdminCartoon, CommissionCartoon, ExecutiveCartoon, Cartoon
+            AdminCartoon, CommissionCartoon, PlayerExecutiveCartoon, Cartoon
         };
 
         #region Networks
 
         public static readonly string[] NetworksArray =
         {
-            AudiovisualPlayerExecutive, Speaker, Industry, Summit, Creator
+            PlayerExecutiveAudiovisual, Speaker, Industry, Summit, Creator
         };
 
-        public const string NetworksString = AudiovisualPlayerExecutive + "," + Speaker + "," + Industry + "," + Summit + "," + Creator;
+        public const string NetworksString = PlayerExecutiveAudiovisual + "," + Speaker + "," + Industry + "," + Summit + "," + Creator;
 
         public static readonly string[] NetworksFullVisibilityArray =
         {
-            AudiovisualPlayerExecutive, Speaker, Industry, Summit
+            PlayerExecutiveAudiovisual, Speaker, Industry, Summit
         };
 
         #endregion

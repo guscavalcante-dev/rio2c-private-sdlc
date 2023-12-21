@@ -60,7 +60,7 @@
                     </div>
                 </li>
             }
-            else if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.AudiovisualPlayerExecutive) == true)
+            else if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.PlayerExecutiveAudiovisual) == true)
             {
                 projectsUrl = Url.Action("EvaluationList", "Projects", new { Area = "" });
 
@@ -80,7 +80,7 @@
                                 </a>
                             </li>
                             <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Meetings", "Audiovisual")" aria-haspopup="true">
-                                <a class="kt-menu__link" href="@Url.Action("Index", "Meetings", new { Area = "Audiovisual", CollaboratorTypeUid = CollaboratorType.AudiovisualPlayerExecutive.Uid })">
+                                <a class="kt-menu__link" href="@Url.Action("Index", "Meetings", new { Area = "Audiovisual", CollaboratorTypeUid = CollaboratorType.PlayerExecutiveAudiovisual.Uid })">
                                     <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
                                     <span class="kt-menu__link-text">@Labels.BusinessRound</span>
                                 </a>
@@ -119,7 +119,7 @@
 
                             meetingsUrl = Url.Action("Index", "Meetings", new { Area = "Audiovisual", CollaboratorTypeUid = CollaboratorType.Industry.Uid });
                         }
-                        @if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.AudiovisualPlayerExecutive) == true && editionDto?.IsProjectBuyerEvaluationStarted() == true)
+                        @if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.PlayerExecutiveAudiovisual) == true && editionDto?.IsProjectBuyerEvaluationStarted() == true)
                         {
                             projectsUrl = Url.Action("EvaluationList", "Projects", new { Area = "" });
                             <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "EvaluationList", "Projects", "")" aria-haspopup="true">
@@ -129,11 +129,11 @@
                                 </a>
                             </li>
 
-                            meetingsUrl = Url.Action("Index", "Meetings", new { Area = "Audiovisual", CollaboratorTypeUid = CollaboratorType.AudiovisualPlayerExecutive.Uid });
+                            meetingsUrl = Url.Action("Index", "Meetings", new { Area = "Audiovisual", CollaboratorTypeUid = CollaboratorType.PlayerExecutiveAudiovisual.Uid });
                         }
 
                         @if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true ||
-                            userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.AudiovisualPlayerExecutive) == true)
+                            userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.PlayerExecutiveAudiovisual) == true)
                         {
                             <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Meetings", "Audiovisual")" aria-haspopup="true">
                                 <a class="kt-menu__link" href="@meetingsUrl">

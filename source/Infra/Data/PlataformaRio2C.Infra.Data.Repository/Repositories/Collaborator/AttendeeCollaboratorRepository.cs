@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-06-2023
+// Last Modified On : 12-21-2023
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -123,7 +123,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                               && act.CollaboratorType.Name == Domain.Constants.CollaboratorType.Industry)
                                       || (ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted // Player without tickets
                                                                                  && !act.CollaboratorType.IsDeleted
-                                                                                 && act.CollaboratorType.Name == Domain.Constants.CollaboratorType.AudiovisualPlayerExecutive)
+                                                                                 && act.CollaboratorType.Name == Domain.Constants.CollaboratorType.PlayerExecutiveAudiovisual)
                                           && !ac.AttendeeCollaboratorTickets.Any(act => !act.IsDeleted && !act.AttendeeSalesPlatformTicketType.IsDeleted)));
 
             return query;
@@ -359,7 +359,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery(true)
                                 .FindByCollaboratorUid(collaboratorUid)
-                                //.FindByCollaboratorTypeUid(collaboratorTypeUid) //TODO: Find by collaboratorType when CollaboratorType.AudiovisualPlayerExecutive has been splited on AudiovisualPlayerExecutive and AudiovisualProducerExecutive
+                                //.FindByCollaboratorTypeUid(collaboratorTypeUid) //TODO: Find by collaboratorType when CollaboratorType.PlayerExecutiveAudiovisual has been splited on PlayerExecutiveAudiovisual and ProducerExecutiveAudiovisual
                                 .FindByOrganizationTypeUid(organizationTypeUid);
 
             return await query

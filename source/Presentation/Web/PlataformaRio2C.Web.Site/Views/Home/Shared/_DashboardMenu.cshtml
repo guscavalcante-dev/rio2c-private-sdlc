@@ -124,7 +124,7 @@
                     </li>
                     @if (userAccessControlDto?.HasAnyCollaboratorType(new[]
                     {
-                        CollaboratorType.AudiovisualPlayerExecutive.Name,
+                        CollaboratorType.PlayerExecutiveAudiovisual.Name,
                         CollaboratorType.Industry.Name
                     }) == true)
                     {
@@ -133,7 +133,7 @@
                         {
                             projectsUrl = Url.Action("SubmittedList", "Projects", new { Area = "" });
                         }
-                        else if (userAccessControlDto?.HasCollaboratorType(CollaboratorType.AudiovisualPlayerExecutive.Name) == true)
+                        else if (userAccessControlDto?.HasCollaboratorType(CollaboratorType.PlayerExecutiveAudiovisual.Name) == true)
                         {
                             projectsUrl = Url.Action("EvaluationList", "Projects", new { Area = "" });
                             if (editionDto?.IsProjectBuyerEvaluationStarted() != true)

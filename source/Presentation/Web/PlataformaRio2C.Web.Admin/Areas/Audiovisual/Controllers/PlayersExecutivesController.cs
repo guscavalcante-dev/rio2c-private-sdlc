@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-10-2023
+// Last Modified On : 12-21-2023
 // ***********************************************************************
 // <copyright file="PlayersExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -120,7 +120,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 request.Search?.Value,
                 request.GetSortColumns(),
                 new List<Guid>(),
-                new string[] { CollaboratorType.AudiovisualPlayerExecutive.Name },
+                new string[] { CollaboratorType.PlayerExecutiveAudiovisual.Name },
                 new string[] { OrganizationType.Player.Name },
                 showAllEditions,
                 showAllParticipants,
@@ -297,7 +297,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         {
             var attendeeCollaboratorDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByCollaboratorTypeUidAsync(
                 id ?? Guid.Empty,
-                CollaboratorType.AudiovisualPlayerExecutive.Uid,
+                CollaboratorType.PlayerExecutiveAudiovisual.Uid,
                 OrganizationType.Player.Uid);
 
             if (attendeeCollaboratorDto == null)
@@ -413,7 +413,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         public async Task<ActionResult> ShowTotalCountWidget()
         {
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
-                CollaboratorType.AudiovisualPlayerExecutive.Name,
+                CollaboratorType.PlayerExecutiveAudiovisual.Name,
                 OrganizationType.Player.Name,
                 true,
                 this.EditionDto.Id);
@@ -437,7 +437,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         public async Task<ActionResult> ShowEditionCountWidget()
         {
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
-                CollaboratorType.AudiovisualPlayerExecutive.Name,
+                CollaboratorType.PlayerExecutiveAudiovisual.Name,
                 OrganizationType.Player.Name,
                 false,
                 this.EditionDto.Id);
@@ -500,7 +500,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    Domain.Constants.CollaboratorType.AudiovisualPlayerExecutive,
+                    Domain.Constants.CollaboratorType.PlayerExecutiveAudiovisual,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -610,7 +610,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    Domain.Constants.CollaboratorType.AudiovisualPlayerExecutive,
+                    Domain.Constants.CollaboratorType.PlayerExecutiveAudiovisual,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -679,7 +679,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    CollaboratorType.AudiovisualPlayerExecutive.Name,
+                    CollaboratorType.PlayerExecutiveAudiovisual.Name,
                     OrganizationType.Player.Name,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
@@ -732,7 +732,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 this.EditionDto.Id,
                 keywords,
                 filterByProjectsInNegotiation.Value,
-                Constants.CollaboratorType.AudiovisualPlayerExecutive,
+                Constants.CollaboratorType.PlayerExecutiveAudiovisual,
                 false,
                 page.Value,
                 10);

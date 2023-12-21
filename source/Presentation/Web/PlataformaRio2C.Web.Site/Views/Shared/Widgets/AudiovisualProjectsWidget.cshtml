@@ -4,7 +4,7 @@
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var editionDto = ViewBag.EditionDto as EditionDto;
     var isSeller = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true;
-    var isBuyer = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.AudiovisualPlayerExecutive) == true;
+    var isBuyer = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.PlayerExecutiveAudiovisual) == true;
 }
 @if (isSeller || isBuyer)
 {
