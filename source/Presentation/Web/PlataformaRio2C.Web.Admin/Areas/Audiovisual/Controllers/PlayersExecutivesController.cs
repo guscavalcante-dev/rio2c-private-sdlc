@@ -41,9 +41,6 @@ using ClosedXML.Excel;
 using PlataformaRio2C.Domain.ApiModels;
 using PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults;
 using System.IO;
-using Org.BouncyCastle.Asn1.Ocsp;
-using System.Xml;
-using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 {
@@ -121,7 +118,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 request.GetSortColumns(),
                 new List<Guid>(),
                 new string[] { CollaboratorType.PlayerExecutiveAudiovisual.Name },
-                new string[] { OrganizationType.Player.Name },
+                new string[] { OrganizationType.AudiovisualPlayer.Name },
                 showAllEditions,
                 showAllParticipants,
                 showHighlights,
@@ -298,7 +295,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             var attendeeCollaboratorDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByCollaboratorTypeUidAsync(
                 id ?? Guid.Empty,
                 CollaboratorType.PlayerExecutiveAudiovisual.Uid,
-                OrganizationType.Player.Uid);
+                OrganizationType.AudiovisualPlayer.Uid);
 
             if (attendeeCollaboratorDto == null)
             {
@@ -414,7 +411,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         {
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
                 CollaboratorType.PlayerExecutiveAudiovisual.Name,
-                OrganizationType.Player.Name,
+                OrganizationType.AudiovisualPlayer.Name,
                 true,
                 this.EditionDto.Id);
 
@@ -438,7 +435,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         {
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
                 CollaboratorType.PlayerExecutiveAudiovisual.Name,
-                OrganizationType.Player.Name,
+                OrganizationType.AudiovisualPlayer.Name,
                 false,
                 this.EditionDto.Id);
 
@@ -462,7 +459,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         public async Task<ActionResult> ShowCreateModal()
         {
             CreateCollaborator cmd = new CreateCollaborator(
-                    await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.Player.Uid),
+                    await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.AudiovisualPlayer.Uid),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
@@ -521,7 +518,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdateDropdownProperties(
-                    await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.Player.Uid),
+                    await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.AudiovisualPlayer.Uid),
                     await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
@@ -565,7 +562,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             {
                 cmd = new UpdateCollaborator(
                     await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
-                    await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.Player.Uid),
+                    await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.AudiovisualPlayer.Uid),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
@@ -632,7 +629,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
                 cmd.UpdateDropdownProperties(
                     await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(cmd.CollaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
-                    await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.Player.Uid),
+                    await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.AudiovisualPlayer.Uid),
                     await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
@@ -680,7 +677,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
                 cmd.UpdatePreSendProperties(
                     CollaboratorType.PlayerExecutiveAudiovisual.Name,
-                    OrganizationType.Player.Name,
+                    OrganizationType.AudiovisualPlayer.Name,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,

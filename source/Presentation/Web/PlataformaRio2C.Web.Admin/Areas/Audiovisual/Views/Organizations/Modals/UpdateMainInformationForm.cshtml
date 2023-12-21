@@ -1,7 +1,7 @@
 ﻿@using PlataformaRio2C.Domain.Entities
 @model PlataformaRio2C.Application.CQRS.Commands.UpdateOrganizationAdminMainInformation
 @{
-    var isPlayer = Model.OrganizationTypeUid == OrganizationType.Player.Uid;
+    var isPlayer = Model.OrganizationTypeUid == OrganizationType.AudiovisualPlayer.Uid;
     var isProducer = Model.OrganizationTypeUid == OrganizationType.Producer.Uid;
     var isAudiovisualCompany = isPlayer || isProducer;
 }

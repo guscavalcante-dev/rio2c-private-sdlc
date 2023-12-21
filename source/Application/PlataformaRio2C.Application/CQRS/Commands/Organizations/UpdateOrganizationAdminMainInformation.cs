@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 12-21-2023
 // ***********************************************************************
 // <copyright file="UpdateOrganizationAdminMainInformation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,7 +26,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>UpdateOrganizationAdminMainInformation</summary>
     public class UpdateOrganizationAdminMainInformation : UpdateOrganizationMainInformationBaseCommand
     {
-        public bool IsAudiovisualBuyer => (this.OrganizationType != null && this.OrganizationType?.Name == OrganizationType.Player.Name);
+        public bool IsAudiovisualBuyer => (this.OrganizationType != null && this.OrganizationType?.Name == OrganizationType.AudiovisualPlayer.Name);
 
         public Guid? OrganizationTypeUid { get; set; }
 
@@ -83,7 +83,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Name = entity?.Organization?.Name;
             this.TradeName = entity?.Organization?.TradeName;
             this.IsVirtualMeeting = entity?.Organization?.IsVirtualMeeting;
-            this.IsVirtualMeetingRequired = organizationType?.Uid == OrganizationType.Player.Uid;
+            this.IsVirtualMeetingRequired = organizationType?.Uid == OrganizationType.AudiovisualPlayer.Uid;
 
             this.UpdateModelsAndLists(holdingBaseDtos);
             this.UpdateApiConfigurations(entity, organizationType);

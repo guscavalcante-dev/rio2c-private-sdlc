@@ -867,9 +867,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         public async Task<ActionResult> ShowExecutivesWidget(Guid? organizationUid, Guid? organizationTypeUid)
         {
             ViewBag.OrganizationTypeUid = organizationTypeUid;
-            ViewBag.CollaboratorTypeForDropdownSearch = organizationTypeUid == OrganizationType.Player.Uid ? "PlayersExecutives" : "ProducersExecutives";
+            ViewBag.CollaboratorTypeForDropdownSearch = organizationTypeUid == OrganizationType.AudiovisualPlayer.Uid ? "PlayersExecutives" : "ProducersExecutives";
 
-            Guid collaboratorTypeUid = organizationTypeUid == OrganizationType.Player.Uid ? CollaboratorType.PlayerExecutiveAudiovisual.Uid : 
+            Guid collaboratorTypeUid = organizationTypeUid == OrganizationType.AudiovisualPlayer.Uid ? CollaboratorType.PlayerExecutiveAudiovisual.Uid : 
                                             organizationTypeUid == OrganizationType.Producer.Uid ? CollaboratorType.Industry.Uid : 
                                                 Guid.Empty;
 
@@ -947,7 +947,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     throw new DomainException(Messages.CorrectFormValues);
                 }
 
-                if (cmd.OrganizationTypeUid == OrganizationType.Player.Uid)
+                if (cmd.OrganizationTypeUid == OrganizationType.AudiovisualPlayer.Uid)
                 {
                     cmd.CollaboratorTypeName = CollaboratorType.PlayerExecutiveAudiovisual.Name;
                 }
@@ -1016,7 +1016,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     throw new DomainException(Messages.CorrectFormValues);
                 }
 
-                if (cmd.OrganizationTypeUid == OrganizationType.Player.Uid)
+                if (cmd.OrganizationTypeUid == OrganizationType.AudiovisualPlayer.Uid)
                 {
                     cmd.CollaboratorTypeName = CollaboratorType.PlayerExecutiveAudiovisual.Name;
                 }

@@ -68,7 +68,7 @@
                                         @{
                                             var jobTitle = attendeeCollaboratorDto.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value;
 
-                                            if (organizationTypeUid == OrganizationType.Player.Uid)
+                                            if (organizationTypeUid == OrganizationType.AudiovisualPlayer.Uid)
                                             {
                                                 organizationUrlAction = Url.Action("Details", "PlayersExecutives", new { Area = "Audiovisual", id = attendeeCollaboratorDto.Collaborator.Uid });
                                             }

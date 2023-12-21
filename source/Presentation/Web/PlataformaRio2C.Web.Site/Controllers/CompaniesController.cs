@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 10-08-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 12-21-2023
 // ***********************************************************************
 // <copyright file="CompaniesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -990,7 +990,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 this.EditionDto.Id,
                 keywords,
                 customFilter,
-                OrganizationType.Player.Uid,
+                OrganizationType.AudiovisualPlayer.Uid,
                 page.Value,
                 10);
 

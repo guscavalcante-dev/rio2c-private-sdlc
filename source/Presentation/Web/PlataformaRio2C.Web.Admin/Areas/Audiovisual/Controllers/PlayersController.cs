@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 04-12-2023
+// Last Modified On : 12-21-2023
 // ***********************************************************************
 // <copyright file="PlayersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -119,7 +119,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 request.Length,
                 request.Search?.Value,
                 request.GetSortColumns(),
-                OrganizationType.Player.Uid,
+                OrganizationType.AudiovisualPlayer.Uid,
                 showAllEditions,
                 showAllOrganizations,
                 this.EditionDto.Id);
@@ -289,7 +289,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowTotalCountWidget()
         {
-            var playersCount = await this.organizationRepo.CountAllByDataTable(OrganizationType.Player.Uid, true, this.EditionDto.Id);
+            var playersCount = await this.organizationRepo.CountAllByDataTable(OrganizationType.AudiovisualPlayer.Uid, true, this.EditionDto.Id);
 
             return Json(new
             {
@@ -309,7 +309,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <returns></returns>
         public async Task<ActionResult> ShowEditionCountWidget()
         {
-            var playersCount = await this.organizationRepo.CountAllByDataTable(OrganizationType.Player.Uid, false, this.EditionDto.Id);
+            var playersCount = await this.organizationRepo.CountAllByDataTable(OrganizationType.AudiovisualPlayer.Uid, false, this.EditionDto.Id);
 
             return Json(new
             {
@@ -329,7 +329,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <returns></returns>
         public async Task<ActionResult> ShowEditionCountOdometerWidget()
         {
-            var playersCount = await this.organizationRepo.CountAllByDataTable(OrganizationType.Player.Uid, false, this.EditionDto.Id);
+            var playersCount = await this.organizationRepo.CountAllByDataTable(OrganizationType.AudiovisualPlayer.Uid, false, this.EditionDto.Id);
             return Json(new
             {
                 status = "success",
@@ -353,7 +353,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         {
             var attendeeOrganizationDto = await this.attendeeOrganizationRepo.FindDetailsDtoByOrganizationUidAndByOrganizationTypeUidAsync(
                 id ?? Guid.Empty, 
-                OrganizationType.Player.Uid,
+                OrganizationType.AudiovisualPlayer.Uid,
                 this.EditionDto.Id, 
                 false);
 
@@ -373,7 +373,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             #endregion
 
-            ViewBag.OrganizationTypeUid = OrganizationType.Player.Uid; // It's the admin page accessed and not the organization type of the current organization
+            ViewBag.OrganizationTypeUid = OrganizationType.AudiovisualPlayer.Uid; // It's the admin page accessed and not the organization type of the current organization
 
             return View(attendeeOrganizationDto);
         }
@@ -390,7 +390,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         public async Task<ActionResult> ShowCreateModal()
         {
             var cmd = new CreateOrganization(
-                OrganizationType.Player,
+                OrganizationType.AudiovisualPlayer,
                 await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
@@ -429,7 +429,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    OrganizationType.Player,
+                    OrganizationType.AudiovisualPlayer,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -491,7 +491,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             {
                 cmd = new UpdateOrganization(
                     await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(organizationUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
-                    OrganizationType.Player,
+                    OrganizationType.AudiovisualPlayer,
                     await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
@@ -536,7 +536,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    OrganizationType.Player,
+                    OrganizationType.AudiovisualPlayer,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -601,7 +601,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    OrganizationType.Player,
+                    OrganizationType.AudiovisualPlayer,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -653,7 +653,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 this.EditionDto.Id,
                 keywords,
                 customFilter,
-                OrganizationType.Player.Uid,
+                OrganizationType.AudiovisualPlayer.Uid,
                 page.Value,
                 10);
 

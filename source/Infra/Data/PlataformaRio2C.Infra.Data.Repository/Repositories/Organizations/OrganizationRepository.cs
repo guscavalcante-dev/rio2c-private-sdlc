@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-13-2023
+// Last Modified On : 12-21-2023
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -195,7 +195,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             {
                 if (customFilter == "HasProjectNegotiationScheduled")
                 {
-                    if (organizationTypeUid == OrganizationType.Player.Uid)
+                    if (organizationTypeUid == OrganizationType.AudiovisualPlayer.Uid)
                     {
                         query = query.Where(o => o.AttendeeOrganizations
                                                         .Any(ao => ao.EditionId == editionId
@@ -220,7 +220,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 }
                 else if (customFilter == "HasProjectNegotiationNotScheduled")
                 {
-                    if (organizationTypeUid == OrganizationType.Player.Uid)
+                    if (organizationTypeUid == OrganizationType.AudiovisualPlayer.Uid)
                     {
                         query = query.Where(o => o.AttendeeOrganizations
                                                         .Any(ao => ao.EditionId == editionId
@@ -727,7 +727,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             int? editionId,
             bool exportToExcel = false)
         {
-            Guid playerOrganizationTypeUid = OrganizationType.Player.Uid;
+            Guid playerOrganizationTypeUid = OrganizationType.AudiovisualPlayer.Uid;
 
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords)
@@ -875,7 +875,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             int page,
             int pageSize)
         {
-            Guid playerOrganizationTypeUid = OrganizationType.Player.Uid;
+            Guid playerOrganizationTypeUid = OrganizationType.AudiovisualPlayer.Uid;
 
             var query = this.GetBaseQuery()
                                 .FindByOrganizationTypeUidAndByEditionId(playerOrganizationTypeUid, false, false, editionId)
@@ -1004,7 +1004,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<PlayerOrganizationApiDto> FindPlayerPublicApiDtoByUid(Guid organizationUid, int editionId)
         {
-            Guid playerOrganizationTypeUid = OrganizationType.Player.Uid;
+            Guid playerOrganizationTypeUid = OrganizationType.AudiovisualPlayer.Uid;
 
             var query = this.GetBaseQuery()
                                     .FindByUid(organizationUid)

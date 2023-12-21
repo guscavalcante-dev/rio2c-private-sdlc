@@ -3,7 +3,7 @@
 @model AttendeeOrganizationSiteDetailsDto
 @{
     ViewBag.Title = $"{Labels.Company}  {Model.Organization.TradeName}";
-    var isPlayer = ViewBag.OrganizationTypeUid == OrganizationType.Player.Uid;
+    var isPlayer = ViewBag.OrganizationTypeUid == OrganizationType.AudiovisualPlayer.Uid;
     var isProducer = ViewBag.OrganizationTypeUid == OrganizationType.Producer.Uid;
     var isAudiovisualCompany = isPlayer || isProducer;
 }

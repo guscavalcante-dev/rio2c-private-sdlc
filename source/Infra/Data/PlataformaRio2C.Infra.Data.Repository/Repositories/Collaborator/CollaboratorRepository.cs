@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-13-2023
+// Last Modified On : 12-21-2023
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1920,7 +1920,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             this.SetProxyEnabled(false);
 
             string[] collaboratorTypeNames = new string[] { CollaboratorType.PlayerExecutiveAudiovisual.Name };
-            string[] organizationTypeNames = new string[] { OrganizationType.Player.Name };
+            string[] organizationTypeNames = new string[] { OrganizationType.AudiovisualPlayer.Name };
 
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords, editionId)

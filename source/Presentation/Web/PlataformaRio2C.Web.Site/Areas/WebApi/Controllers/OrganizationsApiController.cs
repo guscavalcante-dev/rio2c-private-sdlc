@@ -4,7 +4,7 @@
 // Created          : 10-14-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 04-19-2023
+// Last Modified On : 12-21-2023
 // ***********************************************************************
 // <copyright file="OrganizationsApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -119,7 +119,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         //    var organizationApiDto = await this.organizationRepo.FindApiDtoByUidAsync(
         //        request?.Uid ?? Guid.Empty,
         //        edition.Id,
-        //        OrganizationType.Player.Uid);
+        //        OrganizationType.AudiovisualPlayer.Uid);
         //    if (organizationApiDto == null)
         //    {
         //        return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "Player not found." } });

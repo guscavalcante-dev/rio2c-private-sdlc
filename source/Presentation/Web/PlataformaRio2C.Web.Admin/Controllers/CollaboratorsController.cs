@@ -487,7 +487,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         public async Task<ActionResult> ShowCompanyWidget(Guid? collaboratorUid, Guid? organizationTypeUid)
         {
             ViewBag.OrganizationTypeUid = organizationTypeUid;
-            ViewBag.OrganizationTypeForDropdownSearch = organizationTypeUid == OrganizationType.Player.Uid ? "Players" :
+            ViewBag.OrganizationTypeForDropdownSearch = organizationTypeUid == OrganizationType.AudiovisualPlayer.Uid ? "Players" :
                                                         organizationTypeUid == OrganizationType.Producer.Uid ? "Producers" :
                                                         "Companies";
 
@@ -563,7 +563,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     throw new DomainException(Messages.CorrectFormValues);
                 }
 
-                if (cmd.OrganizationTypeUid == OrganizationType.Player.Uid)
+                if (cmd.OrganizationTypeUid == OrganizationType.AudiovisualPlayer.Uid)
                 {
                     cmd.CollaboratorTypeName = CollaboratorType.PlayerExecutiveAudiovisual.Name;
                 }
@@ -633,7 +633,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     throw new DomainException(Messages.CorrectFormValues);
                 }
 
-                if (cmd.OrganizationTypeUid == OrganizationType.Player.Uid)
+                if (cmd.OrganizationTypeUid == OrganizationType.AudiovisualPlayer.Uid)
                 {
                     cmd.CollaboratorTypeName = CollaboratorType.PlayerExecutiveAudiovisual.Name;
                 }
