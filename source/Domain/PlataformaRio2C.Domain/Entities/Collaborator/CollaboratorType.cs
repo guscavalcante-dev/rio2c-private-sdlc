@@ -4,9 +4,9 @@
 // Created          : 09-26-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-16-2021
+// Last Modified On : 12-21-2023
 // ***********************************************************************
-// <copyright file="TicketType.cs" company="Softo">
+// <copyright file="CollaboratorType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -35,12 +35,12 @@ namespace PlataformaRio2C.Domain.Entities
         public static CollaboratorType AdminConferences = new CollaboratorType(new Guid("203D6BFB-3009-4E7E-8BE9-A4F02DA795BB"), "Admin | Conferences");
 
         /// <summary>
-        /// TODO: Create AudiovisualProducerExecutive, like AudiovisualPlayerExecutive
+        /// TODO: Create ProducerExecutiveAudiovisual, ProducerExecutiveMusic, ProducerExecutiveInnovation, ProducerExecutiveCartoon
         /// </summary>
-        public static CollaboratorType AudiovisualPlayerExecutive = new CollaboratorType(new Guid("2D6F0E07-7990-458A-8207-1471DC3D1833"), "Executive | Audiovisual Player");
-        public static CollaboratorType ExecutiveMusic = new CollaboratorType(new Guid("F05C6213-5CDE-46B8-A617-DF339D9903A9"), "Executive | Music");
-        public static CollaboratorType ExecutiveInnovation = new CollaboratorType(new Guid("7E4909E0-3DE9-4B55-A678-3C4C277A89DA"), "Executive | Innovation");
-        public static CollaboratorType ExecutiveCartoon = new CollaboratorType(new Guid("E632C88F-73D2-4EBA-9704-408EF4397DC2"), "Executive | Cartoon");
+        public static CollaboratorType PlayerExecutiveAudiovisual = new CollaboratorType(new Guid("2D6F0E07-7990-458A-8207-1471DC3D1833"), "Player Executive | Audiovisual");
+        public static CollaboratorType PlayerExecutiveMusic = new CollaboratorType(new Guid("F05C6213-5CDE-46B8-A617-DF339D9903A9"), "Player Executive | Music");
+        public static CollaboratorType PlayerExecutiveInnovation = new CollaboratorType(new Guid("7E4909E0-3DE9-4B55-A678-3C4C277A89DA"), "Player Executive | Innovation");
+        public static CollaboratorType PlayerExecutiveCartoon = new CollaboratorType(new Guid("E632C88F-73D2-4EBA-9704-408EF4397DC2"), "Player Executive | Cartoon");
 
         public static CollaboratorType ComissionAudiovisual = new CollaboratorType(new Guid("60AAFB26-B483-425F-BFA6-ED0D45F3CBCB"), "Commission | Audiovisual");
         public static CollaboratorType ComissionMusic = new CollaboratorType(new Guid("3633CF67-840F-4061-B480-C075A5E9F5EE"), "Commission | Music");
@@ -55,9 +55,6 @@ namespace PlataformaRio2C.Domain.Entities
         public static CollaboratorType Music = new CollaboratorType(new Guid("1610EB14-D2E0-4B09-81F9-F904C1FF37B5"), "Music");
         public static CollaboratorType Innovation = new CollaboratorType(new Guid("E1A6AEEE-15FD-4BDB-B899-ACC462F30258"), "Innovation");
         public static CollaboratorType Cartoon = new CollaboratorType(new Guid("A1BBA990-1A08-4381-B233-E0AECE6532DB"), "Cartoon");
-
-        public static CollaboratorType MusicPlayer = new CollaboratorType(new Guid("EE8141AF-2BBF-44B0-87D4-A15C9C68CACA"), "Player | Music");
-        public static CollaboratorType MusicPlayerExecutive = new CollaboratorType(new Guid("C8960F1B-BE37-42B7-8021-3F6099C8C8D8"), "Executive | Music Player");
 
         #endregion
 

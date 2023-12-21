@@ -7,7 +7,7 @@
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
     var brazilUtc = @DateTimeExtensions.GetBrazilUtc();
-    var isPlayerExecutive = (ViewBag.CollaboratorTypeUid as Guid?) == CollaboratorType.AudiovisualPlayerExecutive.Uid;
+    var isPlayerExecutive = (ViewBag.CollaboratorTypeUid as Guid?) == CollaboratorType.PlayerExecutiveAudiovisual.Uid;
 }
 @if (Model?.Any() == true)
 {

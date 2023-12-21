@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-16-2021
+// Last Modified On : 12-21-2023
 // ***********************************************************************
 // <copyright file="OrganizationType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,7 +13,6 @@
 // ***********************************************************************
 using System;
 using System.Collections.Generic;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -25,13 +24,14 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Configurations
 
-        public static OrganizationType Player = new OrganizationType(new Guid("936B3262-8B8F-472C-94AD-3A2B925DD0AE"), "Player");
         public static OrganizationType Producer = new OrganizationType(new Guid("7CE5A34F-E31F-4C26-BED9-CDD6A0206185"), "Producer");
-        //public static OrganizationType Startup = new OrganizationType(new Guid("F2EFDBAA-27BD-42BD-BF29-A8DAED6093FF"), "Startup");
-        //public static OrganizationType Investor = new OrganizationType(new Guid("7EB327A9-95E8-4514-8E66-39510FC9ED03"), "Investor");
-        //public static OrganizationType MusicBand = new OrganizationType(new Guid("D077BA5C-2982-4B69-95D4-D9AA1BF8E7F4"), "Music Band");
-        //public static OrganizationType Recorder = new OrganizationType(new Guid("243AAFB2-B610-49B4-B9BC-33CDF631C367"), "Recorder");
-
+        public static OrganizationType AudiovisualPlayer = new OrganizationType(new Guid("936B3262-8B8F-472C-94AD-3A2B925DD0AE"), "Audiovisual Player");
+        
+        public static OrganizationType Startup = new OrganizationType(new Guid("F2EFDBAA-27BD-42BD-BF29-A8DAED6093FF"), "Startup");
+        public static OrganizationType StartupPlayer = new OrganizationType(new Guid("7EB327A9-95E8-4514-8E66-39510FC9ED03"), "Startup Player");
+        
+        public static OrganizationType MusicBand = new OrganizationType(new Guid("D077BA5C-2982-4B69-95D4-D9AA1BF8E7F4"), "Music Band");
+        public static OrganizationType MusicPlayer = new OrganizationType(new Guid("243AAFB2-B610-49B4-B9BC-33CDF631C367"), "Music Player");
 
         #endregion
 

@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-26-2019
 //
-// Last Modified By : Renan valentim
-// Last Modified On : 06-26-2023
+// Last Modified By : Renan Valentim
+// Last Modified On : 12-21-2023
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -335,7 +335,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void Delete(CollaboratorType collaboratorType, OrganizationType organizationType, int userId)
         {
-            if (collaboratorType.Name == CollaboratorType.AudiovisualPlayerExecutive.Name)
+            if (collaboratorType.Name == CollaboratorType.PlayerExecutiveAudiovisual.Name)
             {
                 this.DeleteAttendeeCollaboratorType(collaboratorType, userId);
                 this.DeleteAttendeeOrganizationCollaborators(organizationType, userId);

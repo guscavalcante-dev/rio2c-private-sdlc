@@ -2,7 +2,7 @@
 @using PlataformaRio2C.Domain.Entities
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
-    var isPlayerExecutive = (ViewBag.CollaboratorTypeUid as Guid?) == CollaboratorType.AudiovisualPlayerExecutive.Uid;
+    var isPlayerExecutive = (ViewBag.CollaboratorTypeUid as Guid?) == CollaboratorType.PlayerExecutiveAudiovisual.Uid;
 }
 @Html.Hidden("CollaboratorTypeUid", ViewBag.CollaboratorTypeUid as Guid?)
 <div class="col-12">

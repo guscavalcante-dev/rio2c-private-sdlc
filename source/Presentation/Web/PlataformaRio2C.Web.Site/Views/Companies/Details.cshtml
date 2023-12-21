@@ -8,8 +8,8 @@
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var isCollaborator = userAccessControlDto?.HasEditionAttendeeOrganization(Model.AttendeeOrganization.Uid) == true;
 
-    var isAudiovisualCompany = Model.HasAnyType(new[] { OrganizationType.Player.Name, OrganizationType.Producer.Name });
-    var isAudiovisualBuyerCompany = Model.HasAnyType(new[] { OrganizationType.Player.Name });
+    var isAudiovisualCompany = Model.HasAnyType(new[] { OrganizationType.AudiovisualPlayer.Name, OrganizationType.Producer.Name });
+    var isAudiovisualBuyerCompany = Model.HasAnyType(new[] { OrganizationType.AudiovisualPlayer.Name });
 }
 @Html.Hidden("AggregateId", Model.Organization.Uid)
 <div class="row">

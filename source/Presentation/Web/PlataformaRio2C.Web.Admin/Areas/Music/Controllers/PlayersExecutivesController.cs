@@ -118,9 +118,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 request.Search?.Value,
                 request.GetSortColumns(),
                 new List<Guid>(),
-                //TODO: 866 - verify type CollaboratorType and  OrganizationType
-                new string[] { CollaboratorType.MusicPlayerExecutive.Name },
-                new string[] { OrganizationType.Player.Name },
+                new string[] { CollaboratorType.PlayerExecutiveMusic.Name },
+                new string[] { OrganizationType.MusicPlayer.Name },
                 showAllEditions,
                 showAllParticipants,
                 showHighlights,
@@ -289,10 +288,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowTotalCountWidget()
         {
-            //TODO: 866 - verify type CollaboratorType and  OrganizationType
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
-                CollaboratorType.MusicPlayerExecutive.Name,
-                OrganizationType.Player.Name,
+                CollaboratorType.PlayerExecutiveMusic.Name,
+                OrganizationType.MusicPlayer.Name,
                 true,
                 this.EditionDto.Id);
 
@@ -311,10 +309,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowEditionCountWidget()
         {
-            //TODO: 866 - verify type CollaboratorType and  OrganizationType
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
-                CollaboratorType.MusicPlayerExecutive.Name,
-                OrganizationType.Player.Name,
+                CollaboratorType.PlayerExecutiveMusic.Name,
+                OrganizationType.MusicPlayer.Name,
                 false,
                 this.EditionDto.Id);
 
@@ -340,9 +337,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         {
             var attendeeCollaboratorDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByCollaboratorTypeUidAsync(
                 id ?? Guid.Empty,
-                //TODO: 866 - verify type CollaboratorType and  OrganizationType
-                CollaboratorType.MusicPlayerExecutive.Uid,
-                OrganizationType.Player.Uid);
+                CollaboratorType.PlayerExecutiveMusic.Uid,
+                OrganizationType.MusicPlayer.Uid);
 
             if (attendeeCollaboratorDto == null)
             {
@@ -459,7 +455,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         {
             CreateCollaborator cmd = new CreateCollaborator(
                     //TODO: 866 - verify type CollaboratorType and  OrganizationType
-                    await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.Player.Uid),
+                    await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.MusicPlayer.Uid),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
@@ -501,9 +497,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    //TODO: 866 - verify type CollaboratorType and  OrganizationType
-                    CollaboratorType.MusicPlayerExecutive.Name,
-                    OrganizationType.Player.Name,
+                    CollaboratorType.PlayerExecutiveMusic.Name,
+                    OrganizationType.MusicPlayer.Name,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -557,7 +552,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 cmd = new UpdateCollaborator(
                     await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
                     //TODO: 866 - verify type CollaboratorType and  OrganizationType
-                    await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.Player.Uid),
+                    await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.MusicPlayer.Uid),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),

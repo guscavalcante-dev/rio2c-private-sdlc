@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 using System.Web.Optimization;
-using Xceed.Document.NET;
 
 namespace PlataformaRio2C.Web.Admin
 {

@@ -66,7 +66,7 @@
                                     <div class="kt-widget__info">
                                         <a class="kt-widget__username">@attendeeOrganizationDto.Organization.TradeName</a>
                                         <span class="kt-widget__desc">
-                                            @if (organizationTypeUid == OrganizationType.Player.Uid)
+                                            @if (organizationTypeUid == OrganizationType.AudiovisualPlayer.Uid)
                                             {
                                                 organizationUrlAction = Url.Action("Details", "Players", new { Area = "Audiovisual", id = attendeeOrganizationDto.Organization.Uid });
                                             }

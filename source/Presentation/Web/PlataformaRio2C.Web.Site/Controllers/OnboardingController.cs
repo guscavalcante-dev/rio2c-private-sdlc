@@ -4,7 +4,7 @@
 // Created          : 08-29-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 04-10-2023
+// Last Modified On : 12-21-2023
 // ***********************************************************************
 // <copyright file="OnboardingController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -627,7 +627,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    OrganizationType.Player,
+                    OrganizationType.AudiovisualPlayer,
                     this.UserAccessControlDto.User.Id,
                     this.UserAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -699,7 +699,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             var currentOrganization = this.UserAccessControlDto?.EditionAttendeeOrganizations?.FirstOrDefault(eao => eao.OnboardingOrganizationDate.HasValue
                                                                                                                      && !eao.OnboardingInterestsDate.HasValue
                                                                                                                      && eao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
-                                                                                                                                                                 && aot.OrganizationType.Name == OrganizationType.Player.Name))?.Organization;
+                                                                                                                                                                 && aot.OrganizationType.Name == OrganizationType.AudiovisualPlayer.Name))?.Organization;
             if (currentOrganization == null)
             {
                 return RedirectToAction("Index", "Onboarding");
@@ -745,7 +745,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    OrganizationType.Player,
+                    OrganizationType.AudiovisualPlayer,
                     this.UserAccessControlDto.User.Id,
                     this.UserAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -958,7 +958,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <summary>Sets the view bags.</summary>
         private void SetViewBags()
         {
-            bool isPlayer = this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.AudiovisualPlayerExecutive) == true;
+            bool isPlayer = this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.PlayerExecutiveAudiovisual) == true;
             ViewBag.IsPlayer = isPlayer;
 
             if (isPlayer)
@@ -967,7 +967,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                                                                 .Where(eao => !eao.IsDeleted
                                                                               && eao.AttendeeOrganizationTypes?
                                                                                   .Any(aot => !aot.IsDeleted
-                                                                                              && aot.OrganizationType.Name == OrganizationType.Player.Name) == true)?
+                                                                                              && aot.OrganizationType.Name == OrganizationType.AudiovisualPlayer.Name) == true)?
                                                                 .ToList();
             }
 

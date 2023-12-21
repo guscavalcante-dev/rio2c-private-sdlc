@@ -4,7 +4,7 @@
 // Created          : 08-28-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-22-2023
+// Last Modified On : 12-21-2023
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -950,7 +950,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords)
                                 .FindByEditionId(editionId, false)
-                                .FindByOrganizationTypeUidAndEditionId(editionId, false, OrganizationType.Player.Uid)
+                                .FindByOrganizationTypeUidAndEditionId(editionId, false, OrganizationType.AudiovisualPlayer.Uid)
                                 .HasActiveBuyerNegotiations();
 
             return await query
@@ -1050,7 +1050,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByKeywords(keywords)
                                 .FindByUids(selectedAttendeeOrganizationsUids)
                                 .FindByEditionId(editionId, false)
-                                .FindByOrganizationTypeUidAndEditionId(editionId, false, OrganizationType.Player.Uid)
+                                .FindByOrganizationTypeUidAndEditionId(editionId, false, OrganizationType.AudiovisualPlayer.Uid)
                                 .HasActiveBuyerNegotiations();
 
             return await query
@@ -1160,7 +1160,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                 .FindByEditionId(editionId ?? 0, showAllEditions)
-                .FindByOrganizationTypeUidAndEditionId(editionId ?? 0, showAllEditions, OrganizationType.Player.Uid)
+                .FindByOrganizationTypeUidAndEditionId(editionId ?? 0, showAllEditions, OrganizationType.AudiovisualPlayer.Uid)
                 .HasActiveBuyerNegotiations();
 
             return await query.CountAsync();

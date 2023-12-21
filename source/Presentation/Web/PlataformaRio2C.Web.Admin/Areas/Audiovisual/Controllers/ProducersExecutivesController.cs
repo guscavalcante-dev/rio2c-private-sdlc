@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-15-2021
+// Last Modified On : 12-21-2023
 // ***********************************************************************
 // <copyright file="ProducersExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -142,7 +142,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         {
             var attendeeCollaboratorDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByCollaboratorTypeUidAsync(
                 id ?? Guid.Empty, 
-                CollaboratorType.AudiovisualPlayerExecutive.Uid, 
+                CollaboratorType.PlayerExecutiveAudiovisual.Uid, 
                 OrganizationType.Producer.Uid);
 
             if (attendeeCollaboratorDto == null)

@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-15-2021
+// Last Modified On : 12-21-2023
 // ***********************************************************************
 // <copyright file="AttendeeOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -207,7 +207,7 @@ namespace PlataformaRio2C.Domain.Entities
                 this.AttendeeOrganizationCollaborators = new List<AttendeeOrganizationCollaborator>();
             }
 
-            if (collaboratorType?.Name == CollaboratorType.AudiovisualPlayerExecutive.Name)
+            if (collaboratorType?.Name == CollaboratorType.PlayerExecutiveAudiovisual.Name)
             {
                 attendeeCollaborator.SynchronizeAttendeeCollaboratorType(collaboratorType, false, null, userId);
             }
@@ -243,7 +243,7 @@ namespace PlataformaRio2C.Domain.Entities
                 attendeeOrganizationCollaborator.Delete(userId);
             }
 
-            if (collaboratorType?.Name == CollaboratorType.AudiovisualPlayerExecutive.Name)
+            if (collaboratorType?.Name == CollaboratorType.PlayerExecutiveAudiovisual.Name)
             {
                 //Deactivate the AttendeeCollaborator when disassociated from all AttendeeOrganizations
                 if (!attendeeCollaborator.AttendeeOrganizationCollaborators.Any(aoc => !aoc.IsDeleted))

@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 04-15-2023
+// Last Modified On : 12-21-2023
 // ***********************************************************************
 // <copyright file="CollaboratorsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -138,13 +138,13 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="page">The page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> FindAllExecutivesByFilters(string keywords, int? page = 1, string collaboratorTypeName = Constants.CollaboratorType.AudiovisualPlayerExecutive)
+        public async Task<ActionResult> FindAllExecutivesByFilters(string keywords, int? page = 1, string collaboratorTypeName = Constants.CollaboratorType.PlayerExecutiveAudiovisual)
         {
             var collaboratorsApiDtos = await this.collaboratorRepo.FindAllDropdownApiListDtoPaged(
                 this.EditionDto.Id,
                 keywords,
                 false,
-                collaboratorTypeName, //Constants.CollaboratorType.AudiovisualPlayerExecutive
+                collaboratorTypeName, //Constants.CollaboratorType.PlayerExecutiveAudiovisual
                 false,
                 page.Value,
                 10);
@@ -487,7 +487,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         public async Task<ActionResult> ShowCompanyWidget(Guid? collaboratorUid, Guid? organizationTypeUid)
         {
             ViewBag.OrganizationTypeUid = organizationTypeUid;
-            ViewBag.OrganizationTypeForDropdownSearch = organizationTypeUid == OrganizationType.Player.Uid ? "Players" :
+            ViewBag.OrganizationTypeForDropdownSearch = organizationTypeUid == OrganizationType.AudiovisualPlayer.Uid ? "Players" :
                                                         organizationTypeUid == OrganizationType.Producer.Uid ? "Producers" :
                                                         "Companies";
 
@@ -563,9 +563,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     throw new DomainException(Messages.CorrectFormValues);
                 }
 
-                if (cmd.OrganizationTypeUid == OrganizationType.Player.Uid)
+                if (cmd.OrganizationTypeUid == OrganizationType.AudiovisualPlayer.Uid)
                 {
-                    cmd.CollaboratorTypeName = CollaboratorType.AudiovisualPlayerExecutive.Name;
+                    cmd.CollaboratorTypeName = CollaboratorType.PlayerExecutiveAudiovisual.Name;
                 }
                 else if (cmd.OrganizationTypeUid == OrganizationType.Producer.Uid)
                 {
@@ -633,9 +633,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     throw new DomainException(Messages.CorrectFormValues);
                 }
 
-                if (cmd.OrganizationTypeUid == OrganizationType.Player.Uid)
+                if (cmd.OrganizationTypeUid == OrganizationType.AudiovisualPlayer.Uid)
                 {
-                    cmd.CollaboratorTypeName = CollaboratorType.AudiovisualPlayerExecutive.Name;
+                    cmd.CollaboratorTypeName = CollaboratorType.PlayerExecutiveAudiovisual.Name;
                 }
                 else if (cmd.OrganizationTypeUid == OrganizationType.Producer.Uid)
                 {

@@ -4,7 +4,7 @@
 // Created          : 07-28-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 04-27-2023
+// Last Modified On : 12-21-2023
 // ***********************************************************************
 // <copyright file="MeetingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,7 +36,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
     /// MeetingsController
     /// </summary>
     [AjaxAuthorize(Order = 1)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AudiovisualPlayerExecutive + "," + Constants.CollaboratorType.Industry)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.PlayerExecutiveAudiovisual + "," + Constants.CollaboratorType.Industry)]
     public class MeetingsController : BaseController
     {
         private readonly INegotiationRepository negotiationRepo;
