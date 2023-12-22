@@ -143,7 +143,7 @@
     @if (isAdminFull || isAdminMusic)
     {
         <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel
-             @this.IsOpen(menuOpenCssClass, null, null, "Music")
+            @this.IsOpen(menuOpenCssClass, null, null, "Music")
             @this.IsOpen(menuOpenCssClass, null, "Commissions,Projects,Players,PlayersExecutives", "Music")"
             data-ktmenu-submenu-toggle="click" aria-haspopup="true">
             <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">@Labels.Music</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
@@ -164,9 +164,9 @@
                         <a href="#" class="kt-menu__link kt-menu__toggle"><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Players</span><i class="kt-menu__hor-arrow la la-angle-right"></i><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
                         <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--right">
                             <ul class="kt-menu__subnav">
-                                @*<li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "Players", "Music")" aria-haspopup="true">
-                                        <a href="@Url.Action("Index", "Players", new { Area = "Music" })" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.Companies</span></a>
-                                    </li>*@
+                                <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "Players", "Music")" aria-haspopup="true">
+                                    <a href="@Url.Action("Index", "Players", new { Area = "Music" })" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.Companies</span></a>
+                                </li>
                                 <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "PlayersExecutives", "Music")" aria-haspopup="true">
                                     <a href="@Url.Action("Index", "PlayersExecutives", new { Area = "Music" })" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.Executives</span></a>
                                 </li>

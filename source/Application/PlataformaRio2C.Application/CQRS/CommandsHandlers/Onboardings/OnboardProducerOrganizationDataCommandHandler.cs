@@ -79,7 +79,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             Organization organization = null;
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
-            var activities = await this.activityRepo.FindAllAsync();
+            var activities = await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id);
 
             var attendeeCollaborator = await this.attendeeCollaboratorRepo.GetAsync(ac => ac.Collaborator.User.Uid == cmd.UserUid && ac.EditionId == cmd.EditionId);
             if (attendeeCollaborator == null)

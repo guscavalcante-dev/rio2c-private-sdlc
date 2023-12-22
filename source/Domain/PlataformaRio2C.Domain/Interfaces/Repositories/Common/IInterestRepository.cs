@@ -23,7 +23,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IInterestRepository</summary>
     public interface IInterestRepository : IRepository<Interest>
     {
-        Task<List<InterestDto>> FindAllDtosAsync();
+        Task<List<InterestDto>> FindAllDtosbyProjectTypeIdAsync(int projectTypeId);
         Task<List<InterestDto>> FindAllDtosByInterestGroupUidAsync(Guid interestGroupUid);
         Task<List<IGrouping<InterestGroup, Interest>>> FindAllGroupedByInterestGroupsAsync();
         Task<List<Interest>> FindAllByUidsAsync(List<Guid> interestsUids);

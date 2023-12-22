@@ -34,6 +34,8 @@ namespace PlataformaRio2C.Domain.Entities
         public string Name { get; private set; }
         
         public virtual ICollection<OrganizationType> OrganizationTypes { get; private set; }
+        public virtual ICollection<InterestGroup> InterestGroups { get; private set; }
+        public virtual ICollection<Activity> Activities { get; private set; }
 
         //public virtual Address Address { get; private set; }
         //public virtual ICollection<PlayerDescription> Descriptions { get; private set; }

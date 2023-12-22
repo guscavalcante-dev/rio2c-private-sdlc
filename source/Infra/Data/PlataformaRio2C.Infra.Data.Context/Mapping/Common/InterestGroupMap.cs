@@ -31,6 +31,11 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.Property(t => t.Name)
                .HasMaxLength(InterestGroup.NameMaxLength)
                .IsRequired();
+
+            //Relationships
+            this.HasRequired(t => t.ProjectType)
+                .WithMany(e => e.InterestGroups)
+                .HasForeignKey(d => d.ProjectTypeId);
         }
     }
 }

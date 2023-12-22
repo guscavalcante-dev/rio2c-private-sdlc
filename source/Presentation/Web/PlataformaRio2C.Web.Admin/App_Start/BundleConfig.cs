@@ -914,6 +914,31 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region Players
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.players.list.js").Include(
+                "~/Assets/js/music/players/music.players.totalcount.widget.js",
+                "~/Assets/js/music/players/music.players.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.players.editioncount.js").Include(
+                "~/Assets/js/music/players/music.players.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.players.editioncountodometer.widget.js").Include(
+                "~/Assets/js/music/players/music.players.editioncountodometer.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.players.create.js").Include(
+                "~/Assets/js/music/players/music.players.create.js",
+                "~/Assets/js/myrio2c.companynumber.js",
+                "~/Assets/js/myrio2c.additionalinfo.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.players.update.js").Include(
+                "~/Assets/js/music/players/music.players.update.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.players.delete.js").Include(
+                "~/Assets/js/music/players/music.players.delete.js"));
+
+            #endregion
+
             #region Players - Executives
             bundles.Add(new ScriptBundle("~/bundles/js/music.players.executives.list.js").Include(
                 "~/Assets/js/music/playersexecutives/music.players.executives.totalcount.widget.js",

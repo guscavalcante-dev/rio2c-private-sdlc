@@ -188,7 +188,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
                 #endregion
 
-                var activities = await this.activityRepo.FindAllAsync();
+                var activities = await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id);
                 var targetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id);
                 var intrests = await this.interestRepo.FindAllGroupedByInterestGroupsAsync();
 
