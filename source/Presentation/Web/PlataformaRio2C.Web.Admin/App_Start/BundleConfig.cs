@@ -1025,6 +1025,30 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region Players - Executives
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.players.executives.list.js").Include(
+                 "~/Assets/js/innovation/playersexecutives/innovation.players.executives.totalcount.widget.js",
+                 "~/Assets/js/innovation/playersexecutives/innovation.players.executives.datatable.widget.js",
+                 "~/Assets/js/salesplatforms/salesplatforms.export.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.players.executives.editioncount.js").Include(
+                "~/Assets/js/innovation/playersexecutives/innovation.players.executives.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.players.executives.create.js").Include(
+                "~/Assets/js/innovation/playersexecutives/innovation.players.executives.create.js",
+                "~/Assets/js/myrio2c.publicemail.js",
+                "~/Assets/js/attendeeorganizations/attendeeorganizations.form.js",
+                "~/Assets/js/dynamic.list.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.players.executives.update.js").Include(
+                "~/Assets/js/innovation/playersexecutives/innovation.players.executives.update.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.players.executives.delete.js").Include(
+                "~/Assets/js/innovation/playersexecutives/innovation.players.executives.delete.js"));
+
+            #endregion
+
             #region Track Options
 
             bundles.Add(new ScriptBundle("~/bundles/js/innovation.trackoptions.list.js").Include(
