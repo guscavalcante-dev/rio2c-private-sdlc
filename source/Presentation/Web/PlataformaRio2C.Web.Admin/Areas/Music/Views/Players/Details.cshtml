@@ -1,0 +1,93 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Entities
+@model AttendeeOrganizationSiteDetailsDto
+@{
+    ViewBag.Title = $"{Labels.Company}  {Model.Organization.TradeName}";
+}
+@Html.Hidden("AggregateId", Model.Organization.Uid)
+@Html.Hidden("OrganizationTypeUid", (Guid)ViewBag.OrganizationTypeUid)
+
+<div class="row">
+    <!--begin: Main Container-->
+    <div class="col-md-8 col-lg-9">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-12">
+                        <div id="CompanyMainInformationWidget" class="kt-portlet" style="min-height: 230px;"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div id="CompanySocialNetworksWidget" class="kt-portlet" style="min-height: 325px;"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div id="CompanyAddressWidget" class="kt-portlet" style="min-height: 325px;"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div id="CompanyActivityWidget" class="kt-portlet kt-portlet--height-fluid" style="min-height: 325px;"></div>
+                    </div>
+                    <div class="col-6">
+                        <div id="CompanyTargetAudienceWidget" class="kt-portlet kt-portlet--height-fluid" style="min-height: 325px;"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div id="CompanyInterestWidget" class="kt-portlet" style="min-height: 325px;"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div id="OrganizationExecutivesWidget" class="kt-portlet" style="min-height: 325px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end: Main Container-->
+    <!--begin: Right Container-->
+    <div class="col-md-4 col-lg-3">
+        <!--begin:Api Configurations Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="OrganizationApiConfigurationWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+        </div>
+        <!--end:Api Configurations Widget-->
+    </div>
+    <!--end: Right Container-->
+</div>
+@section Styles {
+    @Styles.Render("~/bundles/css/cropper.css")
+    @Styles.Render("~/bundles/css/select2.css")
+    @Styles.Render("~/bundles/css/bootstrap-datepicker.css")
+    @Styles.Render("~/bundles/css/music.organizations.apiconfiguration.css")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/cropper.js")
+    @Scripts.Render("~/bundles/js/select2.js")
+    @Scripts.Render("~/bundles/js/bootstrap-datepicker.js")
+    @Scripts.Render("~/bundles/js/inputmask.js")
+    @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/addresses.form.js")
+    @Scripts.Render("~/bundles/js/music.players.executives.create.js")
+    @Scripts.Render("~/bundles/js/music.organizations.widget.js")
+    <script>
+        // Page translations ----------------------------------------------------------------------
+
+        jQuery(document).ready(function () {
+            MusicOrganizationsMainInformationWidget.init();
+            MusicOrganizationsSocialNetworksWidget.init();
+            MusicOrganizationsAddressWidget.init();
+            MusicOrganizationsActivityWidget.init();
+            MusicOrganizationsTargetAudienceWidget.init();
+            MusicOrganizationsInterestWidget.init();
+            MusicOrganizationsExecutivesWidget.init();
+            MusicOrganizationsApiConfigurationWidget.init();
+        });
+    </script>
+}

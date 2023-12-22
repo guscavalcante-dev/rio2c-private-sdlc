@@ -1,7 +1,7 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Rafael Dantas Ruiz
-// Created          : 08-19-2019
+// Author           : Renan Valentim
+// Created          : 12-21-2023
 //
 // Last Modified By : Renan Valentim
 // Last Modified On : 12-21-2023
@@ -42,11 +42,11 @@ using PlataformaRio2C.Domain.ApiModels;
 using PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults;
 using System.IO;
 
-namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
+namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 {
     /// <summary>PlayersController</summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminMusic)]
     public class PlayersController : BaseController
     {
         private readonly IOrganizationRepository organizationRepo;
@@ -97,8 +97,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Players, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.AudioVisual, null),
-                new BreadcrumbItemHelper(Labels.Players, Url.Action("Index", "Players", new { Area = "Audiovisual" }))
+                new BreadcrumbItemHelper(Labels.Music, null),
+                new BreadcrumbItemHelper(Labels.Players, Url.Action("Index", "Players", new { Area = "Music" }))
             });
 
             #endregion
@@ -119,7 +119,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 request.Length,
                 request.Search?.Value,
                 request.GetSortColumns(),
-                OrganizationType.AudiovisualPlayer.Uid,
+                OrganizationType.MusicPlayer.Uid,
                 showAllEditions,
                 showAllOrganizations,
                 this.EditionDto.Id);
@@ -289,14 +289,14 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowTotalCountWidget()
         {
-            var playersCount = await this.organizationRepo.CountAllByDataTable(OrganizationType.AudiovisualPlayer.Uid, true, this.EditionDto.Id);
+            var playersCount = await this.organizationRepo.CountAllByDataTable(OrganizationType.MusicPlayer.Uid, true, this.EditionDto.Id);
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", playersCount), divIdOrClass = "#PlayersTotalCountWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", playersCount), divIdOrClass = "#MusicPlayersTotalCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -309,14 +309,14 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <returns></returns>
         public async Task<ActionResult> ShowEditionCountWidget()
         {
-            var playersCount = await this.organizationRepo.CountAllByDataTable(OrganizationType.AudiovisualPlayer.Uid, false, this.EditionDto.Id);
+            var playersCount = await this.organizationRepo.CountAllByDataTable(OrganizationType.MusicPlayer.Uid, false, this.EditionDto.Id);
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", playersCount), divIdOrClass = "#PlayersEditionCountWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", playersCount), divIdOrClass = "#MusicPlayersEditionCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -329,14 +329,14 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <returns></returns>
         public async Task<ActionResult> ShowEditionCountOdometerWidget()
         {
-            var playersCount = await this.organizationRepo.CountAllByDataTable(OrganizationType.AudiovisualPlayer.Uid, false, this.EditionDto.Id);
+            var playersCount = await this.organizationRepo.CountAllByDataTable(OrganizationType.MusicPlayer.Uid, false, this.EditionDto.Id);
             return Json(new
             {
                 status = "success",
                 odometerCount = playersCount,
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/EditionCountOdometerWidget", playersCount), divIdOrClass = "#AudiovisualPlayersEditionCountOdometerWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/EditionCountOdometerWidget", playersCount), divIdOrClass = "#MusicPlayersEditionCountOdometerWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -353,27 +353,27 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         {
             var attendeeOrganizationDto = await this.attendeeOrganizationRepo.FindDetailsDtoByOrganizationUidAndByOrganizationTypeUidAsync(
                 id ?? Guid.Empty, 
-                OrganizationType.AudiovisualPlayer.Uid,
+                OrganizationType.MusicPlayer.Uid,
                 this.EditionDto.Id, 
                 false);
 
             if (attendeeOrganizationDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Player, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "Players", new { Area = "Audiovisual" });
+                return RedirectToAction("Index", "Players", new { Area = "Music" });
             }
 
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Players, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.AudioVisual, null),
-                new BreadcrumbItemHelper(Labels.Players, Url.Action("Index", "Players", new { Area = "Audiovisual" })),
-                new BreadcrumbItemHelper(attendeeOrganizationDto.Organization.Name, Url.Action("Details", "Players", new { Area = "Audiovisual", id }))
+                new BreadcrumbItemHelper(Labels.Music, null),
+                new BreadcrumbItemHelper(Labels.Players, Url.Action("Index", "Players", new { Area = "Music" })),
+                new BreadcrumbItemHelper(attendeeOrganizationDto.Organization.Name, Url.Action("Details", "Players", new { Area = "Music", id }))
             });
 
             #endregion
 
-            ViewBag.OrganizationTypeUid = OrganizationType.AudiovisualPlayer.Uid; // It's the admin page accessed and not the organization type of the current organization
+            ViewBag.OrganizationTypeUid = OrganizationType.MusicPlayer.Uid; // It's the admin page accessed and not the organization type of the current organization
 
             return View(attendeeOrganizationDto);
         }
@@ -390,13 +390,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         public async Task<ActionResult> ShowCreateModal()
         {
             var cmd = new CreateOrganization(
-                OrganizationType.AudiovisualPlayer,
-                await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
+                OrganizationType.MusicPlayer,
+                await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)), //TODO: Music hasn't holding. Remove this
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
-                await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
-                await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Audiovisual.Id),
+                await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
+                await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
+                await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Music.Id),
                 false,
                 false,
                 false,
@@ -429,7 +429,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    OrganizationType.AudiovisualPlayer,
+                    OrganizationType.MusicPlayer,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -452,8 +452,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 cmd.UpdateDropdownProperties(
                     await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                    await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
-                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
+                    await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id));
 
                 return Json(new
                 {
@@ -491,13 +491,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             {
                 cmd = new UpdateOrganization(
                     await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(organizationUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
-                    OrganizationType.AudiovisualPlayer,
+                    OrganizationType.MusicPlayer,
                     await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                    await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
-                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
-                    await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Audiovisual.Id),
+                    await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
+                    await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Music.Id),
                     isAddingToCurrentEdition,
                     false,
                     false,
@@ -536,7 +536,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    OrganizationType.AudiovisualPlayer,
+                    OrganizationType.MusicPlayer,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -559,8 +559,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 cmd.UpdateDropdownProperties(
                     await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                    await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
-                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
+                    await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id));
 
                 return Json(new
                 {
@@ -601,7 +601,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    OrganizationType.AudiovisualPlayer,
+                    OrganizationType.MusicPlayer,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -653,7 +653,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 this.EditionDto.Id,
                 keywords,
                 customFilter,
-                OrganizationType.AudiovisualPlayer.Uid,
+                OrganizationType.MusicPlayer.Uid,
                 page.Value,
                 10);
 

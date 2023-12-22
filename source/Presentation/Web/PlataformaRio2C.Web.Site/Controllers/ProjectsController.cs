@@ -407,7 +407,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
                 cmd = new UpdateProjectInterests(
                     interestWidgetDto,
-                    await this.interestRepo.FindAllDtosAsync(),
+                    await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Audiovisual.Id),
                     await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
             }
             catch (DomainException ex)
@@ -779,7 +779,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 projectDto,
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
-                await this.interestRepo.FindAllDtosAsync(),
+                await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Audiovisual.Id),
                 true,
                 false,
                 false);
@@ -919,7 +919,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 currentOrganization != null ? await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(currentOrganization.Uid, this.EditionDto.Id, this.UserInterfaceLanguage)) : null,
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                await this.activityRepo.FindAllAsync(),
+                await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
                 await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
                 true,
                 true,

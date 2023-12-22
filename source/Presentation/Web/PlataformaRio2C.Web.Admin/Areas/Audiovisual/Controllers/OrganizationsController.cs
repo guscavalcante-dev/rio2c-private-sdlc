@@ -485,7 +485,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Activity, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            ViewBag.Activities = await this.activityRepo.FindAllAsync();
+            ViewBag.Activities = await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id);
 
             return Json(new
             {
@@ -522,7 +522,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
                 cmd = new UpdateOrganizationActivities(
                     activityWidgetDto,
-                    await this.activityRepo.FindAllAsync());
+                    await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
             }
             catch (DomainException ex)
             {
@@ -776,7 +776,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
                 cmd = new UpdateOrganizationInterests(
                     interestWidgetDto,
-                    await this.interestRepo.FindAllDtosAsync(),
+                    await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Audiovisual.Id),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     true);
             }

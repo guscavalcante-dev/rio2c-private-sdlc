@@ -23,6 +23,11 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         public ActivityMap()
         {
             this.ToTable("Activities");
+
+            //Relationships
+            this.HasRequired(t => t.ProjectType)
+                .WithMany(e => e.Activities)
+                .HasForeignKey(d => d.ProjectTypeId);
         }
     }
 }

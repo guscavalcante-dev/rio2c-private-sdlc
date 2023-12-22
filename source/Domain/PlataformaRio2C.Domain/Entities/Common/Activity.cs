@@ -21,9 +21,12 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int NameMinLength = 2;
         public static readonly int NameMaxLength = 100;
 
+        public int ProjectTypeId { get; private set; }
         public string Name { get; private set; }
         public int DisplayOrder { get; private set; }
         public bool HasAdditionalInfo { get; private set; }
+
+        public virtual ProjectType ProjectType { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Activity"/> class.</summary>
         /// <param name="name">The name.</param>

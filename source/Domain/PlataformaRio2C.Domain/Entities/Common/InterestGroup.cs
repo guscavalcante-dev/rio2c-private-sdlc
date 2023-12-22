@@ -24,10 +24,13 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int NameMaxLength = 150;
         public static readonly int TypeMaxLength = 100;
 
+        public int ProjectTypeId { get; private set; }
         public string Name { get; private set; }
         public string Type { get; private set; }
         public int DisplayOrder { get; private set; }
         public bool IsCommission { get; private set; }
+
+        public virtual ProjectType ProjectType { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="InterestGroup"/> class.</summary>
         protected InterestGroup()
@@ -57,8 +60,6 @@ namespace PlataformaRio2C.Domain.Entities
         public static InterestGroup Genre = new InterestGroup(new Guid("7B4A7C4A-EF10-483C-8854-87EBEB883583"));
         public static InterestGroup SubGenre = new InterestGroup(new Guid("BBFA501D-A4D2-4500-8D7D-8A133685E6D2"));
         public static InterestGroup Format = new InterestGroup(new Guid("2D5AE955-8D8F-4763-AEE4-964980FFB170"));
-
-
         
         #endregion
 

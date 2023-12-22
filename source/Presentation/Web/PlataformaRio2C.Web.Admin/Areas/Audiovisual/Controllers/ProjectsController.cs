@@ -896,7 +896,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
                 cmd = new UpdateProjectInterests(
                     interestWidgetDto,
-                    await this.interestRepo.FindAllDtosAsync(),
+                    await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Audiovisual.Id),
                     await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
             }
             catch (DomainException ex)

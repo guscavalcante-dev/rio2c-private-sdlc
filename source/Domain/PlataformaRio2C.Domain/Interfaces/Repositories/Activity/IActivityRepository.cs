@@ -21,7 +21,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IActivityRepository</summary>
     public interface IActivityRepository : IRepository<Activity>
     {
-        Task<List<Activity>> FindAllAsync();
+        Task<List<Activity>> FindAllByProjectTypeIdAsync(int projectTypeId);
         Task<List<Activity>> FindAllByUidsAsync(List<Guid> activitiesUids);
     }    
 }

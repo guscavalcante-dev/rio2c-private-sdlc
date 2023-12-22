@@ -54,6 +54,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>
+        /// Finds the by project type identifier.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="projectTypeId">The project type identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<Activity> FindByProjectTypeId(this IQueryable<Activity> query, int projectTypeId)
+        {
+            query = query.Where(a => a.ProjectTypeId == projectTypeId);
+
+            return query;
+        }
+
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
@@ -103,9 +116,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         /// <summary>Finds all asynchronous.</summary>
         /// <returns></returns>
-        public async Task<List<Activity>> FindAllAsync()
+        public async Task<List<Activity>> FindAllByProjectTypeIdAsync(int projectTypeId)
         {
-            var query = this.GetBaseQuery();
+            var query = this.GetBaseQuery()
+                                .FindByProjectTypeId(projectTypeId);
 
             return await query
                             .Order()
