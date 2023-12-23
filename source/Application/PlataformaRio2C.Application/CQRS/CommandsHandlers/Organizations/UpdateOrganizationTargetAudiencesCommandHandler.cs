@@ -65,7 +65,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             organization.UpdateOrganizationTargetAudiences(
                 cmd.OrganizationTargetAudiences?.Where(ota => ota.IsChecked)?.Select(ota => new OrganizationTargetAudience(targetAudiences?.FirstOrDefault(a => a.Uid == ota.TargetAudienceUid), ota.AdditionalInfo, cmd.UserId))?.ToList(),
-                //cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<TargetAudience>(),
                 cmd.UserId);
             if (!organization.IsValid())
             {
@@ -78,10 +77,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.AppValidationResult.Data = organization;
 
             return this.AppValidationResult;
-
-            //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
-
-            //return Task.FromResult(propertyId); // use it when the methed is not async
         }
     }
 }

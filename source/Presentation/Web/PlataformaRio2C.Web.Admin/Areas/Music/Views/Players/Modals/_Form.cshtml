@@ -169,26 +169,6 @@
                     </div>
                 </div>
             </div>
-            @*<div class="col-md-6">
-                    <div class="kt-section pt-4">
-                        <h3 class="kt-section__title mb-0">@Labels.TargetAudiences</h3>
-                        @Html.ValidationMessage("TargetAudiencesUids", new { @class = "text-danger" })
-                        <div class="kt-section__content mt-3">
-                            <div class="kt-checkbox-list">
-                                @foreach (var targetAudience in Model.TargetAudiences)
-                                {
-                                    <label class="kt-checkbox">
-                                        <input type="checkbox"
-                                               name="TargetAudiencesUids"
-                                               value="@targetAudience.Uid"
-                                               @if (Model.TargetAudiencesUids?.Contains(targetAudience.Uid) == true) { <text> checked </text> } /> @targetAudience.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')
-                                            <span></span>
-                                        </label>
-                                    }
-                            </div>
-                        </div>
-                    </div>
-                </div>*@
         </div>
     </div>
 </div>
