@@ -1,0 +1,243 @@
+﻿@using System.Globalization
+@model PlataformaRio2C.Application.CQRS.Commands.OrganizationBaseCommand
+@Html.HiddenFor(m => m.IsHoldingRequired)
+<div class="kt-section">
+    <div class="kt-separator kt-separator--border-dashed"></div>
+    <h3 class="kt-section__title mb-0">@Labels.PlayerInformation</h3>
+    <div class="kt-separator kt-separator--border-dashed"></div>
+    <div class="kt-section__content mt-3">
+        <div class="row">
+            <div class="form-group col-lg-4">
+                @Html.EditorFor(m => m.CropperImage)
+            </div>
+            <div class="col-lg-8">
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        @Html.LabelFor(m => m.Name, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        @Html.LabelFor(m => m.CompanyName, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                        @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        @Html.LabelFor(m => m.TradeName, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                        @Html.TextBoxFor(m => m.TradeName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.TradeName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6" data-id="Country">
+                @Html.LabelFor(m => m.CountryUid, new { @class = "control-label" })
+                @Html.HiddenFor(m => m.IsCompanyNumberRequired)
+                <select name="@Html.NameFor(m => m.CountryUid)" id="@Html.IdFor(m => m.CountryUid)" @Html.GetUnobtrusiveValidationAttributesFor(m => m.CountryUid) class="form-control">
+                    <option value="" data-country-code="" data-companynumber-mask="" data-zipcode-mask="" data-phonenumber-mask="" data-mobile-mask="">@(Labels.Select)...</option>
+                    @foreach (var countryBaseDto in Model.CountriesBaseDtos)
+                    {
+                        <option value="@countryBaseDto.Uid" @(countryBaseDto.Uid == Model.CountryUid ? "selected" : "") data-country-code="@countryBaseDto.Code" data-companynumber-required="@countryBaseDto.IsCompanyNumberRequired" data-companynumber-mask="@countryBaseDto.CompanyNumberMask" data-zipcode-mask="@countryBaseDto.ZipCodeMask" data-phonenumber-mask="@countryBaseDto.PhoneNumberMask" data-mobile-mask="@countryBaseDto.MobileMask">
+                            @countryBaseDto.DisplayName
+                        </option>
+                    }
+                </select>
+                @Html.ValidationMessageFor(m => m.CountryUid, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.Document, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                @Html.TextBoxFor(m => m.Document, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Document, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="kt-section mt-50 mb-0">
+            <h3 class="kt-heading kt-heading--md">@Labels.OneToOneMeetingConfiguration</h3>
+            <div class="kt-section__content">
+                <div class="row">
+                    <div class="col-sm-6">
+                        @Html.HiddenFor(m => m.IsVirtualMeetingRequired)
+                        <div class="row">
+                            <div class="col-12">
+                                @Html.LabelFor(m => m.IsVirtualMeeting, new { @class = "control-label" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-12 mb-0">
+                                <div class="kt-radio-list ml-3" data-id="IsVirtualMeeting">
+                                    <label class="kt-radio">
+                                        @Html.RadioButtonFor(m => m.IsVirtualMeeting, true) @Labels.Virtual
+                                        <span></span>
+                                    </label>
+                                    <label class="kt-radio">
+                                        @Html.RadioButtonFor(m => m.IsVirtualMeeting, false) @Labels.Presential
+                                        <span></span>
+                                    </label>
+                                    @Html.ValidationMessageFor(m => m.IsVirtualMeeting, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="kt-section pt-4">
+            <h3 class="kt-heading kt-heading--md">@Labels.SocialNetworks</h3>
+            <div class="kt-section__content mt-3">
+                <div class="row">
+                    <div class="form-group col-xl-6">
+                        @Html.LabelFor(m => m.Website, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                        @Html.TextBoxFor(m => m.Website, new { @class = "form-control" })
+                        <span class="form-text text-muted">@Messages.WebsiteUrl</span>
+                        <span class="form-text text-muted">@Labels.Eg: site.com @Labels.Or www.site.com</span>
+                        @Html.ValidationMessageFor(m => m.Website, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-xl-6">
+                        @Html.LabelFor(m => m.Linkedin, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                        @Html.TextBoxFor(m => m.Linkedin, new { @class = "form-control" })
+                        <span class="form-text text-muted">@Messages.LinkedinUser</span>
+                        <span class="form-text text-muted">@Labels.Eg: https://www.linkedin.com/in/<span style="background: #e0e0e0;">abcdefg</span> @Labels.Is <span style="background: #e0e0e0;">abcdefg</span></span>
+                        @Html.ValidationMessageFor(m => m.Linkedin, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xl-6">
+                        @Html.LabelFor(m => m.Twitter, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                        @Html.TextBoxFor(m => m.Twitter, new { @class = "form-control" })
+                        <span class="form-text text-muted">@Messages.TwitterUser</span>
+                        <span class="form-text text-muted">@Labels.Eg: https://twitter.com/<span style="background: #e0e0e0;">abcdefg</span> @Labels.Is <span style="background: #e0e0e0;">abcdefg</span></span>
+                        @Html.ValidationMessageFor(m => m.Twitter, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-xl-6">
+                        @Html.LabelFor(m => m.Instagram, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                        @Html.TextBoxFor(m => m.Instagram, new { @class = "form-control" })
+                        <span class="form-text text-muted">@Messages.InstagramUser</span>
+                        <span class="form-text text-muted">@Labels.Eg: https://www.instagram.com/<span style="background: #e0e0e0;">abcdefg</span> @Labels.Is <span style="background: #e0e0e0;">abcdefg</span>.</span>
+                        @Html.ValidationMessageFor(m => m.Instagram, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xl-6">
+                        @Html.LabelFor(m => m.Youtube, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                        @Html.TextBoxFor(m => m.Youtube, new { @class = "form-control" })
+                        <span class="form-text text-muted">@Messages.YoutubeUrl</span>
+                        <span class="form-text text-muted">@Labels.Eg: youtube.com/channel/abcdefg </span>
+                        @Html.ValidationMessageFor(m => m.Youtube, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="kt-section pt-4">
+            <h3 class="kt-section__title mb-0">
+                @Labels.Address <span class="form-optional-input text-muted">@Labels.Optional</span>
+            </h3>
+            <div class="kt-section__content mt-3">
+                @Html.EditorFor(m => m.Address)
+            </div>
+        </div>
+        <div class="kt-section pt-4">
+            <h3 class="kt-section__title mb-0">@Labels.CompanyProfiles</h3>
+            @Html.ValidationMessage("Descriptions", new { @class = "text-danger" })
+            <div class="kt-section__content mt-3">
+                @Html.EditorFor(m => m.Descriptions)
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6">
+                <div class="kt-section pt-4">
+                    <h3 class="kt-section__title mb-0">@Labels.Activities</h3>
+                    @Html.ValidationMessage("OrganizationActivities", new { @class = "text-danger" })
+                    <div class="kt-section__content mt-3">
+                        <div class="kt-checkbox-list">
+                            @Html.EditorFor(m => m.OrganizationActivities)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="kt-section pt-4">
+                    <h3 class="kt-section__title mb-0">@Labels.TargetAudiences</h3>
+                    @Html.ValidationMessage("OrganizationTargetAudiences", new { @class = "text-danger" })
+                    <div class="kt-section__content mt-3">
+                        <div class="kt-checkbox-list">
+                            @Html.EditorFor(m => m.OrganizationTargetAudiences)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="kt-section">
+    <div class="kt-separator kt-separator--border-dashed"></div>
+    <h3 class="kt-section__title mb-0">@Labels.PlayerInterests</h3>
+    <div class="kt-separator kt-separator--border-dashed"></div>
+    @Html.ValidationMessage("InterestsUids", new { @class = "text-danger" })
+    <div class="kt-section__content mt-3">
+        <div class="kt-section pt-4">
+            <h3 class="kt-section__title mb-0">@Messages.DescribeRestrictionSpecifics</h3>
+            @Html.ValidationMessage("RestrictionSpecifics", new { @class = "text-danger" })
+            <div class="kt-section__content mt-3">
+                @Html.EditorFor(m => m.RestrictionSpecifics)
+            </div>
+        </div>
+        @if (Model.Interests?.Any() == true)
+        {
+            <div class="kt-checkbox-list">
+                @for (int i = 0; i < Model.Interests.Length; i++)
+                {
+                    var group = Model.Interests[i].FirstOrDefault();
+                    <h5 class="mt-30">@(group?.InterestGroupName?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</h5>
+                    @Html.ValidationMessage(group?.InterestGroupUid.ToString(), new { @class = "text-danger" })
+                    <div class="kt-section__content mt-3">
+                        <div class="row require-one-group" data-id="@(group?.InterestGroupUid)">
+                            @Html.EditorFor(x => Model.Interests[i])
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+<div class="kt-section">
+    <div class="kt-separator kt-separator--border-dashed"></div>
+    <h3 class="kt-section__title mb-0">@Labels.ApiConfigurations</h3>
+    <div class="kt-separator kt-separator--border-dashed"></div>
+    <div class="kt-section__content">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-12">
+                        @Html.Label($"{string.Format(Labels.DisplayOnSiteEdition, ViewBag.EditionDto.UrlCode)}", new { @class = "control-label" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-12">
+                        <span class="kt-switch kt-switch--icon">
+                            <label>
+                                @Html.CheckBoxFor(m => m.IsApiDisplayEnabled, true)
+                                <span></span>
+                            </label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-12">
+                        @Html.Label(Labels.HighlightPosition, new { @class = "control-label" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-12">
+                        @Html.DropDownListFor(m => m.ApiHighlightPosition, new SelectList(Model.ApiHighlightPositions, Model.ApiHighlightPosition), Labels.Select + "...", new { @class = "form-control enable-select2" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

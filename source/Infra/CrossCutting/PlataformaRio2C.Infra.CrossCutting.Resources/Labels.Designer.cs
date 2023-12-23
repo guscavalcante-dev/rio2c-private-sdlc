@@ -2941,6 +2941,33 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data de início da avaliação de startups.
+        /// </summary>
+        public static string InnovationCommissionEvaluationStartDate {
+            get {
+                return ResourceManager.GetString("InnovationCommissionEvaluationStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade máxima de startups aprovadas.
+        /// </summary>
+        public static string InnovationCommissionMaximumApprovedCompaniesCount {
+            get {
+                return ResourceManager.GetString("InnovationCommissionMaximumApprovedCompaniesCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de início de cadastro de startups.
+        /// </summary>
+        public static string InnovationProjectSubmitStartDate {
+            get {
+                return ResourceManager.GetString("InnovationProjectSubmitStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Em andamento.
         /// </summary>
         public static string InProgress {
@@ -6334,6 +6361,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Player de Startup.
+        /// </summary>
+        public static string StartupPlayer {
+            get {
+                return ResourceManager.GetString("StartupPlayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Startups.
         /// </summary>
         public static string Startups {
@@ -6354,36 +6390,18 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Data de término da avaliação de startups.
         /// </summary>
-        public static string InnovationCommissionEvaluationEndDate {
+        public static string StartupsCommissionEvaluationEndDate {
             get {
-                return ResourceManager.GetString("InnovationCommissionEvaluationEndDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Data de início da avaliação de startups.
-        /// </summary>
-        public static string InnovationCommissionEvaluationStartDate {
-            get {
-                return ResourceManager.GetString("InnovationCommissionEvaluationStartDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Quantidade máxima de startups aprovadas.
-        /// </summary>
-        public static string InnovationCommissionMaximumApprovedCompaniesCount {
-            get {
-                return ResourceManager.GetString("InnovationCommissionMaximumApprovedCompaniesCount", resourceCulture);
+                return ResourceManager.GetString("StartupsCommissionEvaluationEndDate", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Quantidade mínima de votos para gerar média de Startups.
         /// </summary>
-        public static string InnovationCommissionMinimumEvaluationsCount {
+        public static string StartupsCommissionMinimumEvaluationsCount {
             get {
-                return ResourceManager.GetString("InnovationCommissionMinimumEvaluationsCount", resourceCulture);
+                return ResourceManager.GetString("StartupsCommissionMinimumEvaluationsCount", resourceCulture);
             }
         }
         
@@ -6399,18 +6417,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Data de término de cadastro de startups.
         /// </summary>
-        public static string InnovationProjectSubmitEndDate {
+        public static string StartupsProjectSubmitEndDate {
             get {
-                return ResourceManager.GetString("InnovationProjectSubmitEndDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Data de início de cadastro de startups.
-        /// </summary>
-        public static string InnovationProjectSubmitStartDate {
-            get {
-                return ResourceManager.GetString("InnovationProjectSubmitStartDate", resourceCulture);
+                return ResourceManager.GetString("StartupsProjectSubmitEndDate", resourceCulture);
             }
         }
         
