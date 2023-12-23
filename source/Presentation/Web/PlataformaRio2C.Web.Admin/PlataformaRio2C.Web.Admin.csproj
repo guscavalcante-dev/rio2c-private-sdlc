@@ -377,6 +377,7 @@
     <Compile Include="Areas\Cartoon\Controllers\CommissionsController.cs" />
     <Compile Include="Areas\Cartoon\Controllers\ProjectsController.cs" />
     <Compile Include="Areas\Innovation\Controllers\CommissionsController.cs" />
+    <Compile Include="Areas\Innovation\Controllers\PlayersController.cs" />
     <Compile Include="Areas\Innovation\Controllers\ProjectsController.cs" />
     <Compile Include="Areas\Innovation\Controllers\TrackOptionsController.cs" />
     <Compile Include="Areas\Innovation\Controllers\TrackOptionGroupsController.cs" />
@@ -891,6 +892,13 @@
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.tracks.widget.js" />
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.totalcount.widget.js" />
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.update.js" />
+    <Content Include="Assets\js\innovation\players\innovation.players.create.js" />
+    <Content Include="Assets\js\innovation\players\innovation.players.datatable.widget.js" />
+    <Content Include="Assets\js\innovation\players\innovation.players.delete.js" />
+    <Content Include="Assets\js\innovation\players\innovation.players.editioncount.widget.js" />
+    <Content Include="Assets\js\innovation\players\innovation.players.editioncountodometer.widget.js" />
+    <Content Include="Assets\js\innovation\players\innovation.players.totalcount.widget.js" />
+    <Content Include="Assets\js\innovation\players\innovation.players.update.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.datatable.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.delete.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.editioncount.pie.widget.js" />
@@ -8206,6 +8214,15 @@
     <Content Include="Areas\Music\Views\Shared\EditorTemplates\OrganizationRestrictionSpecificsBaseCommand.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Shared\EditorTemplates\OrganizationTargetAudienceBaseCommand.cshtml" />
     <Content Include="Areas\Music\Views\Shared\EditorTemplates\OrganizationTargetAudienceBaseCommand.cshtml" />
+    <Content Include="Areas\Innovation\Views\Players\Details.cshtml" />
+    <Content Include="Areas\Innovation\Views\Players\Index.cshtml" />
+    <Content Include="Areas\Innovation\Views\Players\Modals\_Form.cshtml" />
+    <Content Include="Areas\Innovation\Views\Players\Modals\CreateModal.cshtml" />
+    <Content Include="Areas\Innovation\Views\Players\Modals\UpdateModal.cshtml" />
+    <Content Include="Areas\Innovation\Views\Players\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\Players\Widgets\EditionCountOdometerWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\Players\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\Players\Widgets\TotalCountWidget.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

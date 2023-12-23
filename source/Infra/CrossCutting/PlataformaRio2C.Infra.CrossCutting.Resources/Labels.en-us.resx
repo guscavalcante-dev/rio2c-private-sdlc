@@ -2727,6 +2727,9 @@
   <data name="Startup" xml:space="preserve">
     <value>Startup</value>
   </data>
+  <data name="StartupPlayer" xml:space="preserve">
+    <value>Startup Player</value>
+  </data>
   <data name="Startups" xml:space="preserve">
     <value>Startups</value>
     <comment>Startups</comment>

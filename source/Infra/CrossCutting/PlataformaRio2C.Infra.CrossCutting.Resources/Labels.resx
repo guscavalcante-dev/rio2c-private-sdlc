@@ -2730,6 +2730,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Startup" xml:space="preserve">
     <value>Startup</value>
   </data>
+  <data name="StartupPlayer" xml:space="preserve">
+    <value>Player de Startup</value>
+  </data>
   <data name="Startups" xml:space="preserve">
     <value>Startups</value>
   </data>
