@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-14-2022
+// Last Modified On : 12-23-2023
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -61,13 +61,6 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<OrganizationTargetAudience> OrganizationTargetAudiences { get; private set; }
         public virtual ICollection<OrganizationInterest> OrganizationInterests { get; private set; }
 
-        //public virtual ICollection<PlayerInterest> Interests { get; private set; }
-        //public virtual ICollection<Collaborator> Collaborators { get; private set; }
-        //public virtual ICollection<Collaborator> CollaboratorsOld { get; private set; }
-        //public virtual ICollection<PlayerActivity> PlayerActivitys { get; private set; }
-        //public virtual ICollection<PlayerTargetAudience> PlayerTargetAudience { get; private set; }
-        //public virtual ICollection<PlayerRestrictionsSpecifics> RestrictionsSpecifics { get; private set; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Organization" /> class for admin.
         /// </summary>
@@ -100,7 +93,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="organizationDescriptions">The organization descriptions.</param>
         /// <param name="organizationRestrictionSpecifics">The organization restriction specifics.</param>
         /// <param name="organizationActivities">The organization activities.</param>
-        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="organizationTargetAudiences">The target audiences.</param>
         /// <param name="organizationInterests">The organization interests.</param>
         /// <param name="userId">The user identifier.</param>
         public Organization(
@@ -133,7 +126,7 @@ namespace PlataformaRio2C.Domain.Entities
             List<OrganizationDescription> organizationDescriptions,
             List<OrganizationRestrictionSpecific> organizationRestrictionSpecifics,
             List<OrganizationActivity> organizationActivities,
-            List<TargetAudience> targetAudiences,
+            List<OrganizationTargetAudience> organizationTargetAudiences,
             List<OrganizationInterest> organizationInterests,
             int userId)
         {
@@ -156,7 +149,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeAttendeeOrganizations(edition, organizationType, isApiDisplayEnabled, apiHighlightPosition, null, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
-            this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
+            this.SynchronizeOrganizationTargetAudiences(organizationTargetAudiences, userId);
             this.SynchronizeOrganizationInterests(organizationInterests, userId);
         }
 
@@ -250,7 +243,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isVirtualMeeting">The is virtual meeting.</param>
         /// <param name="organizationDescriptions">The organization descriptions.</param>
         /// <param name="organizationActivities">The organization activities.</param>
-        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="organizationTargetAudiences">The target audiences.</param>
         /// <param name="userId">The user identifier.</param>
         public Organization(
             Edition edition,
@@ -275,7 +268,7 @@ namespace PlataformaRio2C.Domain.Entities
             bool? isVirtualMeeting,
             List<OrganizationDescription> organizationDescriptions,
             List<OrganizationActivity> organizationActivities,
-            List<TargetAudience> targetAudiences,
+            List<OrganizationTargetAudience> organizationTargetAudiences,
             int userId)
         {
             this.Name = tradeName?.Trim();
@@ -290,7 +283,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
-            this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
+            this.SynchronizeOrganizationTargetAudiences(organizationTargetAudiences, userId);
             this.SynchronizeAttendeeOrganizations(edition, null, false, null, attendeeCollaborator, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.OnboardProducerAttendeeOrganizationData(edition, userId);
@@ -333,7 +326,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="organizationDscriptions">The organization dscriptions.</param>
         /// <param name="organizationRestrictionSpecifics">The organization restriction specifics.</param>
         /// <param name="organizationActivities">The organization activities.</param>
-        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="organizationTargetAudiences">The target audiences.</param>
         /// <param name="organizationIterests">The organization iterests.</param>
         /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
         /// <param name="userId">The user identifier.</param>
@@ -367,7 +360,7 @@ namespace PlataformaRio2C.Domain.Entities
             List<OrganizationDescription> organizationDscriptions,
             List<OrganizationRestrictionSpecific> organizationRestrictionSpecifics,
             List<OrganizationActivity> organizationActivities,
-            List<TargetAudience> targetAudiences,
+            List<OrganizationTargetAudience> organizationTargetAudiences,
             List<OrganizationInterest> organizationIterests,
             bool isAddingToCurrentEdition,
             int userId)
@@ -391,7 +384,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeAttendeeOrganizations(edition, organizationType, isApiDisplayEnabled, apiHighlightPosition, null, isAddingToCurrentEdition, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
-            this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
+            this.SynchronizeOrganizationTargetAudiences(organizationTargetAudiences, userId);
             this.SynchronizeOrganizationInterests(organizationIterests, userId);
         }
 
@@ -577,7 +570,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isVirtualMeeting">The is virtual meeting.</param>
         /// <param name="organizationDescriptions">The organization descriptions.</param>
         /// <param name="organizationActivities">The organization activities.</param>
-        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="organizationTargetAudiences">The target audiences.</param>
         /// <param name="userId">The user identifier.</param>
         public void OnboardPlayerData(
             Edition edition,
@@ -602,7 +595,7 @@ namespace PlataformaRio2C.Domain.Entities
             bool isImageDeleted,
             List<OrganizationDescription> organizationDescriptions,
             List<OrganizationActivity> organizationActivities,
-            List<TargetAudience> targetAudiences,
+            List<OrganizationTargetAudience> organizationTargetAudiences,
             int userId)
         {
             this.CompanyName = companyName?.Trim();
@@ -615,7 +608,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
             this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
-            this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
+            this.SynchronizeOrganizationTargetAudiences(organizationTargetAudiences, userId);
             this.SynchronizeAttendeeOrganizations(edition, organizationType, null, null, null, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.OnboardPlayerAttendeeOrganizationData(edition, userId);
@@ -728,7 +721,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isVirtualMeeting">The is virtual meeting.</param>
         /// <param name="organizationDescriptions">The organization descriptions.</param>
         /// <param name="organizationActivities">The organization activities.</param>
-        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="organizationTargetAudiences">The target audiences.</param>
         /// <param name="userId">The user identifier.</param>
         public void OnboardProducerData(
             Edition edition,
@@ -754,7 +747,7 @@ namespace PlataformaRio2C.Domain.Entities
             bool? isVirtualMeeting,
             List<OrganizationDescription> organizationDescriptions,
             List<OrganizationActivity> organizationActivities,
-            List<TargetAudience> targetAudiences,
+            List<OrganizationTargetAudience> organizationTargetAudiences,
             int userId)
         {
             this.CompanyName = companyName?.Trim();
@@ -768,7 +761,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
             this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
-            this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
+            this.SynchronizeOrganizationTargetAudiences(organizationTargetAudiences, userId);
             this.SynchronizeAttendeeOrganizations(edition, null, null, null, attendeeCollaborator, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.OnboardProducerAttendeeOrganizationData(edition, userId);
@@ -1179,43 +1172,43 @@ namespace PlataformaRio2C.Domain.Entities
         #region Target Audiences
 
         /// <summary>Updates the organization target audiences.</summary>
-        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="organizationTargetAudiences">The target audiences.</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateOrganizationTargetAudiences(List<TargetAudience> targetAudiences, int userId)
+        public void UpdateOrganizationTargetAudiences(List<OrganizationTargetAudience> organizationTargetAudiences, int userId)
         {
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
-            this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
+            this.SynchronizeOrganizationTargetAudiences(organizationTargetAudiences, userId);
         }
 
         /// <summary>Synchronizes the organization target audiences.</summary>
-        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="organizationTargetAudiences">The target audiences.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeOrganizationTargetAudiences(List<TargetAudience> targetAudiences, int userId)
+        private void SynchronizeOrganizationTargetAudiences(List<OrganizationTargetAudience> organizationTargetAudiences, int userId)
         {
             if (this.OrganizationTargetAudiences == null)
             {
                 this.OrganizationTargetAudiences = new List<OrganizationTargetAudience>();
             }
 
-            this.DeleteOrganizationTargetAudiences(targetAudiences, userId);
+            this.DeleteOrganizationTargetAudiences(organizationTargetAudiences, userId);
 
-            if (targetAudiences?.Any() != true)
+            if (organizationTargetAudiences?.Any() != true)
             {
                 return;
             }
 
             // Create or update target audiences
-            foreach (var targetAudience in targetAudiences)
+            foreach (var organizationTargetAudience in organizationTargetAudiences)
             {
-                var organizationTargetAudienceDb = this.OrganizationTargetAudiences.FirstOrDefault(a => a.TargetAudience.Uid == targetAudience.Uid);
+                var organizationTargetAudienceDb = this.OrganizationTargetAudiences.FirstOrDefault(a => a.TargetAudience.Uid == organizationTargetAudience.TargetAudience.Uid);
                 if (organizationTargetAudienceDb != null)
                 {
                     organizationTargetAudienceDb.Update(userId);
                 }
                 else
                 {
-                    this.CreateOrganizationTargetAudience(targetAudience, userId);
+                    this.CreateOrganizationTargetAudience(organizationTargetAudience.TargetAudience, organizationTargetAudience.AdditionalInfo, userId);
                 }
             }
         }
@@ -1223,7 +1216,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Deletes the organization target audiences.</summary>
         /// <param name="newTargetAudiences">The new target audiences.</param>
         /// <param name="userId">The user identifier.</param>
-        private void DeleteOrganizationTargetAudiences(List<TargetAudience> newTargetAudiences, int userId)
+        private void DeleteOrganizationTargetAudiences(List<OrganizationTargetAudience> newTargetAudiences, int userId)
         {
             var organizationTargetAudiencesToDelete = this.OrganizationTargetAudiences.Where(db => newTargetAudiences?.Select(a => a.Uid)?.Contains(db.TargetAudience.Uid) == false && !db.IsDeleted).ToList();
             foreach (var organizationTargetAudienceToDelete in organizationTargetAudiencesToDelete)
@@ -1235,9 +1228,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Creates the organization target audience.</summary>
         /// <param name="targetAudience">The target audience.</param>
         /// <param name="userId">The user identifier.</param>
-        private void CreateOrganizationTargetAudience(TargetAudience targetAudience, int userId)
+        private void CreateOrganizationTargetAudience(TargetAudience targetAudience, string additionalInfo, int userId)
         {
-            this.OrganizationTargetAudiences.Add(new OrganizationTargetAudience(this, targetAudience, userId));
+            this.OrganizationTargetAudiences.Add(new OrganizationTargetAudience(this, targetAudience, additionalInfo, userId));
         }
 
         #endregion

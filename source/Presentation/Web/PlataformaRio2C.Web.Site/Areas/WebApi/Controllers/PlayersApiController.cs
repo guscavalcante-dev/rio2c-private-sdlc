@@ -4,7 +4,7 @@
 // Created          : 09-25-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-15-2023
+// Last Modified On : 12-23-2023
 // ***********************************************************************
 // <copyright file="PlayersApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -190,7 +190,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
                 var activities = await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id);
                 var targetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id);
-                var intrests = await this.interestRepo.FindAllGroupedByInterestGroupsAsync();
+                var intrests = await this.interestRepo.FindAllByProjectTypeIdAndGroupedByInterestGroupAsync(ProjectType.Audiovisual.Id);
 
                 return await Json(new PlayersFiltersApiResponse
                 {

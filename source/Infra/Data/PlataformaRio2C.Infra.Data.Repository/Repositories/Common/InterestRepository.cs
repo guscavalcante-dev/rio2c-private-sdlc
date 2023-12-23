@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-20-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 12-23-2023
 // ***********************************************************************
 // <copyright file="InterestRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -180,11 +180,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         .ToListAsync();
         }
 
-        /// <summary>Finds all grouped by interest groups asynchronous.</summary>
+        /// <summary>
+        /// Finds all by project type identifier and grouped by interest group asynchronous.
+        /// </summary>
+        /// <param name="projectTypeId">The project type identifier.</param>
         /// <returns></returns>
-        public async Task<List<IGrouping<InterestGroup, Interest>>> FindAllGroupedByInterestGroupsAsync()
+        public async Task<List<IGrouping<InterestGroup, Interest>>> FindAllByProjectTypeIdAndGroupedByInterestGroupAsync(int projectTypeId)
         {
             var query = this.GetBaseQuery()
+                                    .FindByProjectTypeId(projectTypeId)
                                     .GroupBy(i => i.InterestGroup);
 
             return await query

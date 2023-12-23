@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-09-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 12-23-2023
 // ***********************************************************************
 // <copyright file="OrganizationTargetAudience.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,7 +13,6 @@
 // ***********************************************************************
 using System;
 using PlataformaRio2C.Domain.Validation;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -22,27 +21,51 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public int OrganizationId { get; private set; }
         public int TargetAudienceId { get; private set; }
+        public string AdditionalInfo { get; private set; }
 
         public virtual Organization Organization { get; private set; }
         public virtual TargetAudience TargetAudience { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="OrganizationTargetAudience"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OrganizationTargetAudience" /> class.
+        /// </summary>
         /// <param name="organization">The organization.</param>
         /// <param name="targetAudience">The target audience.</param>
+        /// <param name="additionalInfo">The additional information.</param>
         /// <param name="userId">The user identifier.</param>
-        public OrganizationTargetAudience(Organization organization, TargetAudience targetAudience, int userId)
+        public OrganizationTargetAudience(Organization organization, TargetAudience targetAudience, string additionalInfo, int userId)
         {
             this.Organization = organization;
             this.OrganizationId = organization?.Id ?? 0;
             this.TargetAudience = targetAudience;
             this.TargetAudienceId = targetAudience?.Id ?? 0;
+            this.AdditionalInfo = additionalInfo;
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="OrganizationTargetAudience"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OrganizationTargetAudience"/> class.
+        /// </summary>
+        /// <param name="targetAudience">The target audience.</param>
+        /// <param name="additionalInfo">The additional information.</param>
+        /// <param name="userId">The user identifier.</param>
+        public OrganizationTargetAudience(TargetAudience targetAudience, string additionalInfo, int userId)
+        {
+            this.TargetAudience = targetAudience;
+            this.TargetAudienceId = targetAudience?.Id ?? 0;
+            this.AdditionalInfo = additionalInfo?.Trim();
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OrganizationTargetAudience" /> class.
+        /// </summary>
         protected OrganizationTargetAudience()
         {
         }

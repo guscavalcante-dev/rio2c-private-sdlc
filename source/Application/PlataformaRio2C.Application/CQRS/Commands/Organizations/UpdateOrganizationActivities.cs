@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 10-10-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-10-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 12-23-2023
 // ***********************************************************************
 // <copyright file="UpdateOrganizationActivities.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,17 +29,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Display(Name = "Activities", ResourceType = typeof(Labels))]
         public List<OrganizationActivityBaseCommand> OrganizationActivities { get; set; }
 
-        //public UserBaseDto UpdaterBaseDto { get; set; }
-        //public DateTime UpdateDate { get; set; }
-
         public UpdateOrganizationActivities(
             AttendeeOrganizationSiteActivityWidgetDto entity,
             List<Activity> activities)
         {
             this.OrganizationUid = entity.Organization.Uid;
             this.UpdateActivities(entity, activities);
-            //this.UpdaterBaseDto = entity.UpdaterDto;
-            //this.UpdateDate = entity.UpdateDate;
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateOrganizationActivities"/> class.</summary>

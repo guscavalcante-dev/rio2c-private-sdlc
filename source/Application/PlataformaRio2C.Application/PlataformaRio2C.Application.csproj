@@ -443,6 +443,7 @@
     <Compile Include="CQRS\Commands\Innovation\TrackOptions\CreateInnovationOrganizationTrackOption.cs" />
     <Compile Include="CQRS\Commands\Innovation\TrackOptions\DeleteInnovationOrganizationTrackOption.cs" />
     <Compile Include="CQRS\Commands\Innovation\TrackOptions\UpdateInnovationOrganizationTrackOptionMainInformation.cs" />
+    <Compile Include="CQRS\Commands\Organizations\BaseCommands\OrganizationTargetAudienceBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Organizations\DisassociateOrganizationCollaborator.cs" />
     <Compile Include="CQRS\Commands\Organizations\AssociateOrganizationCollaborator.cs" />
     <Compile Include="CQRS\Commands\Innovation\Collaborators\BaseCommands\InnovationCollaboratorBaseCommand.cs" />

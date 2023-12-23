@@ -4,7 +4,7 @@
 // Created          : 08-29-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-21-2023
+// Last Modified On : 12-23-2023
 // ***********************************************************************
 // <copyright file="OnboardingController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -577,7 +577,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             var currentOrganization = this.UserAccessControlDto?.EditionAttendeeOrganizations?.FirstOrDefault(eao => !eao.OnboardingOrganizationDate.HasValue
                                                                                                                      && eao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
-                                                                                                                                                                 && aot.OrganizationType.Name == "Player"))?.Organization;
+                                                                                                                                                                 && aot.OrganizationType.Name == OrganizationType.AudiovisualPlayer.Name))?.Organization;
             if (currentOrganization == null)
             {
                 return RedirectToAction("Index", "Onboarding");

@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-31-2023
+// Last Modified On : 12-23-2023
 // ***********************************************************************
 // <copyright file="UpdateOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -60,7 +60,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isAddressRequired, 
             bool isRestrictionSpecificRequired, 
             bool isImageRequired,
-            bool isVirtualMeetingRequired)
+            bool isVirtualMeetingRequired,
+            bool isHoldingRequired)
         {
             if (entity == null)
             {
@@ -84,7 +85,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 isAddressRequired, 
                 isRestrictionSpecificRequired,
                 isImageRequired,
-                isVirtualMeetingRequired);
+                isVirtualMeetingRequired,
+                isHoldingRequired);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateOrganization"/> class.</summary>

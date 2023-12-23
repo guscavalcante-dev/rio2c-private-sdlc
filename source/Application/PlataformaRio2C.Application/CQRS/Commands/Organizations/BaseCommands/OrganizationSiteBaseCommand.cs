@@ -4,7 +4,7 @@
 // Created          : 10-29-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-31-2023
+// Last Modified On : 12-23-2023
 // ***********************************************************************
 // <copyright file="OrganizationSiteBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -84,7 +84,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "TargetAudiences", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneOption")]
-        public List<Guid> TargetAudiencesUids { get; set; }
+        public List<OrganizationTargetAudienceBaseCommand> OrganizationTargetAudiences { get; set; }
 
         public List<OrganizationDescriptionBaseCommand> Descriptions { get; set; }
         public CropperImageBaseCommand CropperImage { get; set; }
@@ -126,10 +126,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Twitter = entity?.Twitter;
             this.Instagram = entity?.Instagram;
             this.Youtube = entity?.Youtube;
-            this.TargetAudiencesUids = entity?.OrganizationTargetAudiencesDtos?.Select(otad => otad.TargetAudienceUid)?.ToList();
             this.UpdateAddress(entity, isAddressRequired);
             this.UpdateDescriptions(entity, languagesDtos, isDescriptionRequired);
             this.UpdateActivities(entity, activities);
+            this.UpdateTargetAudiences(entity, targetAudiences);
             this.UpdateCropperImage(entity, isImageRequired);
             this.UpdateDropdownProperties(countriesBaseDtos, targetAudiences);
             this.UpdaterBaseDto = entity?.UpdaterBaseDto;
@@ -177,6 +177,22 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 var organizationActivity = entity?.OrganizationActivitiesDtos?.FirstOrDefault(oad => oad.ActivityUid == activity.Uid);
                 this.OrganizationActivities.Add(organizationActivity != null ? new OrganizationActivityBaseCommand(organizationActivity) :
                                                                                new OrganizationActivityBaseCommand(activity));
+            }
+        }
+
+        /// <summary>
+        /// Updates the target audiences.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="targetAudiences">The target audiences.</param>
+        protected void UpdateTargetAudiences(OrganizationDto entity, List<TargetAudience> targetAudiences)
+        {
+            this.OrganizationTargetAudiences = new List<OrganizationTargetAudienceBaseCommand>();
+            foreach (var targetAudience in targetAudiences)
+            {
+                var organizationTargetAudience = entity?.OrganizationTargetAudiencesDtos?.FirstOrDefault(oad => oad.TargetAudienceUid == targetAudience.Uid);
+                this.OrganizationTargetAudiences.Add(organizationTargetAudience != null ? new OrganizationTargetAudienceBaseCommand(organizationTargetAudience) :
+                                                                                          new OrganizationTargetAudienceBaseCommand(targetAudience));
             }
         }
 

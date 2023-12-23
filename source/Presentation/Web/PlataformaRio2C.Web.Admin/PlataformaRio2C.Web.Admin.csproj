@@ -8204,6 +8204,8 @@
     <Content Include="Areas\Music\Views\Players\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Areas\Music\Views\Shared\EditorTemplates\OrganizationActivityBaseCommand.cshtml" />
     <Content Include="Areas\Music\Views\Shared\EditorTemplates\OrganizationRestrictionSpecificsBaseCommand.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Shared\EditorTemplates\OrganizationTargetAudienceBaseCommand.cshtml" />
+    <Content Include="Areas\Music\Views\Shared\EditorTemplates\OrganizationTargetAudienceBaseCommand.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
@@ -9723,9 +9725,6 @@
     <Content Include="Views\Shared\EditorTemplates\CropperImageBaseCommand.cshtml" />
     <Content Include="Views\Holdings\EditorTemplates\HoldingDescriptionBaseCommand.cshtml" />
     <Content Include="Views\Holdings\Modals\UpdateModal.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Players\_Editor.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Players\Create.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Players\Edit.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\OrganizationDescriptionBaseCommand.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Players\Index.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Players\Modals\_Form.cshtml" />

@@ -4,7 +4,7 @@
 // Created          : 03-08-2020
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-21-2023
+// Last Modified On : 12-23-2023
 // ***********************************************************************
 // <copyright file="OrganizationsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -515,11 +515,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundF.ToLowerInvariant()));
                 }
 
-                //if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(activityWidgetDto.AttendeeOrganization.Uid) != true)
-                //{
-                //    throw new DomainException(Texts.ForbiddenErrorMessage);
-                //}
-
                 cmd = new UpdateOrganizationActivities(
                     activityWidgetDto,
                     await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
@@ -641,11 +636,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundF.ToLowerInvariant()));
                 }
 
-                //if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(targetAudienceWidgetDto.AttendeeOrganization.Uid) != true)
-                //{
-                //    throw new DomainException(Texts.ForbiddenErrorMessage);
-                //}
-
                 cmd = new UpdateOrganizationTargetAudiences(
                     targetAudienceWidgetDto,
                     await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
@@ -681,6 +671,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
+                    ProjectType.Audiovisual.Id,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -700,7 +691,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
-                cmd.UpdateModelsAndLists(await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
+                cmd.UpdateTargetAudiences(null, await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
 
                 return Json(new
                 {
@@ -739,7 +730,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Interests, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            ViewBag.GroupedInterests = await this.interestRepo.FindAllGroupedByInterestGroupsAsync();
+            ViewBag.GroupedInterests = await this.interestRepo.FindAllByProjectTypeIdAndGroupedByInterestGroupAsync(ProjectType.Audiovisual.Id);
 
             return Json(new
             {
