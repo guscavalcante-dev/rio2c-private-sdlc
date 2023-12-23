@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-31-2023
+// Last Modified On : 12-23-2023
 // ***********************************************************************
 // <copyright file="OrganizationBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,8 +28,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>OrganizationBaseCommand</summary>
     public class OrganizationBaseCommand : BaseCommand
     {
+        public bool IsHoldingRequired { get; set; }
         [Display(Name = "Holding", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [RequiredIf(nameof(IsHoldingRequired), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? HoldingUid { get; set; }
 
         [Display(Name = "Name", ResourceType = typeof(Labels))]
@@ -99,7 +100,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Display(Name = "Activities", ResourceType = typeof(Labels))]
         public List<OrganizationActivityBaseCommand> OrganizationActivities { get; set; }
 
-        public List<Guid> TargetAudiencesUids { get; set; }
+        [Display(Name = "TargetAudiences", ResourceType = typeof(Labels))]
+        public List<OrganizationTargetAudienceBaseCommand> OrganizationTargetAudiences { get; set; }
 
         public InterestBaseCommand[][] Interests { get; set; }
 
@@ -111,6 +113,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public List<HoldingBaseDto> HoldingBaseDtos { get; private set; }
         public OrganizationType OrganizationType { get; private set; }
+        public ProjectType ProjectType { get; private set; }
         public List<Activity> Activities { get; private set; }
         public List<TargetAudience> TargetAudiences { get; private set; }
         public List<CountryBaseDto> CountriesBaseDtos { get; private set; }
@@ -151,9 +154,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isAddressRequired, 
             bool isRestrictionSpecificRequired, 
             bool isImageRequired,
-            bool isVirtualMeetingRequired)
+            bool isVirtualMeetingRequired,
+            bool isHoldingRequired)
         {
             this.HoldingUid = entity?.HoldingBaseDto?.Uid;
+            this.IsHoldingRequired = isHoldingRequired;
+
             this.Name = entity?.Name;
             this.CompanyName = entity?.CompanyName;
             this.TradeName = entity?.TradeName;
@@ -168,6 +174,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.PhoneNumber = entity?.PhoneNumber;
 
             this.OrganizationType = organizationType;
+            this.ProjectType = this.GetProjectTypeByOrganizationType(organizationType);
+
             this.IsVirtualMeeting = entity?.IsVirtualMeeting;
             this.IsVirtualMeetingRequired = isVirtualMeetingRequired;
 
@@ -177,7 +185,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateActivities(entity, activities);
             this.UpdateCropperImage(entity, isImageRequired);
             this.UpdateDropdownProperties(holdingBaseDtos, countriesBaseDtos, activities, targetAudiences);
-            this.TargetAudiencesUids = entity?.OrganizationTargetAudiencesDtos?.Select(otad => otad.TargetAudienceUid)?.ToList();
+            this.UpdateTargetAudiences(entity, targetAudiences);
             this.UpdateInterests(entity, interestsDtos);
             this.UpdateApiConfigurations(entity, organizationType);
         }
@@ -218,6 +226,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string userInterfaceLanguage)
         {
             this.OrganizationType = organizationType;
+            this.ProjectType = this.GetProjectTypeByOrganizationType(organizationType);
             this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
         }
 
@@ -318,12 +327,54 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             }
         }
 
+        /// <summary>
+        /// Updates the target audiences.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="targetAudiences">The target audiences.</param>
+        public void UpdateTargetAudiences(OrganizationDto entity, List<TargetAudience> targetAudiences)
+        {
+            this.OrganizationTargetAudiences = new List<OrganizationTargetAudienceBaseCommand>();
+            foreach (var targetAudience in targetAudiences)
+            {
+                var organizationTargetAudience = entity?.OrganizationTargetAudiencesDtos?.FirstOrDefault(ota => ota.TargetAudienceUid == targetAudience.Uid);
+                this.OrganizationTargetAudiences.Add(organizationTargetAudience != null ? new OrganizationTargetAudienceBaseCommand(organizationTargetAudience) :
+                                                                                          new OrganizationTargetAudienceBaseCommand(targetAudience));
+            }
+        }
+
         /// <summary>Updates the cropper image.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         private void UpdateCropperImage(OrganizationDto entity, bool isImageRequired)
         {
             this.CropperImage = new CropperImageBaseCommand(entity?.ImageUploadDate, entity?.Uid, FileRepositoryPathType.OrganizationImage, isImageRequired);
+        }
+
+        /// <summary>
+        /// Gets the type of the project type by organization.
+        /// </summary>
+        /// <param name="organizationType">Type of the organization.</param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        private ProjectType GetProjectTypeByOrganizationType(OrganizationType organizationType)
+        {
+            if(organizationType.Name == OrganizationType.AudiovisualPlayer.Name)
+            {
+                return ProjectType.Audiovisual;
+            }
+            else if (organizationType.Name == OrganizationType.MusicPlayer.Name)
+            {
+                return ProjectType.Music;
+            }
+            else if (organizationType.Name == OrganizationType.StartupPlayer.Name)
+            {
+                return ProjectType.Startup;
+            }
+            else
+            {
+                throw new NotImplementedException(string.Format(Messages.EntityNotAction, "OrganizationType: " + organizationType.Name, Labels.FoundM));
+            }
         }
 
         #endregion

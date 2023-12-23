@@ -401,7 +401,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 false,
                 false,
                 false,
-                true);
+                true,
+                false);
 
             return Json(new
             {
@@ -503,7 +504,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     false,
                     false,
                     false,
-                    true);
+                    true,
+                    false);
             }
             catch (DomainException ex)
             {

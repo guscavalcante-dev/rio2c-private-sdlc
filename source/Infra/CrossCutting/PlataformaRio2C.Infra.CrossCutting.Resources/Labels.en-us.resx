@@ -360,6 +360,9 @@
     <value>Audiovisual Pitching Sessions</value>
     <comment>Pitching de Audiovisual</comment>
   </data>
+  <data name="AudiovisualPlayer" xml:space="preserve">
+    <value>Audiovisual Player</value>
+  </data>
   <data name="AudiovisualProjects" xml:space="preserve">
     <value>Audiovisual Projects</value>
     <comment>Projetos de Audiovisual</comment>
@@ -1305,40 +1308,17 @@
     <value>Informations</value>
     <comment>Informações</comment>
   </data>
-  <data name="StartupsCommission" xml:space="preserve">
-    <value>Startups Commission</value>
-    <comment>Comissão de Inovação</comment>
-  </data>
-  <data name="StartupsCommissionEvaluationEndDate" xml:space="preserve">
-    <value>Startups evaluation end date</value>
-    <comment>Data de término da avaliação de projeto de inovação</comment>
-  </data>
-  <data name="StartupsCommissionEvaluationStartDate" xml:space="preserve">
+  <data name="InnovationCommissionEvaluationStartDate" xml:space="preserve">
     <value>Startups evaluation start date</value>
     <comment>Data de início da avaliação de projeto de inovação</comment>
   </data>
-  <data name="StartupsCommissionMaximumApprovedCompaniesCount" xml:space="preserve">
+  <data name="InnovationCommissionMaximumApprovedCompaniesCount" xml:space="preserve">
     <value>Maximum approved startups count</value>
     <comment>Quantidade máxima de empresas aprovadas</comment>
   </data>
-  <data name="StartupsCommissionMinimumEvaluationsCount" xml:space="preserve">
-    <value>Startups minimum evaluations count</value>
-    <comment>Quantidade mínima de votos para gerar média</comment>
-  </data>
-  <data name="StartupsProjects" xml:space="preserve">
-    <value>Startup Projects</value>
-    <comment>Projetos de Inovação</comment>
-  </data>
-  <data name="StartupsProjectSubmitEndDate" xml:space="preserve">
-    <value>Startups submission end date</value>
-    <comment>Data de término de envio de projeto de inovação</comment>
-  </data>
-  <data name="StartupsProjectSubmitStartDate" xml:space="preserve">
+  <data name="InnovationProjectSubmitStartDate" xml:space="preserve">
     <value>Startups submission start date</value>
     <comment>Data de início de envio de projeto de inovação</comment>
-  </data>
-  <data name="StartupsVerticals" xml:space="preserve">
-    <value>Startup Verticals</value>
   </data>
   <data name="InProgress" xml:space="preserve">
     <value>In progress</value>
@@ -1652,6 +1632,9 @@
   <data name="MusicInstrumentName" xml:space="preserve">
     <value>Musical instrument</value>
     <comment>Instrumento musical</comment>
+  </data>
+  <data name="MusicPlayer" xml:space="preserve">
+    <value>Music Player</value>
   </data>
   <data name="MusicProjects" xml:space="preserve">
     <value>Music Projects</value>
@@ -2747,6 +2730,29 @@
   <data name="Startups" xml:space="preserve">
     <value>Startups</value>
     <comment>Startups</comment>
+  </data>
+  <data name="StartupsCommission" xml:space="preserve">
+    <value>Startups Commission</value>
+    <comment>Comissão de Inovação</comment>
+  </data>
+  <data name="StartupsCommissionEvaluationEndDate" xml:space="preserve">
+    <value>Startups evaluation end date</value>
+    <comment>Data de término da avaliação de projeto de inovação</comment>
+  </data>
+  <data name="StartupsCommissionMinimumEvaluationsCount" xml:space="preserve">
+    <value>Startups minimum evaluations count</value>
+    <comment>Quantidade mínima de votos para gerar média</comment>
+  </data>
+  <data name="StartupsProjects" xml:space="preserve">
+    <value>Startup Projects</value>
+    <comment>Projetos de Inovação</comment>
+  </data>
+  <data name="StartupsProjectSubmitEndDate" xml:space="preserve">
+    <value>Startups submission end date</value>
+    <comment>Data de término de envio de projeto de inovação</comment>
+  </data>
+  <data name="StartupsVerticals" xml:space="preserve">
+    <value>Startup Verticals</value>
   </data>
   <data name="State" xml:space="preserve">
     <value>State</value>

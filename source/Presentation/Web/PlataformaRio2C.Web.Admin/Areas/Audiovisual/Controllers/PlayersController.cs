@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-21-2023
+// Last Modified On : 12-23-2023
 // ***********************************************************************
 // <copyright file="PlayersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -401,6 +401,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 false,
                 false,
                 false,
+                true,
                 true);
 
             return Json(new
@@ -503,6 +504,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     false,
                     false,
                     false,
+                    true,
                     true);
             }
             catch (DomainException ex)

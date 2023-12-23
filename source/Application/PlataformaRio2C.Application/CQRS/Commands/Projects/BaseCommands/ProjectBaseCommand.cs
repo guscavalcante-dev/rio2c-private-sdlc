@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 11-06-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 12-23-2023
 // ***********************************************************************
 // <copyright file="ProjectBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -89,7 +89,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public Guid? AttendeeOrganizationUid { get; private set; }
         public Guid ProjectTypeUid { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="OrganizationBaseCommand"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="ProjectBaseCommand"/> class.</summary>
         public ProjectBaseCommand()
         {
         }

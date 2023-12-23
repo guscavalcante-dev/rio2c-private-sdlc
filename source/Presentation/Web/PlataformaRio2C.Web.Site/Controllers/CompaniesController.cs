@@ -4,7 +4,7 @@
 // Created          : 10-08-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-21-2023
+// Last Modified On : 12-23-2023
 // ***********************************************************************
 // <copyright file="CompaniesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -693,6 +693,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
+                    ProjectType.Audiovisual.Id,
                     this.UserAccessControlDto.User.Id,
                     this.UserAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -712,7 +713,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
-                cmd.UpdateModelsAndLists(await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
+                cmd.UpdateTargetAudiences(null, await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
 
                 return Json(new
                 {
@@ -751,7 +752,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Interests, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            ViewBag.GroupedInterests = await this.interestRepo.FindAllGroupedByInterestGroupsAsync();
+            ViewBag.GroupedInterests = await this.interestRepo.FindAllByProjectTypeIdAndGroupedByInterestGroupAsync(ProjectType.Audiovisual.Id);
 
             return Json(new
             {

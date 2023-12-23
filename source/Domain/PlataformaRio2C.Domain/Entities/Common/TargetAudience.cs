@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 12-23-2023
 // ***********************************************************************
 // <copyright file="TargetAudience.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,6 +24,7 @@ namespace PlataformaRio2C.Domain.Entities
         public string Name { get; private set; }
         public int DisplayOrder { get; private set; }
         public int ProjectTypeId { get; private set; }
+        public bool HasAdditionalInfo { get; private set; }
 
         public virtual ProjectType ProjectType { get; private set; }
 
