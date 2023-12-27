@@ -41,6 +41,7 @@ using ClosedXML.Excel;
 using PlataformaRio2C.Domain.ApiModels;
 using PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults;
 using System.IO;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 {
@@ -147,16 +148,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
             try
             {
-                var playerExecutiveReportDtos = await this.collaboratorRepo.FindAllPlayersExecutivesReportByDataTable(
-                    1,
-                    10000,
-                    searchViewModel.Search,
-                    new List<Tuple<string, string>>(), //request.GetSortColumns(),
-                    searchViewModel.ShowAllEditions,
-                    searchViewModel.ShowAllParticipants,
-                    false,
-                    this.EditionDto?.Id
-                );
+                //Todo: Not implemented
+                var playerExecutiveReportDtos = await Task.FromResult(new List<T>());
 
                 using (var workbook = new XLWorkbook())
                 {
