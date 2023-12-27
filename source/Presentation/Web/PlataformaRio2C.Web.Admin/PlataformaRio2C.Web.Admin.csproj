@@ -8210,10 +8210,7 @@
     <Content Include="Areas\Music\Views\Players\Widgets\EditionCountOdometerWidget.cshtml" />
     <Content Include="Areas\Music\Views\Players\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Areas\Music\Views\Players\Widgets\TotalCountWidget.cshtml" />
-    <Content Include="Areas\Music\Views\Shared\EditorTemplates\OrganizationActivityBaseCommand.cshtml" />
-    <Content Include="Areas\Music\Views\Shared\EditorTemplates\OrganizationRestrictionSpecificsBaseCommand.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Shared\EditorTemplates\OrganizationTargetAudienceBaseCommand.cshtml" />
-    <Content Include="Areas\Music\Views\Shared\EditorTemplates\OrganizationTargetAudienceBaseCommand.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\OrganizationTargetAudienceBaseCommand.cshtml" />
     <Content Include="Areas\Innovation\Views\Players\Details.cshtml" />
     <Content Include="Areas\Innovation\Views\Players\Index.cshtml" />
     <Content Include="Areas\Innovation\Views\Players\Modals\_Form.cshtml" />
@@ -8348,8 +8345,8 @@
     <Content Include="Areas\Innovation\Views\web.config" />
     <Content Include="Areas\Innovation\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Innovation\Views\Commissions\Modals\_Form.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Shared\EditorTemplates\OrganizationActivityBaseCommand.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Shared\EditorTemplates\OrganizationRestrictionSpecificsBaseCommand.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\OrganizationActivityBaseCommand.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\OrganizationRestrictionSpecificsBaseCommand.cshtml" />
     <Content Include="Areas\Innovation\Views\Shared\EditorTemplates\InnovationOrganizationTrackOptionBaseCommand.cshtml" />
     <Content Include="Areas\Innovation\Views\Commissions\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Widgets\MainInformationWidget.cshtml" />
@@ -10034,10 +10031,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Audiovisual\Views\Shared\EditorTemplates\" />
     <Folder Include="Areas\Cartoon\Views\Projects\Modals\" />
     <Folder Include="Areas\Cartoon\Views\Projects\Shared\" />
     <Folder Include="Areas\Innovation\Views\Projects\Modals\" />
     <Folder Include="Areas\Innovation\Views\Projects\Shared\" />
+    <Folder Include="Areas\Music\Views\Shared\EditorTemplates\" />
     <Folder Include="Scripts\ckeditor\images\" />
     <Folder Include="Scripts\ckeditor\plugins\a11yhelp\lang\" />
     <Folder Include="Scripts\ckeditor\plugins\docprops\dialogs\" />

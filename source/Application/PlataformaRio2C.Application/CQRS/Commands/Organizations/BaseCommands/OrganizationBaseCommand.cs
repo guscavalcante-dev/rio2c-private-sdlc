@@ -66,7 +66,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [RadioButtonRequiredIf(nameof(IsVirtualMeetingRequired), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public bool? IsVirtualMeeting { get; set; }
 
-
         #region Socials
 
         [Display(Name = "Website", ResourceType = typeof(Labels))]
@@ -103,6 +102,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Display(Name = "TargetAudiences", ResourceType = typeof(Labels))]
         public List<OrganizationTargetAudienceBaseCommand> OrganizationTargetAudiences { get; set; }
 
+        public bool IsVerticalRequired { get; set; }
+
+        [Display(Name = "Verticals", ResourceType = typeof(Labels))]
+        [RequiredIf(nameof(IsVerticalRequired), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneOption")]
+        public List<InnovationOrganizationTrackOptionBaseCommand> InnovationOrganizationTrackGroups { get; set; }
+
         public InterestBaseCommand[][] Interests { get; set; }
 
         [Display(Name = "DisplayOnSite", ResourceType = typeof(Labels))]
@@ -111,14 +116,19 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Display(Name = "HighlightPosition", ResourceType = typeof(Labels))]
         public int? ApiHighlightPosition { get; set; }
 
-        public List<HoldingBaseDto> HoldingBaseDtos { get; private set; }
         public OrganizationType OrganizationType { get; private set; }
         public ProjectType ProjectType { get; private set; }
+
+        #region Dropdowns Properties
+
+        public List<HoldingBaseDto> HoldingBaseDtos { get; private set; }
         public List<Activity> Activities { get; private set; }
         public List<TargetAudience> TargetAudiences { get; private set; }
         public List<CountryBaseDto> CountriesBaseDtos { get; private set; }
+        public List<InnovationOrganizationTrackOptionDto> InnovationOrganizationTrackOptionDtos { get; private set; }
+        public int[] ApiHighlightPositions = new[] { 1, 2, 3, 4, 5 };
 
-        public int[] ApiHighlightPositions =  new[] { 1, 2, 3, 4, 5 };
+        #endregion
 
         /// <summary>Initializes a new instance of the <see cref="OrganizationBaseCommand"/> class.</summary>
         public OrganizationBaseCommand()
@@ -136,26 +146,31 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="activities">The activities.</param>
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="interestsDtos">The interests dtos.</param>
+        /// <param name="innovationOrganizationTrackOptionDtos">The innovation organization track option dtos.</param>
         /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
         /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
         /// <param name="isRestrictionSpecificRequired">if set to <c>true</c> [is restriction specific required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         /// <param name="isVirtualMeetingRequired">if set to <c>true</c> [is virtual meeting required].</param>
+        /// <param name="isHoldingRequired">if set to <c>true</c> [is holding required].</param>
+        /// <param name="isVericalRequired">if set to <c>true</c> [is verical required].</param>
         public void UpdateBaseProperties(
             OrganizationDto entity,
             OrganizationType organizationType,
-            List<HoldingBaseDto> holdingBaseDtos, 
-            List<LanguageDto> languagesDtos, 
+            List<HoldingBaseDto> holdingBaseDtos,
+            List<LanguageDto> languagesDtos,
             List<CountryBaseDto> countriesBaseDtos,
             List<Activity> activities,
             List<TargetAudience> targetAudiences,
             List<InterestDto> interestsDtos,
-            bool isDescriptionRequired, 
-            bool isAddressRequired, 
-            bool isRestrictionSpecificRequired, 
+            List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos,
+            bool isDescriptionRequired,
+            bool isAddressRequired,
+            bool isRestrictionSpecificRequired,
             bool isImageRequired,
             bool isVirtualMeetingRequired,
-            bool isHoldingRequired)
+            bool isHoldingRequired,
+            bool isVericalRequired)
         {
             this.HoldingUid = entity?.HoldingBaseDto?.Uid;
             this.IsHoldingRequired = isHoldingRequired;
@@ -179,35 +194,44 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.IsVirtualMeeting = entity?.IsVirtualMeeting;
             this.IsVirtualMeetingRequired = isVirtualMeetingRequired;
 
+            this.IsVerticalRequired = isVericalRequired;
+
+            this.UpdateDropdownProperties(holdingBaseDtos, countriesBaseDtos, activities, targetAudiences, innovationOrganizationTrackOptionDtos);
+
             this.UpdateAddress(entity, isAddressRequired);
             this.UpdateDescriptions(entity, languagesDtos, isDescriptionRequired);
             this.UpdateRestrictionSpecifics(entity, languagesDtos, isRestrictionSpecificRequired);
             this.UpdateActivities(entity, activities);
             this.UpdateCropperImage(entity, isImageRequired);
-            this.UpdateDropdownProperties(holdingBaseDtos, countriesBaseDtos, activities, targetAudiences);
             this.UpdateTargetAudiences(entity, targetAudiences);
             this.UpdateInterests(entity, interestsDtos);
+            this.UpdateInnovationOrganizationTrackOptionGroups(entity, innovationOrganizationTrackOptionDtos);
             this.UpdateApiConfigurations(entity, organizationType);
         }
 
-        /// <summary>Updates the dropdown properties.</summary>
+        /// <summary>
+        /// Updates the dropdown properties.
+        /// </summary>
         /// <param name="holdingBaseDtos">The holding base dtos.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
         /// <param name="activities">The activities.</param>
         /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="innovationOrganizationTrackOptionDtos">The innovation organization track option dtos.</param>
         public void UpdateDropdownProperties(
             List<HoldingBaseDto> holdingBaseDtos,
             List<CountryBaseDto> countriesBaseDtos,
             List<Activity> activities,
-            List<TargetAudience> targetAudiences)
+            List<TargetAudience> targetAudiences,
+            List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos)
         {
             this.HoldingBaseDtos = holdingBaseDtos;
             this.Activities = activities;
             this.TargetAudiences = targetAudiences;
             this.CountriesBaseDtos = countriesBaseDtos?
-                .OrderBy(c => c.Ordering)?
-                .ThenBy(c => c.DisplayName)?
-                .ToList();
+                                        .OrderBy(c => c.Ordering)?
+                                        .ThenBy(c => c.DisplayName)?
+                                        .ToList();
+            this.InnovationOrganizationTrackOptionDtos = innovationOrganizationTrackOptionDtos;
         }
 
         /// <summary>Updates the pre send properties.</summary>
@@ -265,7 +289,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             foreach (var languageDto in languagesDtos)
             {
                 var description = entity?.OrganizationDescriptionBaseDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
-                this.Descriptions.Add(description != null ? new OrganizationDescriptionBaseCommand(description, isDescriptionRequired) : 
+                this.Descriptions.Add(description != null ? new OrganizationDescriptionBaseCommand(description, isDescriptionRequired) :
                                                             new OrganizationDescriptionBaseCommand(languageDto, isDescriptionRequired));
             }
         }
@@ -343,6 +367,30 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             }
         }
 
+        /// <summary>
+        /// Updates the innovation organization track option groups.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="innovationOrganizationTrackOptionDtos">The innovation organization track option dtos.</param>
+        private void UpdateInnovationOrganizationTrackOptionGroups(OrganizationDto entity, List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos)
+        {
+            this.InnovationOrganizationTrackGroups = new List<InnovationOrganizationTrackOptionBaseCommand>();
+
+            var selectedInnovationOrganizationTrackOptionGroupsUids = entity?.InnovationOrganizationTrackOptionGroupDtos
+                                                                                .GroupBy(aciotDto => aciotDto.InnovationOrganizationTrackOptionGroup?.Uid)
+                                                                                .Select(group => group.Key);
+            if (innovationOrganizationTrackOptionDtos?.Any() == true)
+            {
+                foreach (var innovationOrganizationTrackOptionGroup in innovationOrganizationTrackOptionDtos.GroupBy(dto => dto.InnovationOrganizationTrackOptionGroup))
+                {
+                    this.InnovationOrganizationTrackGroups.Add(
+                        new InnovationOrganizationTrackOptionBaseCommand(
+                            innovationOrganizationTrackOptionGroup.Key,
+                            selectedInnovationOrganizationTrackOptionGroupsUids?.Contains(innovationOrganizationTrackOptionGroup.Key?.Uid) == true));
+                }
+            }
+        }
+
         /// <summary>Updates the cropper image.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
@@ -359,7 +407,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <exception cref="System.NotImplementedException"></exception>
         private ProjectType GetProjectTypeByOrganizationType(OrganizationType organizationType)
         {
-            if(organizationType.Name == OrganizationType.AudiovisualPlayer.Name)
+            if (organizationType.Name == OrganizationType.AudiovisualPlayer.Name)
             {
                 return ProjectType.Audiovisual;
             }

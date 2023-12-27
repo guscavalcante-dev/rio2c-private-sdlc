@@ -1,5 +1,7 @@
 ﻿@using System.Globalization
 @model PlataformaRio2C.Application.CQRS.Commands.OrganizationBaseCommand
+@Html.HiddenFor(m => m.IsHoldingRequired)
+@Html.HiddenFor(m => m.IsVerticalRequired)
 <div class="kt-section">
     <div class="kt-separator kt-separator--border-dashed"></div>
     <h3 class="kt-section__title mb-0">@Labels.PlayerInformation</h3>
@@ -12,7 +14,6 @@
             <div class="col-lg-8">
                 <div class="form-group row">
                     <div class="col-md-12">
-                        @Html.HiddenFor(m => m.IsHoldingRequired)
                         @Html.LabelFor(m => m.HoldingUid, new { @class = "control-label" })
                         @Html.DropDownList("HoldingUid", new SelectList(Model.HoldingBaseDtos, "Uid", "Name", Model.HoldingUid), $"{Labels.Select}...", new { @class = "form-control enable-select2" })
                         @Html.ValidationMessageFor(m => m.HoldingUid, "", new { @class = "text-danger" })

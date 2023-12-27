@@ -26,6 +26,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<OrganizationInterestDto> OrganizationInterestDtos { get; set; }
         public IEnumerable<CollaboratorDto> CollaboratorsDtos { get; set; }
         public IEnumerable<AttendeeOrganizationTypeDto> AttendeeOrganizationTypesDtos { get; set; }
+        public IEnumerable<InnovationOrganizationTrackOptionGroupDto> InnovationOrganizationTrackOptionGroupDtos { get; set; }
 
         #region Helpers
 
