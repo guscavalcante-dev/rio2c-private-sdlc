@@ -29,7 +29,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public DateTimeOffset UpdateDate { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateOrganization"/> class.
+        /// Initializes a new instance of the <see cref="UpdateOrganization" /> class.
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="organizationType">Type of the organization.</param>
@@ -45,6 +45,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isRestrictionSpecificRequired">if set to <c>true</c> [is restriction specific required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         /// <param name="isVirtualMeetingRequired">if set to <c>true</c> [is virtual meeting required].</param>
+        /// <param name="isHoldingRequired">if set to <c>true</c> [is holding required].</param>
+        /// <param name="isVerticalRequired">if set to <c>true</c> [is vertical required].</param>
         /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
         public UpdateOrganization(
             OrganizationDto entity, 
@@ -55,13 +57,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<Activity> activities,
             List<TargetAudience> targetAudiences,
             List<InterestDto> interestsDtos,
+            List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos,
             bool? isAddingToCurrentEdition,
             bool isDescriptionRequired, 
             bool isAddressRequired, 
             bool isRestrictionSpecificRequired, 
             bool isImageRequired,
             bool isVirtualMeetingRequired,
-            bool isHoldingRequired)
+            bool isHoldingRequired,
+            bool isVerticalRequired)
         {
             if (entity == null)
             {
@@ -80,13 +84,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 countriesBaseDtos, 
                 activities, 
                 targetAudiences,
-                interestsDtos, 
+                interestsDtos,
+                innovationOrganizationTrackOptionDtos,
                 isDescriptionRequired, 
                 isAddressRequired, 
                 isRestrictionSpecificRequired,
                 isImageRequired,
                 isVirtualMeetingRequired,
-                isHoldingRequired);
+                isHoldingRequired,
+                isVerticalRequired);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateOrganization"/> class.</summary>

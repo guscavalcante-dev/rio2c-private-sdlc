@@ -55,6 +55,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         private readonly IActivityRepository activityRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
         private readonly IInterestRepository interestRepo;
+        private readonly IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo;
         private readonly IFileRepository fileRepo;
 
         /// <summary>
@@ -67,6 +68,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// <param name="activityRepository">The activity repository.</param>
         /// <param name="targetAudienceRepository">The target audience repository.</param>
         /// <param name="interestRepository">The interest repository.</param>
+        /// <param name="innovationOrganizationTrackOptionRepository">The innovation organization track option repository.</param>
         /// <param name="fileRepository">The file repository.</param>
         public PlayersController(
             IMediator commandBus,
@@ -76,6 +78,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             IActivityRepository activityRepository,
             ITargetAudienceRepository targetAudienceRepository,
             IInterestRepository interestRepository,
+            IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepository,
             IFileRepository fileRepository)
             : base(commandBus, identityController)
         {
@@ -84,6 +87,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             this.activityRepo = activityRepository;
             this.targetAudienceRepo = targetAudienceRepository;
             this.interestRepo = interestRepository;
+            this.innovationOrganizationTrackOptionRepo = innovationOrganizationTrackOptionRepository;
             this.fileRepo = fileRepository;
         }
 
@@ -393,18 +397,20 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         {
             var cmd = new CreateOrganization(
                 OrganizationType.StartupPlayer,
-                await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)), //TODO: Innovation hasn't holding. Remove this
+                null,
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                 await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id),
                 await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id),
                 await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Startup.Id),
+                await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync(),
                 false,
                 false,
                 false,
                 false,
                 true,
-                false);
+                false,
+                true);
 
             return Json(new
             {
@@ -456,7 +462,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                     await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                     await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id),
-                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id));
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id),
+                    await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync());
 
                 return Json(new
                 {
@@ -501,13 +508,15 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                     await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id),
                     await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id),
                     await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Startup.Id),
+                    await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync(), //TODO: Pode ser que isso aqui se torne TrackOptionGroup. Cliente está validando.
                     isAddingToCurrentEdition,
                     false,
                     false,
                     false,
                     false,
                     true,
-                    false);
+                    false,
+                    true);
             }
             catch (DomainException ex)
             {
@@ -564,7 +573,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                     await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                     await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id),
-                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id));
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id),
+                    await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync());
 
                 return Json(new
                 {

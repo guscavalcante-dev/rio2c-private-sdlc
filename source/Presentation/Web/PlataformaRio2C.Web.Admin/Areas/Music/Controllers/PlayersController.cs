@@ -392,17 +392,19 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         {
             var cmd = new CreateOrganization(
                 OrganizationType.MusicPlayer,
-                await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)), //TODO: Music hasn't holding. Remove this
+                null,
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                 await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
                 await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
                 await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Music.Id),
+                null,
                 false,
                 false,
                 false,
                 false,
                 true,
+                false,
                 false);
 
             return Json(new
@@ -455,7 +457,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                     await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
-                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id));
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
+                    null);
 
                 return Json(new
                 {
@@ -500,12 +503,14 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
                     await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
                     await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Music.Id),
+                    null,
                     isAddingToCurrentEdition,
                     false,
                     false,
                     false,
                     false,
                     true,
+                    false,
                     false);
             }
             catch (DomainException ex)
@@ -563,7 +568,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                     await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
-                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id));
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
+                    null);
 
                 return Json(new
                 {

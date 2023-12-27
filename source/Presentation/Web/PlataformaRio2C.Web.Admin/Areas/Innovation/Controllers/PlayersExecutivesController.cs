@@ -149,7 +149,17 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             try
             {
                 //Todo: Not implemented
-                var playerExecutiveReportDtos = await Task.FromResult(new List<T>());
+                var playerExecutiveReportDtos = new List<PlayerExecutiveReportDto>();
+                //await this.collaboratorRepo.FindAllPlayersExecutivesReportByDataTable(
+                //    1,
+                //    10000,
+                //    searchViewModel.Search,
+                //    new List<Tuple<string, string>>(), //request.GetSortColumns(),
+                //    searchViewModel.ShowAllEditions,
+                //    searchViewModel.ShowAllParticipants,
+                //    false,
+                //    this.EditionDto?.Id
+                //);
 
                 using (var workbook = new XLWorkbook())
                 {

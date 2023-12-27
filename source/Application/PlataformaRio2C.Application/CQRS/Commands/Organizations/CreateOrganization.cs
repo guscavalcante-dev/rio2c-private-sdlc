@@ -21,7 +21,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     public class CreateOrganization : OrganizationBaseCommand
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateOrganization"/> class.
+        /// Initializes a new instance of the <see cref="CreateOrganization" /> class.
         /// </summary>
         /// <param name="organizationType">Type of the organization.</param>
         /// <param name="holdingBaseDtos">The holding base dtos.</param>
@@ -30,11 +30,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="activities">The activities.</param>
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="interestsDtos">The interests dtos.</param>
+        /// <param name="innovationOrganizationTrackOptionDtos">The innovation organization track option dtos.</param>
         /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
         /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
         /// <param name="isRestrictionSpecificRequired">if set to <c>true</c> [is restriction specific required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         /// <param name="isVirtualMeetingRequired">if set to <c>true</c> [is virtual meeting required].</param>
+        /// <param name="isHoldingRequired">if set to <c>true</c> [is holding required].</param>
+        /// <param name="isVerticalRequired">if set to <c>true</c> [is vertical required].</param>
         public CreateOrganization(
             OrganizationType organizationType,
             List<HoldingBaseDto> holdingBaseDtos,
@@ -43,12 +46,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<Activity> activities,
             List<TargetAudience> targetAudiences,
             List<InterestDto> interestsDtos,
+            List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos,
             bool isDescriptionRequired, 
             bool isAddressRequired, 
             bool isRestrictionSpecificRequired, 
             bool isImageRequired,
             bool isVirtualMeetingRequired,
-            bool isHoldingRequired)
+            bool isHoldingRequired,
+            bool isVerticalRequired)
         {
             this.UpdateBaseProperties(
                 null,
@@ -58,13 +63,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 countriesBaseDtos, 
                 activities, 
                 targetAudiences,
-                interestsDtos, 
+                interestsDtos,
+                innovationOrganizationTrackOptionDtos,
                 isDescriptionRequired, 
                 isAddressRequired, 
                 isRestrictionSpecificRequired,
                 isImageRequired,
                 isVirtualMeetingRequired,
-                isHoldingRequired);
+                isHoldingRequired,
+                isVerticalRequired);
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateOrganization"/> class.</summary>

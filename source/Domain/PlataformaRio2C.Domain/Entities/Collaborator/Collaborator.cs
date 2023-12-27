@@ -1201,7 +1201,9 @@ namespace PlataformaRio2C.Domain.Entities
                             .Where(ac => !ac.IsDeleted)?
                             .SelectMany(ac => ac.AttendeeCollaboratorTypes
                                                     .Where(act => !act.IsDeleted && act.CollaboratorType?.IsDeleted == false)
-                                                    .Select(act => act.CollaboratorType.Role))?.Distinct()?.ToList();
+                                                    .Select(act => act?.CollaboratorType?.Role))
+                                                    ?.Distinct()
+                                                    ?.ToList();
         }
 
         #endregion
