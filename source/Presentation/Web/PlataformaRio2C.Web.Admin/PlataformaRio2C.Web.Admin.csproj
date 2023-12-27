@@ -377,6 +377,7 @@
     <Compile Include="Areas\Cartoon\Controllers\CommissionsController.cs" />
     <Compile Include="Areas\Cartoon\Controllers\ProjectsController.cs" />
     <Compile Include="Areas\Innovation\Controllers\CommissionsController.cs" />
+    <Compile Include="Areas\Innovation\Controllers\PlayersExecutivesController.cs" />
     <Compile Include="Areas\Innovation\Controllers\PlayersController.cs" />
     <Compile Include="Areas\Innovation\Controllers\ProjectsController.cs" />
     <Compile Include="Areas\Innovation\Controllers\TrackOptionsController.cs" />
@@ -892,6 +893,12 @@
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.tracks.widget.js" />
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.totalcount.widget.js" />
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.update.js" />
+    <Content Include="Assets\js\innovation\playersexecutives\innovation.players.executives.create.js" />
+    <Content Include="Assets\js\innovation\playersexecutives\innovation.players.executives.datatable.widget.js" />
+    <Content Include="Assets\js\innovation\playersexecutives\innovation.players.executives.delete.js" />
+    <Content Include="Assets\js\innovation\playersexecutives\innovation.players.executives.editioncount.widget.js" />
+    <Content Include="Assets\js\innovation\playersexecutives\innovation.players.executives.totalcount.widget.js" />
+    <Content Include="Assets\js\innovation\playersexecutives\innovation.players.executives.update.js" />
     <Content Include="Assets\js\innovation\players\innovation.players.create.js" />
     <Content Include="Assets\js\innovation\players\innovation.players.datatable.widget.js" />
     <Content Include="Assets\js\innovation\players\innovation.players.delete.js" />
@@ -8210,7 +8217,14 @@
     <Content Include="Areas\Music\Views\Players\Widgets\EditionCountOdometerWidget.cshtml" />
     <Content Include="Areas\Music\Views\Players\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Areas\Music\Views\Players\Widgets\TotalCountWidget.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\OrganizationTargetAudienceBaseCommand.cshtml" />
+	<Content Include="Areas\Innovation\Views\PlayersExecutives\Details.cshtml" />
+	<Content Include="Areas\Innovation\Views\PlayersExecutives\Index.cshtml" />
+	<Content Include="Areas\Innovation\Views\PlayersExecutives\Modals\_Form.cshtml" />
+	<Content Include="Areas\Innovation\Views\PlayersExecutives\Modals\CreateModal.cshtml" />
+	<Content Include="Areas\Innovation\Views\PlayersExecutives\Modals\UpdateModal.cshtml" />
+	<Content Include="Areas\Innovation\Views\PlayersExecutives\Widgets\DataTableWidget.cshtml" />
+	<Content Include="Areas\Innovation\Views\PlayersExecutives\Widgets\EditionCountWidget.cshtml" />
+	<Content Include="Areas\Innovation\Views\PlayersExecutives\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Players\Details.cshtml" />
     <Content Include="Areas\Innovation\Views\Players\Index.cshtml" />
     <Content Include="Areas\Innovation\Views\Players\Modals\_Form.cshtml" />
@@ -8347,6 +8361,7 @@
     <Content Include="Areas\Innovation\Views\Commissions\Modals\_Form.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\OrganizationActivityBaseCommand.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\OrganizationRestrictionSpecificsBaseCommand.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\OrganizationTargetAudienceBaseCommand.cshtml" />
     <Content Include="Areas\Innovation\Views\Shared\EditorTemplates\InnovationOrganizationTrackOptionBaseCommand.cshtml" />
     <Content Include="Areas\Innovation\Views\Commissions\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Widgets\MainInformationWidget.cshtml" />
