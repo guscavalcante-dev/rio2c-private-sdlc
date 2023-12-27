@@ -3,15 +3,14 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 10-10-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 12-23-2023
 // ***********************************************************************
 // <copyright file="UpdateOrganizationTargetAudiencesCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -52,6 +51,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.Uow.BeginTransaction();
 
             var organization = await this.GetOrganizationByUid(cmd.OrganizationUid);
+            var targetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(cmd.ProjectTypeId);
 
             #region Initial validations
 
@@ -64,7 +64,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             organization.UpdateOrganizationTargetAudiences(
-                cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<TargetAudience>(),
+                cmd.OrganizationTargetAudiences?.Where(ota => ota.IsChecked)?.Select(ota => new OrganizationTargetAudience(targetAudiences?.FirstOrDefault(a => a.Uid == ota.TargetAudienceUid), ota.AdditionalInfo, cmd.UserId))?.ToList(),
                 cmd.UserId);
             if (!organization.IsValid())
             {
@@ -77,10 +77,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.AppValidationResult.Data = organization;
 
             return this.AppValidationResult;
-
-            //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
-
-            //return Task.FromResult(propertyId); // use it when the methed is not async
         }
     }
 }

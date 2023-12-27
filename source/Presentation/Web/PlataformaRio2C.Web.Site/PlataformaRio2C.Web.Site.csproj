@@ -7778,6 +7778,7 @@
     <Content Include="Views\Themes\Metronic\_EditionSelector.cshtml" />
     <Content Include="Views\SiteMailerService\SpeakersReportEmail.cshtml" />
     <Content Include="Views\Home\Shared\_WeConnectPublications.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\OrganizationTargetAudienceBaseCommand.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

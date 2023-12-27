@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-09-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-18-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 12-23-2023
 // ***********************************************************************
 // <copyright file="OrganizationActivityDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,6 +21,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public int OrganizationActivityId { get; set; }
         public Guid OrganizationActivityUid { get; set; }
         public string OrganizationActivityAdditionalInfo { get; set; }
+
         public int ActivityId { get; set; }
         public Guid ActivityUid { get; set; }
         public string ActivityName { get; set; }

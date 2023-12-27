@@ -637,6 +637,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Player de Audiovisual.
+        /// </summary>
+        public static string AudiovisualPlayer {
+            get {
+                return ResourceManager.GetString("AudiovisualPlayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Projetos de Audiovisual.
         /// </summary>
         public static string AudiovisualProjects {
@@ -2932,6 +2941,33 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data de início da avaliação de startups.
+        /// </summary>
+        public static string InnovationCommissionEvaluationStartDate {
+            get {
+                return ResourceManager.GetString("InnovationCommissionEvaluationStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade máxima de startups aprovadas.
+        /// </summary>
+        public static string InnovationCommissionMaximumApprovedCompaniesCount {
+            get {
+                return ResourceManager.GetString("InnovationCommissionMaximumApprovedCompaniesCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de início de cadastro de startups.
+        /// </summary>
+        public static string InnovationProjectSubmitStartDate {
+            get {
+                return ResourceManager.GetString("InnovationProjectSubmitStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Em andamento.
         /// </summary>
         public static string InProgress {
@@ -3684,6 +3720,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string MusicInstrumentName {
             get {
                 return ResourceManager.GetString("MusicInstrumentName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Player de Música.
+        /// </summary>
+        public static string MusicPlayer {
+            get {
+                return ResourceManager.GetString("MusicPlayer", resourceCulture);
             }
         }
         
@@ -6316,6 +6361,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Player de Startup.
+        /// </summary>
+        public static string StartupPlayer {
+            get {
+                return ResourceManager.GetString("StartupPlayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Startups.
         /// </summary>
         public static string Startups {
@@ -6343,24 +6397,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data de início da avaliação de startups.
-        /// </summary>
-        public static string StartupsCommissionEvaluationStartDate {
-            get {
-                return ResourceManager.GetString("StartupsCommissionEvaluationStartDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Quantidade máxima de startups aprovadas.
-        /// </summary>
-        public static string StartupsCommissionMaximumApprovedCompaniesCount {
-            get {
-                return ResourceManager.GetString("StartupsCommissionMaximumApprovedCompaniesCount", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Quantidade mínima de votos para gerar média de Startups.
         /// </summary>
         public static string StartupsCommissionMinimumEvaluationsCount {
@@ -6384,15 +6420,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string StartupsProjectSubmitEndDate {
             get {
                 return ResourceManager.GetString("StartupsProjectSubmitEndDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Data de início de cadastro de startups.
-        /// </summary>
-        public static string StartupsProjectSubmitStartDate {
-            get {
-                return ResourceManager.GetString("StartupsProjectSubmitStartDate", resourceCulture);
             }
         }
         

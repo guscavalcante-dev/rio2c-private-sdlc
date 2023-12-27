@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-28-2023
+// Last Modified On : 12-23-2023
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1083,6 +1083,31 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/innovation.trackoption.groups.delete.js").Include(
                 "~/Assets/js/innovation/trackoptiongroups/innovation.trackoption.groups.delete.js"));
+
+            #endregion
+
+            #region Players
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.players.list.js").Include(
+                "~/Assets/js/innovation/players/innovation.players.totalcount.widget.js",
+                "~/Assets/js/innovation/players/innovation.players.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.players.editioncount.js").Include(
+                "~/Assets/js/innovation/players/innovation.players.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.players.editioncountodometer.widget.js").Include(
+                "~/Assets/js/innovation/players/innovation.players.editioncountodometer.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.players.create.js").Include(
+                "~/Assets/js/innovation/players/innovation.players.create.js",
+                "~/Assets/js/myrio2c.companynumber.js",
+                "~/Assets/js/myrio2c.additionalinfo.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.players.update.js").Include(
+                "~/Assets/js/innovation/players/innovation.players.update.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.players.delete.js").Include(
+                "~/Assets/js/innovation/players/innovation.players.delete.js"));
 
             #endregion
 

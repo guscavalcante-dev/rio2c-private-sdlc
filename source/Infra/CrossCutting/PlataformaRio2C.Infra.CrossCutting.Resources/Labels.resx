@@ -359,6 +359,9 @@
     <value>Pitching de Audiovisual</value>
     <comment>Pitching de Audiovisual</comment>
   </data>
+  <data name="AudiovisualPlayer" xml:space="preserve">
+    <value>Player de Audiovisual</value>
+  </data>
   <data name="AudiovisualProjects" xml:space="preserve">
     <value>Projetos de Audiovisual</value>
     <comment>Projetos de Audiovisual</comment>
@@ -1304,32 +1307,14 @@
     <value>Informações</value>
     <comment>Informações</comment>
   </data>
-  <data name="StartupsCommission" xml:space="preserve">
-    <value>Comissão de Startups</value>
-  </data>
-  <data name="StartupsCommissionEvaluationEndDate" xml:space="preserve">
-    <value>Data de término da avaliação de startups</value>
-  </data>
-  <data name="StartupsCommissionEvaluationStartDate" xml:space="preserve">
+  <data name="InnovationCommissionEvaluationStartDate" xml:space="preserve">
     <value>Data de início da avaliação de startups</value>
   </data>
-  <data name="StartupsCommissionMaximumApprovedCompaniesCount" xml:space="preserve">
+  <data name="InnovationCommissionMaximumApprovedCompaniesCount" xml:space="preserve">
     <value>Quantidade máxima de startups aprovadas</value>
   </data>
-  <data name="StartupsCommissionMinimumEvaluationsCount" xml:space="preserve">
-    <value>Quantidade mínima de votos para gerar média de Startups</value>
-  </data>
-  <data name="StartupsProjects" xml:space="preserve">
-    <value>Projetos de Startup</value>
-  </data>
-  <data name="StartupsProjectSubmitEndDate" xml:space="preserve">
-    <value>Data de término de cadastro de startups</value>
-  </data>
-  <data name="StartupsProjectSubmitStartDate" xml:space="preserve">
+  <data name="InnovationProjectSubmitStartDate" xml:space="preserve">
     <value>Data de início de cadastro de startups</value>
-  </data>
-  <data name="StartupsVerticals" xml:space="preserve">
-    <value>Verticais de Startup</value>
   </data>
   <data name="InProgress" xml:space="preserve">
     <value>Em andamento</value>
@@ -1643,6 +1628,9 @@
   <data name="MusicInstrumentName" xml:space="preserve">
     <value>Instrumento musical</value>
     <comment>Instrumento musical</comment>
+  </data>
+  <data name="MusicPlayer" xml:space="preserve">
+    <value>Player de Música</value>
   </data>
   <data name="MusicProjects" xml:space="preserve">
     <value>Projetos de Música</value>
@@ -2742,8 +2730,29 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Startup" xml:space="preserve">
     <value>Startup</value>
   </data>
+  <data name="StartupPlayer" xml:space="preserve">
+    <value>Player de Startup</value>
+  </data>
   <data name="Startups" xml:space="preserve">
     <value>Startups</value>
+  </data>
+  <data name="StartupsCommission" xml:space="preserve">
+    <value>Comissão de Startups</value>
+  </data>
+  <data name="StartupsCommissionEvaluationEndDate" xml:space="preserve">
+    <value>Data de término da avaliação de startups</value>
+  </data>
+  <data name="StartupsCommissionMinimumEvaluationsCount" xml:space="preserve">
+    <value>Quantidade mínima de votos para gerar média de Startups</value>
+  </data>
+  <data name="StartupsProjects" xml:space="preserve">
+    <value>Projetos de Startup</value>
+  </data>
+  <data name="StartupsProjectSubmitEndDate" xml:space="preserve">
+    <value>Data de término de cadastro de startups</value>
+  </data>
+  <data name="StartupsVerticals" xml:space="preserve">
+    <value>Verticais de Startup</value>
   </data>
   <data name="State" xml:space="preserve">
     <value>Estado</value>

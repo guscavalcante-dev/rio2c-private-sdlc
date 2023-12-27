@@ -148,15 +148,16 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
             try
             {
-                var players = await this.organizationRepo.FindAllPlayersByDataTable(
-                    1, 
-                    10000, 
-                    searchKeywords, 
-                    new List<Tuple<string, string>>(), //request.GetSortColumns(),
-                    showAllEditions,
-                    showAllOrganizations,
-                    this.EditionDto.Id,
-                    true);
+                var players = new List<OrganizationDto>();
+                //var players = await this.organizationRepo.FindAllPlayersByDataTable(
+                //    1, 
+                //    10000, 
+                //    searchKeywords, 
+                //    new List<Tuple<string, string>>(), //request.GetSortColumns(),
+                //    showAllEditions,
+                //    showAllOrganizations,
+                //    this.EditionDto.Id,
+                //    true);
 
                 using (var workbook = new XLWorkbook())
                 {
@@ -401,7 +402,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 false,
                 false,
                 false,
-                true);
+                true,
+                false);
 
             return Json(new
             {
@@ -503,7 +505,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     false,
                     false,
                     false,
-                    true);
+                    true,
+                    false);
             }
             catch (DomainException ex)
             {

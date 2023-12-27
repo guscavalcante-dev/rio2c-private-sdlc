@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-09-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-09-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 12-23-2023
 // ***********************************************************************
 // <copyright file="OrganizationTargetAudienceDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,9 +20,12 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         public int OrganizationTargetAudienceId { get; set; }
         public Guid OrganizationTargetAudienceUid { get; set; }
+        public string OrganizationTargetAudienceAdditionalInfo { get; set; }
+
         public int TargetAudienceId { get; set; }
         public Guid TargetAudienceUid { get; set; }
         public string TargetAudienceName { get; set; }
+        public bool TargetAudienceHasAdditionalInfo { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="OrganizationTargetAudienceDto"/> class.</summary>
         public OrganizationTargetAudienceDto()

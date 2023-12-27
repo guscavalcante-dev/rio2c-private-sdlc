@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 12-23-2023
 // ***********************************************************************
 // <copyright file="CreateOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -47,7 +47,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isAddressRequired, 
             bool isRestrictionSpecificRequired, 
             bool isImageRequired,
-            bool isVirtualMeetingRequired)
+            bool isVirtualMeetingRequired,
+            bool isHoldingRequired)
         {
             this.UpdateBaseProperties(
                 null,
@@ -62,7 +63,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 isAddressRequired, 
                 isRestrictionSpecificRequired,
                 isImageRequired,
-                isVirtualMeetingRequired);
+                isVirtualMeetingRequired,
+                isHoldingRequired);
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateOrganization"/> class.</summary>
