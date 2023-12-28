@@ -195,14 +195,14 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             try
             {
-                var commissionAttendeeCollaboratorInterestsWidgetDto = await this.attendeeCollaboratorRepo.FindInterestsWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
-                if (commissionAttendeeCollaboratorInterestsWidgetDto == null)
+                var attendeeCollaboratorInterestsWidgetDto = await this.attendeeCollaboratorRepo.FindInterestsWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
+                if (attendeeCollaboratorInterestsWidgetDto == null)
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()));
                 }
 
                 cmd = new UpdateAudiovisualCollaboratorInterests(
-                    commissionAttendeeCollaboratorInterestsWidgetDto,
+                    attendeeCollaboratorInterestsWidgetDto,
                     await this.GetInterestsFromGenreInterestGroupAsync());
             }
             catch (DomainException ex)

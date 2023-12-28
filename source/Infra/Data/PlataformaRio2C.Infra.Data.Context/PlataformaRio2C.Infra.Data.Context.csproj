@@ -78,7 +78,9 @@
     <Compile Include="Interfaces\IDbContext.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Mapping\Audiovisual\CommissionEvaluationMap.cs" />
-    <Compile Include="Mapping\Audiovisual\CommissionAttendeeCollaboratorInterestMap.cs" />
+    <Compile Include="Mapping\Collaborator\AttendeeCollaboratorTargetAudienceMap.cs" />
+    <Compile Include="Mapping\Collaborator\AttendeeCollaboratorActivityMap.cs" />
+    <Compile Include="Mapping\Collaborator\AttendeeCollaboratorInterestMap.cs" />
     <Compile Include="Mapping\Audiovisual\Negotiation\AttendeeNegotiationCollaboratorMap.cs" />
     <Compile Include="Mapping\Cartoon\AttendeeCartoonProjectMap.cs" />
     <Compile Include="Mapping\Cartoon\CartoonProjectOrganizationMap.cs" />

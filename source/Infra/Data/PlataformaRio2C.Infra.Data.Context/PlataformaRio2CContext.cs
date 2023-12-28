@@ -76,6 +76,9 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new CollaboratorRoleMap());
             modelBuilder.Configurations.Add(new CollaboratorIndustryMap());
             modelBuilder.Configurations.Add(new CollaboratorEditionParticipationMap());
+            modelBuilder.Configurations.Add(new AttendeeCollaboratorInterestMap());
+            modelBuilder.Configurations.Add(new AttendeeCollaboratorActivityMap());
+            modelBuilder.Configurations.Add(new AttendeeCollaboratorTargetAudienceMap());
 
             // Audiovisual
             modelBuilder.Configurations.Add(new ProjectMap());
@@ -92,7 +95,6 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new ProjectBuyerEvaluationMap());
             modelBuilder.Configurations.Add(new ProjectEvaluationStatusMap());
             modelBuilder.Configurations.Add(new ProjectEvaluationRefuseReasonMap());
-            modelBuilder.Configurations.Add(new CommissionAttendeeCollaboratorInterestMap());
             modelBuilder.Configurations.Add(new CommissionEvaluationMap());
 
             // Addresses
@@ -258,7 +260,7 @@ namespace PlataformaRio2C.Infra.Data.Context
         public DbSet<Interest> Interests { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectStatus> ProjectStatus { get; set; }
-        public DbSet<CommissionAttendeeCollaboratorInterest> CommissionAttendeeCollaboratorInterests { get; set; }
+        public DbSet<AttendeeCollaboratorInterest> AttendeeCollaboratorInterests { get; set; }
         public DbSet<CommissionEvaluation> CommissionEvaluations { get; set; }
 
         public DbSet<Country> Country { get; set; }

@@ -6,7 +6,7 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 08-17-2021
 // ***********************************************************************
-// <copyright file="CommissionAttendeeCollaboratorInterestMap.cs" company="Softo">
+// <copyright file="AttendeeCollaboratorInterestMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -16,21 +16,21 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace PlataformaRio2C.Infra.Data.Context.Mapping
 {
-    /// <summary>AttendeeInnovationOrganizationTrackMap</summary>
-    public class CommissionAttendeeCollaboratorInterestMap : EntityTypeConfiguration<CommissionAttendeeCollaboratorInterest>
+    /// <summary>AttendeeCollaboratorInterestMap</summary>
+    public class AttendeeCollaboratorInterestMap : EntityTypeConfiguration<AttendeeCollaboratorInterest>
     {
-        /// <summary>Initializes a new instance of the <see cref="CommissionAttendeeCollaboratorInterestMap"/> class.</summary>
-        public CommissionAttendeeCollaboratorInterestMap()
+        /// <summary>Initializes a new instance of the <see cref="AttendeeCollaboratorInterestMap"/> class.</summary>
+        public AttendeeCollaboratorInterestMap()
         {
-            this.ToTable("CommissionAttendeeCollaboratorInterests");
+            this.ToTable("AttendeeCollaboratorInterests");
 
             // Relationships
             this.HasRequired(caci => caci.Interest)
-                .WithMany(i => i.CommissionAttendeeCollaboratorInterests)
+                .WithMany(i => i.AttendeeCollaboratorInterests)
                 .HasForeignKey(caci => caci.InterestId);
 
             this.HasRequired(caci => caci.AttendeeCollaborator)
-                .WithMany(ac => ac.CommissionAttendeeCollaboratorInterests)
+                .WithMany(ac => ac.AttendeeCollaboratorInterests)
                 .HasForeignKey(caci => caci.AttendeeCollaboratorId);
         }
     }

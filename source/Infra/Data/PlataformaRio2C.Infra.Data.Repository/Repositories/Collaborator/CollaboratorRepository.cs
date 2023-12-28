@@ -421,7 +421,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             {
                 query = query.Where(c => interestsUids.Any(iUid =>
                     c.AttendeeCollaborators.Any(ac =>
-                        ac.CommissionAttendeeCollaboratorInterests.Any(caci => caci.Interest.Uid == iUid && !caci.IsDeleted))));
+                        ac.AttendeeCollaboratorInterests.Any(caci => caci.Interest.Uid == iUid && !caci.IsDeleted))));
             }
 
             return query;

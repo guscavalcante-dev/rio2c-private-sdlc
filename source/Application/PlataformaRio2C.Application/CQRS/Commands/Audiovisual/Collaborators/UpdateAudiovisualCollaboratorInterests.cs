@@ -33,14 +33,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateAudiovisualCollaboratorInterests"/> class.
         /// </summary>
-        /// <param name="commissionAttendeeCollaboratorInterestsWidgetDto">The commission attendee collaborator interests widget dto.</param>
+        /// <param name="attendeeCollaboratorInterestsWidgetDto">The attendee collaborator interests widget dto.</param>
         /// <param name="interestsDtos">The interests dtos.</param>
         public UpdateAudiovisualCollaboratorInterests(
-            CommissionAttendeeCollaboratorInterestsWidgetDto commissionAttendeeCollaboratorInterestsWidgetDto,
+            AttendeeCollaboratorInterestsWidgetDto attendeeCollaboratorInterestsWidgetDto,
             List<InterestDto> interestsDtos)
         {
-            this.CollaboratorUid = commissionAttendeeCollaboratorInterestsWidgetDto.AttendeeCollaboratorDto.Collaborator.Uid;
-            this.UpdateBaseProperties(commissionAttendeeCollaboratorInterestsWidgetDto, interestsDtos);
+            this.CollaboratorUid = attendeeCollaboratorInterestsWidgetDto.AttendeeCollaboratorDto.Collaborator.Uid;
+            this.UpdateBaseProperties(attendeeCollaboratorInterestsWidgetDto, interestsDtos);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateAudiovisualCollaboratorInterests"/> class.</summary>
@@ -71,7 +71,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// </summary>
         /// <param name="interestsDtos">The innovation organization track options.</param>
         public void UpdateBaseProperties(
-            CommissionAttendeeCollaboratorInterestsWidgetDto entity,
+            AttendeeCollaboratorInterestsWidgetDto entity,
             List<InterestDto> interestsDtos)
         {
             this.UpdateAudiovisualOrganizationTrackOptions(entity, interestsDtos);
@@ -93,14 +93,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="entity">The entity.</param>
         /// <param name="interestsDtos">The interests dtos.</param>
         private void UpdateAudiovisualOrganizationTrackOptions(
-            CommissionAttendeeCollaboratorInterestsWidgetDto entity,
+            AttendeeCollaboratorInterestsWidgetDto entity,
             List<InterestDto> interestsDtos)
         {
             var interestsBaseCommands = new List<InterestBaseCommand>();
             foreach (var interestDto in interestsDtos)
             {
-                var commissionAttendeeCollaboratorInterestDto = entity?.CommissionAttendeeCollaboratorInterestDtos?.FirstOrDefault(oad => oad.Interest.Uid == interestDto.Interest.Uid);
-                interestsBaseCommands.Add(commissionAttendeeCollaboratorInterestDto != null ? new InterestBaseCommand(commissionAttendeeCollaboratorInterestDto) :
+                var attendeeCollaboratorInterestDto = entity?.AttendeeCollaboratorInterestDtos?.FirstOrDefault(oad => oad.Interest.Uid == interestDto.Interest.Uid);
+                interestsBaseCommands.Add(attendeeCollaboratorInterestDto != null ? new InterestBaseCommand(attendeeCollaboratorInterestDto) :
                                                                          new InterestBaseCommand(interestDto));
             }
 

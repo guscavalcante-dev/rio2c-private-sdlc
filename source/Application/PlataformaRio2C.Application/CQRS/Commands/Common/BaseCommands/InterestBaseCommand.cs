@@ -41,7 +41,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// Initializes a new instance of the <see cref="InterestBaseCommand"/> class.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        public InterestBaseCommand(CommissionAttendeeCollaboratorInterestDto entity)
+        public InterestBaseCommand(AttendeeCollaboratorInterestDto entity)
         {
             this.InterestGroupUid = entity.InterestGroup.Uid;
             this.InterestGroupName = entity.InterestGroup.Name;
@@ -52,8 +52,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.InterestDisplayOrder = entity.Interest.DisplayOrder;
             this.InterestHasAdditionalInfo = entity.Interest.HasAdditionalInfo;
 
-            //TODO: Create CommissionAttendeeCollaboratorInterest.AdditionalInfo field at database and put here.
-            this.AdditionalInfo = "";//entity.CommissionAttendeeCollaboratorInterest.AdditionalInfo;
+            //TODO: Create AttendeeCollaboratorInterest.AdditionalInfo field at database and put here.
+            this.AdditionalInfo = "";//entity.AttendeeCollaboratorInterest.AdditionalInfo;
             this.IsChecked = true;
         }
 

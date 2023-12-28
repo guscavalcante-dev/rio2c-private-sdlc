@@ -109,7 +109,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<Interest> FindByAttendeeCollaboratorId(this IQueryable<Interest> query, int attendeeCollaboratorId)
         {
-            query = query.Where(ioto => ioto.CommissionAttendeeCollaboratorInterests
+            query = query.Where(ioto => ioto.AttendeeCollaboratorInterests
                                                 .Where(caci => !caci.IsDeleted)
                                                 .Any(caci => caci.AttendeeCollaboratorId == attendeeCollaboratorId));
 
