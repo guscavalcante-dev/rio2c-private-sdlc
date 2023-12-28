@@ -16,7 +16,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
@@ -40,26 +39,27 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// Updates the base properties.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        /// <param name="commissionAttendeeCollaboratorInterestsWidgetDto">The entity.</param>
+        /// <param name="attendeeCollaboratorInterestsWidgetDto">The entity.</param>
         /// <param name="interestsDtos">The interests.</param>
         public void UpdateBaseProperties(
             CollaboratorDto entity,
-            CommissionAttendeeCollaboratorInterestsWidgetDto commissionAttendeeCollaboratorInterestsWidgetDto,
+            AttendeeCollaboratorInterestsWidgetDto attendeeCollaboratorInterestsWidgetDto,
             List<InterestDto> interestsDtos)
         {
             base.UpdateBaseProperties(entity);
-            this.UpdateInterests(commissionAttendeeCollaboratorInterestsWidgetDto, interestsDtos);
+            this.UpdateInterests(attendeeCollaboratorInterestsWidgetDto, interestsDtos);
         }
 
         /// <summary>
         /// Updates the base properties.
         /// </summary>
+        /// <param name="attendeeCollaboratorInterestsWidgetDto">The attendee collaborator interests widget dto.</param>
         /// <param name="interestsDtos">The interests.</param>
         public void UpdateBaseProperties(
-            CommissionAttendeeCollaboratorInterestsWidgetDto commissionAttendeeCollaboratorInterestsWidgetDto,
+            AttendeeCollaboratorInterestsWidgetDto attendeeCollaboratorInterestsWidgetDto,
             List<InterestDto> interestsDtos)
         {
-            this.UpdateInterests(commissionAttendeeCollaboratorInterestsWidgetDto, interestsDtos);
+            this.UpdateInterests(attendeeCollaboratorInterestsWidgetDto, interestsDtos);
         }
 
         /// <summary>
@@ -73,19 +73,25 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         }
 
         /// <summary>
-        /// Updates the audiovisual interests.
+        /// Updates the interests.
         /// </summary>
-        /// <param name="commissionAttendeeCollaboratorInterestsWidgetDto">The entity.</param>
-        /// <param name="interests">The interests.</param>
+        /// <param name="attendeeCollaboratorInterestsWidgetDto">The attendee collaborator interests widget dto.</param>
+        /// <param name="interestsDtos">The interests dtos.</param>
+        /// <exception cref="System.ArgumentNullException">attendeeCollaboratorInterestsWidgetDto</exception>
         private void UpdateInterests(
-            CommissionAttendeeCollaboratorInterestsWidgetDto commissionAttendeeCollaboratorInterestsWidgetDto,
+            AttendeeCollaboratorInterestsWidgetDto attendeeCollaboratorInterestsWidgetDto,
             List<InterestDto> interestsDtos)
         {
+            if (attendeeCollaboratorInterestsWidgetDto is null)
+            {
+                throw new ArgumentNullException(nameof(attendeeCollaboratorInterestsWidgetDto));
+            }
+
             var interestsBaseCommands = new List<InterestBaseCommand>();
             foreach (var interestDto in interestsDtos)
             {
-                var commissionAttendeeCollaboratorInterestDto = commissionAttendeeCollaboratorInterestsWidgetDto?.CommissionAttendeeCollaboratorInterestDtos?.FirstOrDefault(oad => oad.Interest.Uid == interestDto.Interest.Uid);
-                interestsBaseCommands.Add(commissionAttendeeCollaboratorInterestDto != null ? new InterestBaseCommand(commissionAttendeeCollaboratorInterestDto) :
+                var attendeeCollaboratorInterestDto = attendeeCollaboratorInterestsWidgetDto?.AttendeeCollaboratorInterestDtos?.FirstOrDefault(oad => oad.Interest.Uid == interestDto.Interest.Uid);
+                interestsBaseCommands.Add(attendeeCollaboratorInterestDto != null ? new InterestBaseCommand(attendeeCollaboratorInterestDto) :
                     new InterestBaseCommand(interestDto));
             }
 

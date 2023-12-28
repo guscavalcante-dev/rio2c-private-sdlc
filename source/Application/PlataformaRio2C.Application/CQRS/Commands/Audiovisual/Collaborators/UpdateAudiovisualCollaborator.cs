@@ -28,22 +28,22 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public bool IsAddingToCurrentEdition { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateAudiovisualCollaborator" /> class.
+        /// Initializes a new instance of the <see cref="UpdateAudiovisualCollaborator"/> class.
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="isAddingToCurrentEdition">The is adding to current edition.</param>
-        /// <param name="commissionAttendeeCollaboratorInterestsWidgetDto">The commission attendee collaborator interests widget dto.</param>
+        /// <param name="attendeeCollaboratorInterestsWidgetDto">The attendee collaborator interests widget dto.</param>
         /// <param name="interestsDtos">The interests dtos.</param>
         public UpdateAudiovisualCollaborator(
             CollaboratorDto entity,
             bool? isAddingToCurrentEdition,
-            CommissionAttendeeCollaboratorInterestsWidgetDto commissionAttendeeCollaboratorInterestsWidgetDto,
+            AttendeeCollaboratorInterestsWidgetDto attendeeCollaboratorInterestsWidgetDto,
             List<InterestDto> interestsDtos)
         {
             this.CollaboratorUid = entity.Uid;
             this.IsAddingToCurrentEdition = isAddingToCurrentEdition ?? false;
 
-            this.UpdateBaseProperties(entity, commissionAttendeeCollaboratorInterestsWidgetDto, interestsDtos);
+            this.UpdateBaseProperties(entity, attendeeCollaboratorInterestsWidgetDto, interestsDtos);
         }
 
         /// <summary>

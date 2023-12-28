@@ -342,7 +342,9 @@
     <Compile Include="Dtos\WeConnect\WeConnectPublicationDto.cs" />
     <Compile Include="Entities\Addresses\Address.cs" />
     <Compile Include="Entities\Audiovisual\CommissionEvaluation.cs" />
-    <Compile Include="Entities\Audiovisual\CommissionAttendeeCollaboratorInterest.cs" />
+    <Compile Include="Entities\Collaborator\AttendeeCollaboratorActivity.cs" />
+    <Compile Include="Entities\Collaborator\AttendeeCollaboratorTargetAudience.cs" />
+    <Compile Include="Entities\Collaborator\AttendeeCollaboratorInterest.cs" />
     <Compile Include="Entities\Audiovisual\Negotiation\AttendeeNegotiationCollaborator.cs" />
     <Compile Include="Entities\Base\AggregateRoot.cs" />
     <Compile Include="Entities\Cartoon\AttendeeCartoonProject.cs" />

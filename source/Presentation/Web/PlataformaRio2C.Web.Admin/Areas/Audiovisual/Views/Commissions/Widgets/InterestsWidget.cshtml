@@ -1,7 +1,7 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Domain.Entities;
 @using System.Globalization
-@model CommissionAttendeeCollaboratorInterestsWidgetDto
+@model AttendeeCollaboratorInterestsWidgetDto
 @{
     var interestsDtos = ViewBag.InterestsDtos as List<InterestDto>;
 }
@@ -25,9 +25,9 @@
         <div class="kt-widget4">
             @foreach (var interestDto in interestsDtos.OrderBy(a => a.Interest.Name))
             {
-                var commissionAttendeeCollaboratorInterestDto = Model.GetCommissionAttendeeCollaboratorInterestDtoByInterestUid(interestDto.Interest.Uid);
+                var attendeeCollaboratorInterestDto = Model.GetAttendeeCollaboratorInterestDtoByInterestUid(interestDto.Interest.Uid);
                 <div class="kt-widget4__item pt-2 pb-2">
-                    @if (commissionAttendeeCollaboratorInterestDto != null)
+                    @if (attendeeCollaboratorInterestDto != null)
                     {
                         <div class="kt-widget4__pic kt-font-success">
                             <i class="la la-check"></i>

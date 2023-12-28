@@ -521,25 +521,25 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<CommissionAttendeeCollaboratorInterestsWidgetDto> FindInterestsWidgetDtoAsync(Guid collaboratorUid, int editionId)
+        public async Task<AttendeeCollaboratorInterestsWidgetDto> FindInterestsWidgetDtoAsync(Guid collaboratorUid, int editionId)
         {
             var query = this.GetBaseQuery(true)
                                 .FindByCollaboratorUid(collaboratorUid)
                                 .FindByEditionId(editionId, false);
 
             return await query
-                            .Select(ac => new CommissionAttendeeCollaboratorInterestsWidgetDto
+                            .Select(ac => new AttendeeCollaboratorInterestsWidgetDto
                             {
                                 AttendeeCollaboratorDto = new AttendeeCollaboratorDto
                                 {
                                     AttendeeCollaborator = ac,
                                     Collaborator = ac.Collaborator
                                 },
-                                CommissionAttendeeCollaboratorInterestDtos = ac.CommissionAttendeeCollaboratorInterests
+                                AttendeeCollaboratorInterestDtos = ac.AttendeeCollaboratorInterests
                                                                                         .Where(caci => !caci.IsDeleted)
-                                                                                        .Select(caci => new CommissionAttendeeCollaboratorInterestDto
+                                                                                        .Select(caci => new AttendeeCollaboratorInterestDto
                                                                                         {
-                                                                                            CommissionAttendeeCollaboratorInterest = caci,
+                                                                                            AttendeeCollaboratorInterest = caci,
                                                                                             Interest = caci.Interest,
                                                                                             InterestGroup = caci.Interest.InterestGroup
                                                                                         }).ToList()

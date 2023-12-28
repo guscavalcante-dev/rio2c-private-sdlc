@@ -74,21 +74,21 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var interestsDtos = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.Genre.Uid);
 
             // Interests
-            var commissionAttendeeCollaboratorInterests = new List<CommissionAttendeeCollaboratorInterest>();
+            var attendeeCollaboratorInterests = new List<AttendeeCollaboratorInterest>();
             if (cmd.Interests?.Any() == true)
             {
                 foreach (var interestBaseCommands in cmd.Interests)
                 {
                     foreach (var interestBaseCommand in interestBaseCommands?.Where(ibc => ibc.IsChecked)?.ToList())
                     {
-                        commissionAttendeeCollaboratorInterests.Add(new CommissionAttendeeCollaboratorInterest(interestsDtos?.FirstOrDefault(id => id.Interest.Uid == interestBaseCommand.InterestUid)?.Interest, interestBaseCommand.AdditionalInfo, cmd.UserId));
+                        attendeeCollaboratorInterests.Add(new AttendeeCollaboratorInterest(interestsDtos?.FirstOrDefault(id => id.Interest.Uid == interestBaseCommand.InterestUid)?.Interest, interestBaseCommand.AdditionalInfo, cmd.UserId));
                     }
                 }
             }
 
-            collaborator.UpdateCommissionAttendeeCollaboratorInterests(
+            collaborator.UpdateAttendeeCollaboratorInterests(
                 edition,
-                commissionAttendeeCollaboratorInterests,
+                attendeeCollaboratorInterests,
                 cmd.UserId);
             if (!collaborator.IsValid())
             {

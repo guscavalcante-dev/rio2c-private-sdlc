@@ -4,9 +4,9 @@
 // Created          : 08-18-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-18-2021
+// Last Modified On : 12-28-2023
 // ***********************************************************************
-// <copyright file="CommissionAttendeeCollaboratorInterestsWidgetDto.cs" company="Softo">
+// <copyright file="AttendeeCollaboratorInterestsWidgetDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -17,25 +17,25 @@ using System.Linq;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
-    /// <summary>CommissionAttendeeCollaboratorInterestsWidgetDto</summary>
-    public class CommissionAttendeeCollaboratorInterestsWidgetDto
+    /// <summary>AttendeeCollaboratorInterestsWidgetDto</summary>
+    public class AttendeeCollaboratorInterestsWidgetDto
     {
         public AttendeeCollaboratorDto AttendeeCollaboratorDto { get; set; }
-        public List<CommissionAttendeeCollaboratorInterestDto> CommissionAttendeeCollaboratorInterestDtos { get; set; }
+        public List<AttendeeCollaboratorInterestDto> AttendeeCollaboratorInterestDtos { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="CommissionAttendeeCollaboratorInterestsWidgetDto"/> class.</summary>
-        public CommissionAttendeeCollaboratorInterestsWidgetDto()
+        /// <summary>Initializes a new instance of the <see cref="AttendeeCollaboratorInterestsWidgetDto"/> class.</summary>
+        public AttendeeCollaboratorInterestsWidgetDto()
         {
         }
 
         /// <summary>
-        /// Gets the commission attendee collaborator interest dto by interest uid.
+        /// Gets the attendee collaborator interest dto by interest uid.
         /// </summary>
         /// <param name="interestUid">The interest uid.</param>
         /// <returns></returns>
-        public CommissionAttendeeCollaboratorInterestDto GetCommissionAttendeeCollaboratorInterestDtoByInterestUid(Guid interestUid)
+        public AttendeeCollaboratorInterestDto GetAttendeeCollaboratorInterestDtoByInterestUid(Guid interestUid)
         {
-            return this.CommissionAttendeeCollaboratorInterestDtos?.FirstOrDefault(caci => caci.Interest.Uid == interestUid);
+            return this.AttendeeCollaboratorInterestDtos?.FirstOrDefault(caci => caci.Interest.Uid == interestUid);
         }
     }
 }

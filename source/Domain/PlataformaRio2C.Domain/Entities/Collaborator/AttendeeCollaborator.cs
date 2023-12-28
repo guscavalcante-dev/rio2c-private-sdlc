@@ -45,8 +45,10 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeInnovationOrganizationCollaborator> AttendeeInnovationOrganizationCollaborators { get; private set; }
         public virtual ICollection<Logistic> Logistics { get; private set; }
         public virtual ICollection<AttendeeCollaboratorInnovationOrganizationTrack> AttendeeCollaboratorInnovationOrganizationTracks { get; private set; }
-        public virtual ICollection<CommissionAttendeeCollaboratorInterest> CommissionAttendeeCollaboratorInterests { get; private set; }
         public virtual ICollection<AttendeeNegotiationCollaborator> AttendeeNegotiationCollaborators { get; private set; }
+        public virtual ICollection<AttendeeCollaboratorInterest> AttendeeCollaboratorInterests { get; private set; }
+        public virtual ICollection<AttendeeCollaboratorActivity> AttendeeCollaboratorActivities { get; private set; }
+        public virtual ICollection<AttendeeCollaboratorTargetAudience> AttendeeCollaboratorTargetAudiences { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.
@@ -85,7 +87,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.
         /// </summary>
         /// <param name="edition">The edition.</param>
-        /// <param name="commissionAttendeeCollaboratorInterests">The commission attendee collaborator interests.</param>
+        /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
         /// <param name="apiHighlightPosition">The API highlight position.</param>
@@ -95,7 +97,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public AttendeeCollaborator(
             Edition edition,
-            List<CommissionAttendeeCollaboratorInterest> commissionAttendeeCollaboratorInterests,
+            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
             CollaboratorType collaboratorType,
             bool? isApiDisplayEnabled,
             int? apiHighlightPosition,
@@ -111,7 +113,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeAttendeeCollaboratorType(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
             this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
-            this.SynchronizeCommissionAttendeeCollaboratorInterests(commissionAttendeeCollaboratorInterests, userId);
+            this.SynchronizeAttendeeCollaboratorInterests(attendeeCollaboratorInterests, userId);
         }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.</summary>
@@ -277,9 +279,9 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>
-        /// Updates the specified commission attendee collaborator interests.
+        /// Updates the specified attendee collaborator interests.
         /// </summary>
-        /// <param name="commissionAttendeeCollaboratorInterests">The commission attendee collaborator interests.</param>
+        /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
@@ -287,7 +289,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
         /// <param name="userId">The user identifier.</param>
         public void Update(
-            List<CommissionAttendeeCollaboratorInterest> commissionAttendeeCollaboratorInterests,
+            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
             CollaboratorType collaboratorType,
             List<AttendeeOrganization> attendeeOrganizations,
             bool? isApiDisplayEnabled,
@@ -300,7 +302,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
             this.SynchronizeAttendeeCollaboratorType(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
             this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
-            this.SynchronizeCommissionAttendeeCollaboratorInterests(commissionAttendeeCollaboratorInterests, userId);
+            this.SynchronizeAttendeeCollaboratorInterests(attendeeCollaboratorInterests, userId);
         }
 
         /// <summary>
@@ -1390,40 +1392,40 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Commission Attendee Collaborator Interests
+        #region Attendee Collaborator Interests
 
         /// <summary>
-        /// Synchronizes the commission attendee collaborator interests.
+        /// Synchronizes the attendee collaborator interests.
         /// </summary>
-        /// <param name="commissionAttendeeCollaboratorInterests">The commission attendee collaborator interests.</param>
+        /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
         /// <param name="userId">The user identifier.</param>
-        public void SynchronizeCommissionAttendeeCollaboratorInterests(
-           List<CommissionAttendeeCollaboratorInterest> commissionAttendeeCollaboratorInterests,
+        public void SynchronizeAttendeeCollaboratorInterests(
+           List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
            int userId)
         {
-            if (this.CommissionAttendeeCollaboratorInterests == null)
+            if (this.AttendeeCollaboratorInterests == null)
             {
-                this.CommissionAttendeeCollaboratorInterests = new List<CommissionAttendeeCollaboratorInterest>();
+                this.AttendeeCollaboratorInterests = new List<AttendeeCollaboratorInterest>();
             }
 
-            this.DeleteCommissionAttendeeCollaboratorInterests(commissionAttendeeCollaboratorInterests, userId);
+            this.DeleteAttendeeCollaboratorInterests(attendeeCollaboratorInterests, userId);
 
-            if (commissionAttendeeCollaboratorInterests?.Any() != true)
+            if (attendeeCollaboratorInterests?.Any() != true)
             {
                 return;
             }
 
             // Create or update
-            foreach (var commissionAttendeeCollaboratorInterest in commissionAttendeeCollaboratorInterests)
+            foreach (var attendeeCollaboratorInterest in attendeeCollaboratorInterests)
             {
-                var commissionAttendeeCollaboratorInterestDb = this.CommissionAttendeeCollaboratorInterests.FirstOrDefault(aci => aci.Interest.Uid == commissionAttendeeCollaboratorInterest.Interest.Uid);
-                if (commissionAttendeeCollaboratorInterestDb != null)
+                var attendeeCollaboratorInterestDb = this.AttendeeCollaboratorInterests.FirstOrDefault(aci => aci.Interest.Uid == attendeeCollaboratorInterest.Interest.Uid);
+                if (attendeeCollaboratorInterestDb != null)
                 {
-                    commissionAttendeeCollaboratorInterestDb.Update(userId);
+                    attendeeCollaboratorInterestDb.Update(userId);
                 }
                 else
                 {
-                    this.CommissionAttendeeCollaboratorInterests.Add(new CommissionAttendeeCollaboratorInterest(this, commissionAttendeeCollaboratorInterest.Interest, userId));
+                    this.AttendeeCollaboratorInterests.Add(new AttendeeCollaboratorInterest(this, attendeeCollaboratorInterest.Interest, userId));
                 }
             }
         }
@@ -1431,16 +1433,16 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>
         /// Deletes the attendee collaborator interests.
         /// </summary>
-        /// <param name="newCommissionAttendeeCollaboratorInterests">The new attendee collaborator interests.</param>
+        /// <param name="newAttendeeCollaboratorInterests">The new attendee collaborator interests.</param>
         /// <param name="userId">The user identifier.</param>
-        private void DeleteCommissionAttendeeCollaboratorInterests(
-            List<CommissionAttendeeCollaboratorInterest> newCommissionAttendeeCollaboratorInterests,
+        private void DeleteAttendeeCollaboratorInterests(
+            List<AttendeeCollaboratorInterest> newAttendeeCollaboratorInterests,
             int userId)
         {
-            var commissionAttendeeCollaboratorInterestsToDelete = this.CommissionAttendeeCollaboratorInterests.Where(db => newCommissionAttendeeCollaboratorInterests?.Select(aci => aci.Interest.Uid)?.Contains(db.Interest.Uid) == false && !db.IsDeleted).ToList();
-            foreach (var commissionAttendeeCollaboratorInterest in commissionAttendeeCollaboratorInterestsToDelete)
+            var attendeeCollaboratorInterestsToDelete = this.AttendeeCollaboratorInterests.Where(db => newAttendeeCollaboratorInterests?.Select(aci => aci.Interest.Uid)?.Contains(db.Interest.Uid) == false && !db.IsDeleted).ToList();
+            foreach (var attendeeCollaboratorInterest in attendeeCollaboratorInterestsToDelete)
             {
-                commissionAttendeeCollaboratorInterest.Delete(userId);
+                attendeeCollaboratorInterest.Delete(userId);
             }
         }
 
