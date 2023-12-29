@@ -1,18 +1,17 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Renan Valentim
-// Created          : 07-19-2021
+// Created          : 12-29-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-19-2021
+// Last Modified On : 12-29-2023
 // ***********************************************************************
-// <copyright file="CreateAudiovisualCollaboratorCommandHandler.cs" company="Softo">
+// <copyright file="CreateInnovationPlayerExecutiveCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,42 +25,41 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>CreateAudiovisualCollaboratorCommandHandler</summary>
-    public class CreateAudiovisualCollaboratorCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<CreateAudiovisualCollaborator, AppValidationResult>
+    public class CreateInnovationPlayerExecutiveCollaboratorCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<CreateInnovationPlayerExecutiveCollaborator, AppValidationResult>
     {
         private readonly IUserRepository userRepo;
         private readonly IEditionRepository editionRepo;
         private readonly ICollaboratorTypeRepository collaboratorTypeRepo;
-        private readonly IInterestRepository interestRepo;
+        private readonly IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="CreateAudiovisualCollaboratorCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="CreateInnovationPlayerExecutiveCollaboratorCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="userRepository">The user repository.</param>
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="collaboratorTypeRepository">The collaborator type repository.</param>
-        public CreateAudiovisualCollaboratorCommandHandler(
+        public CreateInnovationPlayerExecutiveCollaboratorCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             ICollaboratorRepository collaboratorRepository,
             IUserRepository userRepository,
             IEditionRepository editionRepository,
             ICollaboratorTypeRepository collaboratorTypeRepository,
-            IInterestRepository interestRepository)
+            IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepository)
             : base(eventBus, uow, collaboratorRepository)
         {
             this.userRepo = userRepository;
             this.editionRepo = editionRepository;
             this.collaboratorTypeRepo = collaboratorTypeRepository;
-            this.interestRepo = interestRepository;
+            this.innovationOrganizationTrackOptionRepo = innovationOrganizationTrackOptionRepository;
         }
 
         /// <summary>Handles the specified create tiny collaborator.</summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(CreateAudiovisualCollaborator cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(CreateInnovationPlayerExecutiveCollaborator cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
@@ -86,22 +84,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             // Create if the user was not found in database
             if (user == null)
             {
-                var interestsDtos = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.Genre.Uid);
+                var innovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllByGroupsUidsAsync(cmd.InnovationOrganizationTrackGroups
+                                                                                                                                    ?.Where(ioto => ioto.IsChecked)
+                                                                                                                                    ?.Select(ioto => ioto.InnovationOrganizationTrackOptionGroupUid));
 
-                // Interests
-                var attendeeCollaboratorInterests = new List<AttendeeCollaboratorInterest>();
-                if (cmd.Interests?.Any() == true)
-                {
-                    foreach (var interestBaseCommands in cmd.Interests)
-                    {
-                        foreach (var interestBaseCommand in interestBaseCommands?.Where(ibc => ibc.IsChecked)?.ToList())
-                        {
-                            attendeeCollaboratorInterests.Add(new AttendeeCollaboratorInterest(interestsDtos?.FirstOrDefault(id => id.Interest.Uid == interestBaseCommand.InterestUid)?.Interest, interestBaseCommand.AdditionalInfo, cmd.UserId));
-                        }
-                    }
-                }
-
-                var collaborator = new Collaborator(
+                var collaborator = Collaborator.CreateInnovationPlayerExecutive(
                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                     await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
                     cmd.FirstName,
@@ -110,8 +97,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.PhoneNumber,
                     cmd.CellPhone,
                     cmd.Document,
-                    attendeeCollaboratorInterests,
+                    innovationOrganizationTrackOptions.Select(ioto => new AttendeeInnovationOrganizationTrack(ioto, string.Empty, cmd.UserId)).ToList(),
                     cmd.UserId);
+
                 if (!collaborator.IsValid())
                 {
                     this.AppValidationResult.Add(collaborator.ValidationResult);

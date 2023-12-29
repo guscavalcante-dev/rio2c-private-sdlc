@@ -444,11 +444,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()
         {
-            CreateAudiovisualCollaborator cmd;
+            CreateAudiovisualCommissionCollaborator cmd;
 
             try
             {
-                cmd = new CreateAudiovisualCollaborator(await this.GetInterestsFromGenreInterestGroupAsync());
+                cmd = new CreateAudiovisualCommissionCollaborator(await this.GetInterestsFromGenreInterestGroupAsync());
             }
             catch (DomainException ex)
             {
@@ -469,7 +469,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Create(CreateAudiovisualCollaborator cmd)
+        public async Task<ActionResult> Create(CreateAudiovisualCommissionCollaborator cmd)
         {
             var result = new AppValidationResult();
 
@@ -533,11 +533,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUpdateModal(Guid? collaboratorUid, bool? isAddingToCurrentEdition)
         {
-            UpdateAudiovisualCollaborator cmd;
+            UpdateAudiovisualCommissionCollaborator cmd;
 
             try
             {
-                cmd = new UpdateAudiovisualCollaborator(
+                cmd = new UpdateAudiovisualCommissionCollaborator(
                     await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
                     isAddingToCurrentEdition,
                     await this.attendeeCollaboratorRepo.FindInterestsWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id),
@@ -562,7 +562,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Update(UpdateAudiovisualCollaborator cmd)
+        public async Task<ActionResult> Update(UpdateAudiovisualCommissionCollaborator cmd)
         {
             var result = new AppValidationResult();
 

@@ -195,6 +195,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     Id = ioto.Id,
                                                                                     Uid = ioto.Uid,
                                                                                     Name = ioto.Name,
+                                                                                    HasAdditionalInfo = ioto.HasAdditionalInfo,
                                                                                     CreateDate = ioto.CreateDate,
                                                                                     UpdateDate = ioto.UpdateDate
                                                                                 })

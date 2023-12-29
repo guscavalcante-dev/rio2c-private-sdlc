@@ -466,11 +466,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()
         {
-            CreateInnovationCollaborator cmd;
+            CreateInnovationCommissionCollaborator cmd;
 
             try
             {
-                cmd = new CreateInnovationCollaborator(await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync());
+                cmd = new CreateInnovationCommissionCollaborator(await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync());
             }
             catch (DomainException ex)
             {
@@ -491,7 +491,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Create(CreateInnovationCollaborator cmd)
+        public async Task<ActionResult> Create(CreateInnovationCommissionCollaborator cmd)
         {
             var result = new AppValidationResult();
 
@@ -555,11 +555,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUpdateModal(Guid? collaboratorUid, bool? isAddingToCurrentEdition)
         {
-            UpdateInnovationCollaborator cmd;
+            UpdateInnovationCommissionCollaborator cmd;
 
             try
             {
-                cmd = new UpdateInnovationCollaborator(
+                cmd = new UpdateInnovationCommissionCollaborator(
                     await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
                     isAddingToCurrentEdition,
                     await this.attendeeCollaboratorRepo.FindTracksWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id),
@@ -584,7 +584,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Update(UpdateInnovationCollaborator cmd)
+        public async Task<ActionResult> Update(UpdateInnovationCommissionCollaborator cmd)
         {
             var result = new AppValidationResult();
 

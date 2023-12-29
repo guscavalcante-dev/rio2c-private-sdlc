@@ -1039,7 +1039,8 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/innovation/playersexecutives/innovation.players.executives.create.js",
                 "~/Assets/js/myrio2c.publicemail.js",
                 "~/Assets/js/attendeeorganizations/attendeeorganizations.form.js",
-                "~/Assets/js/dynamic.list.js"));
+                "~/Assets/js/dynamic.list.js",
+                "~/Assets/js/myrio2c.additionalinfo.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/innovation.players.executives.update.js").Include(
                 "~/Assets/js/innovation/playersexecutives/innovation.players.executives.update.js"));

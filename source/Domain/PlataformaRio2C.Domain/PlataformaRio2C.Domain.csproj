@@ -132,10 +132,11 @@
     <Compile Include="Dtos\Agendas\AgendaConferenceEventJsonDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorListDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorNetworkDto.cs" />
+    <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorActivityDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationApiConfigurationWidgetDto.cs" />
     <Compile Include="Dtos\Audiovisual\AttendeeCollaboratorAudiovisualCommissionEvaluationDto.cs" />
     <Compile Include="Dtos\Audiovisual\AttendeeCollaboratorAudiovisualCommissionEvaluationsWidgetDto.cs" />
-    <Compile Include="Dtos\Audiovisual\CommissionAttendeeCollaboratorInterestDto.cs" />
+    <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorInterestDto.cs" />
     <Compile Include="Dtos\Audiovisual\CommissionAttendeeCollaboratorInterestsWidgetDto.cs" />
     <Compile Include="Dtos\Cartoon\API\CartoonProjectCompanyApiDto.cs" />
     <Compile Include="Dtos\Cartoon\API\CartoonProjectCreatorApiDto.cs" />

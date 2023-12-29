@@ -210,6 +210,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 Id = ioto.Id,
                                 Uid = ioto.Uid,
                                 Name = ioto.Name,
+                                HasAdditionalInfo = ioto.HasAdditionalInfo,
                                 GroupUid = ioto.InnovationOrganizationTrackOptionGroup.Uid,
                                 GroupName = ioto.InnovationOrganizationTrackOptionGroup.Name,
                                 CreateDate = ioto.CreateDate,
@@ -324,6 +325,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Order()
                             .Select(ioto => new InnovationOrganizationTrackOptionDto
                             {
+                                Id = ioto.Id,
+                                Uid = ioto.Uid,
+                                Name = ioto.Name,
+                                HasAdditionalInfo = ioto.HasAdditionalInfo,
+                                GroupUid = ioto.InnovationOrganizationTrackOptionGroup.Uid,
+                                GroupName = ioto.InnovationOrganizationTrackOptionGroup.Name,
+                                CreateDate = ioto.CreateDate,
+                                UpdateDate = ioto.UpdateDate,
+
                                 InnovationOrganizationTrackOption = ioto,
                                 InnovationOrganizationTrackOptionGroup = ioto.InnovationOrganizationTrackOptionGroup
                             });
@@ -393,6 +403,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                  Id = ioto.Id,
                                  Uid = ioto.Uid,
                                  Name = ioto.Name,
+                                 HasAdditionalInfo = ioto.HasAdditionalInfo,
                                  GroupName = ioto.InnovationOrganizationTrackOptionGroup.Name,
                                  CreateDate = ioto.CreateDate,
                                  UpdateDate = ioto.UpdateDate

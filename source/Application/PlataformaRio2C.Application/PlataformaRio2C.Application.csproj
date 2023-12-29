@@ -200,8 +200,8 @@
     <Compile Include="Common\AppValidationResult.cs" />
     <Compile Include="Common\EntityViewModel.cs" />
     <Compile Include="Common\StatusProjectCodes.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Audiovisual\Collaborators\UpdateAudiovisualCollaboratorCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Audiovisual\Collaborators\CreateAudiovisualCollaboratorCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Audiovisual\Commissions\UpdateAudiovisualCommissionCollaboratorCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Audiovisual\Commissions\CreateAudiovisualCommissionCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\Collaborators\UpdateAudiovisualCollaboratorAdminMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\Collaborators\UpdateAudiovisualCollaboratorSocialNetworksCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\Collaborators\UpdateAudiovisualCollaboratorInterestsCommandHandler.cs" />
@@ -268,6 +268,7 @@
     <Compile Include="CQRS\CommandsHandlers\Emails\Site\SendProjectBuyerEvaluationEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Site\SendUnreadConversationEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Site\SendProducerWelcomeEmailAsyncCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Innovation\PlayersExecutives\CreateInnovationPlayerExecutiveCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Innovation\TrackOptionGroups\UpdateInnovationOrganizationTrackOptionGroupMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Innovation\TrackOptionGroups\DeleteInnovationOrganizationTrackOptionGroupCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Innovation\TrackOptions\BaseCommandHandlers\InnovationOrganizationTrackOptionBaseCommandHandler.cs" />
@@ -282,8 +283,8 @@
     <Compile Include="CQRS\CommandsHandlers\Holdings\DeleteHoldingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\UpdateHoldingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\CreateHoldingCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Innovation\Collaborators\UpdateInnovationCollaboratorCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Innovation\Collaborators\CreateInnovationCollaboratorCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Innovation\Commissions\UpdateInnovationCommissionCollaboratorCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Innovation\Commissions\CreateInnovationCommissionCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Innovation\Collaborators\UpdateInnovationCollaboratorAdminMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Innovation\Collaborators\UpdateInnovationCollaboratorTracksCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Innovation\Collaborators\UpdateInnovationCollaboratorSocialNetworksCommandHandler.cs" />
@@ -394,9 +395,9 @@
     <Compile Include="CQRS\CommandsHandlers\Tracks\TrackBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationConfigs\UpdateNegotiationConfigMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\WeConnect\SynchronizeWeConnectPublicationsCommandHandler.cs" />
-    <Compile Include="CQRS\Commands\Audiovisual\Collaborators\BaseCommands\AudiovisualCollaboratorBaseCommand.cs" />
-    <Compile Include="CQRS\Commands\Audiovisual\Collaborators\UpdateAudiovisualCollaborator.cs" />
-    <Compile Include="CQRS\Commands\Audiovisual\Collaborators\CreateAudiovisualCollaborator.cs" />
+    <Compile Include="CQRS\Commands\Audiovisual\Commissions\BaseCommands\AudiovisualCommissionCollaboratorBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Audiovisual\Commissions\UpdateAudiovisualCommissionCollaborator.cs" />
+    <Compile Include="CQRS\Commands\Audiovisual\Commissions\CreateAudiovisualCommissionCollaborator.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\Collaborators\UpdateAudiovisualCollaboratorAdminMainInformation.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\Collaborators\UpdateAudiovisualCollaboratorSocialNetworks.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\Collaborators\UpdateAudiovisualCollaboratorInterests.cs" />
@@ -417,6 +418,8 @@
     <Compile Include="CQRS\Commands\Cartoon\Projects\CreateCartoonProject.cs" />
     <Compile Include="CQRS\Commands\Cartoon\Projects\DeleteCartoonProject.cs" />
     <Compile Include="CQRS\Commands\Cartoon\Projects\EvaluateCartoonProject.cs" />
+    <Compile Include="CQRS\Commands\Collaborators\BaseCommands\AttendeeCollaboratorInterestBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Collaborators\BaseCommands\AttendeeCollaboratorActivityBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Collaborators\UpdateCollaboratorSocialNetworks.cs" />
     <Compile Include="CQRS\Commands\ConferenceParticipantRoles\BaseCommands\ConferenceParticipantRoleTitleBaseCommand.cs" />
     <Compile Include="CQRS\Commands\ConferenceParticipantRoles\CreateConferenceParticipantRole.cs" />
@@ -437,6 +440,8 @@
     <Compile Include="CQRS\Commands\Emails\Admin\SendPlayerNegotiationsEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendProducerNegotiationsEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Site\SendSpeakersReportEmailAsync.cs" />
+    <Compile Include="CQRS\Commands\Innovation\PlayersExecutives\BaseCommands\InnovationPlayerExecutiveCollaboratorBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Innovation\PlayersExecutives\CreateInnovationPlayerExecutiveCollaborator.cs" />
     <Compile Include="CQRS\Commands\Innovation\TrackOptionGroups\UpdateInnovationOrganizationTrackOptionGroupMainInformation.cs" />
     <Compile Include="CQRS\Commands\Innovation\TrackOptionGroups\DeleteInnovationOrganizationTrackOptionGroup.cs" />
     <Compile Include="CQRS\Commands\Innovation\TrackOptionGroups\CreateInnovationOrganizationTrackOptionGroup.cs" />
@@ -446,13 +451,13 @@
     <Compile Include="CQRS\Commands\Organizations\BaseCommands\OrganizationTargetAudienceBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Organizations\DisassociateOrganizationCollaborator.cs" />
     <Compile Include="CQRS\Commands\Organizations\AssociateOrganizationCollaborator.cs" />
-    <Compile Include="CQRS\Commands\Innovation\Collaborators\BaseCommands\InnovationCollaboratorBaseCommand.cs" />
-    <Compile Include="CQRS\Commands\Innovation\Collaborators\UpdateInnovationCollaborator.cs" />
+    <Compile Include="CQRS\Commands\Innovation\Commissions\BaseCommands\InnovationCommissionCollaboratorBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Innovation\Commissions\UpdateInnovationCommissionCollaborator.cs" />
     <Compile Include="CQRS\Commands\Innovation\Collaborators\UpdateInnovationCollaboratorAdminMainInformation.cs" />
     <Compile Include="CQRS\Commands\Innovation\Collaborators\UpdateInnovationCollaboratorTracks.cs" />
     <Compile Include="CQRS\Commands\Innovation\Collaborators\UpdateInnovationCollaboratorSocialNetworks.cs" />
     <Compile Include="CQRS\Commands\Innovation\BaseCommands\InnovationOrganizationTrackOptionBaseCommand.cs" />
-    <Compile Include="CQRS\Commands\Innovation\Collaborators\CreateInnovationCollaborator.cs" />
+    <Compile Include="CQRS\Commands\Innovation\Commissions\CreateInnovationCommissionCollaborator.cs" />
     <Compile Include="CQRS\Commands\Innovation\Organizations\DeleteInnovationOrganization.cs" />
     <Compile Include="CQRS\Commands\Innovation\Organizations\EvaluateInnovationOrganization.cs" />
     <Compile Include="CQRS\Commands\Innovation\Organizations\UpdateInnovationOrganization.cs" />
@@ -849,6 +854,8 @@
     <Folder Include="CQRS\CommandsHandlers\Audiovisual\Collaborators\BaseCommandHandlers\" />
     <Folder Include="CQRS\CommandsHandlers\Innovation\Collaborators\BaseCommandHandlers\" />
     <Folder Include="CQRS\CommandsHandlers\SalesPlatforms\" />
+    <Folder Include="CQRS\Commands\Audiovisual\Collaborators\BaseCommands\" />
+    <Folder Include="CQRS\Commands\Innovation\Collaborators\BaseCommands\" />
     <Folder Include="CQRS\Commands\SalesPlatforms\" />
     <Folder Include="CQRS\EventsHandlers\" />
     <Folder Include="CQRS\Events\" />

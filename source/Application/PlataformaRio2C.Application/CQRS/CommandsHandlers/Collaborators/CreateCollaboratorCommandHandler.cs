@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
@@ -137,6 +138,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.CropperImage?.ImageFile != null,
                     cmd.JobTitles?.Select(d => new CollaboratorJobTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                     cmd.MiniBios?.Select(d => new CollaboratorMiniBio(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
+                    //TODO: AQUI PRECISA PASSAR cmd.AttendeeCollaboratorActivities e cmd.AttendeeCollaboratorInterests
                     cmd.UserId);
 
                 if (!collaborator.IsValid())

@@ -6,7 +6,7 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 01-04-2023
 // ***********************************************************************
-// <copyright file="UpdateInnovationCollaborator.cs" company="Softo">
+// <copyright file="UpdateInnovationCommissionCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -20,30 +20,29 @@ using System.Collections.Generic;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>UpdateInnovationCollaborator</summary>
-    public class UpdateInnovationCollaborator : InnovationCollaboratorBaseCommand
+    public class UpdateInnovationCommissionCollaborator : InnovationCommissionCollaboratorBaseCommand
     {
         public Guid CollaboratorUid { get; set; }
         public bool IsAddingToCurrentEdition { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateInnovationCollaborator"/> class.
+        /// Initializes a new instance of the <see cref="UpdateInnovationCommissionCollaborator"/> class.
         /// </summary>
         /// <param name="innovationOptions">The innovation options.</param>
-        public UpdateInnovationCollaborator(List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos)
+        public UpdateInnovationCommissionCollaborator(List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos)
         {
             this.UpdateBaseProperties(null, innovationOrganizationTrackOptionDtos);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateInnovationCollaborator" /> class.
+        /// Initializes a new instance of the <see cref="UpdateInnovationCommissionCollaborator" /> class.
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="isAddingToCurrentEdition">The is adding to current edition.</param>
         /// <param name="attendeeCollaboratorTracksWidgetDto">The attendee collaborator tracks widget dto.</param>
         /// <param name="innovationOrganizationTrackOptionDtos">The innovation organization track options.</param>
         /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
-        public UpdateInnovationCollaborator(
+        public UpdateInnovationCommissionCollaborator(
             CollaboratorDto entity,
             bool? isAddingToCurrentEdition,
             AttendeeCollaboratorTracksWidgetDto attendeeCollaboratorTracksWidgetDto,
@@ -61,9 +60,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateInnovationCollaborator" /> class.
+        /// Initializes a new instance of the <see cref="UpdateInnovationCommissionCollaborator" /> class.
         /// </summary>
-        public UpdateInnovationCollaborator()
+        public UpdateInnovationCommissionCollaborator()
         {
         }
     }

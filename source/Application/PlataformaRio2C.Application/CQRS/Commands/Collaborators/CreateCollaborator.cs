@@ -20,13 +20,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>CreateCollaborator</summary>
     public class CreateCollaborator : CollaboratorDataBaseCommand
     {
-        /// <summary>Initializes a new instance of the <see cref="CreateCollaborator"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateCollaborator" /> class.
+        /// </summary>
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="genders">The genders.</param>
         /// <param name="industries">The industries.</param>
         /// <param name="collaboratorRoles">The roles.</param>
         /// <param name="editionsDtos">The editions dtos.</param>
+        /// <param name="activities">The activities.</param>
+        /// <param name="interestsDtos">The interests dtos.</param>
         /// <param name="currentEditionId">The current edition identifier.</param>
         /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
         /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
@@ -39,6 +43,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<CollaboratorIndustry> industries, 
             List<CollaboratorRole> collaboratorRoles,
             List<EditionDto> editionsDtos,
+            List<Activity> activities,
+            List<InterestDto> interestsDtos,
+            List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos,
             int currentEditionId,
             bool isJobTitleRequired,
             bool isMiniBioRequired, 
@@ -51,7 +58,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 genders, 
                 industries, 
                 collaboratorRoles, 
-                editionsDtos, 
+                editionsDtos,
+                activities,
+                interestsDtos,
+                innovationOrganizationTrackOptionDtos,
                 currentEditionId, 
                 isJobTitleRequired, 
                 isMiniBioRequired, 

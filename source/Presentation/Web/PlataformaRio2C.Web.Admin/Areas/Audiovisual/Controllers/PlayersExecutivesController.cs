@@ -465,6 +465,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
+                    null,
+                    null,
+                    null,
                     EditionDto.Id,
                     false,
                     false,
@@ -523,6 +526,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
+                    null,
+                    null,
+                    null,
                     EditionDto.Id,
                     UserInterfaceLanguage);
 
@@ -569,6 +575,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
+                    null,
+                    null,
+                    null,
                     EditionDto.Id,
                     isAddingToCurrentEdition,
                     false,
@@ -634,6 +643,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
+                    null,
+                    null,
+                    null,
                     EditionDto.Id,
                     UserInterfaceLanguage);
 

@@ -8217,14 +8217,14 @@
     <Content Include="Areas\Music\Views\Players\Widgets\EditionCountOdometerWidget.cshtml" />
     <Content Include="Areas\Music\Views\Players\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Areas\Music\Views\Players\Widgets\TotalCountWidget.cshtml" />
-	<Content Include="Areas\Innovation\Views\PlayersExecutives\Details.cshtml" />
-	<Content Include="Areas\Innovation\Views\PlayersExecutives\Index.cshtml" />
-	<Content Include="Areas\Innovation\Views\PlayersExecutives\Modals\_Form.cshtml" />
-	<Content Include="Areas\Innovation\Views\PlayersExecutives\Modals\CreateModal.cshtml" />
-	<Content Include="Areas\Innovation\Views\PlayersExecutives\Modals\UpdateModal.cshtml" />
-	<Content Include="Areas\Innovation\Views\PlayersExecutives\Widgets\DataTableWidget.cshtml" />
-	<Content Include="Areas\Innovation\Views\PlayersExecutives\Widgets\EditionCountWidget.cshtml" />
-	<Content Include="Areas\Innovation\Views\PlayersExecutives\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\PlayersExecutives\Details.cshtml" />
+    <Content Include="Areas\Innovation\Views\PlayersExecutives\Index.cshtml" />
+    <Content Include="Areas\Innovation\Views\PlayersExecutives\Modals\_Form.cshtml" />
+    <Content Include="Areas\Innovation\Views\PlayersExecutives\Modals\CreateModal.cshtml" />
+    <Content Include="Areas\Innovation\Views\PlayersExecutives\Modals\UpdateModal.cshtml" />
+    <Content Include="Areas\Innovation\Views\PlayersExecutives\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\PlayersExecutives\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\PlayersExecutives\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Players\Details.cshtml" />
     <Content Include="Areas\Innovation\Views\Players\Index.cshtml" />
     <Content Include="Areas\Innovation\Views\Players\Modals\_Form.cshtml" />
@@ -10043,6 +10043,7 @@
     <Content Include="Views\Collaborators\Modals\AssociateCompanyModal.cshtml" />
     <Content Include="Views\AdminMailerService\CartoonCommissionWelcomeEmail.cshtml" />
     <Content Include="Views\Collaborators\Widgets\CollaboratorImagesWidget.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\AttendeeCollaboratorActivityBaseCommand.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

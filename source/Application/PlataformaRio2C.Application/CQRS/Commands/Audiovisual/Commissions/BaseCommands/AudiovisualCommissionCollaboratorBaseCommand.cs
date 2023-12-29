@@ -6,7 +6,7 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 07-08-2021
 // ***********************************************************************
-// <copyright file="AudiovisualCollaboratorBaseCommand.cs" company="Softo">
+// <copyright file="AudiovisualCommissionCollaboratorBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -20,8 +20,7 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>AudiovisualCollaboratorBaseCommand</summary>
-    public class AudiovisualCollaboratorBaseCommand : CollaboratorBaseCommand
+    public class AudiovisualCommissionCollaboratorBaseCommand : CollaboratorBaseCommand
     {
         //TODO: Essa lista tem que ser AttendeeCollaboratorInterestBaseCommand
         [Display(Name = "Interests", ResourceType = typeof(Labels))]
@@ -29,9 +28,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public InterestBaseCommand[][] Interests { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AudiovisualCollaboratorBaseCommand" /> class.
+        /// Initializes a new instance of the <see cref="AudiovisualCommissionCollaboratorBaseCommand" /> class.
         /// </summary>
-        public AudiovisualCollaboratorBaseCommand()
+        public AudiovisualCommissionCollaboratorBaseCommand()
         {
         }
 
@@ -82,11 +81,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             AttendeeCollaboratorInterestsWidgetDto attendeeCollaboratorInterestsWidgetDto,
             List<InterestDto> interestsDtos)
         {
-            if (attendeeCollaboratorInterestsWidgetDto is null)
-            {
-                throw new ArgumentNullException(nameof(attendeeCollaboratorInterestsWidgetDto));
-            }
-
             var interestsBaseCommands = new List<InterestBaseCommand>();
             foreach (var interestDto in interestsDtos)
             {
