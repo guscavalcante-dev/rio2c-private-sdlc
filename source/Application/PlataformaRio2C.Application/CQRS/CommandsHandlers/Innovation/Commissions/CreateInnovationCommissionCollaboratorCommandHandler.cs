@@ -112,7 +112,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
             else
             {
-                var updateCmd = new UpdateCollaborator
+                var updateCmd = new UpdateAudiovisualPlayerExecutiveCollaborator
                 {
                     CollaboratorUid = user.Collaborator.Uid,
                     IsAddingToCurrentEdition = true,

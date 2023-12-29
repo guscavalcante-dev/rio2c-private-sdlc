@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-16-2020
 // ***********************************************************************
-// <copyright file="UpdateCollaboratorCommandHandler.cs" company="Softo">
+// <copyright file="UpdateAudiovisualPlayerExecutiveCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -28,8 +28,7 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>UpdateCollaboratorCommandHandler</summary>
-    public class UpdateCollaboratorCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<UpdateCollaborator, AppValidationResult>
+    public class UpdateAudiovisualPlayerExecutiveCollaboratorCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<UpdateAudiovisualPlayerExecutiveCollaborator, AppValidationResult>
     {
         private readonly IUserRepository userRepo;
         private readonly IEditionRepository editionRepo;
@@ -40,7 +39,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly ICollaboratorIndustryRepository industryRepo;
         private readonly ICollaboratorRoleRepository roleRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="UpdateAudiovisualPlayerExecutiveCollaboratorCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
@@ -52,7 +51,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="genderRepo">The gender repo.</param>
         /// <param name="industryRepo">The industry repo.</param>
         /// <param name="roleRepo">The role repo.</param>
-        public UpdateCollaboratorCommandHandler(
+        public UpdateAudiovisualPlayerExecutiveCollaboratorCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             ICollaboratorRepository collaboratorRepository,
@@ -81,7 +80,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="cmd"></param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(UpdateCollaborator cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(UpdateAudiovisualPlayerExecutiveCollaborator cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 

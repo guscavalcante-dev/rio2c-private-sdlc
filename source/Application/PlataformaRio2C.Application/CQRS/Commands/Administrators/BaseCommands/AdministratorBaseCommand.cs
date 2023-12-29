@@ -169,7 +169,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public CropperImageBaseCommand CropperImage { get; set; }
         public List<AttendeeOrganizationBaseCommand> TemplateAttendeeOrganizationBaseCommands { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="CollaboratorBaseCommand"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="AdministratorBaseCommand"/> class.</summary>
         public AdministratorBaseCommand()
         {
         }

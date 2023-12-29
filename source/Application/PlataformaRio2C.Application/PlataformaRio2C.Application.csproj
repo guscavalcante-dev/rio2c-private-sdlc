@@ -234,9 +234,9 @@
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateTinyCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorTicketCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\CreateCollaboratorTicketCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Collaborators\CreateCollaboratorCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Audiovisual\PlayersExecutives\CreateAudiovisualPlayerExecutiveCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\DeleteCollaboratorCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Audiovisual\PlayersExecutives\UpdateAudiovisualPlayerExecutiveCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorSiteMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Conferences\ConferenceBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Conferences\CreateConferenceCommandHandler.cs" />
@@ -517,7 +517,7 @@
     <Compile Include="CQRS\CommandsHandlers\User\UpdateUserInterfaceLanguageCommandHandler.cs" />
     <Compile Include="CQRS\Commands\Attendees\BaseCommands\AttendeeOrganizationBaseCommand.cs" />
     <Compile Include="CQRS\Commands\BaseCommand.cs" />
-    <Compile Include="CQRS\Commands\Audiovisual\PlayersExecutives\AudiovisualPlayerExecutiveCollaboratorBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Audiovisual\PlayersExecutives\BaseCommands\AudiovisualPlayerExecutiveCollaboratorBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Collaborators\BaseCommands\CollaboratorMiniBioBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Collaborators\CreateTinyCollaborator.cs" />
     <Compile Include="CQRS\Commands\Collaborators\BaseCommands\UpdateCollaboratorMainInformationBaseCommand.cs" />
@@ -562,9 +562,9 @@
     <Compile Include="CQRS\Commands\Common\BaseCommands\CropperImageBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Collaborators\BaseCommands\CollaboratorBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Collaborators\BaseCommands\CollaboratorJobTitleBaseCommand.cs" />
-    <Compile Include="CQRS\Commands\Collaborators\CreateCollaborator.cs" />
+    <Compile Include="CQRS\Commands\Audiovisual\PlayersExecutives\CreateAudiovisualPlayerExecutiveCollaborator.cs" />
     <Compile Include="CQRS\Commands\Collaborators\DeleteCollaborator.cs" />
-    <Compile Include="CQRS\Commands\Collaborators\UpdateCollaborator.cs" />
+    <Compile Include="CQRS\Commands\Audiovisual\PlayersExecutives\UpdateAudiovisualPlayerExecutiveCollaborator.cs" />
     <Compile Include="CQRS\Commands\Onboardings\OnboardPlayerInterests.cs" />
     <Compile Include="CQRS\Commands\Onboardings\OnboardPlayerOrganizationData.cs" />
     <Compile Include="CQRS\Commands\Organizations\BaseCommands\OrganizationRestrictionSpecificsBaseCommand.cs" />
@@ -855,7 +855,6 @@
     <Folder Include="CQRS\CommandsHandlers\Innovation\Collaborators\BaseCommandHandlers\" />
     <Folder Include="CQRS\CommandsHandlers\SalesPlatforms\" />
     <Folder Include="CQRS\Commands\Audiovisual\Collaborators\BaseCommands\" />
-    <Folder Include="CQRS\Commands\Audiovisual\PlayersExecutives\BaseCommands\" />
     <Folder Include="CQRS\Commands\Innovation\Collaborators\BaseCommands\" />
     <Folder Include="CQRS\Commands\SalesPlatforms\" />
     <Folder Include="CQRS\EventsHandlers\" />

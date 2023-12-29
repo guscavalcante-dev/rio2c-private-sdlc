@@ -541,9 +541,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                     await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
-                    await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id),
-                    await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Startup.Id),
-                    await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync(),
                     EditionDto.Id,
                     UserInterfaceLanguage);
 
@@ -577,11 +574,12 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUpdateModal(Guid? collaboratorUid, bool? isAddingToCurrentEdition)
         {
-            UpdateCollaborator cmd;
+            //TODO: CRIAR UpdateInnovationPlayerExecutiveCollaborator e implementar aqui
+            UpdateAudiovisualPlayerExecutiveCollaborator cmd;
 
             try
             {
-                cmd = new UpdateCollaborator(
+                cmd = new UpdateAudiovisualPlayerExecutiveCollaborator(
                     await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
                     await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.StartupPlayer.Uid),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
@@ -590,9 +588,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                     await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
-                    await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id),
-                    await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Startup.Id),
-                    await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync(),
                     EditionDto.Id,
                     isAddingToCurrentEdition,
                     false,
@@ -619,8 +614,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Update(UpdateCollaborator cmd)
+        public async Task<ActionResult> Update(UpdateAudiovisualPlayerExecutiveCollaborator cmd)
         {
+            //TODO: CRIAR UpdateInnovationPlayerExecutiveCollaborator e implementar aqui
             var result = new AppValidationResult();
 
             try
@@ -658,9 +654,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                     await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
-                    await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id),
-                    await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Startup.Id),
-                    await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync(),
                     EditionDto.Id,
                     UserInterfaceLanguage);
 

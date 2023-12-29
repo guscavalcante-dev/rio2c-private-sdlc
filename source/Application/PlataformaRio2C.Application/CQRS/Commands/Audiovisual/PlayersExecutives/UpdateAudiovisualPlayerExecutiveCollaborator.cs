@@ -6,7 +6,7 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 01-31-2023
 // ***********************************************************************
-// <copyright file="UpdateCollaborator.cs" company="Softo">
+// <copyright file="UpdateAudiovisualPlayerExecutiveCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -20,8 +20,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>UpdateCollaborator</summary>
-    public class UpdateCollaborator : AudiovisualPlayerExecutiveCollaboratorBaseCommand
+    public class UpdateAudiovisualPlayerExecutiveCollaborator : AudiovisualPlayerExecutiveCollaboratorBaseCommand
     {
         public Guid CollaboratorUid { get; set; }
         public bool IsAddingToCurrentEdition { get; set; }
@@ -37,7 +36,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public DateTimeOffset UpdateDate { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateCollaborator" /> class.
+        /// Initializes a new instance of the <see cref="UpdateAudiovisualPlayerExecutiveCollaborator" /> class.
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
@@ -47,9 +46,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="industries">The industries.</param>
         /// <param name="collaboratorRoles">The roles.</param>
         /// <param name="editionsDtos">The editions dtos.</param>
-        /// <param name="activities">The activities.</param>
-        /// <param name="interestsDtos">The interests dtos.</param>
-        /// <param name="innovationOrganizationTrackOptionDtos">The innovation organization track option dtos.</param>
         /// <param name="currentEditionId">The current edition identifier.</param>
         /// <param name="isAddingToCurrentEdition">The is adding to current edition.</param>
         /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
@@ -58,7 +54,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
         /// <exception cref="DomainException"></exception>
-        public UpdateCollaborator(
+        public UpdateAudiovisualPlayerExecutiveCollaborator(
             CollaboratorDto entity, 
             List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, 
             List<LanguageDto> languagesDtos, 
@@ -67,9 +63,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<CollaboratorIndustry> industries, 
             List<CollaboratorRole> collaboratorRoles,
             List<EditionDto> editionsDtos,
-            List<Activity> activities,
-            List<InterestDto> interestsDtos,
-            List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos,
             int currentEditionId,
             bool? isAddingToCurrentEdition, 
             bool isJobTitleRequired,
@@ -101,9 +94,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 industries, 
                 collaboratorRoles, 
                 editionsDtos,
-                activities,
-                interestsDtos,
-                innovationOrganizationTrackOptionDtos,
                 currentEditionId, 
                 isJobTitleRequired, 
                 isMiniBioRequired, 
@@ -116,15 +106,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 industries, 
                 collaboratorRoles, 
                 editionsDtos, 
-                activities,
-                interestsDtos,
-                innovationOrganizationTrackOptionDtos,
                 currentEditionId, 
                 userInterfaceLanguage);
         }
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateCollaborator"/> class.</summary>
-        public UpdateCollaborator()
+        /// <summary>Initializes a new instance of the <see cref="UpdateAudiovisualPlayerExecutiveCollaborator"/> class.</summary>
+        public UpdateAudiovisualPlayerExecutiveCollaborator()
         {
         }
 
@@ -137,9 +124,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="industries">The industries.</param>
         /// <param name="collaboratorRoles">The roles.</param>
         /// <param name="editionsDtos">The editions dtos.</param>
-        /// <param name="activities">The activities.</param>
-        /// <param name="interestsDtos">The interests dtos.</param>
-        /// <param name="innovationOrganizationTrackOptionDtos">The innovation organization track option dtos.</param>
         /// <param name="currentEditionId">The current edition identifier.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public void UpdateDropdownProperties(
@@ -149,9 +133,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<CollaboratorIndustry> industries,
             List<CollaboratorRole> collaboratorRoles,
             List<EditionDto> editionsDtos,
-            List<Activity> activities,
-            List<InterestDto> interestsDtos,
-            List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos,
             int currentEditionId,
             string userInterfaceLanguage)
         {
@@ -171,9 +152,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 industries, 
                 collaboratorRoles, 
                 editionsDtos, 
-                activities,
-                interestsDtos,
-                innovationOrganizationTrackOptionDtos,
                 currentEditionId, 
                 userInterfaceLanguage);
         }

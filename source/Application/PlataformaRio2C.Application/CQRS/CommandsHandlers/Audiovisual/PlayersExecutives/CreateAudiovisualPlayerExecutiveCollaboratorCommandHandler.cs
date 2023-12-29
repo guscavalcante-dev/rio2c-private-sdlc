@@ -6,7 +6,7 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 09-13-2021
 // ***********************************************************************
-// <copyright file="CreateCollaboratorCommandHandler.cs" company="Softo">
+// <copyright file="CreateAudiovisualPlayerExecutiveCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -18,7 +18,6 @@ using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
 using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
@@ -28,8 +27,7 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>CreateCollaboratorCommandHandler</summary>
-    public class CreateCollaboratorCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<CreateCollaborator, AppValidationResult>
+    public class CreateAudiovisualPlayerExecutiveCollaboratorCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<CreateAudiovisualPlayerExecutiveCollaborator, AppValidationResult>
     {
         private readonly IUserRepository userRepo;
         private readonly IEditionRepository editionRepo;
@@ -40,7 +38,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly ICollaboratorIndustryRepository industryRepo;
         private readonly ICollaboratorRoleRepository roleRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="CreateCollaboratorCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="CreateAudiovisualPlayerExecutiveCollaboratorCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
@@ -52,7 +50,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="genderRepo">The gender repo.</param>
         /// <param name="industryRepo">The industry repo.</param>
         /// <param name="roleRepo">The role repo.</param>
-        public CreateCollaboratorCommandHandler(
+        public CreateAudiovisualPlayerExecutiveCollaboratorCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             ICollaboratorRepository collaboratorRepository,
@@ -80,7 +78,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(CreateCollaborator cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(CreateAudiovisualPlayerExecutiveCollaborator cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
@@ -153,7 +151,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
             else
             {
-                var updateCmd = new UpdateCollaborator
+                var updateCmd = new UpdateAudiovisualPlayerExecutiveCollaborator
                 {
                     CollaboratorUid = user.Collaborator.Uid,
                     IsAddingToCurrentEdition = true,

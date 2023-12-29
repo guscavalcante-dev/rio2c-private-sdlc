@@ -84,21 +84,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             // Create if the user was not found in database
             if (user == null)
             {
-                var innovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllByGroupsUidsAsync(cmd.InnovationOrganizationTrackGroups
-                                                                                                                                    ?.Where(ioto => ioto.IsChecked)
-                                                                                                                                    ?.Select(ioto => ioto.InnovationOrganizationTrackOptionGroupUid));
-
-                var collaborator = Collaborator.CreateInnovationPlayerExecutive(
-                    await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
-                    await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
-                    cmd.FirstName,
-                    cmd.LastNames,
-                    cmd.Email,
-                    cmd.PhoneNumber,
-                    cmd.CellPhone,
-                    cmd.Document,
-                    innovationOrganizationTrackOptions.Select(ioto => new AttendeeInnovationOrganizationTrack(ioto, string.Empty, cmd.UserId)).ToList(),
-                    cmd.UserId);
+                var collaborator = Collaborator.CreateInnovationPlayerExecutive(); //TODO: PASSAR OS PARAMETROS AQUI
 
                 if (!collaborator.IsValid())
                 {
@@ -112,7 +98,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
             else
             {
-                var updateCmd = new UpdateCollaborator
+                var updateCmd = new UpdateAudiovisualPlayerExecutiveCollaborator
                 {
                     CollaboratorUid = user.Collaborator.Uid,
                     IsAddingToCurrentEdition = true,
