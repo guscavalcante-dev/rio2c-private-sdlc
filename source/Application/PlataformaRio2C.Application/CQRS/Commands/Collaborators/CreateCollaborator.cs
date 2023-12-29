@@ -18,7 +18,7 @@ using System.Collections.Generic;
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>CreateCollaborator</summary>
-    public class CreateCollaborator : CollaboratorDataBaseCommand
+    public class CreateCollaborator : AudiovisualPlayerExecutiveCollaboratorBaseCommand
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateCollaborator" /> class.
@@ -52,7 +52,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isImageRequired,
             string userInterfaceLanguage)
         {
-            this.UpdateBaseProperties(null, 
+            base.UpdateBaseProperties(null, 
                 attendeeOrganizationsBaseDtos, 
                 languagesDtos, 
                 genders, 

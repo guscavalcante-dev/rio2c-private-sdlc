@@ -21,7 +21,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>UpdateCollaborator</summary>
-    public class UpdateCollaborator : CollaboratorDataBaseCommand
+    public class UpdateCollaborator : AudiovisualPlayerExecutiveCollaboratorBaseCommand
     {
         public Guid CollaboratorUid { get; set; }
         public bool IsAddingToCurrentEdition { get; set; }

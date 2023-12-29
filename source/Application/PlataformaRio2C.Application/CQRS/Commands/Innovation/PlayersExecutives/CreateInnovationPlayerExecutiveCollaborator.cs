@@ -13,19 +13,29 @@
 // ***********************************************************************
 
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using System.Collections.Generic;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    public class CreateInnovationPlayerExecutiveCollaborator : InnovationCommissionCollaboratorBaseCommand
+    public class CreateInnovationPlayerExecutiveCollaborator : InnovationPlayerExecutiveCollaboratorBaseCommand
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateInnovationPlayerExecutiveCollaborator"/> class.
+        /// Initializes a new instance of the <see cref="CreateInnovationPlayerExecutiveCollaborator" /> class.
         /// </summary>
-        /// <param name="innovationOptions">The innovation options.</param>
-        public CreateInnovationPlayerExecutiveCollaborator(List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos)
+        /// <param name="activities">The activities.</param>
+        /// <param name="interestsDtos">The interests dtos.</param>
+        /// <param name="innovationOrganizationTrackOptionDtos">The innovation organization track option dtos.</param>
+        public CreateInnovationPlayerExecutiveCollaborator(
+            List<Activity> activities,
+            List<InterestDto> interestsDtos,
+            List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos)
         {
-            this.UpdateBaseProperties(null, innovationOrganizationTrackOptionDtos);
+            base.UpdateBaseProperties(
+                null,
+                activities,
+                interestsDtos,
+                innovationOrganizationTrackOptionDtos);
         }
 
         /// <summary>

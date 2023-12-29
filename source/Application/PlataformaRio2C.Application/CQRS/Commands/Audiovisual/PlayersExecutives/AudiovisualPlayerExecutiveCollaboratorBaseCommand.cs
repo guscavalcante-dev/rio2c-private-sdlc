@@ -6,7 +6,7 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 01-31-2023
 // ***********************************************************************
-// <copyright file="CollaboratorDataBaseCommand.cs" company="Softo">
+// <copyright file="AudiovisualPlayerExecutiveCollaboratorBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -23,20 +23,11 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>CollaboratorDataBaseCommand</summary>
-    public class CollaboratorDataBaseCommand : CollaboratorBaseCommand
+    public class AudiovisualPlayerExecutiveCollaboratorBaseCommand : CollaboratorBaseCommand
     {
         [Display(Name = "BadgeName", ResourceType = typeof(Labels))]
         [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Badge { get; set; }
-
-        [Display(Name = "PhoneNumber", ResourceType = typeof(Labels))]
-        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string PhoneNumber { get; set; }
-
-        [Display(Name = "CellPhone", ResourceType = typeof(Labels))]
-        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string CellPhone { get; set; }
 
         public bool? SharePublicEmail { get; set; }
 
@@ -139,10 +130,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<AttendeeOrganizationBaseCommand> AttendeeOrganizationBaseCommands { get; set; }
         public List<CollaboratorJobTitleBaseCommand> JobTitles { get; set; }
         public List<CollaboratorMiniBioBaseCommand> MiniBios { get; set; }
-        public List<AttendeeCollaboratorActivityBaseCommand> AttendeeCollaboratorActivities { get; set; }
-        public List<AttendeeCollaboratorInterestBaseCommand> AttendeeCollaboratorInterests { get; set; }
-        //public List<AttendeeCollaboratorInnovationOrganizationTrackBaseCommand> AttendeeCollaboratorInnovationOrganizationTracks { get; set; }
-
         public CropperImageBaseCommand CropperImage { get; set; }
         public List<AttendeeOrganizationBaseCommand> TemplateAttendeeOrganizationBaseCommands { get; set; }
 
@@ -155,8 +142,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         #endregion
 
-        /// <summary>Initializes a new instance of the <see cref="CollaboratorDataBaseCommand"/> class.</summary>
-        public CollaboratorDataBaseCommand()
+        /// <summary>Initializes a new instance of the <see cref="AudiovisualPlayerExecutiveCollaboratorBaseCommand"/> class.</summary>
+        public AudiovisualPlayerExecutiveCollaboratorBaseCommand()
         {
         }
 
@@ -176,9 +163,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<CollaboratorIndustry> industries,
             List<CollaboratorRole> collaboratorRoles,
             List<EditionDto> editionsDtos,
-            List<Activity> activities,
-            List<InterestDto> interestsDtos,
-            List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos,
             int currentEditionId,
             bool isJobTitleRequired,
             bool isMiniBioRequired,
@@ -202,9 +186,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateJobTitles(entity, languagesDtos, isJobTitleRequired);
             this.UpdateMiniBios(entity, languagesDtos, isMiniBioRequired);
             this.UpdateCropperImage(entity, isImageRequired);
-            this.UpdateActivities(entity, activities);
-            this.UpdateInterests(entity, interestsDtos);
-            this.UpdateInnovationOrganizationTrackOptions(entity, innovationOrganizationTrackOptionDtos);
 
             this.UpdateDropdownProperties(
                 attendeeOrganizationsBaseDtos,
@@ -212,23 +193,18 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 industries,
                 collaboratorRoles,
                 editionsDtos,
-                activities,
-                interestsDtos,
-                innovationOrganizationTrackOptionDtos,
                 currentEditionId,
                 userInterfaceLanguage);
         }
-
+        
         /// <summary>
         /// Updates the dropdown properties.
         /// </summary>
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
         /// <param name="genders">The genders.</param>
         /// <param name="industries">The industries.</param>
-        /// <param name="collaboratorRoles">The roles.</param>
+        /// <param name="collaboratorRoles">The collaborator roles.</param>
         /// <param name="editionsDtos">The editions dtos.</param>
-        /// <param name="activities">The activities.</param>
-        /// <param name="interestsDtos">The interests dtos.</param>
         /// <param name="currentEditionId">The current edition identifier.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public void UpdateDropdownProperties(List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos,
@@ -236,9 +212,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<CollaboratorIndustry> industries,
             List<CollaboratorRole> collaboratorRoles,
             List<EditionDto> editionsDtos,
-            List<Activity> activities,
-            List<InterestDto> interestsDtos,
-            List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos,
             int currentEditionId,
             string userInterfaceLanguage)
         {
@@ -399,64 +372,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             //collaboratorTypes.ForEach(g => g.Translate(userInterfaceLanguage));
             this.CollaboratorTypes = collaboratorTypes;
-        }
-
-        /// <summary>
-        /// Updates the activities.
-        /// </summary>
-        /// <param name="entity">The entity.</param>
-        /// <param name="activities">The activities.</param>
-        private void UpdateActivities(CollaboratorDto entity, List<Activity> activities)
-        {
-            this.AttendeeCollaboratorActivities = new List<AttendeeCollaboratorActivityBaseCommand>();
-            if (activities?.Any() == true)
-            {
-                foreach (var activity in activities)
-                {
-                    var attendeeCollaboratorActivityDto = entity?.AttendeeCollaboratorActivityDtos?.FirstOrDefault(oad => oad.ActivityUid == activity.Uid);
-                    this.AttendeeCollaboratorActivities.Add(attendeeCollaboratorActivityDto != null ? new AttendeeCollaboratorActivityBaseCommand(attendeeCollaboratorActivityDto) :
-                                                                                                      new AttendeeCollaboratorActivityBaseCommand(activity));
-                }
-            }
-        }
-
-        /// <summary>
-        /// Updates the interests.
-        /// </summary>
-        /// <param name="entity">The entity.</param>
-        /// <param name="interestDtos">The interest dtos.</param>
-        private void UpdateInterests(CollaboratorDto entity, List<InterestDto> interestDtos)
-        {
-            this.AttendeeCollaboratorInterests = new List<AttendeeCollaboratorInterestBaseCommand>();
-
-            if (interestDtos?.Any() == true)
-            {
-                foreach (var interestDto in interestDtos)
-                {
-                    var attendeeCollaboratorInterestDto = entity?.AttendeeCollaboratorInterestDtos?.FirstOrDefault(oad => oad.InterestUid == interestDto.Interest.Uid);
-                    this.AttendeeCollaboratorInterests.Add(attendeeCollaboratorInterestDto != null ? new AttendeeCollaboratorInterestBaseCommand(attendeeCollaboratorInterestDto) :
-                                                                                                     new AttendeeCollaboratorInterestBaseCommand(interestDto));
-                }
-            }
-        }
-
-        /// <summary>
-        /// Updates the innovation organization track options.
-        /// </summary>
-        /// <param name="entity">The entity.</param>
-        /// <param name="innovationOrganizationTrackOptionDtos">The innovation organization track option dtos.</param>
-        private void UpdateInnovationOrganizationTrackOptions(CollaboratorDto entity, List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos)
-        {
-            //this.AttendeeCollaboratorInnovationOrganizationTracks = new List<AttendeeCollaboratorInnovationOrganizationTrackBaseCommand>();
-            //if (innovationOrganizationTrackOptionDtos?.Any() == true)
-            //{
-            //    foreach (var innovationOrganizationTrackOptionDto in innovationOrganizationTrackOptionDtos)
-            //    {
-            //        var attendeeCollaboratorInterestDto = entity?.AttendeeCollaboratorInnovationOrganizationTrackDtos?.FirstOrDefault(dto => dto.InnovationOrganizationTrackOption.Uid == innovationOrganizationTrackOptionDto.Uid);
-            //        this.AttendeeCollaboratorInterests.Add(attendeeCollaboratorInterestDto != null ? new AttendeeCollaboratorInnovationOrganizationTrackBaseCommand(attendeeCollaboratorInterestDto) :
-            //                                                                                         new AttendeeCollaboratorInnovationOrganizationTrackBaseCommand(innovationOrganizationTrackOptionDto));
-            //    }
-            //}
         }
 
         #endregion

@@ -1,31 +1,28 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Renan Valentim
-// Created          : 07-08-2021
+// Created          : 12-29-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-06-2023
+// Last Modified On : 12-29-2023
 // ***********************************************************************
-// <copyright file="InnovationCollaboratorBaseCommand.cs" company="Softo">
+// <copyright file="InnovationPlayerExecutiveCollaboratorBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>InnovationCollaboratorBaseCommand</summary>
     public class InnovationPlayerExecutiveCollaboratorBaseCommand : CollaboratorBaseCommand
     {
-        [Display(Name = "Verticals", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneOption")]
-        public List<InnovationOrganizationTrackOptionBaseCommand> InnovationOrganizationTrackGroups { get; set; }
+        public List<AttendeeCollaboratorActivityBaseCommand> AttendeeCollaboratorActivities { get; set; }
+        public List<AttendeeCollaboratorInterestBaseCommand> AttendeeCollaboratorInterests { get; set; }
+        //public List<AttendeeCollaboratorInnovationOrganizationTrackBaseCommand> AttendeeCollaboratorInnovationOrganizationTracks { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InnovationPlayerExecutiveCollaboratorBaseCommand" /> class.
@@ -38,37 +35,71 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// Updates the base properties.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        /// <param name="innovationOrganizationTrackOptionDtos">The innovation organization track option dto.</param>
-        public void UpdateBaseProperties(
-            AttendeeCollaboratorTracksWidgetDto entity, 
-            List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos)
-        {
-            this.UpdateInnovationOrganizationTrackOptionGroups(entity, innovationOrganizationTrackOptionDtos);
-        }
-
-        /// <summary>
-        /// Updates the base properties.
-        /// </summary>
-        /// <param name="entity">The entity.</param>
-        /// <param name="attendeeCollaboratorTracksWidgetDto">The attendee collaborator tracks widget dto.</param>
+        /// <param name="activities">The activities.</param>
+        /// <param name="interestsDtos">The interests dtos.</param>
         /// <param name="innovationOrganizationTrackOptionDtos">The innovation organization track option dtos.</param>
         public void UpdateBaseProperties(
             CollaboratorDto entity,
-            AttendeeCollaboratorTracksWidgetDto attendeeCollaboratorTracksWidgetDto,
-            List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos)
+             List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos,
+            List<LanguageDto> languagesDtos,
+            List<CollaboratorGender> genders,
+            List<CollaboratorIndustry> industries,
+            List<CollaboratorRole> collaboratorRoles,
+            List<EditionDto> editionsDtos,
+            List<Activity> activities,
+            List<InterestDto> interestsDtos,
+            List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos,
+            
+            )
         {
             base.UpdateBaseProperties(entity);
-            this.UpdateInnovationOrganizationTrackOptionGroups(attendeeCollaboratorTracksWidgetDto, innovationOrganizationTrackOptionDtos);
+            this.UpdateActivities(entity, activities);
+            this.UpdateInterests(entity, interestsDtos);
+            this.UpdateInnovationOrganizationTrackOptions(entity, innovationOrganizationTrackOptionDtos);
+        }
+
+        #region Privates
+
+        /// <summary>
+        /// Updates the activities.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="activities">The activities.</param>
+        private void UpdateActivities(
+            CollaboratorDto entity, 
+            List<Activity> activities)
+        {
+            this.AttendeeCollaboratorActivities = new List<AttendeeCollaboratorActivityBaseCommand>();
+            if (activities?.Any() == true)
+            {
+                foreach (var activity in activities)
+                {
+                    var attendeeCollaboratorActivityDto = entity?.AttendeeCollaboratorActivityDtos?.FirstOrDefault(oad => oad.ActivityUid == activity.Uid);
+                    this.AttendeeCollaboratorActivities.Add(attendeeCollaboratorActivityDto != null ? new AttendeeCollaboratorActivityBaseCommand(attendeeCollaboratorActivityDto) :
+                                                                                                      new AttendeeCollaboratorActivityBaseCommand(activity));
+                }
+            }
         }
 
         /// <summary>
-        /// Updates the dropdown properties.
+        /// Updates the interests.
         /// </summary>
-        /// <param name="innovationOrganizationTrackOptionDtos">The innovation organization track option dtos.</param>
-        public void UpdateDropdownProperties(
-            List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos)
+        /// <param name="entity">The entity.</param>
+        /// <param name="interestDtos">The interest dtos.</param>
+        private void UpdateInterests(
+            CollaboratorDto entity, 
+            List<InterestDto> interestDtos)
         {
-            this.UpdateInnovationOrganizationTrackOptionGroups(null, innovationOrganizationTrackOptionDtos);
+            this.AttendeeCollaboratorInterests = new List<AttendeeCollaboratorInterestBaseCommand>();
+            if (interestDtos?.Any() == true)
+            {
+                foreach (var interestDto in interestDtos)
+                {
+                    var attendeeCollaboratorInterestDto = entity?.AttendeeCollaboratorInterestDtos?.FirstOrDefault(oad => oad.InterestUid == interestDto.Interest.Uid);
+                    this.AttendeeCollaboratorInterests.Add(attendeeCollaboratorInterestDto != null ? new AttendeeCollaboratorInterestBaseCommand(attendeeCollaboratorInterestDto) :
+                                                                                                     new AttendeeCollaboratorInterestBaseCommand(interestDto));
+                }
+            }
         }
 
         /// <summary>
@@ -76,23 +107,22 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="innovationOrganizationTrackOptionDtos">The innovation organization track option dtos.</param>
-        private void UpdateInnovationOrganizationTrackOptionGroups(
-            AttendeeCollaboratorTracksWidgetDto entity, 
+        private void UpdateInnovationOrganizationTrackOptions(
+            CollaboratorDto entity, 
             List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos)
         {
-            this.InnovationOrganizationTrackGroups = new List<InnovationOrganizationTrackOptionBaseCommand>();
-
-            var selectedInnovationOrganizationTrackOptionGroupsUids = entity?.AttendeeCollaboratorInnovationOrganizationTrackDtos
-                                                                                .GroupBy(aciotDto => aciotDto.InnovationOrganizationTrackOptionGroup?.Uid)
-                                                                                .Select(group => group.Key);
-
-            foreach (var innovationOrganizationTrackOptionGroup in innovationOrganizationTrackOptionDtos.GroupBy(dto => dto.InnovationOrganizationTrackOptionGroup).ToList())
-            {
-                this.InnovationOrganizationTrackGroups.Add(
-                    new InnovationOrganizationTrackOptionBaseCommand(
-                        innovationOrganizationTrackOptionGroup.Key,
-                        selectedInnovationOrganizationTrackOptionGroupsUids?.Contains(innovationOrganizationTrackOptionGroup.Key?.Uid) == true));
-            }
+            //this.AttendeeCollaboratorInnovationOrganizationTracks = new List<AttendeeCollaboratorInnovationOrganizationTrackBaseCommand>();
+            //if (innovationOrganizationTrackOptionDtos?.Any() == true)
+            //{
+            //    foreach (var innovationOrganizationTrackOptionDto in innovationOrganizationTrackOptionDtos)
+            //    {
+            //        var attendeeCollaboratorInterestDto = entity?.AttendeeCollaboratorInnovationOrganizationTrackDtos?.FirstOrDefault(dto => dto.InnovationOrganizationTrackOption.Uid == innovationOrganizationTrackOptionDto.Uid);
+            //        this.AttendeeCollaboratorInterests.Add(attendeeCollaboratorInterestDto != null ? new AttendeeCollaboratorInnovationOrganizationTrackBaseCommand(attendeeCollaboratorInterestDto) :
+            //                                                                                         new AttendeeCollaboratorInnovationOrganizationTrackBaseCommand(innovationOrganizationTrackOptionDto));
+            //    }
+            //}
         }
+
+        #endregion
     }
 }
