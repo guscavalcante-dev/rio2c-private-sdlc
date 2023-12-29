@@ -105,7 +105,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             // Create if the user was not found in database
             if (user == null)
             {
-                var collaborator = new Collaborator(
+                var collaborator = Collaborator.CreateAudiovisualPlayerExecutiveCollaborator(
                     await this.attendeeOrganizationRepo.FindAllByUidsAsync(cmd.AttendeeOrganizationBaseCommands?.Where(aobc => aobc.AttendeeOrganizationUid.HasValue)?.Select(aobc => aobc.AttendeeOrganizationUid.Value)?.ToList()),
                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                     await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
@@ -136,7 +136,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.CropperImage?.ImageFile != null,
                     cmd.JobTitles?.Select(d => new CollaboratorJobTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                     cmd.MiniBios?.Select(d => new CollaboratorMiniBio(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
-                    //TODO: AQUI PRECISA PASSAR cmd.AttendeeCollaboratorActivities e cmd.AttendeeCollaboratorInterests
                     cmd.UserId);
 
                 if (!collaborator.IsValid())

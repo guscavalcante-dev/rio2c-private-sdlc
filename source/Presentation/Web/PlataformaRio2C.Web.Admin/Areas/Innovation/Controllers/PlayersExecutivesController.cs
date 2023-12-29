@@ -41,7 +41,6 @@ using ClosedXML.Excel;
 using PlataformaRio2C.Domain.ApiModels;
 using PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults;
 using System.IO;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 {

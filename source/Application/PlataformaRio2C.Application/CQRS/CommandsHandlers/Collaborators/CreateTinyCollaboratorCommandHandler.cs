@@ -99,7 +99,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             {
                 #region Create
 
-                var collaborator = new Collaborator(
+                var collaborator = Collaborator.CreateTinyCollaborator(
                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                     await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
                     cmd.FirstName,

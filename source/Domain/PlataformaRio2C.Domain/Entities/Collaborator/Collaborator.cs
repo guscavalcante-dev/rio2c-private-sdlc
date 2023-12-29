@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -76,6 +77,284 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeCollaborator> AttendeeCollaborators { get; private set; }
         public virtual ICollection<CollaboratorEditionParticipation> EditionParticipantions { get; private set; }
 
+        #region Collaborator Ticket
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Collaborator" /> class.
+        /// </summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="edition">The edition.</param>
+        /// <param name="newAttendeeOrganizations">The new attendee organizations.</param>
+        /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="role">The role.</param>
+        /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
+        /// <param name="salesPlatformUpdateDate">The sales platform update date.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastMame">The last mame.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="jobTitle">The job title.</param>
+        /// <param name="barcode">The barcode.</param>
+        /// <param name="isBarcodePrinted">if set to <c>true</c> [is barcode printed].</param>
+        /// <param name="isBarcodeUsed">if set to <c>true</c> [is barcode used].</param>
+        /// <param name="barcodeUpdateDate">The barcode update date.</param>
+        /// <param name="ticketUrl">The ticket URL.</param>
+        /// <param name="isTicketPrinted">if set to <c>true</c> [is ticket printed].</param>
+        /// <param name="isTicketUsed">if set to <c>true</c> [is ticket used].</param>
+        /// <param name="ticketUpdateDate">The ticket update date.</param>
+        /// <param name="userId">The user identifier.</param>
+        private Collaborator(
+            Guid collaboratorUid,
+            Edition edition,
+            List<AttendeeOrganization> newAttendeeOrganizations,
+            AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
+            CollaboratorType collaboratorType,
+            Role role,
+            string salesPlatformAttendeeId,
+            DateTime salesPlatformUpdateDate,
+            string firstName,
+            string lastMame,
+            string email,
+            string cellPhone,
+            string jobTitle,
+            string barcode,
+            bool isBarcodePrinted,
+            bool isBarcodeUsed,
+            DateTime? barcodeUpdateDate,
+            string ticketUrl,
+            bool isTicketPrinted,
+            bool isTicketUsed,
+            DateTime? ticketUpdateDate,
+            int userId)
+        {
+            //this.Uid = collaboratorUid;
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastMame?.Trim();
+            this.Badge = firstName?.Trim() + (!string.IsNullOrEmpty(lastMame) ? " " + lastMame?.Trim() : string.Empty);
+            this.CellPhone = cellPhone?.Trim();
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+
+            //TODO: Refactor this!
+            //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
+            this.SynchronizeAttendeeCollaborators(
+                edition,
+                collaboratorType,
+                newAttendeeOrganizations,
+                attendeeSalesPlatformTicketType,
+                salesPlatformAttendeeId,
+                salesPlatformUpdateDate,
+                firstName,
+                lastMame,
+                cellPhone,
+                jobTitle,
+                barcode,
+                isBarcodePrinted,
+                isBarcodeUsed,
+                barcodeUpdateDate,
+                ticketUrl,
+                isTicketPrinted,
+                isTicketUsed,
+                ticketUpdateDate,
+                userId);
+            this.UpdateUser(email);
+        }
+
+        /// <summary>
+        /// Creates the collaborator ticket.
+        /// </summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="edition">The edition.</param>
+        /// <param name="newAttendeeOrganizations">The new attendee organizations.</param>
+        /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="role">The role.</param>
+        /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
+        /// <param name="salesPlatformUpdateDate">The sales platform update date.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastMame">The last mame.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="jobTitle">The job title.</param>
+        /// <param name="barcode">The barcode.</param>
+        /// <param name="isBarcodePrinted">if set to <c>true</c> [is barcode printed].</param>
+        /// <param name="isBarcodeUsed">if set to <c>true</c> [is barcode used].</param>
+        /// <param name="barcodeUpdateDate">The barcode update date.</param>
+        /// <param name="ticketUrl">The ticket URL.</param>
+        /// <param name="isTicketPrinted">if set to <c>true</c> [is ticket printed].</param>
+        /// <param name="isTicketUsed">if set to <c>true</c> [is ticket used].</param>
+        /// <param name="ticketUpdateDate">The ticket update date.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public static Collaborator CreateCollaboratorTicket(
+            Guid collaboratorUid,
+            Edition edition,
+            List<AttendeeOrganization> newAttendeeOrganizations,
+            AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
+            CollaboratorType collaboratorType,
+            Role role,
+            string salesPlatformAttendeeId,
+            DateTime salesPlatformUpdateDate,
+            string firstName,
+            string lastMame,
+            string email,
+            string cellPhone,
+            string jobTitle,
+            string barcode,
+            bool isBarcodePrinted,
+            bool isBarcodeUsed,
+            DateTime? barcodeUpdateDate,
+            string ticketUrl,
+            bool isTicketPrinted,
+            bool isTicketUsed,
+            DateTime? ticketUpdateDate,
+            int userId)
+        {
+            return new Collaborator(collaboratorUid,
+                edition,
+                newAttendeeOrganizations,
+                attendeeSalesPlatformTicketType,
+                collaboratorType,
+                role,
+                salesPlatformAttendeeId,
+                salesPlatformUpdateDate,
+                firstName,
+                lastMame,
+                email,
+                cellPhone,
+                jobTitle,
+                barcode,
+                isBarcodePrinted,
+                isBarcodeUsed,
+                barcodeUpdateDate,
+                ticketUrl,
+                isTicketPrinted,
+                isTicketUsed,
+                ticketUpdateDate,
+                userId);
+        }
+
+        #endregion
+
+        #region Tiny Collaborator
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Collaborator"/> class.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="document">The document.</param>
+        /// <param name="userId">The user identifier.</param>
+        private Collaborator(
+            Edition edition,
+            CollaboratorType collaboratorType,
+            string firstName,
+            string lastNames,
+            string email,
+            string phoneNumber,
+            string cellPhone,
+            string document,
+            int userId)
+        {
+            //this.Uid = uid;
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.PublicEmail = email?.Trim();
+
+            //TODO: Refactor this!
+            //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
+            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, null, null, true, userId);
+            this.UpdateUser(email);
+
+            this.PhoneNumber = phoneNumber?.Trim();
+            this.CellPhone = cellPhone?.Trim();
+            this.Document = document?.Trim();
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
+        /// <summary>
+        /// Creates the tiny collaborator.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="document">The document.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public static Collaborator CreateTinyCollaborator(
+            Edition edition,
+            CollaboratorType collaboratorType,
+            string firstName,
+            string lastNames,
+            string email,
+            string phoneNumber,
+            string cellPhone,
+            string document,
+            int userId)
+        {
+            return new Collaborator(
+                edition,
+                collaboratorType,
+                firstName,
+                lastNames,
+                email,
+                phoneNumber,
+                cellPhone,
+                document,
+                userId);
+        }
+
+        /// <summary>
+        /// Updates the tiny collaborator.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateTinyCollaborator(
+            Edition edition,
+            CollaboratorType collaboratorType,
+            string firstName,
+            string lastNames,
+            string email,
+            bool isAddingToCurrentEdition,
+            int userId)
+        {
+            //this.Uid = uid;
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+
+            //TODO: Refactor this!
+            //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
+            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, null, null, isAddingToCurrentEdition, userId);
+            this.UpdateUser(email);
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
+        #endregion
+
+        #region Audiovisual Player Executive
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Collaborator"/> class.
         /// </summary>
@@ -110,7 +389,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="jobTitles">The job titles.</param>
         /// <param name="miniBios">The mini bios.</param>
         /// <param name="userId">The user identifier.</param>
-        public Collaborator(
+        private Collaborator(
             List<AttendeeOrganization> attendeeOrganizations,
             Edition edition,
             CollaboratorType collaboratorType,
@@ -182,170 +461,204 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Collaborator" /> class.
+        /// Creates the audiovisual player executive collaborator.
         /// </summary>
-        /// <param name="collaboratorUid">The collaborator uid.</param>
-        /// <param name="edition">The edition.</param>
-        /// <param name="newAttendeeOrganizations">The new attendee organizations.</param>
-        /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
-        /// <param name="collaboratorType">Type of the collaborator.</param>
-        /// <param name="role">The role.</param>
-        /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
-        /// <param name="salesPlatformUpdateDate">The sales platform update date.</param>
-        /// <param name="firstName">The first name.</param>
-        /// <param name="lastMame">The last mame.</param>
-        /// <param name="email">The email.</param>
-        /// <param name="cellPhone">The cell phone.</param>
-        /// <param name="jobTitle">The job title.</param>
-        /// <param name="barcode">The barcode.</param>
-        /// <param name="isBarcodePrinted">if set to <c>true</c> [is barcode printed].</param>
-        /// <param name="isBarcodeUsed">if set to <c>true</c> [is barcode used].</param>
-        /// <param name="barcodeUpdateDate">The barcode update date.</param>
-        /// <param name="ticketUrl">The ticket URL.</param>
-        /// <param name="isTicketPrinted">if set to <c>true</c> [is ticket printed].</param>
-        /// <param name="isTicketUsed">if set to <c>true</c> [is ticket used].</param>
-        /// <param name="ticketUpdateDate">The ticket update date.</param>
-        /// <param name="userId">The user identifier.</param>
-        public Collaborator(
-            Guid collaboratorUid,
-            Edition edition,
-            List<AttendeeOrganization> newAttendeeOrganizations,
-            AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
-            CollaboratorType collaboratorType,
-            Role role,
-            string salesPlatformAttendeeId,
-            DateTime salesPlatformUpdateDate,
-            string firstName,
-            string lastMame,
-            string email,
-            string cellPhone,
-            string jobTitle,
-            string barcode,
-            bool isBarcodePrinted,
-            bool isBarcodeUsed,
-            DateTime? barcodeUpdateDate,
-            string ticketUrl,
-            bool isTicketPrinted,
-            bool isTicketUsed,
-            DateTime? ticketUpdateDate,
-            int userId)
-        {
-            //this.Uid = collaboratorUid;
-            this.FirstName = firstName?.Trim();
-            this.LastNames = lastMame?.Trim();
-            this.Badge = firstName?.Trim() + (!string.IsNullOrEmpty(lastMame) ? " " + lastMame?.Trim() : string.Empty);
-            this.CellPhone = cellPhone?.Trim();
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
-
-            //TODO: Refactor this!
-            //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
-            this.SynchronizeAttendeeCollaborators(
-                edition,
-                collaboratorType,
-                newAttendeeOrganizations,
-                attendeeSalesPlatformTicketType,
-                salesPlatformAttendeeId,
-                salesPlatformUpdateDate,
-                firstName,
-                lastMame,
-                cellPhone,
-                jobTitle,
-                barcode,
-                isBarcodePrinted,
-                isBarcodeUsed,
-                barcodeUpdateDate,
-                ticketUrl,
-                isTicketPrinted,
-                isTicketUsed,
-                ticketUpdateDate,
-                userId);
-            this.UpdateUser(email);
-        }
-
-        #region Innovation Commission Collaborator
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Collaborator"/> class.
-        /// </summary>
+        /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="birthDate">The birth date.</param>
+        /// <param name="collaboratorGender">The collaborator gender.</param>
+        /// <param name="collaboratorGenderAdditionalInfo">The collaborator gender additional information.</param>
+        /// <param name="collaboratorRole">The collaborator role.</param>
+        /// <param name="collaboratorRoleAdditionalInfo">The collaborator role additional information.</param>
+        /// <param name="collaboratorIndustry">The collaborator industry.</param>
+        /// <param name="collaboratorIndustryAdditionalInfo">The collaborator industry additional information.</param>
+        /// <param name="hasAnySpecialNeeds">The has any special needs.</param>
+        /// <param name="specialNeedsDescription">The special needs description.</param>
+        /// <param name="haveYouBeenToRio2CBefore">The have you been to rio2 c before.</param>
+        /// <param name="editionsParticipated">The editions participated.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastNames">The last names.</param>
+        /// <param name="badge">The badge.</param>
         /// <param name="email">The email.</param>
         /// <param name="phoneNumber">The phone number.</param>
         /// <param name="cellPhone">The cell phone.</param>
-        /// <param name="document">The document.</param>
-        /// <param name="attendeeInnovationOrganizationTracks">The attendee innovation organization tracks.</param>
-        /// <param name="userId">The user identifier.</param>
-        private Collaborator(
-            Edition edition,
-            CollaboratorType collaboratorType,
-            string firstName,
-            string lastNames,
-            string email,
-            string phoneNumber,
-            string cellPhone,
-            string document,
-            List<AttendeeInnovationOrganizationTrack> attendeeInnovationOrganizationTracks,
-            int userId)
-        {
-            this.FirstName = firstName?.Trim();
-            this.LastNames = lastNames?.Trim();
-            this.PublicEmail = email?.Trim();
-
-            this.PhoneNumber = phoneNumber?.Trim();
-            this.CellPhone = cellPhone?.Trim();
-            this.Document = document?.Trim();
-
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
-
-            //TODO: Refactor this!
-            //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
-            this.SynchronizeInnovationCommissionAttendeeCollaborators(edition, collaboratorType, null, attendeeInnovationOrganizationTracks, null, null, true, userId);
-            this.UpdateUser(email);
-        }
-
-        /// <summary>
-        /// Creates the innovation commission collaborator.
-        /// </summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="collaboratorType">Type of the collaborator.</param>
-        /// <param name="firstName">The first name.</param>
-        /// <param name="lastNames">The last names.</param>
-        /// <param name="email">The email.</param>
-        /// <param name="phoneNumber">The phone number.</param>
-        /// <param name="cellPhone">The cell phone.</param>
-        /// <param name="document">The document.</param>
-        /// <param name="attendeeInnovationOrganizationTracks">The attendee innovation organization tracks.</param>
+        /// <param name="sharePublicEmail">The share public email.</param>
+        /// <param name="publicEmail">The public email.</param>
+        /// <param name="website">The website.</param>
+        /// <param name="linkedin">The linkedin.</param>
+        /// <param name="twitter">The twitter.</param>
+        /// <param name="instagram">The instagram.</param>
+        /// <param name="youtube">The youtube.</param>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="jobTitles">The job titles.</param>
+        /// <param name="miniBios">The mini bios.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public static Collaborator CreateInnovationCommissionCollaborator(
+        public static Collaborator CreateAudiovisualPlayerExecutiveCollaborator(
+            List<AttendeeOrganization> attendeeOrganizations,
             Edition edition,
             CollaboratorType collaboratorType,
+            DateTime? birthDate,
+            CollaboratorGender collaboratorGender,
+            string collaboratorGenderAdditionalInfo,
+            CollaboratorRole collaboratorRole,
+            string collaboratorRoleAdditionalInfo,
+            CollaboratorIndustry collaboratorIndustry,
+            string collaboratorIndustryAdditionalInfo,
+            bool? hasAnySpecialNeeds,
+            string specialNeedsDescription,
+            bool? haveYouBeenToRio2CBefore,
+            List<Edition> editionsParticipated,
             string firstName,
             string lastNames,
+            string badge,
             string email,
             string phoneNumber,
             string cellPhone,
-            string document,
-            List<AttendeeInnovationOrganizationTrack> attendeeInnovationOrganizationTracks,
+            bool? sharePublicEmail,
+            string publicEmail,
+            string website,
+            string linkedin,
+            string twitter,
+            string instagram,
+            string youtube,
+            bool isImageUploaded,
+            List<CollaboratorJobTitle> jobTitles,
+            List<CollaboratorMiniBio> miniBios,
             int userId)
         {
             return new Collaborator(
+                attendeeOrganizations,
                 edition,
                 collaboratorType,
+                birthDate,
+                collaboratorGender,
+                collaboratorGenderAdditionalInfo,
+                collaboratorRole,
+                collaboratorRoleAdditionalInfo,
+                collaboratorIndustry,
+                collaboratorIndustryAdditionalInfo,
+                hasAnySpecialNeeds,
+                specialNeedsDescription,
+                haveYouBeenToRio2CBefore,
+                editionsParticipated,
                 firstName,
                 lastNames,
+                badge,
                 email,
                 phoneNumber,
                 cellPhone,
-                document,
-                attendeeInnovationOrganizationTracks,
+                sharePublicEmail,
+                publicEmail,
+                website,
+                linkedin,
+                twitter,
+                instagram,
+                youtube,
+                isImageUploaded,
+                jobTitles,
+                miniBios,
                 userId);
+        }
+
+        /// <summary>Updates the specified attendee organizations for admin.</summary>
+        /// <param name="attendeeOrganizations">The attendee organizations.</param>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="birthDate">The birth date.</param>
+        /// <param name="collaboratorGender">The collaborator gender.</param>
+        /// <param name="collaboratorGenderAdditionalInfo">The collaborator gender additional information.</param>
+        /// <param name="collaboratorRole">The collaborator role.</param>
+        /// <param name="collaboratorRoleAdditionalInfo">The collaborator role additional information.</param>
+        /// <param name="collaboratorIndustry">The collaborator industry.</param>
+        /// <param name="collaboratorIndustryAdditionalInfo">The collaborator industry additional information.</param>
+        /// <param name="hasAnySpecialNeeds">if set to <c>true</c> [has any special needs].</param>
+        /// <param name="specialNeedsDescription">The special needs description.</param>
+        /// <param name="haveYouBeenToRio2CBefore">The have you been to rio2 c before.</param>
+        /// <param name="editionsParticipated">The editions participated.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="badge">The badge.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="sharePublicEmail">The share public email.</param>
+        /// <param name="publicEmail">The public email.</param>
+        /// <param name="website">The website.</param>
+        /// <param name="linkedin">The linkedin.</param>
+        /// <param name="twitter">The twitter.</param>
+        /// <param name="instagram">The instagram.</param>
+        /// <param name="youtube">The youtube.</param>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
+        /// <param name="jobTitles">The job titles.</param>
+        /// <param name="miniBios">The mini bios.</param>
+        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateAudiovisualPlayerExecutive(
+            List<AttendeeOrganization> attendeeOrganizations,
+            Edition edition,
+            CollaboratorType collaboratorType,
+            DateTime? birthDate,
+            CollaboratorGender collaboratorGender,
+            string collaboratorGenderAdditionalInfo,
+            CollaboratorRole collaboratorRole,
+            string collaboratorRoleAdditionalInfo,
+            CollaboratorIndustry collaboratorIndustry,
+            string collaboratorIndustryAdditionalInfo,
+            bool hasAnySpecialNeeds,
+            string specialNeedsDescription,
+            bool? haveYouBeenToRio2CBefore,
+            List<Edition> editionsParticipated,
+            string firstName,
+            string lastNames,
+            string badge,
+            string email,
+            string phoneNumber,
+            string cellPhone,
+            bool? sharePublicEmail,
+            string publicEmail,
+            string website,
+            string linkedin,
+            string twitter,
+            string instagram,
+            string youtube,
+            bool isImageUploaded,
+            bool isImageDeleted,
+            List<CollaboratorJobTitle> jobTitles,
+            List<CollaboratorMiniBio> miniBios,
+            bool isAddingToCurrentEdition,
+            int userId)
+        {
+            //this.Uid = uid;
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.Badge = badge?.Trim();
+            this.PhoneNumber = phoneNumber?.Trim();
+            this.CellPhone = cellPhone?.Trim();
+            this.UpdatePublicEmail(sharePublicEmail, publicEmail);
+            this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
+            this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
+
+            this.UpdateEditions(haveYouBeenToRio2CBefore, editionsParticipated, userId);
+            this.BirthDate = birthDate;
+            UpdateGender(collaboratorGender, collaboratorGenderAdditionalInfo);
+            UpdateRole(collaboratorRole, collaboratorRoleAdditionalInfo);
+            UpdateIndustry(collaboratorIndustry, collaboratorIndustryAdditionalInfo);
+            UpdateSpecialNeeds(hasAnySpecialNeeds, specialNeedsDescription);
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+
+            this.SynchronizeJobTitles(jobTitles, userId);
+            this.SynchronizeMiniBios(miniBios, userId);
+
+            //TODO: Refactor this!
+            //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
+            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, null, attendeeOrganizations, isAddingToCurrentEdition, userId);
+            this.UpdateUser(email);
         }
 
         #endregion
@@ -435,6 +748,36 @@ namespace PlataformaRio2C.Domain.Entities
                 userId);
         }
 
+        /// <summary>
+        /// Updates the audiovisual commission.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="attendeeCollaboratorInterests">The commission attendee collaborator interests.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateAudiovisualCommission(
+            Edition edition,
+            CollaboratorType collaboratorType,
+            string firstName,
+            string lastNames,
+            string email,
+            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
+            int userId)
+        {
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.PublicEmail = email?.Trim();
+
+            this.SetUpdateDate(userId);
+
+            //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
+            this.SynchronizeAudiovisualCommissionAttendeeCollaborators(edition, collaboratorType, null, attendeeCollaboratorInterests, null, null, true, userId);
+            this.UpdateUser(email);
+        }
+
         #endregion
 
         #region Innovation Player Executive
@@ -451,6 +794,8 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
+        #region Innovation Commission Collaborator
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Collaborator"/> class.
         /// </summary>
@@ -462,8 +807,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="phoneNumber">The phone number.</param>
         /// <param name="cellPhone">The cell phone.</param>
         /// <param name="document">The document.</param>
+        /// <param name="attendeeInnovationOrganizationTracks">The attendee innovation organization tracks.</param>
         /// <param name="userId">The user identifier.</param>
-        public Collaborator(
+        private Collaborator(
             Edition edition,
             CollaboratorType collaboratorType,
             string firstName,
@@ -472,17 +818,12 @@ namespace PlataformaRio2C.Domain.Entities
             string phoneNumber,
             string cellPhone,
             string document,
+            List<AttendeeInnovationOrganizationTrack> attendeeInnovationOrganizationTracks,
             int userId)
         {
-            //this.Uid = uid;
             this.FirstName = firstName?.Trim();
             this.LastNames = lastNames?.Trim();
             this.PublicEmail = email?.Trim();
-
-            //TODO: Refactor this!
-            //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
-            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, null, null, true, userId);
-            this.UpdateUser(email);
 
             this.PhoneNumber = phoneNumber?.Trim();
             this.CellPhone = cellPhone?.Trim();
@@ -491,141 +832,87 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
+
+            //TODO: Refactor this!
+            //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
+            this.SynchronizeInnovationCommissionAttendeeCollaborators(edition, collaboratorType, null, attendeeInnovationOrganizationTracks, null, null, true, userId);
+            this.UpdateUser(email);
         }
+
+        /// <summary>
+        /// Creates the innovation commission collaborator.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="document">The document.</param>
+        /// <param name="attendeeInnovationOrganizationTracks">The attendee innovation organization tracks.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public static Collaborator CreateInnovationCommissionCollaborator(
+            Edition edition,
+            CollaboratorType collaboratorType,
+            string firstName,
+            string lastNames,
+            string email,
+            string phoneNumber,
+            string cellPhone,
+            string document,
+            List<AttendeeInnovationOrganizationTrack> attendeeInnovationOrganizationTracks,
+            int userId)
+        {
+            return new Collaborator(
+                edition,
+                collaboratorType,
+                firstName,
+                lastNames,
+                email,
+                phoneNumber,
+                cellPhone,
+                document,
+                attendeeInnovationOrganizationTracks,
+                userId);
+        }
+
+        /// <summary>
+        /// Updates the innovation commission.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="attendeeInnovationOrganizationTracks">The attendee innovation organization tracks.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateInnovationCommission(
+            Edition edition,
+            CollaboratorType collaboratorType,
+            string firstName,
+            string lastNames,
+            string email,
+            List<AttendeeInnovationOrganizationTrack> attendeeInnovationOrganizationTracks,
+            int userId)
+        {
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.PublicEmail = email?.Trim();
+
+            this.SetUpdateDate(userId);
+
+            //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
+            this.SynchronizeInnovationCommissionAttendeeCollaborators(edition, collaboratorType, null, attendeeInnovationOrganizationTracks, null, null, true, userId);
+            this.UpdateUser(email);
+        }
+
+        #endregion
 
         /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class.</summary>
         protected Collaborator()
         {
-        }
-
-        /// <summary>Updates the tiny for admin.</summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="collaboratorType">Type of the collaborator.</param>
-        /// <param name="firstName">The first name.</param>
-        /// <param name="lastNames">The last names.</param>
-        /// <param name="email">The email.</param>
-        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
-        /// <param name="userId">The user identifier.</param>
-        public void UpdateTiny(
-            Edition edition,
-            CollaboratorType collaboratorType,
-            string firstName,
-            string lastNames,
-            string email,
-            bool isAddingToCurrentEdition,
-            int userId)
-        {
-            //this.Uid = uid;
-            this.FirstName = firstName?.Trim();
-            this.LastNames = lastNames?.Trim();
-
-            //TODO: Refactor this!
-            //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
-            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, null, null, isAddingToCurrentEdition, userId);
-            this.UpdateUser(email);
-
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
-        }
-
-        /// <summary>Updates the specified attendee organizations for admin.</summary>
-        /// <param name="attendeeOrganizations">The attendee organizations.</param>
-        /// <param name="edition">The edition.</param>
-        /// <param name="collaboratorType">Type of the collaborator.</param>
-        /// <param name="birthDate">The birth date.</param>
-        /// <param name="collaboratorGender">The collaborator gender.</param>
-        /// <param name="collaboratorGenderAdditionalInfo">The collaborator gender additional information.</param>
-        /// <param name="collaboratorRole">The collaborator role.</param>
-        /// <param name="collaboratorRoleAdditionalInfo">The collaborator role additional information.</param>
-        /// <param name="collaboratorIndustry">The collaborator industry.</param>
-        /// <param name="collaboratorIndustryAdditionalInfo">The collaborator industry additional information.</param>
-        /// <param name="hasAnySpecialNeeds">if set to <c>true</c> [has any special needs].</param>
-        /// <param name="specialNeedsDescription">The special needs description.</param>
-        /// <param name="haveYouBeenToRio2CBefore">The have you been to rio2 c before.</param>
-        /// <param name="editionsParticipated">The editions participated.</param>
-        /// <param name="firstName">The first name.</param>
-        /// <param name="lastNames">The last names.</param>
-        /// <param name="badge">The badge.</param>
-        /// <param name="email">The email.</param>
-        /// <param name="phoneNumber">The phone number.</param>
-        /// <param name="cellPhone">The cell phone.</param>
-        /// <param name="sharePublicEmail">The share public email.</param>
-        /// <param name="publicEmail">The public email.</param>
-        /// <param name="website">The website.</param>
-        /// <param name="linkedin">The linkedin.</param>
-        /// <param name="twitter">The twitter.</param>
-        /// <param name="instagram">The instagram.</param>
-        /// <param name="youtube">The youtube.</param>
-        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
-        /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
-        /// <param name="jobTitles">The job titles.</param>
-        /// <param name="miniBios">The mini bios.</param>
-        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
-        /// <param name="userId">The user identifier.</param>
-        public void Update(
-            List<AttendeeOrganization> attendeeOrganizations,
-            Edition edition,
-            CollaboratorType collaboratorType,
-            DateTime? birthDate,
-            CollaboratorGender collaboratorGender,
-            string collaboratorGenderAdditionalInfo,
-            CollaboratorRole collaboratorRole,
-            string collaboratorRoleAdditionalInfo,
-            CollaboratorIndustry collaboratorIndustry,
-            string collaboratorIndustryAdditionalInfo,
-            bool hasAnySpecialNeeds,
-            string specialNeedsDescription,
-            bool? haveYouBeenToRio2CBefore,
-            List<Edition> editionsParticipated,
-            string firstName,
-            string lastNames,
-            string badge,
-            string email,
-            string phoneNumber,
-            string cellPhone,
-            bool? sharePublicEmail,
-            string publicEmail,
-            string website,
-            string linkedin,
-            string twitter,
-            string instagram,
-            string youtube,
-            bool isImageUploaded,
-            bool isImageDeleted,
-            List<CollaboratorJobTitle> jobTitles,
-            List<CollaboratorMiniBio> miniBios,
-            bool isAddingToCurrentEdition,
-            int userId)
-        {
-            //this.Uid = uid;
-            this.FirstName = firstName?.Trim();
-            this.LastNames = lastNames?.Trim();
-            this.Badge = badge?.Trim();
-            this.PhoneNumber = phoneNumber?.Trim();
-            this.CellPhone = cellPhone?.Trim();
-            this.UpdatePublicEmail(sharePublicEmail, publicEmail);
-            this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
-            this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
-
-            this.UpdateEditions(haveYouBeenToRio2CBefore, editionsParticipated, userId);
-            this.BirthDate = birthDate;
-            UpdateGender(collaboratorGender, collaboratorGenderAdditionalInfo);
-            UpdateRole(collaboratorRole, collaboratorRoleAdditionalInfo);
-            UpdateIndustry(collaboratorIndustry, collaboratorIndustryAdditionalInfo);
-            UpdateSpecialNeeds(hasAnySpecialNeeds, specialNeedsDescription);
-
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
-
-            this.SynchronizeJobTitles(jobTitles, userId);
-            this.SynchronizeMiniBios(miniBios, userId);
-
-            //TODO: Refactor this!
-            //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
-            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, null, attendeeOrganizations, isAddingToCurrentEdition, userId);
-            this.UpdateUser(email);
         }
 
         /// <summary>Updates the admin main information.</summary>
@@ -778,65 +1065,92 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
         }
 
-        /// <summary>
-        /// Updates the innovation commission.
-        /// </summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="collaboratorType">Type of the collaborator.</param>
-        /// <param name="firstName">The first name.</param>
-        /// <param name="lastNames">The last names.</param>
-        /// <param name="email">The email.</param>
-        /// <param name="attendeeInnovationOrganizationTracks">The attendee innovation organization tracks.</param>
+        /// <summary>Updates the social networks.</summary>
+        /// <param name="website">The website.</param>
+        /// <param name="linkedin">The linkedin.</param>
+        /// <param name="twitter">The twitter.</param>
+        /// <param name="instagram">The instagram.</param>
+        /// <param name="youtube">The youtube.</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateInnovationCommission(
-            Edition edition,
-            CollaboratorType collaboratorType,
-            string firstName,
-            string lastNames,
-            string email,
-            List<AttendeeInnovationOrganizationTrack> attendeeInnovationOrganizationTracks,
+        public void UpdateSocialNetworks(
+            string website,
+            string linkedin,
+            string twitter,
+            string instagram,
+            string youtube,
             int userId)
         {
-            this.FirstName = firstName?.Trim();
-            this.LastNames = lastNames?.Trim();
-            this.PublicEmail = email?.Trim();
+            this.Website = website?.Trim();
+            this.Linkedin = linkedin?.Trim();
+            this.Twitter = twitter?.Trim();
+            this.Instagram = instagram?.Trim();
+            this.Youtube = youtube?.Trim();
 
-            this.SetUpdateDate(userId);
-
-            //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
-            this.SynchronizeInnovationCommissionAttendeeCollaborators(edition, collaboratorType, null, attendeeInnovationOrganizationTracks, null, null, true, userId);
-            this.UpdateUser(email);
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
         }
 
         /// <summary>
-        /// Updates the audiovisual commission.
+        /// Deletes the specified edition.
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
-        /// <param name="firstName">The first name.</param>
-        /// <param name="lastNames">The last names.</param>
-        /// <param name="email">The email.</param>
-        /// <param name="attendeeCollaboratorInterests">The commission attendee collaborator interests.</param>
+        /// <param name="organizationType">Type of the organization.</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateAudiovisualCommission(
-            Edition edition,
-            CollaboratorType collaboratorType,
-            string firstName,
-            string lastNames,
-            string email,
-            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
-            int userId)
+        public void Delete(Edition edition, CollaboratorType collaboratorType, OrganizationType organizationType, int userId)
         {
-            this.FirstName = firstName?.Trim();
-            this.LastNames = lastNames?.Trim();
-            this.PublicEmail = email?.Trim();
+            this.DeleteAttendeeCollaborators(edition, collaboratorType, organizationType, userId);
+            this.DeleteUser();
 
-            this.SetUpdateDate(userId);
+            // Delete only if the collaborator has no attendee collaborators in any edition and is not admin
+            if (this.FindAllAttendeeCollaboratorsNotDeleted()?.Any() == false && this.User.Roles?.Any(r => r.Name == Constants.Role.Admin) == false)
+            {
+                this.IsDeleted = true;
+                this.UpdateImageUploadDate(false, true);
+            }
 
-            //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
-            this.SynchronizeAudiovisualCommissionAttendeeCollaborators(edition, collaboratorType, null, attendeeCollaboratorInterests, null, null, true, userId);
-            this.UpdateUser(email);
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
         }
+
+        /// <summary>Gets the display name.</summary>
+        /// <returns></returns>
+        public string GetDisplayName()
+        {
+            return this.Badge ?? this.GetFullName();
+        }
+
+        /// <summary>Gets the display name abbreviation.</summary>
+        /// <returns></returns>
+        public string GetDisplayNameAbbreviation()
+        {
+            return this.GetDisplayName().GetTwoLetterCode();
+        }
+
+        /// <summary>Gets the full name.</summary>
+        /// <returns></returns>
+        public string GetFullName()
+        {
+            return this.FirstName + (!string.IsNullOrEmpty(this.LastNames) ? " " + this.LastNames : String.Empty);
+        }
+
+        /// <summary>Gets the name abbreviation.</summary>
+        /// <returns></returns>
+        public string GetNameAbbreviation()
+        {
+            return this.GetFullName().GetTwoLetterCode();
+        }
+
+        /// <summary>Determines whether this instance has image.</summary>
+        /// <returns>
+        ///   <c>true</c> if this instance has image; otherwise, <c>false</c>.</returns>
+        public bool HasImage()
+        {
+            return this.ImageUploadDate.HasValue;
+        }
+
+        #region Privates
 
         /// <summary>
         /// Updates the special needs.
@@ -950,32 +1264,6 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        /// <summary>Updates the social networks.</summary>
-        /// <param name="website">The website.</param>
-        /// <param name="linkedin">The linkedin.</param>
-        /// <param name="twitter">The twitter.</param>
-        /// <param name="instagram">The instagram.</param>
-        /// <param name="youtube">The youtube.</param>
-        /// <param name="userId">The user identifier.</param>
-        public void UpdateSocialNetworks(
-            string website,
-            string linkedin,
-            string twitter,
-            string instagram,
-            string youtube,
-            int userId)
-        {
-            this.Website = website?.Trim();
-            this.Linkedin = linkedin?.Trim();
-            this.Twitter = twitter?.Trim();
-            this.Instagram = instagram?.Trim();
-            this.Youtube = youtube?.Trim();
-
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
-        }
-
         /// <summary>Updates the public email.</summary>
         /// <param name="sharePublicEmail">The share public email.</param>
         /// <param name="publicEmail">The public email.</param>
@@ -987,29 +1275,6 @@ namespace PlataformaRio2C.Domain.Entities
             }
 
             this.PublicEmail = sharePublicEmail == true ? publicEmail?.Trim() : null;
-        }
-
-        /// <summary>
-        /// Deletes the specified edition.
-        /// </summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="collaboratorType">Type of the collaborator.</param>
-        /// <param name="organizationType">Type of the organization.</param>
-        /// <param name="userId">The user identifier.</param>
-        public void Delete(Edition edition, CollaboratorType collaboratorType, OrganizationType organizationType, int userId)
-        {
-            this.DeleteAttendeeCollaborators(edition, collaboratorType, organizationType, userId);
-            this.DeleteUser();
-
-            // Delete only if the collaborator has no attendee collaborators in any edition and is not admin
-            if (this.FindAllAttendeeCollaboratorsNotDeleted()?.Any() == false && this.User.Roles?.Any(r => r.Name == Constants.Role.Admin) == false)
-            {
-                this.IsDeleted = true;
-                this.UpdateImageUploadDate(false, true);
-            }
-
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
         }
 
         /// <summary>Updates the image upload date.</summary>
@@ -1027,41 +1292,7 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        /// <summary>Gets the display name.</summary>
-        /// <returns></returns>
-        public string GetDisplayName()
-        {
-            return this.Badge ?? this.GetFullName();
-        }
-
-        /// <summary>Gets the display name abbreviation.</summary>
-        /// <returns></returns>
-        public string GetDisplayNameAbbreviation()
-        {
-            return this.GetDisplayName().GetTwoLetterCode();
-        }
-
-        /// <summary>Gets the full name.</summary>
-        /// <returns></returns>
-        public string GetFullName()
-        {
-            return this.FirstName + (!string.IsNullOrEmpty(this.LastNames) ? " " + this.LastNames : String.Empty);
-        }
-
-        /// <summary>Gets the name abbreviation.</summary>
-        /// <returns></returns>
-        public string GetNameAbbreviation()
-        {
-            return this.GetFullName().GetTwoLetterCode();
-        }
-
-        /// <summary>Determines whether this instance has image.</summary>
-        /// <returns>
-        ///   <c>true</c> if this instance has image; otherwise, <c>false</c>.</returns>
-        public bool HasImage()
-        {
-            return this.ImageUploadDate.HasValue;
-        }
+        #endregion
 
         #region Administrators
 

@@ -61,7 +61,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             // Create if the user was not found in database
             if (user == null)
             {
-                var collaborator = new Collaborator(
+                var collaborator = Collaborator.CreateCollaboratorTicket(
                     collaboratorUid,
                     cmd.Edition,
                     cmd.AttendeeOrganizations,
