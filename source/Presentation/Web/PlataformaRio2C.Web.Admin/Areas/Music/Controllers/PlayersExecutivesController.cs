@@ -55,6 +55,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
+        private readonly IActivityRepository activityRepo;
+        private readonly ITargetAudienceRepository targetAudienceRepo;
+        private readonly IInterestRepository interestRepo;
         private readonly IFileRepository fileRepo;
 
         /// <summary>
@@ -72,6 +75,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             ICollaboratorRepository collaboratorRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepo,
             IAttendeeOrganizationRepository attendeeOrganizationRepo,
+            IActivityRepository activityRepository,
+            ITargetAudienceRepository targetAudienceRepository,
+            IInterestRepository interestRepository,
             IFileRepository fileRepo
             )
             : base(commandBus, identityControlle)
@@ -79,6 +85,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             this.collaboratorRepo = collaboratorRepository;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepo;
             this.attendeeOrganizationRepo = attendeeOrganizationRepo;
+            this.activityRepo = activityRepository;
+            this.targetAudienceRepo = targetAudienceRepository;
+            this.interestRepo = interestRepository;
             this.fileRepo = fileRepo;
         }
 
@@ -91,8 +100,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         public ActionResult Index(CollaboratorSearchViewModel searchViewModel)
         {
             #region Breadcrumb
-
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.MusicCommission, new List<BreadcrumbItemHelper> {
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ExecutiveMusic, new List<BreadcrumbItemHelper> {
                 new BreadcrumbItemHelper(Labels.Music, null),
                 new BreadcrumbItemHelper(Labels.Players, Url.Action("Index", "Players", new { Area = "Music" })),
                 new BreadcrumbItemHelper(Labels.Executives, Url.Action("Index", "PlayersExecutives", new { Area = "Music" }))
@@ -453,18 +461,22 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()
         {
-            CreateAudiovisualPlayerExecutiveCollaborator cmd = new CreateAudiovisualPlayerExecutiveCollaborator(
-                    //TODO: 866 - verify type CollaboratorType and  OrganizationType
+            CreateMusicPlayerExecutiveCollaborator cmd = new CreateMusicPlayerExecutiveCollaborator(
                     await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.MusicPlayer.Uid),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
+                    await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
+                    await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Music.Id),
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
                     EditionDto.Id,
                     false,
                     false,
                     false,
+                    false,
+                    true,
                     UserInterfaceLanguage);
 
             return Json(new
@@ -481,7 +493,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Create(CreateAudiovisualPlayerExecutiveCollaborator cmd)
+        public async Task<ActionResult> Create(CreateMusicPlayerExecutiveCollaborator cmd)
         {
             var result = new AppValidationResult();
 
@@ -608,11 +620,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUpdateModal(Guid? collaboratorUid, bool? isAddingToCurrentEdition)
         {
-            UpdateAudiovisualPlayerExecutiveCollaborator cmd;
+            UpdateMusicPlayerExecutiveCollaborator cmd;
 
             try
             {
-                cmd = new UpdateAudiovisualPlayerExecutiveCollaborator(
+                cmd = new UpdateMusicPlayerExecutiveCollaborator(
                     await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
                     //TODO: 866 - verify type CollaboratorType and  OrganizationType
                     await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.MusicPlayer.Uid),
@@ -622,11 +634,16 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
+                    await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
+                    await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Music.Id),
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
                     EditionDto.Id,
                     isAddingToCurrentEdition,
                     false,
                     false,
                     false,
+                    false,
+                    true,
                     this.UserInterfaceLanguage);
             }
             catch (DomainException ex)
@@ -642,6 +659,70 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     new { page = this.RenderRazorViewToString("Modals/UpdateModal", cmd), divIdOrClass = "#GlobalModalContainer" },
                 }
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Updates the specified command.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> Update(UpdateMusicPlayerExecutiveCollaborator cmd)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    Constants.CollaboratorType.PlayerExecutiveAudiovisual,
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                cmd.UpdateDropdownProperties(
+                    await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(cmd.CollaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
+                    await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.AudiovisualPlayer.Uid),
+                    await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
+                    EditionDto.Id,
+                    UserInterfaceLanguage);
+
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Executive, Labels.UpdatedM) });
         }
 
         #endregion

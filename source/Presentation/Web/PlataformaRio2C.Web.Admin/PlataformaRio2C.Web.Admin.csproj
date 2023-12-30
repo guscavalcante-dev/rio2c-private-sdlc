@@ -10044,6 +10044,7 @@
     <Content Include="Views\AdminMailerService\CartoonCommissionWelcomeEmail.cshtml" />
     <Content Include="Views\Collaborators\Widgets\CollaboratorImagesWidget.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AttendeeCollaboratorActivityBaseCommand.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\AttendeeCollaboratorTargetAudienceBaseCommand.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
