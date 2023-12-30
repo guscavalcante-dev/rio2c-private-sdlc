@@ -269,6 +269,7 @@
     <Compile Include="CQRS\CommandsHandlers\Emails\Site\SendUnreadConversationEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Site\SendProducerWelcomeEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Innovation\PlayersExecutives\CreateInnovationPlayerExecutiveCollaboratorCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Innovation\PlayersExecutives\UpdateInnovationPlayerExecutiveCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Innovation\TrackOptionGroups\UpdateInnovationOrganizationTrackOptionGroupMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Innovation\TrackOptionGroups\DeleteInnovationOrganizationTrackOptionGroupCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Innovation\TrackOptions\BaseCommandHandlers\InnovationOrganizationTrackOptionBaseCommandHandler.cs" />
@@ -442,6 +443,7 @@
     <Compile Include="CQRS\Commands\Emails\Site\SendSpeakersReportEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Innovation\PlayersExecutives\BaseCommands\InnovationPlayerExecutiveCollaboratorBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Innovation\PlayersExecutives\CreateInnovationPlayerExecutiveCollaborator.cs" />
+    <Compile Include="CQRS\Commands\Innovation\PlayersExecutives\UpdateInnovationPlayerExecutiveCollaborator.cs" />
     <Compile Include="CQRS\Commands\Innovation\TrackOptionGroups\UpdateInnovationOrganizationTrackOptionGroupMainInformation.cs" />
     <Compile Include="CQRS\Commands\Innovation\TrackOptionGroups\DeleteInnovationOrganizationTrackOptionGroup.cs" />
     <Compile Include="CQRS\Commands\Innovation\TrackOptionGroups\CreateInnovationOrganizationTrackOptionGroup.cs" />

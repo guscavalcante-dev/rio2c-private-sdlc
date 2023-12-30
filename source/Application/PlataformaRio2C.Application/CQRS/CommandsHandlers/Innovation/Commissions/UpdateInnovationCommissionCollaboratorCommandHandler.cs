@@ -86,7 +86,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                                                                                                                    ?.Where(ioto => ioto.IsChecked)
                                                                                                                                    ?.Select(ioto => ioto.InnovationOrganizationTrackOptionGroupUid));
 
-            collaborator.UpdateInnovationCommission(
+            collaborator.UpdateInnovationCommissionCollaborator(
                 await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                 await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
                 cmd.FirstName,

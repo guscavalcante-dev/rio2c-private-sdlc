@@ -25,6 +25,7 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public int AttendeeCollaboratorId { get; set; }
         public int TargetAudienceId { get; set; }
+        public string AdditionalInfo { get; set; }
 
         public virtual AttendeeCollaborator AttendeeCollaborator { get; private set; }
         public virtual TargetAudience TargetAudience { get; private set; }

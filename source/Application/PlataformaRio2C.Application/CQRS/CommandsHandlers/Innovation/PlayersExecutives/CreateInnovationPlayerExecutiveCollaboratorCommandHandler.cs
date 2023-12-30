@@ -12,11 +12,13 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;
@@ -30,15 +32,32 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IUserRepository userRepo;
         private readonly IEditionRepository editionRepo;
         private readonly ICollaboratorTypeRepository collaboratorTypeRepo;
+        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
+        private readonly ILanguageRepository languageRepo;
+        private readonly ICollaboratorGenderRepository genderRepo;
+        private readonly ICollaboratorIndustryRepository industryRepo;
+        private readonly ICollaboratorRoleRepository roleRepo;
+        private readonly IActivityRepository activityRepo;
+        private readonly IInterestRepository interestRepo;
         private readonly IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="CreateInnovationPlayerExecutiveCollaboratorCommandHandler"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateInnovationPlayerExecutiveCollaboratorCommandHandler"/> class.
+        /// </summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="userRepository">The user repository.</param>
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="collaboratorTypeRepository">The collaborator type repository.</param>
+        /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
+        /// <param name="languageRepository">The language repository.</param>
+        /// <param name="genderRepository">The gender repository.</param>
+        /// <param name="industryRepository">The industry repository.</param>
+        /// <param name="roleRepository">The role repository.</param>
+        /// <param name="activityRepository">The activity repository.</param>
+        /// <param name="interestRepository">The interest repository.</param>
+        /// <param name="innovationOrganizationTrackOptionRepository">The innovation organization track option repository.</param>
         public CreateInnovationPlayerExecutiveCollaboratorCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
@@ -46,12 +65,26 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IUserRepository userRepository,
             IEditionRepository editionRepository,
             ICollaboratorTypeRepository collaboratorTypeRepository,
+            IAttendeeOrganizationRepository attendeeOrganizationRepository,
+            ILanguageRepository languageRepository,
+            ICollaboratorGenderRepository genderRepository,
+            ICollaboratorIndustryRepository industryRepository,
+            ICollaboratorRoleRepository roleRepository,
+            IActivityRepository activityRepository,
+            IInterestRepository interestRepository,
             IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepository)
             : base(eventBus, uow, collaboratorRepository)
         {
             this.userRepo = userRepository;
             this.editionRepo = editionRepository;
             this.collaboratorTypeRepo = collaboratorTypeRepository;
+            this.attendeeOrganizationRepo = attendeeOrganizationRepository;
+            this.languageRepo = languageRepository;
+            this.genderRepo = genderRepository;
+            this.industryRepo = industryRepository;
+            this.roleRepo = roleRepository;
+            this.activityRepo = activityRepository;
+            this.interestRepo = interestRepository;
             this.innovationOrganizationTrackOptionRepo = innovationOrganizationTrackOptionRepository;
         }
 
@@ -81,10 +114,48 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
+            var languageDtos = await this.languageRepo.FindAllDtosAsync();
+            var activities = await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id);
+            var interestsDtos = await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Startup.Id);
+
             // Create if the user was not found in database
             if (user == null)
             {
-                var collaborator = Collaborator.CreateInnovationPlayerExecutive(); //TODO: PASSAR OS PARAMETROS AQUI
+                var collaborator = Collaborator.CreateInnovationPlayerExecutiveCollaborator(
+                    await this.attendeeOrganizationRepo.FindAllByUidsAsync(cmd.AttendeeOrganizationBaseCommands?.Where(aobc => aobc.AttendeeOrganizationUid.HasValue)?.Select(aobc => aobc.AttendeeOrganizationUid.Value)?.ToList()),
+                    await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
+                    await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
+                    cmd.BirthDate,
+                    genderRepo.Get(cmd.CollaboratorGenderUid ?? Guid.Empty),
+                    cmd.CollaboratorGenderAdditionalInfo,
+                    roleRepo.Get(cmd.CollaboratorRoleUid ?? Guid.Empty),
+                    cmd.CollaboratorRoleAdditionalInfo,
+                    industryRepo.Get(cmd.CollaboratorIndustryUid ?? Guid.Empty),
+                    cmd.CollaboratorIndustryAdditionalInfo,
+                    cmd.HasAnySpecialNeeds,
+                    cmd.SpecialNeedsDescription,
+                    cmd.HaveYouBeenToRio2CBefore,
+                    cmd.EditionsUids != null ? this.editionRepo.GetAll(e => cmd.EditionsUids.Contains(e.Uid)).ToList() : null,
+                    cmd.FirstName,
+                    cmd.LastNames,
+                    cmd.Badge,
+                    cmd.Email,
+                    cmd.PhoneNumber,
+                    cmd.CellPhone,
+                    cmd.SharePublicEmail,
+                    cmd.PublicEmail,
+                    cmd.Website,
+                    cmd.Linkedin,
+                    cmd.Twitter,
+                    cmd.Instagram,
+                    cmd.Youtube,
+                    cmd.CropperImage?.ImageFile != null,
+                    cmd.JobTitles?.Select(d => new CollaboratorJobTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
+                    cmd.MiniBios?.Select(d => new CollaboratorMiniBio(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
+                    cmd.AttendeeCollaboratorActivities?.Where(aca => aca.IsChecked)?.Select(aca => new AttendeeCollaboratorActivity(activities?.FirstOrDefault(a => a.Uid == aca.ActivityUid), aca.AdditionalInfo, cmd.UserId))?.ToList(),
+                    cmd.AttendeeCollaboratorInterests?.Where(aci => aci.IsChecked)?.Select(aci => new AttendeeCollaboratorInterest(interestsDtos?.FirstOrDefault(i => i.Interest.Uid == aci.InterestUid).Interest, aci.AdditionalInfo, cmd.UserId))?.ToList(),
+                    new List<AttendeeCollaboratorInnovationOrganizationTrack>(), //TODO: Passar a lista vinda do EditorFor() aqui
+                    cmd.UserId);
 
                 if (!collaborator.IsValid())
                 {

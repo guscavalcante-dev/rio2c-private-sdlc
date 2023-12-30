@@ -176,7 +176,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public void UpdateBaseProperties(
             CollaboratorDto entity,
-             List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos,
+            List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos,
             List<LanguageDto> languagesDtos,
             List<CollaboratorGender> genders,
             List<CollaboratorIndustry> industries,

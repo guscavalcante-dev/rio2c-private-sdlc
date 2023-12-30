@@ -573,12 +573,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUpdateModal(Guid? collaboratorUid, bool? isAddingToCurrentEdition)
         {
-            //TODO: CRIAR UpdateInnovationPlayerExecutiveCollaborator e implementar aqui
-            UpdateAudiovisualPlayerExecutiveCollaborator cmd;
+            UpdateInnovationPlayerExecutiveCollaborator cmd;
 
             try
             {
-                cmd = new UpdateAudiovisualPlayerExecutiveCollaborator(
+                cmd = new UpdateInnovationPlayerExecutiveCollaborator(
                     await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
                     await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.StartupPlayer.Uid),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
@@ -587,6 +586,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                     await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
+                    await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id),
+                    await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Startup.Id),
+                    await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync(),
                     EditionDto.Id,
                     isAddingToCurrentEdition,
                     false,
