@@ -8234,6 +8234,7 @@
     <Content Include="Areas\Innovation\Views\Players\Widgets\EditionCountOdometerWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Players\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Players\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\Shared\EditorTemplates\AttendeeCollaboratorInnovationOrganizationTrackBaseCommand.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

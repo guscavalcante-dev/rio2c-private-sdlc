@@ -2414,7 +2414,7 @@ namespace PlataformaRio2C.Domain.Entities
             int userId)
         {
             var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition?.Id ?? 0);
-            attendeeCollaborator?.SynchronizeAttendeeCollaboratorInnovationOrganizationTracks(attendeeInnovationOrganizationTracks, userId);
+            attendeeCollaborator?.SynchronizeAttendeeInnovationOrganizationTracks(attendeeInnovationOrganizationTracks, userId);
         }
 
         /// <summary>

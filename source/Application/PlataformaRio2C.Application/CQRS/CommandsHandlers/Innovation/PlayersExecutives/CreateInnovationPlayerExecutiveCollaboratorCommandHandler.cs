@@ -117,10 +117,24 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
             var activities = await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id);
             var interestsDtos = await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Startup.Id);
+            var innovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync();
 
             // Create if the user was not found in database
             if (user == null)
             {
+                // Interests
+                var attendeeCollaboratorInterests = new List<AttendeeCollaboratorInterest>();
+                if (cmd.Interests?.Any() == true)
+                {
+                    foreach (var interestBaseCommands in cmd.Interests)
+                    {
+                        foreach (var interestBaseCommand in interestBaseCommands?.Where(ibc => ibc.IsChecked)?.ToList())
+                        {
+                            attendeeCollaboratorInterests.Add(new AttendeeCollaboratorInterest(interestsDtos?.FirstOrDefault(id => id.Interest.Uid == interestBaseCommand.InterestUid)?.Interest, interestBaseCommand.AdditionalInfo, cmd.UserId));
+                        }
+                    }
+                }
+
                 var collaborator = Collaborator.CreateInnovationPlayerExecutiveCollaborator(
                     await this.attendeeOrganizationRepo.FindAllByUidsAsync(cmd.AttendeeOrganizationBaseCommands?.Where(aobc => aobc.AttendeeOrganizationUid.HasValue)?.Select(aobc => aobc.AttendeeOrganizationUid.Value)?.ToList()),
                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
@@ -153,8 +167,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.JobTitles?.Select(d => new CollaboratorJobTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                     cmd.MiniBios?.Select(d => new CollaboratorMiniBio(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                     cmd.AttendeeCollaboratorActivities?.Where(aca => aca.IsChecked)?.Select(aca => new AttendeeCollaboratorActivity(activities?.FirstOrDefault(a => a.Uid == aca.ActivityUid), aca.AdditionalInfo, cmd.UserId))?.ToList(),
-                    cmd.AttendeeCollaboratorInterests?.Where(aci => aci.IsChecked)?.Select(aci => new AttendeeCollaboratorInterest(interestsDtos?.FirstOrDefault(i => i.Interest.Uid == aci.InterestUid).Interest, aci.AdditionalInfo, cmd.UserId))?.ToList(),
-                    new List<AttendeeCollaboratorInnovationOrganizationTrack>(), //TODO: Passar a lista vinda do EditorFor() aqui
+                    attendeeCollaboratorInterests,
+                    cmd.AttendeeCollaboratorInnovationOrganizationTracks?.Where(aciot => aciot.IsChecked)?.Select(aciot => new AttendeeCollaboratorInnovationOrganizationTrack(innovationOrganizationTrackOptions?.FirstOrDefault(ioto => ioto.Uid == aciot.InnovationOrganizationTrackOptionUid)?.InnovationOrganizationTrackOption, aciot.AdditionalInfo, cmd.UserId))?.ToList(),
                     cmd.UserId);
 
                 if (!collaborator.IsValid())

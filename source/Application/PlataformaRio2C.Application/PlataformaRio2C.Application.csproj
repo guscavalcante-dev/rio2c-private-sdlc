@@ -419,6 +419,7 @@
     <Compile Include="CQRS\Commands\Cartoon\Projects\CreateCartoonProject.cs" />
     <Compile Include="CQRS\Commands\Cartoon\Projects\DeleteCartoonProject.cs" />
     <Compile Include="CQRS\Commands\Cartoon\Projects\EvaluateCartoonProject.cs" />
+    <Compile Include="CQRS\Commands\Collaborators\BaseCommands\AttendeeCollaboratorInnovationOrganizationTrackBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Collaborators\BaseCommands\AttendeeCollaboratorInterestBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Collaborators\BaseCommands\AttendeeCollaboratorActivityBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Collaborators\UpdateCollaboratorSocialNetworks.cs" />
