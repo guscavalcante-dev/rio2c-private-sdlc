@@ -25,10 +25,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
 
         [Display(Name = "Player", ResourceType = typeof(Labels))]
-        [RequiredIf("IsRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [RequiredIf("IsAttendeeOrganizationUidRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? AttendeeOrganizationUid { get; set; }
 
-        public bool IsRequired { get; set; }
+        public bool IsAttendeeOrganizationUidRequired { get; set; }
 
         public List<AttendeeOrganizationBaseDto> AttendeeOrganizationsBaseDtos { get; private set; }
 
@@ -50,7 +50,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
         private void UpdateBaseProperties(AttendeeOrganizationBaseDto attendeeOrganizationBaseDto, List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, bool isAttendeeOrganizationRequired)
         {
-            this.IsRequired = isAttendeeOrganizationRequired;
+            this.IsAttendeeOrganizationUidRequired = isAttendeeOrganizationRequired;
             this.AttendeeOrganizationUid = attendeeOrganizationBaseDto?.Uid;
             this.UpdateDropdownProperties(attendeeOrganizationsBaseDtos);
         }
