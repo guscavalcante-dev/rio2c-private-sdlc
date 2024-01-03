@@ -19,6 +19,8 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>AttendeeCollaboratorInnovationOrganizationTrackDto</summary>
     public class AttendeeCollaboratorInnovationOrganizationTrackDto
     {
+        public string AdditionalInfo { get; set; }
+
         public AttendeeCollaborator AttendeeCollaborator { get; set; }
         public InnovationOrganizationTrackOption InnovationOrganizationTrackOption { get; set; }
         public InnovationOrganizationTrackOptionGroup InnovationOrganizationTrackOptionGroup { get; set; }

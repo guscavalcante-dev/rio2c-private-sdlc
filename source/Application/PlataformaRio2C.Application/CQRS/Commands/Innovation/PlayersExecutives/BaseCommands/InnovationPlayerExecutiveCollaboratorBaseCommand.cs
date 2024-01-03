@@ -137,8 +137,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<AttendeeOrganizationBaseCommand> TemplateAttendeeOrganizationBaseCommands { get; set; }
 
         public List<AttendeeCollaboratorActivityBaseCommand> AttendeeCollaboratorActivities { get; set; }
-        public List<AttendeeCollaboratorInterestBaseCommand> AttendeeCollaboratorInterests { get; set; }
-        //public List<AttendeeCollaboratorInnovationOrganizationTrackBaseCommand> AttendeeCollaboratorInnovationOrganizationTracks { get; set; }
+        public InterestBaseCommand[][] Interests { get; set; }
+
+        //public List<AttendeeCollaboratorInterestBaseCommand> AttendeeCollaboratorInterests { get; set; }
+        public List<AttendeeCollaboratorInnovationOrganizationTrackBaseCommand> AttendeeCollaboratorInnovationOrganizationTracks { get; set; }
 
         #region Dropdowns Properties
 
@@ -176,7 +178,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public void UpdateBaseProperties(
             CollaboratorDto entity,
-             List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos,
+            List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos,
             List<LanguageDto> languagesDtos,
             List<CollaboratorGender> genders,
             List<CollaboratorIndustry> industries,
@@ -406,16 +408,39 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             CollaboratorDto entity, 
             List<InterestDto> interestDtos)
         {
-            this.AttendeeCollaboratorInterests = new List<AttendeeCollaboratorInterestBaseCommand>();
-            if (interestDtos?.Any() == true)
+            var interestsBaseCommands = new List<InterestBaseCommand>();
+            foreach (var interestDto in interestDtos)
             {
-                foreach (var interestDto in interestDtos)
+                var attendeeCollaboratorInterest = entity?.AttendeeCollaboratorInterestDtos?.FirstOrDefault(dto => dto.Interest.Uid == interestDto.Interest.Uid);
+                interestsBaseCommands.Add(attendeeCollaboratorInterest != null ? new InterestBaseCommand(attendeeCollaboratorInterest) :
+                                                                         new InterestBaseCommand(interestDto));
+            }
+
+            var groupedInterestsDtos = interestsBaseCommands?
+                                            .GroupBy(i => new { i.InterestGroupUid, i.InterestGroupName, i.InterestGroupDisplayOrder })?
+                                            .OrderBy(g => g.Key.InterestGroupDisplayOrder)?
+                                            .ToList();
+
+            if (groupedInterestsDtos?.Any() == true)
+            {
+                this.Interests = new InterestBaseCommand[groupedInterestsDtos.Count][];
+                for (int i = 0; i < groupedInterestsDtos.Count; i++)
                 {
-                    var attendeeCollaboratorInterestDto = entity?.AttendeeCollaboratorInterestDtos?.FirstOrDefault(oad => oad.InterestUid == interestDto.Interest.Uid);
-                    this.AttendeeCollaboratorInterests.Add(attendeeCollaboratorInterestDto != null ? new AttendeeCollaboratorInterestBaseCommand(attendeeCollaboratorInterestDto) :
-                                                                                                     new AttendeeCollaboratorInterestBaseCommand(interestDto));
+                    this.Interests[i] = groupedInterestsDtos[i].ToArray();
                 }
             }
+
+            //TODO: Implement the EditorTemplate for Interest and activate the code below. This is the new patter for all EditorTemplates.
+            //this.AttendeeCollaboratorInterests = new List<AttendeeCollaboratorInterestBaseCommand>();
+            //if (interestDtos?.Any() == true)
+            //{
+            //    foreach (var interestDto in interestDtos)
+            //    {
+            //        var attendeeCollaboratorInterestDto = entity?.AttendeeCollaboratorInterestDtos?.FirstOrDefault(oad => oad.InterestUid == interestDto.Interest.Uid);
+            //        this.AttendeeCollaboratorInterests.Add(attendeeCollaboratorInterestDto != null ? new AttendeeCollaboratorInterestBaseCommand(attendeeCollaboratorInterestDto) :
+            //                                                                                         new AttendeeCollaboratorInterestBaseCommand(interestDto));
+            //    }
+            //}
         }
 
         /// <summary>
@@ -427,16 +452,16 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             CollaboratorDto entity, 
             List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos)
         {
-            //this.AttendeeCollaboratorInnovationOrganizationTracks = new List<AttendeeCollaboratorInnovationOrganizationTrackBaseCommand>();
-            //if (innovationOrganizationTrackOptionDtos?.Any() == true)
-            //{
-            //    foreach (var innovationOrganizationTrackOptionDto in innovationOrganizationTrackOptionDtos)
-            //    {
-            //        var attendeeCollaboratorInterestDto = entity?.AttendeeCollaboratorInnovationOrganizationTrackDtos?.FirstOrDefault(dto => dto.InnovationOrganizationTrackOption.Uid == innovationOrganizationTrackOptionDto.Uid);
-            //        this.AttendeeCollaboratorInterests.Add(attendeeCollaboratorInterestDto != null ? new AttendeeCollaboratorInnovationOrganizationTrackBaseCommand(attendeeCollaboratorInterestDto) :
-            //                                                                                         new AttendeeCollaboratorInnovationOrganizationTrackBaseCommand(innovationOrganizationTrackOptionDto));
-            //    }
-            //}
+            this.AttendeeCollaboratorInnovationOrganizationTracks = new List<AttendeeCollaboratorInnovationOrganizationTrackBaseCommand>();
+            if (innovationOrganizationTrackOptionDtos?.Any() == true)
+            {
+                foreach (var innovationOrganizationTrackOptionDto in innovationOrganizationTrackOptionDtos)
+                {
+                    var attendeeCollaboratorInterestDto = entity?.AttendeeCollaboratorInnovationOrganizationTrackDtos?.FirstOrDefault(dto => dto.InnovationOrganizationTrackOption.Uid == innovationOrganizationTrackOptionDto.Uid);
+                    this.AttendeeCollaboratorInnovationOrganizationTracks.Add(attendeeCollaboratorInterestDto != null ? new AttendeeCollaboratorInnovationOrganizationTrackBaseCommand(attendeeCollaboratorInterestDto) :
+                                                                                                                        new AttendeeCollaboratorInnovationOrganizationTrackBaseCommand(innovationOrganizationTrackOptionDto.InnovationOrganizationTrackOption));
+                }
+            }
         }
 
         #endregion

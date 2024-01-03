@@ -1,0 +1,21 @@
+﻿@using System.Globalization
+@model PlataformaRio2C.Application.CQRS.Commands.AttendeeCollaboratorInnovationOrganizationTrackBaseCommand
+<div data-id="@Model.InnovationOrganizationTrackOptionUid">
+    @Html.HiddenFor(m => m.InnovationOrganizationTrackOptionUid)
+    @Html.HiddenFor(m => m.InnovationOrganizationTrackOptionName)
+
+    <label class="kt-checkbox" style="margin-bottom: 5px;">
+        @if (!Model.InnovationOrganizationTrackOptionHasAdditionalInfo)
+        {
+            @Html.CheckBoxFor(m => m.IsChecked, new { @class = "require-one", data_id = "activity-group" })
+        }
+        else
+        {
+            @Html.CheckBoxFor(m => m.IsChecked, new { @class = "require-one toggle-additional-info", data_id = "activity-group", data_toggle_id = Model.InnovationOrganizationTrackOptionUid })
+        }
+        <div>
+            <span>@Model.InnovationOrganizationTrackOptionName.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')</span>
+        </div>
+        <span></span>
+    </label>
+</div>

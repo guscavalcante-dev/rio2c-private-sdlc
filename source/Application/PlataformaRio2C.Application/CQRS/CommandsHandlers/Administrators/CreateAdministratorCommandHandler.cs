@@ -90,7 +90,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             // Create if the user was not found in database
             if (user == null)
             {
-                var collaborator = new Collaborator(
+                var collaborator = Collaborator.CreateAdministratorCollaborator(
                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                     await this.collaboratorTypeRepo.FindAllByNamesAsync(cmd.CollaboratorTypeNames),
                     await this.roleRepo.FindByNameAsync(cmd.RoleName),

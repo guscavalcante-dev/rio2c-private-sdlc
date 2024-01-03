@@ -13,10 +13,6 @@
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -29,6 +25,7 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public int AttendeeCollaboratorId { get; set; }
         public int InnovationOrganizationTrackOptionId { get; set; }
+        public string AdditionalInfo { get; set; }
 
         public virtual AttendeeCollaborator AttendeeCollaborator { get; private set; }
         public virtual InnovationOrganizationTrackOption InnovationOrganizationTrackOption { get; private set; }
@@ -38,18 +35,41 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
         /// <param name="innovationOrganizationTrackOption">The innovation organization track option.</param>
+        /// <param name="addtionalInfo">The addtional information.</param>
         /// <param name="userId">The user identifier.</param>
         public AttendeeCollaboratorInnovationOrganizationTrack(
             AttendeeCollaborator attendeeCollaborator,
             InnovationOrganizationTrackOption innovationOrganizationTrackOption,
+            string addtionalInfo,
             int userId)
         {
             this.AttendeeCollaborator = attendeeCollaborator;
             this.InnovationOrganizationTrackOption = innovationOrganizationTrackOption;
 
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
+            this.AttendeeCollaboratorId = attendeeCollaborator?.Id ?? 0;
+            this.InnovationOrganizationTrackOptionId = innovationOrganizationTrackOption?.Id ?? 0;
+
+            this.AdditionalInfo = addtionalInfo;
+
+            this.SetCreateDate(userId);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttendeeCollaboratorInnovationOrganizationTrack"/> class.
+        /// </summary>
+        /// <param name="innovationOrganizationTrackOption">The innovation organization track option.</param>
+        /// <param name="addtionalInfo">The addtional information.</param>
+        /// <param name="userId">The user identifier.</param>
+        public AttendeeCollaboratorInnovationOrganizationTrack(
+            InnovationOrganizationTrackOption innovationOrganizationTrackOption,
+            string addtionalInfo,
+            int userId)
+        {
+            this.InnovationOrganizationTrackOption = innovationOrganizationTrackOption;
+            this.InnovationOrganizationTrackOptionId = innovationOrganizationTrackOption?.Id ?? 0;
+            this.AdditionalInfo = addtionalInfo;
+
+            this.SetCreateDate(userId);
         }
 
         /// <summary>
@@ -57,7 +77,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         public AttendeeCollaboratorInnovationOrganizationTrack()
         {
-
         }
 
         /// <summary>

@@ -74,7 +74,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                                                                                                                     ?.Where(ioto => ioto.IsChecked)
                                                                                                                                     ?.Select(ioto => ioto.InnovationOrganizationTrackOptionGroupUid));
 
-            collaborator.UpdateAttendeeCollaboratorInnovationOrganizationTracks(edition,
+            collaborator.UpdateCollaboratorInnovationOrganizationTracks(edition,
                                                                                 innovationOrganizationTrackOptions.Select(ioto => new AttendeeInnovationOrganizationTrack(ioto, string.Empty, cmd.UserId)).ToList(),
                                                                                 cmd.UserId);
 

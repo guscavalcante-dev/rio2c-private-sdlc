@@ -20,19 +20,22 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public int AttendeeCollaboratorId { get; set; }
         public int ActivityId { get; set; }
+        public string AdditionalInfo { get; set; }
 
         public virtual AttendeeCollaborator AttendeeCollaborator { get; private set; }
         public virtual Activity Activity { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeCollaboratorActivity"/> class.
+        /// Initializes a new instance of the <see cref="AttendeeCollaboratorActivity" /> class.
         /// </summary>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
         /// <param name="activity">The activity.</param>
+        /// <param name="additionalInfo">The additional information.</param>
         /// <param name="userId">The user identifier.</param>
         public AttendeeCollaboratorActivity(
             AttendeeCollaborator attendeeCollaborator,
             Activity activity,
+            string additionalInfo,
             int userId)
         {
             this.AttendeeCollaborator = attendeeCollaborator;
@@ -41,9 +44,9 @@ namespace PlataformaRio2C.Domain.Entities
             this.AttendeeCollaboratorId = attendeeCollaborator?.Id ?? 0;
             this.ActivityId = activity?.Id ?? 0;
 
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
+            this.AdditionalInfo = additionalInfo;
+
+            this.SetCreateDate(userId);
         }
 
         /// <summary>
@@ -59,6 +62,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.Activity = activity;
             this.ActivityId = activity?.Id ?? 0;
+            this.AdditionalInfo = additionalInfo;
 
             base.SetCreateDate(userId);
         }
@@ -73,12 +77,13 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>
         /// Updates the specified user identifier.
         /// </summary>
+        /// <param name="additionalInfo">The additional information.</param>
         /// <param name="userId">The user identifier.</param>
-        public void Update(int userId)
+        public void Update(string additionalInfo, int userId)
         {
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            this.AdditionalInfo = additionalInfo;
+
+            this.SetUpdateDate(userId);
         }
 
         #region Valitations
