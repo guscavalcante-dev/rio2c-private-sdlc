@@ -278,6 +278,8 @@
     <Compile Include="CQRS\CommandsHandlers\Innovation\TrackOptionGroups\CreateInnovationOrganizationTrackOptionGroupCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Innovation\TrackOptions\DeleteInnovationOrganizationTrackOptionCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Innovation\TrackOptions\UpdateInnovationOrganizationTrackOptionMainInformationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Music\PlayersExecutives\CreateMusicPlayerExecutiveCollaboratorCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Music\PlayersExecutives\UpdateMusicPlayerExecutiveCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\DisassociateOrganizationCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\AssociateOrganizationCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\BaseHoldingCommandHandler.cs" />
@@ -419,6 +421,7 @@
     <Compile Include="CQRS\Commands\Cartoon\Projects\CreateCartoonProject.cs" />
     <Compile Include="CQRS\Commands\Cartoon\Projects\DeleteCartoonProject.cs" />
     <Compile Include="CQRS\Commands\Cartoon\Projects\EvaluateCartoonProject.cs" />
+    <Compile Include="CQRS\Commands\Collaborators\BaseCommands\AttendeeCollaboratorTargetAudienceBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Collaborators\BaseCommands\AttendeeCollaboratorInnovationOrganizationTrackBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Collaborators\BaseCommands\AttendeeCollaboratorInterestBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Collaborators\BaseCommands\AttendeeCollaboratorActivityBaseCommand.cs" />
@@ -451,6 +454,9 @@
     <Compile Include="CQRS\Commands\Innovation\TrackOptions\CreateInnovationOrganizationTrackOption.cs" />
     <Compile Include="CQRS\Commands\Innovation\TrackOptions\DeleteInnovationOrganizationTrackOption.cs" />
     <Compile Include="CQRS\Commands\Innovation\TrackOptions\UpdateInnovationOrganizationTrackOptionMainInformation.cs" />
+    <Compile Include="CQRS\Commands\Music\PlayersExecutives\BaseCommands\MusicPlayerExecutiveCollaboratorBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Music\PlayersExecutives\CreateMusicPlayerExecutiveCollaborator.cs" />
+    <Compile Include="CQRS\Commands\Music\PlayersExecutives\UpdateMusicPlayerExecutiveCollaborator.cs" />
     <Compile Include="CQRS\Commands\Organizations\BaseCommands\OrganizationTargetAudienceBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Organizations\DisassociateOrganizationCollaborator.cs" />
     <Compile Include="CQRS\Commands\Organizations\AssociateOrganizationCollaborator.cs" />

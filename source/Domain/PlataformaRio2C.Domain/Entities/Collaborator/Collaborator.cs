@@ -1735,6 +1735,387 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
+        #region Music Player Executive Collaborator
+
+        private Collaborator(
+            List<AttendeeOrganization> attendeeOrganizations,
+            Edition edition,
+            CollaboratorType collaboratorType,
+            DateTime? birthDate,
+            CollaboratorGender collaboratorGender,
+            string collaboratorGenderAdditionalInfo,
+            CollaboratorRole collaboratorRole,
+            string collaboratorRoleAdditionalInfo,
+            CollaboratorIndustry collaboratorIndustry,
+            string collaboratorIndustryAdditionalInfo,
+            bool? hasAnySpecialNeeds,
+            string specialNeedsDescription,
+            bool? haveYouBeenToRio2CBefore,
+            List<Edition> editionsParticipated,
+            string firstName,
+            string lastNames,
+            string badge,
+            string email,
+            string phoneNumber,
+            string cellPhone,
+            bool? sharePublicEmail,
+            string publicEmail,
+            string website,
+            string linkedin,
+            string twitter,
+            string instagram,
+            string youtube,
+            bool isImageUploaded,
+            List<CollaboratorJobTitle> jobTitles,
+            List<CollaboratorMiniBio> miniBios,
+            bool? isVirtualMeeting,
+            List<AttendeeCollaboratorActivity> attendeeCollaboratorActivities,
+            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
+            List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences,
+            int userId)
+        {
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.Badge = badge?.Trim();
+            this.PhoneNumber = phoneNumber?.Trim();
+            this.CellPhone = cellPhone?.Trim();            
+            this.UpdatePublicEmail(sharePublicEmail, publicEmail);
+            this.UpdateImageUploadDate(isImageUploaded, false);
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+
+            this.UpdateEditions(haveYouBeenToRio2CBefore, editionsParticipated, userId);
+            this.BirthDate = birthDate;
+            this.Gender = collaboratorGender;
+            this.Industry = collaboratorIndustry;
+            this.Role = collaboratorRole;
+            this.CollaboratorGenderId = collaboratorGender?.Id;
+            this.CollaboratorGenderAdditionalInfo = collaboratorGenderAdditionalInfo;
+            this.CollaboratorRoleId = collaboratorRole?.Id;
+            this.CollaboratorRoleAdditionalInfo = collaboratorRoleAdditionalInfo;
+            this.CollaboratorIndustryId = collaboratorIndustry?.Id;
+            this.CollaboratorIndustryAdditionalInfo = collaboratorIndustryAdditionalInfo;
+            this.HasAnySpecialNeeds = hasAnySpecialNeeds;
+            this.SpecialNeedsDescription = specialNeedsDescription;
+
+            this.SynchronizeJobTitles(jobTitles, userId);
+            this.SynchronizeMiniBios(miniBios, userId);
+
+            this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
+
+            //TODO: Refactor this!
+            //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!  
+            //todo: passar o isVirtualMeeting aqui
+            this.UpdateMusicPlayerExecutiveAttendeeCollaborators(
+               edition,
+               collaboratorType,
+               false,
+               null,
+               attendeeOrganizations,
+               attendeeCollaboratorActivities,
+               attendeeCollaboratorInterests,
+               attendeeCollaboratorTargetAudiences,
+               true,
+               userId);
+
+            this.UpdateUser(email);
+        }
+
+
+
+        /// <summary>
+        /// Updates the innovation player executive attendee collaborators.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
+        /// <param name="attendeeOrganizations">The attendee organizations.</param>
+        /// <param name="attendeeCollaboratorActivities">The attendee collaborator activities.</param>
+        /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
+        /// <param name="attendeeCollaboratorTargetAudiences">The attendee collaborator music organization tracks.</param>
+        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
+        /// <param name="userId">The user identifier.</param>
+        private void UpdateMusicPlayerExecutiveAttendeeCollaborators(
+            Edition edition,
+            CollaboratorType collaboratorType,
+            bool? isApiDisplayEnabled,
+            int? apiHighlightPosition,
+            List<AttendeeOrganization> attendeeOrganizations,
+            List<AttendeeCollaboratorActivity> attendeeCollaboratorActivities,
+            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
+            List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences,
+            bool isAddingToCurrentEdition,
+            int userId)
+        {
+            // Synchronize only when is adding to current edition
+            if (!isAddingToCurrentEdition)
+            {
+                return;
+            }
+
+            if (this.AttendeeCollaborators == null)
+            {
+                this.AttendeeCollaborators = new List<AttendeeCollaborator>();
+            }
+
+            if (edition == null)
+            {
+                return;
+            }
+
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            if (attendeeCollaborator != null)
+            {
+                attendeeCollaborator.UpdateMusicPlayerExecutiveAttendeeCollaborator(
+                    collaboratorType,
+                    isApiDisplayEnabled,
+                    apiHighlightPosition,
+                    true,
+                    attendeeOrganizations,
+                    attendeeCollaboratorActivities,
+                    attendeeCollaboratorInterests,
+                    attendeeCollaboratorTargetAudiences,
+                    userId);
+            }
+            else
+            {
+                //todo: passar o isVirtualMeeting aqui
+                this.AttendeeCollaborators.Add(AttendeeCollaborator.CreateMusicPlayerExecutiveAttendeeCollaborator(
+                    edition,
+                    collaboratorType,
+                    this,
+                    isApiDisplayEnabled,
+                    apiHighlightPosition,
+                    true,
+                    attendeeOrganizations,
+                    attendeeCollaboratorActivities,
+                    attendeeCollaboratorInterests,
+                    attendeeCollaboratorTargetAudiences,
+                    userId));
+            }
+        }
+
+
+        /// <summary>
+        /// Creates the audiovisual player executive collaborator.
+        /// </summary>
+        /// <param name="attendeeOrganizations">The attendee organizations.</param>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="birthDate">The birth date.</param>
+        /// <param name="collaboratorGender">The collaborator gender.</param>
+        /// <param name="collaboratorGenderAdditionalInfo">The collaborator gender additional information.</param>
+        /// <param name="collaboratorRole">The collaborator role.</param>
+        /// <param name="collaboratorRoleAdditionalInfo">The collaborator role additional information.</param>
+        /// <param name="collaboratorIndustry">The collaborator industry.</param>
+        /// <param name="collaboratorIndustryAdditionalInfo">The collaborator industry additional information.</param>
+        /// <param name="hasAnySpecialNeeds">The has any special needs.</param>
+        /// <param name="specialNeedsDescription">The special needs description.</param>
+        /// <param name="haveYouBeenToRio2CBefore">The have you been to rio2 c before.</param>
+        /// <param name="editionsParticipated">The editions participated.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="badge">The badge.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="sharePublicEmail">The share public email.</param>
+        /// <param name="publicEmail">The public email.</param>
+        /// <param name="website">The website.</param>
+        /// <param name="linkedin">The linkedin.</param>
+        /// <param name="twitter">The twitter.</param>
+        /// <param name="instagram">The instagram.</param>
+        /// <param name="youtube">The youtube.</param>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="jobTitles">The job titles.</param>
+        /// <param name="miniBios">The mini bios.</param>
+        /// <param name="organizationActivities">The organization activities.</param>
+        /// <param name="organizationInterests">The organization interests.</param>
+        /// <param name="organizationTargetAudiences">The target audiences.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public static Collaborator CreateMusicPlayerExecutive(
+            List<AttendeeOrganization> attendeeOrganizations,
+            Edition edition,
+            CollaboratorType collaboratorType,
+            DateTime? birthDate,
+            CollaboratorGender collaboratorGender,
+            string collaboratorGenderAdditionalInfo,
+            CollaboratorRole collaboratorRole,
+            string collaboratorRoleAdditionalInfo,
+            CollaboratorIndustry collaboratorIndustry,
+            string collaboratorIndustryAdditionalInfo,
+            bool? hasAnySpecialNeeds,
+            string specialNeedsDescription,
+            bool? haveYouBeenToRio2CBefore,
+            List<Edition> editionsParticipated,
+            string firstName,
+            string lastNames,
+            string badge,
+            string email,
+            string phoneNumber,
+            string cellPhone,
+            bool? sharePublicEmail,
+            string publicEmail,
+            string website,
+            string linkedin,
+            string twitter,
+            string instagram,
+            string youtube,
+            bool isImageUploaded,
+            List<CollaboratorJobTitle> jobTitles,
+            List<CollaboratorMiniBio> miniBios,
+            bool? isVirtualMeeting,
+            List<AttendeeCollaboratorActivity> attendeeCollaboratorActivities,
+            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
+            List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences,
+            int userId)
+        {          
+            return new Collaborator(
+               attendeeOrganizations,
+               edition,
+               collaboratorType,
+               birthDate,
+               collaboratorGender,
+               collaboratorGenderAdditionalInfo,
+               collaboratorRole,
+               collaboratorRoleAdditionalInfo,
+               collaboratorIndustry,
+               collaboratorIndustryAdditionalInfo,
+               hasAnySpecialNeeds,
+               specialNeedsDescription,
+               haveYouBeenToRio2CBefore,
+               editionsParticipated,
+               firstName,
+               lastNames,
+               badge,
+               email,
+               phoneNumber,
+               cellPhone,
+               sharePublicEmail,
+               publicEmail,
+               website,
+               linkedin,
+               twitter,
+               instagram,
+               youtube,
+               isImageUploaded,
+               jobTitles,
+               miniBios,
+               isVirtualMeeting,
+               attendeeCollaboratorActivities,
+               attendeeCollaboratorInterests,
+               attendeeCollaboratorTargetAudiences,               
+               userId);
+        }
+
+        /// <summary>Updates the specified attendee organizations for admin.</summary>
+        /// <param name="attendeeOrganizations">The attendee organizations.</param>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="birthDate">The birth date.</param>
+        /// <param name="collaboratorGender">The collaborator gender.</param>
+        /// <param name="collaboratorGenderAdditionalInfo">The collaborator gender additional information.</param>
+        /// <param name="collaboratorRole">The collaborator role.</param>
+        /// <param name="collaboratorRoleAdditionalInfo">The collaborator role additional information.</param>
+        /// <param name="collaboratorIndustry">The collaborator industry.</param>
+        /// <param name="collaboratorIndustryAdditionalInfo">The collaborator industry additional information.</param>
+        /// <param name="hasAnySpecialNeeds">if set to <c>true</c> [has any special needs].</param>
+        /// <param name="specialNeedsDescription">The special needs description.</param>
+        /// <param name="haveYouBeenToRio2CBefore">The have you been to rio2 c before.</param>
+        /// <param name="editionsParticipated">The editions participated.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="badge">The badge.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="sharePublicEmail">The share public email.</param>
+        /// <param name="publicEmail">The public email.</param>
+        /// <param name="website">The website.</param>
+        /// <param name="linkedin">The linkedin.</param>
+        /// <param name="twitter">The twitter.</param>
+        /// <param name="instagram">The instagram.</param>
+        /// <param name="youtube">The youtube.</param>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
+        /// <param name="jobTitles">The job titles.</param>
+        /// <param name="miniBios">The mini bios.</param>
+        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateMusicPlayerExecutive(
+            List<AttendeeOrganization> attendeeOrganizations,
+            Edition edition,
+            CollaboratorType collaboratorType,
+            DateTime? birthDate,
+            CollaboratorGender collaboratorGender,
+            string collaboratorGenderAdditionalInfo,
+            CollaboratorRole collaboratorRole,
+            string collaboratorRoleAdditionalInfo,
+            CollaboratorIndustry collaboratorIndustry,
+            string collaboratorIndustryAdditionalInfo,
+            bool hasAnySpecialNeeds,
+            string specialNeedsDescription,
+            bool? haveYouBeenToRio2CBefore,
+            List<Edition> editionsParticipated,
+            string firstName,
+            string lastNames,
+            string badge,
+            string email,
+            string phoneNumber,
+            string cellPhone,
+            bool? sharePublicEmail,
+            string publicEmail,
+            string website,
+            string linkedin,
+            string twitter,
+            string instagram,
+            string youtube,
+            bool isImageUploaded,
+            bool isImageDeleted,
+            List<CollaboratorJobTitle> jobTitles,
+            List<CollaboratorMiniBio> miniBios,
+            bool isAddingToCurrentEdition,
+            int userId)
+        {
+            //this.Uid = uid;
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.Badge = badge?.Trim();
+            this.PhoneNumber = phoneNumber?.Trim();
+            this.CellPhone = cellPhone?.Trim();
+            this.UpdatePublicEmail(sharePublicEmail, publicEmail);
+            this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
+            this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
+
+            this.UpdateEditions(haveYouBeenToRio2CBefore, editionsParticipated, userId);
+            this.BirthDate = birthDate;
+            UpdateGender(collaboratorGender, collaboratorGenderAdditionalInfo);
+            UpdateRole(collaboratorRole, collaboratorRoleAdditionalInfo);
+            UpdateIndustry(collaboratorIndustry, collaboratorIndustryAdditionalInfo);
+            UpdateSpecialNeeds(hasAnySpecialNeeds, specialNeedsDescription);
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+
+            this.SynchronizeJobTitles(jobTitles, userId);
+            this.SynchronizeMiniBios(miniBios, userId);
+
+            //TODO: Refactor this!
+            //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
+            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, null, attendeeOrganizations, isAddingToCurrentEdition, userId);
+            this.UpdateUser(email);
+        }
+
+
+
+
+        #endregion
+
         #region Innovation Commission Collaborator
 
         /// <summary>

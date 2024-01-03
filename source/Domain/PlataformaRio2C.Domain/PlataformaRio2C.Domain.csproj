@@ -133,6 +133,7 @@
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorListDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorNetworkDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorActivityDto.cs" />
+    <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorTargetAudiencesDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationApiConfigurationWidgetDto.cs" />
     <Compile Include="Dtos\Audiovisual\AttendeeCollaboratorAudiovisualCommissionEvaluationDto.cs" />
     <Compile Include="Dtos\Audiovisual\AttendeeCollaboratorAudiovisualCommissionEvaluationsWidgetDto.cs" />

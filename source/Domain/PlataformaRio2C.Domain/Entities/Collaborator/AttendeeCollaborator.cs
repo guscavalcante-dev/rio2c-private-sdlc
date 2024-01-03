@@ -625,6 +625,125 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
+
+        #region Music Player Executive Attendee Collaborator
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="collaborator">The collaborator.</param>
+        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
+        /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
+        /// <param name="attendeeOrganizations">The attendee organizations.</param>
+        /// <param name="attendeeCollaboratorActivities">The attendee collaborator activities.</param>
+        /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
+        /// <param name="attendeeCollaboratorTargetAudiences">The attendee collaborator music TargetAudiences.</param>
+        /// <param name="userId">The user identifier.</param>
+        private AttendeeCollaborator(
+            Edition edition,
+            CollaboratorType collaboratorType,
+            Collaborator collaborator,
+            bool? isApiDisplayEnabled,
+            int? apiHighlightPosition,
+            bool shouldDeleteOrganizations,
+            List<AttendeeOrganization> attendeeOrganizations,
+            List<AttendeeCollaboratorActivity> attendeeCollaboratorActivities,
+            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
+            List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences,
+            int userId)
+        {
+            this.Edition = edition;
+            this.Collaborator = collaborator;
+
+            this.SetCreateDate(userId);
+
+            this.SynchronizeAttendeeCollaboratorType(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
+            this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
+            this.SynchronizeAttendeeCollaboratorActivities(attendeeCollaboratorActivities, userId);
+            this.SynchronizeAttendeeCollaboratorInterests(attendeeCollaboratorInterests, userId);
+            this.SynchronizeAttendeeCollaboratorMusicTargetAudiences(attendeeCollaboratorTargetAudiences, userId);
+        }
+
+        /// <summary>
+        /// Creates the innovation player executive attendee collaborator.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="collaborator">The collaborator.</param>
+        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
+        /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
+        /// <param name="attendeeOrganizations">The attendee organizations.</param>
+        /// <param name="attendeeCollaboratorActivities">The attendee collaborator activities.</param>
+        /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
+        /// <param name="attendeeCollaboratorInnovationOrganizationTracks">The attendee collaborator music TargetAudience.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public static AttendeeCollaborator CreateMusicPlayerExecutiveAttendeeCollaborator(
+            Edition edition,
+            CollaboratorType collaboratorType,
+            Collaborator collaborator,
+            bool? isApiDisplayEnabled,
+            int? apiHighlightPosition,
+            bool shouldDeleteOrganizations,
+            List<AttendeeOrganization> attendeeOrganizations,
+            List<AttendeeCollaboratorActivity> attendeeCollaboratorActivities,
+            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
+            List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences,
+            int userId)
+        {
+            return new AttendeeCollaborator(
+                edition,
+                collaboratorType,
+                collaborator,
+                isApiDisplayEnabled,
+                apiHighlightPosition,
+                shouldDeleteOrganizations,
+                attendeeOrganizations,
+                attendeeCollaboratorActivities,
+                attendeeCollaboratorInterests,
+                attendeeCollaboratorTargetAudiences,
+                userId);
+        }
+
+        /// <summary>
+        /// Updates the innovation player executive.
+        /// </summary>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
+        /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
+        /// <param name="attendeeOrganizations">The attendee organizations.</param>
+        /// <param name="attendeeCollaboratorActivities">The attendee collaborator activities.</param>
+        /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
+        /// <param name="attendeeCollaboratorInnovationOrganizationTracks">The attendee collaborator music TargetAudience.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateMusicPlayerExecutiveAttendeeCollaborator(
+            CollaboratorType collaboratorType,
+            bool? isApiDisplayEnabled,
+            int? apiHighlightPosition,
+            bool shouldDeleteOrganizations,
+            List<AttendeeOrganization> attendeeOrganizations,
+            List<AttendeeCollaboratorActivity> attendeeCollaboratorActivities,
+            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
+            List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences,
+            int userId)
+        {
+            this.SetUpdateDate(userId);
+
+            this.SynchronizeAttendeeCollaboratorType(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
+            this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
+            this.SynchronizeAttendeeCollaboratorActivities(attendeeCollaboratorActivities, userId);
+            this.SynchronizeAttendeeCollaboratorInterests(attendeeCollaboratorInterests, userId);
+            this.SynchronizeAttendeeCollaboratorMusicTargetAudiences(attendeeCollaboratorTargetAudiences, userId);
+        }
+
+        #endregion
+
+
         /// <summary>Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.</summary>
         protected AttendeeCollaborator()
         {
@@ -1546,6 +1665,64 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         #endregion
+
+
+        #region Attendee Collaborator music Organization Tracks
+
+        /// <summary>
+        /// Synchronizes the attendee collaborator music organization TargetAudiences.
+        /// </summary>
+        /// <param name="attendeeCollaboratorInnovationOrganizationTrack">The attendee music organization TargetAudiences.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void SynchronizeAttendeeCollaboratorMusicTargetAudiences(
+           List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences,
+           int userId)
+        {
+            if (this.AttendeeCollaboratorTargetAudiences == null)
+            {
+                this.AttendeeCollaboratorTargetAudiences = new List<AttendeeCollaboratorTargetAudience>();
+            }
+
+            this.DeleteAttendeeCollaboratorMusicTargetAudiences(attendeeCollaboratorTargetAudiences, userId);
+
+            if (attendeeCollaboratorTargetAudiences?.Any() != true)
+            {
+                return;
+            }
+
+            // Create or update
+            foreach (var attendeeCollaboratorTargetAudience in attendeeCollaboratorTargetAudiences)
+            {
+                var attendeeCollaboratorTargetAudienceDb = this.AttendeeCollaboratorTargetAudiences.FirstOrDefault(aciot => aciot.TargetAudience.Uid == attendeeCollaboratorTargetAudience.TargetAudience?.Uid);
+                if (attendeeCollaboratorTargetAudienceDb != null)
+                {
+                    attendeeCollaboratorTargetAudienceDb.Update(userId);
+                }
+                else
+                {
+                    this.AttendeeCollaboratorTargetAudiences.Add(new AttendeeCollaboratorTargetAudience(this, attendeeCollaboratorTargetAudience.TargetAudience, attendeeCollaboratorTargetAudienceDb?.AdditionalInfo, userId));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deletes the attendee collaborator music organization TargetAudiences.
+        /// </summary>
+        /// <param name="attendeeCollaboratorTargetAudiences">The new attendee music organization TargetAudiences.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteAttendeeCollaboratorMusicTargetAudiences(
+            List<AttendeeCollaboratorTargetAudience> newAttendeeCollaboratorTargetAudiences,
+            int userId)
+        {
+            var attendeeCollaboratorTargetAudiencesToDelete = this.AttendeeCollaboratorTargetAudiences.Where(db => newAttendeeCollaboratorTargetAudiences?.Select(ioto => ioto.TargetAudience.Uid)?.Contains(db.TargetAudience.Uid) == false && !db.IsDeleted).ToList();
+            foreach (var attendeeCollaboratorInnovationOrganizationTrack in attendeeCollaboratorTargetAudiencesToDelete)
+            {
+                attendeeCollaboratorInnovationOrganizationTrack.Delete(userId);
+            }
+        }
+
+        #endregion
+
 
         #region Attendee Collaborator Activities
 

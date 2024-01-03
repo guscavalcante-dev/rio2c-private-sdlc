@@ -39,6 +39,7 @@ namespace PlataformaRio2C.Domain.Entities
         public AttendeeCollaboratorTargetAudience(
             AttendeeCollaborator attendeeCollaborator,
             TargetAudience targetAudience,
+            string additionalInfo,
             int userId)
         {
             this.AttendeeCollaborator = attendeeCollaborator;
@@ -46,10 +47,9 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.AttendeeCollaboratorId = attendeeCollaborator?.Id ?? 0;
             this.TargetAudienceId = targetAudience?.Id ?? 0;
+            this.AdditionalInfo = additionalInfo;
 
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
+            base.SetCreateDate(userId);
         }
 
         /// <summary>
@@ -65,6 +65,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.TargetAudience = targetAudience;
             this.TargetAudienceId = targetAudience?.Id ?? 0;
+            this.AdditionalInfo = additionalInfo;
 
             base.SetCreateDate(userId);
         }

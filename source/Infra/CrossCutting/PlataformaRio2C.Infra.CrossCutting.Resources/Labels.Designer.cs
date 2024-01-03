@@ -2365,6 +2365,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Executivos dos Players de Música.
+        /// </summary>
+        public static string ExecutiveMusic {
+            get {
+                return ResourceManager.GetString("ExecutiveMusic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nome do Executivo.
         /// </summary>
         public static string ExecutiveName {

@@ -5,6 +5,7 @@
         @*@Html.LabelFor(m => m.AttendeeOrganizationUid, new { @class = "control-label" })*@
         @Html.DropDownList("AttendeeOrganizationUid", new SelectList(Model.AttendeeOrganizationsBaseDtos, "Uid", "DisplayName", Model.AttendeeOrganizationUid), $"{Labels.Select}...", new { @class = "form-control enable-select2-attendeeorganization" })
         @Html.ValidationMessageFor(m => m.AttendeeOrganizationUid, "", new { @class = "text-danger" })
+        @Html.HiddenFor(m => m.IsRequired)
     </div>
     <div class="col-md-2">
         <button type="button" class="btn btn-danger btn-icon attendeeorganization-remove" onclick="AttendeeOrganizationsForm.remove(this);return false;"><i class="flaticon2-trash"></i></button>
