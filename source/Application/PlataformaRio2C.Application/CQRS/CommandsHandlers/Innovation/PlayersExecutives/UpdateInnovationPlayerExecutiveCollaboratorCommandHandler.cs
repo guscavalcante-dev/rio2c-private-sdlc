@@ -38,8 +38,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly ICollaboratorGenderRepository genderRepo;
         private readonly ICollaboratorIndustryRepository industryRepo;
         private readonly ICollaboratorRoleRepository roleRepo;
+        private readonly IActivityRepository activityRepo;
+        private readonly IInterestRepository interestRepo;
+        private readonly IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateInnovationPlayerExecutiveCollaboratorCommandHandler"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateInnovationPlayerExecutiveCollaboratorCommandHandler" /> class.
+        /// </summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
@@ -48,9 +53,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="collaboratorTypeRepository">The collaborator type repository.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="languageRepository">The language repository.</param>
-        /// <param name="genderRepo">The gender repo.</param>
-        /// <param name="industryRepo">The industry repo.</param>
-        /// <param name="roleRepo">The role repo.</param>
+        /// <param name="genderRepository">The gender repo.</param>
+        /// <param name="industryRepository">The industry repo.</param>
+        /// <param name="roleRepository">The role repo.</param>
+        /// <param name="activityRepository">The activity repository.</param>
+        /// <param name="interestRepository">The interest repository.</param>
+        /// <param name="innovationOrganizationTrackOptionRepository">The innovation organization track option repository.</param>
         public UpdateInnovationPlayerExecutiveCollaboratorCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
@@ -60,9 +68,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             ICollaboratorTypeRepository collaboratorTypeRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             ILanguageRepository languageRepository,
-            ICollaboratorGenderRepository genderRepo,
-            ICollaboratorIndustryRepository industryRepo,
-            ICollaboratorRoleRepository roleRepo)
+            ICollaboratorGenderRepository genderRepository,
+            ICollaboratorIndustryRepository industryRepository,
+            ICollaboratorRoleRepository roleRepository,
+            IActivityRepository activityRepository,
+            IInterestRepository interestRepository,
+            IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepository)
             : base(eventBus, uow, collaboratorRepository)
         {
             this.userRepo = userRepository;
@@ -70,10 +81,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.collaboratorTypeRepo = collaboratorTypeRepository;
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.languageRepo = languageRepository;
-            this.genderRepo = genderRepo;
-            this.industryRepo = industryRepo;
+            this.genderRepo = genderRepository;
+            this.industryRepo = industryRepository;
             this.languageRepo = languageRepository;
-            this.roleRepo = roleRepo;
+            this.roleRepo = roleRepository;
+            this.activityRepo = activityRepository;
+            this.interestRepo = interestRepository;
+            this.innovationOrganizationTrackOptionRepo = innovationOrganizationTrackOptionRepository;
         }
 
         /// <summary>Handles the specified update collaborator.</summary>
@@ -122,8 +136,25 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var collaboratorRole = roleRepo.Get(cmd.CollaboratorRoleUid ?? Guid.Empty);
             var collaboratorIndustry = industryRepo.Get(cmd.CollaboratorIndustryUid ?? Guid.Empty);
             var editions = this.editionRepo.GetAll(e => cmd.EditionsUids.Contains(e.Uid)).ToList();
+            var interestsDtos = await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Startup.Id);
+            var activities = await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id);
+            var innovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync();
 
-            collaborator.UpdateAudiovisualPlayerExecutive(attendeeOrganizations,
+            // Interests
+            var attendeeCollaboratorInterests = new List<AttendeeCollaboratorInterest>();
+            if (cmd.Interests?.Any() == true)
+            {
+                foreach (var interestBaseCommands in cmd.Interests)
+                {
+                    foreach (var interestBaseCommand in interestBaseCommands?.Where(ibc => ibc.IsChecked)?.ToList())
+                    {
+                        attendeeCollaboratorInterests.Add(new AttendeeCollaboratorInterest(interestsDtos?.FirstOrDefault(id => id.Interest.Uid == interestBaseCommand.InterestUid)?.Interest, interestBaseCommand.AdditionalInfo, cmd.UserId));
+                    }
+                }
+            }
+
+            collaborator.UpdateInnovationPlayerExecutiveCollaborator(
+                attendeeOrganizations,
                 edition,
                 collaboratorType,
                 cmd.BirthDate,
@@ -154,6 +185,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.CropperImage?.IsImageDeleted == true,
                 cmd.JobTitles?.Select(d => new CollaboratorJobTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.MiniBios?.Select(d => new CollaboratorMiniBio(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
+                cmd.AttendeeCollaboratorActivities?.Where(aca => aca.IsChecked)?.Select(aca => new AttendeeCollaboratorActivity(activities?.FirstOrDefault(a => a.Uid == aca.ActivityUid), aca.AdditionalInfo, cmd.UserId))?.ToList(),
+                attendeeCollaboratorInterests,
+                cmd.AttendeeCollaboratorInnovationOrganizationTracks?.Where(aciot => aciot.IsChecked)?.Select(aciot => new AttendeeCollaboratorInnovationOrganizationTrack(innovationOrganizationTrackOptions?.FirstOrDefault(ioto => ioto.Uid == aciot.InnovationOrganizationTrackOptionUid)?.InnovationOrganizationTrackOption, aciot.AdditionalInfo, cmd.UserId))?.ToList(),
                 true, // TODO: Get isAddingToCurrentEdition from command for UpdateCollaborator
                 cmd.UserId);
 

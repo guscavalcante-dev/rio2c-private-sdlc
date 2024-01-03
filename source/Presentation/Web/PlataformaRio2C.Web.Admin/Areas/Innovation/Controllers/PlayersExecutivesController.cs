@@ -615,9 +615,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Update(UpdateAudiovisualPlayerExecutiveCollaborator cmd)
+        public async Task<ActionResult> Update(UpdateInnovationPlayerExecutiveCollaborator cmd)
         {
-            //TODO: CRIAR UpdateInnovationPlayerExecutiveCollaborator e implementar aqui
             var result = new AppValidationResult();
 
             try
@@ -628,7 +627,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    Domain.Constants.CollaboratorType.PlayerExecutiveInnovation,
+                    Constants.CollaboratorType.PlayerExecutiveInnovation,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,

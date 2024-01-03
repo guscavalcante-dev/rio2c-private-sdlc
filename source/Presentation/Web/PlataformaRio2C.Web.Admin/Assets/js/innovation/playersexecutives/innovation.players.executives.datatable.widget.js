@@ -114,26 +114,26 @@ var InnovationPlayersExecutivesDataTableWidget = function () {
                 extend: 'collection',
                 text: labels.actions,
                 buttons: [
-                    {
-                        text: sendInvitationEmail,
-                        action: function (e, dt, node, config) {
-                            $('.dt-button-background').remove();
-                            showSendInvitationEmailsModal();
-                        }
-                    },
-                    {
-                        text: exportToEventbrite,
-                        action: function (e, dt, node, config) {
-                            $('.dt-button-background').remove();
-                            var eventbriteCsvExport = dt.ajax.params();
-                            eventbriteCsvExport.selectedCollaboratorsUids = $('#playersexecutives-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
-                            eventbriteCsvExport.showAllEditions = $('#ShowAllEditions').prop('checked');
-                            eventbriteCsvExport.showAllParticipants = $('#ShowAllParticipants').prop('checked');
-                            eventbriteCsvExport.collaboratorTypeName = collaboratorTypeName;
+                    //{
+                    //    text: sendInvitationEmail,
+                    //    action: function (e, dt, node, config) {
+                    //        $('.dt-button-background').remove();
+                    //        showSendInvitationEmailsModal();
+                    //    }
+                    //},
+                    //{
+                    //    text: exportToEventbrite,
+                    //    action: function (e, dt, node, config) {
+                    //        $('.dt-button-background').remove();
+                    //        var eventbriteCsvExport = dt.ajax.params();
+                    //        eventbriteCsvExport.selectedCollaboratorsUids = $('#playersexecutives-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
+                    //        eventbriteCsvExport.showAllEditions = $('#ShowAllEditions').prop('checked');
+                    //        eventbriteCsvExport.showAllParticipants = $('#ShowAllParticipants').prop('checked');
+                    //        eventbriteCsvExport.collaboratorTypeName = collaboratorTypeName;
 
-                            SalesPlatformsExport.showExportEventbriteCsvModal(eventbriteCsvExport);
-                        }
-                    },
+                    //        SalesPlatformsExport.showExportEventbriteCsvModal(eventbriteCsvExport);
+                    //    }
+                    //},
                     {
                         text: labels.selectAll,
                         action: function (e, dt, node, config) {
@@ -262,35 +262,36 @@ var InnovationPlayersExecutivesDataTableWidget = function () {
                     data: 'Actions',
                     responsivePriority: -1,
                     render: function (data, type, full, meta) {
-                        var html = '\
-                                        <span class="dropdown">\
-                                            <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">\
-                                              <i class="la la-ellipsis-h"></i>\
-                                            </a>\
-                                            <div class="dropdown-menu dropdown-menu-right">';
+                        //var html = '\
+                        //                <span class="dropdown">\
+                        //                    <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">\
+                        //                      <i class="la la-ellipsis-h"></i>\
+                        //                    </a>\
+                        //                    <div class="dropdown-menu dropdown-menu-right">';
 
-                        if (!full.IsInCurrentEdition) {
-                            html += '<button class="dropdown-item" onclick="InnovationPlayersExecutivesUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
-                        }
+                        //if (!full.IsInCurrentEdition) {
+                        //    html += '<button class="dropdown-item" onclick="InnovationPlayersExecutivesUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
+                        //}
 
-                        if (full.IsInCurrentEdition) {
-                            html += '<button class="dropdown-item" onclick="InnovationPlayersExecutivesDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
-                        }
+                        //if (full.IsInCurrentEdition) {
+                        //    html += '<button class="dropdown-item" onclick="InnovationPlayersExecutivesDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
+                        //}
 
-                        html += '<button class="dropdown-item" onclick="AccountsUpdateUserStatus.showModal(\'' + full.UserBaseDto.Uid + '\',\'' + !full.Active + '\');"><i class="la la-lock"></i> ' + ((full.Active) ? labels.block : labels.unblock) + '</button>';
+                        //html += '<button class="dropdown-item" onclick="AccountsUpdateUserStatus.showModal(\'' + full.UserBaseDto.Uid + '\',\'' + !full.Active + '\');"><i class="la la-lock"></i> ' + ((full.Active) ? labels.block : labels.unblock) + '</button>';
 
-                        if (full.IsInCurrentEdition && full.IsInOtherEdition) {
-                            html += '<button class="dropdown-item" onclick="InnovationPlayersExecutivesDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-remove"></i> ' + removeFromEdition + '</button>';
-                        }
-                        else {
-                            html += '<button class="dropdown-item" onclick="InnovationPlayersExecutivesDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
-                        }
+                        //if (full.IsInCurrentEdition && full.IsInOtherEdition) {
+                        //    html += '<button class="dropdown-item" onclick="InnovationPlayersExecutivesDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-remove"></i> ' + removeFromEdition + '</button>';
+                        //}
+                        //else {
+                        //    html += '<button class="dropdown-item" onclick="InnovationPlayersExecutivesDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+                        //}
 
-                        html += '\
-                                            </div>\
-                                        </span>';
+                        //html += '\
+                        //                    </div>\
+                        //                </span>';
 
-                        return html;
+                        //return html;
+                        return "";
                     }
                 }
             ],

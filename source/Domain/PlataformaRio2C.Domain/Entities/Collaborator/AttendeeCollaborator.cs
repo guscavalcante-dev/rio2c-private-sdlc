@@ -97,9 +97,8 @@ namespace PlataformaRio2C.Domain.Entities
             bool shouldDeleteOrganizations,
             int userId)
         {
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            this.SetUpdateDate(userId);
+
             this.SynchronizeAttendeeCollaboratorType(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
             this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
         }
