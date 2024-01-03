@@ -292,7 +292,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         }
 
         /// <summary>Shows the total count widget.</summary>
-        /// <returns></returns>
+        /// <returns></returns>Innovation
         [HttpGet]
         public async Task<ActionResult> ShowTotalCountWidget()
         {
@@ -356,7 +356,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.MusicCommission, new List<BreadcrumbItemHelper> {
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ExecutiveMusic, new List<BreadcrumbItemHelper> {
                 new BreadcrumbItemHelper(Labels.Music, null),
                 new BreadcrumbItemHelper(Labels.Players, Url.Action("Index", "Players", new { Area = "Music" })),
                 new BreadcrumbItemHelper(Labels.Executives, Url.Action("Index", "PlayersExecutives", new { Area = "Music" })),
@@ -475,7 +475,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     false,
                     false,
                     false,
-                    false,
+                    false, //organization requerid
                     true,
                     UserInterfaceLanguage);
 

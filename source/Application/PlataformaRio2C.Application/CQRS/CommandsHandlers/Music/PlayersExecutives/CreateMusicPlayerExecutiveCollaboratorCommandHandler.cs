@@ -21,6 +21,7 @@ using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,6 +37,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly ILanguageRepository languageRepo;
         private readonly ICollaboratorGenderRepository genderRepo;
         private readonly ICollaboratorIndustryRepository industryRepo;
+        private readonly IActivityRepository activityRepo;
+        private readonly IInterestRepository interestRepo;
+        private readonly ITargetAudienceRepository targetAudienceRepo;
         private readonly ICollaboratorRoleRepository roleRepo;
 
         /// <param name="eventBus">The event bus.</param>
@@ -49,6 +53,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="genderRepo">The gender repo.</param>
         /// <param name="industryRepo">The industry repo.</param>
         /// <param name="roleRepo">The role repo.</param>
+        /// <param name="activityRepository">The activity repository.</param>
+        /// <param name="interestRepository">The interest repository.</param>
+        /// <param name="targetAudienceRepository">The target audience repository.</param>
         public CreateMusicPlayerExecutiveCollaboratorCommandHandler(
         IMediator eventBus,
             IUnitOfWork uow,
@@ -60,6 +67,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             ILanguageRepository languageRepository,
             ICollaboratorGenderRepository genderRepo,
             ICollaboratorIndustryRepository industryRepo,
+            IActivityRepository activityRepository,
+            IInterestRepository interestRepository,
+            ITargetAudienceRepository targetAudienceRepository,
             ICollaboratorRoleRepository roleRepo)
             : base(eventBus, uow, collaboratorRepository)
         {
@@ -70,6 +80,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.languageRepo = languageRepository;
             this.genderRepo = genderRepo;
             this.industryRepo = industryRepo;
+            this.activityRepo = activityRepository;
+            this.interestRepo = interestRepository;
+            this.targetAudienceRepo = targetAudienceRepository;
             this.roleRepo = roleRepo;
         }
 
@@ -100,10 +113,28 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
+            
+            var activities = await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id);
+            var interestsDtos = await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Music.Id);
+            var targetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id);
 
             // Create if the user was not found in database
             if (user == null)
             {
+
+                // Interests
+                var attendeeCollaboratorInterests = new List<AttendeeCollaboratorInterest>();
+                if (cmd.AttendeeCollaboratorInterests?.Any() == true)
+                {
+                    foreach (var interestBaseCommands in cmd.AttendeeCollaboratorInterests)
+                    {
+                        foreach (var interestBaseCommand in interestBaseCommands?.Where(ibc => ibc.IsChecked)?.ToList())
+                        {
+                            attendeeCollaboratorInterests.Add(new AttendeeCollaboratorInterest(interestsDtos?.FirstOrDefault(id => id.Interest.Uid == interestBaseCommand.InterestUid)?.Interest, interestBaseCommand.AdditionalInfo, cmd.UserId));
+                        }
+                    }
+                }
+
                 var collaborator = Collaborator.CreateMusicPlayerExecutive(
                     await this.attendeeOrganizationRepo.FindAllByUidsAsync(cmd.AttendeeOrganizationBaseCommands?.Where(aobc => aobc.AttendeeOrganizationUid.HasValue)?.Select(aobc => aobc.AttendeeOrganizationUid.Value)?.ToList()),
                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
@@ -135,13 +166,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.CropperImage?.ImageFile != null,
                     cmd.JobTitles?.Select(d => new CollaboratorJobTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                     cmd.MiniBios?.Select(d => new CollaboratorMiniBio(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
+                    cmd.IsVirtualMeeting,
+                    cmd.AttendeeCollaboratorActivities?.Where(aca => aca.IsChecked)?.Select(aca => new AttendeeCollaboratorActivity(activities?.FirstOrDefault(a => a.Uid == aca.ActivityUid), aca.AdditionalInfo, cmd.UserId))?.ToList(),
+                    attendeeCollaboratorInterests,
+                    cmd.AttendeeCollaboratorTargetAudiences?.Where(ota => ota.IsChecked)?.Select(ota => new AttendeeCollaboratorTargetAudience(targetAudiences?.FirstOrDefault(a => a.Uid == ota.TargetAudienceUid), ota.AdditionalInfo, cmd.UserId))?.ToList(),
                     cmd.UserId);
-
-                    //TODO: not implemented
-                    //cmd.AttendeeCollaboratorActivities.Select(new AttendeeCollaboratorActivity()),
-                    //cmd.AttendeeCollaboratorTargetAudiences,
-                    //cmd.AttendeeCollaboratorInterests
-
+                         
                 if (!collaborator.IsValid())
                 {
                     this.AppValidationResult.Add(collaborator.ValidationResult);

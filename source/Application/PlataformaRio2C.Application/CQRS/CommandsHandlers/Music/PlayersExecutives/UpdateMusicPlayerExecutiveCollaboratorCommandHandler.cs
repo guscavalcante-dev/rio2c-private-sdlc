@@ -123,7 +123,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var collaboratorIndustry = industryRepo.Get(cmd.CollaboratorIndustryUid ?? Guid.Empty);
             var editions = this.editionRepo.GetAll(e => cmd.EditionsUids.Contains(e.Uid)).ToList();
 
-            collaborator.UpdateAudiovisualPlayerExecutive(attendeeOrganizations,
+            collaborator.UpdateMusicPlayerExecutive(attendeeOrganizations,
                 edition,
                 collaboratorType,
                 cmd.BirthDate,
