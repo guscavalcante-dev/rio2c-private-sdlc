@@ -112,7 +112,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var beforeImageUploadDate = collaborator.ImageUploadDate;
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
-
+                       
             var attendeeOrganizations = cmd.AttendeeOrganizationBaseCommands == null ? new List<AttendeeOrganization>() :
                                         await this.attendeeOrganizationRepo.FindAllByUidsAsync(cmd.AttendeeOrganizationBaseCommands?.Where(aobc => aobc.AttendeeOrganizationUid.HasValue)?.Select(aobc => aobc.AttendeeOrganizationUid.Value)?.ToList());
 
