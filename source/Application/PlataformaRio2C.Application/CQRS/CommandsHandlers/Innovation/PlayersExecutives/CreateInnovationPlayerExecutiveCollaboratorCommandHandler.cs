@@ -138,7 +138,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 //Todo: verificar com renan
                 List<AttendeeOrganization> attendeeOrganization = new List<AttendeeOrganization>();
                 if (cmd.AttendeeOrganizationBaseCommands.Where(x => x.AttendeeOrganizationUid.HasValue).Any())
-                    attendeeOrganization = await this.attendeeOrganizationRepo.FindAllByUidsAsync(cmd.AttendeeOrganizationBaseCommands?.Where(aobc => aobc.AttendeeOrganizationUid.HasValue)?.Select(aobc => aobc.AttendeeOrganizationUid.Value)?.ToList()),
+                    attendeeOrganization = await this.attendeeOrganizationRepo.FindAllByUidsAsync(cmd.AttendeeOrganizationBaseCommands?.Where(aobc => aobc.AttendeeOrganizationUid.HasValue)?.Select(aobc => aobc.AttendeeOrganizationUid.Value)?.ToList());
 
                 var collaborator = Collaborator.CreateInnovationPlayerExecutiveCollaborator(
                     attendeeOrganization,
