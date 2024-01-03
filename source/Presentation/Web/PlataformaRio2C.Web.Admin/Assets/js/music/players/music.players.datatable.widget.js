@@ -59,14 +59,15 @@ var MusicPlayersDataTableWidget = function () {
                     extend: 'collection',
                     text: labels.actions,
                     buttons: [
-                        {
-                            name: 'btnExportToExcel',
-                            text: exportToExcelText,
-                            action: function (e, dt, node, config) {
-                                $('.dt-button-background').remove();
-                                exportToExcel();
-                            }
-                        }]
+                        //{
+                        //    name: 'btnExportToExcel',
+                        //    text: exportToExcelText,
+                        //    action: function (e, dt, node, config) {
+                        //        $('.dt-button-background').remove();
+                        //        exportToExcel();
+                        //    }
+                        //}
+                    ]
                 }],
             order: [[0, "asc"]],
             sDom: '<"row"<"col-sm-6"l><"col-sm-6 text-right"B>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
@@ -170,32 +171,33 @@ var MusicPlayersDataTableWidget = function () {
                     data: 'Actions',
                     responsivePriority: -1,
                     render: function (data, type, full, meta) {
-                        var html = '\
-                                        <span class="dropdown">\
-                                            <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">\
-                                              <i class="la la-ellipsis-h"></i>\
-                                            </a>\
-                                            <div class="dropdown-menu dropdown-menu-right">';
+                        //var html = '\
+                        //                <span class="dropdown">\
+                        //                    <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">\
+                        //                      <i class="la la-ellipsis-h"></i>\
+                        //                    </a>\
+                        //                    <div class="dropdown-menu dropdown-menu-right">';
 
-                        if (!full.IsInCurrentEdition) {
-                            html += '<button class="dropdown-item" onclick="MusicPlayersUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
-                        }
-                        else {
-                            html += '<button class="dropdown-item" onclick="MusicPlayersDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
-                        }
+                        //if (!full.IsInCurrentEdition) {
+                        //    html += '<button class="dropdown-item" onclick="MusicPlayersUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
+                        //}
+                        //else {
+                        //    html += '<button class="dropdown-item" onclick="MusicPlayersDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
+                        //}
 
-                        if (full.IsInCurrentEdition && full.IsInOtherEdition) {
-                            html += '<button class="dropdown-item" onclick="MusicPlayersDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-minus"></i> ' + removeFromEdition + '</button>';
-                        }
-                        else {
-                            html += '<button class="dropdown-item" onclick="MusicPlayersDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
-                        }
+                        //if (full.IsInCurrentEdition && full.IsInOtherEdition) {
+                        //    html += '<button class="dropdown-item" onclick="MusicPlayersDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-minus"></i> ' + removeFromEdition + '</button>';
+                        //}
+                        //else {
+                        //    html += '<button class="dropdown-item" onclick="MusicPlayersDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+                        //}
 
-                        html += '\
-                                            </div>\
-                                        </span>';
+                        //html += '\
+                        //                    </div>\
+                        //                </span>';
 
-                        return html;
+                        //return html;
+                        return "";
                     }
                 }
             ],

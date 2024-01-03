@@ -54,6 +54,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
         /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
+        /// <param name="isAttendeeOrganizationRequired">if set to <c>true</c> [is attendee organization required].</param>
+        /// <param name="isVirtualMeetingRequired">if set to <c>true</c> [is virtual meeting required].</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
         /// <exception cref="DomainException"></exception>
@@ -74,6 +76,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isJobTitleRequired,
             bool isMiniBioRequired, 
             bool isImageRequired,
+            bool isAttendeeOrganizationRequired,
+            bool isVirtualMeetingRequired,
             string userInterfaceLanguage)
         {
             if (entity == null)
@@ -107,6 +111,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 isJobTitleRequired, 
                 isMiniBioRequired, 
                 isImageRequired, 
+                isAttendeeOrganizationRequired,
+                isVirtualMeetingRequired,
                 userInterfaceLanguage);
             this.UpdateDropdownProperties(
                 entity, 

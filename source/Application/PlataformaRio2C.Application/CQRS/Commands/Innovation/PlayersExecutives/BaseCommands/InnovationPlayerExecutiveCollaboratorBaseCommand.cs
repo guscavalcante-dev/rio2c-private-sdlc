@@ -23,6 +23,7 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using DataType = System.ComponentModel.DataAnnotations.DataType;
 using PlataformaRio2C.Domain.Statics;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -130,6 +131,16 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         #endregion
 
+        #region VirtualMeeting
+
+        public bool IsVirtualMeetingRequired { get; set; }
+
+        [Display(Name = "MeetingType", ResourceType = typeof(Labels))]
+        [RadioButtonRequiredIf(nameof(IsVirtualMeetingRequired), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public bool? IsVirtualMeeting { get; set; }
+
+        #endregion
+
         public List<AttendeeOrganizationBaseCommand> AttendeeOrganizationBaseCommands { get; set; }
         public List<CollaboratorJobTitleBaseCommand> JobTitles { get; set; }
         public List<CollaboratorMiniBioBaseCommand> MiniBios { get; set; }
@@ -175,6 +186,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
         /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
+        /// <param name="isAttendeeOrganizationRequired">if set to <c>true</c> [is attendee organization required].</param>
+        /// <param name="isVirtualMeetingRequired">if set to <c>true</c> [is virtual meeting required].</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public void UpdateBaseProperties(
             CollaboratorDto entity,
@@ -191,8 +204,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isJobTitleRequired,
             bool isMiniBioRequired,
             bool isImageRequired,
-            string userInterfaceLanguage
-            )
+            bool isAttendeeOrganizationRequired,
+            bool isVirtualMeetingRequired,
+            string userInterfaceLanguage)
         {
             base.UpdateBaseProperties(entity);
             this.Badge = entity?.Badge;
@@ -207,7 +221,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Youtube = entity?.Youtube;
             this.EditionsUids = entity?.EditionsUids;
             this.HaveYouBeenToRio2CBefore = entity?.EditionsUids?.Any();
-            this.UpdateOrganizations(entity, attendeeOrganizationsBaseDtos);
+
+            //this.IsVirtualMeeting = entity?.IsVirtualMeeting;
+            this.IsVirtualMeetingRequired = isVirtualMeetingRequired;
+
+            this.UpdateOrganizations(entity, attendeeOrganizationsBaseDtos, isAttendeeOrganizationRequired);
             this.UpdateJobTitles(entity, languagesDtos, isJobTitleRequired);
             this.UpdateMiniBios(entity, languagesDtos, isMiniBioRequired);
             this.UpdateCropperImage(entity, isImageRequired);
@@ -310,10 +328,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.CollaboratorRoles = roles.OrderBy(e => e.HasAdditionalInfo).ThenBy(e => e.Name);
         }
 
-        /// <summary>Updates the organizations.</summary>
+        /// <summary>
+        /// Updates the organizations.
+        /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
-        private void UpdateOrganizations(CollaboratorDto entity, List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos)
+        /// <param name="isAttendeeOrganizationRequired">if set to <c>true</c> [is attendee organization required].</param>
+        private void UpdateOrganizations(CollaboratorDto entity, List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, bool isAttendeeOrganizationRequired)
         {
             if (this.AttendeeOrganizationBaseCommands == null)
             {
@@ -322,11 +343,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
             if (entity?.AttendeeOrganizationBasesDtos?.Any() != true)
             {
-                this.AttendeeOrganizationBaseCommands.Add(new AttendeeOrganizationBaseCommand(null, attendeeOrganizationsBaseDtos));
+                this.AttendeeOrganizationBaseCommands.Add(new AttendeeOrganizationBaseCommand(null, attendeeOrganizationsBaseDtos, isAttendeeOrganizationRequired));
             }
             else
             {
-                this.AttendeeOrganizationBaseCommands = entity?.AttendeeOrganizationBasesDtos?.Select(aobd => new AttendeeOrganizationBaseCommand(aobd, attendeeOrganizationsBaseDtos))?.ToList();
+                this.AttendeeOrganizationBaseCommands = entity?.AttendeeOrganizationBasesDtos?.Select(aobd => new AttendeeOrganizationBaseCommand(aobd, attendeeOrganizationsBaseDtos, isAttendeeOrganizationRequired))?.ToList();
             }
         }
 

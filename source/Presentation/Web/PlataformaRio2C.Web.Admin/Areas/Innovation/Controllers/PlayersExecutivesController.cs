@@ -486,6 +486,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                     false,
                     false,
                     false,
+                    false,
+                    false,
                     UserInterfaceLanguage);
 
             return Json(new
@@ -591,6 +593,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                     await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync(),
                     EditionDto.Id,
                     isAddingToCurrentEdition,
+                    false,
+                    false,
                     false,
                     false,
                     false,

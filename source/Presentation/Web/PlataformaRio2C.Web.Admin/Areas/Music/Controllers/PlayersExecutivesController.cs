@@ -475,7 +475,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     false,
                     false,
                     false,
-                    false, //organization requerid
+                    false,
                     true,
                     UserInterfaceLanguage);
 

@@ -129,6 +129,16 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         #endregion
 
+        #region VirtualMeeting
+
+        public bool IsVirtualMeetingRequired { get; set; }
+
+        [Display(Name = "MeetingType", ResourceType = typeof(Labels))]
+        [RadioButtonRequiredIf(nameof(IsVirtualMeetingRequired), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public bool? IsVirtualMeeting { get; set; }
+
+        #endregion
+
         public List<AttendeeOrganizationBaseCommand> AttendeeOrganizationBaseCommands { get; set; }
         public List<CollaboratorJobTitleBaseCommand> JobTitles { get; set; }
         public List<CollaboratorMiniBioBaseCommand> MiniBios { get; set; }
@@ -143,12 +153,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<AttendeeCollaboratorTargetAudienceBaseCommand> AttendeeCollaboratorTargetAudiences { get; set; }
 
         public InterestBaseCommand[][] AttendeeCollaboratorInterests { get; set; }
-
-        public bool IsVirtualMeetingRequired { get; set; }
-
-        [Display(Name = "MeetingType", ResourceType = typeof(Labels))]
-        [RadioButtonRequiredIf(nameof(IsVirtualMeetingRequired), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public bool? IsVirtualMeeting { get; set; }
 
         #region Dropdowns Properties
 
@@ -203,8 +207,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isImageRequired,
             bool isAttendeeOrganizationRequired,
             bool isVirtualMeetingRequired,
-            string userInterfaceLanguage
-            )
+            string userInterfaceLanguage)
         {
             base.UpdateBaseProperties(entity);
             this.Badge = entity?.Badge;

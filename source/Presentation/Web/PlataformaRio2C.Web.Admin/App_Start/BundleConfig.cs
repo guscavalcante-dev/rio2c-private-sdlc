@@ -949,7 +949,10 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/music/playersexecutives/music.players.executives.editioncount.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/music.players.executives.create.js").Include(
-               "~/Assets/js/music/playersexecutives/music.players.executives.create.js"));
+               "~/Assets/js/music/playersexecutives/music.players.executives.create.js",
+               "~/Assets/js/myrio2c.publicemail.js",
+               "~/Assets/js/dynamic.list.js",
+               "~/Assets/js/myrio2c.additionalinfo.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/music.players.executives.update.js").Include(
                "~/Assets/js/music/playersexecutives/music.players.executives.update.js"));
