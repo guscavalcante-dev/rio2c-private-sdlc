@@ -38,6 +38,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly ICollaboratorGenderRepository genderRepo;
         private readonly ICollaboratorIndustryRepository industryRepo;
         private readonly ICollaboratorRoleRepository roleRepo;
+        private readonly IActivityRepository activityRepo;
+        private readonly IInterestRepository interestRepo;
+        private readonly ITargetAudienceRepository targetAudienceRepo;
 
         /// <summary>Initializes a new instance of the <see cref="UpdateMusicPlayerExecutiveCollaboratorCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
@@ -51,6 +54,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="genderRepo">The gender repo.</param>
         /// <param name="industryRepo">The industry repo.</param>
         /// <param name="roleRepo">The role repo.</param>
+        /// <param name="activityRepository">The activity repository.</param>
+        /// <param name="interestRepository">The interest repository.</param>
+        /// <param name="targetAudienceRepository">The target audience repository.</param>
+
         public UpdateMusicPlayerExecutiveCollaboratorCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
@@ -62,7 +69,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             ILanguageRepository languageRepository,
             ICollaboratorGenderRepository genderRepo,
             ICollaboratorIndustryRepository industryRepo,
-            ICollaboratorRoleRepository roleRepo)
+            ICollaboratorRoleRepository roleRepo,
+            IActivityRepository activityRepository,
+            IInterestRepository interestRepository,
+            ITargetAudienceRepository targetAudienceRepository)
             : base(eventBus, uow, collaboratorRepository)
         {
             this.userRepo = userRepository;
@@ -74,6 +84,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.industryRepo = industryRepo;
             this.languageRepo = languageRepository;
             this.roleRepo = roleRepo;
+            this.activityRepo = activityRepository;
+            this.interestRepo = interestRepository;
+            this.targetAudienceRepo = targetAudienceRepository;
         }
 
         /// <summary>Handles the specified update collaborator.</summary>
@@ -112,7 +125,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var beforeImageUploadDate = collaborator.ImageUploadDate;
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
-                       
+
             var attendeeOrganizations = cmd.AttendeeOrganizationBaseCommands == null ? new List<AttendeeOrganization>() :
                                         await this.attendeeOrganizationRepo.FindAllByUidsAsync(cmd.AttendeeOrganizationBaseCommands?.Where(aobc => aobc.AttendeeOrganizationUid.HasValue)?.Select(aobc => aobc.AttendeeOrganizationUid.Value)?.ToList());
 
@@ -122,6 +135,22 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var collaboratorRole = roleRepo.Get(cmd.CollaboratorRoleUid ?? Guid.Empty);
             var collaboratorIndustry = industryRepo.Get(cmd.CollaboratorIndustryUid ?? Guid.Empty);
             var editions = this.editionRepo.GetAll(e => cmd.EditionsUids.Contains(e.Uid)).ToList();
+            var interestsDtos = await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Music.Id);
+            var activities = await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id);
+            var targetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id);
+
+            // Interests
+            var attendeeCollaboratorInterests = new List<AttendeeCollaboratorInterest>();
+            if (cmd.AttendeeCollaboratorInterests?.Any() == true)
+            {
+                foreach (var interestBaseCommands in cmd.AttendeeCollaboratorInterests)
+                {
+                    foreach (var interestBaseCommand in interestBaseCommands?.Where(ibc => ibc.IsChecked)?.ToList())
+                    {
+                        attendeeCollaboratorInterests.Add(new AttendeeCollaboratorInterest(interestsDtos?.FirstOrDefault(id => id.Interest.Uid == interestBaseCommand.InterestUid)?.Interest, interestBaseCommand.AdditionalInfo, cmd.UserId));
+                    }
+                }
+            }
 
             collaborator.UpdateMusicPlayerExecutive(attendeeOrganizations,
                 edition,
@@ -155,6 +184,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.JobTitles?.Select(d => new CollaboratorJobTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.MiniBios?.Select(d => new CollaboratorMiniBio(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 true, // TODO: Get isAddingToCurrentEdition from command for UpdateCollaborator
+                cmd.IsVirtualMeeting,
+                cmd.AttendeeCollaboratorActivities?.Where(aca => aca.IsChecked)?.Select(aca => new AttendeeCollaboratorActivity(activities?.FirstOrDefault(a => a.Uid == aca.ActivityUid), aca.AdditionalInfo, cmd.UserId))?.ToList(),
+                attendeeCollaboratorInterests,
+                cmd.AttendeeCollaboratorTargetAudiences?.Where(ota => ota.IsChecked)?.Select(ota => new AttendeeCollaboratorTargetAudience(targetAudiences?.FirstOrDefault(a => a.Uid == ota.TargetAudienceUid), ota.AdditionalInfo, cmd.UserId))?.ToList(),
                 cmd.UserId);
 
             if (!collaborator.IsValid())

@@ -625,8 +625,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             try
             {
                 cmd = new UpdateMusicPlayerExecutiveCollaborator(
-                    await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
-                    //TODO: 866 - verify type CollaboratorType and  OrganizationType
+                    await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),                   
                     await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.MusicPlayer.Uid),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
@@ -677,7 +676,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    Constants.CollaboratorType.PlayerExecutiveAudiovisual,
+                    Constants.CollaboratorType.PlayerExecutiveMusic,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -699,7 +698,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
                 cmd.UpdateDropdownProperties(
                     await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(cmd.CollaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
-                    await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.AudiovisualPlayer.Uid),
+                    await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.MusicPlayer.Uid),
                     await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
