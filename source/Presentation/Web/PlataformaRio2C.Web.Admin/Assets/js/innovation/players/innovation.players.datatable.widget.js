@@ -171,17 +171,18 @@ var InnovationPlayersDataTableWidget = function () {
                     data: 'Actions',
                     responsivePriority: -1,
                     render: function (data, type, full, meta) {
-                        //var html = '\
-                        //                <span class="dropdown">\
-                        //                    <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">\
-                        //                      <i class="la la-ellipsis-h"></i>\
-                        //                    </a>\
-                        //                    <div class="dropdown-menu dropdown-menu-right">';
+                        var html = '\
+                                        <span class="dropdown">\
+                                            <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">\
+                                              <i class="la la-ellipsis-h"></i>\
+                                            </a>\
+                                            <div class="dropdown-menu dropdown-menu-right">';
 
-                        //if (!full.IsInCurrentEdition) {
-                        //    html += '<button class="dropdown-item" onclick="InnovationPlayersUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
-                        //}
-                        //else {
+                        if (!full.IsInCurrentEdition) {
+                            html += '<button class="dropdown-item" onclick="InnovationPlayersUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
+                        }
+
+                        //if (full.IsInCurrentEdition) {
                         //    html += '<button class="dropdown-item" onclick="InnovationPlayersDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
                         //}
 
@@ -192,12 +193,11 @@ var InnovationPlayersDataTableWidget = function () {
                         //    html += '<button class="dropdown-item" onclick="InnovationPlayersDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
                         //}
 
-                        //html += '\
-                        //                    </div>\
-                        //                </span>';
+                        html += '\
+                                            </div>\
+                                        </span>';
 
-                        //return html;
-                        return "";
+                        return html;
                     }
                 }
             ],
