@@ -113,7 +113,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
-            
             var activities = await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id);
             var interestsDtos = await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Music.Id);
             var targetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id);
@@ -121,7 +120,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             // Create if the user was not found in database
             if (user == null)
             {
-
                 // Interests
                 var attendeeCollaboratorInterests = new List<AttendeeCollaboratorInterest>();
                 if (cmd.AttendeeCollaboratorInterests?.Any() == true)
@@ -135,15 +133,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     }
                 }
 
-
-                //todo: verificar com renan
-                List<AttendeeOrganization> attendeeOrganization = new List<AttendeeOrganization>();
-                if (cmd.AttendeeOrganizationBaseCommands.Where(x=>x.AttendeeOrganizationUid.HasValue).Any())
-                    attendeeOrganization = await this.attendeeOrganizationRepo.FindAllByUidsAsync(cmd.AttendeeOrganizationBaseCommands?.Where(aobc => aobc.AttendeeOrganizationUid.HasValue)?.Select(aobc => aobc.AttendeeOrganizationUid.Value)?.ToList());
-                
+                List<Guid> attendeeOrganizationUids = cmd.AttendeeOrganizationBaseCommands?.Where(ao => ao.AttendeeOrganizationUid.HasValue)?.Select(aobc => aobc.AttendeeOrganizationUid.Value)?.ToList();
 
                 var collaborator = Collaborator.CreateMusicPlayerExecutive(
-                    attendeeOrganization,
+                    attendeeOrganizationUids.Any() ? await this.attendeeOrganizationRepo.FindAllByUidsAsync(attendeeOrganizationUids) : null,
                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                     await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
                     cmd.BirthDate,

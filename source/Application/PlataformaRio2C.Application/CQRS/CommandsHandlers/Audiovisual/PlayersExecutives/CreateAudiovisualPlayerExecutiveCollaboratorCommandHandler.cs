@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -105,8 +106,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             // Create if the user was not found in database
             if (user == null)
             {
+                List<Guid> attendeeOrganizationUids = cmd.AttendeeOrganizationBaseCommands?.Where(ao => ao.AttendeeOrganizationUid.HasValue)?.Select(aobc => aobc.AttendeeOrganizationUid.Value)?.ToList();
+
                 var collaborator = Collaborator.CreateAudiovisualPlayerExecutiveCollaborator(
-                    await this.attendeeOrganizationRepo.FindAllByUidsAsync(cmd.AttendeeOrganizationBaseCommands?.Where(aobc => aobc.AttendeeOrganizationUid.HasValue)?.Select(aobc => aobc.AttendeeOrganizationUid.Value)?.ToList()),
+                    attendeeOrganizationUids.Any() ? await this.attendeeOrganizationRepo.FindAllByUidsAsync(attendeeOrganizationUids) : null,
                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                     await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
                     cmd.BirthDate,
