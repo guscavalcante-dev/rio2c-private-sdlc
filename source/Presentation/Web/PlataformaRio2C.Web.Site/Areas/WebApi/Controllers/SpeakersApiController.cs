@@ -120,6 +120,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 Domain.Constants.CollaboratorType.Speaker,
                 request?.ModifiedAfterDate.ToUtcDateKind(),
                 request?.ShowDetails ?? false,
+                request?.ShowDeleted ?? false,
                 request?.Page ?? 1,
                 request?.PageSize ?? 10);
 
@@ -132,7 +133,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 TotalItemCount = speakerCollaboratorApiDtos.TotalItemCount,
                 PageCount = speakerCollaboratorApiDtos.PageCount,
                 PageNumber = speakerCollaboratorApiDtos.PageNumber,
-                PageSize = speakerCollaboratorApiDtos.PageSize,
+                PageSize = speakerCollaboratorApiDtos.PageSize,               
                 SpeakerApiResponses = speakerCollaboratorApiDtos?.Select(dto => new SpeakerApiResponse
                 {
                     Uid = dto.Uid,

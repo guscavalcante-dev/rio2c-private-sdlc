@@ -15,6 +15,7 @@ using Newtonsoft.Json;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
 using System;
+using System.ComponentModel;
 
 namespace PlataformaRio2C.Domain.ApiModels
 {
@@ -44,5 +45,10 @@ namespace PlataformaRio2C.Domain.ApiModels
         [JsonProperty("showDetails")]
         [SwaggerParameterDescription(description: "Shows extra fields.")]
         public bool? ShowDetails { get; set; }
+
+        [JsonProperty("ShowDeleted")]
+        [SwaggerParameterDescription(description: "Shows Deleted fields.")]
+        [SwaggerDefaultValue(false)]
+        public bool ShowDeleted { get; set; }
     }
 }

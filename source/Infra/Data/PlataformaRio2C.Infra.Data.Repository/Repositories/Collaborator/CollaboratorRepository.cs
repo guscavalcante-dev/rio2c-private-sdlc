@@ -2333,6 +2333,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             string collaboratorTypeName,
             DateTime? modifiedAfterDate,
             bool showDetails,
+            bool showDeleted,
             int page,
             int pageSize)
         {
