@@ -184,6 +184,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
             else
             {
+                //TODO: This is not the correct way to instantiate a command. Create a new constructor accepting this parameters and use it.
                 var updateCmd = new UpdateMusicPlayerExecutiveCollaborator
                 {
                     CollaboratorUid = user.Collaborator.Uid,

@@ -44,8 +44,8 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeCartoonProjectCollaborator> AttendeeCartoonProjectCollaborators { get; private set; }
         public virtual ICollection<AttendeeInnovationOrganizationCollaborator> AttendeeInnovationOrganizationCollaborators { get; private set; }
         public virtual ICollection<Logistic> Logistics { get; private set; }
-        public virtual ICollection<AttendeeCollaboratorInnovationOrganizationTrack> AttendeeCollaboratorInnovationOrganizationTracks { get; private set; }
         public virtual ICollection<AttendeeNegotiationCollaborator> AttendeeNegotiationCollaborators { get; private set; }
+        public virtual ICollection<AttendeeCollaboratorInnovationOrganizationTrack> AttendeeCollaboratorInnovationOrganizationTracks { get; private set; }
         public virtual ICollection<AttendeeCollaboratorInterest> AttendeeCollaboratorInterests { get; private set; }
         public virtual ICollection<AttendeeCollaboratorActivity> AttendeeCollaboratorActivities { get; private set; }
         public virtual ICollection<AttendeeCollaboratorTargetAudience> AttendeeCollaboratorTargetAudiences { get; private set; }
@@ -625,7 +625,6 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-
         #region Music Player Executive Attendee Collaborator
 
         /// <summary>
@@ -742,7 +741,6 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         #endregion
-
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.</summary>
         protected AttendeeCollaborator()
@@ -1615,10 +1613,10 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>
         /// Synchronizes the attendee collaborator innovation organization tracks.
         /// </summary>
-        /// <param name="attendeeCollaboratorInnovationOrganizationTrack">The attendee innovation organization tracks.</param>
+        /// <param name="attendeeCollaboratorInnovationOrganizationTracks">The attendee innovation organization tracks.</param>
         /// <param name="userId">The user identifier.</param>
         public void SynchronizeAttendeeCollaboratorInnovationOrganizationTracks(
-           List<AttendeeCollaboratorInnovationOrganizationTrack> attendeeCollaboratorInnovationOrganizationTrack,
+           List<AttendeeCollaboratorInnovationOrganizationTrack> attendeeCollaboratorInnovationOrganizationTracks,
            int userId)
         {
             if (this.AttendeeCollaboratorInnovationOrganizationTracks == null)
@@ -1626,15 +1624,15 @@ namespace PlataformaRio2C.Domain.Entities
                 this.AttendeeCollaboratorInnovationOrganizationTracks = new List<AttendeeCollaboratorInnovationOrganizationTrack>();
             }
 
-            this.DeleteAttendeeCollaboratorInnovationOrganizationTracks(attendeeCollaboratorInnovationOrganizationTrack, userId);
+            this.DeleteAttendeeCollaboratorInnovationOrganizationTracks(attendeeCollaboratorInnovationOrganizationTracks, userId);
 
-            if (attendeeCollaboratorInnovationOrganizationTrack?.Any() != true)
+            if (attendeeCollaboratorInnovationOrganizationTracks?.Any() != true)
             {
                 return;
             }
 
             // Create or update
-            foreach (var attendeeInnovationOrganizationTrack in attendeeCollaboratorInnovationOrganizationTrack)
+            foreach (var attendeeInnovationOrganizationTrack in attendeeCollaboratorInnovationOrganizationTracks)
             {
                 var attendeeCollaboratorInnovationOrganizationTrackDb = this.AttendeeCollaboratorInnovationOrganizationTracks.FirstOrDefault(aciot => aciot.InnovationOrganizationTrackOption.Uid == attendeeInnovationOrganizationTrack.InnovationOrganizationTrackOption?.Uid);
                 if (attendeeCollaboratorInnovationOrganizationTrackDb != null)
@@ -1666,13 +1664,12 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-
-        #region Attendee Collaborator music Organization Tracks
+        #region Attendee Collaborator Music Organization Target Audiences
 
         /// <summary>
-        /// Synchronizes the attendee collaborator music organization TargetAudiences.
+        /// Synchronizes the attendee collaborator music target audiences.
         /// </summary>
-        /// <param name="attendeeCollaboratorInnovationOrganizationTrack">The attendee music organization TargetAudiences.</param>
+        /// <param name="attendeeCollaboratorTargetAudiences">The attendee collaborator target audiences.</param>
         /// <param name="userId">The user identifier.</param>
         public void SynchronizeAttendeeCollaboratorMusicTargetAudiences(
            List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences,
@@ -1706,23 +1703,22 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>
-        /// Deletes the attendee collaborator music organization TargetAudiences.
+        /// Deletes the attendee collaborator music target audiences.
         /// </summary>
-        /// <param name="attendeeCollaboratorTargetAudiences">The new attendee music organization TargetAudiences.</param>
+        /// <param name="newAttendeeCollaboratorTargetAudiences">The new attendee collaborator target audiences.</param>
         /// <param name="userId">The user identifier.</param>
         private void DeleteAttendeeCollaboratorMusicTargetAudiences(
             List<AttendeeCollaboratorTargetAudience> newAttendeeCollaboratorTargetAudiences,
             int userId)
         {
             var attendeeCollaboratorTargetAudiencesToDelete = this.AttendeeCollaboratorTargetAudiences.Where(db => newAttendeeCollaboratorTargetAudiences?.Select(ioto => ioto.TargetAudience.Uid)?.Contains(db.TargetAudience.Uid) == false && !db.IsDeleted).ToList();
-            foreach (var attendeeCollaboratorInnovationOrganizationTrack in attendeeCollaboratorTargetAudiencesToDelete)
+            foreach (var attendeeCollaboratorTargetAudience in attendeeCollaboratorTargetAudiencesToDelete)
             {
-                attendeeCollaboratorInnovationOrganizationTrack.Delete(userId);
+                attendeeCollaboratorTargetAudience.Delete(userId);
             }
         }
 
         #endregion
-
 
         #region Attendee Collaborator Activities
 

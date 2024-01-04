@@ -1394,12 +1394,10 @@ namespace PlataformaRio2C.Domain.Entities
             this.CellPhone = cellPhone?.Trim();
             this.UpdatePublicEmail(sharePublicEmail, publicEmail);
             this.UpdateImageUploadDate(isImageUploaded, false);
-
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
-
             this.UpdateEditions(haveYouBeenToRio2CBefore, editionsParticipated, userId);
+
+            this.SetCreateDate(userId);
+
             this.BirthDate = birthDate;
             this.Gender = collaboratorGender;
             this.Industry = collaboratorIndustry;
@@ -1781,12 +1779,10 @@ namespace PlataformaRio2C.Domain.Entities
             this.CellPhone = cellPhone?.Trim();            
             this.UpdatePublicEmail(sharePublicEmail, publicEmail);
             this.UpdateImageUploadDate(isImageUploaded, false);
-
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
-
             this.UpdateEditions(haveYouBeenToRio2CBefore, editionsParticipated, userId);
+
+            this.SetCreateDate(userId);
+
             this.BirthDate = birthDate;
             this.Gender = collaboratorGender;
             this.Industry = collaboratorIndustry;
@@ -1823,84 +1819,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUser(email);
         }
 
-
-
         /// <summary>
-        /// Updates the innovation player executive attendee collaborators.
-        /// </summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="collaboratorType">Type of the collaborator.</param>
-        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
-        /// <param name="apiHighlightPosition">The API highlight position.</param>
-        /// <param name="attendeeOrganizations">The attendee organizations.</param>
-        /// <param name="attendeeCollaboratorActivities">The attendee collaborator activities.</param>
-        /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
-        /// <param name="attendeeCollaboratorTargetAudiences">The attendee collaborator music organization tracks.</param>
-        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
-        /// <param name="userId">The user identifier.</param>
-        private void UpdateMusicPlayerExecutiveAttendeeCollaborators(
-            Edition edition,
-            CollaboratorType collaboratorType,
-            bool? isApiDisplayEnabled,
-            int? apiHighlightPosition,
-            List<AttendeeOrganization> attendeeOrganizations,
-            List<AttendeeCollaboratorActivity> attendeeCollaboratorActivities,
-            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
-            List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences,
-            bool isAddingToCurrentEdition,
-            int userId)
-        {
-            // Synchronize only when is adding to current edition
-            if (!isAddingToCurrentEdition)
-            {
-                return;
-            }
-
-            if (this.AttendeeCollaborators == null)
-            {
-                this.AttendeeCollaborators = new List<AttendeeCollaborator>();
-            }
-
-            if (edition == null)
-            {
-                return;
-            }
-
-            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
-            if (attendeeCollaborator != null)
-            {
-                attendeeCollaborator.UpdateMusicPlayerExecutiveAttendeeCollaborator(
-                    collaboratorType,
-                    isApiDisplayEnabled,
-                    apiHighlightPosition,
-                    true,
-                    attendeeOrganizations,
-                    attendeeCollaboratorActivities,
-                    attendeeCollaboratorInterests,
-                    attendeeCollaboratorTargetAudiences,
-                    userId);
-            }
-            else
-            {
-                //todo: passar o isVirtualMeeting aqui
-                this.AttendeeCollaborators.Add(AttendeeCollaborator.CreateMusicPlayerExecutiveAttendeeCollaborator(
-                    edition,
-                    collaboratorType,
-                    this,
-                    isApiDisplayEnabled,
-                    apiHighlightPosition,
-                    true,
-                    attendeeOrganizations,
-                    attendeeCollaboratorActivities,
-                    attendeeCollaboratorInterests,
-                    attendeeCollaboratorTargetAudiences,
-                    userId));
-            }
-        }
-
-
-        /// <summary>
-        /// Creates the audiovisual player executive collaborator.
+        /// Creates the music player executive.
         /// </summary>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="edition">The edition.</param>
@@ -1932,9 +1852,10 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="jobTitles">The job titles.</param>
         /// <param name="miniBios">The mini bios.</param>
-        /// <param name="organizationActivities">The organization activities.</param>
-        /// <param name="organizationInterests">The organization interests.</param>
-        /// <param name="organizationTargetAudiences">The target audiences.</param>
+        /// <param name="isVirtualMeeting">The is virtual meeting.</param>
+        /// <param name="attendeeCollaboratorActivities">The attendee collaborator activities.</param>
+        /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
+        /// <param name="attendeeCollaboratorTargetAudiences">The attendee collaborator target audiences.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
         public static Collaborator CreateMusicPlayerExecutive(
@@ -1973,7 +1894,7 @@ namespace PlataformaRio2C.Domain.Entities
             List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
             List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences,
             int userId)
-        {          
+        {
             return new Collaborator(
                attendeeOrganizations,
                edition,
@@ -2008,7 +1929,7 @@ namespace PlataformaRio2C.Domain.Entities
                isVirtualMeeting,
                attendeeCollaboratorActivities,
                attendeeCollaboratorInterests,
-               attendeeCollaboratorTargetAudiences,               
+               attendeeCollaboratorTargetAudiences,
                userId);
         }
 
@@ -2111,8 +2032,78 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUser(email);
         }
 
+        /// <summary>
+        /// Updates the innovation player executive attendee collaborators.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
+        /// <param name="attendeeOrganizations">The attendee organizations.</param>
+        /// <param name="attendeeCollaboratorActivities">The attendee collaborator activities.</param>
+        /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
+        /// <param name="attendeeCollaboratorTargetAudiences">The attendee collaborator music organization tracks.</param>
+        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
+        /// <param name="userId">The user identifier.</param>
+        private void UpdateMusicPlayerExecutiveAttendeeCollaborators(
+            Edition edition,
+            CollaboratorType collaboratorType,
+            bool? isApiDisplayEnabled,
+            int? apiHighlightPosition,
+            List<AttendeeOrganization> attendeeOrganizations,
+            List<AttendeeCollaboratorActivity> attendeeCollaboratorActivities,
+            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
+            List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences,
+            bool isAddingToCurrentEdition,
+            int userId)
+        {
+            // Synchronize only when is adding to current edition
+            if (!isAddingToCurrentEdition)
+            {
+                return;
+            }
 
+            if (this.AttendeeCollaborators == null)
+            {
+                this.AttendeeCollaborators = new List<AttendeeCollaborator>();
+            }
 
+            if (edition == null)
+            {
+                return;
+            }
+
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            if (attendeeCollaborator != null)
+            {
+                attendeeCollaborator.UpdateMusicPlayerExecutiveAttendeeCollaborator(
+                    collaboratorType,
+                    isApiDisplayEnabled,
+                    apiHighlightPosition,
+                    true,
+                    attendeeOrganizations,
+                    attendeeCollaboratorActivities,
+                    attendeeCollaboratorInterests,
+                    attendeeCollaboratorTargetAudiences,
+                    userId);
+            }
+            else
+            {
+                //todo: passar o isVirtualMeeting aqui
+                this.AttendeeCollaborators.Add(AttendeeCollaborator.CreateMusicPlayerExecutiveAttendeeCollaborator(
+                    edition,
+                    collaboratorType,
+                    this,
+                    isApiDisplayEnabled,
+                    apiHighlightPosition,
+                    true,
+                    attendeeOrganizations,
+                    attendeeCollaboratorActivities,
+                    attendeeCollaboratorInterests,
+                    attendeeCollaboratorTargetAudiences,
+                    userId));
+            }
+        }
 
         #endregion
 
