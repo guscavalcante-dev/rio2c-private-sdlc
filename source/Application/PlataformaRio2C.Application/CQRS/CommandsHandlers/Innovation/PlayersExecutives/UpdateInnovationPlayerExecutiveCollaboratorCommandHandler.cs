@@ -126,10 +126,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var beforeImageUploadDate = collaborator.ImageUploadDate;
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
-
-            var attendeeOrganizations = cmd.AttendeeOrganizationBaseCommands == null ? new List <AttendeeOrganization>() :
-                                        await this.attendeeOrganizationRepo.FindAllByUidsAsync(cmd.AttendeeOrganizationBaseCommands?.Where(aobc => aobc.AttendeeOrganizationUid.HasValue)?.Select(aobc => aobc.AttendeeOrganizationUid.Value)?.ToList());
-
             var edition = await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty);
             var collaboratorType = await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName);
             var collaboratorGender = genderRepo.Get(cmd.CollaboratorGenderUid ?? Guid.Empty);
@@ -153,8 +149,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 }
             }
 
+            List<Guid> attendeeOrganizationUids = cmd.AttendeeOrganizationBaseCommands?.Where(ao => ao.AttendeeOrganizationUid.HasValue)?.Select(aobc => aobc.AttendeeOrganizationUid.Value)?.ToList();
+
             collaborator.UpdateInnovationPlayerExecutiveCollaborator(
-                attendeeOrganizations,
+                attendeeOrganizationUids.Any() ? await this.attendeeOrganizationRepo.FindAllByUidsAsync(attendeeOrganizationUids) : null,
                 edition,
                 collaboratorType,
                 cmd.BirthDate,

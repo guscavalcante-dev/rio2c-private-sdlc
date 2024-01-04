@@ -274,23 +274,25 @@ var MusicPlayersExecutivesDataTableWidget = function () {
                             html += '<button class="dropdown-item" onclick="MusicPlayersExecutivesUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         }
 
-                        if (full.IsInCurrentEdition) {
-                            html += '<button class="dropdown-item" onclick="MusicPlayersExecutivesDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
-                        }
+                        //if (full.IsInCurrentEdition) {
+                        //    html += '<button class="dropdown-item" onclick="MusicPlayersExecutivesDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
+                        //}
 
                         html += '<button class="dropdown-item" onclick="AccountsUpdateUserStatus.showModal(\'' + full.UserBaseDto.Uid + '\',\'' + !full.Active + '\');"><i class="la la-lock"></i> ' + ((full.Active) ? labels.block : labels.unblock) + '</button>';
 
-                        if (full.IsInCurrentEdition && full.IsInOtherEdition) {
-                            html += '<button class="dropdown-item" onclick="MusicPlayersExecutivesDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-remove"></i> ' + removeFromEdition + '</button>';
-                        }
-                        else {
-                            html += '<button class="dropdown-item" onclick="MusicPlayersExecutivesDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
-                        }
+                        //if (full.IsInCurrentEdition && full.IsInOtherEdition) {
+                        //    html += '<button class="dropdown-item" onclick="MusicPlayersExecutivesDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-remove"></i> ' + removeFromEdition + '</button>';
+                        //}
+                        //else {
+                        //    html += '<button class="dropdown-item" onclick="MusicPlayersExecutivesDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+                        //}
 
-                        html += '\</div>\
+                        html += '\
+                                            </div>\
                                         </span>';
-                        return html; ///todo: not implementad
-                       // return ""; 
+
+                        return html;
+
                     }
                 }
             ],
