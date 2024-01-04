@@ -292,6 +292,7 @@ var MusicPlayersExecutivesDataTableWidget = function () {
                                         </span>';
 
                         return html;
+
                     }
                 }
             ],

@@ -1810,6 +1810,7 @@ namespace PlataformaRio2C.Domain.Entities
                false,
                null,
                attendeeOrganizations,
+               isVirtualMeeting,
                attendeeCollaboratorActivities,
                attendeeCollaboratorInterests,
                attendeeCollaboratorTargetAudiences,
@@ -2000,6 +2001,10 @@ namespace PlataformaRio2C.Domain.Entities
             List<CollaboratorJobTitle> jobTitles,
             List<CollaboratorMiniBio> miniBios,
             bool isAddingToCurrentEdition,
+            bool? isVirtualMeeting,
+            List<AttendeeCollaboratorActivity> attendeeCollaboratorActivities,
+            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
+            List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences,
             int userId)
         {
             //this.Uid = uid;
@@ -2026,10 +2031,21 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
 
+          
             //TODO: Refactor this!
             //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
-            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, null, attendeeOrganizations, isAddingToCurrentEdition, userId);
-            this.UpdateUser(email);
+            this.UpdateMusicPlayerExecutiveAttendeeCollaborators(
+                edition,
+                collaboratorType,
+                null,
+                null,
+                attendeeOrganizations,
+                isVirtualMeeting,
+                attendeeCollaboratorActivities,
+                attendeeCollaboratorInterests,
+                attendeeCollaboratorTargetAudiences,
+                isAddingToCurrentEdition,
+                userId);
         }
 
         /// <summary>
@@ -2051,6 +2067,7 @@ namespace PlataformaRio2C.Domain.Entities
             bool? isApiDisplayEnabled,
             int? apiHighlightPosition,
             List<AttendeeOrganization> attendeeOrganizations,
+            bool? isVirtualMeeting,
             List<AttendeeCollaboratorActivity> attendeeCollaboratorActivities,
             List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
             List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences,
@@ -2076,6 +2093,7 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
             if (attendeeCollaborator != null)
             {
+                //todo: passar o isVirtualMeeting aqui
                 attendeeCollaborator.UpdateMusicPlayerExecutiveAttendeeCollaborator(
                     collaboratorType,
                     isApiDisplayEnabled,

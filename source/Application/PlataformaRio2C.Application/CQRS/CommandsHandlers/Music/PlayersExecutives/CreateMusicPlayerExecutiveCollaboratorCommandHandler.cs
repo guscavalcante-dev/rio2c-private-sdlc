@@ -37,10 +37,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly ILanguageRepository languageRepo;
         private readonly ICollaboratorGenderRepository genderRepo;
         private readonly ICollaboratorIndustryRepository industryRepo;
+        private readonly ICollaboratorRoleRepository roleRepo;
         private readonly IActivityRepository activityRepo;
         private readonly IInterestRepository interestRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
-        private readonly ICollaboratorRoleRepository roleRepo;
 
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
@@ -67,10 +67,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             ILanguageRepository languageRepository,
             ICollaboratorGenderRepository genderRepo,
             ICollaboratorIndustryRepository industryRepo,
+            ICollaboratorRoleRepository roleRepo,
             IActivityRepository activityRepository,
             IInterestRepository interestRepository,
-            ITargetAudienceRepository targetAudienceRepository,
-            ICollaboratorRoleRepository roleRepo)
+            ITargetAudienceRepository targetAudienceRepository)
             : base(eventBus, uow, collaboratorRepository)
         {
             this.userRepo = userRepository;
@@ -80,10 +80,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.languageRepo = languageRepository;
             this.genderRepo = genderRepo;
             this.industryRepo = industryRepo;
+            this.roleRepo = roleRepo;
             this.activityRepo = activityRepository;
             this.interestRepo = interestRepository;
             this.targetAudienceRepo = targetAudienceRepository;
-            this.roleRepo = roleRepo;
         }
 
         /// <summary>Handles the specified create tiny collaborator.</summary>
