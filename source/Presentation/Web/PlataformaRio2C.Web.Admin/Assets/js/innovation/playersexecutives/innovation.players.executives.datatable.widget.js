@@ -262,23 +262,22 @@ var InnovationPlayersExecutivesDataTableWidget = function () {
                     data: 'Actions',
                     responsivePriority: -1,
                     render: function (data, type, full, meta) {
-                        
-                        //var html = '\
-                        //                <span class="dropdown">\
-                        //                    <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">\
-                        //                      <i class="la la-ellipsis-h"></i>\
-                        //                    </a>\
-                        //                    <div class="dropdown-menu dropdown-menu-right">';
+                        var html = '\
+                                        <span class="dropdown">\
+                                            <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">\
+                                              <i class="la la-ellipsis-h"></i>\
+                                            </a>\
+                                            <div class="dropdown-menu dropdown-menu-right">';
 
-                        //if (!full.IsInCurrentEdition) {
-                        //    html += '<button class="dropdown-item" onclick="InnovationPlayersExecutivesUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
-                        //}
+                        if (!full.IsInCurrentEdition) {
+                            html += '<button class="dropdown-item" onclick="InnovationPlayersExecutivesUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
+                        }
 
                         //if (full.IsInCurrentEdition) {
                         //    html += '<button class="dropdown-item" onclick="InnovationPlayersExecutivesDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
                         //}
 
-                        //html += '<button class="dropdown-item" onclick="AccountsUpdateUserStatus.showModal(\'' + full.UserBaseDto.Uid + '\',\'' + !full.Active + '\');"><i class="la la-lock"></i> ' + ((full.Active) ? labels.block : labels.unblock) + '</button>';
+                        html += '<button class="dropdown-item" onclick="AccountsUpdateUserStatus.showModal(\'' + full.UserBaseDto.Uid + '\',\'' + !full.Active + '\');"><i class="la la-lock"></i> ' + ((full.Active) ? labels.block : labels.unblock) + '</button>';
 
                         //if (full.IsInCurrentEdition && full.IsInOtherEdition) {
                         //    html += '<button class="dropdown-item" onclick="InnovationPlayersExecutivesDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-remove"></i> ' + removeFromEdition + '</button>';
@@ -287,29 +286,11 @@ var InnovationPlayersExecutivesDataTableWidget = function () {
                         //    html += '<button class="dropdown-item" onclick="InnovationPlayersExecutivesDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
                         //}
 
-                        //html += '\
-                        //                    </div>\
-                        //                </span>';
-
-                        if (!full.IsInCurrentEdition) {
-                            var html = '\
-                                        <span class="dropdown">\
-                                            <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">\
-                                              <i class="la la-ellipsis-h"></i>\
-                                            </a>\
-                                            <div class="dropdown-menu dropdown-menu-right">';
-
-
-                            html += '<button class="dropdown-item" onclick="InnovationPlayersExecutivesUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
-
-
-                            html += '\
+                        html += '\
                                             </div>\
                                         </span>';
-                            return html;
-                        }
 
-                        return '';
+                        return html;
                     }
                 }
             ],
