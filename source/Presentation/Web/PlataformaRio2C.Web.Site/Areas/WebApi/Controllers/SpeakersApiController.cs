@@ -3,28 +3,18 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-18-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 12-13-2023
+// Last Modified By : Elton Assunção
+// Last Modified On : 01-05-2024
 // ***********************************************************************
 // <copyright file="SpeakersApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Globalization;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web.Http;
 using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.ApiModels;
-using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
@@ -32,6 +22,13 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using Swashbuckle.Swagger.Annotations;
+using System;
+using System.Configuration;
+using System.Globalization;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Web.Http;
 using AppValidationResult = PlataformaRio2C.Application.AppValidationResult;
 
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
@@ -133,7 +130,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 TotalItemCount = speakerCollaboratorApiDtos.TotalItemCount,
                 PageCount = speakerCollaboratorApiDtos.PageCount,
                 PageNumber = speakerCollaboratorApiDtos.PageNumber,
-                PageSize = speakerCollaboratorApiDtos.PageSize,               
+                PageSize = speakerCollaboratorApiDtos.PageSize,
                 SpeakerApiResponses = speakerCollaboratorApiDtos?.Select(dto => new SpeakerApiResponse
                 {
                     Uid = dto.Uid,
@@ -146,6 +143,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     Site = dto.Website?.GetUrlWithProtocol(),
                     SocialNetworks = dto.GetSocialNetworks(),
                     Tracks = dto.GetTrackBaseApiResponseByLanguageCode(currentLanguageCode),
+                    IsDeleted = dto.IsDeleted,
                     Companies = dto.OrganizationsDtos?.Select(od => new SpeakerOrganizationApiResponse
                     {
                         Uid = od.Uid,
@@ -153,7 +151,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                         CompanyName = od.CompanyName,
                         Picture = od.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, od.Uid, od.ImageUploadDate, true) : null
                     })?.OrderBy(s => s.TradeName),
-                    Conferences = dto.GetConferencesApiResponseByLanguageCode(currentLanguageCode)
+                    Conferences = dto.GetConferencesApiResponseByLanguageCode(currentLanguageCode),
+
                 })?.ToList()
             });
         }
@@ -305,7 +304,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             {
                 Status = ApiStatus.Success,
                 Error = null,
-                
+
                 Uid = speakerCollaboratorApiDto.Uid,
                 BadgeName = speakerCollaboratorApiDto.BadgeName?.Trim(),
                 Name = speakerCollaboratorApiDto.Name?.Trim(),

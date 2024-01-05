@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-18-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 12-15-2023
+// Last Modified By : Elton Assunção
+// Last Modified On : 01-05-2024
 // ***********************************************************************
 // <copyright file="SpeakersApiRequest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,7 +15,6 @@ using Newtonsoft.Json;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
 using System;
-using System.ComponentModel;
 
 namespace PlataformaRio2C.Domain.ApiModels
 {
@@ -44,10 +43,11 @@ namespace PlataformaRio2C.Domain.ApiModels
 
         [JsonProperty("showDetails")]
         [SwaggerParameterDescription(description: "Shows extra fields.")]
+        [SwaggerDefaultValue(false)]
         public bool? ShowDetails { get; set; }
 
         [JsonProperty("ShowDeleted")]
-        [SwaggerParameterDescription(description: "Shows Deleted fields.")]
+        [SwaggerParameterDescription(description: "Shows deleted Speakers.")]
         [SwaggerDefaultValue(false)]
         public bool ShowDeleted { get; set; }
     }

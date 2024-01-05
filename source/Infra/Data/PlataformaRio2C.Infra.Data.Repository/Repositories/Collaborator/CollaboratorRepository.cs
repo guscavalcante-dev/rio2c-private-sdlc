@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 12-21-2023
+// Last Modified By : Elton Assunção
+// Last Modified On : 01-05-2024
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -137,7 +137,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        internal static IQueryable<Collaborator> FindByCollaboratorTypeNameAndByEditionId(this IQueryable<Collaborator> query, string[] collaboratorTypeNames, bool showAllEditions, bool showAllParticipants, int? editionId)
+        internal static IQueryable<Collaborator> FindByCollaboratorTypeNameAndByEditionId(this IQueryable<Collaborator> query, string[] collaboratorTypeNames, bool showAllEditions, bool showAllParticipants, int? editionId, bool showDeleted = false)
         {
             if (collaboratorTypeNames == null)
             {
@@ -146,12 +146,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             query = query.Where(c => (showAllParticipants && c.User.Roles.Any(r => r.Name == Constants.Role.Admin))
                                                || c.AttendeeCollaborators.Any(ac => (showAllEditions || ac.EditionId == editionId)
-                                                                                           && !ac.IsDeleted
-                                                                                           && !ac.Edition.IsDeleted
+                                                                                           && (!ac.IsDeleted || showDeleted)
+                                                                                           && (!ac.Edition.IsDeleted || showDeleted)
                                                                                            && (showAllParticipants
                                                                                                || ac.AttendeeCollaboratorTypes
-                                                                                                   .Any(act => !act.IsDeleted
-                                                                                                               && !act.CollaboratorType.IsDeleted
+                                                                                                   .Any(act => (!act.IsDeleted || showDeleted)
+                                                                                                               && (!act.CollaboratorType.IsDeleted || showDeleted)
                                                                                                                && collaboratorTypeNames.Contains(act.CollaboratorType.Name)))));
 
             return query;
@@ -205,12 +205,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
         /// <param name="highlights">The highlights.</param>
         /// <returns></returns>
-        internal static IQueryable<Collaborator> FindByApiHighlights(this IQueryable<Collaborator> query, string collaboratorTypeName, int? highlights)
+        internal static IQueryable<Collaborator> FindByApiHighlights(this IQueryable<Collaborator> query, string collaboratorTypeName, int? highlights, bool showDeleted = false)
         {
             if (highlights == 0 || highlights == 1)
             {
                 query = query.Where(o => o.AttendeeCollaborators.Any(ac => !ac.IsDeleted
-                                                                           && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
+                                                                           && ac.AttendeeCollaboratorTypes.Any(act => (!act.IsDeleted || showDeleted)
                                                                                                                       && act.CollaboratorType.Name == collaboratorTypeName
                                                                                                                       && act.IsApiDisplayEnabled
                                                                                                                       && (highlights.Value == 1 ? act.ApiHighlightPosition.HasValue : !act.ApiHighlightPosition.HasValue))));
@@ -241,7 +241,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="keywords">The keywords.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        internal static IQueryable<Collaborator> FindByKeywords(this IQueryable<Collaborator> query, string keywords, int? editionId)
+        internal static IQueryable<Collaborator> FindByKeywords(this IQueryable<Collaborator> query, string keywords, int? editionId, bool showDeleted = false)
         {
             if (!string.IsNullOrEmpty(keywords))
             {
@@ -261,22 +261,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         innerExecutiveEmailWhere = innerExecutiveEmailWhere.And(c => c.User.Email.Contains(keyword));
                         innerOrganizationNameWhere = innerOrganizationNameWhere
                                                         .And(c => c.AttendeeCollaborators.Any(ac => (!editionId.HasValue || ac.EditionId == editionId)
-                                                                                                    && !ac.IsDeleted
-                                                                                                    && !ac.Edition.IsDeleted
+                                                                                                    && (!ac.IsDeleted || showDeleted)
+                                                                                                    && (!ac.Edition.IsDeleted || showDeleted)
                                                                                                     && ac.AttendeeOrganizationCollaborators
-                                                                                                            .Any(aoc => !aoc.IsDeleted
-                                                                                                                        && !aoc.AttendeeOrganization.IsDeleted
-                                                                                                                        && !aoc.AttendeeOrganization.Organization.IsDeleted
+                                                                                                            .Any(aoc => (!aoc.IsDeleted || showDeleted)
+                                                                                                                        && (!aoc.AttendeeOrganization.IsDeleted || showDeleted)
+                                                                                                                        && (!aoc.AttendeeOrganization.Organization.IsDeleted || showDeleted)
                                                                                                                         && aoc.AttendeeOrganization.Organization.Name.Contains(keyword))));
                         innerHoldingNameWhere = innerHoldingNameWhere
                                                         .And(c => c.AttendeeCollaborators.Any(ac => (!editionId.HasValue || ac.EditionId == editionId)
-                                                                                                    && !ac.IsDeleted
-                                                                                                    && !ac.Edition.IsDeleted
+                                                                                                    && (!ac.IsDeleted || showDeleted)
+                                                                                                    && (!ac.Edition.IsDeleted || showDeleted)
                                                                                                     && ac.AttendeeOrganizationCollaborators
-                                                                                                        .Any(aoc => !aoc.IsDeleted
-                                                                                                                    && !aoc.AttendeeOrganization.IsDeleted
-                                                                                                                    && !aoc.AttendeeOrganization.Organization.IsDeleted
-                                                                                                                    && !aoc.AttendeeOrganization.Organization.Holding.IsDeleted
+                                                                                                        .Any(aoc => (!aoc.IsDeleted || showDeleted)
+                                                                                                                    && (!aoc.AttendeeOrganization.IsDeleted || showDeleted)
+                                                                                                                    && (!aoc.AttendeeOrganization.Organization.IsDeleted || showDeleted)
+                                                                                                                    && (!aoc.AttendeeOrganization.Organization.Holding.IsDeleted || showDeleted)
                                                                                                                     && aoc.AttendeeOrganization.Organization.Holding.Name.Contains(keyword))));
 
                     }
@@ -353,10 +353,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
         /// <returns></returns>
-        internal static IQueryable<Collaborator> IsApiDisplayEnabled(this IQueryable<Collaborator> query, int editionId, string collaboratorTypeName)
+        internal static IQueryable<Collaborator> IsApiDisplayEnabled(this IQueryable<Collaborator> query, int editionId, string collaboratorTypeName, bool showDeleted = false)
         {
             query = query.Where(c => c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId
-                                                                       && ac.AttendeeCollaboratorTypes.Any(aot => !aot.IsDeleted
+                                                                       && ac.AttendeeCollaboratorTypes.Any(aot => (!aot.IsDeleted || showDeleted)
                                                                                                                   && aot.CollaboratorType.Name == collaboratorTypeName
                                                                                                                   && aot.IsApiDisplayEnabled)));
 
@@ -455,12 +455,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="query">The query.</param>
         /// <param name="conferencesDates">The conferences dates.</param>
         /// <returns></returns>
-        internal static IQueryable<Collaborator> FindByConferencesDates(this IQueryable<Collaborator> query, List<DateTimeOffset?> conferencesDates)
+        internal static IQueryable<Collaborator> FindByConferencesDates(this IQueryable<Collaborator> query, List<DateTimeOffset?> conferencesDates, bool showDeleted = false)
         {
             if (conferencesDates?.Any(d => d.HasValue) == true)
             {
-                query = query.Where(c => c.AttendeeCollaborators.Any(ac => !ac.IsDeleted &&
-                                                                            ac.ConferenceParticipants.Any(cp => !cp.IsDeleted &&
+                query = query.Where(c => c.AttendeeCollaborators.Any(ac => (!ac.IsDeleted || showDeleted) &&
+                                                                            ac.ConferenceParticipants.Any(cp => (!cp.IsDeleted || showDeleted) &&
                                                                                                                 conferencesDates.Contains(DbFunctions.TruncateTime(cp.Conference.StartDate)))));
             }
 
@@ -473,12 +473,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="query">The query.</param>
         /// <param name="conferencesUids">The conferences uids.</param>
         /// <returns></returns>
-        internal static IQueryable<Collaborator> FindByConferencesUids(this IQueryable<Collaborator> query, List<Guid?> conferencesUids)
+        internal static IQueryable<Collaborator> FindByConferencesUids(this IQueryable<Collaborator> query, List<Guid?> conferencesUids, bool showDeleted = false)
         {
             if (conferencesUids?.Any(d => d.HasValue) == true)
             {
-                query = query.Where(c => c.AttendeeCollaborators.Any(ac => !ac.IsDeleted &&
-                                                                            ac.ConferenceParticipants.Any(cp => !cp.IsDeleted &&
+                query = query.Where(c => c.AttendeeCollaborators.Any(ac => (!ac.IsDeleted || showDeleted) && 
+                                                                            ac.ConferenceParticipants.Any(cp => (!cp.IsDeleted || showDeleted) &&
                                                                                                                 conferencesUids.Contains(cp.Conference.Uid))));
             }
 
@@ -491,12 +491,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="query">The query.</param>
         /// <param name="roomsUids">The rooms uids.</param>
         /// <returns></returns>
-        internal static IQueryable<Collaborator> FindByConferencesRoomsUids(this IQueryable<Collaborator> query, List<Guid?> roomsUids)
+        internal static IQueryable<Collaborator> FindByConferencesRoomsUids(this IQueryable<Collaborator> query, List<Guid?> roomsUids, bool showDeleted = false)
         {
             if (roomsUids?.Any(d => d.HasValue) == true)
             {
-                query = query.Where(c => c.AttendeeCollaborators.Any(ac => !ac.IsDeleted &&
-                                                                            ac.ConferenceParticipants.Any(cp => !cp.IsDeleted &&
+                query = query.Where(c => c.AttendeeCollaborators.Any(ac => (!ac.IsDeleted || showDeleted) &&
+                                                                            ac.ConferenceParticipants.Any(cp => (!cp.IsDeleted || showDeleted) &&
                                                                                                                 roomsUids.Contains(cp.Conference.Room.Uid))));
             }
 
@@ -617,14 +617,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>Gets the base query.</summary>
         /// <param name="readonly">if set to <c>true</c> [readonly].</param>
         /// <returns></returns>
-        private IQueryable<Collaborator> GetBaseQuery(bool @readonly = false)
+        private IQueryable<Collaborator> GetBaseQuery(bool @readonly = false, bool showDeleted = false)
         {
-            var consult = this.dbSet
-                                .IsNotDeleted();
+            var consult = this.dbSet;
+
+            if (!showDeleted)
+            {
+                consult.IsNotDeleted();
+            }
 
             return @readonly
-                        ? consult.AsNoTracking()
-                        : consult;
+                    ? consult.AsNoTracking()
+                    : consult;
         }
 
         /// <summary>Finds all collaborators by collaborators uids.</summary>
@@ -1437,7 +1441,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate,
                                                                                     SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
                                                                                 }).FirstOrDefault(),
-                                
+
                                 AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
                                                                     .Where(at => !at.IsDeleted && at.EditionId == editionId)
                                                                     .SelectMany(at => at.AttendeeOrganizationCollaborators
@@ -1578,7 +1582,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate,
                                                                                     SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
                                                                                 }).FirstOrDefault(),
-                                
+
                                 AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
                                                                     .Where(at => !at.IsDeleted && at.EditionId == editionId)
                                                                     .SelectMany(at => at.AttendeeOrganizationCollaborators
@@ -2216,7 +2220,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                     }),
                                                                                                     RoomDto = new RoomDto
                                                                                                     {
-                                                                                                        RoomNameDtos =  cp.Conference.Room.RoomNames.Select(rn => new RoomNameDto
+                                                                                                        RoomNameDtos = cp.Conference.Room.RoomNames.Select(rn => new RoomNameDto
                                                                                                         {
                                                                                                             RoomName = rn,
                                                                                                             LanguageDto = new LanguageBaseDto
@@ -2283,7 +2287,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                                                                                                             && collaboratorTypeNames.Contains(act.CollaboratorType.Name))) : null,
 
                                                 EditionAttendeeCollaboratorBaseDto = c.AttendeeCollaborators
-                                                                                        .Where(ac => !ac.IsDeleted && ac.EditionId == editionId && ac.AttendeeCollaboratorTypes.Any(act =>  act.CollaboratorType.Uid == CollaboratorType.Speaker.Uid))
+                                                                                        .Where(ac => !ac.IsDeleted && ac.EditionId == editionId && ac.AttendeeCollaboratorTypes.Any(act => act.CollaboratorType.Uid == CollaboratorType.Speaker.Uid))
                                                                                         .Select(ac => new AttendeeCollaboratorBaseDto
                                                                                         {
                                                                                             SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate,
@@ -2337,14 +2341,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             int page,
             int pageSize)
         {
-            var query = this.GetBaseQuery()
-                                .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, false, false, editionId)
-                                .IsApiDisplayEnabled(editionId, collaboratorTypeName)
-                                .FindByKeywords(keywords, editionId)
-                                .FindByApiHighlights(collaboratorTypeName, highlights)
-                                .FindByConferencesDates(conferencesDates)
-                                .FindByConferencesUids(conferencesUids)
-                                .FindByConferencesRoomsUids(roomsUids)
+            var query = this.GetBaseQuery(showDeleted: showDeleted)
+                                .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, false, false, editionId, showDeleted)
+                                .IsApiDisplayEnabled(editionId, collaboratorTypeName, showDeleted)
+                                .FindByKeywords(keywords, editionId, showDeleted)
+                                .FindByApiHighlights(collaboratorTypeName, highlights, showDeleted)
+                                .FindByConferencesDates(conferencesDates, showDeleted)
+                                .FindByConferencesUids(conferencesUids, showDeleted)
+                                .FindByConferencesRoomsUids(roomsUids, showDeleted)
                                 .FindByCreateOrUpdateDate(modifiedAfterDate);
 
             IQueryable<SpeakerCollaboratorApiDto> filteredQuery;
@@ -2358,9 +2362,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     BadgeName = c.Badge,
                     Name = c.FirstName + " " + c.LastNames,
                     ApiHighlightPosition = c.AttendeeCollaborators
-                                                            .FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                            .FirstOrDefault(ac => (!ac.IsDeleted || showDeleted) && ac.EditionId == editionId)
                                                                 .AttendeeCollaboratorTypes
-                                                                    .FirstOrDefault(act => !act.IsDeleted && act.CollaboratorType.Name == collaboratorTypeName)
+                                                                    .FirstOrDefault(act => (!act.IsDeleted || showDeleted) && act.CollaboratorType.Name == collaboratorTypeName)
                                                                         .ApiHighlightPosition,
                     ImageUploadDate = c.ImageUploadDate,
                     Website = c.Website,
@@ -2370,8 +2374,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     Youtube = c.Youtube,
                     CreateDate = c.CreateDate,
                     UpdateDate = c.UpdateDate,
+                    IsDeleted = c.IsDeleted,
                     MiniBiosDtos = c.MiniBios
-                                        .Where(mb => !mb.IsDeleted)
+                                        .Where(mb => (!mb.IsDeleted || showDeleted))
                                         .Select(d => new CollaboratorMiniBioBaseDto
                                         {
                                             Id = d.Id,
@@ -2386,7 +2391,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                             }
                                         }),
                     JobTitlesDtos = c.JobTitles
-                                        .Where(jb => !jb.IsDeleted)
+                                        .Where(jb => (!jb.IsDeleted || showDeleted))
                                         .Select(d => new CollaboratorJobTitleBaseDto
                                         {
                                             Id = d.Id,
@@ -2401,9 +2406,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                             }
                                         }),
                     OrganizationsDtos = c.AttendeeCollaborators
-                                            .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                            .Where(ac => (!ac.IsDeleted || showDeleted) && ac.EditionId == editionId)
                                             .SelectMany(ac => ac.AttendeeOrganizationCollaborators
-                                                                    .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted && !aoc.AttendeeOrganization.Organization.IsDeleted)
+                                                                    .Where(aoc => (!aoc.IsDeleted || showDeleted) && (!aoc.AttendeeOrganization.IsDeleted || showDeleted) && (!aoc.AttendeeOrganization.Organization.IsDeleted || showDeleted))
                                                                     .Select(aoc => new OrganizationApiListDto
                                                                     {
                                                                         Uid = aoc.AttendeeOrganization.Organization.Uid,
@@ -2413,26 +2418,26 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                         ImageUploadDate = aoc.AttendeeOrganization.Organization.ImageUploadDate
                                                                     })),
                     TracksDtos = c.AttendeeCollaborators
-                                            .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                            .Where(ac => (!ac.IsDeleted || showDeleted) && ac.EditionId == editionId)
                                             .SelectMany(ac => ac.ConferenceParticipants
-                                                                    .Where(cp => !cp.IsDeleted && !cp.Conference.IsDeleted)
+                                                                    .Where(cp => (!cp.IsDeleted || showDeleted) && (!cp.Conference.IsDeleted || showDeleted))
                                                                     .SelectMany(cp => cp.Conference.ConferenceTracks
-                                                                                            .Where(ct => !ct.IsDeleted && !ct.Track.IsDeleted)
+                                                                                            .Where(ct => (!ct.IsDeleted || showDeleted) && (!ct.Track.IsDeleted || showDeleted))
                                                                                             .Select(ct => new TrackDto
                                                                                             {
                                                                                                 Track = ct.Track
                                                                                             }))).Distinct(),
                     ConferencesDtos = c.AttendeeCollaborators
-                                                        .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                        .Where(ac => (!ac.IsDeleted || showDeleted) && ac.EditionId == editionId)
                                                         .SelectMany(ac => ac.ConferenceParticipants
-                                                                                .Where(cp => !cp.IsDeleted && !cp.Conference.IsDeleted)
+                                                                                .Where(cp => (!cp.IsDeleted || showDeleted) && (!cp.Conference.IsDeleted || showDeleted))
                                                                                 .Select(cp => new ConferenceDto
                                                                                 {
                                                                                     Uid = cp.Conference.Uid,
                                                                                     StartDate = cp.Conference.StartDate,
                                                                                     EndDate = cp.Conference.EndDate,
                                                                                     EditionEvent = cp.Conference.EditionEvent,
-                                                                                    ConferenceTitleDtos = cp.Conference.ConferenceTitles.Where(ct => !ct.IsDeleted).Select(ct => new ConferenceTitleDto
+                                                                                    ConferenceTitleDtos = cp.Conference.ConferenceTitles.Where(ct => (!ct.IsDeleted || showDeleted)).Select(ct => new ConferenceTitleDto
                                                                                     {
                                                                                         ConferenceTitle = ct,
                                                                                         LanguageDto = new LanguageBaseDto
@@ -2446,7 +2451,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     RoomDto = new RoomDto
                                                                                     {
                                                                                         Uid = cp.Conference.Room.Uid,
-                                                                                        RoomNameDtos = cp.Conference.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
+                                                                                        RoomNameDtos = cp.Conference.Room.RoomNames.Where(rn => (!rn.IsDeleted || showDeleted)).Select(rn => new RoomNameDto
                                                                                         {
                                                                                             RoomName = rn,
                                                                                             LanguageDto = new LanguageDto
@@ -2457,7 +2462,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                             }
                                                                                         })
                                                                                     },
-                                                                                    ConferenceSynopsisDtos = cp.Conference.ConferenceSynopses.Where(cs => !cs.IsDeleted).Select(cs => new ConferenceSynopsisDto
+                                                                                    ConferenceSynopsisDtos = cp.Conference.ConferenceSynopses.Where(cs => (!cs.IsDeleted || showDeleted)).Select(cs => new ConferenceSynopsisDto
                                                                                     {
                                                                                         ConferenceSynopsis = cs,
                                                                                         LanguageDto = new LanguageBaseDto
@@ -2483,16 +2488,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     BadgeName = c.Badge,
                     Name = c.FirstName + " " + c.LastNames,
                     ApiHighlightPosition = c.AttendeeCollaborators
-                                                            .FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                            .FirstOrDefault(ac => (!ac.IsDeleted || showDeleted) && ac.EditionId == editionId)
                                                                 .AttendeeCollaboratorTypes
-                                                                    .FirstOrDefault(act => !act.IsDeleted && act.CollaboratorType.Name == collaboratorTypeName)
+                                                                    .FirstOrDefault(act => (!act.IsDeleted || showDeleted) && act.CollaboratorType.Name == collaboratorTypeName)
                                                                         .ApiHighlightPosition,
                     CreateDate = c.CreateDate,
                     UpdateDate = c.UpdateDate,
                     ImageUploadDate = c.ImageUploadDate,
                     Website = c.Website,
                     MiniBiosDtos = c.MiniBios
-                                        .Where(mb => !mb.IsDeleted)
+                                        .Where(mb => (!mb.IsDeleted || showDeleted))
                                         .Select(d => new CollaboratorMiniBioBaseDto
                                         {
                                             Id = d.Id,
@@ -2507,7 +2512,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                             }
                                         }),
                     JobTitlesDtos = c.JobTitles
-                                        .Where(jb => !jb.IsDeleted)
+                                        .Where(jb => (!jb.IsDeleted || showDeleted))
                                         .Select(d => new CollaboratorJobTitleBaseDto
                                         {
                                             Id = d.Id,
