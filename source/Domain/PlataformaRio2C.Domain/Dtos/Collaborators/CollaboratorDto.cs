@@ -84,6 +84,12 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<InnovationOrganizationTrackOptionGroupDto> InnovationOrganizationTrackOptionGroupDtos { get; set; }
         public IEnumerable<ConferenceDto> ConferencesDtos { get; set; }
 
+        public IEnumerable<AttendeeCollaboratorActivityDto> AttendeeCollaboratorActivityDtos { get; set; }
+        public IEnumerable<AttendeeCollaboratorInterestDto> AttendeeCollaboratorInterestDtos { get; set; }
+        public IEnumerable<AttendeeCollaboratorInnovationOrganizationTrackDto> AttendeeCollaboratorInnovationOrganizationTrackDtos { get; set; }
+
+        public IEnumerable<AttendeeCollaboratorTargetAudiencesDto> AttendeeCollaboratorTargetAudiencesDtos { get; set; }
+
         [ScriptIgnore]
         public AttendeeCollaborator EditionAttendeeCollaborator { get; set; }
 

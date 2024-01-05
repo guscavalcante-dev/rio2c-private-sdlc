@@ -114,26 +114,27 @@ var MusicPlayersExecutivesDataTableWidget = function () {
                     extend: 'collection',
                     text: labels.actions,
                     buttons: [
-                        {
-                            text: sendInvitationEmail,
-                            action: function (e, dt, node, config) {
-                                $('.dt-button-background').remove();
-                                showSendInvitationEmailsModal();
-                            }
-                        },
-                        {
-                            text: exportToEventbrite,
-                            action: function (e, dt, node, config) {
-                                $('.dt-button-background').remove();
-                                var eventbriteCsvExport = dt.ajax.params();
-                                eventbriteCsvExport.selectedCollaboratorsUids = $('#playersexecutives-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
-                                eventbriteCsvExport.showAllEditions = $('#ShowAllEditions').prop('checked');
-                                eventbriteCsvExport.showAllParticipants = $('#ShowAllParticipants').prop('checked');
-                                eventbriteCsvExport.collaboratorTypeName = collaboratorTypeName;
+                        //todo: not implementad
+                        //{
+                        //    text: sendInvitationEmail,
+                        //    action: function (e, dt, node, config) {
+                        //        $('.dt-button-background').remove();
+                        //        showSendInvitationEmailsModal();
+                        //    }
+                        //},
+                        //{
+                        //    text: exportToEventbrite,
+                        //    action: function (e, dt, node, config) {
+                        //        $('.dt-button-background').remove();
+                        //        var eventbriteCsvExport = dt.ajax.params();
+                        //        eventbriteCsvExport.selectedCollaboratorsUids = $('#playersexecutives-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
+                        //        eventbriteCsvExport.showAllEditions = $('#ShowAllEditions').prop('checked');
+                        //        eventbriteCsvExport.showAllParticipants = $('#ShowAllParticipants').prop('checked');
+                        //        eventbriteCsvExport.collaboratorTypeName = collaboratorTypeName;
 
-                                SalesPlatformsExport.showExportEventbriteCsvModal(eventbriteCsvExport);
-                            }
-                        },
+                        //        SalesPlatformsExport.showExportEventbriteCsvModal(eventbriteCsvExport);
+                        //    }
+                        //},
                         {
                             text: labels.selectAll,
                             action: function (e, dt, node, config) {
@@ -273,24 +274,25 @@ var MusicPlayersExecutivesDataTableWidget = function () {
                             html += '<button class="dropdown-item" onclick="MusicPlayersExecutivesUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         }
 
-                        if (full.IsInCurrentEdition) {
-                            html += '<button class="dropdown-item" onclick="MusicPlayersExecutivesDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
-                        }
+                        //if (full.IsInCurrentEdition) {
+                        //    html += '<button class="dropdown-item" onclick="MusicPlayersExecutivesDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
+                        //}
 
                         html += '<button class="dropdown-item" onclick="AccountsUpdateUserStatus.showModal(\'' + full.UserBaseDto.Uid + '\',\'' + !full.Active + '\');"><i class="la la-lock"></i> ' + ((full.Active) ? labels.block : labels.unblock) + '</button>';
 
-                        if (full.IsInCurrentEdition && full.IsInOtherEdition) {
-                            html += '<button class="dropdown-item" onclick="MusicPlayersExecutivesDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-remove"></i> ' + removeFromEdition + '</button>';
-                        }
-                        else {
-                            html += '<button class="dropdown-item" onclick="MusicPlayersExecutivesDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
-                        }
+                        //if (full.IsInCurrentEdition && full.IsInOtherEdition) {
+                        //    html += '<button class="dropdown-item" onclick="MusicPlayersExecutivesDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-remove"></i> ' + removeFromEdition + '</button>';
+                        //}
+                        //else {
+                        //    html += '<button class="dropdown-item" onclick="MusicPlayersExecutivesDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+                        //}
 
                         html += '\
                                             </div>\
                                         </span>';
 
                         return html;
+
                     }
                 }
             ],

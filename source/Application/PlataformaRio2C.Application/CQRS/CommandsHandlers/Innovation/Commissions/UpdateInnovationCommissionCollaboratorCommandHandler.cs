@@ -4,15 +4,14 @@
 // Updated          : 08-19-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-19-2021
+// Last Modified On : 01-11-2023
 // ***********************************************************************
-// <copyright file="UpdateAudiovisualCollaboratorCommandHandler.cs" company="Softo">
+// <copyright file="UpdateInnovationCommissionCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,42 +25,41 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>UpdateAudiovisualCollaboratorCommandHandler</summary>
-    public class UpdateAudiovisualCollaboratorCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<UpdateAudiovisualCollaborator, AppValidationResult>
+    public class UpdateInnovationCommissionCollaboratorCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<UpdateInnovationCommissionCollaborator, AppValidationResult>
     {
         private readonly IUserRepository userRepo;
         private readonly IEditionRepository editionRepo;
         private readonly ICollaboratorTypeRepository collaboratorTypeRepo;
-        private readonly IInterestRepository interestRepo;
+        private readonly IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateAudiovisualCollaboratorCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="UpdateInnovationCommissionCollaboratorCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="userRepository">The user repository.</param>
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="collaboratorTypeRepository">The collaborator type repository.</param>
-        public UpdateAudiovisualCollaboratorCommandHandler(
+        public UpdateInnovationCommissionCollaboratorCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             ICollaboratorRepository collaboratorRepository,
             IUserRepository userRepository,
             IEditionRepository editionRepository,
             ICollaboratorTypeRepository collaboratorTypeRepository,
-            IInterestRepository interestRepository)
+            IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepository)
             : base(eventBus, uow, collaboratorRepository)
         {
             this.userRepo = userRepository;
             this.editionRepo = editionRepository;
             this.collaboratorTypeRepo = collaboratorTypeRepository;
-            this.interestRepo = interestRepository;
+            this.innovationOrganizationTrackOptionRepo = innovationOrganizationTrackOptionRepository;
         }
 
         /// <summary>Handles the specified create tiny collaborator.</summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(UpdateAudiovisualCollaborator cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(UpdateInnovationCommissionCollaborator cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
@@ -69,9 +67,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #region Initial validations
 
+            // Check if exists an user with the same email
             var user = await this.userRepo.GetAsync(u => u.Email == cmd.Email.Trim() && !u.IsDeleted);
-
-            // Return error only if the user is not deleted
             if (user != null && (collaborator?.User == null || user.Uid != collaborator?.User?.Uid))
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.User.ToLowerInvariant(), $"{Labels.TheM.ToLowerInvariant()} {Labels.Email.ToLowerInvariant()}", cmd.Email), new string[] { "Email" }));
@@ -85,28 +82,17 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            var interestsDtos = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.Genre.Uid);
+            var innovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllByGroupsUidsAsync(cmd.InnovationOrganizationTrackGroups
+                                                                                                                                   ?.Where(ioto => ioto.IsChecked)
+                                                                                                                                   ?.Select(ioto => ioto.InnovationOrganizationTrackOptionGroupUid));
 
-            // Interests
-            var attendeeCollaboratorInterests = new List<AttendeeCollaboratorInterest>();
-            if (cmd.Interests?.Any() == true)
-            {
-                foreach (var interestBaseCommands in cmd.Interests)
-                {
-                    foreach (var interestBaseCommand in interestBaseCommands?.Where(ibc => ibc.IsChecked)?.ToList())
-                    {
-                        attendeeCollaboratorInterests.Add(new AttendeeCollaboratorInterest(interestsDtos?.FirstOrDefault(id => id.Interest.Uid == interestBaseCommand.InterestUid)?.Interest, interestBaseCommand.AdditionalInfo, cmd.UserId));
-                    }
-                }
-            }
-
-            collaborator.UpdateAudiovisualCommission(
+            collaborator.UpdateInnovationCommissionCollaborator(
                 await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                 await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
                 cmd.FirstName,
                 cmd.LastNames,
                 cmd.Email,
-                attendeeCollaboratorInterests,
+                innovationOrganizationTrackOptions.Select(ioto => new AttendeeInnovationOrganizationTrack(ioto, string.Empty, cmd.UserId)).ToList(),
                 cmd.UserId);
 
             if (!collaborator.IsValid())

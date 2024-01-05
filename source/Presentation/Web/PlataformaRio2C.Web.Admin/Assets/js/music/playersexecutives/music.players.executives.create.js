@@ -42,6 +42,11 @@ var MusicPlayersExecutivesCreate = function () {
         MyRio2cCommon.enableAtLeastOnCheckboxByNameValidation("HaveYouBeenToRio2CBefore");
         enableAjaxForm();
         enableFormValidation();
+
+        // Enable additional info textbox
+        if (typeof (MyRio2cCommonAdditionalInfo) !== 'undefined') {
+            MyRio2cCommonAdditionalInfo.init();
+        }
     };
 
     var changePreviousEditionsRequired = function () {

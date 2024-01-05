@@ -6,7 +6,7 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 01-04-2023
 // ***********************************************************************
-// <copyright file="CreateInnovationCollaborator.cs" company="Softo">
+// <copyright file="CreateInnovationCommissionCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -17,22 +17,21 @@ using System.Collections.Generic;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>CreateInnovationCollaborator</summary>
-    public class CreateInnovationCollaborator : InnovationCollaboratorBaseCommand
+    public class CreateInnovationCommissionCollaborator : InnovationCommissionCollaboratorBaseCommand
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateInnovationCollaborator"/> class.
+        /// Initializes a new instance of the <see cref="CreateInnovationCommissionCollaborator"/> class.
         /// </summary>
         /// <param name="innovationOptions">The innovation options.</param>
-        public CreateInnovationCollaborator(List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos)
+        public CreateInnovationCommissionCollaborator(List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos)
         {
             this.UpdateBaseProperties(null, innovationOrganizationTrackOptionDtos);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateInnovationCollaborator" /> class.
+        /// Initializes a new instance of the <see cref="CreateInnovationCommissionCollaborator" /> class.
         /// </summary>
-        public CreateInnovationCollaborator()
+        public CreateInnovationCommissionCollaborator()
         {
         }
     }

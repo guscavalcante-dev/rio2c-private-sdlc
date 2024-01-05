@@ -6,7 +6,7 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 07-19-2021
 // ***********************************************************************
-// <copyright file="CreateAudiovisualCollaboratorCommandHandler.cs" company="Softo">
+// <copyright file="CreateAudiovisualCommissionCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -27,21 +27,21 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
     /// <summary>CreateAudiovisualCollaboratorCommandHandler</summary>
-    public class CreateAudiovisualCollaboratorCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<CreateAudiovisualCollaborator, AppValidationResult>
+    public class CreateAudiovisualCommissionCollaboratorCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<CreateAudiovisualCommissionCollaborator, AppValidationResult>
     {
         private readonly IUserRepository userRepo;
         private readonly IEditionRepository editionRepo;
         private readonly ICollaboratorTypeRepository collaboratorTypeRepo;
         private readonly IInterestRepository interestRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="CreateAudiovisualCollaboratorCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="CreateAudiovisualCommissionCollaboratorCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="userRepository">The user repository.</param>
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="collaboratorTypeRepository">The collaborator type repository.</param>
-        public CreateAudiovisualCollaboratorCommandHandler(
+        public CreateAudiovisualCommissionCollaboratorCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             ICollaboratorRepository collaboratorRepository,
@@ -61,7 +61,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(CreateAudiovisualCollaborator cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(CreateAudiovisualCommissionCollaborator cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
@@ -101,7 +101,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     }
                 }
 
-                var collaborator = new Collaborator(
+                var collaborator = Collaborator.CreateAudiovisualCommissionCollaborator(
                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                     await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
                     cmd.FirstName,
@@ -112,6 +112,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.Document,
                     attendeeCollaboratorInterests,
                     cmd.UserId);
+
                 if (!collaborator.IsValid())
                 {
                     this.AppValidationResult.Add(collaborator.ValidationResult);
@@ -124,7 +125,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
             else
             {
-                var updateCmd = new UpdateCollaborator
+                //TODO: This is not the correct way to instantiate a command. Create a new constructor accepting this parameters and use it.
+                //TODO: Use "UpdateAudiovisualCommissionCollaborator" instead of "UpdateAudiovisualPlayerExecutiveCollaborator" and test.
+                var updateCmd = new UpdateAudiovisualPlayerExecutiveCollaborator()
                 {
                     CollaboratorUid = user.Collaborator.Uid,
                     IsAddingToCurrentEdition = true,

@@ -23,6 +23,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public int Id { get; set; }
         public Guid Uid { get; set; }
         public string Name { get; set; }
+        public bool HasAdditionalInfo { get; set; }
 
         public Guid GroupUid { get; set; }
         public string GroupName { get; set; }
@@ -30,7 +31,10 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset CreateDate { get; set; }
         public DateTimeOffset UpdateDate { get; set; }
 
+        [Obsolete("Use the 'InnovationOrganizationTrackOptionDto' properties instead of this. This property will be deleted!")]
         public InnovationOrganizationTrackOptionGroup InnovationOrganizationTrackOptionGroup { get; set; }
+
+        [Obsolete("Use the 'InnovationOrganizationTrackOptionDto' properties instead of this. This property will be deleted!")]
         public InnovationOrganizationTrackOption InnovationOrganizationTrackOption { get; set; }
 
         /// <summary>

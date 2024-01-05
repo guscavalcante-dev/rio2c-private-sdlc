@@ -14,6 +14,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Foolproof;
+using Org.BouncyCastle.Asn1.Ocsp;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
@@ -22,18 +24,32 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>AttendeeOrganizationBaseCommand</summary>
     public class AttendeeOrganizationBaseCommand
     {
+        public Guid? AttendeeOrganizationUid 
+        {
+            get 
+            {
+                return Guid.TryParse(this.Value, out var result) ? result : (Guid?)null;
+            }
+        }
+
         [Display(Name = "Player", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public Guid? AttendeeOrganizationUid { get; set; }
+        [RequiredIf(nameof(IsRequired), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public string Value { get; set; }
+
+        public bool IsRequired { get; set; }
 
         public List<AttendeeOrganizationBaseDto> AttendeeOrganizationsBaseDtos { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeOrganizationBaseCommand"/> class.</summary>
         /// <param name="attendeeOrganizationBaseDto">The attendee organization base dto.</param>
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
-        public AttendeeOrganizationBaseCommand(AttendeeOrganizationBaseDto attendeeOrganizationBaseDto, List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos)
+        public AttendeeOrganizationBaseCommand(
+            AttendeeOrganizationBaseDto attendeeOrganizationBaseDto, 
+            List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, 
+            bool isPlayerRequired)
         {
             this.UpdateBaseProperties(attendeeOrganizationBaseDto, attendeeOrganizationsBaseDtos);
+            this.IsRequired = isPlayerRequired;
         }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeOrganizationBaseCommand"/> class.</summary>
@@ -46,7 +62,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
         private void UpdateBaseProperties(AttendeeOrganizationBaseDto attendeeOrganizationBaseDto, List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos)
         {
-            this.AttendeeOrganizationUid = attendeeOrganizationBaseDto?.Uid;
+            //this.AttendeeOrganizationUid = attendeeOrganizationBaseDto?.Uid ?? Guid.Empty;
+            this.Value = attendeeOrganizationBaseDto?.Uid != null ? attendeeOrganizationBaseDto.Uid.ToString() : null;
             this.UpdateDropdownProperties(attendeeOrganizationsBaseDtos);
         }
 

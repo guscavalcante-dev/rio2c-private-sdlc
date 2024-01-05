@@ -6,7 +6,7 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 01-06-2023
 // ***********************************************************************
-// <copyright file="InnovationCollaboratorBaseCommand.cs" company="Softo">
+// <copyright file="InnovationCommissionCollaboratorBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -16,22 +16,20 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>InnovationCollaboratorBaseCommand</summary>
-    public class InnovationCollaboratorBaseCommand : CollaboratorBaseCommand
+    public class InnovationCommissionCollaboratorBaseCommand : CollaboratorBaseCommand
     {
         [Display(Name = "Verticals", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneOption")]
         public List<InnovationOrganizationTrackOptionBaseCommand> InnovationOrganizationTrackGroups { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InnovationCollaboratorBaseCommand" /> class.
+        /// Initializes a new instance of the <see cref="InnovationCommissionCollaboratorBaseCommand" /> class.
         /// </summary>
-        public InnovationCollaboratorBaseCommand()
+        public InnovationCommissionCollaboratorBaseCommand()
         {
         }
 

@@ -25,6 +25,7 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public int AttendeeCollaboratorId { get; set; }
         public int InterestId { get; set; }
+        public string AdditionalInfo { get; set; }
 
         public virtual AttendeeCollaborator AttendeeCollaborator { get; private set; }
         public virtual Interest Interest { get; private set; }
@@ -46,13 +47,11 @@ namespace PlataformaRio2C.Domain.Entities
             this.AttendeeCollaboratorId = attendeeCollaborator?.Id ?? 0;
             this.InterestId = interest?.Id ?? 0;
 
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
+            this.SetCreateDate(userId);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeCollaboratorInterest"/> class.
+        /// Initializes a new instance of the <see cref="AttendeeCollaboratorInterest" /> class.
         /// </summary>
         /// <param name="interest">The interest.</param>
         /// <param name="additionalInfo">The additional information.</param>
@@ -64,6 +63,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.Interest = interest;
             this.InterestId = interest?.Id ?? 0;
+            this.AdditionalInfo = additionalInfo;
 
             base.SetCreateDate(userId);
         }
@@ -78,12 +78,13 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>
         /// Updates the specified user identifier.
         /// </summary>
+        /// <param name="additionalInfo">The additional information.</param>
         /// <param name="userId">The user identifier.</param>
-        public void Update(int userId)
+        public void Update(string additionalInfo, int userId)
         {
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            this.AdditionalInfo = additionalInfo;
+
+            this.SetUpdateDate(userId);
         }
 
         #region Valitations

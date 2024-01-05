@@ -34,7 +34,7 @@ foolproof.is = function (value1, operator, value2, passOnNull) {
         return input === true || input === false || input === "true" || input === "false";
     };
 
-    if (isDate(value1) != 'NaN') {
+    if (isDate(value1)) { // != 'NaN'
         //This is a custom fix designed by Softo developers at 11/30/2021. It's consider Globalize culture. 
         //The original MVCFoolproof doesn't consider Globalize.
         var dateValue1 = Date.parse(moment(value1, Globalize.culture().calendar.patterns.d.toUpperCase()).format('YYYY-MM-DD'));

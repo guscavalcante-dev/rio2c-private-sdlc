@@ -86,7 +86,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 }
             }
 
-            collaborator.UpdateAttendeeCollaboratorInterests(
+            collaborator.UpdateCollaboratorInterests(
                 edition,
                 attendeeCollaboratorInterests,
                 cmd.UserId);

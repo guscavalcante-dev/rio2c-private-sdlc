@@ -59,14 +59,15 @@ var MusicPlayersDataTableWidget = function () {
                     extend: 'collection',
                     text: labels.actions,
                     buttons: [
-                        {
-                            name: 'btnExportToExcel',
-                            text: exportToExcelText,
-                            action: function (e, dt, node, config) {
-                                $('.dt-button-background').remove();
-                                exportToExcel();
-                            }
-                        }]
+                        //{
+                        //    name: 'btnExportToExcel',
+                        //    text: exportToExcelText,
+                        //    action: function (e, dt, node, config) {
+                        //        $('.dt-button-background').remove();
+                        //        exportToExcel();
+                        //    }
+                        //}
+                    ]
                 }],
             order: [[0, "asc"]],
             sDom: '<"row"<"col-sm-6"l><"col-sm-6 text-right"B>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
@@ -180,16 +181,17 @@ var MusicPlayersDataTableWidget = function () {
                         if (!full.IsInCurrentEdition) {
                             html += '<button class="dropdown-item" onclick="MusicPlayersUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         }
-                        else {
-                            html += '<button class="dropdown-item" onclick="MusicPlayersDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
-                        }
 
-                        if (full.IsInCurrentEdition && full.IsInOtherEdition) {
-                            html += '<button class="dropdown-item" onclick="MusicPlayersDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-minus"></i> ' + removeFromEdition + '</button>';
-                        }
-                        else {
-                            html += '<button class="dropdown-item" onclick="MusicPlayersDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
-                        }
+                        //if (full.IsInCurrentEdition) {
+                        //    html += '<button class="dropdown-item" onclick="MusicPlayersDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
+                        //}
+
+                        //if (full.IsInCurrentEdition && full.IsInOtherEdition) {
+                        //    html += '<button class="dropdown-item" onclick="MusicPlayersDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-minus"></i> ' + removeFromEdition + '</button>';
+                        //}
+                        //else {
+                        //    html += '<button class="dropdown-item" onclick="MusicPlayersDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+                        //}
 
                         html += '\
                                             </div>\

@@ -8217,14 +8217,14 @@
     <Content Include="Areas\Music\Views\Players\Widgets\EditionCountOdometerWidget.cshtml" />
     <Content Include="Areas\Music\Views\Players\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Areas\Music\Views\Players\Widgets\TotalCountWidget.cshtml" />
-	<Content Include="Areas\Innovation\Views\PlayersExecutives\Details.cshtml" />
-	<Content Include="Areas\Innovation\Views\PlayersExecutives\Index.cshtml" />
-	<Content Include="Areas\Innovation\Views\PlayersExecutives\Modals\_Form.cshtml" />
-	<Content Include="Areas\Innovation\Views\PlayersExecutives\Modals\CreateModal.cshtml" />
-	<Content Include="Areas\Innovation\Views\PlayersExecutives\Modals\UpdateModal.cshtml" />
-	<Content Include="Areas\Innovation\Views\PlayersExecutives\Widgets\DataTableWidget.cshtml" />
-	<Content Include="Areas\Innovation\Views\PlayersExecutives\Widgets\EditionCountWidget.cshtml" />
-	<Content Include="Areas\Innovation\Views\PlayersExecutives\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\PlayersExecutives\Details.cshtml" />
+    <Content Include="Areas\Innovation\Views\PlayersExecutives\Index.cshtml" />
+    <Content Include="Areas\Innovation\Views\PlayersExecutives\Modals\_Form.cshtml" />
+    <Content Include="Areas\Innovation\Views\PlayersExecutives\Modals\CreateModal.cshtml" />
+    <Content Include="Areas\Innovation\Views\PlayersExecutives\Modals\UpdateModal.cshtml" />
+    <Content Include="Areas\Innovation\Views\PlayersExecutives\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\PlayersExecutives\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\PlayersExecutives\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Players\Details.cshtml" />
     <Content Include="Areas\Innovation\Views\Players\Index.cshtml" />
     <Content Include="Areas\Innovation\Views\Players\Modals\_Form.cshtml" />
@@ -8234,6 +8234,8 @@
     <Content Include="Areas\Innovation\Views\Players\Widgets\EditionCountOdometerWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Players\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Players\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\Shared\EditorTemplates\AttendeeCollaboratorInnovationOrganizationTrackBaseCommand.cshtml" />
+    <Content Include="Areas\Music\Views\PlayersExecutives\Details.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
@@ -10043,6 +10045,9 @@
     <Content Include="Views\Collaborators\Modals\AssociateCompanyModal.cshtml" />
     <Content Include="Views\AdminMailerService\CartoonCommissionWelcomeEmail.cshtml" />
     <Content Include="Views\Collaborators\Widgets\CollaboratorImagesWidget.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\AttendeeCollaboratorActivityBaseCommand.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\AttendeeCollaboratorTargetAudienceBaseCommand.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\TemplateAttendeeOrganizationBaseCommand.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -10081,7 +10086,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Application\PlataformaRio2C.Application\PlataformaRio2C.Application.csproj">
-      <Project>{5C6E9CB9-B206-4ECF-AE1A-7E07995D39F7}</Project>
+      <Project>{5c6e9cb9-b206-4ecf-ae1a-7e07995d39f7}</Project>
       <Name>PlataformaRio2C.Application</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Domain\PlataformaRio2C.Domain\PlataformaRio2C.Domain.csproj">

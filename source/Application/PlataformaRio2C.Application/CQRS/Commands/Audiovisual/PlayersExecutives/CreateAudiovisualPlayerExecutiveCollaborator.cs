@@ -6,7 +6,7 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 09-13-2021
 // ***********************************************************************
-// <copyright file="CreateCollaborator.cs" company="Softo">
+// <copyright file="CreateAudiovisualPlayerExecutiveCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -17,10 +17,11 @@ using System.Collections.Generic;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>CreateCollaborator</summary>
-    public class CreateCollaborator : CollaboratorDataBaseCommand
+    public class CreateAudiovisualPlayerExecutiveCollaborator : AudiovisualPlayerExecutiveCollaboratorBaseCommand
     {
-        /// <summary>Initializes a new instance of the <see cref="CreateCollaborator"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateAudiovisualPlayerExecutiveCollaborator" /> class.
+        /// </summary>
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="genders">The genders.</param>
@@ -32,7 +33,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
-        public CreateCollaborator(
+        public CreateAudiovisualPlayerExecutiveCollaborator(
             List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, 
             List<LanguageDto> languagesDtos, 
             List<CollaboratorGender> genders, 
@@ -43,24 +44,26 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isJobTitleRequired,
             bool isMiniBioRequired, 
             bool isImageRequired,
+            bool isPlayerRequired,
             string userInterfaceLanguage)
         {
-            this.UpdateBaseProperties(null, 
+            base.UpdateBaseProperties(null, 
                 attendeeOrganizationsBaseDtos, 
                 languagesDtos, 
                 genders, 
                 industries, 
                 collaboratorRoles, 
-                editionsDtos, 
+                editionsDtos,
                 currentEditionId, 
                 isJobTitleRequired, 
                 isMiniBioRequired, 
-                isImageRequired, 
+                isImageRequired,
+                isPlayerRequired,
                 userInterfaceLanguage);
         }
 
-        /// <summary>Initializes a new instance of the <see cref="CreateCollaborator"/> class.</summary>
-        public CreateCollaborator()
+        /// <summary>Initializes a new instance of the <see cref="CreateAudiovisualPlayerExecutiveCollaborator"/> class.</summary>
+        public CreateAudiovisualPlayerExecutiveCollaborator()
         {
         }
     }

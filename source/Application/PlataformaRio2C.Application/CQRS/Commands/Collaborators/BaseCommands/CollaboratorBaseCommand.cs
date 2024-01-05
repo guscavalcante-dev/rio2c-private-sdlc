@@ -85,10 +85,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         #endregion
 
-        /// <summary>Initializes a new instance of the <see cref="CollaboratorBaseCommand"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CollaboratorBaseCommand" /> class.
+        /// </summary>
         public CollaboratorBaseCommand()
         {
-            
         }
 
         /// <summary>

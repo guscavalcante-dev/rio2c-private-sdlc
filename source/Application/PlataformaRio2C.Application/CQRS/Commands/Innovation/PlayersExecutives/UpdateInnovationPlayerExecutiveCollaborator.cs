@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
-// Author           : Rafael Dantas Ruiz
-// Created          : 08-26-2019
+// Author           : Renan Valentim
+// Created          : 12-29-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-31-2023
+// Last Modified On : 12-29-2023
 // ***********************************************************************
-// <copyright file="UpdateCollaborator.cs" company="Softo">
+// <copyright file="UpdateInnovationPlayerExecutiveCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -20,8 +20,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>UpdateCollaborator</summary>
-    public class UpdateCollaborator : CollaboratorDataBaseCommand
+    public class UpdateInnovationPlayerExecutiveCollaborator : InnovationPlayerExecutiveCollaboratorBaseCommand
     {
         public Guid CollaboratorUid { get; set; }
         public bool IsAddingToCurrentEdition { get; set; }
@@ -36,7 +35,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public UserBaseDto UpdaterBaseDto { get; private set; }
         public DateTimeOffset UpdateDate { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateCollaborator"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateInnovationPlayerExecutiveCollaborator" /> class.
+        /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
@@ -45,14 +46,20 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="industries">The industries.</param>
         /// <param name="collaboratorRoles">The roles.</param>
         /// <param name="editionsDtos">The editions dtos.</param>
+        /// <param name="activities">The activities.</param>
+        /// <param name="interestsDtos">The interests dtos.</param>
+        /// <param name="innovationOrganizationTrackOptionDtos">The innovation organization track option dtos.</param>
         /// <param name="currentEditionId">The current edition identifier.</param>
         /// <param name="isAddingToCurrentEdition">The is adding to current edition.</param>
         /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
         /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
+        /// <param name="isPlayerRequired">if set to <c>true</c> [is attendee organization required].</param>
+        /// <param name="isVirtualMeetingRequired">if set to <c>true</c> [is virtual meeting required].</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
         /// <exception cref="DomainException"></exception>
-        public UpdateCollaborator(
+        public UpdateInnovationPlayerExecutiveCollaborator(
             CollaboratorDto entity, 
             List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, 
             List<LanguageDto> languagesDtos, 
@@ -61,11 +68,16 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<CollaboratorIndustry> industries, 
             List<CollaboratorRole> collaboratorRoles,
             List<EditionDto> editionsDtos,
+            List<Activity> activities,
+            List<InterestDto> interestsDtos,
+            List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos,
             int currentEditionId,
             bool? isAddingToCurrentEdition, 
             bool isJobTitleRequired,
             bool isMiniBioRequired, 
             bool isImageRequired,
+            bool isPlayerRequired,
+            bool isVirtualMeetingRequired,
             string userInterfaceLanguage)
         {
             if (entity == null)
@@ -84,16 +96,43 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.CollaboratorRoleAdditionalInfo = entity?.CollaboratorRoleAdditionalInfo;
             this.CollaboratorUid = entity.Uid;
             this.IsAddingToCurrentEdition = isAddingToCurrentEdition ?? false;
-            this.UpdateBaseProperties(entity, attendeeOrganizationsBaseDtos, languagesDtos, genders, industries, collaboratorRoles, editionsDtos, currentEditionId, isJobTitleRequired, isMiniBioRequired, isImageRequired, userInterfaceLanguage);
-            this.UpdateDropdownProperties(entity, attendeeOrganizationsBaseDtos, genders, industries, collaboratorRoles, editionsDtos, currentEditionId, userInterfaceLanguage);
+            base.UpdateBaseProperties(
+                entity, 
+                attendeeOrganizationsBaseDtos, 
+                languagesDtos, 
+                genders, 
+                industries, 
+                collaboratorRoles, 
+                editionsDtos,
+                activities,
+                interestsDtos,
+                innovationOrganizationTrackOptionDtos,
+                currentEditionId, 
+                isJobTitleRequired, 
+                isMiniBioRequired, 
+                isImageRequired, 
+                isPlayerRequired,
+                isVirtualMeetingRequired,
+                userInterfaceLanguage);
+            this.UpdateDropdownProperties(
+                entity, 
+                attendeeOrganizationsBaseDtos, 
+                genders, 
+                industries, 
+                collaboratorRoles, 
+                editionsDtos, 
+                currentEditionId, 
+                userInterfaceLanguage);
         }
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateCollaborator"/> class.</summary>
-        public UpdateCollaborator()
+        /// <summary>Initializes a new instance of the <see cref="UpdateInnovationPlayerExecutiveCollaborator"/> class.</summary>
+        public UpdateInnovationPlayerExecutiveCollaborator()
         {
         }
 
-        /// <summary>Updates the dropdown properties.</summary>
+        /// <summary>
+        /// Updates the dropdown properties.
+        /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
         /// <param name="genders">The genders.</param>
@@ -121,7 +160,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.ProducerTermsAcceptanceDate = entity.EditionAttendeeCollaboratorBaseDto?.ProducerTermsAcceptanceDate;
             this.UpdaterBaseDto = entity.UpdaterBaseDto;
             this.UpdateDate = entity.UpdateDate;
-            this.UpdateDropdownProperties(attendeeOrganizationsBaseDtos, genders, industries, collaboratorRoles, editionsDtos, currentEditionId, userInterfaceLanguage);
+
+            base.UpdateDropdownProperties(
+                attendeeOrganizationsBaseDtos,
+                genders, 
+                industries, 
+                collaboratorRoles, 
+                editionsDtos, 
+                currentEditionId, 
+                userInterfaceLanguage);
         }
     }
 }

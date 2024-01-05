@@ -41,6 +41,11 @@ var MusicPlayersExecutivesUpdate = function () {
         changePreviousEditionsRequired();
         enableAjaxForm();
         enableFormValidation();
+
+        // Enable additional info textbox
+        if (typeof (MyRio2cCommonAdditionalInfo) !== 'undefined') {
+            MyRio2cCommonAdditionalInfo.init();
+        }
     };
 
     var changePreviousEditionsRequired = function () {

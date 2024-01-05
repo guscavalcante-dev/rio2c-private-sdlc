@@ -41,7 +41,6 @@ using ClosedXML.Excel;
 using PlataformaRio2C.Domain.ApiModels;
 using PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults;
 using System.IO;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 {
@@ -55,6 +54,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
+        private readonly IActivityRepository activityRepo;
+        private readonly IInterestRepository interestRepo;
+        private readonly IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo;
         private readonly IFileRepository fileRepo;
 
         /// <summary>
@@ -65,6 +67,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
+        /// <param name="innovationOrganizationTrackOptionRepository">The innovation organization track option repository.</param>
+        /// <param name="activityRepository">The activity repository.</param>
+        /// <param name="interestRepository">The interest repository.</param>
         /// <param name="fileRepository">The file repository.</param>
         public PlayersExecutivesController(
             IMediator commandBus,
@@ -72,6 +77,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             ICollaboratorRepository collaboratorRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
+            IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepository,
+            IActivityRepository activityRepository,
+            IInterestRepository interestRepository,
             IFileRepository fileRepository
             )
             : base(commandBus, identityController)
@@ -79,6 +87,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             this.collaboratorRepo = collaboratorRepository;
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
+            this.activityRepo = activityRepository;
+            this.interestRepo = interestRepository;
+            this.innovationOrganizationTrackOptionRepo = innovationOrganizationTrackOptionRepository;
             this.fileRepo = fileRepository;
         }
 
@@ -461,14 +472,19 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()
         {
-            CreateCollaborator cmd = new CreateCollaborator(
+            CreateInnovationPlayerExecutiveCollaborator cmd = new CreateInnovationPlayerExecutiveCollaborator(
                     await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.StartupPlayer.Uid),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
+                    await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id),
+                    await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Startup.Id),
+                    await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync(),
                     EditionDto.Id,
+                    false,
+                    false,
                     false,
                     false,
                     false,
@@ -488,7 +504,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Create(CreateCollaborator cmd)
+        public async Task<ActionResult> Create(CreateInnovationPlayerExecutiveCollaborator cmd)
         {
             var result = new AppValidationResult();
 
@@ -559,11 +575,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUpdateModal(Guid? collaboratorUid, bool? isAddingToCurrentEdition)
         {
-            UpdateCollaborator cmd;
+            UpdateInnovationPlayerExecutiveCollaborator cmd;
 
             try
             {
-                cmd = new UpdateCollaborator(
+                cmd = new UpdateInnovationPlayerExecutiveCollaborator(
                     await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
                     await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.StartupPlayer.Uid),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
@@ -572,8 +588,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                     await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
+                    await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id),
+                    await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Startup.Id),
+                    await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync(),
                     EditionDto.Id,
                     isAddingToCurrentEdition,
+                    false,
+                    false,
                     false,
                     false,
                     false,
@@ -598,7 +619,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Update(UpdateCollaborator cmd)
+        public async Task<ActionResult> Update(UpdateInnovationPlayerExecutiveCollaborator cmd)
         {
             var result = new AppValidationResult();
 
@@ -610,7 +631,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    Domain.Constants.CollaboratorType.PlayerExecutiveInnovation,
+                    Constants.CollaboratorType.PlayerExecutiveInnovation,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,

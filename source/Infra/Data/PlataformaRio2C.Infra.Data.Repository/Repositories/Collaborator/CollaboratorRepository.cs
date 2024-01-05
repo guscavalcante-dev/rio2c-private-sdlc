@@ -819,8 +819,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByKeywords(keywords, editionId)
                                 .FindByUids(collaboratorsUids)
                                 .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, showAllEditions, showAllParticipants, editionId)
-                                .FindByHighlights(collaboratorTypeNames, showHighlights)
-                                .FindByOrganizationTypeNames(organizationTypeNames, showAllEditions, showAllParticipants, editionId);
+                                .FindByHighlights(collaboratorTypeNames, showHighlights);
+                                //.FindByOrganizationTypeNames(organizationTypeNames, showAllEditions, showAllParticipants, editionId);
 
             var collaborators = await query
                             .DynamicOrder(
