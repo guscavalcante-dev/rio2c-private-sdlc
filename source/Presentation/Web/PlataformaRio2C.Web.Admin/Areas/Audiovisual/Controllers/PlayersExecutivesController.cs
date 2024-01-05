@@ -469,6 +469,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     false,
                     false,
                     false,
+                    true,
                     UserInterfaceLanguage);
 
             return Json(new
@@ -574,6 +575,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     false,
                     false,
                     false,
+                    true,
                     this.UserInterfaceLanguage);
             }
             catch (DomainException ex)

@@ -2,9 +2,10 @@
 <!--begin:: Attendee Organization Form-->
 <div class="form-group row attendeeorganization-list-item">
     <div class="col-md-10">
-        @Html.DropDownList("AttendeeOrganizationUid", new SelectList(Model.AttendeeOrganizationsBaseDtos, "Uid", "DisplayName", Model.AttendeeOrganizationUid), $"{Labels.Select}...", new { @class = "form-control enable-select2-attendeeorganization" })
-        @Html.ValidationMessageFor(m => m.AttendeeOrganizationUid, "", new { @class = "text-danger" })
-        @Html.HiddenFor(m => m.IsAttendeeOrganizationUidRequired)
+        @Html.HiddenFor(m => m.IsRequired)
+        @Html.HiddenFor(m => m.AttendeeOrganizationUid)
+        @Html.DropDownListFor(m => m.Value, new SelectList(Model.AttendeeOrganizationsBaseDtos, "Uid", "DisplayName", Model.Value), $"{Labels.Select}...", new { @class = "form-control enable-select2-attendeeorganization" })
+        @Html.ValidationMessageFor(m => m.Value, "", new { @class = "text-danger" })
     </div>
     <div class="col-md-2">
         <button type="button" class="btn btn-danger btn-icon attendeeorganization-remove" onclick="AttendeeOrganizationsForm.remove(this);return false;"><i class="flaticon2-trash"></i></button>

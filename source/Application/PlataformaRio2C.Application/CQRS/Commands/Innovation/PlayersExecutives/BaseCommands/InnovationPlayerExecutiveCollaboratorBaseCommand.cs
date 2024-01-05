@@ -145,7 +145,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<CollaboratorJobTitleBaseCommand> JobTitles { get; set; }
         public List<CollaboratorMiniBioBaseCommand> MiniBios { get; set; }
         public CropperImageBaseCommand CropperImage { get; set; }
-        public List<AttendeeOrganizationBaseCommand> TemplateAttendeeOrganizationBaseCommands { get; set; }
+        public List<TemplateAttendeeOrganizationBaseCommand> TemplateAttendeeOrganizationBaseCommands { get; set; }
 
         public List<AttendeeCollaboratorActivityBaseCommand> AttendeeCollaboratorActivities { get; set; }
         public InterestBaseCommand[][] Interests { get; set; }
@@ -186,7 +186,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
         /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
-        /// <param name="isAttendeeOrganizationRequired">if set to <c>true</c> [is attendee organization required].</param>
+        /// <param name="isPlayerRequired">if set to <c>true</c> [is attendee organization required].</param>
         /// <param name="isVirtualMeetingRequired">if set to <c>true</c> [is virtual meeting required].</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public void UpdateBaseProperties(
@@ -204,7 +204,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isJobTitleRequired,
             bool isMiniBioRequired,
             bool isImageRequired,
-            bool isAttendeeOrganizationRequired,
+            bool isPlayerRequired,
             bool isVirtualMeetingRequired,
             string userInterfaceLanguage)
         {
@@ -225,7 +225,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             //this.IsVirtualMeeting = entity?.IsVirtualMeeting;
             this.IsVirtualMeetingRequired = isVirtualMeetingRequired;
 
-            this.UpdateOrganizations(entity, attendeeOrganizationsBaseDtos, isAttendeeOrganizationRequired);
+            this.UpdateOrganizations(entity, attendeeOrganizationsBaseDtos, isPlayerRequired);
             this.UpdateJobTitles(entity, languagesDtos, isJobTitleRequired);
             this.UpdateMiniBios(entity, languagesDtos, isMiniBioRequired);
             this.UpdateCropperImage(entity, isImageRequired);
@@ -333,8 +333,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
-        /// <param name="isAttendeeOrganizationRequired">if set to <c>true</c> [is attendee organization required].</param>
-        private void UpdateOrganizations(CollaboratorDto entity, List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, bool isAttendeeOrganizationRequired)
+        /// <param name="isPlayerRequired">if set to <c>true</c> [is attendee organization required].</param>
+        private void UpdateOrganizations(CollaboratorDto entity, List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, bool isPlayerRequired)
         {
             if (this.AttendeeOrganizationBaseCommands == null)
             {
@@ -343,11 +343,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
             if (entity?.AttendeeOrganizationBasesDtos?.Any() != true)
             {
-                this.AttendeeOrganizationBaseCommands.Add(new AttendeeOrganizationBaseCommand(null, attendeeOrganizationsBaseDtos, isAttendeeOrganizationRequired));
+                this.AttendeeOrganizationBaseCommands.Add(new AttendeeOrganizationBaseCommand(null, attendeeOrganizationsBaseDtos, isPlayerRequired));
             }
             else
             {
-                this.AttendeeOrganizationBaseCommands = entity?.AttendeeOrganizationBasesDtos?.Select(aobd => new AttendeeOrganizationBaseCommand(aobd, attendeeOrganizationsBaseDtos, isAttendeeOrganizationRequired))?.ToList();
+                this.AttendeeOrganizationBaseCommands = entity?.AttendeeOrganizationBasesDtos?.Select(aobd => new AttendeeOrganizationBaseCommand(aobd, attendeeOrganizationsBaseDtos, isPlayerRequired))?.ToList();
             }
         }
 
@@ -355,9 +355,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
         private void UpdateOrganizationTemplate(List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos)
         {
-            this.TemplateAttendeeOrganizationBaseCommands = new List<AttendeeOrganizationBaseCommand>
+            this.TemplateAttendeeOrganizationBaseCommands = new List<TemplateAttendeeOrganizationBaseCommand>
             {
-                new AttendeeOrganizationBaseCommand(null, attendeeOrganizationsBaseDtos)
+                new TemplateAttendeeOrganizationBaseCommand(null, attendeeOrganizationsBaseDtos)
             };
         }
 

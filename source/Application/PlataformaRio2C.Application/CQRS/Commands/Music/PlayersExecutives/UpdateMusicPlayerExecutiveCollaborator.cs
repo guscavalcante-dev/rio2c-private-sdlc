@@ -52,7 +52,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
         /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
-        /// <param name="isAttendeeOrganizationRequired">if set to <c>true</c> [is image required].</param>
+        /// <param name="isPlayerRequired">if set to <c>true</c> [is image required].</param>
         /// <param name="isVirtualMeetingRequired">if set to <c>true</c> [is isVirtualMeetingRequired required].</param>    
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public UpdateMusicPlayerExecutiveCollaborator(
@@ -72,7 +72,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isJobTitleRequired,
             bool isMiniBioRequired,
             bool isImageRequired,
-            bool isAttendeeOrganizationRequired,
+            bool isPlayerRequired,
             bool isVirtualMeetingRequired,
             string userInterfaceLanguage)
         {
@@ -107,7 +107,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 isJobTitleRequired,
                 isMiniBioRequired,
                 isImageRequired,
-                isAttendeeOrganizationRequired,
+                isPlayerRequired,
                 isVirtualMeetingRequired,
                 userInterfaceLanguage);
 

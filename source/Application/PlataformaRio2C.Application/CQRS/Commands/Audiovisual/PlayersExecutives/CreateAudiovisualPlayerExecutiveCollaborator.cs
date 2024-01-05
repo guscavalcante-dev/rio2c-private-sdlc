@@ -44,6 +44,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isJobTitleRequired,
             bool isMiniBioRequired, 
             bool isImageRequired,
+            bool isPlayerRequired,
             string userInterfaceLanguage)
         {
             base.UpdateBaseProperties(null, 
@@ -56,7 +57,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 currentEditionId, 
                 isJobTitleRequired, 
                 isMiniBioRequired, 
-                isImageRequired, 
+                isImageRequired,
+                isPlayerRequired,
                 userInterfaceLanguage);
         }
 

@@ -1,59 +1,41 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
-// Author           : Rafael Dantas Ruiz
-// Created          : 08-28-2019
+// Author           : Renan Valentim
+// Created          : 01-04-2023
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-28-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-04-2023
 // ***********************************************************************
-// <copyright file="AttendeeOrganizationBaseCommand.cs" company="Softo">
+// <copyright file="AttendeeOrganizationTemplateBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Foolproof;
-using Org.BouncyCastle.Asn1.Ocsp;
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>AttendeeOrganizationBaseCommand</summary>
-    public class AttendeeOrganizationBaseCommand
+    /// <summary>AttendeeOrganizationTemplateBaseCommand</summary>
+    public class TemplateAttendeeOrganizationBaseCommand
     {
-        public Guid? AttendeeOrganizationUid 
-        {
-            get 
-            {
-                return Guid.TryParse(this.Value, out var result) ? result : (Guid?)null;
-            }
-        }
-
-        [Display(Name = "Player", ResourceType = typeof(Labels))]
-        [RequiredIf(nameof(IsRequired), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public string Value { get; set; }
-
-        public bool IsRequired { get; set; }
+        public Guid AttendeeOrganizationUid { get; set; }
 
         public List<AttendeeOrganizationBaseDto> AttendeeOrganizationsBaseDtos { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="AttendeeOrganizationBaseCommand"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="TemplateAttendeeOrganizationBaseCommand"/> class.</summary>
         /// <param name="attendeeOrganizationBaseDto">The attendee organization base dto.</param>
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
-        public AttendeeOrganizationBaseCommand(
+        public TemplateAttendeeOrganizationBaseCommand(
             AttendeeOrganizationBaseDto attendeeOrganizationBaseDto, 
-            List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, 
-            bool isPlayerRequired)
+            List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos)
         {
             this.UpdateBaseProperties(attendeeOrganizationBaseDto, attendeeOrganizationsBaseDtos);
-            this.IsRequired = isPlayerRequired;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="AttendeeOrganizationBaseCommand"/> class.</summary>
-        public AttendeeOrganizationBaseCommand()
+        /// <summary>Initializes a new instance of the <see cref="TemplateAttendeeOrganizationBaseCommand"/> class.</summary>
+        public TemplateAttendeeOrganizationBaseCommand()
         {
         }
 
@@ -62,8 +44,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
         private void UpdateBaseProperties(AttendeeOrganizationBaseDto attendeeOrganizationBaseDto, List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos)
         {
-            //this.AttendeeOrganizationUid = attendeeOrganizationBaseDto?.Uid ?? Guid.Empty;
-            this.Value = attendeeOrganizationBaseDto?.Uid != null ? attendeeOrganizationBaseDto.Uid.ToString() : null;
+            this.AttendeeOrganizationUid = attendeeOrganizationBaseDto?.Uid ?? Guid.Empty;
             this.UpdateDropdownProperties(attendeeOrganizationsBaseDtos);
         }
 

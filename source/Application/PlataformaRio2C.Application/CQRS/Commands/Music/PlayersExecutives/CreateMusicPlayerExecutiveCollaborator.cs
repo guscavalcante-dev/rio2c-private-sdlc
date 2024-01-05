@@ -51,7 +51,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isJobTitleRequired,
             bool isMiniBioRequired,
             bool isImageRequired,
-            bool isAttendeeOrganizationRequired,
+            bool isPlayerRequired,
             bool isVirtualMeetingRequired,
             string userInterfaceLanguage)
         {
@@ -70,7 +70,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 isJobTitleRequired,
                 isMiniBioRequired,
                 isImageRequired,
-                isAttendeeOrganizationRequired,
+                isPlayerRequired,
                 isVirtualMeetingRequired,
                 userInterfaceLanguage);
         }

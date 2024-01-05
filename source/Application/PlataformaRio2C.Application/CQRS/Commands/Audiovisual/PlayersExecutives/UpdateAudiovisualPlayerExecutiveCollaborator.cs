@@ -68,6 +68,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isJobTitleRequired,
             bool isMiniBioRequired, 
             bool isImageRequired,
+            bool isPlayerRequired,
             string userInterfaceLanguage)
         {
             if (entity == null)
@@ -97,7 +98,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 currentEditionId, 
                 isJobTitleRequired, 
                 isMiniBioRequired, 
-                isImageRequired, 
+                isImageRequired,
+                isPlayerRequired,
                 userInterfaceLanguage);
             this.UpdateDropdownProperties(
                 entity, 

@@ -398,6 +398,7 @@
     <Compile Include="CQRS\CommandsHandlers\Tracks\TrackBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationConfigs\UpdateNegotiationConfigMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\WeConnect\SynchronizeWeConnectPublicationsCommandHandler.cs" />
+    <Compile Include="CQRS\Commands\Attendees\BaseCommands\TemplateAttendeeOrganizationBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\Commissions\BaseCommands\AudiovisualCommissionCollaboratorBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\Commissions\UpdateAudiovisualCommissionCollaborator.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\Commissions\CreateAudiovisualCommissionCollaborator.cs" />

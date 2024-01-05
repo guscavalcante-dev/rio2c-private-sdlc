@@ -131,7 +131,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<CollaboratorJobTitleBaseCommand> JobTitles { get; set; }
         public List<CollaboratorMiniBioBaseCommand> MiniBios { get; set; }
         public CropperImageBaseCommand CropperImage { get; set; }
-        public List<AttendeeOrganizationBaseCommand> TemplateAttendeeOrganizationBaseCommands { get; set; }
+        public List<TemplateAttendeeOrganizationBaseCommand> TemplateAttendeeOrganizationBaseCommands { get; set; }
 
         #region Dropdowns Properties
 
@@ -167,6 +167,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isJobTitleRequired,
             bool isMiniBioRequired,
             bool isImageRequired,
+            bool isPlayerRequired,
             string userInterfaceLanguage)
         {
             base.UpdateBaseProperties(entity);
@@ -182,7 +183,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Youtube = entity?.Youtube;
             this.EditionsUids = entity?.EditionsUids;
             this.HaveYouBeenToRio2CBefore = entity?.EditionsUids?.Any();
-            this.UpdateOrganizations(entity, attendeeOrganizationsBaseDtos);
+            this.UpdateOrganizations(entity, attendeeOrganizationsBaseDtos, isPlayerRequired);
             this.UpdateJobTitles(entity, languagesDtos, isJobTitleRequired);
             this.UpdateMiniBios(entity, languagesDtos, isMiniBioRequired);
             this.UpdateCropperImage(entity, isImageRequired);
@@ -285,7 +286,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Updates the organizations.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
-        private void UpdateOrganizations(CollaboratorDto entity, List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos)
+        private void UpdateOrganizations(CollaboratorDto entity, List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, bool isPlayerRequired)
         {
             if (this.AttendeeOrganizationBaseCommands == null)
             {
@@ -294,11 +295,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
             if (entity?.AttendeeOrganizationBasesDtos?.Any() != true)
             {
-                this.AttendeeOrganizationBaseCommands.Add(new AttendeeOrganizationBaseCommand(null, attendeeOrganizationsBaseDtos));
+                this.AttendeeOrganizationBaseCommands.Add(new AttendeeOrganizationBaseCommand(null, attendeeOrganizationsBaseDtos, isPlayerRequired));
             }
             else
             {
-                this.AttendeeOrganizationBaseCommands = entity?.AttendeeOrganizationBasesDtos?.Select(aobd => new AttendeeOrganizationBaseCommand(aobd, attendeeOrganizationsBaseDtos))?.ToList();
+                this.AttendeeOrganizationBaseCommands = entity?.AttendeeOrganizationBasesDtos?.Select(aobd => new AttendeeOrganizationBaseCommand(aobd, attendeeOrganizationsBaseDtos, isPlayerRequired))?.ToList();
             }
         }
 
@@ -306,9 +307,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
         private void UpdateOrganizationTemplate(List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos)
         {
-            this.TemplateAttendeeOrganizationBaseCommands = new List<AttendeeOrganizationBaseCommand>
+            this.TemplateAttendeeOrganizationBaseCommands = new List<TemplateAttendeeOrganizationBaseCommand>
             {
-                new AttendeeOrganizationBaseCommand(null, attendeeOrganizationsBaseDtos)
+                new TemplateAttendeeOrganizationBaseCommand(null, attendeeOrganizationsBaseDtos)
             };
         }
 
