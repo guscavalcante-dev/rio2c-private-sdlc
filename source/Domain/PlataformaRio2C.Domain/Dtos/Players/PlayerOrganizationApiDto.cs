@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 12-15-2023
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 12-15-2023
+// Last Modified By : Elton Assunção
+// Last Modified On : 01-05-2024
 // ***********************************************************************
 // <copyright file="PlayerOrganizationApiDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -32,7 +32,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public int? ApiHighlightPosition { get; set; }
         public DateTimeOffset CreateDate { get; set; }
         public DateTimeOffset UpdateDate { get; set; }
-
+        public bool IsDeleted { get; set; }
         public IEnumerable<OrganizationDescriptionBaseDto> OrganizationDescriptionBaseDtos { get; set; }
         public IEnumerable<OrganizationInterestDto> OrganizationInterestDtos { get; set; }
         public IEnumerable<CollaboratorDto> CollaboratorsDtos { get; set; }

@@ -46,7 +46,7 @@ namespace PlataformaRio2C.Domain.ApiModels
         [SwaggerDefaultValue(false)]
         public bool? ShowDetails { get; set; }
 
-        [JsonProperty("ShowDeleted")]
+        [JsonProperty("showDeleted")]
         [SwaggerParameterDescription(description: "Shows deleted Speakers.")]
         [SwaggerDefaultValue(false)]
         public bool ShowDeleted { get; set; }

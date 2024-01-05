@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-25-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 12-23-2023
+// Last Modified By : Elton Assunção
+// Last Modified On : 01-05-2024
 // ***********************************************************************
 // <copyright file="PlayersApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -106,6 +106,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 request?.InterestsUids?.ToListGuid(','),
                 request?.ModifiedAfterDate.ToUtcDateKind(),
                 request?.ShowDetails ?? false,
+                request?.ShowDeleted ?? false,
                 request?.Page ?? 1, 
                 request?.PageSize ?? 10);
 
@@ -129,6 +130,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     Picture = dto.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, dto.Uid, dto.ImageUploadDate, true) : null,
                     DescriptionsApiResponses = dto.GetDescriptionsApiResponses(),
                     InterestGroupApiResponses = dto.GetInterestGroupApiResponses(),
+                    IsDeleted = dto.IsDeleted,
                     PlayerCollaboratorApiResponses = dto.CollaboratorsDtos?.Select(cd => new PlayerCollaboratorApiResponse
                     {
                         Uid = cd.Uid,

@@ -477,7 +477,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             if (conferencesUids?.Any(d => d.HasValue) == true)
             {
-                query = query.Where(c => c.AttendeeCollaborators.Any(ac => (!ac.IsDeleted || showDeleted) && 
+                query = query.Where(c => c.AttendeeCollaborators.Any(ac => (!ac.IsDeleted || showDeleted) &&
                                                                             ac.ConferenceParticipants.Any(cp => (!cp.IsDeleted || showDeleted) &&
                                                                                                                 conferencesUids.Contains(cp.Conference.Uid))));
             }
@@ -619,11 +619,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         private IQueryable<Collaborator> GetBaseQuery(bool @readonly = false, bool showDeleted = false)
         {
-            var consult = this.dbSet;
+            var consult = this.dbSet.AsQueryable();
 
             if (!showDeleted)
             {
-                consult.IsNotDeleted();
+                consult = consult.IsNotDeleted();
             }
 
             return @readonly
