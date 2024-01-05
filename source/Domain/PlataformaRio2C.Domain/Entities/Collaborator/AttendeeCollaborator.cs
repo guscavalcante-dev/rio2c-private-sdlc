@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-21-2023
+// Last Modified On : 01-05-2023
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1697,7 +1697,7 @@ namespace PlataformaRio2C.Domain.Entities
                 }
                 else
                 {
-                    this.AttendeeCollaboratorTargetAudiences.Add(new AttendeeCollaboratorTargetAudience(this, attendeeCollaboratorTargetAudience.TargetAudience, attendeeCollaboratorTargetAudienceDb?.AdditionalInfo, userId));
+                    this.AttendeeCollaboratorTargetAudiences.Add(new AttendeeCollaboratorTargetAudience(this, attendeeCollaboratorTargetAudience.TargetAudience, attendeeCollaboratorTargetAudience.AdditionalInfo, userId));
                 }
             }
         }

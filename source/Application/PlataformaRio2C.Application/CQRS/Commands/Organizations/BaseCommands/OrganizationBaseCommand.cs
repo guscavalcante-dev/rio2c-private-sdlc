@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-23-2023
+// Last Modified On : 05-01-2024
 // ***********************************************************************
 // <copyright file="OrganizationBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -377,8 +377,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.InnovationOrganizationTrackGroups = new List<InnovationOrganizationTrackOptionBaseCommand>();
 
             var selectedInnovationOrganizationTrackOptionGroupsUids = entity?.InnovationOrganizationTrackOptionGroupDtos
-                                                                                .GroupBy(aciotDto => aciotDto.InnovationOrganizationTrackOptionGroup?.Uid)
-                                                                                .Select(group => group.Key);
+                                                                                ?.GroupBy(aciotDto => aciotDto.InnovationOrganizationTrackOptionGroup?.Uid)
+                                                                                ?.Select(group => group.Key);
             if (innovationOrganizationTrackOptionDtos?.Any() == true)
             {
                 foreach (var innovationOrganizationTrackOptionGroup in innovationOrganizationTrackOptionDtos.GroupBy(dto => dto.InnovationOrganizationTrackOptionGroup))
