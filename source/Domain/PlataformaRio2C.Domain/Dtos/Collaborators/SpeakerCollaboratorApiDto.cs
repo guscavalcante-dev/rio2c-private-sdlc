@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 01-16-2020
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 12-19-2023
+// Last Modified By : Elton Assunção
+// Last Modified On : 01-05-2024
 // ***********************************************************************
 // <copyright file="SpeakerCollaboratorApiDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,7 +36,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public string Twitter { get; set; }
         public string Instagram { get; set; }
         public string Youtube { get; set; }
-
+        public bool IsDeleted { get; set; }        
         public IEnumerable<CollaboratorMiniBioBaseDto> MiniBiosDtos { get; set; }
         public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }
         public IEnumerable<OrganizationApiListDto> OrganizationsDtos { get; set; }

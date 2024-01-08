@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-30-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 12-15-2023
+// Last Modified By : Elton Assunção
+// Last Modified On : 01-05-2024
 // ***********************************************************************
 // <copyright file="PlayerApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -38,6 +38,9 @@ namespace PlataformaRio2C.Domain.ApiModels
         [JsonProperty("picture", Order = 600)]
         public string Picture { get; set; }
 
+        [JsonProperty("isDeleted", Order = 601)]
+        public bool IsDeleted { get; set; }
+
         [JsonProperty("descriptions", Order = 700)]
         public IEnumerable<LanguageValueApiResponse> DescriptionsApiResponses { get; set; }
 
@@ -45,6 +48,6 @@ namespace PlataformaRio2C.Domain.ApiModels
         public IEnumerable<InterestGroupApiResponse> InterestGroupApiResponses { get; set; }
 
         [JsonProperty("collaborators", Order = 900)]
-        public IEnumerable<PlayerCollaboratorApiResponse> PlayerCollaboratorApiResponses { get; set; }
+        public IEnumerable<PlayerCollaboratorApiResponse> PlayerCollaboratorApiResponses { get; set; }      
     }
 }

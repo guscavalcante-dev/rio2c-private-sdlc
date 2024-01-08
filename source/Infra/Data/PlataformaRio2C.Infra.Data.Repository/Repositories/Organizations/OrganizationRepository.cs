@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-19-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 12-21-2023
+// Last Modified By : Elton Assunção
+// Last Modified On : 01-05-2024
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -94,24 +94,24 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="showAllOrganizations">if set to <c>true</c> [show all organizations].</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        internal static IQueryable<Organization> FindByOrganizationTypeUidAndByEditionId(this IQueryable<Organization> query, Guid? organizationTypeUid, bool showAllEditions, bool showAllOrganizations, int? editionId)
+        internal static IQueryable<Organization> FindByOrganizationTypeUidAndByEditionId(this IQueryable<Organization> query, Guid? organizationTypeUid, bool showAllEditions, bool showAllOrganizations, int? editionId, bool showDeleted = false)
         {
             if (showAllEditions && showAllOrganizations)
             {
-                query = query.Where(o => !o.IsDeleted);
+                query = query.Where(o => (!o.IsDeleted || showDeleted));
             }
             else if (!showAllEditions && editionId.HasValue)
             {
                 query = query.Where(o => o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
-                                                                           && !ao.IsDeleted
+                                                                           && (!ao.IsDeleted || showDeleted)
                                                                            && (showAllOrganizations || ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == organizationTypeUid
-                                                                                                                                               && !aot.IsDeleted))));
+                                                                                                                                               && (!aot.IsDeleted || showDeleted)))));
             }
             else
             {
-                query = query.Where(o => o.AttendeeOrganizations.Any(ao => !ao.IsDeleted
+                query = query.Where(o => o.AttendeeOrganizations.Any(ao => (!ao.IsDeleted || showDeleted)
                                                                            && (showAllOrganizations || ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == organizationTypeUid
-                                                                                                                                               && !aot.IsDeleted))));
+                                                                                                                                               && (!aot.IsDeleted || showDeleted)))));
             }
 
             return query;
@@ -254,7 +254,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="targetAudiencesUids">The target audiences uids.</param>
         /// <param name="interestsUids">The interests uids.</param>
         /// <returns></returns>
-        internal static IQueryable<Organization> FindByFiltersUids(this IQueryable<Organization> query, List<Guid> activitiesUids, List<Guid> targetAudiencesUids, List<Guid> interestsUids)
+        internal static IQueryable<Organization> FindByFiltersUids(this IQueryable<Organization> query, List<Guid> activitiesUids, List<Guid> targetAudiencesUids, List<Guid> interestsUids, bool showDeleted)
         {
             if (activitiesUids?.Any() == true || targetAudiencesUids?.Any() == true || interestsUids?.Any() == true)
             {
@@ -265,17 +265,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
                 if (activitiesUids?.Any() == true)
                 {
-                    innerActivitiesUidsWhere = innerActivitiesUidsWhere.Or(a => a.OrganizationActivities.Where(oa => !oa.IsDeleted).Any(oa => activitiesUids.Contains(oa.Activity.Uid)));
+                    innerActivitiesUidsWhere = innerActivitiesUidsWhere.Or(a => a.OrganizationActivities.Where(oa => (!oa.IsDeleted || showDeleted)).Any(oa => activitiesUids.Contains(oa.Activity.Uid)));
                 }
 
                 if (targetAudiencesUids?.Any() == true)
                 {
-                    innerTargetAudiencesUidsWhere = innerTargetAudiencesUidsWhere.Or(ta => ta.OrganizationTargetAudiences.Where(ota => !ota.IsDeleted).Any(oa => targetAudiencesUids.Contains(oa.TargetAudience.Uid)));
+                    innerTargetAudiencesUidsWhere = innerTargetAudiencesUidsWhere.Or(ta => ta.OrganizationTargetAudiences.Where(ota => (!ota.IsDeleted || showDeleted)).Any(oa => targetAudiencesUids.Contains(oa.TargetAudience.Uid)));
                 }
 
                 if (interestsUids?.Any() == true)
                 {
-                    innerInterestsUidsWhere = innerInterestsUidsWhere.Or(i => i.OrganizationInterests.Where(oi => !oi.IsDeleted).Any(oa => interestsUids.Contains(oa.Interest.Uid)));
+                    innerInterestsUidsWhere = innerInterestsUidsWhere.Or(i => i.OrganizationInterests.Where(oi => (!oi.IsDeleted || showDeleted)).Any(oa => interestsUids.Contains(oa.Interest.Uid)));
                 }
 
                 outerWhere = outerWhere.And(innerActivitiesUidsWhere);
@@ -293,10 +293,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <returns></returns>
-        internal static IQueryable<Organization> IsApiDisplayEnabled(this IQueryable<Organization> query, int editionId, Guid organizationTypeUid)
+        internal static IQueryable<Organization> IsApiDisplayEnabled(this IQueryable<Organization> query, int editionId, Guid organizationTypeUid, bool showDeleted = false)
         {
             query = query.Where(o => o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
-                                                                       && ao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
+                                                                       && ao.AttendeeOrganizationTypes.Any(aot => (!aot.IsDeleted || showDeleted)
                                                                                                                   && aot.OrganizationType.Uid == organizationTypeUid
                                                                                                                   && aot.IsApiDisplayEnabled)));
 
@@ -460,10 +460,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>Gets the base query.</summary>
         /// <param name="readonly">if set to <c>true</c> [readonly].</param>
         /// <returns></returns>
-        private IQueryable<Organization> GetBaseQuery(bool @readonly = false)
+        private IQueryable<Organization> GetBaseQuery(bool @readonly = false, bool showDeleted = false)
         {
-            var consult = this.dbSet
-                                .IsNotDeleted();
+            var consult = this.dbSet.AsQueryable();
+
+            if (!showDeleted)
+            {
+                consult = consult.IsNotDeleted();
+            }
 
             return @readonly
                         ? consult.AsNoTracking()
@@ -872,15 +876,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             List<Guid> interestsUids,
             DateTime? modifiedAfterDate,
             bool showDetails,
+            bool showDeleted,
             int page,
             int pageSize)
         {
             Guid playerOrganizationTypeUid = OrganizationType.AudiovisualPlayer.Uid;
 
-            var query = this.GetBaseQuery()
-                                .FindByOrganizationTypeUidAndByEditionId(playerOrganizationTypeUid, false, false, editionId)
-                                .IsApiDisplayEnabled(editionId, playerOrganizationTypeUid)
-                                .FindByFiltersUids(activitiesUids, targetAudiencesUids, interestsUids)
+            var query = this.GetBaseQuery(showDeleted: showDeleted)
+                                .FindByOrganizationTypeUidAndByEditionId(playerOrganizationTypeUid, false, false, editionId, showDeleted)
+                                .IsApiDisplayEnabled(editionId, playerOrganizationTypeUid, showDeleted)
+                                .FindByFiltersUids(activitiesUids, targetAudiencesUids, interestsUids, showDeleted)
                                 .FindByKeywords(keywords)
                                 .FindByCreateOrUpdateDate(modifiedAfterDate);
 
@@ -898,6 +903,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     ImageUploadDate = o.ImageUploadDate,
                     CreateDate = o.CreateDate,
                     UpdateDate = o.UpdateDate,
+                    IsDeleted = o.IsDeleted,
                     ApiHighlightPosition = o.AttendeeOrganizations
                                                 .FirstOrDefault(ao => !ao.IsDeleted && ao.EditionId == editionId)
                                                     .AttendeeOrganizationTypes
@@ -963,7 +969,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                 Code = jt.Language.Code
                                                                                             }
                                                                                         })
-                                                                                    }))                    
+                                                                                    }))
                 });
 
                 #endregion
@@ -979,6 +985,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     CompanyName = o.CompanyName,
                     TradeName = o.TradeName,
                     ImageUploadDate = o.ImageUploadDate,
+                    IsDeleted = o.IsDeleted,
                     ApiHighlightPosition = o.AttendeeOrganizations
                                                 .FirstOrDefault(ao => !ao.IsDeleted && ao.EditionId == editionId)
                                                     .AttendeeOrganizationTypes.FirstOrDefault(aot => !aot.IsDeleted && aot.OrganizationType.Uid == playerOrganizationTypeUid)
