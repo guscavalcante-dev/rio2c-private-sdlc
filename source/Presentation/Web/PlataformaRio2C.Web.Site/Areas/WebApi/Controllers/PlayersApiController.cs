@@ -1,10 +1,10 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Site
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-25-2019
 //
 // Last Modified By : Elton Assunção
-// Last Modified On : 01-05-2024
+// Last Modified On : 01-08-2024
 // ***********************************************************************
 // <copyright file="PlayersApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -123,7 +123,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 Players = playerOrganizationApiDtos?.Select(dto => new PlayerApiResponse
                 {
                     Uid = dto.Uid,
-                    Name = dto.TradeName,
+                    Name = dto.Name,
                     TradeName = dto.TradeName,
                     CompanyName = dto.CompanyName,
                     HighlightPosition = dto.ApiHighlightPosition,
