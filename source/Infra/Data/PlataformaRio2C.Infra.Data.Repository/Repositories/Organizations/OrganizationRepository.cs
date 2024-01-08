@@ -1100,8 +1100,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, showAllEditions, showAllOrganizations, editionId)
                                 .FindByCompanyName(companyName)
                                 .FindByTradeName(tradeName)
-                                .FindByEqualDocument(document)
-                                .HasAttendeeOrganizationCollaborators(collaboratorId);
+                                .FindByEqualDocument(document);
+
+            // If searching by document, must return the Organization data even if without past association between Collaborador and Organization.
+            if (string.IsNullOrEmpty(document))
+            {
+                query = query.HasAttendeeOrganizationCollaborators(collaboratorId);
+            }
 
             return await query
                             .Select(o => new OrganizationApiListDto
