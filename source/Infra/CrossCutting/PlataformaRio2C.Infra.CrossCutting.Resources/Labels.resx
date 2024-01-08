@@ -1311,11 +1311,21 @@
     <value>Informações</value>
     <comment>Informações</comment>
   </data>
+  <data name="InnovationCommissionEvaluationEndDate" xml:space="preserve">
+    <value>Data final da avaliação da Comissão de Inovação</value>
+    <comment>Data final da avaliação da Comissão de Inovação</comment>
+  </data>
   <data name="InnovationCommissionEvaluationStartDate" xml:space="preserve">
     <value>Data de início da avaliação de startups</value>
   </data>
   <data name="InnovationCommissionMaximumApprovedCompaniesCount" xml:space="preserve">
     <value>Quantidade máxima de startups aprovadas</value>
+  </data>
+  <data name="InnovationCommissionMinimumEvaluationsCount" xml:space="preserve">
+    <value>Contagem mínima de avaliações da Comissão de Inovação</value>
+  </data>
+  <data name="InnovationProjectSubmitEndDate" xml:space="preserve">
+    <value>Data de término de envio do projeto de inovação</value>
   </data>
   <data name="InnovationProjectSubmitStartDate" xml:space="preserve">
     <value>Data de início de cadastro de startups</value>
