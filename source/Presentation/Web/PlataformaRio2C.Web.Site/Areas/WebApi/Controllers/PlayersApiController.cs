@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-25-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 12-23-2023
+// Last Modified By : Elton Assunção
+// Last Modified On : 01-08-2024
 // ***********************************************************************
 // <copyright file="PlayersApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
