@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-25-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 12-13-2023
+// Last Modified By : Elton Assunção
+// Last Modified On : 01-05-2024
 // ***********************************************************************
 // <copyright file="PlayersApiRequest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -39,6 +39,12 @@ namespace PlataformaRio2C.Domain.ApiModels
 
         [JsonProperty("showDetails")]
         [SwaggerParameterDescription(description: "Shows extra fields.")]
+        [SwaggerDefaultValue(false)]
         public bool? ShowDetails { get; set; }
+
+        [JsonProperty("showDeleted")]
+        [SwaggerParameterDescription(description: "Shows deleted Players.")]
+        [SwaggerDefaultValue(false)]
+        public bool ShowDeleted { get; set; }
     }
 }
