@@ -127,7 +127,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 request.GetSortColumns(),
                 new List<Guid>(),
                 new string[] { CollaboratorType.PlayerExecutiveMusic.Name },
-                new string[] { OrganizationType.MusicPlayer.Name },
+                null,
                 showAllEditions,
                 showAllParticipants,
                 showHighlights,
@@ -298,7 +298,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         {
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
                 CollaboratorType.PlayerExecutiveMusic.Name,
-                OrganizationType.MusicPlayer.Name,
+                null,
                 true,
                 this.EditionDto.Id);
 
@@ -319,7 +319,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         {
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
                 CollaboratorType.PlayerExecutiveMusic.Name,
-                OrganizationType.MusicPlayer.Name,
+                null,
                 false,
                 this.EditionDto.Id);
 
