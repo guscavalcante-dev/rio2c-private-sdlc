@@ -927,8 +927,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<int> CountAllByDataTable(string collaboratorTypeName, string organizationTypeName, bool showAllEditions, int? editionId)
         {
             var query = this.GetBaseQuery()
-                                .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, showAllEditions, false, editionId)
-                                .FindByOrganizationTypeNames(new string[] { organizationTypeName }, showAllEditions, false, editionId);
+                                .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, showAllEditions, false, editionId);
+                                //.FindByOrganizationTypeNames(new string[] { organizationTypeName }, showAllEditions, false, editionId);
 
             return await query.CountAsync();
         }
