@@ -73,8 +73,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void Delete(int userId)
         {
-            this.UpdateApiConfigurations(false, null);
-
             this.IsDeleted = true;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
