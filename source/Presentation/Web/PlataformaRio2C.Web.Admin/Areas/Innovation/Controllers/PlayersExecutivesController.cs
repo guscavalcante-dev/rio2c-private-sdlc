@@ -130,7 +130,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                 request.GetSortColumns(),
                 new List<Guid>(),
                 new string[] { CollaboratorType.PlayerExecutiveInnovation.Name },
-                new string[] { OrganizationType.StartupPlayer.Name },
+                null,
                 showAllEditions,
                 showAllParticipants,
                 showHighlights,
@@ -425,7 +425,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         {
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
                 CollaboratorType.PlayerExecutiveInnovation.Name,
-                OrganizationType.StartupPlayer.Name,
+                null,
                 true,
                 this.EditionDto.Id);
 
@@ -449,7 +449,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         {
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
                 CollaboratorType.PlayerExecutiveInnovation.Name,
-                OrganizationType.StartupPlayer.Name,
+                null,
                 false,
                 this.EditionDto.Id);
 
