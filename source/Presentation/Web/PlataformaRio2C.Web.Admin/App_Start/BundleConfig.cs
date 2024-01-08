@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-23-2023
+// Last Modified On : 01-08-2024
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -141,7 +141,7 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Scripts/jquery.validate.min.js",
                 "~/Scripts/jquery.validate-vsdoc.min.js",
                 "~/Scripts/jquery.validate.unobtrusive.min.js",
-                "~/Client Scripts/mvcfoolproof.unobtrusive.js"
+                "~/Client Scripts/mvcfoolproof.unobtrusive.20240108122200.js"
                 ));
 
             #endregion
@@ -1265,7 +1265,6 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-1.x.min.js"));
 
-
             var bundlesJqueryval = new ScriptBundle("~/bundles/jqueryval");
             bundlesJqueryval.Include("~/Scripts/jquery.validate.min.js");
             bundlesJqueryval.Include("~/Scripts/jquery.validate-vsdoc.min.js");
@@ -1273,8 +1272,6 @@ namespace PlataformaRio2C.Web.Admin
             //bundlesJqueryval.Include("~/Scripts/globalize.js");            
             //bundlesJqueryval.Include("~/Scripts/jquery.validate.globalize.min.js");       
             bundles.Add(bundlesJqueryval);
-
-
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                         "~/Scripts/popper.min.js",
