@@ -122,7 +122,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 Players = playerOrganizationApiDtos?.Select(dto => new PlayerApiResponse
                 {
                     Uid = dto.Uid,
-                    Name = dto.TradeName,
+                    Name = dto.Name,
                     TradeName = dto.TradeName,
                     CompanyName = dto.CompanyName,
                     HighlightPosition = dto.ApiHighlightPosition,
