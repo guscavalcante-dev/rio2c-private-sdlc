@@ -2950,7 +2950,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data final da avaliação da Comissão de Inovação.
+        ///   Looks up a localized string similar to Data de término de avaliação da Comissão de Inovação.
         /// </summary>
         public static string InnovationCommissionEvaluationEndDate {
             get {
@@ -2977,7 +2977,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Contagem mínima de avaliações da Comissão de Inovação.
+        ///   Looks up a localized string similar to Quantidade mínima de avaliações da Comissão de Inovação.
         /// </summary>
         public static string InnovationCommissionMinimumEvaluationsCount {
             get {
