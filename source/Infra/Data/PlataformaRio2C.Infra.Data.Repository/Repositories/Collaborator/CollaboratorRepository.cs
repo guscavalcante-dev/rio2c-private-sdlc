@@ -538,8 +538,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static async Task<IPagedList<CollaboratorDto>> ToListPagedAsync(this IQueryable<CollaboratorDto> query, int page, int pageSize)
         {
-            if (page == 0)
-                page++;
+            page++;
 
             // Page the list
             var pagedList = await query.ToPagedListAsync(page, pageSize);
