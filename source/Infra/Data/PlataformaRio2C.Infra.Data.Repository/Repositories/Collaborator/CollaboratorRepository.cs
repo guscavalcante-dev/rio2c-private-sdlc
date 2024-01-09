@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Elton Assunção
-// Last Modified On : 01-05-2024
+// Last Modified On : 01-09-2024
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
