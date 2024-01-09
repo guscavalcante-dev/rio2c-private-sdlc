@@ -4,7 +4,7 @@
 // Created          : 12-29-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-29-2023
+// Last Modified On : 01-09-2024
 // ***********************************************************************
 // <copyright file="UpdateInnovationPlayerExecutiveCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -134,7 +134,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var editions = this.editionRepo.GetAll(e => cmd.EditionsUids.Contains(e.Uid)).ToList();
             var interestsDtos = await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Startup.Id);
             var activities = await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id);
-            var innovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync();
 
             // Interests
             var attendeeCollaboratorInterests = new List<AttendeeCollaboratorInterest>();
@@ -150,6 +149,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             List<Guid> attendeeOrganizationUids = cmd.AttendeeOrganizationBaseCommands?.Where(ao => ao.AttendeeOrganizationUid.HasValue)?.Select(aobc => aobc.AttendeeOrganizationUid.Value)?.ToList();
+
+            var innovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllByGroupsUidsAsync(cmd.InnovationOrganizationTrackGroups
+                                                                                                                                   ?.Where(ioto => ioto.IsChecked)
+                                                                                                                                   ?.Select(ioto => ioto.InnovationOrganizationTrackOptionGroupUid));
 
             collaborator.UpdateInnovationPlayerExecutiveCollaborator(
                 attendeeOrganizationUids.Any() ? await this.attendeeOrganizationRepo.FindAllByUidsAsync(attendeeOrganizationUids) : null,
@@ -185,7 +188,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.MiniBios?.Select(d => new CollaboratorMiniBio(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.AttendeeCollaboratorActivities?.Where(aca => aca.IsChecked)?.Select(aca => new AttendeeCollaboratorActivity(activities?.FirstOrDefault(a => a.Uid == aca.ActivityUid), aca.AdditionalInfo, cmd.UserId))?.ToList(),
                 attendeeCollaboratorInterests,
-                cmd.AttendeeCollaboratorInnovationOrganizationTracks?.Where(aciot => aciot.IsChecked)?.Select(aciot => new AttendeeCollaboratorInnovationOrganizationTrack(innovationOrganizationTrackOptions?.FirstOrDefault(ioto => ioto.Uid == aciot.InnovationOrganizationTrackOptionUid)?.InnovationOrganizationTrackOption, aciot.AdditionalInfo, cmd.UserId))?.ToList(),
+                innovationOrganizationTrackOptions.Select(ioto => new AttendeeCollaboratorInnovationOrganizationTrack(ioto, string.Empty, cmd.UserId)).ToList(),
                 true, // TODO: Get isAddingToCurrentEdition from command for UpdateCollaborator
                 cmd.UserId);
 
