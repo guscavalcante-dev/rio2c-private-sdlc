@@ -1311,6 +1311,9 @@
     <value>Informations</value>
     <comment>Informações</comment>
   </data>
+  <data name="InnovationCommissionEvaluationEndDate" xml:space="preserve">
+    <value>Innovation Commission Evaluation End Date</value>
+  </data>
   <data name="InnovationCommissionEvaluationStartDate" xml:space="preserve">
     <value>Startups evaluation start date</value>
     <comment>Data de início da avaliação de projeto de inovação</comment>
@@ -1318,6 +1321,12 @@
   <data name="InnovationCommissionMaximumApprovedCompaniesCount" xml:space="preserve">
     <value>Maximum approved startups count</value>
     <comment>Quantidade máxima de empresas aprovadas</comment>
+  </data>
+  <data name="InnovationCommissionMinimumEvaluationsCount" xml:space="preserve">
+    <value>Innovation Commission Minimum Evaluations Count</value>
+  </data>
+  <data name="InnovationProjectSubmitEndDate" xml:space="preserve">
+    <value>Innovation Project Submit End Date</value>
   </data>
   <data name="InnovationProjectSubmitStartDate" xml:space="preserve">
     <value>Startups submission start date</value>

@@ -2950,6 +2950,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data de término de avaliação da Comissão de Inovação.
+        /// </summary>
+        public static string InnovationCommissionEvaluationEndDate {
+            get {
+                return ResourceManager.GetString("InnovationCommissionEvaluationEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data de início da avaliação de startups.
         /// </summary>
         public static string InnovationCommissionEvaluationStartDate {
@@ -2964,6 +2973,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string InnovationCommissionMaximumApprovedCompaniesCount {
             get {
                 return ResourceManager.GetString("InnovationCommissionMaximumApprovedCompaniesCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade mínima de avaliações da Comissão de Inovação.
+        /// </summary>
+        public static string InnovationCommissionMinimumEvaluationsCount {
+            get {
+                return ResourceManager.GetString("InnovationCommissionMinimumEvaluationsCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de término de envio do projeto de inovação.
+        /// </summary>
+        public static string InnovationProjectSubmitEndDate {
+            get {
+                return ResourceManager.GetString("InnovationProjectSubmitEndDate", resourceCulture);
             }
         }
         
