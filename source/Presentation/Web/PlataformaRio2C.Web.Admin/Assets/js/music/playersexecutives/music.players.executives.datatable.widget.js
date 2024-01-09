@@ -114,13 +114,13 @@ var MusicPlayersExecutivesDataTableWidget = function () {
                     extend: 'collection',
                     text: labels.actions,
                     buttons: [
-                        //{
-                        //    text: sendInvitationEmail,
-                        //    action: function (e, dt, node, config) {
-                        //        $('.dt-button-background').remove();
-                        //        showSendInvitationEmailsModal();
-                        //    }
-                        //},
+                        {
+                            text: sendInvitationEmail,
+                            action: function (e, dt, node, config) {
+                                $('.dt-button-background').remove();
+                                showSendInvitationEmailsModal();
+                            }
+                        },
                         //{
                         //    text: exportToEventbrite,
                         //    action: function (e, dt, node, config) {
