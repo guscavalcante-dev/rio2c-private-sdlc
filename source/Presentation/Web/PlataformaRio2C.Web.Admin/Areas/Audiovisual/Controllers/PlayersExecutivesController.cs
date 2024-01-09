@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-21-2023
+// Last Modified On : 01-09-2024
 // ***********************************************************************
 // <copyright file="PlayersExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -357,6 +357,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     {
                         result = await this.CommandBus.Send(new SendPlayerWelcomeEmailAsync(
                             collaboratorDto.Collaborator.Uid,
+                            CollaboratorType.PlayerExecutiveAudiovisual.Uid,
                             collaboratorDto.User.SecurityStamp,
                             collaboratorDto.User.Id,
                             collaboratorDto.User.Uid,

@@ -3,8 +3,8 @@
 // Author           : Elton Assunção
 // Created          : 12-19-2023
 //
-// Last Modified By : Elton Assunção
-// Last Modified On : 01-08-2024
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-09-2024
 // ***********************************************************************
 // <copyright file="PlayersExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -406,9 +406,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
                     try
                     {
-                        //TODO: 866 - verify type SendPlayerWelcomeEmailAsync to change
                         result = await this.CommandBus.Send(new SendPlayerWelcomeEmailAsync(
                             collaboratorDto.Collaborator.Uid,
+                            CollaboratorType.PlayerExecutiveMusic.Uid,
                             collaboratorDto.User.SecurityStamp,
                             collaboratorDto.User.Id,
                             collaboratorDto.User.Uid,

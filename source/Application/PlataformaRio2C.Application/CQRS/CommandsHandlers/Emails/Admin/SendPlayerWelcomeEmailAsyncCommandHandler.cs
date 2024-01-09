@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-21-2023
+// Last Modified On : 01-09-2024
 // ***********************************************************************
 // <copyright file="SendPlayerWelcomeEmailAsyncCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -74,7 +74,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                                                  && ac.EditionId == cmd.Edition.Id
                                                                  && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
                                                                                                             && !act.CollaboratorType.IsDeleted
-                                                                                                            && act.CollaboratorType.Uid == CollaboratorType.PlayerExecutiveAudiovisual.Uid)))
+                                                                                                            && act.CollaboratorType.Uid == cmd.CollaboratorTypeUid)))
             {
                 this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundM))));
             }
