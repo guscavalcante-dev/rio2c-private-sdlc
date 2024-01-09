@@ -2373,7 +2373,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     Youtube = c.Youtube,
                     CreateDate = c.CreateDate,
                     UpdateDate = c.UpdateDate,
-                    IsDeleted = c.IsDeleted,
+                    IsDeleted = c.AttendeeCollaborators.FirstOrDefault(ac => (!ac.IsDeleted || showDeleted) && ac.EditionId == editionId).IsDeleted,
                     MiniBiosDtos = c.MiniBios
                                         .Where(mb => (!mb.IsDeleted || showDeleted))
                                         .Select(d => new CollaboratorMiniBioBaseDto
@@ -2493,6 +2493,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                         .ApiHighlightPosition,
                     CreateDate = c.CreateDate,
                     UpdateDate = c.UpdateDate,
+                    IsDeleted = c.AttendeeCollaborators.FirstOrDefault(ac => (!ac.IsDeleted || showDeleted) && ac.EditionId == editionId).IsDeleted,
                     ImageUploadDate = c.ImageUploadDate,
                     Website = c.Website,
                     MiniBiosDtos = c.MiniBios

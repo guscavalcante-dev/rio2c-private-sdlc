@@ -903,11 +903,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     ImageUploadDate = o.ImageUploadDate,
                     CreateDate = o.CreateDate,
                     UpdateDate = o.UpdateDate,
-                    IsDeleted = o.IsDeleted,
+                    IsDeleted = o.AttendeeOrganizations
+                                                .FirstOrDefault(ao => (!ao.IsDeleted || showDeleted) && ao.EditionId == editionId).IsDeleted,
                     ApiHighlightPosition = o.AttendeeOrganizations
-                                                .FirstOrDefault(ao => !ao.IsDeleted && ao.EditionId == editionId)
+                                                .FirstOrDefault(ao => (!ao.IsDeleted || showDeleted) && ao.EditionId == editionId)
                                                     .AttendeeOrganizationTypes
-                                                        .FirstOrDefault(aot => !aot.IsDeleted && aot.OrganizationType.Uid == playerOrganizationTypeUid)
+                                                        .FirstOrDefault(aot => (!aot.IsDeleted || showDeleted) && aot.OrganizationType.Uid == playerOrganizationTypeUid)
                                                             .ApiHighlightPosition,
                     OrganizationDescriptionBaseDtos = o.OrganizationDescriptions.Select(d => new OrganizationDescriptionDto
                     {
@@ -923,7 +924,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         }
                     }),
                     OrganizationInterestDtos = o.OrganizationInterests
-                                                    .Where(ota => !ota.IsDeleted)
+                                                    .Where(ota => (!ota.IsDeleted || showDeleted))
                                                     .OrderBy(oi => oi.Interest.InterestGroup.DisplayOrder)
                                                     .ThenBy(oi => oi.Interest.DisplayOrder)
                                                     .Select(oi => new OrganizationInterestDto
@@ -933,9 +934,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                         InterestGroup = oi.Interest.InterestGroup
                                                     }),
                     CollaboratorsDtos = o.AttendeeOrganizations
-                                                            .Where(ao => !ao.IsDeleted && ao.EditionId == editionId)
+                                                            .Where(ao => (!ao.IsDeleted || showDeleted) && ao.EditionId == editionId)
                                                             .SelectMany(ao => ao.AttendeeOrganizationCollaborators
-                                                                                    .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeCollaborator.IsDeleted && !aoc.AttendeeCollaborator.Collaborator.IsDeleted)
+                                                                                    .Where(aoc => (!aoc.IsDeleted || showDeleted) && (!aoc.AttendeeCollaborator.IsDeleted || showDeleted) && (!aoc.AttendeeCollaborator.Collaborator.IsDeleted || showDeleted))
                                                                                     .Select(aoc => new CollaboratorDto
                                                                                     {
                                                                                         Uid = aoc.AttendeeCollaborator.Collaborator.Uid,
@@ -985,10 +986,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     CompanyName = o.CompanyName,
                     TradeName = o.TradeName,
                     ImageUploadDate = o.ImageUploadDate,
-                    IsDeleted = o.IsDeleted,
+                    IsDeleted = o.AttendeeOrganizations
+                                                .FirstOrDefault(ao => (!ao.IsDeleted || showDeleted) && ao.EditionId == editionId).IsDeleted,
                     ApiHighlightPosition = o.AttendeeOrganizations
-                                                .FirstOrDefault(ao => !ao.IsDeleted && ao.EditionId == editionId)
-                                                    .AttendeeOrganizationTypes.FirstOrDefault(aot => !aot.IsDeleted && aot.OrganizationType.Uid == playerOrganizationTypeUid)
+                                                .FirstOrDefault(ao => (!ao.IsDeleted || showDeleted) && ao.EditionId == editionId)
+                                                    .AttendeeOrganizationTypes.FirstOrDefault(aot => (!aot.IsDeleted || showDeleted) && aot.OrganizationType.Uid == playerOrganizationTypeUid)
                                                         .ApiHighlightPosition,
                     CreateDate = o.CreateDate,
                     UpdateDate = o.UpdateDate
