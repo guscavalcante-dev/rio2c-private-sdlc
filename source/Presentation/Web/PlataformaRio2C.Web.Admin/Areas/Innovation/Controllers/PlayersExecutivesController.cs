@@ -371,6 +371,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                     {
                         result = await this.CommandBus.Send(new SendPlayerWelcomeEmailAsync(
                             collaboratorDto.Collaborator.Uid,
+                            CollaboratorType.PlayerExecutiveInnovation.Uid,
                             collaboratorDto.User.SecurityStamp,
                             collaboratorDto.User.Id,
                             collaboratorDto.User.Uid,

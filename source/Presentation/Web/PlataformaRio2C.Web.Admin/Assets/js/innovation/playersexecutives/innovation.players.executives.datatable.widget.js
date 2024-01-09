@@ -3,8 +3,8 @@
 // Author           : Elton Assunção
 // Created          : 12-22-2023
 //
-// Last Modified By : Elton Assunção
-// Last Modified On : 12-22-2023
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-09-2024
 // ***********************************************************************
 // <copyright file="innovation.players.executives.datatable.widget" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -114,13 +114,13 @@ var InnovationPlayersExecutivesDataTableWidget = function () {
                 extend: 'collection',
                 text: labels.actions,
                 buttons: [
-                    //{
-                    //    text: sendInvitationEmail,
-                    //    action: function (e, dt, node, config) {
-                    //        $('.dt-button-background').remove();
-                    //        showSendInvitationEmailsModal();
-                    //    }
-                    //},
+                    {
+                        text: sendInvitationEmail,
+                        action: function (e, dt, node, config) {
+                            $('.dt-button-background').remove();
+                            showSendInvitationEmailsModal();
+                        }
+                    },
                     //{
                     //    text: exportToEventbrite,
                     //    action: function (e, dt, node, config) {

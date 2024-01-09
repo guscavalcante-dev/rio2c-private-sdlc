@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-02-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-11-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-09-2024
 // ***********************************************************************
 // <copyright file="SendPlayerWelcomeEmailAsync.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,11 +20,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     public class SendPlayerWelcomeEmailAsync : EmailBaseCommand
     {
         public Guid Collaboratoruid { get; private set; }
+        public Guid CollaboratorTypeUid { get; private set; }
         public string UserSecurityToken { get; private set; }
         public int UserId { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="SendPlayerWelcomeEmailAsync"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SendPlayerWelcomeEmailAsync" /> class.
+        /// </summary>
         /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="collaboratorTypeUid">The collaborator type uid.</param>
         /// <param name="userSecurityToken">The user security token.</param>
         /// <param name="recipientUserId">The recipient user identifier.</param>
         /// <param name="recipientUserUid">The recipient user uid.</param>
@@ -36,6 +40,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public SendPlayerWelcomeEmailAsync(
             Guid collaboratorUid,
+            Guid collaboratorTypeUid,
             string userSecurityToken,
             int recipientUserId, 
             Guid recipientUserUid, 
@@ -48,6 +53,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             : base(recipientUserId, recipientUserUid, recipientFirstName, recipientFullName, recipientEmail, edition, userInterfaceLanguage)
         {
             this.Collaboratoruid = collaboratorUid;
+            this.CollaboratorTypeUid = collaboratorTypeUid;
             this.UserSecurityToken = userSecurityToken;
             this.UserId = userId;
         }

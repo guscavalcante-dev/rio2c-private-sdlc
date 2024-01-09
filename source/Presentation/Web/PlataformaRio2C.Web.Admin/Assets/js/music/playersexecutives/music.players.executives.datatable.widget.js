@@ -3,8 +3,8 @@
 // Author           : Elton Assunção
 // Created          : 12-19-2023
 //
-// Last Modified By : Elton Assunção
-// Last Modified On : 12-19-2023
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-09-2024
 // ***********************************************************************
 // <copyright file="music.players.executives.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -114,14 +114,13 @@ var MusicPlayersExecutivesDataTableWidget = function () {
                     extend: 'collection',
                     text: labels.actions,
                     buttons: [
-                        //todo: not implementad
-                        //{
-                        //    text: sendInvitationEmail,
-                        //    action: function (e, dt, node, config) {
-                        //        $('.dt-button-background').remove();
-                        //        showSendInvitationEmailsModal();
-                        //    }
-                        //},
+                        {
+                            text: sendInvitationEmail,
+                            action: function (e, dt, node, config) {
+                                $('.dt-button-background').remove();
+                                showSendInvitationEmailsModal();
+                            }
+                        },
                         //{
                         //    text: exportToEventbrite,
                         //    action: function (e, dt, node, config) {
