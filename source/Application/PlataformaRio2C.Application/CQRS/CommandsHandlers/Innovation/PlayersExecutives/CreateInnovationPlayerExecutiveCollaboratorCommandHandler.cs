@@ -4,7 +4,7 @@
 // Created          : 12-29-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-29-2023
+// Last Modified On : 01-09-2024
 // ***********************************************************************
 // <copyright file="CreateInnovationPlayerExecutiveCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,7 +19,6 @@ using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
 using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
@@ -119,7 +118,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
             var activities = await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id);
             var interestsDtos = await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Startup.Id);
-            var innovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync();
 
             // Create if the user was not found in database
             if (user == null)
@@ -138,6 +136,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 }
 
                 List<Guid> attendeeOrganizationUids = cmd.AttendeeOrganizationBaseCommands?.Where(ao => ao.AttendeeOrganizationUid.HasValue)?.Select(aobc => aobc.AttendeeOrganizationUid.Value)?.ToList();
+
+                var innovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllByGroupsUidsAsync(cmd.InnovationOrganizationTrackGroups
+                                                                                                                                    ?.Where(ioto => ioto.IsChecked)
+                                                                                                                                    ?.Select(ioto => ioto.InnovationOrganizationTrackOptionGroupUid));
 
                 var collaborator = Collaborator.CreateInnovationPlayerExecutiveCollaborator(
                     attendeeOrganizationUids.Any() ? await this.attendeeOrganizationRepo.FindAllByUidsAsync(attendeeOrganizationUids) : null,
@@ -172,7 +174,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.MiniBios?.Select(d => new CollaboratorMiniBio(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                     cmd.AttendeeCollaboratorActivities?.Where(aca => aca.IsChecked)?.Select(aca => new AttendeeCollaboratorActivity(activities?.FirstOrDefault(a => a.Uid == aca.ActivityUid), aca.AdditionalInfo, cmd.UserId))?.ToList(),
                     attendeeCollaboratorInterests,
-                    cmd.AttendeeCollaboratorInnovationOrganizationTracks?.Where(aciot => aciot.IsChecked)?.Select(aciot => new AttendeeCollaboratorInnovationOrganizationTrack(innovationOrganizationTrackOptions?.FirstOrDefault(ioto => ioto.Uid == aciot.InnovationOrganizationTrackOptionUid)?.InnovationOrganizationTrackOption, aciot.AdditionalInfo, cmd.UserId))?.ToList(),
+                    innovationOrganizationTrackOptions.Select(ioto => new AttendeeCollaboratorInnovationOrganizationTrack(ioto, string.Empty, cmd.UserId)).ToList(),
                     cmd.UserId);
 
                 if (!collaborator.IsValid())
@@ -187,17 +189,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
             else
             {
-                //TODO: This is not the correct way to instantiate a command. Create a new constructor accepting this parameters and use it.
-                //TODO: Use "UpdateInnovationPlayerExecutiveCollaborator" instead of "UpdateAudiovisualPlayerExecutiveCollaborator" and test.
-                var updateCmd = new UpdateAudiovisualPlayerExecutiveCollaborator
-                {
-                    CollaboratorUid = user.Collaborator.Uid,
-                    IsAddingToCurrentEdition = true,
-                    FirstName = cmd.FirstName,
-                    LastNames = cmd.LastNames,
-                    Email = cmd.Email,
-                };
-                updateCmd.UpdatePreSendProperties(cmd.CollaboratorTypeName, cmd.UserId, cmd.UserUid, cmd.EditionId, cmd.EditionUid, cmd.UserInterfaceLanguage);
+                var updateCmd = new UpdateInnovationPlayerExecutiveCollaborator(user.Collaborator.Uid, cmd);
+                updateCmd.UpdatePreSendProperties(
+                    cmd.CollaboratorTypeName, 
+                    cmd.UserId, 
+                    cmd.UserUid, 
+                    cmd.EditionId, 
+                    cmd.EditionUid, 
+                    cmd.UserInterfaceLanguage);
 
                 this.AppValidationResult = await this.CommandBus.Send(updateCmd, cancellationToken);
             }

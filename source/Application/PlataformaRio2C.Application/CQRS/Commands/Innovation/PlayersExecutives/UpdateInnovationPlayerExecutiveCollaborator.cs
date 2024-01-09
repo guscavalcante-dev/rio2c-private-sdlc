@@ -4,7 +4,7 @@
 // Created          : 12-29-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-29-2023
+// Last Modified On : 01-09-2024
 // ***********************************************************************
 // <copyright file="UpdateInnovationPlayerExecutiveCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -123,6 +123,49 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 editionsDtos, 
                 currentEditionId, 
                 userInterfaceLanguage);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateInnovationPlayerExecutiveCollaborator"/> class.
+        /// </summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="cmd">The command.</param>
+        public UpdateInnovationPlayerExecutiveCollaborator(Guid collaboratorUid, CreateInnovationPlayerExecutiveCollaborator cmd)
+        {
+            this.CollaboratorUid = collaboratorUid;
+            this.IsAddingToCurrentEdition = true;
+
+            this.FirstName = cmd.FirstName;
+            this.LastNames = cmd.LastNames;
+            this.Badge = cmd.Badge;
+            this.Email = cmd.Email;
+            this.PhoneNumber = cmd.PhoneNumber;
+            this.CellPhone = cmd.CellPhone;
+            this.SharePublicEmail = cmd.SharePublicEmail;
+            this.PublicEmail = cmd.PublicEmail;
+            this.Website = cmd.Website;
+            this.Linkedin = cmd.Linkedin;
+            this.Twitter= cmd.Twitter;
+            this.Instagram= cmd.Instagram;
+            this.Youtube= cmd.Youtube;
+            this.CropperImage= cmd.CropperImage;
+            this.JobTitles= cmd.JobTitles;
+            this.MiniBios= cmd.MiniBios;
+            this.AttendeeCollaboratorActivities= cmd.AttendeeCollaboratorActivities;
+            this.InnovationOrganizationTrackGroups = cmd.InnovationOrganizationTrackGroups;
+            this.EditionsUids = cmd.EditionsUids;
+            this.CollaboratorGenderUid = cmd.CollaboratorGenderUid;
+            this.CollaboratorRoleUid = cmd.CollaboratorRoleUid;
+            this.CollaboratorIndustryUid = cmd.CollaboratorIndustryUid;
+            this.Interests = cmd.Interests;
+            this.AttendeeOrganizationBaseCommands = cmd.AttendeeOrganizationBaseCommands;
+            this.BirthDate = cmd.BirthDate;
+            this.CollaboratorGenderAdditionalInfo = cmd.CollaboratorGenderAdditionalInfo;
+            this.CollaboratorRoleAdditionalInfo = cmd.CollaboratorRoleAdditionalInfo;
+            this.CollaboratorIndustryAdditionalInfo = cmd.CollaboratorIndustryAdditionalInfo;
+            this.HasAnySpecialNeeds = cmd.HasAnySpecialNeeds;
+            this.SpecialNeedsDescription = cmd.SpecialNeedsDescription;
+            this.HaveYouBeenToRio2CBefore = cmd.HaveYouBeenToRio2CBefore;
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateInnovationPlayerExecutiveCollaborator"/> class.</summary>
