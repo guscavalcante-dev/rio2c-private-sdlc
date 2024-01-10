@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Elton Assunção
-// Last Modified On : 01-09-2024
+// Last Modified On : 01-10-2024
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -154,6 +154,28 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                                && (!act.CollaboratorType.IsDeleted || showDeleted)
                                                                                                                && collaboratorTypeNames.Contains(act.CollaboratorType.Name)))));
 
+            return query;
+        }
+
+        /// <summary>Finds the by collaborator type name and by edition identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="collaboratorTypeNames">Name of the collaborator type.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> FindByCollaboratorTypeNameAndByEditionId(this IQueryable<Collaborator> query, string[] collaboratorTypeNames, int? editionId, bool showDeleted = false)
+        {
+            if (collaboratorTypeNames == null)
+            {
+                collaboratorTypeNames = new string[] { };
+            }
+
+            query = query.Where(c => c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId
+                                                                        && (!ac.IsDeleted || showDeleted)
+                                                                        && (!ac.Edition.IsDeleted || showDeleted)
+                                                                        && (ac.AttendeeCollaboratorTypes
+                                                                                .Any(act => (!act.IsDeleted || showDeleted)
+                                                                                            && (!act.CollaboratorType.IsDeleted || showDeleted)
+                                                                                            && collaboratorTypeNames.Contains(act.CollaboratorType.Name)))));
             return query;
         }
 
@@ -823,7 +845,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByUids(collaboratorsUids)
                                 .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, showAllEditions, showAllParticipants, editionId)
                                 .FindByHighlights(collaboratorTypeNames, showHighlights);
-                                //.FindByOrganizationTypeNames(organizationTypeNames, showAllEditions, showAllParticipants, editionId);
+            //.FindByOrganizationTypeNames(organizationTypeNames, showAllEditions, showAllParticipants, editionId);
 
             var collaborators = await query
                             .DynamicOrder(
@@ -1745,20 +1767,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="keywords">The keywords.</param>
-        /// <param name="collaboratorTypeNames">The collaborator type names.</param>
-        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
         /// <returns></returns>
         private IQueryable<Collaborator> GetMusicCommissionsBaseQuery(
             int? editionId,
-            string keywords,
-            string[] collaboratorTypeNames,
-            bool showAllEditions,
-            bool showAllParticipants)
+            string keywords)
         {
+            var collaboratorTypeNames = new string[] { Constants.CollaboratorType.CommissionMusic };
+
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords, editionId)
-                                .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, showAllEditions, showAllParticipants, editionId);
+                                .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, editionId);
 
             return query;
         }
@@ -1779,10 +1797,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var baseQuery = this.GetMusicCommissionsBaseQuery(
                 editionId,
-                keywords,
-                new string[] { Constants.CollaboratorType.CommissionMusic },
-                false,
-                false);
+                keywords);
 
             return await baseQuery
                             .Select(c => new CollaboratorDto
