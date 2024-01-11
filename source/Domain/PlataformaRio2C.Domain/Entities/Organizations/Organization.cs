@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-23-2023
+// Last Modified On : 01-11-2024
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -525,6 +525,13 @@ namespace PlataformaRio2C.Domain.Entities
             {
                 this.ImageUploadDate = null;
             }
+        }
+
+        /// <summary>Gets the name abbreviation.</summary>
+        /// <returns></returns>
+        public string GetNameAbbreviation()
+        {
+            return this.Name?.GetTwoLetterCode();
         }
 
         /// <summary>Gets the name abbreviation.</summary>

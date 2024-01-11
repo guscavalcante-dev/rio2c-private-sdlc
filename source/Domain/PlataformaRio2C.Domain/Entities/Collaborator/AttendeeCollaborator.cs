@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-05-2023
+// Last Modified On : 01-11-2024
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,7 +29,9 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset? OnboardingUserDate { get; private set; }
         public DateTimeOffset? OnboardingCollaboratorDate { get; private set; }
         public DateTimeOffset? OnboardingOrganizationDataSkippedDate { get; private set; }
-        public DateTimeOffset? PlayerTermsAcceptanceDate { get; private set; }
+        public DateTimeOffset? AudiovisualPlayerTermsAcceptanceDate { get; private set; }
+        public DateTimeOffset? InnovationPlayerTermsAcceptanceDate { get; private set; }
+        public DateTimeOffset? MusicPlayerTermsAcceptanceDate { get; private set; }
         public DateTimeOffset? ProducerTermsAcceptanceDate { get; private set; }
         public DateTimeOffset? SpeakerTermsAcceptanceDate { get; private set; }
 
@@ -949,15 +951,34 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
         }
 
-        /// <summary>Called when [player terms acceptance].</summary>
+        /// <summary>
+        /// Called when [audiovisual player terms acceptance].
+        /// </summary>
         /// <param name="userId">The user identifier.</param>
-        public void OnboardPlayerTermsAcceptance(int userId)
+        public void OnboardAudiovisualPlayerTermsAcceptance(int userId)
         {
-            this.PlayerTermsAcceptanceDate = DateTime.UtcNow;
+            this.AudiovisualPlayerTermsAcceptanceDate = DateTime.UtcNow;
+            this.SetUpdateDate(userId);
+        }
 
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+        /// <summary>
+        /// Called when [innovation player terms acceptance].
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardInnovationPlayerTermsAcceptance(int userId)
+        {
+            this.InnovationPlayerTermsAcceptanceDate = DateTime.UtcNow;
+            this.SetUpdateDate(userId);
+        }
+
+        /// <summary>
+        /// Called when [music player terms acceptance].
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardMusicPlayerTermsAcceptance(int userId)
+        {
+            this.MusicPlayerTermsAcceptanceDate = DateTime.UtcNow;
+            this.SetUpdateDate(userId);
         }
 
         /// <summary>Called when [speaker terms acceptance].</summary>

@@ -4,11 +4,15 @@
     Layout = "~/Views/Themes/Metronic/_Internal.cshtml";
     var editionDto = ViewBag.EditionDto as EditionDto;
     ViewBag.Title = string.Format(Labels.Welcome, editionDto?.UrlCode);
-    var isPlayer = ViewBag.IsPlayer as bool? ?? false;
-    var isExecutive = ViewBag.IsExecutive as bool? ?? false;
-    var isIndustry = ViewBag.IsIndustry as bool? ?? false;
-    var isSpeaker = ViewBag.IsSpeaker as bool? ?? false;
-    var menuIndex = 2 + (isSpeaker ? 1 : 0) + (isPlayer ? 1 : 0);
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var isExecutive = userAccessControlDto.IsPlayerExecutive();
+    var isIndustry = userAccessControlDto.IsIndustry();
+
+    var isSpeaker = userAccessControlDto.IsSpeaker();
+    var isAudiovisualPlayer = userAccessControlDto.IsAudiovisualPlayerExecutive();
+    var isInnovationPlayer = userAccessControlDto.IsInnovationPlayerExecutive();
+    var isMusicPlayer = userAccessControlDto.IsMusicPlayerExecutive();
+    var menuIndex = 2 + (isSpeaker ? 1 : 0) + (isAudiovisualPlayer ? 1 : 0) + (isInnovationPlayer ? 1 : 0) + (isMusicPlayer ? 1 : 0);
 }
 <div class="kt-portlet">
     <div class="kt-portlet__body kt-portlet__body--fit">
@@ -41,7 +45,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="kt-section">
                                         <div class="kt-section__content mt-3">
                                             <div class="row">
@@ -70,7 +73,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="kt-section">
                                         <div class="kt-section__content mt-3">
                                             <div class="row">
@@ -99,7 +101,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="kt-section">
                                         <div class="kt-section__content mt-3">
                                             <div class="row">
@@ -111,7 +112,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="kt-section">
                                         <div class="kt-section__content mt-3">
                                             <div class="row">
@@ -140,7 +140,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="kt-section">
                                         <h3 class="kt-heading kt-heading--md">@Messages.DescribeYourMiniBiography</h3>
                                         @Html.ValidationMessage("MiniBios", new { @class = "text-danger" })
@@ -148,7 +147,6 @@
                                             @Html.EditorFor(m => m.MiniBios)
                                         </div>
                                     </div>
-
                                     @if (isExecutive || isIndustry)
                                     {
                                         <div class="row">
@@ -216,7 +214,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
                                     <div class="form-group">
                                         <label class="control-label">@Labels.HasAnySpecialNeeds</label>
                                         <div class="kt-radio-list ml-5" data-id="HasAnySpecialNeeds">
@@ -231,7 +228,6 @@
                                         </div>
                                         @Html.ValidationMessageFor(m => m.HasAnySpecialNeeds, "", new { @class = "text-danger" })
                                     </div>
-
                                     <div class="form-group" data-additionalinfo="HasAnySpecialNeeds">
                                         <label class="control-label">@Labels.WhichSpecialNeedsQ</label>
                                         <div class="ml-5">
@@ -239,7 +235,6 @@
                                             @Html.ValidationMessageFor(m => m.SpecialNeedsDescription, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
-
                                     <div class="form-group">
                                         <label class="control-label">@Labels.HaveYouBeenToRio2CBefore</label>
                                         <div class="kt-radio-list ml-5" data-id="HaveYouBeenToRio2CBefore">
@@ -254,7 +249,6 @@
                                         </div>
                                         @Html.ValidationMessageFor(m => m.HaveYouBeenToRio2CBefore, "", new { @class = "text-danger" })
                                     </div>
-
                                     <div class="form-group" data-additionalinfo="HaveYouBeenToRio2CBefore">
                                         <label class="control-label">@Labels.WhichEditionQ</label>
                                         <div class="row">

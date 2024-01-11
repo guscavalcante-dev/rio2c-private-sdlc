@@ -4,7 +4,7 @@
 // Created          : 09-26-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-21-2023
+// Last Modified On : 01-11-2024
 // ***********************************************************************
 // <copyright file="CollaboratorType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -54,7 +54,7 @@ namespace PlataformaRio2C.Domain.Constants
             Industry, Creator, Summit, Festvalia
         };
 
-        public static readonly string[] Executives =
+        public static readonly string[] PlayerExecutives =
         {
             PlayerExecutiveAudiovisual, PlayerExecutiveMusic, PlayerExecutiveInnovation, PlayerExecutiveCartoon
         };

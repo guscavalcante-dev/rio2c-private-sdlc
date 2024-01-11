@@ -375,6 +375,10 @@
     <value>Audiovisual Subscription Project Report</value>
     <comment>Relatório de Inscrição de Projeto Audiovisual</comment>
   </data>
+  <data name="AudiovisualTermsAcceptanceDate" xml:space="preserve">
+    <value>Audiovisual terms acceptance date</value>
+    <comment>Data de aceite do regulamento</comment>
+  </data>
   <data name="AudiovisualVirtualMeetingJoinDate" xml:space="preserve">
     <value>Audiovisual virtual meeting join date</value>
   </data>
@@ -1332,6 +1336,9 @@
     <value>Startups submission start date</value>
     <comment>Data de início de envio de projeto de inovação</comment>
   </data>
+  <data name="InnovationTermsAcceptanceDate" xml:space="preserve">
+    <value>Startups terms acceptance date</value>
+  </data>
   <data name="InProgress" xml:space="preserve">
     <value>In progress</value>
   </data>
@@ -1659,6 +1666,9 @@
   <data name="MusicProjectSubmitStartDate" xml:space="preserve">
     <value>Music project submission start date</value>
     <comment>Data de início de envio de projeto musical</comment>
+  </data>
+  <data name="MusicTermsAcceptanceDate" xml:space="preserve">
+    <value>Music terms acceptance date</value>
   </data>
   <data name="MyRio2C" xml:space="preserve">
     <value>MyRio2C</value>
@@ -2858,7 +2868,6 @@
   </data>
   <data name="TermsAcceptanceDate" xml:space="preserve">
     <value>Terms acceptance date</value>
-    <comment>Data de aceite do regulamento</comment>
   </data>
   <data name="TermsOfUse" xml:space="preserve">
     <value>Terms of use</value>

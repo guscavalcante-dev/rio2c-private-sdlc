@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-27-2023
+// Last Modified On : 01-11-2024
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -2975,10 +2975,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void Onboard(Edition edition, int userId)
         {
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
-            this.OnboardAttendeeCollaborator(edition, userId);
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            attendeeCollaborator?.Onboard(userId);
+            this.SetUpdateDate(userId);
         }
 
         /// <summary>Called when [access data].</summary>
@@ -3005,32 +3004,50 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
         }
 
-        /// <summary>Called when [player terms acceptance].</summary>
+        /// <summary>
+        /// Called when [audiovisual player terms acceptance].
+        /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="userId">The user identifier.</param>
-        public void OnboardPlayerTermsAcceptance(
-            Edition edition,
-            int userId)
+        public void OnboardAudiovisualPlayerTermsAcceptance(Edition edition, int userId)
         {
-            this.OnboardAttendeeCollaboratorPlayerTermsAcceptance(edition, userId);
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            attendeeCollaborator?.OnboardAudiovisualPlayerTermsAcceptance(userId);
+            this.SetUpdateDate(userId);
+        }
 
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+        /// <summary>
+        /// Called when [innovation player terms acceptance].
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardInnovationPlayerTermsAcceptance(Edition edition, int userId)
+        {
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            attendeeCollaborator?.OnboardInnovationPlayerTermsAcceptance(userId);
+            this.SetUpdateDate(userId);
+        }
+
+        /// <summary>
+        /// Called when [music player terms acceptance].
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardMusicPlayerTermsAcceptance(Edition edition, int userId)
+        {
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            attendeeCollaborator?.OnboardMusicPlayerTermsAcceptance(userId);
+            this.SetUpdateDate(userId);
         }
 
         /// <summary>Called when [speaker terms acceptance].</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="userId">The user identifier.</param>
-        public void OnboardSpeakerTermsAcceptance(
-            Edition edition,
-            int userId)
+        public void OnboardSpeakerTermsAcceptance(Edition edition, int userId)
         {
-            this.OnboardAttendeeCollaboratorSpeakerTermsAcceptance(edition, userId);
-
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            attendeeCollaborator?.OnboardSpeakerTermsAcceptance(userId);
+            this.SetUpdateDate(userId);
         }
 
         /// <summary>Onboard collaborator data.</summary>
@@ -3097,23 +3114,17 @@ namespace PlataformaRio2C.Domain.Entities
             this.HasAnySpecialNeeds = hasAnySpecialNeeds;
             this.SpecialNeedsDescription = specialNeedsDescription;
 
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            this.SetUpdateDate(userId);
         }
 
         /// <summary>Called when [producer terms acceptance].</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="userId">The user identifier.</param>
-        public void OnboardProducerTermsAcceptance(
-            Edition edition,
-            int userId)
+        public void OnboardProducerTermsAcceptance(Edition edition, int userId)
         {
-            this.OnboardAttendeeCollaboratorProducerTermsAcceptance(edition, userId);
-
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            attendeeCollaborator?.OnboardProducerTermsAcceptance(userId);
+            this.SetUpdateDate(userId);
         }
 
         /// <summary>Sends the welcome email send date.</summary>
@@ -3126,42 +3137,6 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         #region Privates
-
-        /// <summary>Called when [attendee collaborator].</summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="userId">The user identifier.</param>
-        private void OnboardAttendeeCollaborator(Edition edition, int userId)
-        {
-            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
-            attendeeCollaborator?.Onboard(userId);
-        }
-
-        /// <summary>Called when [attendee collaborator player terms acceptance].</summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="userId">The user identifier.</param>
-        private void OnboardAttendeeCollaboratorPlayerTermsAcceptance(Edition edition, int userId)
-        {
-            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
-            attendeeCollaborator?.OnboardPlayerTermsAcceptance(userId);
-        }
-
-        /// <summary>Called when [attendee collaborator speaker terms acceptance].</summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="userId">The user identifier.</param>
-        private void OnboardAttendeeCollaboratorSpeakerTermsAcceptance(Edition edition, int userId)
-        {
-            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
-            attendeeCollaborator?.OnboardSpeakerTermsAcceptance(userId);
-        }
-
-        /// <summary>Called when [attendee collaborator producer terms acceptance].</summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="userId">The user identifier.</param>
-        private void OnboardAttendeeCollaboratorProducerTermsAcceptance(Edition edition, int userId)
-        {
-            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
-            attendeeCollaborator?.OnboardProducerTermsAcceptance(userId);
-        }
 
         /// <summary>Called when [attendee collaborator access data].</summary>
         /// <param name="edition">The edition.</param>

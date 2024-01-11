@@ -374,6 +374,10 @@
     <value>Relatório de Inscrição de Projeto Audiovisual</value>
     <comment>Relatório de Inscrição de Projeto Audiovisual</comment>
   </data>
+  <data name="AudiovisualTermsAcceptanceDate" xml:space="preserve">
+    <value>Data de aceite do regulamento de Audiovisual</value>
+    
+  </data>
   <data name="AudiovisualVirtualMeetingJoinDate" xml:space="preserve">
     <value>Data de ingresso na reunião virtual</value>
   </data>
@@ -1326,10 +1330,13 @@
     <comment>Quantidade mínima de avaliações da Comissão de Inovação</comment>
   </data>
   <data name="InnovationProjectSubmitEndDate" xml:space="preserve">
-    <value>Data de término de envio do projeto de inovação</value>
+    <value>Data de término de envio do projeto de startup</value>
   </data>
   <data name="InnovationProjectSubmitStartDate" xml:space="preserve">
     <value>Data de início de cadastro de startups</value>
+  </data>
+  <data name="InnovationTermsAcceptanceDate" xml:space="preserve">
+    <value>Data de aceite do regulamento de Startups</value>
   </data>
   <data name="InProgress" xml:space="preserve">
     <value>Em andamento</value>
@@ -1658,6 +1665,9 @@
   <data name="MusicProjectSubmitStartDate" xml:space="preserve">
     <value>Data de início de envio de projeto musical</value>
     <comment>Data de início de envio de projeto musical</comment>
+  </data>
+  <data name="MusicTermsAcceptanceDate" xml:space="preserve">
+    <value>Data de aceite do regulamento de Musica</value>
   </data>
   <data name="MyRio2C" xml:space="preserve">
     <value>MyRio2C</value>
@@ -2861,7 +2871,6 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   </data>
   <data name="TermsAcceptanceDate" xml:space="preserve">
     <value>Data de aceite do regulamento</value>
-    <comment>Data de aceite do regulamento</comment>
   </data>
   <data name="TermsOfUse" xml:space="preserve">
     <value>Termo de uso</value>

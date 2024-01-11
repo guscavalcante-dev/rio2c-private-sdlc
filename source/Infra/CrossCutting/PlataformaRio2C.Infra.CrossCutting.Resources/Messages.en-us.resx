@@ -148,6 +148,9 @@
   <data name="AttentionPossiblePlayersNotSelected" xml:space="preserve">
     <value>Attention! You have selected only {0} players out of {1} possible.</value>
   </data>
+  <data name="AudiovisualPlayerTerms" xml:space="preserve">
+    <value>Player’s Regulation (Audiovisual)</value>
+  </data>
   <data name="AudivisualPichingQuestion" xml:space="preserve">
     <value>Do you wish to take part in the selection proccess for the AUDIOVISUAL PITCHING sessions at Rio2C {0}?</value>
     <comment>Deseja participar do processo de seleção para apresentar esse projeto nas sessões de PITCHING AUDIOVISUAL da Rio2C {0}?</comment>
@@ -490,6 +493,9 @@
     <value>Inform you address</value>
     <comment>Informe seu endereço</comment>
   </data>
+  <data name="InnovationPlayerTerms" xml:space="preserve">
+    <value>Player’s Regulation (Startup)</value>
+  </data>
   <data name="InsertNewLineUseShiftEnter" xml:space="preserve">
     <value>To inser a new line use shift+enter.</value>
   </data>
@@ -603,6 +609,9 @@
   <data name="MinimumNumberOfCharacters" xml:space="preserve">
     <value>The '{0}' must be at least '{2}' characters long.</value>
   </data>
+  <data name="MusicPlayerTerms" xml:space="preserve">
+    <value>Player’s Regulation (Music)</value>
+  </data>
   <data name="NameIsRequired" xml:space="preserve">
     <value>Name required.</value>
   </data>
@@ -685,7 +694,7 @@
     <value>Player not found</value>
   </data>
   <data name="PlayerTerms" xml:space="preserve">
-    <value>Players’ Regulation</value>
+    <value>Player's Regulation</value>
     <comment>Regulamento de Players</comment>
   </data>
   <data name="PleaseClickHereToLogin" xml:space="preserve">

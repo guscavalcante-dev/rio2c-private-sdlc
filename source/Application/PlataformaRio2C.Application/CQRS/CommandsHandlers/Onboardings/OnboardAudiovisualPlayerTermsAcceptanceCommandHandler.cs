@@ -3,10 +3,10 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-11-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-27-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-11-2024
 // ***********************************************************************
-// <copyright file="OnboardPlayerTermsAcceptanceCommandHandler.cs" company="Softo">
+// <copyright file="OnboardAudiovisualPlayerTermsAcceptanceCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -21,17 +21,17 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>OnboardPlayerTermsAcceptanceCommandHandler</summary>
-    public class OnboardPlayerTermsAcceptanceCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<OnboardPlayerTermsAcceptance, AppValidationResult>
+    /// <summary>OnboardAudiovisualPlayerTermsAcceptanceCommandHandler</summary>
+    public class OnboardAudiovisualPlayerTermsAcceptanceCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<OnboardAudiovisualPlayerTermsAcceptance, AppValidationResult>
     {
         private readonly IEditionRepository editionRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="OnboardPlayerTermsAcceptanceCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="OnboardAudiovisualPlayerTermsAcceptanceCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="editionRepository">The edition repository.</param>
-        public OnboardPlayerTermsAcceptanceCommandHandler(
+        public OnboardAudiovisualPlayerTermsAcceptanceCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             ICollaboratorRepository collaboratorRepository,
@@ -45,7 +45,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(OnboardPlayerTermsAcceptance cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(OnboardAudiovisualPlayerTermsAcceptance cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
@@ -61,7 +61,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            collaborator.OnboardPlayerTermsAcceptance(
+            collaborator.OnboardAudiovisualPlayerTermsAcceptance(
                 await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                 cmd.UserId);
             if (!collaborator.IsValid())

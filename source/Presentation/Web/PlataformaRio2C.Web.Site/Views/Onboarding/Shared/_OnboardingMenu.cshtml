@@ -6,7 +6,6 @@
     var counter = 1;
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var playerAttendeeOrganizations = ViewBag.PlayerAttendeeOrganizations as List<AttendeeOrganization>;
-    var isPlayer = ViewBag.IsPlayer as bool? == true;
     var isIndustry = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true;
     var isTicketBuyer = userAccessControlDto?.HasAnyCollaboratorType(Constants.CollaboratorType.TicketBuyers) == true;
     var isSpeaker = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Speaker) == true;
@@ -30,7 +29,6 @@
         @if (isSpeaker)
         {
             counter++;
-
             <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" :
                                                                                                       Model > counter || userAccessControlDto?.IsSpeakerTermsAcceptanceFinished() == true ? "done" :
                                                                                                           "pending")">
@@ -43,23 +41,54 @@
                 </div>
             </span>
         }
-        @{
-            counter++;
-        }
-        @if (isPlayer)
+        @if (userAccessControlDto.IsAudiovisualPlayerExecutive())
         {
+            counter++;
             <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" :
-                                                                                                  Model > counter || userAccessControlDto?.IsPlayerTermsAcceptanceFinished() == true ? "done" :
+                                                                                                  Model > counter || userAccessControlDto?.IsAudiovisualPlayerTermsAcceptanceFinished() == true ? "done" :
                                                                                                   "pending")">
                 <div class="kt-wizard-v2__nav-body">
                     <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
                     <div class="kt-wizard-v2__nav-label">
-                        <div class="kt-wizard-v2__nav-label-title">@Messages.PlayerTerms</div>
+                        <div class="kt-wizard-v2__nav-label-title">@Messages.AudiovisualPlayerTerms</div>
                         <div class="kt-wizard-v2__nav-label-desc">@Messages.ToProceedYouMustAcceptTheTerm</div>
                     </div>
                 </div>
             </span>
 
+            
+        }
+        @if (userAccessControlDto.IsInnovationPlayerExecutive())
+        {
+            counter++;
+            <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" :
+                                                                                                  Model > counter || userAccessControlDto?.IsInnovationPlayerTermsAcceptanceFinished() == true ? "done" :
+                                                                                                  "pending")">
+                <div class="kt-wizard-v2__nav-body">
+                    <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
+                    <div class="kt-wizard-v2__nav-label">
+                        <div class="kt-wizard-v2__nav-label-title">@Messages.InnovationPlayerTerms</div>
+                        <div class="kt-wizard-v2__nav-label-desc">@Messages.ToProceedYouMustAcceptTheTerm</div>
+                    </div>
+                </div>
+            </span>
+        }
+        @if (userAccessControlDto.IsMusicPlayerExecutive())
+        {
+            counter++;
+            <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" :
+                                                                                                  Model > counter || userAccessControlDto?.IsMusicPlayerTermsAcceptanceFinished() == true ? "done" :
+                                                                                                  "pending")">
+                <div class="kt-wizard-v2__nav-body">
+                    <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
+                    <div class="kt-wizard-v2__nav-label">
+                        <div class="kt-wizard-v2__nav-label-title">@Messages.MusicPlayerTerms</div>
+                        <div class="kt-wizard-v2__nav-label-desc">@Messages.ToProceedYouMustAcceptTheTerm</div>
+                    </div>
+                </div>
+            </span>
+        }
+        @{
             counter++;
         }
         <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" :
@@ -73,7 +102,7 @@
                 </div>
             </div>
         </span>
-        @if (isPlayer)
+        @if (userAccessControlDto.IsAudiovisualPlayerExecutive())
         {
             foreach (var playerAttendeeOrganization in playerAttendeeOrganizations)
             {

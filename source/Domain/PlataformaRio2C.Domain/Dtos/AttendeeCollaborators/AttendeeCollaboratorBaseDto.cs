@@ -4,7 +4,7 @@
 // Created          : 09-18-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-22-2023
+// Last Modified On : 01-11-2024
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,7 +25,9 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset? OnboardingFinishDate { get; set; }
         public DateTimeOffset? OnboardingUserDate { get; set; }
         public DateTimeOffset? OnboardingCollaboratorDate { get; set; }
-        public DateTimeOffset? PlayerTermsAcceptanceDate { get; set; }
+        public DateTimeOffset? AudiovisualPlayerTermsAcceptanceDate { get; set; }
+        public DateTimeOffset? InnovationPlayerTermsAcceptanceDate { get; set; }
+        public DateTimeOffset? MusicPlayerTermsAcceptanceDate { get; set; }
         public DateTimeOffset? ProducerTermsAcceptanceDate { get; set; }
         public DateTimeOffset? SpeakerTermsAcceptanceDate { get; set; }
 
