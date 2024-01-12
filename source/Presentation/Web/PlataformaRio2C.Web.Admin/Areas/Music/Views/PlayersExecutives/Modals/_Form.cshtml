@@ -12,7 +12,7 @@
             <div class="col-lg-8">
                 <div class="kt-section">
                     <h3 class="kt-section__title mb-0">@Labels.Player</h3>
-                    @Html.ValidationMessage("Players", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(m => m.AttendeeOrganizationBaseCommands, "", new { @class = "text-danger" })
                     <div class="kt-section__content mt-3">
                         <div id="attendeeorganization-list">
                             @Html.EditorFor(m => m.AttendeeOrganizationBaseCommands)
@@ -67,7 +67,6 @@
         </div>
     </div>
 </div>
-@*todo: not implementad*@
 @*<div class="kt-section">
     <h3 class="kt-heading kt-heading--md">@Labels.OneToOneMeetingConfiguration</h3>
     <div class="kt-section__content">
@@ -98,7 +97,6 @@
         </div>
     </div>
 </div>*@
-
 <div class="kt-section">
     <div class="kt-section__content mt-3">
         <div class="row">
@@ -200,26 +198,24 @@
 
 <div class="kt-section pt-4">
     <h3 class="kt-section__title mb-0">@Labels.JobTitles</h3>
-    @Html.ValidationMessage("JobTitles", new { @class = "text-danger" })
+    @Html.ValidationMessageFor(m => m.JobTitles, "", new { @class = "text-danger" })
     <div class="kt-section__content mt-3">
         @Html.EditorFor(m => m.JobTitles, new { id = "vasco" })
     </div>
 </div>
 <div class="kt-section pt-4">
     <h3 class="kt-section__title mb-0">@Labels.MiniBios</h3>
-    @Html.ValidationMessage("MiniBios", new { @class = "text-danger" })
+    @Html.ValidationMessageFor(m => m.MiniBios, "", new { @class = "text-danger" })
     <div class="kt-section__content mt-3">
         @Html.EditorFor(m => m.MiniBios)
     </div>
 </div>  
-
-@*Todo: begin task 988*@
 <div class="kt-section">
     <div class="form-group row">
         <div class="col-md-6">
             <div class="kt-section pt-4">
                 <h3 class="kt-section__title mb-0">@Labels.Activities</h3>
-                @Html.ValidationMessage("OrganizationActivities", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(m => m.AttendeeCollaboratorActivities, "", new { @class = "text-danger" })
                 <div class="kt-section__content mt-3">
                     <div class="kt-checkbox-list">
                         @Html.EditorFor(m => m.AttendeeCollaboratorActivities)
@@ -230,7 +226,7 @@
         <div class="col-md-6">
             <div class="kt-section pt-4">
                 <h3 class="kt-section__title mb-0">@Labels.TargetAudiences</h3>
-                @Html.ValidationMessage("OrganizationTargetAudiences", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(m => m.AttendeeCollaboratorTargetAudiences, "", new { @class = "text-danger" })
                 <div class="kt-section__content mt-3">
                     <div class="kt-checkbox-list">
                         @Html.EditorFor(m => m.AttendeeCollaboratorTargetAudiences)
@@ -240,12 +236,11 @@
         </div>
     </div>
 </div>
-
 <div class="kt-section">
         <div class="kt-separator kt-separator--border-dashed"></div>
         <h3 class="kt-section__title mb-0">@Labels.PlayerInterests</h3>
         <div class="kt-separator kt-separator--border-dashed"></div>
-        @Html.ValidationMessage("InterestsUids", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(m => m.AttendeeCollaboratorInterests, "", new { @class = "text-danger" })
         <div class="kt-section__content mt-3">
             @*<div class="kt-section pt-4">
                 <h3 class="kt-section__title mb-0">@Messages.DescribeRestrictionSpecifics</h3>
