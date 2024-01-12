@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
-// Author           : Rafael Dantas Ruiz
-// Created          : 09-11-2019
+// Author           : Renan Valentim
+// Created          : 01-10-2024
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-12-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-10-2024
 // ***********************************************************************
-// <copyright file="OnboardPlayerTermsAcceptance.cs" company="Softo">
+// <copyright file="OnboardInnovationPlayerTermsAcceptance.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -17,16 +17,16 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>OnboardPlayerTermsAcceptance</summary>
-    public class OnboardPlayerTermsAcceptance : BaseCommand
+    /// <summary>OnboardInnovationPlayerTermsAcceptance</summary>
+    public class OnboardInnovationPlayerTermsAcceptance : BaseCommand
     {
         [Range(typeof(bool), "true", "true", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "ToProceedYouMustAcceptTheTerm")]
         public bool AcceptTerms { get; set; }
 
         public Guid CollaboratorUid { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="OnboardPlayerTermsAcceptance"/> class.</summary>
-        public OnboardPlayerTermsAcceptance()
+        /// <summary>Initializes a new instance of the <see cref="OnboardInnovationPlayerTermsAcceptance"/> class.</summary>
+        public OnboardInnovationPlayerTermsAcceptance()
         {
             this.AcceptTerms = false;
         }

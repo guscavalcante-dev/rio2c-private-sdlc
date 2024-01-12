@@ -4,8 +4,13 @@
     Layout = "~/Views/Themes/Metronic/_Internal.cshtml";
     var editionDto = ViewBag.EditionDto as EditionDto;
     ViewBag.Title = string.Format(Labels.Welcome, editionDto?.UrlCode);
-    var isSpeaker = ViewBag.IsSpeaker as bool? ?? false;
-    var menuIndex = 3 + (isSpeaker ? 1 : 0);
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+
+    var isSpeaker = userAccessControlDto.IsSpeaker();
+    var isAudiovisualPlayer = userAccessControlDto.IsAudiovisualPlayerExecutive();
+    var isInnovationPlayer = userAccessControlDto.IsInnovationPlayerExecutive();
+    var isMusicPlayer = userAccessControlDto.IsMusicPlayerExecutive();
+    var menuIndex = 3 + (isSpeaker ? 1 : 0) + (isAudiovisualPlayer ? 1 : 0) + (isInnovationPlayer ? 1 : 0) + (isMusicPlayer ? 1 : 0);
 }
 <div class="kt-portlet">
     <div class="kt-portlet__body kt-portlet__body--fit">
@@ -38,9 +43,6 @@
                     <!--end: Form Wizard Step 1-->
                     <!--begin: Form Actions -->
                     <div class="kt-form__actions">
-                        @*<a href="@Url.Action("SkipCompanyInfo", "Onboarding", new { Area = "" })" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
-                            @Labels.Skip
-                        </a>*@
                         <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="MyRio2cCommon.submitForm('#CompanyInfoForm');">
                             @Labels.Save
                         </button>

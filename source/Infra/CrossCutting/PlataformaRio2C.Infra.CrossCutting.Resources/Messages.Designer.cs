@@ -142,6 +142,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Regulamento de Players (Audiovisual).
+        /// </summary>
+        public static string AudiovisualPlayerTerms {
+            get {
+                return ResourceManager.GetString("AudiovisualPlayerTerms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deseja participar do processo de seleção para apresentar esse projeto nas sessões de PITCHING AUDIOVISUAL da Rio2C {0}?.
         /// </summary>
         public static string AudivisualPichingQuestion {
@@ -978,6 +987,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Regulamento de Players (Startup).
+        /// </summary>
+        public static string InnovationPlayerTerms {
+            get {
+                return ResourceManager.GetString("InnovationPlayerTerms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Para inserir uma nova linha use shift+enter..
         /// </summary>
         public static string InsertNewLineUseShiftEnter {
@@ -1262,6 +1280,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string MinimumNumberOfCharacters {
             get {
                 return ResourceManager.GetString("MinimumNumberOfCharacters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Regulamento de Players (Música).
+        /// </summary>
+        public static string MusicPlayerTerms {
+            get {
+                return ResourceManager.GetString("MusicPlayerTerms", resourceCulture);
             }
         }
         

@@ -4,7 +4,7 @@
 // Created          : 01-27-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-21-2023
+// Last Modified On : 01-11-2024
 // ***********************************************************************
 // <copyright file="SendSpeakersReportCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -140,7 +140,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = Labels.Company + " - " + Labels.Twitter;
                 worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = Labels.Company + " - " + Labels.YouTube;
 
-                worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = Labels.TermsAcceptanceDate;
+                worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = Labels.AudiovisualTermsAcceptanceDate;
                 worksheet.Column(columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
                 skipFinalAdjustmentsColumnIndexes.Add(columnIndex);
 

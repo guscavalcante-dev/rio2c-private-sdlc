@@ -7696,8 +7696,8 @@
     <Content Include="Views\Shared\EditorTemplates\OrganizationDescriptionBaseCommand.cshtml" />
     <Content Include="Views\Onboarding\PlayerInterests.cshtml" />
     <Content Include="Views\Themes\Metronic\_InternalSidebar.cshtml" />
-    <Content Include="Views\Onboarding\PlayerTermsAcceptance.cshtml" />
-    <Content Include="Views\Onboarding\Shared\_PlayerTermsAcceptanceText.cshtml" />
+    <Content Include="Views\Onboarding\AudiovisualPlayerTermsAcceptance.cshtml" />
+    <Content Include="Views\Onboarding\Shared\_AudiovisualPlayerTermsAcceptanceText.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\OrganizationRestrictionSpecificsBaseCommand.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\OrganizationActivityBaseCommand.cshtml" />
     <Content Include="Views\Shared\Widgets\BadgesWidget.cshtml" />
@@ -7780,6 +7780,10 @@
     <Content Include="Views\SiteMailerService\SpeakersReportEmail.cshtml" />
     <Content Include="Views\Home\Shared\_WeConnectPublications.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\OrganizationTargetAudienceBaseCommand.cshtml" />
+    <Content Include="Views\Onboarding\Shared\_InnovationPlayerTermsAcceptanceText.cshtml" />
+    <Content Include="Views\Onboarding\Shared\_MusicPlayerTermsAcceptanceText.cshtml" />
+    <Content Include="Views\Onboarding\InnovationPlayerTermsAcceptance.cshtml" />
+    <Content Include="Views\Onboarding\MusicPlayerTermsAcceptance.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

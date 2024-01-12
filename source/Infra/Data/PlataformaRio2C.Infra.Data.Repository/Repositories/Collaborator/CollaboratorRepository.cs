@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // Assembly         : PlataformaRio2C.Infra.Data.Repository
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
@@ -746,7 +746,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     OnboardingFinishDate = ac.OnboardingFinishDate,
                                                                                     OnboardingUserDate = ac.OnboardingUserDate,
                                                                                     OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
-                                                                                    PlayerTermsAcceptanceDate = ac.PlayerTermsAcceptanceDate,
+                                                                                    AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
+                                                                                    InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
+                                                                                    MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
                                                                                     ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate,
                                                                                     SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
                                                                                 }).FirstOrDefault(),
@@ -889,7 +891,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     OnboardingFinishDate = ac.OnboardingFinishDate,
                                                                                     OnboardingUserDate = ac.OnboardingUserDate,
                                                                                     OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
-                                                                                    PlayerTermsAcceptanceDate = ac.PlayerTermsAcceptanceDate,
+                                                                                    AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
+                                                                                    InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
+                                                                                    MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
                                                                                     ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate,
                                                                                     SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
                                                                                 }).FirstOrDefault(),
@@ -1061,7 +1065,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                 OnboardingFinishDate = ac.OnboardingFinishDate,
                                                                 OnboardingUserDate = ac.OnboardingUserDate,
                                                                 OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
-                                                                PlayerTermsAcceptanceDate = ac.PlayerTermsAcceptanceDate,
+                                                                AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
+                                                                InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
+                                                                MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
                                                                 ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate,
                                                                 SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
                                                             }).FirstOrDefault(),
@@ -1238,7 +1244,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                             OnboardingFinishDate = ac.OnboardingFinishDate,
                                                                                             OnboardingUserDate = ac.OnboardingUserDate,
                                                                                             OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
-                                                                                            PlayerTermsAcceptanceDate = ac.PlayerTermsAcceptanceDate,
+                                                                                            AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
+                                                                                            InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
+                                                                                            MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
                                                                                             ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate,
                                                                                             SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
                                                                                         }).FirstOrDefault(),
@@ -1458,7 +1466,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     OnboardingFinishDate = ac.OnboardingFinishDate,
                                                                                     OnboardingUserDate = ac.OnboardingUserDate,
                                                                                     OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
-                                                                                    PlayerTermsAcceptanceDate = ac.PlayerTermsAcceptanceDate,
+                                                                                    AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
+                                                                                    InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
+                                                                                    MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
                                                                                     ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate,
                                                                                     SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
                                                                                 }).FirstOrDefault(),
@@ -1599,7 +1609,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     OnboardingFinishDate = ac.OnboardingFinishDate,
                                                                                     OnboardingUserDate = ac.OnboardingUserDate,
                                                                                     OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
-                                                                                    PlayerTermsAcceptanceDate = ac.PlayerTermsAcceptanceDate,
+                                                                                    AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
+                                                                                    InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
+                                                                                    MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
                                                                                     ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate,
                                                                                     SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
                                                                                 }).FirstOrDefault(),

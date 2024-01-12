@@ -1,12 +1,15 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
-@model PlataformaRio2C.Application.CQRS.Commands.OnboardPlayerTermsAcceptance
+@model PlataformaRio2C.Application.CQRS.Commands.OnboardMusicPlayerTermsAcceptance
 @{
     Layout = "~/Views/Themes/Metronic/_Internal.cshtml";
     var editionDto = ViewBag.EditionDto as EditionDto;
     ViewBag.Title = string.Format(Labels.Welcome, editionDto?.UrlCode);
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
-    var isSpeaker = ViewBag.IsSpeaker as bool? ?? false;
-    var menuIndex = 2 + (isSpeaker ? 1 : 0);
+
+    var isSpeaker = userAccessControlDto.IsSpeaker();
+    var isAudiovisualPlayer = userAccessControlDto.IsAudiovisualPlayerExecutive();
+    var isInnovationPlayer = userAccessControlDto.IsInnovationPlayerExecutive();
+    var menuIndex = 2 + (isSpeaker ? 1 : 0) + (isAudiovisualPlayer ? 1 : 0) + (isInnovationPlayer ? 1 : 0);
 }
 <div class="kt-portlet">
     <div class="kt-portlet__body kt-portlet__body--fit">
@@ -17,7 +20,7 @@
                 <!--end: Form Wizard Nav -->
             </div>
             <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v2__wrapper">
-                @using (Html.BeginForm("PlayerTermsAcceptance", "Onboarding", FormMethod.Post, new { id = "PlayerTermsAcceptanceForm", @class = "kt-form" }))
+                @using (Html.BeginForm("MusicPlayerTermsAcceptance", "Onboarding", FormMethod.Post, new { id = "MusicPlayerTermsAcceptanceForm", @class = "kt-form" }))
                 {
                     <!--begin: Form Wizard Step 1-->
                     <div class="kt-wizard-v2__content" data-ktwizard-type="step-content" data-ktwizard-state="current">
@@ -29,7 +32,7 @@
                                         <div class="kt-portlet">
                                             <div class="kt-portlet__body">
                                                 <div class="rio2c-scroll" data-height="400" data-scrollbar-shown="true">
-                                                    @Html.Partial("Shared/_PlayerTermsAcceptanceText")
+                                                    @Html.Partial("Shared/_MusicPlayerTermsAcceptanceText")
                                                 </div>
                                             </div>
                                         </div>
@@ -52,7 +55,7 @@
                     <div class="kt-form__actions">
                         @if (userAccessControlDto?.IsAttendeeCollaboratorOnboardingFinished() == false || userAccessControlDto?.IsPlayerAttendeeOrganizationsOnboardingFinished() == false)
                         {
-                            <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="MyRio2cCommon.submitForm('#PlayerTermsAcceptanceForm');">
+                            <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="MyRio2cCommon.submitForm('#MusicPlayerTermsAcceptanceForm');">
                                 @Labels.NextStep
                             </button>
                         }

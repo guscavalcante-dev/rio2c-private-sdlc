@@ -673,6 +673,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data de aceite do regulamento de Audiovisual.
+        /// </summary>
+        public static string AudiovisualTermsAcceptanceDate {
+            get {
+                return ResourceManager.GetString("AudiovisualTermsAcceptanceDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data de ingresso na reunião virtual.
         /// </summary>
         public static string AudiovisualVirtualMeetingJoinDate {
@@ -2986,7 +2995,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data de término de envio do projeto de inovação.
+        ///   Looks up a localized string similar to Data de término de envio do projeto de startup.
         /// </summary>
         public static string InnovationProjectSubmitEndDate {
             get {
@@ -3000,6 +3009,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string InnovationProjectSubmitStartDate {
             get {
                 return ResourceManager.GetString("InnovationProjectSubmitStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de aceite do regulamento de Startups.
+        /// </summary>
+        public static string InnovationTermsAcceptanceDate {
+            get {
+                return ResourceManager.GetString("InnovationTermsAcceptanceDate", resourceCulture);
             }
         }
         
@@ -3792,6 +3810,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string MusicProjectSubmitStartDate {
             get {
                 return ResourceManager.GetString("MusicProjectSubmitStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de aceite do regulamento de Musica.
+        /// </summary>
+        public static string MusicTermsAcceptanceDate {
+            get {
+                return ResourceManager.GetString("MusicTermsAcceptanceDate", resourceCulture);
             }
         }
         
