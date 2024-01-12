@@ -280,6 +280,8 @@
     <Compile Include="CQRS\CommandsHandlers\Innovation\TrackOptions\UpdateInnovationOrganizationTrackOptionMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\PlayersExecutives\CreateMusicPlayerExecutiveCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\PlayersExecutives\UpdateMusicPlayerExecutiveCollaboratorCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardMusicPlayerTermsAcceptanceCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardInnovationPlayerTermsAcceptanceCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\DisassociateOrganizationCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\AssociateOrganizationCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\BaseHoldingCommandHandler.cs" />
@@ -343,7 +345,7 @@
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardProducerTermsAcceptanceCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\SkipOnboardTicketBuyerOrganizationDataCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\CreateTicketBuyerOrganizationDataCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardPlayerTermsAcceptanceCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardAudiovisualPlayerTermsAcceptanceCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardPlayerInterestsCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardPlayerOrganizationDataCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardCollaboratorDataCommandHandler.cs" />
@@ -458,6 +460,8 @@
     <Compile Include="CQRS\Commands\Music\PlayersExecutives\BaseCommands\MusicPlayerExecutiveCollaboratorBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Music\PlayersExecutives\CreateMusicPlayerExecutiveCollaborator.cs" />
     <Compile Include="CQRS\Commands\Music\PlayersExecutives\UpdateMusicPlayerExecutiveCollaborator.cs" />
+    <Compile Include="CQRS\Commands\Onboardings\OnboardMusicPlayerTermsAcceptance.cs" />
+    <Compile Include="CQRS\Commands\Onboardings\OnboardInnovationPlayerTermsAcceptance.cs" />
     <Compile Include="CQRS\Commands\Organizations\BaseCommands\OrganizationTargetAudienceBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Organizations\DisassociateOrganizationCollaborator.cs" />
     <Compile Include="CQRS\Commands\Organizations\AssociateOrganizationCollaborator.cs" />
@@ -562,7 +566,7 @@
     <Compile Include="CQRS\Commands\Collaborators\CreateTicketBuyerOrganizationData.cs" />
     <Compile Include="CQRS\Commands\Organizations\BaseCommands\OrganizationSiteBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Organizations\BaseCommands\OrganizationActivityBaseCommand.cs" />
-    <Compile Include="CQRS\Commands\Onboardings\OnboardPlayerTermsAcceptance.cs" />
+    <Compile Include="CQRS\Commands\Onboardings\OnboardAudiovisualPlayerTermsAcceptance.cs" />
     <Compile Include="CQRS\Commands\Onboardings\OnboardCollaboratorData.cs" />
     <Compile Include="CQRS\Commands\Onboardings\OnboardCollaboratorAccessData.cs" />
     <Compile Include="CQRS\Commands\Collaborators\DeleteCollaboratorTicket.cs" />

@@ -7,10 +7,14 @@
     ViewBag.Title = string.Format(Labels.Welcome, editionDto?.UrlCode);
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var playerAttendeeOrganizations = ViewBag.PlayerAttendeeOrganizations as List<AttendeeOrganization>;
-    var isPlayer = ViewBag.IsPlayer as bool? ?? false;
-    var isSpeaker = ViewBag.IsSpeaker as bool? ?? false;
     var player = playerAttendeeOrganizations?.FirstOrDefault(pao => pao.Organization.Uid == Model.OrganizationUid)?.Organization;
-    var initialPlayerIndex = 4 + (isSpeaker ? 1 : 0) + (isPlayer ? 1 : 0);
+
+    var isSpeaker = userAccessControlDto.IsSpeaker();
+    var isAudiovisualPlayer = userAccessControlDto.IsAudiovisualPlayerExecutive();
+    var isInnovationPlayer = userAccessControlDto.IsInnovationPlayerExecutive();
+    var isMusicPlayer = userAccessControlDto.IsMusicPlayerExecutive();
+    var initialPlayerIndex = 4 + (isSpeaker ? 1 : 0) + (isAudiovisualPlayer ? 1 : 0) + (isInnovationPlayer ? 1 : 0) + (isMusicPlayer ? 1 : 0);
+
     var playerIndex = playerAttendeeOrganizations?.FindIndex(pao => pao.Organization.Uid == Model.OrganizationUid) ?? 0;
     var additionIndex = playerIndex == 0 ? 0 : 1;
 }

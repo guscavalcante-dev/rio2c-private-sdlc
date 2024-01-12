@@ -3,14 +3,15 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-02-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-13-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-11-2024
 // ***********************************************************************
 // <copyright file="OnboardingAllowedRoutesHelper.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Web.Site.Controllers;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,25 +27,27 @@ namespace PlataformaRio2C.Web.Site.Helpers
         /// </summary>
         public static List<OnboardingAllowedRoute> Routes = new List<OnboardingAllowedRoute>
         {
-            new OnboardingAllowedRoute("Account", "Login"),
-            new OnboardingAllowedRoute("Account", "LogOff"),
-            new OnboardingAllowedRoute("Account", "Onboarding"),
-            new OnboardingAllowedRoute("Error", "Index"),
-            new OnboardingAllowedRoute("Error", "Forbidden"),
-            new OnboardingAllowedRoute("Error", "NotFound"),
-            new OnboardingAllowedRoute("Home", "SetCulture"),
-            new OnboardingAllowedRoute("States", "FindAllByCountryUid"),
-            new OnboardingAllowedRoute("Cities", "FindAllByStateUid"),
-            new OnboardingAllowedRoute("Onboarding", "Index"),
-            new OnboardingAllowedRoute("Onboarding", "PlayerTermsAcceptance"),
-            new OnboardingAllowedRoute("Onboarding", "AccessData"),
-            new OnboardingAllowedRoute("Onboarding", "CollaboratorData"),
-            new OnboardingAllowedRoute("Onboarding", "PlayerInfo"),
-            new OnboardingAllowedRoute("Onboarding", "PlayerInterests"),
-            new OnboardingAllowedRoute("Onboarding", "CompanyInfo"),
-            new OnboardingAllowedRoute("Onboarding", "SkipCompanyInfo"),
-            new OnboardingAllowedRoute("Onboarding", "SpeakerTermsAcceptance"),
-            new OnboardingAllowedRoute("Companies", "ShowTicketBuyerFilledForm"),
+            new OnboardingAllowedRoute(nameof(AccountController), nameof(AccountController.Login)),
+            new OnboardingAllowedRoute(nameof(AccountController), nameof(AccountController.LogOff)),
+            new OnboardingAllowedRoute(nameof(AccountController), nameof(AccountController.Onboarding)),
+            new OnboardingAllowedRoute(nameof(ErrorController), nameof(ErrorController.Index)),
+            new OnboardingAllowedRoute(nameof(ErrorController), nameof(ErrorController.Forbidden)),
+            new OnboardingAllowedRoute(nameof(ErrorController), nameof(ErrorController.NotFound)),
+            new OnboardingAllowedRoute(nameof(HomeController), nameof(HomeController.SetCulture)),
+            new OnboardingAllowedRoute(nameof(StatesController), nameof(StatesController.FindAllByCountryUid)),
+            new OnboardingAllowedRoute(nameof(CitiesController), nameof(CitiesController.FindAllByStateUid)),
+            new OnboardingAllowedRoute(nameof(OnboardingController), nameof(OnboardingController.Index)),
+            new OnboardingAllowedRoute(nameof(OnboardingController), nameof(OnboardingController.AudiovisualPlayerTermsAcceptance)),
+            new OnboardingAllowedRoute(nameof(OnboardingController), nameof(OnboardingController.InnovationPlayerTermsAcceptance)),
+            new OnboardingAllowedRoute(nameof(OnboardingController), nameof(OnboardingController.MusicPlayerTermsAcceptance)),
+            new OnboardingAllowedRoute(nameof(OnboardingController), nameof(OnboardingController.AccessData)),
+            new OnboardingAllowedRoute(nameof(OnboardingController), nameof(OnboardingController.CollaboratorData)),
+            new OnboardingAllowedRoute(nameof(OnboardingController), nameof(OnboardingController.PlayerInfo)),
+            new OnboardingAllowedRoute(nameof(OnboardingController), nameof(OnboardingController.PlayerInterests)),
+            new OnboardingAllowedRoute(nameof(OnboardingController), nameof(OnboardingController.CompanyInfo)),
+            new OnboardingAllowedRoute(nameof(OnboardingController), nameof(OnboardingController.SkipCompanyInfo)),
+            new OnboardingAllowedRoute(nameof(OnboardingController), nameof(OnboardingController.SpeakerTermsAcceptance)),
+            new OnboardingAllowedRoute(nameof(CompaniesController), nameof(CompaniesController.ShowTicketBuyerFilledForm)),
         };
 
         /// <summary>
@@ -74,7 +77,7 @@ namespace PlataformaRio2C.Web.Site.Helpers
         /// <param name="action">The action.</param>
         public OnboardingAllowedRoute(string controller, string action)
         {
-            this.Controller = controller;
+            this.Controller = controller.Replace("Controller", "");
             this.Action = action;
         }
     }

@@ -4,7 +4,7 @@
 // Created          : 10-09-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-17-2023
+// Last Modified On : 01-11-2024
 // ***********************************************************************
 // <copyright file="ExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -162,7 +162,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             try
             {
-                var isExecutive = this.UserAccessControlDto?.HasAnyCollaboratorType(Constants.CollaboratorType.Executives) == true;
+                var isExecutive = this.UserAccessControlDto?.HasAnyCollaboratorType(Constants.CollaboratorType.PlayerExecutives) == true;
                 var isIndustry = this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true;
 
                 // Field SharePublicEmail does not exist for this types of users
@@ -391,7 +391,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             try
             {
-                if (this.UserAccessControlDto?.EditionAttendeeOrganizations?.Any() == true  || this.UserAccessControlDto?.HasAnyCollaboratorType(Constants.CollaboratorType.Executives) == true)
+                if (this.UserAccessControlDto?.EditionAttendeeOrganizations?.Any() == true  || this.UserAccessControlDto?.HasAnyCollaboratorType(Constants.CollaboratorType.PlayerExecutives) == true)
                 {
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
@@ -437,7 +437,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(Messages.CorrectFormValues);
                 }
 
-                if (this.UserAccessControlDto?.EditionAttendeeOrganizations?.Any() == true || this.UserAccessControlDto?.HasAnyCollaboratorType(Constants.CollaboratorType.Executives) == true)
+                if (this.UserAccessControlDto?.EditionAttendeeOrganizations?.Any() == true || this.UserAccessControlDto?.HasAnyCollaboratorType(Constants.CollaboratorType.PlayerExecutives) == true)
                 {
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
