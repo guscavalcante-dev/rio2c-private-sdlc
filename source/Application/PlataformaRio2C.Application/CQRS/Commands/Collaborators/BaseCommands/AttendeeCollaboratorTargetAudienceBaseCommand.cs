@@ -3,8 +3,8 @@
 // Author           : Elton Assunção
 // Created          : 12-28-2023
 //
-// Last Modified By : Elton Assunção
-// Last Modified On : 12-28-2023
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-13-2024
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorTargetAudienceBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,29 +25,38 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string TargetAudienceName { get; set; }
         public bool TargetAudienceHasAdditionalInfo { get; set; }
         public bool IsChecked { get; set; }
+        public bool IsRequired { get; set; }
 
         [Display(Name = "AdditionalInformation", ResourceType = typeof(Labels))]
         public string AdditionalInfo { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="AttendeeCollaboratorTargetAudienceBaseCommand"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttendeeCollaboratorTargetAudienceBaseCommand" /> class.
+        /// </summary>
         /// <param name="entity">The entity.</param>
-        public AttendeeCollaboratorTargetAudienceBaseCommand(AttendeeCollaboratorTargetAudiencesDto entity)
+        /// <param name="isRequired">if set to <c>true</c> [is required].</param>
+        public AttendeeCollaboratorTargetAudienceBaseCommand(AttendeeCollaboratorTargetAudiencesDto entity, bool isRequired)
         {
             this.TargetAudienceUid = entity.TargetAudienceUid;
             this.TargetAudienceName = entity.TargetAudienceName;
             this.TargetAudienceHasAdditionalInfo = entity.TargetAudienceHasAdditionalInfo;
             this.AdditionalInfo = entity.AttendeeCollaboratorTargetAudienceAdditionalInfo;
             this.IsChecked = true;
+            this.IsRequired = isRequired;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="AttendeeCollaboratorTargetAudienceBaseCommand"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttendeeCollaboratorTargetAudienceBaseCommand" /> class.
+        /// </summary>
         /// <param name="targetAudience">The TargetAudience.</param>
-        public AttendeeCollaboratorTargetAudienceBaseCommand(TargetAudience targetAudience)
+        /// <param name="isRequired">if set to <c>true</c> [is required].</param>
+        public AttendeeCollaboratorTargetAudienceBaseCommand(TargetAudience targetAudience, bool isRequired)
         {
             this.TargetAudienceUid = targetAudience.Uid;
             this.TargetAudienceName = targetAudience.Name;
             this.TargetAudienceHasAdditionalInfo = targetAudience.HasAdditionalInfo;
             this.IsChecked = false;
+            this.IsRequired = isRequired;
         }
 
         public AttendeeCollaboratorTargetAudienceBaseCommand()

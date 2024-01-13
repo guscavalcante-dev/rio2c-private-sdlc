@@ -4,7 +4,7 @@
 // Created          : 12-29-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-09-2024
+// Last Modified On : 01-13-2024
 // ***********************************************************************
 // <copyright file="InnovationPlayerExecutiveCollaboratorBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,9 +14,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using DocumentFormat.OpenXml.Wordprocessing;
 using Foolproof;
-using System.Security.AccessControl;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -195,6 +193,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         /// <param name="isPlayerRequired">if set to <c>true</c> [is attendee organization required].</param>
         /// <param name="isVirtualMeetingRequired">if set to <c>true</c> [is virtual meeting required].</param>
+        /// <param name="isActivitiesRequired">if set to <c>true</c> [is activities required].</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public void UpdateBaseProperties(
             CollaboratorDto entity,
@@ -213,6 +212,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isImageRequired,
             bool isPlayerRequired,
             bool isVirtualMeetingRequired,
+            bool isActivitiesRequired,
             string userInterfaceLanguage)
         {
             base.UpdateBaseProperties(entity);
@@ -236,7 +236,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateJobTitles(entity, languagesDtos, isJobTitleRequired);
             this.UpdateMiniBios(entity, languagesDtos, isMiniBioRequired);
             this.UpdateCropperImage(entity, isImageRequired);
-            this.UpdateActivities(entity, activities);
+            this.UpdateActivities(entity, activities, isActivitiesRequired);
             this.UpdateInterests(entity, interestsDtos);
 
             this.UpdateInnovationOrganizationTrackOptionGroups(entity, innovationOrganizationTrackOptionDtos);
@@ -414,7 +414,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="activities">The activities.</param>
         private void UpdateActivities(
             CollaboratorDto entity,
-            List<Activity> activities)
+            List<Activity> activities,
+            bool isActivitiesRequired)
         {
             this.AttendeeCollaboratorActivities = new List<AttendeeCollaboratorActivityBaseCommand>();
             if (activities?.Any() == true)
@@ -422,8 +423,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 foreach (var activity in activities)
                 {
                     var attendeeCollaboratorActivityDto = entity?.AttendeeCollaboratorActivityDtos?.FirstOrDefault(oad => oad.ActivityUid == activity.Uid);
-                    this.AttendeeCollaboratorActivities.Add(attendeeCollaboratorActivityDto != null ? new AttendeeCollaboratorActivityBaseCommand(attendeeCollaboratorActivityDto) :
-                                                                                                      new AttendeeCollaboratorActivityBaseCommand(activity));
+                    this.AttendeeCollaboratorActivities.Add(attendeeCollaboratorActivityDto != null ? new AttendeeCollaboratorActivityBaseCommand(attendeeCollaboratorActivityDto, isActivitiesRequired) :
+                                                                                                      new AttendeeCollaboratorActivityBaseCommand(activity, isActivitiesRequired));
                 }
             }
         }

@@ -3760,6 +3760,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Executivo de Música.
+        /// </summary>
+        public static string MusicExecutive {
+            get {
+                return ResourceManager.GetString("MusicExecutive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Estilo musical.
         /// </summary>
         public static string MusicGenre {
@@ -6420,6 +6429,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Startup {
             get {
                 return ResourceManager.GetString("Startup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Executivo de Startup.
+        /// </summary>
+        public static string StartupExecutive {
+            get {
+                return ResourceManager.GetString("StartupExecutive", resourceCulture);
             }
         }
         

@@ -533,7 +533,7 @@ namespace PlataformaRio2C.Domain.Entities
                 email,
                 passwordHash,
                 userId);
-            }
+        }
 
         /// <summary>
         /// Updates the administrator.
@@ -1220,15 +1220,15 @@ namespace PlataformaRio2C.Domain.Entities
             int userId)
         {
             return new Collaborator(
-                edition, 
-                collaboratorType, 
-                firstName, 
-                lastNames, 
-                email, 
-                phoneNumber, 
+                edition,
+                collaboratorType,
+                firstName,
+                lastNames,
+                email,
+                phoneNumber,
                 cellPhone,
-                document, 
-                attendeeCollaboratorInterests, 
+                document,
+                attendeeCollaboratorInterests,
                 userId);
         }
 
@@ -1419,15 +1419,15 @@ namespace PlataformaRio2C.Domain.Entities
             //TODO: Refactor this!
             //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
             this.UpdateInnovationPlayerExecutiveAttendeeCollaborators(
-                edition, 
-                collaboratorType, 
-                false, 
-                null, 
+                edition,
+                collaboratorType,
+                false,
+                null,
                 attendeeOrganizations,
                 attendeeCollaboratorActivities,
                 attendeeCollaboratorInterests,
                 attendeeCollaboratorInnovationOrganizationTracks,
-                true, 
+                true,
                 userId);
 
             this.UpdateUser(email);
@@ -1645,15 +1645,15 @@ namespace PlataformaRio2C.Domain.Entities
             //TODO: Refactor this!
             //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
             this.UpdateInnovationPlayerExecutiveAttendeeCollaborators(
-                edition, 
-                collaboratorType, 
-                null, 
-                null, 
-                attendeeOrganizations, 
+                edition,
+                collaboratorType,
+                null,
+                null,
+                attendeeOrganizations,
                 attendeeCollaboratorActivities,
                 attendeeCollaboratorInterests,
                 attendeeCollaboratorInnovationOrganizationTracks,
-                isAddingToCurrentEdition, 
+                isAddingToCurrentEdition,
                 userId);
 
             this.UpdateUser(email);
@@ -1704,8 +1704,8 @@ namespace PlataformaRio2C.Domain.Entities
             if (attendeeCollaborator != null)
             {
                 attendeeCollaborator.UpdateInnovationPlayerExecutiveAttendeeCollaborator(
-                    collaboratorType, 
-                    isApiDisplayEnabled, 
+                    collaboratorType,
+                    isApiDisplayEnabled,
                     apiHighlightPosition,
                     true,
                     attendeeOrganizations,
@@ -1717,10 +1717,10 @@ namespace PlataformaRio2C.Domain.Entities
             else
             {
                 this.AttendeeCollaborators.Add(AttendeeCollaborator.CreateInnovationPlayerExecutiveAttendeeCollaborator(
-                    edition, 
+                    edition,
                     collaboratorType,
                     this,
-                    isApiDisplayEnabled, 
+                    isApiDisplayEnabled,
                     apiHighlightPosition,
                     true,
                     attendeeOrganizations,
@@ -1776,7 +1776,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.LastNames = lastNames?.Trim();
             this.Badge = badge?.Trim();
             this.PhoneNumber = phoneNumber?.Trim();
-            this.CellPhone = cellPhone?.Trim();            
+            this.CellPhone = cellPhone?.Trim();
             this.UpdatePublicEmail(sharePublicEmail, publicEmail);
             this.UpdateImageUploadDate(isImageUploaded, false);
             this.UpdateEditions(haveYouBeenToRio2CBefore, editionsParticipated, userId);
@@ -2031,7 +2031,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
 
-          
+
             //TODO: Refactor this!
             //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
             this.UpdateMusicPlayerExecutiveAttendeeCollaborators(
@@ -3004,52 +3004,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
         }
 
-        /// <summary>
-        /// Called when [audiovisual player terms acceptance].
-        /// </summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="userId">The user identifier.</param>
-        public void OnboardAudiovisualPlayerTermsAcceptance(Edition edition, int userId)
-        {
-            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
-            attendeeCollaborator?.OnboardAudiovisualPlayerTermsAcceptance(userId);
-            this.SetUpdateDate(userId);
-        }
-
-        /// <summary>
-        /// Called when [innovation player terms acceptance].
-        /// </summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="userId">The user identifier.</param>
-        public void OnboardInnovationPlayerTermsAcceptance(Edition edition, int userId)
-        {
-            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
-            attendeeCollaborator?.OnboardInnovationPlayerTermsAcceptance(userId);
-            this.SetUpdateDate(userId);
-        }
-
-        /// <summary>
-        /// Called when [music player terms acceptance].
-        /// </summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="userId">The user identifier.</param>
-        public void OnboardMusicPlayerTermsAcceptance(Edition edition, int userId)
-        {
-            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
-            attendeeCollaborator?.OnboardMusicPlayerTermsAcceptance(userId);
-            this.SetUpdateDate(userId);
-        }
-
-        /// <summary>Called when [speaker terms acceptance].</summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="userId">The user identifier.</param>
-        public void OnboardSpeakerTermsAcceptance(Edition edition, int userId)
-        {
-            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
-            attendeeCollaborator?.OnboardSpeakerTermsAcceptance(userId);
-            this.SetUpdateDate(userId);
-        }
-
         /// <summary>Onboard collaborator data.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="sharePublicEmail">The share public email.</param>
@@ -3117,6 +3071,76 @@ namespace PlataformaRio2C.Domain.Entities
             this.SetUpdateDate(userId);
         }
 
+        #region Music Player
+
+        /// <summary>
+        /// Called when [music player data].
+        /// </summary>
+        /// <param name="attendeeCollaboratorActivities">The attendee collaborator activities.</param>
+        /// <param name="attendeeCollaboratorTargetAudiences">The attendee collaborator target audiences.</param>
+        public void OnboardMusicPlayerData(
+            Edition edition,
+            List<AttendeeCollaboratorActivity> attendeeCollaboratorActivities,
+            List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences,
+            int userId)
+        {
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            attendeeCollaborator?.UpdateAttendeeCollaboratorActivities(attendeeCollaboratorActivities, userId);
+            attendeeCollaborator?.UpdateAttendeeCollaboratorMusicTargetAudiences(attendeeCollaboratorTargetAudiences, userId);
+
+            this.SetUpdateDate(userId);
+        }
+
+        /// <summary>
+        /// Called when [music player terms acceptance].
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardMusicPlayerTermsAcceptance(Edition edition, int userId)
+        {
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            attendeeCollaborator?.OnboardMusicPlayerTermsAcceptance(userId);
+            this.SetUpdateDate(userId);
+        }
+
+        #endregion
+
+        #region Onboard Terms Acceptance
+
+        /// <summary>
+        /// Called when [audiovisual player terms acceptance].
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardAudiovisualPlayerTermsAcceptance(Edition edition, int userId)
+        {
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            attendeeCollaborator?.OnboardAudiovisualPlayerTermsAcceptance(userId);
+            this.SetUpdateDate(userId);
+        }
+
+        /// <summary>
+        /// Called when [innovation player terms acceptance].
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardInnovationPlayerTermsAcceptance(Edition edition, int userId)
+        {
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            attendeeCollaborator?.OnboardInnovationPlayerTermsAcceptance(userId);
+            this.SetUpdateDate(userId);
+        }
+
+        /// <summary>Called when [speaker terms acceptance].</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardSpeakerTermsAcceptance(Edition edition, int userId)
+        {
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            attendeeCollaborator?.OnboardSpeakerTermsAcceptance(userId);
+            this.SetUpdateDate(userId);
+        }
+
         /// <summary>Called when [producer terms acceptance].</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="userId">The user identifier.</param>
@@ -3126,6 +3150,8 @@ namespace PlataformaRio2C.Domain.Entities
             attendeeCollaborator?.OnboardProducerTermsAcceptance(userId);
             this.SetUpdateDate(userId);
         }
+
+        #endregion
 
         /// <summary>Sends the welcome email send date.</summary>
         /// <param name="editionId">The edition identifier.</param>

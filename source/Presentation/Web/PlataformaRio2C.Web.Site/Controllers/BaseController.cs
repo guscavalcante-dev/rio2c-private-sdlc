@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-28-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-23-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-13-2024
 // ***********************************************************************
 // <copyright file="BaseController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -113,7 +113,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                                                                             .Contains(e.Id)
                                                                             ).ToList();
             }
-            else if(userAccessControlDto == null && (userAccessControlDto?.IsAdmin() == null || !userAccessControlDto?.IsAdmin() == true))
+            else if (userAccessControlDto == null && (userAccessControlDto?.IsAdmin() == null || !userAccessControlDto?.IsAdmin() == true))
             {
                 //Clear the ActiveEditions only when is not admin.
                 //Without this validation, "ViewBag.ActiveEditions" will always contains all Editions.
@@ -122,6 +122,21 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             base.OnActionExecuting(filterContext);
         }
+
+        /// <summary>
+        /// Redirects to the specified action using the action name and controller name.
+        /// </summary>
+        /// <param name="actionName">The name of the action.</param>
+        /// <param name="controllerName">The name of the controller.</param>
+        /// <returns>
+        /// The redirect result object.
+        /// </returns>
+        public new RedirectToRouteResult RedirectToAction(string actionName, string controllerName)
+        {
+            return base.RedirectToAction(actionName, controllerName.Replace("Controller", ""));
+        }
+
+        #region Privates
 
         /// <summary>Sets the environment.</summary>
         private void SetEnvironment()
@@ -306,7 +321,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 var activeEditionDtos = this.CommandBus.Send(new FindAllEditionsDtosAsync()).Result;
 
                 var lastParticipatedEdition = activeEditionDtos?.FirstOrDefault(w => w.Id == lastParticipatedEditionId);
-                if(lastParticipatedEdition == null)
+                if (lastParticipatedEdition == null)
                 {
                     return false;
                 }
@@ -365,5 +380,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             return true;
         }
+
+        #endregion
     }
 }

@@ -41,8 +41,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateMusicPlayerExecutiveCollaborator" /> class.
         /// </summary>
+        /// <param name="entity">The entity.</param>
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
+        /// <param name="countriesBaseDtos">The countries base dtos.</param>
         /// <param name="genders">The genders.</param>
         /// <param name="industries">The industries.</param>
         /// <param name="collaboratorRoles">The collaborator roles.</param>
@@ -51,12 +53,16 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="interestsDtos">The interests dtos.</param>
         /// <param name="targetAudiences">The targetAudiences track option dtos.</param>
         /// <param name="currentEditionId">The current edition identifier.</param>
+        /// <param name="isAddingToCurrentEdition">The is adding to current edition.</param>
         /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
         /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         /// <param name="isPlayerRequired">if set to <c>true</c> [is image required].</param>
-        /// <param name="isVirtualMeetingRequired">if set to <c>true</c> [is isVirtualMeetingRequired required].</param>    
+        /// <param name="isVirtualMeetingRequired">if set to <c>true</c> [is isVirtualMeetingRequired required].</param>
+        /// <param name="isActivitiesRequired">if set to <c>true</c> [is activities required].</param>
+        /// <param name="isTargetAudiencesRequired">if set to <c>true</c> [is target audiences required].</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
         public UpdateMusicPlayerExecutiveCollaborator(
             CollaboratorDto entity,
             List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos,
@@ -76,6 +82,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isImageRequired,
             bool isPlayerRequired,
             bool isVirtualMeetingRequired,
+            bool isActivitiesRequired,
+            bool isTargetAudiencesRequired,
             string userInterfaceLanguage)
         {
             if (entity == null)
@@ -111,6 +119,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 isImageRequired,
                 isPlayerRequired,
                 isVirtualMeetingRequired,
+                isActivitiesRequired,
+                isTargetAudiencesRequired,
                 userInterfaceLanguage);
 
             this.UpdateDropdownProperties(

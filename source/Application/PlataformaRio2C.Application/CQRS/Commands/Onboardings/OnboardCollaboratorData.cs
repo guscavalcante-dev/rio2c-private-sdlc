@@ -4,7 +4,7 @@
 // Created          : 09-06-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-17-2023
+// Last Modified On : 01-13-2024
 // ***********************************************************************
 // <copyright file="OnboardCollaboratorData.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -60,6 +60,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(300, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Youtube { get; set; }
 
+        #region CollaboratorIndustry
+
         [Display(Name = "CollaboratorIndustry", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? CollaboratorIndustryUid { get; set; }
@@ -72,6 +74,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         [RequiredIf("CollaboratorIndustryAdditionalInfoRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public string CollaboratorIndustryAdditionalInfo { get; set; }
+
+        #endregion
+
+        #region CollaboratorGender
 
         [Display(Name = "Gender", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -86,6 +92,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [RequiredIf("CollaboratorGenderAdditionalInfoRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public string CollaboratorGenderAdditionalInfo { get; set; }
 
+        #endregion
+
+        #region CollaboratorRole
+
         [Display(Name = "Role", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? CollaboratorRoleUid { get; set; }
@@ -99,6 +109,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [RequiredIf("CollaboratorRoleAdditionalInfoRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public string CollaboratorRoleAdditionalInfo { get; set; }
 
+        #endregion
+
+        #region SpecialNeeds
+
         [Display(Name = "HasAnySpecialNeeds", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public bool? HasAnySpecialNeeds { get; set; }
@@ -107,6 +121,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [RequiredIf("HasAnySpecialNeeds", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string SpecialNeedsDescription { get; set; }
+
+        #endregion
+
+        #region Editions
 
         [Display(Name = "HaveYouBeenToRio2CBefore", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -118,26 +136,45 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [RequiredIf("HaveYouBeenToRio2CBefore", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneOption")]
         public bool? HasEditionSelected { get; set; }
 
-        public IEnumerable<EditionDto> Editions { get; set; }
+        #endregion
 
         public List<CollaboratorJobTitleBaseCommand> JobTitles { get; set; }
         public List<CollaboratorMiniBioBaseCommand> MiniBios { get; set; }
         public CropperImageBaseCommand CropperImage { get; set; }
 
         public Guid CollaboratorUid { get; set; }
+        public UserAccessControlDto UserAccessControlDto { get; set; }
+        
+        [Display(Name = "Activities", ResourceType = typeof(Labels))]
+        public List<AttendeeCollaboratorActivityBaseCommand> AttendeeCollaboratorActivities { get; set; }
 
-        /// <summary></summary>
-        /// <param name="collaborator"></param>
-        /// <param name="genders"></param>
-        /// <param name="industries"></param>
-        /// <param name="roles"></param>
-        /// <param name="languagesDtos"></param>
-        /// <param name="editionsDtos"></param>
-        /// <param name="currentEditionId"></param>
-        /// <param name="isJobTitleRequired"></param>
-        /// <param name="isMiniBioRequired"></param>
-        /// <param name="isImageRequired"></param>
-        /// <param name="userInterfaceLanguage"></param>
+        [Display(Name = "TargetAudiences", ResourceType = typeof(Labels))]
+        public List<AttendeeCollaboratorTargetAudienceBaseCommand> AttendeeCollaboratorTargetAudiences { get; set; }
+
+        #region Dropdowns Properties
+
+        public IEnumerable<EditionDto> Editions { get; set; }
+
+        #endregion
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OnboardCollaboratorData" /> class.
+        /// </summary>
+        /// <param name="collaborator">The collaborator.</param>
+        /// <param name="genders">The genders.</param>
+        /// <param name="industries">The industries.</param>
+        /// <param name="roles">The roles.</param>
+        /// <param name="languagesDtos">The languages dtos.</param>
+        /// <param name="editionsDtos">The editions dtos.</param>
+        /// <param name="activities">The activities.</param>
+        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="currentEditionId">The current edition identifier.</param>
+        /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
+        /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
+        /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
+        /// <param name="isActivitiesRequired">if set to <c>true</c> [is activities required].</param>
+        /// <param name="isTargetAudiencesRequired">if set to <c>true</c> [is target audiences required].</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
         public OnboardCollaboratorData(
             CollaboratorDto collaborator,
             List<CollaboratorGender> genders,
@@ -145,16 +182,20 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<CollaboratorRole> roles,
             List<LanguageDto> languagesDtos,
             List<EditionDto> editionsDtos,
+            List<Activity> activities,
+            List<TargetAudience> targetAudiences,
             int currentEditionId,
             bool isJobTitleRequired,
             bool isMiniBioRequired,
             bool isImageRequired,
+            bool isActivitiesRequired,
+            bool isTargetAudiencesRequired,
             string userInterfaceLanguage)
         {
             this.SharePublicEmail = !string.IsNullOrEmpty(collaborator.PublicEmail) ? (bool?)true : null;
             this.PublicEmail = collaborator?.PublicEmail;
             this.BirthDate = collaborator?.BirthDate;
-            
+
             this.Website = collaborator?.Website;
             this.Linkedin = collaborator?.Linkedin;
             this.Twitter = collaborator?.Twitter;
@@ -167,23 +208,25 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
             this.UpdateEditions(editionsDtos, currentEditionId);
 
-            this.UpdateGenders(genders, 
-                userInterfaceLanguage, 
-                collaborator?.Gender?.Uid, 
+            this.UpdateGenders(genders,
+                userInterfaceLanguage,
+                collaborator?.Gender?.Uid,
                 collaborator?.CollaboratorGenderAdditionalInfo);
 
-            this.UpdateIndustries(industries, 
-                userInterfaceLanguage, 
-                collaborator?.Industry?.Uid, 
+            this.UpdateIndustries(industries,
+                userInterfaceLanguage,
+                collaborator?.Industry?.Uid,
                 collaborator?.CollaboratorIndustryAdditionalInfo);
 
-            this.UpdateRoles(roles, 
-                userInterfaceLanguage, 
-                collaborator?.CollaboratorRole?.Uid, 
+            this.UpdateRoles(roles,
+                userInterfaceLanguage,
+                collaborator?.CollaboratorRole?.Uid,
                 collaborator?.CollaboratorRoleAdditionalInfo);
 
             this.UpdateJobTitles(collaborator, languagesDtos, isJobTitleRequired);
             this.UpdateMiniBios(collaborator, languagesDtos, isMiniBioRequired);
+            this.UpdateActivities(collaborator, activities, isActivitiesRequired);
+            this.UpdateTargetAudiences(collaborator, targetAudiences, isTargetAudiencesRequired);
             this.UpdateCropperImage(collaborator, isImageRequired);
         }
 
@@ -215,8 +258,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateRoles(roles, userInterfaceLanguage, null, null);
         }
 
-        /// <summary>Updates the pre send properties.</summary>
+        /// <summary>
+        /// Updates the pre send properties.
+        /// </summary>
         /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="userAccessControlDto">The user access control dto.</param>
         /// <param name="userId">The user identifier.</param>
         /// <param name="userUid">The user uid.</param>
         /// <param name="editionId">The edition identifier.</param>
@@ -224,6 +270,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public void UpdatePreSendProperties(
             Guid collaboratorUid,
+            UserAccessControlDto userAccessControlDto,
             int userId,
             Guid userUid,
             int? editionId,
@@ -236,6 +283,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             }
 
             this.CollaboratorUid = collaboratorUid;
+            this.UserAccessControlDto = userAccessControlDto;
+
             this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, userInterfaceLanguage);
         }
 
@@ -333,6 +382,43 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.CollaboratorRoles = roles.OrderBy(e => e.HasAdditionalInfo).ThenBy(e => e.Name);
             this.CollaboratorRoleUid = collaboratorRoleUid;
             this.CollaboratorRoleAdditionalInfo = collaboratorRoleAdditionalInfo;
+        }
+
+        /// <summary>
+        /// Updates the activities.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="activities">The activities.</param>
+        private void UpdateActivities(CollaboratorDto entity, List<Activity> activities, bool isActivitiesRequired)
+        {
+            this.AttendeeCollaboratorActivities = new List<AttendeeCollaboratorActivityBaseCommand>();
+            if (activities?.Any() == true)
+            {
+                foreach (var activity in activities)
+                {
+                    var attendeeCollaboratorActivityDto = entity?.AttendeeCollaboratorActivityDtos?.FirstOrDefault(oad => oad.ActivityUid == activity.Uid);
+                    this.AttendeeCollaboratorActivities.Add(attendeeCollaboratorActivityDto != null ? new AttendeeCollaboratorActivityBaseCommand(attendeeCollaboratorActivityDto, isActivitiesRequired) :
+                                                                                                      new AttendeeCollaboratorActivityBaseCommand(activity, isActivitiesRequired));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates the target audiences.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="targetAudiences">The target audiences.</param>
+        public void UpdateTargetAudiences(CollaboratorDto entity, List<TargetAudience> targetAudiences, bool isTargetAudiencesRequired)
+        {
+            if (targetAudiences == null) return;
+
+            this.AttendeeCollaboratorTargetAudiences = new List<AttendeeCollaboratorTargetAudienceBaseCommand>();
+            foreach (var targetAudience in targetAudiences)
+            {
+                var attendeeCollaboratorTargetAudience = entity?.AttendeeCollaboratorTargetAudiencesDtos?.FirstOrDefault(ota => ota.TargetAudienceUid == targetAudience.Uid);
+                this.AttendeeCollaboratorTargetAudiences.Add(attendeeCollaboratorTargetAudience != null ? new AttendeeCollaboratorTargetAudienceBaseCommand(attendeeCollaboratorTargetAudience, isTargetAudiencesRequired) :
+                                                                                                          new AttendeeCollaboratorTargetAudienceBaseCommand(targetAudience, isTargetAudiencesRequired));
+            }
         }
 
         #endregion

@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-06-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-13-2024
 // ***********************************************************************
 // <copyright file="OnboardCollaboratorDataCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,13 +33,24 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly ICollaboratorGenderRepository genderRepo;
         private readonly ICollaboratorIndustryRepository industryRepo;
         private readonly ICollaboratorRoleRepository roleRepo;
+        private readonly IActivityRepository activityRepo;
+        private readonly IInterestRepository interestRepo;
+        private readonly ITargetAudienceRepository targetAudienceRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="OnboardCollaboratorDataCommandHandler"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OnboardCollaboratorDataCommandHandler" /> class.
+        /// </summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="languageRepository">The language repository.</param>
+        /// <param name="genderRepo">The gender repo.</param>
+        /// <param name="industryRepo">The industry repo.</param>
+        /// <param name="roleRepo">The role repo.</param>
+        /// <param name="activityRepository">The activity repository.</param>
+        /// <param name="interestRepository">The interest repository.</param>
+        /// <param name="targetAudienceRepository">The target audience repository.</param>
         public OnboardCollaboratorDataCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
@@ -48,7 +59,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             ILanguageRepository languageRepository,
             ICollaboratorGenderRepository genderRepo,
             ICollaboratorIndustryRepository industryRepo,
-            ICollaboratorRoleRepository roleRepo)
+            ICollaboratorRoleRepository roleRepo,
+            IActivityRepository activityRepository,
+            IInterestRepository interestRepository,
+            ITargetAudienceRepository targetAudienceRepository)
             : base(eventBus, uow, collaboratorRepository)
         {
             this.editionRepo = editionRepository;
@@ -56,6 +70,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.genderRepo = genderRepo;
             this.industryRepo = industryRepo;
             this.roleRepo = roleRepo;
+            this.activityRepo = activityRepository;
+            this.interestRepo = interestRepository;
+            this.targetAudienceRepo = targetAudienceRepository;
         }
 
         /// <summary>Handles the specified onboard collaborator data.</summary>
@@ -82,9 +99,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var beforeImageUploadDate = collaborator.ImageUploadDate;
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
+            var edition = await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty);
 
             collaborator.OnboardData(
-                await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
+                edition,
                 cmd.SharePublicEmail,
                 cmd.PublicEmail,
                 cmd.CropperImage?.ImageFile != null,
@@ -107,6 +125,19 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.Instagram,
                 cmd.Youtube,
                 cmd.UserId);
+
+            if (cmd.UserAccessControlDto.IsMusicPlayerExecutive())
+            {
+                var activities = await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id);
+                var targetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id);
+
+                collaborator.OnboardMusicPlayerData(
+                    edition,
+                    cmd.AttendeeCollaboratorActivities?.Where(aca => aca.IsChecked)?.Select(aca => new AttendeeCollaboratorActivity(activities?.FirstOrDefault(a => a.Uid == aca.ActivityUid), aca.AdditionalInfo, cmd.UserId))?.ToList(),
+                    cmd.AttendeeCollaboratorTargetAudiences?.Where(ota => ota.IsChecked)?.Select(ota => new AttendeeCollaboratorTargetAudience(targetAudiences?.FirstOrDefault(a => a.Uid == ota.TargetAudienceUid), ota.AdditionalInfo, cmd.UserId))?.ToList(),
+                    cmd.UserId);
+            }
+
             if (!collaborator.IsValid())
             {
                 this.AppValidationResult.Add(collaborator.ValidationResult);

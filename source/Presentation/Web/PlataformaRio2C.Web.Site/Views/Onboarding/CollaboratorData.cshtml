@@ -140,13 +140,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="kt-section">
-                                        <h3 class="kt-heading kt-heading--md">@Messages.DescribeYourMiniBiography</h3>
-                                        @Html.ValidationMessage("MiniBios", new { @class = "text-danger" })
-                                        <div class="kt-section__content mt-3">
-                                            @Html.EditorFor(m => m.MiniBios)
-                                        </div>
-                                    </div>
                                     @if (isExecutive || isIndustry)
                                     {
                                         <div class="row">
@@ -168,52 +161,6 @@
                                             </div>
                                         </div>
                                     }
-                                    <div class="kt-section">
-                                        <h3 class="kt-heading kt-heading--md">@Labels.SocialNetworks</h3>
-                                        <div class="kt-section__content mt-3">
-                                            <div class="row">
-                                                <div class="form-group col-xl-6">
-                                                    @Html.LabelFor(m => m.Website, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
-                                                    @Html.TextBoxFor(m => m.Website, new { @class = "form-control" })
-                                                    <span class="form-text text-muted">@Messages.WebsiteUrl</span>
-                                                    <span class="form-text text-muted">@Labels.Eg: site.com @Labels.Or www.site.com</span>
-                                                    @Html.ValidationMessageFor(m => m.Website, "", new { @class = "text-danger" })
-                                                </div>
-                                                <div class="form-group col-xl-6">
-                                                    @Html.LabelFor(m => m.Linkedin, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
-                                                    @Html.TextBoxFor(m => m.Linkedin, new { @class = "form-control" })
-                                                    <span class="form-text text-muted">@Messages.LinkedinUser</span>
-                                                    <span class="form-text text-muted">@Labels.Eg: https://www.linkedin.com/in/<span style="background: #e0e0e0;">abcdefg</span> @Labels.Is <span style="background: #e0e0e0;">abcdefg</span></span>
-                                                    @Html.ValidationMessageFor(m => m.Linkedin, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="form-group col-xl-6">
-                                                    @Html.LabelFor(m => m.Twitter, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
-                                                    @Html.TextBoxFor(m => m.Twitter, new { @class = "form-control" })
-                                                    <span class="form-text text-muted">@Messages.TwitterUser</span>
-                                                    <span class="form-text text-muted">@Labels.Eg: https://twitter.com/<span style="background: #e0e0e0;">abcdefg</span> @Labels.Is <span style="background: #e0e0e0;">abcdefg</span></span>
-                                                    @Html.ValidationMessageFor(m => m.Twitter, "", new { @class = "text-danger" })
-                                                </div>
-                                                <div class="form-group col-xl-6">
-                                                    @Html.LabelFor(m => m.Instagram, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
-                                                    @Html.TextBoxFor(m => m.Instagram, new { @class = "form-control" })
-                                                    <span class="form-text text-muted">@Messages.InstagramUser</span>
-                                                    <span class="form-text text-muted">@Labels.Eg: https://www.instagram.com/<span style="background: #e0e0e0;">abcdefg</span> @Labels.Is <span style="background: #e0e0e0;">abcdefg</span>.</span>
-                                                    @Html.ValidationMessageFor(m => m.Instagram, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="form-group col-xl-6">
-                                                    @Html.LabelFor(m => m.Youtube, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
-                                                    @Html.TextBoxFor(m => m.Youtube, new { @class = "form-control" })
-                                                    <span class="form-text text-muted">@Messages.YoutubeUrl</span>
-                                                    <span class="form-text text-muted">@Labels.Eg: youtube.com/channel/abcdefg </span>
-                                                    @Html.ValidationMessageFor(m => m.Youtube, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="form-group">
                                         <label class="control-label">@Labels.HasAnySpecialNeeds</label>
                                         <div class="kt-radio-list ml-5" data-id="HasAnySpecialNeeds">
@@ -267,6 +214,95 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="kt-section">
+                                        <div class="kt-separator kt-separator--border-dashed"></div>
+                                        <h3 class="kt-section__title mb-0">@Messages.DescribeYourMiniBiography</h3>
+                                        <div class="kt-separator kt-separator--border-dashed"></div>
+                                        @Html.ValidationMessage("MiniBios", new { @class = "text-danger" })
+                                        <div class="kt-section__content mt-3">
+                                            @Html.EditorFor(m => m.MiniBios)
+                                        </div>
+                                    </div>
+                                    <div class="kt-section">
+                                        <div class="kt-separator kt-separator--border-dashed"></div>
+                                        <h3 class="kt-section__title mb-0">@Labels.SocialNetworks</h3>
+                                        <div class="kt-separator kt-separator--border-dashed"></div>
+                                        <div class="kt-section__content mt-3">
+                                            <div class="row">
+                                                <div class="form-group col-xl-6">
+                                                    @Html.LabelFor(m => m.Website, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                                                    @Html.TextBoxFor(m => m.Website, new { @class = "form-control" })
+                                                    <span class="form-text text-muted">@Messages.WebsiteUrl</span>
+                                                    <span class="form-text text-muted">@Labels.Eg: site.com @Labels.Or www.site.com</span>
+                                                    @Html.ValidationMessageFor(m => m.Website, "", new { @class = "text-danger" })
+                                                </div>
+                                                <div class="form-group col-xl-6">
+                                                    @Html.LabelFor(m => m.Linkedin, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                                                    @Html.TextBoxFor(m => m.Linkedin, new { @class = "form-control" })
+                                                    <span class="form-text text-muted">@Messages.LinkedinUser</span>
+                                                    <span class="form-text text-muted">@Labels.Eg: https://www.linkedin.com/in/<span style="background: #e0e0e0;">abcdefg</span> @Labels.Is <span style="background: #e0e0e0;">abcdefg</span></span>
+                                                    @Html.ValidationMessageFor(m => m.Linkedin, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-xl-6">
+                                                    @Html.LabelFor(m => m.Twitter, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                                                    @Html.TextBoxFor(m => m.Twitter, new { @class = "form-control" })
+                                                    <span class="form-text text-muted">@Messages.TwitterUser</span>
+                                                    <span class="form-text text-muted">@Labels.Eg: https://twitter.com/<span style="background: #e0e0e0;">abcdefg</span> @Labels.Is <span style="background: #e0e0e0;">abcdefg</span></span>
+                                                    @Html.ValidationMessageFor(m => m.Twitter, "", new { @class = "text-danger" })
+                                                </div>
+                                                <div class="form-group col-xl-6">
+                                                    @Html.LabelFor(m => m.Instagram, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                                                    @Html.TextBoxFor(m => m.Instagram, new { @class = "form-control" })
+                                                    <span class="form-text text-muted">@Messages.InstagramUser</span>
+                                                    <span class="form-text text-muted">@Labels.Eg: https://www.instagram.com/<span style="background: #e0e0e0;">abcdefg</span> @Labels.Is <span style="background: #e0e0e0;">abcdefg</span>.</span>
+                                                    @Html.ValidationMessageFor(m => m.Instagram, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-xl-6">
+                                                    @Html.LabelFor(m => m.Youtube, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                                                    @Html.TextBoxFor(m => m.Youtube, new { @class = "form-control" })
+                                                    <span class="form-text text-muted">@Messages.YoutubeUrl</span>
+                                                    <span class="form-text text-muted">@Labels.Eg: youtube.com/channel/abcdefg </span>
+                                                    @Html.ValidationMessageFor(m => m.Youtube, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (isMusicPlayer)
+                                    {
+                                        <div class="kt-section">
+                                            <div class="kt-separator kt-separator--border-dashed"></div>
+                                            <h3 class="kt-section__title mb-0">@Labels.MusicExecutive</h3>
+                                            <div class="kt-separator kt-separator--border-dashed"></div>
+                                            <div class="form-group row">
+                                                <div class="col-md-6">
+                                                    <div class="kt-section pt-4">
+                                                        <h3 class="kt-section__title mb-0">@Labels.Activities</h3>
+                                                        @Html.ValidationMessageFor(m => m.AttendeeCollaboratorActivities, "", new { @class = "text-danger" })
+                                                        <div class="kt-section__content mt-3">
+                                                            <div class="kt-checkbox-list">
+                                                                @Html.EditorFor(m => m.AttendeeCollaboratorActivities)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="kt-section pt-4">
+                                                        <h3 class="kt-section__title mb-0">@Labels.TargetAudiences</h3>
+                                                        @Html.ValidationMessageFor(m => m.AttendeeCollaboratorTargetAudiences, "", new { @class = "text-danger" })
+                                                        <div class="kt-section__content mt-3">
+                                                            <div class="kt-checkbox-list">
+                                                                @Html.EditorFor(m => m.AttendeeCollaboratorTargetAudiences)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>

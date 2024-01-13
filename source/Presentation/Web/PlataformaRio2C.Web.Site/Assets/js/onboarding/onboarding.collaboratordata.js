@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-06-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-21-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-13-2024
 // ***********************************************************************
 // <copyright file="onboarding.collaboratordata.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,8 +36,15 @@ var OnboardingCollaboratorData = function () {
         MyRio2cCommon.enableDropdownChangeEvent("CollaboratorIndustryUid", "CollaboratorIndustryAdditionalInfo");
         MyRio2cCommon.enableYesNoRadioEvent("HasAnySpecialNeeds");
         MyRio2cCommon.enableYesNoRadioEvent("HaveYouBeenToRio2CBefore");
+        MyRio2cCommon.enableAtLeastOnCheckboxByNameValidation();
+
         changePreviousEditionsRequired();
         AddressesForm.init();
+
+        // Enable additional info textbox
+        if (typeof (MyRio2cCommonAdditionalInfo) !== 'undefined') {
+            MyRio2cCommonAdditionalInfo.init();
+        }
     };
 
 

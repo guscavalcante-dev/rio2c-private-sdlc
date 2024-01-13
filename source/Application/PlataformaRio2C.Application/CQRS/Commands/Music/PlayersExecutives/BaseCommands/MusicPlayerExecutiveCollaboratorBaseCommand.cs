@@ -3,8 +3,8 @@
 // Author           : Elton Assunção
 // Created          : 12-29-2023
 //
-// Last Modified By : Elton Assunção
-// Last Modified On : 12-29-2023
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-13-2024
 // ***********************************************************************
 // <copyright file="MusicPlayerExecutiveCollaboratorBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -145,7 +145,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public CropperImageBaseCommand CropperImage { get; set; }
         public List<TemplateAttendeeOrganizationBaseCommand> TemplateAttendeeOrganizationBaseCommands { get; set; }
 
-        //Todo: task 988
         [Display(Name = "Activities", ResourceType = typeof(Labels))]
         public List<AttendeeCollaboratorActivityBaseCommand> AttendeeCollaboratorActivities { get; set; }
 
@@ -207,6 +206,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isImageRequired,
             bool isPlayerRequired,
             bool isVirtualMeetingRequired,
+            bool isActivitiesRequired,
+            bool isTargetAudiencesRequired,
             string userInterfaceLanguage)
         {
             base.UpdateBaseProperties(entity);
@@ -230,9 +231,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateJobTitles(entity, languagesDtos, isJobTitleRequired);
             this.UpdateMiniBios(entity, languagesDtos, isMiniBioRequired);
             this.UpdateCropperImage(entity, isImageRequired);
-            this.UpdateActivities(entity, activities);
+            this.UpdateActivities(entity, activities, isActivitiesRequired);
+            this.UpdateTargetAudiences(entity, targetAudiences, isTargetAudiencesRequired);
             this.UpdateInterests(entity, interestsDtos);
-            this.UpdateTargetAudiences(entity, targetAudiences);
 
             this.UpdateDropdownProperties(
                 attendeeOrganizationsBaseDtos,
@@ -402,9 +403,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="activities">The activities.</param>
-        private void UpdateActivities(
-            CollaboratorDto entity,
-            List<Activity> activities)
+        private void UpdateActivities(CollaboratorDto entity, List<Activity> activities, bool isActivitiesRequired)
         {
             this.AttendeeCollaboratorActivities = new List<AttendeeCollaboratorActivityBaseCommand>();
             if (activities?.Any() == true)
@@ -412,8 +411,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 foreach (var activity in activities)
                 {
                     var attendeeCollaboratorActivityDto = entity?.AttendeeCollaboratorActivityDtos?.FirstOrDefault(oad => oad.ActivityUid == activity.Uid);
-                    this.AttendeeCollaboratorActivities.Add(attendeeCollaboratorActivityDto != null ? new AttendeeCollaboratorActivityBaseCommand(attendeeCollaboratorActivityDto) :
-                                                                                                      new AttendeeCollaboratorActivityBaseCommand(activity));
+                    this.AttendeeCollaboratorActivities.Add(attendeeCollaboratorActivityDto != null ? new AttendeeCollaboratorActivityBaseCommand(attendeeCollaboratorActivityDto, isActivitiesRequired) :
+                                                                                                      new AttendeeCollaboratorActivityBaseCommand(activity, isActivitiesRequired));
                 }
             }
         }
@@ -457,7 +456,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="targetAudiences">The target audiences.</param>
-        public void UpdateTargetAudiences(CollaboratorDto entity, List<TargetAudience> targetAudiences)
+        private void UpdateTargetAudiences(CollaboratorDto entity, List<TargetAudience> targetAudiences, bool isTargetAudiencesRequired)
         {
             if (targetAudiences == null) return;
 
@@ -465,8 +464,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             foreach (var targetAudience in targetAudiences)
             {
                 var attendeeCollaboratorTargetAudience = entity?.AttendeeCollaboratorTargetAudiencesDtos?.FirstOrDefault(ota => ota.TargetAudienceUid == targetAudience.Uid);
-                this.AttendeeCollaboratorTargetAudiences.Add(attendeeCollaboratorTargetAudience != null ? new AttendeeCollaboratorTargetAudienceBaseCommand(attendeeCollaboratorTargetAudience) :
-                                                                                          new AttendeeCollaboratorTargetAudienceBaseCommand(targetAudience));
+                this.AttendeeCollaboratorTargetAudiences.Add(attendeeCollaboratorTargetAudience != null ? new AttendeeCollaboratorTargetAudienceBaseCommand(attendeeCollaboratorTargetAudience, isTargetAudiencesRequired) :
+                                                                                                          new AttendeeCollaboratorTargetAudienceBaseCommand(targetAudience, isTargetAudiencesRequired));
             }
         }
 

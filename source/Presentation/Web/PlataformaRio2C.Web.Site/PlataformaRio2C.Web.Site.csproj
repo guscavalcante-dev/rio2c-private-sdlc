@@ -7784,6 +7784,8 @@
     <Content Include="Views\Onboarding\Shared\_MusicPlayerTermsAcceptanceText.cshtml" />
     <Content Include="Views\Onboarding\InnovationPlayerTermsAcceptance.cshtml" />
     <Content Include="Views\Onboarding\MusicPlayerTermsAcceptance.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\AttendeeCollaboratorActivityBaseCommand.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\AttendeeCollaboratorTargetAudienceBaseCommand.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
