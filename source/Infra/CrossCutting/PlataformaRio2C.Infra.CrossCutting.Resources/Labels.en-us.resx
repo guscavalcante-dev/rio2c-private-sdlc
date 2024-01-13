@@ -1644,6 +1644,9 @@
     <value>Music Project Minimum Evaluations Count</value>
     <comment>Quantidade mínima de votos para gerar média</comment>
   </data>
+  <data name="MusicExecutive" xml:space="preserve">
+    <value>Music Executive</value>
+  </data>
   <data name="MusicGenre" xml:space="preserve">
     <value>Musical style</value>
     <comment>Estilo musical</comment>
@@ -2748,6 +2751,9 @@
   </data>
   <data name="Startup" xml:space="preserve">
     <value>Startup</value>
+  </data>
+  <data name="StartupExecutive" xml:space="preserve">
+    <value>Startup Executive</value>
   </data>
   <data name="StartupPlayer" xml:space="preserve">
     <value>Startup Player</value>

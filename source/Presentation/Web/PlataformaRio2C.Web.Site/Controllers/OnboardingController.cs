@@ -69,65 +69,66 @@ namespace PlataformaRio2C.Web.Site.Controllers
             // Redirect if onboarding is not pending
             if (this.UserAccessControlDto?.IsOnboardingPending() != true)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction(nameof(HomeController.Index), nameof(HomeController));
             }
 
             // Redirect to access data if not finished
             if (this.UserAccessControlDto?.IsUserOnboardingFinished() != true)
             {
-                return RedirectToAction("AccessData", "Onboarding");
+                return RedirectToAction(nameof(OnboardingController.AccessData), nameof(OnboardingController));
             }
 
             // Redirect if speaker terms acceptance pending
             if (this.UserAccessControlDto?.IsSpeakerTermsAcceptanceFinished() != true)
             {
-                return RedirectToAction("SpeakerTermsAcceptance", "Onboarding");
+                return RedirectToAction(nameof(OnboardingController.SpeakerTermsAcceptance), nameof(OnboardingController));
             }
 
             // Redirect if audiovisual player terms acceptance is pending
             if (this.UserAccessControlDto?.IsAudiovisualPlayerTermsAcceptanceFinished() != true)
             {
-                return RedirectToAction("AudiovisualPlayerTermsAcceptance", "Onboarding");
+                return RedirectToAction(nameof(OnboardingController.AudiovisualPlayerTermsAcceptance), nameof(OnboardingController));
             }
 
             // Redirect if innovation player terms acceptance is pending
             if (this.UserAccessControlDto?.IsInnovationPlayerTermsAcceptanceFinished() != true)
             {
-                return RedirectToAction("InnovationPlayerTermsAcceptance", "Onboarding");
+                return RedirectToAction(nameof(OnboardingController.InnovationPlayerTermsAcceptance), nameof(OnboardingController));
             }
 
             // Redirect if music player terms acceptance is pending
             if (this.UserAccessControlDto?.IsMusicPlayerTermsAcceptanceFinished() != true)
             {
-                return RedirectToAction("MusicPlayerTermsAcceptance", "Onboarding");
+                return RedirectToAction(nameof(OnboardingController.MusicPlayerTermsAcceptance), nameof(OnboardingController));
             }
 
             // Redirect to collaborator data if not finished
             if (this.UserAccessControlDto?.IsCollaboratorOnboardingFinished() != true)
             {
-                return RedirectToAction("CollaboratorData", "Onboarding");
+                
+                return RedirectToAction(nameof(OnboardingController.CollaboratorData), nameof(OnboardingController));
             }
 
             // Redirect to organization data if not finished and there is no pending interests to do before
             if (this.UserAccessControlDto?.IsPlayerOrganizationsOnboardingFinished() != true
                 && this.UserAccessControlDto?.IsPlayerOrganizationInterestsOnboardingPending() != true)
             {
-                return RedirectToAction("PlayerInfo", "Onboarding");
+                return RedirectToAction(nameof(OnboardingController.PlayerInfo), nameof(OnboardingController));
             }
 
             // Redirect to organization interests if not finished
             if (this.UserAccessControlDto?.IsPlayerOrganizationInterestsOnboardingPending() == true)
             {
-                return RedirectToAction("PlayerInterests", "Onboarding");
+                return RedirectToAction(nameof(OnboardingController.PlayerInterests), nameof(OnboardingController));
             }
 
             // Redirect to ticket buyer organization if not finished or speaker
             if (this.UserAccessControlDto?.IsTicketBuyerOrganizationOnboardingPending() == true)
             {
-                return RedirectToAction("CompanyInfo", "Onboarding");
+                return RedirectToAction(nameof(OnboardingController.CompanyInfo), nameof(OnboardingController));
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(HomeController.Index), nameof(HomeController));
         }
 
         #region Access Data
@@ -651,10 +652,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
+                this.UserAccessControlDto.IsMusicPlayerExecutive() ? await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id) : null,
+                this.UserAccessControlDto.IsMusicPlayerExecutive() ? await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id) : null,
                 EditionDto.Id,
                 true,
                 true,
                 true,
+                this.UserAccessControlDto.IsMusicPlayerExecutive(),
+                this.UserAccessControlDto.IsMusicPlayerExecutive(),
                 UserInterfaceLanguage);
 
             return View(cmd);
@@ -704,6 +709,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
                 cmd.UpdatePreSendProperties(
                     this.UserAccessControlDto.Collaborator.Uid,
+                    this.UserAccessControlDto,
                     this.UserAccessControlDto.User.Id,
                     this.UserAccessControlDto.User.Uid,
                     this.EditionDto.Id,

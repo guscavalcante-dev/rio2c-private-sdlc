@@ -1688,11 +1688,25 @@ namespace PlataformaRio2C.Domain.Entities
         #region Attendee Collaborator Music Organization Target Audiences
 
         /// <summary>
+        /// Updates the attendee collaborator music target audiences.
+        /// </summary>
+        /// <param name="attendeeCollaboratorTargetAudiences">The attendee collaborator target audiences.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateAttendeeCollaboratorMusicTargetAudiences(
+           List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences,
+           int userId)
+        {
+            this.SetUpdateDate(userId);
+
+            this.SynchronizeAttendeeCollaboratorMusicTargetAudiences(attendeeCollaboratorTargetAudiences, userId);
+        }
+
+        /// <summary>
         /// Synchronizes the attendee collaborator music target audiences.
         /// </summary>
         /// <param name="attendeeCollaboratorTargetAudiences">The attendee collaborator target audiences.</param>
         /// <param name="userId">The user identifier.</param>
-        public void SynchronizeAttendeeCollaboratorMusicTargetAudiences(
+        private void SynchronizeAttendeeCollaboratorMusicTargetAudiences(
            List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences,
            int userId)
         {

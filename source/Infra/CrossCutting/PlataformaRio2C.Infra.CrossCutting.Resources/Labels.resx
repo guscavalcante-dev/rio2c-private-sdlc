@@ -1643,6 +1643,9 @@
     <value>Quantidade mínima de votos para gerar média</value>
     <comment>Quantidade mínima de votos para gerar média</comment>
   </data>
+  <data name="MusicExecutive" xml:space="preserve">
+    <value>Executivo de Música</value>
+  </data>
   <data name="MusicGenre" xml:space="preserve">
     <value>Estilo musical</value>
     <comment>Estilo musical</comment>
@@ -2754,6 +2757,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   </data>
   <data name="Startup" xml:space="preserve">
     <value>Startup</value>
+  </data>
+  <data name="StartupExecutive" xml:space="preserve">
+    <value>Executivo de Startup</value>
   </data>
   <data name="StartupPlayer" xml:space="preserve">
     <value>Player de Startup</value>

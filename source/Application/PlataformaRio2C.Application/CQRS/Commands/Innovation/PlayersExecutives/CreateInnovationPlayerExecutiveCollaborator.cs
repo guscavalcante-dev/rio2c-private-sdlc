@@ -4,7 +4,7 @@
 // Created          : 12-29-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-29-2023
+// Last Modified On : 01-13-2024
 // ***********************************************************************
 // <copyright file="CreateInnovationPlayerExecutiveCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -38,6 +38,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         /// <param name="isPlayerRequired">if set to <c>true</c> [is attendee organization required].</param>
         /// <param name="isVirtualMeetingRequired">if set to <c>true</c> [is virtual meeting required].</param>
+        /// <param name="isActivitiesRequired">if set to <c>true</c> [is activities required].</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public CreateInnovationPlayerExecutiveCollaborator(
             List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos,
@@ -55,6 +56,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isImageRequired,
             bool isPlayerRequired,
             bool isVirtualMeetingRequired,
+            bool isActivitiesRequired,
             string userInterfaceLanguage)
         {
             base.UpdateBaseProperties(
@@ -74,6 +76,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 isImageRequired,
                 isPlayerRequired,
                 isVirtualMeetingRequired,
+                isActivitiesRequired,
                 userInterfaceLanguage);
         }
 

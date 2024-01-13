@@ -68,35 +68,35 @@
     </div>
 </div>
 @*<div class="kt-section">
-    <h3 class="kt-heading kt-heading--md">@Labels.OneToOneMeetingConfiguration</h3>
-    <div class="kt-section__content">
-        <div class="row">
-            <div class="col-sm-6">
-                @Html.HiddenFor(m => m.IsVirtualMeetingRequired)
-                <div class="row">
-                    <div class="col-12">
-                        @Html.LabelFor(m => m.IsVirtualMeeting, new { @class = "control-label" })
+        <h3 class="kt-heading kt-heading--md">@Labels.OneToOneMeetingConfiguration</h3>
+        <div class="kt-section__content">
+            <div class="row">
+                <div class="col-sm-6">
+                    @Html.HiddenFor(m => m.IsVirtualMeetingRequired)
+                    <div class="row">
+                        <div class="col-12">
+                            @Html.LabelFor(m => m.IsVirtualMeeting, new { @class = "control-label" })
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-12 mb-0">
-                        <div class="kt-radio-list ml-3" data-id="IsVirtualMeeting">
-                            <label class="kt-radio">
-                                @Html.RadioButtonFor(m => m.IsVirtualMeeting, true) @Labels.Virtual
-                                <span></span>
-                            </label>
-                            <label class="kt-radio">
-                                @Html.RadioButtonFor(m => m.IsVirtualMeeting, false) @Labels.Presential
-                                <span></span>
-                            </label>
-                            @Html.ValidationMessageFor(m => m.IsVirtualMeeting, "", new { @class = "text-danger" })
+                    <div class="row">
+                        <div class="form-group col-12 mb-0">
+                            <div class="kt-radio-list ml-3" data-id="IsVirtualMeeting">
+                                <label class="kt-radio">
+                                    @Html.RadioButtonFor(m => m.IsVirtualMeeting, true) @Labels.Virtual
+                                    <span></span>
+                                </label>
+                                <label class="kt-radio">
+                                    @Html.RadioButtonFor(m => m.IsVirtualMeeting, false) @Labels.Presential
+                                    <span></span>
+                                </label>
+                                @Html.ValidationMessageFor(m => m.IsVirtualMeeting, "", new { @class = "text-danger" })
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>*@
+    </div>*@
 <div class="kt-section">
     <div class="kt-section__content mt-3">
         <div class="row">
@@ -209,7 +209,7 @@
     <div class="kt-section__content mt-3">
         @Html.EditorFor(m => m.MiniBios)
     </div>
-</div>  
+</div>
 <div class="kt-section">
     <div class="form-group row">
         <div class="col-md-6">
@@ -237,36 +237,36 @@
     </div>
 </div>
 <div class="kt-section">
-        <div class="kt-separator kt-separator--border-dashed"></div>
-        <h3 class="kt-section__title mb-0">@Labels.PlayerInterests</h3>
-        <div class="kt-separator kt-separator--border-dashed"></div>
-        @Html.ValidationMessageFor(m => m.AttendeeCollaboratorInterests, "", new { @class = "text-danger" })
-        <div class="kt-section__content mt-3">
-            @*<div class="kt-section pt-4">
+    <div class="kt-separator kt-separator--border-dashed"></div>
+    <h3 class="kt-section__title mb-0">@Labels.PlayerInterests</h3>
+    <div class="kt-separator kt-separator--border-dashed"></div>
+    @Html.ValidationMessageFor(m => m.AttendeeCollaboratorInterests, "", new { @class = "text-danger" })
+    <div class="kt-section__content mt-3">
+        @*<div class="kt-section pt-4">
                 <h3 class="kt-section__title mb-0">@Messages.DescribeRestrictionSpecifics</h3>
                 @Html.ValidationMessage("RestrictionSpecifics", new { @class = "text-danger" })
                 <div class="kt-section__content mt-3">
                     @Html.EditorFor(m => m.RestrictionSpecifics)
                 </div>
             </div>*@
-            @if (Model.AttendeeCollaboratorInterests?.Any() == true)
-            {
-                <div class="kt-checkbox-list">
-                    @for (int i = 0; i < Model.AttendeeCollaboratorInterests.Length; i++)
-                    {
-                        var group = Model.AttendeeCollaboratorInterests[i].FirstOrDefault();
-                        <h5 class="mt-30">@(group?.InterestGroupName?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</h5>
-                        @Html.ValidationMessage(group?.InterestGroupUid.ToString(), new { @class = "text-danger" })
-                        <div class="kt-section__content mt-3">
-                            <div class="row require-one-group" data-id="@(group?.InterestGroupUid)">
-                                @Html.EditorFor(x => Model.AttendeeCollaboratorInterests[i])
-                            </div>
+        @if (Model.AttendeeCollaboratorInterests?.Any() == true)
+        {
+            <div class="kt-checkbox-list">
+                @for (int i = 0; i < Model.AttendeeCollaboratorInterests.Length; i++)
+                {
+                    var group = Model.AttendeeCollaboratorInterests[i].FirstOrDefault();
+                    <h5 class="mt-30">@(group?.InterestGroupName?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</h5>
+                    @Html.ValidationMessage(group?.InterestGroupUid.ToString(), new { @class = "text-danger" })
+                    <div class="kt-section__content mt-3">
+                        <div class="row require-one-group" data-id="@(group?.InterestGroupUid)">
+                            @Html.EditorFor(x => Model.AttendeeCollaboratorInterests[i])
                         </div>
-                    }
-                </div>
-            }
-        </div>
+                    </div>
+                }
+            </div>
+        }
     </div>
+</div>
 @*Todo: end task 988*@
 
 <div class="form-group row">
