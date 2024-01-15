@@ -157,6 +157,28 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the by collaborator type name and by edition identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="collaboratorTypeNames">Name of the collaborator type.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> FindByCollaboratorTypeNameAndByEditionId(this IQueryable<Collaborator> query, string[] collaboratorTypeNames, int? editionId, bool showDeleted = false)
+        {
+            if (collaboratorTypeNames == null)
+            {
+                collaboratorTypeNames = new string[] { };
+            }
+
+            query = query.Where(c => c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId
+                                                                        && (!ac.IsDeleted || showDeleted)
+                                                                        && (!ac.Edition.IsDeleted || showDeleted)
+                                                                        && (ac.AttendeeCollaboratorTypes
+                                                                                .Any(act => (!act.IsDeleted || showDeleted)
+                                                                                            && (!act.CollaboratorType.IsDeleted || showDeleted)
+                                                                                            && collaboratorTypeNames.Contains(act.CollaboratorType.Name)))));
+            return query;
+        }
+
         /// <summary>Finds the logistics by edition identifier.</summary>
         /// <param name="query">The query.</param>
         /// <param name="editionId">The edition identifier.</param>
@@ -2692,7 +2714,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             int pageSize)
         {
             var query = this.GetBaseQuery(true)
-                                .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, false, showAllParticipants, editionId)
+                                .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, editionId)
                                 .FindByKeywords(keywords, editionId)
                                 .HasProjectInNegotiation(editionId, filterByProjectsInNegotiation);
 
