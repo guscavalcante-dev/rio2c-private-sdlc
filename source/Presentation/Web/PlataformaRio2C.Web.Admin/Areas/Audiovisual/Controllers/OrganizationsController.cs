@@ -855,10 +855,16 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <returns></returns>
         [HttpGet]
+        //TODO: This route isn't more specific to Audiovisual area. Move this route out from Audiovisual Area!
+        //Or make it specific and create this same route at Innovation/OrganizationsController and Music/OrganizationsCrontroller.
         public async Task<ActionResult> ShowExecutivesWidget(Guid? organizationUid, Guid? organizationTypeUid)
         {
             ViewBag.OrganizationTypeUid = organizationTypeUid;
-            ViewBag.CollaboratorTypeForDropdownSearch = organizationTypeUid == OrganizationType.AudiovisualPlayer.Uid ? "PlayersExecutives" : "ProducersExecutives";
+            ViewBag.CollaboratorTypeForDropdownSearch = organizationTypeUid == OrganizationType.AudiovisualPlayer.Uid ? "Audiovisual/PlayersExecutives" :
+                                                        organizationTypeUid == OrganizationType.StartupPlayer.Uid ? "Innovation/PlayersExecutives" :
+                                                        organizationTypeUid == OrganizationType.MusicPlayer.Uid ? "Music/PlayersExecutives" :
+                                                        "Audiovisual/ProducersExecutives";
+
 
             Guid collaboratorTypeUid = organizationTypeUid == OrganizationType.AudiovisualPlayer.Uid ? CollaboratorType.PlayerExecutiveAudiovisual.Uid : 
                                             organizationTypeUid == OrganizationType.Producer.Uid ? CollaboratorType.Industry.Uid : 
