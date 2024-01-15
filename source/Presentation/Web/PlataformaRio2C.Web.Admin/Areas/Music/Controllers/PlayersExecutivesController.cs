@@ -477,8 +477,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     false,
                     false,
                     true,
-                    true,
-                    true,
                     UserInterfaceLanguage);
 
             return Json(new
@@ -644,8 +642,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     false,
                     false,
                     false,
-                    true,
-                    true,
                     true,
                     this.UserInterfaceLanguage);
             }

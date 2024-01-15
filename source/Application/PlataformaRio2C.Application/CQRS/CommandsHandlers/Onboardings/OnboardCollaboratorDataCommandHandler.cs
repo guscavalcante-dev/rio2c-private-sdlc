@@ -36,6 +36,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IActivityRepository activityRepo;
         private readonly IInterestRepository interestRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
+        private readonly IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OnboardCollaboratorDataCommandHandler" /> class.
@@ -51,6 +52,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="activityRepository">The activity repository.</param>
         /// <param name="interestRepository">The interest repository.</param>
         /// <param name="targetAudienceRepository">The target audience repository.</param>
+        /// <param name="innovationOrganizationTrackOptionRepo">The innovation organization track option repo.</param>
         public OnboardCollaboratorDataCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
@@ -62,7 +64,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             ICollaboratorRoleRepository roleRepo,
             IActivityRepository activityRepository,
             IInterestRepository interestRepository,
-            ITargetAudienceRepository targetAudienceRepository)
+            ITargetAudienceRepository targetAudienceRepository,
+            IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo)
             : base(eventBus, uow, collaboratorRepository)
         {
             this.editionRepo = editionRepository;
@@ -73,6 +76,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.activityRepo = activityRepository;
             this.interestRepo = interestRepository;
             this.targetAudienceRepo = targetAudienceRepository;
+            this.innovationOrganizationTrackOptionRepo = innovationOrganizationTrackOptionRepo;
         }
 
         /// <summary>Handles the specified onboard collaborator data.</summary>
@@ -133,8 +137,22 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
                 collaborator.OnboardMusicPlayerData(
                     edition,
-                    cmd.AttendeeCollaboratorActivities?.Where(aca => aca.IsChecked)?.Select(aca => new AttendeeCollaboratorActivity(activities?.FirstOrDefault(a => a.Uid == aca.ActivityUid), aca.AdditionalInfo, cmd.UserId))?.ToList(),
-                    cmd.AttendeeCollaboratorTargetAudiences?.Where(ota => ota.IsChecked)?.Select(ota => new AttendeeCollaboratorTargetAudience(targetAudiences?.FirstOrDefault(a => a.Uid == ota.TargetAudienceUid), ota.AdditionalInfo, cmd.UserId))?.ToList(),
+                    cmd.MusicAttendeeCollaboratorActivities?.Where(aca => aca.IsChecked)?.Select(aca => new AttendeeCollaboratorActivity(activities?.FirstOrDefault(a => a.Uid == aca.ActivityUid), aca.AdditionalInfo, cmd.UserId))?.ToList(),
+                    cmd.MusicAttendeeCollaboratorTargetAudiences?.Where(ota => ota.IsChecked)?.Select(ota => new AttendeeCollaboratorTargetAudience(targetAudiences?.FirstOrDefault(a => a.Uid == ota.TargetAudienceUid), ota.AdditionalInfo, cmd.UserId))?.ToList(),
+                    cmd.UserId);
+            }
+
+            if (cmd.UserAccessControlDto.IsInnovationPlayerExecutive())
+            {
+                var activities = await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id);
+                var innovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllByGroupsUidsAsync(cmd.InnovationOrganizationTrackGroups
+                                                                                                                                    ?.Where(ioto => ioto.IsChecked)
+                                                                                                                                    ?.Select(ioto => ioto.InnovationOrganizationTrackOptionGroupUid));
+
+                collaborator.OnboardInnovationPlayerData(
+                    edition,
+                    cmd.InnovationAttendeeCollaboratorActivities?.Where(aca => aca.IsChecked)?.Select(aca => new AttendeeCollaboratorActivity(activities?.FirstOrDefault(a => a.Uid == aca.ActivityUid), aca.AdditionalInfo, cmd.UserId))?.ToList(),
+                    innovationOrganizationTrackOptions.Select(ioto => new AttendeeCollaboratorInnovationOrganizationTrack(ioto, string.Empty, cmd.UserId)).ToList(),
                     cmd.UserId);
             }
 

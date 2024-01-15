@@ -145,18 +145,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public CropperImageBaseCommand CropperImage { get; set; }
         public List<TemplateAttendeeOrganizationBaseCommand> TemplateAttendeeOrganizationBaseCommands { get; set; }
 
+        [Display(Name = "Activities", ResourceType = typeof(Labels))]
         public List<AttendeeCollaboratorActivityBaseCommand> AttendeeCollaboratorActivities { get; set; }
-        public InterestBaseCommand[][] Interests { get; set; }
-
-        #region Innovation Organization Track Options
-
-        public bool IsVerticalRequired { get; set; }
 
         [Display(Name = "Verticals", ResourceType = typeof(Labels))]
-        [RequiredIf(nameof(IsVerticalRequired), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneOption")]
         public List<InnovationOrganizationTrackOptionBaseCommand> InnovationOrganizationTrackGroups { get; set; }
 
-        #endregion
+        [Display(Name = "Interests", ResourceType = typeof(Labels))]
+        public InterestBaseCommand[][] Interests { get; set; }
 
         #region Dropdowns Properties
 
@@ -193,7 +189,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         /// <param name="isPlayerRequired">if set to <c>true</c> [is attendee organization required].</param>
         /// <param name="isVirtualMeetingRequired">if set to <c>true</c> [is virtual meeting required].</param>
-        /// <param name="isActivitiesRequired">if set to <c>true</c> [is activities required].</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public void UpdateBaseProperties(
             CollaboratorDto entity,
@@ -212,7 +207,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isImageRequired,
             bool isPlayerRequired,
             bool isVirtualMeetingRequired,
-            bool isActivitiesRequired,
             string userInterfaceLanguage)
         {
             base.UpdateBaseProperties(entity);
@@ -236,7 +230,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateJobTitles(entity, languagesDtos, isJobTitleRequired);
             this.UpdateMiniBios(entity, languagesDtos, isMiniBioRequired);
             this.UpdateCropperImage(entity, isImageRequired);
-            this.UpdateActivities(entity, activities, isActivitiesRequired);
+            this.UpdateActivities(entity, activities);
             this.UpdateInterests(entity, interestsDtos);
 
             this.UpdateInnovationOrganizationTrackOptionGroups(entity, innovationOrganizationTrackOptionDtos);
@@ -412,10 +406,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="activities">The activities.</param>
-        private void UpdateActivities(
-            CollaboratorDto entity,
-            List<Activity> activities,
-            bool isActivitiesRequired)
+        private void UpdateActivities(CollaboratorDto entity, List<Activity> activities)
         {
             this.AttendeeCollaboratorActivities = new List<AttendeeCollaboratorActivityBaseCommand>();
             if (activities?.Any() == true)
@@ -423,8 +414,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 foreach (var activity in activities)
                 {
                     var attendeeCollaboratorActivityDto = entity?.AttendeeCollaboratorActivityDtos?.FirstOrDefault(oad => oad.ActivityUid == activity.Uid);
-                    this.AttendeeCollaboratorActivities.Add(attendeeCollaboratorActivityDto != null ? new AttendeeCollaboratorActivityBaseCommand(attendeeCollaboratorActivityDto, isActivitiesRequired) :
-                                                                                                      new AttendeeCollaboratorActivityBaseCommand(activity, isActivitiesRequired));
+                    this.AttendeeCollaboratorActivities.Add(attendeeCollaboratorActivityDto != null ? new AttendeeCollaboratorActivityBaseCommand(attendeeCollaboratorActivityDto) :
+                                                                                                      new AttendeeCollaboratorActivityBaseCommand(activity));
                 }
             }
         }

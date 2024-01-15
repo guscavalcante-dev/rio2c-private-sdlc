@@ -1632,11 +1632,25 @@ namespace PlataformaRio2C.Domain.Entities
         #region Attendee Collaborator Innovation Organization Tracks
 
         /// <summary>
+        /// Updates the attendee collaborator innovation organization tracks.
+        /// </summary>
+        /// <param name="attendeeCollaboratorInnovationOrganizationTracks">The attendee collaborator innovation organization tracks.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateAttendeeCollaboratorInnovationOrganizationTracks(
+           List<AttendeeCollaboratorInnovationOrganizationTrack> attendeeCollaboratorInnovationOrganizationTracks,
+           int userId)
+        {
+            this.SetUpdateDate(userId);
+
+            this.SynchronizeAttendeeCollaboratorInnovationOrganizationTracks(attendeeCollaboratorInnovationOrganizationTracks, userId);
+        }
+
+        /// <summary>
         /// Synchronizes the attendee collaborator innovation organization tracks.
         /// </summary>
         /// <param name="attendeeCollaboratorInnovationOrganizationTracks">The attendee innovation organization tracks.</param>
         /// <param name="userId">The user identifier.</param>
-        public void SynchronizeAttendeeCollaboratorInnovationOrganizationTracks(
+        private void SynchronizeAttendeeCollaboratorInnovationOrganizationTracks(
            List<AttendeeCollaboratorInnovationOrganizationTrack> attendeeCollaboratorInnovationOrganizationTracks,
            int userId)
         {

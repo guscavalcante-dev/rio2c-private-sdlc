@@ -41,24 +41,30 @@ namespace PlataformaRio2C.Web.Site.Controllers
         private readonly IActivityRepository activityRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
         private readonly IInterestRepository interestRepo;
+        private readonly IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="OnboardingController"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OnboardingController" /> class.
+        /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="activityRepository">The activity repository.</param>
         /// <param name="targetAudienceRepository">The target audience repository.</param>
         /// <param name="interestRepository">The interest repository.</param>
+        /// <param name="innovationOrganizationTrackOptionRepo">The innovation organization track option repo.</param>
         public OnboardingController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             IActivityRepository activityRepository,
             ITargetAudienceRepository targetAudienceRepository,
-            IInterestRepository interestRepository)
+            IInterestRepository interestRepository,
+            IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo)
             : base(commandBus, identityController)
         {
             this.activityRepo = activityRepository;
             this.targetAudienceRepo = targetAudienceRepository;
             this.interestRepo = interestRepository;
+            this.innovationOrganizationTrackOptionRepo = innovationOrganizationTrackOptionRepo;
         }
 
         /// <summary>Indexes this instance.</summary>
@@ -654,12 +660,12 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
                 this.UserAccessControlDto.IsMusicPlayerExecutive() ? await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id) : null,
                 this.UserAccessControlDto.IsMusicPlayerExecutive() ? await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id) : null,
+                this.UserAccessControlDto.IsInnovationPlayerExecutive() ? await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync() : null,
+                this.UserAccessControlDto.IsInnovationPlayerExecutive() ? await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id) : null,
                 EditionDto.Id,
                 true,
                 true,
                 true,
-                this.UserAccessControlDto.IsMusicPlayerExecutive(),
-                this.UserAccessControlDto.IsMusicPlayerExecutive(),
                 UserInterfaceLanguage);
 
             return View(cmd);

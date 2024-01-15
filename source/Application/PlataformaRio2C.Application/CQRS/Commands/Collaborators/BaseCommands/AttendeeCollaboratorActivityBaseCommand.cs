@@ -26,7 +26,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string ActivityName { get; set; }
         public bool ActivityHasAdditionalInfo { get; set; }
         public bool IsChecked { get; set; }
-        public bool IsRequired { get; set; }
 
         [Display(Name = "AdditionalInformation", ResourceType = typeof(Labels))]
         public string AdditionalInfo { get; set; }
@@ -36,14 +35,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="isRequired">if set to <c>true</c> [is required].</param>
-        public AttendeeCollaboratorActivityBaseCommand(AttendeeCollaboratorActivityDto entity, bool isRequired)
+        public AttendeeCollaboratorActivityBaseCommand(AttendeeCollaboratorActivityDto entity)
         {
             this.ActivityUid = entity.ActivityUid;
             this.ActivityName = entity.ActivityName;
             this.ActivityHasAdditionalInfo = entity.ActivityHasAdditionalInfo;
             this.AdditionalInfo = entity.AttendeeCollaboratorActivityAdditionalInfo;
             this.IsChecked = true;
-            this.IsRequired = isRequired;
         }
 
         /// <summary>
@@ -51,13 +49,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// </summary>
         /// <param name="activity">The activity.</param>
         /// <param name="isRequired">if set to <c>true</c> [is required].</param>
-        public AttendeeCollaboratorActivityBaseCommand(Activity activity, bool isRequired)
+        public AttendeeCollaboratorActivityBaseCommand(Activity activity)
         {
             this.ActivityUid = activity.Uid;
             this.ActivityName = activity.Name;
             this.ActivityHasAdditionalInfo = activity.HasAdditionalInfo;
             this.IsChecked = false;
-            this.IsRequired = isRequired;
         }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeCollaboratorActivityBaseCommand"/> class.</summary>

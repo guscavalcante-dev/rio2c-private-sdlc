@@ -151,6 +151,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Display(Name = "TargetAudiences", ResourceType = typeof(Labels))]
         public List<AttendeeCollaboratorTargetAudienceBaseCommand> AttendeeCollaboratorTargetAudiences { get; set; }
 
+        [Display(Name = "Interests", ResourceType = typeof(Labels))]
         public InterestBaseCommand[][] AttendeeCollaboratorInterests { get; set; }
 
         #region Dropdowns Properties
@@ -206,8 +207,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isImageRequired,
             bool isPlayerRequired,
             bool isVirtualMeetingRequired,
-            bool isActivitiesRequired,
-            bool isTargetAudiencesRequired,
             string userInterfaceLanguage)
         {
             base.UpdateBaseProperties(entity);
@@ -231,8 +230,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateJobTitles(entity, languagesDtos, isJobTitleRequired);
             this.UpdateMiniBios(entity, languagesDtos, isMiniBioRequired);
             this.UpdateCropperImage(entity, isImageRequired);
-            this.UpdateActivities(entity, activities, isActivitiesRequired);
-            this.UpdateTargetAudiences(entity, targetAudiences, isTargetAudiencesRequired);
+            this.UpdateActivities(entity, activities);
+            this.UpdateTargetAudiences(entity, targetAudiences);
             this.UpdateInterests(entity, interestsDtos);
 
             this.UpdateDropdownProperties(
@@ -403,7 +402,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="activities">The activities.</param>
-        private void UpdateActivities(CollaboratorDto entity, List<Activity> activities, bool isActivitiesRequired)
+        private void UpdateActivities(CollaboratorDto entity, List<Activity> activities)
         {
             this.AttendeeCollaboratorActivities = new List<AttendeeCollaboratorActivityBaseCommand>();
             if (activities?.Any() == true)
@@ -411,8 +410,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 foreach (var activity in activities)
                 {
                     var attendeeCollaboratorActivityDto = entity?.AttendeeCollaboratorActivityDtos?.FirstOrDefault(oad => oad.ActivityUid == activity.Uid);
-                    this.AttendeeCollaboratorActivities.Add(attendeeCollaboratorActivityDto != null ? new AttendeeCollaboratorActivityBaseCommand(attendeeCollaboratorActivityDto, isActivitiesRequired) :
-                                                                                                      new AttendeeCollaboratorActivityBaseCommand(activity, isActivitiesRequired));
+                    this.AttendeeCollaboratorActivities.Add(attendeeCollaboratorActivityDto != null ? new AttendeeCollaboratorActivityBaseCommand(attendeeCollaboratorActivityDto) :
+                                                                                                      new AttendeeCollaboratorActivityBaseCommand(activity));
                 }
             }
         }
@@ -456,7 +455,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="targetAudiences">The target audiences.</param>
-        private void UpdateTargetAudiences(CollaboratorDto entity, List<TargetAudience> targetAudiences, bool isTargetAudiencesRequired)
+        private void UpdateTargetAudiences(CollaboratorDto entity, List<TargetAudience> targetAudiences)
         {
             if (targetAudiences == null) return;
 
@@ -464,8 +463,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             foreach (var targetAudience in targetAudiences)
             {
                 var attendeeCollaboratorTargetAudience = entity?.AttendeeCollaboratorTargetAudiencesDtos?.FirstOrDefault(ota => ota.TargetAudienceUid == targetAudience.Uid);
-                this.AttendeeCollaboratorTargetAudiences.Add(attendeeCollaboratorTargetAudience != null ? new AttendeeCollaboratorTargetAudienceBaseCommand(attendeeCollaboratorTargetAudience, isTargetAudiencesRequired) :
-                                                                                                          new AttendeeCollaboratorTargetAudienceBaseCommand(targetAudience, isTargetAudiencesRequired));
+                this.AttendeeCollaboratorTargetAudiences.Add(attendeeCollaboratorTargetAudience != null ? new AttendeeCollaboratorTargetAudienceBaseCommand(attendeeCollaboratorTargetAudience) :
+                                                                                                          new AttendeeCollaboratorTargetAudienceBaseCommand(targetAudience));
             }
         }
 

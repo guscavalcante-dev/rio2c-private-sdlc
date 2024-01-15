@@ -3071,7 +3071,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SetUpdateDate(userId);
         }
 
-        #region Music Player
+        #region Music Player Executive
 
         /// <summary>
         /// Called when [music player data].
@@ -3105,17 +3105,25 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Onboard Terms Acceptance
+        #region Innovation Player Executive
 
         /// <summary>
-        /// Called when [audiovisual player terms acceptance].
+        /// Called when [innovation player data].
         /// </summary>
         /// <param name="edition">The edition.</param>
+        /// <param name="attendeeCollaboratorActivities">The attendee collaborator activities.</param>
+        /// <param name="attendeeCollaboratorInnovationOrganizationTracks">The attendee collaborator innovation organization tracks.</param>
         /// <param name="userId">The user identifier.</param>
-        public void OnboardAudiovisualPlayerTermsAcceptance(Edition edition, int userId)
+        public void OnboardInnovationPlayerData(
+            Edition edition,
+            List<AttendeeCollaboratorActivity> attendeeCollaboratorActivities,
+            List<AttendeeCollaboratorInnovationOrganizationTrack> attendeeCollaboratorInnovationOrganizationTracks,
+            int userId)
         {
             var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
-            attendeeCollaborator?.OnboardAudiovisualPlayerTermsAcceptance(userId);
+            attendeeCollaborator?.UpdateAttendeeCollaboratorActivities(attendeeCollaboratorActivities, userId);
+            attendeeCollaborator?.UpdateAttendeeCollaboratorInnovationOrganizationTracks(attendeeCollaboratorInnovationOrganizationTracks, userId);
+
             this.SetUpdateDate(userId);
         }
 
@@ -3128,6 +3136,22 @@ namespace PlataformaRio2C.Domain.Entities
         {
             var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
             attendeeCollaborator?.OnboardInnovationPlayerTermsAcceptance(userId);
+            this.SetUpdateDate(userId);
+        }
+
+        #endregion
+
+        #region Onboard Terms Acceptance
+
+        /// <summary>
+        /// Called when [audiovisual player terms acceptance].
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardAudiovisualPlayerTermsAcceptance(Edition edition, int userId)
+        {
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            attendeeCollaborator?.OnboardAudiovisualPlayerTermsAcceptance(userId);
             this.SetUpdateDate(userId);
         }
 
