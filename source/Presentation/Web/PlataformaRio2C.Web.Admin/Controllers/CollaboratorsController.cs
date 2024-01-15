@@ -487,7 +487,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         public async Task<ActionResult> ShowCompanyWidget(Guid? collaboratorUid, Guid? organizationTypeUid)
         {
             ViewBag.OrganizationTypeUid = organizationTypeUid;
-            ViewBag.OrganizationTypeForDropdownSearch = organizationTypeUid == OrganizationType.AudiovisualPlayer.Uid ? "Players" :
+            ViewBag.OrganizationTypeForDropdownSearch = organizationTypeUid == OrganizationType.AudiovisualPlayer.Uid ? "Audiovisual/Players" :
+                                                        organizationTypeUid == OrganizationType.StartupPlayer.Uid ? "Innovation/Players" :
+                                                        organizationTypeUid == OrganizationType.MusicPlayer.Uid ? "Music/Players" :
                                                         organizationTypeUid == OrganizationType.Producer.Uid ? "Producers" :
                                                         "Companies";
 

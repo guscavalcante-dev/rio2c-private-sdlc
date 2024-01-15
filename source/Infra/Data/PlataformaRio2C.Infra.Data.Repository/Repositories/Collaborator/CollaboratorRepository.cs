@@ -2719,7 +2719,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             int pageSize)
         {
             var query = this.GetBaseQuery(true)
-                                .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, false, showAllParticipants, editionId)
+                                .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, editionId)
                                 .FindByKeywords(keywords, editionId)
                                 .HasProjectInNegotiation(editionId, filterByProjectsInNegotiation);
 
