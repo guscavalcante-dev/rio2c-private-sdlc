@@ -25,7 +25,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string TargetAudienceName { get; set; }
         public bool TargetAudienceHasAdditionalInfo { get; set; }
         public bool IsChecked { get; set; }
-        public bool IsRequired { get; set; }
 
         [Display(Name = "AdditionalInformation", ResourceType = typeof(Labels))]
         public string AdditionalInfo { get; set; }
@@ -34,29 +33,25 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// Initializes a new instance of the <see cref="AttendeeCollaboratorTargetAudienceBaseCommand" /> class.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        /// <param name="isRequired">if set to <c>true</c> [is required].</param>
-        public AttendeeCollaboratorTargetAudienceBaseCommand(AttendeeCollaboratorTargetAudiencesDto entity, bool isRequired)
+        public AttendeeCollaboratorTargetAudienceBaseCommand(AttendeeCollaboratorTargetAudiencesDto entity)
         {
             this.TargetAudienceUid = entity.TargetAudienceUid;
             this.TargetAudienceName = entity.TargetAudienceName;
             this.TargetAudienceHasAdditionalInfo = entity.TargetAudienceHasAdditionalInfo;
             this.AdditionalInfo = entity.AttendeeCollaboratorTargetAudienceAdditionalInfo;
             this.IsChecked = true;
-            this.IsRequired = isRequired;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttendeeCollaboratorTargetAudienceBaseCommand" /> class.
         /// </summary>
         /// <param name="targetAudience">The TargetAudience.</param>
-        /// <param name="isRequired">if set to <c>true</c> [is required].</param>
-        public AttendeeCollaboratorTargetAudienceBaseCommand(TargetAudience targetAudience, bool isRequired)
+        public AttendeeCollaboratorTargetAudienceBaseCommand(TargetAudience targetAudience)
         {
             this.TargetAudienceUid = targetAudience.Uid;
             this.TargetAudienceName = targetAudience.Name;
             this.TargetAudienceHasAdditionalInfo = targetAudience.HasAdditionalInfo;
             this.IsChecked = false;
-            this.IsRequired = isRequired;
         }
 
         public AttendeeCollaboratorTargetAudienceBaseCommand()

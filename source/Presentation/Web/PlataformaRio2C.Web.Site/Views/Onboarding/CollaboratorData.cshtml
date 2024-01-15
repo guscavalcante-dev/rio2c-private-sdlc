@@ -281,10 +281,10 @@
                                                 <div class="col-md-6">
                                                     <div class="kt-section pt-4">
                                                         <h3 class="kt-section__title mb-0">@Labels.Activities</h3>
-                                                        @Html.ValidationMessageFor(m => m.AttendeeCollaboratorActivities, "", new { @class = "text-danger" })
+                                                        @Html.ValidationMessageFor(m => m.MusicAttendeeCollaboratorActivities, "", new { @class = "text-danger" })
                                                         <div class="kt-section__content mt-3">
                                                             <div class="kt-checkbox-list">
-                                                                @Html.EditorFor(m => m.AttendeeCollaboratorActivities)
+                                                                @Html.EditorFor(m => m.MusicAttendeeCollaboratorActivities, new { editorType = "Music" })
                                                             </div>
                                                         </div>
                                                     </div>
@@ -292,10 +292,42 @@
                                                 <div class="col-md-6">
                                                     <div class="kt-section pt-4">
                                                         <h3 class="kt-section__title mb-0">@Labels.TargetAudiences</h3>
-                                                        @Html.ValidationMessageFor(m => m.AttendeeCollaboratorTargetAudiences, "", new { @class = "text-danger" })
+                                                        @Html.ValidationMessageFor(m => m.MusicAttendeeCollaboratorTargetAudiences, "", new { @class = "text-danger" })
                                                         <div class="kt-section__content mt-3">
                                                             <div class="kt-checkbox-list">
-                                                                @Html.EditorFor(m => m.AttendeeCollaboratorTargetAudiences)
+                                                                @Html.EditorFor(m => m.MusicAttendeeCollaboratorTargetAudiences)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    @if (isInnovationPlayer)
+                                    {
+                                        <div class="kt-section">
+                                            <div class="kt-separator kt-separator--border-dashed"></div>
+                                            <h3 class="kt-section__title mb-0">@Labels.StartupExecutive</h3>
+                                            <div class="kt-separator kt-separator--border-dashed"></div>
+                                            <div class="form-group row">
+                                                <div class="col-md-6">
+                                                    <div class="kt-section pt-4">
+                                                        <h3 class="kt-section__title mb-0">@Labels.Activities</h3>
+                                                        @Html.ValidationMessageFor(m => m.InnovationAttendeeCollaboratorActivities, "", new { @class = "text-danger" })
+                                                        <div class="kt-section__content mt-3">
+                                                            <div class="kt-checkbox-list">
+                                                                @Html.EditorFor(m => m.InnovationAttendeeCollaboratorActivities, new { editorType = "Innovation" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="kt-section pt-4">
+                                                        <h3 class="kt-section__title mb-0">@Labels.Verticals</h3>
+                                                        @Html.ValidationMessageFor(m => m.InnovationOrganizationTrackGroups, "", new { @class = "text-danger" })
+                                                        <div class="kt-section__content mt-3">
+                                                            <div class="kt-checkbox-list">
+                                                                @Html.EditorFor(m => m.InnovationOrganizationTrackGroups)
                                                             </div>
                                                         </div>
                                                     </div>

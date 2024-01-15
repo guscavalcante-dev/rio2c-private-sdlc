@@ -144,12 +144,18 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public Guid CollaboratorUid { get; set; }
         public UserAccessControlDto UserAccessControlDto { get; set; }
-        
+
         [Display(Name = "Activities", ResourceType = typeof(Labels))]
-        public List<AttendeeCollaboratorActivityBaseCommand> AttendeeCollaboratorActivities { get; set; }
+        public List<AttendeeCollaboratorActivityBaseCommand> MusicAttendeeCollaboratorActivities { get; set; }
 
         [Display(Name = "TargetAudiences", ResourceType = typeof(Labels))]
-        public List<AttendeeCollaboratorTargetAudienceBaseCommand> AttendeeCollaboratorTargetAudiences { get; set; }
+        public List<AttendeeCollaboratorTargetAudienceBaseCommand> MusicAttendeeCollaboratorTargetAudiences { get; set; }
+
+        [Display(Name = "Verticals", ResourceType = typeof(Labels))]
+        public List<InnovationOrganizationTrackOptionBaseCommand> InnovationOrganizationTrackGroups { get; set; }
+
+        [Display(Name = "Activities", ResourceType = typeof(Labels))]
+        public List<AttendeeCollaboratorActivityBaseCommand> InnovationAttendeeCollaboratorActivities { get; set; }
 
         #region Dropdowns Properties
 
@@ -160,74 +166,76 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>
         /// Initializes a new instance of the <see cref="OnboardCollaboratorData" /> class.
         /// </summary>
-        /// <param name="collaborator">The collaborator.</param>
+        /// <param name="entity">The collaborator.</param>
         /// <param name="genders">The genders.</param>
         /// <param name="industries">The industries.</param>
         /// <param name="roles">The roles.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="editionsDtos">The editions dtos.</param>
-        /// <param name="activities">The activities.</param>
-        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="musicAttendeeCollaboratorActivities">The activities.</param>
+        /// <param name="musicAttendeeCollaboratorTargetAudiences">The target audiences.</param>
+        /// <param name="innovationOrganizationTrackOptionDtos">The innovation organization track option dtos.</param>
+        /// <param name="innovationAttendeeCollaboratorActivities">The innovation attendee collaborator activities.</param>
         /// <param name="currentEditionId">The current edition identifier.</param>
         /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
         /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
-        /// <param name="isActivitiesRequired">if set to <c>true</c> [is activities required].</param>
-        /// <param name="isTargetAudiencesRequired">if set to <c>true</c> [is target audiences required].</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public OnboardCollaboratorData(
-            CollaboratorDto collaborator,
+            CollaboratorDto entity,
             List<CollaboratorGender> genders,
             List<CollaboratorIndustry> industries,
             List<CollaboratorRole> roles,
             List<LanguageDto> languagesDtos,
             List<EditionDto> editionsDtos,
-            List<Activity> activities,
-            List<TargetAudience> targetAudiences,
+            List<Activity> musicAttendeeCollaboratorActivities,
+            List<TargetAudience> musicAttendeeCollaboratorTargetAudiences,
+            List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos,
+            List<Activity> innovationAttendeeCollaboratorActivities,
             int currentEditionId,
             bool isJobTitleRequired,
             bool isMiniBioRequired,
             bool isImageRequired,
-            bool isActivitiesRequired,
-            bool isTargetAudiencesRequired,
             string userInterfaceLanguage)
         {
-            this.SharePublicEmail = !string.IsNullOrEmpty(collaborator.PublicEmail) ? (bool?)true : null;
-            this.PublicEmail = collaborator?.PublicEmail;
-            this.BirthDate = collaborator?.BirthDate;
+            this.SharePublicEmail = !string.IsNullOrEmpty(entity.PublicEmail) ? (bool?)true : null;
+            this.PublicEmail = entity?.PublicEmail;
+            this.BirthDate = entity?.BirthDate;
 
-            this.Website = collaborator?.Website;
-            this.Linkedin = collaborator?.Linkedin;
-            this.Twitter = collaborator?.Twitter;
-            this.Instagram = collaborator?.Instagram;
-            this.Youtube = collaborator?.Youtube;
-            this.HasAnySpecialNeeds = collaborator?.HasAnySpecialNeeds;
-            this.SpecialNeedsDescription = collaborator?.SpecialNeedsDescription;
-            this.HaveYouBeenToRio2CBefore = collaborator?.EditionsUids?.Count > 0;
-            this.EditionsUids = collaborator?.EditionsUids;
+            this.Website = entity?.Website;
+            this.Linkedin = entity?.Linkedin;
+            this.Twitter = entity?.Twitter;
+            this.Instagram = entity?.Instagram;
+            this.Youtube = entity?.Youtube;
+            this.HasAnySpecialNeeds = entity?.HasAnySpecialNeeds;
+            this.SpecialNeedsDescription = entity?.SpecialNeedsDescription;
+            this.HaveYouBeenToRio2CBefore = entity?.EditionsUids?.Count > 0;
+            this.EditionsUids = entity?.EditionsUids;
 
             this.UpdateEditions(editionsDtos, currentEditionId);
 
             this.UpdateGenders(genders,
                 userInterfaceLanguage,
-                collaborator?.Gender?.Uid,
-                collaborator?.CollaboratorGenderAdditionalInfo);
+                entity?.Gender?.Uid,
+                entity?.CollaboratorGenderAdditionalInfo);
 
             this.UpdateIndustries(industries,
                 userInterfaceLanguage,
-                collaborator?.Industry?.Uid,
-                collaborator?.CollaboratorIndustryAdditionalInfo);
+                entity?.Industry?.Uid,
+                entity?.CollaboratorIndustryAdditionalInfo);
 
             this.UpdateRoles(roles,
                 userInterfaceLanguage,
-                collaborator?.CollaboratorRole?.Uid,
-                collaborator?.CollaboratorRoleAdditionalInfo);
+                entity?.CollaboratorRole?.Uid,
+                entity?.CollaboratorRoleAdditionalInfo);
 
-            this.UpdateJobTitles(collaborator, languagesDtos, isJobTitleRequired);
-            this.UpdateMiniBios(collaborator, languagesDtos, isMiniBioRequired);
-            this.UpdateActivities(collaborator, activities, isActivitiesRequired);
-            this.UpdateTargetAudiences(collaborator, targetAudiences, isTargetAudiencesRequired);
-            this.UpdateCropperImage(collaborator, isImageRequired);
+            this.UpdateJobTitles(entity, languagesDtos, isJobTitleRequired);
+            this.UpdateMiniBios(entity, languagesDtos, isMiniBioRequired);
+            this.UpdateMusicAttendeeCollaboratorActivities(entity, musicAttendeeCollaboratorActivities);
+            this.UpdateMusicTargetAudiences(entity, musicAttendeeCollaboratorTargetAudiences);
+            this.UpdateInnovationOrganizationTrackOptionGroups(entity, innovationOrganizationTrackOptionDtos);
+            this.UpdateInnovationAttendeeCollaboratorActivities(entity, innovationAttendeeCollaboratorActivities);
+            this.UpdateCropperImage(entity, isImageRequired);
         }
 
         /// <summary>Initializes a new instance of the <see cref="OnboardCollaboratorData"/> class.</summary>
@@ -384,21 +392,24 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.CollaboratorRoleAdditionalInfo = collaboratorRoleAdditionalInfo;
         }
 
+        #region Music Player Executive
+
         /// <summary>
-        /// Updates the activities.
+        /// Updates the music attendee collaborator activities.
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="activities">The activities.</param>
-        private void UpdateActivities(CollaboratorDto entity, List<Activity> activities, bool isActivitiesRequired)
+        /// <param name="isActivitiesRequired">if set to <c>true</c> [is activities required].</param>
+        private void UpdateMusicAttendeeCollaboratorActivities(CollaboratorDto entity, List<Activity> activities)
         {
-            this.AttendeeCollaboratorActivities = new List<AttendeeCollaboratorActivityBaseCommand>();
+            this.MusicAttendeeCollaboratorActivities = new List<AttendeeCollaboratorActivityBaseCommand>();
             if (activities?.Any() == true)
             {
                 foreach (var activity in activities)
                 {
                     var attendeeCollaboratorActivityDto = entity?.AttendeeCollaboratorActivityDtos?.FirstOrDefault(oad => oad.ActivityUid == activity.Uid);
-                    this.AttendeeCollaboratorActivities.Add(attendeeCollaboratorActivityDto != null ? new AttendeeCollaboratorActivityBaseCommand(attendeeCollaboratorActivityDto, isActivitiesRequired) :
-                                                                                                      new AttendeeCollaboratorActivityBaseCommand(activity, isActivitiesRequired));
+                    this.MusicAttendeeCollaboratorActivities.Add(attendeeCollaboratorActivityDto != null ? new AttendeeCollaboratorActivityBaseCommand(attendeeCollaboratorActivityDto) :
+                                                                                                           new AttendeeCollaboratorActivityBaseCommand(activity));
                 }
             }
         }
@@ -408,18 +419,68 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="targetAudiences">The target audiences.</param>
-        public void UpdateTargetAudiences(CollaboratorDto entity, List<TargetAudience> targetAudiences, bool isTargetAudiencesRequired)
+        public void UpdateMusicTargetAudiences(CollaboratorDto entity, List<TargetAudience> targetAudiences)
         {
             if (targetAudiences == null) return;
 
-            this.AttendeeCollaboratorTargetAudiences = new List<AttendeeCollaboratorTargetAudienceBaseCommand>();
+            this.MusicAttendeeCollaboratorTargetAudiences = new List<AttendeeCollaboratorTargetAudienceBaseCommand>();
             foreach (var targetAudience in targetAudiences)
             {
                 var attendeeCollaboratorTargetAudience = entity?.AttendeeCollaboratorTargetAudiencesDtos?.FirstOrDefault(ota => ota.TargetAudienceUid == targetAudience.Uid);
-                this.AttendeeCollaboratorTargetAudiences.Add(attendeeCollaboratorTargetAudience != null ? new AttendeeCollaboratorTargetAudienceBaseCommand(attendeeCollaboratorTargetAudience, isTargetAudiencesRequired) :
-                                                                                                          new AttendeeCollaboratorTargetAudienceBaseCommand(targetAudience, isTargetAudiencesRequired));
+                this.MusicAttendeeCollaboratorTargetAudiences.Add(attendeeCollaboratorTargetAudience != null ? new AttendeeCollaboratorTargetAudienceBaseCommand(attendeeCollaboratorTargetAudience) :
+                                                                                                               new AttendeeCollaboratorTargetAudienceBaseCommand(targetAudience));
             }
         }
+
+        #endregion
+
+        #region Innovation Player Executive
+
+        /// <summary>
+        /// Updates the innovation organization track option groups.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="innovationOrganizationTrackOptionDtos">The innovation organization track option dtos.</param>
+        private void UpdateInnovationOrganizationTrackOptionGroups(CollaboratorDto entity, List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos)
+        {
+            this.InnovationOrganizationTrackGroups = new List<InnovationOrganizationTrackOptionBaseCommand>();
+
+            var selectedInnovationOrganizationTrackOptionGroupsUids = entity?.InnovationOrganizationTrackOptionGroupDtos
+                                                                                ?.GroupBy(aciotDto => aciotDto.InnovationOrganizationTrackOptionGroup?.Uid)
+                                                                                ?.Select(group => group.Key);
+            if (innovationOrganizationTrackOptionDtos?.Any() == true)
+            {
+                foreach (var innovationOrganizationTrackOptionGroup in innovationOrganizationTrackOptionDtos.GroupBy(dto => dto.InnovationOrganizationTrackOptionGroup))
+                {
+                    this.InnovationOrganizationTrackGroups.Add(
+                        new InnovationOrganizationTrackOptionBaseCommand(
+                            innovationOrganizationTrackOptionGroup.Key,
+                            selectedInnovationOrganizationTrackOptionGroupsUids?.Contains(innovationOrganizationTrackOptionGroup.Key?.Uid) == true));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates the innovation attendee collaborator activities.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="activities">The activities.</param>
+        /// <param name="isActivitiesRequired">if set to <c>true</c> [is activities required].</param>
+        private void UpdateInnovationAttendeeCollaboratorActivities(CollaboratorDto entity, List<Activity> activities)
+        {
+            this.InnovationAttendeeCollaboratorActivities = new List<AttendeeCollaboratorActivityBaseCommand>();
+            if (activities?.Any() == true)
+            {
+                foreach (var activity in activities)
+                {
+                    var attendeeCollaboratorActivityDto = entity?.AttendeeCollaboratorActivityDtos?.FirstOrDefault(oad => oad.ActivityUid == activity.Uid);
+                    this.InnovationAttendeeCollaboratorActivities.Add(attendeeCollaboratorActivityDto != null ? new AttendeeCollaboratorActivityBaseCommand(attendeeCollaboratorActivityDto) :
+                                                                                                                new AttendeeCollaboratorActivityBaseCommand(activity));
+                }
+            }
+        }
+
+        #endregion
 
         #endregion
     }

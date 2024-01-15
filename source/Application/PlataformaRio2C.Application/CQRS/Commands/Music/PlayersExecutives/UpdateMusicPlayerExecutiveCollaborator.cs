@@ -59,8 +59,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         /// <param name="isPlayerRequired">if set to <c>true</c> [is image required].</param>
         /// <param name="isVirtualMeetingRequired">if set to <c>true</c> [is isVirtualMeetingRequired required].</param>
-        /// <param name="isActivitiesRequired">if set to <c>true</c> [is activities required].</param>
-        /// <param name="isTargetAudiencesRequired">if set to <c>true</c> [is target audiences required].</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
         public UpdateMusicPlayerExecutiveCollaborator(
@@ -82,8 +80,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isImageRequired,
             bool isPlayerRequired,
             bool isVirtualMeetingRequired,
-            bool isActivitiesRequired,
-            bool isTargetAudiencesRequired,
             string userInterfaceLanguage)
         {
             if (entity == null)
@@ -119,8 +115,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 isImageRequired,
                 isPlayerRequired,
                 isVirtualMeetingRequired,
-                isActivitiesRequired,
-                isTargetAudiencesRequired,
                 userInterfaceLanguage);
 
             this.UpdateDropdownProperties(
