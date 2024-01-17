@@ -58,5 +58,19 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public UpdateAudiovisualCommissionCollaborator()
         {
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateAudiovisualCommissionCollaborator" /> class.
+        /// </summary>
+        public UpdateAudiovisualCommissionCollaborator(Guid collaboratorUid, CreateAudiovisualCommissionCollaborator cmd)
+        {
+            this.CollaboratorUid = collaboratorUid;
+            this.IsAddingToCurrentEdition = true;
+
+            this.FirstName = cmd.FirstName;
+            this.LastNames = cmd.LastNames;
+            this.Email = cmd.Email;
+            this.Interests = cmd.Interests;
+        }
     }
 }
