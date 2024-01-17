@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-11-2024
+// Last Modified On : 01-17-2024
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1279,7 +1279,7 @@ namespace PlataformaRio2C.Domain.Entities
                 var interestDb = this.OrganizationInterests.FirstOrDefault(a => a.Interest.Uid == organizationInterest.Interest.Uid);
                 if (interestDb != null)
                 {
-                    interestDb.Update(organizationInterest, userId);
+                    interestDb.Update(organizationInterest?.AdditionalInfo, userId);
                 }
                 else
                 {

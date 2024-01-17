@@ -4,7 +4,7 @@
 // Created          : 09-06-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-13-2024
+// Last Modified On : 01-17-2024
 // ***********************************************************************
 // <copyright file="OnboardCollaboratorDataCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -135,10 +136,28 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 var activities = await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id);
                 var targetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id);
 
+                // Interests
+                var attendeeCollaboratorInterests = new List<AttendeeCollaboratorInterest>();
+                if (cmd.MusicInterests?.Any() == true)
+                {
+                    var interestsDtos = await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Music.Id);
+
+                    foreach (var interestBaseCommands in cmd.MusicInterests)
+                    {
+                        foreach (var interestBaseCommand in interestBaseCommands?.Where(ibc => ibc.IsChecked)?.ToList())
+                        {
+                            var interestDto = interestsDtos?.FirstOrDefault(id => id.Interest.Uid == interestBaseCommand.InterestUid);
+                            attendeeCollaboratorInterests.Add(new AttendeeCollaboratorInterest(interestDto?.Interest, interestBaseCommand.AdditionalInfo, cmd.UserId));
+                        }
+                    }
+                }
+
                 collaborator.OnboardMusicPlayerData(
                     edition,
+                    ProjectType.Music,
                     cmd.MusicAttendeeCollaboratorActivities?.Where(aca => aca.IsChecked)?.Select(aca => new AttendeeCollaboratorActivity(activities?.FirstOrDefault(a => a.Uid == aca.ActivityUid), aca.AdditionalInfo, cmd.UserId))?.ToList(),
                     cmd.MusicAttendeeCollaboratorTargetAudiences?.Where(ota => ota.IsChecked)?.Select(ota => new AttendeeCollaboratorTargetAudience(targetAudiences?.FirstOrDefault(a => a.Uid == ota.TargetAudienceUid), ota.AdditionalInfo, cmd.UserId))?.ToList(),
+                    attendeeCollaboratorInterests,
                     cmd.UserId);
             }
 
@@ -149,10 +168,28 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                                                                                                                     ?.Where(ioto => ioto.IsChecked)
                                                                                                                                     ?.Select(ioto => ioto.InnovationOrganizationTrackOptionGroupUid));
 
+                // Interests
+                var attendeeCollaboratorInterests = new List<AttendeeCollaboratorInterest>();
+                if (cmd.InnovationInterests?.Any() == true)
+                {
+                    var interestsDtos = await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Startup.Id);
+
+                    foreach (var interestBaseCommands in cmd.InnovationInterests)
+                    {
+                        foreach (var interestBaseCommand in interestBaseCommands?.Where(ibc => ibc.IsChecked)?.ToList())
+                        {
+                            var interestDto = interestsDtos?.FirstOrDefault(id => id.Interest.Uid == interestBaseCommand.InterestUid);
+                            attendeeCollaboratorInterests.Add(new AttendeeCollaboratorInterest(interestDto?.Interest, interestBaseCommand.AdditionalInfo, cmd.UserId));
+                        }
+                    }
+                }
+
                 collaborator.OnboardInnovationPlayerData(
                     edition,
+                    ProjectType.Startup,
                     cmd.InnovationAttendeeCollaboratorActivities?.Where(aca => aca.IsChecked)?.Select(aca => new AttendeeCollaboratorActivity(activities?.FirstOrDefault(a => a.Uid == aca.ActivityUid), aca.AdditionalInfo, cmd.UserId))?.ToList(),
                     innovationOrganizationTrackOptions.Select(ioto => new AttendeeCollaboratorInnovationOrganizationTrack(ioto, string.Empty, cmd.UserId)).ToList(),
+                    attendeeCollaboratorInterests,
                     cmd.UserId);
             }
 

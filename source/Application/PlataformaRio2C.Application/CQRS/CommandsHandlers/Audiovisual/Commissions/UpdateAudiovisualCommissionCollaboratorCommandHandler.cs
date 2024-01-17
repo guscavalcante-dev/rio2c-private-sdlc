@@ -4,7 +4,7 @@
 // Updated          : 08-19-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-19-2021
+// Last Modified On : 01-17-2024
 // ***********************************************************************
 // <copyright file="UpdateAudiovisualCommissionCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -102,6 +102,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             collaborator.UpdateAudiovisualCommissionCollaborator(
                 await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                 await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
+                ProjectType.Audiovisual,
                 cmd.FirstName,
                 cmd.LastNames,
                 cmd.Email,

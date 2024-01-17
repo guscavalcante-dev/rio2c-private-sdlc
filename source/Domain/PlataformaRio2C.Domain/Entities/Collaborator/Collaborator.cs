@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-11-2024
+// Last Modified On : 01-17-2024
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1154,6 +1154,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastNames">The last names.</param>
         /// <param name="email">The email.</param>
@@ -1165,6 +1166,7 @@ namespace PlataformaRio2C.Domain.Entities
         private Collaborator(
             Edition edition,
             CollaboratorType collaboratorType,
+            ProjectType projectType,
             string firstName,
             string lastNames,
             string email,
@@ -1189,7 +1191,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             //TODO: Refactor this!
             //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
-            this.SynchronizeAudiovisualCommissionAttendeeCollaborators(edition, collaboratorType, null, attendeeCollaboratorInterests, null, null, true, userId);
+            this.SynchronizeAudiovisualCommissionAttendeeCollaborators(edition, collaboratorType, projectType, null, attendeeCollaboratorInterests, null, null, true, userId);
             this.UpdateUser(email);
         }
 
@@ -1198,6 +1200,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastNames">The last names.</param>
         /// <param name="email">The email.</param>
@@ -1210,6 +1213,7 @@ namespace PlataformaRio2C.Domain.Entities
         public static Collaborator CreateAudiovisualCommissionCollaborator(
             Edition edition,
             CollaboratorType collaboratorType,
+            ProjectType projectType,
             string firstName,
             string lastNames,
             string email,
@@ -1222,6 +1226,7 @@ namespace PlataformaRio2C.Domain.Entities
             return new Collaborator(
                 edition,
                 collaboratorType,
+                projectType,
                 firstName,
                 lastNames,
                 email,
@@ -1237,6 +1242,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastNames">The last names.</param>
         /// <param name="email">The email.</param>
@@ -1245,6 +1251,7 @@ namespace PlataformaRio2C.Domain.Entities
         public void UpdateAudiovisualCommissionCollaborator(
             Edition edition,
             CollaboratorType collaboratorType,
+            ProjectType projectType,
             string firstName,
             string lastNames,
             string email,
@@ -1258,7 +1265,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SetUpdateDate(userId);
 
             //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
-            this.SynchronizeAudiovisualCommissionAttendeeCollaborators(edition, collaboratorType, null, attendeeCollaboratorInterests, null, null, true, userId);
+            this.SynchronizeAudiovisualCommissionAttendeeCollaborators(edition, collaboratorType, projectType, null, attendeeCollaboratorInterests, null, null, true, userId);
             this.UpdateUser(email);
         }
 
@@ -1267,6 +1274,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="attendeeCollaboratorInterests">The commission attendee collaborator interests.</param>
         /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
@@ -1276,6 +1284,7 @@ namespace PlataformaRio2C.Domain.Entities
         private void SynchronizeAudiovisualCommissionAttendeeCollaborators(
             Edition edition,
             CollaboratorType collaboratorType,
+            ProjectType projectType,
             List<AttendeeOrganization> attendeeOrganizations,
             List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
             bool? isApiDisplayEnabled,
@@ -1302,11 +1311,11 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
             if (attendeeCollaborator != null)
             {
-                attendeeCollaborator.UpdateAudiovisualCommissionAttendeeCollaborator(attendeeCollaboratorInterests, collaboratorType, attendeeOrganizations, isApiDisplayEnabled, apiHighlightPosition, true, userId);
+                attendeeCollaborator.UpdateAudiovisualCommissionAttendeeCollaborator(attendeeCollaboratorInterests, collaboratorType, projectType, attendeeOrganizations, isApiDisplayEnabled, apiHighlightPosition, true, userId);
             }
             else
             {
-                this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, attendeeCollaboratorInterests, collaboratorType, isApiDisplayEnabled, apiHighlightPosition, attendeeOrganizations, this, true, userId));
+                this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, attendeeCollaboratorInterests, collaboratorType, projectType, isApiDisplayEnabled, apiHighlightPosition, attendeeOrganizations, this, true, userId));
             }
         }
 
@@ -1315,11 +1324,12 @@ namespace PlataformaRio2C.Domain.Entities
         #region Innovation Player Executive Collaborator
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Collaborator"/> class.
+        /// Initializes a new instance of the <see cref="Collaborator" /> class.
         /// </summary>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="birthDate">The birth date.</param>
         /// <param name="collaboratorGender">The collaborator gender.</param>
         /// <param name="collaboratorGenderAdditionalInfo">The collaborator gender additional information.</param>
@@ -1355,6 +1365,7 @@ namespace PlataformaRio2C.Domain.Entities
             List<AttendeeOrganization> attendeeOrganizations,
             Edition edition,
             CollaboratorType collaboratorType,
+            ProjectType projectType,
             DateTime? birthDate,
             CollaboratorGender collaboratorGender,
             string collaboratorGenderAdditionalInfo,
@@ -1421,6 +1432,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateInnovationPlayerExecutiveAttendeeCollaborators(
                 edition,
                 collaboratorType,
+                projectType,
                 false,
                 null,
                 attendeeOrganizations,
@@ -1439,6 +1451,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="birthDate">The birth date.</param>
         /// <param name="collaboratorGender">The collaborator gender.</param>
         /// <param name="collaboratorGenderAdditionalInfo">The collaborator gender additional information.</param>
@@ -1475,6 +1488,7 @@ namespace PlataformaRio2C.Domain.Entities
             List<AttendeeOrganization> attendeeOrganizations,
             Edition edition,
             CollaboratorType collaboratorType,
+            ProjectType projectType,
             DateTime? birthDate,
             CollaboratorGender collaboratorGender,
             string collaboratorGenderAdditionalInfo,
@@ -1511,6 +1525,7 @@ namespace PlataformaRio2C.Domain.Entities
                 attendeeOrganizations,
                 edition,
                 collaboratorType,
+                projectType,
                 birthDate,
                 collaboratorGender,
                 collaboratorGenderAdditionalInfo,
@@ -1587,6 +1602,7 @@ namespace PlataformaRio2C.Domain.Entities
             List<AttendeeOrganization> attendeeOrganizations,
             Edition edition,
             CollaboratorType collaboratorType,
+            ProjectType projectType,
             DateTime? birthDate,
             CollaboratorGender collaboratorGender,
             string collaboratorGenderAdditionalInfo,
@@ -1647,6 +1663,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateInnovationPlayerExecutiveAttendeeCollaborators(
                 edition,
                 collaboratorType,
+                projectType,
                 null,
                 null,
                 attendeeOrganizations,
@@ -1664,6 +1681,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
         /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
@@ -1675,6 +1693,7 @@ namespace PlataformaRio2C.Domain.Entities
         private void UpdateInnovationPlayerExecutiveAttendeeCollaborators(
             Edition edition,
             CollaboratorType collaboratorType,
+            ProjectType projectType,
             bool? isApiDisplayEnabled,
             int? apiHighlightPosition,
             List<AttendeeOrganization> attendeeOrganizations,
@@ -1705,6 +1724,7 @@ namespace PlataformaRio2C.Domain.Entities
             {
                 attendeeCollaborator.UpdateInnovationPlayerExecutiveAttendeeCollaborator(
                     collaboratorType,
+                    projectType,
                     isApiDisplayEnabled,
                     apiHighlightPosition,
                     true,
@@ -1719,6 +1739,7 @@ namespace PlataformaRio2C.Domain.Entities
                 this.AttendeeCollaborators.Add(AttendeeCollaborator.CreateInnovationPlayerExecutiveAttendeeCollaborator(
                     edition,
                     collaboratorType,
+                    projectType,
                     this,
                     isApiDisplayEnabled,
                     apiHighlightPosition,
@@ -1735,10 +1756,50 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Music Player Executive Collaborator
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Collaborator"/> class.
+        /// </summary>
+        /// <param name="attendeeOrganizations">The attendee organizations.</param>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="projectType">Type of the project.</param>
+        /// <param name="birthDate">The birth date.</param>
+        /// <param name="collaboratorGender">The collaborator gender.</param>
+        /// <param name="collaboratorGenderAdditionalInfo">The collaborator gender additional information.</param>
+        /// <param name="collaboratorRole">The collaborator role.</param>
+        /// <param name="collaboratorRoleAdditionalInfo">The collaborator role additional information.</param>
+        /// <param name="collaboratorIndustry">The collaborator industry.</param>
+        /// <param name="collaboratorIndustryAdditionalInfo">The collaborator industry additional information.</param>
+        /// <param name="hasAnySpecialNeeds">The has any special needs.</param>
+        /// <param name="specialNeedsDescription">The special needs description.</param>
+        /// <param name="haveYouBeenToRio2CBefore">The have you been to rio2 c before.</param>
+        /// <param name="editionsParticipated">The editions participated.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="badge">The badge.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="sharePublicEmail">The share public email.</param>
+        /// <param name="publicEmail">The public email.</param>
+        /// <param name="website">The website.</param>
+        /// <param name="linkedin">The linkedin.</param>
+        /// <param name="twitter">The twitter.</param>
+        /// <param name="instagram">The instagram.</param>
+        /// <param name="youtube">The youtube.</param>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="jobTitles">The job titles.</param>
+        /// <param name="miniBios">The mini bios.</param>
+        /// <param name="isVirtualMeeting">The is virtual meeting.</param>
+        /// <param name="attendeeCollaboratorActivities">The attendee collaborator activities.</param>
+        /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
+        /// <param name="attendeeCollaboratorTargetAudiences">The attendee collaborator target audiences.</param>
+        /// <param name="userId">The user identifier.</param>
         private Collaborator(
             List<AttendeeOrganization> attendeeOrganizations,
             Edition edition,
             CollaboratorType collaboratorType,
+            ProjectType projectType,
             DateTime? birthDate,
             CollaboratorGender collaboratorGender,
             string collaboratorGenderAdditionalInfo,
@@ -1807,6 +1868,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateMusicPlayerExecutiveAttendeeCollaborators(
                edition,
                collaboratorType,
+               projectType,
                false,
                null,
                attendeeOrganizations,
@@ -1826,6 +1888,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="birthDate">The birth date.</param>
         /// <param name="collaboratorGender">The collaborator gender.</param>
         /// <param name="collaboratorGenderAdditionalInfo">The collaborator gender additional information.</param>
@@ -1863,6 +1926,7 @@ namespace PlataformaRio2C.Domain.Entities
             List<AttendeeOrganization> attendeeOrganizations,
             Edition edition,
             CollaboratorType collaboratorType,
+            ProjectType projectType,
             DateTime? birthDate,
             CollaboratorGender collaboratorGender,
             string collaboratorGenderAdditionalInfo,
@@ -1900,6 +1964,7 @@ namespace PlataformaRio2C.Domain.Entities
                attendeeOrganizations,
                edition,
                collaboratorType,
+               projectType,
                birthDate,
                collaboratorGender,
                collaboratorGenderAdditionalInfo,
@@ -1972,6 +2037,7 @@ namespace PlataformaRio2C.Domain.Entities
             List<AttendeeOrganization> attendeeOrganizations,
             Edition edition,
             CollaboratorType collaboratorType,
+            ProjectType projectType,
             DateTime? birthDate,
             CollaboratorGender collaboratorGender,
             string collaboratorGenderAdditionalInfo,
@@ -2037,6 +2103,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateMusicPlayerExecutiveAttendeeCollaborators(
                 edition,
                 collaboratorType,
+                projectType,
                 null,
                 null,
                 attendeeOrganizations,
@@ -2053,9 +2120,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
         /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
+        /// <param name="isVirtualMeeting">The is virtual meeting.</param>
         /// <param name="attendeeCollaboratorActivities">The attendee collaborator activities.</param>
         /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
         /// <param name="attendeeCollaboratorTargetAudiences">The attendee collaborator music organization tracks.</param>
@@ -2064,6 +2133,7 @@ namespace PlataformaRio2C.Domain.Entities
         private void UpdateMusicPlayerExecutiveAttendeeCollaborators(
             Edition edition,
             CollaboratorType collaboratorType,
+            ProjectType projectType,
             bool? isApiDisplayEnabled,
             int? apiHighlightPosition,
             List<AttendeeOrganization> attendeeOrganizations,
@@ -2096,6 +2166,7 @@ namespace PlataformaRio2C.Domain.Entities
                 //todo: passar o isVirtualMeeting aqui
                 attendeeCollaborator.UpdateMusicPlayerExecutiveAttendeeCollaborator(
                     collaboratorType,
+                    projectType,
                     isApiDisplayEnabled,
                     apiHighlightPosition,
                     true,
@@ -2111,6 +2182,7 @@ namespace PlataformaRio2C.Domain.Entities
                 this.AttendeeCollaborators.Add(AttendeeCollaborator.CreateMusicPlayerExecutiveAttendeeCollaborator(
                     edition,
                     collaboratorType,
+                    projectType,
                     this,
                     isApiDisplayEnabled,
                     apiHighlightPosition,
@@ -2811,15 +2883,17 @@ namespace PlataformaRio2C.Domain.Entities
         /// Updates the collaborator interests.
         /// </summary>
         /// <param name="edition">The edition.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateCollaboratorInterests(
             Edition edition,
+            ProjectType projectType,
             List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
             int userId)
         {
             var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition?.Id ?? 0);
-            attendeeCollaborator?.SynchronizeAttendeeCollaboratorInterests(attendeeCollaboratorInterests, userId);
+            attendeeCollaborator?.UpdateAttendeeCollaboratorInterests(attendeeCollaboratorInterests, projectType, userId);
         }
 
         #region Privates
@@ -3076,17 +3150,24 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>
         /// Called when [music player data].
         /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="attendeeCollaboratorActivities">The attendee collaborator activities.</param>
         /// <param name="attendeeCollaboratorTargetAudiences">The attendee collaborator target audiences.</param>
+        /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
+        /// <param name="userId">The user identifier.</param>
         public void OnboardMusicPlayerData(
             Edition edition,
+            ProjectType projectType,
             List<AttendeeCollaboratorActivity> attendeeCollaboratorActivities,
             List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences,
+            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
             int userId)
         {
             var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
-            attendeeCollaborator?.UpdateAttendeeCollaboratorActivities(attendeeCollaboratorActivities, userId);
-            attendeeCollaborator?.UpdateAttendeeCollaboratorMusicTargetAudiences(attendeeCollaboratorTargetAudiences, userId);
+            attendeeCollaborator?.UpdateAttendeeCollaboratorActivities(attendeeCollaboratorActivities, projectType, userId);
+            attendeeCollaborator?.UpdateAttendeeCollaboratorTargetAudiences(attendeeCollaboratorTargetAudiences, projectType, userId);
+            attendeeCollaborator?.UpdateAttendeeCollaboratorInterests(attendeeCollaboratorInterests, projectType, userId);
 
             this.SetUpdateDate(userId);
         }
@@ -3111,18 +3192,23 @@ namespace PlataformaRio2C.Domain.Entities
         /// Called when [innovation player data].
         /// </summary>
         /// <param name="edition">The edition.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="attendeeCollaboratorActivities">The attendee collaborator activities.</param>
         /// <param name="attendeeCollaboratorInnovationOrganizationTracks">The attendee collaborator innovation organization tracks.</param>
+        /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
         /// <param name="userId">The user identifier.</param>
         public void OnboardInnovationPlayerData(
             Edition edition,
+            ProjectType projectType,
             List<AttendeeCollaboratorActivity> attendeeCollaboratorActivities,
             List<AttendeeCollaboratorInnovationOrganizationTrack> attendeeCollaboratorInnovationOrganizationTracks,
+            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
             int userId)
         {
             var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
-            attendeeCollaborator?.UpdateAttendeeCollaboratorActivities(attendeeCollaboratorActivities, userId);
+            attendeeCollaborator?.UpdateAttendeeCollaboratorActivities(attendeeCollaboratorActivities, projectType, userId);
             attendeeCollaborator?.UpdateAttendeeCollaboratorInnovationOrganizationTracks(attendeeCollaboratorInnovationOrganizationTracks, userId);
+            attendeeCollaborator?.UpdateAttendeeCollaboratorInterests(attendeeCollaboratorInterests, projectType, userId);
 
             this.SetUpdateDate(userId);
         }

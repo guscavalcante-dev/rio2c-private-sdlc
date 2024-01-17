@@ -4,7 +4,7 @@
 // Created          : 08-29-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-11-2024
+// Last Modified On : 01-17-2024
 // ***********************************************************************
 // <copyright file="OnboardingController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -660,8 +660,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
                 this.UserAccessControlDto.IsMusicPlayerExecutive() ? await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id) : null,
                 this.UserAccessControlDto.IsMusicPlayerExecutive() ? await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id) : null,
+                this.UserAccessControlDto.IsMusicPlayerExecutive() ? await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Music.Id) : null,
                 this.UserAccessControlDto.IsInnovationPlayerExecutive() ? await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync() : null,
                 this.UserAccessControlDto.IsInnovationPlayerExecutive() ? await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id) : null,
+                this.UserAccessControlDto.IsInnovationPlayerExecutive() ? await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Startup.Id) : null,
                 EditionDto.Id,
                 true,
                 true,
