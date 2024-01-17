@@ -3,8 +3,8 @@
 // Author           : Elton Assunção
 // Created          : 12-19-2023
 //
-// Last Modified By : Elton Assunção
-// Last Modified On : 12-19-2023
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-17-2024
 // ***********************************************************************
 // <copyright file="music.players.executives.create.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -39,7 +39,6 @@ var MusicPlayersExecutivesCreate = function () {
         MyRio2cCommon.enableYesNoRadioEvent("HaveYouBeenToRio2CBefore");
         MyRio2cCommon.enableDatePicker({ inputIdOrClass: formId + ' .enable-datepicker' });
         changePreviousEditionsRequired();
-        MyRio2cCommon.enableAtLeastOnCheckboxByNameValidation("HaveYouBeenToRio2CBefore");
         enableAjaxForm();
         enableFormValidation();
 
