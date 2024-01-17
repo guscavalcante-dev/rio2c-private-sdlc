@@ -125,17 +125,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
             else
             {
-                //TODO: This is not the correct way to instantiate a command. Create a new constructor accepting this parameters and use it.
-                //TODO: Use "UpdateAudiovisualCommissionCollaborator" instead of "UpdateAudiovisualPlayerExecutiveCollaborator" and test.
-                var updateCmd = new UpdateAudiovisualPlayerExecutiveCollaborator()
-                {
-                    CollaboratorUid = user.Collaborator.Uid,
-                    IsAddingToCurrentEdition = true,
-                    FirstName = cmd.FirstName,
-                    LastNames = cmd.LastNames,
-                    Email = cmd.Email,
-                };
-                updateCmd.UpdatePreSendProperties(cmd.CollaboratorTypeName, cmd.UserId, cmd.UserUid, cmd.EditionId, cmd.EditionUid, cmd.UserInterfaceLanguage);
+                var updateCmd = new UpdateAudiovisualCommissionCollaborator(user.Collaborator.Uid, cmd);
+                updateCmd.UpdatePreSendProperties(
+                    cmd.CollaboratorTypeName, 
+                    cmd.UserId, 
+                    cmd.UserUid, 
+                    cmd.EditionId, 
+                    cmd.EditionUid, 
+                    cmd.UserInterfaceLanguage);
 
                 this.AppValidationResult = await this.CommandBus.Send(updateCmd, cancellationToken);
             }
