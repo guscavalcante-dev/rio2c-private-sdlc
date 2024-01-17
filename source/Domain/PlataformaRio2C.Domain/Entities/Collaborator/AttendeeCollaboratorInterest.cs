@@ -4,7 +4,7 @@
 // Created          : 08-17-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-17-2021
+// Last Modified On : 01-17-2024
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorInterest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
-using System;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -31,14 +30,16 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual Interest Interest { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeCollaboratorInterest"/> class.
+        /// Initializes a new instance of the <see cref="AttendeeCollaboratorInterest" /> class.
         /// </summary>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
         /// <param name="interest">The interest.</param>
+        /// <param name="additionalInfo">The additional information.</param>
         /// <param name="userId">The user identifier.</param>
         public AttendeeCollaboratorInterest(
             AttendeeCollaborator attendeeCollaborator,
             Interest interest,
+            string additionalInfo,
             int userId)
         {
             this.AttendeeCollaborator = attendeeCollaborator;
@@ -46,6 +47,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.AttendeeCollaboratorId = attendeeCollaborator?.Id ?? 0;
             this.InterestId = interest?.Id ?? 0;
+            this.AdditionalInfo = additionalInfo;
 
             this.SetCreateDate(userId);
         }
@@ -82,7 +84,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void Update(string additionalInfo, int userId)
         {
-            this.AdditionalInfo = additionalInfo;
+            this.AdditionalInfo = additionalInfo?.Trim();
 
             this.SetUpdateDate(userId);
         }

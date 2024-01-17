@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-09-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-17-2024
 // ***********************************************************************
 // <copyright file="OrganizationInterest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -66,16 +66,16 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Updates the specified organization interest.</summary>
-        /// <param name="organizationInterest">The organization interest.</param>
+        /// <summary>
+        /// Updates the specified additional information.
+        /// </summary>
+        /// <param name="additionalInfo">The additional information.</param>
         /// <param name="userId">The user identifier.</param>
-        public void Update(OrganizationInterest organizationInterest, int userId)
+        public void Update(string additionalInfo, int userId)
         {
-            this.AdditionalInfo = organizationInterest?.AdditionalInfo?.Trim();
+            this.AdditionalInfo = additionalInfo?.Trim();
 
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            this.SetUpdateDate(userId);
         }
 
         /// <summary>Deletes the specified user identifier.</summary>

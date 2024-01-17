@@ -4,7 +4,7 @@
 // Created          : 12-29-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-09-2024
+// Last Modified On : 01-17-2024
 // ***********************************************************************
 // <copyright file="CreateInnovationPlayerExecutiveCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -145,6 +145,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     attendeeOrganizationUids.Any() ? await this.attendeeOrganizationRepo.FindAllByUidsAsync(attendeeOrganizationUids) : null,
                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                     await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
+                    ProjectType.Startup,
                     cmd.BirthDate,
                     genderRepo.Get(cmd.CollaboratorGenderUid ?? Guid.Empty),
                     cmd.CollaboratorGenderAdditionalInfo,

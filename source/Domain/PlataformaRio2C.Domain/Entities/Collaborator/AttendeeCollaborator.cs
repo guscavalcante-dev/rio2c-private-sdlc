@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-11-2024
+// Last Modified On : 01-17-2024
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -450,11 +450,12 @@ namespace PlataformaRio2C.Domain.Entities
         #region Audiovisual Commission Attendee Collaborator
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.
+        /// Initializes a new instance of the <see cref="AttendeeCollaborator" /> class.
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
         /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
@@ -465,6 +466,7 @@ namespace PlataformaRio2C.Domain.Entities
             Edition edition,
             List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
             CollaboratorType collaboratorType,
+            ProjectType projectType,
             bool? isApiDisplayEnabled,
             int? apiHighlightPosition,
             List<AttendeeOrganization> attendeeOrganizations,
@@ -479,7 +481,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.SynchronizeAttendeeCollaboratorType(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
             this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
-            this.SynchronizeAttendeeCollaboratorInterests(attendeeCollaboratorInterests, userId);
+            this.SynchronizeAttendeeCollaboratorInterests(attendeeCollaboratorInterests, projectType, userId);
         }
 
         /// <summary>
@@ -487,6 +489,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
         /// <param name="apiHighlightPosition">The API highlight position.</param>
@@ -495,6 +498,7 @@ namespace PlataformaRio2C.Domain.Entities
         public void UpdateAudiovisualCommissionAttendeeCollaborator(
             List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
             CollaboratorType collaboratorType,
+            ProjectType projectType,
             List<AttendeeOrganization> attendeeOrganizations,
             bool? isApiDisplayEnabled,
             int? apiHighlightPosition,
@@ -505,7 +509,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.SynchronizeAttendeeCollaboratorType(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
             this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
-            this.SynchronizeAttendeeCollaboratorInterests(attendeeCollaboratorInterests, userId);
+            this.SynchronizeAttendeeCollaboratorInterests(attendeeCollaboratorInterests, projectType, userId);
         }
 
         #endregion
@@ -513,10 +517,11 @@ namespace PlataformaRio2C.Domain.Entities
         #region Innovation Player Executive Attendee Collaborator
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.
+        /// Initializes a new instance of the <see cref="AttendeeCollaborator" /> class.
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="collaborator">The collaborator.</param>
         /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
         /// <param name="apiHighlightPosition">The API highlight position.</param>
@@ -529,6 +534,7 @@ namespace PlataformaRio2C.Domain.Entities
         private AttendeeCollaborator(
             Edition edition,
             CollaboratorType collaboratorType,
+            ProjectType projectType,
             Collaborator collaborator,
             bool? isApiDisplayEnabled,
             int? apiHighlightPosition,
@@ -546,8 +552,8 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.SynchronizeAttendeeCollaboratorType(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
             this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
-            this.SynchronizeAttendeeCollaboratorActivities(attendeeCollaboratorActivities, userId);
-            this.SynchronizeAttendeeCollaboratorInterests(attendeeCollaboratorInterests, userId);
+            this.SynchronizeAttendeeCollaboratorActivities(attendeeCollaboratorActivities, projectType, userId);
+            this.SynchronizeAttendeeCollaboratorInterests(attendeeCollaboratorInterests, projectType, userId);
             this.SynchronizeAttendeeCollaboratorInnovationOrganizationTracks(attendeeCollaboratorInnovationOrganizationTracks, userId);
         }
 
@@ -556,6 +562,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="collaborator">The collaborator.</param>
         /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
         /// <param name="apiHighlightPosition">The API highlight position.</param>
@@ -569,6 +576,7 @@ namespace PlataformaRio2C.Domain.Entities
         public static AttendeeCollaborator CreateInnovationPlayerExecutiveAttendeeCollaborator(
             Edition edition,
             CollaboratorType collaboratorType,
+            ProjectType projectType,
             Collaborator collaborator,
             bool? isApiDisplayEnabled,
             int? apiHighlightPosition,
@@ -581,7 +589,8 @@ namespace PlataformaRio2C.Domain.Entities
         {
             return new AttendeeCollaborator(
                 edition, 
-                collaboratorType, 
+                collaboratorType,
+                projectType,
                 collaborator, 
                 isApiDisplayEnabled, 
                 apiHighlightPosition,
@@ -597,6 +606,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// Updates the innovation player executive.
         /// </summary>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
         /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
@@ -607,6 +617,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void UpdateInnovationPlayerExecutiveAttendeeCollaborator(
             CollaboratorType collaboratorType,
+            ProjectType projectType,
             bool? isApiDisplayEnabled,
             int? apiHighlightPosition,
             bool shouldDeleteOrganizations,
@@ -620,8 +631,8 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.SynchronizeAttendeeCollaboratorType(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
             this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
-            this.SynchronizeAttendeeCollaboratorActivities(attendeeCollaboratorActivities, userId);
-            this.SynchronizeAttendeeCollaboratorInterests(attendeeCollaboratorInterests, userId);
+            this.SynchronizeAttendeeCollaboratorActivities(attendeeCollaboratorActivities, projectType, userId);
+            this.SynchronizeAttendeeCollaboratorInterests(attendeeCollaboratorInterests, projectType, userId);
             this.SynchronizeAttendeeCollaboratorInnovationOrganizationTracks(attendeeCollaboratorInnovationOrganizationTracks, userId);
         }
 
@@ -630,10 +641,11 @@ namespace PlataformaRio2C.Domain.Entities
         #region Music Player Executive Attendee Collaborator
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.
+        /// Initializes a new instance of the <see cref="AttendeeCollaborator" /> class.
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="collaborator">The collaborator.</param>
         /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
         /// <param name="apiHighlightPosition">The API highlight position.</param>
@@ -646,6 +658,7 @@ namespace PlataformaRio2C.Domain.Entities
         private AttendeeCollaborator(
             Edition edition,
             CollaboratorType collaboratorType,
+            ProjectType projectType,
             Collaborator collaborator,
             bool? isApiDisplayEnabled,
             int? apiHighlightPosition,
@@ -663,9 +676,9 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.SynchronizeAttendeeCollaboratorType(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
             this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
-            this.SynchronizeAttendeeCollaboratorActivities(attendeeCollaboratorActivities, userId);
-            this.SynchronizeAttendeeCollaboratorInterests(attendeeCollaboratorInterests, userId);
-            this.SynchronizeAttendeeCollaboratorMusicTargetAudiences(attendeeCollaboratorTargetAudiences, userId);
+            this.SynchronizeAttendeeCollaboratorActivities(attendeeCollaboratorActivities, projectType, userId);
+            this.SynchronizeAttendeeCollaboratorInterests(attendeeCollaboratorInterests, projectType, userId);
+            this.SynchronizeAttendeeCollaboratorTargetAudiences(attendeeCollaboratorTargetAudiences, projectType, userId);
         }
 
         /// <summary>
@@ -673,6 +686,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="collaborator">The collaborator.</param>
         /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
         /// <param name="apiHighlightPosition">The API highlight position.</param>
@@ -680,12 +694,13 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="attendeeCollaboratorActivities">The attendee collaborator activities.</param>
         /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
-        /// <param name="attendeeCollaboratorInnovationOrganizationTracks">The attendee collaborator music TargetAudience.</param>
+        /// <param name="attendeeCollaboratorTargetAudiences">The attendee collaborator target audiences.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
         public static AttendeeCollaborator CreateMusicPlayerExecutiveAttendeeCollaborator(
             Edition edition,
             CollaboratorType collaboratorType,
+            ProjectType projectType,
             Collaborator collaborator,
             bool? isApiDisplayEnabled,
             int? apiHighlightPosition,
@@ -699,6 +714,7 @@ namespace PlataformaRio2C.Domain.Entities
             return new AttendeeCollaborator(
                 edition,
                 collaboratorType,
+                projectType,
                 collaborator,
                 isApiDisplayEnabled,
                 apiHighlightPosition,
@@ -714,16 +730,18 @@ namespace PlataformaRio2C.Domain.Entities
         /// Updates the innovation player executive.
         /// </summary>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
         /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="attendeeCollaboratorActivities">The attendee collaborator activities.</param>
         /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
-        /// <param name="attendeeCollaboratorInnovationOrganizationTracks">The attendee collaborator music TargetAudience.</param>
+        /// <param name="attendeeCollaboratorTargetAudiences">The attendee collaborator target audiences.</param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateMusicPlayerExecutiveAttendeeCollaborator(
             CollaboratorType collaboratorType,
+            ProjectType projectType,
             bool? isApiDisplayEnabled,
             int? apiHighlightPosition,
             bool shouldDeleteOrganizations,
@@ -737,9 +755,9 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.SynchronizeAttendeeCollaboratorType(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
             this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
-            this.SynchronizeAttendeeCollaboratorActivities(attendeeCollaboratorActivities, userId);
-            this.SynchronizeAttendeeCollaboratorInterests(attendeeCollaboratorInterests, userId);
-            this.SynchronizeAttendeeCollaboratorMusicTargetAudiences(attendeeCollaboratorTargetAudiences, userId);
+            this.SynchronizeAttendeeCollaboratorActivities(attendeeCollaboratorActivities, projectType, userId);
+            this.SynchronizeAttendeeCollaboratorInterests(attendeeCollaboratorInterests, projectType, userId);
+            this.SynchronizeAttendeeCollaboratorTargetAudiences(attendeeCollaboratorTargetAudiences, projectType, userId);
         }
 
         #endregion
@@ -1519,18 +1537,9 @@ namespace PlataformaRio2C.Domain.Entities
                 }
                 else
                 {
-                    this.CreateAttendeeInnovationOrganizationCollaborator(attendeeInnovationOrganization, userId);
+                    this.AttendeeInnovationOrganizationCollaborators.Add(new AttendeeInnovationOrganizationCollaborator(attendeeInnovationOrganization, this, userId));
                 }
             }
-        }
-
-        /// <summary>Deletes the attendee innovation organization collaborator.</summary>
-        /// <param name="InnovationOrganizationUid">The music band uid.</param>
-        /// <param name="userId">The user identifier.</param>
-        public void DeleteAttendeeInnovationOrganizationCollaborator(Guid InnovationOrganizationUid, int userId)
-        {
-            var attendeeInnovationOrganizationCollaborator = this.FindAttendeeInnovationOrganizationCollaboratorByInnovationOrganizationUid(InnovationOrganizationUid);
-            attendeeInnovationOrganizationCollaborator?.Delete(userId);
         }
 
         /// <summary>Deletes the attendee innovation organization collaborators.</summary>
@@ -1546,29 +1555,6 @@ namespace PlataformaRio2C.Domain.Entities
             {
                 attendeeInnovationOrganizationCollaborator.Delete(userId);
             }
-        }
-
-        /// <summary>Creates the attendee innovation organization collaborator.</summary>
-        /// <param name="attendeeInnovationOrganization">The attendee innovation organization.</param>
-        /// <param name="userId">The user identifier.</param>
-        private void CreateAttendeeInnovationOrganizationCollaborator(AttendeeInnovationOrganization attendeeInnovationOrganization, int userId)
-        {
-            this.AttendeeInnovationOrganizationCollaborators.Add(new AttendeeInnovationOrganizationCollaborator(attendeeInnovationOrganization, this, userId));
-        }
-
-        /// <summary>Finds the attendee innovation organization collaborator by music band uid.</summary>
-        /// <param name="InnovationOrganizationUid">The music band uid.</param>
-        /// <returns></returns>
-        private AttendeeInnovationOrganizationCollaborator FindAttendeeInnovationOrganizationCollaboratorByInnovationOrganizationUid(Guid InnovationOrganizationUid)
-        {
-            return this.AttendeeInnovationOrganizationCollaborators?.FirstOrDefault(aioc => aioc.AttendeeInnovationOrganization.InnovationOrganization.Uid == InnovationOrganizationUid);
-        }
-
-        /// <summary>Gets all attende music bands.</summary>
-        /// <returns></returns>
-        public List<AttendeeInnovationOrganization> GetAllAttendeInnovationOrganizations()
-        {
-            return this.AttendeeInnovationOrganizationCollaborators?.Select(aioc => aioc.AttendeeInnovationOrganization)?.ToList();
         }
 
         #endregion
@@ -1636,9 +1622,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         /// <param name="attendeeCollaboratorInnovationOrganizationTracks">The attendee collaborator innovation organization tracks.</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateAttendeeCollaboratorInnovationOrganizationTracks(
-           List<AttendeeCollaboratorInnovationOrganizationTrack> attendeeCollaboratorInnovationOrganizationTracks,
-           int userId)
+        public void UpdateAttendeeCollaboratorInnovationOrganizationTracks(List<AttendeeCollaboratorInnovationOrganizationTrack> attendeeCollaboratorInnovationOrganizationTracks, int userId)
         {
             this.SetUpdateDate(userId);
 
@@ -1650,9 +1634,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         /// <param name="attendeeCollaboratorInnovationOrganizationTracks">The attendee innovation organization tracks.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeAttendeeCollaboratorInnovationOrganizationTracks(
-           List<AttendeeCollaboratorInnovationOrganizationTrack> attendeeCollaboratorInnovationOrganizationTracks,
-           int userId)
+        private void SynchronizeAttendeeCollaboratorInnovationOrganizationTracks(List<AttendeeCollaboratorInnovationOrganizationTrack> attendeeCollaboratorInnovationOrganizationTracks, int userId)
         {
             if (this.AttendeeCollaboratorInnovationOrganizationTracks == null)
             {
@@ -1666,7 +1648,7 @@ namespace PlataformaRio2C.Domain.Entities
                 return;
             }
 
-            // Create or update
+            // Create or update attendee collaborator innovation organization tracks
             foreach (var attendeeInnovationOrganizationTrack in attendeeCollaboratorInnovationOrganizationTracks)
             {
                 var attendeeCollaboratorInnovationOrganizationTrackDb = this.AttendeeCollaboratorInnovationOrganizationTracks.FirstOrDefault(aciot => aciot.InnovationOrganizationTrackOption.Uid == attendeeInnovationOrganizationTrack.InnovationOrganizationTrackOption?.Uid);
@@ -1686,10 +1668,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         /// <param name="newAttendeeCollaboratorInnovationOrganizationTrack">The new attendee innovation organization tracks.</param>
         /// <param name="userId">The user identifier.</param>
-        private void DeleteAttendeeCollaboratorInnovationOrganizationTracks(
-            List<AttendeeCollaboratorInnovationOrganizationTrack> newAttendeeCollaboratorInnovationOrganizationTrack,
-            int userId)
+        private void DeleteAttendeeCollaboratorInnovationOrganizationTracks(List<AttendeeCollaboratorInnovationOrganizationTrack> newAttendeeCollaboratorInnovationOrganizationTrack, int userId)
         {
+            //TODO: Check if isn't deleting AttendeeCollaboratorInnovationOrganizationTracks from Commissions
             var attendeeCollaboratorInnovationOrganizationTracksToDelete = this.AttendeeCollaboratorInnovationOrganizationTracks.Where(db => newAttendeeCollaboratorInnovationOrganizationTrack?.Select(ioto => ioto.InnovationOrganizationTrackOption.Uid)?.Contains(db.InnovationOrganizationTrackOption.Uid) == false && !db.IsDeleted).ToList();
             foreach (var attendeeCollaboratorInnovationOrganizationTrack in attendeeCollaboratorInnovationOrganizationTracksToDelete)
             {
@@ -1699,44 +1680,42 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Attendee Collaborator Music Organization Target Audiences
+        #region Attendee Collaborator Target Audiences
 
         /// <summary>
-        /// Updates the attendee collaborator music target audiences.
+        /// Updates the attendee collaborator target audiences.
         /// </summary>
         /// <param name="attendeeCollaboratorTargetAudiences">The attendee collaborator target audiences.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateAttendeeCollaboratorMusicTargetAudiences(
-           List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences,
-           int userId)
+        public void UpdateAttendeeCollaboratorTargetAudiences(List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences, ProjectType projectType, int userId)
         {
             this.SetUpdateDate(userId);
 
-            this.SynchronizeAttendeeCollaboratorMusicTargetAudiences(attendeeCollaboratorTargetAudiences, userId);
+            this.SynchronizeAttendeeCollaboratorTargetAudiences(attendeeCollaboratorTargetAudiences, projectType, userId);
         }
 
         /// <summary>
-        /// Synchronizes the attendee collaborator music target audiences.
+        /// Synchronizes the attendee collaborator target audiences.
         /// </summary>
         /// <param name="attendeeCollaboratorTargetAudiences">The attendee collaborator target audiences.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeAttendeeCollaboratorMusicTargetAudiences(
-           List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences,
-           int userId)
+        private void SynchronizeAttendeeCollaboratorTargetAudiences(List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences, ProjectType projectType, int userId)
         {
             if (this.AttendeeCollaboratorTargetAudiences == null)
             {
                 this.AttendeeCollaboratorTargetAudiences = new List<AttendeeCollaboratorTargetAudience>();
             }
 
-            this.DeleteAttendeeCollaboratorMusicTargetAudiences(attendeeCollaboratorTargetAudiences, userId);
+            this.DeleteAttendeeCollaboratorTargetAudiences(attendeeCollaboratorTargetAudiences, projectType, userId);
 
             if (attendeeCollaboratorTargetAudiences?.Any() != true)
             {
                 return;
             }
 
-            // Create or update
+            // Create or update target audiences
             foreach (var attendeeCollaboratorTargetAudience in attendeeCollaboratorTargetAudiences)
             {
                 var attendeeCollaboratorTargetAudienceDb = this.AttendeeCollaboratorTargetAudiences.FirstOrDefault(aciot => aciot.TargetAudience.Uid == attendeeCollaboratorTargetAudience.TargetAudience?.Uid);
@@ -1752,15 +1731,18 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>
-        /// Deletes the attendee collaborator music target audiences.
+        /// Deletes the attendee collaborator target audiences.
         /// </summary>
         /// <param name="newAttendeeCollaboratorTargetAudiences">The new attendee collaborator target audiences.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="userId">The user identifier.</param>
-        private void DeleteAttendeeCollaboratorMusicTargetAudiences(
-            List<AttendeeCollaboratorTargetAudience> newAttendeeCollaboratorTargetAudiences,
-            int userId)
+        private void DeleteAttendeeCollaboratorTargetAudiences(List<AttendeeCollaboratorTargetAudience> newAttendeeCollaboratorTargetAudiences, ProjectType projectType, int userId)
         {
-            var attendeeCollaboratorTargetAudiencesToDelete = this.AttendeeCollaboratorTargetAudiences.Where(db => newAttendeeCollaboratorTargetAudiences?.Select(ioto => ioto.TargetAudience.Uid)?.Contains(db.TargetAudience.Uid) == false && !db.IsDeleted).ToList();
+            var selectedTargetAudiencesUids = newAttendeeCollaboratorTargetAudiences.Select(acta => acta.TargetAudience.Uid);
+            var attendeeCollaboratorTargetAudiencesToDelete = this.AttendeeCollaboratorTargetAudiences.Where(acta => !acta.IsDeleted                                                        // Is not deleted
+                                                                                                            && selectedTargetAudiencesUids?.Contains(acta.TargetAudience.Uid) == false      // Is not selected. 
+                                                                                                            && acta.TargetAudience.ProjectTypeId == projectType.Id).ToList();               // Filter by ProjectType to avoid to delete AttendeeCollaboratorTargetAudiences from another project types
+
             foreach (var attendeeCollaboratorTargetAudience in attendeeCollaboratorTargetAudiencesToDelete)
             {
                 attendeeCollaboratorTargetAudience.Delete(userId);
@@ -1771,27 +1753,33 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Attendee Collaborator Activities
 
-        /// <summary>Updates the organization activities.</summary>
+        /// <summary>
+        /// Updates the organization activities.
+        /// </summary>
         /// <param name="attendeeCollaboratorActivities">The organization activities.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateAttendeeCollaboratorActivities(List<AttendeeCollaboratorActivity> attendeeCollaboratorActivities, int userId)
+        public void UpdateAttendeeCollaboratorActivities(List<AttendeeCollaboratorActivity> attendeeCollaboratorActivities, ProjectType projectType, int userId)
         {
             this.SetUpdateDate(userId);
 
-            this.SynchronizeAttendeeCollaboratorActivities(attendeeCollaboratorActivities, userId);
+            this.SynchronizeAttendeeCollaboratorActivities(attendeeCollaboratorActivities, projectType, userId);
         }
 
-        /// <summary>Synchronizes the organization activities.</summary>
+        /// <summary>
+        /// Synchronizes the organization activities.
+        /// </summary>
         /// <param name="attendeeCollaboratorActivities">The organization activities.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeAttendeeCollaboratorActivities(List<AttendeeCollaboratorActivity> attendeeCollaboratorActivities, int userId)
+        private void SynchronizeAttendeeCollaboratorActivities(List<AttendeeCollaboratorActivity> attendeeCollaboratorActivities, ProjectType projectType, int userId)
         {
             if (this.AttendeeCollaboratorActivities == null)
             {
                 this.AttendeeCollaboratorActivities = new List<AttendeeCollaboratorActivity>();
             }
 
-            this.DeleteAttendeeCollaboratorActivities(attendeeCollaboratorActivities, userId);
+            this.DeleteAttendeeCollaboratorActivities(attendeeCollaboratorActivities, projectType, userId);
 
             if (attendeeCollaboratorActivities?.Any() != true)
             {
@@ -1808,7 +1796,7 @@ namespace PlataformaRio2C.Domain.Entities
                 }
                 else
                 {
-                    this.CreateAttendeeCollaboratorActivity(attendeeCollaboratorActivity.Activity, attendeeCollaboratorActivity.AdditionalInfo, userId);
+                    this.AttendeeCollaboratorActivities.Add(new AttendeeCollaboratorActivity(this, attendeeCollaboratorActivity.Activity, attendeeCollaboratorActivity.AdditionalInfo, userId));
                 }
             }
         }
@@ -1817,25 +1805,19 @@ namespace PlataformaRio2C.Domain.Entities
         /// Deletes the attendee collaborator activities.
         /// </summary>
         /// <param name="newAttendeeCollaboratorActivities">The new attendee collaborator activities.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="userId">The user identifier.</param>
-        private void DeleteAttendeeCollaboratorActivities(List<AttendeeCollaboratorActivity> newAttendeeCollaboratorActivities, int userId)
+        private void DeleteAttendeeCollaboratorActivities(List<AttendeeCollaboratorActivity> newAttendeeCollaboratorActivities, ProjectType projectType, int userId)
         {
-            var attendeeCollaboratorActivitiesToDelete = this.AttendeeCollaboratorActivities.Where(db => newAttendeeCollaboratorActivities?.Select(oa => oa.Activity.Uid)?.Contains(db.Activity.Uid) == false && !db.IsDeleted).ToList();
+            var selectedActivitiesUids = newAttendeeCollaboratorActivities.Select(aca => aca.Activity.Uid);
+            var attendeeCollaboratorActivitiesToDelete = this.AttendeeCollaboratorActivities.Where(aca => !aca.IsDeleted                                                        // Is not deleted.
+                                                                                                            && selectedActivitiesUids?.Contains(aca.Activity.Uid) == false      // Is not selected. 
+                                                                                                            && aca.Activity.ProjectTypeId == projectType.Id).ToList();          // Filter by ProjectType to avoid to delete AttendeeCollaboratorActivities from another project types
+
             foreach (var attendeeCollaboratorActivityToDelete in attendeeCollaboratorActivitiesToDelete)
             {
                 attendeeCollaboratorActivityToDelete.Delete(userId);
             }
-        }
-
-        /// <summary>
-        /// Creates the attendee collaborator activity.
-        /// </summary>
-        /// <param name="activity">The activity.</param>
-        /// <param name="additionalInfo">The additional information.</param>
-        /// <param name="userId">The user identifier.</param>
-        private void CreateAttendeeCollaboratorActivity(Activity activity, string additionalInfo, int userId)
-        {
-            this.AttendeeCollaboratorActivities.Add(new AttendeeCollaboratorActivity(this, activity, additionalInfo, userId));
         }
 
         #endregion
@@ -1843,18 +1825,32 @@ namespace PlataformaRio2C.Domain.Entities
         #region Attendee Collaborator Interests
 
         /// <summary>
+        /// Updates the attendee collaborator interests.
+        /// </summary>
+        /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
+        /// <param name="projectType">Type of the project.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateAttendeeCollaboratorInterests(List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests, ProjectType projectType, int userId)
+        {
+            this.SetUpdateDate(userId);
+
+            this.SynchronizeAttendeeCollaboratorInterests(attendeeCollaboratorInterests, projectType, userId);
+        }
+
+        /// <summary>
         /// Synchronizes the attendeeCollaborator interests.
         /// </summary>
         /// <param name="attendeeCollaboratorInterests">The attendeeCollaborator interests.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="userId">The user identifier.</param>
-        public void SynchronizeAttendeeCollaboratorInterests(List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests, int userId)
+        private void SynchronizeAttendeeCollaboratorInterests(List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests, ProjectType projectType, int userId)
         {
             if (this.AttendeeCollaboratorInterests == null)
             {
                 this.AttendeeCollaboratorInterests = new List<AttendeeCollaboratorInterest>();
             }
 
-            this.DeleteAttendeeCollaboratorInterests(attendeeCollaboratorInterests, userId);
+            this.DeleteAttendeeCollaboratorInterests(attendeeCollaboratorInterests, projectType, userId);
 
             if (attendeeCollaboratorInterests?.Any() != true)
             {
@@ -1871,7 +1867,7 @@ namespace PlataformaRio2C.Domain.Entities
                 }
                 else
                 {
-                    this.AttendeeCollaboratorInterests.Add(attendeeCollaboratorInterest);
+                    this.AttendeeCollaboratorInterests.Add(new AttendeeCollaboratorInterest(this, attendeeCollaboratorInterest.Interest, attendeeCollaboratorInterest.AdditionalInfo, userId));
                 }
             }
         }
@@ -1880,10 +1876,15 @@ namespace PlataformaRio2C.Domain.Entities
         /// Deletes the attendee collaborator interests.
         /// </summary>
         /// <param name="newAttendeeCollaboratorInterests">The new attendee collaborator interests.</param>
+        /// <param name="projectType">Type of the project.</param>
         /// <param name="userId">The user identifier.</param>
-        private void DeleteAttendeeCollaboratorInterests(List<AttendeeCollaboratorInterest> newAttendeeCollaboratorInterests, int userId)
+        private void DeleteAttendeeCollaboratorInterests(List<AttendeeCollaboratorInterest> newAttendeeCollaboratorInterests, ProjectType projectType, int userId)
         {
-            var attendeeCollaboratorInterestsToDelete = this.AttendeeCollaboratorInterests.Where(db => newAttendeeCollaboratorInterests?.Select(a => a.Interest.Uid)?.Contains(db.Interest.Uid) == false && !db.IsDeleted).ToList();
+            var selectedInterestsUids = newAttendeeCollaboratorInterests.Select(aci => aci.Interest.Uid);
+            var attendeeCollaboratorInterestsToDelete = this.AttendeeCollaboratorInterests.Where(aci => !aci.IsDeleted                                                                  // Is not deleted.
+                                                                                                            && selectedInterestsUids?.Contains(aci.Interest.Uid) == false               // Is not selected.
+                                                                                                            && aci.Interest.InterestGroup.ProjectTypeId == projectType.Id).ToList();    // Filter by ProjectType to avoid to delete AttendeeCollaboratorInterests from another project types
+
             foreach (var attendeeCollaboratorInterestToDelete in attendeeCollaboratorInterestsToDelete)
             {
                 attendeeCollaboratorInterestToDelete.Delete(userId);

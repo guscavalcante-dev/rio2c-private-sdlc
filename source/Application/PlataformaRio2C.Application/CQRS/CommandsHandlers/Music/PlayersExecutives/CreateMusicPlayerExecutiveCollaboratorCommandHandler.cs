@@ -3,8 +3,8 @@
 // Author           : Elton Assunção
 // Created          : 12-29-2023
 //
-// Last Modified By : Elton Assunção
-// Last Modified On : 12-29-2023
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-17-2024
 // ***********************************************************************
 // <copyright file="CreateMusicPlayerExecutiveCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -139,6 +139,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     attendeeOrganizationUids.Any() ? await this.attendeeOrganizationRepo.FindAllByUidsAsync(attendeeOrganizationUids) : null,
                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                     await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
+                    ProjectType.Music,
                     cmd.BirthDate,
                     genderRepo.Get(cmd.CollaboratorGenderUid ?? Guid.Empty),
                     cmd.CollaboratorGenderAdditionalInfo,

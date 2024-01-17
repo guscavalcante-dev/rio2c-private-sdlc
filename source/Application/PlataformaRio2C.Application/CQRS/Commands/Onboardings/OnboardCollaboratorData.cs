@@ -4,7 +4,7 @@
 // Created          : 09-06-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-13-2024
+// Last Modified On : 01-17-2024
 // ***********************************************************************
 // <copyright file="OnboardCollaboratorData.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -145,17 +145,32 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public Guid CollaboratorUid { get; set; }
         public UserAccessControlDto UserAccessControlDto { get; set; }
 
+        #region Music Player Executive
+
         [Display(Name = "Activities", ResourceType = typeof(Labels))]
         public List<AttendeeCollaboratorActivityBaseCommand> MusicAttendeeCollaboratorActivities { get; set; }
 
         [Display(Name = "TargetAudiences", ResourceType = typeof(Labels))]
         public List<AttendeeCollaboratorTargetAudienceBaseCommand> MusicAttendeeCollaboratorTargetAudiences { get; set; }
 
+        [Display(Name = "Interests", ResourceType = typeof(Labels))]
+        public InterestBaseCommand[][] MusicInterests { get; set; }
+
+        #endregion
+
+        #region Innovation Player Executive
+
         [Display(Name = "Verticals", ResourceType = typeof(Labels))]
         public List<InnovationOrganizationTrackOptionBaseCommand> InnovationOrganizationTrackGroups { get; set; }
 
         [Display(Name = "Activities", ResourceType = typeof(Labels))]
         public List<AttendeeCollaboratorActivityBaseCommand> InnovationAttendeeCollaboratorActivities { get; set; }
+
+        [Display(Name = "Interests", ResourceType = typeof(Labels))]
+        public InterestBaseCommand[][] InnovationInterests { get; set; }
+
+        #endregion
+
 
         #region Dropdowns Properties
 
@@ -174,8 +189,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="editionsDtos">The editions dtos.</param>
         /// <param name="musicAttendeeCollaboratorActivities">The activities.</param>
         /// <param name="musicAttendeeCollaboratorTargetAudiences">The target audiences.</param>
+        /// <param name="musicInterestsDtos">The music interests dtos.</param>
         /// <param name="innovationOrganizationTrackOptionDtos">The innovation organization track option dtos.</param>
         /// <param name="innovationAttendeeCollaboratorActivities">The innovation attendee collaborator activities.</param>
+        /// <param name="innovationInterestsDtos">The innovation interests dtos.</param>
         /// <param name="currentEditionId">The current edition identifier.</param>
         /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
         /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
@@ -190,8 +207,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<EditionDto> editionsDtos,
             List<Activity> musicAttendeeCollaboratorActivities,
             List<TargetAudience> musicAttendeeCollaboratorTargetAudiences,
+            List<InterestDto> musicInterestsDtos,
             List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos,
             List<Activity> innovationAttendeeCollaboratorActivities,
+            List<InterestDto> innovationInterestsDtos,
             int currentEditionId,
             bool isJobTitleRequired,
             bool isMiniBioRequired,
@@ -233,8 +252,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateMiniBios(entity, languagesDtos, isMiniBioRequired);
             this.UpdateMusicAttendeeCollaboratorActivities(entity, musicAttendeeCollaboratorActivities);
             this.UpdateMusicTargetAudiences(entity, musicAttendeeCollaboratorTargetAudiences);
+            this.UpdateMusicInterests(entity, musicInterestsDtos);
             this.UpdateInnovationOrganizationTrackOptionGroups(entity, innovationOrganizationTrackOptionDtos);
             this.UpdateInnovationAttendeeCollaboratorActivities(entity, innovationAttendeeCollaboratorActivities);
+            this.UpdateInnovationInterests(entity, innovationInterestsDtos);
             this.UpdateCropperImage(entity, isImageRequired);
         }
 
@@ -419,7 +440,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="targetAudiences">The target audiences.</param>
-        public void UpdateMusicTargetAudiences(CollaboratorDto entity, List<TargetAudience> targetAudiences)
+        private void UpdateMusicTargetAudiences(CollaboratorDto entity, List<TargetAudience> targetAudiences)
         {
             if (targetAudiences == null) return;
 
@@ -429,6 +450,36 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 var attendeeCollaboratorTargetAudience = entity?.AttendeeCollaboratorTargetAudiencesDtos?.FirstOrDefault(ota => ota.TargetAudienceUid == targetAudience.Uid);
                 this.MusicAttendeeCollaboratorTargetAudiences.Add(attendeeCollaboratorTargetAudience != null ? new AttendeeCollaboratorTargetAudienceBaseCommand(attendeeCollaboratorTargetAudience) :
                                                                                                                new AttendeeCollaboratorTargetAudienceBaseCommand(targetAudience));
+            }
+        }
+
+        /// <summary>
+        /// Updates the music interests.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="interestsDtos">The interests dtos.</param>
+        private void UpdateMusicInterests(CollaboratorDto entity, List<InterestDto> interestsDtos)
+        {
+            var interestsBaseCommands = new List<InterestBaseCommand>();
+            foreach (var interestDto in interestsDtos)
+            {
+                var attendeeCollaboratorInterestDto = entity?.AttendeeCollaboratorInterestDtos?.FirstOrDefault(oad => oad.Interest.Uid == interestDto.Interest.Uid);
+                interestsBaseCommands.Add(attendeeCollaboratorInterestDto != null ? new InterestBaseCommand(attendeeCollaboratorInterestDto) :
+                                                                                    new InterestBaseCommand(interestDto));
+            }
+
+            var groupedInterestsDtos = interestsBaseCommands?
+                                            .GroupBy(i => new { i.InterestGroupUid, i.InterestGroupName, i.InterestGroupDisplayOrder })?
+                                            .OrderBy(g => g.Key.InterestGroupDisplayOrder)?
+                                            .ToList();
+
+            if (groupedInterestsDtos?.Any() == true)
+            {
+                this.MusicInterests = new InterestBaseCommand[groupedInterestsDtos.Count][];
+                for (int i = 0; i < groupedInterestsDtos.Count; i++)
+                {
+                    this.MusicInterests[i] = groupedInterestsDtos[i].ToArray();
+                }
             }
         }
 
@@ -476,6 +527,36 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                     var attendeeCollaboratorActivityDto = entity?.AttendeeCollaboratorActivityDtos?.FirstOrDefault(oad => oad.ActivityUid == activity.Uid);
                     this.InnovationAttendeeCollaboratorActivities.Add(attendeeCollaboratorActivityDto != null ? new AttendeeCollaboratorActivityBaseCommand(attendeeCollaboratorActivityDto) :
                                                                                                                 new AttendeeCollaboratorActivityBaseCommand(activity));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates the music interests.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="interestsDtos">The interests dtos.</param>
+        private void UpdateInnovationInterests(CollaboratorDto entity, List<InterestDto> interestsDtos)
+        {
+            var interestsBaseCommands = new List<InterestBaseCommand>();
+            foreach (var interestDto in interestsDtos)
+            {
+                var attendeeCollaboratorInterestDto = entity?.AttendeeCollaboratorInterestDtos?.FirstOrDefault(oad => oad.Interest.Uid == interestDto.Interest.Uid);
+                interestsBaseCommands.Add(attendeeCollaboratorInterestDto != null ? new InterestBaseCommand(attendeeCollaboratorInterestDto) :
+                                                                                    new InterestBaseCommand(interestDto));
+            }
+
+            var groupedInterestsDtos = interestsBaseCommands?
+                                            .GroupBy(i => new { i.InterestGroupUid, i.InterestGroupName, i.InterestGroupDisplayOrder })?
+                                            .OrderBy(g => g.Key.InterestGroupDisplayOrder)?
+                                            .ToList();
+
+            if (groupedInterestsDtos?.Any() == true)
+            {
+                this.InnovationInterests = new InterestBaseCommand[groupedInterestsDtos.Count][];
+                for (int i = 0; i < groupedInterestsDtos.Count; i++)
+                {
+                    this.InnovationInterests[i] = groupedInterestsDtos[i].ToArray();
                 }
             }
         }

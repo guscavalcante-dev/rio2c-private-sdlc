@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-27-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-16-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-17-2024
 // ***********************************************************************
 // <copyright file="UpdateMusicPlayerExecutiveCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -154,6 +154,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 attendeeOrganizationUids.Any() ? await this.attendeeOrganizationRepo.FindAllByUidsAsync(attendeeOrganizationUids) : null,
                 edition,
                 collaboratorType,
+                ProjectType.Music,
                 cmd.BirthDate,
                 collaboratorGender,
                 cmd.CollaboratorGenderAdditionalInfo,

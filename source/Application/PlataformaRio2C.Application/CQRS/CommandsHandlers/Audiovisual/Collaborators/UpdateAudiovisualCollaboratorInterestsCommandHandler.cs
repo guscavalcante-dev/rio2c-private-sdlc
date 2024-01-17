@@ -4,7 +4,7 @@
 // Created          : 07-19-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-19-2021
+// Last Modified On : 01-17-2024
 // ***********************************************************************
 // <copyright file="UpdateAudiovisualCollaboratorInterestsCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -88,6 +88,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             collaborator.UpdateCollaboratorInterests(
                 edition,
+                ProjectType.Audiovisual,
                 attendeeCollaboratorInterests,
                 cmd.UserId);
             if (!collaborator.IsValid())
