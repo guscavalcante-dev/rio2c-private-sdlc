@@ -1592,7 +1592,7 @@ namespace PlataformaRio2C.Domain.Entities
                 }
                 else
                 {
-                    this.AttendeeCollaboratorInnovationOrganizationTracks.Add(new AttendeeCollaboratorInnovationOrganizationTrack(this, attendeeInnovationOrganizationTrack.InnovationOrganizationTrackOption, attendeeCollaboratorInnovationOrganizationTrackDb.AdditionalInfo, userId));
+                    this.AttendeeCollaboratorInnovationOrganizationTracks.Add(new AttendeeCollaboratorInnovationOrganizationTrack(this, attendeeInnovationOrganizationTrack.InnovationOrganizationTrackOption, attendeeInnovationOrganizationTrack.AdditionalInfo, userId));
                 }
             }
         }

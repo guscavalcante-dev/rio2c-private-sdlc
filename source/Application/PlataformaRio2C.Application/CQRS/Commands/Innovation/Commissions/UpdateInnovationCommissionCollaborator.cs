@@ -4,7 +4,7 @@
 // Updated          : 08-19-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-04-2023
+// Last Modified On : 01-17-2024
 // ***********************************************************************
 // <copyright file="UpdateInnovationCommissionCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -62,8 +62,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateInnovationCommissionCollaborator" /> class.
         /// </summary>
-        public UpdateInnovationCommissionCollaborator()
+        public UpdateInnovationCommissionCollaborator(Guid collaboratorUid, CreateInnovationCommissionCollaborator cmd)
         {
+            this.CollaboratorUid = collaboratorUid;
+            this.IsAddingToCurrentEdition = true;
+
+            this.FirstName = cmd.FirstName;
+            this.LastNames = cmd.LastNames;
+            this.Email = cmd.Email;
+            this.InnovationOrganizationTrackGroups = cmd.InnovationOrganizationTrackGroups;
         }
     }
 }
