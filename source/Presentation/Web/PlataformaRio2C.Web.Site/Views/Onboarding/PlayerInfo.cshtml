@@ -175,7 +175,7 @@
                     <!--end: Form Wizard Step 1-->
                     <!--begin: Form Actions -->
                     <div class="kt-form__actions">
-                        @if (userAccessControlDto?.IsAttendeeCollaboratorOnboardingFinished() == false || userAccessControlDto?.IsPlayerAttendeeOrganizationsOnboardingFinished() == false)
+                        @if (userAccessControlDto?.IsAttendeeCollaboratorOnboardingFinished() == false || userAccessControlDto?.IsAudiovisualPlayerAttendeeOrganizationsOnboardingFinished() == false)
                         {
                             <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="MyRio2cCommon.submitForm('#OrganizationDataForm');">
                                 @Labels.NextStep

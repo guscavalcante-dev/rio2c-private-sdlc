@@ -56,7 +56,7 @@
                 </div>
             </span>
 
-            
+
         }
         @if (userAccessControlDto.IsInnovationPlayerExecutive())
         {
@@ -108,38 +108,38 @@
             {
                 counter++;
                 <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" :
-                                                                                                      Model > counter || playerAttendeeOrganization.OnboardingOrganizationDate.HasValue ? "done" :
-                                                                                                      "pending")">
+                                                                                                          Model > counter || playerAttendeeOrganization.OnboardingOrganizationDate.HasValue ? "done" :
+                                                                                                          "pending")">
                     <div class="kt-wizard-v2__nav-body">
                         <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
                         <div class="kt-wizard-v2__nav-label">
                             <div class="kt-wizard-v2__nav-label-title">@Labels.Company</div>
                             <div class="kt-wizard-v2__nav-label-desc">
-                                @string.Format(Messages.CompletePlayerInfo, playerAttendeeOrganization.Organization.Name)
+                                @Html.Raw(string.Format(Messages.CompletePlayerInfo, playerAttendeeOrganization.Organization.Name))
                             </div>
                         </div>
                     </div>
                 </span>
                 counter++;
                 <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" :
-                                                                                                      Model > counter || playerAttendeeOrganization.OnboardingInterestsDate.HasValue ? "done" :
-                                                                                                      "pending")">
+                                                                                                          Model > counter || playerAttendeeOrganization.OnboardingInterestsDate.HasValue ? "done" :
+                                                                                                          "pending")">
                     <div class="kt-wizard-v2__nav-body">
                         <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
                         <div class="kt-wizard-v2__nav-label">
                             <div class="kt-wizard-v2__nav-label-title">@Labels.PlayerInterests</div>
-                            <div class="kt-wizard-v2__nav-label-desc">@string.Format(Messages.CompletePlayerInterestsFor, playerAttendeeOrganization.Organization.Name)</div>
+                            <div class="kt-wizard-v2__nav-label-desc">@Html.Raw(string.Format(Messages.CompletePlayerInterestsFor, playerAttendeeOrganization.Organization.Name))</div>
                         </div>
                     </div>
                 </span>
             }
         }
-        else if (isTicketBuyer)
+        @if (isTicketBuyer)
         {
             counter++;
             <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" :
-                                                                                                  Model > counter || userAccessControlDto?.IsTicketBuyerOrganizationOnboardingPending() != true ? "done" :
-                                                                                                  "pending")">
+                                                                                                      Model > counter || userAccessControlDto?.IsTicketBuyerOrganizationOnboardingPending() != true ? "done" :
+                                                                                                      "pending")">
                 <div class="kt-wizard-v2__nav-body">
                     <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
                     <div class="kt-wizard-v2__nav-label">

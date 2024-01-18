@@ -592,6 +592,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dados de Audiovisual.
+        /// </summary>
+        public static string AudiovisualData {
+            get {
+                return ResourceManager.GetString("AudiovisualData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Negociações Audiovisual.
         /// </summary>
         public static string AudiovisualNegotiations {

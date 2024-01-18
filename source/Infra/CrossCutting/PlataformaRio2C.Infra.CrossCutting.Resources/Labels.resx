@@ -340,6 +340,9 @@
     <value>Quantidade mínima de votos para gerar média de projeto audiovisual</value>
     <comment>Quantidade mínima de votos para gerar média de projeto audiovisual</comment>
   </data>
+  <data name="AudiovisualData" xml:space="preserve">
+    <value>Dados de Audiovisual</value>
+  </data>
   <data name="AudiovisualNegotiations" xml:space="preserve">
     <value>Negociações Audiovisual</value>
     <comment>Negociações Audiovisual</comment>
