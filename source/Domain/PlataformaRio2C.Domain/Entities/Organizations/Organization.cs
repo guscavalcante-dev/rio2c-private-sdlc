@@ -527,28 +527,6 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        /// <summary>Gets the name abbreviation.</summary>
-        /// <returns></returns>
-        public string GetNameAbbreviation()
-        {
-            return this.Name?.GetTwoLetterCode();
-        }
-
-        /// <summary>Gets the name abbreviation.</summary>
-        /// <returns></returns>
-        public string GetTradeNameAbbreviation()
-        {
-            return this.TradeName?.GetTwoLetterCode();
-        }
-
-        /// <summary>Determines whether this instance has image.</summary>
-        /// <returns>
-        ///   <c>true</c> if this instance has image; otherwise, <c>false</c>.</returns>
-        public bool HasImage()
-        {
-            return this.ImageUploadDate.HasValue;
-        }
-
         #region Onboarding
 
         /// <summary>
@@ -574,7 +552,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
-        /// <param name="isVirtualMeeting">The is virtual meeting.</param>
         /// <param name="organizationDescriptions">The organization descriptions.</param>
         /// <param name="organizationActivities">The organization activities.</param>
         /// <param name="organizationTargetAudiences">The target audiences.</param>
@@ -1003,7 +980,9 @@ namespace PlataformaRio2C.Domain.Entities
             attendeeOrganization?.OnboardInterests(userId);
         }
 
-        /// <summary>Called when [ticket buyer attendee organization data].</summary>
+        /// <summary>
+        /// Called when [attendee organization data].
+        /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="userId">The user identifier.</param>
         public void OnboardTicketBuyerAttendeeOrganizationData(Edition edition, int userId)
@@ -1295,6 +1274,76 @@ namespace PlataformaRio2C.Domain.Entities
             {
                 organizationInterestToDelete.Delete(userId);
             }
+        }
+
+        #endregion
+
+        #region Helpers
+
+        /// <summary>Gets the name abbreviation.</summary>
+        /// <returns></returns>
+        public string GetNameAbbreviation()
+        {
+            return this.Name?.GetTwoLetterCode();
+        }
+
+        /// <summary>Gets the name abbreviation.</summary>
+        /// <returns></returns>
+        public string GetTradeNameAbbreviation()
+        {
+            return this.TradeName?.GetTwoLetterCode();
+        }
+
+        /// <summary>Determines whether this instance has image.</summary>
+        /// <returns>
+        ///   <c>true</c> if this instance has image; otherwise, <c>false</c>.</returns>
+        public bool HasImage()
+        {
+            return this.ImageUploadDate.HasValue;
+        }
+
+        /// <summary>
+        /// Determines whether this instance is player.
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is player; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsPlayer()
+        {
+            return this.IsAudiovisualPlayer() || this.IsMusicPlayer() || this.IsStartupPlayer();
+        }
+
+        /// <summary>
+        /// Determines whether [is audiovisual player].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is audiovisual player]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsAudiovisualPlayer()
+        {
+            return this.AttendeeOrganizations.Any(ao => ao.IsAudiovisualPlayer());
+        }
+
+        /// <summary>
+        /// Determines whether [is music player].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is music player]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsMusicPlayer()
+        {
+            return this.AttendeeOrganizations.Any(ao => ao.IsMusicPlayer());
+        }
+
+        /// <summary>
+        /// Determines whether [is startup player].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is startup player]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsStartupPlayer()
+        {
+            return this.AttendeeOrganizations.Any(ao => ao.IsStartupPlayer());
         }
 
         #endregion

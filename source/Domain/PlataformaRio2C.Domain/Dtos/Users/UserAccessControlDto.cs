@@ -293,7 +293,7 @@ namespace PlataformaRio2C.Domain.Dtos
         {
             return !this.IsAdmin() 
                    && (!this.IsAttendeeCollaboratorOnboardingFinished() 
-                       || !this.IsPlayerAttendeeOrganizationsOnboardingFinished() 
+                       || !this.IsAudiovisualPlayerAttendeeOrganizationsOnboardingFinished() 
                        || this.IsTicketBuyerOrganizationOnboardingPending());
         }
 
@@ -377,45 +377,57 @@ namespace PlataformaRio2C.Domain.Dtos
 
         #region Organizations
 
-        /// <summary>Determines whether [is player attendee organizations onboarding finished].</summary>
+        /// <summary>
+        /// Determines whether [is audiovisual player attendee organizations onboarding finished].
+        /// </summary>
         /// <returns>
-        ///   <c>true</c> if [is player attendee organizations onboarding finished]; otherwise, <c>false</c>.</returns>
-        public bool IsPlayerAttendeeOrganizationsOnboardingFinished()
+        ///   <c>true</c> if [is audiovisual player attendee organizations onboarding finished]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsAudiovisualPlayerAttendeeOrganizationsOnboardingFinished()
         {
-            return this.IsPlayerOrganizationsOnboardingFinished() 
-                   && this.IsPlayerOrganizationsInterestsOnboardingFinished();
+            return this.IsAudiovisualPlayerOrganizationsOnboardingFinished() 
+                   && this.IsAudiovisualPlayerOrganizationsInterestsOnboardingFinished();
         }
 
-        /// <summary>Determines whether [is player organizatiosn onboarding finished].</summary>
+        /// <summary>
+        /// Determines whether [is audiovisual player organizations onboarding finished].
+        /// </summary>
         /// <returns>
-        ///   <c>true</c> if [is player organizatiosn onboarding finished]; otherwise, <c>false</c>.</returns>
-        public bool IsPlayerOrganizationsOnboardingFinished()
+        ///   <c>true</c> if [is audiovisual player organizations onboarding finished]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsAudiovisualPlayerOrganizationsOnboardingFinished()
         {
-            return !this.IsAudiovisualPlayerExecutive()                                                                                                        // Is not Player 
+            return !this.IsAudiovisualPlayerExecutive()                                                                                    // Is not Audiovisual Player 
                     || (this.EditionAttendeeOrganizations?.Any() == false                                                                  // No organization related
                         || (this.EditionAttendeeOrganizations?.Any() == true                                                               // or has at least one organization linked
                             && this.EditionAttendeeOrganizations?.Where(ao => ao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted && aot.OrganizationType.Name == OrganizationType.AudiovisualPlayer.Name))
                                                                     .All(ao => ao.OnboardingOrganizationDate.HasValue) == true));          // and all organizations interests onboarding are finished
         }
 
-        /// <summary>Determines whether [is player organization interests onboarding pending].</summary>
+        /// <summary>
+        /// Determines whether [is audiovisual player organization interests onboarding pending].
+        /// </summary>
         /// <returns>
-        ///   <c>true</c> if [is player organization interests onboarding pending]; otherwise, <c>false</c>.</returns>
-        public bool IsPlayerOrganizationInterestsOnboardingPending()
+        ///   <c>true</c> if [is audiovisual player organization interests onboarding pending]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsAudiovisualPlayerOrganizationInterestsOnboardingPending()
         {
-            return this.IsAudiovisualPlayerExecutive()                                                                                                          // Is Player
+            return this.IsAudiovisualPlayerExecutive()                                                                                      // Is Audiovisual Player
                    && this.EditionAttendeeOrganizations?.Any() == true                                                                      // Has at least one organization linked
                    && this.EditionAttendeeOrganizations?.Where(ao => ao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted && aot.OrganizationType.Name == OrganizationType.AudiovisualPlayer.Name))
                                                         .Any(ao => ao.OnboardingOrganizationDate.HasValue                                   // and at least one organization onboarded
                                                                    && !ao.OnboardingInterestsDate.HasValue) == true;                        // and this organization interests area not onboarded
         }
 
-        /// <summary>Determines whether [is player organizations interests onboarding finished].</summary>
+        /// <summary>
+        /// Determines whether [is audiovisual player organizations interests onboarding finished].
+        /// </summary>
         /// <returns>
-        ///   <c>true</c> if [is player organizations interests onboarding finished]; otherwise, <c>false</c>.</returns>
-        public bool IsPlayerOrganizationsInterestsOnboardingFinished()
+        ///   <c>true</c> if [is audiovisual player organizations interests onboarding finished]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsAudiovisualPlayerOrganizationsInterestsOnboardingFinished()
         {
-            return !this.IsAudiovisualPlayerExecutive()                                                                                                        // Is not Player 
+            return !this.IsAudiovisualPlayerExecutive()                                                                                    // Is not Audiovisual Player 
                    || (this.EditionAttendeeOrganizations?.Any() == false                                                                   // No organization related
                        || (this.EditionAttendeeOrganizations?.Any() == true                                                                // or has at least one organization linked
                            && this.EditionAttendeeOrganizations?.Where(ao => ao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted && aot.OrganizationType.Name == OrganizationType.AudiovisualPlayer.Name))
@@ -427,11 +439,11 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is ticket buyer organization onboarding pending]; otherwise, <c>false</c>.</returns>
         public bool IsTicketBuyerOrganizationOnboardingPending()
         {
-            return !this.IsAudiovisualPlayerExecutive()                                                                                                        // Is not Player 
-                   && this.HasAnyCollaboratorType(Constants.CollaboratorType.TicketBuyers)                                                 // Is ticket buyer
+            return !this.IsAudiovisualPlayerExecutive()                                                                                    // Is not Player 
+                   && this.IsTicketBuyer()                                                                                                 // Is ticket buyer
                    && (!this.EditionAttendeeCollaborator.OnboardingOrganizationDataSkippedDate.HasValue                                    // Not skipped the onboarding of company data
                        && (this.EditionAttendeeOrganizations?.Any() == false                                                               // No organization related
-                           || this.EditionAttendeeOrganizations?.Where(ao => ao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted && aot.OrganizationType.Name == OrganizationType.AudiovisualPlayer.Name))
+                           || this.EditionAttendeeOrganizations?.Where(ao => ao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted && aot.OrganizationType.Name != OrganizationType.AudiovisualPlayer.Name))
                                                                     .All(ao => ao.OnboardingFinishDate.HasValue) == false));               // or has organizations without onboarding     
         }
 

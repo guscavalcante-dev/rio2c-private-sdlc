@@ -298,9 +298,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.OnboardingStartDate = this.OnboardingOrganizationDate = DateTime.UtcNow;
 
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            this.SetUpdateDate(userId);
         }
 
         /// <summary>Called when [interests].</summary>
@@ -309,20 +307,18 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.OnboardingFinishDate = this.OnboardingInterestsDate = DateTime.UtcNow;
 
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            this.SetUpdateDate(userId);
         }
 
-        /// <summary>Called when [t icket buyer].</summary>
+        /// <summary>
+        /// Called when [organization].
+        /// </summary>
         /// <param name="userId">The user identifier.</param>
         public void OnboardTIcketBuyer(int userId)
         {
             this.OnboardingStartDate = this.OnboardingFinishDate = this.OnboardingOrganizationDate = DateTime.UtcNow;
 
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            this.SetUpdateDate(userId);
         }
 
         /// <summary>Called when [producer].</summary>
@@ -331,9 +327,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.OnboardingStartDate = this.OnboardingFinishDate = this.OnboardingOrganizationDate = this.ProjectSubmissionOrganizationDate = DateTime.UtcNow;
 
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            this.SetUpdateDate(userId);
         }
 
         #endregion
@@ -491,6 +485,77 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         #endregion
+
+        #endregion
+
+        #region Helpers
+
+        /// <summary>
+        /// Determines whether [is audiovisual player].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is audiovisual player]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsAudiovisualPlayer()
+        {
+            return this.HasOrganizationType(OrganizationType.AudiovisualPlayer.Name);
+        }
+
+        /// <summary>
+        /// Determines whether [is music player].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is music player]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsMusicPlayer()
+        {
+            return this.HasOrganizationType(OrganizationType.MusicPlayer.Name);
+        }
+
+        /// <summary>
+        /// Determines whether [is startup player].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is startup player]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsStartupPlayer()
+        {
+            return this.HasOrganizationType(OrganizationType.StartupPlayer.Name);
+        }
+
+        /// <summary>
+        /// Determines whether [has organization type] [the specified organization type name].
+        /// </summary>
+        /// <param name="organizationTypeName">Name of the organization type.</param>
+        /// <returns>
+        ///   <c>true</c> if [has organization type] [the specified organization type name]; otherwise, <c>false</c>.
+        /// </returns>
+        private bool HasOrganizationType(string organizationTypeName)
+        {
+            if (string.IsNullOrEmpty(organizationTypeName))
+            {
+                return false;
+            }
+
+            return this.AttendeeOrganizationTypes?.Any(aot => !aot.IsDeleted && aot.OrganizationType.Name == organizationTypeName) == true;
+        }
+
+        /// <summary>
+        /// Determines whether [has any organization type] [the specified organization type names].
+        /// </summary>
+        /// <param name="organizationTypeNames">The organization type names.</param>
+        /// <returns>
+        ///   <c>true</c> if [has any organization type] [the specified organization type names]; otherwise, <c>false</c>.
+        /// </returns>
+        private bool HasAnyOrganizationType(string[] organizationTypeNames)
+        {
+            if (organizationTypeNames?.Any() != true)
+            {
+                return false;
+            }
+
+            return this.AttendeeOrganizationTypes?.Any(aot => !aot.IsDeleted && organizationTypeNames.Contains(aot.OrganizationType.Name)) == true;
+        }
 
         #endregion
 

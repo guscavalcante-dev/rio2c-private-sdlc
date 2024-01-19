@@ -340,6 +340,9 @@
     <value>Audiovisual commission minimum evaluations count</value>
     <comment>Quantidade mínima de votos para gerar média de projeto audiovisual</comment>
   </data>
+  <data name="AudiovisualData" xml:space="preserve">
+    <value>Audiovisual Data</value>
+  </data>
   <data name="AudiovisualNegotiations" xml:space="preserve">
     <value>Audiovisual Negotiations</value>
     <comment>Negociações Audiovisual</comment>

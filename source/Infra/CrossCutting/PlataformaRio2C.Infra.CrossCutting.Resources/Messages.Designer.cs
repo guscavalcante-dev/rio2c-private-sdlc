@@ -358,6 +358,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Complete os dados da empresa &lt;b&gt;{0}&lt;/b&gt;.
+        /// </summary>
+        public static string CompleteCompanyInfo {
+            get {
+                return ResourceManager.GetString("CompleteCompanyInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Complete os dados da sua empresa.
         /// </summary>
         public static string CompleteCompanyrInfo {
@@ -367,7 +376,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Complete os dados do player {0}.
+        ///   Looks up a localized string similar to Complete os dados do player &lt;b&gt;{0}&lt;/b&gt;.
         /// </summary>
         public static string CompletePlayerInfo {
             get {
@@ -376,7 +385,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Informe quais as áreas de interesse do player {0}.
+        ///   Looks up a localized string similar to Informe quais as áreas de interesse do player &lt;b&gt;{0}&lt;/b&gt;.
         /// </summary>
         public static string CompletePlayerInterestsFor {
             get {

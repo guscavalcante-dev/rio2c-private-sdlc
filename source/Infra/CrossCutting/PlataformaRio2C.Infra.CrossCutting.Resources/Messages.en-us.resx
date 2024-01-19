@@ -232,16 +232,19 @@
   <data name="CompanySummaryInPtBrMandatory" xml:space="preserve">
     <value>Company summary in Portuguese is required.</value>
   </data>
+  <data name="CompleteCompanyInfo" xml:space="preserve">
+    <value>Complete the company information for &lt;b&gt;{0}&lt;/b&gt;</value>
+  </data>
   <data name="CompleteCompanyrInfo" xml:space="preserve">
     <value>Complete your company information</value>
     <comment>Complete os dados da sua empresa</comment>
   </data>
   <data name="CompletePlayerInfo" xml:space="preserve">
-    <value>Complete the player information for {0}</value>
+    <value>Complete the player information for &lt;b&gt;{0}&lt;/b&gt;</value>
     <comment>Complete as informações do player {0}</comment>
   </data>
   <data name="CompletePlayerInterestsFor" xml:space="preserve">
-    <value>Inform the interest areas for player {0}</value>
+    <value>Inform the interest areas for player &lt;b&gt;{0}&lt;/b&gt;</value>
     <comment>Informe quais as áreas de interesse do player {0}</comment>
   </data>
   <data name="CompleteProjectInfo" xml:space="preserve">

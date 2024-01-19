@@ -115,15 +115,15 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return RedirectToAction(nameof(OnboardingController.CollaboratorData), nameof(OnboardingController));
             }
 
-            // Redirect to organization data if not finished and there is no pending interests to do before
-            if (this.UserAccessControlDto?.IsPlayerOrganizationsOnboardingFinished() != true
-                && this.UserAccessControlDto?.IsPlayerOrganizationInterestsOnboardingPending() != true)
+            // Redirect to audiovisual organization data if not finished and there is no pending interests to do before
+            if (this.UserAccessControlDto?.IsAudiovisualPlayerOrganizationsOnboardingFinished() != true
+                && this.UserAccessControlDto?.IsAudiovisualPlayerOrganizationInterestsOnboardingPending() != true)
             {
                 return RedirectToAction(nameof(OnboardingController.PlayerInfo), nameof(OnboardingController));
             }
 
-            // Redirect to organization interests if not finished
-            if (this.UserAccessControlDto?.IsPlayerOrganizationInterestsOnboardingPending() == true)
+            // Redirect to audiovisual organization interests if not finished
+            if (this.UserAccessControlDto?.IsAudiovisualPlayerOrganizationInterestsOnboardingPending() == true)
             {
                 return RedirectToAction(nameof(OnboardingController.PlayerInterests), nameof(OnboardingController));
             }
@@ -778,7 +778,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> PlayerInfo()
         {
-            if (this.UserAccessControlDto?.IsPlayerOrganizationsOnboardingFinished() == true)
+            if (this.UserAccessControlDto?.IsAudiovisualPlayerOrganizationsOnboardingFinished() == true)
             {
                 return RedirectToAction("Index", "Onboarding");
             }
@@ -820,7 +820,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpPost]
         public async Task<ActionResult> PlayerInfo(OnboardPlayerOrganizationData cmd)
         {
-            if (this.UserAccessControlDto?.IsPlayerOrganizationsOnboardingFinished() == true)
+            if (this.UserAccessControlDto?.IsAudiovisualPlayerOrganizationsOnboardingFinished() == true)
             {
                 return RedirectToAction("Index", "Onboarding");
             }
@@ -899,7 +899,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> PlayerInterests()
         {
-            if (this.UserAccessControlDto?.IsPlayerOrganizationInterestsOnboardingPending() != true)
+            if (this.UserAccessControlDto?.IsAudiovisualPlayerOrganizationInterestsOnboardingPending() != true)
             {
                 return RedirectToAction("Index", "Onboarding");
             }
@@ -938,7 +938,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpPost]
         public async Task<ActionResult> PlayerInterests(OnboardPlayerInterests cmd)
         {
-            if (this.UserAccessControlDto?.IsPlayerOrganizationInterestsOnboardingPending() != true)
+            if (this.UserAccessControlDto?.IsAudiovisualPlayerOrganizationInterestsOnboardingPending() != true)
             {
                 return RedirectToAction("Index", "Onboarding");
             }
