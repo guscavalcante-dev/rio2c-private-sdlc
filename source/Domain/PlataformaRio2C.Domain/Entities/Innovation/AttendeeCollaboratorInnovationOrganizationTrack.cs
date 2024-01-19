@@ -82,12 +82,13 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>
         /// Updates the specified user identifier.
         /// </summary>
+        /// <param name="additionalInfo">The additional information.</param>
         /// <param name="userId">The user identifier.</param>
-        public void Update(int userId)
+        public void Update(string additionalInfo, int userId)
         {
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            this.AdditionalInfo = additionalInfo;
+
+            this.SetUpdateDate(userId);
         }
 
         /// <summary>

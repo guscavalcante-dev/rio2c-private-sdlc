@@ -1588,7 +1588,7 @@ namespace PlataformaRio2C.Domain.Entities
                 var attendeeCollaboratorInnovationOrganizationTrackDb = this.AttendeeCollaboratorInnovationOrganizationTracks.FirstOrDefault(aciot => aciot.InnovationOrganizationTrackOption.Uid == attendeeInnovationOrganizationTrack.InnovationOrganizationTrackOption?.Uid);
                 if (attendeeCollaboratorInnovationOrganizationTrackDb != null)
                 {
-                    attendeeCollaboratorInnovationOrganizationTrackDb.Update(userId);
+                    attendeeCollaboratorInnovationOrganizationTrackDb.Update(attendeeInnovationOrganizationTrack.AdditionalInfo, userId);
                 }
                 else
                 {
@@ -1654,11 +1654,11 @@ namespace PlataformaRio2C.Domain.Entities
                 var attendeeCollaboratorInnovationOrganizationTrackDb = this.AttendeeCollaboratorInnovationOrganizationTracks.FirstOrDefault(aciot => aciot.InnovationOrganizationTrackOption.Uid == attendeeInnovationOrganizationTrack.InnovationOrganizationTrackOption?.Uid);
                 if (attendeeCollaboratorInnovationOrganizationTrackDb != null)
                 {
-                    attendeeCollaboratorInnovationOrganizationTrackDb.Update(userId);
+                    attendeeCollaboratorInnovationOrganizationTrackDb.Update(attendeeInnovationOrganizationTrack.AdditionalInfo, userId);
                 }
                 else
                 {
-                    this.AttendeeCollaboratorInnovationOrganizationTracks.Add(new AttendeeCollaboratorInnovationOrganizationTrack(this, attendeeInnovationOrganizationTrack.InnovationOrganizationTrackOption, attendeeCollaboratorInnovationOrganizationTrackDb?.AdditionalInfo, userId));
+                    this.AttendeeCollaboratorInnovationOrganizationTracks.Add(new AttendeeCollaboratorInnovationOrganizationTrack(this, attendeeInnovationOrganizationTrack.InnovationOrganizationTrackOption, attendeeInnovationOrganizationTrack.AdditionalInfo, userId));
                 }
             }
         }
@@ -1721,7 +1721,7 @@ namespace PlataformaRio2C.Domain.Entities
                 var attendeeCollaboratorTargetAudienceDb = this.AttendeeCollaboratorTargetAudiences.FirstOrDefault(aciot => aciot.TargetAudience.Uid == attendeeCollaboratorTargetAudience.TargetAudience?.Uid);
                 if (attendeeCollaboratorTargetAudienceDb != null)
                 {
-                    attendeeCollaboratorTargetAudienceDb.Update(userId);
+                    attendeeCollaboratorTargetAudienceDb.Update(attendeeCollaboratorTargetAudience.AdditionalInfo, userId);
                 }
                 else
                 {
