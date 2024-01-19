@@ -7,11 +7,11 @@
     <label class="kt-checkbox" style="margin-bottom: 5px;">
         @if (!Model.ActivityHasAdditionalInfo)
         {
-            @Html.CheckBoxFor(m => m.IsChecked, new { @class = (Model.IsRequired ? "require-one" : ""), data_id = "activity-group" })
+            @Html.CheckBoxFor(m => m.IsChecked, new { @class = "require-one", data_id = $@"{ViewData["editorType"]}-activity-group" })
         }
         else
         {
-            @Html.CheckBoxFor(m => m.IsChecked, new { @class = $@"{(Model.IsRequired ? "require-one" : "")} toggle-additional-info", data_id = "activity-group", data_toggle_id = Model.ActivityUid })
+            @Html.CheckBoxFor(m => m.IsChecked, new { @class = "require-one toggle-additional-info", data_id = $@"{ViewData["editorType"]}-activity-group", data_toggle_id = Model.ActivityUid })
         }
         @Model.ActivityName.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')
         <span></span>
