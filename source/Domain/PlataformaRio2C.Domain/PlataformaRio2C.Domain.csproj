@@ -120,6 +120,8 @@
     <Compile Include="ApiModels\Speakers\Responses\SpeakerApiResponse.cs" />
     <Compile Include="ApiModels\Pillars\Responses\PillarBaseApiResponse.cs" />
     <Compile Include="ApiModels\Tracks\Responses\TrackBaseApiResponse.cs" />
+    <Compile Include="ApiModels\Users\Requests\UserProjectsSubscriptionsAvailableApiRequest.cs" />
+    <Compile Include="ApiModels\Users\Responses\UserProjectsSubscriptionsAvailableApiResponse.cs" />
     <Compile Include="Constants\CookieName.cs" />
     <Compile Include="Constants\Culture.cs" />
     <Compile Include="Constants\CollaboratorType.cs" />

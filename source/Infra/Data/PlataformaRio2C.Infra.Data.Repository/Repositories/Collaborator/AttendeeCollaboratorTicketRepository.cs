@@ -61,6 +61,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>
+        /// Finds the by user email.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="email">The email.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeCollaboratorTicket> FindByUserEmail(this IQueryable<AttendeeCollaboratorTicket> query, string email)
+        {
+            query = query.Where(act => act.AttendeeCollaborator.Collaborator.User.Email == email);
+
+            return query;
+        }
     }
 
     #endregion
@@ -97,6 +110,25 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
                                 .FindByCollaboratorId(collaboratorId);
+
+            return await query
+                            .Select(act => new AttendeeCollaboratorTicketDto
+                            {
+                                AttendeeCollaboratorTicket = act,
+                                AttendeeSalesPlatformTicketType = act.AttendeeSalesPlatformTicketType
+                            })
+                            .ToListAsync();
+        }
+
+        /// <summary>Finds all dto by edition identifier and by collaborator identifier.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="collaboratorId">The collaborator identifier.</param>
+        /// <returns></returns>
+        public async Task<List<AttendeeCollaboratorTicketDto>> FindAllDtoByEditionIdAndByUserEmail(int editionId, string email)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId)
+                                .FindByUserEmail(email);
 
             return await query
                             .Select(act => new AttendeeCollaboratorTicketDto
