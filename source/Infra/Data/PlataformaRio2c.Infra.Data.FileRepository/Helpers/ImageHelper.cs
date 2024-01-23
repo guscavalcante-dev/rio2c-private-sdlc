@@ -4,7 +4,7 @@
 // Created          : 08-15-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-23-2023
+// Last Modified On : 01-22-2024
 // ***********************************************************************
 // <copyright file="ImageHelper.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -273,7 +273,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
 
             try
             {
-                sourceBitmap = new Bitmap(content, false);
+                sourceBitmap = new Bitmap(content);
             }
             catch
             {
@@ -300,7 +300,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
                 try
                 {
                     //Creating new bitmap with valid dimensions
-                    using (Bitmap newBitMap = new Bitmap(cropRect.Width, cropRect.Height, PixelFormat.Format24bppRgb))
+                    using (Bitmap newBitMap = new Bitmap(cropRect.Width, cropRect.Height))
                     {
                         using (Graphics g = Graphics.FromImage(newBitMap))
                         {
