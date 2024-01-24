@@ -120,6 +120,8 @@
     <Compile Include="ApiModels\Speakers\Responses\SpeakerApiResponse.cs" />
     <Compile Include="ApiModels\Pillars\Responses\PillarBaseApiResponse.cs" />
     <Compile Include="ApiModels\Tracks\Responses\TrackBaseApiResponse.cs" />
+    <Compile Include="ApiModels\Users\Requests\UserTicketsInformationApiRequest.cs" />
+    <Compile Include="ApiModels\Users\Responses\UserTicketsInformationApiResponse.cs" />
     <Compile Include="Constants\CookieName.cs" />
     <Compile Include="Constants\Culture.cs" />
     <Compile Include="Constants\CollaboratorType.cs" />
@@ -257,6 +259,7 @@
     <Compile Include="Dtos\Music\API\MusicBandResponsibleApiDto.cs" />
     <Compile Include="Dtos\Music\API\MusicProjectApiDto.cs" />
     <Compile Include="Dtos\Music\AttendeeCollaboratorMusicBandEvaluationsWidgetDto.cs" />
+    <Compile Include="Dtos\Music\AttendeeMusicBandDto.cs" />
     <Compile Include="Dtos\Music\MusicBandDto.cs" />
     <Compile Include="Dtos\Music\AttendeeMusicBandCollaboratorDto.cs" />
     <Compile Include="Dtos\Music\API\TargetAudienceApiDto.cs" />
@@ -331,6 +334,7 @@
     <Compile Include="Dtos\Pillars\PillarDto.cs" />
     <Compile Include="Dtos\Pillars\PillarJsonDto.cs" />
     <Compile Include="Dtos\Users\AdminAccessControlDto.cs" />
+    <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorTicketsInformationDto.cs" />
     <Compile Include="Dtos\Users\UserUnsubscribedListDto.cs" />
     <Compile Include="Dtos\Users\UserEmailSettingsDto.cs" />
     <Compile Include="Dtos\Users\UserDto.cs" />

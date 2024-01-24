@@ -486,7 +486,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                            .Select(mbg => mbg.TargetAudience.Name).ToList(),
                                                        CreateDate = mp.CreateDate,
                                                        UpdateDate = mp.UpdateDate,
-                                                       WouldYouLikeParticipateBusinessRound = mp.AttendeeMusicBand.WouldYouLikeParticipateBusinessRound
+                                                       WouldYouLikeParticipateBusinessRound = mp.AttendeeMusicBand.WouldYouLikeParticipateBusinessRound,
+                                                       WouldYouLikeParticipatePitching = mp.AttendeeMusicBand.WouldYouLikeParticipatePitching
                                                    })
                                                    .ToListAsync();
 
@@ -580,6 +581,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                        UpdateDate = mp.AttendeeMusicBand.MusicBand.UpdateDate,
                                                        ImageUploadDate = mp.AttendeeMusicBand.MusicBand.ImageUploadDate,
                                                        WouldYouLikeParticipateBusinessRound = mp.AttendeeMusicBand.WouldYouLikeParticipateBusinessRound,
+                                                       WouldYouLikeParticipatePitching = mp.AttendeeMusicBand.WouldYouLikeParticipatePitching,
                                                        MusicBandType = mp.AttendeeMusicBand.MusicBand.MusicBandType,
                                                        MusicProjectApiDto = new MusicProjectApiDto
                                                        {

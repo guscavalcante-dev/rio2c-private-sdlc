@@ -2904,6 +2904,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>o nome</value>
     <comment>o nome</comment>
   </data>
+  <data name="ThisDocumentIsNotValid" xml:space="preserve">
+    <value>Este {0} não é válido</value>
+  </data>
   <data name="ThreeDotsToAnimation" xml:space="preserve">
     <value>&lt;span&gt;.&lt;/span&gt;&lt;span&gt;.&lt;/span&gt;&lt;span&gt;.&lt;/span&gt;</value>
   </data>

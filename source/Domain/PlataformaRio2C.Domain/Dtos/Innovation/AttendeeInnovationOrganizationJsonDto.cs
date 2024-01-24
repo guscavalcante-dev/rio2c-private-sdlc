@@ -30,6 +30,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public int EvaluationsCount { get; set; }
         public bool IsApproved { get; set; }
         public bool? WouldYouLikeParticipateBusinessRound { get; set; }
+        public bool? WouldYouLikeParticipatePitching { get; set; }
 
         public IList<string> InnovationOrganizationTracksNames { get; set; }
         public IList<InnovationOrganizationTrackOptionGroupDto> InnovationOrganizationTrackOptionGroupDtos { get; set; }

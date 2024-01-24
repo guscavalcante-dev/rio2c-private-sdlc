@@ -642,6 +642,9 @@
     <value>Not evaluated</value>
     <comment>Não avaliado</comment>
   </data>
+  <data name="NoTicketsFoundForEmail" xml:space="preserve">
+    <value>No tickets found for email {0}</value>
+  </data>
   <data name="NotScheduledOneToOneMeetings" xml:space="preserve">
     <value>Not Scheduled One-to-One Meetings</value>
     <comment>Rodadas de Negócios não Agendadas</comment>
@@ -815,6 +818,9 @@
   <data name="ProjectNotFound" xml:space="preserve">
     <value>Project not found.</value>
   </data>
+  <data name="ProjectRegistrationLimitReachedFor" xml:space="preserve">
+    <value>{0} registration limit for {1} reached</value>
+  </data>
   <data name="ProjectSavedButNotSentToPlayers" xml:space="preserve">
     <value>Project saved but NOT submitted to Players. To submit your project select the Players and click the Save and Submit button.</value>
     <comment>Projeto salvo mas ainda NÃO enviado para Players. Para enviar o projeto para avaliação selecione os Players e clique em Salvar e Enviar.</comment>
@@ -981,8 +987,11 @@
     <comment>O projeto deve ter no mínimo 1 {0} para ser concluído.</comment>
   </data>
   <data name="TheProjectsWillReceiveFinalGradeAtPeriodEnds" xml:space="preserve">
-    <value>The projects will receive the final grade and approval status only at the period ends.</value>
+    <value>The projects will receive the final grade and approval status only at the period ends</value>
     <comment>Os projetos receberão a nota final e o status de aprovação somente ao final desse período</comment>
+  </data>
+  <data name="ThereAreStillXSlotsLeftToRegisterProjects" xml:space="preserve">
+    <value>There are still {0} slots left to subscribe {1} for {2}</value>
   </data>
   <data name="ThereIsAlreadyFounderForStartup" xml:space="preserve">
     <value>There is already a registered founder named {0} for this startup</value>

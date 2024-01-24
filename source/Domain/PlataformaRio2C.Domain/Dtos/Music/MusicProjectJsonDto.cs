@@ -30,6 +30,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool IsApproved { get; set; }
         public DateTimeOffset? ImageUploadDate { get; set; }
         public bool WouldYouLikeParticipateBusinessRound { get; set; }
+        public bool WouldYouLikeParticipatePitching { get; set; }
 
         public IList<string> MusicGenreNames { get; set; }
         public IList<string> MusicTargetAudiencesNames { get; set; }

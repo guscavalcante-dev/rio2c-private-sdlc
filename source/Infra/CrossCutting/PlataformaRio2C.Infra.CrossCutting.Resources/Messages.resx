@@ -638,6 +638,9 @@
     <value>Não avaliado</value>
     <comment>Não avaliado</comment>
   </data>
+  <data name="NoTicketsFoundForEmail" xml:space="preserve">
+    <value>Nenhum ingresso encontrado para o email {0}</value>
+  </data>
   <data name="NotScheduledOneToOneMeetings" xml:space="preserve">
     <value>Rodadas de Negócios não Agendadas</value>
     <comment>Rodadas de Negócios não Agendadas</comment>
@@ -810,6 +813,9 @@
   <data name="ProjectNotFound" xml:space="preserve">
     <value>Projeto não encontrado.</value>
   </data>
+  <data name="ProjectRegistrationLimitReachedFor" xml:space="preserve">
+    <value>Limite de inscrições de {0} para {1} atingido</value>
+  </data>
   <data name="ProjectSavedButNotSentToPlayers" xml:space="preserve">
     <value>Projeto salvo mas ainda NÃO enviado para Players. Para enviar o projeto para avaliação selecione os Players e clique em Salvar e Enviar.</value>
     <comment>Projeto salvo mas ainda NÃO enviado para Players. Para enviar o projeto para avaliação selecione os Players e clique em Salvar e Enviar.</comment>
@@ -980,6 +986,9 @@
   <data name="TheProjectsWillReceiveFinalGradeAtPeriodEnds" xml:space="preserve">
     <value>Os projetos receberão a nota final e o status de aprovação somente ao final desse período</value>
     <comment>Os projetos receberão a nota final e o status de aprovação somente ao final desse período</comment>
+  </data>
+  <data name="ThereAreStillXSlotsLeftToRegisterProjects" xml:space="preserve">
+    <value>Ainda restam {0} slots para inscrição de {1} para {2}</value>
   </data>
   <data name="ThereIsAlreadyFounderForStartup" xml:space="preserve">
     <value>Já existe um fundador cadastrado com o nome {0} para esta startup</value>

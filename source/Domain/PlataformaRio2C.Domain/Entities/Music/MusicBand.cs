@@ -69,6 +69,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="twitter">The twitter.</param>
         /// <param name="youtube">The youtube.</param>
         /// <param name="wouldYouLikeParticipateBusinessRound">if set to <c>true</c> [would you like participate business round].</param>
+        /// <param name="wouldYouLikeParticipatePitching">if set to <c>true</c> [would you like participate pitching].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="musicProjectApiDto">The music project API dto.</param>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
@@ -89,6 +90,7 @@ namespace PlataformaRio2C.Domain.Entities
             string twitter,
             string youtube,
             bool wouldYouLikeParticipateBusinessRound,
+            bool wouldYouLikeParticipatePitching,
             bool isImageUploaded,
             MusicProjectApiDto musicProjectApiDto,
             AttendeeCollaborator attendeeCollaborator,
@@ -111,7 +113,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateImageUploadDate(isImageUploaded, false);
             base.SetCreateDate(userId);
 
-            this.SynchronizeAttendeeMusicBands(edition, attendeeCollaborator, musicProjectApiDto, wouldYouLikeParticipateBusinessRound, userId);  
+            this.SynchronizeAttendeeMusicBands(edition, attendeeCollaborator, musicProjectApiDto, wouldYouLikeParticipateBusinessRound, wouldYouLikeParticipatePitching, userId);  
             this.SynchronizeMusicBandGenres(musicGenreApiDtos, userId);
             this.SynchronizeMusicBandTargetAudience(targetAudienceApiDtos, userId);
             this.SynchronizeMusicBandMembers(musicBandMemberApiDtos, userId);
@@ -163,12 +165,14 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
         /// <param name="musicProjectApiDto">The music project API dto.</param>
         /// <param name="wouldYouLikeParticipateBusinessRound">if set to <c>true</c> [would you like participate business round].</param>
+        /// <param name="wouldYouLikeParticipatePitching">if set to <c>true</c> [would you like participate pitching].</param>
         /// <param name="userId">The user identifier.</param>
         private void SynchronizeAttendeeMusicBands(
             Edition edition,
             AttendeeCollaborator attendeeCollaborator,
             MusicProjectApiDto musicProjectApiDto,
             bool wouldYouLikeParticipateBusinessRound,
+            bool wouldYouLikeParticipatePitching,
             int userId)
         {
             if (this.AttendeeMusicBands == null)
@@ -200,6 +204,7 @@ namespace PlataformaRio2C.Domain.Entities
                     musicProjectApiDto.Clipping2,
                     musicProjectApiDto.Clipping3,
                     wouldYouLikeParticipateBusinessRound,
+                    wouldYouLikeParticipatePitching,
                     userId);
                 this.AttendeeMusicBands.Add(newAttendeeMusicBand);
                 attendeeCollaborator?.SynchronizeAttendeeMusicBandCollaborators(new List<AttendeeMusicBand> { newAttendeeMusicBand }, false, userId);

@@ -59,7 +59,8 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual Edition Edition { get; private set; }
         public virtual InnovationOrganization InnovationOrganization { get; private set; }
 
-        public bool? WouldYouLikeParticipateBusinessRound { get; private set; }
+        public bool WouldYouLikeParticipateBusinessRound { get; private set; }
+        public bool WouldYouLikeParticipatePitching { get; private set; }
         public decimal? AccumulatedRevenueForLastTwelveMonths { get; private set; }
         
         public virtual ICollection<AttendeeInnovationOrganizationCollaborator> AttendeeInnovationOrganizationCollaborators { get; private set; }
@@ -104,7 +105,8 @@ namespace PlataformaRio2C.Domain.Entities
             string businessOperationalModel,
             string videoUrl,
             string presentationFileExtension,
-            bool? wouldYouLikeParticipateBusinessRound,
+            bool wouldYouLikeParticipateBusinessRound,
+            bool wouldYouLikeParticipatePitching,
             decimal? accumulatedRevenueForLastTwelveMonths,
             int userId)
         {
@@ -121,6 +123,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.VideoUrl = videoUrl;
             this.PresentationFileExtension = presentationFileExtension;
             this.WouldYouLikeParticipateBusinessRound = wouldYouLikeParticipateBusinessRound;
+            this.WouldYouLikeParticipatePitching = wouldYouLikeParticipatePitching;
             this.AccumulatedRevenueForLastTwelveMonths = accumulatedRevenueForLastTwelveMonths;
             this.SetCreateDate(userId);
             this.UpdatePresentationUploadDate(isPresentationUploaded, false);

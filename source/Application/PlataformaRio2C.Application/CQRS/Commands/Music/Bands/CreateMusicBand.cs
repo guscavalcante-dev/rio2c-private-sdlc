@@ -30,6 +30,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string Twitter { get; private set; }
         public string Youtube { get; private set; }
         public bool WouldYouLikeParticipateBusinessRound { get; private set; }
+        public bool WouldYouLikeParticipatePitching { get; private set; }
 
         public MusicProjectApiDto MusicProjectApiDto { get; set; }
         public MusicBandResponsibleApiDto MusicBandResponsibleApiDto { get; set; }
@@ -52,6 +53,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="twitter">The twitter.</param>
         /// <param name="youtube">The youtube.</param>
         /// <param name="wouldYouLikeParticipateBusinessRound">if set to <c>true</c> [would you like participate business round].</param>
+        /// <param name="wouldYouLikeParticipatePitching">if set to <c>true</c> [would you like participate pitching].</param>
         /// <param name="musicProjectApiDto">The music project API dto.</param>
         /// <param name="musicBandResponsibleApiDto">The music band responsible API dto.</param>
         /// <param name="musicBandMembersApiDtos">The music band members API dtos.</param>
@@ -70,6 +72,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string twitter,
             string youtube,
             bool wouldYouLikeParticipateBusinessRound,
+            bool wouldYouLikeParticipatePitching,
             MusicProjectApiDto musicProjectApiDto,
             MusicBandResponsibleApiDto musicBandResponsibleApiDto,
             List<MusicBandMemberApiDto> musicBandMembersApiDtos,
@@ -88,6 +91,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Twitter = twitter;
             this.Youtube = youtube;
             this.WouldYouLikeParticipateBusinessRound = wouldYouLikeParticipateBusinessRound;
+            this.WouldYouLikeParticipatePitching = wouldYouLikeParticipatePitching;
             this.MusicProjectApiDto = musicProjectApiDto;
             this.MusicBandResponsibleApiDto = musicBandResponsibleApiDto;
             this.MusicBandMembersApiDtos = musicBandMembersApiDtos;
