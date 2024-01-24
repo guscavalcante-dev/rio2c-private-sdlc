@@ -369,30 +369,30 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     Status = ApiStatus.Success,
                     Error = null,
                     Email = request.Email,
-                    HasTicket = attendeeCollaboratorTicketsInformationDto.HasTicket(),
+                    HasTicket = attendeeCollaboratorTicketsInformationDto?.HasTicket() ?? false,
 
-                    HasPitchingMusicBandsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto.HasMusicPitchingProjectsSubscriptionsAvailable(),
-                    HasBusinessRoundsMusicBandsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto.HasMusicBusinessRoundsProjectsSubscriptionsAvailable(),
+                    HasPitchingMusicBandsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.HasMusicPitchingProjectsSubscriptionsAvailable() ?? false,
+                    HasBusinessRoundsMusicBandsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.HasMusicBusinessRoundsProjectsSubscriptionsAvailable() ?? false,
 
-                    HasPitchingStartupsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto.HasInnovationPitchingProjectsSubscriptionsAvailable(),
-                    HasBusinessRoundsStartupsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto.HasInnovationBusinessRoundsProjectsSubscriptionsAvailable(),
+                    HasPitchingStartupsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.HasInnovationPitchingProjectsSubscriptionsAvailable() ?? false,
+                    HasBusinessRoundsStartupsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.HasInnovationBusinessRoundsProjectsSubscriptionsAvailable() ?? false,
 
                     MusicProject = new MusicProject
                     {
-                        PitchingProjectsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto.GetMusicPitchingProjectsSubscriptionsAvailable(), 
-                        BusinessRoundsProjectsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto.GetMusicBusinessRoundsProjectsSubscriptionsAvailable(),
-                        Messages = attendeeCollaboratorTicketsInformationDto.GetMusicMessages(),
+                        PitchingProjectsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.GetMusicPitchingProjectsSubscriptionsAvailable() ?? 0, 
+                        BusinessRoundsProjectsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.GetMusicBusinessRoundsProjectsSubscriptionsAvailable() ?? 0,
+                        Messages = attendeeCollaboratorTicketsInformationDto?.GetMusicMessages(),
                     },
 
                     StartupProject = new StartupProject
                     {
-                        PitchingProjectsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto.GetInnovationPitchingProjectsSubscriptionsAvailable(),
-                        BusinessRoundsProjectsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto.GetInnovationBusinessRoundsProjectsSubscriptionsAvailable(),
-                        Messages = attendeeCollaboratorTicketsInformationDto.GetInnovationMessages()
+                        PitchingProjectsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.GetInnovationPitchingProjectsSubscriptionsAvailable() ?? 0,
+                        BusinessRoundsProjectsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.GetInnovationBusinessRoundsProjectsSubscriptionsAvailable() ?? 0,
+                        Messages = attendeeCollaboratorTicketsInformationDto?.GetInnovationMessages()
                     },
 
-                    Messages = attendeeCollaboratorTicketsInformationDto.HasTicket() ? attendeeCollaboratorTicketsInformationDto.GetAllMessages() :
-                                                                                       new string[] { string.Format(Messages.NoTicketsFoundForEmail, request.Email) },
+                    Messages = attendeeCollaboratorTicketsInformationDto?.HasTicket() == true ? attendeeCollaboratorTicketsInformationDto?.GetAllMessages() :
+                                                                                                new string[] { string.Format(Messages.NoTicketsFoundForEmail, request.Email) },
                 });
             }
             catch (DomainException ex)
