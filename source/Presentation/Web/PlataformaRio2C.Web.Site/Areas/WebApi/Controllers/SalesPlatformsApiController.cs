@@ -14,6 +14,7 @@
 using System;
 using System.Configuration;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -32,14 +33,15 @@ using Swashbuckle.Swagger.Annotations;
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 {
     /// <summary>SalesPlatformsApiController</summary>
-    
+
     [System.Web.Http.RoutePrefix("api/v1.0/salesplatforms")]
     public class SalesPlatformsApiController : BaseApiController
     {
         private readonly IMediator commandBus;
         private readonly IUserRepository userRepo;
         private readonly IEditionRepository editionRepo;
-        private readonly IAttendeeCollaboratorTicketRepository attendeeCollaboratorTicketRepo;
+        private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
+        private readonly ILanguageRepository languageRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SalesPlatformsApiController" /> class.
@@ -47,17 +49,20 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <param name="commandBus">The command bus.</param>
         /// <param name="userRepository">The identity controller.</param>
         /// <param name="editionRepository">The edition repository.</param>
-        /// <param name="attendeeCollaboratorTicketRepo">The attendee collaborator ticket repo.</param>
+        /// <param name="attendeeCollaboratorRepository">The attendee collaborator repo.</param>
+        /// <param name="languageRepository">The language repository.</param>
         public SalesPlatformsApiController(
             IMediator commandBus,
             IUserRepository userRepository,
             IEditionRepository editionRepository,
-            IAttendeeCollaboratorTicketRepository attendeeCollaboratorTicketRepo)
+            IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
+            ILanguageRepository languageRepository)
         {
             this.commandBus = commandBus;
             this.userRepo = userRepository;
             this.editionRepo = editionRepository;
-            this.attendeeCollaboratorTicketRepo = attendeeCollaboratorTicketRepo;
+            this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
+            this.languageRepo = languageRepository;
         }
 
         #region Inti requests
@@ -304,19 +309,14 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         }
 
         /// <summary>
-        /// Gets the user tickets by email.
+        /// Gets the user tickets information.
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        /// <exception cref="System.Exception">Invalid API key to execute this action.</exception>
-        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException">
-        /// The email is required
-        /// or
-        /// </exception>
-        [Route("get-user-tickets-by-email"), HttpGet]
+        [Route("get-user-tickets-information"), HttpGet]
         [SwaggerResponse(System.Net.HttpStatusCode.OK)]
         [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
-        public async Task<IHttpActionResult> GetUserProjectsSubscriptionsAvailable([FromUri] UserProjectsSubscriptionsAvailableApiRequest request)
+        public async Task<IHttpActionResult> GetUserTicketsInformation([FromUri] UserTicketsInformationApiRequest request)
         {
             var result = new AppValidationResult();
 
@@ -324,7 +324,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             {
                 #region Initial Validations
 
-                if (request.Key?.ToLowerInvariant() != ConfigurationManager.AppSettings["GetUserTicketsByEmailApiKey"]?.ToLowerInvariant())
+                if (request.Key?.ToLowerInvariant() != ConfigurationManager.AppSettings[nameof(GetUserTicketsInformation)]?.ToLowerInvariant())
                 {
                     return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "Invalid API key to execute this action." } });
                 }
@@ -348,62 +348,51 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00004", Message = "No editions found." } });
                 }
 
+                // Get language from request otherwise get default
+                var languages = await this.languageRepo.FindAllDtosAsync();
+                var requestLanguage = languages?.FirstOrDefault(l => l.Code == request?.Culture);
+                var defaultLanguage = languages?.FirstOrDefault(l => l.IsDefault);
+                if (requestLanguage == null && defaultLanguage == null)
+                {
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00005", Message = "No active languages found." } });
+                }
+                string currentLanguageCode = requestLanguage?.Code ?? defaultLanguage?.Code;
+                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(currentLanguageCode);
+                Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
+
                 #endregion
 
-                //Campos tabela Editions
-                //------------------------------------------------------
-                //AttendeeOrganizationMaxSellProjectsCount
-
-                //MusicPitching MaxSellProjectsCount
-                //MusicBusinessRounds MaxSellProjectsCount
-
-                //InnovationPitching MaxSellProjectsCount
-                //InnovationBusinessRounds MaxSellProjectsCount
-
-                //CreatorPitching MaxSellProjectsCount
-
-                //EditorialPitching MaxSellProjectsCount
-                //EditorialBusinessRounds MaxSellProjectsCount
-                //---------------------------------------------------------
-
-                //TODO:
-                //1. Criar campos na tabela Editions (MusicPitching, MusicBusinessRound, InnovationPitching, InnovationBusinessround)
-                //2. Criar campos IsPitching e IsBusinessRouds nas tabelas AttendeeInnovationOrganizations e AttendeeMusicBands (OU em InnovationOrganizations e MusicBands? Em Audiovisual grava na tabela Projects)
-                //3. Criar UserProjectsSubscriptionsAvailableApiDto
-                //      - Projetos de inovação da edição (List<AttendeeInnovationOrganizations>)
-                //      - Projetos de musica da edição (List<AttendeeMusicBands>)
-                //      - Ingressos que o cara tem na edição (List<AttendeeCollaboratorTicket>)
-
-                var attendeeCollaboratorTicketDtos = await this.attendeeCollaboratorTicketRepo.FindAllDtoByEditionIdAndByUserEmail(edition.Id, request.Email);
-                if (attendeeCollaboratorTicketDtos?.Any() == false)
-                {
-                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00005", Message = "No tickets found." } });
-                }
+                var attendeeCollaboratorTicketsInformationDto = await this.attendeeCollaboratorRepo.FindUserTicketsInformationDtoByEmail(edition.Id, request.Email);
 
                 return await Json(new UserProjectsSubscriptionsAvailableApiResponse
                 {
                     Status = ApiStatus.Success,
                     Error = null,
-                    Email = "", //Passar o email do cara aqui
+                    Email = request.Email,
+                    HasTicket = attendeeCollaboratorTicketsInformationDto.HasTicket(),
 
-                    HasMusicProjectsSubscriptionsAvailable = false,     // Pegar o count da lista de MusicBands e bater com os parametros Editions (BusinessRoundTotalCount e PitchingTotalCount).
-                    HasStartupProjectsSubscriptionsAvailable = false,   // Pegar o count da lista de InnovationOrganizations e bater com o parametro Editions (BusinessRoundTotalCount e PitchingTotalCount)
+                    HasPitchingMusicBandsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto.HasMusicPitchingProjectsSubscriptionsAvailable(),
+                    HasBusinessRoundsMusicBandsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto.HasMusicBusinessRoundsProjectsSubscriptionsAvailable(),
 
-                    MusicMarket = new MusicMarket
+                    HasPitchingStartupsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto.HasInnovationPitchingProjectsSubscriptionsAvailable(),
+                    HasBusinessRoundsStartupsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto.HasInnovationBusinessRoundsProjectsSubscriptionsAvailable(),
+
+                    MusicProject = new MusicProject
                     {
-                        BusinessRoundsProjectsSubscriptionsAvailable = 0, // Pegar o count da lista de AttendeeMusicBands com IsBusinessRound = true. Multiplicar pela quantidade de ingressos
-                        PitchingProjectsSubscriptionsAvailable = 0,       // Pegar o count da lista de AttendeeMusicBands com IsPitching = true
-                        Messages = new string[] { }
+                        PitchingProjectsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto.GetMusicPitchingProjectsSubscriptionsAvailable(), 
+                        BusinessRoundsProjectsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto.GetMusicBusinessRoundsProjectsSubscriptionsAvailable(),
+                        Messages = attendeeCollaboratorTicketsInformationDto.GetMusicMessages(),
                     },
 
-                    StartupMarket = new StartupMarket
+                    StartupProject = new StartupProject
                     {
-                        BusinessRoundsProjectsSubscriptionsAvailable = 0, // Pegar o count da lista de AttendeeInnovationOrganizations com IsBusinessRound = true. Multiplicar pela quantidade de ingressos
-                        PitchingProjectsSubscriptionsAvailable = 0,       // Pegar o count da lista de AttendeeInnovationOrganizations com IsPitching = true
-                        Messages = new string[] { }
+                        PitchingProjectsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto.GetInnovationPitchingProjectsSubscriptionsAvailable(),
+                        BusinessRoundsProjectsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto.GetInnovationBusinessRoundsProjectsSubscriptionsAvailable(),
+                        Messages = attendeeCollaboratorTicketsInformationDto.GetInnovationMessages()
                     },
 
-                    Messages = new string[] { }, //Pegar todas as mensagens de todos os mercados e concatenar aqui
+                    Messages = attendeeCollaboratorTicketsInformationDto.HasTicket() ? attendeeCollaboratorTicketsInformationDto.GetAllMessages() :
+                                                                                       new string[] { string.Format(Messages.NoTicketsFoundForEmail, request.Email) },
                 });
             }
             catch (DomainException ex)

@@ -262,6 +262,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>
+        /// Finds the by user email.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="email">The email.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeCollaborator> FindByUserEmail(this IQueryable<AttendeeCollaborator> query, string email)
+        {
+            query = query.Where(ac => ac.Collaborator.User.Email == email);
+
+            return query;
+        }
     }
 
     #endregion
@@ -1254,6 +1267,44 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             })
                             .OrderBy(o => o.Name)
                             .ToListPagedAsync(page, pageSize);
+        }
+
+        /// <summary>
+        /// Finds the user tickets information dto by email.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="email">The email.</param>
+        /// <returns></returns>
+        public async Task<AttendeeCollaboratorTicketsInformationDto> FindUserTicketsInformationDtoByEmail(int editionId, string email)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUserEmail(email)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ac => new AttendeeCollaboratorTicketsInformationDto
+                            {
+                                Edition = ac.Edition,
+                                CollaboratorDto = new CollaboratorDto
+                                {
+                                    Document = ac.Collaborator.Document
+                                },
+                                AttendeeCollaboratorTicketsCount = ac.AttendeeCollaboratorTickets
+                                                                        .Count(act => !act.IsDeleted),
+                                AttendeeMusicBandDtos = ac.AttendeeMusicBandCollaborators
+                                                                .Where(ambc => !ambc.IsDeleted)
+                                                                .Select(ambc => new AttendeeMusicBandDto 
+                                                                {
+                                                                    WouldYouLikeParticipateBusinessRound = ambc.AttendeeMusicBand.WouldYouLikeParticipateBusinessRound
+                                                                }),
+                                AttendeeInnovationOrganizationDtos = ac.AttendeeInnovationOrganizationCollaborators
+                                                                            .Where(aioc => !aioc.IsDeleted)
+                                                                            .Select(aioc => new AttendeeInnovationOrganizationDto
+                                                                            {
+                                                                                WouldYouLikeParticipateBusinessRound = aioc.AttendeeInnovationOrganization.WouldYouLikeParticipateBusinessRound
+                                                                            })
+                            })
+                            .FirstOrDefaultAsync();
         }
 
         #endregion

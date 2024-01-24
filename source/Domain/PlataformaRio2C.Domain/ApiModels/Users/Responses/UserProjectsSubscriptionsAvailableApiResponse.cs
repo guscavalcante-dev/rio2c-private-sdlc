@@ -12,19 +12,36 @@
 // <summary></summary>
 // ***********************************************************************
 using Newtonsoft.Json;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 
 namespace PlataformaRio2C.Domain.ApiModels
 {
     public class UserProjectsSubscriptionsAvailableApiResponse
     {
+        [SwaggerParameterDescription(description: "The email to get tickets information from.")]
         [JsonProperty("email", Order = 100)]
         public string Email { get; set; }
 
-        [JsonProperty("hasMusicProjectsSubscriptionsAvailable", Order = 200)]
-        public bool HasMusicProjectsSubscriptionsAvailable { get; set; }
+        [JsonProperty("hasTicket", Order = 200)]
+        public bool HasTicket { get; set; }
 
-        [JsonProperty("hasStartupProjectsSubscriptionsAvailable", Order = 201)]
-        public bool HasStartupProjectsSubscriptionsAvailable { get; set; }
+        [JsonProperty("hasBusinessRoundsMusicBandsSubscriptionsAvailable", Order = 300)]
+        public bool HasBusinessRoundsMusicBandsSubscriptionsAvailable { get; set; }
+
+        [JsonProperty("hasPitchingMusicBandsSubscriptionsAvailable", Order = 301)]
+        public bool HasPitchingMusicBandsSubscriptionsAvailable { get; set; }
+
+        [JsonProperty("hasBusinessRoundsStartupsSubscriptionsAvailable", Order = 302)]
+        public bool HasBusinessRoundsStartupsSubscriptionsAvailable { get; set; }
+
+        [JsonProperty("hasPitchinStartupsSubscriptionsAvailable", Order = 303)]
+        public bool HasPitchingStartupsSubscriptionsAvailable { get; set; }
+
+        [JsonProperty("musicProject", Order = 400)]
+        public MusicProject MusicProject { get; set; }
+
+        [JsonProperty("startupProject", Order = 500)]
+        public StartupProject StartupProject { get; set; }
 
         [JsonProperty("status", Order = 10000)]
         public string Status { get; set; }
@@ -34,19 +51,11 @@ namespace PlataformaRio2C.Domain.ApiModels
 
         [JsonProperty("error", Order = 10002)]
         public ApiError Error { get; set; }
-
-        #region Markets
-
-        public MusicMarket MusicMarket { get; set; }
-
-        public StartupMarket StartupMarket { get; set; }
-
-        #endregion
     }
 
 
     //TODO: MOVER TODOS PARA ARQUIVOS INDEPENDENTES!
-    public class MarketBase
+    public class BaseProject
     {
         [JsonProperty("pitchingProjectsSubscriptionsAvailable", Order = 100)]
         public int PitchingProjectsSubscriptionsAvailable { get; set; }
@@ -58,12 +67,12 @@ namespace PlataformaRio2C.Domain.ApiModels
         public string[] Messages { get; set; }
     }
 
-    public class MusicMarket : MarketBase
+    public class MusicProject : BaseProject
     {
 
     }
 
-    public class StartupMarket : MarketBase
+    public class StartupProject : BaseProject
     {
 
     }

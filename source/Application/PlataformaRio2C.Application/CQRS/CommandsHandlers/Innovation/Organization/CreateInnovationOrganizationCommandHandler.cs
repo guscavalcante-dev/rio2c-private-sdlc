@@ -249,7 +249,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                        cmd.InnovationOrganizationTechnologyOptionApiDtos,
                        cmd.InnovationOrganizationTrackOptionApiDtos,
                        cmd.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
-                       cmd.WouldYouLikeParticipateBusinessRound,
+                       cmd.WouldYouLikeParticipateBusinessRound ?? false,
                        cmd.AccumulatedRevenueForLastTwelveMonths,
                        cmd.FoundationYear,
                        cmd.UserId);
@@ -291,7 +291,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                        cmd.InnovationOrganizationTechnologyOptionApiDtos,
                        cmd.InnovationOrganizationTrackOptionApiDtos,
                        cmd.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
-                       cmd.WouldYouLikeParticipateBusinessRound,
+                       cmd.WouldYouLikeParticipateBusinessRound ?? false,
                        cmd.AccumulatedRevenueForLastTwelveMonths,
                        cmd.FoundationYear,
                        cmd.UserId);

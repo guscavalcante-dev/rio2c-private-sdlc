@@ -43,7 +43,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Dates Information
 
-        #region Audiovisual - Negotiations
+        #region Audiovisual - Business Rounds
 
         public DateTimeOffset ProjectSubmitStartDate { get; private set; }
         public DateTimeOffset ProjectSubmitEndDate { get; private set; }
@@ -59,6 +59,23 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
+        #region Audiovisual - Commissions
+
+        public DateTimeOffset AudiovisualCommissionEvaluationStartDate { get; private set; }
+        public DateTimeOffset AudiovisualCommissionEvaluationEndDate { get; private set; }
+        public int AudiovisualCommissionMinimumEvaluationsCount { get; private set; }
+        public int AudiovisualCommissionMaximumApprovedProjectsCount { get; private set; }
+
+        #endregion
+
+        #region Music - Business Rounds
+
+        public int MusicPitchingIndividualMaxSellProjectsCount { get; private set; }
+        public int MusicPitchingEntityMaxSellProjectsCount { get; private set; }
+        public int MusicBusinessRoundsMaxSellProjectsCount { get; private set; }
+
+        #endregion
+
         #region Music - Commissions
 
         public DateTimeOffset MusicProjectSubmitStartDate { get; private set; }
@@ -67,6 +84,13 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset MusicCommissionEvaluationEndDate { get; private set; }
         public int MusicCommissionMinimumEvaluationsCount { get; private set; }
         public int MusicCommissionMaximumApprovedBandsCount { get; private set; }
+
+        #endregion
+
+        #region Innovation - Business Rounds
+
+        public int InnovationPitchingMaxSellProjectsCount { get; private set; }
+        public int InnovationBusinessRoundsMaxSellProjectsCount { get; private set; }
 
         #endregion
 
@@ -79,15 +103,6 @@ namespace PlataformaRio2C.Domain.Entities
         public int InnovationCommissionMinimumEvaluationsCount { get; private set; }
         public int InnovationCommissionMaximumApprovedCompaniesCount { get; private set; }
 
-        #endregion
-
-        #region Audiovisual - Commissions
-
-        public DateTimeOffset AudiovisualCommissionEvaluationStartDate { get; private set; }
-        public DateTimeOffset AudiovisualCommissionEvaluationEndDate { get; private set; }
-        public int AudiovisualCommissionMinimumEvaluationsCount { get; private set; }
-        public int AudiovisualCommissionMaximumApprovedProjectsCount { get; private set; }
-        
         #endregion
 
         #region Cartoon - Commissions

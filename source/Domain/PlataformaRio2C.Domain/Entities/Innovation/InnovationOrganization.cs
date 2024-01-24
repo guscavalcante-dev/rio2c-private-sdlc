@@ -106,7 +106,7 @@ namespace PlataformaRio2C.Domain.Entities
             List<InnovationOrganizationTechnologyOptionApiDto> innovationOrganizationTechnologyOptionApiDtos,
             List<InnovationOrganizationTrackOptionApiDto> innovationOrganizationTrackOptionApiDtos,
             List<InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto> innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
-            bool? wouldYouLikeParticipateBusinessRound,
+            bool wouldYouLikeParticipateBusinessRound,
             decimal? accumulatedRevenueForLastTwelveMonths,
             int? businessFoundationYear,
             int userId)
@@ -251,7 +251,7 @@ namespace PlataformaRio2C.Domain.Entities
             List<InnovationOrganizationTechnologyOptionApiDto> innovationOrganizationTechnologyOptionApiDtos,
             List<InnovationOrganizationTrackOptionApiDto> innovationOrganizationTrackOptionApiDtos,
             List<InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto> innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
-            bool? wouldYouLikeParticipateBusinessRound,
+            bool wouldYouLikeParticipateBusinessRound,
             decimal? accumulatedRevenueForLastTwelveMonths,
             int? businessFoundationYear,
             int userId)
@@ -412,7 +412,7 @@ namespace PlataformaRio2C.Domain.Entities
             string businessOperationalModel,
             string videoUrl,
             string presentationFileExtension,
-            bool? wouldYouLikeParticipateBusinessRound,
+            bool wouldYouLikeParticipateBusinessRound,
             decimal? accumulatedRevenueForLastTwelveMonths,
             int userId)
         {

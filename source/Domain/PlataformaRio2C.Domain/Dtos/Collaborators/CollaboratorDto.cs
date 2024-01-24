@@ -44,6 +44,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public string Youtube { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
+        public string Document { get; set; }
 
         public int? CollaboratorGenderId { get; set; }
         public string CollaboratorGenderAdditionalInfo { get; set; }

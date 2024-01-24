@@ -21,6 +21,8 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>AttendeeInnovationOrganizationDto</summary>
     public class AttendeeInnovationOrganizationDto
     {
+        public bool WouldYouLikeParticipateBusinessRound { get; set; }
+
         public InnovationOrganization InnovationOrganization { get; set; }
         public AttendeeInnovationOrganization AttendeeInnovationOrganization { get; set; }
         public AttendeeInnovationOrganizationEvaluationDto AttendeeInnovationOrganizationEvaluationDto { get; set; }

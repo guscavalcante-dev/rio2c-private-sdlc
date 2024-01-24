@@ -6811,6 +6811,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Este {0} não é válido.
+        /// </summary>
+        public static string ThisDocumentIsNotValid {
+            get {
+                return ResourceManager.GetString("ThisDocumentIsNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;span&gt;.&lt;/span&gt;&lt;span&gt;.&lt;/span&gt;&lt;span&gt;.&lt;/span&gt;.
         /// </summary>
         public static string ThreeDotsToAnimation {

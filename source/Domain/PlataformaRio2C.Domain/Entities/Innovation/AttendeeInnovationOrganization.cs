@@ -59,7 +59,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual Edition Edition { get; private set; }
         public virtual InnovationOrganization InnovationOrganization { get; private set; }
 
-        public bool? WouldYouLikeParticipateBusinessRound { get; private set; }
+        public bool WouldYouLikeParticipateBusinessRound { get; private set; }
         public decimal? AccumulatedRevenueForLastTwelveMonths { get; private set; }
         
         public virtual ICollection<AttendeeInnovationOrganizationCollaborator> AttendeeInnovationOrganizationCollaborators { get; private set; }
@@ -104,7 +104,7 @@ namespace PlataformaRio2C.Domain.Entities
             string businessOperationalModel,
             string videoUrl,
             string presentationFileExtension,
-            bool? wouldYouLikeParticipateBusinessRound,
+            bool wouldYouLikeParticipateBusinessRound,
             decimal? accumulatedRevenueForLastTwelveMonths,
             int userId)
         {

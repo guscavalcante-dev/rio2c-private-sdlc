@@ -1365,6 +1365,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nenhum ingresso encontrado para o email {0}.
+        /// </summary>
+        public static string NoTicketsFoundForEmail {
+            get {
+                return ResourceManager.GetString("NoTicketsFoundForEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rodadas de Negócios não Agendadas.
         /// </summary>
         public static string NotScheduledOneToOneMeetings {
@@ -1824,6 +1833,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Limite de inscrições de {0} para {1} atingido.
+        /// </summary>
+        public static string ProjectRegistrationLimitReachedFor {
+            get {
+                return ResourceManager.GetString("ProjectRegistrationLimitReachedFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Projeto salvo mas ainda NÃO enviado para Players. Para enviar o projeto para avaliação selecione os Players e clique em Salvar e Enviar..
         /// </summary>
         public static string ProjectSavedButNotSentToPlayers {
@@ -2261,6 +2279,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string TheProjectsWillReceiveFinalGradeAtPeriodEnds {
             get {
                 return ResourceManager.GetString("TheProjectsWillReceiveFinalGradeAtPeriodEnds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ainda restam {0} slots para inscrição de {1} para {2}.
+        /// </summary>
+        public static string ThereAreStillXSlotsLeftToRegisterProjects {
+            get {
+                return ResourceManager.GetString("ThereAreStillXSlotsLeftToRegisterProjects", resourceCulture);
             }
         }
         
