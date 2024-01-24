@@ -364,7 +364,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
                 var attendeeCollaboratorTicketsInformationDto = await this.attendeeCollaboratorRepo.FindUserTicketsInformationDtoByEmail(edition.Id, request.Email);
 
-                return await Json(new UserProjectsSubscriptionsAvailableApiResponse
+                return await Json(new UserTicketsInformationApiResponse
                 {
                     Status = ApiStatus.Success,
                     Error = null,

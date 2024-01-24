@@ -6,7 +6,7 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 01-20-2024
 // ***********************************************************************
-// <copyright file="UserProjectsSubscriptionsAvailableApiResponse.cs" company="Softo">
+// <copyright file="UserTicketsInformationApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -16,7 +16,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 
 namespace PlataformaRio2C.Domain.ApiModels
 {
-    public class UserProjectsSubscriptionsAvailableApiResponse
+    public class UserTicketsInformationApiResponse
     {
         [SwaggerParameterDescription(description: "The email to get tickets information from.")]
         [JsonProperty("email", Order = 100)]

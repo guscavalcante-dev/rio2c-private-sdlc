@@ -26,9 +26,6 @@ namespace PlataformaRio2C.Domain.Dtos
         public Edition Edition { get; set; }
         public CollaboratorDto CollaboratorDto { get; set; }
         public int AttendeeCollaboratorTicketsCount { get; set; }
-
-        //public IEnumerable<AttendeeCollaboratorTicketDto> AttendeeCollaboratorTicketDtos { get; set; }
-
         public IEnumerable<AttendeeMusicBandDto> AttendeeMusicBandDtos { get; set; }
         public IEnumerable<AttendeeInnovationOrganizationDto> AttendeeInnovationOrganizationDtos { get; set; }
 
@@ -53,8 +50,8 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns></returns>
         private int GetMusicPitchingMaxSellProjectsCount()
         {
-            return this.CollaboratorDto.Document.IsCnpj() ? this.Edition.MusicPitchingEntityMaxSellProjectsCount :
-                                                            this.Edition.MusicPitchingIndividualMaxSellProjectsCount;
+            return this.CollaboratorDto.Document?.IsCnpj() == true ? this.Edition.MusicPitchingEntityMaxSellProjectsCount :
+                                                                     this.Edition.MusicPitchingIndividualMaxSellProjectsCount;
         }
 
         /// <summary>
