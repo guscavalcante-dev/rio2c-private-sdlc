@@ -76,6 +76,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="innovationOrganizationTrackOptionApiDtos">The innovation organization track option API dtos.</param>
         /// <param name="innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos">The innovation organization sustainable development objectives option API dtos.</param>
         /// <param name="wouldYouLikeParticipateBusinessRound">would you like participate business round.</param>
+        /// <param name="wouldYouLikeParticipatePitching">if set to <c>true</c> [would you like participate pitching].</param>
         /// <param name="accumulatedRevenueForLastTwelveMonths">accumulated revenue for last twelve months.</param>
         /// <param name="businessFoundationYear">business foundtaion year.</param>
         /// <param name="userId">The user identifier.</param>
@@ -107,6 +108,7 @@ namespace PlataformaRio2C.Domain.Entities
             List<InnovationOrganizationTrackOptionApiDto> innovationOrganizationTrackOptionApiDtos,
             List<InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto> innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
             bool wouldYouLikeParticipateBusinessRound,
+            bool wouldYouLikeParticipatePitching,
             decimal? accumulatedRevenueForLastTwelveMonths,
             int? businessFoundationYear,
             int userId)
@@ -135,6 +137,7 @@ namespace PlataformaRio2C.Domain.Entities
                 videoUrl,
                 presentationFileExtension,
                 wouldYouLikeParticipateBusinessRound,
+                wouldYouLikeParticipatePitching,
                 accumulatedRevenueForLastTwelveMonths,
                 userId);
 
@@ -219,6 +222,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="innovationOrganizationTrackOptionApiDtos">The innovation organization track option API dtos.</param>
         /// <param name="innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos">The innovation organization track option API dtos.</param>
         /// <param name="wouldYouLikeParticipateBusinessRound">would you like participate business round.</param>
+        /// <param name="wouldYouLikeParticipatePitching">if set to <c>true</c> [would you like participate pitching].</param>
         /// <param name="accumulatedRevenueForLastTwelveMonths">accumulated revenue for last twelve months.</param>
         /// <param name="businessFoundationYear">business foundtaion year.</param>
         /// <param name="userId">The user identifier.</param>
@@ -252,6 +256,7 @@ namespace PlataformaRio2C.Domain.Entities
             List<InnovationOrganizationTrackOptionApiDto> innovationOrganizationTrackOptionApiDtos,
             List<InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto> innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
             bool wouldYouLikeParticipateBusinessRound,
+            bool wouldYouLikeParticipatePitching,
             decimal? accumulatedRevenueForLastTwelveMonths,
             int? businessFoundationYear,
             int userId)
@@ -280,6 +285,7 @@ namespace PlataformaRio2C.Domain.Entities
                 videoUrl,
                 presentationFileExtension,
                 wouldYouLikeParticipateBusinessRound,
+                wouldYouLikeParticipatePitching,
                 accumulatedRevenueForLastTwelveMonths,
                 userId);
 
@@ -396,7 +402,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isPresentationUploaded">if set to <c>true</c> [is presentation uploaded].</param>
         /// <param name="businessOperationalModel">The business operational model.</param>
         /// <param name="videoUrl">The video URL.</param>
+        /// <param name="presentationFileExtension">The presentation file extension.</param>
         /// <param name="wouldYouLikeParticipateBusinessRound">would you like participate business round.</param>
+        /// <param name="wouldYouLikeParticipatePitching">if set to <c>true</c> [would you like participate pitching].</param>
         /// <param name="accumulatedRevenueForLastTwelveMonths">accumulated revenue for last twelve months.</param>
         /// <param name="userId">The user identifier.</param>
         private void SynchronizeAttendeeInnovationOrganizations(
@@ -413,6 +421,7 @@ namespace PlataformaRio2C.Domain.Entities
             string videoUrl,
             string presentationFileExtension,
             bool wouldYouLikeParticipateBusinessRound,
+            bool wouldYouLikeParticipatePitching,
             decimal? accumulatedRevenueForLastTwelveMonths,
             int userId)
         {
@@ -449,6 +458,7 @@ namespace PlataformaRio2C.Domain.Entities
                     videoUrl,
                     presentationFileExtension,
                     wouldYouLikeParticipateBusinessRound,
+                    wouldYouLikeParticipatePitching,
                     accumulatedRevenueForLastTwelveMonths,
                     userId));
             }

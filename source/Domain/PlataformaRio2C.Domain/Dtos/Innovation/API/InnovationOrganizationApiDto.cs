@@ -91,10 +91,14 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonProperty("wouldYouLikeParticipateBusinessRound", Order = 100)]
         public bool WouldYouLikeParticipateBusinessRound { get; set; }
 
-        [JsonProperty("accumulatedRevenueForLastTwelveMonths", Order = 101)]
+        [JsonRequired]
+        [JsonProperty("wouldYouLikeParticipatePitching", Order = 101)]
+        public bool WouldYouLikeParticipatePitching { get; set; }
+
+        [JsonProperty("accumulatedRevenueForLastTwelveMonths", Order = 102)]
         public decimal? AccumulatedRevenueForLastTwelveMonths { get; set; }
 
-        [JsonProperty("businessFoundationYear", Order = 102)]
+        [JsonProperty("businessFoundationYear", Order = 103)]
         public int? BusinessFoundationYear { get; set; }
 
         #endregion

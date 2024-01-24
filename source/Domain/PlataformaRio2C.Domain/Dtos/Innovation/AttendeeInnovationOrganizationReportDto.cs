@@ -44,6 +44,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset? UpdateDate { get; set; }
         public decimal AccumulatedRevenue { get; set; }
         public bool? WouldYouLikeParticipateBusinessRound { get; set; }
+        public bool? WouldYouLikeParticipatePitching { get; set; }
         public DateTimeOffset? ImageUploadDate { get; set; }
         public DateTimeOffset? PresentationUploadDate { get; set; }
         public string PresentationFileExtension { get; set; }

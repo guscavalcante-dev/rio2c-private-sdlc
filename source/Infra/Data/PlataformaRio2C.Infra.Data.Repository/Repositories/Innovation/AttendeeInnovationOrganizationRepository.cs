@@ -545,7 +545,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                                         .ToList(),
                                                                        CreateDate = aio.CreateDate,
                                                                        UpdateDate = aio.UpdateDate,
-                                                                       WouldYouLikeParticipateBusinessRound = aio.WouldYouLikeParticipateBusinessRound
+                                                                       WouldYouLikeParticipateBusinessRound = aio.WouldYouLikeParticipateBusinessRound,
+                                                                       WouldYouLikeParticipatePitching = aio.WouldYouLikeParticipatePitching
                                                                    }).ToListAsync();
 
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
@@ -635,6 +636,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                             PresentationFileExtension = aio.PresentationFileExtension,
                                                                             VideoUrl = aio.VideoUrl,
                                                                             WouldYouLikeParticipateBusinessRound = aio.WouldYouLikeParticipateBusinessRound,
+                                                                            WouldYouLikeParticipatePitching = aio.WouldYouLikeParticipatePitching,
                                                                             InnovationOrganizationId = aio.InnovationOrganization.Id,
                                                                             InnovationOrganizationUid = aio.InnovationOrganization.Uid,
                                                                             Description = aio.InnovationOrganization.Description,

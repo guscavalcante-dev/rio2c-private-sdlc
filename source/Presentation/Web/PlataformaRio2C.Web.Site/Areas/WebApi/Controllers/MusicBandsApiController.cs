@@ -154,6 +154,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                         musicBandApiDto.Twitter,
                         musicBandApiDto.Youtube,
                         musicBandApiDto.WouldYouLikeParticipateBusinessRound ?? false,
+                        musicBandApiDto.WouldYouLikeParticipatePitching ?? false,
                         musicBandApiDto.MusicProjectApiDto,
                         musicBandApiDto.MusicBandResponsibleApiDto,
                         musicBandApiDto.MusicBandMembersApiDtos,

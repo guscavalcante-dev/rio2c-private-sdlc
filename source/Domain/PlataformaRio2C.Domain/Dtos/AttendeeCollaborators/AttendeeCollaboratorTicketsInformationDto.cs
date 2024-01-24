@@ -41,7 +41,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns></returns>
         private int GetMusicPitchingProjectsCount()
         {
-            return this.AttendeeMusicBandDtos.Count(dto => dto.WouldYouLikeParticipateBusinessRound == false);
+            return this.AttendeeMusicBandDtos.Count(dto => dto.WouldYouLikeParticipatePitching);
         }
 
         /// <summary>
@@ -71,7 +71,14 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns></returns>
         public int GetMusicPitchingProjectsSubscriptionsAvailable()
         {
-            return this.GetMusicPitchingMaxSellProjectsCount() - this.GetMusicPitchingProjectsCount();
+            if (this.HasTicket())
+            {
+                return this.GetMusicPitchingMaxSellProjectsCount() - this.GetMusicPitchingProjectsCount();
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         #endregion
@@ -84,7 +91,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns></returns>
         private int GetMusicBusinessRoundsProjectsCount()
         {
-            return this.AttendeeMusicBandDtos.Count(dto => dto.WouldYouLikeParticipateBusinessRound == true);
+            return this.AttendeeMusicBandDtos.Count(dto => dto.WouldYouLikeParticipateBusinessRound);
         }
 
         /// <summary>
@@ -104,7 +111,15 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns></returns>
         public int GetMusicBusinessRoundsProjectsSubscriptionsAvailable()
         {
-            return (this.AttendeeCollaboratorTicketsCount * this.Edition.MusicBusinessRoundsMaxSellProjectsCount) - this.GetMusicBusinessRoundsProjectsCount();
+            if (this.HasTicket())
+            {
+                return (this.AttendeeCollaboratorTicketsCount * this.Edition.MusicBusinessRoundsMaxSellProjectsCount) - this.GetMusicBusinessRoundsProjectsCount();
+            }
+            else
+            {
+                return 0;
+            }
+                
         }
 
         #endregion
@@ -155,7 +170,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns></returns>
         private int GetInnovationPitchingProjectsCount()
         {
-            return this.AttendeeInnovationOrganizationDtos.Count(dto => dto.WouldYouLikeParticipateBusinessRound == false);
+            return this.AttendeeInnovationOrganizationDtos.Count(dto => dto.WouldYouLikeParticipatePitching);
         }
 
         /// <summary>
@@ -175,7 +190,14 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns></returns>
         public int GetInnovationPitchingProjectsSubscriptionsAvailable()
         {
-            return this.Edition.InnovationPitchingMaxSellProjectsCount - this.GetInnovationPitchingProjectsCount();
+            if (this.HasTicket())
+            {
+                return this.Edition.InnovationPitchingMaxSellProjectsCount - this.GetInnovationPitchingProjectsCount();
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         #endregion
@@ -188,7 +210,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns></returns>
         private int GetInnovationBusinessRoundsProjectsCount()
         {
-            return this.AttendeeInnovationOrganizationDtos.Count(dto => dto.WouldYouLikeParticipateBusinessRound == true);
+            return this.AttendeeInnovationOrganizationDtos.Count(dto => dto.WouldYouLikeParticipateBusinessRound);
         }
 
         /// <summary>
@@ -208,7 +230,14 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns></returns>
         public int GetInnovationBusinessRoundsProjectsSubscriptionsAvailable()
         {
-            return (this.AttendeeCollaboratorTicketsCount * this.Edition.InnovationBusinessRoundsMaxSellProjectsCount) - this.GetInnovationBusinessRoundsProjectsCount();
+            if (this.HasTicket())
+            {
+                return (this.AttendeeCollaboratorTicketsCount * this.Edition.InnovationBusinessRoundsMaxSellProjectsCount) - this.GetInnovationBusinessRoundsProjectsCount();
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         #endregion

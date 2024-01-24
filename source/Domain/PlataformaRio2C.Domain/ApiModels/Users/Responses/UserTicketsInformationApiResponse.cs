@@ -18,7 +18,6 @@ namespace PlataformaRio2C.Domain.ApiModels
 {
     public class UserTicketsInformationApiResponse
     {
-        [SwaggerParameterDescription(description: "The email to get tickets information from.")]
         [JsonProperty("email", Order = 100)]
         public string Email { get; set; }
 
@@ -53,8 +52,6 @@ namespace PlataformaRio2C.Domain.ApiModels
         public ApiError Error { get; set; }
     }
 
-
-    //TODO: MOVER TODOS PARA ARQUIVOS INDEPENDENTES!
     public class BaseProject
     {
         [JsonProperty("pitchingProjectsSubscriptionsAvailable", Order = 100)]
@@ -69,11 +66,9 @@ namespace PlataformaRio2C.Domain.ApiModels
 
     public class MusicProject : BaseProject
     {
-
     }
 
     public class StartupProject : BaseProject
     {
-
     }
 }

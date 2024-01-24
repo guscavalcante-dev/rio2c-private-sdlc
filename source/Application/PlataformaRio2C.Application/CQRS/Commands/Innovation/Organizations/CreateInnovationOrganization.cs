@@ -44,6 +44,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string PresentationFileName { get; private set; }
 
         public bool? WouldYouLikeParticipateBusinessRound { get; private set; }
+        public bool? WouldYouLikeParticipatePitching { get; private set; }
         public decimal? AccumulatedRevenueForLastTwelveMonths { get; private set; }
         public int? FoundationYear { get; private set; }
 
@@ -56,7 +57,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto> InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateInnovationOrganization"/> class.
+        /// Initializes a new instance of the <see cref="CreateInnovationOrganization" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="document">The document.</param>
@@ -88,6 +89,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="innovationOrganizationTechnologyOptionApiDtos">The innovation organization technology option API dtos.</param>
         /// <param name="innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos">The innovation organization sustainable development objectives option API dtos.</param>
         /// <param name="wouldYouLikeParticipateBusinessRound">would you like participate business round.</param>
+        /// <param name="wouldYouLikeParticipatePitching">The would you like participate pitching.</param>
         /// <param name="accumulatedRevenueForLastTwelveMonths">accumulated revenue for last twelve months.</param>
         /// <param name="businessFoundationYear">business foundtaion year.</param>
         public CreateInnovationOrganization(
@@ -121,6 +123,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<InnovationOrganizationTechnologyOptionApiDto> innovationOrganizationTechnologyOptionApiDtos,
             List<InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto> innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
             bool? wouldYouLikeParticipateBusinessRound,
+            bool? wouldYouLikeParticipatePitching,
             decimal? accumulatedRevenueForLastTwelveMonths,
             int? businessFoundationYear
             )
@@ -157,6 +160,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos = innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos;
 
             this.WouldYouLikeParticipateBusinessRound = wouldYouLikeParticipateBusinessRound;
+            this.WouldYouLikeParticipatePitching = wouldYouLikeParticipatePitching;
             this.AccumulatedRevenueForLastTwelveMonths = accumulatedRevenueForLastTwelveMonths;
             this.FoundationYear = businessFoundationYear;
         }

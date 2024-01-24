@@ -29,6 +29,7 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset? LastEvaluationDate { get; private set; }
         public DateTimeOffset? EvaluationEmailSendDate { get; private set; }
         public bool WouldYouLikeParticipateBusinessRound { get; private set; }
+        public bool WouldYouLikeParticipatePitching { get; private set; }
 
         public virtual Edition Edition { get; private set; }
         public virtual MusicBand MusicBand { get; private set; }
@@ -50,6 +51,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="clipping2">The clipping2.</param>
         /// <param name="clipping3">The clipping3.</param>
         /// <param name="wouldYouLikeParticipateBusinessRound">if set to <c>true</c> [would you like participate business round].</param>
+        /// <param name="wouldYouLikeParticipatePitching">if set to <c>true</c> [would you like participate pitching].</param>
         /// <param name="userId">The user identifier.</param>
         public AttendeeMusicBand(
             Edition edition,
@@ -62,6 +64,7 @@ namespace PlataformaRio2C.Domain.Entities
             string clipping2,
             string clipping3,
             bool wouldYouLikeParticipateBusinessRound,
+            bool wouldYouLikeParticipatePitching,
             int userId)
         {
             this.Edition = edition;
@@ -69,6 +72,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.EditionId = edition.Id;
             this.MusicBandId = musicBand.Id;
             this.WouldYouLikeParticipateBusinessRound = wouldYouLikeParticipateBusinessRound;
+            this.WouldYouLikeParticipatePitching = wouldYouLikeParticipatePitching;
 
             this.CreateProject(
                 videoUrl,

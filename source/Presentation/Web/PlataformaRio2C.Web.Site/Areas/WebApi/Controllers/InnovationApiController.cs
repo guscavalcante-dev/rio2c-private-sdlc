@@ -162,6 +162,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     innovationOrganizationApiDto.InnovationOrganizationTechnologyOptionApiDtos,
                     innovationOrganizationApiDto.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
                     innovationOrganizationApiDto.WouldYouLikeParticipateBusinessRound,
+                    innovationOrganizationApiDto.WouldYouLikeParticipatePitching,
                     innovationOrganizationApiDto.AccumulatedRevenueForLastTwelveMonths,
                     innovationOrganizationApiDto.BusinessFoundationYear
                     );

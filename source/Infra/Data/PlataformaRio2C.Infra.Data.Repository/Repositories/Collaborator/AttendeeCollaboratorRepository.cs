@@ -1295,13 +1295,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                 .Where(ambc => !ambc.IsDeleted)
                                                                 .Select(ambc => new AttendeeMusicBandDto 
                                                                 {
-                                                                    WouldYouLikeParticipateBusinessRound = ambc.AttendeeMusicBand.WouldYouLikeParticipateBusinessRound
+                                                                    WouldYouLikeParticipateBusinessRound = ambc.AttendeeMusicBand.WouldYouLikeParticipateBusinessRound,
+                                                                    WouldYouLikeParticipatePitching = ambc.AttendeeMusicBand.WouldYouLikeParticipatePitching,
                                                                 }),
                                 AttendeeInnovationOrganizationDtos = ac.AttendeeInnovationOrganizationCollaborators
                                                                             .Where(aioc => !aioc.IsDeleted)
                                                                             .Select(aioc => new AttendeeInnovationOrganizationDto
                                                                             {
-                                                                                WouldYouLikeParticipateBusinessRound = aioc.AttendeeInnovationOrganization.WouldYouLikeParticipateBusinessRound
+                                                                                WouldYouLikeParticipateBusinessRound = aioc.AttendeeInnovationOrganization.WouldYouLikeParticipateBusinessRound,
+                                                                                WouldYouLikeParticipatePitching = aioc.AttendeeInnovationOrganization.WouldYouLikeParticipatePitching
                                                                             })
                             })
                             .FirstOrDefaultAsync();

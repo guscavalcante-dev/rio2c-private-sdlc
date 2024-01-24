@@ -17,5 +17,6 @@ namespace PlataformaRio2C.Domain.Dtos
     public class AttendeeMusicBandDto
     {
         public bool WouldYouLikeParticipateBusinessRound { get; set; }
+        public bool WouldYouLikeParticipatePitching { get; set; }
     }
 }

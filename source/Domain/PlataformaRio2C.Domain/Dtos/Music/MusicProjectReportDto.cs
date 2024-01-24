@@ -34,6 +34,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset UpdateDate { get; set; }
         public DateTimeOffset? ImageUploadDate { get; set; }
         public bool WouldYouLikeParticipateBusinessRound { get; set; }
+        public bool WouldYouLikeParticipatePitching { get; set; }
 
         public MusicBandType MusicBandType { get; set; }
         public MusicProjectApiDto MusicProjectApiDto { get; set; }

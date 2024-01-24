@@ -48,6 +48,10 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonProperty("wouldYouLikeParticipateBusinessRound")]
         public bool? WouldYouLikeParticipateBusinessRound { get; set; }
 
+        [JsonRequired]
+        [JsonProperty("wouldYouLikeParticipatePitching")]
+        public bool? WouldYouLikeParticipatePitching { get; set; }
+
         /// <summary>
         /// Don't remove order. This is for JSON beauty design. 
         /// Should be aligned at end of JSON.

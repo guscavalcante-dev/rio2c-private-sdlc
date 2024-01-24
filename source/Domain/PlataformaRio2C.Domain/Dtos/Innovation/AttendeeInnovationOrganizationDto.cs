@@ -22,6 +22,7 @@ namespace PlataformaRio2C.Domain.Dtos
     public class AttendeeInnovationOrganizationDto
     {
         public bool WouldYouLikeParticipateBusinessRound { get; set; }
+        public bool WouldYouLikeParticipatePitching { get; set; }
 
         public InnovationOrganization InnovationOrganization { get; set; }
         public AttendeeInnovationOrganization AttendeeInnovationOrganization { get; set; }

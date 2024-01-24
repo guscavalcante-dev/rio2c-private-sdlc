@@ -227,6 +227,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.Twitter,
                 cmd.Youtube,
                 cmd.WouldYouLikeParticipateBusinessRound,
+                cmd.WouldYouLikeParticipatePitching,
                 !string.IsNullOrEmpty(cmd.ImageFile),
                 cmd.MusicProjectApiDto,
                 collaboratorDto?.EditionAttendeeCollaborator,
