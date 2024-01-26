@@ -78,7 +78,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Clipping1 = clipping1?.Trim();
             this.Clipping2 = clipping2?.Trim();
             this.Clipping3 = clipping3?.Trim();
-            this.Release = release?.Trim();
+            this.Release = release.Trim();
 
             //this.ProjectEvaluationStatusId = ProjectEvaluationStatus.UnderEvaluation.Id;
 

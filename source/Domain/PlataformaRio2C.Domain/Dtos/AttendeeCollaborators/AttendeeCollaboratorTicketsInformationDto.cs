@@ -145,6 +145,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <summary>
         /// Determines whether [has music business rounds projects subscriptions available].
         /// </summary>
+        /// <param name="addingMusicProjectsCount">The adding music projects count.</param>
         /// <returns>
         ///   <c>true</c> if [has music business rounds projects subscriptions available]; otherwise, <c>false</c>.
         /// </returns>
@@ -164,6 +165,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <summary>
         /// Gets the music business rounds projects subscriptions available.
         /// </summary>
+        /// <param name="addingMusicProjectsCount">The adding music projects count.</param>
         /// <returns></returns>
         public int GetMusicBusinessRoundsProjectsSubscriptionsAvailable(int addingMusicProjectsCount)
         {
@@ -183,6 +185,8 @@ namespace PlataformaRio2C.Domain.Dtos
         /// Gets the music messages.
         /// </summary>
         /// <param name="document">The document.</param>
+        /// <param name="addingMusicPitchingProjectsCount">The adding music pitching projects count.</param>
+        /// <param name="addingMusicBusinessRoundsProjectsCount">The adding music business rounds projects count.</param>
         /// <returns></returns>
         public string[] GetMusicMessages(string document, int addingMusicPitchingProjectsCount, int addingMusicBusinessRoundsProjectsCount)
         {
@@ -349,6 +353,8 @@ namespace PlataformaRio2C.Domain.Dtos
         /// Gets all messages.
         /// </summary>
         /// <param name="document">The document.</param>
+        /// <param name="addingMusicPitchingProjectsCount">The adding music pitching projects count.</param>
+        /// <param name="addingMusicBusinessRoundsProjectsCount">The adding music business rounds projects count.</param>
         /// <returns></returns>
         public string[] GetAllMessages(string document, int addingMusicPitchingProjectsCount, int addingMusicBusinessRoundsProjectsCount)
         {

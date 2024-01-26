@@ -83,6 +83,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns></returns>
         public static string GenerateTestJson()
         {
+            //TODO: Modify this to generate the test JSON based on new changes.
             //MusicBandApiDto i = new MusicBandApiDto() { 
 
             //};

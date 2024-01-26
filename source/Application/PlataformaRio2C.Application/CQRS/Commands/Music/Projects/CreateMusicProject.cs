@@ -30,15 +30,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateBaseProperties(musicProjectDto);
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CreateMusicProject"/> class.
-        /// </summary>
-        /// <param name="musicProjectDto">The music project dto.</param>
-        public CreateMusicProject(MusicBandApiDto musicProjectDto)
-        {
-            this.UpdateBaseProperties(musicProjectDto);
-        }
-
         /// <summary>Initializes a new instance of the <see cref="CreateMusicProject"/> class.</summary>
         public CreateMusicProject()
         {
