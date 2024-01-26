@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 02-28-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-28-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-26-2024
 // ***********************************************************************
 // <copyright file="MusicBandTeamMember.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,7 +14,6 @@
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using System;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -44,9 +43,21 @@ namespace PlataformaRio2C.Domain.Entities
             this.Name = name;
             this.Role = role;
 
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
+            this.SetCreateDate(userId);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MusicBandTeamMember" /> class.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="role">The role.</param>
+        /// <param name="userId">The user identifier.</param>
+        public MusicBandTeamMember(string name, string role, int userId)
+        {
+            this.Name = name;
+            this.Role = role;
+
+            this.SetCreateDate(userId);
         }
 
         /// <summary>Initializes a new instance of the <see cref="MusicBandTeamMember"/> class.</summary>

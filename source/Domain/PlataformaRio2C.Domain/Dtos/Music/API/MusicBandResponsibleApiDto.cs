@@ -4,7 +4,7 @@
 // Created          : 03-30-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-27-2023
+// Last Modified On : 01-26-2024
 // ***********************************************************************
 // <copyright file="MusicBandResponsibleApiDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -64,6 +64,7 @@ namespace PlataformaRio2C.Domain.Dtos
 
         #region Validations
 
+        [JsonIgnore]
         public ValidationResult ValidationResult { get; set; }
 
         /// <summary>

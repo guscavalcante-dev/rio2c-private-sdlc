@@ -256,6 +256,7 @@
     <Compile Include="Dtos\Messages\MessageDto.cs" />
     <Compile Include="Dtos\Messages\ConversationDto.cs" />
     <Compile Include="Dtos\Interests\InterestDto.cs" />
+    <Compile Include="Dtos\Music\API\MusicBandDataApiDto.cs" />
     <Compile Include="Dtos\Music\API\MusicBandResponsibleApiDto.cs" />
     <Compile Include="Dtos\Music\API\MusicProjectApiDto.cs" />
     <Compile Include="Dtos\Music\AttendeeCollaboratorMusicBandEvaluationsWidgetDto.cs" />

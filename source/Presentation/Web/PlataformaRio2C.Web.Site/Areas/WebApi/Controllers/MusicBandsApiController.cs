@@ -4,7 +4,7 @@
 // Created          : 03-01-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 10-16-2023
+// Last Modified On : 01-26-2024
 // ***********************************************************************
 // <copyright file="MusicBandsApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,7 +26,6 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
-using PlataformaRio2C.Infra.Data.Repository.Repositories;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Configuration;
@@ -144,24 +143,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 }
 
                 var cmd = new CreateMusicBand(
-                        musicBandApiDto.MusicBandTypeUid ?? Guid.Empty,
-                        musicBandApiDto.Name,
-                        musicBandApiDto.ImageFile,
-                        musicBandApiDto.FormationDate,
-                        musicBandApiDto.MainMusicInfluences,
-                        musicBandApiDto.Facebook,
-                        musicBandApiDto.Instagram,
-                        musicBandApiDto.Twitter,
-                        musicBandApiDto.Youtube,
-                        musicBandApiDto.WouldYouLikeParticipateBusinessRound ?? false,
-                        musicBandApiDto.WouldYouLikeParticipatePitching ?? false,
-                        musicBandApiDto.MusicProjectApiDto,
-                        musicBandApiDto.MusicBandResponsibleApiDto,
-                        musicBandApiDto.MusicBandMembersApiDtos,
-                        musicBandApiDto.MusicBandTeamMembersApiDtos,
-                        musicBandApiDto.ReleasedMusicProjectsApiDtos,
-                        musicBandApiDto.MusicGenresApiDtos,
-                        musicBandApiDto.TargetAudiencesApiDtos);
+                    musicBandApiDto.MusicBandResponsibleApiDto,
+                    musicBandApiDto.MusicBandDataApiDtos);
 
                 cmd.UpdatePreSendProperties(
                     applicationUser.Id,

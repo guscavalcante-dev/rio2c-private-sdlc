@@ -4,7 +4,7 @@
 // Created          : 07-10-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-17-2023
+// Last Modified On : 01-26-2024
 // ***********************************************************************
 // <copyright file="SalesPlatformsApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -376,17 +376,17 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     Email = request.Email,
                     HasTicket = attendeeCollaboratorTicketsInformationDto?.HasTicket() ?? false,
 
-                    HasPitchingMusicBandsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.HasMusicPitchingProjectsSubscriptionsAvailable() ?? false,
-                    HasBusinessRoundsMusicBandsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.HasMusicBusinessRoundsProjectsSubscriptionsAvailable() ?? false,
+                    HasPitchingMusicBandsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.HasMusicPitchingProjectsSubscriptionsAvailable("", 0) ?? false,
+                    HasBusinessRoundsMusicBandsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.HasMusicBusinessRoundsProjectsSubscriptionsAvailable(0) ?? false,
 
                     HasPitchingStartupsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.HasInnovationPitchingProjectsSubscriptionsAvailable() ?? false,
                     HasBusinessRoundsStartupsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.HasInnovationBusinessRoundsProjectsSubscriptionsAvailable() ?? false,
 
                     MusicProject = new MusicProject
                     {
-                        PitchingProjectsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.GetMusicPitchingProjectsSubscriptionsAvailable() ?? 0, 
-                        BusinessRoundsProjectsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.GetMusicBusinessRoundsProjectsSubscriptionsAvailable() ?? 0,
-                        Messages = attendeeCollaboratorTicketsInformationDto?.GetMusicMessages(),
+                        PitchingProjectsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.GetMusicPitchingProjectsSubscriptionsAvailable("", 0) ?? 0, 
+                        BusinessRoundsProjectsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.GetMusicBusinessRoundsProjectsSubscriptionsAvailable(0) ?? 0,
+                        Messages = attendeeCollaboratorTicketsInformationDto?.GetMusicMessages("", 0, 0),
                     },
 
                     StartupProject = new StartupProject
@@ -396,7 +396,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                         Messages = attendeeCollaboratorTicketsInformationDto?.GetInnovationMessages()
                     },
 
-                    Messages = attendeeCollaboratorTicketsInformationDto?.HasTicket() == true ? attendeeCollaboratorTicketsInformationDto?.GetAllMessages() :
+                    Messages = attendeeCollaboratorTicketsInformationDto?.HasTicket() == true ? attendeeCollaboratorTicketsInformationDto?.GetAllMessages("", 0, 0) :
                                                                                                 new string[] { string.Format(Messages.NoTicketsFoundForEmail, request.Email) },
                 });
             }

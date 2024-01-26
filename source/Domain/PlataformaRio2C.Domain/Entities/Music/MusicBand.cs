@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-14-2023
+// Last Modified On : 01-26-2024
 // ***********************************************************************
 // <copyright file="MusicBand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,7 +14,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
@@ -71,13 +70,13 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="wouldYouLikeParticipateBusinessRound">if set to <c>true</c> [would you like participate business round].</param>
         /// <param name="wouldYouLikeParticipatePitching">if set to <c>true</c> [would you like participate pitching].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
-        /// <param name="musicProjectApiDto">The music project API dto.</param>
+        /// <param name="musicProject">The music project.</param>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
-        /// <param name="musicGenreApiDtos">The music genre API dtos.</param>
-        /// <param name="targetAudienceApiDtos">The target audience API dtos.</param>
-        /// <param name="musicBandMemberApiDtos">The music band member API dtos.</param>
-        /// <param name="musicBandTeamMemberApiDtos">The music band team member API dtos.</param>
-        /// <param name="releasedMusicProjectApiDtos">The released music project API dtos.</param>
+        /// <param name="musicBandGenres">The music genres.</param>
+        /// <param name="musicBandTargetAudiences">The target audiences.</param>
+        /// <param name="musicBandMembers">The music band members.</param>
+        /// <param name="musicBandTeamMembers">The music band team members.</param>
+        /// <param name="releasedMusicProjects">The released music projects.</param>
         /// <param name="userId">The user identifier.</param>
         public MusicBand(
             MusicBandType musicBandType,
@@ -92,13 +91,13 @@ namespace PlataformaRio2C.Domain.Entities
             bool wouldYouLikeParticipateBusinessRound,
             bool wouldYouLikeParticipatePitching,
             bool isImageUploaded,
-            MusicProjectApiDto musicProjectApiDto,
+            MusicProject musicProject,
             AttendeeCollaborator attendeeCollaborator,
-            List<MusicGenreApiDto> musicGenreApiDtos,
-            List<TargetAudienceApiDto> targetAudienceApiDtos,
-            List<MusicBandMemberApiDto> musicBandMemberApiDtos,
-            List<MusicBandTeamMemberApiDto> musicBandTeamMemberApiDtos,
-            List<ReleasedMusicProjectApiDto> releasedMusicProjectApiDtos,
+            List<MusicBandGenre> musicBandGenres,
+            List<MusicBandTargetAudience> musicBandTargetAudiences,
+            List<MusicBandMember> musicBandMembers,
+            List<MusicBandTeamMember> musicBandTeamMembers,
+            List<ReleasedMusicProject> releasedMusicProjects,
             int userId)
         {
             this.MusicBandType = musicBandType;
@@ -113,12 +112,18 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateImageUploadDate(isImageUploaded, false);
             base.SetCreateDate(userId);
 
-            this.SynchronizeAttendeeMusicBands(edition, attendeeCollaborator, musicProjectApiDto, wouldYouLikeParticipateBusinessRound, wouldYouLikeParticipatePitching, userId);  
-            this.SynchronizeMusicBandGenres(musicGenreApiDtos, userId);
-            this.SynchronizeMusicBandTargetAudience(targetAudienceApiDtos, userId);
-            this.SynchronizeMusicBandMembers(musicBandMemberApiDtos, userId);
-            this.SynchronizeMusicBandTeamMembers(musicBandTeamMemberApiDtos, userId);
-            this.SynchronizeReleasedMusicProjects(releasedMusicProjectApiDtos, userId);
+            this.SynchronizeAttendeeMusicBands(
+                edition, 
+                attendeeCollaborator,
+                musicProject,
+                wouldYouLikeParticipateBusinessRound, 
+                wouldYouLikeParticipatePitching, 
+                userId);  
+            this.SynchronizeMusicBandGenres(musicBandGenres, userId);
+            this.SynchronizeMusicBandTargetAudience(musicBandTargetAudiences, userId);
+            this.SynchronizeMusicBandMembers(musicBandMembers, userId);
+            this.SynchronizeMusicBandTeamMembers(musicBandTeamMembers, userId);
+            this.SynchronizeReleasedMusicProjects(releasedMusicProjects, userId);
         }
 
         /// <summary>Initializes a new instance of the <see cref="MusicBand"/> class.</summary>
@@ -163,14 +168,14 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
-        /// <param name="musicProjectApiDto">The music project API dto.</param>
+        /// <param name="musicProject">The music project.</param>
         /// <param name="wouldYouLikeParticipateBusinessRound">if set to <c>true</c> [would you like participate business round].</param>
         /// <param name="wouldYouLikeParticipatePitching">if set to <c>true</c> [would you like participate pitching].</param>
         /// <param name="userId">The user identifier.</param>
         private void SynchronizeAttendeeMusicBands(
             Edition edition,
             AttendeeCollaborator attendeeCollaborator,
-            MusicProjectApiDto musicProjectApiDto,
+            MusicProject musicProject,
             bool wouldYouLikeParticipateBusinessRound,
             bool wouldYouLikeParticipatePitching,
             int userId)
@@ -196,13 +201,7 @@ namespace PlataformaRio2C.Domain.Entities
                 var newAttendeeMusicBand = new AttendeeMusicBand(
                     edition,
                     this,
-                    musicProjectApiDto.VideoUrl,
-                    musicProjectApiDto.Music1Url,
-                    musicProjectApiDto.Music2Url,
-                    musicProjectApiDto.Release,
-                    musicProjectApiDto.Clipping1,
-                    musicProjectApiDto.Clipping2,
-                    musicProjectApiDto.Clipping3,
+                    musicProject,
                     wouldYouLikeParticipateBusinessRound,
                     wouldYouLikeParticipatePitching,
                     userId);
@@ -257,55 +256,54 @@ namespace PlataformaRio2C.Domain.Entities
         #endregion
 
         /// <summary>
-        /// Synchronizes the attendee music bands.
+        /// Synchronizes the music band members.
         /// </summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
+        /// <param name="musicBandMembers">The music band members.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeMusicBandMembers(List<MusicBandMemberApiDto> musicBandMemberApiDtos, int userId)
+        private void SynchronizeMusicBandMembers(List<MusicBandMember> musicBandMembers, int userId)
         {
             if (this.MusicBandMembers == null)
             {
                 this.MusicBandMembers = new List<MusicBandMember>();
             }
 
-            foreach(var bandMember in musicBandMemberApiDtos)
+            foreach(var musicBandMember in musicBandMembers)
             {
-                this.MusicBandMembers.Add(new MusicBandMember(this, bandMember.Name, bandMember.MusicInstrumentName, userId));
+                this.MusicBandMembers.Add(new MusicBandMember(this, musicBandMember.Name, musicBandMember.MusicInstrumentName, userId));
             }
         }
 
         /// <summary>
         /// Synchronizes the music band team members.
         /// </summary>
-        /// <param name="musicBandTeamMemberApiDtos">The music band team member API dtos.</param>
+        /// <param name="musicBandTeamMembers">The music band team members.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeMusicBandTeamMembers(List<MusicBandTeamMemberApiDto> musicBandTeamMemberApiDtos, int userId)
+        private void SynchronizeMusicBandTeamMembers(List<MusicBandTeamMember> musicBandTeamMembers, int userId)
         {
             if (this.MusicBandTeamMembers == null)
             {
                 this.MusicBandTeamMembers = new List<MusicBandTeamMember>();
             }
 
-            foreach (var bandTeamMember in musicBandTeamMemberApiDtos)
+            foreach (var musicBandTeamMember in musicBandTeamMembers)
             {
-                this.MusicBandTeamMembers.Add(new MusicBandTeamMember(this, bandTeamMember.Name, bandTeamMember.Role, userId));
+                this.MusicBandTeamMembers.Add(new MusicBandTeamMember(this, musicBandTeamMember.Name, musicBandTeamMember.Role, userId));
             }
         }
 
         /// <summary>
         /// Synchronizes the released music projects.
         /// </summary>
-        /// <param name="releasedMusicProjectApiDtos">The released music project API dtos.</param>
+        /// <param name="releasedMusicProjects">The released music projects.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeReleasedMusicProjects(List<ReleasedMusicProjectApiDto> releasedMusicProjectApiDtos, int userId)
+        private void SynchronizeReleasedMusicProjects(List<ReleasedMusicProject> releasedMusicProjects, int userId)
         {
             if (this.ReleasedMusicProjects == null)
             {
                 this.ReleasedMusicProjects = new List<ReleasedMusicProject>();
             }
 
-            foreach (var releasedMusicProject in releasedMusicProjectApiDtos)
+            foreach (var releasedMusicProject in releasedMusicProjects)
             {
                 this.ReleasedMusicProjects.Add(new ReleasedMusicProject(this, releasedMusicProject.Name, releasedMusicProject.Year, userId));
             }
@@ -314,36 +312,36 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>
         /// Synchronizes the music band genres.
         /// </summary>
-        /// <param name="musicGenreApiDtos">The music genre API dtos.</param>
+        /// <param name="musicBandGenres">The music genres.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeMusicBandGenres(List<MusicGenreApiDto> musicGenreApiDtos, int userId)
+        private void SynchronizeMusicBandGenres(List<MusicBandGenre> musicBandGenres, int userId)
         {
             if (this.MusicBandGenres == null)
             {
                 this.MusicBandGenres = new List<MusicBandGenre>();
             }
 
-            foreach (var musicGenre in musicGenreApiDtos)
+            foreach (var musicBandGenre in musicBandGenres)
             {
-                this.MusicBandGenres.Add(new MusicBandGenre(this, musicGenre.MusicGenre, musicGenre.AdditionalInfo, userId));
+                this.MusicBandGenres.Add(new MusicBandGenre(this, musicBandGenre.MusicGenre, musicBandGenre.AdditionalInfo, userId));
             }
         }
 
         /// <summary>
         /// Synchronizes the music band target audience.
         /// </summary>
-        /// <param name="targetAudienceApiDtos">The target audience API dtos.</param>
+        /// <param name="musicBandTargetAudiences">The music band target audiences.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeMusicBandTargetAudience(List<TargetAudienceApiDto> targetAudienceApiDtos, int userId)
+        private void SynchronizeMusicBandTargetAudience(List<MusicBandTargetAudience> musicBandTargetAudiences, int userId)
         {
             if (this.MusicBandTargetAudiences == null)
             {
                 this.MusicBandTargetAudiences = new List<MusicBandTargetAudience>();
             }
 
-            foreach (var targetAudience in targetAudienceApiDtos)
+            foreach (var musicBandTargetAudience in musicBandTargetAudiences)
             {
-                this.MusicBandTargetAudiences.Add(new MusicBandTargetAudience(this, targetAudience.TargetAudience, userId));
+                this.MusicBandTargetAudiences.Add(new MusicBandTargetAudience(this, musicBandTargetAudience.TargetAudience, userId));
             }
         }
 

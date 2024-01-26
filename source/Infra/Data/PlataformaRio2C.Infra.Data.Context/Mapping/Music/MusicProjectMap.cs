@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 02-26-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-29-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-26-2024
 // ***********************************************************************
 // <copyright file="MusicProjectMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,6 +26,9 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
 
             this.Property(t => t.VideoUrl)
                 .HasMaxLength(MusicProject.VideoUrlMaxLength);
+
+            this.Property(t => t.VideoUrlPassword)
+               .HasMaxLength(MusicProject.VideoUrlPasswordMaxLength);
 
             this.Property(t => t.Music1Url)
                 .HasMaxLength(MusicProject.Music1UrlMaxLength);

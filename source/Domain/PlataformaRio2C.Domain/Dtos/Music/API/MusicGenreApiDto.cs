@@ -4,7 +4,7 @@
 // Created          : 03-25-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-25-2021
+// Last Modified On : 01-26-2024
 // ***********************************************************************
 // <copyright file="MusicGenreApiDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,7 +14,6 @@
 using Newtonsoft.Json;
 using PlataformaRio2C.Domain.Entities;
 using System;
-using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -30,6 +29,14 @@ namespace PlataformaRio2C.Domain.Dtos
 
         [JsonIgnore]
         public MusicGenre MusicGenre { get; set; }
+
+        public MusicBandGenre ToMusicBandGenre(int userId)
+        {
+            return new MusicBandGenre(
+                this.MusicGenre,
+                this.AdditionalInfo,
+                userId);
+        }
 
         /// <summary>Initializes a new instance of the <see cref="MusicGenreApiDto"/> class.</summary>
         public MusicGenreApiDto()

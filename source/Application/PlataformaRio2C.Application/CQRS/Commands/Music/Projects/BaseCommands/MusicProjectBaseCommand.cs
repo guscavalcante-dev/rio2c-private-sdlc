@@ -4,21 +4,14 @@
 // Created          : 03-24-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-24-2021
+// Last Modified On : 01-26-2024
 // ***********************************************************************
 // <copyright file="MusicProjectBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -56,26 +49,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Clipping1 = musicProjectDto.MusicProject.Clipping1;
             this.Clipping2 = musicProjectDto.MusicProject.Clipping2;
             this.Clipping3 = musicProjectDto.MusicProject.Clipping3;
-        }
-
-        /// <summary>
-        /// Updates the base properties.
-        /// </summary>
-        /// <param name="musicBandApiDto">The music band API dto.</param>
-        public void UpdateBaseProperties(MusicBandApiDto musicBandApiDto)
-        {
-            if (musicBandApiDto == null || musicBandApiDto?.MusicProjectApiDto == null)
-            {
-                return;
-            }
-
-            this.VideoUrl = musicBandApiDto.MusicProjectApiDto.VideoUrl;
-            this.Music1Url = musicBandApiDto.MusicProjectApiDto.Music1Url;
-            this.Music2Url = musicBandApiDto.MusicProjectApiDto.Music2Url;
-            this.Release = musicBandApiDto.MusicProjectApiDto.Release;
-            this.Clipping1 = musicBandApiDto.MusicProjectApiDto.Clipping1;
-            this.Clipping2 = musicBandApiDto.MusicProjectApiDto.Clipping2;
-            this.Clipping3 = musicBandApiDto.MusicProjectApiDto.Clipping3;
         }
     }
 }

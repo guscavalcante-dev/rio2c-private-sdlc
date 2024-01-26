@@ -2130,6 +2130,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Selecione pelo menos uma das opções.
+        /// </summary>
+        public static string SelectAtLeastOneOfTheOptions {
+            get {
+                return ResourceManager.GetString("SelectAtLeastOneOfTheOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Selecione pelo menos uma opção do grupo..
         /// </summary>
         public static string SelectAtLeastOneOption {
@@ -2490,6 +2499,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Você gostaria de participar das Rodadas de Negócios?.
+        /// </summary>
+        public static string WouldYouLikeParticipateBusinessRound {
+            get {
+                return ResourceManager.GetString("WouldYouLikeParticipateBusinessRound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Você gostaria de participar do Pitching?.
+        /// </summary>
+        public static string WouldYouLikeParticipatePitching {
+            get {
+                return ResourceManager.GetString("WouldYouLikeParticipatePitching", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Você pode selecionar no máximo {0} players.
         /// </summary>
         public static string YouCanSelectUpToXPlayers {
@@ -2504,6 +2531,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string YouCanSendUpToXPlayers {
             get {
                 return ResourceManager.GetString("YouCanSendUpToXPlayers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Você pode enviar no máximo {0} {1} para {2}.
+        /// </summary>
+        public static string YouCanSubmitMaxXProjectsFor {
+            get {
+                return ResourceManager.GetString("YouCanSubmitMaxXProjectsFor", resourceCulture);
             }
         }
         

@@ -4,14 +4,13 @@
 // Created          : 01-22-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-22-2023
+// Last Modified On : 01-26-2024
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorTicketsInformationDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Domain.Entities;
@@ -29,6 +28,25 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<AttendeeMusicBandDto> AttendeeMusicBandDtos { get; set; }
         public IEnumerable<AttendeeInnovationOrganizationDto> AttendeeInnovationOrganizationDtos { get; set; }
 
+        /// <summary>Initializes a new instance of the <see cref="UserEmailSettingsDto"/> class.</summary>
+        public AttendeeCollaboratorTicketsInformationDto()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttendeeCollaboratorTicketsInformationDto"/> class.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        public AttendeeCollaboratorTicketsInformationDto(Edition edition)
+        {
+            this.Edition = edition;
+            this.CollaboratorDto = new CollaboratorDto();
+            this.AttendeeCollaboratorTicketsCount = 0;
+            this.AttendeeMusicBandDtos = new List<AttendeeMusicBandDto>();
+            this.AttendeeInnovationOrganizationDtos = new List<AttendeeInnovationOrganizationDto>();
+        }
+
+        //TODO: Move all this validations inside AttendeeCollaboratorTicketsInformationDto to a Service and refactor this.
         #region Helpers
 
         #region Music
@@ -38,42 +56,70 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <summary>
         /// Gets the music pitching projects count.
         /// </summary>
+        /// <param name="addingMusicProjectsCount">The adding music projects count.</param>
         /// <returns></returns>
-        private int GetMusicPitchingProjectsCount()
+        private int GetMusicPitchingProjectsCount(int addingMusicProjectsCount)
         {
-            return this.AttendeeMusicBandDtos.Count(dto => dto.WouldYouLikeParticipatePitching);
+            // When adding new music projects, must consider them in the projects count.
+            return this.AttendeeMusicBandDtos.Count(dto => dto.WouldYouLikeParticipatePitching) + addingMusicProjectsCount;
         }
 
         /// <summary>
         /// Gets the music pitching maximum sell projects count.
         /// </summary>
+        /// <param name="document">The document.</param>
         /// <returns></returns>
-        private int GetMusicPitchingMaxSellProjectsCount()
+        public int GetMusicPitchingMaxSellProjectsCount(string document)
         {
-            return this.CollaboratorDto.Document?.IsCnpj() == true ? this.Edition.MusicPitchingEntityMaxSellProjectsCount :
-                                                                     this.Edition.MusicPitchingIndividualMaxSellProjectsCount;
+            // TODO: Always returning MusicPitchingEntityMaxSellProjectsCount(3) because we have a problem to identify if a foreigner is an Individual or Entity by the document.
+            // For now, validating the number of projects a participant can register is only on the front-end.
+            // The customer opened https://softohq.atlassian.net/browse/RIO2CMY-1032 to review this rule later.
+            return this.Edition.MusicPitchingEntityMaxSellProjectsCount;
+
+            //if (!string.IsNullOrEmpty(document))
+            //{
+            //    return document.IsCnpj() ? this.Edition.MusicPitchingEntityMaxSellProjectsCount :
+            //                               this.Edition.MusicPitchingIndividualMaxSellProjectsCount;
+            //}
+            //else
+            //{
+            //    return this.CollaboratorDto?.Document?.IsCnpj() == true ? this.Edition.MusicPitchingEntityMaxSellProjectsCount :
+            //                                                              this.Edition.MusicPitchingIndividualMaxSellProjectsCount;
+            //}
         }
 
         /// <summary>
         /// Determines whether [has music pitching projects subscriptions available].
         /// </summary>
+        /// <param name="document">The document.</param>
+        /// <param name="addingMusicProjectsCount">The adding music pitching projects count.</param>
         /// <returns>
         ///   <c>true</c> if [has music pitching projects subscriptions available]; otherwise, <c>false</c>.
         /// </returns>
-        public bool HasMusicPitchingProjectsSubscriptionsAvailable()
+        public bool HasMusicPitchingProjectsSubscriptionsAvailable(string document, int addingMusicProjectsCount)
         {
-            return this.HasTicket() && this.GetMusicPitchingProjectsCount() < this.GetMusicPitchingMaxSellProjectsCount();
+            if (addingMusicProjectsCount > 0)
+            {
+                // When adding new music pitching project, we need to use <= operator
+                return this.GetMusicPitchingProjectsCount(addingMusicProjectsCount) <= this.GetMusicPitchingMaxSellProjectsCount(document);
+            }
+            else
+            {
+                return this.GetMusicPitchingProjectsCount(addingMusicProjectsCount) < this.GetMusicPitchingMaxSellProjectsCount(document);
+            }
         }
 
         /// <summary>
         /// Gets the music pitching projects subscriptions available.
         /// </summary>
+        /// <param name="document">The document.</param>
+        /// <param name="addingMusicProjectsCount">The adding music pitching projects count.</param>
         /// <returns></returns>
-        public int GetMusicPitchingProjectsSubscriptionsAvailable()
+        public int GetMusicPitchingProjectsSubscriptionsAvailable(string document, int addingMusicProjectsCount)
         {
             if (this.HasTicket())
             {
-                return this.GetMusicPitchingMaxSellProjectsCount() - this.GetMusicPitchingProjectsCount();
+                return this.GetMusicPitchingMaxSellProjectsCount(document) - this.GetMusicPitchingProjectsCount(addingMusicProjectsCount);
             }
             else
             {
@@ -88,38 +134,49 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <summary>
         /// Gets the music business rounds projects count.
         /// </summary>
+        /// <param name="addingMusicProjectsCount">The adding music projects count.</param>
         /// <returns></returns>
-        private int GetMusicBusinessRoundsProjectsCount()
+        private int GetMusicBusinessRoundsProjectsCount(int addingMusicProjectsCount)
         {
-            return this.AttendeeMusicBandDtos.Count(dto => dto.WouldYouLikeParticipateBusinessRound);
+            // When adding new music projects, must consider them in the projects count.
+            return this.AttendeeMusicBandDtos.Count(dto => dto.WouldYouLikeParticipateBusinessRound) + addingMusicProjectsCount;
         }
 
         /// <summary>
         /// Determines whether [has music business rounds projects subscriptions available].
         /// </summary>
+        /// <param name="addingMusicProjectsCount">The adding music projects count.</param>
         /// <returns>
         ///   <c>true</c> if [has music business rounds projects subscriptions available]; otherwise, <c>false</c>.
         /// </returns>
-        public bool HasMusicBusinessRoundsProjectsSubscriptionsAvailable()
+        public bool HasMusicBusinessRoundsProjectsSubscriptionsAvailable(int addingMusicProjectsCount)
         {
-            return this.HasTicket() && this.GetMusicBusinessRoundsProjectsCount() < this.Edition.MusicBusinessRoundsMaxSellProjectsCount;
+            if (addingMusicProjectsCount > 0)
+            {
+                // When adding new music pitching project, we need to use <= operator
+                return this.HasTicket() && this.GetMusicBusinessRoundsProjectsCount(addingMusicProjectsCount) <= this.Edition.MusicBusinessRoundsMaxSellProjectsCount;
+            }
+            else
+            {
+                return this.HasTicket() && this.GetMusicBusinessRoundsProjectsCount(addingMusicProjectsCount) < this.Edition.MusicBusinessRoundsMaxSellProjectsCount;
+            }
         }
 
         /// <summary>
         /// Gets the music business rounds projects subscriptions available.
         /// </summary>
+        /// <param name="addingMusicProjectsCount">The adding music projects count.</param>
         /// <returns></returns>
-        public int GetMusicBusinessRoundsProjectsSubscriptionsAvailable()
+        public int GetMusicBusinessRoundsProjectsSubscriptionsAvailable(int addingMusicProjectsCount)
         {
             if (this.HasTicket())
             {
-                return (this.AttendeeCollaboratorTicketsCount * this.Edition.MusicBusinessRoundsMaxSellProjectsCount) - this.GetMusicBusinessRoundsProjectsCount();
+                return (this.AttendeeCollaboratorTicketsCount * this.Edition.MusicBusinessRoundsMaxSellProjectsCount) - this.GetMusicBusinessRoundsProjectsCount(addingMusicProjectsCount);
             }
             else
             {
                 return 0;
             }
-                
         }
 
         #endregion
@@ -127,8 +184,11 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <summary>
         /// Gets the music messages.
         /// </summary>
+        /// <param name="document">The document.</param>
+        /// <param name="addingMusicPitchingProjectsCount">The adding music pitching projects count.</param>
+        /// <param name="addingMusicBusinessRoundsProjectsCount">The adding music business rounds projects count.</param>
         /// <returns></returns>
-        public string[] GetMusicMessages()
+        public string[] GetMusicMessages(string document, int addingMusicPitchingProjectsCount, int addingMusicBusinessRoundsProjectsCount)
         {
             if (!this.HasTicket())
             {
@@ -137,18 +197,18 @@ namespace PlataformaRio2C.Domain.Dtos
 
             List<string> messages = new List<string>();
 
-            if (this.HasMusicPitchingProjectsSubscriptionsAvailable())
+            if (this.HasMusicPitchingProjectsSubscriptionsAvailable(document, addingMusicPitchingProjectsCount))
             {
-                messages.Add(string.Format(Messages.ThereAreStillXSlotsLeftToRegisterProjects, this.GetMusicPitchingProjectsSubscriptionsAvailable(), Labels.MusicProjects, Labels.Pitching));
+                messages.Add(string.Format(Messages.ThereAreStillXSlotsLeftToRegisterProjects, this.GetMusicPitchingProjectsSubscriptionsAvailable(document, addingMusicPitchingProjectsCount), Labels.MusicProjects, Labels.Pitching));
             }
             else
             {
                 messages.Add(string.Format(Messages.ProjectRegistrationLimitReachedFor, Labels.MusicProjects, Labels.Pitching));
             }
 
-            if (this.HasMusicBusinessRoundsProjectsSubscriptionsAvailable())
+            if (this.HasMusicBusinessRoundsProjectsSubscriptionsAvailable(addingMusicBusinessRoundsProjectsCount))
             {
-                messages.Add(string.Format(Messages.ThereAreStillXSlotsLeftToRegisterProjects, this.GetMusicBusinessRoundsProjectsSubscriptionsAvailable(), Labels.MusicProjects, Labels.BusinessRound));
+                messages.Add(string.Format(Messages.ThereAreStillXSlotsLeftToRegisterProjects, this.GetMusicBusinessRoundsProjectsSubscriptionsAvailable(addingMusicBusinessRoundsProjectsCount), Labels.MusicProjects, Labels.BusinessRound));
             }
             else
             {
@@ -181,7 +241,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// </returns>
         public bool HasInnovationPitchingProjectsSubscriptionsAvailable()
         {
-            return this.HasTicket() && this.GetInnovationPitchingProjectsCount() < this.Edition.InnovationPitchingMaxSellProjectsCount;
+            return this.GetInnovationPitchingProjectsCount() < this.Edition.InnovationPitchingMaxSellProjectsCount;
         }
 
         /// <summary>
@@ -292,20 +352,18 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <summary>
         /// Gets all messages.
         /// </summary>
+        /// <param name="document">The document.</param>
+        /// <param name="addingMusicPitchingProjectsCount">The adding music pitching projects count.</param>
+        /// <param name="addingMusicBusinessRoundsProjectsCount">The adding music business rounds projects count.</param>
         /// <returns></returns>
-        public string[] GetAllMessages()
+        public string[] GetAllMessages(string document, int addingMusicPitchingProjectsCount, int addingMusicBusinessRoundsProjectsCount)
         {
-            return this.GetMusicMessages()
+            return this.GetMusicMessages(document, addingMusicPitchingProjectsCount, addingMusicBusinessRoundsProjectsCount)
                         .Concat(this.GetInnovationMessages())
                         .Distinct()
                         .ToArray();
         }
 
         #endregion
-
-        /// <summary>Initializes a new instance of the <see cref="UserEmailSettingsDto"/> class.</summary>
-        public AttendeeCollaboratorTicketsInformationDto()
-        {
-        }
     }
 }

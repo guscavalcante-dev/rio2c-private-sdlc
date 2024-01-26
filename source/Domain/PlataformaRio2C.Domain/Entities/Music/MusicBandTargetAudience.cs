@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 02-28-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-28-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-26-2024
 // ***********************************************************************
 // <copyright file="MusicBandTargetAudience.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -37,9 +37,19 @@ namespace PlataformaRio2C.Domain.Entities
             this.TargetAudience = targetAudience;
             this.TargetAudienceId = targetAudience?.Id ?? 0;
 
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
+            this.SetCreateDate(userId);
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="MusicBandTargetAudience"/> class.</summary>
+        /// <param name="musicBand">The music band.</param>
+        /// <param name="targetAudience">The target audience.</param>
+        /// <param name="userId">The user identifier.</param>
+        public MusicBandTargetAudience(TargetAudience targetAudience, int userId)
+        {
+            this.TargetAudience = targetAudience;
+            this.TargetAudienceId = targetAudience?.Id ?? 0;
+
+            this.SetCreateDate(userId);
         }
 
         /// <summary>Initializes a new instance of the <see cref="MusicBandTargetAudience"/> class.</summary>

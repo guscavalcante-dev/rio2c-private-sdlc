@@ -930,6 +930,9 @@
   <data name="SelectAtLeastOneGroupOption" xml:space="preserve">
     <value>Please select at least one option from the {0} group.</value>
   </data>
+  <data name="SelectAtLeastOneOfTheOptions" xml:space="preserve">
+    <value>Select at least one of the options</value>
+  </data>
   <data name="SelectAtLeastOneOption" xml:space="preserve">
     <value>Please select at least one option from the group.</value>
     <comment>Selecione pelo menos uma opção do grupo.</comment>
@@ -1073,11 +1076,20 @@
     <value>This is your chance to experience days filled with great content, doing business, networking and sharing amazing experiences.</value>
     <comment>Sua oportunidade de viver dias incríveis de aprendizado, negócios, networking e experiências.</comment>
   </data>
+  <data name="WouldYouLikeParticipateBusinessRound" xml:space="preserve">
+    <value>Would you like participate Business Rounds?</value>
+  </data>
+  <data name="WouldYouLikeParticipatePitching" xml:space="preserve">
+    <value>Would you like participate Pitching?</value>
+  </data>
   <data name="YouCanSelectUpToXPlayers" xml:space="preserve">
     <value>You can select up to {0} players.</value>
   </data>
   <data name="YouCanSendUpToXPlayers" xml:space="preserve">
     <value>You can send up to {0} players.</value>
+  </data>
+  <data name="YouCanSubmitMaxXProjectsFor" xml:space="preserve">
+    <value>You can submit a maximum of {0} {1} for {2}</value>
   </data>
   <data name="YouDontHaveAdminProfile" xml:space="preserve">
     <value>You don't have an admin profile.</value>
