@@ -4,7 +4,7 @@
 // Created          : 03-25-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-25-2021
+// Last Modified On : 01-26-2024
 // ***********************************************************************
 // <copyright file="MusicBandTypeRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -99,6 +99,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                 .IsNotDeleted()
                                 .FindById(musicBandTypeId);
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the by uid asynchronous.
+        /// </summary>
+        /// <param name="musicBandTypeUid">The music band type uid.</param>
+        /// <returns></returns>
+        public async Task<MusicBandType> FindByUidAsync(Guid musicBandTypeUid)
+        {
+            var query = this.GetBaseQuery()
+                                .IsNotDeleted()
+                                .FindByUid(musicBandTypeUid);
 
             return await query
                             .FirstOrDefaultAsync();

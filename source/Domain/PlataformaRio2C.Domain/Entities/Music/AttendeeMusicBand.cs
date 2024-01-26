@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-06-2023
+// Last Modified On : 01-26-2024
 // ***********************************************************************
 // <copyright file="AttendeeMusicBand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -43,26 +43,14 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="musicBand">The music band.</param>
-        /// <param name="videoUrl">The video URL.</param>
-        /// <param name="music1Url">The music1 URL.</param>
-        /// <param name="music2Url">The music2 URL.</param>
-        /// <param name="release">The release.</param>
-        /// <param name="clipping1">The clipping1.</param>
-        /// <param name="clipping2">The clipping2.</param>
-        /// <param name="clipping3">The clipping3.</param>
+        /// <param name="musicProject">The music project.</param>
         /// <param name="wouldYouLikeParticipateBusinessRound">if set to <c>true</c> [would you like participate business round].</param>
         /// <param name="wouldYouLikeParticipatePitching">if set to <c>true</c> [would you like participate pitching].</param>
         /// <param name="userId">The user identifier.</param>
         public AttendeeMusicBand(
             Edition edition,
             MusicBand musicBand,
-            string videoUrl,
-            string music1Url,
-            string music2Url,
-            string release,
-            string clipping1,
-            string clipping2,
-            string clipping3,
+            MusicProject musicProject,
             bool wouldYouLikeParticipateBusinessRound,
             bool wouldYouLikeParticipatePitching,
             int userId)
@@ -75,13 +63,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.WouldYouLikeParticipatePitching = wouldYouLikeParticipatePitching;
 
             this.CreateProject(
-                videoUrl,
-                music1Url,
-                music2Url,
-                release,
-                clipping1,
-                clipping2,
-                clipping3,
+                musicProject,
                 false,
                 userId);
 
@@ -236,24 +218,14 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Music Projects
 
-        /// <summary>Creates the project.</summary>
-        /// <param name="videoUrl">The video URL.</param>
-        /// <param name="music1Url">The music1 URL.</param>
-        /// <param name="music2Url">The music2 URL.</param>
-        /// <param name="release">The release.</param>
-        /// <param name="clipping1">The clipping1.</param>
-        /// <param name="clipping2">The clipping2.</param>
-        /// <param name="clipping3">The clipping3.</param>
+        /// <summary>
+        /// Creates the project.
+        /// </summary>
+        /// <param name="musicProject">The music project.</param>
         /// <param name="isClippingUploaded">if set to <c>true</c> [is clipping uploaded].</param>
         /// <param name="userId">The user identifier.</param>
         private void CreateProject(
-            string videoUrl,
-            string music1Url,
-            string music2Url,
-            string release,
-            string clipping1,
-            string clipping2,
-            string clipping3,
+            MusicProject musicProject,
             bool isClippingUploaded,
             int userId)
         {
@@ -270,13 +242,14 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.MusicProjects.Add(new MusicProject(
                 this,
-                videoUrl,
-                music1Url,
-                music2Url,
-                release,
-                clipping1,
-                clipping2,
-                clipping3,
+                musicProject.VideoUrl,
+                musicProject.VideoUrlPassword,
+                musicProject.Music1Url,
+                musicProject.Music2Url,
+                musicProject.Clipping1,
+                musicProject.Clipping2,
+                musicProject.Clipping3,
+                musicProject.Release,
                 userId));
         }
 

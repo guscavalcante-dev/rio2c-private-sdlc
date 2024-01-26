@@ -4,7 +4,7 @@
 // Created          : 26-03-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 26-03-2021
+// Last Modified On : 01-26-2024
 // ***********************************************************************
 // <copyright file="MusicProjectApiDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,8 +13,6 @@
 // ***********************************************************************
 using Newtonsoft.Json;
 using PlataformaRio2C.Domain.Entities;
-using System;
-using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -23,6 +21,9 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         [JsonProperty(PropertyName = "videoUrl", Order = 100)]
         public string VideoUrl { get; set; }
+
+        [JsonProperty(PropertyName = "videoUrlPassword", Order = 101)]
+        public string VideoUrlPassword { get; set; }
 
         [JsonProperty(PropertyName = "music1Url", Order = 200)]
         public string Music1Url { get; set; }
@@ -45,6 +46,24 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <summary>Initializes a new instance of the <see cref="MusicProjectApiDto"/> class.</summary>
         public MusicProjectApiDto()
         {
+        }
+
+        /// <summary>
+        /// Converts to musicproject.
+        /// </summary>
+        /// <returns></returns>
+        public MusicProject ToMusicProject(int userId)
+        {
+            return new MusicProject(
+                this.VideoUrl,
+                this.VideoUrlPassword,
+                this.Music1Url,
+                this.Music2Url,
+                this.Clipping1,
+                this.Clipping2,
+                this.Clipping3,
+                this.Release,
+                userId);
         }
     }
 }

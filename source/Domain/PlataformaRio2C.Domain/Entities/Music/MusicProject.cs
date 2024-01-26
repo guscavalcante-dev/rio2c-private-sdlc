@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 02-26-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-01-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-26-2024
 // ***********************************************************************
 // <copyright file="MusicProject.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,6 +23,7 @@ namespace PlataformaRio2C.Domain.Entities
     public class MusicProject : Entity
     {
         public static readonly int VideoUrlMaxLength = 300;
+        public static readonly int VideoUrlPasswordMaxLength = 100;
         public static readonly int Music1UrlMaxLength = 300;
         public static readonly int Music2UrlMaxLength = 300;
         public static readonly int Clipping1MaxLength = 300;
@@ -33,6 +34,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         public int AttendeeMusicBandId { get; private set; }
         public string VideoUrl { get; private set; }
+        public string VideoUrlPassword { get; private set; }
         public string Music1Url { get; private set; }
         public string Music2Url { get; private set; }
         public string Release { get; private set; }
@@ -58,28 +60,64 @@ namespace PlataformaRio2C.Domain.Entities
         public MusicProject(
             AttendeeMusicBand attendeeMusicBand,
             string videoUrl,
+            string videoUrlPassword,
             string music1Url,
             string music2Url,
-            string release,
             string clipping1,
             string clipping2,
             string clipping3,
+            string release,
             int userId)
         {
             this.AttendeeMusicBandId = attendeeMusicBand?.Id ?? 0;
             this.AttendeeMusicBand = attendeeMusicBand;
             this.VideoUrl = videoUrl?.Trim();
+            this.VideoUrlPassword = videoUrlPassword;
             this.Music1Url = music1Url?.Trim();
             this.Music2Url = music2Url?.Trim();
-            this.Release = release?.Trim();
             this.Clipping1 = clipping1?.Trim();
             this.Clipping2 = clipping2?.Trim();
             this.Clipping3 = clipping3?.Trim();
+            this.Release = release?.Trim();
 
             //this.ProjectEvaluationStatusId = ProjectEvaluationStatus.UnderEvaluation.Id;
-            this.IsDeleted = false;
-            this.CreateUserId = this.UpdateUserId = userId;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+
+            this.SetCreateDate(userId);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MusicProject" /> class.
+        /// </summary>
+        /// <param name="videoUrl">The video URL.</param>
+        /// <param name="videoUrlPassword">The video URL password.</param>
+        /// <param name="music1Url">The music1 URL.</param>
+        /// <param name="music2Url">The music2 URL.</param>
+        /// <param name="clipping1">The clipping1.</param>
+        /// <param name="clipping2">The clipping2.</param>
+        /// <param name="clipping3">The clipping3.</param>
+        /// <param name="release">The release.</param>
+        /// <param name="userId">The user identifier.</param>
+        public MusicProject(
+            string videoUrl,
+            string videoUrlPassword,
+            string music1Url,
+            string music2Url,
+            string clipping1,
+            string clipping2,
+            string clipping3,
+            string release,
+            int userId)
+        {
+            this.VideoUrl = videoUrl?.Trim();
+            this.VideoUrlPassword = videoUrlPassword;
+            this.Music1Url = music1Url?.Trim();
+            this.Music2Url = music2Url?.Trim();
+            this.Clipping1 = clipping1?.Trim();
+            this.Clipping2 = clipping2?.Trim();
+            this.Clipping3 = clipping3?.Trim();
+            this.Release = release?.Trim();
+
+            this.SetCreateDate(userId);
         }
 
         /// <summary>Initializes a new instance of the <see cref="MusicProject"/> class.</summary>
@@ -186,6 +224,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.ValidateMusicBand();
             this.ValidateVideoUrl();
+            this.ValidateVideoUrlPassword();
             this.ValidateMusic1Url();
             this.ValidateMusic2Url();
             this.ValidateRelease();
@@ -213,7 +252,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             if (this.AttendeeMusicBand == null)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.MusicBand), new string[] { "MusicBandId" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, "MusicBandId"), new string[] { "MusicBandId" }));
             }
         }
 
@@ -222,7 +261,16 @@ namespace PlataformaRio2C.Domain.Entities
         {
             if (!string.IsNullOrEmpty(this.VideoUrl) && this.VideoUrl?.Trim().Length > VideoUrlMaxLength)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Release, VideoUrlMaxLength, 1), new string[] { "Release" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(VideoUrl), VideoUrlMaxLength, 1), new string[] { nameof(VideoUrl) }));
+            }
+        }
+
+        /// <summary>Validates the video URL.</summary>
+        public void ValidateVideoUrlPassword()
+        {
+            if (!string.IsNullOrEmpty(this.VideoUrlPassword) && this.VideoUrlPassword?.Trim().Length > VideoUrlPasswordMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(VideoUrlPassword), VideoUrlPasswordMaxLength, 1), new string[] { nameof(VideoUrlPassword) }));
             }
         }
 
