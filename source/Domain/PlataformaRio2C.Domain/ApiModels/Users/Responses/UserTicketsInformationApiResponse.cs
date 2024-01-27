@@ -4,7 +4,7 @@
 // Created          : 01-20-2024
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-20-2024
+// Last Modified On : 01-27-2024
 // ***********************************************************************
 // <copyright file="UserTicketsInformationApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,8 +21,8 @@ namespace PlataformaRio2C.Domain.ApiModels
         [JsonProperty("email", Order = 100)]
         public string Email { get; set; }
 
-        [JsonProperty("hasTicket", Order = 200)]
-        public bool HasTicket { get; set; }
+        [JsonProperty("ticketsCount", Order = 200)]
+        public int TicketsCount { get; set; }
 
         [JsonProperty("hasBusinessRoundsMusicBandsSubscriptionsAvailable", Order = 300)]
         public bool HasBusinessRoundsMusicBandsSubscriptionsAvailable { get; set; }
