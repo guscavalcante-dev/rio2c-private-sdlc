@@ -222,6 +222,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 {
                     return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "No active languages found." } });
                 }
+                string currentLanguageCode = requestLanguage?.Code ?? defaultLanguage?.Code;
 
                 #endregion
 
@@ -234,19 +235,19 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     MusicBandTypes = musicBandTypes.OrderBy(o => o.DisplayOrder).Select(mbt => new ApiListItemBaseResponse()
                     {
                         Uid = mbt.Uid,
-                        Name = mbt.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
+                        Name = mbt.GetNameTranslation(currentLanguageCode)
                     })?.ToList(),
 
                     MusicGenres = musicGenres.OrderBy(o => o.DisplayOrder).Select(mg => new ApiListItemBaseResponse()
                     {
                         Uid = mg.Uid,
-                        Name = mg.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
+                        Name = mg.GetNameTranslation(currentLanguageCode)
                     })?.ToList(),
 
                     TargetAudiences = targetAudiences.OrderBy(o => o.DisplayOrder).Select(ta => new ApiListItemBaseResponse()
                     {
                         Uid = ta.Uid,
-                        Name = ta.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
+                        Name = ta.GetNameTranslation(currentLanguageCode)
                     })?.ToList(),
 
                     Status = ApiStatus.Success
