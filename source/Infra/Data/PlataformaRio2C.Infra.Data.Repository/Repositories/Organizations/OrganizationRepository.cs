@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-19-2019
 //
-// Last Modified By : Elton Assunção
-// Last Modified On : 01-09-2024
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-30-2024
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1024,6 +1024,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Select(o => new PlayerOrganizationApiDto
                             {
                                 Uid = o.Uid,
+                                Name = o.Name,
                                 CompanyName = o.CompanyName,
                                 TradeName = o.TradeName,
                                 ImageUploadDate = o.ImageUploadDate,
