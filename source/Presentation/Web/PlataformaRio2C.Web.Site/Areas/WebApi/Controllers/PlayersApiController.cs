@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-25-2019
 //
-// Last Modified By : Elton Assunção
-// Last Modified On : 01-08-2024
+// Last Modified By : Renan Valentim
+// Last Modified On : 30-01-2024
 // ***********************************************************************
 // <copyright file="PlayersApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -268,6 +268,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 Status = ApiStatus.Success,
                 Error = null,
                 Uid = playerOrganizationApiDto.Uid,
+                Name = playerOrganizationApiDto.Name,
                 TradeName = playerOrganizationApiDto.TradeName,
                 CompanyName = playerOrganizationApiDto.CompanyName,
                 Picture = playerOrganizationApiDto.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, playerOrganizationApiDto.Uid, playerOrganizationApiDto.ImageUploadDate, true) : null,
