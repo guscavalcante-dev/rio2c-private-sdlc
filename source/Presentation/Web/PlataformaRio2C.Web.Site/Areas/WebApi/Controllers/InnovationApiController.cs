@@ -4,7 +4,7 @@
 // Created          : 06-28-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-27-2023
+// Last Modified On : 01-29-2023
 // ***********************************************************************
 // <copyright file="InnovationApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,6 +17,7 @@ using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.ApiModels;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -24,6 +25,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using Swashbuckle.Swagger.Annotations;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
@@ -243,13 +245,14 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 {
                     return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "No active languages found." } });
                 }
+                string currentLanguageCode = requestLanguage?.Code ?? defaultLanguage?.Code;
 
                 #endregion
 
                 var innovationOrganizationExperienceOptions = await this.innovationOrganizationExperienceOptionRepo.FindAllAsync();
                 var innovationOrganizationTechnologyOptions = await this.innovationOrganizationTechnologyOptionRepo.FindAllAsync();
                 var innovationOrganizationObjectivesOptions = await this.innovationOrganizationObjectivesOptionRepo.FindAllAsync();
-                var innovationOrganizationSustainableDevelopmentObjectivesOptions = await this.innovationOrganizationSustainableDevelopmentObjectivesOptionRepo.FindAllAsync();
+                var innovationOrganizationSustainableDevelopmentObjectivesOptions = new List<InnovationOrganizationSustainableDevelopmentObjectivesOption>(); //await this.innovationOrganizationSustainableDevelopmentObjectivesOptionRepo.FindAllAsync();
                 var innovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllAsync();
                 var workDedications = await this.workDedicationRepo.FindAllAsync();
 
@@ -258,42 +261,42 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     InnovationOrganizationExperienceOptions = innovationOrganizationExperienceOptions.Select(ioeo => new ApiListItemBaseResponse()
                     {
                         Uid = ioeo.Uid,
-                        Name = ioeo.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
+                        Name = ioeo.GetNameTranslation(currentLanguageCode)
                     })?.ToList(),
 
                     InnovationOrganizationTechnologyOptions = innovationOrganizationTechnologyOptions.Select(ioto => new ApiListItemBaseResponse()
                     {
                         Uid = ioto.Uid,
-                        Name = ioto.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
+                        Name = ioto.GetNameTranslation(currentLanguageCode)
                     })?.ToList(),
 
                     InnovationOrganizationObjectivesOptions = innovationOrganizationObjectivesOptions.Select(iooo => new ApiListItemBaseResponse()
                     {
                         Uid = iooo.Uid,
-                        Name = iooo.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
+                        Name = iooo.GetNameTranslation(currentLanguageCode)
                     })?.ToList(),
 
                     InnovationOrganizationSustainableDevelopmentObjectivesOptions = innovationOrganizationSustainableDevelopmentObjectivesOptions.Select(iooo => new InnovationOrganizationSustainableDevelopmentObjectivesOptionListItemApiResponse()
                     {
                         Uid = iooo.Uid,
-                        Name = iooo.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code),
-                        Description = iooo.GetDesctiptionTranslation(requestLanguage?.Code ?? defaultLanguage?.Code),
+                        Name = iooo.GetNameTranslation(currentLanguageCode),
+                        Description = iooo.GetDesctiptionTranslation(currentLanguageCode),
                         DisplayOrder = iooo.DisplayOrder
                     })?.ToList(),
 
                     InnovationOrganizationTrackOptions = innovationOrganizationTrackOptions.Select(ioto => new InnovationOrganizationTrackOptionListItemApiResponse()
                     {
                         Uid = ioto.Uid,
-                        Name = ioto.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code),
-                        Description = ioto.GetDesctiptionTranslation(requestLanguage?.Code ?? defaultLanguage?.Code),
+                        Name = ioto.GetNameTranslation(currentLanguageCode),
+                        Description = ioto.GetDesctiptionTranslation(currentLanguageCode),
                         GroupUid = ioto.InnovationOrganizationTrackOptionGroup?.Uid.ToString(),
-                        GroupName = ioto.GetInnovationOrganizationTrackOptionGroupNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
+                        GroupName = ioto.GetInnovationOrganizationTrackOptionGroupNameTranslation(currentLanguageCode)
                     })?.ToList(),
 
                     WorkDedications = workDedications.Select(wd => new ApiListItemBaseResponse()
                     {
                         Uid = wd.Uid,
-                        Name = wd.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
+                        Name = wd.GetNameTranslation(currentLanguageCode)
                     })?.ToList(),
                     
                     Status = ApiStatus.Success
