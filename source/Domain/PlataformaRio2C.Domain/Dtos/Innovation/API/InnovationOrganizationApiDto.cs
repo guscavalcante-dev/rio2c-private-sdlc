@@ -150,7 +150,6 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonProperty("companyObjectives")]
         public List<InnovationOrganizationObjectivesOptionApiDto> InnovationOrganizationObjectivesOptionApiDtos { get; set; }
 
-        [JsonRequired]
         [JsonProperty("sustainableDevelopmentObjectives")]
         public List<InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto> InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos { get; set; }
 
