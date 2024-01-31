@@ -329,7 +329,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00000", Message = $"Invalid request parameters. Must be {new UserTicketsInformationApiRequest().ToJson()}" } });
                 }
 
-                if (request.Key?.ToLowerInvariant() != ConfigurationManager.AppSettings[nameof(GetUserTicketsInformation)]?.ToLowerInvariant())
+                if (request.Key?.ToLowerInvariant() != ConfigurationManager.AppSettings["GetUserTicketsInformationApiKey"]?.ToLowerInvariant())
                 {
                     return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "Invalid API key to execute this action." } });
                 }
