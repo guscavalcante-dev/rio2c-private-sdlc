@@ -1,0 +1,15 @@
+﻿@using System.Globalization
+@model PlataformaRio2C.Application.CQRS.Commands.UpdateInnovationCollaboratorTracks
+<div class="row">
+    <div class="form-group col-md-12">
+        @Html.ValidationMessageFor(m => m.AttendeeInnovationOrganizationTrackGroups, "", new { @class = "text-danger" })
+        <div class="error">
+            <span></span>
+        </div>
+        <div class="kt-section__content mt-3">
+            <div class="kt-checkbox-list">
+                @Html.EditorFor(m => m.AttendeeInnovationOrganizationTrackGroups)
+            </div>
+        </div>
+    </div>
+</div>

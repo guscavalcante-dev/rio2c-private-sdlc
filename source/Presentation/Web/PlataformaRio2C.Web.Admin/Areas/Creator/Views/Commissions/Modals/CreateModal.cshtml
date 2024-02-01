@@ -1,0 +1,23 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateInnovationCommissionCollaborator
+<div class="modal fade" id="CreateCommissionModal" role="dialog" aria-labelledby="CreateCommissionModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@Labels.NewM @Labels.Member</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Create", "Commissions", new { Area = "Innovation" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "CreateCommissionForm" }))
+                {
+                    <div id="form-container">
+                        @Html.Partial("Modals/_Form", Model)
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">@Labels.Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="$('#CreateCommissionForm').submit();">@Labels.Save</button>
+            </div>
+        </div>
+    </div>
+</div>

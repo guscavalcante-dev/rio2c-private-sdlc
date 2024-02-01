@@ -1,0 +1,35 @@
+﻿@using System.Globalization
+@model PlataformaRio2C.Application.CQRS.Commands.InnovationCommissionCollaboratorBaseCommand
+<div class="row">
+    <div class="form-group col-md-5">
+        @Html.LabelFor(m => m.FirstName, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-7">
+        @Html.LabelFor(m => m.LastNames, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+        @Html.TextBoxFor(m => m.LastNames, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.LastNames, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-12">
+        @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        <span class="form-text text-muted">@Messages.EmailInputMessage</span>
+        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-12">
+        <div class="kt-section pt-4">
+            <h3 class="kt-section__title mb-0">@Labels.Verticals</h3>
+            @Html.ValidationMessageFor(m => m.InnovationOrganizationTrackGroups, "", new { @class = "text-danger" })
+            <div class="kt-section__content mt-3">
+                <div class="kt-checkbox-list">
+                    @Html.EditorFor(m => m.InnovationOrganizationTrackGroups)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
