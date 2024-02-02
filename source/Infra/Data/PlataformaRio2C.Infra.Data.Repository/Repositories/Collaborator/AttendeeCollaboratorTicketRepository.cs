@@ -52,6 +52,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>
+        /// Finds the by barcode.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="barcode">The barcode.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeCollaboratorTicket> FindByBarcode(this IQueryable<AttendeeCollaboratorTicket> query, string barcode)
+        {
+            query = query.Where(act => act.Barcode == barcode);
+
+            return query;
+        }
+
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
@@ -105,6 +118,26 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 AttendeeSalesPlatformTicketType = act.AttendeeSalesPlatformTicketType
                             })
                             .ToListAsync();
+        }
+
+        /// <summary>
+        /// Finds the dto by barcode.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="barcode">The barcode.</param>
+        /// <returns></returns>
+        public async Task<AttendeeCollaboratorTicketDto> FindDtoByBarcode(int editionId, string barcode)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByEditionId(editionId)
+                                .FindByBarcode(barcode);
+
+            return await query
+                            .Select(act => new AttendeeCollaboratorTicketDto
+                            {
+                               Barcode = act.Barcode
+                            })
+                            .FirstOrDefaultAsync();
         }
     }
 }

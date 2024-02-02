@@ -1002,6 +1002,12 @@
   <data name="ThisProjectHasAlreadyBeenSubmittedForTheEvaluationOfPlayers" xml:space="preserve">
     <value>Este projeto já foi enviado para avaliação de players</value>
   </data>
+  <data name="TicketIsInvalidForEdition" xml:space="preserve">
+    <value>O ingresso {0} não é válido para a edição {1}!</value>
+  </data>
+  <data name="TicketIsValidForEdition" xml:space="preserve">
+    <value>O ingresso {0} é válido para a edição {1}!</value>
+  </data>
   <data name="ToAccessMyRio2CPlatform" xml:space="preserve">
     <value>Para acessar a plataforma MyRio2C é necessário estar credenciado.</value>
     <comment>Para acessar a plataforma MyRio2C é necessário estar credenciado.</comment>
