@@ -292,7 +292,7 @@ namespace PlataformaRio2C.Domain.Dtos
             if (this.InnovationOrganizationTechnologyOptionApiDtos == null ||
                 !this.InnovationOrganizationTechnologyOptionApiDtos.Any())
             {
-                //Actually isn't required
+                // Actually isn't required
                 //this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, "technologyExperiences"), new string[] { "technologyExperiences" }));
             }
 
@@ -305,7 +305,8 @@ namespace PlataformaRio2C.Domain.Dtos
             if (this.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos == null ||
                 !this.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos.Any())
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, "sustainableDevelopmentObjectives"), new string[] { "sustainableDevelopmentObjectives" }));
+                // No longer needed since RIO2CMY-1025
+                //this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, "sustainableDevelopmentObjectives"), new string[] { "sustainableDevelopmentObjectives" }));
             }
 
             #endregion
