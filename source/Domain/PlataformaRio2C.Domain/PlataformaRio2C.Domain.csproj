@@ -85,6 +85,8 @@
   <ItemGroup>
     <Compile Include="ApiModels\ApiBaseRequest.cs" />
     <Compile Include="ApiModels\ApiReportBaseRequest.cs" />
+    <Compile Include="ApiModels\AttendeeCollaborators\Requests\AttendeeCollaboratorTicketInformationApiRequest.cs" />
+    <Compile Include="ApiModels\AttendeeCollaborators\Responses\AttendeeCollaboratorTicketInformationApiResponse.cs" />
     <Compile Include="ApiModels\Audiovisual\Requests\AudiovisualCommissionsApiRequest.cs" />
     <Compile Include="ApiModels\Audiovisual\Requests\AudiovisualCommissionApiRequest.cs" />
     <Compile Include="ApiModels\Audiovisual\Responses\AudiovisualCommissionsApiResponse.cs" />
