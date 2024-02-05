@@ -54,6 +54,13 @@ namespace PlataformaRio2C.Domain.Interfaces
 
         #endregion
 
+        #region Music Players Executives
+
+        Task<IPagedList<MusicPlayerOrganizationApiDto>> FindAllMusicPlayersExecutivesPublicApiPaged(int editionId, string keywords, List<Guid> activitiesUids, List<Guid> targetAudiencesUids, List<Guid> interestsUids, DateTime? modifiedAfterDate, bool showDetails, bool showDeleted, int page, int pageSize);
+        Task<MusicPlayerOrganizationApiDto> FindMusicPlayerExecutivePublicApiDtoByUid(Guid collaboratorUid, int editionId);
+
+        #endregion
+
         #region Speakers
 
         Task<IPagedList<CollaboratorApiListDto>> FindAllSpeakersApiListDtoPaged(int editionId, string keywords, bool filterByProjectsInNegotiation, string collaboratorTypeName, bool showAllParticipants, int page, int pageSize);

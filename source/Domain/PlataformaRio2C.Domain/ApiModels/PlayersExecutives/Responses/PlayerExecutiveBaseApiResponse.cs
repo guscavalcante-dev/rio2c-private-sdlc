@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Web.Site
-// Author           : Rafael Dantas Ruiz
-// Created          : 09-30-2019
+// Assembly         : PlataformaRio2C.Domain
+// Author           : Renan Valentim
+// Created          : 02-03-2024
 //
-// Last Modified By : Elton Assunção
-// Last Modified On : 01-05-2024
+// Last Modified By : Renan Valentim
+// Last Modified On : 02-03-2024
 // ***********************************************************************
-// <copyright file="PlayerApiResponse.cs" company="Softo">
+// <copyright file="PlayerExecutiveBaseApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -17,8 +17,8 @@ using Newtonsoft.Json;
 
 namespace PlataformaRio2C.Domain.ApiModels
 {
-    /// <summary>PlayerApiResponse</summary>
-    public class PlayerApiResponse : ApiBaseResponse
+    /// <summary>PlayerExecutiveBaseApiResponse</summary>
+    public class PlayerExecutiveBaseApiResponse : ApiBaseResponse
     {
         [JsonProperty("uid", Order = 100)]
         public Guid Uid { get; set; }

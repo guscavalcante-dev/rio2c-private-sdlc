@@ -47,7 +47,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="activityRepository">The activity repository.</param>
         /// <param name="targetAudienceRepository">The target audience repository.</param>
-        /// <param name="interestRepositoryy">The interest repositoryy.</param>
+        /// <param name="interestRepository">The interest repositoryy.</param>
         /// <param name="fileRepository">The file repository.</param>
         /// <param name="languageRepository">The language repository.</param>
         public PlayersApiController(
@@ -55,7 +55,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             IEditionRepository editionRepository,
             IActivityRepository activityRepository,
             ITargetAudienceRepository targetAudienceRepository,
-            IInterestRepository interestRepositoryy,
+            IInterestRepository interestRepository,
             IFileRepository fileRepository,
             ILanguageRepository languageRepository)
         {
@@ -63,7 +63,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             this.editionRepo = editionRepository;
             this.activityRepo = activityRepository;
             this.targetAudienceRepo = targetAudienceRepository;
-            this.interestRepo = interestRepositoryy;
+            this.interestRepo = interestRepository;
             this.fileRepo = fileRepository;
             this.languageRepo = languageRepository;
         }
@@ -78,7 +78,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("players"), HttpGet]
         [SwaggerResponse(System.Net.HttpStatusCode.OK)]
         [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
-        public async Task<IHttpActionResult> Players([FromUri] PlayersApiRequest request)
+        public async Task<IHttpActionResult> Players([FromUri] AudiovisualPlayersApiRequest request)
         {
             #region Initial Validations
 
@@ -98,7 +98,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
             #endregion
 
-            var playerOrganizationApiDtos = await this.organizationRepo.FindAllPlayersPublicApiPaged(
+            var playerOrganizationApiDtos = await this.organizationRepo.FindAllAudiovisualPlayersPublicApiPaged(
                 edition.Id,
                 request?.Keywords,
                 request?.ActivitiesUids?.ToListGuid(','),
@@ -110,7 +110,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 request?.Page ?? 1, 
                 request?.PageSize ?? 10);
 
-            return await Json(new PlayersApiResponse
+            return await Json(new AudiovisualPlayersApiResponse
             {
                 Status = ApiStatus.Success,
                 Error = null,
@@ -120,7 +120,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 PageCount = playerOrganizationApiDtos.PageCount,
                 PageNumber = playerOrganizationApiDtos.PageNumber,
                 PageSize = playerOrganizationApiDtos.PageSize,
-                Players = playerOrganizationApiDtos?.Select(dto => new PlayerApiResponse
+                Players = playerOrganizationApiDtos?.Select(dto => new AudiovisualPlayerApiResponse
                 {
                     Uid = dto.Uid,
                     Name = dto.Name,
@@ -159,7 +159,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("players/filters"), HttpGet]
         [SwaggerResponse(System.Net.HttpStatusCode.OK)]
         [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
-        public async Task<IHttpActionResult> Filters([FromUri] PlayersFiltersApiRequest request)
+        public async Task<IHttpActionResult> Filters([FromUri] AudiovisualPlayersFiltersApiRequest request)
         {
             try
             {
@@ -192,9 +192,9 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
                 var activities = await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id);
                 var targetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id);
-                var intrests = await this.interestRepo.FindAllByProjectTypeIdAndGroupedByInterestGroupAsync(ProjectType.Audiovisual.Id);
+                var interests = await this.interestRepo.FindAllByProjectTypeIdAndGroupedByInterestGroupAsync(ProjectType.Audiovisual.Id);
 
-                return await Json(new PlayersFiltersApiResponse
+                return await Json(new AudiovisualPlayersFiltersApiResponse
                 {
                     Status = ApiStatus.Success,
                     Error = null,
@@ -208,7 +208,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                         Uid = ta.Uid,
                         Name = ta.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
                     })?.ToList(),
-                    InterestGroupApiResponses = intrests?.OrderBy(i => i.Key.DisplayOrder)?.Select(intrest => new InterestGroupApiResponse
+                    InterestGroupApiResponses = interests?.OrderBy(i => i.Key.DisplayOrder)?.Select(intrest => new InterestGroupApiResponse
                     {
                         Uid = intrest.Key.Uid,
                         Name = intrest.Key.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code),
@@ -239,8 +239,10 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("player/{uid?}"), HttpGet]
         [SwaggerResponse(System.Net.HttpStatusCode.OK)]
         [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
-        public async Task<IHttpActionResult> Player([FromUri] PlayerApiRequest request)
+        public async Task<IHttpActionResult> Player([FromUri] AudiovisualPlayerApiRequest request)
         {
+            #region Initial Validations
+
             var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
             if (editions?.Any() == false)
             {
@@ -255,7 +257,9 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." } });
             }
 
-            var playerOrganizationApiDto = await this.organizationRepo.FindPlayerPublicApiDtoByUid(
+            #endregion
+
+            var playerOrganizationApiDto = await this.organizationRepo.FindAudiovisualPlayerPublicApiDtoByUid(
                 request?.Uid ?? Guid.Empty,
                 edition.Id);
             if (playerOrganizationApiDto == null)
@@ -263,7 +267,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "Player not found." } });
             }
 
-            return await Json(new PlayerApiResponse
+            return await Json(new AudiovisualPlayerApiResponse
             {
                 Status = ApiStatus.Success,
                 Error = null,
