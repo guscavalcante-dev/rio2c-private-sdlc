@@ -430,7 +430,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                                                        InnovationOrganizationSustainableDevelopmentObjectivesOption = this.innovationOrganizationSustainableDevelopmentObjectivesOptionRepo.FindByUid(dto.Uid)
                                                                    }).ToList();
 
-            if (cmd.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos.Any(dto => dto.InnovationOrganizationSustainableDevelopmentObjectivesOption == null))
+            if (cmd.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos?.Any(dto => dto?.InnovationOrganizationSustainableDevelopmentObjectivesOption == null) == true)
             {
                 var uidsNotFound = cmd.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos.Where(dto => dto.InnovationOrganizationSustainableDevelopmentObjectivesOption == null).Select(dto => dto.Uid);
 
