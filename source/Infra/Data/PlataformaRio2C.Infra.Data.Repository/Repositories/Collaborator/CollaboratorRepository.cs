@@ -676,6 +676,33 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
     #endregion
 
+    #region MusicPlayerCollaboratorApiDto IQueryable Extensions
+
+    /// <summary>
+    /// MusicPlayerCollaboratorApiDtoIQueryableExtensions
+    /// </summary>
+    internal static class MusicPlayerCollaboratorApiDtoIQueryableExtensions
+    {
+        /// <summary>
+        /// Converts to listpagedasync.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        internal static async Task<IPagedList<MusicPlayerCollaboratorApiDto>> ToListPagedAsync(this IQueryable<MusicPlayerCollaboratorApiDto> query, int page, int pageSize)
+        {
+            // Page the list
+            var pagedList = await query.ToPagedListAsync(page, pageSize);
+            if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
+                pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
+
+            return pagedList;
+        }
+    }
+
+    #endregion
+
     /// <summary>CollaboratorRepository</summary>
     public class CollaboratorRepository : Repository<PlataformaRio2CContext, Collaborator>, ICollaboratorRepository
     {
@@ -1317,125 +1344,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             this.SetProxyEnabled(true);
 
             return collaborators;
-
-            #region Old Query
-
-            //IQueryable<CollaboratorBaseDto> collaboratorsQuery = null;
-
-            //using (var ctx = this._context)
-            //{
-            //    collaboratorsQuery = from c in ctx.Collaborators
-
-            //                         join u in ctx.Users on c.Id equals u.Id into u_join
-            //                         from u in u_join.DefaultIfEmpty()
-
-            //                         join ac in ctx.AttendeeCollaborators on new { Id = c.Id } equals new { Id = ac.CollaboratorId } into ac_join
-            //                         from ac in ac_join.DefaultIfEmpty()
-
-            //                         join act in ctx.AttendeeCollaboratorTypes on new { Id = ac.Id } equals new { Id = act.AttendeeCollaboratorId } into act_join
-            //                         from act in act_join.DefaultIfEmpty()
-
-            //                         join ct in ctx.CollaboratorTypes on new { CollaboratorTypeId = act.CollaboratorTypeId } equals new { CollaboratorTypeId = ct.Id } into ct_join
-            //                         from ct in ct_join.DefaultIfEmpty()
-
-            //                         where
-            //                           !c.IsDeleted
-            //                           && (showAllEditions || ac.EditionId == editionId)
-            //                           && !u.Roles.Select(r => r.Name).Contains(Constants.Role.User.ToString())
-
-            //                           && Constants.CollaboratorType.Admins.Contains(ct.Name)
-            //                           //&& c.AttendeeCollaborators.Any(ac => 
-            //                           //             ac.AttendeeCollaboratorTypes.Any(act =>
-            //                           //                     Constants.CollaboratorType.Admins.Contains(act.CollaboratorType.Name)))
-
-            //                           && (string.IsNullOrEmpty(roleName)
-            //                                || u.Roles.Any(r => r.Name == roleName))
-            //                           && (string.IsNullOrEmpty(collaboratorTypeName)
-            //                                || c.AttendeeCollaborators.Any(ac => (showAllEditions || ac.EditionId == editionId)
-            //                                && !ac.IsDeleted
-            //                                && !ac.Edition.IsDeleted
-            //                                && (ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
-            //                                                                            && !act.CollaboratorType.IsDeleted
-            //                                                                            && act.CollaboratorType.Name == collaboratorTypeName))))
-            //                                //|| (showAllEditions || ac.EditionId == editionId)
-            //                                //   && !ac.IsDeleted
-            //                                //   && !ac.Edition.IsDeleted
-            //                                //   && !act.IsDeleted
-            //                                //   && !ct.IsDeleted
-            //                                //   && ct.Name == collaboratorTypeName)
-
-
-
-            //                         select new CollaboratorBaseDto
-            //                         {
-            //                             Id = c.Id,
-            //                             Uid = c.Uid,
-
-            //                             Active = c.User.Active,
-            //                             UserUid = c.User.Uid,
-
-            //                             FirstName = c.FirstName,
-            //                             LastNames = c.LastNames,
-            //                             Badge = c.Badge,
-            //                             Email = c.User.Email,
-            //                             PhoneNumber = c.PhoneNumber,
-            //                             CellPhone = c.CellPhone,
-            //                             PublicEmail = c.PublicEmail,
-            //                             ImageUploadDate = c.ImageUploadDate,
-            //                             CreateDate = c.CreateDate,
-            //                             UpdateDate = c.UpdateDate,
-
-            //                             //IsInOtherEdition = (editionId.HasValue 
-            //                             //                    && ac.EditionId != editionId 
-            //                             //                    && !ac.IsDeleted),
-            //                             IsInOtherEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId
-            //                                                                                                       && !ac.IsDeleted),
-
-            //                             //EditionAttendeeCollaborator = ac,
-            //                             EditionAttendeeCollaborator = editionId.HasValue ? c.AttendeeCollaborators.FirstOrDefault(ac => ac.EditionId == editionId
-            //                                                                                                                                && !ac.Edition.IsDeleted
-            //                                                                                                                                && !ac.IsDeleted
-            //                                                                                                                                && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
-            //                                                                                                                                                                           && (string.IsNullOrEmpty(collaboratorTypeName) || act.CollaboratorType.Name == collaboratorTypeName))) :
-            //                                                                                    null,
-
-            //                             //Role = u.Roles.FirstOrDefault(r => r.Name == roleName),
-            //                             Role = c.User.Roles.FirstOrDefault(r => string.IsNullOrEmpty(roleName) || r.Name == roleName),
-
-            //                             AttendeeCollaboratorTypeDtos = c.AttendeeCollaborators
-            //                                                                     .Select(ac => new AttendeeCollaboratorTypeDto()
-            //                                                                     {
-            //                                                                         AttendeeCollaboratorType = act,
-            //                                                                         CollaboratorType = act.CollaboratorType
-            //                                                                     })
-            //                                                                     .Where(act =>
-            //                                                                            !act.AttendeeCollaboratorType.IsDeleted
-            //                                                                            && !act.AttendeeCollaboratorType.CollaboratorType.IsDeleted
-            //                                                                            && (string.IsNullOrEmpty(collaboratorTypeName) || act.AttendeeCollaboratorType.CollaboratorType.Name == collaboratorTypeName))
-            //                                                                     .ToList(),
-
-            //                             User = new UserDto() { User = c.User, Collaborator = c }
-            //                         };
-
-            //    collaboratorsQuery = collaboratorsQuery.AsNoTracking();
-
-            //    var collaborators = await collaboratorsQuery
-            //                                .DynamicOrder<CollaboratorBaseDto>(
-            //                                                        sortColumns,
-            //                                                        new List<Tuple<string, string>>
-            //                                                        {
-            //                                                            new Tuple<string, string>("FullName", "User.User.Name"),
-            //                                                            new Tuple<string, string>("Email", "User.User.Email"),
-            //                                                        },
-            //                                                        new List<string> { "User.User.Name", "User.User.Email", "CreateDate", "UpdateDate" },
-            //                                                        "User.User.Name")
-            //                                .ToListPagedAsync(page, pageSize);
-
-            //    this.SetProxyEnabled(true);
-
-            //    return collaborators;
-            //};
-            #endregion
         }
 
         /// <summary>
@@ -2120,7 +2028,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<MusicPlayerOrganizationApiDto>> FindAllMusicPlayersExecutivesPublicApiPaged(
+        public async Task<IPagedList<MusicPlayerCollaboratorApiDto>> FindAllMusicPlayersExecutivesPublicApiPaged(
             int editionId,
             string keywords,
             List<Guid> activitiesUids,
@@ -2135,94 +2043,58 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var collaboratorTypeName = CollaboratorType.PlayerExecutiveMusic.Name;
 
             var query = this.GetBaseQuery()
-                                .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, false, false, editionId, showDeleted)
-                                .IsApiDisplayEnabled(editionId, collaboratorTypeName, showDeleted)
-                                .FindByFiltersUids(activitiesUids, targetAudiencesUids, interestsUids, showDeleted)
-                                .FindByKeywords(keywords, editionId)
-                                .FindByCreateOrUpdateDate(modifiedAfterDate);
+                                .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, false, false, editionId, showDeleted);
+                                //.IsApiDisplayEnabled(editionId, collaboratorTypeName, showDeleted)
+                                //.FindByFiltersUids(activitiesUids, targetAudiencesUids, interestsUids, showDeleted)
+                                //.FindByKeywords(keywords, editionId)
+                                //.FindByCreateOrUpdateDate(modifiedAfterDate);
 
-            IQueryable<MusicPlayerOrganizationApiDto> filteredQuery;
+            IQueryable<MusicPlayerCollaboratorApiDto> filteredQuery;
             if (showDetails)
             {
                 #region Detailed Query
 
-                filteredQuery = query.Select(o => new MusicPlayerOrganizationApiDto
+                filteredQuery = query.Select(c => new MusicPlayerCollaboratorApiDto
                 {
-                    Uid = o.Uid,
-                    Name = o.Name,
-                    CompanyName = o.CompanyName,
-                    TradeName = o.TradeName,
-                    ImageUploadDate = o.ImageUploadDate,
-                    CreateDate = o.CreateDate,
-                    UpdateDate = o.UpdateDate,
-                    IsDeleted = o.AttendeeOrganizations
-                                                .FirstOrDefault(ao => (!ao.IsDeleted || showDeleted) && ao.EditionId == editionId).IsDeleted,
-                    ApiHighlightPosition = o.AttendeeOrganizations
+                    Uid = c.Uid,
+                    FirstName = c.FirstName,
+                    LastNames = c.LastNames,
+                    Badge = c.Badge,
+                    ImageUploadDate = c.ImageUploadDate,
+                    CreateDate = c.CreateDate,
+                    UpdateDate = c.UpdateDate,
+                    IsDeleted = c.AttendeeCollaborators.FirstOrDefault(ao => (!ao.IsDeleted || showDeleted) && ao.EditionId == editionId).IsDeleted,
+                    ApiHighlightPosition = c.AttendeeCollaborators
                                                 .FirstOrDefault(ao => (!ao.IsDeleted || showDeleted) && ao.EditionId == editionId)
-                                                    .AttendeeOrganizationTypes
-                                                        .FirstOrDefault(aot => (!aot.IsDeleted || showDeleted) && aot.OrganizationType.Uid == collaboratorTypeUid)
+                                                    .AttendeeCollaboratorTypes
+                                                        .FirstOrDefault(aot => (!aot.IsDeleted || showDeleted) && aot.CollaboratorType.Name == collaboratorTypeName)
                                                             .ApiHighlightPosition,
-                    OrganizationDescriptionBaseDtos = o.OrganizationDescriptions.Select(d => new OrganizationDescriptionDto
+                    JobTitleBaseDtos = c.JobTitles.Where(jt => !jt.IsDeleted).Select(jt => new CollaboratorJobTitleBaseDto
                     {
-                        Id = d.Id,
-                        Uid = d.Uid,
-                        Value = d.Value,
+                        Id = jt.Id,
+                        Uid = jt.Uid,
+                        Value = jt.Value,
                         LanguageDto = new LanguageBaseDto
                         {
-                            Id = d.Language.Id,
-                            Uid = d.Language.Uid,
-                            Name = d.Language.Name,
-                            Code = d.Language.Code
+                            Id = jt.Language.Id,
+                            Uid = jt.Language.Uid,
+                            Name = jt.Language.Name,
+                            Code = jt.Language.Code
                         }
                     }),
-                    OrganizationInterestDtos = o.OrganizationInterests
-                                                    .Where(ota => (!ota.IsDeleted || showDeleted))
-                                                    .OrderBy(oi => oi.Interest.InterestGroup.DisplayOrder)
-                                                    .ThenBy(oi => oi.Interest.DisplayOrder)
-                                                    .Select(oi => new OrganizationInterestDto
-                                                    {
-                                                        OrganizationInterest = oi,
-                                                        Interest = oi.Interest,
-                                                        InterestGroup = oi.Interest.InterestGroup
-                                                    }),
-                    CollaboratorsDtos = o.AttendeeOrganizations
-                                                            .Where(ao => (!ao.IsDeleted || showDeleted) && ao.EditionId == editionId)
-                                                            .SelectMany(ao => ao.AttendeeOrganizationCollaborators
-                                                                                    .Where(aoc => (!aoc.IsDeleted || showDeleted) && (!aoc.AttendeeCollaborator.IsDeleted || showDeleted) && (!aoc.AttendeeCollaborator.Collaborator.IsDeleted || showDeleted))
-                                                                                    .Select(aoc => new CollaboratorDto
-                                                                                    {
-                                                                                        Uid = aoc.AttendeeCollaborator.Collaborator.Uid,
-                                                                                        FirstName = aoc.AttendeeCollaborator.Collaborator.FirstName,
-                                                                                        LastNames = aoc.AttendeeCollaborator.Collaborator.LastNames,
-                                                                                        Badge = aoc.AttendeeCollaborator.Collaborator.Badge,
-                                                                                        ImageUploadDate = aoc.AttendeeCollaborator.Collaborator.ImageUploadDate,
-                                                                                        JobTitleBaseDtos = aoc.AttendeeCollaborator.Collaborator.JobTitles.Select(jt => new CollaboratorJobTitleBaseDto
-                                                                                        {
-                                                                                            Id = jt.Id,
-                                                                                            Uid = jt.Uid,
-                                                                                            Value = jt.Value,
-                                                                                            LanguageDto = new LanguageBaseDto
-                                                                                            {
-                                                                                                Id = jt.Language.Id,
-                                                                                                Uid = jt.Language.Uid,
-                                                                                                Name = jt.Language.Name,
-                                                                                                Code = jt.Language.Code
-                                                                                            }
-                                                                                        }),
-                                                                                        MiniBioBaseDtos = aoc.AttendeeCollaborator.Collaborator.MiniBios.Select(jt => new CollaboratorMiniBioBaseDto
-                                                                                        {
-                                                                                            Id = jt.Id,
-                                                                                            Uid = jt.Uid,
-                                                                                            Value = jt.Value,
-                                                                                            LanguageDto = new LanguageBaseDto
-                                                                                            {
-                                                                                                Id = jt.Language.Id,
-                                                                                                Uid = jt.Language.Uid,
-                                                                                                Name = jt.Language.Name,
-                                                                                                Code = jt.Language.Code
-                                                                                            }
-                                                                                        })
-                                                                                    }))
+                    MiniBioBaseDtos = c.MiniBios.Where(mb => !mb.IsDeleted).Select(jt => new CollaboratorMiniBioBaseDto
+                    {
+                        Id = jt.Id,
+                        Uid = jt.Uid,
+                        Value = jt.Value,
+                        LanguageDto = new LanguageBaseDto
+                        {
+                            Id = jt.Language.Id,
+                            Uid = jt.Language.Uid,
+                            Name = jt.Language.Name,
+                            Code = jt.Language.Code
+                        }
+                    })
                 });
 
                 #endregion
@@ -2231,29 +2103,30 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             {
                 #region Simple Query
 
-                filteredQuery = query.Select(o => new MusicPlayerOrganizationApiDto
+                filteredQuery = query.Select(c => new MusicPlayerCollaboratorApiDto
                 {
-                    Uid = o.Uid,
-                    Name = o.Name,
-                    CompanyName = o.CompanyName,
-                    TradeName = o.TradeName,
-                    ImageUploadDate = o.ImageUploadDate,
-                    IsDeleted = o.AttendeeOrganizations
-                                                .FirstOrDefault(ao => (!ao.IsDeleted || showDeleted) && ao.EditionId == editionId).IsDeleted,
-                    ApiHighlightPosition = o.AttendeeOrganizations
+                    Uid = c.Uid,
+                    FirstName = c.FirstName,
+                    LastNames = c.LastNames,
+                    Badge = c.Badge,
+                    ImageUploadDate = c.ImageUploadDate,
+                    CreateDate = c.CreateDate,
+                    UpdateDate = c.UpdateDate,
+                    IsDeleted = c.AttendeeCollaborators.FirstOrDefault(ao => (!ao.IsDeleted || showDeleted) && ao.EditionId == editionId).IsDeleted,
+                    ApiHighlightPosition = c.AttendeeCollaborators
                                                 .FirstOrDefault(ao => (!ao.IsDeleted || showDeleted) && ao.EditionId == editionId)
-                                                    .AttendeeOrganizationTypes.FirstOrDefault(aot => (!aot.IsDeleted || showDeleted) && aot.OrganizationType.Uid == collaboratorTypeUid)
-                                                        .ApiHighlightPosition,
-                    CreateDate = o.CreateDate,
-                    UpdateDate = o.UpdateDate
+                                                    .AttendeeCollaboratorTypes
+                                                        .FirstOrDefault(aot => (!aot.IsDeleted || showDeleted) && aot.CollaboratorType.Name == collaboratorTypeName)
+                                                            .ApiHighlightPosition,
                 });
 
                 #endregion
             }
 
             return await filteredQuery
-                            .OrderBy(o => o.ApiHighlightPosition ?? 99)
-                            .ThenBy(o => o.TradeName)
+                            .OrderBy(c => c.FirstName)
+                            //.OrderBy(o => o.ApiHighlightPosition ?? 99)
+                            //.ThenBy(o => o.FirstName)
                             .ToListPagedAsync(page, pageSize);
         }
 
@@ -2263,7 +2136,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="collaboratorUid">The organization uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<MusicPlayerOrganizationApiDto> FindMusicPlayerExecutivePublicApiDtoByUid(Guid collaboratorUid, int editionId)
+        public async Task<MusicPlayerCollaboratorApiDto> FindMusicPlayerExecutivePublicApiDtoByUid(Guid collaboratorUid, int editionId)
         {
             var collaboratorTypeName = CollaboratorType.PlayerExecutiveMusic.Name;
 
@@ -2273,74 +2146,46 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     .IsApiDisplayEnabled(editionId, collaboratorTypeName);
 
             return await query
-                            .Select(o => new MusicPlayerOrganizationApiDto
+                            .Select(c => new MusicPlayerCollaboratorApiDto
                             {
-                                Uid = o.Uid,
-                                Name = o.Name,
-                                CompanyName = o.CompanyName,
-                                TradeName = o.TradeName,
-                                ImageUploadDate = o.ImageUploadDate,
-                                OrganizationDescriptionBaseDtos = o.OrganizationDescriptions.Select(d => new OrganizationDescriptionDto
+                                Uid = c.Uid,
+                                FirstName = c.FirstName,
+                                LastNames = c.LastNames,
+                                Badge = c.Badge,
+                                ImageUploadDate = c.ImageUploadDate,
+                                CreateDate = c.CreateDate,
+                                UpdateDate = c.UpdateDate,
+                                ApiHighlightPosition = c.AttendeeCollaborators
+                                                .FirstOrDefault(ao => !ao.IsDeleted && ao.EditionId == editionId)
+                                                    .AttendeeCollaboratorTypes
+                                                        .FirstOrDefault(aot => !aot.IsDeleted && aot.CollaboratorType.Name == collaboratorTypeName)
+                                                            .ApiHighlightPosition,
+                                JobTitleBaseDtos = c.JobTitles.Select(jt => new CollaboratorJobTitleBaseDto
                                 {
-                                    Id = d.Id,
-                                    Uid = d.Uid,
-                                    Value = d.Value,
+                                    Id = jt.Id,
+                                    Uid = jt.Uid,
+                                    Value = jt.Value,
                                     LanguageDto = new LanguageBaseDto
                                     {
-                                        Id = d.Language.Id,
-                                        Uid = d.Language.Uid,
-                                        Name = d.Language.Name,
-                                        Code = d.Language.Code
+                                        Id = jt.Language.Id,
+                                        Uid = jt.Language.Uid,
+                                        Name = jt.Language.Name,
+                                        Code = jt.Language.Code
                                     }
                                 }),
-                                OrganizationInterestDtos = o.OrganizationInterests
-                                                                .Where(ota => !ota.IsDeleted)
-                                                                .OrderBy(oi => oi.Interest.InterestGroup.DisplayOrder)
-                                                                .ThenBy(oi => oi.Interest.DisplayOrder)
-                                                                .Select(oi => new OrganizationInterestDto
-                                                                {
-                                                                    OrganizationInterest = oi,
-                                                                    Interest = oi.Interest,
-                                                                    InterestGroup = oi.Interest.InterestGroup
-                                                                }),
-                                CollaboratorsDtos = o.AttendeeOrganizations
-                                                            .Where(ao => !ao.IsDeleted && ao.EditionId == editionId)
-                                                            .SelectMany(ao => ao.AttendeeOrganizationCollaborators
-                                                                                    .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeCollaborator.IsDeleted && !aoc.AttendeeCollaborator.Collaborator.IsDeleted)
-                                                                                    .Select(aoc => new CollaboratorDto
-                                                                                    {
-                                                                                        Uid = aoc.AttendeeCollaborator.Collaborator.Uid,
-                                                                                        FirstName = aoc.AttendeeCollaborator.Collaborator.FirstName,
-                                                                                        LastNames = aoc.AttendeeCollaborator.Collaborator.LastNames,
-                                                                                        Badge = aoc.AttendeeCollaborator.Collaborator.Badge,
-                                                                                        ImageUploadDate = aoc.AttendeeCollaborator.Collaborator.ImageUploadDate,
-                                                                                        JobTitleBaseDtos = aoc.AttendeeCollaborator.Collaborator.JobTitles.Select(jt => new CollaboratorJobTitleBaseDto
-                                                                                        {
-                                                                                            Id = jt.Id,
-                                                                                            Uid = jt.Uid,
-                                                                                            Value = jt.Value,
-                                                                                            LanguageDto = new LanguageBaseDto
-                                                                                            {
-                                                                                                Id = jt.Language.Id,
-                                                                                                Uid = jt.Language.Uid,
-                                                                                                Name = jt.Language.Name,
-                                                                                                Code = jt.Language.Code
-                                                                                            }
-                                                                                        }),
-                                                                                        MiniBioBaseDtos = aoc.AttendeeCollaborator.Collaborator.MiniBios.Select(jt => new CollaboratorMiniBioBaseDto
-                                                                                        {
-                                                                                            Id = jt.Id,
-                                                                                            Uid = jt.Uid,
-                                                                                            Value = jt.Value,
-                                                                                            LanguageDto = new LanguageBaseDto
-                                                                                            {
-                                                                                                Id = jt.Language.Id,
-                                                                                                Uid = jt.Language.Uid,
-                                                                                                Name = jt.Language.Name,
-                                                                                                Code = jt.Language.Code
-                                                                                            }
-                                                                                        })
-                                                                                    }))
+                                MiniBioBaseDtos = c.MiniBios.Select(jt => new CollaboratorMiniBioBaseDto
+                                {
+                                    Id = jt.Id,
+                                    Uid = jt.Uid,
+                                    Value = jt.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = jt.Language.Id,
+                                        Uid = jt.Language.Uid,
+                                        Name = jt.Language.Name,
+                                        Code = jt.Language.Code
+                                    }
+                                })
                             }).FirstOrDefaultAsync();
         }
 

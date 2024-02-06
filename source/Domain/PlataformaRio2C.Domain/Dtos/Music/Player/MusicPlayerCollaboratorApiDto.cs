@@ -6,26 +6,21 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 02-03-2024
 // ***********************************************************************
-// <copyright file="MusicPlayerExecutiveApiDto.cs" company="Softo">
+// <copyright file="MusicPlayerCollaboratorApiDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Domain.ApiModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
-    /// <summary>MusicPlayerExecutiveApiDto</summary>
-    public class MusicPlayerExecutiveApiDto : PlayerOrganizationBaseApiDto
+    /// <summary>MusicPlayerCollaboratorApiDto</summary>
+    public class MusicPlayerCollaboratorApiDto : PlayerCollaboratorBaseApiDto
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MusicPlayerOrganizationApiDto" /> class.
+        /// Initializes a new instance of the <see cref="MusicPlayerCollaboratorApiDto" /> class.
         /// </summary>
-        public MusicPlayerExecutiveApiDto()
+        public MusicPlayerCollaboratorApiDto()
         {
         }
     }

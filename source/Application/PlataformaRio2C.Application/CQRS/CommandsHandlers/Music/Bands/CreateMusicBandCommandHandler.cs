@@ -308,6 +308,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     musicBandDataApiDto.Instagram,
                     musicBandDataApiDto.Twitter,
                     musicBandDataApiDto.Youtube,
+                    musicBandDataApiDto.Tiktok,
                     musicBandDataApiDto.WouldYouLikeParticipateBusinessRound,
                     musicBandDataApiDto.WouldYouLikeParticipatePitching,
                     !string.IsNullOrEmpty(musicBandDataApiDto.ImageFile),

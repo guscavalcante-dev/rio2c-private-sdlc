@@ -40,6 +40,7 @@ namespace PlataformaRio2C.Domain.Entities
         public string Instagram { get; private set; }
         public string Twitter { get; private set; }
         public string Youtube { get; private set; }
+        public string Tiktok { get; private set; }
         public DateTimeOffset? ImageUploadDate { get; private set; }
 
         //TODO: Delete this field!
@@ -67,6 +68,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="instagram">The instagram.</param>
         /// <param name="twitter">The twitter.</param>
         /// <param name="youtube">The youtube.</param>
+        /// <param name="tiktok">The tiktok.</param>
         /// <param name="wouldYouLikeParticipateBusinessRound">if set to <c>true</c> [would you like participate business round].</param>
         /// <param name="wouldYouLikeParticipatePitching">if set to <c>true</c> [would you like participate pitching].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
@@ -88,6 +90,7 @@ namespace PlataformaRio2C.Domain.Entities
             string instagram,
             string twitter,
             string youtube,
+            string tiktok,
             bool wouldYouLikeParticipateBusinessRound,
             bool wouldYouLikeParticipatePitching,
             bool isImageUploaded,
@@ -108,6 +111,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Instagram = instagram;
             this.Twitter = twitter;
             this.Youtube = youtube;
+            this.Tiktok = tiktok;
 
             this.UpdateImageUploadDate(isImageUploaded, false);
             base.SetCreateDate(userId);

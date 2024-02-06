@@ -661,7 +661,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
             #endregion
 
-            var playerOrganizationApiDtos = await this.collaboratorRepo.FindAllMusicPlayersPublicApiPaged(
+            var playerOrganizationApiDtos = await this.collaboratorRepo.FindAllMusicPlayersExecutivesPublicApiPaged(
                 edition.Id,
                 request?.Keywords,
                 request?.ActivitiesUids?.ToListGuid(','),
@@ -686,31 +686,21 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 PlayersExecutives = playerOrganizationApiDtos?.Select(dto => new MusicPlayerExecutiveApiResponse
                 {
                     Uid = dto.Uid,
-                    Name = dto.Name,
-                    TradeName = dto.TradeName,
-                    CompanyName = dto.CompanyName,
-                    HighlightPosition = dto.ApiHighlightPosition,
-                    Picture = dto.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, dto.Uid, dto.ImageUploadDate, true) : null,
-                    DescriptionsApiResponses = dto.GetDescriptionsApiResponses(),
-                    InterestGroupApiResponses = dto.GetInterestGroupApiResponses(),
+                    BadgeName = dto.Badge,
+                    Name = dto.FullName,
                     IsDeleted = dto.IsDeleted,
-                    PlayerCollaboratorApiResponses = dto.CollaboratorsDtos?.Select(cd => new PlayerCollaboratorApiResponse
+                    HighlightPosition = dto.ApiHighlightPosition,
+                    Picture = dto.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, dto.Uid, dto.ImageUploadDate, true) : null,
+                    JobTitlesApiResponses = dto.JobTitleBaseDtos?.Select(jtd => new LanguageValueApiResponse
                     {
-                        Uid = cd.Uid,
-                        BadgeName = cd.Badge,
-                        Name = cd.FullName,
-                        Picture = cd.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, cd.Uid, cd.ImageUploadDate, true) : null,
-                        JobTitlesApiResponses = cd.JobTitleBaseDtos?.Select(jtd => new LanguageValueApiResponse
-                        {
-                            Culture = jtd.LanguageDto.Code,
-                            Value = HttpUtility.HtmlDecode(jtd.Value)
-                        })?.ToList(),
-                        MiniBiosApiResponses = cd.MiniBioBaseDtos?.Select(jtd => new LanguageValueApiResponse
-                        {
-                            Culture = jtd.LanguageDto.Code,
-                            Value = HttpUtility.HtmlDecode(jtd.Value)
-                        })?.ToList()
-                    })
+                        Culture = jtd.LanguageDto.Code,
+                        Value = HttpUtility.HtmlDecode(jtd.Value)
+                    })?.ToList(),
+                    MiniBiosApiResponses = dto.MiniBioBaseDtos?.Select(jtd => new LanguageValueApiResponse
+                    {
+                        Culture = jtd.LanguageDto.Code,
+                        Value = HttpUtility.HtmlDecode(jtd.Value)
+                    })?.ToList()
                 })?.ToList()
             });
         }
@@ -756,7 +746,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
                 var activities = await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id);
                 var targetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id);
-                var intrests = await this.interestRepo.FindAllByProjectTypeIdAndGroupedByInterestGroupAsync(ProjectType.Music.Id);
+                var interests = await this.interestRepo.FindAllByProjectTypeIdAndGroupedByInterestGroupAsync(ProjectType.Music.Id);
 
                 return await Json(new MusicPlayersExecutivesFiltersApiResponse
                 {
@@ -772,7 +762,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                         Uid = ta.Uid,
                         Name = ta.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
                     })?.ToList(),
-                    InterestGroupApiResponses = intrests?.OrderBy(i => i.Key.DisplayOrder)?.Select(intrest => new InterestGroupApiResponse
+                    InterestGroupApiResponses = interests?.OrderBy(i => i.Key.DisplayOrder)?.Select(intrest => new InterestGroupApiResponse
                     {
                         Uid = intrest.Key.Uid,
                         Name = intrest.Key.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code),
@@ -819,45 +809,33 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
             #endregion
 
-            var playerOrganizationApiDto = await this.organizationRepo.FindMusicPlayerPublicApiDtoByUid(
+            var musicPlayerCollaboratorApiDto = await this.collaboratorRepo.FindMusicPlayerExecutivePublicApiDtoByUid(
                 request?.Uid ?? Guid.Empty,
                 edition.Id);
-            if (playerOrganizationApiDto == null)
+            if (musicPlayerCollaboratorApiDto == null)
             {
-                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "Player not found." } });
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "Player Executive not found." } });
             }
 
             return await Json(new MusicPlayerExecutiveApiResponse
             {
                 Status = ApiStatus.Success,
                 Error = null,
-                Uid = playerOrganizationApiDto.Uid,
-                Name = playerOrganizationApiDto.Name,
-                TradeName = playerOrganizationApiDto.TradeName,
-                CompanyName = playerOrganizationApiDto.CompanyName,
-                Picture = playerOrganizationApiDto.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, playerOrganizationApiDto.Uid, playerOrganizationApiDto.ImageUploadDate, true) : null,
-                DescriptionsApiResponses = playerOrganizationApiDto.OrganizationDescriptionBaseDtos?.Select(dd => new LanguageValueApiResponse
+                Uid = musicPlayerCollaboratorApiDto.Uid,
+                BadgeName = musicPlayerCollaboratorApiDto.Badge,
+                Name = musicPlayerCollaboratorApiDto.FullName,
+                IsDeleted = musicPlayerCollaboratorApiDto.IsDeleted,
+                HighlightPosition = musicPlayerCollaboratorApiDto.ApiHighlightPosition,
+                Picture = musicPlayerCollaboratorApiDto.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, musicPlayerCollaboratorApiDto.Uid, musicPlayerCollaboratorApiDto.ImageUploadDate, true) : null,
+                JobTitlesApiResponses = musicPlayerCollaboratorApiDto.JobTitleBaseDtos?.Select(jtd => new LanguageValueApiResponse
                 {
-                    Culture = dd.LanguageDto.Code,
-                    Value = HttpUtility.HtmlDecode(dd.Value)
+                    Culture = jtd.LanguageDto.Code,
+                    Value = HttpUtility.HtmlDecode(jtd.Value)
                 })?.ToList(),
-                InterestGroupApiResponses = playerOrganizationApiDto.GetInterestGroupApiResponses(),
-                PlayerCollaboratorApiResponses = playerOrganizationApiDto.CollaboratorsDtos?.Select(cd => new PlayerCollaboratorApiResponse
+                MiniBiosApiResponses = musicPlayerCollaboratorApiDto.MiniBioBaseDtos?.Select(jtd => new LanguageValueApiResponse
                 {
-                    Uid = cd.Uid,
-                    BadgeName = cd.Badge,
-                    Name = cd.FullName,
-                    Picture = cd.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, cd.Uid, cd.ImageUploadDate, true) : null,
-                    JobTitlesApiResponses = cd.JobTitleBaseDtos?.Select(jtd => new LanguageValueApiResponse
-                    {
-                        Culture = jtd.LanguageDto.Code,
-                        Value = HttpUtility.HtmlDecode(jtd.Value)
-                    })?.ToList(),
-                    MiniBiosApiResponses = cd.MiniBioBaseDtos?.Select(jtd => new LanguageValueApiResponse
-                    {
-                        Culture = jtd.LanguageDto.Code,
-                        Value = HttpUtility.HtmlDecode(jtd.Value)
-                    })?.ToList()
+                    Culture = jtd.LanguageDto.Code,
+                    Value = HttpUtility.HtmlDecode(jtd.Value)
                 })?.ToList()
             });
         }

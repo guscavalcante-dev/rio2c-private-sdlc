@@ -304,7 +304,7 @@
     <Compile Include="Dtos\Music\MusicProject\MusicProjectJsonDto.cs" />
     <Compile Include="Dtos\Music\MusicProject\MusicProjectEvaluationDto.cs" />
     <Compile Include="Dtos\Music\MusicProject\MusicProjectDto.cs" />
-    <Compile Include="Dtos\Music\PlayerExecutive\MusicPlayerExecutiveApiDto.cs" />
+    <Compile Include="Dtos\Music\Player\MusicPlayerCollaboratorApiDto.cs" />
     <Compile Include="Dtos\Music\Player\MusicPlayerOrganizationApiDto.cs" />
     <Compile Include="Dtos\OrganizationDescriptions\OrganizationRestrictionSpecificDto.cs" />
     <Compile Include="Dtos\OrganizationDescriptions\OrganizationRestrictionSpecificBaseDto.cs" />
@@ -316,8 +316,8 @@
     <Compile Include="Dtos\Organizations\OrganizationActivityDto.cs" />
     <Compile Include="Dtos\Places\PlaceDto.cs" />
     <Compile Include="Dtos\Places\PlaceJsonDto.cs" />
-    <Compile Include="Dtos\PlayersExecutives\API\PlayerExecutiveBaseApiDto.cs" />
     <Compile Include="Dtos\PlayersExecutives\PlayerExecutiveReportDto.cs" />
+    <Compile Include="Dtos\Players\API\PlayerCollaboratorBaseApiDto.cs" />
     <Compile Include="Dtos\Players\API\PlayerOrganizationBaseApiDto.cs" />
     <Compile Include="Dtos\Projects\ProjectBuyerEvaluationBaseDto.cs" />
     <Compile Include="Dtos\Projects\ProjectCommissionEvaluationDto.cs" />

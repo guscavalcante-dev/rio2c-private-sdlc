@@ -20,34 +20,28 @@ namespace PlataformaRio2C.Domain.ApiModels
     /// <summary>PlayerExecutiveBaseApiResponse</summary>
     public class PlayerExecutiveBaseApiResponse : ApiBaseResponse
     {
-        [JsonProperty("uid", Order = 100)]
+        [JsonProperty("uid")]
         public Guid Uid { get; set; }
 
-        [JsonProperty("name", Order = 200)]
+        [JsonProperty("badgeName")]
+        public string BadgeName { get; set; }
+
+        [JsonProperty("name")]
         public string Name { get; set; }
 
-        [JsonProperty("highlightPosition", Order = 300)]
+        [JsonProperty("highlightPosition")]
         public int? HighlightPosition { get; set; }
 
-        [JsonProperty("tradeName", Order = 400)]
-        public string TradeName { get; set; }
-
-        [JsonProperty("companyName", Order = 500)]
-        public string CompanyName { get; set; }
-
-        [JsonProperty("picture", Order = 600)]
+        [JsonProperty("picture")]
         public string Picture { get; set; }
 
-        [JsonProperty("isDeleted", Order = 601)]
+        [JsonProperty("isDeleted")]
         public bool IsDeleted { get; set; }
 
-        [JsonProperty("descriptions", Order = 700)]
-        public IEnumerable<LanguageValueApiResponse> DescriptionsApiResponses { get; set; }
+        [JsonProperty("jobTitles")]
+        public List<LanguageValueApiResponse> JobTitlesApiResponses { get; set; }
 
-        [JsonProperty("interestsGroups", Order = 800)]
-        public IEnumerable<InterestGroupApiResponse> InterestGroupApiResponses { get; set; }
-
-        [JsonProperty("collaborators", Order = 900)]
-        public IEnumerable<PlayerCollaboratorApiResponse> PlayerCollaboratorApiResponses { get; set; }      
+        [JsonProperty("miniBios")]
+        public List<LanguageValueApiResponse> MiniBiosApiResponses { get; set; }
     }
 }
