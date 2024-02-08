@@ -703,6 +703,33 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
     #endregion
 
+    #region InnovationPlayerCollaboratorApiDto IQueryable Extensions
+
+    /// <summary>
+    /// InnovationPlayerCollaboratorApiDtoIQueryableExtensions
+    /// </summary>
+    internal static class InnovationPlayerCollaboratorApiDtoIQueryableExtensions
+    {
+        /// <summary>
+        /// Converts to listpagedasync.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        internal static async Task<IPagedList<InnovationPlayerCollaboratorApiDto>> ToListPagedAsync(this IQueryable<InnovationPlayerCollaboratorApiDto> query, int page, int pageSize)
+        {
+            // Page the list
+            var pagedList = await query.ToPagedListAsync(page, pageSize);
+            if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
+                pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
+
+            return pagedList;
+        }
+    }
+
+    #endregion
+
     /// <summary>CollaboratorRepository</summary>
     public class CollaboratorRepository : Repository<PlataformaRio2CContext, Collaborator>, ICollaboratorRepository
     {
@@ -2147,6 +2174,186 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return await query
                             .Select(c => new MusicPlayerCollaboratorApiDto
+                            {
+                                Uid = c.Uid,
+                                FirstName = c.FirstName,
+                                LastNames = c.LastNames,
+                                Badge = c.Badge,
+                                ImageUploadDate = c.ImageUploadDate,
+                                CreateDate = c.CreateDate,
+                                UpdateDate = c.UpdateDate,
+                                ApiHighlightPosition = c.AttendeeCollaborators
+                                                .FirstOrDefault(ao => !ao.IsDeleted && ao.EditionId == editionId)
+                                                    .AttendeeCollaboratorTypes
+                                                        .FirstOrDefault(aot => !aot.IsDeleted && aot.CollaboratorType.Name == collaboratorTypeName)
+                                                            .ApiHighlightPosition,
+                                JobTitleBaseDtos = c.JobTitles.Select(jt => new CollaboratorJobTitleBaseDto
+                                {
+                                    Id = jt.Id,
+                                    Uid = jt.Uid,
+                                    Value = jt.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = jt.Language.Id,
+                                        Uid = jt.Language.Uid,
+                                        Name = jt.Language.Name,
+                                        Code = jt.Language.Code
+                                    }
+                                }),
+                                MiniBioBaseDtos = c.MiniBios.Select(jt => new CollaboratorMiniBioBaseDto
+                                {
+                                    Id = jt.Id,
+                                    Uid = jt.Uid,
+                                    Value = jt.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = jt.Language.Id,
+                                        Uid = jt.Language.Uid,
+                                        Name = jt.Language.Name,
+                                        Code = jt.Language.Code
+                                    }
+                                })
+                            }).FirstOrDefaultAsync();
+        }
+
+        #endregion
+
+        #region Innovation Players Executives
+
+        /// <summary>
+        /// Finds all innovation players executives public API paged.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="activitiesUids">The activities uids.</param>
+        /// <param name="targetAudiencesUids">The target audiences uids.</param>
+        /// <param name="interestsUids">The interests uids.</param>
+        /// <param name="modifiedAfterDate">The modified after date.</param>
+        /// <param name="showDetails">if set to <c>true</c> [show details].</param>
+        /// <param name="showDeleted">if set to <c>true</c> [show deleted].</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<InnovationPlayerCollaboratorApiDto>> FindAllInnovationPlayersExecutivesPublicApiPaged(
+            int editionId,
+            string keywords,
+            List<Guid> activitiesUids,
+            List<Guid> targetAudiencesUids,
+            List<Guid> interestsUids,
+            DateTime? modifiedAfterDate,
+            bool showDetails,
+            bool showDeleted,
+            int page,
+            int pageSize)
+        {
+            var collaboratorTypeName = CollaboratorType.PlayerExecutiveInnovation.Name;
+
+            var query = this.GetBaseQuery()
+                                .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, false, false, editionId, showDeleted)
+                                //.IsApiDisplayEnabled(editionId, collaboratorTypeName, showDeleted) //TODO: Enable this filter after implementing: Admin area > Player Executive details view > API Configuration widget
+                                .FindByFiltersUids(activitiesUids, targetAudiencesUids, interestsUids, showDeleted)
+                                .FindByKeywords(keywords, editionId)
+                                .FindByCreateOrUpdateDate(modifiedAfterDate);
+
+            IQueryable<InnovationPlayerCollaboratorApiDto> filteredQuery;
+            if (showDetails)
+            {
+                #region Detailed Query
+
+                filteredQuery = query.Select(c => new InnovationPlayerCollaboratorApiDto
+                {
+                    Uid = c.Uid,
+                    FirstName = c.FirstName,
+                    LastNames = c.LastNames,
+                    Badge = c.Badge,
+                    ImageUploadDate = c.ImageUploadDate,
+                    CreateDate = c.CreateDate,
+                    UpdateDate = c.UpdateDate,
+                    IsDeleted = c.AttendeeCollaborators.FirstOrDefault(ao => (!ao.IsDeleted || showDeleted) && ao.EditionId == editionId).IsDeleted,
+                    ApiHighlightPosition = c.AttendeeCollaborators
+                                                .FirstOrDefault(ao => (!ao.IsDeleted || showDeleted) && ao.EditionId == editionId)
+                                                    .AttendeeCollaboratorTypes
+                                                        .FirstOrDefault(aot => (!aot.IsDeleted || showDeleted) && aot.CollaboratorType.Name == collaboratorTypeName)
+                                                            .ApiHighlightPosition,
+                    JobTitleBaseDtos = c.JobTitles.Where(jt => !jt.IsDeleted).Select(jt => new CollaboratorJobTitleBaseDto
+                    {
+                        Id = jt.Id,
+                        Uid = jt.Uid,
+                        Value = jt.Value,
+                        LanguageDto = new LanguageBaseDto
+                        {
+                            Id = jt.Language.Id,
+                            Uid = jt.Language.Uid,
+                            Name = jt.Language.Name,
+                            Code = jt.Language.Code
+                        }
+                    }),
+                    MiniBioBaseDtos = c.MiniBios.Where(mb => !mb.IsDeleted).Select(jt => new CollaboratorMiniBioBaseDto
+                    {
+                        Id = jt.Id,
+                        Uid = jt.Uid,
+                        Value = jt.Value,
+                        LanguageDto = new LanguageBaseDto
+                        {
+                            Id = jt.Language.Id,
+                            Uid = jt.Language.Uid,
+                            Name = jt.Language.Name,
+                            Code = jt.Language.Code
+                        }
+                    })
+                });
+
+                #endregion
+            }
+            else
+            {
+                #region Simple Query
+
+                filteredQuery = query.Select(c => new InnovationPlayerCollaboratorApiDto
+                {
+                    Uid = c.Uid,
+                    FirstName = c.FirstName,
+                    LastNames = c.LastNames,
+                    Badge = c.Badge,
+                    ImageUploadDate = c.ImageUploadDate,
+                    CreateDate = c.CreateDate,
+                    UpdateDate = c.UpdateDate,
+                    IsDeleted = c.AttendeeCollaborators.FirstOrDefault(ao => (!ao.IsDeleted || showDeleted) && ao.EditionId == editionId).IsDeleted,
+                    ApiHighlightPosition = c.AttendeeCollaborators
+                                                .FirstOrDefault(ao => (!ao.IsDeleted || showDeleted) && ao.EditionId == editionId)
+                                                    .AttendeeCollaboratorTypes
+                                                        .FirstOrDefault(aot => (!aot.IsDeleted || showDeleted) && aot.CollaboratorType.Name == collaboratorTypeName)
+                                                            .ApiHighlightPosition,
+                });
+
+                #endregion
+            }
+
+            return await filteredQuery
+                            .OrderBy(c => c.FirstName)
+                            //.OrderBy(o => o.ApiHighlightPosition ?? 99)  //TODO: Enable this after implementing: Admin area > Player Executive details view > API Configuration widget
+                            //.ThenBy(o => o.FirstName)
+                            .ToListPagedAsync(page, pageSize);
+        }
+
+
+        /// <summary>
+        /// Finds the innovation player executive public API dto by uid.
+        /// </summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<InnovationPlayerCollaboratorApiDto> FindInnovationPlayerExecutivePublicApiDtoByUid(Guid collaboratorUid, int editionId)
+        {
+            var collaboratorTypeName = CollaboratorType.PlayerExecutiveInnovation.Name;
+
+            var query = this.GetBaseQuery()
+                                    .FindByUid(collaboratorUid)
+                                    .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, false, false, editionId);
+            //.IsApiDisplayEnabled(editionId, collaboratorTypeName); //TODO: Enable this filter after implementing: Admin area > Player Executive details view > API Configuration widget
+
+            return await query
+                            .Select(c => new InnovationPlayerCollaboratorApiDto
                             {
                                 Uid = c.Uid,
                                 FirstName = c.FirstName,
