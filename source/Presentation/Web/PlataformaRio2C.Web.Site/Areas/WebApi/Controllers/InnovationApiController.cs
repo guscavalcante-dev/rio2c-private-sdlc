@@ -4,7 +4,7 @@
 // Created          : 06-28-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-29-2023
+// Last Modified On : 02-08-2024
 // ***********************************************************************
 // <copyright file="InnovationApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -152,7 +152,6 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     innovationOrganizationApiDto.BusinessStage,
                     innovationOrganizationApiDto.ResponsibleName,
                     innovationOrganizationApiDto.Email,
-                    "",
                     innovationOrganizationApiDto.CellPhone,
                     innovationOrganizationApiDto.PresentationFile,
                     innovationOrganizationApiDto.PresentationFileName,

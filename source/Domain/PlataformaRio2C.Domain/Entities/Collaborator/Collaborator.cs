@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-17-2024
+// Last Modified On : 02-08-2024
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,7 +18,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -774,7 +773,6 @@ namespace PlataformaRio2C.Domain.Entities
             bool isAddingToCurrentEdition,
             int userId)
         {
-            //this.Uid = uid;
             this.FirstName = firstName?.Trim();
             this.LastNames = lastNames?.Trim();
 
@@ -2816,6 +2814,20 @@ namespace PlataformaRio2C.Domain.Entities
                     addressIsManual,
                     userId);
             }
+        }
+
+        /// <summary>
+        /// Updates the cell phone.
+        /// </summary>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateCellPhone(
+            string cellPhone, 
+            int userId)
+        {
+            this.CellPhone = cellPhone;
+
+            this.SetUpdateDate(userId);
         }
 
         /// <summary>Updates the social networks.</summary>

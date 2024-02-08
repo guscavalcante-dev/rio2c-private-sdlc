@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Elton Assunção
-// Last Modified On : 01-10-2024
+// Last Modified By : Renan Valentim
+// Last Modified On : 02-08-2024
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -72,12 +72,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
-        /// Finds the by email.
+        /// Finds by the user email.
         /// </summary>
         /// <param name="query">The query.</param>
         /// <param name="email">The email.</param>
         /// <returns></returns>
-        internal static IQueryable<Collaborator> FindByEmail(this IQueryable<Collaborator> query, string email)
+        internal static IQueryable<Collaborator> FindByUserEmail(this IQueryable<Collaborator> query, string email)
         {
             query = query.Where(c => c.User.Email == email);
 
@@ -982,7 +982,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<CollaboratorDto> FindByEmailAsync(string email, int? editionId)
         {
             var query = this.GetBaseQuery()
-                               .FindByEmail(email);
+                               .FindByUserEmail(email);
 
             return await query.Select(c => new CollaboratorDto
             {
