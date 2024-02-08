@@ -4,7 +4,7 @@
 // Created          : 07-17-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-17-2021
+// Last Modified On : 02-08-2024
 // ***********************************************************************
 // <copyright file="AttendeeInnovationOrganizationCollaboratorDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,6 +23,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public Collaborator Collaborator { get; set; }
         public AttendeeInnovationOrganization AttendeeInnovationOrganization { get; set; }
         public IEnumerable<AttendeeInnovationOrganizationTrackDto> AttendeeInnovationOrganizationTracksDtos { get; set; }
+        public User User { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationCollaboratorDto"/> class.

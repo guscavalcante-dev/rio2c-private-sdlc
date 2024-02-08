@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-09-2023
+// Last Modified On : 02-08-2024
 // ***********************************************************************
 // <copyright file="CollaboratorBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -43,9 +43,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string PhoneNumber { get; set; }
 
+        #region CellPhone
+        public bool IsUpdatingCellPhone { get; private set; } = false;
+
         [Display(Name = "CellPhone", ResourceType = typeof(Labels))]
         [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string CellPhone { get; set; }
+
+        #endregion
 
         [Display(Name = "Document", ResourceType = typeof(Labels))]
         [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
@@ -127,6 +132,28 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.PhoneNumber = phoneNumber;
             this.CellPhone = cellPhone;
             this.Document = document;
+        }
+
+        /// <summary>
+        /// Updates the base properties.
+        /// </summary>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="document">The document.</param>
+        /// <param name="isUpdatingCellPhone">if set to <c>true</c> [is updating cell phone].</param>
+        public void UpdateBaseProperties(
+            string firstName,
+            string email,
+            string cellPhone,
+            string document,
+            bool isUpdatingCellPhone)
+        {
+            this.FirstName = firstName;
+            this.Email = email;
+            this.CellPhone = cellPhone;
+            this.Document = document;
+            this.IsUpdatingCellPhone = isUpdatingCellPhone;
         }
 
         /// <summary>

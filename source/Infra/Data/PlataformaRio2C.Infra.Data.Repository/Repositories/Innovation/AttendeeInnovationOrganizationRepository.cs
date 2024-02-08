@@ -4,7 +4,7 @@
 // Created          : 08-30-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-27-2023
+// Last Modified On : 02-08-2024
 // ***********************************************************************
 // <copyright file="AttendeeInnovationOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1111,6 +1111,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                    {
                                                                                        AttendeeCollaborator = aioc.AttendeeCollaborator,
                                                                                        Collaborator = aioc.AttendeeCollaborator.Collaborator,
+                                                                                       User = aioc.AttendeeCollaborator.Collaborator.User
                                                                                    }).ToList(),
                                    AttendeeInnovationOrganizationTrackDtos = aio.AttendeeInnovationOrganizationTracks.Select(aiot =>
                                                                                      new AttendeeInnovationOrganizationTrackDto

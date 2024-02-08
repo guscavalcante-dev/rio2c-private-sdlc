@@ -151,14 +151,14 @@
             </div>
             <div class="kt-widget__item w-25 w-xs-100">
                 <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.Email</span>
+                    <span class="kt-widget__title">@Labels.PublicEmail</span>
                     <span class="kt-widget__value"><span class="text-break">@(collaboratorDto?.Collaborator?.PublicEmail ?? "-")</span></span>
                 </div>
             </div>
             <div class="kt-widget__item w-25 w-xs-100">
                 <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.PhoneNumber</span>
-                    <span class="kt-widget__value"><span class="text-break">@(collaboratorDto?.Collaborator?.PhoneNumber ?? "-")</span></span>
+                    <span class="kt-widget__title">@Labels.AccessEmail</span>
+                    <span class="kt-widget__value"><span class="text-break">@(collaboratorDto?.User?.Email ?? "-")</span></span>
                 </div>
             </div>
             <div class="kt-widget__item w-25 w-xs-100">
