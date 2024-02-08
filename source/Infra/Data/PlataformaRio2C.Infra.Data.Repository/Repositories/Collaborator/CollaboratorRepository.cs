@@ -2043,11 +2043,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var collaboratorTypeName = CollaboratorType.PlayerExecutiveMusic.Name;
 
             var query = this.GetBaseQuery()
-                                .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, false, false, editionId, showDeleted);
-                                //.IsApiDisplayEnabled(editionId, collaboratorTypeName, showDeleted)
-                                //.FindByFiltersUids(activitiesUids, targetAudiencesUids, interestsUids, showDeleted)
-                                //.FindByKeywords(keywords, editionId)
-                                //.FindByCreateOrUpdateDate(modifiedAfterDate);
+                                .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, false, false, editionId, showDeleted)
+                                //.IsApiDisplayEnabled(editionId, collaboratorTypeName, showDeleted) //TODO: Enable this filter after implementing: Admin area > Player Executive details view > API Configuration widget
+                                .FindByFiltersUids(activitiesUids, targetAudiencesUids, interestsUids, showDeleted)
+                                .FindByKeywords(keywords, editionId)
+                                .FindByCreateOrUpdateDate(modifiedAfterDate);
 
             IQueryable<MusicPlayerCollaboratorApiDto> filteredQuery;
             if (showDetails)
@@ -2125,7 +2125,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return await filteredQuery
                             .OrderBy(c => c.FirstName)
-                            //.OrderBy(o => o.ApiHighlightPosition ?? 99)
+                            //.OrderBy(o => o.ApiHighlightPosition ?? 99)  //TODO: Enable this after implementing: Admin area > Player Executive details view > API Configuration widget
                             //.ThenBy(o => o.FirstName)
                             .ToListPagedAsync(page, pageSize);
         }
@@ -2142,8 +2142,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             var query = this.GetBaseQuery()
                                     .FindByUid(collaboratorUid)
-                                    .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, false, false, editionId)
-                                    .IsApiDisplayEnabled(editionId, collaboratorTypeName);
+                                    .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, false, false, editionId);
+                                    //.IsApiDisplayEnabled(editionId, collaboratorTypeName); //TODO: Enable this filter after implementing: Admin area > Player Executive details view > API Configuration widget
 
             return await query
                             .Select(c => new MusicPlayerCollaboratorApiDto
