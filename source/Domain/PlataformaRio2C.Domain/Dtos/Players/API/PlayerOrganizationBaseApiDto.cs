@@ -12,8 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.ApiModels;
-using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Domain.Statics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +20,7 @@ using System.Web;
 namespace PlataformaRio2C.Domain.Dtos
 {
     /// <summary>PlayerOrganizationApiDto</summary>
-    public class PlayerOrganizationApiDto
+    public class PlayerOrganizationBaseApiDto
     {
         public Guid Uid { get; set; }
         public string Name { get; set; }
@@ -78,9 +76,9 @@ namespace PlataformaRio2C.Domain.Dtos
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PlayerOrganizationApiDto" /> class.
+        /// Initializes a new instance of the <see cref="PlayerOrganizationBaseApiDto" /> class.
         /// </summary>
-        public PlayerOrganizationApiDto()
+        public PlayerOrganizationBaseApiDto()
         {
         }
     }

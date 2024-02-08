@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Web.Site
-// Author           : Rafael Dantas Ruiz
-// Created          : 09-25-2019
+// Assembly         : PlataformaRio2C.Domain
+// Author           : Renan Valentim
+// Created          : 02-03-2024
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-15-2023
+// Last Modified On : 02-03-2024
 // ***********************************************************************
-// <copyright file="PlayersApiResponse.cs" company="Softo">
+// <copyright file="AudiovisualPlayersApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -17,10 +17,10 @@ using Newtonsoft.Json;
 
 namespace PlataformaRio2C.Domain.ApiModels
 {
-    /// <summary>PlayersApiResponse</summary>
-    public class PlayersApiResponse : ListBaseModel
+    /// <summary>AudiovisualPlayersApiResponse</summary>
+    public class AudiovisualPlayersApiResponse : ListBaseModel
     {
         [JsonProperty("players")]
-        public List<PlayerApiResponse> Players { get; set; }
+        public List<AudiovisualPlayerApiResponse> Players { get; set; }
     }
 }
