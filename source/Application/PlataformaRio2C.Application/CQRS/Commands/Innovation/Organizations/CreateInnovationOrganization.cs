@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 28-06-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-13-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 02-08-2024
 // ***********************************************************************
 // <copyright file="CreateInnovationOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -38,7 +38,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string BusinessStage { get; private set; }
         public string ResponsibleName { get; private set; }
         public string Email { get; private set; }
-        public string PhoneNumber { get; private set; }
         public string CellPhone { get; private set; }
         public string PresentationFile { get; private set; }
         public string PresentationFileName { get; private set; }
@@ -77,7 +76,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="businessStage">The business stage.</param>
         /// <param name="responsibleName">Name of the responsible.</param>
         /// <param name="email">The email.</param>
-        /// <param name="phoneNumber">The phone number.</param>
         /// <param name="cellPhone">The cell phone.</param>
         /// <param name="presentationFile">The presentation file.</param>
         /// <param name="presentationFileName">Name of the presentation file.</param>
@@ -111,7 +109,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string businessStage,
             string responsibleName,
             string email,
-            string phoneNumber,
             string cellPhone,
             string presentationFile,
             string presentationFileName,
@@ -146,7 +143,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.BusinessStage = businessStage;
             this.ResponsibleName = responsibleName;
             this.Email = email;
-            this.PhoneNumber = phoneNumber;
             this.CellPhone = cellPhone;
             this.PresentationFile = presentationFile;
             this.PresentationFileName = presentationFileName;

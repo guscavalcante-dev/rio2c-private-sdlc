@@ -702,6 +702,11 @@ namespace PlataformaRio2C.Domain.Entities
             List<InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto> innovationOrganizationSustainableDevelopmentObjectivesOptionApiDto,
             int userId)
         {
+            if(innovationOrganizationSustainableDevelopmentObjectivesOptionApiDto == null)
+            {
+                return;
+            }
+
             var attendeeInnovationOrganization = this.GetAttendeeInnovationOrganizationByEditionId(edition?.Id ?? 0);
 
             foreach (var objective in innovationOrganizationSustainableDevelopmentObjectivesOptionApiDto)

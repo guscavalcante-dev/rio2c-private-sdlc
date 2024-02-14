@@ -148,7 +148,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             try
             {
-                var players = await this.organizationRepo.FindAllPlayersByDataTable(
+                var players = await this.organizationRepo.FindAllAudiovisualPlayersByDataTable(
                     1, 
                     10000, 
                     searchKeywords, 

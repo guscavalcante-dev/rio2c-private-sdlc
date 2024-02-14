@@ -18,6 +18,8 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>AttendeeCollaboratorTicketDto</summary>
     public class AttendeeCollaboratorTicketDto
     {
+        public string Barcode { get; set; }
+
         public AttendeeCollaboratorTicket AttendeeCollaboratorTicket { get; set; }
         public AttendeeSalesPlatformTicketType AttendeeSalesPlatformTicketType { get; set; }
 

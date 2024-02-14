@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-27-2023
+// Last Modified On : 02-08-2024
 // ***********************************************************************
 // <copyright file="UpdateTinyCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -115,6 +115,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.Address,
                     cmd.ZipCode,
                     true,
+                    cmd.UserId);
+            }
+
+            if (cmd.IsUpdatingCellPhone)
+            {
+                collaborator.UpdateCellPhone(
+                    cmd.CellPhone, 
                     cmd.UserId);
             }
 

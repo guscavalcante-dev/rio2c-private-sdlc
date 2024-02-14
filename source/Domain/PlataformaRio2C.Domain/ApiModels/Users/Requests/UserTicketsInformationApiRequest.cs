@@ -24,6 +24,7 @@ namespace PlataformaRio2C.Domain.ApiModels
 
         [JsonProperty("email")]
         [SwaggerParameterDescription(description: "The email to get tickets information from.", isRequired: true)]
+        
         public string Email { get; set; }
     }
 }

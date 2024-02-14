@@ -22,5 +22,6 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface IAttendeeCollaboratorTicketRepository : IRepository<AttendeeCollaboratorTicket>
     {
         Task<List<AttendeeCollaboratorTicketDto>> FindAllDtoByEditionIdAndByCollaboratorId(int editionId, int collaboratorId);
+        Task<AttendeeCollaboratorTicketDto> FindDtoByBarcode(int editionId, string barcode);
     }
 }

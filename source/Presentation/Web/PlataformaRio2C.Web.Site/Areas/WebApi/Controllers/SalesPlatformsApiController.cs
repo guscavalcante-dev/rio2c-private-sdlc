@@ -42,6 +42,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         private readonly IEditionRepository editionRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
         private readonly ILanguageRepository languageRepo;
+        private readonly IAttendeeCollaboratorTicketRepository attendeeCollaboratorTicketRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SalesPlatformsApiController" /> class.
@@ -51,18 +52,21 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repo.</param>
         /// <param name="languageRepository">The language repository.</param>
+        /// <param name="attendeeCollaboratorTicketRepository">The attendee collaborator ticket repository.</param>
         public SalesPlatformsApiController(
             IMediator commandBus,
             IUserRepository userRepository,
             IEditionRepository editionRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
-            ILanguageRepository languageRepository)
+            ILanguageRepository languageRepository,
+            IAttendeeCollaboratorTicketRepository attendeeCollaboratorTicketRepository)
         {
             this.commandBus = commandBus;
             this.userRepo = userRepository;
             this.editionRepo = editionRepository;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
             this.languageRepo = languageRepository;
+            this.attendeeCollaboratorTicketRepo = attendeeCollaboratorTicketRepository;
         }
 
         #region Inti requests
@@ -398,6 +402,90 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
                     Messages = attendeeCollaboratorTicketsInformationDto?.HasTicket() == true ? attendeeCollaboratorTicketsInformationDto?.GetAllMessages("", 0, 0) :
                                                                                                 new string[] { string.Format(Messages.NoTicketsFoundForEmail, request.Email) },
+                });
+            }
+            catch (DomainException ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return await Json(new { status = ApiStatus.Error, message = ex.GetInnerMessage(), errors = result?.Errors?.Select(e => new { e.Code, e.Message }) });
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return await Json(new { status = ApiStatus.Error, message = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Gets the specific ticket information by code.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        [Route("get-ticket-information"), HttpGet]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK)]
+        [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
+        public async Task<IHttpActionResult> GetTicketInformation([FromUri] AttendeeCollaboratorTicketInformationApiRequest request)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                #region Initial Validations
+
+                if (request == null)
+                {
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00000", Message = $"Invalid request parameters. Must be {new AttendeeCollaboratorTicketInformationApiRequest().ToJson()}" } });
+                }
+
+                if (request.Key?.ToLowerInvariant() != ConfigurationManager.AppSettings["GetTicketInformationApiKey"]?.ToLowerInvariant())
+                {
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "Invalid API key to execute this action." } });
+                }
+
+                if (string.IsNullOrWhiteSpace(request.TicketCode))
+                {
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "The ticket code is required" } });
+                }
+
+                var activeEditions = await this.editionRepo.FindAllByIsActiveAsync(false);
+                if (activeEditions?.Any() == false)
+                {
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "No active editions found." } });
+                }
+
+                // Get edition from request otherwise get current
+                var edition = request?.Edition.HasValue == true ? activeEditions?.FirstOrDefault(e => e.UrlCode == request.Edition) :
+                                                                  activeEditions?.FirstOrDefault(e => e.IsCurrent);
+                if (edition == null)
+                {
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00004", Message = "No editions found." } });
+                }
+
+                // Get language from request otherwise get default
+                var languages = await this.languageRepo.FindAllDtosAsync();
+                var requestLanguage = languages?.FirstOrDefault(l => l.Code == request?.Culture);
+                var defaultLanguage = languages?.FirstOrDefault(l => l.IsDefault);
+                if (requestLanguage == null && defaultLanguage == null)
+                {
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00005", Message = "No active languages found." } });
+                }
+                string currentLanguageCode = requestLanguage?.Code ?? defaultLanguage?.Code;
+                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(currentLanguageCode);
+                Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
+
+                #endregion
+
+                var attendeeCollaboratorTicketDto = await this.attendeeCollaboratorTicketRepo.FindDtoByBarcode(edition.Id, request.TicketCode);
+
+                return await Json(new AttendeeCollaboratorTicketInformationApiResponse
+                {
+                    Status = ApiStatus.Success,
+                    Error = null,
+                    TicketCode = request.TicketCode,
+                    TicketExists = attendeeCollaboratorTicketDto != null,
+                    Message = attendeeCollaboratorTicketDto != null ? 
+                                string.Format(Messages.TicketIsValidForEdition, request.TicketCode, edition.UrlCode) :
+                                string.Format(Messages.TicketIsInvalidForEdition, request.TicketCode, edition.UrlCode)
                 });
             }
             catch (DomainException ex)

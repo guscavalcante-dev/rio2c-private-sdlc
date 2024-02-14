@@ -4,7 +4,7 @@
 // Created          : 06-28-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-14-2023
+// Last Modified On : 02-08-2024
 // ***********************************************************************
 // <copyright file="CreateInnovationOrganizationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -141,13 +141,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             {
                 #region Creates new Collaborator and User
 
-                var createCollaboratorCommand = new CreateTinyCollaborator();
-                createCollaboratorCommand.UpdateBaseProperties(
-                    cmd.ResponsibleName,
-                    null,
-                    cmd.Email,
-                    cmd.PhoneNumber,
-                    cmd.CellPhone,
+                var createCollaboratorCommand = new CreateTinyCollaborator(
+                    cmd.ResponsibleName, 
+                    cmd.Email, 
+                    cmd.CellPhone, 
                     cmd.Document);
 
                 createCollaboratorCommand.UpdatePreSendProperties(
@@ -183,11 +180,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 var updateCollaboratorCommand = new UpdateTinyCollaborator(collaboratorDto, true);
                 updateCollaboratorCommand.UpdateBaseProperties(
                     cmd.ResponsibleName,
-                    null,
                     cmd.Email,
-                    cmd.PhoneNumber,
                     cmd.CellPhone,
-                    cmd.Document);
+                    cmd.Document, 
+                    true);
 
                 updateCollaboratorCommand.UpdatePreSendProperties(
                     CollaboratorType.Innovation.Name,
@@ -430,7 +426,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                                                        InnovationOrganizationSustainableDevelopmentObjectivesOption = this.innovationOrganizationSustainableDevelopmentObjectivesOptionRepo.FindByUid(dto.Uid)
                                                                    }).ToList();
 
-            if (cmd.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos.Any(dto => dto.InnovationOrganizationSustainableDevelopmentObjectivesOption == null))
+            if (cmd.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos?.Any(dto => dto?.InnovationOrganizationSustainableDevelopmentObjectivesOption == null) == true)
             {
                 var uidsNotFound = cmd.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos.Where(dto => dto.InnovationOrganizationSustainableDevelopmentObjectivesOption == null).Select(dto => dto.Uid);
 

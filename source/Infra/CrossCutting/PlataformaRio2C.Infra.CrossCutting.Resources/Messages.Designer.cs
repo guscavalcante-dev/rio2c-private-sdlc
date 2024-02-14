@@ -2328,6 +2328,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O ingresso {0} não é válido para a edição {1}!.
+        /// </summary>
+        public static string TicketIsInvalidForEdition {
+            get {
+                return ResourceManager.GetString("TicketIsInvalidForEdition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O ingresso {0} é válido para a edição {1}!.
+        /// </summary>
+        public static string TicketIsValidForEdition {
+            get {
+                return ResourceManager.GetString("TicketIsValidForEdition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Para acessar a plataforma MyRio2C é necessário estar credenciado..
         /// </summary>
         public static string ToAccessMyRio2CPlatform {
