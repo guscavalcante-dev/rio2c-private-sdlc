@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-19-2019
 //
-// Last Modified By : Elton Assunção
-// Last Modified On : 01-05-2024
+// Last Modified By : Renan Valentim
+// Last Modified On : 02-16-2024
 // ***********************************************************************
 // <copyright file="IOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -41,6 +41,14 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<IPagedList<OrganizationDto>> FindAllMusicPlayersByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, bool showAllOrganizations, int? editionId, bool exportToExcel = false);
         Task<IPagedList<MusicPlayerOrganizationApiDto>> FindAllMusicPlayersPublicApiPaged(int editionId, string keywords, List<Guid> activitiesUids, List<Guid> targetAudiencesUids, List<Guid> interestsUids, DateTime? modifiedAfterDate, bool showDetails, bool showDeleted, int page, int pageSize);
         Task<MusicPlayerOrganizationApiDto> FindMusicPlayerPublicApiDtoByUid(Guid organizationUid, int editionId);
+
+        #endregion
+
+        #region Innovation Players
+
+        Task<IPagedList<OrganizationDto>> FindAllInnovationPlayersByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, bool showAllOrganizations, int? editionId, bool exportToExcel = false);
+        Task<IPagedList<InnovationPlayerOrganizationApiDto>> FindAllInnovationPlayersPublicApiPaged(int editionId, string keywords, List<Guid> activitiesUids, List<Guid> targetAudiencesUids, List<Guid> interestsUids, DateTime? modifiedAfterDate, bool showDetails, bool showDeleted, int page, int pageSize);
+        Task<InnovationPlayerOrganizationApiDto> FindInnovationPlayerPublicApiDtoByUid(Guid organizationUid, int editionId);
 
         #endregion
 

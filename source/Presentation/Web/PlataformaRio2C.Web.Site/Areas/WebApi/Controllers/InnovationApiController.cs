@@ -4,7 +4,7 @@
 // Created          : 06-28-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-08-2024
+// Last Modified On : 02-16-2024
 // ***********************************************************************
 // <copyright file="InnovationApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,6 +33,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 {
@@ -57,6 +58,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         private readonly IActivityRepository activityRepo;
         private readonly IInterestRepository interestRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
+        private readonly IOrganizationRepository organizationRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InnovationApiController" /> class.
@@ -76,6 +78,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <param name="activityRepository">The activity repository.</param>
         /// <param name="interestRepository">The interest repository.</param>
         /// <param name="targetAudienceRepo">The target audience repo.</param>
+        /// <param name="organizationRepository">The organization repo.</param>
         public InnovationApiController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
@@ -91,7 +94,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             IFileRepository fileRepository,
             IActivityRepository activityRepository,
             IInterestRepository interestRepository,
-            ITargetAudienceRepository targetAudienceRepo)
+            ITargetAudienceRepository targetAudienceRepo,
+            IOrganizationRepository organizationRepository)
         {
             this.commandBus = commandBus;
             this.identityController = identityController;
@@ -105,9 +109,10 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             this.innovationOrganizationSustainableDevelopmentObjectivesOptionRepo = innovationOrganizationSustainableDevelopmentObjectivesOptionRepository;
             this.collaboratorRepo = collaboratorRepository;
             this.fileRepo = fileRepository;
-            this.activityRepo= activityRepository;
+            this.activityRepo = activityRepository;
             this.interestRepo = interestRepository;
             this.targetAudienceRepo = targetAudienceRepo;
+            this.organizationRepo = organizationRepository;
         }
 
         /// <summary>
@@ -331,7 +336,239 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             }
         }
 
-        #region Players Executives
+        #region Players
+
+        /// <summary>
+        /// Get the Innovation Players
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        [Route("players"), HttpGet]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK)]
+        [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
+        public async Task<IHttpActionResult> Players([FromUri] InnovationPlayersApiRequest request)
+        {
+            #region Initial Validations
+
+            var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
+            if (editions?.Any() == false)
+            {
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." } });
+            }
+
+            // Get edition from request otherwise get current
+            var edition = request?.Edition.HasValue == true ? editions?.FirstOrDefault(e => e.UrlCode == request.Edition) :
+                                                              editions?.FirstOrDefault(e => e.IsCurrent);
+            if (edition == null)
+            {
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." } });
+            }
+
+            #endregion
+
+            var playerOrganizationApiDtos = await this.organizationRepo.FindAllInnovationPlayersPublicApiPaged(
+                edition.Id,
+                request?.Keywords,
+                request?.ActivitiesUids?.ToListGuid(','),
+                request?.TargetAudiencesUids?.ToListGuid(','),
+                request?.InterestsUids?.ToListGuid(','),
+                request?.ModifiedAfterDate.ToUtcDateKind(),
+                request?.ShowDetails ?? false,
+                request?.ShowDeleted ?? false,
+                request?.Page ?? 1,
+                request?.PageSize ?? 10);
+
+            return await Json(new InnovationPlayersApiResponse
+            {
+                Status = ApiStatus.Success,
+                Error = null,
+                HasPreviousPage = playerOrganizationApiDtos.HasPreviousPage,
+                HasNextPage = playerOrganizationApiDtos.HasNextPage,
+                TotalItemCount = playerOrganizationApiDtos.TotalItemCount,
+                PageCount = playerOrganizationApiDtos.PageCount,
+                PageNumber = playerOrganizationApiDtos.PageNumber,
+                PageSize = playerOrganizationApiDtos.PageSize,
+                Players = playerOrganizationApiDtos?.Select(dto => new InnovationPlayerApiResponse
+                {
+                    Uid = dto.Uid,
+                    Name = dto.Name,
+                    TradeName = dto.TradeName,
+                    CompanyName = dto.CompanyName,
+                    HighlightPosition = dto.ApiHighlightPosition,
+                    Picture = dto.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, dto.Uid, dto.ImageUploadDate, true) : null,
+                    DescriptionsApiResponses = dto.GetDescriptionsApiResponses(),
+                    InterestGroupApiResponses = dto.GetInterestGroupApiResponses(),
+                    IsDeleted = dto.IsDeleted,
+                    PlayerCollaboratorApiResponses = dto.CollaboratorsDtos?.Select(cd => new PlayerCollaboratorApiResponse
+                    {
+                        Uid = cd.Uid,
+                        BadgeName = cd.Badge,
+                        Name = cd.FullName,
+                        Picture = cd.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, cd.Uid, cd.ImageUploadDate, true) : null,
+                        JobTitlesApiResponses = cd.JobTitleBaseDtos?.Select(jtd => new LanguageValueApiResponse
+                        {
+                            Culture = jtd.LanguageDto.Code,
+                            Value = HttpUtility.HtmlDecode(jtd.Value)
+                        })?.ToList(),
+                        MiniBiosApiResponses = cd.MiniBioBaseDtos?.Select(jtd => new LanguageValueApiResponse
+                        {
+                            Culture = jtd.LanguageDto.Code,
+                            Value = HttpUtility.HtmlDecode(jtd.Value)
+                        })?.ToList()
+                    })
+                })?.ToList()
+            });
+        }
+
+        /// <summary>
+        /// Get the Innovation Players API filters
+        /// </summary>
+        /// <returns></returns>
+        [Route("players/filters"), HttpGet]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK)]
+        [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
+        public async Task<IHttpActionResult> PlayersFilters([FromUri] InnovationPlayersFiltersApiRequest request)
+        {
+            try
+            {
+                #region Initial Validations
+
+                var activeEditions = await this.editionRepo.FindAllByIsActiveAsync(false);
+                if (activeEditions?.Any() == false)
+                {
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." } });
+                }
+
+                // Get edition from request otherwise get current
+                var edition = request?.Edition.HasValue == true ? activeEditions?.FirstOrDefault(e => e.UrlCode == request.Edition) :
+                                                                  activeEditions?.FirstOrDefault(e => e.IsCurrent);
+                if (edition == null)
+                {
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." } });
+                }
+
+                // Get language from request otherwise get default
+                var languages = await this.languageRepo.FindAllDtosAsync();
+                var requestLanguage = languages?.FirstOrDefault(l => l.Code == request?.Culture);
+                var defaultLanguage = languages?.FirstOrDefault(l => l.IsDefault);
+                if (requestLanguage == null && defaultLanguage == null)
+                {
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "No active languages found." } });
+                }
+
+                #endregion
+
+                var activities = await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id);
+                var targetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id);
+                var intrests = await this.interestRepo.FindAllByProjectTypeIdAndGroupedByInterestGroupAsync(ProjectType.Startup.Id);
+
+                return await Json(new InnovationPlayersFiltersApiResponse
+                {
+                    Status = ApiStatus.Success,
+                    Error = null,
+                    ActivityApiResponses = activities?.OrderBy(ta => ta.DisplayOrder)?.Select(ta => new ActivityApiResponse
+                    {
+                        Uid = ta.Uid,
+                        Name = ta.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
+                    })?.ToList(),
+                    TargetAudienceApiResponses = targetAudiences?.OrderBy(ta => ta.DisplayOrder)?.Select(ta => new TargetAudienceApiResponse
+                    {
+                        Uid = ta.Uid,
+                        Name = ta.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
+                    })?.ToList(),
+                    InterestGroupApiResponses = intrests?.OrderBy(i => i.Key.DisplayOrder)?.Select(intrest => new InterestGroupApiResponse
+                    {
+                        Uid = intrest.Key.Uid,
+                        Name = intrest.Key.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code),
+                        InterestsApiResponses = intrest?.OrderBy(i => i.DisplayOrder)?.Select(i => new InterestApiResponse
+                        {
+                            Uid = i.Uid,
+                            Name = i.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
+                        })?.ToList()
+                    })?.ToList()
+                });
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "Players filters api failed." } });
+            }
+        }
+
+        /// <summary>
+        /// Get the Innovation Player details
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        [Route("players/details/{uid?}"), HttpGet]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK)]
+        [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
+        public async Task<IHttpActionResult> PlayerDetails([FromUri] InnovationPlayerApiRequest request)
+        {
+            #region Initial Validations
+
+            var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
+            if (editions?.Any() == false)
+            {
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." } });
+            }
+
+            // Get edition from request otherwise get current
+            var edition = request?.Edition.HasValue == true ? editions?.FirstOrDefault(e => e.UrlCode == request.Edition) :
+                editions?.FirstOrDefault(e => e.IsCurrent);
+            if (edition == null)
+            {
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." } });
+            }
+
+            #endregion
+
+            var playerOrganizationApiDto = await this.organizationRepo.FindInnovationPlayerPublicApiDtoByUid(
+                request?.Uid ?? Guid.Empty,
+                edition.Id);
+            if (playerOrganizationApiDto == null)
+            {
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "Player not found." } });
+            }
+
+            return await Json(new InnovationPlayerApiResponse
+            {
+                Status = ApiStatus.Success,
+                Error = null,
+                Uid = playerOrganizationApiDto.Uid,
+                Name = playerOrganizationApiDto.Name,
+                TradeName = playerOrganizationApiDto.TradeName,
+                CompanyName = playerOrganizationApiDto.CompanyName,
+                Picture = playerOrganizationApiDto.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, playerOrganizationApiDto.Uid, playerOrganizationApiDto.ImageUploadDate, true) : null,
+                DescriptionsApiResponses = playerOrganizationApiDto.OrganizationDescriptionBaseDtos?.Select(dd => new LanguageValueApiResponse
+                {
+                    Culture = dd.LanguageDto.Code,
+                    Value = HttpUtility.HtmlDecode(dd.Value)
+                })?.ToList(),
+                InterestGroupApiResponses = playerOrganizationApiDto.GetInterestGroupApiResponses(),
+                PlayerCollaboratorApiResponses = playerOrganizationApiDto.CollaboratorsDtos?.Select(cd => new PlayerCollaboratorApiResponse
+                {
+                    Uid = cd.Uid,
+                    BadgeName = cd.Badge,
+                    Name = cd.FullName,
+                    Picture = cd.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, cd.Uid, cd.ImageUploadDate, true) : null,
+                    JobTitlesApiResponses = cd.JobTitleBaseDtos?.Select(jtd => new LanguageValueApiResponse
+                    {
+                        Culture = jtd.LanguageDto.Code,
+                        Value = HttpUtility.HtmlDecode(jtd.Value)
+                    })?.ToList(),
+                    MiniBiosApiResponses = cd.MiniBioBaseDtos?.Select(jtd => new LanguageValueApiResponse
+                    {
+                        Culture = jtd.LanguageDto.Code,
+                        Value = HttpUtility.HtmlDecode(jtd.Value)
+                    })?.ToList()
+                })?.ToList()
+            });
+        }
+
+        #endregion
+
+        #region Players Executives (Disabled by Rio2C customer's request) 
 
         /// <summary>
         /// Get the Startup Players Executives
@@ -341,6 +578,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("players/executives"), HttpGet]
         [SwaggerResponse(System.Net.HttpStatusCode.OK)]
         [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IHttpActionResult> PlayersExecutives([FromUri] InnovationPlayersExecutivesApiRequest request)
         {
             #region Initial Validations
@@ -413,6 +651,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("players/executives/filters"), HttpGet]
         [SwaggerResponse(System.Net.HttpStatusCode.OK)]
         [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IHttpActionResult> PlayersExecutivesFilters([FromUri] InnovationPlayersExecutivesFiltersApiRequest request)
         {
             try
@@ -489,6 +728,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("players/executives/details/{uid?}"), HttpGet]
         [SwaggerResponse(System.Net.HttpStatusCode.OK)]
         [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IHttpActionResult> PlayerExecutiveDetails([FromUri] InnovationPlayerExecutiveApiRequest request)
         {
             #region Initial Validations
