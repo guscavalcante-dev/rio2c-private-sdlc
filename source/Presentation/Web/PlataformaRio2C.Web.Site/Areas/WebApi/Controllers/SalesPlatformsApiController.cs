@@ -4,7 +4,7 @@
 // Created          : 07-10-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-27-2024
+// Last Modified On : 02-16-2024
 // ***********************************************************************
 // <copyright file="SalesPlatformsApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -253,7 +253,6 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
         [HttpGet]
         [Route("send-producer-welcome-email")]
-        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IHttpActionResult> SendProducerWelcomeEmail(string key, string email)
         {
             var result = new AppValidationResult();
