@@ -4,7 +4,7 @@
 // Created          : 03-01-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-26-2024
+// Last Modified On : 02-16-2024
 // ***********************************************************************
 // <copyright file="MusicApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -410,7 +410,6 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("players"), HttpGet]
         [SwaggerResponse(System.Net.HttpStatusCode.OK)]
         [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
-        [ApiExplorerSettings(IgnoreApi = true)] // Disabled because in Music market, Player isn't required.
         public async Task<IHttpActionResult> Players([FromUri] MusicPlayersApiRequest request)
         {
             #region Initial Validations
@@ -492,7 +491,6 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("players/filters"), HttpGet]
         [SwaggerResponse(System.Net.HttpStatusCode.OK)]
         [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
-        [ApiExplorerSettings(IgnoreApi = true)] // Disabled because in Music market, Player isn't required.
         public async Task<IHttpActionResult> PlayersFilters([FromUri] MusicPlayersFiltersApiRequest request)
         {
             try
@@ -569,7 +567,6 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("players/details/{uid?}"), HttpGet]
         [SwaggerResponse(System.Net.HttpStatusCode.OK)]
         [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
-        [ApiExplorerSettings(IgnoreApi = true)] // Disabled because in Music market, Player isn't required.
         public async Task<IHttpActionResult> PlayerDetails([FromUri] MusicPlayerApiRequest request)
         {
             #region Initial Validations
@@ -635,7 +632,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
         #endregion
 
-        #region Players Executives
+        #region Players Executives (Disabled by Rio2C customer's request) 
 
         /// <summary>
         /// Get the Music Players Executives
@@ -645,6 +642,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("players/executives"), HttpGet]
         [SwaggerResponse(System.Net.HttpStatusCode.OK)]
         [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IHttpActionResult> PlayersExecutives([FromUri] MusicPlayersExecutivesApiRequest request)
         {
             #region Initial Validations
@@ -717,6 +715,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("players/executives/filters"), HttpGet]
         [SwaggerResponse(System.Net.HttpStatusCode.OK)]
         [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IHttpActionResult> PlayersExecutivesFilters([FromUri] MusicPlayersExecutivesFiltersApiRequest request)
         {
             try
@@ -793,6 +792,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("players/executives/details/{uid?}"), HttpGet]
         [SwaggerResponse(System.Net.HttpStatusCode.OK)]
         [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IHttpActionResult> PlayerExecutiveDetails([FromUri] MusicPlayerExecutiveApiRequest request)
         {
             #region Initial Validations

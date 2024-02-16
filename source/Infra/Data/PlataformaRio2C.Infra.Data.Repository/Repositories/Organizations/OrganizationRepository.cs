@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-30-2024
+// Last Modified On : 02-16-2024
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -456,6 +456,30 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         internal static async Task<IPagedList<MusicPlayerOrganizationApiDto>> ToListPagedAsync(this IQueryable<MusicPlayerOrganizationApiDto> query, int page, int pageSize)
+        {
+            // Page the list
+            var pagedList = await query.ToPagedListAsync(page, pageSize);
+            if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
+                pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
+
+            return pagedList;
+        }
+    }
+
+    #endregion
+
+    #region InnovationPlayerOrganizationApiDto IQueryable Extensions
+
+    internal static class InnovationPlayerOrganizationApiDtoIQueryableExtensions
+    {
+        /// <summary>
+        /// Converts to listpagedasync.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        internal static async Task<IPagedList<InnovationPlayerOrganizationApiDto>> ToListPagedAsync(this IQueryable<InnovationPlayerOrganizationApiDto> query, int page, int pageSize)
         {
             // Page the list
             var pagedList = await query.ToPagedListAsync(page, pageSize);
@@ -1294,7 +1318,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             var query = this.GetBaseQuery(showDeleted: showDeleted)
                                 .FindByOrganizationTypeUidAndByEditionId(playerOrganizationTypeUid, false, false, editionId, showDeleted)
-                                .IsApiDisplayEnabled(editionId, playerOrganizationTypeUid, showDeleted)
+                                //.IsApiDisplayEnabled(editionId, playerOrganizationTypeUid, showDeleted) //TODO: Enable this filter after implementing: Admin area > Player details view > API Configuration widget
                                 .FindByFiltersUids(activitiesUids, targetAudiencesUids, interestsUids, showDeleted)
                                 .FindByKeywords(keywords)
                                 .FindByCreateOrUpdateDate(modifiedAfterDate);
@@ -1427,11 +1451,398 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             var query = this.GetBaseQuery()
                                     .FindByUid(organizationUid)
-                                    .FindByOrganizationTypeUidAndByEditionId(playerOrganizationTypeUid, false, false, editionId)
-                                    .IsApiDisplayEnabled(editionId, playerOrganizationTypeUid);
+                                    .FindByOrganizationTypeUidAndByEditionId(playerOrganizationTypeUid, false, false, editionId);
+                                    //.IsApiDisplayEnabled(editionId, playerOrganizationTypeUid); //TODO: Enable this filter after implementing: Admin area > Player details view > API Configuration widget
 
             return await query
                             .Select(o => new MusicPlayerOrganizationApiDto
+                            {
+                                Uid = o.Uid,
+                                Name = o.Name,
+                                CompanyName = o.CompanyName,
+                                TradeName = o.TradeName,
+                                ImageUploadDate = o.ImageUploadDate,
+                                OrganizationDescriptionBaseDtos = o.OrganizationDescriptions.Select(d => new OrganizationDescriptionDto
+                                {
+                                    Id = d.Id,
+                                    Uid = d.Uid,
+                                    Value = d.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = d.Language.Id,
+                                        Uid = d.Language.Uid,
+                                        Name = d.Language.Name,
+                                        Code = d.Language.Code
+                                    }
+                                }),
+                                OrganizationInterestDtos = o.OrganizationInterests
+                                                                .Where(ota => !ota.IsDeleted)
+                                                                .OrderBy(oi => oi.Interest.InterestGroup.DisplayOrder)
+                                                                .ThenBy(oi => oi.Interest.DisplayOrder)
+                                                                .Select(oi => new OrganizationInterestDto
+                                                                {
+                                                                    OrganizationInterest = oi,
+                                                                    Interest = oi.Interest,
+                                                                    InterestGroup = oi.Interest.InterestGroup
+                                                                }),
+                                CollaboratorsDtos = o.AttendeeOrganizations
+                                                            .Where(ao => !ao.IsDeleted && ao.EditionId == editionId)
+                                                            .SelectMany(ao => ao.AttendeeOrganizationCollaborators
+                                                                                    .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeCollaborator.IsDeleted && !aoc.AttendeeCollaborator.Collaborator.IsDeleted)
+                                                                                    .Select(aoc => new CollaboratorDto
+                                                                                    {
+                                                                                        Uid = aoc.AttendeeCollaborator.Collaborator.Uid,
+                                                                                        FirstName = aoc.AttendeeCollaborator.Collaborator.FirstName,
+                                                                                        LastNames = aoc.AttendeeCollaborator.Collaborator.LastNames,
+                                                                                        Badge = aoc.AttendeeCollaborator.Collaborator.Badge,
+                                                                                        ImageUploadDate = aoc.AttendeeCollaborator.Collaborator.ImageUploadDate,
+                                                                                        JobTitleBaseDtos = aoc.AttendeeCollaborator.Collaborator.JobTitles.Select(jt => new CollaboratorJobTitleBaseDto
+                                                                                        {
+                                                                                            Id = jt.Id,
+                                                                                            Uid = jt.Uid,
+                                                                                            Value = jt.Value,
+                                                                                            LanguageDto = new LanguageBaseDto
+                                                                                            {
+                                                                                                Id = jt.Language.Id,
+                                                                                                Uid = jt.Language.Uid,
+                                                                                                Name = jt.Language.Name,
+                                                                                                Code = jt.Language.Code
+                                                                                            }
+                                                                                        }),
+                                                                                        MiniBioBaseDtos = aoc.AttendeeCollaborator.Collaborator.MiniBios.Select(jt => new CollaboratorMiniBioBaseDto
+                                                                                        {
+                                                                                            Id = jt.Id,
+                                                                                            Uid = jt.Uid,
+                                                                                            Value = jt.Value,
+                                                                                            LanguageDto = new LanguageBaseDto
+                                                                                            {
+                                                                                                Id = jt.Language.Id,
+                                                                                                Uid = jt.Language.Uid,
+                                                                                                Name = jt.Language.Name,
+                                                                                                Code = jt.Language.Code
+                                                                                            }
+                                                                                        })
+                                                                                    }))
+                            }).FirstOrDefaultAsync();
+        }
+
+        #endregion
+
+        #region Innovation Players
+
+        /// <summary>
+        /// Finds all innovation players by data table.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="showAllOrganizations">if set to <c>true</c> [show all organizations].</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="exportToExcel">if set to <c>true</c> [export to excel].</param>
+        /// <returns></returns>
+        public async Task<IPagedList<OrganizationDto>> FindAllInnovationPlayersByDataTable(
+            int page,
+            int pageSize,
+            string keywords,
+            List<Tuple<string, string>> sortColumns,
+            bool showAllEditions,
+            bool showAllOrganizations,
+            int? editionId,
+            bool exportToExcel = false)
+        {
+            Guid playerOrganizationTypeUid = OrganizationType.StartupPlayer.Uid;
+
+            var query = this.GetBaseQuery()
+                                .FindByKeywords(keywords)
+                                .FindByOrganizationTypeUidAndByEditionId(playerOrganizationTypeUid, showAllEditions, showAllOrganizations, editionId);
+
+            IPagedList<OrganizationDto> organizationDtos;
+
+            if (exportToExcel)
+            {
+                #region Report Select Query
+
+                organizationDtos = await query
+                                               .OrderBy(o => o.Name)
+                                               .Select(o => new OrganizationDto
+                                               {
+                                                   Id = o.Id,
+                                                   Uid = o.Uid,
+                                                   Name = o.Name,
+                                                   CompanyName = o.CompanyName,
+                                                   TradeName = o.CompanyName,
+                                                   Document = o.Document,
+                                                   Website = o.Website,
+                                                   Instagram = o.Instagram,
+                                                   Youtube = o.Youtube,
+                                                   Linkedin = o.Linkedin,
+                                                   Twitter = o.Twitter,
+                                                   OrganizationDescriptionBaseDtos = o.OrganizationDescriptions.Select(d => new OrganizationDescriptionDto
+                                                   {
+                                                       Id = d.Id,
+                                                       Uid = d.Uid,
+                                                       Value = d.Value,
+                                                       LanguageDto = new LanguageBaseDto
+                                                       {
+                                                           Id = d.Language.Id,
+                                                           Uid = d.Language.Uid,
+                                                           Name = d.Language.Name,
+                                                           Code = d.Language.Code
+                                                       }
+                                                   }),
+                                                   OrganizationInterestDtos = o.OrganizationInterests.Where(ota => !ota.IsDeleted).Select(oi => new OrganizationInterestDto
+                                                   {
+                                                       OrganizationInterest = oi,
+                                                       Interest = oi.Interest,
+                                                       InterestGroup = oi.Interest.InterestGroup
+                                                   }),
+                                                   OrganizationTargetAudiencesDtos = o.OrganizationTargetAudiences.Where(ota => !ota.IsDeleted).Select(oa => new OrganizationTargetAudienceDto
+                                                   {
+                                                       OrganizationTargetAudienceId = oa.Id,
+                                                       OrganizationTargetAudienceUid = oa.Uid,
+                                                       TargetAudienceId = oa.TargetAudience.Id,
+                                                       TargetAudienceUid = oa.TargetAudience.Uid,
+                                                       TargetAudienceName = oa.TargetAudience.Name
+                                                   }),
+                                                   ImageUploadDate = o.ImageUploadDate,
+                                                   IsVirtualMeeting = o.IsVirtualMeeting,
+                                                   IsApiDisplayEnabled = o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
+                                                                                                          && ao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
+                                                                                                                                                     && aot.OrganizationType.Uid == playerOrganizationTypeUid
+                                                                                                                                                     && aot.IsApiDisplayEnabled)),
+                                                   ReceivedProjectsCount = o.AttendeeOrganizations
+                                                                                .Where(ao => ao.EditionId == editionId)
+                                                                                .Sum(ao => ao.ProjectBuyerEvaluations.Count(pbe => !pbe.Project.IsDeleted &&
+                                                                                                                                   pbe.Project.FinishDate != null &&
+                                                                                                                                   !pbe.IsDeleted))
+                                               })
+                                               .ToListPagedAsync(page, pageSize);
+
+                #endregion
+            }
+            else
+            {
+                #region DataTable Select Query
+
+                organizationDtos = await query
+                                                .DynamicOrder(
+                                                    sortColumns,
+                                                    new List<Tuple<string, string>>
+                                                    {
+                                                        new Tuple<string, string>("HoldingBaseDto.Name", "Holding.Name")
+                                                    },
+                                                    new List<string> { "Name", "Holding.Name", "Document", "Website", "PhoneNumber", "CreateDate", "UpdateDate" },
+                                                    "Name")
+                                                .Select(o => new OrganizationDto
+                                                {
+                                                    Id = o.Id,
+                                                    Uid = o.Uid,
+                                                    Name = o.Name,
+                                                    HoldingBaseDto = o.Holding == null ? null : new HoldingBaseDto
+                                                    {
+                                                        Id = o.Holding.Id,
+                                                        Uid = o.Holding.Uid,
+                                                        Name = o.Holding.Name
+                                                    },
+                                                    Document = o.Document,
+                                                    Website = o.Website,
+                                                    PhoneNumber = o.PhoneNumber,
+                                                    ImageUploadDate = o.ImageUploadDate,
+                                                    CreateDate = o.CreateDate,
+                                                    UpdateDate = o.UpdateDate,
+                                                    IsVirtualMeeting = o.IsVirtualMeeting,
+
+                                                    IsInCurrentEdition = editionId.HasValue && o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
+                                                                                                                                    && !ao.Edition.IsDeleted
+                                                                                                                                    && !ao.IsDeleted
+                                                                                                                                    && ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == playerOrganizationTypeUid
+                                                                                                                                                                                && !aot.IsDeleted)),
+                                                    IsInOtherEdition = editionId.HasValue && o.AttendeeOrganizations.Any(ao => ao.EditionId != editionId
+                                                                                                                                && !ao.IsDeleted),
+
+                                                    IsApiDisplayEnabled = o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
+                                                                                                            && ao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
+                                                                                                                                                       && aot.OrganizationType.Uid == playerOrganizationTypeUid
+                                                                                                                                                       && aot.IsApiDisplayEnabled)),
+                                                })
+                                                .ToListPagedAsync(page, pageSize);
+
+                #endregion
+            }
+
+            return organizationDtos;
+        }
+
+        /// <summary>
+        /// Finds all innovation players public API paged.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="activitiesUids">The activities uids.</param>
+        /// <param name="targetAudiencesUids">The target audiences uids.</param>
+        /// <param name="interestsUids">The interests uids.</param>
+        /// <param name="modifiedAfterDate">The modified after date.</param>
+        /// <param name="showDetails">if set to <c>true</c> [show details].</param>
+        /// <param name="showDeleted">if set to <c>true</c> [show deleted].</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<InnovationPlayerOrganizationApiDto>> FindAllInnovationPlayersPublicApiPaged(
+            int editionId,
+            string keywords,
+            List<Guid> activitiesUids,
+            List<Guid> targetAudiencesUids,
+            List<Guid> interestsUids,
+            DateTime? modifiedAfterDate,
+            bool showDetails,
+            bool showDeleted,
+            int page,
+            int pageSize)
+        {
+            Guid playerOrganizationTypeUid = OrganizationType.StartupPlayer.Uid;
+
+            var query = this.GetBaseQuery(showDeleted: showDeleted)
+                                .FindByOrganizationTypeUidAndByEditionId(playerOrganizationTypeUid, false, false, editionId, showDeleted)
+                                //.IsApiDisplayEnabled(editionId, playerOrganizationTypeUid, showDeleted) //TODO: Enable this filter after implementing: Admin area > Player details view > API Configuration widget
+                                .FindByFiltersUids(activitiesUids, targetAudiencesUids, interestsUids, showDeleted)
+                                .FindByKeywords(keywords)
+                                .FindByCreateOrUpdateDate(modifiedAfterDate);
+
+            IQueryable<InnovationPlayerOrganizationApiDto> filteredQuery;
+            if (showDetails)
+            {
+                #region Detailed Query
+
+                filteredQuery = query.Select(o => new InnovationPlayerOrganizationApiDto
+                {
+                    Uid = o.Uid,
+                    Name = o.Name,
+                    CompanyName = o.CompanyName,
+                    TradeName = o.TradeName,
+                    ImageUploadDate = o.ImageUploadDate,
+                    CreateDate = o.CreateDate,
+                    UpdateDate = o.UpdateDate,
+                    IsDeleted = o.AttendeeOrganizations
+                                                .FirstOrDefault(ao => (!ao.IsDeleted || showDeleted) && ao.EditionId == editionId).IsDeleted,
+                    ApiHighlightPosition = o.AttendeeOrganizations
+                                                .FirstOrDefault(ao => (!ao.IsDeleted || showDeleted) && ao.EditionId == editionId)
+                                                    .AttendeeOrganizationTypes
+                                                        .FirstOrDefault(aot => (!aot.IsDeleted || showDeleted) && aot.OrganizationType.Uid == playerOrganizationTypeUid)
+                                                            .ApiHighlightPosition,
+                    OrganizationDescriptionBaseDtos = o.OrganizationDescriptions.Select(d => new OrganizationDescriptionDto
+                    {
+                        Id = d.Id,
+                        Uid = d.Uid,
+                        Value = d.Value,
+                        LanguageDto = new LanguageBaseDto
+                        {
+                            Id = d.Language.Id,
+                            Uid = d.Language.Uid,
+                            Name = d.Language.Name,
+                            Code = d.Language.Code
+                        }
+                    }),
+                    OrganizationInterestDtos = o.OrganizationInterests
+                                                    .Where(ota => (!ota.IsDeleted || showDeleted))
+                                                    .OrderBy(oi => oi.Interest.InterestGroup.DisplayOrder)
+                                                    .ThenBy(oi => oi.Interest.DisplayOrder)
+                                                    .Select(oi => new OrganizationInterestDto
+                                                    {
+                                                        OrganizationInterest = oi,
+                                                        Interest = oi.Interest,
+                                                        InterestGroup = oi.Interest.InterestGroup
+                                                    }),
+                    CollaboratorsDtos = o.AttendeeOrganizations
+                                                            .Where(ao => (!ao.IsDeleted || showDeleted) && ao.EditionId == editionId)
+                                                            .SelectMany(ao => ao.AttendeeOrganizationCollaborators
+                                                                                    .Where(aoc => (!aoc.IsDeleted || showDeleted) && (!aoc.AttendeeCollaborator.IsDeleted || showDeleted) && (!aoc.AttendeeCollaborator.Collaborator.IsDeleted || showDeleted))
+                                                                                    .Select(aoc => new CollaboratorDto
+                                                                                    {
+                                                                                        Uid = aoc.AttendeeCollaborator.Collaborator.Uid,
+                                                                                        FirstName = aoc.AttendeeCollaborator.Collaborator.FirstName,
+                                                                                        LastNames = aoc.AttendeeCollaborator.Collaborator.LastNames,
+                                                                                        Badge = aoc.AttendeeCollaborator.Collaborator.Badge,
+                                                                                        ImageUploadDate = aoc.AttendeeCollaborator.Collaborator.ImageUploadDate,
+                                                                                        JobTitleBaseDtos = aoc.AttendeeCollaborator.Collaborator.JobTitles.Select(jt => new CollaboratorJobTitleBaseDto
+                                                                                        {
+                                                                                            Id = jt.Id,
+                                                                                            Uid = jt.Uid,
+                                                                                            Value = jt.Value,
+                                                                                            LanguageDto = new LanguageBaseDto
+                                                                                            {
+                                                                                                Id = jt.Language.Id,
+                                                                                                Uid = jt.Language.Uid,
+                                                                                                Name = jt.Language.Name,
+                                                                                                Code = jt.Language.Code
+                                                                                            }
+                                                                                        }),
+                                                                                        MiniBioBaseDtos = aoc.AttendeeCollaborator.Collaborator.MiniBios.Select(jt => new CollaboratorMiniBioBaseDto
+                                                                                        {
+                                                                                            Id = jt.Id,
+                                                                                            Uid = jt.Uid,
+                                                                                            Value = jt.Value,
+                                                                                            LanguageDto = new LanguageBaseDto
+                                                                                            {
+                                                                                                Id = jt.Language.Id,
+                                                                                                Uid = jt.Language.Uid,
+                                                                                                Name = jt.Language.Name,
+                                                                                                Code = jt.Language.Code
+                                                                                            }
+                                                                                        })
+                                                                                    }))
+                });
+
+                #endregion
+            }
+            else
+            {
+                #region Simple Query
+
+                filteredQuery = query.Select(o => new InnovationPlayerOrganizationApiDto
+                {
+                    Uid = o.Uid,
+                    Name = o.Name,
+                    CompanyName = o.CompanyName,
+                    TradeName = o.TradeName,
+                    ImageUploadDate = o.ImageUploadDate,
+                    IsDeleted = o.AttendeeOrganizations
+                                                .FirstOrDefault(ao => (!ao.IsDeleted || showDeleted) && ao.EditionId == editionId).IsDeleted,
+                    ApiHighlightPosition = o.AttendeeOrganizations
+                                                .FirstOrDefault(ao => (!ao.IsDeleted || showDeleted) && ao.EditionId == editionId)
+                                                    .AttendeeOrganizationTypes.FirstOrDefault(aot => (!aot.IsDeleted || showDeleted) && aot.OrganizationType.Uid == playerOrganizationTypeUid)
+                                                        .ApiHighlightPosition,
+                    CreateDate = o.CreateDate,
+                    UpdateDate = o.UpdateDate
+                });
+
+                #endregion
+            }
+
+            return await filteredQuery
+                            .OrderBy(o => o.ApiHighlightPosition ?? 99)
+                            .ThenBy(o => o.TradeName)
+                            .ToListPagedAsync(page, pageSize);
+        }
+
+        /// <summary>
+        /// Finds the innovation player public API dto by uid.
+        /// </summary>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<InnovationPlayerOrganizationApiDto> FindInnovationPlayerPublicApiDtoByUid(Guid organizationUid, int editionId)
+        {
+            Guid playerOrganizationTypeUid = OrganizationType.StartupPlayer.Uid;
+
+            var query = this.GetBaseQuery()
+                                    .FindByUid(organizationUid)
+                                    .FindByOrganizationTypeUidAndByEditionId(playerOrganizationTypeUid, false, false, editionId);
+                                    //.IsApiDisplayEnabled(editionId, playerOrganizationTypeUid); //TODO: Enable this filter after implementing: Admin area > Player details view > API Configuration widget
+
+            return await query
+                            .Select(o => new InnovationPlayerOrganizationApiDto
                             {
                                 Uid = o.Uid,
                                 Name = o.Name,

@@ -111,12 +111,18 @@
     <Compile Include="ApiModels\Innovation\Requests\PlayersExecutives\InnovationPlayerExecutiveApiRequest.cs" />
     <Compile Include="ApiModels\Innovation\Requests\PlayersExecutives\InnovationPlayersExecutivesApiRequest.cs" />
     <Compile Include="ApiModels\Innovation\Requests\PlayersExecutives\InnovationPlayersExecutivesFiltersApiRequest.cs" />
+    <Compile Include="ApiModels\Innovation\Requests\Players\InnovationPlayerApiRequest.cs" />
+    <Compile Include="ApiModels\Innovation\Requests\Players\InnovationPlayersApiRequest.cs" />
+    <Compile Include="ApiModels\Innovation\Requests\Players\InnovationPlayersFiltersApiRequest.cs" />
     <Compile Include="ApiModels\Innovation\Responses\InnovationFiltersApiResponse.cs" />
     <Compile Include="ApiModels\Innovation\Responses\InnovationOrganizationSustainableDevelopmentObjectivesOptionListItemApiResponse.cs" />
     <Compile Include="ApiModels\Innovation\Responses\InnovationOrganizationTrackOptionListItemApiResponse.cs" />
     <Compile Include="ApiModels\Innovation\Responses\PlayersExecutives\InnovationPlayerExecutiveApiResponse.cs" />
     <Compile Include="ApiModels\Innovation\Responses\PlayersExecutives\InnovationPlayersExecutivesApiResponse.cs" />
     <Compile Include="ApiModels\Innovation\Responses\PlayersExecutives\InnovationPlayersExecutivesFiltersApiResponse.cs" />
+    <Compile Include="ApiModels\Innovation\Responses\Players\InnovationPlayerApiResponse.cs" />
+    <Compile Include="ApiModels\Innovation\Responses\Players\InnovationPlayersApiResponse.cs" />
+    <Compile Include="ApiModels\Innovation\Responses\Players\InnovationPlayersFiltersApiResponse.cs" />
     <Compile Include="ApiModels\LanguageValueApiResponse.cs" />
     <Compile Include="ApiModels\Music\Requests\Commissions\MusicCommissionApiRequest.cs" />
     <Compile Include="ApiModels\Music\Requests\Commissions\MusicCommissionsApiRequest.cs" />
@@ -274,6 +280,7 @@
     <Compile Include="Dtos\Innovation\InnovationOrganization\InnovationOrganizationGroupedByTrackDto.cs" />
     <Compile Include="Dtos\Innovation\AttendeeInnovationOrganization\AttendeeInnovationOrganizationReportDto.cs" />
     <Compile Include="Dtos\Innovation\Player\API\InnovationPlayerCollaboratorApiDto.cs" />
+    <Compile Include="Dtos\Innovation\Player\API\InnovationPlayerOrganizationApiDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticAccommodationDto.cs" />
     <Compile Include="Dtos\Logistics\AttendeePlaceDropdownDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticDto.cs" />
