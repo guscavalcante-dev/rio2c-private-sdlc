@@ -6,21 +6,21 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 02-03-2024
 // ***********************************************************************
-// <copyright file="MusicPlayerOrganizationApiDto.cs" company="Softo">
+// <copyright file="InnovationPlayersApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-namespace PlataformaRio2C.Domain.Dtos
+using System;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+
+namespace PlataformaRio2C.Domain.ApiModels
 {
-    /// <summary>MusicPlayerOrganizationApiDto</summary>
-    public class MusicPlayerOrganizationApiDto : PlayerOrganizationBaseApiDto
+    /// <summary>InnovationPlayersApiResponse</summary>
+    public class InnovationPlayersApiResponse : ListBaseModel
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MusicPlayerOrganizationApiDto" /> class.
-        /// </summary>
-        public MusicPlayerOrganizationApiDto()
-        {
-        }
+        [JsonProperty("players")]
+        public List<InnovationPlayerApiResponse> Players { get; set; }
     }
 }
