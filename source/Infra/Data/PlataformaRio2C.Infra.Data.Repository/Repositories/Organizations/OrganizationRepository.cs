@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-30-2024
+// Last Modified On : 02-16-2024
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1294,7 +1294,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             var query = this.GetBaseQuery(showDeleted: showDeleted)
                                 .FindByOrganizationTypeUidAndByEditionId(playerOrganizationTypeUid, false, false, editionId, showDeleted)
-                                .IsApiDisplayEnabled(editionId, playerOrganizationTypeUid, showDeleted)
+                                //.IsApiDisplayEnabled(editionId, playerOrganizationTypeUid, showDeleted) //TODO: Enable this filter after implementing: Admin area > Player details view > API Configuration widget
                                 .FindByFiltersUids(activitiesUids, targetAudiencesUids, interestsUids, showDeleted)
                                 .FindByKeywords(keywords)
                                 .FindByCreateOrUpdateDate(modifiedAfterDate);
