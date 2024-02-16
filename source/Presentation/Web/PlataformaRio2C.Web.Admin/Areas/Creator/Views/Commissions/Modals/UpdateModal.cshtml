@@ -1,4 +1,4 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateInnovationCommissionCollaborator
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateCreatorCommissionCollaborator
 <div class="modal fade" id="UpdateCommissionModal" role="dialog" aria-labelledby="UpdateCommissionModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -16,7 +16,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Update", "Commissions", new { Area = "Innovation" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UpdateCommissionForm" }))
+                @using (Html.BeginForm("Update", "Commissions", new { Area = "Creator" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UpdateCommissionForm" }))
                 {
                     @Html.HiddenFor(m => m.CollaboratorUid)
                     @Html.HiddenFor(m => m.IsAddingToCurrentEdition)

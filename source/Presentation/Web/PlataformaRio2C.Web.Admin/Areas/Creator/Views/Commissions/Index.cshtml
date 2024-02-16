@@ -1,4 +1,4 @@
-﻿@model InnovationCommissionSearchViewModel
+﻿@model CreatorCommissionSearchViewModel
 @{
     ViewBag.Title = Labels.StartupsCommission;
 }
@@ -6,12 +6,12 @@
 <div class="row">
     <!--begin:: Total Count Widget-->
     <div class="col-sm-6">
-        <div id="InnovationCommissionsTotalCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <div id="CreatorCommissionsTotalCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
     </div>
     <!--end:: Total Count Widget-->
     <!--begin:: Edition Count-->
     <div class="col-sm-6">
-        <div id="InnovationCommissionsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <div id="CreatorCommissionsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
     </div>
     <!--end:: Edition Count-->
 </div>
@@ -26,13 +26,13 @@
     @Scripts.Render("~/bundles/js/chart.js")
     @Scripts.Render("~/bundles/js/select2.js")
     @Scripts.Render("~/bundles/js/bootbox.js")
-    @Scripts.Render("~/bundles/js/innovation.commissions.list.js")
-    @Scripts.Render("~/bundles/js/innovation.commissions.editioncount.js")
-    @Scripts.Render("~/bundles/js/innovation.commissions.create.js")
-    @Scripts.Render("~/bundles/js/innovation.commissions.update.js")
-    @Scripts.Render("~/bundles/js/innovation.commissions.delete.js")
+    @Scripts.Render("~/bundles/js/creator.commissions.list.js")
+    @Scripts.Render("~/bundles/js/creator.commissions.editioncount.js")
+    @Scripts.Render("~/bundles/js/creator.commissions.create.js")
+    @Scripts.Render("~/bundles/js/creator.commissions.update.js")
+    @Scripts.Render("~/bundles/js/creator.commissions.delete.js")
     <script>
-        var collaboratorTypeName = '@PlataformaRio2C.Domain.Entities.CollaboratorType.ComissionInnovation.Name';
+        var collaboratorTypeName = '@PlataformaRio2C.Domain.Entities.CollaboratorType.ComissionCreator.Name';
 
         // Page translations ----------------------------------------------------------------------
         var addToEdition = '@string.Format(Labels.AddToEdition, ViewBag.EditionDto.UrlCode)';
@@ -48,9 +48,9 @@
         var initialPageSize = @(Model.PageSize?.ToString() ?? "null");
 
         jQuery(document).ready(function () {
-            InnovationCommissionsTotalCountWidget.init();
-            InnovationCommissionsEditionCountWidget.init();
-            InnovationCommissionsDataTableWidget.init();
+            CreatorCommissionsTotalCountWidget.init();
+            CreatorCommissionsEditionCountWidget.init();
+            CreatorCommissionsDataTableWidget.init();
         });
     </script>
 }

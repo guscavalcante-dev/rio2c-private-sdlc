@@ -22,7 +22,7 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <div id="InnovationCommissionEvaluationsWidget" class="kt-portlet" style="min-height: 325px;"></div>
+                        <div id="CreatorCommissionEvaluationsWidget" class="kt-portlet" style="min-height: 325px;"></div>
                     </div>
                 </div>
             </div>
@@ -38,7 +38,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <div id="InnovationCommissionTracksInfoWidget" class="kt-portlet" style="min-height: 325px;"></div>
+                <div id="CreatorCommissionTracksInfoWidget" class="kt-portlet" style="min-height: 325px;"></div>
             </div>
         </div>
     </div>
@@ -58,14 +58,14 @@
     @Scripts.Render("~/bundles/js/bootstrap-datepicker.js")
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/addresses.form.js")
-    @Scripts.Render("~/bundles/js/innovation.commissions.details.js")
+    @Scripts.Render("~/bundles/js/creator.commissions.details.js")
 <script>
         jQuery(document).ready(function () {
-            CollaboratorsMainInformationWidget.init('@(CollaboratorType.CommissionAudiovisual)');
-            CollaboratorsSocialNetworksWidget.init('@(CollaboratorType.CommissionAudiovisual)');
-            CollaboratorsOnboardingInfoWidget.init('@(CollaboratorType.CommissionAudiovisual)');
-            InnovationCommissionsTracksWidget.init();
-            InnovationCommissionsEvaluationsWidget.init();
+            CollaboratorsMainInformationWidget.init('@(CollaboratorType.CommissionCreator)');
+            CollaboratorsSocialNetworksWidget.init('@(CollaboratorType.CommissionCreator)');
+            CollaboratorsOnboardingInfoWidget.init('@(CollaboratorType.CommissionCreator)');
+            CreatorCommissionsTracksWidget.init();
+            CreatorCommissionsEvaluationsWidget.init();
         });
 </script>
 }

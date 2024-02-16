@@ -6,6 +6,7 @@
     var isAdminAudiovisual = adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminAudiovisual) == true;
     var isAdminMusic = adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminMusic) == true;
     var isAdminInnovation = adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminInnovation) == true;
+    var isAdminCreator = adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminCreator) == true;
     var isAdminCartoon = adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminCartoon) == true;
     var isAdminEditorial = adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminEditorial) == true;
     var isAdminLogistic = adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminLogistic) == true;
@@ -66,9 +67,9 @@
                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Projects", "Audiovisual")" aria-haspopup="true">
                         <a href="@Url.Action("Index", "Projects", new { Area = "Audiovisual" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Projects</span></a>
                     </li>
-                    <li class="kt-menu__item  kt-menu__item--submenu 
+                    <li class="kt-menu__item  kt-menu__item--submenu
                         @this.IsOpen(menuOpenCssClass, null, "Players,PlayersExecutives", "Audiovisual")
-                        @this.IsOpen(menuOpenCssClass, null, "Holdings",null)" 
+                        @this.IsOpen(menuOpenCssClass, null, "Holdings",null)"
                         data-ktmenu-submenu-toggle="hover" aria-haspopup="true">
                         <a href="#" class="kt-menu__link kt-menu__toggle"><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Players</span><i class="kt-menu__hor-arrow la la-angle-right"></i><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
                         <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--right">
@@ -221,6 +222,23 @@
                     </li>
                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "TrackOptions",  "Innovation")" aria-haspopup="true">
                         <a href="@Url.Action("Index", "TrackOptions", new { Area = "Innovation" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.CreativeEconomyThemes</span></a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    }
+    @if (isAdminFull || isAdminCreator)
+    {
+        <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel
+            @this.IsOpen(menuOpenCssClass, null, "Commissions", "Creator")
+            @this.IsOpen(menuOpenCssClass, null, null, "Creator")
+            @this.IsOpen(menuOpenCssClass, null, "Commissions", "Creator")"
+            data-ktmenu-submenu-toggle="click" aria-haspopup="true">
+            <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">@Labels.CreatorEN</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
+            <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
+                <ul class="kt-menu__subnav">
+                    <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Commissions",  "Creator")" aria-haspopup="true">
+                        <a href="@Url.Action("Index", "Commissions", new { Area = "Creator" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Commission</span></a>
                     </li>
                 </ul>
             </div>

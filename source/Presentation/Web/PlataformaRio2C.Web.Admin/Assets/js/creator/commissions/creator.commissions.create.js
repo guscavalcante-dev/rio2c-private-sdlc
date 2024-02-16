@@ -1,21 +1,21 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Renan Valentim
-// Created          : 07-08-2021
+// Created          : 02-14-2024
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-08-2021
+// Last Modified On : 02-14-2024
 // ***********************************************************************
-// <copyright file="innovation.commissions.update.js" company="Softo">
+// <copyright file="creator.commissions.create.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var InnovationCommissionsUpdate = function () {
+var CreatorCommissionsCreate = function () {
 
-    var modalId = '#UpdateCommissionModal';
-    var formId = '#UpdateCommissionForm';
+    var modalId = '#CreateCommissionModal';
+    var formId = '#CreateCommissionForm';
 
     // Enable form validation ---------------------------------------------------------------------
     var enableFormValidation = function () {
@@ -30,14 +30,12 @@ var InnovationCommissionsUpdate = function () {
     };
 
     // Show modal ---------------------------------------------------------------------------------
-    var showModal = function (collaboratorUid, isAddingToCurrentEdition) {
+    var showModal = function () {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
-        jsonParameters.collaboratorUid = collaboratorUid;
-        jsonParameters.isAddingToCurrentEdition = isAddingToCurrentEdition;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Commissions/ShowUpdateModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Creator/Commissions/ShowCreateModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -64,16 +62,16 @@ var InnovationCommissionsUpdate = function () {
             onSuccess: function (data) {
                 $(modalId).modal('hide');
 
-                if (typeof (InnovationCommissionsDataTableWidget) !== 'undefined') {
-	                InnovationCommissionsDataTableWidget.refreshData();
+                if (typeof (CreatorCommissionsDataTableWidget) !== 'undefined') {
+	                CreatorCommissionsDataTableWidget.refreshData();
                 }
 
-                if (typeof (InnovationCommissionsTotalCountWidget) !== 'undefined') {
-	                InnovationCommissionsTotalCountWidget.init();
+                if (typeof (CreatorCommissionsTotalCountWidget) !== 'undefined') {
+	                CreatorCommissionsTotalCountWidget.init();
                 }
 
-                if (typeof (InnovationCommissionsEditionCountWidget) !== 'undefined') {
-	                InnovationCommissionsEditionCountWidget.init();
+                if (typeof (CreatorCommissionsEditionCountWidget) !== 'undefined') {
+	                CreatorCommissionsEditionCountWidget.init();
                 }
             },
             onError: function (data) {
@@ -87,8 +85,8 @@ var InnovationCommissionsUpdate = function () {
     };
 
     return {
-        showModal: function (collaboratorUid, isAddingToCurrentEdition) {
-            showModal(collaboratorUid, isAddingToCurrentEdition);
+        showModal: function () {
+            showModal();
         }
     };
 }();

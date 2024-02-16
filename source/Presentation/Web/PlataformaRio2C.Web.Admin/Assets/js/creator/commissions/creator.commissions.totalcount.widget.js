@@ -1,21 +1,21 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Renan Valentim
-// Created          : 07-08-2021
+// Created          : 02-14-2024
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-08-2021
+// Last Modified On : 02-14-2024
 // ***********************************************************************
-// <copyright file="innovation.commissions.totalcount.widget.js" company="Softo">
+// <copyright file="creator.commissions.totalcount.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var InnovationCommissionsTotalCountWidget = function () {
+var CreatorCommissionsTotalCountWidget = function () {
 
-    var widgetElementId = '#InnovationCommissionsTotalCountWidget';
-    var chartElementId = 'InnovationCommissionsTotalCountChart';
+    var widgetElementId = '#CreatorCommissionsTotalCountWidget';
+    var chartElementId = 'CreatorCommissionsTotalCountChart';
     var widgetElement = $(widgetElementId);
 
     // Show ---------------------------------------------------------------------------------------
@@ -117,7 +117,7 @@ var InnovationCommissionsTotalCountWidget = function () {
     var show = function () {
         var jsonParameters = new Object();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Commissions/ShowTotalCountWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Creator/Commissions/ShowTotalCountWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

@@ -1,5 +1,5 @@
 ﻿@using System.Globalization
-@model PlataformaRio2C.Application.CQRS.Commands.InnovationCommissionCollaboratorBaseCommand
+@model PlataformaRio2C.Application.CQRS.Commands.CreatorCommissionCollaboratorBaseCommand
 <div class="row">
     <div class="form-group col-md-5">
         @Html.LabelFor(m => m.FirstName, new { @class = "control-label" })
@@ -20,7 +20,7 @@
         @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
     </div>
 </div>
-<div class="row">
+@*<div class="row">
     <div class="form-group col-md-12">
         <div class="kt-section pt-4">
             <h3 class="kt-section__title mb-0">@Labels.Verticals</h3>
@@ -32,4 +32,4 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@

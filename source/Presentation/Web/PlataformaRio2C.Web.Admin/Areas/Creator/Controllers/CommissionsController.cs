@@ -325,26 +325,25 @@ namespace PlataformaRio2C.Web.Admin.Areas.Creator.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()
         {
-            throw new NotImplementedException();
-            //CreateCreatorCommissionCollaborator cmd;
+            CreateCreatorCommissionCollaborator cmd;
 
-            //try
-            //{
-            //    cmd = new CreateCreatorCommissionCollaborator(await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync());
-            //}
-            //catch (DomainException ex)
-            //{
-            //    return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-            //}
+            try
+            {
+                cmd = new CreateCreatorCommissionCollaborator(await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync());
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
 
-            //return Json(new
-            //{
-            //    status = "success",
-            //    pages = new List<dynamic>
-            //    {
-            //        new { page = this.RenderRazorViewToString("Modals/CreateModal", cmd), divIdOrClass = "#GlobalModalContainer" },
-            //    }
-            //}, JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/CreateModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>Creates the specified collaborator.</summary>

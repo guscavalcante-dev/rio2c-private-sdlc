@@ -1,21 +1,21 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Renan Valentim
-// Created          : 07-08-2021
+// Created          : 02-14-2024
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-22-2023
+// Last Modified On : 02-14-2024
 // ***********************************************************************
-// <copyright file="innovation.commissions.datatable.widget.js" company="Softo">
+// <copyright file="creator.commissions.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var InnovationCommissionsDataTableWidget = function () {
+var CreatorCommissionsDataTableWidget = function () {
 
-    var widgetElementId = '#InnovationCommissionsDataTableWidget';
-    var tableElementId = '#innovation-commissions-list-table';
+    var widgetElementId = '#CreatorCommissionsDataTableWidget';
+    var tableElementId = '#creator-commissions-list-table';
     var modalId = '#ExportEventbriteCsvModal';
     var table;
     var eventbriteCsvExport;
@@ -25,9 +25,9 @@ var InnovationCommissionsDataTableWidget = function () {
         MyRio2cCommon.block();
 
         var jsonParameters = new Object();
-        jsonParameters.selectedCollaboratorsUids = $('#innovation-commissions-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
+        jsonParameters.selectedCollaboratorsUids = $('#creator-commissions-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Commissions/SendInvitationEmails'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Creator/Commissions/SendInvitationEmails'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -43,8 +43,8 @@ var InnovationCommissionsDataTableWidget = function () {
         .always(function () {
             MyRio2cCommon.unblock();
 
-            if (typeof (InnovationCommissionsDataTableWidget) !== 'undefined') {
-                InnovationCommissionsDataTableWidget.refreshData();
+            if (typeof (CreatorCommissionsDataTableWidget) !== 'undefined') {
+                CreatorCommissionsDataTableWidget.refreshData();
             }
         });
     };
@@ -149,11 +149,11 @@ var InnovationCommissionsDataTableWidget = function () {
                 sSearch: $('#Search').val()
             },
             ajax: {
-                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Commissions/Search'),
+                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Creator/Commissions/Search'),
                 data: function (d) {
                     d.showAllEditions = $('#ShowAllEditions').prop('checked');
                     d.showAllParticipants = $('#ShowAllParticipants').prop('checked');
-                    d.innovationOrganizationTrackOptionGroupUid = $('#InnovationOrganizationTrackOptionGroupUid').val();
+                    d.creatorOrganizationTrackOptionGroupUid = $('#CreatorOrganizationTrackOptionGroupUid').val();
                 },
                 dataFilter: function (data) {
                     var jsonReturned = jQuery.parseJSON(data);
@@ -240,9 +240,9 @@ var InnovationCommissionsDataTableWidget = function () {
                         var html = '<ul class="m-0 pl-4">';
 
                         //loop through all the row details to build output string
-                        for (var item in row.InnovationOrganizationTrackOptionGroupDtos) {
-                            if (row.InnovationOrganizationTrackOptionGroupDtos.hasOwnProperty(item)) {
-                                var r = row.InnovationOrganizationTrackOptionGroupDtos[item];
+                        for (var item in row.CreatorOrganizationTrackOptionGroupDtos) {
+                            if (row.CreatorOrganizationTrackOptionGroupDtos.hasOwnProperty(item)) {
+                                var r = row.CreatorOrganizationTrackOptionGroupDtos[item];
                                 html += '<li>' + r.GroupName + '</li>';
                             }
                         }
@@ -290,17 +290,17 @@ var InnovationCommissionsDataTableWidget = function () {
                                             <div class="dropdown-menu dropdown-menu-right">';
 
                         if (!full.IsInCurrentEdition) {
-                            html += '<button class="dropdown-item" onclick="InnovationCommissionsUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
+                            html += '<button class="dropdown-item" onclick="CreatorCommissionsUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         }
                         else {
-                            html += '<button class="dropdown-item" onclick="InnovationCommissionsDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
+                            html += '<button class="dropdown-item" onclick="CreatorCommissionsDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
                         }
 
                         if (full.IsInCurrentEdition && full.IsInOtherEdition) {
-                            html += '<button class="dropdown-item" onclick="InnovationCommissionsDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-minus"></i> ' + removeFromEdition + '</button>';
+                            html += '<button class="dropdown-item" onclick="CreatorCommissionsDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-minus"></i> ' + removeFromEdition + '</button>';
                         }
                         else {
-                            html += '<button class="dropdown-item" onclick="InnovationCommissionsDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+                            html += '<button class="dropdown-item" onclick="CreatorCommissionsDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
                         }
 
                         html += '\
@@ -349,7 +349,7 @@ var InnovationCommissionsDataTableWidget = function () {
             }
         });
 
-        $('#InnovationOrganizationTrackOptionGroupUid').on('change', function (e) {
+        $('#CreatorOrganizationTrackOptionGroupUid').on('change', function (e) {
             table.ajax.reload();
         });
 
@@ -369,7 +369,7 @@ var InnovationCommissionsDataTableWidget = function () {
             return;
         }
 
-        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Commissions/Details/' + commissionUid);
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Creator/Commissions/Details/' + commissionUid);
     };
 
     return {

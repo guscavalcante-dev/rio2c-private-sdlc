@@ -1,20 +1,20 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Renan Valentim
-// Created          : 07-17-2021
+// Created          : 02-14-2024
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-17-2021
+// Last Modified On : 02-14-2024
 // ***********************************************************************
-// <copyright file="innovation.commissions.evaluations.widget.js" company="Softo">
+// <copyright file="creator.commissions.evaluations.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var InnovationCommissionsEvaluationsWidget = function () {
+var CreatorCommissionsEvaluationsWidget = function () {
 
-    var widgetElementId = '#InnovationCommissionEvaluationsWidget';
+    var widgetElementId = '#CreatorCommissionEvaluationsWidget';
     var widgetElement = $(widgetElementId);
 
     var updateModalId = '#UpdateEvaluationsModal';
@@ -34,7 +34,7 @@ var InnovationCommissionsEvaluationsWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.collaboratorUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Commissions/ShowEvaluationsWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Creator/Commissions/ShowEvaluationsWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -60,8 +60,8 @@ var InnovationCommissionsEvaluationsWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (InnovationCommissionsEvaluationsWidget) !== 'undefined') {
-                    InnovationCommissionsEvaluationsWidget.init();
+                if (typeof (CreatorCommissionsEvaluationsWidget) !== 'undefined') {
+                    CreatorCommissionsEvaluationsWidget.init();
                 }
             },
             onError: function (data) {
