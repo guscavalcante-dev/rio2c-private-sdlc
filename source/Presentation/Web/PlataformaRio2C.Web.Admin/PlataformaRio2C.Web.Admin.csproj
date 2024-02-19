@@ -10076,6 +10076,7 @@
     <Content Include="Views\Shared\EditorTemplates\AttendeeCollaboratorActivityBaseCommand.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AttendeeCollaboratorTargetAudienceBaseCommand.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\TemplateAttendeeOrganizationBaseCommand.cshtml" />
+    <Content Include="Views\AdminMailerService\CreatorCommissionWelcomeEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
