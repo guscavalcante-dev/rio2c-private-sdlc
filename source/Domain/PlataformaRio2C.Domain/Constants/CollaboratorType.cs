@@ -4,7 +4,7 @@
 // Created          : 09-26-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-11-2024
+// Last Modified On : 01-31-2024
 // ***********************************************************************
 // <copyright file="CollaboratorType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,16 +24,19 @@ namespace PlataformaRio2C.Domain.Constants
         public const string AdminCartoon = "Admin | Cartoon";
         public const string AdminEditorial = "Admin | Editorial";
         public const string AdminConferences = "Admin | Conferences";
+        public const string AdminCreator = "Admin | Creator";
 
         public const string PlayerExecutiveAudiovisual = "Player Executive | Audiovisual";
         public const string PlayerExecutiveMusic = "Player Executive | Music";
         public const string PlayerExecutiveInnovation = "Player Executive | Innovation";
         public const string PlayerExecutiveCartoon = "Player Executive | Cartoon";
+        public const string PlayerExecutiveCreator = "Player Executive | Creator";
 
         public const string CommissionAudiovisual = "Commission | Audiovisual";
         public const string CommissionMusic = "Commission | Music";
         public const string CommissionInnovation = "Commission | Innovation";
         public const string CommissionCartoon = "Commission | Cartoon";
+        public const string CommissionCreator = "Commission | Creator";
 
         public const string Speaker = "Speaker";
         public const string Industry = "Industry";
@@ -46,7 +49,7 @@ namespace PlataformaRio2C.Domain.Constants
 
         public static readonly string[] Admins =
         {
-            AdminAudiovisual, AdminLogistic, AdminMusic, AdminInnovation, AdminCartoon, AdminEditorial, AdminConferences
+            AdminAudiovisual, AdminLogistic, AdminMusic, AdminInnovation, AdminCartoon, AdminEditorial, AdminConferences, AdminCreator
         };
 
         public static readonly string[] TicketBuyers =
@@ -56,7 +59,7 @@ namespace PlataformaRio2C.Domain.Constants
 
         public static readonly string[] PlayerExecutives =
         {
-            PlayerExecutiveAudiovisual, PlayerExecutiveMusic, PlayerExecutiveInnovation, PlayerExecutiveCartoon
+            PlayerExecutiveAudiovisual, PlayerExecutiveMusic, PlayerExecutiveInnovation, PlayerExecutiveCartoon, PlayerExecutiveCreator
         };
 
         public static readonly string[] Audiovisuals =
@@ -77,6 +80,11 @@ namespace PlataformaRio2C.Domain.Constants
         public static readonly string[] Cartoons =
         {
             AdminCartoon, CommissionCartoon, PlayerExecutiveCartoon, Cartoon
+        };
+
+        public static readonly string[] Creators =
+        {
+            AdminCreator, CommissionCreator, PlayerExecutiveCreator, Creator
         };
 
         #region Networks

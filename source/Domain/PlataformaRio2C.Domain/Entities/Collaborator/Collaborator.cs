@@ -701,20 +701,18 @@ namespace PlataformaRio2C.Domain.Entities
             string document,
             int userId)
         {
-            //this.Uid = uid;
             this.FirstName = firstName?.Trim();
             this.LastNames = lastNames?.Trim();
             this.PublicEmail = email?.Trim();
-
-            //TODO: Refactor this!
-            //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
-            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, null, null, true, userId);
-            this.UpdateUser(email);
 
             this.PhoneNumber = phoneNumber?.Trim();
             this.CellPhone = cellPhone?.Trim();
             this.Document = document?.Trim();
 
+            //TODO: Refactor this!
+            //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
+            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, null, null, true, userId);
+            this.UpdateUser(email);
             this.SetUpdateDate(userId);
         }
 
@@ -1145,179 +1143,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Audiovisual Commission Collaborator
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Collaborator" /> class.
-        /// </summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="collaboratorType">Type of the collaborator.</param>
-        /// <param name="projectType">Type of the project.</param>
-        /// <param name="firstName">The first name.</param>
-        /// <param name="lastNames">The last names.</param>
-        /// <param name="email">The email.</param>
-        /// <param name="phoneNumber">The phone number.</param>
-        /// <param name="cellPhone">The cell phone.</param>
-        /// <param name="document">The document.</param>
-        /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
-        /// <param name="userId">The user identifier.</param>
-        private Collaborator(
-            Edition edition,
-            CollaboratorType collaboratorType,
-            ProjectType projectType,
-            string firstName,
-            string lastNames,
-            string email,
-            string phoneNumber,
-            string cellPhone,
-            string document,
-            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
-            int userId)
-        {
-            //this.Uid = uid;
-            this.FirstName = firstName?.Trim();
-            this.LastNames = lastNames?.Trim();
-            this.PublicEmail = email?.Trim();
-
-            this.PhoneNumber = phoneNumber?.Trim();
-            this.CellPhone = cellPhone?.Trim();
-            this.Document = document?.Trim();
-
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
-
-            //TODO: Refactor this!
-            //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
-            this.SynchronizeAudiovisualCommissionAttendeeCollaborators(edition, collaboratorType, projectType, null, attendeeCollaboratorInterests, null, null, true, userId);
-            this.UpdateUser(email);
-        }
-
-        /// <summary>
-        /// Creates the audiovisual commission collaborator.
-        /// </summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="collaboratorType">Type of the collaborator.</param>
-        /// <param name="projectType">Type of the project.</param>
-        /// <param name="firstName">The first name.</param>
-        /// <param name="lastNames">The last names.</param>
-        /// <param name="email">The email.</param>
-        /// <param name="phoneNumber">The phone number.</param>
-        /// <param name="cellPhone">The cell phone.</param>
-        /// <param name="document">The document.</param>
-        /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
-        /// <param name="userId">The user identifier.</param>
-        /// <returns></returns>
-        public static Collaborator CreateAudiovisualCommissionCollaborator(
-            Edition edition,
-            CollaboratorType collaboratorType,
-            ProjectType projectType,
-            string firstName,
-            string lastNames,
-            string email,
-            string phoneNumber,
-            string cellPhone,
-            string document,
-            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
-            int userId)
-        {
-            return new Collaborator(
-                edition,
-                collaboratorType,
-                projectType,
-                firstName,
-                lastNames,
-                email,
-                phoneNumber,
-                cellPhone,
-                document,
-                attendeeCollaboratorInterests,
-                userId);
-        }
-
-        /// <summary>
-        /// Updates the audiovisual commission.
-        /// </summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="collaboratorType">Type of the collaborator.</param>
-        /// <param name="projectType">Type of the project.</param>
-        /// <param name="firstName">The first name.</param>
-        /// <param name="lastNames">The last names.</param>
-        /// <param name="email">The email.</param>
-        /// <param name="attendeeCollaboratorInterests">The commission attendee collaborator interests.</param>
-        /// <param name="userId">The user identifier.</param>
-        public void UpdateAudiovisualCommissionCollaborator(
-            Edition edition,
-            CollaboratorType collaboratorType,
-            ProjectType projectType,
-            string firstName,
-            string lastNames,
-            string email,
-            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
-            int userId)
-        {
-            this.FirstName = firstName?.Trim();
-            this.LastNames = lastNames?.Trim();
-            this.PublicEmail = email?.Trim();
-
-            this.SetUpdateDate(userId);
-
-            //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
-            this.SynchronizeAudiovisualCommissionAttendeeCollaborators(edition, collaboratorType, projectType, null, attendeeCollaboratorInterests, null, null, true, userId);
-            this.UpdateUser(email);
-        }
-
-        /// <summary>
-        /// Synchronizes the attendee collaborators.
-        /// </summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="collaboratorType">Type of the collaborator.</param>
-        /// <param name="projectType">Type of the project.</param>
-        /// <param name="attendeeOrganizations">The attendee organizations.</param>
-        /// <param name="attendeeCollaboratorInterests">The commission attendee collaborator interests.</param>
-        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
-        /// <param name="apiHighlightPosition">The API highlight position.</param>
-        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
-        /// <param name="userId">The user identifier.</param>
-        private void SynchronizeAudiovisualCommissionAttendeeCollaborators(
-            Edition edition,
-            CollaboratorType collaboratorType,
-            ProjectType projectType,
-            List<AttendeeOrganization> attendeeOrganizations,
-            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
-            bool? isApiDisplayEnabled,
-            int? apiHighlightPosition,
-            bool isAddingToCurrentEdition,
-            int userId)
-        {
-            // Synchronize only when is adding to current edition
-            if (!isAddingToCurrentEdition)
-            {
-                return;
-            }
-
-            if (this.AttendeeCollaborators == null)
-            {
-                this.AttendeeCollaborators = new List<AttendeeCollaborator>();
-            }
-
-            if (edition == null)
-            {
-                return;
-            }
-
-            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
-            if (attendeeCollaborator != null)
-            {
-                attendeeCollaborator.UpdateAudiovisualCommissionAttendeeCollaborator(attendeeCollaboratorInterests, collaboratorType, projectType, attendeeOrganizations, isApiDisplayEnabled, apiHighlightPosition, true, userId);
-            }
-            else
-            {
-                this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, attendeeCollaboratorInterests, collaboratorType, projectType, isApiDisplayEnabled, apiHighlightPosition, attendeeOrganizations, this, true, userId));
-            }
-        }
-
-        #endregion
+        
 
         #region Innovation Player Executive Collaborator
 
@@ -2195,7 +2021,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Innovation Commission Collaborator
+        #region Base Commission Collaborator
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Collaborator"/> class.
@@ -2205,10 +2031,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="firstName">The first name.</param>
         /// <param name="lastNames">The last names.</param>
         /// <param name="email">The email.</param>
-        /// <param name="phoneNumber">The phone number.</param>
-        /// <param name="cellPhone">The cell phone.</param>
-        /// <param name="document">The document.</param>
-        /// <param name="attendeeInnovationOrganizationTracks">The attendee innovation organization tracks.</param>
         /// <param name="userId">The user identifier.</param>
         private Collaborator(
             Edition edition,
@@ -2216,54 +2038,36 @@ namespace PlataformaRio2C.Domain.Entities
             string firstName,
             string lastNames,
             string email,
-            string phoneNumber,
-            string cellPhone,
-            string document,
-            List<AttendeeInnovationOrganizationTrack> attendeeInnovationOrganizationTracks,
             int userId)
         {
             this.FirstName = firstName?.Trim();
             this.LastNames = lastNames?.Trim();
             this.PublicEmail = email?.Trim();
 
-            this.PhoneNumber = phoneNumber?.Trim();
-            this.CellPhone = cellPhone?.Trim();
-            this.Document = document?.Trim();
-
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
+            this.SetCreateDate(userId);
 
             //TODO: Refactor this!
             //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
-            this.SynchronizeInnovationCommissionAttendeeCollaborators(edition, collaboratorType, null, attendeeInnovationOrganizationTracks, null, null, true, userId);
+            this.SynchronizeBaseCommissionAttendeeCollaborators(edition, collaboratorType, true, userId);
             this.UpdateUser(email);
         }
 
         /// <summary>
-        /// Creates the innovation commission collaborator.
+        /// Creates the base commission collaborator.
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastNames">The last names.</param>
         /// <param name="email">The email.</param>
-        /// <param name="phoneNumber">The phone number.</param>
-        /// <param name="cellPhone">The cell phone.</param>
-        /// <param name="document">The document.</param>
-        /// <param name="attendeeInnovationOrganizationTracks">The attendee innovation organization tracks.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public static Collaborator CreateInnovationCommissionCollaborator(
+        public static Collaborator CreateBaseCommissionCollaborator(
             Edition edition,
             CollaboratorType collaboratorType,
             string firstName,
             string lastNames,
             string email,
-            string phoneNumber,
-            string cellPhone,
-            string document,
-            List<AttendeeInnovationOrganizationTrack> attendeeInnovationOrganizationTracks,
             int userId)
         {
             return new Collaborator(
@@ -2272,30 +2076,26 @@ namespace PlataformaRio2C.Domain.Entities
                 firstName,
                 lastNames,
                 email,
-                phoneNumber,
-                cellPhone,
-                document,
-                attendeeInnovationOrganizationTracks,
                 userId);
         }
 
         /// <summary>
-        /// Updates the innovation commission.
+        /// Updates the base commission collaborator.
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastNames">The last names.</param>
         /// <param name="email">The email.</param>
-        /// <param name="attendeeInnovationOrganizationTracks">The attendee innovation organization tracks.</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateInnovationCommissionCollaborator(
+        public void UpdateBaseCommissionCollaborator(
             Edition edition,
             CollaboratorType collaboratorType,
+            bool isAddingToCurrentEdition,
             string firstName,
             string lastNames,
             string email,
-            List<AttendeeInnovationOrganizationTrack> attendeeInnovationOrganizationTracks,
             int userId)
         {
             this.FirstName = firstName?.Trim();
@@ -2305,28 +2105,20 @@ namespace PlataformaRio2C.Domain.Entities
             this.SetUpdateDate(userId);
 
             //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
-            this.SynchronizeInnovationCommissionAttendeeCollaborators(edition, collaboratorType, null, attendeeInnovationOrganizationTracks, null, null, true, userId);
+            this.SynchronizeBaseCommissionAttendeeCollaborators(edition, collaboratorType, isAddingToCurrentEdition, userId);
             this.UpdateUser(email);
         }
 
         /// <summary>
-        /// Synchronizes the attendee collaborators.
+        /// Synchronizes the base commission attendee collaborators.
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
-        /// <param name="attendeeOrganizations">The attendee organizations.</param>
-        /// <param name="attendeeInnovationOrganizationTracks">The attendee innovation organization tracks.</param>
-        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
-        /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeInnovationCommissionAttendeeCollaborators(
+        private void SynchronizeBaseCommissionAttendeeCollaborators(
             Edition edition,
             CollaboratorType collaboratorType,
-            List<AttendeeOrganization> attendeeOrganizations,
-            List<AttendeeInnovationOrganizationTrack> attendeeInnovationOrganizationTracks,
-            bool? isApiDisplayEnabled,
-            int? apiHighlightPosition,
             bool isAddingToCurrentEdition,
             int userId)
         {
@@ -2349,11 +2141,299 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
             if (attendeeCollaborator != null)
             {
-                attendeeCollaborator.InnovationCommissionAttendeeCollaborator(attendeeInnovationOrganizationTracks, collaboratorType, attendeeOrganizations, isApiDisplayEnabled, apiHighlightPosition, true, userId);
+                attendeeCollaborator.UpdateBaseCommissionAttendeeCollaborator(collaboratorType, userId);
             }
             else
             {
-                this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, attendeeInnovationOrganizationTracks, collaboratorType, isApiDisplayEnabled, apiHighlightPosition, attendeeOrganizations, this, true, userId));
+                this.AttendeeCollaborators.Add(AttendeeCollaborator.CreateBaseCommissionAttendeeCollaborator(edition, collaboratorType, this, userId));
+            }
+        }
+
+        #endregion
+
+        #region Innovation Commission Collaborator
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Collaborator" /> class.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="attendeeInnovationOrganizationTracks">The attendee innovation organization tracks.</param>
+        /// <param name="userId">The user identifier.</param>
+        private Collaborator(
+            Edition edition,
+            CollaboratorType collaboratorType,
+            string firstName,
+            string lastNames,
+            string email,
+            List<AttendeeInnovationOrganizationTrack> attendeeInnovationOrganizationTracks,
+            int userId)
+        {
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.PublicEmail = email?.Trim();
+
+            this.SetCreateDate(userId);
+
+            //TODO: Refactor this!
+            //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
+            this.SynchronizeInnovationCommissionAttendeeCollaborators(edition, collaboratorType, attendeeInnovationOrganizationTracks, true, userId);
+            this.UpdateUser(email);
+        }
+
+        /// <summary>
+        /// Creates the innovation commission collaborator.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="attendeeInnovationOrganizationTracks">The attendee innovation organization tracks.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public static Collaborator CreateInnovationCommissionCollaborator(
+            Edition edition,
+            CollaboratorType collaboratorType,
+            string firstName,
+            string lastNames,
+            string email,
+            List<AttendeeInnovationOrganizationTrack> attendeeInnovationOrganizationTracks,
+            int userId)
+        {
+            return new Collaborator(
+                edition,
+                collaboratorType,
+                firstName,
+                lastNames,
+                email,
+                attendeeInnovationOrganizationTracks,
+                userId);
+        }
+
+        /// <summary>
+        /// Updates the innovation commission.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="attendeeInnovationOrganizationTracks">The attendee innovation organization tracks.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateInnovationCommissionCollaborator(
+            Edition edition,
+            CollaboratorType collaboratorType,
+            bool isAddingToCurrentEdition,
+            string firstName,
+            string lastNames,
+            string email,
+            List<AttendeeInnovationOrganizationTrack> attendeeInnovationOrganizationTracks,
+            int userId)
+        {
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.PublicEmail = email?.Trim();
+
+            this.SetUpdateDate(userId);
+
+            //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
+            this.SynchronizeInnovationCommissionAttendeeCollaborators(edition, collaboratorType, attendeeInnovationOrganizationTracks, isAddingToCurrentEdition, userId);
+            this.UpdateUser(email);
+        }
+
+        /// <summary>
+        /// Synchronizes the innovation commission attendee collaborators.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="attendeeInnovationOrganizationTracks">The attendee innovation organization tracks.</param>
+        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeInnovationCommissionAttendeeCollaborators(
+            Edition edition,
+            CollaboratorType collaboratorType,
+            List<AttendeeInnovationOrganizationTrack> attendeeInnovationOrganizationTracks,
+            bool isAddingToCurrentEdition,
+            int userId)
+        {
+            // Synchronize only when is adding to current edition
+            if (!isAddingToCurrentEdition)
+            {
+                return;
+            }
+
+            if (this.AttendeeCollaborators == null)
+            {
+                this.AttendeeCollaborators = new List<AttendeeCollaborator>();
+            }
+
+            if (edition == null)
+            {
+                return;
+            }
+
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            if (attendeeCollaborator != null)
+            {
+                attendeeCollaborator.UpdateInnovationCommissionAttendeeCollaborator(attendeeInnovationOrganizationTracks, collaboratorType,  userId);
+            }
+            else
+            {
+                this.AttendeeCollaborators.Add(AttendeeCollaborator.CreateInnovationCommissionAttendeeCollaborator(edition, attendeeInnovationOrganizationTracks, collaboratorType, this, userId));
+            }
+        }
+
+        #endregion
+
+        #region Audiovisual Commission Collaborator
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Collaborator"/> class.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="projectType">Type of the project.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
+        /// <param name="userId">The user identifier.</param>
+        private Collaborator(
+            Edition edition,
+            CollaboratorType collaboratorType,
+            ProjectType projectType,
+            string firstName,
+            string lastNames,
+            string email,
+            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
+            int userId)
+        {
+            //this.Uid = uid;
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.PublicEmail = email?.Trim();
+
+            this.SetCreateDate(userId);
+
+            //TODO: Refactor this!
+            //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
+            this.SynchronizeAudiovisualCommissionAttendeeCollaborators(edition, collaboratorType, projectType, attendeeCollaboratorInterests, true, userId);
+            this.UpdateUser(email);
+        }
+
+        /// <summary>
+        /// Creates the audiovisual commission collaborator.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="projectType">Type of the project.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public static Collaborator CreateAudiovisualCommissionCollaborator(
+            Edition edition,
+            CollaboratorType collaboratorType,
+            ProjectType projectType,
+            string firstName,
+            string lastNames,
+            string email,
+            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
+            int userId)
+        {
+            return new Collaborator(
+                edition,
+                collaboratorType,
+                projectType,
+                firstName,
+                lastNames,
+                email,
+                attendeeCollaboratorInterests,
+                userId);
+        }
+
+        /// <summary>
+        /// Updates the audiovisual commission.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
+        /// <param name="projectType">Type of the project.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="attendeeCollaboratorInterests">The commission attendee collaborator interests.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateAudiovisualCommissionCollaborator(
+            Edition edition,
+            CollaboratorType collaboratorType,
+            bool isAddingToCurrentEdition,
+            ProjectType projectType,
+            string firstName,
+            string lastNames,
+            string email,
+            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
+            int userId)
+        {
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.PublicEmail = email?.Trim();
+
+            this.SetUpdateDate(userId);
+
+            //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
+            this.SynchronizeAudiovisualCommissionAttendeeCollaborators(edition, collaboratorType, projectType, attendeeCollaboratorInterests, isAddingToCurrentEdition, userId);
+            this.UpdateUser(email);
+        }
+
+        /// <summary>
+        /// Synchronizes the attendee collaborators.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="projectType">Type of the project.</param>
+        /// <param name="attendeeCollaboratorInterests">The commission attendee collaborator interests.</param>
+        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeAudiovisualCommissionAttendeeCollaborators(
+            Edition edition,
+            CollaboratorType collaboratorType,
+            ProjectType projectType,
+            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
+            bool isAddingToCurrentEdition,
+            int userId)
+        {
+            // Synchronize only when is adding to current edition
+            if (!isAddingToCurrentEdition)
+            {
+                return;
+            }
+
+            if (this.AttendeeCollaborators == null)
+            {
+                this.AttendeeCollaborators = new List<AttendeeCollaborator>();
+            }
+
+            if (edition == null)
+            {
+                return;
+            }
+
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            if (attendeeCollaborator != null)
+            {
+                attendeeCollaborator.UpdateAudiovisualCommissionAttendeeCollaborator(attendeeCollaboratorInterests, collaboratorType, projectType, userId);
+            }
+            else
+            {
+                this.AttendeeCollaborators.Add(AttendeeCollaborator.CreateAudiovisualCommissionAttendeeCollaborator(edition, attendeeCollaboratorInterests, collaboratorType, projectType, this, userId));
             }
         }
 

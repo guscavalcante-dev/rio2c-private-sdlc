@@ -33,6 +33,7 @@ namespace PlataformaRio2C.Domain.Entities
         public static CollaboratorType AdminCartoon = new CollaboratorType(new Guid("C55E9C0C-2432-422C-87C6-199457A7C555"), "Admin | Cartoon");
         public static CollaboratorType AdminEditorial = new CollaboratorType(new Guid("3CC40A76-5E69-43E0-872E-2DA26C3C1434"), "Admin | Editorial");
         public static CollaboratorType AdminConferences = new CollaboratorType(new Guid("203D6BFB-3009-4E7E-8BE9-A4F02DA795BB"), "Admin | Conferences");
+        public static CollaboratorType AdminCreator = new CollaboratorType(new Guid("AF657A8E-182D-4E4C-92AF-2CC4FCEA9592"), "Admin | Creator");
 
         /// <summary>
         /// TODO: Create ProducerExecutiveAudiovisual, ProducerExecutiveMusic, ProducerExecutiveInnovation, ProducerExecutiveCartoon
@@ -46,6 +47,7 @@ namespace PlataformaRio2C.Domain.Entities
         public static CollaboratorType ComissionMusic = new CollaboratorType(new Guid("3633CF67-840F-4061-B480-C075A5E9F5EE"), "Commission | Music");
         public static CollaboratorType ComissionInnovation = new CollaboratorType(new Guid("758A53BB-7C3C-4B6F-967B-C6E613568586"), "Commission | Innovation");
         public static CollaboratorType ComissionCartoon = new CollaboratorType(new Guid("A2D0F90D-EA2E-4226-A3EC-47C3360CA1C0"), "Commission | Cartoon");
+        public static CollaboratorType ComissionCreator = new CollaboratorType(new Guid("0A043B0C-547A-4F3E-BF79-FB47E520ADB3"), "Commission | Creator");
 
         public static CollaboratorType Speaker = new CollaboratorType(new Guid("5DA172D8-8D4A-493B-9EEE-F544805A511F"), "Speaker");
         public static CollaboratorType Industry = new CollaboratorType(new Guid("4B0DD2CA-12AE-4357-BEC4-BA4D3820351D"), "Industry");

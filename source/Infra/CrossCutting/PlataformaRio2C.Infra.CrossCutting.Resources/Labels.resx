@@ -762,8 +762,14 @@
   <data name="Creator" xml:space="preserve">
     <value>Criador</value>
   </data>
+  <data name="CreatorEN" xml:space="preserve">
+    <value>Creator</value>
+  </data>
   <data name="Creators" xml:space="preserve">
     <value>Criadores</value>
+  </data>
+  <data name="CreatorsEN" xml:space="preserve">
+    <value>Creators</value>
   </data>
   <data name="Curatorship" xml:space="preserve">
     <value>Curadoria</value>

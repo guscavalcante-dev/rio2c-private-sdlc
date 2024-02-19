@@ -1124,6 +1124,38 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region Creator Page Bundles
+
+            #region Commissions
+
+            bundles.Add(new ScriptBundle("~/bundles/js/creator.commissions.list.js").Include(
+                "~/Assets/js/creator/commissions/creator.commissions.totalcount.widget.js",
+                "~/Assets/js/creator/commissions/creator.commissions.datatable.widget.js",
+                "~/Assets/js/salesplatforms/salesplatforms.export.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/creator.commissions.editioncount.js").Include(
+                "~/Assets/js/creator/commissions/creator.commissions.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/creator.commissions.create.js").Include(
+                "~/Assets/js/creator/commissions/creator.commissions.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/creator.commissions.details.js").Include(
+                "~/Assets/js/collaborators/collaborators.maininformation.widget.js",
+                "~/Assets/js/collaborators/collaborators.socialnetworks.widget.js",
+                "~/Assets/js/collaborators/collaborators.onboardinginfo.widget.js",
+                "~/Assets/js/creator/commissions/creator.commissions.evaluations.widget.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/creator.commissions.update.js").Include(
+                "~/Assets/js/creator/commissions/creator.commissions.update.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/creator.commissions.delete.js").Include(
+                "~/Assets/js/creator/commissions/creator.commissions.delete.js"));
+
+            #endregion
+
+            #endregion
+
             #region Cartoon Page Bundles
 
             #region Commissions

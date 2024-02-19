@@ -31,7 +31,6 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<IPagedList<CollaboratorDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> collaboratorsUids, string[] collaboratorTypeNames, string[] organizationTypeNames, bool showAllEditions, bool showAllParticipants, bool? showHighlights, int? editionId);
         Task<IPagedList<LogisticJsonDto>> FindAllLogisticsByDatatable(int editionId, int page, int pageSize, string searchValue, List<Tuple<string, string>> getSortColumns, bool showAllParticipants, bool showAllSponsors);
         Task<IPagedList<CollaboratorDto>> FindAllAdminsByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, string collaboratorTypeName, string roleName, bool showAllEditions, bool showAllParticipants, string userInterfaceLanguage, int? editionId);
-        Task<IPagedList<CollaboratorDto>> FindAllInnovationCommissionsByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> collaboratorsUids, string[] collaboratorTypeNames, bool showAllEditions, bool showAllParticipants, bool? showHighlights, int? editionId, List<Guid?> innovationOrganizationTrackOptionsUids);
 
         #region Audiovisual Commissions
 
@@ -41,10 +40,22 @@ namespace PlataformaRio2C.Domain.Interfaces
 
         #endregion
 
+        #region Innovation Commissions
+
+        Task<IPagedList<CollaboratorDto>> FindAllInnovationCommissionsByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> collaboratorsUids, string[] collaboratorTypeNames, bool showAllEditions, bool showAllParticipants, bool? showHighlights, int? editionId, List<Guid?> innovationOrganizationTrackOptionsUids);
+
+        #endregion
+
         #region Music Commissions
 
         Task<IPagedList<CollaboratorDto>> FindAllMusicCommissionMembersApiPaged(int? editionId, string keywords, int page, int pageSize);
         Task<CollaboratorDto> FindMusicCommissionMemberApi(Guid collaboratorUid, int editionId);
+
+        #endregion
+
+        #region Creator Commissions
+
+        Task<IPagedList<CollaboratorDto>> FindAllCreatorCommissionsByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> collaboratorsUids, string[] collaboratorTypeNames, bool showAllEditions, bool showAllParticipants, bool? showHighlights, int? editionId);
 
         #endregion
 

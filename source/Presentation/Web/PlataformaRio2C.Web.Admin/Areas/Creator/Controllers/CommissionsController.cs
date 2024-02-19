@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Rafael Dantas Ruiz
-// Created          : 02-25-2020
+// Author           : Renan Valentim
+// Created          : 01-31-2024
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-15-2021
+// Last Modified On : 01-31-2024
 // ***********************************************************************
 // <copyright file="CommissionsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,7 +24,6 @@ using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
@@ -35,33 +34,32 @@ using PlataformaRio2C.Web.Admin.Controllers;
 using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 
-namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
+namespace PlataformaRio2C.Web.Admin.Areas.Creator.Controllers
 {
     /// <summary>CommissionsController</summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminMusic)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminCreator)]
     public class CommissionsController : BaseController
     {
         private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
-        private readonly IMusicProjectRepository musicProjectRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="CommissionsController"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CommissionsController" /> class.
+        /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
         public CommissionsController(
-            IMediator commandBus,
+            IMediator commandBus, 
             IdentityAutenticationService identityController,
             ICollaboratorRepository collaboratorRepository,
-            IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
-            IMusicProjectRepository musicProjectRepository)
+            IAttendeeCollaboratorRepository attendeeCollaboratorRepository)
             : base(commandBus, identityController)
         {
             this.collaboratorRepo = collaboratorRepository;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
-            this.musicProjectRepo = musicProjectRepository;
         }
 
         #region List
@@ -70,13 +68,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Index(MusicCommissionSearchViewModel searchViewModel)
+        public async Task<ActionResult> Index(CreatorCommissionSearchViewModel searchViewModel)
         {
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.MusicCommission, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Music, null),
-                new BreadcrumbItemHelper(Labels.Commission, Url.Action("Index", "Commissions", new { Area = "Music" }))
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.StartupsCommission, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.CreatorsEN, null),
+                new BreadcrumbItemHelper(Labels.Commission, Url.Action("Index", "Commissions", new { Area = "Creator" }))
             });
 
             #endregion
@@ -86,7 +84,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
         #region DataTable Widget
 
-        /// <summary>Searches the specified request.</summary>
+        /// <summary>
+        /// Searches the specified request.
+        /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
@@ -94,14 +94,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllParticipants)
         {
-            var members = await this.collaboratorRepo.FindAllByDataTable(
+            var members = await this.collaboratorRepo.FindAllCreatorCommissionsByDataTable(
                 request.Start / request.Length,
                 request.Length,
                 request.Search?.Value,
                 request.GetSortColumns(),
                 new List<Guid>(),
-                new string[] { Constants.CollaboratorType.CommissionMusic },
-                null,
+                new string[] { Constants.CollaboratorType.CommissionCreator },
                 showAllEditions,
                 showAllParticipants,
                 null,
@@ -133,15 +132,15 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             if (attendeeCollaboratorDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "Commissions", new { Area = "Music" });
+                return RedirectToAction("Index", "Commissions", new { Area = "Creator" });
             }
 
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.MusicCommission, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Music, null),
-                new BreadcrumbItemHelper(Labels.Commission, Url.Action("Index", "Commissions", new { Area = "Music" })),
-                new BreadcrumbItemHelper(attendeeCollaboratorDto.Collaborator.GetFullName(), Url.Action("Details", "Commissions", new { Area = "Music", id }))
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.StartupsCommission, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Startups, null),
+                new BreadcrumbItemHelper(Labels.Commission, Url.Action("Index", "Commissions", new { Area = "Creator" })),
+                new BreadcrumbItemHelper(attendeeCollaboratorDto.Collaborator.GetFullName(), Url.Action("Details", "Commissions", new { Area = "Creator", id }))
             });
 
             #endregion
@@ -153,25 +152,31 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
         #region Evaluations Widget
 
+        /// <summary>
+        /// Shows the evaluations widget.
+        /// </summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> ShowEvaluationsWidget(Guid? collaboratorUid)
         {
-            var attendeeCollaboratorMusicBandEvaluationsWidgetDto = await this.attendeeCollaboratorRepo.FindMusicBandsEvaluationsWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
-            if (attendeeCollaboratorMusicBandEvaluationsWidgetDto == null)
-            {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-            }
+            throw new NotImplementedException();
+            //var innovationEvaluationsWidgetDto = await this.attendeeCollaboratorRepo.FindCreatorEvaluationsWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
+            //if (innovationEvaluationsWidgetDto == null)
+            //{
+            //    return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            //}
 
-            ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id);
+            //ViewBag.ApprovedAttendeeCreatorOrganizationsIds = await this.attendeeCreatorOrganizationRepo.FindAllApprovedAttendeeCreatorOrganizationsIdsAsync(this.EditionDto.Edition.Id);
 
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Widgets/EvaluationsWidget", attendeeCollaboratorMusicBandEvaluationsWidgetDto), divIdOrClass = "#MusicCommissionEvaluationsWidget" },
-                }
-            }, JsonRequestBehavior.AllowGet);
+            //return Json(new
+            //{
+            //    status = "success",
+            //    pages = new List<dynamic>
+            //    {
+            //        new { page = this.RenderRazorViewToString("Widgets/EvaluationsWidget", innovationEvaluationsWidgetDto), divIdOrClass = "#CreatorCommissionEvaluationsWidget" },
+            //    }
+            //}, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
@@ -184,77 +189,78 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpPost]
         public async Task<ActionResult> SendInvitationEmails(string selectedCollaboratorsUids)
         {
-            AppValidationResult result = null;
+            throw new NotImplementedException();
+            //AppValidationResult result = null;
 
-            try
-            {
-                if (string.IsNullOrEmpty(selectedCollaboratorsUids))
-                {
-                    throw new DomainException(Messages.SelectAtLeastOneOption);
-                }
+            //try
+            //{
+            //    if (string.IsNullOrEmpty(selectedCollaboratorsUids))
+            //    {
+            //        throw new DomainException(Messages.SelectAtLeastOneOption);
+            //    }
 
-                var collaboratorsUids = selectedCollaboratorsUids?.ToListGuid(',');
-                if (!collaboratorsUids.Any())
-                {
-                    throw new DomainException(Messages.SelectAtLeastOneOption);
-                }
+            //    var collaboratorsUids = selectedCollaboratorsUids?.ToListGuid(',');
+            //    if (!collaboratorsUids.Any())
+            //    {
+            //        throw new DomainException(Messages.SelectAtLeastOneOption);
+            //    }
 
-                var collaboratorsDtos = await this.collaboratorRepo.FindAllCollaboratorsByCollaboratorsUids(this.EditionDto.Id, collaboratorsUids);
-                if (collaboratorsDtos?.Any() != true)
-                {
-                    throw new DomainException(Messages.SelectAtLeastOneOption);
-                }
+            //    var collaboratorsDtos = await this.collaboratorRepo.FindAllCollaboratorsByCollaboratorsUids(this.EditionDto.Id, collaboratorsUids);
+            //    if (collaboratorsDtos?.Any() != true)
+            //    {
+            //        throw new DomainException(Messages.SelectAtLeastOneOption);
+            //    }
 
-                List<string> errors = new List<string>();
-                foreach (var collaboratorDto in collaboratorsDtos)
-                {
-                    var collaboratorLanguageCode = collaboratorDto.Language?.Code ?? this.UserInterfaceLanguage;
+            //    List<string> errors = new List<string>();
+            //    foreach (var collaboratorDto in collaboratorsDtos)
+            //    {
+            //        var collaboratorLanguageCode = collaboratorDto.Language?.Code ?? this.UserInterfaceLanguage;
 
-                    try
-                    {
-                        result = await this.CommandBus.Send(new SendMusicCommissionWelcomeEmailAsync(
-                            collaboratorDto.Collaborator.Uid,
-                            collaboratorDto.User.SecurityStamp,
-                            collaboratorDto.User.Id,
-                            collaboratorDto.User.Uid,
-                            collaboratorDto.GetFirstName(),
-                            collaboratorDto.GetFullName(collaboratorLanguageCode),
-                            collaboratorDto.User.Email,
-                            this.EditionDto.Edition,
-                            this.AdminAccessControlDto.User.Id,
-                            collaboratorLanguageCode));
-                        if (!result.IsValid)
-                        {
-                            throw new DomainException(Messages.CorrectFormValues);
-                        }
-                    }
-                    catch (DomainException ex)
-                    {
-                        //Cannot stop sending email when exception occurs.
-                        errors.AddRange(result.Errors.Select(e => e.Message));
-                    }
-                    catch (Exception ex)
-                    {
-                        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                    }
-                }
+            //        try
+            //        {
+            //            result = await this.CommandBus.Send(new SendCreatorCommissionWelcomeEmailAsync(
+            //                collaboratorDto.Collaborator.Uid,
+            //                collaboratorDto.User.SecurityStamp,
+            //                collaboratorDto.User.Id,
+            //                collaboratorDto.User.Uid,
+            //                collaboratorDto.GetFirstName(),
+            //                collaboratorDto.GetFullName(collaboratorLanguageCode),
+            //                collaboratorDto.User.Email,
+            //                this.EditionDto.Edition,
+            //                this.AdminAccessControlDto.User.Id,
+            //                collaboratorLanguageCode));
+            //            if (!result.IsValid)
+            //            {
+            //                throw new DomainException(Messages.CorrectFormValues);
+            //            }
+            //        }
+            //        catch (DomainException)
+            //        {
+            //            //Cannot stop sending email when exception occurs.
+            //            errors.AddRange(result.Errors.Select(e => e.Message));
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+            //        }
+            //    }
 
-                if (errors.Any())
-                {
-                    throw new DomainException(string.Format(Messages.OneOrMoreEmailsNotSend, Labels.WelcomeEmail));
-                }
-            }
-            catch (DomainException ex)
-            {
-                return Json(new { status = "error", message = ex.GetInnerMessage(), }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-            }
+            //    if (errors.Any())
+            //    {
+            //        throw new DomainException(string.Format(Messages.OneOrMoreEmailsNotSend, Labels.WelcomeEmail));
+            //    }
+            //}
+            //catch (DomainException ex)
+            //{
+            //    return Json(new { status = "error", message = ex.GetInnerMessage(), }, JsonRequestBehavior.AllowGet);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+            //    return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            //}
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Email.ToLowerInvariant(), Labels.Sent.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            //return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Email.ToLowerInvariant(), Labels.Sent.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
@@ -267,7 +273,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         public async Task<ActionResult> ShowTotalCountWidget()
         {
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
-                Constants.CollaboratorType.CommissionMusic,
+                Constants.CollaboratorType.CommissionCreator,
                 null,
                 true, 
                 this.EditionDto.Id);
@@ -277,7 +283,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", executivesCount), divIdOrClass = "#MusicCommissionsTotalCountWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", executivesCount), divIdOrClass = "#CreatorCommissionsTotalCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -291,7 +297,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         public async Task<ActionResult> ShowEditionCountWidget()
         {
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
-                Constants.CollaboratorType.CommissionMusic,
+                Constants.CollaboratorType.CommissionCreator,
                 null,
                 false, 
                 this.EditionDto.Id);
@@ -301,7 +307,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", executivesCount), divIdOrClass = "#MusicCommissionsEditionCountWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", executivesCount), divIdOrClass = "#CreatorCommissionsEditionCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -310,13 +316,23 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
         #region Create
 
-        /// <summary>Shows the create modal.</summary>
+        /// <summary>
+        /// Shows the create modal.
+        /// </summary>
         /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()
         {
-            //TODO: Refactor this! Create specific command and commandHandler "CreateMusicCommissionCollaborator" for this!
-            var cmd = new CreateTinyCollaborator();
+            CreateCreatorCommissionCollaborator cmd;
+
+            try
+            {
+                cmd = new CreateCreatorCommissionCollaborator();
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
 
             return Json(new
             {
@@ -332,8 +348,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        //TODO: Refactor this! Create specific command and commandHandler "CreateMusicCommissionCollaborator" for this!
-        public async Task<ActionResult> Create(CreateTinyCollaborator cmd)
+        public async Task<ActionResult> Create(CreateCreatorCommissionCollaborator cmd)
         {
             var result = new AppValidationResult();
 
@@ -345,7 +360,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    Constants.CollaboratorType.CommissionMusic,
+                    Constants.CollaboratorType.CommissionCreator,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -371,7 +386,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("/Views/Collaborators/Forms/_TinyForm.cshtml", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -395,12 +410,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUpdateModal(Guid? collaboratorUid, bool? isAddingToCurrentEdition)
         {
-            UpdateTinyCollaborator cmd;
+            UpdateCreatorCommissionCollaborator cmd;
 
             try
             {
-                //TODO: Refactor this! Create specific command and commandHandler "UpdateMusicCommissionCollaborator" for this!
-                cmd = new UpdateTinyCollaborator(
+                cmd = new UpdateCreatorCommissionCollaborator(
                     await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
                     isAddingToCurrentEdition);
             }
@@ -423,8 +437,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        //TODO: Refactor this! Create specific command and commandHandler "UpdateMusicCommissionCollaborator" for this!
-        public async Task<ActionResult> Update(UpdateTinyCollaborator cmd)
+        public async Task<ActionResult> Update(UpdateCreatorCommissionCollaborator cmd)
         {
             var result = new AppValidationResult();
 
@@ -436,7 +449,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    Constants.CollaboratorType.CommissionMusic,
+                    Constants.CollaboratorType.CommissionCreator,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -462,7 +475,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("/Views/Collaborators/Forms/_TinyForm.cshtml", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -495,7 +508,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    Constants.CollaboratorType.CommissionMusic,
+                    Constants.CollaboratorType.CommissionCreator,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,

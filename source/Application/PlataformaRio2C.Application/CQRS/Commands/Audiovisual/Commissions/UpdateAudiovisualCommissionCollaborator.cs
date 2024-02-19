@@ -24,6 +24,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public bool IsAddingToCurrentEdition { get; set; }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateAudiovisualCommissionCollaborator" /> class.
+        /// </summary>
+        public UpdateAudiovisualCommissionCollaborator()
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="UpdateAudiovisualCommissionCollaborator"/> class.
         /// </summary>
         /// <param name="entity">The entity.</param>
@@ -50,13 +57,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<InterestDto> interestsDtos)
         {
             base.UpdateBaseProperties(null, interestsDtos);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateAudiovisualCommissionCollaborator" /> class.
-        /// </summary>
-        public UpdateAudiovisualCommissionCollaborator()
-        {
         }
 
         /// <summary>

@@ -94,9 +94,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.FirstName,
                     cmd.LastNames,
                     cmd.Email,
-                    cmd.PhoneNumber,
-                    cmd.CellPhone,
-                    cmd.Document,
                     innovationOrganizationTrackOptions.Select(ioto => new AttendeeInnovationOrganizationTrack(ioto, string.Empty, cmd.UserId)).ToList(),
                     cmd.UserId);
 

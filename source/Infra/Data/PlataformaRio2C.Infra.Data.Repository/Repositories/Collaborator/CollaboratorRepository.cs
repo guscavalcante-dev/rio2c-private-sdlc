@@ -1373,124 +1373,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return collaborators;
         }
 
-        /// <summary>
-        /// Finds all innovation commissions by data table.
-        /// </summary>
-        /// <param name="page">The page.</param>
-        /// <param name="pageSize">Size of the page.</param>
-        /// <param name="keywords">The keywords.</param>
-        /// <param name="sortColumns">The sort columns.</param>
-        /// <param name="collaboratorsUids">The collaborators uids.</param>
-        /// <param name="collaboratorTypeNames">The collaborator type names.</param>
-        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
-        /// <param name="showHighlights">The show highlights.</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <param name="innovationOrganizationTrackOptionGroupsUids">The innovation organization track option groups uids.</param>
-        /// <returns></returns>
-        public async Task<IPagedList<CollaboratorDto>> FindAllInnovationCommissionsByDataTable(
-            int page,
-            int pageSize,
-            string keywords,
-            List<Tuple<string, string>> sortColumns,
-            List<Guid> collaboratorsUids,
-            string[] collaboratorTypeNames,
-            bool showAllEditions,
-            bool showAllParticipants,
-            bool? showHighlights,
-            int? editionId,
-            List<Guid?> innovationOrganizationTrackOptionGroupsUids)
-        {
-            var query = this.GetBaseQuery()
-                                .FindByKeywords(keywords, editionId)
-                                .FindByUids(collaboratorsUids)
-                                .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, showAllEditions, showAllParticipants, editionId)
-                                .FindByInnovationOrganizationTrackOptionsGroupsUids(editionId, innovationOrganizationTrackOptionGroupsUids)
-                                .FindByHighlights(collaboratorTypeNames, showHighlights);
-
-            return await query
-                            .DynamicOrder(
-                                sortColumns,
-                                new List<Tuple<string, string>>
-                                {
-                                    new Tuple<string, string>("FullName", "User.Name"),
-                                    new Tuple<string, string>("Email", "User.Email"),
-                                },
-                                new List<string> { "User.Name", "User.Email", "CreateDate", "UpdateDate" },
-                                "User.Name")
-                            .Select(c => new CollaboratorDto
-                            {
-                                Id = c.Id,
-                                Uid = c.Uid,
-                                FirstName = c.FirstName,
-                                LastNames = c.LastNames,
-                                Badge = c.Badge,
-                                Email = c.User.Email,
-                                PhoneNumber = c.PhoneNumber,
-                                CellPhone = c.CellPhone,
-                                PublicEmail = c.PublicEmail,
-                                ImageUploadDate = c.ImageUploadDate,
-                                CreateDate = c.CreateDate,
-                                UpdateDate = c.UpdateDate,
-                                IsInOtherEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId && !ac.IsDeleted),
-                                JobTitle = c.JobTitles.FirstOrDefault(jb => !jb.IsDeleted && jb.CollaboratorId == c.Id).Value,
-
-                                EditionAttendeeCollaborator = editionId.HasValue ? c.AttendeeCollaborators.FirstOrDefault(ac => ac.EditionId == editionId
-                                                                                                                                && !ac.Edition.IsDeleted
-                                                                                                                                && !ac.IsDeleted
-                                                                                                                                && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
-                                                                                                                                                                           && collaboratorTypeNames.Contains(act.CollaboratorType.Name))) : null,
-
-                                EditionAttendeeCollaboratorBaseDto = c.AttendeeCollaborators
-                                                                                .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
-                                                                                .Select(ac => new AttendeeCollaboratorBaseDto
-                                                                                {
-                                                                                    Id = ac.Id,
-                                                                                    Uid = ac.Uid,
-                                                                                    WelcomeEmailSendDate = ac.WelcomeEmailSendDate,
-                                                                                    OnboardingStartDate = ac.OnboardingStartDate,
-                                                                                    OnboardingFinishDate = ac.OnboardingFinishDate,
-                                                                                    OnboardingUserDate = ac.OnboardingUserDate,
-                                                                                    OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
-                                                                                    AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
-                                                                                    InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
-                                                                                    MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
-                                                                                    ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate,
-                                                                                    SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
-                                                                                }).FirstOrDefault(),
-
-                                AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
-                                                                    .Where(at => !at.IsDeleted && at.EditionId == editionId)
-                                                                    .SelectMany(at => at.AttendeeOrganizationCollaborators
-                                                                                            .Where(aoc => !aoc.IsDeleted)
-                                                                                            .Select(aoc => new AttendeeOrganizationBaseDto
-                                                                                            {
-                                                                                                Uid = aoc.AttendeeOrganization.Uid,
-                                                                                                OrganizationBaseDto = new OrganizationBaseDto
-                                                                                                {
-                                                                                                    Name = aoc.AttendeeOrganization.Organization.Name,
-                                                                                                    TradeName = aoc.AttendeeOrganization.Organization.TradeName,
-                                                                                                    HoldingBaseDto = aoc.AttendeeOrganization.Organization.Holding == null ? null : new HoldingBaseDto
-                                                                                                    {
-                                                                                                        Name = aoc.AttendeeOrganization.Organization.Holding.Name
-                                                                                                    },
-                                                                                                    IsVirtualMeeting = aoc.AttendeeOrganization.Organization.IsVirtualMeeting
-                                                                                                }
-                                                                                            })),
-
-                                InnovationOrganizationTrackOptionGroupDtos = c.AttendeeCollaborators
-                                                                                .Where(at => !at.IsDeleted && at.EditionId == editionId)
-                                                                                .SelectMany(ac => ac.AttendeeCollaboratorInnovationOrganizationTracks
-                                                                                                        .Where(aciot => !aciot.IsDeleted && aciot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroupId != null)
-                                                                                                        .GroupBy(aciot => aciot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup.Name)
-                                                                                                        .Select(aciot => new InnovationOrganizationTrackOptionGroupDto
-                                                                                                        {
-                                                                                                            GroupName = aciot.Key
-                                                                                                        }))
-                            })
-                            .ToListPagedAsync(page, pageSize);
-        }
-
         #region Audiovisual Commissions
 
         /// <summary>
@@ -1905,6 +1787,223 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             })
                             .OrderBy(o => o.FirstName)
                             .FirstOrDefaultAsync();
+        }
+
+        #endregion
+
+        #region Innovation Commissions
+
+        /// <summary>
+        /// Finds all innovation commissions by data table.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <param name="collaboratorsUids">The collaborators uids.</param>
+        /// <param name="collaboratorTypeNames">The collaborator type names.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <param name="showHighlights">The show highlights.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="innovationOrganizationTrackOptionGroupsUids">The innovation organization track option groups uids.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<CollaboratorDto>> FindAllInnovationCommissionsByDataTable(
+            int page,
+            int pageSize,
+            string keywords,
+            List<Tuple<string, string>> sortColumns,
+            List<Guid> collaboratorsUids,
+            string[] collaboratorTypeNames,
+            bool showAllEditions,
+            bool showAllParticipants,
+            bool? showHighlights,
+            int? editionId,
+            List<Guid?> innovationOrganizationTrackOptionGroupsUids)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByKeywords(keywords, editionId)
+                                .FindByUids(collaboratorsUids)
+                                .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, showAllEditions, showAllParticipants, editionId)
+                                .FindByInnovationOrganizationTrackOptionsGroupsUids(editionId, innovationOrganizationTrackOptionGroupsUids)
+                                .FindByHighlights(collaboratorTypeNames, showHighlights);
+
+            return await query
+                            .DynamicOrder(
+                                sortColumns,
+                                new List<Tuple<string, string>>
+                                {
+                                    new Tuple<string, string>("FullName", "User.Name"),
+                                    new Tuple<string, string>("Email", "User.Email"),
+                                },
+                                new List<string> { "User.Name", "User.Email", "CreateDate", "UpdateDate" },
+                                "User.Name")
+                            .Select(c => new CollaboratorDto
+                            {
+                                Id = c.Id,
+                                Uid = c.Uid,
+                                FirstName = c.FirstName,
+                                LastNames = c.LastNames,
+                                Badge = c.Badge,
+                                Email = c.User.Email,
+                                PhoneNumber = c.PhoneNumber,
+                                CellPhone = c.CellPhone,
+                                PublicEmail = c.PublicEmail,
+                                ImageUploadDate = c.ImageUploadDate,
+                                CreateDate = c.CreateDate,
+                                UpdateDate = c.UpdateDate,
+                                IsInOtherEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId && !ac.IsDeleted),
+                                JobTitle = c.JobTitles.FirstOrDefault(jb => !jb.IsDeleted && jb.CollaboratorId == c.Id).Value,
+
+                                EditionAttendeeCollaborator = editionId.HasValue ? c.AttendeeCollaborators.FirstOrDefault(ac => ac.EditionId == editionId
+                                                                                                                                && !ac.Edition.IsDeleted
+                                                                                                                                && !ac.IsDeleted
+                                                                                                                                && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
+                                                                                                                                                                           && collaboratorTypeNames.Contains(act.CollaboratorType.Name))) : null,
+
+                                EditionAttendeeCollaboratorBaseDto = c.AttendeeCollaborators
+                                                                                .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                                                .Select(ac => new AttendeeCollaboratorBaseDto
+                                                                                {
+                                                                                    Id = ac.Id,
+                                                                                    Uid = ac.Uid,
+                                                                                    WelcomeEmailSendDate = ac.WelcomeEmailSendDate,
+                                                                                    OnboardingStartDate = ac.OnboardingStartDate,
+                                                                                    OnboardingFinishDate = ac.OnboardingFinishDate,
+                                                                                    OnboardingUserDate = ac.OnboardingUserDate,
+                                                                                    OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
+                                                                                    AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
+                                                                                    InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
+                                                                                    MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
+                                                                                    ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate,
+                                                                                    SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
+                                                                                }).FirstOrDefault(),
+
+                                AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
+                                                                    .Where(at => !at.IsDeleted && at.EditionId == editionId)
+                                                                    .SelectMany(at => at.AttendeeOrganizationCollaborators
+                                                                                            .Where(aoc => !aoc.IsDeleted)
+                                                                                            .Select(aoc => new AttendeeOrganizationBaseDto
+                                                                                            {
+                                                                                                Uid = aoc.AttendeeOrganization.Uid,
+                                                                                                OrganizationBaseDto = new OrganizationBaseDto
+                                                                                                {
+                                                                                                    Name = aoc.AttendeeOrganization.Organization.Name,
+                                                                                                    TradeName = aoc.AttendeeOrganization.Organization.TradeName,
+                                                                                                    HoldingBaseDto = aoc.AttendeeOrganization.Organization.Holding == null ? null : new HoldingBaseDto
+                                                                                                    {
+                                                                                                        Name = aoc.AttendeeOrganization.Organization.Holding.Name
+                                                                                                    },
+                                                                                                    IsVirtualMeeting = aoc.AttendeeOrganization.Organization.IsVirtualMeeting
+                                                                                                }
+                                                                                            })),
+
+                                InnovationOrganizationTrackOptionGroupDtos = c.AttendeeCollaborators
+                                                                                .Where(at => !at.IsDeleted && at.EditionId == editionId)
+                                                                                .SelectMany(ac => ac.AttendeeCollaboratorInnovationOrganizationTracks
+                                                                                                        .Where(aciot => !aciot.IsDeleted && aciot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroupId != null)
+                                                                                                        .GroupBy(aciot => aciot.InnovationOrganizationTrackOption.InnovationOrganizationTrackOptionGroup.Name)
+                                                                                                        .Select(aciot => new InnovationOrganizationTrackOptionGroupDto
+                                                                                                        {
+                                                                                                            GroupName = aciot.Key
+                                                                                                        }))
+                            })
+                            .ToListPagedAsync(page, pageSize);
+        }
+
+        #endregion
+
+        #region Creator Commissions
+
+        public async Task<IPagedList<CollaboratorDto>> FindAllCreatorCommissionsByDataTable(
+            int page,
+            int pageSize,
+            string keywords,
+            List<Tuple<string, string>> sortColumns,
+            List<Guid> collaboratorsUids,
+            string[] collaboratorTypeNames,
+            bool showAllEditions,
+            bool showAllParticipants,
+            bool? showHighlights,
+            int? editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByKeywords(keywords, editionId)
+                                .FindByUids(collaboratorsUids)
+                                .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, showAllEditions, showAllParticipants, editionId)
+                                .FindByHighlights(collaboratorTypeNames, showHighlights);
+
+            return await query
+                            .DynamicOrder(
+                                sortColumns,
+                                new List<Tuple<string, string>>
+                                {
+                                    new Tuple<string, string>("FullName", "User.Name"),
+                                    new Tuple<string, string>("Email", "User.Email"),
+                                },
+                                new List<string> { "User.Name", "User.Email", "CreateDate", "UpdateDate" },
+                                "User.Name")
+                            .Select(c => new CollaboratorDto
+                            {
+                                Id = c.Id,
+                                Uid = c.Uid,
+                                FirstName = c.FirstName,
+                                LastNames = c.LastNames,
+                                Badge = c.Badge,
+                                Email = c.User.Email,
+                                PhoneNumber = c.PhoneNumber,
+                                CellPhone = c.CellPhone,
+                                PublicEmail = c.PublicEmail,
+                                ImageUploadDate = c.ImageUploadDate,
+                                CreateDate = c.CreateDate,
+                                UpdateDate = c.UpdateDate,
+                                IsInOtherEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId && !ac.IsDeleted),
+                                JobTitle = c.JobTitles.FirstOrDefault(jb => !jb.IsDeleted && jb.CollaboratorId == c.Id).Value,
+
+                                EditionAttendeeCollaborator = editionId.HasValue ? c.AttendeeCollaborators.FirstOrDefault(ac => ac.EditionId == editionId
+                                                                                                                                && !ac.Edition.IsDeleted
+                                                                                                                                && !ac.IsDeleted
+                                                                                                                                && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
+                                                                                                                                                                           && collaboratorTypeNames.Contains(act.CollaboratorType.Name))) : null,
+
+                                EditionAttendeeCollaboratorBaseDto = c.AttendeeCollaborators
+                                                                                .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                                                .Select(ac => new AttendeeCollaboratorBaseDto
+                                                                                {
+                                                                                    Id = ac.Id,
+                                                                                    Uid = ac.Uid,
+                                                                                    WelcomeEmailSendDate = ac.WelcomeEmailSendDate,
+                                                                                    OnboardingStartDate = ac.OnboardingStartDate,
+                                                                                    OnboardingFinishDate = ac.OnboardingFinishDate,
+                                                                                    OnboardingUserDate = ac.OnboardingUserDate,
+                                                                                    OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
+                                                                                    AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
+                                                                                    InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
+                                                                                    MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
+                                                                                    ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate,
+                                                                                    SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
+                                                                                }).FirstOrDefault(),
+
+                                AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
+                                                                    .Where(at => !at.IsDeleted && at.EditionId == editionId)
+                                                                    .SelectMany(at => at.AttendeeOrganizationCollaborators
+                                                                                            .Where(aoc => !aoc.IsDeleted)
+                                                                                            .Select(aoc => new AttendeeOrganizationBaseDto
+                                                                                            {
+                                                                                                Uid = aoc.AttendeeOrganization.Uid,
+                                                                                                OrganizationBaseDto = new OrganizationBaseDto
+                                                                                                {
+                                                                                                    Name = aoc.AttendeeOrganization.Organization.Name,
+                                                                                                    TradeName = aoc.AttendeeOrganization.Organization.TradeName,
+                                                                                                    HoldingBaseDto = aoc.AttendeeOrganization.Organization.Holding == null ? null : new HoldingBaseDto
+                                                                                                    {
+                                                                                                        Name = aoc.AttendeeOrganization.Organization.Holding.Name
+                                                                                                    },
+                                                                                                    IsVirtualMeeting = aoc.AttendeeOrganization.Organization.IsVirtualMeeting
+                                                                                                }
+                                                                                            }))
+                            })
+                            .ToListPagedAsync(page, pageSize);
         }
 
         #endregion
