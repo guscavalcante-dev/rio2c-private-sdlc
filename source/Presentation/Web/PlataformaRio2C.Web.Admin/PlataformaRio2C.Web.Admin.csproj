@@ -892,9 +892,16 @@
     <Content Include="Assets\js\creator\commissions\creator.commissions.delete.js" />
     <Content Include="Assets\js\creator\commissions\creator.commissions.editioncount.widget.js" />
     <Content Include="Assets\js\creator\commissions\creator.commissions.evaluations.widget.js" />
+    <Content Include="Assets\js\innovation\commissions\innovation.commissions.create.js" />
+    <Content Include="Assets\js\innovation\commissions\innovation.commissions.datatable.widget.js" />
+    <Content Include="Assets\js\innovation\commissions\innovation.commissions.delete.js" />
+    <Content Include="Assets\js\innovation\commissions\innovation.commissions.editioncount.widget.js" />
+    <Content Include="Assets\js\innovation\commissions\innovation.commissions.evaluations.widget.js" />
+    <Content Include="Assets\js\innovation\commissions\innovation.commissions.totalcount.widget.js" />
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.tracks.widget.js" />
     <Content Include="Assets\js\creator\commissions\creator.commissions.totalcount.widget.js" />
     <Content Include="Assets\js\creator\commissions\creator.commissions.update.js" />
+    <Content Include="Assets\js\innovation\commissions\innovation.commissions.update.js" />
     <Content Include="Assets\js\innovation\playersexecutives\innovation.players.executives.create.js" />
     <Content Include="Assets\js\innovation\playersexecutives\innovation.players.executives.datatable.widget.js" />
     <Content Include="Assets\js\innovation\playersexecutives\innovation.players.executives.delete.js" />

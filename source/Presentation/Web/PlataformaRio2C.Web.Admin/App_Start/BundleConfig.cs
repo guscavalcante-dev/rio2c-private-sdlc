@@ -1143,7 +1143,6 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/collaborators/collaborators.maininformation.widget.js",
                 "~/Assets/js/collaborators/collaborators.socialnetworks.widget.js",
                 "~/Assets/js/collaborators/collaborators.onboardinginfo.widget.js",
-                "~/Assets/js/creator/commissions/creator.commissions.tracks.widget.js",
                 "~/Assets/js/creator/commissions/creator.commissions.evaluations.widget.js"
                 ));
 
