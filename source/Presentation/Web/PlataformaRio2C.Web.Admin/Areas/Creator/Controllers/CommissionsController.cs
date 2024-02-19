@@ -79,10 +79,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Creator.Controllers
 
             #endregion
 
-            searchViewModel.UpdateModelsAndLists(
-                //await this.innovationOrganizationTrackOptionGroupRepo.FindAllAsync(),
-                this.UserInterfaceLanguage);
-
             return View(searchViewModel);
         }
 
@@ -320,7 +316,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Creator.Controllers
 
         #region Create
 
-        /// <summary>Shows the create modal.</summary>
+        /// <summary>
+        /// Shows the create modal.
+        /// </summary>
         /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()
@@ -329,7 +327,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Creator.Controllers
 
             try
             {
-                cmd = new CreateCreatorCommissionCollaborator(await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync());
+                cmd = new CreateCreatorCommissionCollaborator();
             }
             catch (DomainException ex)
             {
@@ -350,58 +348,55 @@ namespace PlataformaRio2C.Web.Admin.Areas.Creator.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Create(/*CreateCreatorCommissionCollaborator cmd*/)
+        public async Task<ActionResult> Create(CreateCreatorCommissionCollaborator cmd)
         {
-            throw new NotImplementedException();
-            //var result = new AppValidationResult();
+            var result = new AppValidationResult();
 
-            //try
-            //{
-            //    if (!ModelState.IsValid)
-            //    {
-            //        throw new DomainException(Messages.CorrectFormValues);
-            //    }
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
 
-            //    cmd.UpdatePreSendProperties(
-            //        Constants.CollaboratorType.CommissionCreator,
-            //        this.AdminAccessControlDto.User.Id,
-            //        this.AdminAccessControlDto.User.Uid,
-            //        this.EditionDto.Id,
-            //        this.EditionDto.Uid,
-            //        this.UserInterfaceLanguage);
-            //    result = await this.CommandBus.Send(cmd);
-            //    if (!result.IsValid)
-            //    {
-            //        throw new DomainException(Messages.CorrectFormValues);
-            //    }
-            //}
-            //catch (DomainException ex)
-            //{
-            //    foreach (var error in result.Errors)
-            //    {
-            //        var target = error.Target ?? "";
-            //        ModelState.AddModelError(target, error.Message);
-            //    }
+                cmd.UpdatePreSendProperties(
+                    Constants.CollaboratorType.CommissionCreator,
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
 
-            //    cmd.UpdateDropdownProperties(await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync());
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
 
-            //    return Json(new
-            //    {
-            //        status = "error",
-            //        message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
-            //        pages = new List<dynamic>
-            //        {
-            //            new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
-            //        }
-            //    }, JsonRequestBehavior.AllowGet);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-            //    return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-            //}
-
-            //return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Member, Labels.CreatedM) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Member, Labels.CreatedM) });
         }
 
         #endregion
@@ -415,88 +410,82 @@ namespace PlataformaRio2C.Web.Admin.Areas.Creator.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUpdateModal(Guid? collaboratorUid, bool? isAddingToCurrentEdition)
         {
-            throw new NotImplementedException();
-            //UpdateCreatorCommissionCollaborator cmd;
+            UpdateCreatorCommissionCollaborator cmd;
 
-            //try
-            //{
-            //    cmd = new UpdateCreatorCommissionCollaborator(
-            //        await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
-            //        isAddingToCurrentEdition,
-            //        await this.attendeeCollaboratorRepo.FindTracksWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id),
-            //        await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync());
-            //}
-            //catch (DomainException ex)
-            //{
-            //    return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-            //}
+            try
+            {
+                cmd = new UpdateCreatorCommissionCollaborator(
+                    await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
+                    isAddingToCurrentEdition);
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
 
-            //return Json(new
-            //{
-            //    status = "success",
-            //    pages = new List<dynamic>
-            //    {
-            //        new { page = this.RenderRazorViewToString("Modals/UpdateModal", cmd), divIdOrClass = "#GlobalModalContainer" },
-            //    }
-            //}, JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/UpdateModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>Updates the specified tiny collaborator.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Update(/*UpdateCreatorCommissionCollaborator cmd*/)
+        public async Task<ActionResult> Update(UpdateCreatorCommissionCollaborator cmd)
         {
-            throw new NotImplementedException();
-            //var result = new AppValidationResult();
+            var result = new AppValidationResult();
 
-            //try
-            //{
-            //    if (!ModelState.IsValid)
-            //    {
-            //        throw new DomainException(Messages.CorrectFormValues);
-            //    }
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
 
-            //    cmd.UpdatePreSendProperties(
-            //        Constants.CollaboratorType.CommissionCreator,
-            //        this.AdminAccessControlDto.User.Id,
-            //        this.AdminAccessControlDto.User.Uid,
-            //        this.EditionDto.Id,
-            //        this.EditionDto.Uid,
-            //        this.UserInterfaceLanguage);
-            //    result = await this.CommandBus.Send(cmd);
-            //    if (!result.IsValid)
-            //    {
-            //        throw new DomainException(Messages.CorrectFormValues);
-            //    }
-            //}
-            //catch (DomainException ex)
-            //{
-            //    foreach (var error in result.Errors)
-            //    {
-            //        var target = error.Target ?? "";
-            //        ModelState.AddModelError(target, error.Message);
-            //    }
+                cmd.UpdatePreSendProperties(
+                    Constants.CollaboratorType.CommissionCreator,
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
 
-            //    cmd.UpdateDropdownProperties(await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync());
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
 
-            //    return Json(new
-            //    {
-            //        status = "error",
-            //        message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
-            //        pages = new List<dynamic>
-            //        {
-            //            new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
-            //        }
-            //    }, JsonRequestBehavior.AllowGet);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-            //    return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-            //}
-
-            //return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Member, Labels.UpdatedM) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Member, Labels.UpdatedM) });
         }
 
         #endregion

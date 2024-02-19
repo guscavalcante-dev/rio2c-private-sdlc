@@ -315,6 +315,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()
         {
+            //TODO: Refactor this! Create specific command and commandHandler "CreateMusicCommissionCollaborator" for this!
             var cmd = new CreateTinyCollaborator();
 
             return Json(new
@@ -331,6 +332,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
+        //TODO: Refactor this! Create specific command and commandHandler "CreateMusicCommissionCollaborator" for this!
         public async Task<ActionResult> Create(CreateTinyCollaborator cmd)
         {
             var result = new AppValidationResult();
@@ -397,6 +399,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
             try
             {
+                //TODO: Refactor this! Create specific command and commandHandler "UpdateMusicCommissionCollaborator" for this!
                 cmd = new UpdateTinyCollaborator(
                     await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
                     isAddingToCurrentEdition);
@@ -420,6 +423,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
+        //TODO: Refactor this! Create specific command and commandHandler "UpdateMusicCommissionCollaborator" for this!
         public async Task<ActionResult> Update(UpdateTinyCollaborator cmd)
         {
             var result = new AppValidationResult();

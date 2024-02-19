@@ -235,24 +235,6 @@ var CreatorCommissionsDataTableWidget = function () {
                     }
                 },
                 {
-                    data: 'Verticals',
-                    render: function (data, type, row, meta) {
-                        var html = '<ul class="m-0 pl-4">';
-
-                        //loop through all the row details to build output string
-                        for (var item in row.CreatorOrganizationTrackOptionGroupDtos) {
-                            if (row.CreatorOrganizationTrackOptionGroupDtos.hasOwnProperty(item)) {
-                                var r = row.CreatorOrganizationTrackOptionGroupDtos[item];
-                                html += '<li>' + r.GroupName + '</li>';
-                            }
-                        }
-
-                        html += '</ul>';
-
-                        return html;
-                    }
-                },
-                {
                     data: 'CreateDate',
                     render: function (data) {
 	                    return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');

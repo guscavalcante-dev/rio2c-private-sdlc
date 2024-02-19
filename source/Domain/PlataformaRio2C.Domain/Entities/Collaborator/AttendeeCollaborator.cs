@@ -384,29 +384,19 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Innovation Commission Attendee Collaborator
+        #region Base Commission Attendee Collaborator
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.
+        /// Initializes a new instance of the <see cref="AttendeeCollaborator" /> class.
         /// </summary>
         /// <param name="edition">The edition.</param>
-        /// <param name="attendeeInnovationOrganizationTracks">The innovation organization track options.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
-        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
-        /// <param name="apiHighlightPosition">The API highlight position.</param>
-        /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="collaborator">The collaborator.</param>
-        /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
         /// <param name="userId">The user identifier.</param>
-        public AttendeeCollaborator(
+        private AttendeeCollaborator(
             Edition edition,
-            List<AttendeeInnovationOrganizationTrack> attendeeInnovationOrganizationTracks,
             CollaboratorType collaboratorType,
-            bool? isApiDisplayEnabled,
-            int? apiHighlightPosition,
-            List<AttendeeOrganization> attendeeOrganizations,
             Collaborator collaborator,
-            bool shouldDeleteOrganizations,
             int userId)
         {
             this.Edition = edition;
@@ -414,34 +404,122 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.SetCreateDate(userId);
 
-            this.SynchronizeAttendeeCollaboratorType(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
-            this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
-            this.SynchronizeAttendeeInnovationOrganizationTracks(attendeeInnovationOrganizationTracks, userId);
+            //TODO: Create specific synchronizes for InnovationCommissionAttendeeCollaborator
+            //TODO: Review the "shouldDeleteOrganizations" logic. It seems deleting AttendeeOrganizationCollaborators incorrectly. This parameters allways come "true";
+            this.SynchronizeAttendeeCollaboratorType(collaboratorType, null, null, userId);
+            this.SynchronizeAttendeeOrganizationCollaborators(null, true, userId);
+        }
+
+        /// <summary>
+        /// Creates the base commission attendee collaborator.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="collaborator">The collaborator.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public static AttendeeCollaborator CreateBaseCommissionAttendeeCollaborator(
+            Edition edition,
+            CollaboratorType collaboratorType,
+            Collaborator collaborator,
+            int userId)
+        {
+            return new AttendeeCollaborator(
+                edition,
+                collaboratorType,
+                collaborator,
+                userId);
         }
 
         /// <summary>
         /// Innovations the commission attendee collaborator.
         /// </summary>
-        /// <param name="attendeeInnovationOrganizationTracks">The attendee innovation organization tracks.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
-        /// <param name="attendeeOrganizations">The attendee organizations.</param>
-        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
-        /// <param name="apiHighlightPosition">The API highlight position.</param>
-        /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
         /// <param name="userId">The user identifier.</param>
-        public void InnovationCommissionAttendeeCollaborator(
-            List<AttendeeInnovationOrganizationTrack> attendeeInnovationOrganizationTracks,
+        public void UpdateBaseCommissionAttendeeCollaborator(
             CollaboratorType collaboratorType,
-            List<AttendeeOrganization> attendeeOrganizations,
-            bool? isApiDisplayEnabled,
-            int? apiHighlightPosition,
-            bool shouldDeleteOrganizations,
             int userId)
         {
             this.SetUpdateDate(userId);
 
-            this.SynchronizeAttendeeCollaboratorType(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
-            this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
+            //TODO: Create specific synchronizes for InnovationCommissionAttendeeCollaborator
+            //TODO: Review the "shouldDeleteOrganizations" logic. It seems deleting AttendeeOrganizationCollaborators incorrectly. This parameters allways come "true";
+            this.SynchronizeAttendeeCollaboratorType(collaboratorType, null, null, userId);
+            this.SynchronizeAttendeeOrganizationCollaborators(null, true, userId);
+        }
+
+        #endregion
+
+        #region Innovation Commission Attendee Collaborator
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttendeeCollaborator" /> class.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="attendeeInnovationOrganizationTracks">The innovation organization track options.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="collaborator">The collaborator.</param>
+        /// <param name="userId">The user identifier.</param>
+        private AttendeeCollaborator(
+            Edition edition,
+            List<AttendeeInnovationOrganizationTrack> attendeeInnovationOrganizationTracks,
+            CollaboratorType collaboratorType,
+            Collaborator collaborator,
+            int userId)
+        {
+            this.Edition = edition;
+            this.Collaborator = collaborator;
+
+            this.SetCreateDate(userId);
+
+            //TODO: Create specific synchronizes for InnovationCommissionAttendeeCollaborator
+            //TODO: Review the "shouldDeleteOrganizations" logic. It seems deleting AttendeeOrganizationCollaborators incorrectly. This parameters allways come "true";
+            this.SynchronizeAttendeeCollaboratorType(collaboratorType, null, null, userId);
+            this.SynchronizeAttendeeOrganizationCollaborators(null, true, userId);
+            this.SynchronizeAttendeeInnovationOrganizationTracks(attendeeInnovationOrganizationTracks, userId);
+        }
+
+        /// <summary>
+        /// Creates the innovation commission attendee collaborator.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="attendeeInnovationOrganizationTracks">The attendee innovation organization tracks.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="collaborator">The collaborator.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public static AttendeeCollaborator CreateInnovationCommissionAttendeeCollaborator(
+            Edition edition,
+            List<AttendeeInnovationOrganizationTrack> attendeeInnovationOrganizationTracks,
+            CollaboratorType collaboratorType,
+            Collaborator collaborator,
+            int userId)
+        {
+            return new AttendeeCollaborator(
+                edition,
+                attendeeInnovationOrganizationTracks,
+                collaboratorType,
+                collaborator,
+                userId);
+        }
+
+        /// <summary>
+        /// Creates the innovation commission attendee collaborator.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganizationTracks">The attendee innovation organization tracks.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateInnovationCommissionAttendeeCollaborator(
+            List<AttendeeInnovationOrganizationTrack> attendeeInnovationOrganizationTracks,
+            CollaboratorType collaboratorType,
+            int userId)
+        {
+            this.SetUpdateDate(userId);
+
+            //TODO: Create specific synchronizes for InnovationCommissionAttendeeCollaborator
+            //TODO: Review the "shouldDeleteOrganizations" logic. It seems deleting AttendeeOrganizationCollaborators incorrectly. This parameters allways come "true";
+            this.SynchronizeAttendeeCollaboratorType(collaboratorType, null, null, userId);
+            this.SynchronizeAttendeeOrganizationCollaborators(null, true, userId);
             this.SynchronizeAttendeeInnovationOrganizationTracks(attendeeInnovationOrganizationTracks, userId);
         }
 
@@ -450,28 +528,20 @@ namespace PlataformaRio2C.Domain.Entities
         #region Audiovisual Commission Attendee Collaborator
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeCollaborator" /> class.
+        /// Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="projectType">Type of the project.</param>
-        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
-        /// <param name="apiHighlightPosition">The API highlight position.</param>
-        /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="collaborator">The collaborator.</param>
-        /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
         /// <param name="userId">The user identifier.</param>
-        public AttendeeCollaborator(
+        private AttendeeCollaborator(
             Edition edition,
             List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
             CollaboratorType collaboratorType,
             ProjectType projectType,
-            bool? isApiDisplayEnabled,
-            int? apiHighlightPosition,
-            List<AttendeeOrganization> attendeeOrganizations,
             Collaborator collaborator,
-            bool shouldDeleteOrganizations,
             int userId)
         {
             this.Edition = edition;
@@ -479,9 +549,39 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.SetCreateDate(userId);
 
-            this.SynchronizeAttendeeCollaboratorType(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
-            this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
+            //TODO: Create specific synchronizes for  AudiovisualCommissionAttendeeCollaborator
+            //TODO: Review the "shouldDeleteOrganizations" logic. It seems deleting AttendeeOrganizationCollaborators incorrectly. This parameters allways come "true";
+            this.SynchronizeAttendeeCollaboratorType(collaboratorType, null, null, userId);
+            this.SynchronizeAttendeeOrganizationCollaborators(null, true, userId);
             this.SynchronizeAttendeeCollaboratorInterests(attendeeCollaboratorInterests, projectType, userId);
+        }
+
+        /// <summary>
+        /// Creates the audiovisual commission attendee collaborator.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="projectType">Type of the project.</param>
+        /// <param name="collaborator">The collaborator.</param>
+        /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public static AttendeeCollaborator CreateAudiovisualCommissionAttendeeCollaborator(
+            Edition edition,
+            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
+            CollaboratorType collaboratorType,
+            ProjectType projectType,
+            Collaborator collaborator,
+            int userId)
+        {
+            return new AttendeeCollaborator(
+                edition, 
+                attendeeCollaboratorInterests, 
+                collaboratorType, 
+                projectType, 
+                collaborator, 
+                userId);
         }
 
         /// <summary>
@@ -490,25 +590,19 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="projectType">Type of the project.</param>
-        /// <param name="attendeeOrganizations">The attendee organizations.</param>
-        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
-        /// <param name="apiHighlightPosition">The API highlight position.</param>
-        /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateAudiovisualCommissionAttendeeCollaborator(
             List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
             CollaboratorType collaboratorType,
             ProjectType projectType,
-            List<AttendeeOrganization> attendeeOrganizations,
-            bool? isApiDisplayEnabled,
-            int? apiHighlightPosition,
-            bool shouldDeleteOrganizations,
             int userId)
         {
             this.SetUpdateDate(userId);
 
-            this.SynchronizeAttendeeCollaboratorType(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
-            this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
+            //TODO: Create specific synchronizes for  AudiovisualCommissionAttendeeCollaborator
+            //TODO: Review the "shouldDeleteOrganizations" logic. It seems deleting AttendeeOrganizationCollaborators incorrectly. This parameters allways come "true";
+            this.SynchronizeAttendeeCollaboratorType(collaboratorType, null, null, userId);
+            this.SynchronizeAttendeeOrganizationCollaborators(null, true, userId);
             this.SynchronizeAttendeeCollaboratorInterests(attendeeCollaboratorInterests, projectType, userId);
         }
 
