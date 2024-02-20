@@ -33,8 +33,6 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
     public static class ImageHelper
     {
         private static readonly List<string> AllowedImageFormats = new List<string> { "jpg", "jpeg", "png", "gif", "image/jpg", "image/jpeg", "image/png", "image/gif" };
-        //private static readonly int imageWidth = 200;
-        //private static readonly int imageHieght = 200;
 
         /// <summary>Uploads the original and cropped images.</summary>
         /// <param name="fileUid">The file uid.</param>

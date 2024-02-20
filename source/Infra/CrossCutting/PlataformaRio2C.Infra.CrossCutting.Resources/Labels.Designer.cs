@@ -970,6 +970,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cards.
+        /// </summary>
+        public static string CardsEN {
+            get {
+                return ResourceManager.GetString("CardsEN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Comissão de Cartoonito.
         /// </summary>
         public static string CartoonCommission {

@@ -282,6 +282,17 @@ namespace PlataformaRio2C.Domain.Dtos
                    || (attendeeOrganizationUids?.Any() == true &&  this.EditionAttendeeOrganizations?.Any(eao => attendeeOrganizationUids.Contains(eao.Uid)) == true);
         }
 
+        /// <summary>
+        /// Determines whether [has cards to show].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [has cards to show]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool HasCardsToShow()
+        {
+            return this.HasAnyCollaboratorType(Constants.CollaboratorType.CardsWidget);
+        }
+
         #endregion
 
         #region Onboarding

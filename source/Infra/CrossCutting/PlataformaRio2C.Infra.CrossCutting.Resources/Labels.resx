@@ -500,6 +500,9 @@
   <data name="Caption" xml:space="preserve">
     <value>Legenda:</value>
   </data>
+  <data name="CardsEN" xml:space="preserve">
+    <value>Cards</value>
+  </data>
   <data name="CartoonCommission" xml:space="preserve">
     <value>Comissão de Cartoonito</value>
   </data>

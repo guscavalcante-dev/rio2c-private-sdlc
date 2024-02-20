@@ -87,6 +87,15 @@ namespace PlataformaRio2C.Domain.Constants
             AdminCreator, CommissionCreator, PlayerExecutiveCreator, Creator
         };
 
+        #region Cards Widget
+
+        public static readonly string[] CardsWidget =
+        {
+            Speaker, CommissionInnovation, CommissionMusic, CommissionAudiovisual, PlayerExecutiveAudiovisual, PlayerExecutiveMusic
+        };
+
+        #endregion
+
         #region Networks
 
         public static readonly string[] NetworksArray =
