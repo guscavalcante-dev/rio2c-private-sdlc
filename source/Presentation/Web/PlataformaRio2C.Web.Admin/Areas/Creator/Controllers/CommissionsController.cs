@@ -72,8 +72,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Creator.Controllers
         {
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.StartupsCommission, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.CreatorsEN, null),
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CreatorCommission, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.CreatorEN, null),
                 new BreadcrumbItemHelper(Labels.Commission, Url.Action("Index", "Commissions", new { Area = "Creator" }))
             });
 
@@ -137,8 +137,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Creator.Controllers
 
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.StartupsCommission, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Startups, null),
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CreatorCommission, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Creator, null),
                 new BreadcrumbItemHelper(Labels.Commission, Url.Action("Index", "Commissions", new { Area = "Creator" })),
                 new BreadcrumbItemHelper(attendeeCollaboratorDto.Collaborator.GetFullName(), Url.Action("Details", "Commissions", new { Area = "Creator", id }))
             });

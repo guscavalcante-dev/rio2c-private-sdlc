@@ -1627,6 +1627,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Comissão de Creator.
+        /// </summary>
+        public static string CreatorCommission {
+            get {
+                return ResourceManager.GetString("CreatorCommission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Creator.
         /// </summary>
         public static string CreatorEN {

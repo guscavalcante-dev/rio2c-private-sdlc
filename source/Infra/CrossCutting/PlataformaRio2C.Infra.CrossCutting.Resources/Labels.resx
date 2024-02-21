@@ -762,6 +762,9 @@
   <data name="Creator" xml:space="preserve">
     <value>Criador</value>
   </data>
+  <data name="CreatorCommission" xml:space="preserve">
+    <value>Comissão de Creator</value>
+  </data>
   <data name="CreatorEN" xml:space="preserve">
     <value>Creator</value>
   </data>
