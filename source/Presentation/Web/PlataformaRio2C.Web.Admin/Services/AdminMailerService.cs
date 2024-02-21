@@ -317,6 +317,34 @@ namespace PlataformaRio2C.Web.Admin.Services
             });
         }
 
+        /// <summary>
+        /// Sends the creator commission welcome email.
+        /// </summary>
+        /// <param name="cmd">The command.</param>
+        /// <param name="sentEmailUid">The sent email uid.</param>
+        /// <returns></returns>
+        public MvcMailMessage SendCreatorCommissionWelcomeEmail(SendCreatorCommissionWelcomeEmailAsync cmd, Guid sentEmailUid)
+        {
+            this.SetCulture(cmd.UserInterfaceLanguage);
+
+            this.ViewData = new ViewDataDictionary(cmd);
+
+            return Populate(x =>
+            {
+                x.Subject = this.GetSubject(string.Format("Complete seu cadastro na Comissão de Creator do {0} | Complete your registration at {0} Creator Commission", cmd.Edition.Name), null);
+                x.ViewName = "CreatorCommissionWelcomeEmail";
+                x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
+                x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
+                ViewBag.SentEmailUid = sentEmailUid;
+                ViewBag.SiteUrl = this.siteUrl;
+
+                if (!string.IsNullOrEmpty(this.GetBccEmailRecipient(true)))
+                {
+                    x.Bcc.Add(this.GetBccEmailRecipient(true));
+                }
+            });
+        }
+
         #region Private methods
 
         /// <summary>
