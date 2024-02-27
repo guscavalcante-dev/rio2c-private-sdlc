@@ -12,12 +12,16 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Entities;
+using System;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
     /// <summary>UserDto</summary>
     public class UserDto
     {
+        public int Id { get; set; }
+        public Guid Uid { get; set; }
+
         public User User { get; set; }
         public Collaborator Collaborator { get; set; }
 

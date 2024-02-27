@@ -73,7 +73,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Creator.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CreatorCommission, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.CreatorEN, null),
+                new BreadcrumbItemHelper(Labels.Creator, null),
                 new BreadcrumbItemHelper(Labels.Commission, Url.Action("Index", "Commissions", new { Area = "Creator" }))
             });
 

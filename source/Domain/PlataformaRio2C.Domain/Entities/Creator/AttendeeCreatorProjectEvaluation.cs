@@ -26,6 +26,39 @@ namespace PlataformaRio2C.Domain.Entities
         public AttendeeCreatorProject AttendeeCreatorProject { get; private set; }
         public User EvaluatorUser { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttendeeCreatorProjectEvaluation"/> class.
+        /// </summary>
+        /// <param name="attendeeCreatorProject">The attendee creator project.</param>
+        /// <param name="evaluatorUser">The evaluator user.</param>
+        /// <param name="grade">The grade.</param>
+        /// <param name="userId">The user identifier.</param>
+        public AttendeeCreatorProjectEvaluation(
+            AttendeeCreatorProject attendeeCreatorProject,
+            User evaluatorUser,
+            decimal grade,
+            int userId)
+        {
+            this.AttendeeCreatorProject = attendeeCreatorProject;
+            this.EvaluatorUser = evaluatorUser;
+            this.AttendeeCreatorProjectId = attendeeCreatorProject.Id;
+            this.EvaluatorUserId = evaluatorUser.Id;
+            this.Grade = grade;
+
+            this.SetCreateDate(userId);
+        }
+
+        /// <summary>
+        /// Updates the specified grade.
+        /// </summary>
+        /// <param name="grade">The grade.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(decimal grade, int userId)
+        {
+            this.Grade = grade;
+            this.SetUpdateDate(userId);
+        }
+
         #region Validations
 
         public override bool IsValid()

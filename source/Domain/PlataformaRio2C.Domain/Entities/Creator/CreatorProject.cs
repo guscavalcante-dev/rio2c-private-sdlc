@@ -53,9 +53,6 @@ namespace PlataformaRio2C.Domain.Entities
         public string AgentName { get; private set; }
         public string PhoneNumber { get; private set; }
         public string Curriculum { get; private set; }
-        public int SubGenreInterestId { get; private set; }
-        public int SegmentInterestId { get; private set; }
-        public int FormatInterestId { get; private set; }
         public string Title { get; private set; }
         public string Logline { get; private set; }
         public string Description { get; private set; }

@@ -97,6 +97,16 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;li&gt;Projetos disponíveis para avaliação a partir de: {0}&lt;/li&gt;
+        ///&lt;li&gt;Período de avaliação: {0} a {1}&lt;/li&gt;.
+        /// </summary>
+        public static string CommissionProjectsDates {
+            get {
+                return ResourceManager.GetString("CommissionProjectsDates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A programação do Rio2C será divulgada a partir de fevereiro..
         /// </summary>
         public static string ConferenceSoon {
@@ -316,16 +326,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string LinksImageTeaser {
             get {
                 return ResourceManager.GetString("LinksImageTeaser", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;li&gt;Projetos disponíveis para avaliação a partir de: {0}&lt;/li&gt;
-        ///&lt;li&gt;Período de avaliação: {0} a {1}&lt;/li&gt;.
-        /// </summary>
-        public static string MusicCommissionProjectsDates {
-            get {
-                return ResourceManager.GetString("MusicCommissionProjectsDates", resourceCulture);
             }
         }
         

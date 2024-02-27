@@ -192,6 +192,9 @@
     <Compile Include="Dtos\Cartoon\CartoonProjectCreatorDto.cs" />
     <Compile Include="Dtos\Cartoon\CartoonProjectDto.cs" />
     <Compile Include="Dtos\Cartoon\AttendeeCartoonProjectJsonDto.cs" />
+    <Compile Include="Dtos\Creator\AttendeeCreatorProjectEvaluationDto.cs" />
+    <Compile Include="Dtos\Creator\AttendeeCreatorProjectDto.cs" />
+    <Compile Include="Dtos\Creator\CreatorProjectDto.cs" />
     <Compile Include="Dtos\Innovation\InnovationOrganization\API\InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto.cs" />
     <Compile Include="Dtos\Innovation\AttendeeCollaborator\AttendeeCollaboratorInnovationEvaluationsWidgetDto.cs" />
     <Compile Include="Dtos\Innovation\AttendeeCollaborator\AttendeeCollaboratorTracksWidgetDto.cs" />
@@ -552,6 +555,8 @@
     <Compile Include="Interfaces\Repositories\Addresses\ICityRepository.cs" />
     <Compile Include="Interfaces\Repositories\Addresses\ICountryRepository.cs" />
     <Compile Include="Interfaces\Repositories\Addresses\IStateRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Creator\IAttendeeCretorProjectRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Creator\ICreatorProjectRepository.cs" />
     <Compile Include="Interfaces\Repositories\Editions\IEditionEventRepository.cs" />
     <Compile Include="Interfaces\Repositories\Innovation\IAttendeeInnovationOrganizationRepository.cs" />
     <Compile Include="Interfaces\Repositories\Innovation\IInnovationOrganizationSustainableDevelopmentObjectivesOptionRepository.cs" />

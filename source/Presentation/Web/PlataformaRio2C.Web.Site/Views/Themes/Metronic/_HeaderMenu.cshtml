@@ -10,6 +10,7 @@
     var musicCollaboratorTypesCount = userAccessControlDto?.CountCollaboratorTypes(Constants.CollaboratorType.Musics);
     var innovationCollaboratorTypesCount = userAccessControlDto?.CountCollaboratorTypes(Constants.CollaboratorType.Innovations);
     var cartoonCollaboratorTypesCount = userAccessControlDto?.CountCollaboratorTypes(Constants.CollaboratorType.Cartoons);
+    var creatorCollaboratorTypesCount = userAccessControlDto?.CountCollaboratorTypes(Constants.CollaboratorType.Creators);
 }
 <ul class="kt-menu__nav">
     <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "Index", "Home", null)" aria-haspopup="true">
@@ -194,9 +195,26 @@
         }
         //Disabled on https://softohq.atlassian.net/browse/RIO2CMY-801
         @*<li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "Projects", "Cartoon")" aria-haspopup="true">
-            <a class="kt-menu__link" href="@projectsUrl">
-                <span class="kt-menu__link-text">@Labels.Cartoonito</span>
-            </a>
-        </li>*@
+                <a class="kt-menu__link" href="@projectsUrl">
+                    <span class="kt-menu__link-text">@Labels.Cartoonito</span>
+                </a>
+            </li>*@
+    }
+    @if (creatorCollaboratorTypesCount > 0)
+    {
+        var projectsUrl = Url.Action("Index", "Projects", new { Area = "" });
+        if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.CommissionCreator) == true)
+        {
+            projectsUrl = Url.Action("EvaluationList", "Projects", new { Area = "Creator" });
+            if (editionDto?.IsCreatorProjectEvaluationStarted() != true)
+            {
+                projectsUrl = Url.Action("Index", "Projects", new { Area = "Creator" });
+            }
+            <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "Projects", "Creator")" aria-haspopup="true">
+                <a class="kt-menu__link" href="@projectsUrl">
+                    <span class="kt-menu__link-text">@Labels.Creator</span>
+                </a>
+            </li>
+        }
     }
 </ul>

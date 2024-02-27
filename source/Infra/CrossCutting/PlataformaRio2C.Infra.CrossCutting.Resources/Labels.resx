@@ -760,18 +760,12 @@
     <value>Motivação Criativa</value>
   </data>
   <data name="Creator" xml:space="preserve">
-    <value>Criador</value>
+    <value>Creator</value>
   </data>
   <data name="CreatorCommission" xml:space="preserve">
     <value>Comissão de Creator</value>
   </data>
-  <data name="CreatorEN" xml:space="preserve">
-    <value>Creator</value>
-  </data>
   <data name="Creators" xml:space="preserve">
-    <value>Criadores</value>
-  </data>
-  <data name="CreatorsEN" xml:space="preserve">
     <value>Creators</value>
   </data>
   <data name="Curatorship" xml:space="preserve">

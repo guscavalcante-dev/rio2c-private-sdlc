@@ -770,6 +770,7 @@
     <Compile Include="ViewModels\Common\Cartoon\Commissions\CartoonCommissionSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Collaborators\CollaboratorSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Creator\Commissions\CreatorCommissionSearchViewModel.cs" />
+    <Compile Include="ViewModels\Common\Creator\Projects\CreatorProjectSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Holdings\HoldingSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Innovation\Commissions\InnovationCommissionSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Innovation\Projects\InnovationProjectSearchViewModel.cs" />
