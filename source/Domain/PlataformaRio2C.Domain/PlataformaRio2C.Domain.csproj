@@ -428,6 +428,10 @@
     <Compile Include="Entities\Addresses\City.cs" />
     <Compile Include="Entities\Addresses\Country.cs" />
     <Compile Include="Entities\Addresses\State.cs" />
+    <Compile Include="Entities\Creator\AttendeeCreatorProjectEvaluation.cs" />
+    <Compile Include="Entities\Creator\CreatorProject.cs" />
+    <Compile Include="Entities\Creator\AttendeeCreatorProject.cs" />
+    <Compile Include="Entities\Creator\CreatorProjectInterest.cs" />
     <Compile Include="Entities\Editions\EditionEvent.cs" />
     <Compile Include="Entities\Innovation\AttendeeInnovationOrganizationObjective.cs" />
     <Compile Include="Entities\Innovation\AttendeeCollaboratorInnovationOrganizationTrack.cs" />
