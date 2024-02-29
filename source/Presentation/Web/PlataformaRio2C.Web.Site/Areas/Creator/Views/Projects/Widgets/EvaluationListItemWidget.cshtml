@@ -1,6 +1,7 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2c.Infra.Data.FileRepository.Helpers
 @using PlataformaRio2C.Domain.Statics
+@using PlataformaRio2C.Domain.Entities
 @model AttendeeCreatorProjectDto
 @{
     var evaluationDetailsAction = Url.Action("EvaluationDetails", "Projects", new
@@ -33,14 +34,39 @@
                         <span style="font-weight: 600; font-size: 17px; line-height: 19px; color: #403D50;">@(Model.CreatorProjectDto?.Title ?? "-")</span>
                     </div>
                 </div>
-                @*<div class="row">
+                <div class="row">
                     <div class="col-12 mt-3">
-                        <div style="font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; width: 50px; display: inline-block;">@Labels.Format:</div>
-                        <span class="kt-badge kt-badge--inline kt-badge--info mt-1 ml-3">
-                            @(Model.CreatorProjectDto?.Name ?? "-")
-                        </span>
+                        <div style="font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; display: inline-block;">@Labels.Segment:</div>
+                        @foreach (var interestDto in Model.CreatorProjectDto.GetInterestDtosByGroupUid(InterestGroup.CreatorSegment.Uid))
+                        {
+                            <span class="kt-badge kt-badge--inline kt-badge--info mt-1">
+                                @interestDto.InterestName.GetSeparatorTranslation(Culture, '|')
+                            </span>
+                        }
                     </div>
-                </div>*@
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <div style="font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; display: inline-block;">@Labels.SubGenre:</div>
+                        @foreach (var interestDto in Model.CreatorProjectDto.GetInterestDtosByGroupUid(InterestGroup.CreatorSubGenre.Uid))
+                        {
+                            <span class="kt-badge kt-badge--inline kt-badge--info mt-1">
+                                @interestDto.InterestName.GetSeparatorTranslation(Culture, '|')
+                            </span>
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <div style="font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; display: inline-block;">@Labels.Format:</div>
+                        @foreach (var interestDto in Model.CreatorProjectDto.GetInterestDtosByGroupUid(InterestGroup.CreatorFormat.Uid))
+                        {
+                            <span class="kt-badge kt-badge--inline kt-badge--info mt-1 h-auto">
+                                @interestDto.InterestName.GetSeparatorTranslation(Culture, '|')
+                            </span>
+                        }
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-12 mt-4">
                         @Html.Partial("Shared/_Evaluation", Model)

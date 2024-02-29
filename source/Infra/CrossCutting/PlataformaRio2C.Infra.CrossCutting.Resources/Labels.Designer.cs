@@ -5893,6 +5893,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Segmento.
+        /// </summary>
+        public static string Segment {
+            get {
+                return ResourceManager.GetString("Segment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Selecione.
         /// </summary>
         public static string Select {

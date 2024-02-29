@@ -15,6 +15,7 @@ using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -51,6 +52,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset TermsAcceptanceDate { get;  set; }
 
         public IEnumerable<AttendeeCreatorProjectDto> AttendeeCreatorProjectDtos { get; set; }
+        public IEnumerable<InterestDto> InterestDtos { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CreatorProjectDto"/> class.</summary>
         public CreatorProjectDto()
@@ -64,6 +66,17 @@ namespace PlataformaRio2C.Domain.Dtos
         public string GetTitleAbbreviation()
         {
             return this.Title?.GetTwoLetterCode();
+        }
+
+        /// <summary>
+        /// Gets the interest dtos by group uid.
+        /// </summary>
+        /// <param name="interestGroupUid">The interest group uid.</param>
+        /// <param name="culture">The culture.</param>
+        /// <returns></returns>
+        public List<InterestDto> GetInterestDtosByGroupUid(Guid interestGroupUid)
+        {
+            return this.InterestDtos?.Where(dto => dto.InterestGroupUid == interestGroupUid)?.ToList();
         }
     }
 }

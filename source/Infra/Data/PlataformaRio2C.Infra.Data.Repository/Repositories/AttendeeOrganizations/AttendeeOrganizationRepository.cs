@@ -864,10 +864,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<IPagedList<MatchAttendeeOrganizationDto>> FindAllDtoByMatchingProjectBuyerAsync(int editionId, ProjectDto projectDto, string searchKeywords, int page, int pageSize)
         {
             var buyerOrganizationType = projectDto.ProjectType.OrganizationTypes.FirstOrDefault(ot => !ot.IsDeleted && !ot.IsSeller);
-            var lookingForInterests = projectDto.ProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.LookingFor.Uid)?.Select(pid => pid.Interest.Uid)?.ToList() ?? new List<Guid>();
-            var projectStatusInterests = projectDto.ProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.ProjectStatus.Uid)?.Select(pid => pid.Interest.Uid)?.ToList() ?? new List<Guid>();
-            var platformsInterests = projectDto.ProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.Platforms.Uid)?.Select(pid => pid.Interest.Uid)?.ToList() ?? new List<Guid>();
-            var genreInterests = projectDto.ProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.Genre.Uid)?.Select(pid => pid.Interest.Uid)?.ToList() ?? new List<Guid>();
+            var lookingForInterests = projectDto.ProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.AudiovisualLookingFor.Uid)?.Select(pid => pid.Interest.Uid)?.ToList() ?? new List<Guid>();
+            var projectStatusInterests = projectDto.ProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.AudiovisualProjectStatus.Uid)?.Select(pid => pid.Interest.Uid)?.ToList() ?? new List<Guid>();
+            var platformsInterests = projectDto.ProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.AudiovisualPlatforms.Uid)?.Select(pid => pid.Interest.Uid)?.ToList() ?? new List<Guid>();
+            var genreInterests = projectDto.ProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.AudiovisualGenre.Uid)?.Select(pid => pid.Interest.Uid)?.ToList() ?? new List<Guid>();
             var matchInterests = lookingForInterests
                                  .Union(projectStatusInterests)
                                  .Union(platformsInterests)

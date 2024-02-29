@@ -528,7 +528,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                 ProducerName = p.SellerAttendeeOrganization.Organization.Name,
                                                 ProducerImageUploadDate = p.SellerAttendeeOrganization.Organization.ImageUploadDate,
                                                 ProducerUid = p.SellerAttendeeOrganization.Organization.Uid,
-                                                ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted && i.Interest.InterestGroup.Uid == InterestGroup.Genre.Uid).Select(i => new ProjectInterestDto
+                                                ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted && i.Interest.InterestGroup.Uid == InterestGroup.AudiovisualGenre.Uid).Select(i => new ProjectInterestDto
                                                 {
                                                     Interest = i.Interest,
                                                     InterestGroup = i.Interest.InterestGroup
@@ -877,10 +877,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var matchInterestsGroups = new List<Guid>
             {
-                InterestGroup.LookingFor.Uid,
-                InterestGroup.ProjectStatus.Uid,
-                InterestGroup.Platforms.Uid,
-                InterestGroup.Genre.Uid
+                InterestGroup.AudiovisualLookingFor.Uid,
+                InterestGroup.AudiovisualProjectStatus.Uid,
+                InterestGroup.AudiovisualPlatforms.Uid,
+                InterestGroup.AudiovisualGenre.Uid
             };
 
             var query = this.GetBaseQuery()
@@ -994,7 +994,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                     CommissionEvaluation = ce,
                                                     EvaluatorUser = ce.EvaluatorUser
                                                 }),
-                                                ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted && i.Interest.InterestGroup.Uid == InterestGroup.Genre.Uid).Select(i => new ProjectInterestDto
+                                                ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted && i.Interest.InterestGroup.Uid == InterestGroup.AudiovisualGenre.Uid).Select(i => new ProjectInterestDto
                                                 {
                                                     Interest = i.Interest,
                                                     InterestGroup = i.Interest.InterestGroup
@@ -1929,10 +1929,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var matchInterestsGroups = new List<Guid>
             {
-                InterestGroup.LookingFor.Uid,
-                InterestGroup.ProjectStatus.Uid,
-                InterestGroup.Platforms.Uid,
-                InterestGroup.Genre.Uid
+                InterestGroup.AudiovisualLookingFor.Uid,
+                InterestGroup.AudiovisualProjectStatus.Uid,
+                InterestGroup.AudiovisualPlatforms.Uid,
+                InterestGroup.AudiovisualGenre.Uid
             };
 
             var query = this.GetBaseQuery()

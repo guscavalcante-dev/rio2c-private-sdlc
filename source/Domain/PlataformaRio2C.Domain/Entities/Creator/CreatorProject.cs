@@ -25,9 +25,10 @@ namespace PlataformaRio2C.Domain.Entities
 
         public static readonly int NameMaxLength = 500;
         public static readonly int DocumentMaxLength = 50;
+        public static readonly int EmailMaxLength = 300;
         public static readonly int AgentNameMaxLength = 300;
         public static readonly int PhoneNumberMaxLength = 50;
-        public static readonly int CurriculumMaxLength = 700;
+        public static readonly int CurriculumMaxLength = 750;
         public static readonly int TitleMaxLength = 300;
         public static readonly int LoglineMaxLength = 300;
         public static readonly int DescriptionMaxLength = 5000;
@@ -44,12 +45,14 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int ArticleFileExtensionMaxLength = 10;
         public static readonly int ClippingFileExtensionMaxLength = 10;
         public static readonly int OtherFileExtensionMaxLength = 10;
+        public static readonly int OtherFileDescriptionMaxLength = 400;
         public static readonly int LinksMaxLength = 700;
 
         #endregion
 
         public string Name { get; private set; }
         public string Document { get; private set; }
+        public string Email { get; private set; }
         public string AgentName { get; private set; }
         public string PhoneNumber { get; private set; }
         public string Curriculum { get; private set; }
@@ -68,12 +71,13 @@ namespace PlataformaRio2C.Domain.Entities
         public string ProjectPublicNotice { get; private set; }
         public string PreviouslyDevelopedProjects { get; private set; }
         public string AssociatedInstitutions { get; private set; }
-        public DateTimeOffset ArticleFileUploadDate { get; private set; }
+        public DateTimeOffset? ArticleFileUploadDate { get; private set; }
         public string ArticleFileExtension { get; private set; }
-        public DateTimeOffset ClippingFileUploadDate { get; private set; }
+        public DateTimeOffset? ClippingFileUploadDate { get; private set; }
         public string ClippingFileExtension { get; private set; }
-        public DateTimeOffset OtherFileUploadDate { get; private set; }
+        public DateTimeOffset? OtherFileUploadDate { get; private set; }
         public string OtherFileExtension { get; private set; }
+        public string OtherFileDescription { get; private set; }
         public string Links { get; private set; }
         public DateTimeOffset TermsAcceptanceDate { get; private set; }
 
@@ -88,6 +92,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.ValidateName();
             this.ValidateDocument();
+            this.ValidateEmail();
             this.ValidateAgentName();
             this.ValidatePhoneNumber();
             this.ValidateCurriculum();
@@ -109,7 +114,9 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateArticleFileExtension();
             this.ValidateClippingFileExtension();
             this.ValidateOtherFileExtension();
+            this.ValidateOtherFileDescription();
             this.ValidateLinks();
+
             this.ValidateCreatorProjectInterests();
 
             return this.ValidationResult.IsValid;
@@ -128,6 +135,14 @@ namespace PlataformaRio2C.Domain.Entities
             if (string.IsNullOrEmpty(this.Document) || this.Document.Length > DocumentMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(Document), DocumentMaxLength, 1), new string[] { nameof(Document) }));
+            }
+        }
+
+        private void ValidateEmail()
+        {
+            if (string.IsNullOrEmpty(this.Email) || this.Email.Length > EmailMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(Email), EmailMaxLength, 1), new string[] { nameof(Email) }));
             }
         }
 
@@ -296,6 +311,14 @@ namespace PlataformaRio2C.Domain.Entities
             if (string.IsNullOrEmpty(this.OtherFileExtension) || this.OtherFileExtension.Length > OtherFileExtensionMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(OtherFileExtension), OtherFileExtensionMaxLength, 1), new string[] { nameof(OtherFileExtension) }));
+            }
+        }
+
+        private void ValidateOtherFileDescription()
+        {
+            if (string.IsNullOrEmpty(this.OtherFileDescription) || this.OtherFileDescription.Length > OtherFileDescriptionMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(OtherFileDescription), OtherFileDescriptionMaxLength, 1), new string[] { nameof(OtherFileDescription) }));
             }
         }
 

@@ -27,7 +27,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset? ProducerImageUploadDate { get; set; }
         public Guid ProducerUid { get; set; }
         public List<string> Genre { get; set; }
-        public IEnumerable<ProjectInterestDto> Genres => this.GetAllInterestsByInterestGroupUid(InterestGroup.Genre.Uid);
+        public IEnumerable<ProjectInterestDto> Genres => this.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualGenre.Uid);
         public bool? IsPitching { get; set; }
         public DateTimeOffset CreateDate { get; set; }
         public DateTimeOffset? FinishDate { get; set; }

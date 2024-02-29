@@ -26,7 +26,7 @@ namespace PlataformaRio2C.Application.ViewModels
     public class CreatorProjectSearchViewModel
     {
         [Display(Name = nameof(Labels.Search), ResourceType = typeof(Labels))]
-        public string Search { get; set; }
+        public string SearchKeywords { get; set; }
 
         [Display(Name = nameof(Labels.Status), ResourceType = typeof(Labels))]
         public Guid? EvaluationStatusUid { get; set; }
@@ -60,7 +60,7 @@ namespace PlataformaRio2C.Application.ViewModels
             int? pageSize = 10,
             int? id = null)
         {
-            this.Search = search;
+            this.SearchKeywords = search;
             this.EvaluationStatusUid = evaluationStatusUid;
             this.ShowBusinessRounds = showBusinessRounds;
             this.Page = page;

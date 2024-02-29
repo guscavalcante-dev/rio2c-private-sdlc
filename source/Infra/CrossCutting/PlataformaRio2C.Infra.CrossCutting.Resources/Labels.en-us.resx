@@ -2521,6 +2521,9 @@
   <data name="SeeReasonForRefusal" xml:space="preserve">
     <value>See reason for refusal</value>
   </data>
+  <data name="Segment" xml:space="preserve">
+    <value>Segment</value>
+  </data>
   <data name="Select" xml:space="preserve">
     <value>Select</value>
     <comment>Selecione</comment>

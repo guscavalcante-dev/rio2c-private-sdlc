@@ -26,7 +26,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
 
             // Relationships
             this.HasRequired(t => t.CreatorProject)
-                .WithMany()
+                .WithMany(t => t.CreatorProjectInterests)
                 .HasForeignKey(d => d.CreatorProjectId);
 
             this.HasRequired(t => t.Interest)

@@ -232,7 +232,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                .FindByKeywords(searchKeywords)
                                .Select(acp => new AttendeeCreatorProjectDto
                                {
-                                   CreateDate = acp.CreateDate
+                                   Uid = acp.Uid,
+                                   Grade = acp.Grade,
+                                   CreateDate = acp.CreateDate,
+                                   CreatorProjectDto = new CreatorProjectDto
+                                   {
+                                       Uid = acp.CreatorProject.Uid,
+                                       Title = acp.CreatorProject.Title,
+                                       InterestDtos = acp.CreatorProject.CreatorProjectInterests.Select(cpi => new InterestDto
+                                       {
+                                           InterestName = cpi.Interest.Name,
+                                           InterestGroupUid = cpi.Interest.InterestGroup.Uid,
+                                           InterestGroupName = cpi.Interest.InterestGroup.Name
+                                       })
+                                   },
                                });
 
             return await query

@@ -137,7 +137,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Creator.Controllers
 
             var projects = await this.attendeeCreatorProjectRepo.FindAllDtosPagedAsync(
                 this.EditionDto.Id,
-                searchViewModel.Search,
+                searchViewModel.SearchKeywords,
                 searchViewModel.EvaluationStatusUid,
                 searchViewModel.Page.Value,
                 searchViewModel.PageSize.Value);

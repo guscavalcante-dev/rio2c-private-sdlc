@@ -83,7 +83,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             #endregion
 
-            ViewBag.GenreInterests = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.Genre.Uid);
+            ViewBag.GenreInterests = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.AudiovisualGenre.Uid);
             ViewBag.TargetAudience = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id);
 
             return View(searchViewModel);
@@ -287,7 +287,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
                 firstLine = true;
                 var platforms = string.Empty;
-                var projectPlatformsDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.Platforms.Uid);
+                var projectPlatformsDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualPlatforms.Uid);
                 foreach (var interestDto in projectPlatformsDtos)
                 {
                     platforms += string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(UserInterfaceLanguage, '|'));
@@ -297,7 +297,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
                 firstLine = true;
                 var status = string.Empty;
-                var projectStatusDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.ProjectStatus.Uid);
+                var projectStatusDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualProjectStatus.Uid);
                 foreach (var interestDto in projectStatusDtos)
                 {
                     status += string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(UserInterfaceLanguage as string, '|'));
@@ -307,7 +307,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
                 firstLine = true;
                 var lookingFor = string.Empty;
-                var projectLookingForDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.LookingFor.Uid);
+                var projectLookingForDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualLookingFor.Uid);
                 foreach (var interestDto in projectLookingForDtos)
                 {
                     lookingFor += string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(UserInterfaceLanguage as string, '|'));
@@ -317,7 +317,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
                 firstLine = true;
                 var format = string.Empty;
-                var projectFormatDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.Format.Uid);
+                var projectFormatDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualFormat.Uid);
                 foreach (var interestDto in projectFormatDtos)
                 {
                     format += string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(UserInterfaceLanguage as string, '|'));
@@ -327,7 +327,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
                 firstLine = true;
                 var genre = string.Empty;
-                var projectGenreDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.Genre.Uid);
+                var projectGenreDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualGenre.Uid);
                 foreach (var interestDto in projectGenreDtos)
                 {
                     genre += string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(UserInterfaceLanguage as string, '|'));
@@ -337,7 +337,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
                 firstLine = true;
                 var subgenre = string.Empty;
-                var projectSubgenreDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.SubGenre.Uid);
+                var projectSubgenreDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualSubGenre.Uid);
                 foreach (var interestDto in projectSubgenreDtos)
                 {
                     subgenre += string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(UserInterfaceLanguage as string, '|'));
