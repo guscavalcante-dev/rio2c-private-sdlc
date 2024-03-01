@@ -26,9 +26,9 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int VideoUrlPasswordMaxLength = 100;
         public static readonly int Music1UrlMaxLength = 300;
         public static readonly int Music2UrlMaxLength = 300;
-        public static readonly int Clipping1MaxLength = 300;
-        public static readonly int Clipping2MaxLength = 300;
-        public static readonly int Clipping3MaxLength = 300;
+        public static readonly int Clipping1MaxLength = 5000;
+        public static readonly int Clipping2MaxLength = 5000;
+        public static readonly int Clipping3MaxLength = 5000;
         public static readonly int ReleaseMaxLength = 12000;
         public static readonly int ReasonMaxLength = 500;
 
@@ -78,7 +78,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Clipping1 = clipping1?.Trim();
             this.Clipping2 = clipping2?.Trim();
             this.Clipping3 = clipping3?.Trim();
-            this.Release = release.Trim();
+            this.Release = release?.Trim();
 
             //this.ProjectEvaluationStatusId = ProjectEvaluationStatus.UnderEvaluation.Id;
 
