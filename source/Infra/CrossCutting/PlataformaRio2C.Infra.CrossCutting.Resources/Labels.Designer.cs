@@ -1618,7 +1618,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Criador.
+        ///   Looks up a localized string similar to Creator.
         /// </summary>
         public static string Creator {
             get {
@@ -1636,29 +1636,11 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Creator.
-        /// </summary>
-        public static string CreatorEN {
-            get {
-                return ResourceManager.GetString("CreatorEN", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Criadores.
+        ///   Looks up a localized string similar to Creators.
         /// </summary>
         public static string Creators {
             get {
                 return ResourceManager.GetString("Creators", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Creators.
-        /// </summary>
-        public static string CreatorsEN {
-            get {
-                return ResourceManager.GetString("CreatorsEN", resourceCulture);
             }
         }
         
@@ -5907,6 +5889,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string SeeReasonForRefusal {
             get {
                 return ResourceManager.GetString("SeeReasonForRefusal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Segmento.
+        /// </summary>
+        public static string Segment {
+            get {
+                return ResourceManager.GetString("Segment", resourceCulture);
             }
         }
         

@@ -93,7 +93,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             ViewBag.Page = 1;
             ViewBag.PageSize = 10;
 
-            ViewBag.Interests = (await this.interestRepo.FindAllByInterestGroupUidAsync(InterestGroup.Genre.Uid)).GetSeparatorTranslation(m => m.Name, this.UserInterfaceLanguage, '|');
+            ViewBag.Interests = (await this.interestRepo.FindAllByInterestGroupUidAsync(InterestGroup.AudiovisualGenre.Uid)).GetSeparatorTranslation(m => m.Name, this.UserInterfaceLanguage, '|');
             ViewBag.ProjectEvaluationStatuses = (await this.evaluationStatusRepo.FindAllAsync()).GetSeparatorTranslation(m => m.Name, this.UserInterfaceLanguage, '|');
 
             return View();
@@ -140,7 +140,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 else
                 {
                     //Admin cannot have Collaborator/AttendeeCollaborator, so, get all Interests to list in Dropdown.
-                    interests = await this.interestRepo.FindAllByInterestGroupUidAsync(InterestGroup.Genre.Uid);
+                    interests = await this.interestRepo.FindAllByInterestGroupUidAsync(InterestGroup.AudiovisualGenre.Uid);
                 }
             }
             else
@@ -635,7 +635,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             else
             {
                 //Admin dont have Collaborator/AttendeeCollaborator, so, list all Interests in Dropdown.
-                var interests = await this.interestRepo.FindAllByInterestGroupUidAsync(InterestGroup.Genre.Uid);
+                var interests = await this.interestRepo.FindAllByInterestGroupUidAsync(InterestGroup.AudiovisualGenre.Uid);
                 interestsUids = interests.Select(i => i.Uid as Guid?).ToList();
             }
 

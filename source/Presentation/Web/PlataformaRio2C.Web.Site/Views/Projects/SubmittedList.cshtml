@@ -54,7 +54,7 @@
                                                         <span class="kt-widget__desc">
                                                             @Labels.Genre:
                                                             @{
-                                                                var projectInterestsDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.Genre.Uid);
+                                                                var projectInterestsDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualGenre.Uid);
                                                                 if (projectInterestsDtos?.Any() == true)
                                                                 {
                                                                     foreach (var projectInterestDto in projectInterestsDtos)

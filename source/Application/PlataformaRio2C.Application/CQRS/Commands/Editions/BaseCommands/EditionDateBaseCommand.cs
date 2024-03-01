@@ -179,6 +179,36 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         #endregion
 
+        #region Creator - Commissions
+
+        [Display(Name = nameof(CreatorProjectSubmitStartDate), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public DateTime CreatorProjectSubmitStartDate { get; set; }
+
+        [Display(Name = nameof(CreatorProjectSubmitEndDate), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [GreaterThanOrEqualTo(nameof(CreatorProjectSubmitStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
+        public DateTime CreatorProjectSubmitEndDate { get; set; }
+
+        [Display(Name = nameof(CreatorCommissionEvaluationStartDate), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public DateTime CreatorCommissionEvaluationStartDate { get; set; }
+
+        [Display(Name = nameof(CreatorCommissionEvaluationEndDate), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [GreaterThanOrEqualTo(nameof(CreatorCommissionEvaluationStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
+        public DateTime CreatorCommissionEvaluationEndDate { get; set; }
+
+        [Display(Name = nameof(CreatorCommissionMaximumApprovedProjectsCount), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public int CreatorCommissionMaximumApprovedProjectsCount { get; set; }
+
+        [Display(Name = nameof(CreatorCommissionMinimumEvaluationsCount), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public int CreatorCommissionMinimumEvaluationsCount { get; set; }
+
+        #endregion
+
         /// <summary>
         /// Initializes a new instance of the <see cref="EditionDateBaseCommand"/> class.
         /// </summary>
@@ -246,6 +276,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.CartoonCommissionEvaluationEndDate = editionDto.Edition.CartoonCommissionEvaluationEndDate.ToBrazilTimeZone();
             this.CartoonCommissionMaximumApprovedProjectsCount = editionDto.Edition.CartoonCommissionMaximumApprovedProjectsCount;
             this.CartoonCommissionMinimumEvaluationsCount = editionDto.Edition.CartoonCommissionMinimumEvaluationsCount;
+
+            // Creator - Commissions
+            this.CreatorProjectSubmitStartDate = editionDto.Edition.CreatorProjectSubmitStartDate.ToBrazilTimeZone();
+            this.CreatorProjectSubmitEndDate = editionDto.Edition.CreatorProjectSubmitEndDate.ToBrazilTimeZone();
+            this.CreatorCommissionEvaluationStartDate = editionDto.Edition.CreatorCommissionEvaluationStartDate.ToBrazilTimeZone();
+            this.CreatorCommissionEvaluationEndDate = editionDto.Edition.CreatorCommissionEvaluationEndDate.ToBrazilTimeZone();
+            this.CreatorCommissionMaximumApprovedProjectsCount = editionDto.Edition.CreatorCommissionMaximumApprovedProjectsCount;
+            this.CreatorCommissionMinimumEvaluationsCount = editionDto.Edition.CreatorCommissionMinimumEvaluationsCount;
         }
     }
 }

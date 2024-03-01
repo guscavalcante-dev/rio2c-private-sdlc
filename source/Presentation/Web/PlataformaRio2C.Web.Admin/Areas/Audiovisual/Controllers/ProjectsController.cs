@@ -109,7 +109,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             #endregion
 
             searchViewModel.UpdateModelsAndLists(
-                await this.interestRepo.FindAllByInterestGroupUidAsync(InterestGroup.Genre.Uid),
+                await this.interestRepo.FindAllByInterestGroupUidAsync(InterestGroup.AudiovisualGenre.Uid),
                 await this.evaluationStatusRepo.FindAllAsync(),
                 this.UserInterfaceLanguage);
 

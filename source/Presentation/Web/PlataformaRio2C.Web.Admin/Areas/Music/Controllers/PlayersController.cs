@@ -222,12 +222,12 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.Twitter ?? "-";
 
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetOrganizationDescriptionBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value ?? "-";
-                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.LookingFor.Uid, this.UserInterfaceLanguage);
-                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.ProjectStatus.Uid, this.UserInterfaceLanguage);
-                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.Platforms.Uid, this.UserInterfaceLanguage);
-                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.Format.Uid, this.UserInterfaceLanguage);
-                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.Genre.Uid, this.UserInterfaceLanguage);
-                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.SubGenre.Uid, this.UserInterfaceLanguage);
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.AudiovisualLookingFor.Uid, this.UserInterfaceLanguage);
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.AudiovisualProjectStatus.Uid, this.UserInterfaceLanguage);
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.AudiovisualPlatforms.Uid, this.UserInterfaceLanguage);
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.AudiovisualFormat.Uid, this.UserInterfaceLanguage);
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.AudiovisualGenre.Uid, this.UserInterfaceLanguage);
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.AudiovisualSubGenre.Uid, this.UserInterfaceLanguage);
 
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.OrganizationTargetAudiencesDtos?.Select(otaDto => otaDto.TargetAudienceName?.GetSeparatorTranslation(this.UserInterfaceLanguage, '|'))?.ToString("; ");
 
