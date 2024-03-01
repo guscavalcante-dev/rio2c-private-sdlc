@@ -31,6 +31,7 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int InstagramMaxLength = 300;
         public static readonly int TwitterMaxLength = 300;
         public static readonly int YoutubeMaxLength = 300;
+        public static readonly int TiktokMaxLength = 300;
 
         public int MusicBandTypeId { get; private set; }
         public string Name { get; private set; }

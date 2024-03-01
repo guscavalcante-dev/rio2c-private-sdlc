@@ -29,6 +29,8 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Site.Controllers;
 using PlataformaRio2C.Web.Site.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
+using PlataformaRio2C.Domain.Dtos;
+using X.PagedList;
 
 namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 {
@@ -144,14 +146,16 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
 
-            var projects = await this.musicProjectRepo.FindAllDtosPagedAsync(
-                this.EditionDto.Id,
-                searchKeywords,
-                musicGenreUid,
-                evaluationStatusUid,
-                showBusinessRounds ?? false,
-                page.Value,
-                pageSize.Value);
+            //TODO: Disabled on RIO2CMY - 1076, by customer request. We need to reactivate this after music project evaluation are closed on 2024 edition.
+            //var projects = await this.musicProjectRepo.FindAllDtosPagedAsync(
+            //    this.EditionDto.Id,
+            //    searchKeywords,
+            //    musicGenreUid,
+            //    evaluationStatusUid,
+            //    showBusinessRounds ?? false,
+            //    page.Value,
+            //    pageSize.Value);
+            var projects = new List<MusicProjectDto>().ToPagedList();
 
             ViewBag.SearchKeywords = searchKeywords;
             ViewBag.MusicGenreUid = musicGenreUid;
