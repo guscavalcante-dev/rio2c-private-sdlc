@@ -1693,6 +1693,9 @@
     <value>Name</value>
     <comment>Razão Social</comment>
   </data>
+  <data name="NameOrCompanyName" xml:space="preserve">
+    <value>Name or company name</value>
+  </data>
   <data name="Names" xml:space="preserve">
     <value>Names</value>
     <comment>Nomes</comment>
@@ -2096,7 +2099,7 @@
     <comment>Assessoria</comment>
   </data>
   <data name="PreviouslyDevelopedProjects" xml:space="preserve">
-    <value>Previously developed projects</value>
+    <value>Have carried out other projects previously? Which?</value>
   </data>
   <data name="Print" xml:space="preserve">
     <value>Print</value>
@@ -2197,13 +2200,13 @@
     <comment>Informações adicionais sobre o projeto</comment>
   </data>
   <data name="ProjectAssociatedInstitutions" xml:space="preserve">
-    <value>Project associated institutions</value>
+    <value>Is the project associated with any Association or Institution? Which?</value>
   </data>
   <data name="ProjectAudienceReach" xml:space="preserve">
-    <value>Project audience reach</value>
+    <value>What was the audience reach on the online platform?</value>
   </data>
   <data name="ProjectAwards" xml:space="preserve">
-    <value>Project awards</value>
+    <value>Did the project win or be nominated for any awards? Which?</value>
   </data>
   <data name="ProjectDetails" xml:space="preserve">
     <value>Project's details</value>
@@ -2246,10 +2249,10 @@
     <comment>Nenhum Player selecionado para avaliação</comment>
   </data>
   <data name="ProjectOnlinePlatforms" xml:space="preserve">
-    <value>Online platforms where the project is available</value>
+    <value>Is the project available on an online platform that does not hold the rights to it? Which?</value>
   </data>
   <data name="ProjectPublicNotice" xml:space="preserve">
-    <value>Project public notice</value>
+    <value>Was the project included in any public notice? Which?</value>
   </data>
   <data name="ProjectRefused" xml:space="preserve">
     <value>Refused</value>

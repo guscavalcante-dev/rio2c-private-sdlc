@@ -8,7 +8,6 @@
     {
         Area = "Creator",
         id = Model.Id,
-        //step = 0,
         searchKeywords = ViewBag.SearchKeywords,
         evaluationStatusUid = ViewBag.EvaluationStatusUid,
         Page = ViewBag.Page,
@@ -32,6 +31,11 @@
                 <div class="row">
                     <div class="col-12 mt-3" style="min-height:41px;">
                         <span style="font-weight: 600; font-size: 17px; line-height: 19px; color: #403D50;">@(Model.CreatorProjectDto?.Title ?? "-")</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-2">
+                        <span style="font-weight: normal; font-size: 13px; line-height: 19px; color: #898C98;">@(Model.CreatorProjectDto?.Logline ?? "-")</span>
                     </div>
                 </div>
                 <div class="row">

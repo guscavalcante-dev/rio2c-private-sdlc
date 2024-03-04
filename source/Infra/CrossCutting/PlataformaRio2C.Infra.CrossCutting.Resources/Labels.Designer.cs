@@ -3886,6 +3886,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nome ou nome da empresa.
+        /// </summary>
+        public static string NameOrCompanyName {
+            get {
+                return ResourceManager.GetString("NameOrCompanyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nomes.
         /// </summary>
         public static string Names {
@@ -4853,7 +4862,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Projetos desenvolvidos anteriormente.
+        ///   Looks up a localized string similar to Já realizou outros projetos anteriormente? Quais?.
         /// </summary>
         public static string PreviouslyDevelopedProjects {
             get {
@@ -5105,7 +5114,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Instituições associadas ao projeto.
+        ///   Looks up a localized string similar to O projeto está associado à alguma Associação ou Instituição? Quais?.
         /// </summary>
         public static string ProjectAssociatedInstitutions {
             get {
@@ -5114,7 +5123,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Alcance de público do projeto.
+        ///   Looks up a localized string similar to Qual foi o alcance de público em plataforma online?.
         /// </summary>
         public static string ProjectAudienceReach {
             get {
@@ -5123,7 +5132,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Prêmios que o projeto ganhou.
+        ///   Looks up a localized string similar to O projeto ganhou ou foi indicado a algum prêmio? Quais?.
         /// </summary>
         public static string ProjectAwards {
             get {
@@ -5231,7 +5240,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Plataformas online onde o projeto está disponível.
+        ///   Looks up a localized string similar to O projeto está disponível em plataforma online que não detenha os direitos sobre ele? Quais?.
         /// </summary>
         public static string ProjectOnlinePlatforms {
             get {
@@ -5240,7 +5249,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Editais onde o projeto apareceu.
+        ///   Looks up a localized string similar to O projeto foi contemplado em algum edital? Quais?.
         /// </summary>
         public static string ProjectPublicNotice {
             get {
@@ -6312,6 +6321,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ShowAllParticipants {
             get {
                 return ResourceManager.GetString("ShowAllParticipants", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mostrar todos os patrocinadores.
+        /// </summary>
+        public static string ShowAllSponsored {
+            get {
+                return ResourceManager.GetString("ShowAllSponsored", resourceCulture);
             }
         }
         

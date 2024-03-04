@@ -2,7 +2,7 @@
 @model AttendeeCreatorProjectDto
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
-    ViewBag.Title = $"{Labels.Creator} {Model.CreatorProjectDto?.Title}";
+    ViewBag.Title = $"{Labels.Creator} | {Model.CreatorProjectDto?.Title}";
     var totalProjectsCount = ViewBag.TotalProjectsCount as int?;
     var currentProjectIndex = ViewBag.CurrentProjectIndex as int?;
 
@@ -46,11 +46,14 @@
 <div class="row">
     <div class="col-md-12">
         <div class="row">
-            <!--begin:Main Information Widget-->
             <div class="col-12">
                 <div id="ProjectMainInformationWidget" class="kt-portlet" style="min-height: 350px;"></div>
             </div>
-            <!--end:Main Information Widget-->
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div id="ProjectInformationWidget" class="kt-portlet" style="min-height: 350px;"></div>
+            </div>
         </div>
         @*<div class="row">
             <div class="col-md-12">
@@ -63,16 +66,16 @@
             </div>
         </div>*@
         <!--<div class="row">-->
-            <!--begin:Evaluation Widget-->
-            <!--<div class="col-md-6">
-                <div id="ProjectEvaluationWidget" class="kt-portlet" style="min-height: 296px;"></div>
-            </div>-->
-            <!--end:Evaluation Widget-->
-            <!--begin:Project Evaluators Widget-->
-            <!--<div class="col-md-6">
-                <div id="ProjectEvaluatorsWidget" class="kt-portlet" style="min-height: 296px;"></div>
-            </div>-->
-            <!--end:Project Evaluators Widget-->
+        <!--begin:Evaluation Widget-->
+        <!--<div class="col-md-6">
+        <div id="ProjectEvaluationWidget" class="kt-portlet" style="min-height: 296px;"></div>
+    </div>-->
+        <!--end:Evaluation Widget-->
+        <!--begin:Project Evaluators Widget-->
+        <!--<div class="col-md-6">
+        <div id="ProjectEvaluatorsWidget" class="kt-portlet" style="min-height: 296px;"></div>
+    </div>-->
+        <!--end:Project Evaluators Widget-->
         <!--</div>-->
     </div>
 </div>
@@ -91,7 +94,8 @@
         };
 
         jQuery(document).ready(function () {
-            CreatorProjectsMainInformationWidget.init();           
+            CreatorProjectsMainInformationWidget.init();
+            CreatorProjectsProjectInformationWidget.init();
             CreatorProjectsEvaluationWidget.init();
             CreatorProjectsEvaluatorsWidget.init();
         });

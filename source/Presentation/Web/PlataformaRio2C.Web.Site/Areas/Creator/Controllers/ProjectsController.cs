@@ -209,7 +209,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Creator.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CreatorProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Creator, Url.Action("EvaluationList", "Projects", new { Area = "Creator", searchViewModel.SearchKeywords, searchViewModel.EvaluationStatusUid, searchViewModel.Page, searchViewModel.PageSize })),
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("EvaluationList", "Projects", new { Area = "Creator", searchViewModel.SearchKeywords, searchViewModel.EvaluationStatusUid, searchViewModel.Page, searchViewModel.PageSize })),
                 new BreadcrumbItemHelper(attendeeCreatorProjectDto?.CreatorProjectDto?.Title ?? Labels.Project, Url.Action("EvaluationDetails", "Projects", new { Area = "Creator", searchViewModel.Id }))
             });
 
@@ -314,6 +314,35 @@ namespace PlataformaRio2C.Web.Site.Areas.Creator.Controllers
                 pages = new List<dynamic>
                 {
                     new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", attendeeCreatorProjectDto), divIdOrClass = "#ProjectMainInformationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Project Information Widget
+
+        /// <summary>
+        /// Shows the project information widget.
+        /// </summary>
+        /// <param name="attendeeCreatorProjectUid">The attendee creator project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionCreator)]
+        public async Task<ActionResult> ShowProjectInformationWidget(Guid? attendeeCreatorProjectUid)
+        {
+            var attendeeCreatorProjectDto = await this.attendeeCreatorProjectRepo.FindProjectInformationWidgetDtoAsync(attendeeCreatorProjectUid ?? Guid.Empty);
+            if (attendeeCreatorProjectDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/ProjectInformationWidget", attendeeCreatorProjectDto), divIdOrClass = "#ProjectInformationWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }

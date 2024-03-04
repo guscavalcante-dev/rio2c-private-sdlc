@@ -1692,6 +1692,9 @@
     <value>Nome</value>
     <comment>Nome</comment>
   </data>
+  <data name="NameOrCompanyName" xml:space="preserve">
+    <value>Nome ou nome da empresa</value>
+  </data>
   <data name="Names" xml:space="preserve">
     <value>Nomes</value>
     <comment>Nomes</comment>
@@ -2099,7 +2102,7 @@
     <comment>Assessoria</comment>
   </data>
   <data name="PreviouslyDevelopedProjects" xml:space="preserve">
-    <value>Projetos desenvolvidos anteriormente</value>
+    <value>Já realizou outros projetos anteriormente? Quais?</value>
   </data>
   <data name="Print" xml:space="preserve">
     <value>Imprimir</value>
@@ -2199,13 +2202,13 @@
     <comment>Informações adicionais sobre o projeto</comment>
   </data>
   <data name="ProjectAssociatedInstitutions" xml:space="preserve">
-    <value>Instituições associadas ao projeto</value>
+    <value>O projeto está associado à alguma Associação ou Instituição? Quais?</value>
   </data>
   <data name="ProjectAudienceReach" xml:space="preserve">
-    <value>Alcance de público do projeto</value>
+    <value>Qual foi o alcance de público em plataforma online?</value>
   </data>
   <data name="ProjectAwards" xml:space="preserve">
-    <value>Prêmios que o projeto ganhou</value>
+    <value>O projeto ganhou ou foi indicado a algum prêmio? Quais?</value>
   </data>
   <data name="ProjectDetails" xml:space="preserve">
     <value>Detalhes do Projeto</value>
@@ -2248,10 +2251,10 @@
     <comment>Nenhum Player selecionado para avaliação</comment>
   </data>
   <data name="ProjectOnlinePlatforms" xml:space="preserve">
-    <value>Plataformas online onde o projeto está disponível</value>
+    <value>O projeto está disponível em plataforma online que não detenha os direitos sobre ele? Quais?</value>
   </data>
   <data name="ProjectPublicNotice" xml:space="preserve">
-    <value>Editais onde o projeto apareceu</value>
+    <value>O projeto foi contemplado em algum edital? Quais?</value>
   </data>
   <data name="ProjectRefused" xml:space="preserve">
     <value>Reprovado</value>
@@ -2695,6 +2698,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="ShowAllParticipants" xml:space="preserve">
     <value>Exibir todos os participantes</value>
     <comment>Exibir todos os participantes</comment>
+  </data>
+  <data name="ShowAllSponsored" xml:space="preserve">
+    <value>Mostrar todos os patrocinadores</value>
   </data>
   <data name="ShowAllSponsors" xml:space="preserve">
     <value>Exibir todos os patrocinadores</value>

@@ -6,17 +6,17 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 03-01-2024
 // ***********************************************************************
-// <copyright file="creator.projects.maininformation.widget.js" company="Softo">
+// <copyright file="creator.projects.projectinformation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var CreatorProjectsMainInformationWidget = function () {
+var CreatorProjectsProjectInformationWidget = function () {
 
-    var widgetElementId = '#ProjectMainInformationWidget';
+    var widgetElementId = '#ProjectInformationWidget';
     var widgetElement = $(widgetElementId);
- 
+
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         KTApp.initTooltips();
@@ -31,7 +31,7 @@ var CreatorProjectsMainInformationWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.attendeeCreatorProjectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Creator/Projects/ShowMainInformationWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Creator/Projects/ShowProjectInformationWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -52,40 +52,10 @@ var CreatorProjectsMainInformationWidget = function () {
         });
     };
 
-    // Evaluation Grade ---------------------------------------------------------------------------
-    var submitEvaluationGrade = function (creatorProjectId) {
-        var jsonParameters = new Object();
-        jsonParameters.creatorProjectId = creatorProjectId;
-        jsonParameters.grade = $('#AttendeeCreatorProjectEvaluationGradeMain').val();
-
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Creator/Projects/Evaluate'), jsonParameters, function (data) {
-            MyRio2cCommon.handleAjaxReturn({
-                data: data,
-                // Success
-                onSuccess: function () {
-                },
-                // Error
-                onError: function () {
-                }
-            });
-        })
-            .fail(function () {
-            })
-            .always(function () {
-                MyRio2cCommon.unblock();
-                CreatorProjectsEvaluationWidget.init();
-                CreatorProjectsEvaluatorsWidget.init();
-                CreatorProjectsMainInformationWidget.init();
-            });
-    };
-
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
-        },
-        submitEvaluationGrade: function (creatorProjectId) {
-            submitEvaluationGrade(creatorProjectId);
-        },
+        }
     };
 }();

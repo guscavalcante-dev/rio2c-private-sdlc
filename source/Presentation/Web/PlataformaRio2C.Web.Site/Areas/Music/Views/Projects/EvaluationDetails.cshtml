@@ -2,7 +2,7 @@
 @model MusicProjectDto
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
-    ViewBag.Title = $"{Labels.Music} {Model.AttendeeMusicBandDto?.MusicBand?.Name}";
+    ViewBag.Title = $"{Labels.Music} | {Model.AttendeeMusicBandDto?.MusicBand?.Name}";
     var totalMusicProjectsCount = ViewBag.MusicProjectsTotalCount as int?;
     var currentMusicProjectIndex = ViewBag.CurrentMusicProjectIndex as int?;
 

@@ -509,6 +509,7 @@ namespace PlataformaRio2C.Web.Site
 
             bundles.Add(new ScriptBundle("~/bundles/js/creator.projects.widget.js").Include(
                 "~/Assets/js/creator/projects/creator.projects.maininformation.widget.js",
+                "~/Assets/js/creator/projects/creator.projects.projectinformation.widget.js",
                 "~/Assets/js/creator/projects/creator.projects.evaluators.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/creator.projects.evaluation.list.widget.js").Include(

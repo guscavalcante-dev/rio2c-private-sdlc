@@ -26,6 +26,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public string Document { get;  set; }
         public string AgentName { get;  set; }
         public string PhoneNumber { get;  set; }
+        public string Email { get; set; }
         public string Curriculum { get;  set; }
         public string Title { get;  set; }
         public string Logline { get;  set; }
