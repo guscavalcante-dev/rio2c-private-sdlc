@@ -26,8 +26,8 @@ namespace PlataformaRio2C.Domain.Entities
         public int EditionId { get; private set; }
         public decimal? Grade { get; private set; }
         public int EvaluationsCount { get; private set; }
-        public DateTimeOffset LastEvaluationDate { get; private set; }
-        public DateTimeOffset EvaluationEmailSendDate { get; private set; }
+        public DateTimeOffset? LastEvaluationDate { get; private set; }
+        public DateTimeOffset? EvaluationEmailSendDate { get; private set; }
 
         public virtual CreatorProject CreatorProject { get; private set; }
         public virtual Edition Edition { get; private set; }

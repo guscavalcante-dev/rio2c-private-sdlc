@@ -507,6 +507,10 @@ namespace PlataformaRio2C.Web.Site
 
             #region Projects - Commissions
 
+            bundles.Add(new ScriptBundle("~/bundles/js/creator.projects.widget.js").Include(
+                "~/Assets/js/creator/projects/creator.projects.maininformation.widget.js",
+                "~/Assets/js/creator/projects/creator.projects.evaluators.widget.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/js/creator.projects.evaluation.list.widget.js").Include(
                 "~/Assets/js/creator/projects/creator.projects.evaluation.list.widget.js",
                 "~/Scripts/jquery.unobtrusive-ajax.js"));

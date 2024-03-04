@@ -188,377 +188,137 @@ namespace PlataformaRio2C.Web.Site.Areas.Creator.Controllers
 
         #endregion
 
-        //#region Details
-
-        ///// <summary>
-        ///// Evaluations the details.
-        ///// </summary>
-        ///// <param name="searchViewModel">The search view model.</param>
-        ///// <returns></returns>
-        //[AuthorizeCollaboratorType(Types = Constants.CollaboratorType.CommissionCreator)]
-        //public async Task<ActionResult> EvaluationDetails(CreatorProjectSearchViewModel searchViewModel)
-        //{
-        //    if (this.EditionDto?.IsCreatorProjectEvaluationStarted() != true)
-        //    {
-        //        this.StatusMessageToastr(Messages.OutOfEvaluationPeriod, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("Index", "Projects", new { Area = "Creator" });
-        //    }
-
-        //    var attendeeCreatorOrganizationDto = await this.attendeeCreatorOrganizationRepo.FindDtoToEvaluateAsync(searchViewModel.Id ?? 0);
-        //    var attendeeCollaboratorCreatorOrganizationTrackOptionsGroupUids = await this.GetAttendeeCollaboratorCreatorOrganizationTrackOptionsGroupUids();
-
-        //    if (attendeeCreatorOrganizationDto == null ||
-        //        attendeeCreatorOrganizationDto.AttendeeCreatorOrganizationTrackDtos.Any(aiotDto => attendeeCollaboratorCreatorOrganizationTrackOptionsGroupUids.Contains(aiotDto.CreatorOrganizationTrackOptionGroup.Uid)) == false)
-        //    {
-        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("EvaluationList", "Projects", new { Area = "Creator" });
-        //    }
-
-        //    #region Breadcrumb
-
-        //    ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.StartupsProjects, new List<BreadcrumbItemHelper> {
-        //        new BreadcrumbItemHelper(Labels.Startups, Url.Action("EvaluationList", "Projects", new { Area = "Creator", searchViewModel.Search, searchViewModel.CreatorOrganizationTrackOptionGroupUid, searchViewModel.EvaluationStatusUid, searchViewModel.Page, searchViewModel.PageSize })),
-        //        new BreadcrumbItemHelper(attendeeCreatorOrganizationDto?.CreatorOrganization?.Name ?? Labels.Project, Url.Action("EvaluationDetails", "Projects", new { Area = "Creator", searchViewModel.Id }))
-        //    });
-
-        //    #endregion
-
-        //    var innovationOrganizationTrackOptionGroupsUids = await this.GetSearchCreatorOrganizationTrackOptionGroupUids(searchViewModel.CreatorOrganizationTrackOptionGroupUid);
-
-        //    var allCreatorOrganizationsIds = await this.attendeeCreatorOrganizationRepo.FindAllCreatorOrganizationsIdsPagedAsync(
-        //        this.EditionDto.Edition.Id,
-        //        searchViewModel.Search,
-        //        innovationOrganizationTrackOptionGroupsUids,
-        //        searchViewModel.EvaluationStatusUid,
-        //        searchViewModel.ShowBusinessRounds,
-        //        searchViewModel.Page.Value,
-        //        searchViewModel.PageSize.Value);
-
-        //    var currentCreatorProjectIdIndex = Array.IndexOf(allCreatorOrganizationsIds, searchViewModel.Id.Value) + 1; //Index start at 0, its a fix to "start at 1"
-
-        //    ViewBag.CreatorProjectSearchViewModel = searchViewModel;
-        //    ViewBag.CurrentCreatorProjectIndex = currentCreatorProjectIdIndex;
-        //    ViewBag.ApprovedAttendeeCreatorOrganizationsIds = await this.attendeeCreatorOrganizationRepo.FindAllApprovedAttendeeCreatorOrganizationsIdsAsync(this.EditionDto.Edition.Id);
-        //    ViewBag.CreatorOrganizationsTotalCount = await this.attendeeCreatorOrganizationRepo.CountPagedAsync(
-        //        this.EditionDto.Edition.Id,
-        //        searchViewModel.Search,
-        //        innovationOrganizationTrackOptionGroupsUids,
-        //        searchViewModel.EvaluationStatusUid,
-        //        searchViewModel.ShowBusinessRounds,
-        //        searchViewModel.Page.Value,
-        //        searchViewModel.PageSize.Value);
-
-        //    return View(attendeeCreatorOrganizationDto);
-        //}
-
-        ///// <summary>
-        ///// Previouses the evaluation details.
-        ///// </summary>
-        ///// <param name="searchViewModel">The search view model.</param>
-        ///// <returns></returns>
-        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionCreator)]
-        //public async Task<ActionResult> PreviousEvaluationDetails(CreatorProjectSearchViewModel searchViewModel)
-        //{
-        //    var innovationOrganizationTrackOptionGroupsUids = await this.GetSearchCreatorOrganizationTrackOptionGroupUids(searchViewModel.CreatorOrganizationTrackOptionGroupUid);
-
-        //    var allCreatorOrganizationsIds = await this.attendeeCreatorOrganizationRepo.FindAllCreatorOrganizationsIdsPagedAsync(
-        //        this.EditionDto.Edition.Id,
-        //        searchViewModel.Search,
-        //        innovationOrganizationTrackOptionGroupsUids,
-        //        searchViewModel.EvaluationStatusUid,
-        //        searchViewModel.ShowBusinessRounds,
-        //        searchViewModel.Page.Value,
-        //        searchViewModel.PageSize.Value);
-
-        //    var currentCreatorProjectIdIndex = Array.IndexOf(allCreatorOrganizationsIds, searchViewModel.Id.Value);
-        //    var previousProjectId = allCreatorOrganizationsIds.ElementAtOrDefault(currentCreatorProjectIdIndex - 1);
-        //    if (previousProjectId == 0)
-        //    {
-        //        previousProjectId = searchViewModel.Id.Value;
-        //    }
-        //    searchViewModel.Id = previousProjectId;
-
-        //    return RedirectToAction("EvaluationDetails", searchViewModel);
-        //}
-
-        ///// <summary>
-        ///// Nexts the evaluation details.
-        ///// </summary>
-        ///// <param name="searchViewModel">The search view model.</param>
-        ///// <returns></returns>
-        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionCreator)]
-        //public async Task<ActionResult> NextEvaluationDetails(CreatorProjectSearchViewModel searchViewModel)
-        //{
-        //    var innovationOrganizationTrackOptionsUids = await this.GetSearchCreatorOrganizationTrackOptionGroupUids(searchViewModel.CreatorOrganizationTrackOptionGroupUid);
-
-        //    var allCreatorOrganizationsIds = await this.attendeeCreatorOrganizationRepo.FindAllCreatorOrganizationsIdsPagedAsync(
-        //        this.EditionDto.Edition.Id,
-        //        searchViewModel.Search,
-        //        innovationOrganizationTrackOptionsUids,
-        //        searchViewModel.EvaluationStatusUid,
-        //        searchViewModel.ShowBusinessRounds,
-        //        searchViewModel.Page.Value,
-        //        searchViewModel.PageSize.Value);
-
-        //    var currentCreatorProjectIdIndex = Array.IndexOf(allCreatorOrganizationsIds, searchViewModel.Id.Value);
-        //    var nextProjectId = allCreatorOrganizationsIds.ElementAtOrDefault(currentCreatorProjectIdIndex + 1);
-        //    if (nextProjectId == 0)
-        //    {
-        //        nextProjectId = searchViewModel.Id.Value;
-        //    }
-        //    searchViewModel.Id = nextProjectId;
-
-        //    return RedirectToAction("EvaluationDetails", searchViewModel);
-        //}
-
-        //#endregion
-
-        //#region Main Information Widget
-
-        ///// <summary>
-        ///// Shows the main information widget.
-        ///// </summary>
-        ///// <param name="attendeeCreatorOrganizationUid">The attendee innovation organization uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionCreator)]
-        //public async Task<ActionResult> ShowMainInformationWidget(Guid? attendeeCreatorOrganizationUid)
-        //{
-        //    var attendeeCreatorOrganizationDto = await this.attendeeCreatorOrganizationRepo.FindMainInformationWidgetDtoAsync(attendeeCreatorOrganizationUid ?? Guid.Empty);
-        //    if (attendeeCreatorOrganizationDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Startup, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
-
-        //    #region AttendeeCollaborator and AttendeeCreatorOrganization Tracks validation
-
-        //    var attendeeCollaboratorCreatorOrganizationTrackOptionGroupsUids = await this.GetAttendeeCollaboratorCreatorOrganizationTrackOptionsGroupUids();
-        //    if (attendeeCreatorOrganizationDto.AttendeeCreatorOrganizationTrackDtos.Any(aiotDto => attendeeCollaboratorCreatorOrganizationTrackOptionGroupsUids.Contains(aiotDto.CreatorOrganizationTrackOptionGroup?.Uid)) == false)
-        //    {
-        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("EvaluationList", "Projects", new { Area = "Creator" });
-        //    }
-
-        //    #endregion
-
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", attendeeCreatorOrganizationDto), divIdOrClass = "#ProjectMainInformationWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
-
-        //#endregion
-
-        //#region Business Information Widget
-
-        ///// <summary>
-        ///// Shows the main information widget.
-        ///// </summary>
-        ///// <param name="attendeeCreatorOrganizationUid">The attendee innovation organization uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowBusinessInformationWidget(Guid? attendeeCreatorOrganizationUid)
-        //{
-        //    var attendeeCreatorOrganizationDto = await this.attendeeCreatorOrganizationRepo.FindBusinessInformationWidgetDtoAsync(attendeeCreatorOrganizationUid ?? Guid.Empty);
-        //    if (attendeeCreatorOrganizationDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Startup, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
-
-        //    #region AttendeeCollaborator and AttendeeCreatorOrganization Tracks validation
-
-        //    var attendeeCollaboratorCreatorOrganizationTrackOptionGroupsUids = await this.GetAttendeeCollaboratorCreatorOrganizationTrackOptionsGroupUids();
-        //    if (attendeeCreatorOrganizationDto.AttendeeCreatorOrganizationTrackDtos.Any(aiotDto => attendeeCollaboratorCreatorOrganizationTrackOptionGroupsUids.Contains(aiotDto.CreatorOrganizationTrackOptionGroup?.Uid)) == false)
-        //    {
-        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("EvaluationList", "Projects", new { Area = "Creator" });
-        //    }
-
-        //    #endregion
-
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/BusinessInformationWidget", attendeeCreatorOrganizationDto), divIdOrClass = "#ProjectBusinessInformationWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
-
-        //#endregion
-
-        //#region Tracks Widget
-
-        ///// <summary>
-        ///// Shows the tracks widget.
-        ///// </summary>
-        ///// <param name="attendeeCreatorOrganizationUid">The attendee innovation organization uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionCreator)]
-        //public async Task<ActionResult> ShowTracksWidget(Guid? attendeeCreatorOrganizationUid)
-        //{
-        //    var attendeeCreatorOrganizationDto = await this.attendeeCreatorOrganizationRepo.FindTracksWidgetDtoAsync(attendeeCreatorOrganizationUid ?? Guid.Empty);
-        //    if (attendeeCreatorOrganizationDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Startup, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
-
-        //    #region AttendeeCollaborator and AttendeeCreatorOrganization Tracks validation
-
-        //    var attendeeCollaboratorCreatorOrganizationTrackOptionGroupsUids = await this.GetAttendeeCollaboratorCreatorOrganizationTrackOptionsGroupUids();
-        //    if (attendeeCreatorOrganizationDto.AttendeeCreatorOrganizationTrackDtos.Any(aiotDto => attendeeCollaboratorCreatorOrganizationTrackOptionGroupsUids.Contains(aiotDto.CreatorOrganizationTrackOptionGroup?.Uid)) == false)
-        //    {
-        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("EvaluationList", "Projects", new { Area = "Creator" });
-        //    }
-
-        //    #endregion
-
-        //    ViewBag.CreatorOrganizationTrackOptionGroupDtos = await this.innovationOrganizationTrackOptionGroupRepo.FindAllDtoAsync();
-
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/TracksWidget", attendeeCreatorOrganizationDto), divIdOrClass = "#ProjectTracksWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
-
-        //#endregion
-
-        //#region Objectives Widget
-
-        ///// <summary>
-        ///// Shows the objectives widget.
-        ///// </summary>
-        ///// <param name="attendeeCreatorOrganizationUid">The attendee innovation organization uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionCreator)]
-        //public async Task<ActionResult> ShowObjectivesWidget(Guid? attendeeCreatorOrganizationUid)
-        //{
-        //    var attendeeCreatorOrganizationDto = await this.attendeeCreatorOrganizationRepo.FindObjectivesWidgetDtoAsync(attendeeCreatorOrganizationUid ?? Guid.Empty);
-        //    if (attendeeCreatorOrganizationDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Startup, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
-
-        //    #region AttendeeCollaborator and AttendeeCreatorOrganization Tracks validation
-
-        //    var attendeeCollaboratorCreatorOrganizationTrackOptionGroupsUids = await this.GetAttendeeCollaboratorCreatorOrganizationTrackOptionsGroupUids();
-        //    if (attendeeCreatorOrganizationDto.AttendeeCreatorOrganizationTrackDtos.Any(aiotDto => attendeeCollaboratorCreatorOrganizationTrackOptionGroupsUids.Contains(aiotDto.CreatorOrganizationTrackOptionGroup?.Uid)) == false)
-        //    {
-        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("EvaluationList", "Projects", new { Area = "Creator" });
-        //    }
-
-        //    #endregion
-
-        //    ViewBag.CreatorOrganizationObjectivesOptions = await this.innovationOrganizationObjectivesOptionRepo.FindAllAsync();
-
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/ObjectivesWidget", attendeeCreatorOrganizationDto), divIdOrClass = "#ProjectObjectivesWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
-
-        //#endregion
-
-        //#region Technologies Widget
-
-        ///// <summary>
-        ///// Shows the technologies widget.
-        ///// </summary>
-        ///// <param name="attendeeCreatorOrganizationUid">The attendee innovation organization uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionCreator)]
-        //public async Task<ActionResult> ShowTechnologiesWidget(Guid? attendeeCreatorOrganizationUid)
-        //{
-        //    var attendeeCreatorOrganizationDto = await this.attendeeCreatorOrganizationRepo.FindTechnologiesWidgetDtoAsync(attendeeCreatorOrganizationUid ?? Guid.Empty);
-        //    if (attendeeCreatorOrganizationDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Startup, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
-
-        //    #region AttendeeCollaborator and AttendeeCreatorOrganization Tracks validation
-
-        //    var attendeeCollaboratorCreatorOrganizationTrackOptionGroupsUids = await this.GetAttendeeCollaboratorCreatorOrganizationTrackOptionsGroupUids();
-        //    if (attendeeCreatorOrganizationDto.AttendeeCreatorOrganizationTrackDtos.Any(aiotDto => attendeeCollaboratorCreatorOrganizationTrackOptionGroupsUids.Contains(aiotDto.CreatorOrganizationTrackOptionGroup?.Uid)) == false)
-        //    {
-        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("EvaluationList", "Projects", new { Area = "Creator" });
-        //    }
-
-        //    #endregion
-
-        //    ViewBag.CreatorOrganizationTechnologiesOptions = await this.innovationOrganizationTechnologyOptionRepo.FindAllAsync();
-
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/TechnologiesWidget", attendeeCreatorOrganizationDto), divIdOrClass = "#ProjectTechnologiesWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
-
-        //#endregion
-
-        //#region Experiences Widget
-
-        ///// <summary>
-        ///// Shows the experiences widget.
-        ///// </summary>
-        ///// <param name="attendeeCreatorOrganizationUid">The attendee innovation organization uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionCreator)]
-        //public async Task<ActionResult> ShowExperiencesWidget(Guid? attendeeCreatorOrganizationUid)
-        //{
-        //    var attendeeCreatorOrganizationDto = await this.attendeeCreatorOrganizationRepo.FindExperiencesWidgetDtoAsync(attendeeCreatorOrganizationUid ?? Guid.Empty);
-        //    if (attendeeCreatorOrganizationDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Startup, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
-
-        //    #region AttendeeCollaborator and AttendeeCreatorOrganization Tracks validation
-
-        //    var attendeeCollaboratorCreatorOrganizationTrackOptionGroupsUids = await this.GetAttendeeCollaboratorCreatorOrganizationTrackOptionsGroupUids();
-        //    if (attendeeCreatorOrganizationDto.AttendeeCreatorOrganizationTrackDtos.Any(aiotDto => attendeeCollaboratorCreatorOrganizationTrackOptionGroupsUids.Contains(aiotDto.CreatorOrganizationTrackOptionGroup?.Uid)) == false)
-        //    {
-        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("EvaluationList", "Projects", new { Area = "Creator" });
-        //    }
-
-        //    #endregion
-
-        //    ViewBag.CreatorOrganizationExperiencesOptions = await this.innovationOrganizationExperienceOptionRepo.FindAllAsync();
-
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/ExperiencesWidget", attendeeCreatorOrganizationDto), divIdOrClass = "#ProjectExperiencesWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
-
-        //#endregion
+        #region Details
+
+        /// <summary>
+        /// Evaluations the details.
+        /// </summary>
+        /// <param name="searchViewModel">The search view model.</param>
+        /// <returns></returns>
+        [AuthorizeCollaboratorType(Types = Constants.CollaboratorType.CommissionCreator)]
+        public async Task<ActionResult> EvaluationDetails(CreatorProjectSearchViewModel searchViewModel)
+        {
+            if (this.EditionDto?.IsCreatorProjectEvaluationStarted() != true)
+            {
+                this.StatusMessageToastr(Messages.OutOfEvaluationPeriod, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Projects", new { Area = "Creator" });
+            }
+
+            var attendeeCreatorProjectDto = await this.attendeeCreatorProjectRepo.FindDtoToEvaluateAsync(searchViewModel.Id ?? 0);
+
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CreatorProjects, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Creator, Url.Action("EvaluationList", "Projects", new { Area = "Creator", searchViewModel.SearchKeywords, searchViewModel.EvaluationStatusUid, searchViewModel.Page, searchViewModel.PageSize })),
+                new BreadcrumbItemHelper(attendeeCreatorProjectDto?.CreatorProjectDto?.Title ?? Labels.Project, Url.Action("EvaluationDetails", "Projects", new { Area = "Creator", searchViewModel.Id }))
+            });
+
+            #endregion
+
+            var allCreatorProjectsIds = await this.attendeeCreatorProjectRepo.FindAllCreatorProjectsIdsPagedAsync(
+                this.EditionDto.Edition.Id,
+                searchViewModel.SearchKeywords,
+                searchViewModel.EvaluationStatusUid,
+                searchViewModel.Page.Value,
+                searchViewModel.PageSize.Value);
+
+            var currentCreatorProjectIdIndex = Array.IndexOf(allCreatorProjectsIds, searchViewModel.Id.Value) + 1; //Index start at 0, its a fix to "start at 1"
+
+            ViewBag.CreatorProjectSearchViewModel = searchViewModel;
+            ViewBag.CurrentProjectIndex = currentCreatorProjectIdIndex;
+            ViewBag.ApprovedAttendeeCreatorProjectsIds = await this.attendeeCreatorProjectRepo.FindAllApprovedAttendeeCreatorProjectsIdsAsync(this.EditionDto.Edition.Id);
+            ViewBag.TotalProjectsCount = await this.attendeeCreatorProjectRepo.CountPagedAsync(
+                this.EditionDto.Edition.Id,
+                searchViewModel.SearchKeywords,
+                searchViewModel.EvaluationStatusUid,
+                searchViewModel.Page.Value,
+                searchViewModel.PageSize.Value);
+
+            return View(attendeeCreatorProjectDto);
+        }
+
+        /// <summary>
+        /// Previouses the evaluation details.
+        /// </summary>
+        /// <param name="searchViewModel">The search view model.</param>
+        /// <returns></returns>
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionCreator)]
+        public async Task<ActionResult> PreviousEvaluationDetails(CreatorProjectSearchViewModel searchViewModel)
+        {
+            var allCreatorProjectsIds = await this.attendeeCreatorProjectRepo.FindAllCreatorProjectsIdsPagedAsync(
+                this.EditionDto.Edition.Id,
+                searchViewModel.SearchKeywords,
+                searchViewModel.EvaluationStatusUid,
+                searchViewModel.Page.Value,
+                searchViewModel.PageSize.Value);
+
+            var currentCreatorProjectIdIndex = Array.IndexOf(allCreatorProjectsIds, searchViewModel.Id.Value);
+            var previousProjectId = allCreatorProjectsIds.ElementAtOrDefault(currentCreatorProjectIdIndex - 1);
+            if (previousProjectId == 0)
+            {
+                previousProjectId = searchViewModel.Id.Value;
+            }
+            searchViewModel.Id = previousProjectId;
+
+            return RedirectToAction("EvaluationDetails", searchViewModel);
+        }
+
+        /// <summary>
+        /// Nexts the evaluation details.
+        /// </summary>
+        /// <param name="searchViewModel">The search view model.</param>
+        /// <returns></returns>
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionCreator)]
+        public async Task<ActionResult> NextEvaluationDetails(CreatorProjectSearchViewModel searchViewModel)
+        {
+            var allCreatorProjectsIds = await this.attendeeCreatorProjectRepo.FindAllCreatorProjectsIdsPagedAsync(
+                this.EditionDto.Edition.Id,
+                searchViewModel.SearchKeywords,
+                searchViewModel.EvaluationStatusUid,
+                searchViewModel.Page.Value,
+                searchViewModel.PageSize.Value);
+
+            var currentCreatorProjectIdIndex = Array.IndexOf(allCreatorProjectsIds, searchViewModel.Id.Value);
+            var nextProjectId = allCreatorProjectsIds.ElementAtOrDefault(currentCreatorProjectIdIndex + 1);
+            if (nextProjectId == 0)
+            {
+                nextProjectId = searchViewModel.Id.Value;
+            }
+            searchViewModel.Id = nextProjectId;
+
+            return RedirectToAction("EvaluationDetails", searchViewModel);
+        }
+
+        #endregion
+
+        #region Main Information Widget
+
+        /// <summary>
+        /// Shows the main information widget.
+        /// </summary>
+        /// <param name="attendeeCreatorProjectUid">The attendee innovation organization uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionCreator)]
+        public async Task<ActionResult> ShowMainInformationWidget(Guid? attendeeCreatorProjectUid)
+        {
+            var attendeeCreatorProjectDto = await this.attendeeCreatorProjectRepo.FindMainInformationWidgetDtoAsync(attendeeCreatorProjectUid ?? Guid.Empty);
+            if (attendeeCreatorProjectDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", attendeeCreatorProjectDto), divIdOrClass = "#ProjectMainInformationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
 
         //#region Evaluation Grade Widget 
 

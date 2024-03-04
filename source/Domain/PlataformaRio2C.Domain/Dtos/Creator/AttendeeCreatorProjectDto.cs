@@ -25,8 +25,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public int EditionId { get; set; }
         public decimal? Grade { get; set; }
         public int EvaluationsCount { get; set; }
-        public DateTimeOffset LastEvaluationDate { get; set; }
-        public DateTimeOffset EvaluationEmailSendDate { get; set; }
+        public DateTimeOffset? LastEvaluationDate { get; set; }
+        public DateTimeOffset? EvaluationEmailSendDate { get; set; }
 
         public CreatorProjectDto CreatorProjectDto { get; set; }
         public IEnumerable<AttendeeCreatorProjectEvaluationDto> AttendeeCreatorProjectEvaluationDtos { get; set; }
