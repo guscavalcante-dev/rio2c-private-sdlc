@@ -20,9 +20,9 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>AttendeeCreatorProjectEvaluationDto</summary>
     public class AttendeeCreatorProjectEvaluationDto : BaseDto
     {
-        public int AttendeeCreatorProjectId { get; private set; }
-        public int EvaluatorUserId { get; private set; }
-        public decimal Grade { get; private set; }
+        public int AttendeeCreatorProjectId { get; set; }
+        public int EvaluatorUserId { get; set; }
+        public decimal Grade { get; set; }
 
         public CreatorProjectDto CreatorProjectDto { get; set; }
         public AttendeeCreatorProjectDto AttendeeCreatorProjectDto { get; set; }

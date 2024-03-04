@@ -232,6 +232,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                .FindByKeywords(searchKeywords)
                                .Select(acp => new AttendeeCreatorProjectDto
                                {
+                                   Id = acp.Id,
                                    Uid = acp.Uid,
                                    Grade = acp.Grade,
                                    CreateDate = acp.CreateDate,
@@ -239,6 +240,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                    {
                                        Uid = acp.CreatorProject.Uid,
                                        Title = acp.CreatorProject.Title,
+                                       Logline = acp.CreatorProject.Logline,
                                        InterestDtos = acp.CreatorProject.CreatorProjectInterests.Select(cpi => new InterestDto
                                        {
                                            InterestName = cpi.Interest.Name,
@@ -511,7 +513,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                .FindByIds(new List<int?> { attendeeCreatorProjectId })
                                .Select(acp => new AttendeeCreatorProjectDto
                                {
-
+                                   Id = acp.Id,
+                                   Uid = acp.Uid,
+                                   CreatorProjectDto = new CreatorProjectDto 
+                                   {
+                                       Title = acp.CreatorProject.Title
+                                   }
                                });
 
             return await query
@@ -605,6 +612,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return attendeeCreatorProjectsPagedList.Count;
         }
 
+        #region Widgets
+
         /// <summary>
         /// Finds the main information widget dto asynchronous.
         /// </summary>
@@ -616,7 +625,32 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                .FindByUids(new List<Guid?> { attendeeCreatorProjectUid })
                                .Select(acp => new AttendeeCreatorProjectDto
                                {
-
+                                   Id = acp.Id,
+                                   Uid = acp.Uid,
+                                   Grade = acp.Grade,
+                                   CreatorProjectDto = new CreatorProjectDto
+                                   {
+                                       Title = acp.CreatorProject.Title,
+                                       Logline = acp.CreatorProject.Logline,
+                                       Name = acp.CreatorProject.Name,
+                                       Document = acp.CreatorProject.Document,
+                                       AgentName = acp.CreatorProject.AgentName,
+                                       Email = acp.CreatorProject.Email,
+                                       Curriculum = acp.CreatorProject.Curriculum,
+                                       InterestDtos = acp.CreatorProject.CreatorProjectInterests.Select(cpi => new InterestDto
+                                       {
+                                           InterestName = cpi.Interest.Name,
+                                           InterestGroupUid = cpi.Interest.InterestGroup.Uid,
+                                       })
+                                   },
+                                   AttendeeCreatorProjectEvaluationDtos = acp.AttendeeCreatorProjectEvaluations.Select(acpe => new AttendeeCreatorProjectEvaluationDto
+                                   {
+                                       Grade = acpe.Grade,
+                                       EvaluatorUserDto = new UserDto 
+                                       {
+                                           Id = acpe.EvaluatorUser.Id,
+                                       }
+                                   })
                                });
 
             return await query
@@ -624,41 +658,42 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
-        /// Finds the evaluators widget dto asynchronous.
+        /// Finds the project information widget dto asynchronous.
         /// </summary>
         /// <param name="attendeeCreatorProjectUid">The attendee creator project uid.</param>
         /// <returns></returns>
-        public async Task<AttendeeCreatorProjectDto> FindEvaluatorsWidgetDtoAsync(Guid attendeeCreatorProjectUid)
+        public async Task<AttendeeCreatorProjectDto> FindProjectInformationWidgetDtoAsync(Guid attendeeCreatorProjectUid)
         {
             var query = this.GetBaseQuery()
-                              .FindByUids(new List<Guid?> { attendeeCreatorProjectUid })
-                              .Select(acp => new AttendeeCreatorProjectDto
-                              {
-
-                              });
+                               .FindByUids(new List<Guid?> { attendeeCreatorProjectUid })
+                               .Select(acp => new AttendeeCreatorProjectDto
+                               {
+                                   Id = acp.Id,
+                                   Uid = acp.Uid,
+                                   CreatorProjectDto = new CreatorProjectDto
+                                   {
+                                       Title = acp.CreatorProject.Title,
+                                       Logline = acp.CreatorProject.Logline,
+                                       Description = acp.CreatorProject.Description,
+                                       MotivationToDevelop = acp.CreatorProject.MotivationToDevelop,
+                                       MotivationToTransform = acp.CreatorProject.MotivationToTransform,
+                                       DiversityAndInclusionElements = acp.CreatorProject.DiversityAndInclusionElements,
+                                       MarketingStrategy = acp.CreatorProject.MarketingStrategy,
+                                       SimilarAudiovisualProjects = acp.CreatorProject.SimilarAudiovisualProjects,
+                                       OnlinePlatformsWhereProjectIsAvailable = acp.CreatorProject.OnlinePlatformsWhereProjectIsAvailable,
+                                       OnlinePlatformsAudienceReach = acp.CreatorProject.OnlinePlatformsAudienceReach,
+                                       ProjectAwards = acp.CreatorProject.ProjectAwards,
+                                       ProjectPublicNotice = acp.CreatorProject.ProjectPublicNotice,
+                                       PreviouslyDevelopedProjects = acp.CreatorProject.PreviouslyDevelopedProjects,
+                                       AssociatedInstitutions = acp.CreatorProject.AssociatedInstitutions
+                                   }
+                               });
 
             return await query
-                            .FirstOrDefaultAsync();
+                           .FirstOrDefaultAsync();
         }
 
-        /// <summary>
-        /// Finds the evaluation grade widget dto asynchronous.
-        /// </summary>
-        /// <param name="attendeeCreatorProjectUid">The attendee creator project uid.</param>
-        /// <param name="userId">The user identifier.</param>
-        /// <returns></returns>
-        public async Task<AttendeeCreatorProjectDto> FindEvaluationGradeWidgetDtoAsync(Guid attendeeCreatorProjectUid, int userId)
-        {
-            var query = this.GetBaseQuery()
-                              .FindByUids(new List<Guid?> { attendeeCreatorProjectUid })
-                              .Select(acp => new AttendeeCreatorProjectDto
-                              {
-
-                              });
-
-            return await query
-                            .FirstOrDefaultAsync();
-        }
+        #endregion
     }
 }
 

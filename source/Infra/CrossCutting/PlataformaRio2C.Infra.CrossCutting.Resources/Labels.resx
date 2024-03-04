@@ -765,6 +765,9 @@
   <data name="CreatorCommission" xml:space="preserve">
     <value>Comissão de Creator</value>
   </data>
+  <data name="CreatorProjects" xml:space="preserve">
+    <value>Projetos de Creator</value>
+  </data>
   <data name="Creators" xml:space="preserve">
     <value>Creators</value>
   </data>
@@ -1252,6 +1255,9 @@
     <value>Posição no Destaque</value>
     <comment>Posição no Destaque</comment>
   </data>
+  <data name="History" xml:space="preserve">
+    <value>História</value>
+  </data>
   <data name="Holding" xml:space="preserve">
     <value>Holding</value>
     <comment>Holding</comment>
@@ -1686,6 +1692,9 @@
     <value>Nome</value>
     <comment>Nome</comment>
   </data>
+  <data name="NameOrCompanyName" xml:space="preserve">
+    <value>Nome ou nome da empresa</value>
+  </data>
   <data name="Names" xml:space="preserve">
     <value>Nomes</value>
     <comment>Nomes</comment>
@@ -2092,6 +2101,9 @@
     <value>Assessoria</value>
     <comment>Assessoria</comment>
   </data>
+  <data name="PreviouslyDevelopedProjects" xml:space="preserve">
+    <value>Já realizou outros projetos anteriormente? Quais?</value>
+  </data>
   <data name="Print" xml:space="preserve">
     <value>Imprimir</value>
   </data>
@@ -2189,8 +2201,23 @@
     <value>Informações adicionais sobre o projeto</value>
     <comment>Informações adicionais sobre o projeto</comment>
   </data>
+  <data name="ProjectAssociatedInstitutions" xml:space="preserve">
+    <value>O projeto está associado à alguma Associação ou Instituição? Quais?</value>
+  </data>
+  <data name="ProjectAudienceReach" xml:space="preserve">
+    <value>Qual foi o alcance de público em plataforma online?</value>
+  </data>
+  <data name="ProjectAwards" xml:space="preserve">
+    <value>O projeto ganhou ou foi indicado a algum prêmio? Quais?</value>
+  </data>
   <data name="ProjectDetails" xml:space="preserve">
     <value>Detalhes do Projeto</value>
+  </data>
+  <data name="ProjectDevelopmentMotivation" xml:space="preserve">
+    <value>Motivação para desenvolvimento do projeto</value>
+  </data>
+  <data name="ProjectDiversityAndInclusionElements" xml:space="preserve">
+    <value>Elementos de diversidade e inclusão</value>
   </data>
   <data name="ProjectEvaluationEndDate" xml:space="preserve">
     <value>Data de término da avaliação de projeto</value>
@@ -2212,6 +2239,9 @@
     <value>Informações do Projeto</value>
     <comment>Informações do Projeto</comment>
   </data>
+  <data name="ProjectMarketingStrategy" xml:space="preserve">
+    <value>Estratégia de marketing do projeto</value>
+  </data>
   <data name="ProjectMaxBuyerEvaluationsCount" xml:space="preserve">
     <value>Quantidade máxima de avaliadores por projeto</value>
     <comment>Quantidade máxima de avaliadores por projeto</comment>
@@ -2219,6 +2249,12 @@
   <data name="ProjectNotSubmittedToPlayers" xml:space="preserve">
     <value>Nenhum Player selecionado para avaliação</value>
     <comment>Nenhum Player selecionado para avaliação</comment>
+  </data>
+  <data name="ProjectOnlinePlatforms" xml:space="preserve">
+    <value>O projeto está disponível em plataforma online que não detenha os direitos sobre ele? Quais?</value>
+  </data>
+  <data name="ProjectPublicNotice" xml:space="preserve">
+    <value>O projeto foi contemplado em algum edital? Quais?</value>
   </data>
   <data name="ProjectRefused" xml:space="preserve">
     <value>Reprovado</value>
@@ -2235,6 +2271,9 @@
   <data name="ProjectsForPitching" xml:space="preserve">
     <value>Projetos para Pitching</value>
     <comment>Projetos para Pitching</comment>
+  </data>
+  <data name="ProjectSimilars" xml:space="preserve">
+    <value>Projetos audiovisuais similares</value>
   </data>
   <data name="ProjectsPerProducerQty" xml:space="preserve">
     <value>QTD Projetos Por Produtora</value>
@@ -2269,6 +2308,12 @@
   <data name="ProjectSubscriptions" xml:space="preserve">
     <value>Inscrições de Projeto</value>
     <comment>Inscrições de Projeto</comment>
+  </data>
+  <data name="ProjectThemeRelevation" xml:space="preserve">
+    <value>Relevância da temática</value>
+  </data>
+  <data name="ProjectTransformationMotivation" xml:space="preserve">
+    <value>Motivação para transformar o projeto em podcast, longa-metragem ou série</value>
   </data>
   <data name="PublicEmail" xml:space="preserve">
     <value>Email Público</value>
@@ -2653,6 +2698,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="ShowAllParticipants" xml:space="preserve">
     <value>Exibir todos os participantes</value>
     <comment>Exibir todos os participantes</comment>
+  </data>
+  <data name="ShowAllSponsored" xml:space="preserve">
+    <value>Mostrar todos os patrocinadores</value>
   </data>
   <data name="ShowAllSponsors" xml:space="preserve">
     <value>Exibir todos os patrocinadores</value>
