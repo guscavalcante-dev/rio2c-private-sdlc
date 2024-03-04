@@ -26,5 +26,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Statics
         public static string Jpeg = ".jpeg";
         public static string Gif = ".gif";
         public static string Mp4 = ".mp4";
+        public static string Docx = ".docx";
     }
 }

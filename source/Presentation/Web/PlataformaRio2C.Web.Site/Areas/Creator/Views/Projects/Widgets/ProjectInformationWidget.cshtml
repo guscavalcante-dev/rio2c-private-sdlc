@@ -80,6 +80,15 @@
                     <span class="kt-widget__value"><span class="text-break">@(Model.CreatorProjectDto.AssociatedInstitutions?.Replace("\n", "<br/>") ?? "-")</span></span>
                 </div>
             </div>
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.Links</span>
+                    @foreach (var link in Model.CreatorProjectDto.GetLinks())
+                    {
+                        <span class="kt-widget__value"><a href="@link" target="_blank"><small class="text-break">@link</small></a></span>
+                    }
+                </div>
+            </div>
         </div>
     </div>
 </div>

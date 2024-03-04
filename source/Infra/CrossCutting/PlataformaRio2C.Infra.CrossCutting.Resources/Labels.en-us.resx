@@ -312,6 +312,9 @@
     <value>at</value>
     <comment>em</comment>
   </data>
+  <data name="Attachments" xml:space="preserve">
+    <value>Attachments</value>
+  </data>
   <data name="AttendeeOrganizationMaxSellProjectsCount" xml:space="preserve">
     <value>Maximum number of projects by participant</value>
     <comment>Quantidade máxima de projetos por participante</comment>
@@ -1456,6 +1459,9 @@
   <data name="LinkedIn" xml:space="preserve">
     <value>LinkedIn</value>
   </data>
+  <data name="Links" xml:space="preserve">
+    <value>Links</value>
+  </data>
   <data name="LinksForPromoTeaser" xml:space="preserve">
     <value>Link for Promo/Teaser</value>
     <comment>Link para Promo/Teaser</comment>
@@ -1869,6 +1875,9 @@
   <data name="OrganizationType" xml:space="preserve">
     <value>Organization type</value>
     <comment>Tipo de Empresa</comment>
+  </data>
+  <data name="OtherAttachedFiles" xml:space="preserve">
+    <value>Other attached files</value>
   </data>
   <data name="Others" xml:space="preserve">
     <value>Others</value>
@@ -3042,6 +3051,9 @@
   <data name="Transport" xml:space="preserve">
     <value>Transport</value>
     <comment>Transporte</comment>
+  </data>
+  <data name="TreatmentShortOrArticle" xml:space="preserve">
+    <value>Treatment, short story or article</value>
   </data>
   <data name="Twitter" xml:space="preserve">
     <value>Twitter</value>

@@ -629,12 +629,18 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                    && (s.ToLowerInvariant().Contains(FileType.Pptx));
         }
 
-        /// <summary>Converts the PDF to embed.</summary>
+        public static bool IsDocx(this string s)
+        {
+            return !string.IsNullOrEmpty(s)
+                   && (s.ToLowerInvariant().Contains(FileType.Docx));
+        }
+
+        /// <summary>Converts the file to embed.</summary>
         /// <param name="s">The s.</param>
         /// <returns></returns>
         public static string ConvertFileToEmbed(this string s)
         {
-            if (IsPdf(s) || IsPpt(s) || IsPptx(s))
+            if (IsPdf(s) || IsPpt(s) || IsPptx(s) || IsDocx(s))
             {
                 return $"<embed src='https://drive.google.com/viewerng/viewer?embedded=true&url={s}' type='{FileMimeType.Pdf}'>";
             }

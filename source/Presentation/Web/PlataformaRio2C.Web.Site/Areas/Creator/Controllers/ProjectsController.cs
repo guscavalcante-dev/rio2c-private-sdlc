@@ -349,6 +349,35 @@ namespace PlataformaRio2C.Web.Site.Areas.Creator.Controllers
 
         #endregion
 
+        #region Attachments Widget
+
+        /// <summary>
+        /// Shows the attachments widget.
+        /// </summary>
+        /// <param name="attendeeCreatorProjectUid">The attendee creator project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionCreator)]
+        public async Task<ActionResult> ShowAttachmentsWidget(Guid? attendeeCreatorProjectUid)
+        {
+            var attendeeCreatorProjectDto = await this.attendeeCreatorProjectRepo.FindAttachmentsWidgetDtoAsync(attendeeCreatorProjectUid ?? Guid.Empty);
+            if (attendeeCreatorProjectDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/AttachmentsWidget", attendeeCreatorProjectDto), divIdOrClass = "#AttachmentsWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
         //#region Evaluation Grade Widget 
 
         ///// <summary>
