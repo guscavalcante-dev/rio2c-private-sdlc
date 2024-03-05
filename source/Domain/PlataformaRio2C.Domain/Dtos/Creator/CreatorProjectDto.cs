@@ -16,6 +16,8 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static System.Net.Mime.MediaTypeNames;
+using System.Text.RegularExpressions;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -43,12 +45,13 @@ namespace PlataformaRio2C.Domain.Dtos
         public string ProjectPublicNotice { get;  set; }
         public string PreviouslyDevelopedProjects { get;  set; }
         public string AssociatedInstitutions { get;  set; }
-        public DateTimeOffset ArticleFileUploadDate { get;  set; }
+        public DateTimeOffset? ArticleFileUploadDate { get;  set; }
         public string ArticleFileExtension { get;  set; }
-        public DateTimeOffset ClippingFileUploadDate { get;  set; }
+        public DateTimeOffset? ClippingFileUploadDate { get;  set; }
         public string ClippingFileExtension { get;  set; }
-        public DateTimeOffset OtherFileUploadDate { get;  set; }
+        public DateTimeOffset? OtherFileUploadDate { get;  set; }
         public string OtherFileExtension { get;  set; }
+        public string OtherFileDescription { get; set; }
         public string Links { get;  set; }
         public DateTimeOffset TermsAcceptanceDate { get;  set; }
 
@@ -78,6 +81,42 @@ namespace PlataformaRio2C.Domain.Dtos
         public List<InterestDto> GetInterestDtosByGroupUid(Guid interestGroupUid)
         {
             return this.InterestDtos?.Where(dto => dto.InterestGroupUid == interestGroupUid)?.ToList();
+        }
+
+        /// <summary>
+        /// Gets the links.
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetLinks()
+        {
+            if (string.IsNullOrEmpty(this.Links))
+                return new List<string>() { "-" };
+
+            string pattern = @"(?<url>https?://[^\s]+)";
+
+            MatchCollection matches = Regex.Matches(this.Links, pattern);
+
+            List<string> links = new List<string>();
+
+            foreach (Match match in matches)
+            {
+                links.Add(match.Groups["url"].Value);
+            }
+
+            return links;
+        }
+
+        /// <summary>
+        /// This method is a temporary solution that should be deleted in the future!
+        /// It converts the UID used in MyRio to the UID used by the people who developed the creator form (Rio2C CTO has it). 
+        /// There is only one formatting difference between these values, which is applied in this method.
+        /// </summary>
+        /// <returns></returns>
+        public string GetImageUid()
+        {
+            string imageUid = this.Uid.ToString().Remove(23, 1);
+
+            return imageUid.ToUpper();
         }
     }
 }

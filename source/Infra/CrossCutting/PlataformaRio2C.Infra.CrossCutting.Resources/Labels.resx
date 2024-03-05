@@ -312,6 +312,9 @@
     <value>em</value>
     <comment>em</comment>
   </data>
+  <data name="Attachments" xml:space="preserve">
+    <value>Anexos</value>
+  </data>
   <data name="AttendeeOrganizationMaxSellProjectsCount" xml:space="preserve">
     <value>Quantidade máxima de projetos por produtora</value>
     <comment>Quantidade máxima de projetos por participante</comment>
@@ -1455,6 +1458,9 @@
   <data name="LinkedIn" xml:space="preserve">
     <value>LinkedIn</value>
   </data>
+  <data name="Links" xml:space="preserve">
+    <value>Links</value>
+  </data>
   <data name="LinksForPromoTeaser" xml:space="preserve">
     <value>Link para Promo/Teaser</value>
     <comment>Link para Promo/Teaser</comment>
@@ -1869,6 +1875,9 @@
   <data name="OrganizationType" xml:space="preserve">
     <value>Tipo de Empresa</value>
     <comment>Tipo de Empresa</comment>
+  </data>
+  <data name="OtherAttachedFiles" xml:space="preserve">
+    <value>Outros arquivos anexados</value>
   </data>
   <data name="Others" xml:space="preserve">
     <value>Outros</value>
@@ -3048,6 +3057,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Transport" xml:space="preserve">
     <value>Transporte</value>
     <comment>Transporte</comment>
+  </data>
+  <data name="TreatmentShortOrArticle" xml:space="preserve">
+    <value>Argumento, conto ou artigo</value>
   </data>
   <data name="Twitter" xml:space="preserve">
     <value>Twitter</value>

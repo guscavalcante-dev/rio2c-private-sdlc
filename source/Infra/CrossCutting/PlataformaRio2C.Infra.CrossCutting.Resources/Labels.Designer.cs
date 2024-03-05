@@ -529,6 +529,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Anexos.
+        /// </summary>
+        public static string Attachments {
+            get {
+                return ResourceManager.GetString("Attachments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quantidade máxima de projetos por produtora.
         /// </summary>
         public static string AttendeeOrganizationMaxSellProjectsCount {
@@ -3310,6 +3319,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Links.
+        /// </summary>
+        public static string Links {
+            get {
+                return ResourceManager.GetString("Links", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Link para Promo/Teaser.
         /// </summary>
         public static string LinksForPromoTeaser {
@@ -4314,6 +4332,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string OrganizationType {
             get {
                 return ResourceManager.GetString("OrganizationType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Outros arquivos anexados.
+        /// </summary>
+        public static string OtherAttachedFiles {
+            get {
+                return ResourceManager.GetString("OtherAttachedFiles", resourceCulture);
             }
         }
         
@@ -7185,6 +7212,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Transport {
             get {
                 return ResourceManager.GetString("Transport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argumento, conto ou artigo.
+        /// </summary>
+        public static string TreatmentShortOrArticle {
+            get {
+                return ResourceManager.GetString("TreatmentShortOrArticle", resourceCulture);
             }
         }
         

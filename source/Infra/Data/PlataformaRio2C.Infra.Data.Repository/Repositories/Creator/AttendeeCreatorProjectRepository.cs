@@ -685,7 +685,39 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                        ProjectAwards = acp.CreatorProject.ProjectAwards,
                                        ProjectPublicNotice = acp.CreatorProject.ProjectPublicNotice,
                                        PreviouslyDevelopedProjects = acp.CreatorProject.PreviouslyDevelopedProjects,
-                                       AssociatedInstitutions = acp.CreatorProject.AssociatedInstitutions
+                                       AssociatedInstitutions = acp.CreatorProject.AssociatedInstitutions,
+                                       Links = acp.CreatorProject.Links
+                                   }
+                               });
+
+            return await query
+                           .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the attachments widget dto asynchronous.
+        /// </summary>
+        /// <param name="attendeeCreatorProjectUid">The attendee creator project uid.</param>
+        /// <returns></returns>
+        public async Task<AttendeeCreatorProjectDto> FindAttachmentsWidgetDtoAsync(Guid attendeeCreatorProjectUid)
+        {
+            var query = this.GetBaseQuery()
+                               .FindByUids(new List<Guid?> { attendeeCreatorProjectUid })
+                               .Select(acp => new AttendeeCreatorProjectDto
+                               {
+                                   Id = acp.Id,
+                                   Uid = acp.Uid,
+                                   CreatorProjectDto = new CreatorProjectDto
+                                   {
+                                       Id = acp.CreatorProject.Id,
+                                       Uid = acp.CreatorProject.Uid,
+                                       ArticleFileUploadDate = acp.CreatorProject.ArticleFileUploadDate,
+                                       ArticleFileExtension = acp.CreatorProject.ArticleFileExtension,
+                                       ClippingFileUploadDate = acp.CreatorProject.ClippingFileUploadDate,
+                                       ClippingFileExtension = acp.CreatorProject.ClippingFileExtension,
+                                       OtherFileUploadDate = acp.CreatorProject.OtherFileUploadDate,
+                                       OtherFileExtension = acp.CreatorProject.OtherFileExtension,
+                                       OtherFileDescription = acp.CreatorProject.OtherFileDescription
                                    }
                                });
 

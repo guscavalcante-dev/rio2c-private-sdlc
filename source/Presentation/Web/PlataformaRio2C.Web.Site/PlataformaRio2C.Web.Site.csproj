@@ -846,6 +846,7 @@
     <Content Include="Assets\js\companies\companies.address.widget.js" />
     <Content Include="Assets\js\companies\companies.maininformation.widget.js" />
     <Content Include="Assets\js\creator\projects\creator.projects.evaluators.widget.js" />
+    <Content Include="Assets\js\creator\projects\creator.projects.attachments.widget.js" />
     <Content Include="Assets\js\creator\projects\creator.projects.projectinformation.widget.js" />
     <Content Include="Assets\js\creator\projects\creator.projects.maininformation.widget.js" />
     <Content Include="Assets\js\creator\projects\creator.projects.evaluation.list.widget.js" />
@@ -6947,6 +6948,7 @@
     <Content Include="Areas\Creator\Views\Projects\EvaluationDetails.cshtml" />
     <Content Include="Areas\Creator\Views\Projects\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Areas\Creator\Views\Projects\Widgets\ProjectInformationWidget.cshtml" />
+    <Content Include="Areas\Creator\Views\Projects\Widgets\AttachmentsWidget.cshtml" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />

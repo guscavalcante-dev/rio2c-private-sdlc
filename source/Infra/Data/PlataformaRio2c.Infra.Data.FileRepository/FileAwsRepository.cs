@@ -38,6 +38,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
         private readonly string filesInnovationOrganizationsDirectory;
         private readonly string audioFilesDirectory;
         private readonly string weConnectMediaFilesDirectory;
+        private readonly string creatorProjectsFilesDirectory;
 
         private readonly string errorCroppingDirectory;
 
@@ -57,6 +58,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
             this.filesInnovationOrganizationsDirectory = ConfigurationManager.AppSettings["AwsFilesInnovationOrganizationsDirectory"];
             this.audioFilesDirectory = ConfigurationManager.AppSettings["AwsAudioFilesDirectory"];
             this.weConnectMediaFilesDirectory = ConfigurationManager.AppSettings["AwsWeConnectMediaFilesDirectory"];
+            this.creatorProjectsFilesDirectory = ConfigurationManager.AppSettings["AwsFilesCreatorProjectsDirectory"];
 
             this.errorCroppingDirectory = "img/errorCropping/";
         }
@@ -96,6 +98,11 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
             if (string.IsNullOrEmpty(fileExtension))
             {
                 fileExtension = FileType.Pdf;
+            }
+
+            if (!fileExtension.StartsWith("."))
+            {
+                fileExtension = $".{fileExtension}";
             }
 
             return this.GetUrl(fileRepositoryPathType, objectUid.Value) + $"{additionalFileInfo}{fileExtension}" + $"?v={uploadDate.Value.ToString("yyyyMMddHHmmss")}";
@@ -297,6 +304,11 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
             if (fileRepositoryPathType.Uid == FileRepositoryPathType.WeConnectMediaFile.Uid)
             {
                 return string.Format(this.weConnectMediaFilesDirectory, args);
+            }
+
+            if (fileRepositoryPathType.Uid == FileRepositoryPathType.CreatorProjectFile.Uid)
+            {
+                return string.Format(this.creatorProjectsFilesDirectory, args);
             }
 
             return string.Empty;
