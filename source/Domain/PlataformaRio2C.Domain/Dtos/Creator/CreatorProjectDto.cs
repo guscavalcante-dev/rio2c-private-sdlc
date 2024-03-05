@@ -105,5 +105,18 @@ namespace PlataformaRio2C.Domain.Dtos
 
             return links;
         }
+
+        /// <summary>
+        /// This method is a temporary solution that should be deleted in the future!
+        /// It converts the UID used in MyRio to the UID used by the people who developed the creator form (Rio2C CTO has it). 
+        /// There is only one formatting difference between these values, which is applied in this method.
+        /// </summary>
+        /// <returns></returns>
+        public string GetImageUid()
+        {
+            string imageUid = this.Uid.ToString().Remove(23, 1);
+
+            return imageUid.ToUpper();
+        }
     }
 }
