@@ -100,7 +100,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
                 fileExtension = FileType.Pdf;
             }
 
-            if (!fileExtension.Contains("."))
+            if (!fileExtension.StartsWith("."))
             {
                 fileExtension = $".{fileExtension}";
             }
@@ -306,7 +306,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
                 return string.Format(this.weConnectMediaFilesDirectory, args);
             }
 
-            if (fileRepositoryPathType.Uid == FileRepositoryPathType.CreatorProjecFile.Uid)
+            if (fileRepositoryPathType.Uid == FileRepositoryPathType.CreatorProjectFile.Uid)
             {
                 return string.Format(this.creatorProjectsFilesDirectory, args);
             }

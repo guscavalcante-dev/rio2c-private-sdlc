@@ -5,9 +5,9 @@
 @{
     //TODO: This region needs refactor! We need to migrate images stored on "https://subscription.rio2c.com.br/api/src/storage/uploads/creator/pitching/forms/" to our AWS S3 bucket "assets.my.rio2c.com/files/creator/projects/"
     //This was developed in this way, integrating directly with the images stored by them due to lack of time to carry out the migration. This was an urgent delivery.
-    //var articleFileUrl = FileHelper.GetFileUrl(FileRepositoryPathType.CreatorProjecFile, Model.Uid, Model.CreatorProjectDto.ArticleFileUploadDate, Model.CreatorProjectDto.ArticleFileExtension);
-    //var clippingFileUrl = FileHelper.GetFileUrl(FileRepositoryPathType.CreatorProjecFile, Model.Uid, Model.CreatorProjectDto.ClippingFileUploadDate, Model.CreatorProjectDto.ClippingFileExtension);
-    //var otherFileUrl = FileHelper.GetFileUrl(FileRepositoryPathType.CreatorProjecFile, Model.Uid, Model.CreatorProjectDto.OtherFileUploadDate, Model.CreatorProjectDto.OtherFileExtension);
+    //var articleFileUrl = FileHelper.GetFileUrl(FileRepositoryPathType.CreatorProjectFile, Model.Uid, Model.CreatorProjectDto.ArticleFileUploadDate, Model.CreatorProjectDto.ArticleFileExtension);
+    //var clippingFileUrl = FileHelper.GetFileUrl(FileRepositoryPathType.CreatorProjectFile, Model.Uid, Model.CreatorProjectDto.ClippingFileUploadDate, Model.CreatorProjectDto.ClippingFileExtension);
+    //var otherFileUrl = FileHelper.GetFileUrl(FileRepositoryPathType.CreatorProjectFile, Model.Uid, Model.CreatorProjectDto.OtherFileUploadDate, Model.CreatorProjectDto.OtherFileExtension);
     var articleFileUrl = $"https://subscription.rio2c.com.br/api/src/storage/uploads/creator/pitching/forms/{Model.CreatorProjectDto.GetImageUid()}_Argument.{Model.CreatorProjectDto.ArticleFileExtension}";
     var clippingFileUrl = $"https://subscription.rio2c.com.br/api/src/storage/uploads/creator/pitching/forms/{Model.CreatorProjectDto.GetImageUid()}_Clipping.{Model.CreatorProjectDto.ClippingFileExtension}";
     var otherFileUrl = $"https://subscription.rio2c.com.br/api/src/storage/uploads/creator/pitching/forms/{Model.CreatorProjectDto.GetImageUid()}_Other.{Model.CreatorProjectDto.OtherFileExtension}";
