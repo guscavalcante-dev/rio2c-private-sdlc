@@ -28,7 +28,7 @@
                     <div class="kt-pagination kt-pagination--brand justify-content-center justify-content-sm-between">
                         @Html.PagedListPager(
                             Model,
-                            page => Url.Action("ShowEvaluationListWidget", "Projects", new { Area = "Creator", searchKeywords = ViewBag.SearchKeywords, evaluationStatusUid = ViewBag.EvaluationStatusUid, page, pageSize = ViewBag.PageSize }),
+                            page => Url.Action("ShowEvaluationListWidget", "Projects", new { Area = "Creator", searchKeywords = ViewBag.SearchViewModel.SearchKeywords, evaluationStatusUid = ViewBag.SearchViewModel.EvaluationStatusUid, page, pageSize = ViewBag.SearchViewModel.PageSize }),
                             PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
                                 new PagedListRenderOptions
                                 {
@@ -50,7 +50,7 @@
                                 }
                                 , new AjaxOptions { HttpMethod = "GET", OnBegin = "CreatorProjectsEvaluationListWidget.changePage", OnSuccess = "CreatorProjectsEvaluationListWidget.handlePaginationReturn" }))
                         <div class="kt-pagination__toolbar">
-                            @Html.DropDownList("PageSizeDropdown", new SelectList(new[] { 1, 3, 6, 9, 12, 24, 36 }, ViewBag.PageSize), null, new { @class = "form-control kt-font-brand", style = "width: 60px;" })
+                            @Html.DropDownList("PageSizeDropdown", new SelectList(new[] { 1, 3, 6, 9, 12, 24, 36 }, ViewBag.SearchViewModel.PageSize), null, new { @class = "form-control kt-font-brand", style = "width: 60px;" })
                             @Html.PagedListPager(
                                 Model,
                                 page => Url.Action(null, new { page }),
@@ -82,7 +82,7 @@
 else
 {
     var message = string.Format(Messages.NoneEntityAction, Labels.Project.ToLowerInvariant(), Labels.FoundM);
-    var evaluationStatusUid = ViewBag.EvaluationStatusUid;
+    var evaluationStatusUid = ViewBag.SearchViewModel.EvaluationStatusUid;
 
     if (editionDto.IsCreatorProjectEvaluationOpen() && (
         evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid ||
