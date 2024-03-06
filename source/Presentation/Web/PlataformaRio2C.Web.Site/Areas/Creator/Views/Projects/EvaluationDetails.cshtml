@@ -1,0 +1,96 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model AttendeeCreatorProjectDto
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    ViewBag.Title = $"{Labels.Creator} | {Model.CreatorProjectDto?.Title}";
+    var totalProjectsCount = ViewBag.TotalProjectsCount as int?;
+    var currentProjectIndex = ViewBag.CurrentProjectIndex as int?;
+    var searchViewModel = ViewBag.SearchViewModel as CreatorProjectSearchViewModel;
+
+    var previousStepEvent = Url.Action("PreviousEvaluationDetails", "Projects", new
+    {
+        Area = "Creator",
+        id = Model.Id,
+        searchKeywords = searchViewModel.SearchKeywords,
+        evaluationStatusUid = searchViewModel.EvaluationStatusUid,
+        Page = searchViewModel.Page,
+        pageSize = searchViewModel.PageSize
+    });
+
+    var nextStepEvent = Url.Action("NextEvaluationDetails", "Projects", new
+    {
+        Area = "Creator",
+        id = Model.Id,
+        searchKeywords = searchViewModel.SearchKeywords,
+        evaluationStatusUid = searchViewModel.EvaluationStatusUid,
+        Page = searchViewModel.Page,
+        pageSize = searchViewModel.PageSize
+    });
+}
+@Html.Hidden("AggregateId", Model.Uid)
+
+<div class="row">
+    <div class="col-md-12 d-flex justify-content-end pb-3 pr-4">
+        <div class="row d-flex font-weight-bold text-white" style="align-items: center;">
+            <div class="mr-3">
+                <span>@currentProjectIndex @Labels.Of @totalProjectsCount @Labels.Projects</span>
+            </div>
+            <button class="btn btn-outline-secondary mr-2" onclick="location.href='@previousStepEvent'" @(currentProjectIndex == 1 ? "disabled" : "")>
+                <span class="font-weight-bold text-white"><</span>
+            </button>
+            <button class="btn btn-outline-secondary" onclick="location.href='@nextStepEvent'" @(currentProjectIndex == totalProjectsCount ? "disabled" : "")>
+                <span class="font-weight-bold text-white">></span>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12">
+                <div id="ProjectMainInformationWidget" class="kt-portlet" style="min-height: 350px;"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div id="ProjectInformationWidget" class="kt-portlet" style="min-height: 350px;"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div id="AttachmentsWidget" class="kt-portlet" style="min-height: 350px;"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div id="ProjectEvaluationWidget" class="kt-portlet" style="min-height: 296px;"></div>
+            </div>
+            <div class="col-md-6">
+                <div id="ProjectEvaluatorsWidget" class="kt-portlet" style="min-height: 296px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles {
+    @Styles.Render("~/bundles/css/select2.css")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/select2.js")
+    @Scripts.Render("~/bundles/js/inputmask.js")
+    @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/creator.projects.widget.js")
+    @Scripts.Render("~/bundles/js/creator.projects.evaluation.widget.js")
+    <script>
+        // Page translations ----------------------------------------------------------------------
+        var translations = {
+        };
+
+        jQuery(document).ready(function () {
+            CreatorProjectsMainInformationWidget.init();
+            CreatorProjectsProjectInformationWidget.init();
+            CreatorProjectsAttachmentsWidget.init();
+            CreatorProjectsEvaluationWidget.init();
+            CreatorProjectsEvaluatorsWidget.init();
+        });
+    </script>
+}

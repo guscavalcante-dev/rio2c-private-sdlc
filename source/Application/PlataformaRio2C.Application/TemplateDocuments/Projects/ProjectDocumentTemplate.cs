@@ -130,7 +130,7 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             tableGenre.DefaultCell.VerticalAlignment = Element.ALIGN_TOP;
 
             var chips = new List<Chunk>();
-            var projectInterestsDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.Genre.Uid);
+            var projectInterestsDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualGenre.Uid);
             if (projectInterestsDtos?.Any() == true)
             {
                 foreach (var projectInterestDto in projectInterestsDtos)
@@ -320,7 +320,7 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             tableFormat.AddCell(new Phrase(new Chunk("Formato: ", _fontLabel)));
 
             var chips = new List<Chunk>();
-            var projectFormatsDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.Format.Uid);
+            var projectFormatsDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualFormat.Uid);
             if (projectFormatsDtos?.Any() == true)
             {
                 foreach (var projectFormatDto in projectFormatsDtos)
@@ -347,7 +347,7 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             tablePltaform.DefaultCell.VerticalAlignment = Element.ALIGN_TOP;
 
             chips = new List<Chunk>();
-            var projectPlatformsDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.Platforms.Uid);
+            var projectPlatformsDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualPlatforms.Uid);
             if (projectPlatformsDtos?.Any() == true)
             {
                 foreach (var projectPlatformDto in projectPlatformsDtos)
@@ -373,7 +373,7 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             tableStatus.DefaultCell.VerticalAlignment = Element.ALIGN_TOP;
 
             chips = new List<Chunk>();
-            var projectStatusDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.ProjectStatus.Uid);
+            var projectStatusDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualProjectStatus.Uid);
             if (projectStatusDtos?.Any() == true)
             {
                 foreach (var projectStatusDto in projectStatusDtos)
@@ -399,7 +399,7 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             tableSubGenre.DefaultCell.VerticalAlignment = Element.ALIGN_TOP;
 
             chips = new List<Chunk>();
-            var subgeneroDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.SubGenre.Uid);
+            var subgeneroDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualSubGenre.Uid);
             if (subgeneroDtos?.Any() == true)
             {
                 foreach (var subgeneroDto in subgeneroDtos)

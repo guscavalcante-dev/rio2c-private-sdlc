@@ -177,6 +177,8 @@
     <Compile Include="Repositories\Country\CityRepository.cs" />
     <Compile Include="Repositories\Country\CountryRepository.cs" />
     <Compile Include="Repositories\Country\StateRepository.cs" />
+    <Compile Include="Repositories\Creator\AttendeeCreatorProjectRepository.cs" />
+    <Compile Include="Repositories\Creator\CreatorProjectRepository.cs" />
     <Compile Include="Repositories\Innovation\InnovationOrganizationObjectivesOptionRepository.cs" />
     <Compile Include="Repositories\Innovation\InnovationOrganizationTechnologyOptionRepository.cs" />
     <Compile Include="Repositories\Innovation\InnovationOrganizationSustainableDevelopmentObjectivesOptionRepository.cs" />

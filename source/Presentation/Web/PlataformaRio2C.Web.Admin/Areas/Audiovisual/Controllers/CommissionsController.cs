@@ -91,7 +91,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             #endregion
 
             searchViewModel.UpdateModelsAndLists(
-                await this.interestRepo.FindAllByInterestGroupUidAsync(InterestGroup.Genre.Uid),
+                await this.interestRepo.FindAllByInterestGroupUidAsync(InterestGroup.AudiovisualGenre.Uid),
                 this.UserInterfaceLanguage);
 
             return View(searchViewModel);
@@ -681,7 +681,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <returns></returns>
         private async Task<List<InterestDto>> GetInterestsFromGenreInterestGroupAsync()
         {
-            return await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.Genre.Uid);
+            return await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.AudiovisualGenre.Uid);
         }
 
         #endregion

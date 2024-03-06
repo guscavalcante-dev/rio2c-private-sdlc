@@ -23,32 +23,40 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>UpdateEditionDatesInformationCommandHandler</summary>
     public class UpdateEditionDatesInformationCommandHandler : EditionBaseCommandHandler, IRequestHandler<UpdateEditionDatesInformation, AppValidationResult>
     {
-        private readonly IEditionRepository editionRepo;
         private readonly IAttendeeMusicBandRepository attendeeMusicBandRepo;
         private readonly IAttendeeInnovationOrganizationRepository attendeeInnovationOrganizationRepo;
-        private readonly IProjectRepository projectRepo;
+        private readonly IProjectRepository audiovisualProjectRepo;
+        private readonly IAttendeeCartoonProjectRepository attendeeCartoonProjectRepo;
+        private readonly IAttendeeCreatorProjectRepository attendeeCreatorProjectRepo;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateEditionDatesInformationCommandHandler"/> class.
+        /// Initializes a new instance of the <see cref="UpdateEditionDatesInformationCommandHandler" /> class.
         /// </summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="attendeeMusicBandRepository">The attendee music band repository.</param>
+        /// <param name="attendeeInnovationOrganizationRepository">The attendee innovation organization repository.</param>
+        /// <param name="audiovisualProjectRepository">The audiovisual project repository.</param>
+        /// <param name="attendeeCartoonProjectRepository">The attendee cartoon project repository.</param>
+        /// <param name="attendeeCreatorProjectRepository">The creator project repository.</param>
         public UpdateEditionDatesInformationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IEditionRepository editionRepository,
             IAttendeeMusicBandRepository attendeeMusicBandRepository,
             IAttendeeInnovationOrganizationRepository attendeeInnovationOrganizationRepository,
-            IProjectRepository projectRepository
+            IProjectRepository audiovisualProjectRepository,
+            IAttendeeCartoonProjectRepository attendeeCartoonProjectRepository,
+            IAttendeeCreatorProjectRepository attendeeCreatorProjectRepository
             )
             : base(eventBus, uow, editionRepository)
         {
-            this.editionRepo = editionRepository;
             this.attendeeMusicBandRepo = attendeeMusicBandRepository;
             this.attendeeInnovationOrganizationRepo = attendeeInnovationOrganizationRepository;
-            this.projectRepo = projectRepository;
+            this.audiovisualProjectRepo = audiovisualProjectRepository;
+            this.attendeeCartoonProjectRepo = attendeeCartoonProjectRepository;
+            this.attendeeCreatorProjectRepo = attendeeCreatorProjectRepository;
         }
 
         /// <summary>
@@ -63,10 +71,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var edition = await this.GetEditionByUid(cmd.EditionUid);
 
-            bool changedMusicCommissionMinimumEvaluationsCount = edition.MusicCommissionMinimumEvaluationsCount != cmd.MusicCommissionMinimumEvaluationsCount;
-            bool changedInnovationCommissionMinimumEvaluationsCount = edition.InnovationCommissionMinimumEvaluationsCount != cmd.InnovationCommissionMinimumEvaluationsCount;
-            bool changedAudiovisualCommissionMinimumEvaluationsCount = edition.AudiovisualCommissionMinimumEvaluationsCount != cmd.AudiovisualCommissionMinimumEvaluationsCount;
-
             #region Initial validations
 
             if (!this.ValidationResult.IsValid)
@@ -76,6 +80,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             #endregion
+
+            bool changedMusicCommissionMinimumEvaluationsCount = edition.MusicCommissionMinimumEvaluationsCount != cmd.MusicCommissionMinimumEvaluationsCount;
+            bool changedInnovationCommissionMinimumEvaluationsCount = edition.InnovationCommissionMinimumEvaluationsCount != cmd.InnovationCommissionMinimumEvaluationsCount;
+            bool changedAudiovisualCommissionMinimumEvaluationsCount = edition.AudiovisualCommissionMinimumEvaluationsCount != cmd.AudiovisualCommissionMinimumEvaluationsCount;
+            bool changedCartoonCommissionMinimumEvaluationsCount = edition.CartoonCommissionMinimumEvaluationsCount != cmd.CartoonCommissionMinimumEvaluationsCount;
+            bool changedCreatorCommissionMinimumEvaluationsCount = edition.CreatorCommissionMinimumEvaluationsCount != cmd.CreatorCommissionMinimumEvaluationsCount;
 
             edition.UpdateDatesInformation(
                 cmd.ProjectSubmitStartDate.Value,
@@ -114,6 +124,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.CartoonCommissionMinimumEvaluationsCount,
                 cmd.CartoonCommissionMaximumApprovedProjectsCount,
 
+                cmd.CreatorProjectSubmitStartDate,
+                cmd.CreatorProjectSubmitEndDate,
+                cmd.CreatorCommissionEvaluationStartDate,
+                cmd.CreatorCommissionEvaluationEndDate,
+                cmd.CreatorCommissionMinimumEvaluationsCount,
+                cmd.CreatorCommissionMaximumApprovedProjectsCount,
+
                 cmd.UserId);
 
             if (!edition.IsValid())
@@ -136,16 +153,32 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             if (changedInnovationCommissionMinimumEvaluationsCount)
             {
                 var attendeeInnovationOrganizations = await this.attendeeInnovationOrganizationRepo.FindAllByEditionIdAsync(edition.Id);
-                attendeeInnovationOrganizations.ForEach(amb => amb.RecalculateGrade());
+                attendeeInnovationOrganizations.ForEach(aio => aio.RecalculateGrade());
                 this.attendeeInnovationOrganizationRepo.UpdateAll(attendeeInnovationOrganizations);
             }
 
             // Audiovisual Projects Grades must be recalculated when changed "AudiovisualCommissionMinimumEvaluationsCount"
             if (changedAudiovisualCommissionMinimumEvaluationsCount)
             {
-                var projects = await this.projectRepo.FindAllByEditionIdAsync(edition.Id);
-                projects.ForEach(amb => amb.RecalculateGrade(edition));
-                this.projectRepo.UpdateAll(projects);
+                var projects = await this.audiovisualProjectRepo.FindAllByEditionIdAsync(edition.Id);
+                projects.ForEach(p => p.RecalculateGrade(edition));
+                this.audiovisualProjectRepo.UpdateAll(projects);
+            }
+
+            // Cartoon Projects Grades must be recalculated when changed "CartoonCommissionMinimumEvaluationsCount"
+            if (changedCartoonCommissionMinimumEvaluationsCount)
+            {
+                var projects = await this.attendeeCartoonProjectRepo.FindAllByEditionIdAsync(edition.Id);
+                projects.ForEach(acp => acp.RecalculateGrade());
+                this.attendeeCartoonProjectRepo.UpdateAll(projects);
+            }
+
+            // Creator Projects Grades must be recalculated when changed "CreatorCommissionMinimumEvaluationsCount"
+            if (changedCreatorCommissionMinimumEvaluationsCount)
+            {
+                var projects = await this.attendeeCreatorProjectRepo.FindAllByEditionIdAsync(edition.Id);
+                projects.ForEach(acp => acp.RecalculateGrade());
+                this.attendeeCreatorProjectRepo.UpdateAll(projects);
             }
 
             #endregion

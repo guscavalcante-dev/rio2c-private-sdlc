@@ -1,0 +1,151 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Statics
+@model AttendeeCreatorProjectDto
+@{
+    //TODO: This region needs refactor! We need to migrate images stored on "https://subscription.rio2c.com.br/api/src/storage/uploads/creator/pitching/forms/" to our AWS S3 bucket "assets.my.rio2c.com/files/creator/projects/"
+    //This was developed in this way, integrating directly with the images stored by them due to lack of time to carry out the migration. This was an urgent delivery.
+    //var articleFileUrl = FileHelper.GetFileUrl(FileRepositoryPathType.CreatorProjectFile, Model.Uid, Model.CreatorProjectDto.ArticleFileUploadDate, Model.CreatorProjectDto.ArticleFileExtension);
+    //var clippingFileUrl = FileHelper.GetFileUrl(FileRepositoryPathType.CreatorProjectFile, Model.Uid, Model.CreatorProjectDto.ClippingFileUploadDate, Model.CreatorProjectDto.ClippingFileExtension);
+    //var otherFileUrl = FileHelper.GetFileUrl(FileRepositoryPathType.CreatorProjectFile, Model.Uid, Model.CreatorProjectDto.OtherFileUploadDate, Model.CreatorProjectDto.OtherFileExtension);
+    var articleFileUrl = $"https://subscription.rio2c.com.br/api/src/storage/uploads/creator/pitching/forms/{Model.CreatorProjectDto.GetImageUid()}_Argument.{Model.CreatorProjectDto.ArticleFileExtension}";
+    var clippingFileUrl = $"https://subscription.rio2c.com.br/api/src/storage/uploads/creator/pitching/forms/{Model.CreatorProjectDto.GetImageUid()}_Clipping.{Model.CreatorProjectDto.ClippingFileExtension}";
+    var otherFileUrl = $"https://subscription.rio2c.com.br/api/src/storage/uploads/creator/pitching/forms/{Model.CreatorProjectDto.GetImageUid()}_Other.{Model.CreatorProjectDto.OtherFileExtension}";
+}
+
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">@Labels.Attachments</h3>
+    </div>
+</div>
+<div class="kt-portlet__body">
+    <div class="kt-widget">
+        <div class="kt-widget__bottom">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="kt-widget4">
+                        <h3 class="kt-heading kt-heading--sm mb-0 mt-0 text-center">@Labels.TreatmentShortOrArticle</h3>
+                        @if (Model.CreatorProjectDto.ArticleFileUploadDate.HasValue)
+                        {
+                            if (Model.CreatorProjectDto.ArticleFileExtension.IsImage())
+                            {
+                                <div class="kt-widget__media text-center mt-3">
+                                    <a href="@articleFileUrl" target="_blank">
+                                        <img class="myrio2c-attachment-widget-image" src="@articleFileUrl" alt="image">
+                                    </a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="row mt-3 justify-content-center">
+                                    <div class="col-sm-8 col-md-8 col-lg-6">
+                                        <div class="embed-responsive embed-responsive-1by1 d-flex">
+                                            @Html.Raw(articleFileUrl.ConvertFileToEmbed())
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-12 text-center">
+                                        <span><a href="@articleFileUrl" target="_blank"><small class="text-break">@articleFileUrl</small></a></span>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="row mt-3">
+                                <div class="col-12 text-center">
+                                    <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.TreatmentShortOrArticle, Labels.FoundM)</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="kt-widget4 mt-3">
+                        <h3 class="kt-heading kt-heading--sm mb-0 mt-0 text-center">@Labels.Clipping</h3>
+                        @if (Model.CreatorProjectDto.ClippingFileUploadDate.HasValue)
+                        {
+                            if (Model.CreatorProjectDto.ClippingFileExtension.IsImage())
+                            {
+                                <div class="kt-widget__media text-center mt-3">
+                                    <a href="@clippingFileUrl" target="_blank">
+                                        <img class="myrio2c-attachment-widget-image" src="@clippingFileUrl" alt="image">
+                                    </a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="row mt-3 justify-content-center">
+                                    <div class="col-sm-8 col-md-8 col-lg-6">
+                                        <div class="embed-responsive embed-responsive-1by1 d-flex">
+                                            @Html.Raw(clippingFileUrl.ConvertFileToEmbed())
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-12 text-center">
+                                        <span><a href="@clippingFileUrl" target="_blank"><small class="text-break">@clippingFileUrl</small></a></span>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="row mt-3">
+                                <div class="col-12 text-center">
+                                    <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Clipping, Labels.FoundM)</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="kt-widget4 mt-3">
+                        <h3 class="kt-heading kt-heading--sm mb-0 mt-0 text-center">@Labels.OtherAttachedFiles</h3>
+                        @if (Model.CreatorProjectDto.OtherFileUploadDate.HasValue)
+                        {
+                            if (Model.CreatorProjectDto.OtherFileExtension.IsImage())
+                            {
+                                <div class="kt-widget__media text-center mt-3">
+                                    <a href="@otherFileUrl" target="_blank">
+                                        <img class="myrio2c-attachment-widget-image" src="@otherFileUrl" alt="image">
+                                    </a>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-12 text-center">
+                                        <span><small class="text-break">@(!string.IsNullOrEmpty(Model.CreatorProjectDto.OtherFileDescription) ? Model.CreatorProjectDto.OtherFileDescription : "-")</small></span>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="row mt-3 justify-content-center">
+                                    <div class="col-sm-8 col-md-8 col-lg-6">
+                                        <div class="embed-responsive embed-responsive-1by1 d-flex">
+                                            @Html.Raw(otherFileUrl.ConvertFileToEmbed())
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-12 text-center">
+                                        <span><small class="text-break">@(!string.IsNullOrEmpty(Model.CreatorProjectDto.OtherFileDescription) ? Model.CreatorProjectDto.OtherFileDescription : "-")</small></span>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-12 text-center">
+                                        <span><a href="@otherFileUrl" target="_blank"><small class="text-break">@otherFileUrl</small></a></span>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="row mt-3">
+                                <div class="col-12 text-center">
+                                    <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.OtherAttachedFiles, Labels.FoundM)</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

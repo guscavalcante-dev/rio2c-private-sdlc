@@ -208,6 +208,12 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new AttendeeCartoonProjectCollaboratorMap());
             modelBuilder.Configurations.Add(new AttendeeCartoonProjectEvaluationMap());
 
+            // Creator
+            modelBuilder.Configurations.Add(new CreatorProjectMap());
+            modelBuilder.Configurations.Add(new CreatorProjectInterestMap());
+            modelBuilder.Configurations.Add(new AttendeeCreatorProjectMap());
+            modelBuilder.Configurations.Add(new AttendeeCreatorProjectEvaluationMap());
+
             // WeConnect
             modelBuilder.Configurations.Add(new WeConnectPublicationMap());
             modelBuilder.Configurations.Add(new SocialMediaPlatformMap());

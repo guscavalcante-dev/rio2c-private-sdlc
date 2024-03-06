@@ -1,7 +1,7 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @model ProjectDto
 @{
-    ViewBag.Title = $"{Labels.AudiovisualCommission} {Model.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value}";
+    ViewBag.Title = $"{Labels.AudiovisualCommission} | {Model.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value}";
     var totalProjectsCount = ViewBag.ProjectsTotalCount as int?;
     var currentProjectIndex = ViewBag.CurrentProjectIndex as int?;
 

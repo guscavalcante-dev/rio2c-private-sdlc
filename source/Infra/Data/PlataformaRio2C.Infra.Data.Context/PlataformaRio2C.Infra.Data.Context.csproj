@@ -115,6 +115,10 @@
     <Compile Include="Mapping\Addresses\CityMap.cs" />
     <Compile Include="Mapping\Addresses\CountryMap.cs" />
     <Compile Include="Mapping\Addresses\StateMap.cs" />
+    <Compile Include="Mapping\Creator\AttendeeCreatorProjectEvaluationMap.cs" />
+    <Compile Include="Mapping\Creator\CreatorProjectInterestMap.cs" />
+    <Compile Include="Mapping\Creator\AttendeeCreatorProjectMap.cs" />
+    <Compile Include="Mapping\Creator\CreatorProjectMap.cs" />
     <Compile Include="Mapping\Editions\EditionEventMap.cs" />
     <Compile Include="Mapping\Innovation\AttendeeCollaboratorInnovationOrganizationTrackMap.cs" />
     <Compile Include="Mapping\Innovation\AttendeeInnovationOrganizationEvaluationMap.cs" />

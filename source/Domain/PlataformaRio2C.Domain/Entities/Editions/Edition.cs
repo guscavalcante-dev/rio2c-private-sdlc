@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-13-2023
+// Last Modified On : 02-27-2024
 // ***********************************************************************
 // <copyright file="Edition.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,6 +17,7 @@ using System.Linq;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using static log4net.Appender.RollingFileAppender;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -115,7 +116,18 @@ namespace PlataformaRio2C.Domain.Entities
         public int? CartoonCommissionMaximumApprovedProjectsCount { get; private set; }
 
         #endregion
-              
+
+        #region Creator - Commissions
+
+        public DateTimeOffset CreatorProjectSubmitStartDate { get; private set; }
+        public DateTimeOffset CreatorProjectSubmitEndDate { get; private set; }
+        public DateTimeOffset CreatorCommissionEvaluationStartDate { get; private set; }
+        public DateTimeOffset CreatorCommissionEvaluationEndDate { get; private set; }
+        public int CreatorCommissionMinimumEvaluationsCount { get; private set; }
+        public int CreatorCommissionMaximumApprovedProjectsCount { get; private set; }
+
+        #endregion
+
         #endregion
 
         public virtual ICollection<AttendeeOrganization> AttendeeOrganizations { get; private set; }
@@ -123,9 +135,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeSalesPlatform> AttendeeSalesPlatforms { get; private set; }
         public virtual ICollection<EditionEvent> EditionEvents { get; private set; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Edition" /> class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref="Edition" /> class.</summary>
         /// <param name="uid">The uid.</param>
         /// <param name="name">The name.</param>
         /// <param name="urlCode">The URL code.</param>
@@ -167,6 +177,12 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="cartoonCommissionEvaluationEndDate">The cartoon commission evaluation end date.</param>
         /// <param name="cartoonCommissionMinimumEvaluationsCount">The cartoon commission minimum evaluations count.</param>
         /// <param name="cartoonCommissionMaximumApprovedProjectsCount">The cartoon commission maximum approved companies count.</param>
+        /// <param name="creatorProjectSubmitStartDate"></param>
+        /// <param name="creatorProjectSubmitEndDate"></param>
+        /// <param name="creatorCommissionEvaluationStartDate"></param>
+        /// <param name="creatorCommissionEvaluationEndDate"></param>
+        /// <param name="creatorCommissionMinimumEvaluationsCount"></param>
+        /// <param name="creatorCommissionMaximumApprovedProjectsCount"></param>
         /// <param name="userId">The user identifier.</param>
         public Edition(
             Guid uid,
@@ -215,6 +231,13 @@ namespace PlataformaRio2C.Domain.Entities
             DateTime? cartoonCommissionEvaluationEndDate,
             int? cartoonCommissionMinimumEvaluationsCount,
             int? cartoonCommissionMaximumApprovedProjectsCount,
+
+            DateTime creatorProjectSubmitStartDate,
+            DateTime creatorProjectSubmitEndDate,
+            DateTime creatorCommissionEvaluationStartDate,
+            DateTime creatorCommissionEvaluationEndDate,
+            int creatorCommissionMinimumEvaluationsCount,
+            int creatorCommissionMaximumApprovedProjectsCount,
 
             int userId)
         {
@@ -269,6 +292,14 @@ namespace PlataformaRio2C.Domain.Entities
             this.CartoonCommissionEvaluationEndDate = cartoonCommissionEvaluationEndDate?.ToEndDateTimeOffset();
             this.CartoonCommissionMinimumEvaluationsCount = cartoonCommissionMinimumEvaluationsCount;
             this.CartoonCommissionMaximumApprovedProjectsCount = cartoonCommissionMaximumApprovedProjectsCount;
+
+            // Creator - Commissions
+            this.CreatorProjectSubmitStartDate = creatorProjectSubmitStartDate.ToUtcTimeZone();
+            this.CreatorProjectSubmitEndDate = creatorProjectSubmitEndDate.ToEndDateTimeOffset();
+            this.CreatorCommissionEvaluationStartDate = creatorCommissionEvaluationStartDate.ToUtcTimeZone();
+            this.CreatorCommissionEvaluationEndDate = creatorCommissionEvaluationEndDate.ToEndDateTimeOffset();
+            this.CreatorCommissionMinimumEvaluationsCount = creatorCommissionMinimumEvaluationsCount;
+            this.CreatorCommissionMaximumApprovedProjectsCount = creatorCommissionMaximumApprovedProjectsCount;
 
             base.SetCreateDate(userId);
         }
@@ -390,6 +421,13 @@ namespace PlataformaRio2C.Domain.Entities
             int? cartoonCommissionMinimumEvaluationsCount,
             int? cartoonCommissionMaximumApprovedProjectsCount,
 
+            DateTime creatorProjectSubmitStartDate,
+            DateTime creatorProjectSubmitEndDate,
+            DateTime creatorCommissionEvaluationStartDate,
+            DateTime creatorCommissionEvaluationEndDate,
+            int creatorCommissionMinimumEvaluationsCount,
+            int creatorCommissionMaximumApprovedProjectsCount,
+
             int userId)
         {
             this.ProjectSubmitStartDate = projectSubmitStartDate.ToUtcTimeZone();
@@ -427,6 +465,13 @@ namespace PlataformaRio2C.Domain.Entities
             this.CartoonCommissionEvaluationEndDate = cartoonCommissionEvaluationEndDate?.ToEndDateTimeOffset();
             this.CartoonCommissionMinimumEvaluationsCount = cartoonCommissionMinimumEvaluationsCount;
             this.CartoonCommissionMaximumApprovedProjectsCount = cartoonCommissionMaximumApprovedProjectsCount;
+
+            this.CreatorProjectSubmitStartDate = creatorProjectSubmitStartDate.ToUtcTimeZone();
+            this.CreatorProjectSubmitEndDate = creatorProjectSubmitEndDate.ToEndDateTimeOffset();
+            this.CreatorCommissionEvaluationStartDate = creatorCommissionEvaluationStartDate.ToUtcTimeZone();
+            this.CreatorCommissionEvaluationEndDate = creatorCommissionEvaluationEndDate.ToEndDateTimeOffset();
+            this.CreatorCommissionMinimumEvaluationsCount = creatorCommissionMinimumEvaluationsCount;
+            this.CreatorCommissionMaximumApprovedProjectsCount = creatorCommissionMaximumApprovedProjectsCount;
 
             base.SetUpdateDate(userId);
         }
@@ -534,6 +579,25 @@ namespace PlataformaRio2C.Domain.Entities
         public bool IsInnovationProjectEvaluationOpen()
         {
             return DateTime.UtcNow >= this.InnovationCommissionEvaluationStartDate && DateTime.UtcNow <= this.InnovationCommissionEvaluationEndDate;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Creator - Commissions
+
+        #region Project Evaluation
+
+        /// <summary>
+        /// Determines whether [is creator project evaluation open].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is creator project evaluation open]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsCreatorProjectEvaluationOpen()
+        {
+            return DateTime.UtcNow >= this.CreatorCommissionEvaluationStartDate && DateTime.UtcNow <= this.CreatorCommissionEvaluationEndDate;
         }
 
         #endregion

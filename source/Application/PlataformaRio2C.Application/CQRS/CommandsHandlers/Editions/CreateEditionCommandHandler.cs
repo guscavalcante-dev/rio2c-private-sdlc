@@ -122,6 +122,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.EditionDate.CartoonCommissionMinimumEvaluationsCount,
                 cmd.EditionDate.CartoonCommissionMaximumApprovedProjectsCount,
 
+                cmd.EditionDate.CreatorProjectSubmitStartDate,
+                cmd.EditionDate.CreatorProjectSubmitEndDate,
+                cmd.EditionDate.CreatorCommissionEvaluationStartDate,
+                cmd.EditionDate.CreatorCommissionEvaluationEndDate,
+                cmd.EditionDate.CreatorCommissionMinimumEvaluationsCount,
+                cmd.EditionDate.CreatorCommissionMaximumApprovedProjectsCount,
+
                 cmd.UserId);
 
             if (!edition.IsValid())

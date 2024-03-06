@@ -325,11 +325,9 @@ maira@rio2c.com&lt;br/&gt;
   <data name="LinksImageTeaser" xml:space="preserve">
     <value>(Não serão aceitos links para download, só para sites de compartilhamento de imagem ou vídeo, ex: youtube e Vimeo.) </value>
   </data>
-  <data name="MusicCommissionProjectsDates" xml:space="preserve">
+  <data name="CommissionProjectsDates" xml:space="preserve">
     <value>&lt;li&gt;Projetos disponíveis para avaliação a partir de: {0}&lt;/li&gt;
 &lt;li&gt;Período de avaliação: {0} a {1}&lt;/li&gt;</value>
-    <comment>&lt;li&gt;Projetos disponíveis para avaliação a partir de: {0}&lt;/li&gt;
-&lt;li&gt;Período de avaliação: {0} a {1}&lt;/li&gt;</comment>
   </data>
   <data name="MyRio2cDescription" xml:space="preserve">
     <value>MyRio2C é a plataforma criada pelo Rio2C para integrar os participantes antes do evento e promover mais um ambiente de negócios para quem vai ao evento.&lt;br/&gt;

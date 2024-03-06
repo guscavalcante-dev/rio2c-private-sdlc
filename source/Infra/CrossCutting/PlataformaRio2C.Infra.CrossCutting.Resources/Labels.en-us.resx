@@ -312,6 +312,9 @@
     <value>at</value>
     <comment>em</comment>
   </data>
+  <data name="Attachments" xml:space="preserve">
+    <value>Attachments</value>
+  </data>
   <data name="AttendeeOrganizationMaxSellProjectsCount" xml:space="preserve">
     <value>Maximum number of projects by participant</value>
     <comment>Quantidade máxima de projetos por participante</comment>
@@ -765,13 +768,10 @@
   <data name="CreatorCommission" xml:space="preserve">
     <value>Creator Commission</value>
   </data>
-  <data name="CreatorEN" xml:space="preserve">
-    <value>Creator</value>
+  <data name="CreatorProjects" xml:space="preserve">
+    <value>Creator Projects</value>
   </data>
   <data name="Creators" xml:space="preserve">
-    <value>Creators</value>
-  </data>
-  <data name="CreatorsEN" xml:space="preserve">
     <value>Creators</value>
   </data>
   <data name="Curatorship" xml:space="preserve">
@@ -1258,6 +1258,9 @@
     <value>Highlight Position</value>
     <comment>Posição no Destaque</comment>
   </data>
+  <data name="History" xml:space="preserve">
+    <value>History</value>
+  </data>
   <data name="Holding" xml:space="preserve">
     <value>Holding</value>
     <comment>Holding</comment>
@@ -1455,6 +1458,9 @@
   </data>
   <data name="LinkedIn" xml:space="preserve">
     <value>LinkedIn</value>
+  </data>
+  <data name="Links" xml:space="preserve">
+    <value>Links</value>
   </data>
   <data name="LinksForPromoTeaser" xml:space="preserve">
     <value>Link for Promo/Teaser</value>
@@ -1693,6 +1699,9 @@
     <value>Name</value>
     <comment>Razão Social</comment>
   </data>
+  <data name="NameOrCompanyName" xml:space="preserve">
+    <value>Name or company name</value>
+  </data>
   <data name="Names" xml:space="preserve">
     <value>Names</value>
     <comment>Nomes</comment>
@@ -1866,6 +1875,9 @@
   <data name="OrganizationType" xml:space="preserve">
     <value>Organization type</value>
     <comment>Tipo de Empresa</comment>
+  </data>
+  <data name="OtherAttachedFiles" xml:space="preserve">
+    <value>Other attached files</value>
   </data>
   <data name="Others" xml:space="preserve">
     <value>Others</value>
@@ -2095,6 +2107,9 @@
     <value>Relations</value>
     <comment>Assessoria</comment>
   </data>
+  <data name="PreviouslyDevelopedProjects" xml:space="preserve">
+    <value>Have carried out other projects previously? Which?</value>
+  </data>
   <data name="Print" xml:space="preserve">
     <value>Print</value>
   </data>
@@ -2193,8 +2208,23 @@
     <value>Additional information about the project</value>
     <comment>Informações adicionais sobre o projeto</comment>
   </data>
+  <data name="ProjectAssociatedInstitutions" xml:space="preserve">
+    <value>Is the project associated with any Association or Institution? Which?</value>
+  </data>
+  <data name="ProjectAudienceReach" xml:space="preserve">
+    <value>What was the audience reach on the online platform?</value>
+  </data>
+  <data name="ProjectAwards" xml:space="preserve">
+    <value>Did the project win or be nominated for any awards? Which?</value>
+  </data>
   <data name="ProjectDetails" xml:space="preserve">
     <value>Project's details</value>
+  </data>
+  <data name="ProjectDevelopmentMotivation" xml:space="preserve">
+    <value>Project development motivation</value>
+  </data>
+  <data name="ProjectDiversityAndInclusionElements" xml:space="preserve">
+    <value>Diversity and inclusion elements</value>
   </data>
   <data name="ProjectEvaluationEndDate" xml:space="preserve">
     <value>Project evaluation end date</value>
@@ -2216,6 +2246,9 @@
     <value>Project Information</value>
     <comment>Informações do Projeto</comment>
   </data>
+  <data name="ProjectMarketingStrategy" xml:space="preserve">
+    <value>Project marketing strategy</value>
+  </data>
   <data name="ProjectMaxBuyerEvaluationsCount" xml:space="preserve">
     <value>Maximum number of evaluators by project</value>
     <comment>Quantidade máxima de avaliadores por projeto</comment>
@@ -2223,6 +2256,12 @@
   <data name="ProjectNotSubmittedToPlayers" xml:space="preserve">
     <value>No Player selected for evaluation</value>
     <comment>Nenhum Player selecionado para avaliação</comment>
+  </data>
+  <data name="ProjectOnlinePlatforms" xml:space="preserve">
+    <value>Is the project available on an online platform that does not hold the rights to it? Which?</value>
+  </data>
+  <data name="ProjectPublicNotice" xml:space="preserve">
+    <value>Was the project included in any public notice? Which?</value>
   </data>
   <data name="ProjectRefused" xml:space="preserve">
     <value>Refused</value>
@@ -2239,6 +2278,9 @@
   <data name="ProjectsForPitching" xml:space="preserve">
     <value>Projects for Pitching</value>
     <comment>Projetos para Pitching</comment>
+  </data>
+  <data name="ProjectSimilars" xml:space="preserve">
+    <value>Similar audiovisual projects</value>
   </data>
   <data name="ProjectsPerProducerQty" xml:space="preserve">
     <value>QTD Projects Per Producer</value>
@@ -2273,6 +2315,12 @@
   <data name="ProjectSubscriptions" xml:space="preserve">
     <value>Project Subscriptions</value>
     <comment>Inscrições de Projeto</comment>
+  </data>
+  <data name="ProjectThemeRelevation" xml:space="preserve">
+    <value>Relevance of the theme</value>
+  </data>
+  <data name="ProjectTransformationMotivation" xml:space="preserve">
+    <value>Motivation to transform your work into a feature film or series</value>
   </data>
   <data name="PublicEmail" xml:space="preserve">
     <value>Public Email</value>
@@ -2526,6 +2574,9 @@
   </data>
   <data name="SeeReasonForRefusal" xml:space="preserve">
     <value>See reason for refusal</value>
+  </data>
+  <data name="Segment" xml:space="preserve">
+    <value>Segment</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>Select</value>
@@ -3000,6 +3051,9 @@
   <data name="Transport" xml:space="preserve">
     <value>Transport</value>
     <comment>Transporte</comment>
+  </data>
+  <data name="TreatmentShortOrArticle" xml:space="preserve">
+    <value>Treatment, short story or article</value>
   </data>
   <data name="Twitter" xml:space="preserve">
     <value>Twitter</value>

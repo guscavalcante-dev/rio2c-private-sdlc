@@ -35,6 +35,7 @@ namespace PlataformaRio2C.Domain.Statics
         public static FileRepositoryPathType InnovationOrganizationPresentationFile = new FileRepositoryPathType(new Guid("319ECD0E-9B1B-4563-B98A-C09D59453EF3"));
         public static FileRepositoryPathType AudioFile = new FileRepositoryPathType(new Guid("14EF53C3-C034-487F-8C08-A467167AD286"));
         public static FileRepositoryPathType WeConnectMediaFile = new FileRepositoryPathType(new Guid("95DC4522-A697-49B4-BD2A-44924509B8FA"));
+        public static FileRepositoryPathType CreatorProjectFile = new FileRepositoryPathType(new Guid("C5477B13-CA1B-46AD-91F1-91B19B8D2D83"));
 
         public static FileRepositoryPathType ErrorCropping = new FileRepositoryPathType(new Guid("14EF53C3-C034-487F-8C08-A467167AD287"));
     }

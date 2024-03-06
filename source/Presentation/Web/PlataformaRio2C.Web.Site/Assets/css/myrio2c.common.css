@@ -603,3 +603,16 @@ a.r2c-login__footer-link, a.r2c-footer-link {
 .kt-widget19 .kt-widget19__action {
     margin-top: 1.5rem;
 }
+
+
+/*
+    Image Attachments Widget
+*/
+.myrio2c-attachment-widget-image {
+    /*width: 100%;*/
+    height: auto;
+    max-height: 500px;
+    border-radius: 5px;
+    object-fit: scale-down;
+    cursor: pointer;
+}

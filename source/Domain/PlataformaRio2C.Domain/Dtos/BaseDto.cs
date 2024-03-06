@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-14-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 02-27-2024
 // ***********************************************************************
 // <copyright file="BaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,6 +18,9 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>BaseDto</summary>
     public class BaseDto
     {
+        public int Id { get; set; }
+        public Guid Uid { get; set; }
+        public bool IsDeleted { get; set; }
         public DateTimeOffset CreateDate { get; set; }
         public int CreateUserId { get; set; }
         public DateTimeOffset UpdateDate { get; set; }

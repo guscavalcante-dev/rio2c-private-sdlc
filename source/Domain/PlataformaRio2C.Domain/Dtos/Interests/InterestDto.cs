@@ -12,12 +12,18 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Entities;
+using System;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
     /// <summary>InterestDto</summary>
     public class InterestDto
     {
+        public string InterestName { get; set; }
+        public Guid InterestGroupUid { get; set; }
+        public string InterestGroupName { get; set; }
+
         public Interest Interest { get; set; }
         public InterestGroup InterestGroup { get; set; }
 
