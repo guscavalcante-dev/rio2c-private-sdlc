@@ -6949,6 +6949,8 @@
     <Content Include="Areas\Creator\Views\Projects\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Areas\Creator\Views\Projects\Widgets\ProjectInformationWidget.cshtml" />
     <Content Include="Areas\Creator\Views\Projects\Widgets\AttachmentsWidget.cshtml" />
+    <Content Include="Areas\Creator\Views\Projects\Widgets\EvaluationGradeWidget.cshtml" />
+    <Content Include="Areas\Creator\Views\Projects\Widgets\EvaluatorsWidget.cshtml" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />

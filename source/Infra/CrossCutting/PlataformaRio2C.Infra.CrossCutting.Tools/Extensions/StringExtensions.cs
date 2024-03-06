@@ -659,7 +659,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         {
             if (IsPdf(s) || IsPpt(s) || IsPptx(s))
             {
-                return $"<embed src='https://drive.google.com/viewerng/viewer?embedded=true&url={s}' type='{FileMimeType.Pdf}'>";
+                return $"<embed src='{s}' type='{FileMimeType.Pdf}'>";
             }
             else if (IsDocx(s))
             {

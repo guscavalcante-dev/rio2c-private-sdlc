@@ -30,6 +30,7 @@ using PlataformaRio2C.Web.Site.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 using X.PagedList;
 using PlataformaRio2C.Application.ViewModels;
+using PlataformaRio2C.Application.CQRS.Commands;
 
 namespace PlataformaRio2C.Web.Site.Areas.Creator.Controllers
 {
@@ -142,7 +143,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Creator.Controllers
                 searchViewModel.Page.Value,
                 searchViewModel.PageSize.Value);
 
-            ViewBag.CreatorProjectSearchViewModel = searchViewModel;
+            ViewBag.SearchViewModel = searchViewModel;
             ViewBag.ApprovedAttendeeCreatorProjectsIds = await this.attendeeCreatorProjectRepo.FindAllApprovedAttendeeCreatorProjectsIdsAsync(this.EditionDto.Edition.Id);
 
             return Json(new
@@ -224,7 +225,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Creator.Controllers
 
             var currentCreatorProjectIdIndex = Array.IndexOf(allCreatorProjectsIds, searchViewModel.Id.Value) + 1; //Index start at 0, its a fix to "start at 1"
 
-            ViewBag.CreatorProjectSearchViewModel = searchViewModel;
+            ViewBag.SearchViewModel = searchViewModel;
             ViewBag.CurrentProjectIndex = currentCreatorProjectIdIndex;
             ViewBag.ApprovedAttendeeCreatorProjectsIds = await this.attendeeCreatorProjectRepo.FindAllApprovedAttendeeCreatorProjectsIdsAsync(this.EditionDto.Edition.Id);
             ViewBag.TotalProjectsCount = await this.attendeeCreatorProjectRepo.CountPagedAsync(
@@ -378,226 +379,131 @@ namespace PlataformaRio2C.Web.Site.Areas.Creator.Controllers
 
         #endregion
 
-        //#region Evaluation Grade Widget 
+        #region Evaluation Grade Widget 
 
-        ///// <summary>
-        ///// Shows the evaluation grade widget.
-        ///// </summary>
-        ///// <param name="projectUid">The project uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionCreator)]
-        //public async Task<ActionResult> ShowEvaluationGradeWidget(Guid? attendeeCreatorOrganizationUid)
-        //{
-        //    if (this.EditionDto?.IsCreatorProjectEvaluationStarted() != true)
-        //    {
-        //        return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-        //    }
+        /// <summary>
+        /// Shows the evaluation grade widget.
+        /// </summary>
+        /// <param name="attendeeCreatorProjectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionCreator)]
+        public async Task<ActionResult> ShowEvaluationGradeWidget(Guid? attendeeCreatorProjectUid)
+        {
+            if (this.EditionDto?.IsCreatorProjectEvaluationStarted() != true)
+            {
+                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    var attendeeCreatorOrganizationDto = await this.attendeeCreatorOrganizationRepo.FindEvaluationGradeWidgetDtoAsync(attendeeCreatorOrganizationUid ?? Guid.Empty, this.UserAccessControlDto.User.Id);
-        //    if (attendeeCreatorOrganizationDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
+            var attendeeCreatorProjectDto = await this.attendeeCreatorProjectRepo.FindEvaluationGradeWidgetDtoAsync(attendeeCreatorProjectUid ?? Guid.Empty);
+            if (attendeeCreatorProjectDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    #region AttendeeCollaborator and AttendeeCreatorOrganization Tracks validation
+            ViewBag.ApprovedAttendeeCreatorProjectsIds = await this.attendeeCreatorProjectRepo.FindAllApprovedAttendeeCreatorProjectsIdsAsync(this.EditionDto.Edition.Id);
 
-        //    var attendeeCollaboratorCreatorOrganizationTrackOptionGroupsUids = await this.GetAttendeeCollaboratorCreatorOrganizationTrackOptionsGroupUids();
-        //    if (attendeeCreatorOrganizationDto.AttendeeCreatorOrganizationTrackDtos.Any(aiotDto => attendeeCollaboratorCreatorOrganizationTrackOptionGroupsUids.Contains(aiotDto.CreatorOrganizationTrackOptionGroup?.Uid)) == false)
-        //    {
-        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("EvaluationList", "Projects", new { Area = "Creator" });
-        //    }
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EvaluationGradeWidget", attendeeCreatorProjectDto), divIdOrClass = "#ProjectEvaluationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
-        //    #endregion
+        /// <summary>
+        /// Evaluates the specified creator project identifier.
+        /// </summary>
+        /// <param name="creatorProjectId">The creator project identifier.</param>
+        /// <param name="grade">The grade.</param>
+        /// <returns></returns>
+        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
+        [HttpPost]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionCreator)]
+        public async Task<ActionResult> Evaluate(int creatorProjectId, decimal? grade)
+        {
+            if (this.EditionDto?.IsCreatorProjectEvaluationOpen() != true)
+            {
+                return Json(new { status = "error", message = Messages.OutOfEvaluationPeriod }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    ViewBag.ApprovedAttendeeCreatorOrganizationsIds = await this.attendeeCreatorOrganizationRepo.FindAllApprovedAttendeeCreatorOrganizationsIdsAsync(this.EditionDto.Edition.Id);
+            var result = new AppValidationResult();
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/EvaluationGradeWidget", attendeeCreatorOrganizationDto), divIdOrClass = "#ProjectEvaluationWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            try
+            {
+                var cmd = new EvaluateCreatorProject(creatorProjectId, grade);
 
-        ///// <summary>
-        ///// Evaluates the specified innovation organization identifier.
-        ///// </summary>
-        ///// <param name="innovationOrganizationId">The innovation organization identifier.</param>
-        ///// <param name="grade">The grade.</param>
-        ///// <returns></returns>
-        ///// <exception cref="DomainException"></exception>
-        //[HttpPost]
-        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionCreator)]
-        //public async Task<ActionResult> Evaluate(int innovationOrganizationId, decimal? grade)
-        //{
-        //    //if (this.EditionDto?.IsCreatorProjectEvaluationOpen() != true)
-        //    //{
-        //    //    return Json(new { status = "error", message = Messages.OutOfEvaluationPeriod }, JsonRequestBehavior.AllowGet);
-        //    //}
+                cmd.UpdatePreSendProperties(
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors.Select(e => e = new AppValidationError(e.Message, "ToastrError", e.Code))?
+                                            .FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    var result = new AppValidationResult();
+            return Json(new
+            {
+                status = "success",
+                //projectUid = cmd.CreatorBandId,
+                message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.Evaluated.ToLowerInvariant())
+            });
+        }
 
-        //    try
-        //    {
-        //        var cmd = new EvaluateCreatorOrganization(
-        //            await this.innovationOrganizationRepo.FindByIdAsync(innovationOrganizationId),
-        //            grade);
+        #endregion
 
-        //        cmd.UpdatePreSendProperties(
-        //            this.UserAccessControlDto.User.Id,
-        //            this.UserAccessControlDto.User.Uid,
-        //            this.EditionDto.Id,
-        //            this.EditionDto.Uid,
-        //            this.UserInterfaceLanguage);
-        //        result = await this.CommandBus.Send(cmd);
-        //        if (!result.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        return Json(new
-        //        {
-        //            status = "error",
-        //            message = result.Errors.Select(e => e = new AppValidationError(e.Message, "ToastrError", e.Code))?
-        //                                    .FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
-        //        }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-        //    }
+        #region Evaluators Widget
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        //projectUid = cmd.CreatorBandId,
-        //        message = string.Format(Messages.EntityActionSuccessfull, Labels.Startup, Labels.Evaluated.ToLowerInvariant())
-        //    });
-        //}
+        /// <summary>
+        /// Shows the evaluators widget.
+        /// </summary>
+        /// <param name="attendeeCreatorProjectUid">The attendee creator project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionCreator)]
+        public async Task<ActionResult> ShowEvaluatorsWidget(Guid? attendeeCreatorProjectUid)
+        {
+            if (this.EditionDto?.IsCreatorProjectEvaluationStarted() != true)
+            {
+                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            }
 
-        //#endregion
+            var attendeeCreatorProjectDto = await this.attendeeCreatorProjectRepo.FindEvaluatorsWidgetDtoAsync(attendeeCreatorProjectUid ?? Guid.Empty);
+            if (attendeeCreatorProjectDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
 
-        //#region Evaluators Widget
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EvaluatorsWidget", attendeeCreatorProjectDto), divIdOrClass = "#ProjectEvaluatorsWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
-        //[HttpGet]
-        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionCreator)]
-        //public async Task<ActionResult> ShowEvaluatorsWidget(Guid? attendeeCreatorOrganizationUid)
-        //{
-        //    if (this.EditionDto?.IsCreatorProjectEvaluationStarted() != true)
-        //    {
-        //        return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-        //    }
-
-        //    var attendeeCreatorOrganizationDto = await this.attendeeCreatorOrganizationRepo.FindEvaluatorsWidgetDtoAsync(attendeeCreatorOrganizationUid ?? Guid.Empty);
-        //    if (attendeeCreatorOrganizationDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
-
-        //    #region AttendeeCollaborator and AttendeeCreatorOrganization Tracks validation
-
-        //    var attendeeCollaboratorCreatorOrganizationTrackOptionGroupsUids = await this.GetAttendeeCollaboratorCreatorOrganizationTrackOptionsGroupUids();
-        //    if (attendeeCreatorOrganizationDto.AttendeeCreatorOrganizationTrackDtos.Any(aiotDto => attendeeCollaboratorCreatorOrganizationTrackOptionGroupsUids.Contains(aiotDto.CreatorOrganizationTrackOptionGroup?.Uid)) == false)
-        //    {
-        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("EvaluationList", "Projects", new { Area = "Creator" });
-        //    }
-
-        //    #endregion
-
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/EvaluatorsWidget", attendeeCreatorOrganizationDto), divIdOrClass = "#ProjectEvaluatorsWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
-
-        //#endregion
-
-        //#region Founders Widget
-
-        ///// <summary>
-        ///// Shows the evaluators widget.
-        ///// </summary>
-        ///// <param name="attendeeCreatorOrganizationUid">The project uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowFoundersWidget(Guid? attendeeCreatorOrganizationUid)
-        //{
-        //    var attendeeCreatorOrganizationDto = await this.attendeeCreatorOrganizationRepo.FindFoundersWidgetDtoAsync(attendeeCreatorOrganizationUid ?? Guid.Empty);
-        //    if (attendeeCreatorOrganizationDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Startup, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
-
-        //    #region AttendeeCollaborator and AttendeeCreatorOrganization Tracks validation
-
-        //    var attendeeCollaboratorCreatorOrganizationTrackOptionGroupsUids = await this.GetAttendeeCollaboratorCreatorOrganizationTrackOptionsGroupUids();
-        //    if (attendeeCreatorOrganizationDto.AttendeeCreatorOrganizationTrackDtos.Any(aiotDto => attendeeCollaboratorCreatorOrganizationTrackOptionGroupsUids.Contains(aiotDto.CreatorOrganizationTrackOptionGroup?.Uid)) == false)
-        //    {
-        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("EvaluationList", "Projects", new { Area = "Creator" });
-        //    }
-
-        //    #endregion
-
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/FoundersWidget", attendeeCreatorOrganizationDto), divIdOrClass = "#ProjectsFoundersWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
-
-        //#endregion
-
-        //#region Presentation Widget
-
-        ///// <summary>Shows the clipping widget.</summary>
-        ///// <param name="projectUid">The project uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowPresentationWidget(Guid? attendeeCreatorOrganizationUid)
-        //{
-        //    var attendeeCreatorOrganizationDto = await this.attendeeCreatorOrganizationRepo.FindPresentationWidgetDtoAsync(attendeeCreatorOrganizationUid ?? Guid.Empty);
-        //    if (attendeeCreatorOrganizationDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
-
-        //    #region AttendeeCollaborator and AttendeeCreatorOrganization Tracks validation
-
-        //    var attendeeCollaboratorCreatorOrganizationTrackOptionGroupsUids = await this.GetAttendeeCollaboratorCreatorOrganizationTrackOptionsGroupUids();
-        //    if (attendeeCreatorOrganizationDto.AttendeeCreatorOrganizationTrackDtos.Any(aiotDto => attendeeCollaboratorCreatorOrganizationTrackOptionGroupsUids.Contains(aiotDto.CreatorOrganizationTrackOptionGroup?.Uid)) == false)
-        //    {
-        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("EvaluationList", "Projects", new { Area = "Creator" });
-        //    }
-
-        //    #endregion
-
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/PresentationWidget", attendeeCreatorOrganizationDto), divIdOrClass = "#ProjectsPresentationWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
-
-        //#endregion
+        #endregion
     }
 }

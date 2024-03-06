@@ -43,6 +43,7 @@ namespace PlataformaRio2C.Domain.Entities
         public void Evaluate(User evaluatorUser, decimal grade)
         {
             this.Grade = grade;
+
             if (this.AttendeeCreatorProjectEvaluations == null)
                 this.AttendeeCreatorProjectEvaluations = new List<AttendeeCreatorProjectEvaluation>();
 
@@ -87,7 +88,8 @@ namespace PlataformaRio2C.Domain.Entities
         /// <returns></returns>
         private decimal? GetAverageEvaluation()
         {
-            if (this.FindAllAttendeeCreatorProjectEvaluationsNotDeleted()?.Any() != true)
+            var attendeeCreatorProjectEvaluations = this.FindAllAttendeeCreatorProjectEvaluationsNotDeleted();
+            if (attendeeCreatorProjectEvaluations?.Any() != true)
             {
                 return null;
             }
@@ -96,7 +98,7 @@ namespace PlataformaRio2C.Domain.Entities
             // is greater or equal than minimum necessary evaluations quantity
             if (this.GetAttendeeCreatorProjectEvaluationTotalCount() >= this.Edition?.CreatorCommissionMinimumEvaluationsCount)
             {
-                return this.FindAllAttendeeCreatorProjectEvaluationsNotDeleted().Sum(e => e.Grade) / this.FindAllAttendeeCreatorProjectEvaluationsNotDeleted().Count;
+                return attendeeCreatorProjectEvaluations.Sum(e => e.Grade) / attendeeCreatorProjectEvaluations.Count;
             }
 
             return null;

@@ -23,6 +23,7 @@ using LinqKit;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using X.PagedList;
+using System.Security.Cryptography;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -248,6 +249,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                            InterestGroupName = cpi.Interest.InterestGroup.Name
                                        })
                                    },
+                                   AttendeeCreatorProjectEvaluationDtos = acp.AttendeeCreatorProjectEvaluations.Select(acpe => new AttendeeCreatorProjectEvaluationDto
+                                   {
+                                       Grade = acpe.Grade,
+                                       EvaluatorUserId = acpe.EvaluatorUserId,
+                                       EvaluatorUserDto = new UserDto
+                                       {
+                                           Id = acpe.EvaluatorUser.Id,
+                                           Uid = acpe.EvaluatorUser.Uid,
+                                       }
+                                   })
                                });
 
             return await query
@@ -482,9 +493,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByIsEvaluated();
 
             return await query
-                            .OrderByDescending(aio => aio.Grade)
+                            .OrderByDescending(acp => acp.Grade)
                             .Take(edition.CreatorCommissionMaximumApprovedProjectsCount)
-                            .Select(aio => aio.Id)
+                            .Select(acp => acp.Id)
                             .ToArrayAsync();
         }
 
@@ -630,6 +641,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                    Grade = acp.Grade,
                                    CreatorProjectDto = new CreatorProjectDto
                                    {
+                                       Id = acp.CreatorProject.Id,
                                        Title = acp.CreatorProject.Title,
                                        Logline = acp.CreatorProject.Logline,
                                        Name = acp.CreatorProject.Name,
@@ -646,9 +658,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                    AttendeeCreatorProjectEvaluationDtos = acp.AttendeeCreatorProjectEvaluations.Select(acpe => new AttendeeCreatorProjectEvaluationDto
                                    {
                                        Grade = acpe.Grade,
-                                       EvaluatorUserDto = new UserDto 
+                                       EvaluatorUserId = acpe.EvaluatorUserId,
+                                       EvaluatorUserDto = new UserDto
                                        {
                                            Id = acpe.EvaluatorUser.Id,
+                                           Uid = acpe.EvaluatorUser.Uid,
                                        }
                                    })
                                });
@@ -719,6 +733,68 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                        OtherFileExtension = acp.CreatorProject.OtherFileExtension,
                                        OtherFileDescription = acp.CreatorProject.OtherFileDescription
                                    }
+                               });
+
+            return await query
+                           .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the evaluation grade widget dto asynchronous.
+        /// </summary>
+        /// <param name="attendeeCreatorProjectUid">The attendee creator project uid.</param>
+        /// <returns></returns>
+        public async Task<AttendeeCreatorProjectDto> FindEvaluationGradeWidgetDtoAsync(Guid attendeeCreatorProjectUid)
+        {
+            var query = this.GetBaseQuery()
+                               .FindByUids(new List<Guid?> { attendeeCreatorProjectUid })
+                               .Select(acp => new AttendeeCreatorProjectDto
+                               {
+                                   Id = acp.Id,
+                                   Uid = acp.Uid,
+                                   CreatorProjectDto = new CreatorProjectDto
+                                   {
+                                       Id = acp.CreatorProject.Id,
+                                       Uid = acp.CreatorProject.Uid,
+                                   },
+                                   AttendeeCreatorProjectEvaluationDtos = acp.AttendeeCreatorProjectEvaluations.Select(acpe => new AttendeeCreatorProjectEvaluationDto
+                                   {
+                                       Grade = acpe.Grade,
+                                       EvaluatorUserId = acpe.EvaluatorUserId,
+                                       EvaluatorUserDto = new UserDto
+                                       {
+                                           Id = acpe.EvaluatorUser.Id,
+                                           Uid = acpe.EvaluatorUser.Uid,
+                                       }
+                                   })
+                               });
+
+            return await query
+                           .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the evaluators widget dto asynchronous.
+        /// </summary>
+        /// <param name="attendeeCreatorProjectUid">The attendee creator project uid.</param>
+        /// <returns></returns>
+        public async Task<AttendeeCreatorProjectDto> FindEvaluatorsWidgetDtoAsync(Guid attendeeCreatorProjectUid)
+        {
+            var query = this.GetBaseQuery()
+                               .FindByUids(new List<Guid?> { attendeeCreatorProjectUid })
+                               .Select(acp => new AttendeeCreatorProjectDto
+                               {
+                                   AttendeeCreatorProjectEvaluationDtos = acp.AttendeeCreatorProjectEvaluations.Select(acpe => new AttendeeCreatorProjectEvaluationDto
+                                   {
+                                       Grade = acpe.Grade,
+                                       EvaluatorUserId = acpe.EvaluatorUserId,
+                                       EvaluatorUserDto = new UserDto
+                                       {
+                                           Id = acpe.EvaluatorUser.Id,
+                                           Uid = acpe.EvaluatorUser.Uid,
+                                           Name = acpe.EvaluatorUser.Name
+                                       }
+                                   })
                                });
 
             return await query

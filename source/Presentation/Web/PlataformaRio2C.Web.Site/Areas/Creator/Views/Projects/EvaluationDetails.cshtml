@@ -5,25 +5,26 @@
     ViewBag.Title = $"{Labels.Creator} | {Model.CreatorProjectDto?.Title}";
     var totalProjectsCount = ViewBag.TotalProjectsCount as int?;
     var currentProjectIndex = ViewBag.CurrentProjectIndex as int?;
+    var searchViewModel = ViewBag.SearchViewModel as CreatorProjectSearchViewModel;
 
     var previousStepEvent = Url.Action("PreviousEvaluationDetails", "Projects", new
     {
         Area = "Creator",
         id = Model.Id,
-        searchKeywords = ViewBag.SearchKeywords,
-        evaluationStatusUid = ViewBag.EvaluationStatusUid,
-        Page = ViewBag.Page,
-        pageSize = ViewBag.PageSize
+        searchKeywords = searchViewModel.SearchKeywords,
+        evaluationStatusUid = searchViewModel.EvaluationStatusUid,
+        Page = searchViewModel.Page,
+        pageSize = searchViewModel.PageSize
     });
 
     var nextStepEvent = Url.Action("NextEvaluationDetails", "Projects", new
     {
         Area = "Creator",
         id = Model.Id,
-        searchKeywords = ViewBag.SearchKeywords,
-        evaluationStatusUid = ViewBag.EvaluationStatusUid,
-        Page = ViewBag.Page,
-        pageSize = ViewBag.PageSize
+        searchKeywords = searchViewModel.SearchKeywords,
+        evaluationStatusUid = searchViewModel.EvaluationStatusUid,
+        Page = searchViewModel.Page,
+        pageSize = searchViewModel.PageSize
     });
 }
 @Html.Hidden("AggregateId", Model.Uid)
@@ -60,28 +61,14 @@
                 <div id="AttachmentsWidget" class="kt-portlet" style="min-height: 350px;"></div>
             </div>
         </div>
-        @*<div class="row">
-            <div class="col-md-12">
-                <div id="ProjectOrganizationWidget" class="kt-portlet" style="min-height: 330px; "></div>
+        <div class="row">
+            <div class="col-md-6">
+                <div id="ProjectEvaluationWidget" class="kt-portlet" style="min-height: 296px;"></div>
+            </div>
+            <div class="col-md-6">
+                <div id="ProjectEvaluatorsWidget" class="kt-portlet" style="min-height: 296px;"></div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div id="ProjectCreatorsWidget" class="kt-portlet" style="min-height: 330px; "></div>
-            </div>
-        </div>*@
-        <!--<div class="row">-->
-        <!--begin:Evaluation Widget-->
-        <!--<div class="col-md-6">
-        <div id="ProjectEvaluationWidget" class="kt-portlet" style="min-height: 296px;"></div>
-    </div>-->
-        <!--end:Evaluation Widget-->
-        <!--begin:Project Evaluators Widget-->
-        <!--<div class="col-md-6">
-        <div id="ProjectEvaluatorsWidget" class="kt-portlet" style="min-height: 296px;"></div>
-    </div>-->
-        <!--end:Project Evaluators Widget-->
-        <!--</div>-->
     </div>
 </div>
 @section Styles {

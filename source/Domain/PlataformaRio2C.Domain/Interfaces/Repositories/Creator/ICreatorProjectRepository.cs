@@ -23,13 +23,13 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>ICreatorProjectRepository</summary>
     public interface ICreatorProjectRepository : IRepository<CreatorProject>
     {
-        CreatorProjectDto FindById(int id);
-        CreatorProjectDto FindByUid(Guid uid);
-        Task<CreatorProjectDto> FindByIdAsync(int id);
-        Task<CreatorProjectDto> FindByUidAsync(Guid uid);
+        CreatorProjectDto FindDtoById(int id);
+        CreatorProjectDto FindDtoByUid(Guid uid);
+        Task<CreatorProjectDto> FindDtoByIdAsync(int id);
+        Task<CreatorProjectDto> FindDtoByUidAsync(Guid uid);
         Task<List<CreatorProjectDto>> FindAllAsync();
         Task<List<CreatorProjectDto>> FindAllByIdsAsync(List<int?> ids);
         Task<List<CreatorProjectDto>> FindAllByUidsAsync(List<Guid?> uids);
-        Task<CreatorProjectDto> FindByTitleAsync(string title);
+        Task<CreatorProjectDto> FindDtoByTitleAsync(string title);
     }
 }
