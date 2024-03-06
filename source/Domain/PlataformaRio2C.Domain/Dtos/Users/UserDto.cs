@@ -21,6 +21,7 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         public int Id { get; set; }
         public Guid Uid { get; set; }
+        public string Name { get; set; }
 
         public User User { get; set; }
         public Collaborator Collaborator { get; set; }

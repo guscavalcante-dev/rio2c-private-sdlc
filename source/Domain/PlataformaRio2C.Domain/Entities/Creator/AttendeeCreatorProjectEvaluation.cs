@@ -49,6 +49,13 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="AttendeeCreatorProjectEvaluation"/> class.
+        /// </summary>
+        public AttendeeCreatorProjectEvaluation()
+        {
+        }
+
+        /// <summary>
         /// Updates the specified grade.
         /// </summary>
         /// <param name="grade">The grade.</param>

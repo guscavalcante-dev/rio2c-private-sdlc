@@ -46,7 +46,7 @@ namespace PlataformaRio2C.Domain.Dtos
                 this.AttendeeCreatorProjectEvaluationDtos = new List<AttendeeCreatorProjectEvaluationDto>();
             }
 
-            return this.AttendeeCreatorProjectEvaluationDtos.FirstOrDefault(w => w.EvaluatorUserDto?.Id == userId);
+            return this.AttendeeCreatorProjectEvaluationDtos.FirstOrDefault(w => w.EvaluatorUserId == userId);
         }
 
         /// <summary>

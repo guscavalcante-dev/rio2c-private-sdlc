@@ -43,6 +43,9 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<AttendeeCreatorProjectDto> FindMainInformationWidgetDtoAsync(Guid attendeeCreatorProjectUid);
         Task<AttendeeCreatorProjectDto> FindProjectInformationWidgetDtoAsync(Guid attendeeCreatorProjectUid);
         Task<AttendeeCreatorProjectDto> FindAttachmentsWidgetDtoAsync(Guid attendeeCreatorProjectUid);
+        Task<AttendeeCreatorProjectDto> FindEvaluationGradeWidgetDtoAsync(Guid attendeeCreatorProjectUid);
+        Task<AttendeeCreatorProjectDto> FindEvaluatorsWidgetDtoAsync(Guid attendeeCreatorProjectUid);
+
         #endregion
     }
 }

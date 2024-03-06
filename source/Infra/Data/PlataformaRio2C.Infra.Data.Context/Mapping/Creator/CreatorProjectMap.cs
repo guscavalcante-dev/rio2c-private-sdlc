@@ -92,6 +92,9 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.Property(t => t.OtherFileExtension)
                 .HasMaxLength(CreatorProject.OtherFileExtensionMaxLength);
 
+            this.Property(t => t.OtherFileDescription)
+               .HasMaxLength(CreatorProject.OtherFileDescriptionMaxLength);
+
             this.Property(t => t.Links)
                 .HasMaxLength(CreatorProject.LinksMaxLength);
         }

@@ -117,7 +117,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="creatorProjectIds">The creator project ids.</param>
         /// <returns></returns>
-        public CreatorProjectDto FindById(int creatorProjectIds)
+        public CreatorProjectDto FindDtoById(int creatorProjectIds)
         {
             var query = this.GetBaseQuery()
                             .FindByIds(new List<int?> { creatorProjectIds })
@@ -134,7 +134,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="creatorProjectUid">The creator project uid.</param>
         /// <returns></returns>
-        public CreatorProjectDto FindByUid(Guid creatorProjectUid)
+        public CreatorProjectDto FindDtoByUid(Guid creatorProjectUid)
         {
             var query = this.GetBaseQuery()
                             .FindByUids(new List<Guid?> { creatorProjectUid })
@@ -151,7 +151,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="creatorProjectIds">The creator project ids.</param>
         /// <returns></returns>
-        public async Task<CreatorProjectDto> FindByIdAsync(int creatorProjectIds)
+        public async Task<CreatorProjectDto> FindDtoByIdAsync(int creatorProjectIds)
         {
             var query = this.GetBaseQuery()
                             .FindByIds(new List<int?> { creatorProjectIds })
@@ -168,7 +168,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="creatorProjectUid">The creator project uid.</param>
         /// <returns></returns>
-        public async Task<CreatorProjectDto> FindByUidAsync(Guid creatorProjectUid)
+        public async Task<CreatorProjectDto> FindDtoByUidAsync(Guid creatorProjectUid)
         {
             var query = this.GetBaseQuery()
                             .FindByUids(new List<Guid?> { creatorProjectUid })
@@ -234,7 +234,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="title">The title.</param>
         /// <returns></returns>
-        public async Task<CreatorProjectDto> FindByTitleAsync(string title)
+        public async Task<CreatorProjectDto> FindDtoByTitleAsync(string title)
         {
             var query = this.GetBaseQuery()
                             .FindByTitle(title)

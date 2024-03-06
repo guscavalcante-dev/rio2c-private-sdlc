@@ -40,7 +40,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidateAdditionalInfo()
         {
-            if (string.IsNullOrEmpty(this.AdditionalInfo) || this.AdditionalInfo.Length > AdditionalInfoMaxLength)
+            if (!string.IsNullOrEmpty(this.AdditionalInfo?.Trim()) && this.AdditionalInfo?.Trim().Length > AdditionalInfoMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(AdditionalInfo), AdditionalInfoMaxLength, 1), new string[] { nameof(AdditionalInfo) }));
             }

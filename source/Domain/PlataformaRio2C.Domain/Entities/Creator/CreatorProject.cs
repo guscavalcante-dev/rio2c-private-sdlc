@@ -84,6 +84,36 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeCreatorProject> AttendeeCreatorProjects { get; private set; }
         public virtual ICollection<CreatorProjectInterest> CreatorProjectInterests { get; private set; }
 
+        #region Evaluation
+
+        /// <summary>
+        /// Evaluates the specified edition.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="evaluatorUser">The evaluator user.</param>
+        /// <param name="grade">The grade.</param>
+        public void Evaluate(Edition edition, User evaluatorUser, decimal grade)
+        {
+            var attendeeCreatorProject = this.GetAttendeeCreatorProjectByEditionId(edition.Id);
+            attendeeCreatorProject?.Evaluate(evaluatorUser, grade);
+        }
+
+        #endregion
+
+        #region Attendee Creator Projects
+
+        /// <summary>
+        /// Gets the attendee creator project by edition identifier.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public AttendeeCreatorProject GetAttendeeCreatorProjectByEditionId(int editionId)
+        {
+            return this.AttendeeCreatorProjects?.FirstOrDefault(acp => acp.Edition.Id == editionId);
+        }
+
+        #endregion
+
         #region Validations
 
         public override bool IsValid()
@@ -116,7 +146,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateOtherFileExtension();
             this.ValidateOtherFileDescription();
             this.ValidateLinks();
-
             this.ValidateCreatorProjectInterests();
 
             return this.ValidationResult.IsValid;
@@ -124,7 +153,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidateName()
         {
-            if (string.IsNullOrEmpty(this.Name) || this.Name.Length > NameMaxLength)
+            if (!string.IsNullOrEmpty(this.Name?.Trim()) && this.Name?.Trim().Length > NameMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(Name), NameMaxLength, 1), new string[] { nameof(Name) }));
             }
@@ -132,7 +161,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidateDocument()
         {
-            if (string.IsNullOrEmpty(this.Document) || this.Document.Length > DocumentMaxLength)
+            if (!string.IsNullOrEmpty(this.Document?.Trim()) && this.Document?.Trim().Length > DocumentMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(Document), DocumentMaxLength, 1), new string[] { nameof(Document) }));
             }
@@ -140,7 +169,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidateEmail()
         {
-            if (string.IsNullOrEmpty(this.Email) || this.Email.Length > EmailMaxLength)
+            if (!string.IsNullOrEmpty(this.Email?.Trim()) && this.Email?.Trim().Length > EmailMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(Email), EmailMaxLength, 1), new string[] { nameof(Email) }));
             }
@@ -148,7 +177,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidateAgentName()
         {
-            if (string.IsNullOrEmpty(this.AgentName) || this.AgentName.Length > AgentNameMaxLength)
+            if (!string.IsNullOrEmpty(this.AgentName?.Trim()) && this.AgentName?.Trim().Length > AgentNameMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(AgentName), AgentNameMaxLength, 1), new string[] { nameof(AgentName) }));
             }
@@ -156,7 +185,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidatePhoneNumber()
         {
-            if (string.IsNullOrEmpty(this.PhoneNumber) || this.PhoneNumber.Length > PhoneNumberMaxLength)
+            if (!string.IsNullOrEmpty(this.PhoneNumber?.Trim()) && this.PhoneNumber?.Trim().Length > PhoneNumberMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(PhoneNumber), PhoneNumberMaxLength, 1), new string[] { nameof(PhoneNumber) }));
             }
@@ -164,7 +193,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidateCurriculum()
         {
-            if (string.IsNullOrEmpty(this.Curriculum) || this.Curriculum.Length > CurriculumMaxLength)
+            if (!string.IsNullOrEmpty(this.Curriculum?.Trim()) && this.Curriculum?.Trim().Length > CurriculumMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(Curriculum), CurriculumMaxLength, 1), new string[] { nameof(Curriculum) }));
             }
@@ -172,7 +201,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidateTitle()
         {
-            if (string.IsNullOrEmpty(this.Title) || this.Title.Length > TitleMaxLength)
+            if (!string.IsNullOrEmpty(this.Title?.Trim()) && this.Title?.Trim().Length > TitleMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(Title), TitleMaxLength, 1), new string[] { nameof(Title) }));
             }
@@ -180,7 +209,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidateLogline()
         {
-            if (string.IsNullOrEmpty(this.Logline) || this.Logline.Length > LoglineMaxLength)
+            if (!string.IsNullOrEmpty(this.Logline?.Trim()) && this.Logline?.Trim().Length > LoglineMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(Logline), LoglineMaxLength, 1), new string[] { nameof(Logline) }));
             }
@@ -188,7 +217,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidateDescription()
         {
-            if (string.IsNullOrEmpty(this.Description) || this.Description.Length > DescriptionMaxLength)
+            if (!string.IsNullOrEmpty(this.Description?.Trim()) && this.Description?.Trim().Length > DescriptionMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(Description), DescriptionMaxLength, 1), new string[] { nameof(Description) }));
             }
@@ -196,7 +225,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidateMotivationToDevelop()
         {
-            if (string.IsNullOrEmpty(this.MotivationToDevelop) || this.MotivationToDevelop.Length > MotivationMaxLength)
+            if (!string.IsNullOrEmpty(this.MotivationToDevelop?.Trim()) && this.MotivationToDevelop?.Trim().Length > MotivationMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(MotivationToDevelop), MotivationMaxLength, 1), new string[] { nameof(MotivationToDevelop) }));
             }
@@ -204,7 +233,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidateMotivationToTransform()
         {
-            if (string.IsNullOrEmpty(this.MotivationToTransform) || this.MotivationToTransform.Length > MotivationMaxLength)
+            if (!string.IsNullOrEmpty(this.MotivationToTransform?.Trim()) && this.MotivationToTransform?.Trim().Length > MotivationMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(MotivationToTransform), MotivationMaxLength, 1), new string[] { nameof(MotivationToTransform) }));
             }
@@ -212,7 +241,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidateDiversityAndInclusionElements()
         {
-            if (string.IsNullOrEmpty(this.DiversityAndInclusionElements) || this.DiversityAndInclusionElements.Length > DiversityAndInclusionElementsMaxLength)
+            if (!string.IsNullOrEmpty(this.DiversityAndInclusionElements?.Trim()) && this.DiversityAndInclusionElements?.Trim().Length > DiversityAndInclusionElementsMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(DiversityAndInclusionElements), DiversityAndInclusionElementsMaxLength, 1), new string[] { nameof(DiversityAndInclusionElements) }));
             }
@@ -220,7 +249,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidateThemeRelevation()
         {
-            if (string.IsNullOrEmpty(this.ThemeRelevation) || this.ThemeRelevation.Length > ThemeRelevationMaxLength)
+            if (!string.IsNullOrEmpty(this.ThemeRelevation?.Trim()) && this.ThemeRelevation?.Trim().Length > ThemeRelevationMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(ThemeRelevation), ThemeRelevationMaxLength, 1), new string[] { nameof(ThemeRelevation) }));
             }
@@ -228,7 +257,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidateMarketingStrategy()
         {
-            if (string.IsNullOrEmpty(this.MarketingStrategy) || this.MarketingStrategy.Length > MarketingStrategyMaxLength)
+            if (!string.IsNullOrEmpty(this.MarketingStrategy?.Trim()) && this.MarketingStrategy?.Trim().Length > MarketingStrategyMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(MarketingStrategy), MarketingStrategyMaxLength, 1), new string[] { nameof(MarketingStrategy) }));
             }
@@ -236,7 +265,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidateSimilarAudiovisualProjects()
         {
-            if (string.IsNullOrEmpty(this.SimilarAudiovisualProjects) || this.SimilarAudiovisualProjects.Length > SimilarProjectsMaxLength)
+            if (!string.IsNullOrEmpty(this.SimilarAudiovisualProjects?.Trim()) && this.SimilarAudiovisualProjects?.Trim().Length > SimilarProjectsMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(SimilarAudiovisualProjects), SimilarProjectsMaxLength, 1), new string[] { nameof(SimilarAudiovisualProjects) }));
             }
@@ -244,7 +273,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidateOnlinePlatformsWhereProjectIsAvailable()
         {
-            if (string.IsNullOrEmpty(this.OnlinePlatformsWhereProjectIsAvailable) || this.OnlinePlatformsWhereProjectIsAvailable.Length > OnlinePlatformsMaxLength)
+            if (!string.IsNullOrEmpty(this.OnlinePlatformsWhereProjectIsAvailable?.Trim()) && this.OnlinePlatformsWhereProjectIsAvailable?.Trim().Length > OnlinePlatformsMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(OnlinePlatformsWhereProjectIsAvailable), OnlinePlatformsMaxLength, 1), new string[] { nameof(OnlinePlatformsWhereProjectIsAvailable) }));
             }
@@ -252,7 +281,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidateOnlinePlatformsAudienceReach()
         {
-            if (string.IsNullOrEmpty(this.OnlinePlatformsAudienceReach) || this.OnlinePlatformsAudienceReach.Length > OnlinePlatformsMaxLength)
+            if (!string.IsNullOrEmpty(this.OnlinePlatformsAudienceReach?.Trim()) && this.OnlinePlatformsAudienceReach?.Trim().Length > OnlinePlatformsMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(OnlinePlatformsAudienceReach), OnlinePlatformsMaxLength, 1), new string[] { nameof(OnlinePlatformsAudienceReach) }));
             }
@@ -260,7 +289,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidateProjectAwards()
         {
-            if (string.IsNullOrEmpty(this.ProjectAwards) || this.ProjectAwards.Length > AwardsMaxLength)
+            if (!string.IsNullOrEmpty(this.ProjectAwards?.Trim()) && this.ProjectAwards?.Trim().Length > AwardsMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(ProjectAwards), AwardsMaxLength, 1), new string[] { nameof(ProjectAwards) }));
             }
@@ -268,7 +297,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidateProjectPublicNotice()
         {
-            if (string.IsNullOrEmpty(this.ProjectPublicNotice) || this.ProjectPublicNotice.Length > PublicNoticeMaxLength)
+            if (!string.IsNullOrEmpty(this.ProjectPublicNotice?.Trim()) && this.ProjectPublicNotice?.Trim().Length > PublicNoticeMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(ProjectPublicNotice), PublicNoticeMaxLength, 1), new string[] { nameof(ProjectPublicNotice) }));
             }
@@ -276,7 +305,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidatePreviouslyDevelopedProjects()
         {
-            if (string.IsNullOrEmpty(this.PreviouslyDevelopedProjects) || this.PreviouslyDevelopedProjects.Length > PreviousProjectsMaxLength)
+            if (!string.IsNullOrEmpty(this.PreviouslyDevelopedProjects?.Trim()) && this.PreviouslyDevelopedProjects?.Trim().Length > PreviousProjectsMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(PreviouslyDevelopedProjects), PreviousProjectsMaxLength, 1), new string[] { nameof(PreviouslyDevelopedProjects) }));
             }
@@ -284,7 +313,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidateAssociatedInstitutions()
         {
-            if (string.IsNullOrEmpty(this.AssociatedInstitutions) || this.AssociatedInstitutions.Length > AssociatedInstitutionsMaxLength)
+            if (!string.IsNullOrEmpty(this.AssociatedInstitutions?.Trim()) && this.AssociatedInstitutions?.Trim().Length > AssociatedInstitutionsMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(AssociatedInstitutions), AssociatedInstitutionsMaxLength, 1), new string[] { nameof(AssociatedInstitutions) }));
             }
@@ -292,7 +321,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidateArticleFileExtension()
         {
-            if (string.IsNullOrEmpty(this.ArticleFileExtension) || this.ArticleFileExtension.Length > ArticleFileExtensionMaxLength)
+            if (!string.IsNullOrEmpty(this.ArticleFileExtension?.Trim()) && this.ArticleFileExtension?.Trim().Length > ArticleFileExtensionMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(ArticleFileExtension), ArticleFileExtensionMaxLength, 1), new string[] { nameof(ArticleFileExtension) }));
             }
@@ -300,7 +329,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidateClippingFileExtension()
         {
-            if (string.IsNullOrEmpty(this.ClippingFileExtension) || this.ClippingFileExtension.Length > ClippingFileExtensionMaxLength)
+            if (!string.IsNullOrEmpty(this.ClippingFileExtension?.Trim()) && this.ClippingFileExtension?.Trim().Length > ClippingFileExtensionMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(ClippingFileExtension), ClippingFileExtensionMaxLength, 1), new string[] { nameof(ClippingFileExtension) }));
             }
@@ -308,7 +337,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidateOtherFileExtension()
         {
-            if (string.IsNullOrEmpty(this.OtherFileExtension) || this.OtherFileExtension.Length > OtherFileExtensionMaxLength)
+            if (!string.IsNullOrEmpty(this.OtherFileExtension?.Trim()) && this.OtherFileExtension?.Trim().Length > OtherFileExtensionMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(OtherFileExtension), OtherFileExtensionMaxLength, 1), new string[] { nameof(OtherFileExtension) }));
             }
@@ -316,7 +345,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidateOtherFileDescription()
         {
-            if (string.IsNullOrEmpty(this.OtherFileDescription) || this.OtherFileDescription.Length > OtherFileDescriptionMaxLength)
+            if (!string.IsNullOrEmpty(this.OtherFileDescription?.Trim()) && this.OtherFileDescription?.Trim().Length > OtherFileDescriptionMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(OtherFileDescription), OtherFileDescriptionMaxLength, 1), new string[] { nameof(OtherFileDescription) }));
             }
@@ -324,7 +353,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidateLinks()
         {
-            if (string.IsNullOrEmpty(this.Links) || this.Links.Length > LinksMaxLength)
+            if (!string.IsNullOrEmpty(this.Links?.Trim()) && this.Links?.Trim().Length > LinksMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(Links), LinksMaxLength, 1), new string[] { nameof(Links) }));
             }

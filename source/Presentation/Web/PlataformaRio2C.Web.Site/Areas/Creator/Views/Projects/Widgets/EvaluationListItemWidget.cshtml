@@ -1,17 +1,16 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
-@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
-@using PlataformaRio2C.Domain.Statics
 @using PlataformaRio2C.Domain.Entities
 @model AttendeeCreatorProjectDto
 @{
+    var searchViewModel = ViewBag.SearchViewModel as CreatorProjectSearchViewModel;
     var evaluationDetailsAction = Url.Action("EvaluationDetails", "Projects", new
     {
         Area = "Creator",
         id = Model.Id,
-        searchKeywords = ViewBag.SearchKeywords,
-        evaluationStatusUid = ViewBag.EvaluationStatusUid,
-        Page = ViewBag.Page,
-        pageSize = ViewBag.PageSize
+        searchKeywords = searchViewModel.SearchKeywords,
+        evaluationStatusUid = searchViewModel.EvaluationStatusUid,
+        Page = searchViewModel.Page,
+        pageSize = searchViewModel.PageSize
     });
 }
 @if (Model != null)
