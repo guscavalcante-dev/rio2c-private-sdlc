@@ -701,12 +701,6 @@ var MyRio2cCommon = function () {
         });
 
         $.validator.methods.date = function (value, element) {
-
-            if (element.name == 'CreatorCommissionEvaluationEndDate') {
-                moment.locale(MyRio2cCommon.getGlobalVariable('userInterfaceLanguage'));
-                return this.optional(element) || moment(value, format.toUpperCase(), true).isValid();
-            }
-
             moment.locale(MyRio2cCommon.getGlobalVariable('userInterfaceLanguage'));
             return this.optional(element) || moment(value, format.toUpperCase(), true).isValid();
         }
