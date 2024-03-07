@@ -340,7 +340,7 @@
     <comment>Quantidade máxima de projetos de audiovisual aprovados</comment>
   </data>
   <data name="AudiovisualCommissionMinimumEvaluationsCount" xml:space="preserve">
-    <value>Audiovisual commission minimum evaluations count</value>
+    <value>Minimum number of votes to generate average</value>
     <comment>Quantidade mínima de votos para gerar média de projeto audiovisual</comment>
   </data>
   <data name="AudiovisualData" xml:space="preserve">
@@ -514,10 +514,10 @@
     <value>Cartoonito project evaluation start date</value>
   </data>
   <data name="CartoonCommissionMaximumApprovedProjectsCount" xml:space="preserve">
-    <value>Cartoonito commission maximum approved projects count</value>
+    <value>Commission maximum approved projects count</value>
   </data>
   <data name="CartoonCommissionMinimumEvaluationsCount" xml:space="preserve">
-    <value>Cartoonito commission minimum evaluations count</value>
+    <value>Minimum number of votes to generate average</value>
   </data>
   <data name="Cartoonito" xml:space="preserve">
     <value>Cartoonito</value>
@@ -613,6 +613,12 @@
   <data name="Commission" xml:space="preserve">
     <value>Commission</value>
     <comment>Comissão</comment>
+  </data>
+  <data name="CommissionMaximumApprovedProjectsCount" xml:space="preserve">
+    <value>Commission maximum approved projects count</value>
+  </data>
+  <data name="CommissionMinimumEvaluationsCount" xml:space="preserve">
+    <value>Minimum number of votes to generate average</value>
   </data>
   <data name="CommonQuestions" xml:space="preserve">
     <value>Common Questions</value>
@@ -1659,7 +1665,7 @@
     <comment>Quantidade mínima de votos para gerar média</comment>
   </data>
   <data name="MusicCommissionMinimumEvaluationsCount" xml:space="preserve">
-    <value>Music Project Minimum Evaluations Count</value>
+    <value>Minimum number of votes to generate average</value>
     <comment>Quantidade mínima de votos para gerar média</comment>
   </data>
   <data name="MusicExecutive" xml:space="preserve">
@@ -2834,7 +2840,7 @@
     <comment>Data de término da avaliação de projeto de inovação</comment>
   </data>
   <data name="StartupsCommissionMinimumEvaluationsCount" xml:space="preserve">
-    <value>Startups minimum evaluations count</value>
+    <value>Minimum number of votes to generate average</value>
     <comment>Quantidade mínima de votos para gerar média</comment>
   </data>
   <data name="StartupsProjects" xml:space="preserve">

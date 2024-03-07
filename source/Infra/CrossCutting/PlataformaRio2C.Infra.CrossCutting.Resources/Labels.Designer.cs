@@ -592,7 +592,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quantidade mínima de votos para gerar média de projeto audiovisual.
+        ///   Looks up a localized string similar to Quantidade mínima de votos para gerar média.
         /// </summary>
         public static string AudiovisualCommissionMinimumEvaluationsCount {
             get {
@@ -1254,6 +1254,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Commission {
             get {
                 return ResourceManager.GetString("Commission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade máxima de projetos aprovados.
+        /// </summary>
+        public static string CommissionMaximumApprovedProjectsCount {
+            get {
+                return ResourceManager.GetString("CommissionMaximumApprovedProjectsCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade mínima de votos para gerar média.
+        /// </summary>
+        public static string CommissionMinimumEvaluationsCount {
+            get {
+                return ResourceManager.GetString("CommissionMinimumEvaluationsCount", resourceCulture);
             }
         }
         
@@ -6676,7 +6694,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quantidade mínima de votos para gerar média de Startups.
+        ///   Looks up a localized string similar to Quantidade mínima de votos para gerar média.
         /// </summary>
         public static string StartupsCommissionMinimumEvaluationsCount {
             get {

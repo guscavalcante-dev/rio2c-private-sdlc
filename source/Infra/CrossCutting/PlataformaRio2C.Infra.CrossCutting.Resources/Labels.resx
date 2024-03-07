@@ -337,11 +337,9 @@
   </data>
   <data name="AudiovisualCommissionMaximumApprovedProjectsCount" xml:space="preserve">
     <value>Quantidade máxima de projetos de audiovisual aprovados</value>
-    <comment>Quantidade máxima de projetos de audiovisual aprovados</comment>
   </data>
   <data name="AudiovisualCommissionMinimumEvaluationsCount" xml:space="preserve">
-    <value>Quantidade mínima de votos para gerar média de projeto audiovisual</value>
-    <comment>Quantidade mínima de votos para gerar média de projeto audiovisual</comment>
+    <value>Quantidade mínima de votos para gerar média</value>
   </data>
   <data name="AudiovisualData" xml:space="preserve">
     <value>Dados de Audiovisual</value>
@@ -611,6 +609,12 @@
   <data name="Commission" xml:space="preserve">
     <value>Comissão</value>
     <comment>Comissão</comment>
+  </data>
+  <data name="CommissionMaximumApprovedProjectsCount" xml:space="preserve">
+    <value>Quantidade máxima de projetos aprovados</value>
+  </data>
+  <data name="CommissionMinimumEvaluationsCount" xml:space="preserve">
+    <value>Quantidade mínima de votos para gerar média</value>
   </data>
   <data name="CommonQuestions" xml:space="preserve">
     <value>Perguntas Frequentes</value>
@@ -1342,7 +1346,6 @@
   </data>
   <data name="InnovationCommissionMinimumEvaluationsCount" xml:space="preserve">
     <value>Quantidade mínima de avaliações da Comissão de Inovação</value>
-    <comment>Quantidade mínima de avaliações da Comissão de Inovação</comment>
   </data>
   <data name="InnovationProjectSubmitEndDate" xml:space="preserve">
     <value>Data de término de envio do projeto de startup</value>
@@ -1655,11 +1658,9 @@
   </data>
   <data name="MusicCommissionMaximumApprovedBandsCount" xml:space="preserve">
     <value>Quantidade máxima de bandas aprovadas</value>
-    <comment>Quantidade máxima de bandas aprovadas</comment>
   </data>
   <data name="MusicCommissionMinimumEvaluationsCount" xml:space="preserve">
     <value>Quantidade mínima de votos para gerar média</value>
-    <comment>Quantidade mínima de votos para gerar média</comment>
   </data>
   <data name="MusicExecutive" xml:space="preserve">
     <value>Executivo de Música</value>
@@ -2840,7 +2841,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Data de término da avaliação de startups</value>
   </data>
   <data name="StartupsCommissionMinimumEvaluationsCount" xml:space="preserve">
-    <value>Quantidade mínima de votos para gerar média de Startups</value>
+    <value>Quantidade mínima de votos para gerar média</value>
   </data>
   <data name="StartupsProjects" xml:space="preserve">
     <value>Projetos de Startup</value>

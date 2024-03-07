@@ -163,7 +163,6 @@
         @Html.ValidationMessageFor(m => m.EditionDate.AudiovisualNegotiationsVirtualMeetingsJoinMinutes, "", new { @class = "text-danger" })
     </div>
 </div>
-
 <!-- Audiovisual Negotiations - End  -->
 <!-- Music Commissions - Begin -->
 <h3 class="kt-section__title mt-30 mb-4">@Labels.MusicCommission</h3>
@@ -300,6 +299,57 @@
     </div>
 </div>
 <!-- Audiovisual Commissions - End  -->
+<!-- Creator Commissions - Begin  -->
+<h3 class="kt-section__title mt-30 mb-4">@Labels.CreatorCommission</h3>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EditionDate.CreatorProjectSubmitStartDate, new { @class = "control-label" })
+        @Html.TextBox("EditionDate.CreatorProjectSubmitStartDate", Model.EditionDate.CreatorProjectSubmitStartDate.ToShortDateString(), new
+        {
+            @class = "form-control enable-datepicker"
+        })
+        @Html.ValidationMessageFor(m => m.EditionDate.CreatorProjectSubmitStartDate, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EditionDate.CreatorProjectSubmitEndDate, new { @class = "control-label" })
+        @Html.TextBox("EditionDate.CreatorProjectSubmitEndDate", Model.EditionDate.CreatorProjectSubmitEndDate.ToShortDateString(), new
+        {
+            @class = "form-control enable-datepicker"
+        })
+        @Html.ValidationMessageFor(m => m.EditionDate.CreatorProjectSubmitEndDate, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EditionDate.CreatorCommissionEvaluationStartDate, new { @class = "control-label" })
+        @Html.TextBox("EditionDate.CreatorCommissionEvaluationStartDate", Model.EditionDate.CreatorCommissionEvaluationStartDate.ToShortDateString(), new
+        {
+            @class = "form-control enable-datepicker"
+        })
+        @Html.ValidationMessageFor(m => m.EditionDate.CreatorCommissionEvaluationStartDate, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EditionDate.CreatorCommissionEvaluationEndDate, new { @class = "control-label" })
+        @Html.TextBox("EditionDate.CreatorCommissionEvaluationEndDate", Model.EditionDate.CreatorCommissionEvaluationEndDate.ToShortDateString(), new
+        {
+            @class = "form-control enable-datepicker"
+        })
+        @Html.ValidationMessageFor(m => m.EditionDate.CreatorCommissionEvaluationEndDate, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EditionDate.CreatorCommissionMinimumEvaluationsCount, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.EditionDate.CreatorCommissionMinimumEvaluationsCount, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.EditionDate.CreatorCommissionMinimumEvaluationsCount, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EditionDate.CreatorCommissionMaximumApprovedProjectsCount, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.EditionDate.CreatorCommissionMaximumApprovedProjectsCount, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.EditionDate.CreatorCommissionMaximumApprovedProjectsCount, "", new { @class = "text-danger" })
+    </div>
+</div>
+<!--Creator Commissions - End -->
 <!-- Cartoon Commissions - Begin  -->
 @*Disabled on https://softohq.atlassian.net/browse/RIO2CMY-802*@
 @*<h3 class="kt-section__title mt-30 mb-4">@Labels.CartoonCommission</h3>

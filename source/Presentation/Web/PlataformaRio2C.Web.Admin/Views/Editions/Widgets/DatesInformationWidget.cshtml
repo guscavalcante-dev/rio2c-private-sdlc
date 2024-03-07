@@ -219,28 +219,10 @@
             </div>
         </div>
     </div>
-
+    <!-- Audiovisual Commissions - Begin  -->
     <div class="mt-30 mb-0">
         <h3 class="kt-subheader__title mb-0 mt-30">@Labels.AudiovisualCommission</h3>
         <div class="kt-separator kt-separator--border kt-separator--border w-100 mt-2"></div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.AudiovisualNegotiationsCreateStartDate</h3>
-            <div class="row mt-3">
-                <div class="col-12">
-                    @(Model.Edition.AudiovisualNegotiationsCreateStartDate?.ToBrazilTimeZone().ToShortDateString())
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.AudiovisualNegotiationsCreateEndDate</h3>
-            <div class="row mt-3">
-                <div class="col-12">
-                    @(Model.Edition.AudiovisualNegotiationsCreateEndDate?.ToBrazilTimeZone().ToShortDateString())
-                </div>
-            </div>
-        </div>
     </div>
     <div class="row">
         <div class="col-md-6">
@@ -278,7 +260,67 @@
             </div>
         </div>
     </div>
-
+    <!-- Audiovisual Commissions - End  -->
+    <!-- Creator Commissions - Begin  -->
+    <div class="mt-30 mb-0">
+        <h3 class="kt-subheader__title mb-0 mt-30">@Labels.CreatorCommission</h3>
+        <div class="kt-separator kt-separator--border kt-separator--border w-100 mt-2"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm  mt-0 mb-3">@Labels.ProjectSubmitStartDate</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.CreatorProjectSubmitStartDate.ToBrazilTimeZone().ToShortDateString())
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm  mt-0 mb-3">@Labels.ProjectSubmitEndDate</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.CreatorProjectSubmitEndDate.ToBrazilTimeZone().ToShortDateString())
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.ProjectEvaluationStartDate</h3>
+            <div class="row">
+                <div class="col-12">
+                    @(Model.Edition.CreatorCommissionEvaluationStartDate.ToBrazilTimeZone().ToShortDateString())
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.ProjectEvaluationEndDate</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.CreatorCommissionEvaluationEndDate.ToBrazilTimeZone().ToShortDateString())
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.CommissionMinimumEvaluationsCount</h3>
+            <div class="row">
+                <div class="col-12">
+                    @(Model.Edition.CreatorCommissionMinimumEvaluationsCount)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.CommissionMaximumApprovedProjectsCount</h3>
+            <div class="row">
+                <div class="col-12">
+                    @(Model.Edition.CreatorCommissionMaximumApprovedProjectsCount)
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Creator Commissions - End  -->
     @*Disabled on https://softohq.atlassian.net/browse/RIO2CMY-802*@
     @*<div class="mt-30 mb-0">
             <h3 class="kt-subheader__title mb-0 mt-30">@Labels.CartoonCommission</h3>

@@ -19,86 +19,7 @@ var EditionsDatesInformationWidget = function () {
 
     var updateModalId = '#UpdateDatesInformationModal';
     var updateFormId = '#UpdateDatesInformationForm';
-
-    var enableDatePickerDateRangeChangeEvent = function () {
-        $("#StartDate").datepicker({
-            todayBtn: 1,
-            autoclose: true
-        }).on('changeDate', function (selected) {
-            setStartDateMinDate(selected.date.valueOf());
-        });
-
-        $("#EndDate").datepicker()
-            .on('changeDate', function (selected) {
-                setEndDateMaxDate(selected.date.valueOf());
-            });
-
-        var selectedStarDate = $('#StartDate').datepicker("getDate");
-        if (!MyRio2cCommon.isNullOrEmpty(selectedStarDate)) {
-            setStartDateMinDate(selectedStarDate);
-        }
-
-        var selectedEndDate = $('#EndDate').datepicker("getDate");
-        if (!MyRio2cCommon.isNullOrEmpty(selectedEndDate)) {
-            setEndDateMaxDate(selectedEndDate);
-        }
-    }
-
-    var setStartDateMinDate = function (el, selectedDate) {
-        var minDate = new Date(selectedDate);
-        var element = el;
-        var elementId = element.attr('id');
-        element.datepicker('setStartDate', minDate);
-        checkIfDateIsInRange(elementId);
-    }
-
-    var setGeneralDates = function (selectedDate) {
-        $(".enable-datepicker").each(function (el) {
-            if (el != 'StartDate' && el != 'EndDate')
-                setStartDateMinDate(el, selectedDate);
-        });
-    }
-
-    var setEndDateMaxDate = function (selectedDate) {
-        var maxDate = new Date(selectedDate);
-
-        $(".enable-datepicker").each(function () {
-            var element = $(this);
-            var elementId = element.attr('id');
-
-            if (elementId != 'StartDate' && elementId != 'EndDate') {
-                element.datepicker('setEndDate', maxDate);
-                checkIfDateIsInRange(elementId);
-            }
-        });
-    }
-
-    var checkIfDateIsInRange = function (datePickerElementId) {
-
-        if (MyRio2cCommon.isNullOrEmpty(datePickerElementId)) {
-            return;
-        }
-
-        var minDate = $('#StartDate').datepicker("getDate");
-        var maxDate = $('#EndDate').datepicker("getDate");
-
-        if (!MyRio2cCommon.isNullOrEmpty(minDate) && !MyRio2cCommon.isNullOrEmpty(maxDate) ) {
-
-            var datePickerElement = $('#' + datePickerElementId);
-            var datePickerSelectedDate = datePickerElement.datepicker("getDate");
-
-            if (datePickerSelectedDate > maxDate || datePickerSelectedDate < minDate) {
-                //datePickerElement.datepicker('setDate', null);
-                datePickerElement.valid();
-
-                //const diffTime = Math.abs(minDate - new Date());
-                //const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                //datePickerElement.datepicker({ defaultDate: -diffDays });
-            }
-        }
-    }
-
-    // Show ---------------------------------------------------------------------------------------
+    
     var enableShowPlugins = function () {
         KTApp.initTooltips();
     };
@@ -137,14 +58,6 @@ var EditionsDatesInformationWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                //if (typeof (EditionsMainInformationWidget) !== 'undefined') {
-                //    EditionsMainInformationWidget.init();
-                //}
-
-                //if (typeof (EditionsEventsWidget) !== 'undefined') {
-                //    EditionsEventsWidget.init();
-                //}
-
                 if (typeof (EditionsDatesInformationWidget) !== 'undefined') {
                     EditionsDatesInformationWidget.init();
                 }
@@ -163,7 +76,6 @@ var EditionsDatesInformationWidget = function () {
         MyRio2cCommon.enableDatePicker({ inputIdOrClass: updateFormId + ' .enable-datepicker' });
         enableAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
-        //enableDatePickerDateRangeChangeEvent();
     };
 
     var showUpdateModal = function () {

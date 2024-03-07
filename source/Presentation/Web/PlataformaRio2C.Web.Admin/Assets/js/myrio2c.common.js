@@ -281,22 +281,6 @@ var MyRio2cCommon = function () {
             }
         });
 
-        //jQuery.validator.addMethod("radiobuttonrequiredif", function (value, element, params) {
-        // var dependentproperty = foolproof.getId(element, params["dependentproperty"]);
-        // var dependentpropertyvalue = $('#' + dependentproperty).val();
-        // if (MyRio2cCommon.isNullOrEmpty(dependentpropertyvalue)) {
-        //  return true;
-        // }
-
-        // if (dependentpropertyvalue != params["dependentpropertyvalue"]) {
-        //  return true;
-        // }
-
-
-
-        // return false;
-        //});
-
         // Required if one not empty and other empty
         jQuery.validator.addMethod("requiredifonenotemptyandotherempty", function (value, element, params) {
             var dependentPropertyNotEmpty = foolproof.getId(element, params["dependentpropertynotempty"]);
