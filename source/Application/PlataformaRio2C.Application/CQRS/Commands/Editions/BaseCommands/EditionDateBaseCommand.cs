@@ -181,29 +181,29 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         #region Creator - Commissions
 
-        [Display(Name = nameof(CreatorProjectSubmitStartDate), ResourceType = typeof(Labels))]
+        [Display(Name = nameof(Labels.ProjectSubmitStartDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public DateTime CreatorProjectSubmitStartDate { get; set; }
 
-        [Display(Name = nameof(CreatorProjectSubmitEndDate), ResourceType = typeof(Labels))]
+        [Display(Name = nameof(Labels.ProjectSubmitEndDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [GreaterThanOrEqualTo(nameof(CreatorProjectSubmitStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
         public DateTime CreatorProjectSubmitEndDate { get; set; }
 
-        [Display(Name = nameof(CreatorCommissionEvaluationStartDate), ResourceType = typeof(Labels))]
+        [Display(Name = nameof(Labels.ProjectEvaluationStartDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public DateTime CreatorCommissionEvaluationStartDate { get; set; }
 
-        [Display(Name = nameof(CreatorCommissionEvaluationEndDate), ResourceType = typeof(Labels))]
+        [Display(Name = nameof(Labels.ProjectEvaluationEndDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [GreaterThanOrEqualTo(nameof(CreatorCommissionEvaluationStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
         public DateTime CreatorCommissionEvaluationEndDate { get; set; }
 
-        [Display(Name = nameof(CreatorCommissionMaximumApprovedProjectsCount), ResourceType = typeof(Labels))]
+        [Display(Name = nameof(Labels.CommissionMaximumApprovedProjectsCount), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public int CreatorCommissionMaximumApprovedProjectsCount { get; set; }
 
-        [Display(Name = nameof(CreatorCommissionMinimumEvaluationsCount), ResourceType = typeof(Labels))]
+        [Display(Name = nameof(Labels.CommissionMinimumEvaluationsCount), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public int CreatorCommissionMinimumEvaluationsCount { get; set; }
 

@@ -141,7 +141,7 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Scripts/jquery.validate.min.js",
                 "~/Scripts/jquery.validate-vsdoc.min.js",
                 "~/Scripts/jquery.validate.unobtrusive.min.js",
-                "~/Client Scripts/mvcfoolproof.unobtrusive.20240108122200.js"
+                "~/Client Scripts/mvcfoolproof.unobtrusive.20240307151400.js"
                 ));
 
             #endregion

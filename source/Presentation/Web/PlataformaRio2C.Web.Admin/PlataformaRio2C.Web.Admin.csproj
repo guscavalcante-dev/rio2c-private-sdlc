@@ -6088,7 +6088,7 @@
     <Content Include="Assets\themes\metronic\vendors\general\waypoints\test\waypoint-spec.js" />
     <Content Include="Assets\themes\metronic\vendors\general\wnumb\test.html" />
     <Content Include="Assets\themes\metronic\vendors\general\wnumb\wNumb.js" />
-    <Content Include="Client Scripts\mvcfoolproof.unobtrusive.20240108122200.js" />
+    <Content Include="Client Scripts\mvcfoolproof.unobtrusive.20240307151400.js" />
     <Content Include="Client Scripts\mvcfoolproof.unobtrusive.min.js" />
     <Content Include="Client Scripts\MvcFoolproofJQueryValidation.js" />
     <Content Include="Client Scripts\MvcFoolproofJQueryValidation.min.js" />

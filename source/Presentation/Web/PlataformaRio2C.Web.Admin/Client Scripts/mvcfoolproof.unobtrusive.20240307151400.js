@@ -27,7 +27,7 @@ foolproof.is = function (value1, operator, value2, passOnNull) {
     var isDate = function (input) {    
         //This is a custom fix designed by Softo developers at 11/30/2021. It's consider Globalize culture.
         //The original MVCFoolproof doesn't consider Globalize.
-        return moment(input, Globalize.culture().calendar.patterns.d.toLowerCase(), true).isValid();
+        return moment(input, Globalize.culture().calendar.patterns.d.toUpperCase(), true).isValid();
     };
 
     var isBool = function (input) {
