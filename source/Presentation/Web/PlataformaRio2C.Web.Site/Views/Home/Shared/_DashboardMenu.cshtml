@@ -31,13 +31,33 @@
                             @(userAccessControlDto?.GetFullName(ViewBag.UserInterfaceLanguage))
                         </a>
                         <div class="kt-widget__action mt-0">
-                            @(userAccessControlDto?.GetJobTitle(ViewBag.UserInterfaceLanguage))
                             @{
-                                var organization = organizations?.FirstOrDefault();
-                            }
-                            @if (organization != null)
-                            {
-                                @Labels.At <a href="@Url.Action("Details", "Companies", new { id = organization.Uid })">@(organization.TradeName ?? organization.CompanyName ?? organization.Name)</a>
+                                userAccessControlDto?.GetJobTitle(ViewBag.UserInterfaceLanguage);
+
+                                if (organizations != null)
+                                {
+                                    if (organizations.Count == 1)
+                                    {
+                                        var organization = organizations.FirstOrDefault();
+                                        @Labels.At;
+                                        <a href="@Url.Action("Details", "Companies", new { id = organization.Uid })">@(organization.TradeName ?? organization.CompanyName ?? organization.Name)</a>
+                                    }
+                                    else
+                                    {
+                                        @Labels.At;
+                                        foreach (var organization in organizations)
+                                        {
+                                            if (organization != organizations.Last())
+                                            {
+                                                <a href="@Url.Action("Details", "Companies", new { id = organization.Uid })">@(organization.TradeName ?? organization.CompanyName ?? organization.Name)</a>@(",")
+                                            }
+                                            else if (organization == organizations.Last())
+                                            {
+                                                @Labels.And <a href="@Url.Action("Details", "Companies", new { id = organization.Uid })">@(organization.TradeName ?? organization.CompanyName ?? organization.Name)</a>
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         </div>
                         <div class="kt-widget__action mt-4">
