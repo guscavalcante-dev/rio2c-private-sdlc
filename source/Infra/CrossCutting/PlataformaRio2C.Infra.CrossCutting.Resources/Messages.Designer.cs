@@ -1329,6 +1329,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nenhum card disponível..
+        /// </summary>
+        public static string NoCardsAvailable {
+            get {
+                return ResourceManager.GetString("NoCardsAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nenhuma conversa encontrada..
         /// </summary>
         public static string NoConversationsFound {

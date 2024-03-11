@@ -622,6 +622,9 @@
     <value>Nenhum ingresso disponível.</value>
     <comment>Nenhum ingresso disponível.</comment>
   </data>
+  <data name="NoCardsAvailable" xml:space="preserve">
+    <value>Nenhum card disponível.</value>
+  </data>
   <data name="NoConversationsFound" xml:space="preserve">
     <value>Nenhuma conversa encontrada.</value>
     <comment>Nenhuma conversa encontrada.</comment>
