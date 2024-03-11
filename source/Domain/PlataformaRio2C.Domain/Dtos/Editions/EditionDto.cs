@@ -84,6 +84,14 @@ namespace PlataformaRio2C.Domain.Dtos
         public int? CartoonCommissionMinimumEvaluationsCount { get; private set; }
         public int? CartoonCommissionMaximumApprovedProjectsCount { get; private set; }
 
+        // Creator - Commissions
+        public DateTimeOffset CreatorProjectSubmitStartDate { get; private set; }
+        public DateTimeOffset CreatorProjectSubmitEndDate { get; private set; }
+        public DateTimeOffset CreatorCommissionEvaluationStartDate { get; private set; }
+        public DateTimeOffset CreatorCommissionEvaluationEndDate { get; private set; }
+        public int CreatorCommissionMinimumEvaluationsCount { get; private set; }
+        public int CreatorCommissionMaximumApprovedCompaniesCount { get; private set; }
+
         #endregion
 
         public DateTimeOffset CreateDate { get; private set; }
@@ -164,6 +172,14 @@ namespace PlataformaRio2C.Domain.Dtos
             this.CartoonCommissionEvaluationEndDate = entity.CartoonCommissionEvaluationEndDate;
             this.CartoonCommissionMinimumEvaluationsCount = entity.CartoonCommissionMinimumEvaluationsCount;
             this.CartoonCommissionMaximumApprovedProjectsCount = entity.CartoonCommissionMaximumApprovedProjectsCount;
+
+            // Creator - Commissions
+            this.CreatorProjectSubmitStartDate = entity.CreatorProjectSubmitStartDate;
+            this.CreatorProjectSubmitEndDate = entity.CreatorProjectSubmitEndDate;
+            this.CreatorCommissionEvaluationStartDate = entity.CreatorCommissionEvaluationStartDate;
+            this.CreatorCommissionEvaluationEndDate = entity.CreatorCommissionEvaluationEndDate;
+            this.CreatorCommissionMinimumEvaluationsCount = entity.CreatorCommissionMinimumEvaluationsCount;
+            this.CreatorCommissionMaximumApprovedCompaniesCount = entity.CreatorCommissionMaximumApprovedProjectsCount;
 
             this.CreateDate = entity.CreateDate;
             this.CreateUserId = entity.CreateUserId;
@@ -475,6 +491,48 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool IsCartoonProjectEvaluationEnded()
         {
             return DateTime.UtcNow > this.CartoonCommissionEvaluationEndDate;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Creator
+
+        #region Project Submit
+
+        public bool IsCreatorProjectSubmitOpen()
+        {
+            return DateTime.UtcNow >= this.CreatorProjectSubmitStartDate && DateTime.UtcNow <= this.CreatorProjectSubmitEndDate;
+        }
+
+        public bool IsCreatorProjectSubmitStarted()
+        {
+            return DateTime.UtcNow >= this.CreatorProjectSubmitStartDate;
+        }
+
+        public bool IsCreatorProjectSubmitEnded()
+        {
+            return DateTime.UtcNow > this.CreatorProjectSubmitEndDate;
+        }
+
+        #endregion
+
+        #region Project Evaluation
+
+        public bool IsCreatorProjectEvaluationOpen()
+        {
+            return DateTime.UtcNow >= this.CreatorCommissionEvaluationStartDate && DateTime.UtcNow <= this.CreatorCommissionEvaluationEndDate;
+        }
+
+        public bool IsCreatorProjectEvaluationStarted()
+        {
+            return DateTime.UtcNow >= this.CreatorCommissionEvaluationStartDate;
+        }
+
+        public bool IsCreatorProjectEvaluationEnded()
+        {
+            return DateTime.UtcNow > this.CreatorCommissionEvaluationEndDate;
         }
 
         #endregion

@@ -312,6 +312,9 @@
     <value>em</value>
     <comment>em</comment>
   </data>
+  <data name="Attachments" xml:space="preserve">
+    <value>Anexos</value>
+  </data>
   <data name="AttendeeOrganizationMaxSellProjectsCount" xml:space="preserve">
     <value>Quantidade máxima de projetos por produtora</value>
     <comment>Quantidade máxima de projetos por participante</comment>
@@ -334,11 +337,9 @@
   </data>
   <data name="AudiovisualCommissionMaximumApprovedProjectsCount" xml:space="preserve">
     <value>Quantidade máxima de projetos de audiovisual aprovados</value>
-    <comment>Quantidade máxima de projetos de audiovisual aprovados</comment>
   </data>
   <data name="AudiovisualCommissionMinimumEvaluationsCount" xml:space="preserve">
-    <value>Quantidade mínima de votos para gerar média de projeto audiovisual</value>
-    <comment>Quantidade mínima de votos para gerar média de projeto audiovisual</comment>
+    <value>Quantidade mínima de votos para gerar média</value>
   </data>
   <data name="AudiovisualData" xml:space="preserve">
     <value>Dados de Audiovisual</value>
@@ -612,6 +613,12 @@
     <value>Comissão</value>
     <comment>Comissão</comment>
   </data>
+  <data name="CommissionMaximumApprovedProjectsCount" xml:space="preserve">
+    <value>Quantidade máxima de projetos aprovados</value>
+  </data>
+  <data name="CommissionMinimumEvaluationsCount" xml:space="preserve">
+    <value>Quantidade mínima de votos para gerar média</value>
+  </data>
   <data name="CommonQuestions" xml:space="preserve">
     <value>Perguntas Frequentes</value>
   </data>
@@ -763,15 +770,15 @@
     <value>Motivação Criativa</value>
   </data>
   <data name="Creator" xml:space="preserve">
-    <value>Criador</value>
-  </data>
-  <data name="CreatorEN" xml:space="preserve">
     <value>Creator</value>
   </data>
-  <data name="Creators" xml:space="preserve">
-    <value>Criadores</value>
+  <data name="CreatorCommission" xml:space="preserve">
+    <value>Comissão de Creator</value>
   </data>
-  <data name="CreatorsEN" xml:space="preserve">
+  <data name="CreatorProjects" xml:space="preserve">
+    <value>Projetos de Creator</value>
+  </data>
+  <data name="Creators" xml:space="preserve">
     <value>Creators</value>
   </data>
   <data name="Curatorship" xml:space="preserve">
@@ -1258,6 +1265,9 @@
     <value>Posição no Destaque</value>
     <comment>Posição no Destaque</comment>
   </data>
+  <data name="History" xml:space="preserve">
+    <value>História</value>
+  </data>
   <data name="Holding" xml:space="preserve">
     <value>Holding</value>
     <comment>Holding</comment>
@@ -1339,7 +1349,6 @@
   </data>
   <data name="InnovationCommissionMinimumEvaluationsCount" xml:space="preserve">
     <value>Quantidade mínima de avaliações da Comissão de Inovação</value>
-    <comment>Quantidade mínima de avaliações da Comissão de Inovação</comment>
   </data>
   <data name="InnovationProjectSubmitEndDate" xml:space="preserve">
     <value>Data de término de envio do projeto de startup</value>
@@ -1454,6 +1463,9 @@
   </data>
   <data name="LinkedIn" xml:space="preserve">
     <value>LinkedIn</value>
+  </data>
+  <data name="Links" xml:space="preserve">
+    <value>Links</value>
   </data>
   <data name="LinksForPromoTeaser" xml:space="preserve">
     <value>Link para Promo/Teaser</value>
@@ -1649,11 +1661,9 @@
   </data>
   <data name="MusicCommissionMaximumApprovedBandsCount" xml:space="preserve">
     <value>Quantidade máxima de bandas aprovadas</value>
-    <comment>Quantidade máxima de bandas aprovadas</comment>
   </data>
   <data name="MusicCommissionMinimumEvaluationsCount" xml:space="preserve">
     <value>Quantidade mínima de votos para gerar média</value>
-    <comment>Quantidade mínima de votos para gerar média</comment>
   </data>
   <data name="MusicExecutive" xml:space="preserve">
     <value>Executivo de Música</value>
@@ -1691,6 +1701,9 @@
   <data name="Name" xml:space="preserve">
     <value>Nome</value>
     <comment>Nome</comment>
+  </data>
+  <data name="NameOrCompanyName" xml:space="preserve">
+    <value>Nome ou nome da empresa</value>
   </data>
   <data name="Names" xml:space="preserve">
     <value>Nomes</value>
@@ -1866,6 +1879,9 @@
   <data name="OrganizationType" xml:space="preserve">
     <value>Tipo de Empresa</value>
     <comment>Tipo de Empresa</comment>
+  </data>
+  <data name="OtherAttachedFiles" xml:space="preserve">
+    <value>Outros arquivos anexados</value>
   </data>
   <data name="Others" xml:space="preserve">
     <value>Outros</value>
@@ -2098,6 +2114,9 @@
     <value>Assessoria</value>
     <comment>Assessoria</comment>
   </data>
+  <data name="PreviouslyDevelopedProjects" xml:space="preserve">
+    <value>Já realizou outros projetos anteriormente? Quais?</value>
+  </data>
   <data name="Print" xml:space="preserve">
     <value>Imprimir</value>
   </data>
@@ -2195,8 +2214,23 @@
     <value>Informações adicionais sobre o projeto</value>
     <comment>Informações adicionais sobre o projeto</comment>
   </data>
+  <data name="ProjectAssociatedInstitutions" xml:space="preserve">
+    <value>O projeto está associado à alguma Associação ou Instituição? Quais?</value>
+  </data>
+  <data name="ProjectAudienceReach" xml:space="preserve">
+    <value>Qual foi o alcance de público em plataforma online?</value>
+  </data>
+  <data name="ProjectAwards" xml:space="preserve">
+    <value>O projeto ganhou ou foi indicado a algum prêmio? Quais?</value>
+  </data>
   <data name="ProjectDetails" xml:space="preserve">
     <value>Detalhes do Projeto</value>
+  </data>
+  <data name="ProjectDevelopmentMotivation" xml:space="preserve">
+    <value>Motivação para desenvolvimento do projeto</value>
+  </data>
+  <data name="ProjectDiversityAndInclusionElements" xml:space="preserve">
+    <value>Elementos de diversidade e inclusão</value>
   </data>
   <data name="ProjectEvaluationEndDate" xml:space="preserve">
     <value>Data de término da avaliação de projeto</value>
@@ -2218,6 +2252,9 @@
     <value>Informações do Projeto</value>
     <comment>Informações do Projeto</comment>
   </data>
+  <data name="ProjectMarketingStrategy" xml:space="preserve">
+    <value>Estratégia de marketing do projeto</value>
+  </data>
   <data name="ProjectMaxBuyerEvaluationsCount" xml:space="preserve">
     <value>Quantidade máxima de avaliadores por projeto</value>
     <comment>Quantidade máxima de avaliadores por projeto</comment>
@@ -2225,6 +2262,12 @@
   <data name="ProjectNotSubmittedToPlayers" xml:space="preserve">
     <value>Nenhum Player selecionado para avaliação</value>
     <comment>Nenhum Player selecionado para avaliação</comment>
+  </data>
+  <data name="ProjectOnlinePlatforms" xml:space="preserve">
+    <value>O projeto está disponível em plataforma online que não detenha os direitos sobre ele? Quais?</value>
+  </data>
+  <data name="ProjectPublicNotice" xml:space="preserve">
+    <value>O projeto foi contemplado em algum edital? Quais?</value>
   </data>
   <data name="ProjectRefused" xml:space="preserve">
     <value>Reprovado</value>
@@ -2241,6 +2284,9 @@
   <data name="ProjectsForPitching" xml:space="preserve">
     <value>Projetos para Pitching</value>
     <comment>Projetos para Pitching</comment>
+  </data>
+  <data name="ProjectSimilars" xml:space="preserve">
+    <value>Projetos audiovisuais similares</value>
   </data>
   <data name="ProjectsPerProducerQty" xml:space="preserve">
     <value>QTD Projetos Por Produtora</value>
@@ -2275,6 +2321,12 @@
   <data name="ProjectSubscriptions" xml:space="preserve">
     <value>Inscrições de Projeto</value>
     <comment>Inscrições de Projeto</comment>
+  </data>
+  <data name="ProjectThemeRelevation" xml:space="preserve">
+    <value>Relevância da temática</value>
+  </data>
+  <data name="ProjectTransformationMotivation" xml:space="preserve">
+    <value>Motivação para transformar o projeto em podcast, longa-metragem ou série</value>
   </data>
   <data name="PublicEmail" xml:space="preserve">
     <value>Email Público</value>
@@ -2533,6 +2585,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="SeeReasonForRefusal" xml:space="preserve">
     <value>Ver motivo da recusa</value>
   </data>
+  <data name="Segment" xml:space="preserve">
+    <value>Segmento</value>
+  </data>
   <data name="Select" xml:space="preserve">
     <value>Selecione</value>
     <comment>Selecione</comment>
@@ -2656,6 +2711,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="ShowAllParticipants" xml:space="preserve">
     <value>Exibir todos os participantes</value>
     <comment>Exibir todos os participantes</comment>
+  </data>
+  <data name="ShowAllSponsored" xml:space="preserve">
+    <value>Mostrar todos os patrocinadores</value>
   </data>
   <data name="ShowAllSponsors" xml:space="preserve">
     <value>Exibir todos os patrocinadores</value>
@@ -2786,7 +2844,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Data de término da avaliação de startups</value>
   </data>
   <data name="StartupsCommissionMinimumEvaluationsCount" xml:space="preserve">
-    <value>Quantidade mínima de votos para gerar média de Startups</value>
+    <value>Quantidade mínima de votos para gerar média</value>
   </data>
   <data name="StartupsProjects" xml:space="preserve">
     <value>Projetos de Startup</value>
@@ -3003,6 +3061,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Transport" xml:space="preserve">
     <value>Transporte</value>
     <comment>Transporte</comment>
+  </data>
+  <data name="TreatmentShortOrArticle" xml:space="preserve">
+    <value>Argumento, conto ou artigo</value>
   </data>
   <data name="Twitter" xml:space="preserve">
     <value>Twitter</value>

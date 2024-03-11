@@ -2,7 +2,7 @@
 @model AttendeeInnovationOrganizationDto
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
-    ViewBag.Title = $"{Labels.Startups} {Model.InnovationOrganization?.Name}";
+    ViewBag.Title = $"{Labels.Startups} | {Model.InnovationOrganization?.Name}";
     var totalInnovationProjectsCount = ViewBag.InnovationOrganizationsTotalCount as int?;
     var currentInnovationProjectIndex = ViewBag.CurrentInnovationProjectIndex as int?;
 

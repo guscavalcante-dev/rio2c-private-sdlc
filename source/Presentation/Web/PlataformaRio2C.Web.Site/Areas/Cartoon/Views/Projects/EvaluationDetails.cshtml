@@ -2,7 +2,7 @@
 @model AttendeeCartoonProjectDto
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
-    ViewBag.Title = $"{Labels.Cartoonito} {Model.CartoonProject?.Title}";
+    ViewBag.Title = $"{Labels.Cartoonito} | {Model.CartoonProject?.Title}";
     var totalCartoonProjectsCount = ViewBag.CartoonProjectsTotalCount as int?;
     var currentCartoonProjectIndex = ViewBag.CurrentProjectIndex as int?;
 

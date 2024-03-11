@@ -529,6 +529,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Anexos.
+        /// </summary>
+        public static string Attachments {
+            get {
+                return ResourceManager.GetString("Attachments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quantidade máxima de projetos por produtora.
         /// </summary>
         public static string AttendeeOrganizationMaxSellProjectsCount {
@@ -583,7 +592,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quantidade mínima de votos para gerar média de projeto audiovisual.
+        ///   Looks up a localized string similar to Quantidade mínima de votos para gerar média.
         /// </summary>
         public static string AudiovisualCommissionMinimumEvaluationsCount {
             get {
@@ -1258,6 +1267,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quantidade máxima de projetos aprovados.
+        /// </summary>
+        public static string CommissionMaximumApprovedProjectsCount {
+            get {
+                return ResourceManager.GetString("CommissionMaximumApprovedProjectsCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade mínima de votos para gerar média.
+        /// </summary>
+        public static string CommissionMinimumEvaluationsCount {
+            get {
+                return ResourceManager.GetString("CommissionMinimumEvaluationsCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Perguntas Frequentes.
         /// </summary>
         public static string CommonQuestions {
@@ -1627,7 +1654,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Criador.
+        ///   Looks up a localized string similar to Creator.
         /// </summary>
         public static string Creator {
             get {
@@ -1636,29 +1663,29 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Creator.
+        ///   Looks up a localized string similar to Comissão de Creator.
         /// </summary>
-        public static string CreatorEN {
+        public static string CreatorCommission {
             get {
-                return ResourceManager.GetString("CreatorEN", resourceCulture);
+                return ResourceManager.GetString("CreatorCommission", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Criadores.
+        ///   Looks up a localized string similar to Projetos de Creator.
         /// </summary>
-        public static string Creators {
+        public static string CreatorProjects {
             get {
-                return ResourceManager.GetString("Creators", resourceCulture);
+                return ResourceManager.GetString("CreatorProjects", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Creators.
         /// </summary>
-        public static string CreatorsEN {
+        public static string Creators {
             get {
-                return ResourceManager.GetString("CreatorsEN", resourceCulture);
+                return ResourceManager.GetString("Creators", resourceCulture);
             }
         }
         
@@ -2824,6 +2851,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to História.
+        /// </summary>
+        public static string History {
+            get {
+                return ResourceManager.GetString("History", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Holding.
         /// </summary>
         public static string Holding {
@@ -3306,6 +3342,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string LinkedIn {
             get {
                 return ResourceManager.GetString("LinkedIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Links.
+        /// </summary>
+        public static string Links {
+            get {
+                return ResourceManager.GetString("Links", resourceCulture);
             }
         }
         
@@ -3886,6 +3931,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nome ou nome da empresa.
+        /// </summary>
+        public static string NameOrCompanyName {
+            get {
+                return ResourceManager.GetString("NameOrCompanyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nomes.
         /// </summary>
         public static string Names {
@@ -4305,6 +4359,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string OrganizationType {
             get {
                 return ResourceManager.GetString("OrganizationType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Outros arquivos anexados.
+        /// </summary>
+        public static string OtherAttachedFiles {
+            get {
+                return ResourceManager.GetString("OtherAttachedFiles", resourceCulture);
             }
         }
         
@@ -4853,6 +4916,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Já realizou outros projetos anteriormente? Quais?.
+        /// </summary>
+        public static string PreviouslyDevelopedProjects {
+            get {
+                return ResourceManager.GetString("PreviouslyDevelopedProjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Imprimir.
         /// </summary>
         public static string Print {
@@ -5096,11 +5168,56 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O projeto está associado à alguma Associação ou Instituição? Quais?.
+        /// </summary>
+        public static string ProjectAssociatedInstitutions {
+            get {
+                return ResourceManager.GetString("ProjectAssociatedInstitutions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Qual foi o alcance de público em plataforma online?.
+        /// </summary>
+        public static string ProjectAudienceReach {
+            get {
+                return ResourceManager.GetString("ProjectAudienceReach", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O projeto ganhou ou foi indicado a algum prêmio? Quais?.
+        /// </summary>
+        public static string ProjectAwards {
+            get {
+                return ResourceManager.GetString("ProjectAwards", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Detalhes do Projeto.
         /// </summary>
         public static string ProjectDetails {
             get {
                 return ResourceManager.GetString("ProjectDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Motivação para desenvolvimento do projeto.
+        /// </summary>
+        public static string ProjectDevelopmentMotivation {
+            get {
+                return ResourceManager.GetString("ProjectDevelopmentMotivation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Elementos de diversidade e inclusão.
+        /// </summary>
+        public static string ProjectDiversityAndInclusionElements {
+            get {
+                return ResourceManager.GetString("ProjectDiversityAndInclusionElements", resourceCulture);
             }
         }
         
@@ -5150,6 +5267,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Estratégia de marketing do projeto.
+        /// </summary>
+        public static string ProjectMarketingStrategy {
+            get {
+                return ResourceManager.GetString("ProjectMarketingStrategy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quantidade máxima de avaliadores por projeto.
         /// </summary>
         public static string ProjectMaxBuyerEvaluationsCount {
@@ -5164,6 +5290,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ProjectNotSubmittedToPlayers {
             get {
                 return ResourceManager.GetString("ProjectNotSubmittedToPlayers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O projeto está disponível em plataforma online que não detenha os direitos sobre ele? Quais?.
+        /// </summary>
+        public static string ProjectOnlinePlatforms {
+            get {
+                return ResourceManager.GetString("ProjectOnlinePlatforms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O projeto foi contemplado em algum edital? Quais?.
+        /// </summary>
+        public static string ProjectPublicNotice {
+            get {
+                return ResourceManager.GetString("ProjectPublicNotice", resourceCulture);
             }
         }
         
@@ -5200,6 +5344,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ProjectsForPitching {
             get {
                 return ResourceManager.GetString("ProjectsForPitching", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Projetos audiovisuais similares.
+        /// </summary>
+        public static string ProjectSimilars {
+            get {
+                return ResourceManager.GetString("ProjectSimilars", resourceCulture);
             }
         }
         
@@ -5281,6 +5434,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ProjectSubscriptions {
             get {
                 return ResourceManager.GetString("ProjectSubscriptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Relevância da temática.
+        /// </summary>
+        public static string ProjectThemeRelevation {
+            get {
+                return ResourceManager.GetString("ProjectThemeRelevation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Motivação para transformar o projeto em podcast, longa-metragem ou série.
+        /// </summary>
+        public static string ProjectTransformationMotivation {
+            get {
+                return ResourceManager.GetString("ProjectTransformationMotivation", resourceCulture);
             }
         }
         
@@ -5911,6 +6082,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Segmento.
+        /// </summary>
+        public static string Segment {
+            get {
+                return ResourceManager.GetString("Segment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Selecione.
         /// </summary>
         public static string Select {
@@ -6195,6 +6375,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ShowAllParticipants {
             get {
                 return ResourceManager.GetString("ShowAllParticipants", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mostrar todos os patrocinadores.
+        /// </summary>
+        public static string ShowAllSponsored {
+            get {
+                return ResourceManager.GetString("ShowAllSponsored", resourceCulture);
             }
         }
         
@@ -6514,7 +6703,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quantidade mínima de votos para gerar média de Startups.
+        ///   Looks up a localized string similar to Quantidade mínima de votos para gerar média.
         /// </summary>
         public static string StartupsCommissionMinimumEvaluationsCount {
             get {
@@ -7050,6 +7239,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Transport {
             get {
                 return ResourceManager.GetString("Transport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argumento, conto ou artigo.
+        /// </summary>
+        public static string TreatmentShortOrArticle {
+            get {
+                return ResourceManager.GetString("TreatmentShortOrArticle", resourceCulture);
             }
         }
         

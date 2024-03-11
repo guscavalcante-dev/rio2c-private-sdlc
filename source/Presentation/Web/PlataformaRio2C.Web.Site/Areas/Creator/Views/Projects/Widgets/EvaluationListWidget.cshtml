@@ -1,0 +1,108 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@using X.PagedList.Mvc
+@using X.PagedList.Mvc.Common
+@using PlataformaRio2C.Domain.Entities;
+@model X.PagedList.IPagedList<AttendeeCreatorProjectDto>
+@{ 
+    var editionDto = ViewBag.EditionDto as EditionDto;
+}
+@if (Model?.Any() == true)
+{
+    <!--begin::List-->
+    <div class="row">
+        @foreach (var attendeeCreatorProjectDto in Model)
+        {
+            <!--begin::List Item-->
+            @Html.Partial("Widgets/EvaluationListItemWidget", attendeeCreatorProjectDto)
+            <!--end::List Item-->
+        }
+    </div>
+    <!--end::List-->
+    <!--begin::Pagination-->
+    <div class="row">
+        <div class="col-xl-12">
+            <!--begin:: Components/Pagination/Default-->
+            <div class="kt-portlet">
+                <div class="kt-portlet__body">
+                    <!--begin: Pagination-->
+                    <div class="kt-pagination kt-pagination--brand justify-content-center justify-content-sm-between">
+                        @Html.PagedListPager(
+                            Model,
+                            page => Url.Action("ShowEvaluationListWidget", "Projects", new { Area = "Creator", searchKeywords = ViewBag.SearchViewModel.SearchKeywords, evaluationStatusUid = ViewBag.SearchViewModel.EvaluationStatusUid, page, pageSize = ViewBag.SearchViewModel.PageSize }),
+                            PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
+                                new PagedListRenderOptions
+                                {
+                                    DisplayLinkToIndividualPages = true,
+                                    MaximumPageNumbersToDisplay = 3,
+                                    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                                    DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                                    DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                                    UlElementClasses = new string[] { "kt-pagination__links" },
+                                    LiElementClasses = new string[] { "" },
+                                    PreviousElementClass = "kt-pagination__link--prev",
+                                    NextElementClass = "kt-pagination__link--next",
+                                    ClassToApplyToFirstListItemInPager = "kt-pagination__link--first",
+                                    ClassToApplyToLastListItemInPager = "kt-pagination__link--last kt-font-brand",
+                                    ActiveLiElementClass = "kt-pagination__link--active",
+                                    PageClasses = new string[] { "" },
+                                    EllipsesElementClass = ""
+                                }
+                                , new AjaxOptions { HttpMethod = "GET", OnBegin = "CreatorProjectsEvaluationListWidget.changePage", OnSuccess = "CreatorProjectsEvaluationListWidget.handlePaginationReturn" }))
+                        <div class="kt-pagination__toolbar">
+                            @Html.DropDownList("PageSizeDropdown", new SelectList(new[] { 1, 3, 6, 9, 12, 24, 36 }, ViewBag.SearchViewModel.PageSize), null, new { @class = "form-control kt-font-brand", style = "width: 60px;" })
+                            @Html.PagedListPager(
+                                Model,
+                                page => Url.Action(null, new { page }),
+                                PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
+                                    new PagedListRenderOptions
+                                    {
+                                        ItemSliceAndTotalFormat = Messages.PaginationMessage,
+                                        DisplayItemSliceAndTotal = true,
+                                        DisplayLinkToIndividualPages = false,
+                                        DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+                                        DisplayLinkToPreviousPage = PagedListDisplayMode.Never,
+                                        DisplayLinkToNextPage = PagedListDisplayMode.Never,
+                                        DisplayLinkToLastPage = PagedListDisplayMode.Never,
+                                        ContainerDivClasses = new[] { "pagination__desc" },
+                                        UlElementClasses = new string[] { "pagination mb-0" },
+                                        LiElementClasses = new string[] { "page-item" },
+                                        PageClasses = new string[] { "page-link" }
+                                    }, null))
+                        </div>
+                    </div>
+                    <!--end: Pagination-->
+                </div>
+            </div>
+            <!--end:: Components/Pagination/Default-->
+        </div>
+    </div>
+    <!--end::Pagination-->
+}
+else
+{
+    var message = string.Format(Messages.NoneEntityAction, Labels.Project.ToLowerInvariant(), Labels.FoundM);
+    var evaluationStatusUid = ViewBag.SearchViewModel.EvaluationStatusUid;
+
+    if (editionDto.IsCreatorProjectEvaluationOpen() && (
+        evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid ||
+        evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid))
+    {
+        message = $"{string.Format(Messages.TheEvaluationPeriodRunsFrom, editionDto.CreatorCommissionEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(), editionDto.CreatorCommissionEvaluationEndDate.ToBrazilTimeZone().ToShortDateString())}{Environment.NewLine}{Messages.TheProjectsWillReceiveFinalGradeAtPeriodEnds}";
+    }
+    else if(!editionDto.IsCreatorProjectEvaluationOpen() &&
+        evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
+    {
+        message = $"{Messages.EvaluationPeriodClosed}{Environment.NewLine}{string.Format(Messages.ProjectsNotFoundWithStatus, Labels.UnderEvaluation)}";
+    }
+
+    <div class="kt-portlet">
+        <div class="kt-portlet__body">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="m-0 p-0" style="white-space: pre-line">@MvcHtmlString.Create(message.Replace(Environment.NewLine, "<br />"))</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}

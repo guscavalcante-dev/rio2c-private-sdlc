@@ -1,0 +1,86 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Entities
+@model AttendeeCreatorProjectDto
+@{
+    var searchViewModel = ViewBag.SearchViewModel as CreatorProjectSearchViewModel;
+    var evaluationDetailsAction = Url.Action("EvaluationDetails", "Projects", new
+    {
+        Area = "Creator",
+        id = Model.Id,
+        searchKeywords = searchViewModel.SearchKeywords,
+        evaluationStatusUid = searchViewModel.EvaluationStatusUid,
+        Page = searchViewModel.Page,
+        pageSize = searchViewModel.PageSize
+    });
+}
+@if (Model != null)
+{
+    <div class="col-sm-6 col-lg-6 col-xl-4">
+        <div class="kt-portlet kt-portlet--height-fluid" id="project-@Model.Uid">
+            <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="text-center w-100">
+                            <div class="kt-userpic kt-userpic--lg kt-userpic--brand">
+                                <span style="width: 100%; height: 125px; font-size: 40px;">@(Model.CreatorProjectDto?.GetTitleAbbreviation())</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-3" style="min-height:41px;">
+                        <span style="font-weight: 600; font-size: 17px; line-height: 19px; color: #403D50;">@(Model.CreatorProjectDto?.Title ?? "-")</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-2">
+                        <span style="font-weight: normal; font-size: 13px; line-height: 19px; color: #898C98;">@(Model.CreatorProjectDto?.Logline ?? "-")</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <div style="font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; display: inline-block;">@Labels.Segment:</div>
+                        @foreach (var interestDto in Model.CreatorProjectDto.GetInterestDtosByGroupUid(InterestGroup.CreatorSegment.Uid))
+                        {
+                            <span class="kt-badge kt-badge--inline kt-badge--info mt-1">
+                                @interestDto.InterestName.GetSeparatorTranslation(Culture, '|')
+                            </span>
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <div style="font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; display: inline-block;">@Labels.SubGenre:</div>
+                        @foreach (var interestDto in Model.CreatorProjectDto.GetInterestDtosByGroupUid(InterestGroup.CreatorSubGenre.Uid))
+                        {
+                            <span class="kt-badge kt-badge--inline kt-badge--info mt-1">
+                                @interestDto.InterestName.GetSeparatorTranslation(Culture, '|')
+                            </span>
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <div style="font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; display: inline-block;">@Labels.Format:</div>
+                        @foreach (var interestDto in Model.CreatorProjectDto.GetInterestDtosByGroupUid(InterestGroup.CreatorFormat.Uid))
+                        {
+                            <span class="kt-badge kt-badge--inline kt-badge--info mt-1 h-auto">
+                                @interestDto.InterestName.GetSeparatorTranslation(Culture, '|')
+                            </span>
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-4">
+                        @Html.Partial("Shared/_Evaluation", Model)
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-2">
+                    <div class="col-md-12 text-center">
+                        <a href="@evaluationDetailsAction" class="btn btn-brand">@Labels.View</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

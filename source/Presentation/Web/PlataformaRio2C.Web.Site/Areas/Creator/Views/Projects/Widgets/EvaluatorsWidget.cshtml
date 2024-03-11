@@ -1,0 +1,67 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@using Constants = PlataformaRio2C.Domain.Constants;
+@model AttendeeCreatorProjectDto
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+}
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">@Labels.Evaluators</h3>
+    </div>
+</div>
+<div class="kt-portlet__body pt-0">
+    @if (editionDto?.IsCreatorProjectEvaluationStarted() != true)
+    {
+        <div class="row mt-75">
+            <div class="col-12">
+                <div class="myrio2c-alert-box danger mx-auto text-center">
+                    <span>@Messages.OutOfEvaluationPeriod</span>
+                </div>
+            </div>
+        </div>
+    }
+    else if (editionDto?.IsCreatorProjectEvaluationOpen() == true)
+    {
+        <div class="row mt-75">
+            <div class="col-12">
+                <div class="myrio2c-alert-box warning mx-auto text-center">
+                    <span>@Messages.EvaluationPeriodOpen</span>
+                </div>
+            </div>
+        </div>
+    }
+    else if (Model.AttendeeCreatorProjectEvaluationDtos?.Any() == true)
+    {
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-sm table-head-bg-brand table-body-scroll">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>@Labels.Name</th>
+                            <th class="text-center">@Labels.Grade</th>
+                        </tr>
+                    </thead>
+                    <tbody class="rio2c-scroll" style="max-height: 150px;">
+                        @foreach (var attendeeCreatorProjectEvaluationDto in Model.AttendeeCreatorProjectEvaluationDtos)
+                        {
+                            <tr>
+                                <td>@(attendeeCreatorProjectEvaluationDto?.EvaluatorUserDto?.Name)</td>
+                                <td class="text-center">@(attendeeCreatorProjectEvaluationDto?.Grade)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row mt-75">
+            <div class="col-12">
+                <div class="myrio2c-alert-box danger mx-auto text-center">
+                    <span>@string.Format(Messages.EntityNotAction, Labels.Evaluations, Labels.FoundFP)</span>
+                </div>
+            </div>
+        </div>
+    }
+</div>

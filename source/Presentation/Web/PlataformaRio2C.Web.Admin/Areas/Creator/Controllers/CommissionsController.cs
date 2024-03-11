@@ -72,8 +72,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Creator.Controllers
         {
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.StartupsCommission, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.CreatorsEN, null),
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CreatorCommission, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Creator, null),
                 new BreadcrumbItemHelper(Labels.Commission, Url.Action("Index", "Commissions", new { Area = "Creator" }))
             });
 
@@ -137,8 +137,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Creator.Controllers
 
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.StartupsCommission, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Startups, null),
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CreatorCommission, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Creator, null),
                 new BreadcrumbItemHelper(Labels.Commission, Url.Action("Index", "Commissions", new { Area = "Creator" })),
                 new BreadcrumbItemHelper(attendeeCollaboratorDto.Collaborator.GetFullName(), Url.Action("Details", "Commissions", new { Area = "Creator", id }))
             });
@@ -189,78 +189,81 @@ namespace PlataformaRio2C.Web.Admin.Areas.Creator.Controllers
         [HttpPost]
         public async Task<ActionResult> SendInvitationEmails(string selectedCollaboratorsUids)
         {
-            throw new NotImplementedException();
-            //AppValidationResult result = null;
+            AppValidationResult result = null;
 
-            //try
-            //{
-            //    if (string.IsNullOrEmpty(selectedCollaboratorsUids))
-            //    {
-            //        throw new DomainException(Messages.SelectAtLeastOneOption);
-            //    }
+            try
+            {
+                #region Initial Validations
 
-            //    var collaboratorsUids = selectedCollaboratorsUids?.ToListGuid(',');
-            //    if (!collaboratorsUids.Any())
-            //    {
-            //        throw new DomainException(Messages.SelectAtLeastOneOption);
-            //    }
+                if (string.IsNullOrEmpty(selectedCollaboratorsUids))
+                {
+                    throw new DomainException(Messages.SelectAtLeastOneOption);
+                }
 
-            //    var collaboratorsDtos = await this.collaboratorRepo.FindAllCollaboratorsByCollaboratorsUids(this.EditionDto.Id, collaboratorsUids);
-            //    if (collaboratorsDtos?.Any() != true)
-            //    {
-            //        throw new DomainException(Messages.SelectAtLeastOneOption);
-            //    }
+                var collaboratorsUids = selectedCollaboratorsUids?.ToListGuid(',');
+                if (!collaboratorsUids.Any())
+                {
+                    throw new DomainException(Messages.SelectAtLeastOneOption);
+                }
 
-            //    List<string> errors = new List<string>();
-            //    foreach (var collaboratorDto in collaboratorsDtos)
-            //    {
-            //        var collaboratorLanguageCode = collaboratorDto.Language?.Code ?? this.UserInterfaceLanguage;
+                var collaboratorsDtos = await this.collaboratorRepo.FindAllCollaboratorsByCollaboratorsUids(this.EditionDto.Id, collaboratorsUids);
+                if (collaboratorsDtos?.Any() != true)
+                {
+                    throw new DomainException(Messages.SelectAtLeastOneOption);
+                }
 
-            //        try
-            //        {
-            //            result = await this.CommandBus.Send(new SendCreatorCommissionWelcomeEmailAsync(
-            //                collaboratorDto.Collaborator.Uid,
-            //                collaboratorDto.User.SecurityStamp,
-            //                collaboratorDto.User.Id,
-            //                collaboratorDto.User.Uid,
-            //                collaboratorDto.GetFirstName(),
-            //                collaboratorDto.GetFullName(collaboratorLanguageCode),
-            //                collaboratorDto.User.Email,
-            //                this.EditionDto.Edition,
-            //                this.AdminAccessControlDto.User.Id,
-            //                collaboratorLanguageCode));
-            //            if (!result.IsValid)
-            //            {
-            //                throw new DomainException(Messages.CorrectFormValues);
-            //            }
-            //        }
-            //        catch (DomainException)
-            //        {
-            //            //Cannot stop sending email when exception occurs.
-            //            errors.AddRange(result.Errors.Select(e => e.Message));
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-            //        }
-            //    }
+                #endregion
 
-            //    if (errors.Any())
-            //    {
-            //        throw new DomainException(string.Format(Messages.OneOrMoreEmailsNotSend, Labels.WelcomeEmail));
-            //    }
-            //}
-            //catch (DomainException ex)
-            //{
-            //    return Json(new { status = "error", message = ex.GetInnerMessage(), }, JsonRequestBehavior.AllowGet);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-            //    return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-            //}
+                List<string> errors = new List<string>();
+                foreach (var collaboratorDto in collaboratorsDtos)
+                {
+                    var collaboratorLanguageCode = collaboratorDto.Language?.Code ?? this.UserInterfaceLanguage;
 
-            //return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Email.ToLowerInvariant(), Labels.Sent.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+                    try
+                    {
+                        result = await this.CommandBus.Send(new SendCreatorCommissionWelcomeEmailAsync(
+                            collaboratorDto.Collaborator.Uid,
+                            collaboratorDto.User.SecurityStamp,
+                            collaboratorDto.User.Id,
+                            collaboratorDto.User.Uid,
+                            collaboratorDto.GetFirstName(),
+                            collaboratorDto.GetFullName(collaboratorLanguageCode),
+                            collaboratorDto.User.Email,
+                            this.EditionDto.Edition,
+                            this.AdminAccessControlDto.User.Id,
+                            collaboratorLanguageCode));
+                        if (!result.IsValid)
+                        {
+                            throw new DomainException(Messages.CorrectFormValues);
+                        }
+                    }
+                    catch (DomainException)
+                    {
+                        //Cannot stop sending email when exception occurs.
+                        errors.AddRange(result.Errors.Select(e => e.Message));
+                    }
+                    catch (Exception ex)
+                    {
+                        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                    }
+                }
+
+                if (errors.Any())
+                {
+                    throw new DomainException(string.Format(Messages.OneOrMoreEmailsNotSend, Labels.WelcomeEmail));
+                }
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage(), }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Email.ToLowerInvariant(), Labels.Sent.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

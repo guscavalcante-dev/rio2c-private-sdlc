@@ -1502,7 +1502,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
 
-            ViewBag.GenreInterests = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.Genre.Uid);
+            ViewBag.GenreInterests = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.AudiovisualGenre.Uid);
             ViewBag.ProjectEvaluationStatuses = await this.evaluationStatusRepository.FindAllAsync();
 
             return View();

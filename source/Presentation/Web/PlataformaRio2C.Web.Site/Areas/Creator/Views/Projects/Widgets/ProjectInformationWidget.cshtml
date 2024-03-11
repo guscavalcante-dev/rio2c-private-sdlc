@@ -1,0 +1,94 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model AttendeeCreatorProjectDto
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">@Labels.ProjectInfo</h3>
+    </div>
+</div>
+<div class="kt-portlet__body">
+    <div class="kt-widget kt-widget--user-profile-3">
+        <div class="kt-widget__bottom mt-0" style="border-top:none;">
+            <div class="kt-widget__item w-100 pt-0">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.History</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span class="text-break">@(Html.Raw(Model.CreatorProjectDto.Description?.Replace("\n", "<br/>") ?? "-"))</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.ProjectDevelopmentMotivation</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span class="text-break">@(Html.Raw(Model.CreatorProjectDto.MotivationToDevelop?.Replace("\n", "<br/>") ?? "-"))</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.ProjectTransformationMotivation</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(Model.CreatorProjectDto.MotivationToTransform?.Replace("\n", "<br/>") ?? "-"))</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.ProjectDiversityAndInclusionElements</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.CreatorProjectDto.DiversityAndInclusionElements?.Replace("\n", "<br/>") ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.ProjectMarketingStrategy</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.CreatorProjectDto.MarketingStrategy?.Replace("\n", "<br/>") ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.ProjectSimilars</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.CreatorProjectDto.SimilarAudiovisualProjects?.Replace("\n", "<br/>") ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.ProjectOnlinePlatforms</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.CreatorProjectDto.OnlinePlatformsWhereProjectIsAvailable?.Replace("\n", "<br/>") ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.ProjectAudienceReach</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.CreatorProjectDto.OnlinePlatformsAudienceReach?.Replace("\n", "<br/>") ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.ProjectAwards</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.CreatorProjectDto.ProjectAwards?.Replace("\n", "<br/>") ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.ProjectPublicNotice</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.CreatorProjectDto.ProjectPublicNotice?.Replace("\n", "<br/>") ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.PreviouslyDevelopedProjects</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.CreatorProjectDto.PreviouslyDevelopedProjects?.Replace("\n", "<br/>") ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.ProjectAssociatedInstitutions</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.CreatorProjectDto.AssociatedInstitutions?.Replace("\n", "<br/>") ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.Links</span>
+                    @foreach (var link in Model.CreatorProjectDto.GetLinks())
+                    {
+                        <span class="kt-widget__value"><a href="@link" target="_blank"><small class="text-break">@link</small></a></span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -96,7 +96,7 @@
                         <td class="col-3">
                             @{
                                 firstLine = true;
-                                var projectPlatformsDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.Platforms.Uid);
+                                var projectPlatformsDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualPlatforms.Uid);
                                 foreach (var interestDto in projectPlatformsDtos)
                                 {
                                     @Html.Raw(string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')));
@@ -107,7 +107,7 @@
                         <td class="col-3">
                             @{
                                 firstLine = true;
-                                var projectStatusDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.ProjectStatus.Uid);
+                                var projectStatusDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualProjectStatus.Uid);
                                 foreach (var interestDto in projectStatusDtos)
                                 {
                                     @Html.Raw(string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')));
@@ -118,7 +118,7 @@
                         <td class="col-3">
                             @{
                                 firstLine = true;
-                                var projectLookingForDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.LookingFor.Uid);
+                                var projectLookingForDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualLookingFor.Uid);
                                 foreach (var interestDto in projectLookingForDtos)
                                 {
                                     @Html.Raw(string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')));
@@ -129,7 +129,7 @@
                         <td class="col-3">
                             @{
                                 firstLine = true;
-                                var projectFormatDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.Format.Uid);
+                                var projectFormatDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualFormat.Uid);
                                 foreach (var interestDto in projectFormatDtos)
                                 {
                                     @Html.Raw(string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')));
@@ -140,7 +140,7 @@
                         <td class="col-3">
                             @{
                                 firstLine = true;
-                                var projectGenreDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.Genre.Uid);
+                                var projectGenreDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualGenre.Uid);
                                 foreach (var interestDto in projectGenreDtos)
                                 {
                                     @Html.Raw(string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')));
@@ -151,7 +151,7 @@
                         <td class="col-3">
                             @{
                                 firstLine = true;
-                                var projectSubgenreDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.SubGenre.Uid);
+                                var projectSubgenreDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualSubGenre.Uid);
                                 foreach (var interestDto in projectSubgenreDtos)
                                 {
                                     @Html.Raw(string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')));

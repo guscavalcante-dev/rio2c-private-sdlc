@@ -430,19 +430,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             return timeIntervalBetweenTurn;
         }
 
-        /// <summary>Determines whether this instance is image.</summary>
-        /// <param name="s">The s.</param>
-        /// <returns>
-        ///   <c>true</c> if the specified s is image; otherwise, <c>false</c>.</returns>
-        public static bool IsImage(this string s)
-        {
-            return !string.IsNullOrEmpty(s)
-                   && (s.ToLowerInvariant().EndsWith(".jpg")
-                       || s.ToLowerInvariant().EndsWith(".jpeg")
-                       || s.ToLowerInvariant().EndsWith(".png")
-                       || s.ToLowerInvariant().EndsWith(".gif"));
-        }
-
         #region Video
 
         /// <summary>Determines whether [is vimeo video].</summary>
@@ -589,7 +576,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 
         #region Pdf
 
-
         /// <summary>
         /// Determines whether this instance is PDF.
         /// </summary>
@@ -629,27 +615,61 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                    && (s.ToLowerInvariant().Contains(FileType.Pptx));
         }
 
-        /// <summary>Converts the PDF to embed.</summary>
+        /// <summary>
+        /// Determines whether this instance is docx.
+        /// </summary>
+        /// <param name="s">The s.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified s is docx; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsDocx(this string s)
+        {
+            return !string.IsNullOrEmpty(s)
+                   && (s.ToLowerInvariant().Contains(FileType.Docx));
+        }
+
+        /// <summary>
+        /// Determines whether this instance is image.
+        /// </summary>
+        /// <param name="s">The s.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified s is image; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsImage(this string s)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                return false;
+            }
+
+            if (!s.StartsWith("."))
+            {
+                s = $".{s}";
+            }
+
+            Regex regex = new Regex(@"^\.(jpg|jpeg|png|gif|bmp|tif|tiff)$", RegexOptions.IgnoreCase);
+
+            return regex.IsMatch(s.ToLowerInvariant());
+        }
+
+        /// <summary>Converts the file to embed.</summary>
         /// <param name="s">The s.</param>
         /// <returns></returns>
         public static string ConvertFileToEmbed(this string s)
         {
             if (IsPdf(s) || IsPpt(s) || IsPptx(s))
             {
-                return $"<embed src='https://drive.google.com/viewerng/viewer?embedded=true&url={s}' type='{FileMimeType.Pdf}'>";
+                return $"<embed src='{s}' type='{FileMimeType.Pdf}'>";
             }
-            //else if (IsPpt(s))
-            //{
-            //    return $"<embed src='https://drive.google.com/viewerng/viewer?embedded=true&url={s}' type='{FileMimeType.Ppt}'>";
-            //}
-            //else if (IsPptx(s))
-            //{
-            //    return $"<embed src='https://drive.google.com/viewerng/viewer?embedded=true&url={s}' type='{FileMimeType.Pptx}'>";
-            //}
+            else if (IsDocx(s))
+            {
+                return $"<iframe src=\"https://view.officeapps.live.com/op/embed.aspx?src={s}\"></iframe>";
+            }
 
             return s;
         }
 
+        
         #endregion
 
         #region File
