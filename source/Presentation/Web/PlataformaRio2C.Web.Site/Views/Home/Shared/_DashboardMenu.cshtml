@@ -49,7 +49,7 @@
                                         {
                                             if (organization != organizations.Last())
                                             {
-                                                <a href="@Url.Action("Details", "Companies", new { id = organization.Uid })">@(organization.TradeName ?? organization.CompanyName ?? organization.Name)</a>@(",")
+                                                <a href="@Url.Action("Details", "Companies", new { id = organization.Uid })">@(organization.TradeName ?? organization.CompanyName ?? organization.Name)</a>@(", ")
                                             }
                                             else if (organization == organizations.Last())
                                             {
