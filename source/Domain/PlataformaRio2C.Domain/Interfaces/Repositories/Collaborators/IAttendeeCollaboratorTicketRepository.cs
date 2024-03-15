@@ -11,7 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
@@ -21,7 +20,6 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IAttendeeCollaboratorTicketRepository</summary>
     public interface IAttendeeCollaboratorTicketRepository : IRepository<AttendeeCollaboratorTicket>
     {
-        Task<List<AttendeeCollaboratorTicketDto>> FindAllDtoByEditionIdAndByCollaboratorId(int editionId, int collaboratorId);
         Task<AttendeeCollaboratorTicketDto> FindDtoByBarcode(int editionId, string barcode);
     }
 }

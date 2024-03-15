@@ -4,7 +4,7 @@
 // Created          : 01-22-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-26-2024
+// Last Modified On : 03-15-2024
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorTicketsInformationDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,7 +24,8 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         public Edition Edition { get; set; }
         public CollaboratorDto CollaboratorDto { get; set; }
-        public int AttendeeCollaboratorTicketsCount { get; set; }
+        public IEnumerable<AttendeeCollaboratorTicketDto> AttendeeCollaboratorTicketDtos { get; set; }
+        public int AttendeeCollaboratorTicketsCount => this.AttendeeCollaboratorTicketDtos?.Count() ?? 0;
         public IEnumerable<AttendeeMusicBandDto> AttendeeMusicBandDtos { get; set; }
         public IEnumerable<AttendeeInnovationOrganizationDto> AttendeeInnovationOrganizationDtos { get; set; }
 
@@ -41,7 +42,7 @@ namespace PlataformaRio2C.Domain.Dtos
         {
             this.Edition = edition;
             this.CollaboratorDto = new CollaboratorDto();
-            this.AttendeeCollaboratorTicketsCount = 0;
+            this.AttendeeCollaboratorTicketDtos = new List<AttendeeCollaboratorTicketDto>();
             this.AttendeeMusicBandDtos = new List<AttendeeMusicBandDto>();
             this.AttendeeInnovationOrganizationDtos = new List<AttendeeInnovationOrganizationDto>();
         }

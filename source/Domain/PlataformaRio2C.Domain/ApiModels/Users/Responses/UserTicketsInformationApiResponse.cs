@@ -4,7 +4,7 @@
 // Created          : 01-20-2024
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-27-2024
+// Last Modified On : 03-15-2024
 // ***********************************************************************
 // <copyright file="UserTicketsInformationApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,7 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using Newtonsoft.Json;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.ApiModels
 {
@@ -23,6 +23,9 @@ namespace PlataformaRio2C.Domain.ApiModels
 
         [JsonProperty("ticketsCount", Order = 200)]
         public int TicketsCount { get; set; }
+
+        [JsonProperty("ticketTypes", Order = 201)]
+        public IEnumerable<CollaboratorTicketType> TicketsTypes { get; set; }
 
         [JsonProperty("hasBusinessRoundsMusicBandsSubscriptionsAvailable", Order = 300)]
         public bool HasBusinessRoundsMusicBandsSubscriptionsAvailable { get; set; }
@@ -71,4 +74,17 @@ namespace PlataformaRio2C.Domain.ApiModels
     public class StartupProject : BaseProject
     {
     }
+
+    public class CollaboratorTicketType
+    {
+        [JsonProperty("ticketClassName", Order = 100)]
+        public string TicketClassName { get; set; }
+
+        [JsonProperty("collaboratorTypeId", Order = 200)]
+        public int CollaboratorTypeId { get; set; }
+
+        [JsonProperty("collaboratorTypeName", Order = 300)]
+        public string CollaboratorTypeName { get; set; }
+    }
+
 }

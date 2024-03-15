@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-21-2023
+// Last Modified On : 03-15-2024
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1289,8 +1289,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 {
                                     Document = ac.Collaborator.Document
                                 },
-                                AttendeeCollaboratorTicketsCount = ac.AttendeeCollaboratorTickets
-                                                                        .Count(act => !act.IsDeleted),
+                                AttendeeCollaboratorTicketDtos = ac.AttendeeCollaboratorTickets.Where(act => !act.IsDeleted).Select(act => new AttendeeCollaboratorTicketDto
+                                {
+                                    AttendeeSalesPlatformTicketTypeDto = new AttendeeSalesPlatformTicketTypeDto
+                                    {
+                                        CollaboratorTypeId = act.AttendeeSalesPlatformTicketType.CollaboratorTypeId,
+                                        CollaboratorTypeName = act.AttendeeSalesPlatformTicketType.CollaboratorType.Name,
+                                        TicketClassName = act.AttendeeSalesPlatformTicketType.TicketClassName,
+                                    }
+                                }),
                                 AttendeeMusicBandDtos = ac.AttendeeMusicBandCollaborators
                                                                 .Where(ambc => !ambc.IsDeleted)
                                                                 .Select(ambc => new AttendeeMusicBandDto 

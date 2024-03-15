@@ -14,8 +14,6 @@
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -99,25 +97,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return @readonly
                         ? consult.AsNoTracking()
                         : consult;
-        }
-
-        /// <summary>Finds all dto by edition identifier and by collaborator identifier.</summary>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <param name="collaboratorId">The collaborator identifier.</param>
-        /// <returns></returns>
-        public async Task<List<AttendeeCollaboratorTicketDto>> FindAllDtoByEditionIdAndByCollaboratorId(int editionId, int collaboratorId)
-        {
-            var query = this.GetBaseQuery()
-                                .FindByEditionId(editionId)
-                                .FindByCollaboratorId(collaboratorId);
-
-            return await query
-                            .Select(act => new AttendeeCollaboratorTicketDto
-                            {
-                                AttendeeCollaboratorTicket = act,
-                                AttendeeSalesPlatformTicketType = act.AttendeeSalesPlatformTicketType
-                            })
-                            .ToListAsync();
         }
 
         /// <summary>
