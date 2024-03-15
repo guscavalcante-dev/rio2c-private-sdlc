@@ -4,7 +4,7 @@
 // Created          : 07-10-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-16-2024
+// Last Modified On : 03-15-2024
 // ***********************************************************************
 // <copyright file="SalesPlatformsApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -378,6 +378,12 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     Error = null,
                     Email = request.Email,
                     TicketsCount = attendeeCollaboratorTicketsInformationDto?.AttendeeCollaboratorTicketsCount ?? 0,
+                    TicketsTypes = attendeeCollaboratorTicketsInformationDto?.AttendeeCollaboratorTicketDtos?.Select(dto => new CollaboratorTicketType
+                    {
+                        CollaboratorTypeId = dto.AttendeeSalesPlatformTicketTypeDto.CollaboratorTypeId,
+                        CollaboratorTypeName = dto.AttendeeSalesPlatformTicketTypeDto.CollaboratorTypeName,
+                        TicketClassName = dto.AttendeeSalesPlatformTicketTypeDto.TicketClassName,
+                    }),
 
                     HasPitchingMusicBandsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.HasMusicPitchingProjectsSubscriptionsAvailable("", 0) ?? false,
                     HasBusinessRoundsMusicBandsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.HasMusicBusinessRoundsProjectsSubscriptionsAvailable(0) ?? false,
