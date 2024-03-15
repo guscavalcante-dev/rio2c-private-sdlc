@@ -116,6 +116,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 request?.TracksUids?.ToListGuid(','),
                 request?.PillarsUids?.ToListGuid(','),
                 request?.PresentationFormatsUids?.ToListGuid(','),
+                request?.ModifiedAfterDate.ToUtcDateKind(),
+                request?.ShowDeleted ?? false,
                 request?.Page ?? 1,
                 request?.PageSize ?? 10);
 

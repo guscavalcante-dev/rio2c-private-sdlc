@@ -34,7 +34,7 @@ namespace PlataformaRio2C.Domain.Interfaces
 
         #region Api
 
-        Task<IPagedList<ConferenceDto>> FindAllPublicApiPaged(int editionId, string keywords, List<DateTimeOffset> editionDates, List<Guid> editionEventsUids, List<Guid> roomsUids, List<Guid> tracksUids, List<Guid> pillarsUids, List<Guid> presentationFormatsUids, int page, int pageSize);
+        Task<IPagedList<ConferenceDto>> FindAllPublicApiPaged(int editionId, string keywords, List<DateTimeOffset> editionDates, List<Guid> editionEventsUids, List<Guid> roomsUids, List<Guid> tracksUids, List<Guid> pillarsUids, List<Guid> presentationFormatsUids, DateTime? modifiedAfterDate, bool showDeleted, int page, int pageSize);
         Task<ConferenceDto> FindApiDtoByUidAsync(Guid conferenceUid, int editionId);
 
         #endregion

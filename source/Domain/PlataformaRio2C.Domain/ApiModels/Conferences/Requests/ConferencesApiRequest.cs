@@ -13,6 +13,8 @@
 // ***********************************************************************
 using Newtonsoft.Json;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
+using System;
 
 namespace PlataformaRio2C.Domain.ApiModels
 {
@@ -42,5 +44,14 @@ namespace PlataformaRio2C.Domain.ApiModels
         [JsonProperty("presentationFormatsUids")]
         [SwaggerParameterDescription(description: "Presentation Formats Uids separated by comma.")]
         public string PresentationFormatsUids { get; set; }
+
+        [JsonProperty("showDeleted")]
+        [SwaggerParameterDescription(description: "Shows deleted Conferences.")]
+        [SwaggerDefaultValue(false)]
+        public bool ShowDeleted { get; set; }
+
+        [JsonProperty("modifiedAfterDate")]
+        [SwaggerParameterDescription("Returns only registers created or updated after this date. (UTC)", PublicApiDateTimeFormat.Default)]
+        public DateTime? ModifiedAfterDate { get; set; }
     }
 }
