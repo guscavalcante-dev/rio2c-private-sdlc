@@ -151,7 +151,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="pillarsUids">The pillars uids.</param>
         /// <param name="presentationFormatsUids">The presentation formats uids.</param>
         /// <returns></returns>
-        internal static IQueryable<Conference> FindByApiFilters(this IQueryable<Conference> query, List<DateTimeOffset> editionDates, List<Guid> editionEventsUids, List<Guid> roomsUids, List<Guid> tracksUids, List<Guid> pillarsUids, List<Guid> presentationFormatsUids)
+        internal static IQueryable<Conference> FindByApiFilters(this IQueryable<Conference> query, List<DateTimeOffset> editionDates, List<Guid> editionEventsUids, List<Guid> roomsUids, List<Guid> tracksUids, List<Guid> pillarsUids, List<Guid> presentationFormatsUids, bool showDeleted)
         {
             if (editionDates?.Any() == true || editionEventsUids?.Any() == true || roomsUids?.Any() == true || pillarsUids?.Any() == true || tracksUids?.Any() == true || presentationFormatsUids?.Any() == true)
             {
@@ -180,17 +180,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
                 if (tracksUids?.Any() == true)
                 {
-                    innerTracksUidsWhere = innerTracksUidsWhere.Or(c => c.ConferenceTracks.Any(ct => tracksUids.Contains(ct.Track.Uid) && !ct.IsDeleted));
+                    innerTracksUidsWhere = innerTracksUidsWhere.Or(c => c.ConferenceTracks.Any(ct => tracksUids.Contains(ct.Track.Uid) && (!ct.IsDeleted || showDeleted)));
                 }
 
                 if (pillarsUids?.Any() == true)
                 {
-                    innerPillarsUidsWhere = innerPillarsUidsWhere.Or(c => c.ConferencePillars.Any(ct => pillarsUids.Contains(ct.Pillar.Uid) && !ct.IsDeleted));
+                    innerPillarsUidsWhere = innerPillarsUidsWhere.Or(c => c.ConferencePillars.Any(ct => pillarsUids.Contains(ct.Pillar.Uid) && (!ct.IsDeleted || showDeleted)));
                 }
 
                 if (presentationFormatsUids?.Any() == true)
                 {
-                    innerPresentationFormatsUidsWhere = innerPresentationFormatsUidsWhere.Or(c => c.ConferencePresentationFormats.Any(cpf => presentationFormatsUids.Contains(cpf.PresentationFormat.Uid) && !cpf.IsDeleted));
+                    innerPresentationFormatsUidsWhere = innerPresentationFormatsUidsWhere.Or(c => c.ConferencePresentationFormats.Any(cpf => presentationFormatsUids.Contains(cpf.PresentationFormat.Uid) && (!cpf.IsDeleted || showDeleted)));
                 }
 
                 outerWhere = outerWhere.And(innerEditionDatesWhere);
@@ -239,6 +239,23 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<Conference> IsNotDeleted(this IQueryable<Conference> query)
         {
             query = query.Where(c => !c.IsDeleted);
+
+            return query;
+        }
+
+        /// <summary>
+        /// Finds the by create or update date.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="modifiedAfterDate">The modified after date.</param>
+        /// <returns></returns>
+        internal static IQueryable<Conference> FindByCreateOrUpdateDate(this IQueryable<Conference> query, DateTime? modifiedAfterDate)
+        {
+            if (modifiedAfterDate.HasValue)
+            {
+                query = query.Where(c => c.CreateDate > modifiedAfterDate || c.UpdateDate > modifiedAfterDate || 
+                                            c.ConferenceParticipants.Any(cp => cp.CreateDate > modifiedAfterDate || cp.UpdateDate > modifiedAfterDate));
+            }
 
             return query;
         }
@@ -311,10 +328,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>Gets the base query.</summary>
         /// <param name="readonly">if set to <c>true</c> [readonly].</param>
         /// <returns></returns>
-        private IQueryable<Conference> GetBaseQuery(bool @readonly = false)
+        private IQueryable<Conference> GetBaseQuery(bool @readonly = false, bool showDeleted = false)
         {
-            var consult = this.dbSet
-                                .IsNotDeleted();
+            var consult = this.dbSet.AsQueryable();
+
+            if (!showDeleted)
+            {
+                consult = consult.IsNotDeleted();
+            }
 
             return @readonly
                         ? consult.AsNoTracking()
@@ -718,12 +739,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             List<Guid> tracksUids,
             List<Guid> pillarsUids,
             List<Guid> presentationFormatsUids,
+            DateTime? modifiedAfterDate,
+            bool showDeleted,
             int page,
             int pageSize)
         {
-            var query = this.GetBaseQuery()
+            var query = this.GetBaseQuery(showDeleted: showDeleted)
                                 .FindByEditionId(false, editionId)
-                                .FindByApiFilters(editionDates, editionEventsUids, roomsUids, tracksUids, pillarsUids, presentationFormatsUids);
+                                .FindByApiFilters(editionDates, editionEventsUids, roomsUids, tracksUids, pillarsUids, presentationFormatsUids, showDeleted)
+                                .FindByCreateOrUpdateDate(modifiedAfterDate);
 
             return await query
                             .Select(c => new ConferenceDto

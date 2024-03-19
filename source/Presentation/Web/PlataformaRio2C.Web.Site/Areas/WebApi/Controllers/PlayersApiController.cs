@@ -89,7 +89,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             }
 
             // Get edition from request otherwise get current
-            var edition = request?.Edition.HasValue == true ? editions?.FirstOrDefault(e => e.UrlCode == request.Edition) :
+            var edition = request?.Edition.HasValue == true ? editions?.FirstOrDefault(e => e.UrlCode == request?.Edition) :
                                                               editions?.FirstOrDefault(e => e.IsCurrent);
             if (edition == null)
             {
