@@ -144,15 +144,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 collaboratorTypeNames = new string[] { };
             }
 
-            query = query.Where(c => (showAllParticipants && c.User.Roles.Any(r => r.Name == Constants.Role.Admin))
-                                               || c.AttendeeCollaborators.Any(ac => (showAllEditions || ac.EditionId == editionId)
-                                                                                           && (!ac.IsDeleted || showDeleted)
-                                                                                           && (!ac.Edition.IsDeleted || showDeleted)
-                                                                                           && (showAllParticipants
-                                                                                               || ac.AttendeeCollaboratorTypes
-                                                                                                   .Any(act => (!act.IsDeleted || showDeleted)
-                                                                                                               && (!act.CollaboratorType.IsDeleted || showDeleted)
-                                                                                                               && collaboratorTypeNames.Contains(act.CollaboratorType.Name)))));
+            query = query.Where(c => showAllParticipants || c.AttendeeCollaborators.Any(ac => (showAllEditions || ac.EditionId == editionId)
+                                                                                               && (!ac.IsDeleted || showDeleted)
+                                                                                               && (!ac.Edition.IsDeleted || showDeleted)
+                                                                                               && (showAllParticipants
+                                                                                                   || ac.AttendeeCollaboratorTypes
+                                                                                                           .Any(act => (!act.IsDeleted || showDeleted)
+                                                                                                                        && (!act.CollaboratorType.IsDeleted || showDeleted)
+                                                                                                                        && collaboratorTypeNames.Contains(act.CollaboratorType.Name)))));
 
             return query;
         }

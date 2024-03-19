@@ -253,7 +253,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             if (modifiedAfterDate.HasValue)
             {
-                query = query.Where(c => c.CreateDate > modifiedAfterDate || c.UpdateDate > modifiedAfterDate);
+                query = query.Where(c => c.CreateDate > modifiedAfterDate || c.UpdateDate > modifiedAfterDate || 
+                                            c.ConferenceParticipants.Any(cp => cp.CreateDate > modifiedAfterDate || cp.UpdateDate > modifiedAfterDate));
             }
 
             return query;

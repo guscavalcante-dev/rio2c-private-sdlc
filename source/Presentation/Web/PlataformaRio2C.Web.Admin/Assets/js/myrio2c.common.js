@@ -1479,7 +1479,7 @@ var MyRio2cCommon = function () {
             width: '100%',
             allowClear: options.allowClear,
             placeholder: options.placeholder,
-            //minimumInputLength: 3,
+            minimumInputLength: 3,
             ajax: {
                 url: MyRio2cCommon.getUrlWithCultureAndEdition(options.url),
                 dataType: 'json',
