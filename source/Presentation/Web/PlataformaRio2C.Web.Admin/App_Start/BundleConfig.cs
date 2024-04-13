@@ -1269,6 +1269,29 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region Logistics - Availabilities
+
+            bundles.Add(new ScriptBundle("~/bundles/js/availabilities.list.js").Include(
+                "~/Assets/js/availabilities/availabilities.totalcount.widget.js",
+                "~/Assets/js/availabilities/availabilities.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/availabilities.editioncount.js").Include(
+                "~/Assets/js/availabilities/availabilities.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/availabilities.details.js").Include(
+                "~/Assets/js/collaborators/collaborators.maininformation.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/availabilities.create.js").Include(
+                "~/Assets/js/availabilities/availabilities.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/availabilities.update.js").Include(
+                "~/Assets/js/availabilities/availabilities.update.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/availabilities.delete.js").Include(
+                "~/Assets/js/availabilities/availabilities.delete.js"));
+
+            #endregion
+
             #region Places
 
             bundles.Add(new ScriptBundle("~/bundles/js/places.list.js").Include(

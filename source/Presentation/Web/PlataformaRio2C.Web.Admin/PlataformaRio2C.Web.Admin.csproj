@@ -385,6 +385,8 @@
     <Compile Include="Areas\Innovation\Controllers\TrackOptionsController.cs" />
     <Compile Include="Areas\Innovation\Controllers\TrackOptionGroupsController.cs" />
     <Compile Include="Areas\Innovation\InnovationAreaRegistration.cs" />
+    <Compile Include="Areas\Logistics\Controllers\AvailabilityController.cs" />
+    <Compile Include="Areas\Logistics\LogisticsAreaRegistration.cs" />
     <Compile Include="Areas\Music\Controllers\CommissionsController.cs" />
     <Compile Include="Areas\Music\Controllers\PlayersController.cs" />
     <Compile Include="Areas\Music\Controllers\PlayersExecutivesController.cs" />
@@ -858,6 +860,9 @@
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.commission.evaluation.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.evaluators.widget.js" />
     <Content Include="Assets\js\accounts\accounts.update.userstatus.js" />
+    <Content Include="Assets\js\availabilities\availabilities.editioncount.widget.js" />
+    <Content Include="Assets\js\availabilities\availabilities.totalcount.widget.js" />
+    <Content Include="Assets\js\availabilities\availabilities.datatable.widget.js" />
     <Content Include="Assets\js\cartoon\commissions\cartoon.commissions.create.js" />
     <Content Include="Assets\js\cartoon\commissions\cartoon.commissions.datatable.widget.js" />
     <Content Include="Assets\js\cartoon\commissions\cartoon.commissions.delete.js" />
@@ -8264,6 +8269,17 @@
     <Content Include="Areas\Creator\Views\Commissions\Widgets\TracksWidget.cshtml" />
     <Content Include="Areas\Creator\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Creator\Views\web.config" />
+    <Content Include="Areas\Logistics\Views\web.config" />
+    <Content Include="Areas\Logistics\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Logistics\Views\Availability\Modals\CreateModal.cshtml" />
+    <Content Include="Areas\Logistics\Views\Availability\Modals\UpdateApiConfigurationForm.cshtml" />
+    <Content Include="Areas\Logistics\Views\Availability\Modals\UpdateApiConfigurationModal.cshtml" />
+    <Content Include="Areas\Logistics\Views\Availability\Modals\UpdateModal.cshtml" />
+    <Content Include="Areas\Logistics\Views\Availability\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Areas\Logistics\Views\Availability\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Areas\Logistics\Views\Availability\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Areas\Logistics\Views\Availability\Details.cshtml" />
+    <Content Include="Areas\Logistics\Views\Availability\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

@@ -1,0 +1,52 @@
+﻿@model AvailabilitySearchViewModel
+@{
+    ViewBag.Title = Labels.Availability;
+    var adminAccessControlDto = ViewBag.AdminAccessControlDto as PlataformaRio2C.Domain.Dtos.AdminAccessControlDto;
+    var isAdminFull = adminAccessControlDto?.IsAdmin() == true;
+}
+<!--begin:: Quick Stats-->
+<div class="row">
+    <div class="col-sm-6">
+        <!--begin:: Total Count Widget-->
+        <div id="AvailabilitiesTotalCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <!--end:: Total Count Widget-->
+    </div>
+    <div class="col-sm-6">
+        <!--begin:: Edition Count-->
+        <div id="AvailabilitiesEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <!--end:: Edition Count-->
+    </div>
+</div>
+<!--end:: Quick Stats-->
+@Html.Partial("Widgets/DataTablewidget", Model)
+@section Styles {
+    @Styles.Render("~/bundles/css/dataTables.css")
+    @Styles.Render("~/bundles/css/select2.css")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/dataTables.js")
+    @Scripts.Render("~/bundles/js/chart.js")
+    @Scripts.Render("~/bundles/js/select2.js")
+    @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/availabilities.list.js")
+    @Scripts.Render("~/bundles/js/availabilities.editioncount.js")
+    @Scripts.Render("~/bundles/js/availabilities.create.js")
+    @Scripts.Render("~/bundles/js/availabilities.update.js")
+    @Scripts.Render("~/bundles/js/availabilities.delete.js")
+<script>
+        var isAdminFull = @Json.Encode(isAdminFull);
+
+        // Page translations ----------------------------------------------------------------------
+        var theFieldIsRequired = '@Messages.TheFieldIsRequired';
+
+        // Pagination -----------------------------------------------------------------------------
+        var initialPage = @(Model.Page?.ToString() ?? "null");
+        var initialPageSize = @(Model.PageSize?.ToString() ?? "null");
+
+        jQuery(document).ready(function () {
+            AvailabilitiesTotalCountWidget.init();
+            AvailabilitiesEditionCountWidget.init();
+            AvailabilitiesDataTableWidget.init();
+        });
+</script>
+}

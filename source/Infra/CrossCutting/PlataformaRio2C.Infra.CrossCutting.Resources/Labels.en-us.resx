@@ -392,6 +392,12 @@
     <value>Automatic</value>
     <comment>Automático</comment>
   </data>
+  <data name="Availabilities" xml:space="preserve">
+    <value>Disponibilities</value>
+  </data>
+  <data name="Availability" xml:space="preserve">
+    <value>Availability</value>
+  </data>
   <data name="AvailableP" xml:space="preserve">
     <value>Available</value>
     <comment>Disponíveis</comment>

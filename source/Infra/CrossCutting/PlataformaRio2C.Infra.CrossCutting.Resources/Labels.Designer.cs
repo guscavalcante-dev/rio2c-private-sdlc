@@ -718,6 +718,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disponibilidades.
+        /// </summary>
+        public static string Availabilities {
+            get {
+                return ResourceManager.GetString("Availabilities", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disponibilidade.
+        /// </summary>
+        public static string Availability {
+            get {
+                return ResourceManager.GetString("Availability", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disponíveis.
         /// </summary>
         public static string AvailableP {

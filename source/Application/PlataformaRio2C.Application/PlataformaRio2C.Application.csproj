@@ -769,6 +769,7 @@
     <Compile Include="ViewModels\Common\Audiovisual\Commissions\AudiovisualCommissionSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Audiovisual\Meetings\ScheduledSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Audiovisual\Meetings\MeetingParameterSearchViewModel.cs" />
+    <Compile Include="ViewModels\Common\Availability\AvailabilitySearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Cartoon\Commissions\CartoonCommissionSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Collaborators\CollaboratorSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Creator\Commissions\CreatorCommissionSearchViewModel.cs" />

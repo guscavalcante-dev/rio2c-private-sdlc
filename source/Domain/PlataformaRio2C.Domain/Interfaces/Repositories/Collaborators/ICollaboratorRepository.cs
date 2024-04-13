@@ -88,6 +88,13 @@ namespace PlataformaRio2C.Domain.Interfaces
 
         #endregion
 
+        #region Logistics - Availability
+
+        Task<IPagedList<CollaboratorDto>> FindAllAvailabilitiesByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, int? editionId);
+        Task<int> CountAllAvailabilitiesByDataTable(bool showAllEditions, int? editionId);
+
+        #endregion
+
         #region Api
 
         Task<IPagedList<CollaboratorApiListDto>> FindAllDropdownApiListDtoPaged(int editionId, string keywords, bool filterByProjectsInNegotiation, string collaboratorTypeName, bool showAllParticipants, int page, int pageSize);

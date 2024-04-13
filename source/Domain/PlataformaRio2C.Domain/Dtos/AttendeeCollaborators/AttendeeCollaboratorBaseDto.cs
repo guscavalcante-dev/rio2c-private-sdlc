@@ -30,6 +30,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset? MusicPlayerTermsAcceptanceDate { get; set; }
         public DateTimeOffset? ProducerTermsAcceptanceDate { get; set; }
         public DateTimeOffset? SpeakerTermsAcceptanceDate { get; set; }
+        public DateTimeOffset? AvailabilityBeginDate { get; set; }
+        public DateTimeOffset? AvailabilityEndDate { get; set; }
 
         public CollaboratorDto CollaboratorBaseDto { get; set; }
         public AttendeeCollaboratorTypeDto AttendeeCollaboratorTypeDto { get; set; }

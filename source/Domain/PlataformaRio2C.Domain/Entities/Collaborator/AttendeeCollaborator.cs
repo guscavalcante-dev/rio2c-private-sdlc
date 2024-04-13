@@ -34,6 +34,8 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset? MusicPlayerTermsAcceptanceDate { get; private set; }
         public DateTimeOffset? ProducerTermsAcceptanceDate { get; private set; }
         public DateTimeOffset? SpeakerTermsAcceptanceDate { get; private set; }
+        public DateTimeOffset? AvailabilityBeginDate { get; private set; }
+        public DateTimeOffset? AvailabilityEndDate { get; private set; }
 
         public virtual Edition Edition { get; private set; }
         public virtual Collaborator Collaborator { get; private set; }
