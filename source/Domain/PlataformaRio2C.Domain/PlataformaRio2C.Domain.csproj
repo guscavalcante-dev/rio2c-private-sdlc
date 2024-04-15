@@ -537,7 +537,6 @@
     <Compile Include="Interfaces\Repositories\AttendeeOrganizations\IAttendeeOrganizationRepository.cs" />
     <Compile Include="Interfaces\Repositories\Collaborators\ICollaboratorRoleRepository.cs" />
     <Compile Include="Interfaces\Repositories\Collaborators\ICollaboratorIndustryRepository.cs" />
-    <Compile Include="Interfaces\Repositories\Collaborators\ICollaboratorProducerRepository.cs" />
     <Compile Include="Interfaces\Repositories\Collaborators\ICollaboratorTypeRepository.cs" />
     <Compile Include="Interfaces\Repositories\Collaborators\ICollaboratorGenderRepository.cs" />
     <Compile Include="Interfaces\Repositories\Common\IPresentationFormatRepository.cs" />

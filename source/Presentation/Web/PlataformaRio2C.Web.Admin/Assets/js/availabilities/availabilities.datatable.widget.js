@@ -1,0 +1,278 @@
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Web.Admin
+// Author           : Renan Valentim
+// Created          : 04-12-2024
+//
+// Last Modified By : Renan Valentim
+// Last Modified On : 04-12-2024
+// ***********************************************************************
+// <copyright file="availabilities.datatable.widget.js" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+
+var AvailabilitiesDataTableWidget = function () {
+
+    var widgetElementId = '#AvailabilitiesDataTableWidget';
+    var tableElementId = '#availabilities-list-table';
+    var table;
+
+    // Init datatable -----------------------------------------------------------------------------
+    var initiListTable = function () {
+
+        var tableElement = $(tableElementId);
+
+        // Disable datatable alert
+        $.fn.dataTable.ext.errMode = 'none';
+
+        // Set initial page size
+        var pageLengthOptions = [1, 10, 25, 50, 100];
+        var pageLength = 10;
+        if (!MyRio2cCommon.isNullOrEmpty(initialPageSize) && pageLengthOptions.includes(initialPageSize)) {
+            pageLength = initialPageSize;
+        }
+
+        // Set initial page
+        var displayStart = 0;
+        if (!MyRio2cCommon.isNullOrEmpty(initialPage)) {
+            displayStart = (initialPage - 1) * pageLength;
+        }
+
+        var globalVariables = MyRio2cCommon.getGlobalVariables();
+        var imageDirectory = 'https://' + globalVariables.bucket + '/img/users/';
+
+        // Initiate datatable
+        table = tableElement.DataTable({
+            "language": {
+                "url": "/Assets/components/datatables/datatables." + globalVariables.userInterfaceLanguage + ".js"
+            },
+            select: {
+                style: 'multi'
+            },
+            lengthMenu: [pageLengthOptions, pageLengthOptions],
+            displayStart: displayStart,
+            pageLength: pageLength,
+            responsive: true,
+            sScrollY: "520",
+            searchDelay: 2000,
+            processing: true,
+            serverSide: true,
+            buttons: [
+                {
+                    extend: 'collection',
+                    text: labels.actions,
+                    buttons: [
+                        {
+                            text: labels.selectAll,
+                            action: function (e, dt, node, config) {
+                                $('.dt-button-background').remove();
+                                table.rows().select();
+                            }
+                        },
+                        {
+                            text: labels.unselectAll,
+                            action: function (e, dt, node, config) {
+                                $('.dt-button-background').remove();
+                                table.rows().deselect();
+                            }
+                        }]
+                }],
+            order: [[0, "asc"]],
+            sDom: '<"row"<"col-sm-6"l><"col-sm-6 text-right"B>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+            oSearch: {
+                sSearch: $('#Search').val()
+            },
+            ajax: {
+                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Availability/Search'),
+                data: function (d) {
+                    //d.showAllEditions = $('#ShowAllEditions').prop('checked');
+                    //d.showAllParticipants = $('#ShowAllParticipants').prop('checked');
+                    //d.showHighlights = $('#ShowHighlights').prop('checked');
+                },
+                dataFilter: function (data) {
+                    var jsonReturned = jQuery.parseJSON(data);
+
+                    return MyRio2cCommon.handleAjaxReturn({
+                        data: jsonReturned,
+                        // Success
+                        onSuccess: function () {
+
+                            // Parameters returned with capital letter
+                            var json = new Object();
+                            json.draw = jsonReturned.dataTable.Draw;
+                            json.error = jsonReturned.dataTable.Error;
+                            json.recordsTotal = jsonReturned.dataTable.TotalRecords;
+                            json.recordsFiltered = jsonReturned.dataTable.TotalRecordsFiltered;
+                            json.data = jsonReturned.dataTable.Data;
+
+                            return JSON.stringify(json); // return JSON string
+                        },
+                        // Error
+                        onError: function () {
+                        }
+                    });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $(tableElementId + '_processing').hide();
+                    MyRio2cCommon.showAlert();
+                }
+            },
+            createdRow: function (row, data, dataIndex) {
+                $(row).attr('data-id', data.Uid);
+            },
+            columns: [
+                {
+                    data: 'FullName',
+                    render: function (data, type, full, meta) {
+                        var html = '\
+                                <table class="image-side-text text-left">\
+                                    <tr>\
+                                        <td>';
+
+                        if (!MyRio2cCommon.isNullOrEmpty(full.ImageUploadDate)) {
+                            html += '<img src="' + imageDirectory + full.CollaboratorUid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
+                        }
+                        else {
+                            html += '   <div class="text-center w-100">'
+                                + '             <div class="kt-userpic kt-userpic--md kt-userpic--brand">'
+                                + '                 <span>' + full.NameAbbreviation + '</span>'
+                                + '             </div>'
+                                + '     </div>';
+                        }
+
+                        html += '       <td> ' + full.FullName + '</td>\
+                                    </tr>\
+                                </table>';
+
+                        //if (!full.IsInCurrentEdition) {
+                        //    html += '<span class="kt-badge kt-badge--inline kt-badge--info mt-2">' + labels.notInEdition + '</span>';
+                        //}
+
+                        return html;
+                    }
+                },
+                {
+                    data: 'Company',
+                    render: function (data, type, row, meta) {
+                        var html = '<ul class="m-0 pl-4">';
+
+                        //loop through all the row details to build output string
+                        for (var item in row.AttendeeOrganizationBasesDtos) {
+                            if (row.AttendeeOrganizationBasesDtos.hasOwnProperty(item)) {
+                                var r = row.AttendeeOrganizationBasesDtos[item];
+                                html += '<li>' + r.OrganizationBaseDto.DisplayName + '</li>';
+                            }
+                        }
+
+                        html += '</ul>';
+
+                        return html;
+                    }
+                },
+                {
+                    data: 'AvailabilityBeginDate',
+                    render: function (data) {
+                        return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                    }
+                },
+                {
+                    data: 'AvailabilityEndDate',
+                    render: function (data) {
+                        return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                    }
+                },
+                {
+                    data: 'Actions',
+                    responsivePriority: -1,
+                    render: function (data, type, full, meta) {
+                        var html = '\
+                                        <span class="dropdown">\
+                                            <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">\
+                                              <i class="la la-ellipsis-h"></i>\
+                                            </a>\
+                                            <div class="dropdown-menu dropdown-menu-right">';
+
+                        //if (!full.IsInCurrentEdition) {
+                        //    html += '<button class="dropdown-item" onclick="AvailabilitiesUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
+                        //}
+                        //else {
+                        html += '<button class="dropdown-item" onclick="AvailabilitiesUpdate.showModal(\'' + full.Uid + '\');"><i class="la la-edit"></i> ' + labels.edit + '</button>';
+                        //}
+
+                        //if (full.IsInCurrentEdition && full.IsInOtherEdition) {
+                        //    html += '<button class="dropdown-item" onclick="AvailabilitiesDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-remove"></i> ' + removeFromEdition + '</button>';
+                        //}
+                        //else {
+                        html += '<button class="dropdown-item" onclick="AvailabilitiesDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+                        //}
+
+                        html += '\
+                                            </div>\
+                                        </span>';
+
+                        return html;
+                    }
+                }
+            ],
+            columnDefs: [
+                {
+                    targets: [0],
+                    width: "15%"
+                },
+                {
+                    targets: [1],
+                    width: "15%",
+                    orderable: false
+                },
+                {
+                    targets: [2, 3],
+                    width: "15%",
+                    className: "dt-center",
+                    orderable: true
+                },
+                {
+                    targets: [4],
+                    className: "dt-center",
+                    orderable: false
+                },
+                {
+                    targets: -1,
+                    width: "10%",
+                    orderable: false,
+                    searchable: false,
+                    className: "dt-center"
+                }
+            ],
+            initComplete: function () {
+                $('button.buttons-collection').attr('data-toggle', 'dropdown');
+            }
+        });
+
+        $('#Search').keyup(function (e) {
+            if (e.keyCode === 13) {
+                table.search($(this).val()).draw();
+            }
+        });
+
+        $('.enable-datatable-reload').click(function (e) {
+            table.ajax.reload();
+        });
+
+        MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+    };
+
+    var refreshData = function () {
+        table.ajax.reload();
+    };
+
+    return {
+        init: function () {
+            MyRio2cCommon.block({ idOrClass: widgetElementId });
+            initiListTable();
+        },
+        refreshData: function () {
+            refreshData();
+        }
+    };
+}();

@@ -11,7 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -30,9 +32,24 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset? MusicPlayerTermsAcceptanceDate { get; set; }
         public DateTimeOffset? ProducerTermsAcceptanceDate { get; set; }
         public DateTimeOffset? SpeakerTermsAcceptanceDate { get; set; }
+        public DateTimeOffset? AvailabilityBeginDate { get; set; }
+        public DateTimeOffset? AvailabilityEndDate { get; set; }
+
+        #region Collaborator
+
+        public Guid CollaboratorUid { get; set; }
+        public string FirstName { get; set; }
+        public string LastNames { get; set; }
+        public DateTimeOffset? ImageUploadDate { get; set; }
+
+        public string FullName => this.FirstName + (!string.IsNullOrEmpty(this.LastNames) ? " " + this.LastNames : String.Empty);
+        public string NameAbbreviation => this.FullName.GetTwoLetterCode();
+
+        #endregion
 
         public CollaboratorDto CollaboratorBaseDto { get; set; }
         public AttendeeCollaboratorTypeDto AttendeeCollaboratorTypeDto { get; set; }
+        public IEnumerable<AttendeeOrganizationBaseDto> AttendeeOrganizationBasesDtos { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeCollaboratorBaseDto"/> class.</summary>
         public AttendeeCollaboratorBaseDto()

@@ -1,29 +1,29 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Rafael Dantas Ruiz
-// Created          : 03-04-2020
+// Author           : Renan Valentim
+// Created          : 12-04-2024
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-04-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 12-04-2024
 // ***********************************************************************
-// <copyright file="AudiovisualAreaRegistration.cs" company="Softo">
+// <copyright file="LogisticsAreaRegistration.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 using System.Web.Mvc;
 
-namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual
+namespace PlataformaRio2C.Web.Admin.Areas.Logistics
 {
-    /// <summary>AudiovisualAreaRegistration</summary>
-    public class AudiovisualAreaRegistration : AreaRegistration
+    /// <summary>LogisticsAreaRegistration</summary>
+    public class LogisticsAreaRegistration : AreaRegistration
     {
         /// <summary>Gets the name of the area to register.</summary>
         public override string AreaName
         {
             get
             {
-                return "Audiovisual";
+                return "Logistics";
             }
         }
 

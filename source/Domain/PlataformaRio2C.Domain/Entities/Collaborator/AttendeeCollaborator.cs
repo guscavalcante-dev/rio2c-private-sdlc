@@ -34,6 +34,8 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset? MusicPlayerTermsAcceptanceDate { get; private set; }
         public DateTimeOffset? ProducerTermsAcceptanceDate { get; private set; }
         public DateTimeOffset? SpeakerTermsAcceptanceDate { get; private set; }
+        public DateTimeOffset? AvailabilityBeginDate { get; private set; }
+        public DateTimeOffset? AvailabilityEndDate { get; private set; }
 
         public virtual Edition Edition { get; private set; }
         public virtual Collaborator Collaborator { get; private set; }
@@ -2017,6 +2019,23 @@ namespace PlataformaRio2C.Domain.Entities
                     attendeeMusicBandEvaluation.Delete(userId);
                 }
             }
+        }
+
+        #endregion
+
+        #region Availability
+
+        /// <summary>
+        /// Updates the availability.
+        /// </summary>
+        /// <param name="availabilityBeginDate">The availability begin date.</param>
+        /// <param name="availabilityEndDate">The availability end date.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateAvailability(DateTimeOffset? availabilityBeginDate, DateTimeOffset? availabilityEndDate, int userId)
+        {
+            this.AvailabilityBeginDate = availabilityBeginDate;
+            this.AvailabilityEndDate = availabilityEndDate;
+            this.SetUpdateDate(userId);
         }
 
         #endregion
