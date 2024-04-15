@@ -863,6 +863,9 @@
     <Content Include="Assets\js\availabilities\availabilities.editioncount.widget.js" />
     <Content Include="Assets\js\availabilities\availabilities.totalcount.widget.js" />
     <Content Include="Assets\js\availabilities\availabilities.datatable.widget.js" />
+    <Content Include="Assets\js\availabilities\availabilities.create.js" />
+    <Content Include="Assets\js\availabilities\availabilities.delete.js" />
+    <Content Include="Assets\js\availabilities\availabilities.update.js" />
     <Content Include="Assets\js\cartoon\commissions\cartoon.commissions.create.js" />
     <Content Include="Assets\js\cartoon\commissions\cartoon.commissions.datatable.widget.js" />
     <Content Include="Assets\js\cartoon\commissions\cartoon.commissions.delete.js" />
@@ -8272,14 +8275,12 @@
     <Content Include="Areas\Logistics\Views\web.config" />
     <Content Include="Areas\Logistics\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Logistics\Views\Availability\Modals\CreateModal.cshtml" />
-    <Content Include="Areas\Logistics\Views\Availability\Modals\UpdateApiConfigurationForm.cshtml" />
-    <Content Include="Areas\Logistics\Views\Availability\Modals\UpdateApiConfigurationModal.cshtml" />
-    <Content Include="Areas\Logistics\Views\Availability\Modals\UpdateModal.cshtml" />
     <Content Include="Areas\Logistics\Views\Availability\Widgets\DataTableWidget.cshtml" />
     <Content Include="Areas\Logistics\Views\Availability\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Areas\Logistics\Views\Availability\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Areas\Logistics\Views\Availability\Details.cshtml" />
     <Content Include="Areas\Logistics\Views\Availability\Index.cshtml" />
+    <Content Include="Areas\Logistics\Views\Availability\Modals\UpdateModal.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

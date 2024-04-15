@@ -282,6 +282,9 @@
     <Compile Include="CQRS\CommandsHandlers\Innovation\TrackOptionGroups\CreateInnovationOrganizationTrackOptionGroupCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Innovation\TrackOptions\DeleteInnovationOrganizationTrackOptionCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Innovation\TrackOptions\UpdateInnovationOrganizationTrackOptionMainInformationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Logistics\Availability\DeleteAvailabilityCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Logistics\Availability\UpdateAvailabilityCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Logistics\Availability\CreateAvailabilityCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\PlayersExecutives\CreateMusicPlayerExecutiveCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\PlayersExecutives\UpdateMusicPlayerExecutiveCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardMusicPlayerTermsAcceptanceCommandHandler.cs" />
@@ -466,6 +469,10 @@
     <Compile Include="CQRS\Commands\Innovation\TrackOptions\CreateInnovationOrganizationTrackOption.cs" />
     <Compile Include="CQRS\Commands\Innovation\TrackOptions\DeleteInnovationOrganizationTrackOption.cs" />
     <Compile Include="CQRS\Commands\Innovation\TrackOptions\UpdateInnovationOrganizationTrackOptionMainInformation.cs" />
+    <Compile Include="CQRS\Commands\Logistics\Availability\AvailabilityBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Logistics\Availability\DeleteLogistic.cs" />
+    <Compile Include="CQRS\Commands\Logistics\Availability\UpdateAvailability.cs" />
+    <Compile Include="CQRS\Commands\Logistics\Availability\CreateAvailability.cs" />
     <Compile Include="CQRS\Commands\Music\PlayersExecutives\BaseCommands\MusicPlayerExecutiveCollaboratorBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Music\PlayersExecutives\CreateMusicPlayerExecutiveCollaborator.cs" />
     <Compile Include="CQRS\Commands\Music\PlayersExecutives\UpdateMusicPlayerExecutiveCollaborator.cs" />

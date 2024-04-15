@@ -590,23 +590,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
-
-        /// <summary>
-        /// Determines whether [has availability configured] [the specified edition identifier].
-        /// </summary>
-        /// <param name="query">The query.</param>
-        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <returns></returns>
-        internal static IQueryable<Collaborator> HasAvailabilityConfigured(this IQueryable<Collaborator> query, bool showAllEditions, int? editionId)
-        {
-            query = query.Where(o => o.AttendeeCollaborators.Any(ac => (showAllEditions ? true : ac.EditionId == editionId)
-                                                                       && !ac.IsDeleted
-                                                                       && !ac.Edition.IsDeleted
-                                                                       && (ac.AvailabilityBeginDate.HasValue || ac.AvailabilityEndDate.HasValue)));
-
-            return query;
-        }
     }
 
     #endregion
@@ -3154,89 +3137,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .OrderBy(o => o.ApiHighlightPosition ?? 99)
                             .ThenBy(o => o.BadgeName)
                             .FirstOrDefaultAsync();
-        }
-
-        #endregion
-
-        #region Logistics - Availability
-
-        /// <summary>
-        /// Finds all availabilities by data table.
-        /// </summary>
-        /// <param name="page">The page.</param>
-        /// <param name="pageSize">Size of the page.</param>
-        /// <param name="keywords">The keywords.</param>
-        /// <param name="sortColumns">The sort columns.</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <returns></returns>
-        public async Task<IPagedList<CollaboratorDto>> FindAllAvailabilitiesByDataTable(
-            int page,
-            int pageSize,
-            string keywords,
-            List<Tuple<string, string>> sortColumns,
-            int? editionId)
-        {
-            this.SetProxyEnabled(false);
-
-            var query = this.GetBaseQuery(true)
-                                .FindByKeywords(keywords, editionId)
-                                .FindByEditionId(false, editionId)
-                                .HasAvailabilityConfigured(false, editionId);
-
-            var collaboratorDtos = await query
-                                            .DynamicOrder(sortColumns,
-                                                            new List<Tuple<string, string>>
-                                                            {
-                                                                new Tuple<string, string>("FullName", "User.Name"),
-                                                                new Tuple<string, string>("Email", "User.Email")
-                                                            },
-                                                            new List<string> { "User.Name", "User.Email", "CreateDate", "UpdateDate" },
-                                                            "User.Name")
-                                            .Select(c => new CollaboratorDto
-                                            {
-                                                Id = c.Id,
-                                                Uid = c.Uid,
-                                                FirstName = c.FirstName,
-                                                LastNames = c.LastNames,
-                                                Badge = c.Badge,
-                                                Email = c.User.Email,
-                                                ImageUploadDate = c.ImageUploadDate,
-                                                CreateDate = c.CreateDate,
-                                                UpdateDate = c.UpdateDate,
-                                                JobTitle = c.JobTitles.FirstOrDefault(jb => !jb.IsDeleted && jb.CollaboratorId == c.Id).Value,
-                                                UserBaseDto = new UserBaseDto
-                                                {
-                                                    Id = c.User.Id,
-                                                    Uid = c.User.Uid
-                                                },
-                                                EditionAttendeeCollaboratorBaseDto = c.AttendeeCollaborators
-                                                                                        .Where(ac => !ac.IsDeleted && ac.EditionId == editionId && !ac.Edition.IsDeleted)
-                                                                                        .Select(ac => new AttendeeCollaboratorBaseDto
-                                                                                        {
-                                                                                            AvailabilityBeginDate = ac.AvailabilityBeginDate,
-                                                                                            AvailabilityEndDate = ac.AvailabilityEndDate
-                                                                                        }).FirstOrDefault()
-                                            })
-                                            .ToListPagedAsync(page, pageSize);
-
-            this.SetProxyEnabled(true);
-
-            return collaboratorDtos;
-        }
-
-        /// <summary>
-        /// Counts all by data table.
-        /// </summary>
-        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <returns></returns>
-        public async Task<int> CountAllAvailabilitiesByDataTable(bool showAllEditions, int? editionId)
-        {
-            var query = this.GetBaseQuery(@readonly: true)
-                                .FindByEditionId(showAllEditions, editionId)
-                                .HasAvailabilityConfigured(showAllEditions, editionId);
-
-            return await query.CountAsync();
         }
 
         #endregion

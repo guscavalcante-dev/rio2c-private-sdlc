@@ -22,18 +22,20 @@
 @section Styles {
     @Styles.Render("~/bundles/css/dataTables.css")
     @Styles.Render("~/bundles/css/select2.css")
+    @Styles.Render("~/bundles/css/bootstrap-datepicker.css")
 }
 @section Scripts {
     @Scripts.Render("~/bundles/js/dataTables.js")
     @Scripts.Render("~/bundles/js/chart.js")
     @Scripts.Render("~/bundles/js/select2.js")
     @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/bootstrap-datepicker.js")
     @Scripts.Render("~/bundles/js/availabilities.list.js")
     @Scripts.Render("~/bundles/js/availabilities.editioncount.js")
     @Scripts.Render("~/bundles/js/availabilities.create.js")
     @Scripts.Render("~/bundles/js/availabilities.update.js")
     @Scripts.Render("~/bundles/js/availabilities.delete.js")
-<script>
+    <script>
         var isAdminFull = @Json.Encode(isAdminFull);
 
         // Page translations ----------------------------------------------------------------------
@@ -48,5 +50,5 @@
             AvailabilitiesEditionCountWidget.init();
             AvailabilitiesDataTableWidget.init();
         });
-</script>
+    </script>
 }

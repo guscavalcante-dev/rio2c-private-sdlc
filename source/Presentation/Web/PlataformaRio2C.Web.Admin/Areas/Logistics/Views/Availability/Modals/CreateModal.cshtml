@@ -1,22 +1,40 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateTinyCollaborator
-<div class="modal fade" id="CreateSpeakerModal" role="dialog" aria-labelledby="CreateSpeakerModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateAvailability
+<div class="modal fade" id="CreateAvailabilityModal" role="dialog" aria-labelledby="CreateAvailabilityModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">@Labels.NewM @Labels.Speaker</h5>
+                <h5 class="modal-title">@Labels.NewM @Labels.Availability</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Create", "Speakers", new { Area = "" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "CreateSpeakerForm" }))
+                @using (Html.BeginForm("Create", "Availability", new { Area = "Logistics" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "CreateAvailabilityForm" }))
                 {
                     <div id="form-container">
-                        @Html.Partial("/Views/Collaborators/Forms/_TinyForm.cshtml", Model)
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                @Html.LabelFor(m => m.AttendeeCollaboratorUid, new { @class = "control-label" })
+                                @Html.DropDownList("AttendeeCollaboratorUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control enable-collaborator-select2" })
+                                @Html.ValidationMessageFor(m => m.AttendeeCollaboratorUid, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(m => m.AvailabilityBeginDate, new { @class = "control-label" })
+                                @Html.TextBox("AvailabilityBeginDate", Model.AvailabilityBeginDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+                                @Html.ValidationMessageFor(m => m.AvailabilityBeginDate, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(m => m.AvailabilityEndDate, new { @class = "control-label" })
+                                @Html.TextBox("AvailabilityEndDate", Model.AvailabilityEndDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+                                @Html.ValidationMessageFor(m => m.AvailabilityEndDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
                     </div>
                 }
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">@Labels.Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="$('#CreateSpeakerForm').submit();">@Labels.Save</button>
+                <button type="button" class="btn btn-primary" onclick="$('#CreateAvailabilityForm').submit();">@Labels.Save</button>
             </div>
         </div>
     </div>

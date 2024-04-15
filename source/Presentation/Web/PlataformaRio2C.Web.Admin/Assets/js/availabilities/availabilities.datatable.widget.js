@@ -17,7 +17,7 @@ var AvailabilitiesDataTableWidget = function () {
     var widgetElementId = '#AvailabilitiesDataTableWidget';
     var tableElementId = '#availabilities-list-table';
     var table;
-    
+
     // Init datatable -----------------------------------------------------------------------------
     var initiListTable = function () {
 
@@ -131,7 +131,7 @@ var AvailabilitiesDataTableWidget = function () {
                                         <td>';
 
                         if (!MyRio2cCommon.isNullOrEmpty(full.ImageUploadDate)) {
-                            html += '<img src="' + imageDirectory + full.Uid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
+                            html += '<img src="' + imageDirectory + full.CollaboratorUid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
                         }
                         else {
                             html += '   <div class="text-center w-100">'
@@ -145,9 +145,9 @@ var AvailabilitiesDataTableWidget = function () {
                                     </tr>\
                                 </table>';
 
-                        if (!full.IsInCurrentEdition) {
-                            html += '<span class="kt-badge kt-badge--inline kt-badge--info mt-2">' + labels.notInEdition + '</span>';
-                        }
+                        //if (!full.IsInCurrentEdition) {
+                        //    html += '<span class="kt-badge kt-badge--inline kt-badge--info mt-2">' + labels.notInEdition + '</span>';
+                        //}
 
                         return html;
                     }
@@ -171,13 +171,13 @@ var AvailabilitiesDataTableWidget = function () {
                     }
                 },
                 {
-                    data: 'EditionAttendeeCollaboratorBaseDto.AvailabilityBeginDate',
+                    data: 'AvailabilityBeginDate',
                     render: function (data) {
                         return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
                 },
                 {
-                    data: 'EditionAttendeeCollaboratorBaseDto.AvailabilityEndDate',
+                    data: 'AvailabilityEndDate',
                     render: function (data) {
                         return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
@@ -197,14 +197,14 @@ var AvailabilitiesDataTableWidget = function () {
                         //    html += '<button class="dropdown-item" onclick="AvailabilitiesUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         //}
                         //else {
-                            html += '<button class="dropdown-item" onclick="AvailabilitiesDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
+                        html += '<button class="dropdown-item" onclick="AvailabilitiesUpdate.showModal(\'' + full.Uid + '\');"><i class="la la-edit"></i> ' + labels.edit + '</button>';
                         //}
 
                         //if (full.IsInCurrentEdition && full.IsInOtherEdition) {
                         //    html += '<button class="dropdown-item" onclick="AvailabilitiesDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-remove"></i> ' + removeFromEdition + '</button>';
                         //}
                         //else {
-                            html += '<button class="dropdown-item" onclick="AvailabilitiesDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+                        html += '<button class="dropdown-item" onclick="AvailabilitiesDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
                         //}
 
                         html += '\
@@ -217,8 +217,19 @@ var AvailabilitiesDataTableWidget = function () {
             ],
             columnDefs: [
                 {
-                    targets: [0, 1, 2, 3],
+                    targets: [0],
+                    width: "15%"
+                },
+                {
+                    targets: [1],
                     width: "15%",
+                    orderable: false
+                },
+                {
+                    targets: [2, 3],
+                    width: "15%",
+                    className: "dt-center",
+                    orderable: true
                 },
                 {
                     targets: [4],
@@ -255,14 +266,6 @@ var AvailabilitiesDataTableWidget = function () {
         table.ajax.reload();
     };
 
-    var showDetails = function (collaboratorUid) {
-        if (MyRio2cCommon.isNullOrEmpty(collaboratorUid)) {
-            return;
-        }
-
-        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Availability/Details/' + collaboratorUid);
-    };
-
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
@@ -270,9 +273,6 @@ var AvailabilitiesDataTableWidget = function () {
         },
         refreshData: function () {
             refreshData();
-        },
-        showDetails: function (collaboratorUid) {
-            showDetails(collaboratorUid);
         }
     };
 }();

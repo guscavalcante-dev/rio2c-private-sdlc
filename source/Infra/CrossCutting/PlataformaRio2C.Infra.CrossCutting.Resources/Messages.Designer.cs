@@ -2310,6 +2310,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Já existe disponibilidade cadastrada para este participante.
+        /// </summary>
+        public static string ThereIsAlreadyAvailabilityRegisteredForThisParticipant {
+            get {
+                return ResourceManager.GetString("ThereIsAlreadyAvailabilityRegisteredForThisParticipant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Já existe um fundador cadastrado com o nome {0} para esta startup.
         /// </summary>
         public static string ThereIsAlreadyFounderForStartup {

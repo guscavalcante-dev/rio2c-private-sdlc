@@ -2023,6 +2023,23 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
+        #region Availability
+
+        /// <summary>
+        /// Updates the availability.
+        /// </summary>
+        /// <param name="availabilityBeginDate">The availability begin date.</param>
+        /// <param name="availabilityEndDate">The availability end date.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateAvailability(DateTimeOffset? availabilityBeginDate, DateTimeOffset? availabilityEndDate, int userId)
+        {
+            this.AvailabilityBeginDate = availabilityBeginDate;
+            this.AvailabilityEndDate = availabilityEndDate;
+            this.SetUpdateDate(userId);
+        }
+
+        #endregion
+
         #region Validations
 
         /// <summary>Returns true if ... is valid.</summary>

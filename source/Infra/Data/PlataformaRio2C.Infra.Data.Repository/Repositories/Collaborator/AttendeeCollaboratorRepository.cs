@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using LinqKit;
 using PlataformaRio2C.Domain.Dtos;
 using X.PagedList;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -155,15 +156,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 var innerJobTitleWhere = PredicateBuilder.New<AttendeeCollaborator>(true);
                 var innerOrganizationNameWhere = PredicateBuilder.New<AttendeeCollaborator>(true);
 
-
                 foreach (var keyword in keywords.Split(' '))
                 {
                     if (!string.IsNullOrEmpty(keyword))
                     {
                         innerBadgeWhere = innerBadgeWhere.And(ac => ac.Collaborator.Badge.Contains(keyword));
                         innerUserNameWhere = innerUserNameWhere.And(ac => ac.Collaborator.User.Name.Contains(keyword));
-                        innerJobTitleWhere = innerJobTitleWhere.And(ac => ac.Collaborator.JobTitles.Any(jb => !jb.IsDeleted
-                                                                                                              && jb.Value.Contains(keyword)));
+                        innerJobTitleWhere = innerJobTitleWhere.And(ac => ac.Collaborator.JobTitles.Any(jb => !jb.IsDeleted && jb.Value.Contains(keyword)));
                         innerOrganizationNameWhere = innerOrganizationNameWhere.And(ac =>
                             ac.AttendeeOrganizationCollaborators.Any(aoc =>
                                     !aoc.IsDeleted
@@ -275,6 +274,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>
+        /// Determines whether [has availability configured] [the specified show all editions].
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeCollaborator> HasAvailabilityConfigured(this IQueryable<AttendeeCollaborator> query)
+        {
+            query = query.Where(ac => !ac.IsDeleted
+                                        && !ac.Edition.IsDeleted
+                                        && (ac.AvailabilityBeginDate.HasValue || ac.AvailabilityEndDate.HasValue));
+
+            return query;
+        }
     }
 
     #endregion
@@ -306,6 +321,36 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static async Task<IPagedList<List>> ToListPagedAsync(this IQueryable<List> query, int page, int pageSize)
         {
             // Page the list
+            var pagedList = await query.ToPagedListAsync(page, pageSize);
+            if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
+                pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
+
+            return pagedList;
+        }
+    }
+
+    #endregion
+
+    #region Attendee Collaborator IQueryable Extensions
+
+    /// <summary>
+    /// AttendeeCollaboratorBaseDtoIQueryableExtensions
+    /// </summary>
+    internal static class AttendeeCollaboratorBaseDtoIQueryableExtensions
+    {
+        /// <summary>
+        /// To the list paged.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        internal static async Task<IPagedList<AttendeeCollaboratorBaseDto>> ToListPagedAsync(this IQueryable<AttendeeCollaboratorBaseDto> query, int page, int pageSize)
+        {
+            // Page the list
+            if (page == 0)
+                page = 1;
+
             var pagedList = await query.ToPagedListAsync(page, pageSize);
             if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
                 pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
@@ -582,7 +627,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     Collaborator = ac.Collaborator
                                 },
                                 AttendeeInnovationOrganizationEvaluationDtos = ac.Collaborator.User.AttendeeInnovationOrganizationEvaluations
-                                                                                        .Where(aioe => !aioe.IsDeleted && 
+                                                                                        .Where(aioe => !aioe.IsDeleted &&
                                                                                                         aioe.AttendeeInnovationOrganization.EditionId == editionId)
                                                                                         .OrderBy(aioe => aioe.CreateDate)
                                                                                         .Select(aioe => new AttendeeInnovationOrganizationEvaluationDto
@@ -1186,6 +1231,110 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         #endregion
 
+        #region Logistics - Availability
+
+        /// <summary>
+        /// Finds all availabilities by data table.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<AttendeeCollaboratorBaseDto>> FindAllAvailabilitiesByDataTable(
+            int page,
+            int pageSize,
+            string keywords,
+            List<Tuple<string, string>> sortColumns,
+            int editionId)
+        {
+            this.SetProxyEnabled(false);
+
+            var query = this.GetBaseQuery(true)
+                                .FindByKeywords(keywords)
+                                .FindByEditionId(editionId, false)
+                                .HasAvailabilityConfigured();
+
+            var attendeeCollaboratorBaseDtos = await query
+                                            .DynamicOrder(sortColumns,
+                                                            new List<Tuple<string, string>>
+                                                            {
+                                                                new Tuple<string, string>("FullName", "Collaborator.User.Name")
+                                                            },
+                                                            new List<string> { "Collaborator.User.Name", "AvailabilityBeginDate", "AvailabilityEndDate" },
+                                                            "Collaborator.User.Name")
+                                            .Select(ac => new AttendeeCollaboratorBaseDto
+                                            {
+                                                Id = ac.Id,
+                                                Uid = ac.Uid,
+                                                AvailabilityBeginDate = ac.AvailabilityBeginDate,
+                                                AvailabilityEndDate = ac.AvailabilityEndDate,
+                                                CollaboratorUid = ac.Collaborator.Uid,
+                                                FirstName = ac.Collaborator.FirstName,
+                                                LastNames = ac.Collaborator.LastNames,
+                                                ImageUploadDate = ac.Collaborator.ImageUploadDate,
+                                                AttendeeOrganizationBasesDtos = ac.AttendeeOrganizationCollaborators
+                                                                                    .Where(aoc => !aoc.IsDeleted)
+                                                                                    .Select(aoc => new AttendeeOrganizationBaseDto
+                                                                                    {
+                                                                                        Uid = aoc.AttendeeOrganization.Uid,
+                                                                                        OrganizationBaseDto = new OrganizationBaseDto
+                                                                                        {
+                                                                                            Name = aoc.AttendeeOrganization.Organization.Name,
+                                                                                            TradeName = aoc.AttendeeOrganization.Organization.TradeName,
+                                                                                            HoldingBaseDto = aoc.AttendeeOrganization.Organization.Holding == null ? null : new HoldingBaseDto
+                                                                                            {
+                                                                                                Name = aoc.AttendeeOrganization.Organization.Holding.Name
+                                                                                            }
+                                                                                        }
+                                                                                    })
+                                            })
+                                            .ToListPagedAsync(page, pageSize);
+
+            this.SetProxyEnabled(true);
+
+            return attendeeCollaboratorBaseDtos;
+        }
+
+        /// <summary>
+        /// Counts all by data table.
+        /// </summary>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<int> CountAllAvailabilitiesByDataTable(bool showAllEditions, int editionId)
+        {
+            var query = this.GetBaseQuery(@readonly: true)
+                                .FindByEditionId(editionId, showAllEditions)
+                                .HasAvailabilityConfigured();
+
+            return await query.CountAsync();
+        }
+
+        /// <summary>
+        /// Finds the availability dto asynchronous.
+        /// </summary>
+        /// <param name="attendeeCollaboratorUid">The attendee collaborator uid.</param>
+        /// <returns></returns>
+        public async Task<AttendeeCollaboratorBaseDto> FindAvailabilityDtoAsync(Guid attendeeCollaboratorUid)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByUid(attendeeCollaboratorUid)
+                                .HasAvailabilityConfigured()
+                                .Select(ac => new AttendeeCollaboratorBaseDto
+                                {
+                                    Id = ac.Id,
+                                    Uid = ac.Uid,
+                                    AvailabilityBeginDate = ac.AvailabilityBeginDate,
+                                    AvailabilityEndDate = ac.AvailabilityEndDate
+                                });
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+        #endregion
+
         #region Api
 
         /// <summary>Finds all API configuration widget dto by highlight.</summary>
@@ -1300,7 +1449,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 }),
                                 AttendeeMusicBandDtos = ac.AttendeeMusicBandCollaborators
                                                                 .Where(ambc => !ambc.IsDeleted)
-                                                                .Select(ambc => new AttendeeMusicBandDto 
+                                                                .Select(ambc => new AttendeeMusicBandDto
                                                                 {
                                                                     WouldYouLikeParticipateBusinessRound = ambc.AttendeeMusicBand.WouldYouLikeParticipateBusinessRound,
                                                                     WouldYouLikeParticipatePitching = ambc.AttendeeMusicBand.WouldYouLikeParticipatePitching,

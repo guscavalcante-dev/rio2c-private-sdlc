@@ -999,6 +999,9 @@
   <data name="ThereAreStillXSlotsLeftToRegisterProjects" xml:space="preserve">
     <value>There are still {0} slots left to subscribe {1} for {2}</value>
   </data>
+  <data name="ThereIsAlreadyAvailabilityRegisteredForThisParticipant" xml:space="preserve">
+    <value>There is already availability registered for this participant</value>
+  </data>
   <data name="ThereIsAlreadyFounderForStartup" xml:space="preserve">
     <value>There is already a registered founder named {0} for this startup</value>
   </data>
