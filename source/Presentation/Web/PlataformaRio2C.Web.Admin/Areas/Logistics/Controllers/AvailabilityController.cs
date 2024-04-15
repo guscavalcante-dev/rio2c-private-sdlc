@@ -241,7 +241,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Logistics.Controllers
         #endregion
 
         #region Update
-   
+
+        /// <summary>
+        /// Shows the update modal.
+        /// </summary>
+        /// <param name="attendeeCollaboratorUid">The attendee collaborator uid.</param>
+        /// <returns></returns>
+        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
         [HttpGet]
         public async Task<ActionResult> ShowUpdateModal(Guid? attendeeCollaboratorUid)
         {
@@ -272,9 +278,12 @@ namespace PlataformaRio2C.Web.Admin.Areas.Logistics.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        /// <summary>Updates the main information.</summary>
+        /// <summary>
+        /// Updates the specified command.
+        /// </summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
+        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
         [HttpPost]
         public async Task<ActionResult> Update(UpdateAvailability cmd)
         {
@@ -324,16 +333,19 @@ namespace PlataformaRio2C.Web.Admin.Areas.Logistics.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Request, Labels.UpdatedF) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Availability, Labels.UpdatedF) });
         }
 
         #endregion
 
         #region Delete
 
-        /// <summary>Deletes the specified logistic.</summary>
+        /// <summary>
+        /// Deletes the specified command.
+        /// </summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
+        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
         [HttpPost]
         public async Task<ActionResult> Delete(DeleteAvailability cmd)
         {
@@ -379,7 +391,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Logistics.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Request, Labels.DeletedF) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Availability, Labels.DeletedF) });
         }
 
         #endregion

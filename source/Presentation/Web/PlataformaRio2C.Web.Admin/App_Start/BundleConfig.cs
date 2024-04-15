@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-08-2024
+// Last Modified On : 04-15-2024
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1277,9 +1277,6 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/availabilities.editioncount.js").Include(
                 "~/Assets/js/availabilities/availabilities.editioncount.widget.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/availabilities.details.js").Include(
-                "~/Assets/js/collaborators/collaborators.maininformation.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/availabilities.create.js").Include(
                 "~/Assets/js/availabilities/availabilities.create.js"));

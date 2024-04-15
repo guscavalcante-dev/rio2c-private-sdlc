@@ -8278,7 +8278,6 @@
     <Content Include="Areas\Logistics\Views\Availability\Widgets\DataTableWidget.cshtml" />
     <Content Include="Areas\Logistics\Views\Availability\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Areas\Logistics\Views\Availability\Widgets\TotalCountWidget.cshtml" />
-    <Content Include="Areas\Logistics\Views\Availability\Details.cshtml" />
     <Content Include="Areas\Logistics\Views\Availability\Index.cshtml" />
     <Content Include="Areas\Logistics\Views\Availability\Modals\UpdateModal.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
