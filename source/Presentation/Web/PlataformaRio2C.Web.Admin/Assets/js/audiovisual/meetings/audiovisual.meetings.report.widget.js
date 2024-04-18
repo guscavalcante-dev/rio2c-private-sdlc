@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 03-30-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-30-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 04-18-2024
 // ***********************************************************************
 // <copyright file="audiovisual.meetings.report.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -51,7 +51,7 @@ var AudiovisualMeetingsReportWidget = function () {
     var enableSearchForm = function () {
         enableSearchEvents();
 
-        MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#SearchBuyerOrganizationUid', url: '/Players/FindAllByFilters', customFilter: 'HasProjectNegotiationScheduled', placeholder: translations.playerDropdownPlaceholder });
+        MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#SearchBuyerOrganizationUid', url: '/Audiovisual/Players/FindAllByFilters', customFilter: 'HasProjectNegotiationScheduled', placeholder: translations.playerDropdownPlaceholder });
         MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#SearchSellerOrganizationUid', url: '/Audiovisual/Producers/FindAllByFilters', customFilter: 'HasProjectNegotiationScheduled', placeholder: translations.producerDropdownPlaceholder });
 	    MyRio2cCommon.enableDatePicker({ inputIdOrClass: '.enable-datepicker' });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: '#SearchRoomUid', allowClear: true, placeholder: translations.roomDropdownPlaceholder });
