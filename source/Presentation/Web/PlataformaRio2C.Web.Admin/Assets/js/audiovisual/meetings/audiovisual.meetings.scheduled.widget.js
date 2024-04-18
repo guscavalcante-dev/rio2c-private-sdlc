@@ -4,7 +4,7 @@
 // Created          : 03-07-2020
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 06-26-2023
+// Last Modified On : 04-18-2024
 // ***********************************************************************
 // <copyright file="audiovisual.meetings.scheduled.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -53,7 +53,7 @@ var AudiovisualMeetingsScheduledWidget = function () {
     var enableSearchForm = function () {
         enableSearchEvents();
 
-        MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#BuyerOrganizationUid', url: '/Players/FindAllByFilters', customFilter: 'HasProjectNegotiationScheduled', placeholder: translations.playerDropdownPlaceholder });
+        MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#BuyerOrganizationUid', url: '/Audiovisual/Players/FindAllByFilters', customFilter: 'HasProjectNegotiationScheduled', placeholder: translations.playerDropdownPlaceholder });
         MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#SellerOrganizationUid', url: '/Audiovisual/Producers/FindAllByFilters', customFilter: 'HasProjectNegotiationScheduled', placeholder: translations.producerDropdownPlaceholder });
         MyRio2cCommon.enableDatePicker({ inputIdOrClass: '.enable-datepicker' });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: '#RoomUid', allowClear: true, placeholder: translations.roomDropdownPlaceholder });

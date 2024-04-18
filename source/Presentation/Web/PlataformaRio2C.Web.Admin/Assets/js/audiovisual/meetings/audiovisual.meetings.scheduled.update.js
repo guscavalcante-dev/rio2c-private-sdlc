@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 05-15-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-21-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 04-18-2024
 // ***********************************************************************
 // <copyright file="audiovisual.meetings.scheduled.update.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -430,7 +430,7 @@ var AudiovisualMeetingsUpdate = function () {
         // Select2
         MyRio2cCommon.enableOrganizationSelect2({
             inputIdOrClass: buyerOrganizationUid,
-            url: '/Players/FindAllByFilters',
+            url: '/Audiovisual/Players/FindAllByFilters',
             customFilter: 'HasProjectNegotiationNotScheduled',
             placeholder: translations.playerDropdownPlaceholder,
             selectedOption: {
