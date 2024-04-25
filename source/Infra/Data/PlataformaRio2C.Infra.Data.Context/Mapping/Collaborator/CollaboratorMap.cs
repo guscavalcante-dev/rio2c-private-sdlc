@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-31-2023
+// Last Modified On : 04-25-2024
 // ***********************************************************************
 // <copyright file="CollaboratorMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -54,6 +54,15 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
 
             this.Property(t => t.SpecialNeedsDescription)
                 .HasMaxLength(Collaborator.SpecialNeedsDescriptionMaxLength);
+
+            this.Property(t => t.CollaboratorGenderAdditionalInfo)
+                .HasMaxLength(Collaborator.CollaboratorGenderAdditionalInfoMaxLength);
+
+            this.Property(t => t.CollaboratorRoleAdditionalInfo)
+                .HasMaxLength(Collaborator.CollaboratorRoleAdditionalInfoMaxLength);
+
+            this.Property(t => t.CollaboratorIndustryAdditionalInfo)
+                .HasMaxLength(Collaborator.CollaboratorIndustryAdditionalInfoMaxLength);
 
             // Relationships
             this.HasRequired(t => t.User)

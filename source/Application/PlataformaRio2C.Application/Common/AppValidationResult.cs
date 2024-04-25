@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using PlataformaRio2C.Infra.Data.Context.Models;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace PlataformaRio2C.Application
@@ -18,7 +18,7 @@ namespace PlataformaRio2C.Application
             _erros = new List<AppValidationError>();
         }       
 
-        public AppValidationResult Add(PlataformaRio2C.Domain.Validation.ValidationResult domainValidateResult)
+        public AppValidationResult Add(Domain.Validation.ValidationResult domainValidateResult)
         {
             foreach (var item in domainValidateResult.Errors)
             {
@@ -45,6 +45,16 @@ namespace PlataformaRio2C.Application
             return this;
         }
 
-
+        public AppValidationResult Add(SaveChangesResult saveChangesResult)
+        {
+            foreach (var validationResult in saveChangesResult.ValidationResults)
+            {
+                foreach(var memberName in validationResult.MemberNames)
+                {
+                    _erros.Add(new AppValidationError(validationResult.ErrorMessage, memberName));
+                }
+            }
+            return this;
+        }
     }
 }

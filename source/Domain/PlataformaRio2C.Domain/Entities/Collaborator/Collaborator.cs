@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-08-2024
+// Last Modified On : 04-25-2024
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -38,6 +38,9 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int InstagramMaxLength = 100;
         public static readonly int YoutubeMaxLength = 300;
         public static readonly int SpecialNeedsDescriptionMaxLength = 300;
+        public static readonly int CollaboratorGenderAdditionalInfoMaxLength = 300;
+        public static readonly int CollaboratorRoleAdditionalInfoMaxLength = 300;
+        public static readonly int CollaboratorIndustryAdditionalInfoMaxLength = 300;
 
         public string FirstName { get; private set; }
         public string LastNames { get; private set; }
