@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-16-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 04-25-2024
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorAdminMainInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -139,9 +139,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             this.CollaboratorRepo.Update(collaborator);
-            this.Uow.SaveChanges();
-            this.AppValidationResult.Data = collaborator;
 
+            var result = this.Uow.SaveChanges();
+            if (!result.Success)
+            {
+                this.AppValidationResult.Add(result);
+                return this.AppValidationResult;
+            }
+
+            this.AppValidationResult.Data = collaborator;
 
             // Update images
             if (cmd.CropperImage?.ImageFile != null)

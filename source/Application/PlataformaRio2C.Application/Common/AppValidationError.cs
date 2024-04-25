@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 namespace PlataformaRio2C.Application
 {
@@ -12,7 +8,7 @@ namespace PlataformaRio2C.Application
         public string Code { get; private set; }
         public string Target { get; private set; }
 
-        public AppValidationError(PlataformaRio2C.Domain.Validation.ValidationError validationError)
+        public AppValidationError(Domain.Validation.ValidationError validationError)
         {
             if (validationError.MemberNames != null)
             {
