@@ -1215,6 +1215,17 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region Agendas - Executives
+
+            bundles.Add(new ScriptBundle("~/bundles/js/agendas.executives.list.js").Include(
+                 "~/Assets/js/agendas/executives/agendas.executives.totalcount.widget.js",
+                 "~/Assets/js/agendas/executives/agendas.executives.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/agendas.executives.editioncount.js").Include(
+                "~/Assets/js/agendas/executives/agendas.executives.editioncount.widget.js"));
+
+            #endregion
+
             #region Logistics - Sponsors
 
             bundles.Add(new ScriptBundle("~/bundles/js/logisticsponsors.list.js").Include(

@@ -89,6 +89,9 @@ namespace PlataformaRio2C.Domain.Constants
 
         #region Cards Widget
 
+        /// <summary>
+        /// Collaborator types who have access to the Cards Widget, in the customer's area
+        /// </summary>
         public static readonly string[] CardsWidget =
         {
             Speaker, CommissionInnovation, CommissionMusic, CommissionAudiovisual, PlayerExecutiveAudiovisual, PlayerExecutiveMusic
@@ -126,6 +129,18 @@ namespace PlataformaRio2C.Domain.Constants
         public static readonly string[] SpeakersWriteArray =
         {
             AdminConferences
+        };
+
+        #endregion
+
+        #region Agenda
+
+        /// <summary>
+        /// Collaborator types who have agendas
+        /// </summary>
+        public static readonly string[] HasAgenda =
+        {
+            Speaker, PlayerExecutiveAudiovisual
         };
 
         #endregion

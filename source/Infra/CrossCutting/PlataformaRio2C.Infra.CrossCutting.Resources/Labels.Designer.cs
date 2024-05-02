@@ -1492,6 +1492,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirma o envio de e-mail de agenda para os executivos selecionados?.
+        /// </summary>
+        public static string ConfirmToSendAgendaEmails {
+            get {
+                return ResourceManager.GetString("ConfirmToSendAgendaEmails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Conectado.
         /// </summary>
         public static string Connected {
@@ -6240,6 +6249,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Send {
             get {
                 return ResourceManager.GetString("Send", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enviar e-mail de agenda.
+        /// </summary>
+        public static string SendAgendaEmail {
+            get {
+                return ResourceManager.GetString("SendAgendaEmail", resourceCulture);
             }
         }
         

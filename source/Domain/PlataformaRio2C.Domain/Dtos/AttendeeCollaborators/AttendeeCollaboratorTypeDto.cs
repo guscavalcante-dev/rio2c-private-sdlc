@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 
 namespace PlataformaRio2C.Domain.Dtos
@@ -21,6 +22,8 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         public int AttendeeCollaboratorId { get; set; }
         public int CollaboratorTypeId { get; set; }
+        public string CollaboratorTypeName { get; set; }
+        public string CollaboratorTypeDescription { get; set; }
         public bool IsApiDisplayEnabled { get; set; }
         public int? ApiHighlightPosition { get; set; }
         public DateTimeOffset? TermsAcceptanceDate { get; set; }
