@@ -17,7 +17,6 @@ using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.ViewModels;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
@@ -160,7 +159,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Agenda.Controllers
 
                     try
                     {
-                        result = await this.CommandBus.Send(new SendAdminWelcomeEmailAsync(
+                        result = await this.CommandBus.Send(new SendExecutiveAgendaEmailAsync(
                             collaboratorDto.Collaborator.Uid,
                             collaboratorDto.User.SecurityStamp,
                             collaboratorDto.User.Id,

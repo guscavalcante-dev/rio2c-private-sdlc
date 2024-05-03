@@ -85,7 +85,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.SalesPlatformAttendeeDto.TicketUpdateDate,
                     1);
 
-                collaborator?.SendWelcomeEmailSendDate(cmd.Edition.Id, cmd.UserId);
+                collaborator?.UpdateWelcomeEmailSendDate(cmd.Edition.Id, cmd.UserId);
 
                 if (!collaborator.IsValid())
                 {

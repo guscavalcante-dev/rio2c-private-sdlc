@@ -36,6 +36,7 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset? SpeakerTermsAcceptanceDate { get; private set; }
         public DateTimeOffset? AvailabilityBeginDate { get; private set; }
         public DateTimeOffset? AvailabilityEndDate { get; private set; }
+        public DateTimeOffset? AgendaEmailSendDate { get; private set; }
 
         public virtual Edition Edition { get; private set; }
         public virtual Collaborator Collaborator { get; private set; }
@@ -903,11 +904,23 @@ namespace PlataformaRio2C.Domain.Entities
             base.Delete(userId);
         }
 
-        /// <summary>Sends the welcome email send date.</summary>
+        /// <summary>
+        /// Updates the welcome email send date.
+        /// </summary>
         /// <param name="userId">The user identifier.</param>
-        public void SendWelcomeEmailSendDate(int userId)
+        public void UpdateWelcomeEmailSendDate(int userId)
         {
             this.WelcomeEmailSendDate = this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>
+        /// Updates the agenda email send date.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateAgendaEmailSendDate(int userId)
+        {
+            this.AgendaEmailSendDate = this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
