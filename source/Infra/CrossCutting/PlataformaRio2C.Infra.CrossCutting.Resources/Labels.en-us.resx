@@ -705,6 +705,9 @@
     <value>Confirm to send emails for selected records?</value>
     <comment>Confirma o envio de e-mail para os registros selecionados?</comment>
   </data>
+  <data name="ConfirmToSendAgendaEmails" xml:space="preserve">
+    <value>Do you confirm sending an agenda email to the selected executives?</value>
+  </data>
   <data name="Connected" xml:space="preserve">
     <value>Connected</value>
     <comment>Conectado</comment>
@@ -2650,6 +2653,9 @@
   <data name="Send" xml:space="preserve">
     <value>Send</value>
     <comment>Enviar</comment>
+  </data>
+  <data name="SendAgendaEmail" xml:space="preserve">
+    <value>Send agenda e-mail</value>
   </data>
   <data name="SendDate" xml:space="preserve">
     <value>Send Date</value>

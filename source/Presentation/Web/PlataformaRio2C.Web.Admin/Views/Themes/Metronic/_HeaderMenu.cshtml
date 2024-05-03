@@ -315,8 +315,8 @@
     }
     @if (isAdminFull || isAdminLogistic)
     {
-        <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel  
-            @this.IsOpen(menuOpenCssClass, null, "Logistics,LogisticSponsors,Places", null) 
+        <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel
+            @this.IsOpen(menuOpenCssClass, null, "Logistics,LogisticSponsors,Places", null)
             @this.IsOpen(menuOpenCssClass, null, "Availability", "Logistics")"
             data-ktmenu-submenu-toggle="click" aria-haspopup="true">
             <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">@Labels.Logistics</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
@@ -350,4 +350,23 @@
             </div>
         </li>
     }
+    @if (isAdminFull)
+    {
+        <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel
+        @this.IsOpen(menuOpenCssClass, null, "Executives", "Agenda")"
+            data-ktmenu-submenu-toggle="click" aria-haspopup="true">
+            <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">@Labels.Agenda</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
+            <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
+                <ul class="kt-menu__subnav">
+                    <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Executives", "Agenda")" aria-haspopup="true">
+                        <a href="@Url.Action("Index", "Executives", new { Area = "Agenda" })" class="kt-menu__link ">
+                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                            <span class="kt-menu__link-text">@Labels.Executives</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    }
+
 </ul>

@@ -703,6 +703,9 @@
     <value>Confirma o envio de e-mail para os registros selecionados?</value>
     <comment>Confirma o envio de e-mail para os registros selecionados?</comment>
   </data>
+  <data name="ConfirmToSendAgendaEmails" xml:space="preserve">
+    <value>Confirma o envio de e-mail de agenda para os executivos selecionados?</value>
+  </data>
   <data name="Connected" xml:space="preserve">
     <value>Conectado</value>
     <comment>Conectado</comment>
@@ -2651,6 +2654,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Send" xml:space="preserve">
     <value>Enviar</value>
     <comment>Enviar</comment>
+  </data>
+  <data name="SendAgendaEmail" xml:space="preserve">
+    <value>Enviar e-mail de agenda</value>
   </data>
   <data name="SendDate" xml:space="preserve">
     <value>Data de Envio</value>

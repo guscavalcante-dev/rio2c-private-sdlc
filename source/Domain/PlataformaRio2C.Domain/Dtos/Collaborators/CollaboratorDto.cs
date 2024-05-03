@@ -115,8 +115,7 @@ namespace PlataformaRio2C.Domain.Dtos
                 var collaboratorTypes = new List<string>();
 
                 // Check if the collaborator has admin full role
-                var adminFullDescription = this.Roles?
-                    .FirstOrDefault(r => r.Name == Constants.Role.Admin)?.Description;
+                var adminFullDescription = this.Roles?.FirstOrDefault(r => r.Name == Constants.Role.Admin)?.Description;
                 if (!string.IsNullOrEmpty(adminFullDescription))
                 {
                     collaboratorTypes.Add(adminFullDescription);
@@ -124,10 +123,10 @@ namespace PlataformaRio2C.Domain.Dtos
 
                 // Check if the collaborator has other roles
                 var collaboratorTypesDescriptions = this.AttendeeCollaboratorTypeDtos?
-                    .Select(act => act.CollaboratorType?.Description)?
-                    .OrderBy(ctd => ctd)
+                    .Select(act => act.CollaboratorType?.Description ?? act.CollaboratorTypeDescription)?
+                    .OrderBy(ctd => ctd)?
                     .ToList();
-                if (collaboratorTypesDescriptions?.Any() == true)
+                if (collaboratorTypesDescriptions?.Any(ctd => !string.IsNullOrEmpty(ctd)) == true)
                 {
                     collaboratorTypes.AddRange(collaboratorTypesDescriptions);
                 }
@@ -148,13 +147,21 @@ namespace PlataformaRio2C.Domain.Dtos
 
             this.Roles?
                 .ToList()?
-                .ForEach(r => r.GetSeparatorTranslation(rt => rt.Description, this.UserInterfaceLanguage, '|'));
+                .ForEach(r => r.GetSeparatorTranslation(rt => rt.Description, this.UserInterfaceLanguage));
             this.Roles = this.Roles?.OrderBy(r => r.Description);
 
-            this.AttendeeCollaboratorTypeDtos?
-                                .ToList()?
-                                .ForEach(act => act.CollaboratorType?.GetSeparatorTranslation(ct => ct.Description, this.UserInterfaceLanguage, '|'));
-            this.AttendeeCollaboratorTypeDtos = this.AttendeeCollaboratorTypeDtos?.OrderBy(act => act.CollaboratorType.Description);
+            foreach(var attendeeCollaboratorTypeDto in this.AttendeeCollaboratorTypeDtos)
+            {
+                if(attendeeCollaboratorTypeDto.CollaboratorType != null)
+                {
+                    attendeeCollaboratorTypeDto.CollaboratorType = attendeeCollaboratorTypeDto.CollaboratorType.GetSeparatorTranslation(ct => ct.Description, this.UserInterfaceLanguage);
+                    this.AttendeeCollaboratorTypeDtos = this.AttendeeCollaboratorTypeDtos?.OrderBy(act => act.CollaboratorType.Description);
+                }
+                else if(!string.IsNullOrEmpty(attendeeCollaboratorTypeDto.CollaboratorTypeDescription))
+                {
+                    attendeeCollaboratorTypeDto.CollaboratorTypeDescription = attendeeCollaboratorTypeDto.CollaboratorTypeDescription.GetSeparatorTranslation(this.UserInterfaceLanguage);
+                }
+            }
         }
 
         /// <summary>Gets the collaborator job title base dto by language code.</summary>

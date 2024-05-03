@@ -88,6 +88,13 @@ namespace PlataformaRio2C.Domain.Interfaces
 
         #endregion
 
+        #region Agenda
+
+        Task<IPagedList<CollaboratorDto>> FindAllWithAgendaByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, string[] collaboratorTypeNames, string userInterfaceLanguage, int? editionId);
+        Task<int> CountAllWithAgendaByDataTable(bool showAllEditions, int? editionId);
+
+        #endregion
+
         #region Api
 
         Task<IPagedList<CollaboratorApiListDto>> FindAllDropdownApiListDtoPaged(int editionId, string keywords, bool filterByProjectsInNegotiation, string collaboratorTypeName, bool showAllParticipants, int page, int pageSize);
