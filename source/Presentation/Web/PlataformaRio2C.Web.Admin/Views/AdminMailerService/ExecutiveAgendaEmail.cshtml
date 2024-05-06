@@ -1,8 +1,11 @@
 ﻿@using System.Globalization
-@model PlataformaRio2C.Application.CQRS.Commands.SendAdminWelcomeEmailAsync
+@using PlataformaRio2C.Domain.Statics
+@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@model PlataformaRio2C.Application.CQRS.Commands.SendExecutiveAgendaEmailAsync
 @{
     var brCulture = new CultureInfo("pt-BR");
     var usCulture = new CultureInfo("en-US");
+    var brazilUtc = @DateTimeExtensions.GetBrazilUtc();
     var defaultFontColor = "#F2388F";
 }
 <td valign="top">
@@ -25,26 +28,96 @@
             Confira a programação completa no site http://rio2c.com e pelo aplicativo XXXX.
         </span>
         <br />
-        <span>
+        <span style="font-style: italic; color: @defaultFontColor;">
             The <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span> takes place from <span style="font-weight: 800;">@Model.GetEditionStartAndEndDateByCulture(usCulture)</span>, at Cidade das Artes, Av. das Américas, 5300 - Barra da Tijuca, Rio de Janeiro.
             Check out the complete schedule on the website http://rio2c.com and through the XXXX app.
         </span>
     </p>
     <p>
         <span>
-            Seguem informações importantes sobre a sua participação como @Model.CollaboratorTypesNames.ToString(","), incluindo o seu painel e os eventos sociais para os quais você está convidado. Por favor, leia com atenção até o final:
+            Seguem informações importantes sobre a sua participação como @Model.CollaboratorTypesDescriptions.ToString(","), incluindo o seu painel e os eventos sociais para os quais você está convidado. Por favor, leia com atenção até o final:
         </span>
-        <span>
-            Here are important details about your participation as a @Model.CollaboratorTypesNames.ToString(","), including your panel and the social events you are invited to. Please read carefully until the end.
+        <span style="font-style: italic; color: @defaultFontColor;">
+            Here are important details about your participation as a @Model.CollaboratorTypesDescriptions.ToString(","), including your panel and the social events you are invited to. Please read carefully until the end.
         </span>
     </p>
 
 
-    <p>
-        <span style="text-align: center">
-            AGENDA CONFERÊNCIA | CONFERENCE AGENDA
-        </span>
-    </p>
+    @if (Model.AttendeeCollaboratorTypeDtos.Any(dto => dto.CollaboratorTypeName == PlataformaRio2C.Domain.Constants.CollaboratorType.Speaker))
+    {
+        <p>
+            <span style="text-align: center">
+                AGENDA CONFERÊNCIA | CONFERENCE AGENDA
+            </span>
+        </p>
+
+    }
+
+    @if (Model.AttendeeCollaboratorTypeDtos.Any(dto => dto.CollaboratorTypeName == ))
+    {
+        <p>
+            <span style="text-align: center">
+                RODADAS DE NEGÓCIO | BUSINESS ROUNDS
+            </span>
+        </p>
+        <div>
+            <table style="width: 100%;" cellpadding="10">
+                <tbody>
+                    <tr>
+                        <th>@Labels.Date</th>
+                        <th style="width: 45%; text-align: left;">@Labels.OneToOneMeeting</th>
+                        <th style="width: 35%; text-align: left;">@Labels.Project/@Labels.Producer</th>
+                    </tr>
+                    @foreach (var negotiationBaseDto in Model.NegotiationBaseDtos.OrderBy(sn => sn.StartDate))
+                    {
+                        <tr style="border-top: 1px solid #ebedf2;">
+                            <td style="font-size: 12px; text-align: center;">@negotiationBaseDto.StartDate.ToBrazilTimeZone().ToString("d")</td>
+                            <td style="font-size: 12px;">
+                                @negotiationBaseDto.RoomJsonDto.Name<br />
+                                @Labels.Round @negotiationBaseDto.RoundNumber (@negotiationBaseDto.StartDate.ToBrazilTimeZone().ToString("HH:mm") - @negotiationBaseDto.EndDate.ToBrazilTimeZone().ToString("HH:mm") @brazilUtc)<br />
+                                Mesa 2<br />
+                                <span style="background-color: #ffb822; color: #111111; font-family: sans-serif; font-size: 11px; font-weight: bold; padding: 5px 9px; text-align: center;">
+                                    @if (negotiationBaseDto.RoomJsonDto.IsVirtualMeeting)
+                                    {
+                                        @Labels.Virtual
+                                    }
+                                    else
+                                    {
+                                        @Labels.Presential
+                                    }
+                                </span>
+                            </td>
+                            <td style="font-size: 12px;">
+                                @negotiationBaseDto.ProjectBuyerEvaluationBaseDto.ProjectBaseDto.ProjectName<br />
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td style="font-size: 12px;">
+                                                @if (negotiationBaseDto.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.HasImage())
+                                                {
+                                                    <div style="max-width: 35px; max-height: 35px;">
+                                                        <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, negotiationBaseDto.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.Uid, negotiationBaseDto.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.ImageUploadDate, true)" style="max-width: 100%; max-height: 100%;">
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div style="background: rgba(85, 120, 235, 0.1); justify-content: center; align-items: center; border-radius: 8px; color: #5578eb; font-weight: 700; padding: 7px 7px;">
+                                                        @(negotiationBaseDto.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.GetTradeNameAbbreviation() ?? "-")
+                                                    </div>
+                                                }
+                                            </td>
+                                            <td style="font-size: 12px;">@negotiationBaseDto.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.DisplayName</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
 
 
 

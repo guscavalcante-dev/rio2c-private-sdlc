@@ -184,8 +184,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                             collaboratorDto.User.Email,
                             this.EditionDto.Edition,
                             this.AdminAccessControlDto.User.Id,
-                            collaboratorLanguageCode,
-                            collaboratorDto.EditionCollaboratorTypes.Select(ct => ct.Name)));
+                            collaboratorLanguageCode));
                         if (!result.IsValid)
                         {
                             throw new DomainException(Messages.CorrectFormValues);

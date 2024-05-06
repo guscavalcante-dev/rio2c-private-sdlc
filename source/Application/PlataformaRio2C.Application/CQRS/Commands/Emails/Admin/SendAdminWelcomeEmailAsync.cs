@@ -24,7 +24,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public Guid Collaboratoruid { get; private set; }
         public string UserSecurityToken { get; private set; }
         public int UserId { get; private set; }
-        public IEnumerable<string> CollaboratorTypesNames { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SendAdminWelcomeEmailAsync" /> class.
@@ -39,7 +38,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="edition">The edition.</param>
         /// <param name="userId">The user identifier.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
-        /// <param name="collaboratorTypesNames">The collaborator types names.</param>
         public SendAdminWelcomeEmailAsync(
             Guid collaboratorUid,
             string userSecurityToken,
@@ -50,14 +48,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string recipientEmail, 
             Edition edition,
             int userId,
-            string userInterfaceLanguage,
-            IEnumerable<string> collaboratorTypesNames)
+            string userInterfaceLanguage)
             : base(recipientUserId, recipientUserUid, recipientFirstName, recipientFullName, recipientEmail, edition, userInterfaceLanguage)
         {
             this.Collaboratoruid = collaboratorUid;
             this.UserSecurityToken = userSecurityToken;
             this.UserId = userId;
-            this.CollaboratorTypesNames = collaboratorTypesNames;
         }
 
         /// <summary>Initializes a new instance of the <see cref="SendAdminWelcomeEmailAsync"/> class.</summary>

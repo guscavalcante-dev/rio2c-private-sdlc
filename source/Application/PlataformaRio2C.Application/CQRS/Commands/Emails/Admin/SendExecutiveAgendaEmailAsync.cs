@@ -12,6 +12,8 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
@@ -22,8 +24,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public Guid Collaboratoruid { get; private set; }
         public string UserSecurityToken { get; private set; }
         public int UserId { get; private set; }
+        public IEnumerable<AttendeeCollaboratorTypeDto> AttendeeCollaboratorTypeDtos { get; private set; }
+        public IEnumerable<ConferenceDto> ConferenceDtos { get; set; }
+        public IEnumerable<NegotiationBaseDto> NegotiationBaseDtos { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="SendExecutiveAgendaEmailAsync"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SendExecutiveAgendaEmailAsync" /> class.
+        /// </summary>
         /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <param name="userSecurityToken">The user security token.</param>
         /// <param name="recipientUserId">The recipient user identifier.</param>
@@ -34,6 +41,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="edition">The edition.</param>
         /// <param name="userId">The user identifier.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <param name="attendeeCollaboratorTypeDto">The attendee collaborator type dto.</param>
+        /// <param name="conferenceDtos">The conference dtos.</param>
+        /// <param name="negotiationBaseDtos">The negotiation base dtos.</param>
         public SendExecutiveAgendaEmailAsync(
             Guid collaboratorUid,
             string userSecurityToken,
@@ -44,12 +54,18 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string recipientEmail, 
             Edition edition,
             int userId,
-            string userInterfaceLanguage)
+            string userInterfaceLanguage,
+            IEnumerable<AttendeeCollaboratorTypeDto> attendeeCollaboratorTypeDtos,
+            IEnumerable<ConferenceDto> conferenceDtos,
+            IEnumerable<NegotiationBaseDto> negotiationBaseDtos)
             : base(recipientUserId, recipientUserUid, recipientFirstName, recipientFullName, recipientEmail, edition, userInterfaceLanguage)
         {
             this.Collaboratoruid = collaboratorUid;
             this.UserSecurityToken = userSecurityToken;
             this.UserId = userId;
+            this.AttendeeCollaboratorTypeDtos = attendeeCollaboratorTypeDtos;
+            this.ConferenceDtos = conferenceDtos;
+            this.NegotiationBaseDtos = negotiationBaseDtos;
         }
 
         /// <summary>Initializes a new instance of the <see cref="SendExecutiveAgendaEmailAsync"/> class.</summary>

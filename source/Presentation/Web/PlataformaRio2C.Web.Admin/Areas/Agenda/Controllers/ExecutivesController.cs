@@ -103,7 +103,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Agenda.Controllers
                 request.Length,
                 request.Search?.Value,
                 request.GetSortColumns(),
-                null, //CollaboratorTypeNames
+                Constants.CollaboratorType.HasAgenda,
                 this.UserInterfaceLanguage,
                 this.EditionDto?.Id);
 
@@ -146,7 +146,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Agenda.Controllers
                     throw new DomainException(Messages.SelectAtLeastOneOption);
                 }
 
-                var collaboratorsDtos = await this.collaboratorRepo.FindAllCollaboratorsByCollaboratorsUids(this.EditionDto.Id, collaboratorsUids);
+                var collaboratorsDtos = await this.collaboratorRepo.FindAllCollaboratorDtosWithAgendaByUids(this.EditionDto.Id, collaboratorsUids);
                 if (collaboratorsDtos?.Any() != true)
                 {
                     throw new DomainException(Messages.SelectAtLeastOneOption);
@@ -155,21 +155,27 @@ namespace PlataformaRio2C.Web.Admin.Areas.Agenda.Controllers
                 List<string> errors = new List<string>();
                 foreach (var collaboratorDto in collaboratorsDtos)
                 {
-                    var collaboratorLanguageCode = collaboratorDto.Language?.Code ?? this.UserInterfaceLanguage;
+                    //CHAMAR A API DOS CARAS PRA PEGAR OS EVENTOS PARELELOS
+                    
+                    var collaboratorLanguageCode = collaboratorDto.UserInterfaceLanguage ?? this.UserInterfaceLanguage;
 
                     try
                     {
                         result = await this.CommandBus.Send(new SendExecutiveAgendaEmailAsync(
-                            collaboratorDto.Collaborator.Uid,
-                            collaboratorDto.User.SecurityStamp,
-                            collaboratorDto.User.Id,
-                            collaboratorDto.User.Uid,
-                            collaboratorDto.GetFirstName(),
-                            collaboratorDto.GetFullName(collaboratorLanguageCode),
-                            collaboratorDto.User.Email,
+                            collaboratorDto.Uid,
+                            collaboratorDto.UserBaseDto.SecurityStamp,
+                            collaboratorDto.UserBaseDto.Id,
+                            collaboratorDto.UserBaseDto.Uid,
+                            collaboratorDto.FirstName,
+                            collaboratorDto.FullName,
+                            collaboratorDto.UserBaseDto.Email,
                             this.EditionDto.Edition,
                             this.AdminAccessControlDto.User.Id,
-                            collaboratorLanguageCode));
+                            collaboratorLanguageCode,
+                            collaboratorDto.AttendeeCollaboratorTypeDtos,
+                            collaboratorDto.ConferencesDtos,
+                            collaboratorDto.NegotiationBaseDtos                            
+                            ));
                         if (!result.IsValid)
                         {
                             throw new DomainException(Messages.CorrectFormValues);
