@@ -21,7 +21,6 @@
             <span class="kt-menu__link-text">@Labels.Dashboard</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
         </a>
     </li>
-
     @if (isAdminFull)
     {
         <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel @this.IsOpen(menuOpenCssClass, null, "Editions,Events,Administrators", null)" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
@@ -350,7 +349,7 @@
             </div>
         </li>
     }
-    @if (isAdminFull)
+    @if (isAdminFull || isAdminConferences)
     {
         <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel
         @this.IsOpen(menuOpenCssClass, null, "Executives", "Agenda")"
@@ -368,5 +367,4 @@
             </div>
         </li>
     }
-
 </ul>

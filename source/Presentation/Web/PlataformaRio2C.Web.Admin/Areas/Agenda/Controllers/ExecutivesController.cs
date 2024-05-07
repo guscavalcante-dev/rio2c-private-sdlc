@@ -25,6 +25,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Admin.Controllers;
+using PlataformaRio2C.Web.Admin.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Agenda.Controllers
     /// AgendasController
     /// </summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminConferences)]
     public class ExecutivesController : BaseController
     {
         private readonly ICollaboratorRepository collaboratorRepo;
