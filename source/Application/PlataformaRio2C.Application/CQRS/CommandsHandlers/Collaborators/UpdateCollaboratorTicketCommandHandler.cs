@@ -100,7 +100,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             bool sendWelcomeEmail = attendeeCollaborator != null && !attendeeCollaborator.WelcomeEmailSendDate.HasValue;
             if (sendWelcomeEmail)
             {
-                cmd.Collaborator?.SendWelcomeEmailSendDate(cmd.Edition.Id, 1);
+                cmd.Collaborator?.UpdateWelcomeEmailSendDate(cmd.Edition.Id, 1);
                 this.CollaboratorRepo.Update(cmd.Collaborator);
                 this.Uow.SaveChanges();
             }

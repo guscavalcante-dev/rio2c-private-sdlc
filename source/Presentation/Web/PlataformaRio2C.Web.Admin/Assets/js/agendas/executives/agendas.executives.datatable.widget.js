@@ -19,13 +19,10 @@ var AgendasExecutivesDataTableWidget = function () {
     var table;
 
     // Agenda email ---------------------------------------------------------------------------
-    var sendAgendaEmails = function () {
+    var sendAgendaEmails = function (sendEmailParameters) {
         MyRio2cCommon.block();
-
-        var jsonParameters = new Object();
-        jsonParameters.selectedCollaboratorsUids = $('#agendas-executives-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
-
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Agendas/Executives/SendAgendaEmails'), jsonParameters, function (data) {
+       
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Agenda/Executives/SendAgendaEmails'), sendEmailParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -48,8 +45,14 @@ var AgendasExecutivesDataTableWidget = function () {
     };
 
     var showSendAgendaEmailsModal = function () {
+        var jsonParameters = new Object();
+        jsonParameters.selectedCollaboratorsUids = $('#agendas-executives-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
+        jsonParameters.keywords = $('#Search').val();
+
+        var message = jsonParameters.selectedCollaboratorsUids === '' ? confirmSendEmailAll : confirmSendEmailSelected;
+
         bootbox.dialog({
-            message: confirmToSendAgendaEmails,
+            message: message,
             buttons: {
                 cancel: {
                     label: labels.cancel,
@@ -61,7 +64,7 @@ var AgendasExecutivesDataTableWidget = function () {
                     label: labels.send,
                     className: "btn btn-brand btn-elevate",
                     callback: function () {
-                        sendAgendaEmails();
+                        sendAgendaEmails(jsonParameters);
                     }
                 }
             }
@@ -115,6 +118,13 @@ var AgendasExecutivesDataTableWidget = function () {
                 text: labels.actions,
                 buttons: [
                     {
+                        text: sendAgendaEmail,
+                        action: function (e, dt, node, config) {
+                            $('.dt-button-background').remove();
+                            showSendAgendaEmailsModal();
+                        }
+                    },
+                    {
                         text: labels.selectAll,
                         action: function (e, dt, node, config) {
                             $('.dt-button-background').remove();
@@ -126,13 +136,6 @@ var AgendasExecutivesDataTableWidget = function () {
                         action: function (e, dt, node, config) {
                             $('.dt-button-background').remove();
                             table.rows().deselect();
-                        }
-                    },
-                    {
-                        text: sendAgendaEmail,
-                        action: function (e, dt, node, config) {
-                            $('.dt-button-background').remove();
-                            showSendAgendaEmailsModal();
                         }
                     }]
             }],

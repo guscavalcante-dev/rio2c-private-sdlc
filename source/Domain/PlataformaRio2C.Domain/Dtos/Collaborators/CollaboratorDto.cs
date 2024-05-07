@@ -84,24 +84,22 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<AttendeeCollaboratorTypeDto> AttendeeCollaboratorTypeDtos { get; set; }
         public IEnumerable<InnovationOrganizationTrackOptionGroupDto> InnovationOrganizationTrackOptionGroupDtos { get; set; }
         public IEnumerable<ConferenceDto> ConferencesDtos { get; set; }
-
         public IEnumerable<AttendeeCollaboratorActivityDto> AttendeeCollaboratorActivityDtos { get; set; }
         public IEnumerable<AttendeeCollaboratorInterestDto> AttendeeCollaboratorInterestDtos { get; set; }
         public IEnumerable<AttendeeCollaboratorInnovationOrganizationTrackDto> AttendeeCollaboratorInnovationOrganizationTrackDtos { get; set; }
-
         public IEnumerable<AttendeeCollaboratorTargetAudiencesDto> AttendeeCollaboratorTargetAudiencesDtos { get; set; }
+        public IEnumerable<NegotiationBaseDto> NegotiationBaseDtos { get; set; }
 
         [ScriptIgnore]
         public AttendeeCollaborator EditionAttendeeCollaborator { get; set; }
-
         public AttendeeCollaboratorBaseDto EditionAttendeeCollaboratorBaseDto { get; set; }
+
+        #region Extension Methods and Extension Properties
+
         public DateTimeOffset? SpeakerCurrentEditionOnboardingFinishDate => this.EditionAttendeeCollaboratorBaseDto?.SpeakerTermsAcceptanceDate;
         public DateTimeOffset? WelcomeEmailSentDate => this.EditionAttendeeCollaboratorBaseDto?.WelcomeEmailSendDate;
         public DateTimeOffset? CurrentEditionOnboardingFinishDate => this.EditionAttendeeCollaboratorBaseDto?.OnboardingFinishDate;
         public bool IsInCurrentEdition => this.EditionAttendeeCollaboratorBaseDto != null;
-
-        #region Extension Methods and Extension Properties
-
         public bool IsAdminFull => this.Roles?.Any(r => r.Name == Constants.Role.Admin) ?? false;
         public string FullName => this.FirstName + (!string.IsNullOrEmpty(this.LastNames) ? " " + this.LastNames : String.Empty);
         public string NameAbbreviation => this.FullName.GetTwoLetterCode();

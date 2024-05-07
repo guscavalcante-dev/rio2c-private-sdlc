@@ -3191,11 +3191,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             string userInterfaceLanguage,
             int? editionId)
         {
-            if (collaboratorTypeNames == null || collaboratorTypeNames?.Any() == false)
-            {
-                collaboratorTypeNames = Constants.CollaboratorType.HasAgenda;
-            }
-
             this.SetProxyEnabled(false);
 
             var query = this.GetBaseQuery(true)
@@ -3292,6 +3287,173 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .HasConferencesOrNegotiations(showAllEditions, editionId);
 
             return await query.CountAsync();
+        }
+
+        /// <summary>Finds all collaborators by collaborators uids.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="collaboratorsUids">The collaborators uids.</param>
+        /// <returns></returns>
+        public async Task<List<CollaboratorDto>> FindAllCollaboratorDtosWithAgendaByUids(int editionId, List<Guid> collaboratorsUids)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByCollaboratorTypeNameAndByEditionId(Constants.CollaboratorType.HasAgenda, false, false, editionId)
+                                .HasConferencesOrNegotiations(false, editionId)
+                                .FindByUids(collaboratorsUids);
+
+            return await query
+                            .Select(c => new CollaboratorDto
+                            {
+                                Id = c.Id,
+                                Uid = c.Uid,
+                                FirstName = c.FirstName,
+                                LastNames = c.LastNames,
+                                UserBaseDto = new UserBaseDto
+                                {
+                                    Id = c.User.Id,
+                                    Uid = c.User.Uid,
+                                    Email = c.User.Email,
+                                    SecurityStamp = c.User.SecurityStamp,
+                                    Name = c.User.Name,
+                                },
+                                UserInterfaceLanguage = c.User.UserInterfaceLanguage.Code,
+
+                                // Collaborator Types
+                                AttendeeCollaboratorTypeDtos = c.AttendeeCollaborators
+                                                                                .FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                                                    .AttendeeCollaboratorTypes
+                                                                                        .Where(act => !act.IsDeleted && !act.CollaboratorType.IsDeleted)
+                                                                                        .Select(act => new AttendeeCollaboratorTypeDto()
+                                                                                        {
+                                                                                            CollaboratorTypeName = act.CollaboratorType.Name,
+                                                                                            CollaboratorTypeDescription = act.CollaboratorType.Description
+                                                                                        }),
+
+                                // Conferecences
+                                ConferencesDtos = c.AttendeeCollaborators
+                                                    .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                    .SelectMany(ac => ac.ConferenceParticipants
+                                                                            .Where(cp => !cp.IsDeleted && !cp.Conference.IsDeleted)
+                                                                            .Select(cp => new ConferenceDto
+                                                                            {
+                                                                                StartDate = cp.Conference.StartDate,
+                                                                                EndDate = cp.Conference.EndDate,
+                                                                                ConferenceTitleDtos = cp.Conference.ConferenceTitles.Where(ct => !ct.IsDeleted).Select(ct => new ConferenceTitleDto
+                                                                                {
+                                                                                    ConferenceTitle = ct,
+                                                                                    LanguageDto = new LanguageBaseDto
+                                                                                    {
+                                                                                        Id = ct.Language.Id,
+                                                                                        Uid = ct.Language.Uid,
+                                                                                        Name = ct.Language.Name,
+                                                                                        Code = ct.Language.Code
+                                                                                    }
+                                                                                }),
+                                                                                ConferenceSynopsisDtos = cp.Conference.ConferenceSynopses.Where(cs => !cs.IsDeleted).Select(cs => new ConferenceSynopsisDto
+                                                                                {
+                                                                                    ConferenceSynopsis = cs,
+                                                                                    LanguageDto = new LanguageBaseDto
+                                                                                    {
+                                                                                        Id = cs.Language.Id,
+                                                                                        Uid = cs.Language.Uid,
+                                                                                        Name = cs.Language.Name,
+                                                                                        Code = cs.Language.Code
+                                                                                    }
+                                                                                }),
+                                                                                ConferenceParticipantDtos = cp.Conference.ConferenceParticipants.Where(cp1 => !cp1.IsDeleted).Select(cp1 => new ConferenceParticipantDto
+                                                                                {
+                                                                                    ConferenceParticipant = cp1,
+                                                                                    AttendeeCollaboratorDto = new AttendeeCollaboratorDto
+                                                                                    {
+                                                                                        Collaborator = cp1.AttendeeCollaborator.Collaborator,
+                                                                                        JobTitlesDtos = cp1.AttendeeCollaborator.Collaborator.JobTitles.Where(d => !d.IsDeleted).Select(d => new CollaboratorJobTitleBaseDto
+                                                                                        {
+                                                                                            Id = d.Id,
+                                                                                            Uid = d.Uid,
+                                                                                            Value = d.Value,
+                                                                                            LanguageDto = new LanguageBaseDto
+                                                                                            {
+                                                                                                Id = d.Language.Id,
+                                                                                                Uid = d.Language.Uid,
+                                                                                                Name = d.Language.Name,
+                                                                                                Code = d.Language.Code
+                                                                                            }
+                                                                                        })
+                                                                                    },
+                                                                                }),
+                                                                                RoomDto = new RoomDto
+                                                                                {
+                                                                                    RoomNameDtos = cp.Conference.Room.RoomNames.Select(rn => new RoomNameDto
+                                                                                    {
+                                                                                        RoomName = rn,
+                                                                                        LanguageDto = new LanguageBaseDto
+                                                                                        {
+                                                                                            Id = rn.Language.Id,
+                                                                                            Uid = rn.Language.Uid,
+                                                                                            Name = rn.Language.Name,
+                                                                                            Code = rn.Language.Code
+                                                                                        }
+                                                                                    })
+                                                                                }
+                                                                            })),
+                                // Negotiations
+                                NegotiationBaseDtos = c.AttendeeCollaborators
+                                                        .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                        .SelectMany(ac => ac.AttendeeOrganizationCollaborators
+                                                            .SelectMany(aoc => aoc.AttendeeOrganization.ProjectBuyerEvaluations
+                                                                .SelectMany(pbe => pbe.Negotiations.Where(n => !n.IsDeleted && !n.ProjectBuyerEvaluation.IsDeleted && !n.ProjectBuyerEvaluation.Project.IsDeleted)
+                                                                    .Select(n => new NegotiationBaseDto
+                                                                    {
+                                                                        Id = n.Id,
+                                                                        Uid = n.Uid,
+                                                                        StartDate = n.StartDate,
+                                                                        EndDate = n.EndDate,
+                                                                        TableNumber = n.TableNumber,
+                                                                        RoundNumber = n.RoundNumber,
+                                                                        IsAutomatic = n.IsAutomatic,
+                                                                        ProjectBuyerEvaluationBaseDto = new ProjectBuyerEvaluationBaseDto
+                                                                        {
+                                                                            Id = n.ProjectBuyerEvaluation.Id,
+                                                                            Uid = n.ProjectBuyerEvaluation.Uid,
+                                                                            EvaluationDate = n.ProjectBuyerEvaluation.EvaluationDate,
+                                                                            Reason = n.ProjectBuyerEvaluation.Reason,
+                                                                            ProjectBaseDto = new ProjectBaseDto
+                                                                            {
+                                                                                Id = pbe.Id,
+                                                                                Uid = pbe.Uid,
+                                                                                // Get the project title according to the User's language
+                                                                                ProjectName = pbe.Project.ProjectTitles.FirstOrDefault(t => t.LanguageId == ac.Collaborator.User.UserInterfaceLanguageId).Value,
+                                                                                CreateDate = pbe.Project.CreateDate,
+                                                                                FinishDate = pbe.Project.FinishDate
+                                                                            },
+                                                                            SellerAttendeeOrganizationBaseDto = new AttendeeOrganizationBaseDto
+                                                                            {
+                                                                                Id = pbe.Project.SellerAttendeeOrganization.Id,
+                                                                                Uid = pbe.Project.SellerAttendeeOrganization.Uid,
+                                                                                OrganizationBaseDto = new OrganizationBaseDto
+                                                                                {
+                                                                                    Id = pbe.Project.SellerAttendeeOrganization.Organization.Id,
+                                                                                    Uid = pbe.Project.SellerAttendeeOrganization.Organization.Uid,
+                                                                                    Name = pbe.Project.SellerAttendeeOrganization.Organization.Name,
+                                                                                    TradeName = pbe.Project.SellerAttendeeOrganization.Organization.TradeName,
+                                                                                    ImageUploadDate = pbe.Project.SellerAttendeeOrganization.Organization.ImageUploadDate
+                                                                                },
+                                                                                CreateDate = pbe.Project.SellerAttendeeOrganization.CreateDate,
+                                                                                UpdateDate = pbe.Project.SellerAttendeeOrganization.UpdateDate,
+                                                                            }
+                                                                        },
+                                                                        RoomJsonDto = new RoomJsonDto
+                                                                        {
+                                                                            Id = n.Room.Id,
+                                                                            Uid = n.Room.Uid,
+                                                                            // Get the room name according to the User's language
+                                                                            Name = n.Room.RoomNames.FirstOrDefault(rn => !rn.IsDeleted && rn.LanguageId == ac.Collaborator.User.UserInterfaceLanguageId).Value,
+                                                                            IsVirtualMeeting = n.Room.IsVirtualMeeting,
+                                                                            CreateDate = n.Room.CreateDate,
+                                                                            UpdateDate = n.Room.UpdateDate
+                                                                        }
+                                                                    }))))
+                            })
+                            .ToListAsync();
         }
 
         #endregion

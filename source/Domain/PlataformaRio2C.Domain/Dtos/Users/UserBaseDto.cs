@@ -23,6 +23,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public string Name { get; set; }
         public string Email { get; set; }
         public string UserInterfaceLanguageCode { get; set; }
+        public string SecurityStamp { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="UserBaseDto"/> class.</summary>
         public UserBaseDto()

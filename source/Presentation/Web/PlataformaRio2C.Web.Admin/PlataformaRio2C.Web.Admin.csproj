@@ -10104,6 +10104,7 @@
     <Content Include="Areas\Agenda\Views\Executives\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Areas\Agenda\Views\Executives\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Areas\Agenda\Views\Executives\Index.cshtml" />
+    <Content Include="Views\AdminMailerService\ExecutiveAgendaEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
