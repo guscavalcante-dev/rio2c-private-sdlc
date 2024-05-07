@@ -24,7 +24,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public Guid Collaboratoruid { get; private set; }
         public string UserSecurityToken { get; private set; }
         public int UserId { get; private set; }
-        public IEnumerable<AttendeeCollaboratorTypeDto> AttendeeCollaboratorTypeDtos { get; private set; }
+        public IEnumerable<AttendeeCollaboratorTypeDto> AttendeeCollaboratorTypeDtos { get; set; }
         public IEnumerable<ConferenceDto> ConferenceDtos { get; set; }
         public IEnumerable<NegotiationBaseDto> NegotiationBaseDtos { get; set; }
 
@@ -41,7 +41,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="edition">The edition.</param>
         /// <param name="userId">The user identifier.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
-        /// <param name="attendeeCollaboratorTypeDto">The attendee collaborator type dto.</param>
+        /// <param name="attendeeCollaboratorTypeDtos">The attendee collaborator type dtos.</param>
         /// <param name="conferenceDtos">The conference dtos.</param>
         /// <param name="negotiationBaseDtos">The negotiation base dtos.</param>
         public SendExecutiveAgendaEmailAsync(

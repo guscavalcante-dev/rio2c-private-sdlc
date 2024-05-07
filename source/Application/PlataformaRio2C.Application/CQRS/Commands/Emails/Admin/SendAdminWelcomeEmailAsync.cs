@@ -12,8 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
