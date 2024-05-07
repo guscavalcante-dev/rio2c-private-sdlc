@@ -583,6 +583,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dates and times for credential pickup.
+        /// </summary>
+        public static string DatesTimesForCredentialPickup {
+            get {
+                return ResourceManager.GetString("DatesTimesForCredentialPickup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Prezados, segue em anexo o {0} cadastrados na edição {1}.
         /// </summary>
         public static string DearAllAttachedIsTheReporRegisteredInTheEdition {

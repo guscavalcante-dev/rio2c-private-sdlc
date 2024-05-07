@@ -3296,6 +3296,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<List<CollaboratorDto>> FindAllCollaboratorDtosWithAgendaByUids(int editionId, List<Guid> collaboratorsUids)
         {
             var query = this.GetBaseQuery()
+                                .FindByCollaboratorTypeNameAndByEditionId(Constants.CollaboratorType.HasAgenda, false, false, editionId)
+                                .HasConferencesOrNegotiations(false, editionId)
                                 .FindByUids(collaboratorsUids);
 
             return await query
@@ -3346,6 +3348,78 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                         Code = ct.Language.Code
                                                                                     }
                                                                                 }),
+                                                                                ConferenceSynopsisDtos = cp.Conference.ConferenceSynopses.Where(cs => !cs.IsDeleted).Select(cs => new ConferenceSynopsisDto
+                                                                                {
+                                                                                    ConferenceSynopsis = cs,
+                                                                                    LanguageDto = new LanguageBaseDto
+                                                                                    {
+                                                                                        Id = cs.Language.Id,
+                                                                                        Uid = cs.Language.Uid,
+                                                                                        Name = cs.Language.Name,
+                                                                                        Code = cs.Language.Code
+                                                                                    }
+                                                                                }),
+
+                                                                                //TODO AQUI TA PESADO EU ACHO!
+                                                                                ConferenceParticipantDtos = cp.Conference.ConferenceParticipants.Where(cp1 => !cp1.IsDeleted).Select(cp1 => new ConferenceParticipantDto
+                                                                                {
+                                                                                    ConferenceParticipant = cp1,
+                                                                                    AttendeeCollaboratorDto = new AttendeeCollaboratorDto
+                                                                                    {
+                                                                                        AttendeeCollaborator = cp1.AttendeeCollaborator,
+                                                                                        Collaborator = cp1.AttendeeCollaborator.Collaborator,
+                                                                                        JobTitlesDtos = cp1.AttendeeCollaborator.Collaborator.JobTitles.Where(d => !d.IsDeleted).Select(d => new CollaboratorJobTitleBaseDto
+                                                                                        {
+                                                                                            Id = d.Id,
+                                                                                            Uid = d.Uid,
+                                                                                            Value = d.Value,
+                                                                                            LanguageDto = new LanguageBaseDto
+                                                                                            {
+                                                                                                Id = d.Language.Id,
+                                                                                                Uid = d.Language.Uid,
+                                                                                                Name = d.Language.Name,
+                                                                                                Code = d.Language.Code
+                                                                                            }
+                                                                                        }),
+                                                                                        MiniBiosDtos = cp1.AttendeeCollaborator.Collaborator.MiniBios.Where(d => !d.IsDeleted).Select(d => new CollaboratorMiniBioBaseDto
+                                                                                        {
+                                                                                            Id = d.Id,
+                                                                                            Uid = d.Uid,
+                                                                                            Value = d.Value,
+                                                                                            LanguageDto = new LanguageBaseDto
+                                                                                            {
+                                                                                                Id = d.Language.Id,
+                                                                                                Uid = d.Language.Uid,
+                                                                                                Name = d.Language.Name,
+                                                                                                Code = d.Language.Code
+                                                                                            }
+                                                                                        }),
+                                                                                        AttendeeOrganizationsDtos = cp1.AttendeeCollaborator.AttendeeOrganizationCollaborators
+                                                                                                                        .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted && !aoc.AttendeeOrganization.Organization.IsDeleted)
+                                                                                                                        .Select(aoc => new AttendeeOrganizationDto
+                                                                                                                        {
+                                                                                                                            AttendeeOrganization = aoc.AttendeeOrganization,
+                                                                                                                            Organization = aoc.AttendeeOrganization.Organization
+                                                                                                                        })
+                                                                                    },
+                                                                                    ConferenceParticipantRoleDto = new ConferenceParticipantRoleDto
+                                                                                    {
+                                                                                        ConferenceParticipantRole = cp1.ConferenceParticipantRole,
+                                                                                        ConferenceParticipantRoleTitleDtos = cp1.ConferenceParticipantRole.ConferenceParticipantRoleTitles.Where(cp1rt => !cp1rt.IsDeleted).Select(cp1rt => new ConferenceParticipantRoleTitleDto
+                                                                                        {
+                                                                                            ConferenceParticipantRoleTitle = cp1rt,
+                                                                                            LanguageDto = new LanguageBaseDto
+                                                                                            {
+                                                                                                Id = cp1rt.Language.Id,
+                                                                                                Uid = cp1rt.Language.Uid,
+                                                                                                Name = cp1rt.Language.Name,
+                                                                                                Code = cp1rt.Language.Code
+                                                                                            }
+                                                                                        })
+                                                                                    }
+                                                                                }),
+
+
                                                                                 RoomDto = new RoomDto
                                                                                 {
                                                                                     RoomNameDtos = cp.Conference.Room.RoomNames.Select(rn => new RoomNameDto
@@ -3363,7 +3437,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                             })),
                                 // Negotiations
                                 NegotiationBaseDtos = c.AttendeeCollaborators
-                                                        .Where(ac => !ac.IsDeleted)
+                                                        .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
                                                         .SelectMany(ac => ac.AttendeeOrganizationCollaborators
                                                             .SelectMany(aoc => aoc.AttendeeOrganization.ProjectBuyerEvaluations
                                                                 .SelectMany(pbe => pbe.Negotiations.Where(n => !n.IsDeleted && !n.ProjectBuyerEvaluation.IsDeleted && !n.ProjectBuyerEvaluation.Project.IsDeleted)
@@ -3418,7 +3492,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                             UpdateDate = n.Room.UpdateDate
                                                                         }
                                                                     }))))
-                                    })
+                            })
                             .ToListAsync();
         }
 

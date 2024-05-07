@@ -327,6 +327,9 @@
     <value>The date must be between {1} and {0}.</value>
     <comment>A data deve estar entre {1} e {0}.</comment>
   </data>
+  <data name="DatesTimesForCredentialPickup" xml:space="preserve">
+    <value>Datas e horários de credenciamento</value>
+  </data>
   <data name="DearAllAttachedIsTheReporRegisteredInTheEdition" xml:space="preserve">
     <value>Dear all, attached is the {0} registered in the {1} edition</value>
   </data>

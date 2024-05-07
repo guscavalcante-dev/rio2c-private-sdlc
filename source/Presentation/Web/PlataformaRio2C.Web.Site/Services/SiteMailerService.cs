@@ -228,7 +228,7 @@ namespace PlataformaRio2C.Web.Site.Services
 
         #endregion
 
-        #region Admin Mailers Not implemented
+        #region Admin Mailers - Not implemented
 
         /// <summary>Sends the player welcome email.</summary>
         /// <param name="cmd">The command.</param>
@@ -338,6 +338,18 @@ namespace PlataformaRio2C.Web.Site.Services
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
         public MvcMailMessage SendCreatorCommissionWelcomeEmail(SendCreatorCommissionWelcomeEmailAsync cmd, Guid sentEmailUid)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Sends the executive agenda email.
+        /// </summary>
+        /// <param name="cmd">The command.</param>
+        /// <param name="sentEmailUid">The sent email uid.</param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public MvcMailMessage SendExecutiveAgendaEmail(SendExecutiveAgendaEmailAsync cmd, Guid sentEmailUid)
         {
             throw new NotImplementedException();
         }

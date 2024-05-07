@@ -135,17 +135,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Agenda.Controllers
 
             try
             {
-                if (string.IsNullOrEmpty(selectedCollaboratorsUids))
-                {
-                    throw new DomainException(Messages.SelectAtLeastOneOption);
-                }
-
                 var collaboratorsUids = selectedCollaboratorsUids?.ToListGuid(',');
-                if (!collaboratorsUids.Any())
-                {
-                    throw new DomainException(Messages.SelectAtLeastOneOption);
-                }
-
                 var collaboratorsDtos = await this.collaboratorRepo.FindAllCollaboratorDtosWithAgendaByUids(this.EditionDto.Id, collaboratorsUids);
                 if (collaboratorsDtos?.Any() != true)
                 {

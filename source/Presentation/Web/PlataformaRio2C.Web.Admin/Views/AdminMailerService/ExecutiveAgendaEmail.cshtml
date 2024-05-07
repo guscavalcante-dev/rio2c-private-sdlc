@@ -7,9 +7,12 @@
     var usCulture = new CultureInfo("en-US");
     var brazilUtc = @DateTimeExtensions.GetBrazilUtc();
     var defaultFontColor = "#F2388F";
+    // Defina seus estilos CSS aqui
+    string tableStyle = "width: 100%; border-collapse: separate; border-spacing: 0; border: 2px solid lightgray; border-radius: 10px;";
+    string cellStyle = "border: 1px solid #000; padding: 8px;";
 }
 <td valign="top">
-    <!-- content -->
+    <!-- Header - begin -->
     <h1>
         <span>Prezado (a) @Model.RecipientFirstName,</span><br />
         <span style="font-style: italic; color: @defaultFontColor;">Dear @Model.RecipientFirstName,</span>
@@ -24,180 +27,344 @@
     </p>
     <p>
         <span>
-            O <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span> acontece de <span style="font-weight: 800;">@Model.GetEditionStartAndEndDateByCulture(brCulture)</span>, na Cidade das Artes, na Av. das Américas, 5300 - Barra da Tijuca, Rio de Janeiro.
+            O <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span> acontece de <span style="font-weight: 800;">@(Html.Raw(Model.GetEditionStartAndEndDateByCulture(brCulture)))</span>, na Cidade das Artes, na Av. das Américas, 5300 - Barra da Tijuca, Rio de Janeiro.
+            <br />
             Confira a programação completa no site http://rio2c.com e pelo aplicativo XXXX.
         </span>
         <br />
         <span style="font-style: italic; color: @defaultFontColor;">
-            The <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span> takes place from <span style="font-weight: 800;">@Model.GetEditionStartAndEndDateByCulture(usCulture)</span>, at Cidade das Artes, Av. das Américas, 5300 - Barra da Tijuca, Rio de Janeiro.
+            The <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span> takes place from <span style="font-weight: 800;">@(Html.Raw(Model.GetEditionStartAndEndDateByCulture(usCulture)))</span>, at Cidade das Artes, Av. das Américas, 5300 - Barra da Tijuca, Rio de Janeiro.
+            <br />
             Check out the complete schedule on the website http://rio2c.com and through the XXXX app.
         </span>
     </p>
     <p>
         <span>
-            Seguem informações importantes sobre a sua participação como @Model.CollaboratorTypesDescriptions.ToString(","), incluindo o seu painel e os eventos sociais para os quais você está convidado. Por favor, leia com atenção até o final:
+            Seguem informações importantes sobre a sua participação como <span style="font-weight: 800;">@Model.AttendeeCollaboratorTypeDtos.Select(dto => dto.CollaboratorTypeDescription.GetSeparatorTranslation(brCulture.Name)).ToString(", ")</span>, incluindo o seu painel e os eventos sociais para os quais você está convidado.
+            <br /> Por favor, leia com atenção até o final.
         </span>
+        <br />
         <span style="font-style: italic; color: @defaultFontColor;">
-            Here are important details about your participation as a @Model.CollaboratorTypesDescriptions.ToString(","), including your panel and the social events you are invited to. Please read carefully until the end.
+            Here are important details about your participation as a <span style="font-weight: 800;">@Model.AttendeeCollaboratorTypeDtos.Select(dto => dto.CollaboratorTypeDescription.GetSeparatorTranslation(usCulture.Name)).ToString(", ")</span>, including your panel and the social events you are invited to.
+            <br /> Please read carefully until the end.
         </span>
     </p>
-
-
-    @if (Model.AttendeeCollaboratorTypeDtos.Any(dto => dto.CollaboratorTypeName == PlataformaRio2C.Domain.Constants.CollaboratorType.Speaker))
+    <!-- Header - end -->
+    <!-- Conferences - begin -->
+    @if (Model.AttendeeCollaboratorTypeDtos.Any(dto => dto.CollaboratorTypeName == PlataformaRio2C.Domain.Constants.CollaboratorType.Speaker) && Model.ConferenceDtos.Any())
     {
-        <p>
-            <span style="text-align: center">
-                AGENDA CONFERÊNCIA | CONFERENCE AGENDA
-            </span>
-        </p>
-
-    }
-
-    @if (Model.AttendeeCollaboratorTypeDtos.Any(dto => dto.CollaboratorTypeName == ))
-    {
-        <p>
-            <span style="text-align: center">
-                RODADAS DE NEGÓCIO | BUSINESS ROUNDS
-            </span>
-        </p>
-        <div>
-            <table style="width: 100%;" cellpadding="10">
-                <tbody>
-                    <tr>
-                        <th>@Labels.Date</th>
-                        <th style="width: 45%; text-align: left;">@Labels.OneToOneMeeting</th>
-                        <th style="width: 35%; text-align: left;">@Labels.Project/@Labels.Producer</th>
-                    </tr>
-                    @foreach (var negotiationBaseDto in Model.NegotiationBaseDtos.OrderBy(sn => sn.StartDate))
-                    {
-                        <tr style="border-top: 1px solid #ebedf2;">
-                            <td style="font-size: 12px; text-align: center;">@negotiationBaseDto.StartDate.ToBrazilTimeZone().ToString("d")</td>
-                            <td style="font-size: 12px;">
-                                @negotiationBaseDto.RoomJsonDto.Name<br />
-                                @Labels.Round @negotiationBaseDto.RoundNumber (@negotiationBaseDto.StartDate.ToBrazilTimeZone().ToString("HH:mm") - @negotiationBaseDto.EndDate.ToBrazilTimeZone().ToString("HH:mm") @brazilUtc)<br />
-                                Mesa 2<br />
-                                <span style="background-color: #ffb822; color: #111111; font-family: sans-serif; font-size: 11px; font-weight: bold; padding: 5px 9px; text-align: center;">
-                                    @if (negotiationBaseDto.RoomJsonDto.IsVirtualMeeting)
-                                    {
-                                        @Labels.Virtual
-                                    }
-                                    else
-                                    {
-                                        @Labels.Presential
-                                    }
+        <table style="@tableStyle" cellpadding="10">
+            <tbody>
+                <tr>
+                    <th style="text-align: center; background-color:lightgray;" colspan="3">
+                        <p style="text-align: center;">
+                            <span style="font-weight: 800; font-size:large;">@Labels.Conferences</span>
+                        </p>
+                    </th>
+                </tr>
+                @{var conferenceDtos = Model.ConferenceDtos.OrderBy(sn => sn.StartDate).ToList();}
+                @foreach (var conferenceDto in conferenceDtos)
+                {
+                    var bgColor = conferenceDtos.IndexOf(conferenceDto) % 2 == 0 ? "whitesmoke" : "white";
+                    <tr style="border-top: 1px solid #ebedf2; background-color:@bgColor">
+                        <td style="width:100%">
+                            <div style="display: inline-block; width: 50%; float:left;">
+                                <span style="font-weight: 700;">@Labels.Date:</span>
+                                <span>
+                                    @conferenceDto.StartDate.ToBrazilTimeZone().ToString("d")
                                 </span>
-                            </td>
-                            <td style="font-size: 12px;">
-                                @negotiationBaseDto.ProjectBuyerEvaluationBaseDto.ProjectBaseDto.ProjectName<br />
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td style="font-size: 12px;">
-                                                @if (negotiationBaseDto.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.HasImage())
-                                                {
-                                                    <div style="max-width: 35px; max-height: 35px;">
-                                                        <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, negotiationBaseDto.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.Uid, negotiationBaseDto.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.ImageUploadDate, true)" style="max-width: 100%; max-height: 100%;">
-                                                    </div>
-                                                }
-                                                else
-                                                {
-                                                    <div style="background: rgba(85, 120, 235, 0.1); justify-content: center; align-items: center; border-radius: 8px; color: #5578eb; font-weight: 700; padding: 7px 7px;">
-                                                        @(negotiationBaseDto.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.GetTradeNameAbbreviation() ?? "-")
-                                                    </div>
-                                                }
-                                            </td>
-                                            <td style="font-size: 12px;">@negotiationBaseDto.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.DisplayName</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+                            </div>
+                            <div style="display: inline-block; width: 50%; float:right;">
+                                <span style="font-weight: 700;">@Labels.Hour:</span>
+                                <span>
+                                    @conferenceDto.StartDate.ToBrazilTimeZone().ToString("HH:mm") - @conferenceDto.EndDate.ToBrazilTimeZone().ToString("HH:mm") (@brazilUtc)
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="background-color:@bgColor">
+                        <td>
+                            <span style="font-weight: 700;">@Labels.Room</span>
+                            <br />
+                            @conferenceDto.GetRoomNameDtoByLanguageCode(Model.UserInterfaceLanguage).RoomName.Value
+                        </td>
+                    </tr>
+                    <tr style="background-color:@bgColor">
+                        <td>
+                            <span style="font-weight: 700;">@Labels.Conference</span>
+                            <br />
+                            @conferenceDto.GetConferenceTitleDtoByLanguageCode(Model.UserInterfaceLanguage).ConferenceTitle.Value
+                        </td>
+                    </tr>
+                    <tr style="background-color:@bgColor">
+                        <td>
+                            <span style="font-weight: 700;">@Labels.ConferenceSynopsis</span>
+                            <br />
+                            @conferenceDto.GetConferenceSynopsisDtoByLanguageCode(Model.UserInterfaceLanguage).ConferenceSynopsis.Value
+                        </td>
+                    </tr>
+                    <tr style="background-color:@bgColor">
+                        <td>
+                            <span style="font-weight: 700; ">@Labels.Participants</span>
+                            <br />
+                            <ul style="padding-left:15px;">
+                                @foreach (var conferenceParticipantDto in conferenceDto.ConferenceParticipantDtos)
+                                {
+                                    <li>
+                                        <span style="font-weight: 600;">
+                                            @conferenceParticipantDto.AttendeeCollaboratorDto.Collaborator.GetFullName()
+                                        </span>
+                                        @{
+                                            string jobTiltle = conferenceParticipantDto.AttendeeCollaboratorDto.GetJobTitleDtoByLanguageCode(Model.UserInterfaceLanguage).Value;
+                                            if (!string.IsNullOrEmpty(jobTiltle))
+                                            {
+                                                <span style="font-style: italic;">
+                                                    - @jobTiltle
+                                                </span>
+                                            }
+                                        }
+                                    </li>
+                                }
+                            </ul>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <p>
+            <span>
+                Pedimos a gentileza de chegar ao palco onde será realizado o painel com 30 minutos de antecedência, para cumprimento dos protocolos.
+            </span>
+            <br />
+            <span style="font-style: italic; color: @defaultFontColor;">
+                We kindly ask you to arrive at the stage where the panel will take place 30 minutes in advance to comply with the protocols.
+            </span>
+        </p>
+        <p>
+            <span>
+                Caso o palestrante tenha algum material de apresentação, pedimos que nos envie até o dia <span style="font-weight: 800;">18 de Junho</span>.
+            </span>
+            <br />
+            <span style="font-style: italic; color: @defaultFontColor;">
+                Should the speaker have any presentation materials, we kindly request that they be sent to us by <span style="font-weight: 800;">June 18th</span>.
+            </span>
+        </p>
+        <p>
+            <span>
+                <span style="font-weight: 800;">No caso de a apresentação ser em Keynote</span>, deve ser informado qual versão será utilizada. Caso opte por levar Macbook próprio, este deverá estar acompanhado de adaptador HDMI.
+            </span>
+            <br />
+            <span style="font-style: italic; color: @defaultFontColor;">
+                <span style="font-weight: 800;">In the case of the presentation being in Keynote</span>, please specify which version will be used. If choosing to bring your own Macbook, it should be accompanied by an HDMI adapter.
+            </span>
+        </p>
+        <br />
     }
-
-
-
-
-
-    <p>
-        <span>
-            Para a edição de @Model.Edition.UrlCode, foi criada a plataforma <span style="font-weight: 800;">MyRio2C</span>, na qual estarão concentradas as principais informações sobre sua participação
-            no <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span>, como: sua agenda, seu perfil, a programação do evento, a rede RIO2C para contato direto com outros convidados, credenciamento,
-            dentre outras funcionalidades.
-        </span><br />
-        <span style="font-style: italic; color: @defaultFontColor;">
-            For our @Model.Edition.UrlCode edition, we created the <span style="font-weight: 800;">MyRio2C</span> platform, which will concentrate all the key information about your participation in our event, such as:
-            your schedule, your profile, the official event program, the RIO2C network for you to be able to reach out to other guests directly, accreditation, amongst other functions.
-        </span>
-    </p>
-    <p>
-        <span>
-            Convidamos você para acessar a plataforma <span style="font-weight: 800;">MyRio2C</span> agora e cadastrar seu perfil para o <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span>.
-        </span><br />
-        <span style="font-style: italic; color: @defaultFontColor;">
-            We would like to invite you to register your <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span> profile now on <span style="font-weight: 800;">MyRio2C</span>.
-        </span>
-    </p>
-    <p>
-        <span>
-            Para acessá-la, clique no botão abaixo e utilize esse mesmo endereço de e-mail para fazer o acesso.
-        </span><br />
-        <span style="font-style: italic; color: @defaultFontColor;">
-            Please click on the button below and register using your email address.
-        </span>
-    </p>
-    <div style="margin-top: 25px; margin-bottom: 25px;">
-        <!--Button:begin-->
-        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <!-- Conferences - end -->
+    <!-- Social Agenda - begin -->
+    <table style="@tableStyle" cellpadding="10">
+        <tbody>
             <tr>
-                <td align="center">
-                    <table cellpadding="0" cellspacing="0" width="250" border="0" style="border-collapse: separate !important;">
-                        <tr>
-                            <td style="background-color: @defaultFontColor; color: #FFFFFF; font-family: sans-serif; font-size: 16px; font-weight: bold; padding: 10px 10px; border-radius: 10px; text-align: center;">
-                                <a href="@($"{ViewBag.SiteUrl}/account/onboarding?culture={Model.UserInterfaceLanguage}&edition={Model.Edition.UrlCode}&email={Url.Encode(Model.RecipientEmail)}&uid={Model.RecipientUserUid}&token={Model.UserSecurityToken}")" style="color:#FFFFFF;text-decoration:none;">Clique Aqui / Click here</a>
-                            </td>
-                        </tr>
-                    </table>
+                <th style="text-align: center; background-color:lightgray;" colspan="3">
+                    <p style="text-align: center;">
+                        <span style="font-weight: 800; font-size:large;">@Labels.SocialAgenda</span>
+                    </p>
+                </th>
+            </tr>
+            <tr>
+                <td>
                 </td>
             </tr>
+        </tbody>
+    </table>
+    <br />
+    <!-- Social Agenda - end -->
+    <!-- Credentialing - begin -->
+    <table style="@tableStyle" cellpadding="10">
+        <tbody>
+            <tr>
+                <th style="text-align: center; background-color:lightgray;" colspan="3">
+                    <p style="text-align: center;">
+                        <span style="font-weight: 800; font-size:large;">@Labels.Credentialing</span>
+                    </p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>
+                        <span>
+                            A sua credencial <span style="font-weight: 800;">PALESTRANTE</span> dá acesso a todos os dias do evento e todas as Salas de Programação e Áreas de Convivência.
+                        </span>
+                        <br />
+                        <span style="font-style: italic; color: @defaultFontColor;">
+                            Your <span style="font-weight: 800;">SPEAKER</span> credential provides access to all days of the event and all Programming Rooms and Social Areas.
+                        </span>
+                    </p>
+                    <p>
+                        <span style="font-weight: 800;">
+                            Para que sua credencial esteja disponível, é fundamental concluir o seu cadastro e autorização de imagem, conforme link enviado por e-mail com o assunto: MyRio2C | Bem-vindo ao Rio2C 2024 | Welcome to Rio2C 2024.
+                        </span>
+                        <br />
+                        <span style="font-weight: 800; font-style: italic; color: @defaultFontColor;">
+                            In order for your credential to be available, it's essential to complete your registration and image authorization, as per the link sent via email with the subject: MyRio2C | Welcome to Rio2C 2024
+                        </span>
+                    </p>
+                    <p>
+                        <span>
+                            Retire sua credencial no setor especial para Palestrantes, Industry e Convidados, <span style="font-weight: 800;">na entrada da Cidade das Artes – acesso Alvorada, na Av. das Américas, 5300 - Barra da Tijuca, Rio de Janeiro</span>.
+                        </span>
+                        <br />
+                        <span style="font-style: italic; color: @defaultFontColor;">
+                            Please pick up your credential at the special area for Speakers, Industry, and Guests, <span style="font-weight: 800;">at the entrance of Cidade das Artes – Alvorada access, on Av. das Américas, 5300 - Barra da Tijuca, Rio de Janeiro</span>.
+                        </span>
+                    </p>
+                    <span style="font-weight: 700; text-decoration: line-through;">@Messages.DatesTimesForCredentialPickup</span>
+                    <br />
+                    <ul style="padding-left:15px;">
+                        <li>11/04 - 9h às 18h30</li>
+                        <li>12/04 - 9h às 18h30</li>
+                        <li>13/04 - 9h às 18h30</li>
+                        <li>14/04 - 9h às 18h30</li>
+                        <li>15/04 - 10h às 18h</li>
+                        <li>16/04 - 10h às 18h</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <!-- Credentialing - end -->
+    <!-- Business Rounds - begin -->
+    @if (Model.AttendeeCollaboratorTypeDtos.Any(dto => dto.CollaboratorTypeName == PlataformaRio2C.Domain.Constants.CollaboratorType.PlayerExecutiveAudiovisual) && Model.NegotiationBaseDtos.Any())
+    {
+        <table style="@tableStyle" cellpadding="10">
+            <tbody>
+                <tr>
+                    <th style="text-align: center; background-color:lightgray;" colspan="3">
+                        <p style="text-align: center;">
+                            <span style="font-weight: 800; font-size:large;">@Labels.BusinessRound</span>
+                        </p>
+                    </th>
+                </tr>
+                <tr>
+                    <th>@Labels.Date</th>
+                    <th style="width: 45%; text-align: left;">@Labels.OneToOneMeeting</th>
+                    <th style="width: 35%; text-align: left;">@Labels.Project/@Labels.Producer</th>
+                </tr>
+                @foreach (var negotiationBaseDto in Model.NegotiationBaseDtos.OrderBy(sn => sn.StartDate))
+                {
+                    <tr style="border-top: 1px solid #ebedf2;">
+                        <td style="font-size: 12px; text-align: center;">@negotiationBaseDto.StartDate.ToBrazilTimeZone().ToString("d")</td>
+                        <td style="font-size: 12px;">
+                            @negotiationBaseDto.RoomJsonDto.Name<br />
+                            @Labels.Round @negotiationBaseDto.RoundNumber (@negotiationBaseDto.StartDate.ToBrazilTimeZone().ToString("HH:mm") - @negotiationBaseDto.EndDate.ToBrazilTimeZone().ToString("HH:mm") @brazilUtc)<br />
+                            Mesa 2<br />
+                            <span style="background-color: #ffb822; color: #111111; font-family: sans-serif; font-size: 11px; font-weight: bold; padding: 5px 9px; text-align: center;">
+                                @if (negotiationBaseDto.RoomJsonDto.IsVirtualMeeting)
+                                {
+                                    @Labels.Virtual
+                                }
+                                else
+                                {
+                                    @Labels.Presential
+                                }
+                            </span>
+                        </td>
+                        <td style="font-size: 12px;">
+                            @negotiationBaseDto.ProjectBuyerEvaluationBaseDto.ProjectBaseDto.ProjectName<br />
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td style="font-size: 12px;">
+                                            @if (negotiationBaseDto.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.HasImage())
+                                            {
+                                                <div style="max-width: 35px; max-height: 35px;">
+                                                    <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, negotiationBaseDto.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.Uid, negotiationBaseDto.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.ImageUploadDate, true)" style="max-width: 100%; max-height: 100%;">
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div style="background: rgba(85, 120, 235, 0.1); justify-content: center; align-items: center; border-radius: 8px; color: #5578eb; font-weight: 700; padding: 7px 7px;">
+                                                    @(negotiationBaseDto.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.GetTradeNameAbbreviation() ?? "-")
+                                                </div>
+                                            }
+                                        </td>
+                                        <td style="font-size: 12px;">@negotiationBaseDto.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.DisplayName</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                }
+            </tbody>
         </table>
-        <!--Button:end-->
-    </div>
+        <br />
+    }
+    <!-- Business Rounds - end -->
+    <!-- Parking - begin -->
+    <table style="@tableStyle" cellpadding="10">
+        <tbody>
+            <tr>
+                <th style="text-align: center; background-color:lightgray;" colspan="3">
+                    <p style="text-align: center;">
+                        <span style="font-weight: 800; font-size:large;">@Labels.Parking</span>
+                    </p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>
+                        <span>
+                            O evento não disponibiliza de estacionamento no local, mas teremos shuttle partindo do Village Mall e do Hotel Parceiro (Windsor Barra/ Oceânico) diariamente, das 9h às 18h.
+                        </span>
+                        <br />
+                        <span style="font-style: italic; color: @defaultFontColor;">
+                            The event does not provide parking on-site, but we will have shuttles departing from Village Mall and the Partner Hotel (Windsor Barra/ Oceânico) daily, from 9am to 6pm.
+                        </span>
+                    </p>
+                    <p>
+                        <span>
+                            Táxis, Ubers e demais carros particulares poderão entrar na Cidade das Artes apenas para embarque e desembarque, através do Portão 1 na Avenida das Américas (Barra da Tijuca).
+                        </span>
+                        <span style="font-style: italic; color: @defaultFontColor;">
+                            Taxis, Ubers, and other private cars can only enter Cidade das Artes for drop-off and pick-up through Gate 1 on Avenida das Américas (Barra da Tijuca).
+                        </span>
+                    </p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- Parking - end -->
+    <!-- Footer - begin-->
+    <br />
     <p>
-        <span>
-            Em caso de dúvidas, favor entre em contato com a nossa equipe usando o assunto “<span style="font-weight: bold;">MyRio2C</span>” através do email: curadoria@rio2c.com.
-        </span><br />
-        <span style="font-style: italic; color: @defaultFontColor;">
-            For any queries, please get in touch with our team using the subject “<span style="font-weight: bold;">MyRio2C</span>” via the email: curadoria@rio2c.com.
+        <span style="font-weight: 800;">
+            Pedimos, por gentileza, que confirme o recebimento deste e-mail.
+        </span>
+        <br />
+        <span style="font-style: italic; font-weight: 800; color: @defaultFontColor;">
+            We kindly request that you confirm receipt of this email.
         </span>
     </p>
     <p>
         <span>
-            Desde já agradecemos sua cooperação.
-        </span><br />
+            À sua disposição para quaisquer esclarecimentos,
+        </span>
+        <br />
         <span style="font-style: italic; color: @defaultFontColor;">
-            We thank you for your cooperation.
+            At your disposal for any further clarification,
         </span>
     </p>
     <p>
         <span>
-            Seja bem-vindo ao <span style="font-weight: bold;">MyRio2C</span>!
-        </span><br />
+            Atenciosamente, <span style="font-weight: 800;">Equipe Rio2C</span>
+        </span>
+        <br />
         <span style="font-style: italic; color: @defaultFontColor;">
-            Welcome to <span style="font-weight: bold;">MyRio2C</span>!
+            Sincerely, <span style="font-weight: 800;">Rio2C Team</span>
         </span>
     </p>
-    <p>
-        <span>
-            Curadoria Rio2C
-        </span><br />
-        <span style="font-style: italic; color: @defaultFontColor;">
-            Rio2C Curatorship
-        </span>
-    </p>
+    <!-- Footer - end-->
 </td>
 @section Styles {
 }

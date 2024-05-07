@@ -792,6 +792,9 @@
   <data name="Creators" xml:space="preserve">
     <value>Creators</value>
   </data>
+  <data name="Credentialing" xml:space="preserve">
+    <value>Credentialing</value>
+  </data>
   <data name="Curatorship" xml:space="preserve">
     <value>Curatorship</value>
     <comment>Curadoria</comment>
@@ -1909,6 +1912,9 @@
     <value>Parameters</value>
     <comment>Parâmetros</comment>
   </data>
+  <data name="Parking" xml:space="preserve">
+    <value>Parking</value>
+  </data>
   <data name="Participant" xml:space="preserve">
     <value>Participant</value>
     <comment>Participante</comment>
@@ -2767,6 +2773,9 @@
   <data name="Skip" xml:space="preserve">
     <value>Skip</value>
     <comment>Pular</comment>
+  </data>
+  <data name="SocialAgenda" xml:space="preserve">
+    <value>Social Agenda</value>
   </data>
   <data name="SocialMedia" xml:space="preserve">
     <value>Social media</value>
