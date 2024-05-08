@@ -17,7 +17,6 @@ using System.Linq;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using static log4net.Appender.RollingFileAppender;
 
 namespace PlataformaRio2C.Domain.Entities
 {

@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -2033,8 +2034,16 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void UpdateAvailability(DateTimeOffset? availabilityBeginDate, DateTimeOffset? availabilityEndDate, int userId)
         {
-            this.AvailabilityBeginDate = availabilityBeginDate;
-            this.AvailabilityEndDate = availabilityEndDate;
+            if (availabilityBeginDate.HasValue)
+                this.AvailabilityBeginDate = availabilityBeginDate.Value.DateTime.ToUtcTimeZone();
+            else
+                this.AvailabilityBeginDate = null;
+
+            if (availabilityEndDate.HasValue)
+                this.AvailabilityEndDate = availabilityEndDate.Value.DateTime.ToEndDateTimeOffset();
+            else
+                this.AvailabilityEndDate = null;
+
             this.SetUpdateDate(userId);
         }
 
