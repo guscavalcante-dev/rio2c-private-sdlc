@@ -25,11 +25,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? AttendeeCollaboratorUid { get; set; }
 
-        [Display(Name = nameof(Labels.StartDate), ResourceType = typeof(Labels))]
+        [Display(Name = nameof(Labels.ArrivalDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public DateTimeOffset? AvailabilityBeginDate { get; set; }
 
-        [Display(Name = nameof(Labels.EndDate), ResourceType = typeof(Labels))]
+        [Display(Name = nameof(Labels.DepartureDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [GreaterThanOrEqualTo(nameof(AvailabilityBeginDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
         public DateTimeOffset? AvailabilityEndDate { get; set; }

@@ -173,13 +173,13 @@ var AvailabilitiesDataTableWidget = function () {
                 {
                     data: 'AvailabilityBeginDate',
                     render: function (data) {
-                        return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                        return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L');
                     }
                 },
                 {
                     data: 'AvailabilityEndDate',
                     render: function (data) {
-                        return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                        return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L');
                     }
                 },
                 {
@@ -218,11 +218,11 @@ var AvailabilitiesDataTableWidget = function () {
             columnDefs: [
                 {
                     targets: [0],
-                    width: "15%"
+                    width: "30%"
                 },
                 {
                     targets: [1],
-                    width: "15%",
+                    width: "20%",
                     orderable: false
                 },
                 {

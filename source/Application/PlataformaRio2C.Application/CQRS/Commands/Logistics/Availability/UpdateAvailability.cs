@@ -25,7 +25,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public UpdateAvailability(AttendeeCollaboratorBaseDto attendeeCollaboratorBaseDto)
         {
             this.AttendeeCollaboratorUid = attendeeCollaboratorBaseDto.Uid;
-            this.AvailabilityBeginDate = attendeeCollaboratorBaseDto.AvailabilityEndDate;
+            this.AvailabilityBeginDate = attendeeCollaboratorBaseDto.AvailabilityBeginDate;
             this.AvailabilityEndDate = attendeeCollaboratorBaseDto.AvailabilityEndDate;
         }
 
