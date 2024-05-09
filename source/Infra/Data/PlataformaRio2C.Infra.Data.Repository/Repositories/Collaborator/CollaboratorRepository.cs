@@ -3196,7 +3196,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery(true)
                                 .FindByKeywords(keywords, editionId)
                                 .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, false, false, editionId);
-                                //.HasConferencesOrNegotiations(false, editionId);
 
             var collaboratorDtos = await query
                                         .DynamicOrder(sortColumns,
@@ -3284,7 +3283,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                                 .FindByCollaboratorTypeNameAndByEditionId(Constants.CollaboratorType.ReceivesAgendaEmail, showAllEditions, false, editionId);
-                                //.HasConferencesOrNegotiations(showAllEditions, editionId);
 
             return await query.CountAsync();
         }
@@ -3297,7 +3295,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                                 .FindByCollaboratorTypeNameAndByEditionId(Constants.CollaboratorType.ReceivesAgendaEmail, false, false, editionId)
-                                //.HasConferencesOrNegotiations(false, editionId)
                                 .FindByUids(collaboratorsUids);
 
             return await query

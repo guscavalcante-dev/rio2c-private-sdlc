@@ -229,7 +229,15 @@ namespace PlataformaRio2C.Web.Admin.Areas.Agenda.Controllers
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Email.ToLowerInvariant(), Labels.Sent.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
         }
 
-        #region Classes 
+        #region RIO2C "Eventos Paralelos" API integration (TODO: Refactor this!)
+
+        //1. Create a specific project to external generic API Integrations
+        //2. Move all this classes to this project
+        //2. Create a Service whith this "Private methods" region
+        //3. Configure service at Statup.cs
+        //4. Use here via dependency injection
+
+        #region Classes
 
         public class SearchCollaboratorEventsRequest
         {
@@ -313,6 +321,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Agenda.Controllers
             var response = this.ExecuteRequest(path, httpMethod, jsonString);
             return JsonConvert.DeserializeObject<T>(response);
         }
+
+        #endregion
 
         #endregion
 

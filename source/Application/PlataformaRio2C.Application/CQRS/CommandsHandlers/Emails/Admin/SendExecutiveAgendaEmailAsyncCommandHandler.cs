@@ -83,7 +83,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             collaborator?.UpdateAgendaEmailSendDate(cmd.Edition.Id, cmd.UserId);
 
             // Sends the email
-            //await this.MailerService.SendExecutiveAgendaEmail(cmd, sentEmail.Uid).SendAsync();
+            await this.MailerService.SendExecutiveAgendaEmail(cmd, sentEmail.Uid).SendAsync();
 
             this.Uow.SaveChanges();
 
