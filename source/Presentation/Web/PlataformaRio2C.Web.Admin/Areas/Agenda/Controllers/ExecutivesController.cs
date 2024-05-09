@@ -36,6 +36,8 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Constants = PlataformaRio2C.Domain.Constants;
+using static PlataformaRio2C.Web.Admin.Areas.Agenda.Controllers.ExecutivesController;
+using PlataformaRio2C.Domain.Dtos.Agendas;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Agenda.Controllers
 {
@@ -109,7 +111,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Agenda.Controllers
                 request.Length,
                 request.Search?.Value,
                 request.GetSortColumns(),
-                Constants.CollaboratorType.HasAgenda,
+                Constants.CollaboratorType.ReceivesAgendaEmail,
                 this.UserInterfaceLanguage,
                 this.EditionDto?.Id);
 
@@ -148,16 +150,33 @@ namespace PlataformaRio2C.Web.Admin.Areas.Agenda.Controllers
                     throw new DomainException(Messages.SelectAtLeastOneOption);
                 }
 
+                // Get "Eventos Paralelos" from RIO2C tech team API
                 var request = new SearchCollaboratorEventsRequest() { CollaboratorsID = collaboratorsUids.ToArray() };
-                var apiResult1 = this.ExecuteRequest("searchCollaboratorEvents", HttpMethod.Post, request.ToJson());
-                var apiResult = this.ExecuteRequest<SearchCollaboratorEventsResponse>("searchCollaboratorEvents", HttpMethod.Post, request.ToJson());
+                SearchCollaboratorEventsResponse apiResult = this.ExecuteRequest<SearchCollaboratorEventsResponse>("searchCollaboratorEvents", HttpMethod.Post, request.ToJson());
+
+                // Converts the API response to an internal DTO containing all Collaborators with all Events
+                List<CollaboratorEventsDto> collaboratorsEventsDtos = apiResult.CollaboratorsEvents.Select(ce => new CollaboratorEventsDto
+                {
+                    CollaboratorUid = Guid.Parse(ce.Key),
+                    CollaboratorEventDtos = apiResult.EventsInfo
+                                                        .Where(ei => ce.Value.Contains(ei.Key))
+                                                        .Select(ei => new CollaboratorEventDto 
+                                                        { 
+                                                           Data = (!string.IsNullOrEmpty(ei.Value?.Data) ? DateTime.ParseExact(ei.Value.Data, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture) : new DateTime()),
+                                                           Descritivo = ei.Value?.Descritivo,
+                                                           Horario = ei.Value?.Horario,
+                                                           Local = ei.Value?.Local,
+                                                           Nome = ei.Value?.Nome
+                                                        }).ToList()
+                }).ToList();
 
                 List<string> errors = new List<string>();
                 foreach (var collaboratorDto in collaboratorsDtos)
                 {
-                    //CHAMAR A API DOS CARAS PRA PEGAR OS EVENTOS PARELELOS
-
                     var collaboratorLanguageCode = collaboratorDto.UserInterfaceLanguage ?? this.UserInterfaceLanguage;
+
+                    //Get Events from current iterating Collaborator
+                    var collaboratorEventDtos = collaboratorsEventsDtos?.FirstOrDefault(ce => ce.CollaboratorUid == collaboratorDto.Uid)?.CollaboratorEventDtos;
 
                     try
                     {
@@ -174,8 +193,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Agenda.Controllers
                             collaboratorLanguageCode,
                             collaboratorDto.AttendeeCollaboratorTypeDtos,
                             collaboratorDto.ConferencesDtos,
-                            collaboratorDto.NegotiationBaseDtos
-                            ));
+                            collaboratorDto.NegotiationBaseDtos,
+                            collaboratorEventDtos));
                         if (!result.IsValid)
                         {
                             throw new DomainException(Messages.CorrectFormValues);
@@ -212,19 +231,12 @@ namespace PlataformaRio2C.Web.Admin.Areas.Agenda.Controllers
 
         #region Classes 
 
-        public class CollaboratorEvent
+        public class SearchCollaboratorEventsRequest
         {
-            public Guid CollaboratorUid { get; set; }
-            public List<string> CollaboratorEventsNames { get; set; }
+            public Guid[] CollaboratorsID { get; set; }
         }
 
-        public class Event
-        {
-            public string EventName { get; set; }
-            List<EventInfo> EventInfos { get; set; }
-        }
-
-        public class EventInfo
+        public class EventsInfo
         {
             public string Local { get; set; }
             public string Horario { get; set; }
@@ -233,22 +245,14 @@ namespace PlataformaRio2C.Web.Admin.Areas.Agenda.Controllers
             public string Descritivo { get; set; }
         }
 
-        public class SearchCollaboratorEventsRequest
-        {
-            public Guid[] CollaboratorsID { get; set; }
-        }
-
         public class SearchCollaboratorEventsResponse
         {
             public bool Success { get; set; }
 
-            [JsonProperty("collaboratorsEventsConfirmed")]
-            public List<CollaboratorEvent> CollaboratorEvents { get; set; }
+            public Dictionary<string, List<string>> CollaboratorsEvents { get; set; }
 
-            [JsonProperty("eventsInfo")] 
-            public List<Event> Events { get; set; }
+            public Dictionary<string, EventsInfo> EventsInfo { get; set; }
         }
-
 
         #endregion
 
