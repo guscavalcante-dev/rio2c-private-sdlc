@@ -69,18 +69,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             this.SentEmailRepo.Create(sentEmail);
 
-            string[] enabledCollaboratorTypesNames = PlataformaRio2C.Domain.Constants.CollaboratorType.HasAgenda;
-
-            // Update collaborator welcome email
             var collaborator = await this.collaboratorRepo.GetAsync(cmd.Collaboratoruid);
-            if (collaborator == null || collaborator.IsDeleted || 
-                !collaborator.AttendeeCollaborators.Any(ac => 
-                    !ac.IsDeleted && 
-                    ac.EditionId == cmd.Edition.Id && 
-                    ac.AttendeeCollaboratorTypes.Any(act => 
-                        !act.IsDeleted && 
-                        !act.CollaboratorType.IsDeleted && 
-                        enabledCollaboratorTypesNames.Contains(act.CollaboratorType.Name))))
+            if (collaborator == null || collaborator.IsDeleted)
             {
                 this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundM))));
             }

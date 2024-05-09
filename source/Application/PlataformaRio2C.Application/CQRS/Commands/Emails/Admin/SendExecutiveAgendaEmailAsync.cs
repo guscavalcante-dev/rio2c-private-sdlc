@@ -14,6 +14,7 @@
 using System;
 using System.Collections.Generic;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Dtos.Agendas;
 using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
@@ -27,6 +28,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public IEnumerable<AttendeeCollaboratorTypeDto> AttendeeCollaboratorTypeDtos { get; set; }
         public IEnumerable<ConferenceDto> ConferenceDtos { get; set; }
         public IEnumerable<NegotiationBaseDto> NegotiationBaseDtos { get; set; }
+        public List<CollaboratorEventDto> CollaboratorEventsDtos { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SendExecutiveAgendaEmailAsync" /> class.
@@ -44,6 +46,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="attendeeCollaboratorTypeDtos">The attendee collaborator type dtos.</param>
         /// <param name="conferenceDtos">The conference dtos.</param>
         /// <param name="negotiationBaseDtos">The negotiation base dtos.</param>
+        /// <param name="collaboratorEventsDtos">The collaborator events dtos.</param>
         public SendExecutiveAgendaEmailAsync(
             Guid collaboratorUid,
             string userSecurityToken,
@@ -57,7 +60,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string userInterfaceLanguage,
             IEnumerable<AttendeeCollaboratorTypeDto> attendeeCollaboratorTypeDtos,
             IEnumerable<ConferenceDto> conferenceDtos,
-            IEnumerable<NegotiationBaseDto> negotiationBaseDtos)
+            IEnumerable<NegotiationBaseDto> negotiationBaseDtos,
+            List<CollaboratorEventDto> collaboratorEventsDtos)
             : base(recipientUserId, recipientUserUid, recipientFirstName, recipientFullName, recipientEmail, edition, userInterfaceLanguage)
         {
             this.Collaboratoruid = collaboratorUid;
@@ -66,6 +70,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.AttendeeCollaboratorTypeDtos = attendeeCollaboratorTypeDtos;
             this.ConferenceDtos = conferenceDtos;
             this.NegotiationBaseDtos = negotiationBaseDtos;
+            this.CollaboratorEventsDtos = collaboratorEventsDtos;
         }
 
         /// <summary>Initializes a new instance of the <see cref="SendExecutiveAgendaEmailAsync"/> class.</summary>

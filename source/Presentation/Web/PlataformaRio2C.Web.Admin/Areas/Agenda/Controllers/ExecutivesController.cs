@@ -14,6 +14,7 @@
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
+using Newtonsoft.Json;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.ViewModels;
@@ -21,6 +22,7 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla.Models;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
@@ -29,9 +31,13 @@ using PlataformaRio2C.Web.Admin.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Constants = PlataformaRio2C.Domain.Constants;
+using static PlataformaRio2C.Web.Admin.Areas.Agenda.Controllers.ExecutivesController;
+using PlataformaRio2C.Domain.Dtos.Agendas;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Agenda.Controllers
 {
@@ -55,7 +61,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Agenda.Controllers
         /// <param name="roleRepository">The role repository.</param>
         /// <param name="collaboratorTypeRepository">The collaborator type repository.</param>
         public ExecutivesController(
-            IMediator commandBus,            
+            IMediator commandBus,
             IdentityAutenticationService identityController,
             ICollaboratorRepository collaboratorRepository,
             IRoleRepository roleRepository,
@@ -105,7 +111,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Agenda.Controllers
                 request.Length,
                 request.Search?.Value,
                 request.GetSortColumns(),
-                Constants.CollaboratorType.HasAgenda,
+                Constants.CollaboratorType.ReceivesAgendaEmail,
                 this.UserInterfaceLanguage,
                 this.EditionDto?.Id);
 
@@ -144,12 +150,33 @@ namespace PlataformaRio2C.Web.Admin.Areas.Agenda.Controllers
                     throw new DomainException(Messages.SelectAtLeastOneOption);
                 }
 
+                // Get "Eventos Paralelos" from RIO2C tech team API
+                var request = new SearchCollaboratorEventsRequest() { CollaboratorsID = collaboratorsUids.ToArray() };
+                SearchCollaboratorEventsResponse apiResult = this.ExecuteRequest<SearchCollaboratorEventsResponse>("searchCollaboratorEvents", HttpMethod.Post, request.ToJson());
+
+                // Converts the API response to an internal DTO containing all Collaborators with all Events
+                List<CollaboratorEventsDto> collaboratorsEventsDtos = apiResult.CollaboratorsEvents.Select(ce => new CollaboratorEventsDto
+                {
+                    CollaboratorUid = Guid.Parse(ce.Key),
+                    CollaboratorEventDtos = apiResult.EventsInfo
+                                                        .Where(ei => ce.Value.Contains(ei.Key))
+                                                        .Select(ei => new CollaboratorEventDto 
+                                                        { 
+                                                           Data = (!string.IsNullOrEmpty(ei.Value?.Data) ? DateTime.ParseExact(ei.Value.Data, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture) : new DateTime()),
+                                                           Descritivo = ei.Value?.Descritivo,
+                                                           Horario = ei.Value?.Horario,
+                                                           Local = ei.Value?.Local,
+                                                           Nome = ei.Value?.Nome
+                                                        }).ToList()
+                }).ToList();
+
                 List<string> errors = new List<string>();
                 foreach (var collaboratorDto in collaboratorsDtos)
                 {
-                    //CHAMAR A API DOS CARAS PRA PEGAR OS EVENTOS PARELELOS
-                    
                     var collaboratorLanguageCode = collaboratorDto.UserInterfaceLanguage ?? this.UserInterfaceLanguage;
+
+                    //Get Events from current iterating Collaborator
+                    var collaboratorEventDtos = collaboratorsEventsDtos?.FirstOrDefault(ce => ce.CollaboratorUid == collaboratorDto.Uid)?.CollaboratorEventDtos;
 
                     try
                     {
@@ -166,8 +193,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Agenda.Controllers
                             collaboratorLanguageCode,
                             collaboratorDto.AttendeeCollaboratorTypeDtos,
                             collaboratorDto.ConferencesDtos,
-                            collaboratorDto.NegotiationBaseDtos                            
-                            ));
+                            collaboratorDto.NegotiationBaseDtos,
+                            collaboratorEventDtos));
                         if (!result.IsValid)
                         {
                             throw new DomainException(Messages.CorrectFormValues);
@@ -201,6 +228,103 @@ namespace PlataformaRio2C.Web.Admin.Areas.Agenda.Controllers
 
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Email.ToLowerInvariant(), Labels.Sent.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
         }
+
+        #region RIO2C "Eventos Paralelos" API integration (TODO: Refactor this!)
+
+        //1. Create a specific project to external generic API Integrations
+        //2. Move all this classes to this project
+        //2. Create a Service whith this "Private methods" region
+        //3. Configure service at Statup.cs
+        //4. Use here via dependency injection
+
+        #region Classes
+
+        public class SearchCollaboratorEventsRequest
+        {
+            public Guid[] CollaboratorsID { get; set; }
+        }
+
+        public class EventsInfo
+        {
+            public string Local { get; set; }
+            public string Horario { get; set; }
+            public string Data { get; set; }
+            public string Nome { get; set; }
+            public string Descritivo { get; set; }
+        }
+
+        public class SearchCollaboratorEventsResponse
+        {
+            public bool Success { get; set; }
+
+            public Dictionary<string, List<string>> CollaboratorsEvents { get; set; }
+
+            public Dictionary<string, EventsInfo> EventsInfo { get; set; }
+        }
+
+        #endregion
+
+        #region Private methods
+
+        private readonly string apiUrl = "https://eventos.rio2c.com.br/api/";
+        private readonly string apiKey = "21A502BC-8F12-9C91-2A21CQRHMH542JK2";
+
+        /// <summary>
+        /// Deserializes the payload.
+        /// </summary>
+        /// <param name="payload">The payload.</param>
+        /// <returns></returns>
+        private SymplaParticipant DeserializePayload(string payload)
+        {
+            var symplaPayload = JsonConvert.DeserializeObject<SymplaParticipant>(payload);
+
+            symplaPayload.PayloadString = payload.ToJsonMinified();
+
+            return symplaPayload;
+        }
+
+        /// <summary>
+        /// Executes the request.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <param name="httpMethod">The HTTP method.</param>
+        /// <param name="jsonString">The json string.</param>
+        /// <returns></returns>
+        private string ExecuteRequest(string path, HttpMethod httpMethod, string jsonString)
+        {
+            using (WebClient client = new WebClient())
+            {
+                client.Headers.Add("API-KEY", this.apiKey);
+
+                ServicePointManager.Expect100Continue = false;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
+                                                       SecurityProtocolType.Tls11 |
+                                                       SecurityProtocolType.Tls12;
+                string url = this.apiUrl + path;
+                var response = httpMethod == HttpMethod.Get ? client.DownloadString(url) :
+                                                              client.UploadString(url, httpMethod.ToString(), jsonString);
+
+                return response;
+            }
+        }
+
+        /// <summary>
+        /// Executes the request and desserialize.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path">The path.</param>
+        /// <param name="httpMethod">The HTTP method.</param>
+        /// <param name="jsonString">The json string.</param>
+        /// <returns></returns>
+        private T ExecuteRequest<T>(string path, HttpMethod httpMethod, string jsonString)
+        {
+            var response = this.ExecuteRequest(path, httpMethod, jsonString);
+            return JsonConvert.DeserializeObject<T>(response);
+        }
+
+        #endregion
+
+        #endregion
 
         #endregion
 

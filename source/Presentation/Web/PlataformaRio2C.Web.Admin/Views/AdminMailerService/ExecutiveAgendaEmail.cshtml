@@ -29,29 +29,31 @@
         <span>
             O <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span> acontece de <span style="font-weight: 800;">@(Html.Raw(Model.GetEditionStartAndEndDateByCulture(brCulture)))</span>, na Cidade das Artes, na Av. das Américas, 5300 - Barra da Tijuca, Rio de Janeiro.
             <br />
-            Confira a programação completa no site http://rio2c.com e pelo aplicativo XXXX.
+            Confira a programação completa no site http://rio2c.com e pelo aplicativo.
         </span>
         <br />
         <span style="font-style: italic; color: @defaultFontColor;">
             The <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span> takes place from <span style="font-weight: 800;">@(Html.Raw(Model.GetEditionStartAndEndDateByCulture(usCulture)))</span>, at Cidade das Artes, Av. das Américas, 5300 - Barra da Tijuca, Rio de Janeiro.
             <br />
-            Check out the complete schedule on the website http://rio2c.com and through the XXXX app.
+            Check out the complete schedule on the website http://rio2c.com.
         </span>
     </p>
     <p>
         <span>
-            Seguem informações importantes sobre a sua participação como <span style="font-weight: 800;">@Model.AttendeeCollaboratorTypeDtos.Select(dto => dto.CollaboratorTypeDescription.GetSeparatorTranslation(brCulture.Name)).ToString(", ")</span>, incluindo o seu painel e os eventos sociais para os quais você está convidado.
-            <br /> Por favor, leia com atenção até o final.
+            Seguem informações importantes sobre a sua participação na edição deste ano, incluindo conteúdos, e os eventos sociais para os quais você está convidado.
+            <br />
+            Por favor, leia com atenção até o final.
         </span>
         <br />
         <span style="font-style: italic; color: @defaultFontColor;">
-            Here are important details about your participation as a <span style="font-weight: 800;">@Model.AttendeeCollaboratorTypeDtos.Select(dto => dto.CollaboratorTypeDescription.GetSeparatorTranslation(usCulture.Name)).ToString(", ")</span>, including your panel and the social events you are invited to.
-            <br /> Please read carefully until the end.
+            Below is important information about your participation in this year's edition, including content, and the social events to which you are invited.
+            <br />
+            Please read carefully until the end.
         </span>
     </p>
     <!-- Header - end -->
     <!-- Conferences - begin -->
-    @if (Model.AttendeeCollaboratorTypeDtos.Any(dto => dto.CollaboratorTypeName == PlataformaRio2C.Domain.Constants.CollaboratorType.Speaker) && Model.ConferenceDtos.Any())
+    @if (Model.ConferenceDtos?.Any() == true)
     {
         <table style="@tableStyle" cellpadding="10">
             <tbody>
@@ -115,7 +117,7 @@
                                             @conferenceParticipantDto.AttendeeCollaboratorDto.Collaborator.GetFullName()
                                         </span>
                                         @{
-                                            string jobTiltle = conferenceParticipantDto.AttendeeCollaboratorDto.GetJobTitleDtoByLanguageCode(Model.UserInterfaceLanguage).Value;
+                                            var jobTiltle = conferenceParticipantDto.AttendeeCollaboratorDto.GetJobTitleDtoByLanguageCode(Model.UserInterfaceLanguage)?.Value;
                                             if (!string.IsNullOrEmpty(jobTiltle))
                                             {
                                                 <span style="font-style: italic;">
@@ -133,51 +135,91 @@
         </table>
         <p>
             <span>
-                Pedimos a gentileza de chegar ao palco onde será realizado o painel com 30 minutos de antecedência, para cumprimento dos protocolos.
+                Pedimos a gentileza de chegar ao palco/sala onde será realizada a sua atividade com <span style="font-weight: 800;">30 minutos de antecedência</span>, para cumprimento dos protocolos necessários para a sua participação.
             </span>
             <br />
             <span style="font-style: italic; color: @defaultFontColor;">
-                We kindly ask you to arrive at the stage where the panel will take place 30 minutes in advance to comply with the protocols.
+                We kindly ask you to arrive at the stage/room where your activity will take place <span style="font-weight: 800;">30 minutes in advance</span>, to comply with the necessary protocols for your participation.
             </span>
         </p>
         <p>
             <span>
-                Caso o palestrante tenha algum material de apresentação, pedimos que nos envie até o dia <span style="font-weight: 800;">18 de Junho</span>.
+                Caso tenha algum material de apresentação, pedimos que nos envie até o dia <span style="font-weight: 800;">18 de Maio</span>.
             </span>
             <br />
             <span style="font-style: italic; color: @defaultFontColor;">
-                Should the speaker have any presentation materials, we kindly request that they be sent to us by <span style="font-weight: 800;">June 18th</span>.
+                If you have any presentation material, we ask that you send it to us by <span style="font-weight: 800;">May 18th</span>.
             </span>
         </p>
         <p>
             <span>
-                <span style="font-weight: 800;">No caso de a apresentação ser em Keynote</span>, deve ser informado qual versão será utilizada. Caso opte por levar Macbook próprio, este deverá estar acompanhado de adaptador HDMI.
+                <span style="font-weight: 800;">No caso da sua apresentação ser em Keynote</span>, deve ser informado a coordenação de sala qual versão será utilizada. Caso opte por levar Macbook próprio, este deverá estar acompanhado de adaptador HDMI.
             </span>
             <br />
             <span style="font-style: italic; color: @defaultFontColor;">
-                <span style="font-weight: 800;">In the case of the presentation being in Keynote</span>, please specify which version will be used. If choosing to bring your own Macbook, it should be accompanied by an HDMI adapter.
+                <span style="font-weight: 800;">If your presentation is in Keynote</span>, the room coordinator must be informed which version will be used. If you choose to bring your own Macbook, it must be accompanied by an HDMI adapter.
             </span>
         </p>
         <br />
     }
     <!-- Conferences - end -->
     <!-- Social Agenda - begin -->
-    <table style="@tableStyle" cellpadding="10">
-        <tbody>
-            <tr>
-                <th style="text-align: center; background-color:lightgray;" colspan="3">
-                    <p style="text-align: center;">
-                        <span style="font-weight: 800; font-size:large;">@Labels.SocialAgenda</span>
-                    </p>
-                </th>
-            </tr>
-            <tr>
-                <td>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <br />
+    @if (Model.CollaboratorEventsDtos?.Any() == true)
+    {
+        <table style="@tableStyle" cellpadding="10">
+            <tbody>
+                <tr>
+                    <th style="text-align: center; background-color:lightgray;" colspan="3">
+                        <p style="text-align: center;">
+                            <span style="font-weight: 800; font-size:large;">@Labels.SocialAgenda</span>
+                        </p>
+                    </th>
+                </tr>
+                @{var collaboratorEventDtos = Model.CollaboratorEventsDtos.OrderBy(dto => dto.Data).ThenBy(dto => dto.Horario).ToList();}
+                @foreach (var collaboratorEvent in collaboratorEventDtos)
+                {
+                    var bgColor = collaboratorEventDtos.IndexOf(collaboratorEvent) % 2 == 0 ? "whitesmoke" : "white";
+
+                    <tr style="border-top: 1px solid #ebedf2; background-color: @bgColor">
+                        <td>
+                            <span style="font-weight: 700;">@collaboratorEvent.Nome</span>
+                        </td>
+                    </tr>
+                    <tr style="background-color:@bgColor">
+                        <td style="width:100%">
+                            <div style="display: inline-block; width: 50%; float:left;">
+                                <span style="font-weight: 700;">@Labels.Date:</span>
+                                <span>
+                                    @(collaboratorEvent.Data?.ToBrazilTimeZone().ToString("d"))
+                                </span>
+                            </div>
+                            <div style="display: inline-block; width: 50%; float:right;">
+                                <span style="font-weight: 700;">@Labels.Hour:</span>
+                                <span>
+                                    @(collaboratorEvent.Horario) (@brazilUtc)
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="background-color:@bgColor">
+                        <td>
+                            <span style="font-weight: 700;">@Labels.Event</span>
+                            <br />
+                            @collaboratorEvent.Descritivo
+                        </td>
+                    </tr>
+                    <tr style="background-color:@bgColor">
+                        <td>
+                            <span style="font-weight: 700;">@Labels.Place</span>
+                            <br />
+                            @collaboratorEvent.Local
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br />
+    }
     <!-- Social Agenda - end -->
     <!-- Credentialing - begin -->
     <table style="@tableStyle" cellpadding="10">
@@ -193,11 +235,11 @@
                 <td>
                     <p>
                         <span>
-                            A sua credencial <span style="font-weight: 800;">PALESTRANTE</span> dá acesso a todos os dias do evento e todas as Salas de Programação e Áreas de Convivência.
+                            A sua credencial <span style="font-weight: 800;">@Model.AttendeeCollaboratorTypeDtos.Select(dto => dto.CollaboratorTypeDescription.GetSeparatorTranslation(brCulture.Name)).ToString("/")</span> dá acesso a todos os dias do evento e todas as Salas de Programação e Áreas de Convivência.
                         </span>
                         <br />
                         <span style="font-style: italic; color: @defaultFontColor;">
-                            Your <span style="font-weight: 800;">SPEAKER</span> credential provides access to all days of the event and all Programming Rooms and Social Areas.
+                            Your <span style="font-weight: 800;">@Model.AttendeeCollaboratorTypeDtos.Select(dto => dto.CollaboratorTypeDescription.GetSeparatorTranslation(usCulture.Name)).ToString("/")</span> credential provides access to all days of the event and all Programming Rooms and Social Areas.
                         </span>
                     </p>
                     <p>
@@ -210,24 +252,38 @@
                         </span>
                     </p>
                     <p>
-                        <span>
-                            Retire sua credencial no setor especial para Palestrantes, Industry e Convidados, <span style="font-weight: 800;">na entrada da Cidade das Artes – acesso Alvorada, na Av. das Américas, 5300 - Barra da Tijuca, Rio de Janeiro</span>.
-                        </span>
+                        <span style="font-weight: 700;"><u>Datas e horário de credenciamento:</u> De 04 a 09 de junho – Das 09h às 18h</span>
                         <br />
-                        <span style="font-style: italic; color: @defaultFontColor;">
-                            Please pick up your credential at the special area for Speakers, Industry, and Guests, <span style="font-weight: 800;">at the entrance of Cidade das Artes – Alvorada access, on Av. das Américas, 5300 - Barra da Tijuca, Rio de Janeiro</span>.
-                        </span>
+                        <span style="font-style: italic; color: @defaultFontColor;"><u>Accreditation dates and times:</u> From June 4th to 9th – From 9am to 6pm</span>
                     </p>
-                    <span style="font-weight: 700; text-decoration: line-through;">@Messages.DatesTimesForCredentialPickup</span>
-                    <br />
-                    <ul style="padding-left:15px;">
-                        <li>11/04 - 9h às 18h30</li>
-                        <li>12/04 - 9h às 18h30</li>
-                        <li>13/04 - 9h às 18h30</li>
-                        <li>14/04 - 9h às 18h30</li>
-                        <li>15/04 - 10h às 18h</li>
-                        <li>16/04 - 10h às 18h</li>
-                    </ul>
+                    <p>
+                        <span style="font-weight: 700; text-decoration: underline;">Retire sua credencial nos seguintes pontos de credenciamento:</span>
+                        <span style="font-weight: 700; text-decoration: underline; font-style: italic; color: @defaultFontColor;">Collect your credential at the following accreditation points:</span>
+                        <br />
+                        <ul style="padding-left:15px;">
+                            <li>
+                                <u>Cidade das Artes</u>
+                                <br />
+                                <span>Retire sua credencial no setor especial para palestrantes, Industry e Convidados, na entrada da Cidade das Artes – acesso Alvorada, na Av. das Américas, 5300 - Barra da Tijuca, Rio de Janeiro.</span>
+                                <br />
+                                <span style="font-style: italic; color: @defaultFontColor;">Collect your credential in the special sector for speakers, Industry and Guests, at the entrance to Cidade das Artes – Alvorada access, at Av. das Américas, 5300 - Barra da Tijuca, Rio de Janeiro</span>
+                            </li>
+                            <li>
+                                <u>Village Mall</u>
+                                <br />
+                                <span>Retire sua credencial no estacionamento VIP (Próximo ao teatro Multiplan).</span>
+                                <br />
+                                <span style="font-style: italic; color: @defaultFontColor;">Collect your credentials at the VIP parking lot (near the Multiplan theater).</span>
+                            </li>
+                            <li>
+                                <u>Hotel Windsor Oceânico</u>
+                                <br />
+                                <span>Retire sua credencial no desk indicado no lobby do hotel.</span>
+                                <br />
+                                <span style="font-style: italic; color: @defaultFontColor;">Collect your credentials at the designated desk in the hotel lobby.</span>
+                            </li>
+                        </ul>
+                    </p>
                 </td>
             </tr>
         </tbody>
@@ -235,7 +291,7 @@
     <br />
     <!-- Credentialing - end -->
     <!-- Business Rounds - begin -->
-    @if (Model.AttendeeCollaboratorTypeDtos.Any(dto => dto.CollaboratorTypeName == PlataformaRio2C.Domain.Constants.CollaboratorType.PlayerExecutiveAudiovisual) && Model.NegotiationBaseDtos.Any())
+    @if (Model.NegotiationBaseDtos?.Any() == true)
     {
         <table style="@tableStyle" cellpadding="10">
             <tbody>
@@ -326,6 +382,7 @@
                         <span>
                             Táxis, Ubers e demais carros particulares poderão entrar na Cidade das Artes apenas para embarque e desembarque, através do Portão 1 na Avenida das Américas (Barra da Tijuca).
                         </span>
+                        <br />
                         <span style="font-style: italic; color: @defaultFontColor;">
                             Taxis, Ubers, and other private cars can only enter Cidade das Artes for drop-off and pick-up through Gate 1 on Avenida das Américas (Barra da Tijuca).
                         </span>

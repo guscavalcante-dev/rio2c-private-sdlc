@@ -138,9 +138,9 @@ namespace PlataformaRio2C.Domain.Constants
         /// <summary>
         /// Collaborator types who have agendas
         /// </summary>
-        public static readonly string[] HasAgenda =
+        public static readonly string[] ReceivesAgendaEmail =
         {
-            Speaker, PlayerExecutiveAudiovisual
+            Speaker, Industry, Creator, PlayerExecutiveAudiovisual, PlayerExecutiveMusic, PlayerExecutiveInnovation, PlayerExecutiveCreator, CommissionAudiovisual, CommissionMusic, CommissionInnovation, CommissionCreator, 
         };
 
         #endregion
