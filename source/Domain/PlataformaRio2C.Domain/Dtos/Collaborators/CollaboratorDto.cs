@@ -90,6 +90,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<AttendeeCollaboratorTargetAudiencesDto> AttendeeCollaboratorTargetAudiencesDtos { get; set; }
         public IEnumerable<NegotiationBaseDto> NegotiationBaseDtos { get; set; }
 
+        public IEnumerable<NegotiationBaseDto> ProducerNegotiationBaseDtos { get; set; }
+
         [ScriptIgnore]
         public AttendeeCollaborator EditionAttendeeCollaborator { get; set; }
         public AttendeeCollaboratorBaseDto EditionAttendeeCollaboratorBaseDto { get; set; }

@@ -3448,7 +3448,66 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                             CreateDate = n.Room.CreateDate,
                                                                             UpdateDate = n.Room.UpdateDate
                                                                         }
-                                                                    }))))
+                                                                    })))),
+
+                                ProducerNegotiationBaseDtos = c.AttendeeCollaborators
+                                                        .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                        .SelectMany(ac => ac.AttendeeOrganizationCollaborators
+                                                            .SelectMany(aoc => aoc.AttendeeOrganization.SellProjects
+                                                                .SelectMany(p => p.ProjectBuyerEvaluations
+                                                                    .SelectMany(pbe => pbe.Negotiations.Where(n => !n.IsDeleted && !n.ProjectBuyerEvaluation.IsDeleted && !n.ProjectBuyerEvaluation.Project.IsDeleted)
+                                                                    .Select(n => new NegotiationBaseDto
+                                                                    {
+                                                                        Id = n.Id,
+                                                                        Uid = n.Uid,
+                                                                        StartDate = n.StartDate,
+                                                                        EndDate = n.EndDate,
+                                                                        TableNumber = n.TableNumber,
+                                                                        RoundNumber = n.RoundNumber,
+                                                                        IsAutomatic = n.IsAutomatic,
+                                                                        ProjectBuyerEvaluationBaseDto = new ProjectBuyerEvaluationBaseDto
+                                                                        {
+                                                                            Id = n.ProjectBuyerEvaluation.Id,
+                                                                            Uid = n.ProjectBuyerEvaluation.Uid,
+                                                                            EvaluationDate = n.ProjectBuyerEvaluation.EvaluationDate,
+                                                                            Reason = n.ProjectBuyerEvaluation.Reason,
+                                                                            ProjectBaseDto = new ProjectBaseDto
+                                                                            {
+                                                                                Id = pbe.Id,
+                                                                                Uid = pbe.Uid,
+                                                                                // Get the project title according to the User's language
+                                                                                ProjectName = pbe.Project.ProjectTitles.FirstOrDefault(t => t.LanguageId == ac.Collaborator.User.UserInterfaceLanguageId).Value,
+                                                                                CreateDate = pbe.Project.CreateDate,
+                                                                                FinishDate = pbe.Project.FinishDate
+                                                                            },
+                                                                            SellerAttendeeOrganizationBaseDto = new AttendeeOrganizationBaseDto
+                                                                            {
+                                                                                Id = pbe.Project.SellerAttendeeOrganization.Id,
+                                                                                Uid = pbe.Project.SellerAttendeeOrganization.Uid,
+                                                                                OrganizationBaseDto = new OrganizationBaseDto
+                                                                                {
+                                                                                    Id = pbe.Project.SellerAttendeeOrganization.Organization.Id,
+                                                                                    Uid = pbe.Project.SellerAttendeeOrganization.Organization.Uid,
+                                                                                    Name = pbe.Project.SellerAttendeeOrganization.Organization.Name,
+                                                                                    TradeName = pbe.Project.SellerAttendeeOrganization.Organization.TradeName,
+                                                                                    ImageUploadDate = pbe.Project.SellerAttendeeOrganization.Organization.ImageUploadDate
+                                                                                },
+                                                                                CreateDate = pbe.Project.SellerAttendeeOrganization.CreateDate,
+                                                                                UpdateDate = pbe.Project.SellerAttendeeOrganization.UpdateDate,
+                                                                            }
+                                                                        },
+                                                                        RoomJsonDto = new RoomJsonDto
+                                                                        {
+                                                                            Id = n.Room.Id,
+                                                                            Uid = n.Room.Uid,
+                                                                            // Get the room name according to the User's language
+                                                                            Name = n.Room.RoomNames.FirstOrDefault(rn => !rn.IsDeleted && rn.LanguageId == ac.Collaborator.User.UserInterfaceLanguageId).Value,
+                                                                            IsVirtualMeeting = n.Room.IsVirtualMeeting,
+                                                                            CreateDate = n.Room.CreateDate,
+                                                                            UpdateDate = n.Room.UpdateDate
+                                                                        }
+                                                                    })))
+                                                                )),
                             })
                             .ToListAsync();
         }

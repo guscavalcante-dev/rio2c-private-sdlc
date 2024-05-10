@@ -193,7 +193,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Agenda.Controllers
                             collaboratorLanguageCode,
                             collaboratorDto.AttendeeCollaboratorTypeDtos,
                             collaboratorDto.ConferencesDtos,
-                            collaboratorDto.NegotiationBaseDtos,
+                            collaboratorDto.NegotiationBaseDtos.Concat(collaboratorDto.ProducerNegotiationBaseDtos),
                             collaboratorEventDtos));
                         if (!result.IsValid)
                         {
