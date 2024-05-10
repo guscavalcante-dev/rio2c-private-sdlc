@@ -10,6 +10,7 @@
     // Defina seus estilos CSS aqui
     string tableStyle = "width: 100%; border-collapse: separate; border-spacing: 0; border: 2px solid lightgray; border-radius: 10px;";
     string cellStyle = "border: 1px solid #000; padding: 8px;";
+    string imageUrl = $"https://subscription.rio2c.com.br/api/rsvp/images/pixels/{Model.Collaboratoruid.ToString()}?key=convite_agenda";
 }
 <td valign="top">
     <!-- Header - begin -->
@@ -305,7 +306,7 @@
                 <tr>
                     <th>@Labels.Date</th>
                     <th style="width: 45%; text-align: left;">@Labels.OneToOneMeeting</th>
-                    <th style="width: 35%; text-align: left;">@Labels.Project/@Labels.Producer</th>
+                    <th style="width: 35%; text-align: left;">@Labels.Project/@Labels.Company</th>
                 </tr>
                 @foreach (var negotiationBaseDto in Model.NegotiationBaseDtos.OrderBy(sn => sn.StartDate))
                 {
@@ -314,7 +315,7 @@
                         <td style="font-size: 12px;">
                             @negotiationBaseDto.RoomJsonDto.Name<br />
                             @Labels.Round @negotiationBaseDto.RoundNumber (@negotiationBaseDto.StartDate.ToBrazilTimeZone().ToString("HH:mm") - @negotiationBaseDto.EndDate.ToBrazilTimeZone().ToString("HH:mm") @brazilUtc)<br />
-                            Mesa 2<br />
+                            @Labels.Table @negotiationBaseDto.TableNumber<br />
                             <span style="background-color: #ffb822; color: #111111; font-family: sans-serif; font-size: 11px; font-weight: bold; padding: 5px 9px; text-align: center;">
                                 @if (negotiationBaseDto.RoomJsonDto.IsVirtualMeeting)
                                 {
@@ -421,6 +422,8 @@
             Sincerely, <span style="font-weight: 800;">Rio2C Team</span>
         </span>
     </p>
+     
+    <img src="@imageUrl" width=1 height=1 style="display: none;" />
     <!-- Footer - end-->
 </td>
 @section Styles {

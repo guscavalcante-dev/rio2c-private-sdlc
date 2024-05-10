@@ -45,7 +45,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         /// <param name="attendeeCollaboratorTypeDtos">The attendee collaborator type dtos.</param>
         /// <param name="conferenceDtos">The conference dtos.</param>
-        /// <param name="negotiationBaseDtos">The negotiation base dtos.</param>
+        /// <param name="playerNegotiationBaseDtos">The negotiation base dtos.</param>
         /// <param name="collaboratorEventsDtos">The collaborator events dtos.</param>
         public SendExecutiveAgendaEmailAsync(
             Guid collaboratorUid,
@@ -60,7 +60,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string userInterfaceLanguage,
             IEnumerable<AttendeeCollaboratorTypeDto> attendeeCollaboratorTypeDtos,
             IEnumerable<ConferenceDto> conferenceDtos,
-            IEnumerable<NegotiationBaseDto> negotiationBaseDtos,
+            IEnumerable<NegotiationBaseDto> playerNegotiationBaseDtos,
             List<CollaboratorEventDto> collaboratorEventsDtos)
             : base(recipientUserId, recipientUserUid, recipientFirstName, recipientFullName, recipientEmail, edition, userInterfaceLanguage)
         {
@@ -69,7 +69,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UserId = userId;
             this.AttendeeCollaboratorTypeDtos = attendeeCollaboratorTypeDtos;
             this.ConferenceDtos = conferenceDtos;
-            this.NegotiationBaseDtos = negotiationBaseDtos;
+            this.NegotiationBaseDtos = playerNegotiationBaseDtos;
             this.CollaboratorEventsDtos = collaboratorEventsDtos;
         }
 
