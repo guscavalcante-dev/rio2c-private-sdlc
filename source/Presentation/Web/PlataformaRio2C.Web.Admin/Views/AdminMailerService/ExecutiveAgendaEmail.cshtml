@@ -7,9 +7,7 @@
     var usCulture = new CultureInfo("en-US");
     var brazilUtc = @DateTimeExtensions.GetBrazilUtc();
     var defaultFontColor = "#F2388F";
-    // Defina seus estilos CSS aqui
     string tableStyle = "width: 100%; border-collapse: separate; border-spacing: 0; border: 2px solid lightgray; border-radius: 10px;";
-    string cellStyle = "border: 1px solid #000; padding: 8px;";
     string imageUrl = $"https://subscription.rio2c.com.br/api/rsvp/images/pixels/{Model.Collaboratoruid.ToString()}?key=convite_agenda";
 }
 <td valign="top">
@@ -422,8 +420,11 @@
             Sincerely, <span style="font-weight: 800;">Rio2C Team</span>
         </span>
     </p>
-     
+
+    <!-- Pixel for read receipt - https://softohq.atlassian.net/browse/RIO2CMY-1137 -->
     <img src="@imageUrl" width=1 height=1 style="display: none;" />
+    <!-- Pixel for read receipt -->
+
     <!-- Footer - end-->
 </td>
 @section Styles {

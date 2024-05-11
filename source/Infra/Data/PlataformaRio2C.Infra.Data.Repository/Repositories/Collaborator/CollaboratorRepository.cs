@@ -3237,33 +3237,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                         .Select(act => new AttendeeCollaboratorTypeDto()
                                                                                         {
                                                                                             CollaboratorTypeDescription = act.CollaboratorType.Description
-                                                                                        }),
-                                            //JobTitle = c.JobTitles.FirstOrDefault(jb => !jb.IsDeleted && jb.CollaboratorId == c.Id).Value,
-                                            //EditionAttendeeCollaborator = editionId.HasValue ? c.AttendeeCollaborators
-                                            //                                                        .FirstOrDefault(ac => ac.EditionId == editionId
-                                            //                                                                                && !ac.Edition.IsDeleted
-                                            //                                                                                && !ac.IsDeleted
-                                            //                                                                                && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
-                                            //                                                                                                                            && collaboratorTypeNames.Contains(act.CollaboratorType.Name))) : null,
-
-                                            //EditionAttendeeCollaboratorBaseDto = c.AttendeeCollaborators
-                                            //                                        .Where(ac => !ac.IsDeleted
-                                            //                                                        && ac.EditionId == editionId 
-                                            //                                                        && ac.AttendeeCollaboratorTypes.Any(act => collaboratorTypeNames.Contains(act.CollaboratorType.Name)))
-                                            //                                        .Select(ac => new AttendeeCollaboratorBaseDto
-                                            //                                        {
-                                            //                                            SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate,
-                                            //                                            WelcomeEmailSendDate = ac.WelcomeEmailSendDate,
-                                            //                                            OnboardingFinishDate = ac.OnboardingFinishDate,
-                                            //                                            AttendeeCollaboratorTypeDto = ac.AttendeeCollaboratorTypes
-                                            //                                                                                .Where(act => !act.IsDeleted 
-                                            //                                                                                                && collaboratorTypeNames.Contains(act.CollaboratorType.Name))
-                                            //                                                                                .Select(act => new AttendeeCollaboratorTypeDto
-                                            //                                                                                {
-                                            //                                                                                    IsApiDisplayEnabled = act.IsApiDisplayEnabled,
-                                            //                                                                                    ApiHighlightPosition = act.ApiHighlightPosition
-                                            //                                                                                }).FirstOrDefault()
-                                            //                                        }).FirstOrDefault()
+                                                                                        })
                                         })
                                         .ToListPagedAsync(page, pageSize);
 
