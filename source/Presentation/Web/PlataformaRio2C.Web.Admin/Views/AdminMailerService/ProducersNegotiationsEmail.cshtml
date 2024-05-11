@@ -54,7 +54,7 @@
                         <td style="font-size: 12px;">
                             @negotiationBaseDto.RoomJsonDto.Name<br />
                             @Labels.Round @negotiationBaseDto.RoundNumber (@negotiationBaseDto.StartDate.ToBrazilTimeZone().ToString("HH:mm") - @negotiationBaseDto.EndDate.ToBrazilTimeZone().ToString("HH:mm") @brazilUtc)<br />
-                            Mesa 2<br />
+                            @Labels.Table @negotiationBaseDto.TableNumber<br />
                             <span style="background-color: #ffb822; color: #111111; font-family: sans-serif; font-size: 11px; font-weight: bold; padding: 5px 9px; text-align: center;">
                                 @if (negotiationBaseDto.RoomJsonDto.IsVirtualMeeting)
                                 {

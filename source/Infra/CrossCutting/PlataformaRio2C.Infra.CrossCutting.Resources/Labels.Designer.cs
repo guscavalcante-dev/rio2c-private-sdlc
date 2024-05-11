@@ -1492,6 +1492,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirma o envio de e-mail de agenda para os executivos selecionados?.
+        /// </summary>
+        public static string ConfirmToSendAgendaEmails {
+            get {
+                return ResourceManager.GetString("ConfirmToSendAgendaEmails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Conectado.
         /// </summary>
         public static string Connected {
@@ -1704,6 +1713,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Creators {
             get {
                 return ResourceManager.GetString("Creators", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Credenciamento.
+        /// </summary>
+        public static string Credentialing {
+            get {
+                return ResourceManager.GetString("Credentialing", resourceCulture);
             }
         }
         
@@ -4417,6 +4435,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Estacionamento.
+        /// </summary>
+        public static string Parking {
+            get {
+                return ResourceManager.GetString("Parking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Participante.
         /// </summary>
         public static string Participant {
@@ -6244,6 +6271,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enviar e-mail de agenda.
+        /// </summary>
+        public static string SendAgendaEmail {
+            get {
+                return ResourceManager.GetString("SendAgendaEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data de Envio.
         /// </summary>
         public static string SendDate {
@@ -6510,6 +6546,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Skip {
             get {
                 return ResourceManager.GetString("Skip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agenda Social.
+        /// </summary>
+        public static string SocialAgenda {
+            get {
+                return ResourceManager.GetString("SocialAgenda", resourceCulture);
             }
         }
         

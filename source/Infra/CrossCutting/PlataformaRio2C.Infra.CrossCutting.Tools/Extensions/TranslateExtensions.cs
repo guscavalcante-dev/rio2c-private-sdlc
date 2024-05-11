@@ -20,12 +20,14 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
     /// <summary>TranslateExtensions</summary>
     public static class TranslateExtensions
     {
+        private const char defaultSeparator = '|';
+
         /// <summary>Gets the separator translation.</summary>
         /// <param name="s">The s.</param>
         /// <param name="culture">The culture.</param>
         /// <param name="separator">The separator.</param>
         /// <returns></returns>
-        public static string GetSeparatorTranslation(this string s, string culture, char separator)
+        public static string GetSeparatorTranslation(this string s, string culture, char separator = defaultSeparator)
         {
             if (string.IsNullOrEmpty(s))
             {
@@ -56,7 +58,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         /// <param name="culture">The culture.</param>
         /// <param name="separator">The separator.</param>
         /// <returns></returns>
-        public static T GetSeparatorTranslation<T>(this T entity, Expression<Func<T, string>> property, string culture, char separator)
+        public static T GetSeparatorTranslation<T>(this T entity, Expression<Func<T, string>> property, string culture, char separator = defaultSeparator)
         {
             if (!(property.Body is MemberExpression))
             {
@@ -79,7 +81,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         /// <param name="culture">The culture.</param>
         /// <param name="separator">The separator.</param>
         /// <returns></returns>
-        public static List<T> GetSeparatorTranslation<T>(this List<T> list, Expression<Func<T, string>> property, string culture, char separator)
+        public static List<T> GetSeparatorTranslation<T>(this List<T> list, Expression<Func<T, string>> property, string culture, char separator = defaultSeparator)
         {
             if (!(property.Body is MemberExpression))
             {

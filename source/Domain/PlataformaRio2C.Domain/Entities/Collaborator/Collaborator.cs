@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 04-25-2024
+// Last Modified On : 05-05-2024
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -3358,13 +3358,26 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        /// <summary>Sends the welcome email send date.</summary>
+        /// <summary>
+        /// Updates the welcome email send date.
+        /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="userId">The user identifier.</param>
-        public void SendWelcomeEmailSendDate(int editionId, int userId)
+        public void UpdateWelcomeEmailSendDate(int editionId, int userId)
         {
             var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(editionId);
-            attendeeCollaborator?.SendWelcomeEmailSendDate(userId);
+            attendeeCollaborator?.UpdateWelcomeEmailSendDate(userId);
+        }
+
+        /// <summary>
+        /// Updates the agenda email send date.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateAgendaEmailSendDate(int editionId, int userId)
+        {
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(editionId);
+            attendeeCollaborator?.UpdateAgendaEmailSendDate(userId);
         }
 
         #region Privates

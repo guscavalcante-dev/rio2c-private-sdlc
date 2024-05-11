@@ -86,7 +86,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            collaborator?.SendWelcomeEmailSendDate(cmd.Edition.Id, cmd.UserId);
+            collaborator?.UpdateWelcomeEmailSendDate(cmd.Edition.Id, cmd.UserId);
 
             // Sends the email
             await this.MailerService.SendAdminWelcomeEmail(cmd, sentEmail.Uid).SendAsync();

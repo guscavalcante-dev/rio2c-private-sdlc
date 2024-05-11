@@ -345,6 +345,34 @@ namespace PlataformaRio2C.Web.Admin.Services
             });
         }
 
+        /// <summary>
+        /// Sends the executive agenda email.
+        /// </summary>
+        /// <param name="cmd">The command.</param>
+        /// <param name="sentEmailUid">The sent email uid.</param>
+        /// <returns></returns>
+        public MvcMailMessage SendExecutiveAgendaEmail(SendExecutiveAgendaEmailAsync cmd, Guid sentEmailUid)
+        {
+            this.SetCulture(cmd.UserInterfaceLanguage);
+
+            this.ViewData = new ViewDataDictionary(cmd);
+
+            return Populate(x =>
+            {
+                x.Subject = this.GetSubject(string.Format("Sua agenda no {0} | Your agenda at {0}", cmd.Edition.Name), null);
+                x.ViewName = "ExecutiveAgendaEmail";
+                x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
+                x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
+                ViewBag.SentEmailUid = sentEmailUid;
+                ViewBag.SiteUrl = this.siteUrl;
+
+                if (!string.IsNullOrEmpty(this.GetBccEmailRecipient(true)))
+                {
+                    x.Bcc.Add(this.GetBccEmailRecipient(true));
+                }
+            });
+        }
+
         #region Private methods
 
         /// <summary>

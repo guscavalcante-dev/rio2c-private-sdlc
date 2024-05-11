@@ -259,6 +259,7 @@
     <Compile Include="CQRS\CommandsHandlers\Editions\EditionBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Editions\UpdateEditionDatesInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Editions\UpdateEditionMainInformationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendExecutiveAgendaEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendAdminWelcomeEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendAudiovisualCommissionWelcomeEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendCartoonCommissionWelcomeEmailAsyncCommandHandler.cs" />
@@ -452,6 +453,7 @@
     <Compile Include="CQRS\Commands\Editions\IEditionDatesInformation.cs" />
     <Compile Include="CQRS\Commands\Editions\UpdateEditionDatesInformation.cs" />
     <Compile Include="CQRS\Commands\Editions\UpdateEditionMainInformation.cs" />
+    <Compile Include="CQRS\Commands\Emails\Admin\SendExecutiveAgendaEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendAdminWelcomeEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendAudiovisualCommissionWelcomeEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendCartoonCommissionWelcomeEmailAsync.cs" />
@@ -772,6 +774,7 @@
     <Compile Include="ViewModels\Api\Conference\ConferenceItemListAppViewModel.cs" />
     <Compile Include="ViewModels\Api\Conference\LecturerAppViewModel.cs" />
     <Compile Include="ViewModels\Api\Conference\LecturerGroupAppViewModel.cs" />
+    <Compile Include="ViewModels\Common\Agendas\AgendaExecutiveSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Agendas\AgendaSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Audiovisual\Commissions\AudiovisualCommissionSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Audiovisual\Meetings\ScheduledSearchViewModel.cs" />

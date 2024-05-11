@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
-// Author           : Rafael Dantas Ruiz
-// Created          : 02-26-2020
+// Author           : Renan Valentim
+// Created          : 05-03-2024
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-26-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 05-03-2024
 // ***********************************************************************
-// <copyright file="SendMusicCommissionWelcomeEmailAsyncCommandHandler.cs" company="Softo">
+// <copyright file="SendExecutiveAgendaEmailAsyncCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -26,18 +26,18 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>SendMusicCommissionWelcomeEmailAsyncCommandHandler</summary>
-    public class SendMusicCommissionWelcomeEmailAsyncCommandHandler : MailerBaseCommandHandler, IRequestHandler<SendMusicCommissionWelcomeEmailAsync, AppValidationResult>
+    /// <summary>SendExecutiveAgendaEmailAsyncCommandHandler</summary>
+    public class SendExecutiveAgendaEmailAsyncCommandHandler : MailerBaseCommandHandler, IRequestHandler<SendExecutiveAgendaEmailAsync, AppValidationResult>
     {
         private readonly ICollaboratorRepository collaboratorRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="SendMusicCommissionWelcomeEmailAsyncCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="SendExecutiveAgendaEmailAsyncCommandHandler"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="mailerService">The mailer service.</param>
         /// <param name="sentEmailRepository">The sent email repository.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
-        public SendMusicCommissionWelcomeEmailAsyncCommandHandler(
+        public SendExecutiveAgendaEmailAsyncCommandHandler(
             IMediator commandBus,
             IUnitOfWork uow,
             IMailerService mailerService,
@@ -48,17 +48,19 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.collaboratorRepo = collaboratorRepository;
         }
 
-        /// <summary>Handles the specified send music commission welcome email asynchronous.</summary>
+        /// <summary>
+        /// Handles the specified command.
+        /// </summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(SendMusicCommissionWelcomeEmailAsync cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(SendExecutiveAgendaEmailAsync cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
             // Save sent email
             var sentEmailUid = Guid.NewGuid();
-            var sentEmail = new SentEmail(sentEmailUid, cmd.RecipientUserId, cmd.Edition.Id, "MusicCommissionWelcome");
+            var sentEmail = new SentEmail(sentEmailUid, cmd.RecipientUserId, cmd.Edition.Id, "ExecutiveAgenda");
             if (!sentEmail.IsValid())
             {
                 this.AppValidationResult.Add(sentEmail.ValidationResult);
@@ -67,16 +69,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             this.SentEmailRepo.Create(sentEmail);
 
-            // Update collaborator welcome email
             var collaborator = await this.collaboratorRepo.GetAsync(cmd.Collaboratoruid);
-            if (collaborator == null || collaborator.IsDeleted 
-                || !collaborator.AttendeeCollaborators.Any(ac => !ac.IsDeleted
-                                                                 && ac.EditionId == cmd.Edition.Id
-                                                                 && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
-                                                                                                            && !act.CollaboratorType.IsDeleted
-                                                                                                            && act.CollaboratorType.Uid == CollaboratorType.ComissionMusic.Uid)))
+            if (collaborator == null || collaborator.IsDeleted)
             {
-                this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Speaker, Labels.FoundM))));
+                this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundM))));
             }
 
             if (!this.AppValidationResult.IsValid)
@@ -84,19 +80,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            collaborator?.UpdateWelcomeEmailSendDate(cmd.Edition.Id, cmd.UserId);
+            collaborator?.UpdateAgendaEmailSendDate(cmd.Edition.Id, cmd.UserId);
 
             // Sends the email
-            await this.MailerService.SendMusicCommissionWelcomeEmail(cmd, sentEmail.Uid).SendAsync();
+            await this.MailerService.SendExecutiveAgendaEmail(cmd, sentEmail.Uid).SendAsync();
 
             this.Uow.SaveChanges();
 
             this.AppValidationResult.Data = sentEmail;
             return this.AppValidationResult;
-
-            //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
-
-            //return Task.FromResult(propertyId); // use it when the methed is not async
         }
     }
 }

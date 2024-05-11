@@ -12,8 +12,10 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Globalization;
 using MediatR;
 using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -76,6 +78,36 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Initializes a new instance of the <see cref="EmailBaseCommand"/> class.</summary>
         public EmailBaseCommand()
         {
+        }
+
+        /// <summary>
+        /// Gets the edition start and end date by culture.
+        /// </summary>
+        /// <param name="culture">The culture.</param>
+        /// <returns></returns>
+        /// <exception cref="System.Globalization.CultureNotFoundException"></exception>
+        public string GetEditionStartAndEndDateByCulture(CultureInfo culture)
+        {
+            DateTime startDate = this.Edition.StartDate.ToBrazilTimeZone();
+            DateTime endDate = this.Edition.EndDate.ToBrazilTimeZone();
+
+            string startDateDay = startDate.ToString("dd", culture);
+            string endDateDay = endDate.ToString("dd", culture);
+            string month = this.Edition.EndDate.ToString("MMMM", culture);
+            string year = this.Edition.EndDate.Year.ToString();
+
+            if (culture.Name == "pt-BR")
+            {
+                return $"{startDateDay} a {endDateDay} de {month} de {year}";
+            }
+            else if(culture.Name == "en-US")
+            {
+                return $"{month} {startDateDay}<sup>{startDate.GetDaySuffix()}</sup> – {endDateDay}<sup>{endDate.GetDaySuffix()}</sup>";
+            }
+            else
+            {
+                throw new CultureNotFoundException(culture.Name);
+            }
         }
     }
 }

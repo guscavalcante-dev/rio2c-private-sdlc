@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-27-2022
+// Last Modified On : 05-03-2024
 // ***********************************************************************
 // <copyright file="IMailerService.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -38,6 +38,7 @@ namespace PlataformaRio2C.Application.Services
         MvcMailMessage SendPlayersNegotiationEmail(SendPlayerNegotiationsEmailAsync cmd, Guid sentEmailUid);
         MvcMailMessage SendProducersNegotiationEmail(SendProducerNegotiationsEmailAsync cmd, Guid sentEmailUid);
         MvcMailMessage SendCreatorCommissionWelcomeEmail(SendCreatorCommissionWelcomeEmailAsync cmd, Guid sentEmailUid);
+        MvcMailMessage SendExecutiveAgendaEmail(SendExecutiveAgendaEmailAsync cmd, Guid sentEmailUid);
 
         #endregion
 

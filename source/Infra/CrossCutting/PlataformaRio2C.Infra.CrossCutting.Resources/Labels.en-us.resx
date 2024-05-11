@@ -705,6 +705,9 @@
     <value>Confirm to send emails for selected records?</value>
     <comment>Confirma o envio de e-mail para os registros selecionados?</comment>
   </data>
+  <data name="ConfirmToSendAgendaEmails" xml:space="preserve">
+    <value>Do you confirm sending an agenda email to the selected executives?</value>
+  </data>
   <data name="Connected" xml:space="preserve">
     <value>Connected</value>
     <comment>Conectado</comment>
@@ -788,6 +791,9 @@
   </data>
   <data name="Creators" xml:space="preserve">
     <value>Creators</value>
+  </data>
+  <data name="Credentialing" xml:space="preserve">
+    <value>Credentialing</value>
   </data>
   <data name="Curatorship" xml:space="preserve">
     <value>Curatorship</value>
@@ -1906,6 +1912,9 @@
     <value>Parameters</value>
     <comment>Parâmetros</comment>
   </data>
+  <data name="Parking" xml:space="preserve">
+    <value>Parking</value>
+  </data>
   <data name="Participant" xml:space="preserve">
     <value>Participant</value>
     <comment>Participante</comment>
@@ -2651,6 +2660,9 @@
     <value>Send</value>
     <comment>Enviar</comment>
   </data>
+  <data name="SendAgendaEmail" xml:space="preserve">
+    <value>Send agenda e-mail</value>
+  </data>
   <data name="SendDate" xml:space="preserve">
     <value>Send Date</value>
     <comment>Send Date</comment>
@@ -2761,6 +2773,9 @@
   <data name="Skip" xml:space="preserve">
     <value>Skip</value>
     <comment>Pular</comment>
+  </data>
+  <data name="SocialAgenda" xml:space="preserve">
+    <value>Social Agenda</value>
   </data>
   <data name="SocialMedia" xml:space="preserve">
     <value>Social media</value>
