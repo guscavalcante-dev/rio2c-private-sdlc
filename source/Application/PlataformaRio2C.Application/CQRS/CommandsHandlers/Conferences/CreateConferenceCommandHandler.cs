@@ -52,7 +52,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IRoomRepository roomRepository,
             ITrackRepository trackRepository,
             IPillarRepository pillarRepo,
-        IPresentationFormatRepository presentationFormatRepository)
+            IPresentationFormatRepository presentationFormatRepository)
             : base(eventBus, uow, conferenceRepository)
         {
             this.editionEventRepo = editionEventRepository;
@@ -87,6 +87,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.TrackUids?.Any() == true ? await this.trackRepo.FindAllByUidsAsync(cmd.TrackUids) : new List<Track>(),
                 cmd.PillarUids?.Any() == true ? await this.pillarRepo.FindAllByUidsAsync(cmd.PillarUids) : new List<Pillar>(),
                 cmd.PresentationFormatUids?.Any() == true ? await this.presentationFormatRepo.FindAllByUidsAsync(cmd.PresentationFormatUids) : new List<PresentationFormat>(),
+                cmd.Dynamics?.Select(d => new ConferenceDynamic(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.UserId);
             if (!conference.IsValid())
             {

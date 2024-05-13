@@ -194,6 +194,7 @@
     <Compile Include="Dtos\Cartoon\CartoonProjectCreatorDto.cs" />
     <Compile Include="Dtos\Cartoon\CartoonProjectDto.cs" />
     <Compile Include="Dtos\Cartoon\AttendeeCartoonProjectJsonDto.cs" />
+    <Compile Include="Dtos\Conferences\ConferenceDynamicDto.cs" />
     <Compile Include="Dtos\Creator\AttendeeCreatorProjectEvaluationDto.cs" />
     <Compile Include="Dtos\Creator\AttendeeCreatorProjectDto.cs" />
     <Compile Include="Dtos\Creator\CreatorProjectDto.cs" />
@@ -423,6 +424,7 @@
     <Compile Include="Entities\Common\PillarName.cs" />
     <Compile Include="Entities\Conference\ConferencePresentationFormat.cs" />
     <Compile Include="Entities\Conference\ConferencePillar.cs" />
+    <Compile Include="Entities\Conference\ConferenceDynamic.cs" />
     <Compile Include="Entities\Conference\ConferenceTrack.cs" />
     <Compile Include="Entities\Conference\ConferenceParticipantRole.cs" />
     <Compile Include="Entities\Conference\ConferenceParticipant.cs" />

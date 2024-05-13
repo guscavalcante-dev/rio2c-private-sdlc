@@ -46,6 +46,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public List<ConferenceTitleBaseCommand> Titles { get; set; }
         public List<ConferenceSynopsisBaseCommand> Synopsis { get; set; }
+        public List<ConferenceDynamicBaseCommand> Dynamics { get; set; }
 
         public List<Guid> TrackUids { get; set; }
         public List<Guid> PillarUids { get; set; }
@@ -78,6 +79,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             this.UpdateTitles(languagesDtos);
             this.UpdateSynopsis(languagesDtos);
+            this.UpdateDynamics(languagesDtos);
 
             this.UpdateDropdowns(editionEvents, roomDtos, tracks, pillars, presentationFormats, userInterfaceLanguage);
         }
@@ -144,6 +146,18 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             foreach (var languageDto in languagesDtos)
             {
                 this.Synopsis.Add(new ConferenceSynopsisBaseCommand(languageDto));
+            }
+        }
+
+
+        /// <summary>Updates the Dynamics.</summary>
+        /// <param name="languagesDtos">The languages dtos.</param>
+        private void UpdateDynamics(List<LanguageDto> languagesDtos)
+        {
+            this.Dynamics = new List<ConferenceDynamicBaseCommand>();
+            foreach (var languageDto in languagesDtos)
+            {
+                this.Dynamics.Add(new ConferenceDynamicBaseCommand(languageDto));
             }
         }
 
