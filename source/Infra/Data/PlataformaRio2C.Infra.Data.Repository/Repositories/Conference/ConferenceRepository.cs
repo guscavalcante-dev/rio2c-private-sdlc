@@ -421,7 +421,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         Name = cs.Language.Name,
                                         Code = cs.Language.Code
                                     }
-                                })
+                                }),
+                                //ConferenceDynamicDtos = c.ConferenceDynamics.Where(cd => !cd.IsDeleted).Select(cd => new ConferenceDynamicDto
+                                //{
+                                //    ConferenceDynamic = cd,
+                                //    LanguageDto = new LanguageBaseDto
+                                //    {
+                                //        Id = cd.Language.Id,
+                                //        Uid = cd.Language.Uid,
+                                //        Name = cd.Language.Name,
+                                //        Code = cd.Language.Code
+                                //    }
+                                //})
                             })
                             .FirstOrDefaultAsync();
         }

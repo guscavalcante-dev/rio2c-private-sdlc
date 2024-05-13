@@ -91,7 +91,9 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Updates the main information.</summary>
+        /// <summary>
+        /// Updates the main information.
+        /// </summary>
         /// <param name="editionEvent">The edition event.</param>
         /// <param name="date">The date.</param>
         /// <param name="startTime">The start time.</param>
@@ -99,6 +101,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="room">The room.</param>
         /// <param name="conferenceTitles">The conference titles.</param>
         /// <param name="conferenceSynopses">The conference synopses.</param>
+        /// <param name="conferenceDynamics">The conference dynamics.</param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateMainInformation(
             EditionEvent editionEvent,
@@ -108,6 +111,7 @@ namespace PlataformaRio2C.Domain.Entities
             Room room,
             List<ConferenceTitle> conferenceTitles,
             List<ConferenceSynopsis> conferenceSynopses,
+            List<ConferenceDynamic> conferenceDynamics,
             int userId)
         {
             this.EditionEventId = editionEvent?.Id ?? 0;
@@ -118,6 +122,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Room = room;
             this.SynchronizeConferenceTitles(conferenceTitles, userId);
             this.SynchronizeConferenceSynopses(conferenceSynopses, userId);
+            this.SynchronizeConferenceDynamics(conferenceDynamics, userId);
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;

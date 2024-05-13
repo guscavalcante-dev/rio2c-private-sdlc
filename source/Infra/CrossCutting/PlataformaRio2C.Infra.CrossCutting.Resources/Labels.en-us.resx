@@ -680,6 +680,9 @@
   <data name="ConferenceDetails" xml:space="preserve">
     <value>Conference Details</value>
   </data>
+  <data name="ConferenceDynamic" xml:space="preserve">
+    <value>Conference Dynamic</value>
+  </data>
   <data name="Conferences" xml:space="preserve">
     <value>Conferences</value>
     <comment>Palestras</comment>
@@ -935,6 +938,9 @@
   <data name="DuplicateEntity" xml:space="preserve">
     <value>Duplicate {0}</value>
     <comment>Duplicar {0}</comment>
+  </data>
+  <data name="Dynamic" xml:space="preserve">
+    <value>Conference Dynamic</value>
   </data>
   <data name="EachEpisodePlayingTime" xml:space="preserve">
     <value>Each episode's playing time</value>

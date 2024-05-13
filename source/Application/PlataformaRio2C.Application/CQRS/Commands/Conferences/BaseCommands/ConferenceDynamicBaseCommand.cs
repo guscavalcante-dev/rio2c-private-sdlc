@@ -20,7 +20,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>ConferenceDynamicBaseCommand</summary>
     public class ConferenceDynamicBaseCommand
     {
-        //[Display(Name = "ConferenceDynamic", ResourceType = typeof(Labels))]
+        [Display(Name = "ConferenceDynamic", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(200, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Value { get; set; }

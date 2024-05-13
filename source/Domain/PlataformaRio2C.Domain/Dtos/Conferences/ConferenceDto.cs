@@ -35,6 +35,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<ConferenceTrackDto> ConferenceTrackDtos { get; set; }
         public IEnumerable<ConferencePresentationFormatDto> ConferencePresentationFormatDtos { get; set; }
         public IEnumerable<ConferencePillarDto> ConferencePillarDtos { get; set; }
+        public IEnumerable<ConferenceDynamicDto> ConferenceDynamicDtos { get; set; }
 
         public bool? IsParticipant { get; set; }
 

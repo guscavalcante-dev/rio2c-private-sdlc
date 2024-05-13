@@ -81,6 +81,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.RoomUid.HasValue ? await this.roomRepo.FindByUidAsync(cmd.RoomUid.Value) : null,
                 cmd.Titles?.Select(d => new ConferenceTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.Synopsis?.Select(d => new ConferenceSynopsis(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
+                cmd.Dynamics?.Select(d => new ConferenceDynamic(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.UserId);
             if (!conference.IsValid())
             {

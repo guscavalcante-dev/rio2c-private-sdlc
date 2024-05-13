@@ -49,6 +49,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public List<ConferenceTitleBaseCommand> Titles { get; set; }
         public List<ConferenceSynopsisBaseCommand> Synopsis { get; set; }
+        public List<ConferenceDynamicBaseCommand> Dynamics { get; set; }
 
         public DateTimeOffset? StartDate { get; private set; }
         public DateTimeOffset? EndDate { get; private set; }
@@ -75,6 +76,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.RoomUid = conferenceDto?.RoomDto?.Room?.Uid;
             this.UpdateTitles(conferenceDto, languagesDtos);
             this.UpdateSynopsis(conferenceDto, languagesDtos);
+            this.UpdateDynamics(conferenceDto, languagesDtos);
 
             this.UpdateDropdowns(editionEvents, roomDtos, userInterfaceLanguage);
         }
@@ -137,6 +139,19 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 var conferenceSynopsis = conferenceDto?.ConferenceSynopsisDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
                 this.Synopsis.Add(conferenceSynopsis != null ? new ConferenceSynopsisBaseCommand(conferenceSynopsis) :
                                                                new ConferenceSynopsisBaseCommand(languageDto));
+            }
+        }
+
+        /// <summary>Updates the Dynamics.</summary>
+        /// <param name="languagesDtos">The languages dtos.</param>
+        private void UpdateDynamics(ConferenceDto conferenceDto, List<LanguageDto> languagesDtos)
+        {
+            this.Dynamics = new List<ConferenceDynamicBaseCommand>();
+            foreach (var languageDto in languagesDtos)
+            {
+                var conferenceDynamic = conferenceDto?.ConferenceDynamicDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
+                this.Dynamics.Add(conferenceDynamic != null ? new ConferenceDynamicBaseCommand(conferenceDynamic) :
+                                                               new ConferenceDynamicBaseCommand(languageDto));
             }
         }
 
