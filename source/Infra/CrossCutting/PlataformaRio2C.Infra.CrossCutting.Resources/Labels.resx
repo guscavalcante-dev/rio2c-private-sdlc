@@ -380,7 +380,7 @@
   </data>
   <data name="AudiovisualTermsAcceptanceDate" xml:space="preserve">
     <value>Data de aceite do regulamento de Audiovisual</value>
-    
+  
   </data>
   <data name="AudiovisualVirtualMeetingJoinDate" xml:space="preserve">
     <value>Data de ingresso na reunião virtual</value>
@@ -675,6 +675,9 @@
   </data>
   <data name="ConferenceDetails" xml:space="preserve">
     <value>Detalhes da Palestra</value>
+  </data>
+  <data name="ConferenceDynamic" xml:space="preserve">
+    <value>Dinâmica da Palestra</value>
   </data>
   <data name="Conferences" xml:space="preserve">
     <value>Palestras</value>

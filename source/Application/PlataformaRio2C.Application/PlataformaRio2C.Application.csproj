@@ -441,6 +441,7 @@
     <Compile Include="CQRS\Commands\ConferenceParticipantRoles\CreateConferenceParticipantRole.cs" />
     <Compile Include="CQRS\Commands\ConferenceParticipantRoles\DeleteConferenceParticipantRole.cs" />
     <Compile Include="CQRS\Commands\ConferenceParticipantRoles\UpdateConferenceParticipantRoleMainInformation.cs" />
+    <Compile Include="CQRS\Commands\Conferences\BaseCommands\ConferenceDynamicBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Connections\CleanUpConnectionsAsync.cs" />
     <Compile Include="CQRS\Commands\Creator\Commissions\BaseCommands\CreatorCommissionCollaboratorBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Creator\Commissions\CreateCreatorCommissionCollaborator.cs" />

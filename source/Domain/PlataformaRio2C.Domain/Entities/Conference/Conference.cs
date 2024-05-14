@@ -37,6 +37,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<ConferenceTrack> ConferenceTracks { get; private set; }
         public virtual ICollection<ConferencePresentationFormat> ConferencePresentationFormats { get; private set; }
         public virtual ICollection<ConferencePillar> ConferencePillars { get; private set; }
+        public virtual ICollection<ConferenceDynamic> ConferenceDynamics { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Conference"/> class.</summary>
         /// <param name="conferenceUid">The conference uid.</param>
@@ -63,6 +64,7 @@ namespace PlataformaRio2C.Domain.Entities
             List<Track> tracks,
             List<Pillar> pillars,
             List<PresentationFormat> presentationFormats,
+            List<ConferenceDynamic> conferenceDynamics,
             int userId)
         {
             //this.Uid = conferenceUid;
@@ -77,6 +79,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeConferenceTracks(tracks, userId);
             this.SynchronizeConferencePillars(pillars, userId);
             this.SynchronizeConferencePresentationFormats(presentationFormats, userId);
+            this.SynchronizeConferenceDynamics(conferenceDynamics, userId);
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
@@ -88,7 +91,9 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Updates the main information.</summary>
+        /// <summary>
+        /// Updates the main information.
+        /// </summary>
         /// <param name="editionEvent">The edition event.</param>
         /// <param name="date">The date.</param>
         /// <param name="startTime">The start time.</param>
@@ -96,6 +101,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="room">The room.</param>
         /// <param name="conferenceTitles">The conference titles.</param>
         /// <param name="conferenceSynopses">The conference synopses.</param>
+        /// <param name="conferenceDynamics">The conference dynamics.</param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateMainInformation(
             EditionEvent editionEvent,
@@ -105,6 +111,7 @@ namespace PlataformaRio2C.Domain.Entities
             Room room,
             List<ConferenceTitle> conferenceTitles,
             List<ConferenceSynopsis> conferenceSynopses,
+            List<ConferenceDynamic> conferenceDynamics,
             int userId)
         {
             this.EditionEventId = editionEvent?.Id ?? 0;
@@ -115,6 +122,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Room = room;
             this.SynchronizeConferenceTitles(conferenceTitles, userId);
             this.SynchronizeConferenceSynopses(conferenceSynopses, userId);
+            this.SynchronizeConferenceDynamics(conferenceDynamics, userId);
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
@@ -255,6 +263,61 @@ namespace PlataformaRio2C.Domain.Entities
         private void CreateConferenceSynopsis(ConferenceSynopsis conferenceSynopsis)
         {
             this.ConferenceSynopses.Add(conferenceSynopsis);
+        }
+
+        #endregion
+
+        #region Conference Dynamics
+
+        /// <summary>Synchronizes the conference Dynamics.</summary>
+        /// <param name="conferenceDynamics">The conference Dynamics.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeConferenceDynamics(List<ConferenceDynamic> conferenceDynamics, int userId)
+        {
+            if (this.ConferenceDynamics == null)
+            {
+                this.ConferenceDynamics = new List<ConferenceDynamic>();
+            }
+
+            this.DeleteConferenceDynamics(conferenceDynamics, userId);
+
+            if (conferenceDynamics?.Any() != true)
+            {
+                return;
+            }
+
+            // Create or update
+            foreach (var conferenceDynamic in conferenceDynamics)
+            {
+                var conferenceDynamicDb = this.ConferenceDynamics.FirstOrDefault(d => d.Language.Code == conferenceDynamic.Language.Code);
+                if (conferenceDynamicDb != null)
+                {
+                    conferenceDynamicDb.Update(conferenceDynamic);
+                }
+                else
+                {
+                    this.CreateConferenceDynamic(conferenceDynamic);
+                }
+            }
+        }
+
+        /// <summary>Deletes the conference Dynamics.</summary>
+        /// <param name="newConferenceDynamics">The new conference Dynamics.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteConferenceDynamics(List<ConferenceDynamic> newConferenceDynamics, int userId)
+        {
+            var conferenceDynamicsToDelete = this.ConferenceDynamics.Where(db => newConferenceDynamics?.Select(d => d.Language.Code)?.Contains(db.Language.Code) == false && !db.IsDeleted).ToList();
+            foreach (var conferenceDynamicToDelete in conferenceDynamicsToDelete)
+            {
+                conferenceDynamicToDelete.Delete(userId);
+            }
+        }
+
+        /// <summary>Creates the conference Dynamic.</summary>
+        /// <param name="conferenceDynamic">The conference Dynamic.</param>
+        private void CreateConferenceDynamic(ConferenceDynamic conferenceDynamic)
+        {
+            this.ConferenceDynamics.Add(conferenceDynamic);
         }
 
         #endregion

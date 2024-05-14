@@ -35,6 +35,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<ConferenceTrackDto> ConferenceTrackDtos { get; set; }
         public IEnumerable<ConferencePresentationFormatDto> ConferencePresentationFormatDtos { get; set; }
         public IEnumerable<ConferencePillarDto> ConferencePillarDtos { get; set; }
+        public IEnumerable<ConferenceDynamicDto> ConferenceDynamicDtos { get; set; }
 
         public bool? IsParticipant { get; set; }
 
@@ -62,6 +63,16 @@ namespace PlataformaRio2C.Domain.Dtos
         public ConferenceSynopsisDto GetConferenceSynopsisDtoByLanguageCode(string languageCode)
         {
             return this.ConferenceSynopsisDtos?.FirstOrDefault(csDto => csDto.LanguageDto.Code == languageCode);
+        }
+
+        /// <summary>
+        /// Gets the conference dynamic dto by language code.
+        /// </summary>
+        /// <param name="languageCode">The language code.</param>
+        /// <returns></returns>
+        public ConferenceDynamicDto GetConferenceDynamicDtoByLanguageCode(string languageCode)
+        {
+            return this.ConferenceDynamicDtos?.FirstOrDefault(csDto => csDto.LanguageDto.Code == languageCode);
         }
 
         /// <summary>

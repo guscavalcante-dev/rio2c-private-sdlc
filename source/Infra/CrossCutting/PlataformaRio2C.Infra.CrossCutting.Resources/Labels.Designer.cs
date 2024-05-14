@@ -1429,6 +1429,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dinâmica da Palestra.
+        /// </summary>
+        public static string ConferenceDynamic {
+            get {
+                return ResourceManager.GetString("ConferenceDynamic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Palestras.
         /// </summary>
         public static string Conferences {
