@@ -129,6 +129,7 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new ConferenceTrackMap());
             modelBuilder.Configurations.Add(new ConferencePillarMap());
             modelBuilder.Configurations.Add(new ConferencePresentationFormatMap());
+            modelBuilder.Configurations.Add(new ConferenceDynamicMap());
 
             // Negotiations
             modelBuilder.Configurations.Add(new NegotiationMap());

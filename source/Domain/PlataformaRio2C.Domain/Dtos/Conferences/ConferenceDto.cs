@@ -66,6 +66,16 @@ namespace PlataformaRio2C.Domain.Dtos
         }
 
         /// <summary>
+        /// Gets the conference dynamic dto by language code.
+        /// </summary>
+        /// <param name="languageCode">The language code.</param>
+        /// <returns></returns>
+        public ConferenceDynamicDto GetConferenceDynamicDtoByLanguageCode(string languageCode)
+        {
+            return this.ConferenceDynamicDtos?.FirstOrDefault(csDto => csDto.LanguageDto.Code == languageCode);
+        }
+
+        /// <summary>
         /// Gets the room name dto by language code.
         /// </summary>
         /// <param name="languageCode">The language code.</param>

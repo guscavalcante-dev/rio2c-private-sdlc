@@ -21,7 +21,7 @@ namespace PlataformaRio2C.Domain.Entities
     public class ConferenceDynamic : Entity
     {
         public static readonly int ValueMinLength = 1;
-        public static readonly int ValueMaxLength = 8000;
+        public static readonly int ValueMaxLength = 1000;
 
         public int ConferenceId { get; private set; }
         public int LanguageId { get; private set; }
