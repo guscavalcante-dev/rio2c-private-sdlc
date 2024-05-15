@@ -4,7 +4,7 @@
 // Created          : 05-15-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 04-20-2023
+// Last Modified On : 05-15-2024
 // ***********************************************************************
 // <copyright file="UpdateNegotiationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -88,18 +88,30 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var startDatePreview = negotiationConfig.StartDate.Date.JoinDateAndTime(cmd.StartTime, true).ToUtcTimeZone();
             var endDatePreview = startDatePreview.Add(negotiationConfig.TimeOfEachRound);
 
+            List<Negotiation> automaticScheduledNegotiationsInThisRoom = new List<Negotiation>();
+            bool isUsingAutomaticTable = false;
+
             #region Overbooking Validations
 
             // Available tables check
-            var negotiationsGroupedByRoomAndStartDate = manualScheduledNegotiationsInThisRoom.GroupBy(n => n.StartDate);
-            var hasNoMoreTablesAvailable = negotiationsGroupedByRoomAndStartDate.Any(n => n.Count(w => w.StartDate == startDatePreview) >= negotiationRoomConfig.CountManualTables);
-            if (hasNoMoreTablesAvailable)
+            var manualNegotiationsGroupedByRoomAndStartDate = manualScheduledNegotiationsInThisRoom.GroupBy(n => n.StartDate);
+            var hasNoMoreManualTablesAvailable = manualNegotiationsGroupedByRoomAndStartDate.Any(n => n.Count(w => w.StartDate == startDatePreview) >= negotiationRoomConfig.CountManualTables);
+            if (hasNoMoreManualTablesAvailable)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(
+                // Has no more manual tables available, so, try to use slots available at automatic tables
+                automaticScheduledNegotiationsInThisRoom = await this.NegotiationRepo.FindAutomaticScheduledNegotiationsByRoomIdAsync(negotiationRoomConfig?.Room?.Id ?? 0);
+                var automaticNegotiationsGroupedByRoomAndStartDate = automaticScheduledNegotiationsInThisRoom.GroupBy(n => n.StartDate);
+                var hasNoMoreAutomaticTablesAvailable = automaticNegotiationsGroupedByRoomAndStartDate.Any(n => n.Count(w => w.StartDate == startDatePreview) >= negotiationRoomConfig.CountAutomaticTables);
+                if (hasNoMoreAutomaticTablesAvailable)
+                {
+                    this.ValidationResult.Add(new ValidationError(string.Format(
                     Messages.NoMoreTablesAvailableAtTheRoomAndStartTime,
                     cmd.StartTime,
                     negotiationRoomConfig.Room.GetRoomNameByLanguageCode(cmd.UserInterfaceLanguage)),
                         new string[] { "ToastrError" }));
+                }
+
+                isUsingAutomaticTable = true;
             }
 
             // Negotiations checks
@@ -188,9 +200,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 this.AppValidationResult.Add(this.ValidationResult);
                 return this.AppValidationResult;
             }
-
-            var negotiationsInThisRoomAndStartDate = manualScheduledNegotiationsInThisRoom.Where(n => n.StartDate == startDatePreview).ToList();
             
+            // Concat Manual and Automatic negotiations to use inside negotiation.Update();
+            var negotiationsInThisRoomAndStartDate = manualScheduledNegotiationsInThisRoom
+                                                        .Concat(automaticScheduledNegotiationsInThisRoom)
+                                                        .Where(n => n.StartDate == startDatePreview)
+                                                        .ToList();
+
             var negotiation = await this.GetNegotiationByUid(cmd.NegotiationUid);
             negotiation.Update(
                 negotiationConfig,
@@ -198,7 +214,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 negotiationsInThisRoomAndStartDate,
                 cmd.StartTime,
                 cmd.RoundNumber ?? 0,
-                cmd.UserId);
+                cmd.UserId,
+                cmd.UserInterfaceLanguage,
+                isUsingAutomaticTable);
 
             if (!negotiation.IsValid())
             {

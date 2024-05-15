@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-25-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 05-15-2024
 // ***********************************************************************
 // <copyright file="NegotiationConfigRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -92,7 +92,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     query = query
                                 .HasRoomsConfigured()
                                 .Where(n => n.NegotiationRoomConfigs.Any(nrc => !nrc.IsDeleted 
-                                                                                && nrc.CountManualTables > 0
+                                                                                && nrc.CountManualTables > 0 
                                                                                 && nrc.Room.IsVirtualMeeting == buyerAttendeeOrganizationAcceptsVirtualMeeting));
                 }
             }
@@ -334,7 +334,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 NegotiationRoomConfigDtos = nc.NegotiationRoomConfigs
                                                                     .Where(nrc => !nrc.IsDeleted 
                                                                                     && !nrc.Room.IsDeleted 
-                                                                                    && nrc.CountManualTables > 0 
+                                                                                    && (nrc.CountManualTables > 0 || nrc.CountAutomaticTables > 0)
                                                                                     && nrc.Room.IsVirtualMeeting == buyerAttendeeOrganizationAcceptsVirtualMeeting)
                                                                     .Select(nrc => new NegotiationRoomConfigDto
                                                                     {
@@ -376,7 +376,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             {
                                 NegotiationConfig = nc,
                                 NegotiationRoomConfigDtos = nc.NegotiationRoomConfigs
-                                                                    .Where(nrc => !nrc.IsDeleted && !nrc.Room.IsDeleted && nrc.CountManualTables > 0 && nrc.Uid == negotiationRoomConfigUid)
+                                                                    .Where(nrc => !nrc.IsDeleted && !nrc.Room.IsDeleted && (nrc.CountManualTables > 0 || nrc.CountAutomaticTables > 0) && nrc.Uid == negotiationRoomConfigUid)
                                                                     .Select(nrc => new NegotiationRoomConfigDto
                                                                     {
                                                                         NegotiationRoomConfig = nrc,

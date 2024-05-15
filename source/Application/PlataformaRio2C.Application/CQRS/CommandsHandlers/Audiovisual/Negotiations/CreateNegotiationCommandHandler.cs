@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 03-08-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-26-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 05-15-2024
 // ***********************************************************************
 // <copyright file="CreateNegotiationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,6 +13,7 @@
 // ***********************************************************************
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -71,23 +72,35 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var project = await this.projectRepo.GetAsync(cmd.ProjectUid ?? Guid.Empty);
             var negotiationConfig = await this.negotiationConfigRepo.GetAsync(cmd.NegotiationConfigUid ?? Guid.Empty);
             var negotiationRoomConfig = await this.negotiationRoomConfigRepo.GetAsync(cmd.NegotiationRoomConfigUid ?? Guid.Empty);
-            var negotiationsInThisRoom = await this.NegotiationRepo.FindManualScheduledNegotiationsByRoomIdAsync(negotiationRoomConfig?.Room?.Id ?? 0);
+            var manualScheduledNegotiationsInThisRoom = await this.NegotiationRepo.FindManualScheduledNegotiationsByRoomIdAsync(negotiationRoomConfig?.Room?.Id ?? 0);
 
             var startDatePreview = negotiationConfig.StartDate.Date.JoinDateAndTime(cmd.StartTime, true).ToUtcTimeZone();
             var endDatePreview = startDatePreview.Add(negotiationConfig.TimeOfEachRound);
 
+            List<Negotiation> automaticScheduledNegotiationsInThisRoom = new List<Negotiation>();
+            bool isUsingAutomaticTable = false;
+
             #region Overbooking Validations
 
             // Available tables check
-            var negotiationsGroupedByRoomAndStartDate = negotiationsInThisRoom.GroupBy(n => n.StartDate);
-            var hasNoMoreTablesAvailable = negotiationsGroupedByRoomAndStartDate.Any(n => n.Count(w => w.StartDate == startDatePreview) >= negotiationRoomConfig.CountManualTables);
-            if (hasNoMoreTablesAvailable)
+            var manualNegotiationsGroupedByRoomAndStartDate = manualScheduledNegotiationsInThisRoom.GroupBy(n => n.StartDate);
+            var hasNoMoreManualTablesAvailable = manualNegotiationsGroupedByRoomAndStartDate.Any(n => n.Count(w => w.StartDate == startDatePreview) >= negotiationRoomConfig.CountManualTables);
+            if (hasNoMoreManualTablesAvailable)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(
+                // Has no more manual tables available, so, try to use slots available at automatic tables
+                automaticScheduledNegotiationsInThisRoom = await this.NegotiationRepo.FindAutomaticScheduledNegotiationsByRoomIdAsync(negotiationRoomConfig?.Room?.Id ?? 0);
+                var automaticNegotiationsGroupedByRoomAndStartDate = automaticScheduledNegotiationsInThisRoom.GroupBy(n => n.StartDate);
+                var hasNoMoreAutomaticTablesAvailable = automaticNegotiationsGroupedByRoomAndStartDate.Any(n => n.Count(w => w.StartDate == startDatePreview) >= negotiationRoomConfig.CountAutomaticTables);
+                if (hasNoMoreAutomaticTablesAvailable)
+                {
+                    this.ValidationResult.Add(new ValidationError(string.Format(
                     Messages.NoMoreTablesAvailableAtTheRoomAndStartTime,
                     cmd.StartTime,
                     negotiationRoomConfig.Room.GetRoomNameByLanguageCode(cmd.UserInterfaceLanguage)),
                         new string[] { "ToastrError" }));
+                }
+
+                isUsingAutomaticTable = true;
             }
 
             // Negotiations checks
@@ -184,7 +197,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            var negotiationsInThisRoomAndStartDate = negotiationsInThisRoom.Where(n => n.StartDate == startDatePreview).ToList();
+            // Concat Manual and Automatic negotiations to use inside negotiation.Update();
+            var negotiationsInThisRoomAndStartDate = manualScheduledNegotiationsInThisRoom
+                                                        .Concat(automaticScheduledNegotiationsInThisRoom)
+                                                        .Where(n => n.StartDate == startDatePreview)
+                                                        .ToList();
 
             var negotiationUid = Guid.NewGuid();
             var negotiation = new Negotiation(
@@ -197,7 +214,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 negotiationsInThisRoomAndStartDate,
                 cmd.StartTime,
                 cmd.RoundNumber ?? 0,
-                cmd.UserId);
+                cmd.UserId,
+                cmd.UserInterfaceLanguage,
+                isUsingAutomaticTable);
             if (!negotiation.IsValid())
             {
                 this.AppValidationResult.Add(negotiation.ValidationResult);

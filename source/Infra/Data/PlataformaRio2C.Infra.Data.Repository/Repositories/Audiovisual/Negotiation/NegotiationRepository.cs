@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Renan valentim
-// Last Modified On : 06-26-2023
+// Last Modified By : Renan Valentim
+// Last Modified On : 05-15-2024
 // ***********************************************************************
 // <copyright file="NegotiationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -534,12 +534,27 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>
         /// Finds the negotiations by edition identifier asynchronous.
         /// </summary>
-        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="roomId">The room identifier.</param>
+        /// <param name="showAllRooms">if set to <c>true</c> [show all rooms].</param>
         /// <returns></returns>
         public async Task<List<Negotiation>> FindManualScheduledNegotiationsByRoomIdAsync(int roomId, bool showAllRooms = false)
         {
             var query = this.GetBaseQuery()
                                 .IsManual()
+                                .FindByRoomId(roomId, showAllRooms);
+
+            return await query.ToListAsync();
+        }
+
+        /// <summary>
+        /// Finds the negotiations by edition identifier asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<List<Negotiation>> FindAutomaticScheduledNegotiationsByRoomIdAsync(int roomId, bool showAllRooms = false)
+        {
+            var query = this.GetBaseQuery()
+                                .IsAutomatic()
                                 .FindByRoomId(roomId, showAllRooms);
 
             return await query.ToListAsync();
