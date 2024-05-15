@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Renan valentim
-// Last Modified On : 06-26-2023
+// Last Modified By : Renan Valentim
+// Last Modified On : 05-15-2024
 // ***********************************************************************
 // <copyright file="Negotiation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -69,15 +69,21 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Negotiation"/> class for manual negotiations.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Negotiation" /> class for manual negotiations.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
         /// <param name="negotiationUid">The negotiation uid.</param>
         /// <param name="buyerOrganization">The buyer organization.</param>
         /// <param name="project">The project.</param>
         /// <param name="negotiationConfig">The negotiation configuration.</param>
         /// <param name="negotiationRoomConfig">The negotiation room configuration.</param>
+        /// <param name="negotiations">The negotiations.</param>
         /// <param name="startTime">The start time.</param>
         /// <param name="roundNumber">The round number.</param>
         /// <param name="userId">The user identifier.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <param name="isUsingAutomaticTable">if set to <c>true</c> [is using automatic table].</param>
         public Negotiation(
             int editionId,
             Guid negotiationUid,
@@ -88,7 +94,9 @@ namespace PlataformaRio2C.Domain.Entities
             List<Negotiation> negotiations,
             string startTime,
             int roundNumber,
-            int userId)
+            int userId,
+            string userInterfaceLanguage,
+            bool isUsingAutomaticTable)
         {
             this.EditionId = editionId;
 
@@ -106,10 +114,10 @@ namespace PlataformaRio2C.Domain.Entities
             this.GenerateStarAndEndDate(negotiationConfig, startTime);
 
             // Table Number
-            this.GenerateTableNumber(negotiationConfig, negotiationRoomConfig, negotiations);
+            this.GenerateTableNumber(negotiationConfig, negotiationRoomConfig, negotiations, startTime, userInterfaceLanguage, isUsingAutomaticTable);
 
             this.RoundNumber = roundNumber;
-            this.IsAutomatic = false;
+            this.IsAutomatic = isUsingAutomaticTable;
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
@@ -125,19 +133,22 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>
         /// Updates the specified room.
         /// </summary>
-        /// <param name="room">The room.</param>
-        /// <param name="startDate">The start date.</param>
-        /// <param name="endDate">The end date.</param>
-        /// <param name="tableNumber">The table number.</param>
+        /// <param name="negotiationConfig">The negotiation configuration.</param>
+        /// <param name="negotiationRoomConfig">The negotiation room configuration.</param>
+        /// <param name="roomNegotiations">The room negotiations.</param>
+        /// <param name="startTime">The start time.</param>
         /// <param name="roundNumber">The round number.</param>
         /// <param name="userId">The user identifier.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
         public void Update(
             NegotiationConfig negotiationConfig,
             NegotiationRoomConfig negotiationRoomConfig,
             List<Negotiation> roomNegotiations,
             string startTime,
             int roundNumber,
-            int userId)
+            int userId,
+            string userInterfaceLanguage,
+            bool isUsingAutomaticTable)
         {
             // Room
             var room = negotiationRoomConfig?.Room;
@@ -148,10 +159,10 @@ namespace PlataformaRio2C.Domain.Entities
             this.GenerateStarAndEndDate(negotiationConfig, startTime);
 
             // Table Number
-            this.GenerateTableNumber(negotiationConfig, negotiationRoomConfig, roomNegotiations);
+            this.GenerateTableNumber(negotiationConfig, negotiationRoomConfig, roomNegotiations, startTime, userInterfaceLanguage, isUsingAutomaticTable);
 
             this.RoundNumber = roundNumber;
-            this.IsAutomatic = false;
+            this.IsAutomatic = isUsingAutomaticTable;
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
@@ -177,12 +188,20 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>
         /// Generates the table number.
         /// </summary>
+        /// <param name="negotiationConfig">The negotiation configuration.</param>
         /// <param name="negotiationRoomConfig">The negotiation room configuration.</param>
         /// <param name="negotiations">The room negotiations.</param>
+        /// <param name="startTime">The start time.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <param name="isUsingAutomaticTable">if set to <c>true</c> [is using automatic table].</param>
+        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
         private void GenerateTableNumber(
             NegotiationConfig negotiationConfig,
             NegotiationRoomConfig negotiationRoomConfig,
-            List<Negotiation> negotiations)
+            List<Negotiation> negotiations,
+            string startTime,
+            string userInterfaceLanguage,
+            bool isUsingAutomaticTable)
         {
             if (negotiationConfig == null)
                 return;
@@ -191,7 +210,22 @@ namespace PlataformaRio2C.Domain.Entities
 
             if (negotiations?.Count > 0)
             {
-                this.TableNumber = negotiations.Max(n => n.TableNumber) + 1;
+                //this.TableNumber = negotiations.Max(n => n.TableNumber) + 1;
+                List<int> tableNumbers = negotiations.Select(n => n.TableNumber).ToList();
+                int smallestTableNumber = isUsingAutomaticTable ? 1 : negotiationRoomConfig.CountAutomaticTables + 1;
+                int largestTableNumber = isUsingAutomaticTable ? negotiationRoomConfig.CountAutomaticTables : (negotiationRoomConfig.CountAutomaticTables + negotiationRoomConfig.CountManualTables);
+                IEnumerable<int> allTableNumbers = Enumerable.Range(smallestTableNumber, largestTableNumber - smallestTableNumber + 1);
+                IEnumerable<int> tableNumbersAvailable = allTableNumbers.Except(tableNumbers);
+
+                if (tableNumbersAvailable.Count() == 0)
+                {
+                    throw new DomainException(string.Format(Messages.NoMoreTablesAvailableAtTheRoomAndStartTime, startTime, negotiationRoomConfig.Room.GetRoomNameByLanguageCode(userInterfaceLanguage)));
+                }
+                else
+                {
+                    // Get the next available table number
+                    this.TableNumber = tableNumbersAvailable.OrderBy(i => i).FirstOrDefault();
+                }
             }
             else
             {
