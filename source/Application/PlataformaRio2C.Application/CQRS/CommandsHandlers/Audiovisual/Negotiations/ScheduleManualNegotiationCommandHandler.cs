@@ -85,7 +85,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             // Available tables check
             var manualNegotiationsGroupedByRoomAndStartDate = manualScheduledNegotiationsInThisRoom.GroupBy(n => n.StartDate);
             var hasNoMoreManualTablesAvailable = manualNegotiationsGroupedByRoomAndStartDate.Any(n => n.Count(w => w.StartDate == startDatePreview) >= negotiationRoomConfig.CountManualTables);
-            if (hasNoMoreManualTablesAvailable)
+
+            if (negotiationRoomConfig.CountManualTables == 0 || hasNoMoreManualTablesAvailable)
             {
                 // Has no more manual tables available, so, try to use slots available at automatic tables
                 automaticScheduledNegotiationsInThisRoom = await this.NegotiationRepo.FindAutomaticScheduledNegotiationsByRoomIdAsync(negotiationRoomConfig?.Room?.Id ?? 0);

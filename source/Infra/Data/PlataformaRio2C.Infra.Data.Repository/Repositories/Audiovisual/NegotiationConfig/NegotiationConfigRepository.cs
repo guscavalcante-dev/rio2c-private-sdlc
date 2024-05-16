@@ -92,7 +92,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     query = query
                                 .HasRoomsConfigured()
                                 .Where(n => n.NegotiationRoomConfigs.Any(nrc => !nrc.IsDeleted 
-                                                                                && nrc.CountManualTables > 0 
+                                                                                && (nrc.CountManualTables > 0 || nrc.CountAutomaticTables > 0)
                                                                                 && nrc.Room.IsVirtualMeeting == buyerAttendeeOrganizationAcceptsVirtualMeeting));
                 }
             }
