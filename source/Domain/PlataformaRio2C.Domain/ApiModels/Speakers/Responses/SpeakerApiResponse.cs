@@ -4,7 +4,7 @@
 // Created          : 12-18-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-07-2023
+// Last Modified On : 05-21-2024
 // ***********************************************************************
 // <copyright file="SpeakerApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -58,6 +58,9 @@ namespace PlataformaRio2C.Domain.ApiModels
 
         [JsonProperty("isDeleted", Order = 704)]
         public bool IsDeleted { get; set; }
+
+        [JsonProperty("isApiDisplayEnabled", Order = 705)]
+        public bool IsApiDisplayEnabled { get; set; }
     }
 
     /// <summary>SpeakerSocialNetworkApiResponse</summary>

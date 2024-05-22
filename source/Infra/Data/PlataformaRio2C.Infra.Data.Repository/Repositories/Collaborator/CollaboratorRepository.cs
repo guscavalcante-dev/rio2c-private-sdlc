@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-08-2024
+// Last Modified On : 05-21-2024
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -369,19 +369,30 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
-        /// <summary>Determines whether [is API display enabled] [the specified edition identifier].</summary>
+        /// <summary>
+        /// Determines whether [is API display enabled] [the specified edition identifier].
+        /// </summary>
         /// <param name="query">The query.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
+        /// <param name="showDeleted">if set to <c>true</c> [show deleted].</param>
+        /// <param name="skipIsApiDisplayEnabledVerification">if set to <c>true</c> [skip is API display enabled verification].</param>
         /// <returns></returns>
-        internal static IQueryable<Collaborator> IsApiDisplayEnabled(this IQueryable<Collaborator> query, int editionId, string collaboratorTypeName, bool showDeleted = false)
+        internal static IQueryable<Collaborator> IsApiDisplayEnabled(this IQueryable<Collaborator> query, int editionId, string collaboratorTypeName, bool showDeleted = false, bool skipIsApiDisplayEnabledVerification = false)
         {
-            query = query.Where(c => c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId
-                                                                       && ac.AttendeeCollaboratorTypes.Any(aot => (!aot.IsDeleted || showDeleted)
-                                                                                                                  && aot.CollaboratorType.Name == collaboratorTypeName
-                                                                                                                  && aot.IsApiDisplayEnabled)));
+            if (skipIsApiDisplayEnabledVerification)
+            {
+                return query;
+            }
+            else
+            {
+                query = query.Where(c => c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId
+                                                                           && ac.AttendeeCollaboratorTypes.Any(aot => (!aot.IsDeleted || showDeleted)
+                                                                                                                      && aot.CollaboratorType.Name == collaboratorTypeName
+                                                                                                                      && aot.IsApiDisplayEnabled)));
 
-            return query;
+                return query;
+            }
         }
 
         /// <summary>Determines whether [is not deleted].</summary>
@@ -2821,6 +2832,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
         /// <param name="modifiedAfterDate">The modified after date.</param>
         /// <param name="showDetails">if set to <c>true</c> [show details].</param>
+        /// <param name="showDeleted">if set to <c>true</c> [show deleted].</param>
+        /// <param name="skipIsApiDisplayEnabledVerification">if set to <c>true</c> [skip is API display enabled verification].</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
@@ -2835,12 +2848,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             DateTime? modifiedAfterDate,
             bool showDetails,
             bool showDeleted,
+            bool skipIsApiDisplayEnabledVerification,
             int page,
             int pageSize)
         {
             var query = this.GetBaseQuery(showDeleted: showDeleted)
                                 .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, false, false, editionId, showDeleted)
-                                .IsApiDisplayEnabled(editionId, collaboratorTypeName, showDeleted)
+                                .IsApiDisplayEnabled(editionId, collaboratorTypeName, showDeleted, skipIsApiDisplayEnabledVerification)
                                 .FindByKeywords(keywords, editionId, showDeleted)
                                 .FindByApiHighlights(collaboratorTypeName, highlights, showDeleted)
                                 .FindByConferencesDates(conferencesDates, showDeleted)
@@ -2989,6 +3003,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                 .AttendeeCollaboratorTypes
                                                                     .FirstOrDefault(act => (!act.IsDeleted || showDeleted) && act.CollaboratorType.Name == collaboratorTypeName)
                                                                         .ApiHighlightPosition,
+                    IsApiDisplayEnabled = c.AttendeeCollaborators
+                                                            .FirstOrDefault(ac => (!ac.IsDeleted || showDeleted) && ac.EditionId == editionId)
+                                                                .AttendeeCollaboratorTypes
+                                                                    .FirstOrDefault(act => (!act.IsDeleted || showDeleted) && act.CollaboratorType.Name == collaboratorTypeName)
+                                                                        .IsApiDisplayEnabled,
                     CreateDate = c.CreateDate,
                     UpdateDate = c.UpdateDate,
                     IsDeleted = c.AttendeeCollaborators.FirstOrDefault(ac => (!ac.IsDeleted || showDeleted) && ac.EditionId == editionId).IsDeleted,

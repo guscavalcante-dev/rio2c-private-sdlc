@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-18-2019
 //
-// Last Modified By : Elton Assunção
-// Last Modified On : 01-05-2024
+// Last Modified By : Renan Valentim
+// Last Modified On : 05-21-2024
 // ***********************************************************************
 // <copyright file="SpeakersApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -118,6 +118,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 request?.ModifiedAfterDate.ToUtcDateKind(),
                 request?.ShowDetails ?? false,
                 request?.ShowDeleted ?? false,
+                request?.SkipIsApiDisplayEnabledVerification ?? false,
                 request?.Page ?? 1,
                 request?.PageSize ?? 10);
 
@@ -144,6 +145,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     SocialNetworks = dto.GetSocialNetworks(),
                     Tracks = dto.GetTrackBaseApiResponseByLanguageCode(currentLanguageCode),
                     IsDeleted = dto.IsDeleted,
+                    IsApiDisplayEnabled = dto.IsApiDisplayEnabled,
                     Companies = dto.OrganizationsDtos?.Select(od => new SpeakerOrganizationApiResponse
                     {
                         Uid = od.Uid,
