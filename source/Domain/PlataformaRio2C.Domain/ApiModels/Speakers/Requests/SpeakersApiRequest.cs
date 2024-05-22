@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-18-2019
 //
-// Last Modified By : Elton Assunção
-// Last Modified On : 01-05-2024
+// Last Modified By : Renan Valentim
+// Last Modified On : 05-21-2024
 // ***********************************************************************
 // <copyright file="SpeakersApiRequest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -38,7 +38,7 @@ namespace PlataformaRio2C.Domain.ApiModels
         public string ConferencesRoomsUids { get; set; }
 
         [JsonProperty("modifiedAfterDate")]
-        [SwaggerParameterDescription("Returns only registers created or updated after this date. (UTC)", PublicApiDateTimeFormat.Default)]
+        [SwaggerParameterDescription("Returns only Speakers created or updated after this date. (UTC)", PublicApiDateTimeFormat.Default)]
         public DateTime? ModifiedAfterDate { get; set; }
 
         [JsonProperty("showDetails")]
@@ -50,5 +50,10 @@ namespace PlataformaRio2C.Domain.ApiModels
         [SwaggerParameterDescription(description: "Shows deleted Speakers.")]
         [SwaggerDefaultValue(false)]
         public bool ShowDeleted { get; set; }
+
+        [JsonProperty("skipIsApiDisplayEnabledVerification")]
+        [SwaggerParameterDescription(description: "Skips the IsApiDisplayEnabled verification and returns all Speakers registered in the Edition.")]
+        [SwaggerDefaultValue(false)]
+        public bool SkipIsApiDisplayEnabledVerification { get; set; }
     }
 }
