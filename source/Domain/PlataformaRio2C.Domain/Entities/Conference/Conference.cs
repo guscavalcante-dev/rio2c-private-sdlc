@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-26-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 05-27-2024
 // ***********************************************************************
 // <copyright file="Conference.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -81,9 +81,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeConferencePresentationFormats(presentationFormats, userId);
             this.SynchronizeConferenceDynamics(conferenceDynamics, userId);
 
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
+            this.SetCreateDate(userId);
         }
 
         /// <summary>Initializes a new instance of the <see cref="Conference"/> class.</summary>
@@ -124,9 +122,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeConferenceSynopses(conferenceSynopses, userId);
             this.SynchronizeConferenceDynamics(conferenceDynamics, userId);
 
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            this.SetUpdateDate(userId);
         }
 
         /// <summary>Updates the tracks and presentation formats.</summary>
@@ -140,21 +136,17 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeConferencePillars(pillars, userId);
             this.SynchronizeConferencePresentationFormats(presentationFormats, userId);
 
-            this.IsDeleted = false;
-            this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.UtcNow;
+            this.SetUpdateDate(userId);
         }
 
         /// <summary>Deletes the specified user identifier.</summary>
         /// <param name="userId">The user identifier.</param>
         public void Delete(int userId)
         {
-            this.IsDeleted = true;
             this.SynchronizeConferenceTitles(new List<ConferenceTitle>(), userId);
             this.SynchronizeConferenceSynopses(new List<ConferenceSynopsis>(), userId);
 
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            base.Delete(userId);
         }
 
         #region Conference Titles
@@ -322,7 +314,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Vertical
+        #region Tracks
 
         private void SynchronizeConferenceTracks(List<Track> tracks, int userId)
         {
@@ -372,8 +364,16 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.ConferenceTracks.Add(new ConferenceTrack(Guid.NewGuid(), this, track, userId));
         }
-        
 
+        #endregion
+
+        #region Pillars
+
+        /// <summary>
+        /// Synchronizes the conference pillars.
+        /// </summary>
+        /// <param name="pillars">The pillars.</param>
+        /// <param name="userId">The user identifier.</param>
         private void SynchronizeConferencePillars(List<Pillar> pillars, int userId)
         {
             if (this.ConferencePillars == null)
@@ -506,6 +506,8 @@ namespace PlataformaRio2C.Domain.Entities
             {
                 conferenceParticipant.Update(conferenceParticipantRole, userId);
             }
+
+            this.SetUpdateDate(userId);
         }
 
         /// <summary>Updates the conference participant.</summary>
@@ -519,6 +521,8 @@ namespace PlataformaRio2C.Domain.Entities
         {
             var conferenceParticipant = this.GetConferenceParticipantByAttendeeCollaboratorId(attendeeCollaborator?.Id ?? 0);
             conferenceParticipant?.Update(conferenceParticipantRole, userId);
+
+            this.SetUpdateDate(userId);
         }
 
         /// <summary>Deletes the conference participant.</summary>
@@ -530,6 +534,8 @@ namespace PlataformaRio2C.Domain.Entities
         {
             var conferenceParticipant = this.GetConferenceParticipantByAttendeeCollaboratorId(attendeeCollaborator?.Id ?? 0);
             conferenceParticipant?.Delete(userId);
+
+            this.SetUpdateDate(userId);
         }
 
         /// <summary>Gets the conference participant by attendee collaborator identifier.</summary>
