@@ -4,7 +4,7 @@
 // Created          : 01-08-2020
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 10-03-2023
+// Last Modified On : 06-04-2024
 // ***********************************************************************
 // <copyright file="ConferencesApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -150,6 +150,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     StartTime = c.Conference.StartDate.ToBrazilTimeZone().ToString("HH:mm"),
                     EndTime = c.Conference.EndDate.ToBrazilTimeZone().ToString("HH:mm"),
                     DurationMinutes = (int) ((c.Conference.EndDate - c.Conference.StartDate).TotalMinutes),
+                    IsDeleted = c.Conference.IsDeleted,
                     Room = c.RoomDto != null ? new RoomBaseApiResponse
                     {
                         Uid = c.RoomDto.Room.Uid,

@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 01-08-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-10-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 06-04-2024
 // ***********************************************************************
 // <copyright file="ConferencesApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -53,6 +53,9 @@ namespace PlataformaRio2C.Domain.ApiModels
 
         [JsonProperty("durationMinutes", Order = 109)]
         public int DurationMinutes { get; set; }
+
+        [JsonProperty("isDeleted", Order = 110)]
+        public bool IsDeleted { get; set; }
 
         [JsonProperty("pillars", Order = 701)]
         public List<PillarBaseApiResponse> Pillars { get; set; }
