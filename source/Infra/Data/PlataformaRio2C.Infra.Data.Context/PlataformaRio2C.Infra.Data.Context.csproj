@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.props" Condition="Exists('..\..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" />
+  <Import Project="..\..\..\..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\..\..\..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -48,12 +48,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\log4net.2.0.12\lib\net45\log4net.dll</HintPath>
@@ -75,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\BaseContext.cs" />
+    <Compile Include="Helpers\SqlMigration.cs" />
     <Compile Include="Interfaces\IDbContext.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Mapping\Audiovisual\CommissionEvaluationMap.cs" />
@@ -240,190 +239,15 @@
     <Compile Include="Mapping\User\UserMap.cs" />
     <Compile Include="Mapping\WeConnect\SocialMediaPlatformMap.cs" />
     <Compile Include="Mapping\WeConnect\WeConnectPublicationMap.cs" />
-    <Compile Include="Migrations\201710131419397_Initial.cs" />
-    <Compile Include="Migrations\201710131419397_Initial.Designer.cs">
-      <DependentUpon>201710131419397_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710192001220_UpdateModelSprint2MiniBioAndSocialMediaAndTradeNameAndUserUseTerm.cs" />
-    <Compile Include="Migrations\201710192001220_UpdateModelSprint2MiniBioAndSocialMediaAndTradeNameAndUserUseTerm.Designer.cs">
-      <DependentUpon>201710192001220_UpdateModelSprint2MiniBioAndSocialMediaAndTradeNameAndUserUseTerm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710202007006_AddInterests.cs" />
-    <Compile Include="Migrations\201710202007006_AddInterests.Designer.cs">
-      <DependentUpon>201710202007006_AddInterests.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710251556148_UpdateRelationshipCollaboratorPlayer.cs" />
-    <Compile Include="Migrations\201710251556148_UpdateRelationshipCollaboratorPlayer.Designer.cs">
-      <DependentUpon>201710251556148_UpdateRelationshipCollaboratorPlayer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711091809032_UpdateCollaboratorAddBadge.cs" />
-    <Compile Include="Migrations\201711091809032_UpdateCollaboratorAddBadge.Designer.cs">
-      <DependentUpon>201711091809032_UpdateCollaboratorAddBadge.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711101428058_DropPlayerInterestEvent.cs" />
-    <Compile Include="Migrations\201711101428058_DropPlayerInterestEvent.Designer.cs">
-      <DependentUpon>201711101428058_DropPlayerInterestEvent.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711101438012_UpdatePlayerInterest.cs" />
-    <Compile Include="Migrations\201711101438012_UpdatePlayerInterest.Designer.cs">
-      <DependentUpon>201711101438012_UpdatePlayerInterest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711171857562_AddProducerAndUpdateUserUseTerm.cs" />
-    <Compile Include="Migrations\201711171857562_AddProducerAndUpdateUserUseTerm.Designer.cs">
-      <DependentUpon>201711171857562_AddProducerAndUpdateUserUseTerm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711232047039_UpdateProducerAddActivityAndTargetAudianceAndUpdatePlayer.cs" />
-    <Compile Include="Migrations\201711232047039_UpdateProducerAddActivityAndTargetAudianceAndUpdatePlayer.Designer.cs">
-      <DependentUpon>201711232047039_UpdateProducerAddActivityAndTargetAudianceAndUpdatePlayer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711241949395_AddProject.cs" />
-    <Compile Include="Migrations\201711241949395_AddProject.Designer.cs">
-      <DependentUpon>201711241949395_AddProject.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711271934072_UpdateCollaboratorUserIdUnique.cs" />
-    <Compile Include="Migrations\201711271934072_UpdateCollaboratorUserIdUnique.Designer.cs">
-      <DependentUpon>201711271934072_UpdateCollaboratorUserIdUnique.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711291349590_UpdateUserUseTermAddRoleId.cs" />
-    <Compile Include="Migrations\201711291349590_UpdateUserUseTermAddRoleId.Designer.cs">
-      <DependentUpon>201711291349590_UpdateUserUseTermAddRoleId.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711291512191_UpdateUserUseTermRemoveRoleString.cs" />
-    <Compile Include="Migrations\201711291512191_UpdateUserUseTermRemoveRoleString.Designer.cs">
-      <DependentUpon>201711291512191_UpdateUserUseTermRemoveRoleString.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712011811429_UpdateProjectAndAddRelationshipPlayer.cs" />
-    <Compile Include="Migrations\201712011811429_UpdateProjectAndAddRelationshipPlayer.Designer.cs">
-      <DependentUpon>201712011811429_UpdateProjectAndAddRelationshipPlayer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712051158572_UpdatePlayerAddCompanyName.cs" />
-    <Compile Include="Migrations\201712051158572_UpdatePlayerAddCompanyName.Designer.cs">
-      <DependentUpon>201712051158572_UpdatePlayerAddCompanyName.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712121312465_UpdateProjectPlayerAddStatus.cs" />
-    <Compile Include="Migrations\201712121312465_UpdateProjectPlayerAddStatus.Designer.cs">
-      <DependentUpon>201712121312465_UpdateProjectPlayerAddStatus.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712141517590_UpdatePlayerProjectRemoveId.cs" />
-    <Compile Include="Migrations\201712141517590_UpdatePlayerProjectRemoveId.Designer.cs">
-      <DependentUpon>201712141517590_UpdatePlayerProjectRemoveId.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712141519254_UpdatePlayerProjectAddIdPrimaryKey.cs" />
-    <Compile Include="Migrations\201712141519254_UpdatePlayerProjectAddIdPrimaryKey.Designer.cs">
-      <DependentUpon>201712141519254_UpdatePlayerProjectAddIdPrimaryKey.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712141521158_AddProjectPlayerEvaluaation.cs" />
-    <Compile Include="Migrations\201712141521158_AddProjectPlayerEvaluaation.Designer.cs">
-      <DependentUpon>201712141521158_AddProjectPlayerEvaluaation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712142145140_UpdateAddressMaxLength.cs" />
-    <Compile Include="Migrations\201712142145140_UpdateAddressMaxLength.Designer.cs">
-      <DependentUpon>201712142145140_UpdateAddressMaxLength.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712191625387_UpdateProducerRemoveRequiredCnpj.cs" />
-    <Compile Include="Migrations\201712191625387_UpdateProducerRemoveRequiredCnpj.Designer.cs">
-      <DependentUpon>201712191625387_UpdateProducerRemoveRequiredCnpj.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712291731544_UpdateMaxLenghtProjectSummary.cs" />
-    <Compile Include="Migrations\201712291731544_UpdateMaxLenghtProjectSummary.Designer.cs">
-      <DependentUpon>201712291731544_UpdateMaxLenghtProjectSummary.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712291844161_UpdateMaxLenghtProjectSummary6000.cs" />
-    <Compile Include="Migrations\201712291844161_UpdateMaxLenghtProjectSummary6000.Designer.cs">
-      <DependentUpon>201712291844161_UpdateMaxLenghtProjectSummary6000.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801051643345_AddLogistics.cs" />
-    <Compile Include="Migrations\201801051643345_AddLogistics.Designer.cs">
-      <DependentUpon>201801051643345_AddLogistics.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801101549321_UpdateLogisticsDateTime.cs" />
-    <Compile Include="Migrations\201801101549321_UpdateLogisticsDateTime.Designer.cs">
-      <DependentUpon>201801101549321_UpdateLogisticsDateTime.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801102010386_AddConference.cs" />
-    <Compile Include="Migrations\201801102010386_AddConference.Designer.cs">
-      <DependentUpon>201801102010386_AddConference.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801111354487_UpdateConferenceRemoveImage.cs" />
-    <Compile Include="Migrations\201801111354487_UpdateConferenceRemoveImage.Designer.cs">
-      <DependentUpon>201801111354487_UpdateConferenceRemoveImage.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801111814092_UpdateConferenceAddArrivalTimeAndDepartureTime.cs" />
-    <Compile Include="Migrations\201801111814092_UpdateConferenceAddArrivalTimeAndDepartureTime.Designer.cs">
-      <DependentUpon>201801111814092_UpdateConferenceAddArrivalTimeAndDepartureTime.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801112006319_UpdateConferenceTimeNames.cs" />
-    <Compile Include="Migrations\201801112006319_UpdateConferenceTimeNames.Designer.cs">
-      <DependentUpon>201801112006319_UpdateConferenceTimeNames.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801151840096_UpdateMaxValueFieldsProjects.cs" />
-    <Compile Include="Migrations\201801151840096_UpdateMaxValueFieldsProjects.Designer.cs">
-      <DependentUpon>201801151840096_UpdateMaxValueFieldsProjects.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801161442183_UpdateMaxValueFieldsProjectsToMax.cs" />
-    <Compile Include="Migrations\201801161442183_UpdateMaxValueFieldsProjectsToMax.Designer.cs">
-      <DependentUpon>201801161442183_UpdateMaxValueFieldsProjectsToMax.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801171340540_UpdateLogisticsTime.cs" />
-    <Compile Include="Migrations\201801171340540_UpdateLogisticsTime.Designer.cs">
-      <DependentUpon>201801171340540_UpdateLogisticsTime.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801221246388_AddMessage.cs" />
-    <Compile Include="Migrations\201801221246388_AddMessage.Designer.cs">
-      <DependentUpon>201801221246388_AddMessage.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801291918101_UpdateConferenceAddLectureRole.cs" />
-    <Compile Include="Migrations\201801291918101_UpdateConferenceAddLectureRole.Designer.cs">
-      <DependentUpon>201801291918101_UpdateConferenceAddLectureRole.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801302004568_AddRoom.cs" />
-    <Compile Include="Migrations\201801302004568_AddRoom.Designer.cs">
-      <DependentUpon>201801302004568_AddRoom.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801311621231_RemoveConference.cs" />
-    <Compile Include="Migrations\201801311621231_RemoveConference.Designer.cs">
-      <DependentUpon>201801311621231_RemoveConference.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201802011903051_AddConferenceAndLecturer.cs" />
-    <Compile Include="Migrations\201802011903051_AddConferenceAndLecturer.Designer.cs">
-      <DependentUpon>201802011903051_AddConferenceAndLecturer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201802051515308_UpdateConferenceRoleLecturerIsOptional.cs" />
-    <Compile Include="Migrations\201802051515308_UpdateConferenceRoleLecturerIsOptional.Designer.cs">
-      <DependentUpon>201802051515308_UpdateConferenceRoleLecturerIsOptional.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201802062121506_UpdateRoomAddNameTranslate.cs" />
-    <Compile Include="Migrations\201802062121506_UpdateRoomAddNameTranslate.Designer.cs">
-      <DependentUpon>201802062121506_UpdateRoomAddNameTranslate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201802191844494_AddConfigNegotiation.cs" />
-    <Compile Include="Migrations\201802191844494_AddConfigNegotiation.Designer.cs">
-      <DependentUpon>201802191844494_AddConfigNegotiation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201802192027104_AddNegotiation.cs" />
-    <Compile Include="Migrations\201802192027104_AddNegotiation.Designer.cs">
-      <DependentUpon>201802192027104_AddNegotiation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201802212057123_UpdateNegotiationRoomConfigAddManualTables.cs" />
-    <Compile Include="Migrations\201802212057123_UpdateNegotiationRoomConfigAddManualTables.Designer.cs">
-      <DependentUpon>201802212057123_UpdateNegotiationRoomConfigAddManualTables.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201810291754002_Speaker.cs" />
-    <Compile Include="Migrations\201810291754002_Speaker.Designer.cs">
-      <DependentUpon>201810291754002_Speaker.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201810291820037_Speaker1.cs" />
-    <Compile Include="Migrations\201810291820037_Speaker1.Designer.cs">
-      <DependentUpon>201810291820037_Speaker1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201811221800248_musicalCommission.cs" />
-    <Compile Include="Migrations\201811221800248_musicalCommission.Designer.cs">
-      <DependentUpon>201811221800248_musicalCommission.cs</DependentUpon>
+    <Compile Include="Migrations\202408202223049_Initial.cs" />
+    <Compile Include="Migrations\202408202223049_Initial.Designer.cs">
+      <DependentUpon>202408202223049_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SaveChangesResult.cs" />
     <Compile Include="Models\UnitOfWorkWithLog.cs" />
     <Compile Include="PlataformaRio2CContext.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -441,6 +265,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Migrations\Scripts\202408202223049_Initial.up.sql" />
     <Content Include="SqlScripts\Deltas\20190930_114613_0001_ChangesForPlayersApi.sql" />
     <Content Include="SqlScripts\Deltas\20200513_100215_0030_ChangesForSignalR.sql" />
     <Content Include="SqlScripts\Deltas\20210508_113800_0034_ChangesForNegotiations.sql" />
@@ -521,267 +346,25 @@
     <Content Include="SqlScripts\07_InitialData.sql" />
     <Content Include="SqlScripts\08_SampleData_Test.sql" />
     <None Include="App.config" />
-    <None Include="bin\Debug\App_Data\Logs\PlataformaRio2C_Web_Site_DESKTOP-S4BP9HQ_2018.09.20.LOG" />
-    <None Include="bin\Debug\App_Data\Logs\PlataformaRio2C_Web_Site_DESKTOP-S4BP9HQ_2018.09.21.LOG" />
-    <None Include="bin\Debug\App_Data\Logs\PlataformaRio2C_Web_Site_DESKTOP-S4BP9HQ_2018.09.27.LOG" />
-    <None Include="bin\Debug\PlataformaRio2C.Domain.dll.config" />
-    <None Include="bin\Debug\PlataformaRio2C.Infra.CrossCutting.Identity.dll.config" />
-    <None Include="bin\Debug\PlataformaRio2C.Infra.CrossCutting.Resources.dll.config" />
-    <None Include="bin\Debug\PlataformaRio2C.Infra.CrossCutting.Tools.dll.config" />
-    <None Include="bin\Debug\PlataformaRio2C.Infra.Data.Context.dll.config" />
-    <None Include="bin\Debug\PlataformaRio2C.Infra.Data.Context.pssym" />
-    <None Include="bin\Release\App_Data\Logs\PlataformaRio2C_Web_Site_DESKTOP-S4BP9HQ_2018.10.02.LOG" />
-    <None Include="bin\Release\PlataformaRio2C.Domain.dll.config" />
-    <None Include="bin\Release\PlataformaRio2C.Infra.CrossCutting.Identity.dll.config" />
-    <None Include="bin\Release\PlataformaRio2C.Infra.CrossCutting.Resources.dll.config" />
-    <None Include="bin\Release\PlataformaRio2C.Infra.CrossCutting.Tools.dll.config" />
-    <None Include="bin\Release\PlataformaRio2C.Infra.Data.Context.dll.config" />
-    <None Include="bin\Release\PlataformaRio2C.Infra.Data.Context.pssym" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\en-us\PlataformaRio2C.Infra.CrossCutting.Resources.resources.dll" />
-    <Content Include="bin\Debug\EntityFramework.dll" />
-    <Content Include="bin\Debug\EntityFramework.SqlServer.dll" />
-    <Content Include="bin\Debug\EntityFramework.SqlServer.xml" />
-    <Content Include="bin\Debug\EntityFramework.xml" />
-    <Content Include="bin\Debug\LinqKit.dll" />
-    <Content Include="bin\Debug\LinqKit.xml" />
-    <Content Include="bin\Debug\log4net.dll" />
-    <Content Include="bin\Debug\log4net.xml" />
-    <Content Include="bin\Debug\Microsoft.AspNet.Identity.Core.dll" />
-    <Content Include="bin\Debug\Microsoft.AspNet.Identity.Core.xml" />
-    <Content Include="bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll" />
-    <Content Include="bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml" />
-    <Content Include="bin\Debug\Microsoft.AspNet.Identity.Owin.dll" />
-    <Content Include="bin\Debug\Microsoft.AspNet.Identity.Owin.xml" />
-    <Content Include="bin\Debug\Microsoft.Owin.dll" />
-    <Content Include="bin\Debug\Microsoft.Owin.Host.SystemWeb.dll" />
-    <Content Include="bin\Debug\Microsoft.Owin.Host.SystemWeb.xml" />
-    <Content Include="bin\Debug\Microsoft.Owin.Security.dll" />
-    <Content Include="bin\Debug\Microsoft.Owin.Security.xml" />
-    <Content Include="bin\Debug\Microsoft.Owin.xml" />
-    <Content Include="bin\Debug\Microsoft.Web.Infrastructure.dll" />
-    <Content Include="bin\Debug\Migrations.dll" />
-    <Content Include="bin\Debug\Owin.dll" />
-    <Content Include="bin\Debug\PlataformaRio2C.Domain.dll" />
-    <Content Include="bin\Debug\PlataformaRio2C.Domain.pdb" />
-    <Content Include="bin\Debug\PlataformaRio2C.Infra.CrossCutting.Identity.dll" />
-    <Content Include="bin\Debug\PlataformaRio2C.Infra.CrossCutting.Identity.pdb" />
-    <Content Include="bin\Debug\PlataformaRio2C.Infra.CrossCutting.Resources.dll" />
-    <Content Include="bin\Debug\PlataformaRio2C.Infra.CrossCutting.Resources.pdb" />
-    <Content Include="bin\Debug\PlataformaRio2C.Infra.CrossCutting.Tools.dll" />
-    <Content Include="bin\Debug\PlataformaRio2C.Infra.CrossCutting.Tools.pdb" />
-    <Content Include="bin\Debug\PlataformaRio2C.Infra.Data.Context.dll" />
-    <Content Include="bin\Debug\PlataformaRio2C.Infra.Data.Context.pdb" />
-    <Content Include="bin\Debug\pt-br\Microsoft.AspNet.Identity.Core.resources.dll" />
-    <Content Include="bin\Debug\pt-br\System.Web.Mvc.resources.dll" />
-    <Content Include="bin\Debug\System.Web.Mvc.dll" />
-    <Content Include="bin\Debug\System.Web.Mvc.xml" />
-    <Content Include="bin\Debug\System.Web.Razor.dll" />
-    <Content Include="bin\Debug\System.Web.Razor.xml" />
-    <Content Include="bin\Debug\System.Web.WebPages.Deployment.dll" />
-    <Content Include="bin\Debug\System.Web.WebPages.Deployment.xml" />
-    <Content Include="bin\Debug\System.Web.WebPages.dll" />
-    <Content Include="bin\Debug\System.Web.WebPages.Razor.dll" />
-    <Content Include="bin\Debug\System.Web.WebPages.Razor.xml" />
-    <Content Include="bin\Debug\System.Web.WebPages.xml" />
-    <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
-    <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
-    <Content Include="bin\Release\en-us\PlataformaRio2C.Infra.CrossCutting.Resources.resources.dll" />
-    <Content Include="bin\Release\EntityFramework.dll" />
-    <Content Include="bin\Release\EntityFramework.SqlServer.dll" />
-    <Content Include="bin\Release\EntityFramework.SqlServer.xml" />
-    <Content Include="bin\Release\EntityFramework.xml" />
-    <Content Include="bin\Release\LinqKit.dll" />
-    <Content Include="bin\Release\LinqKit.xml" />
-    <Content Include="bin\Release\log4net.dll" />
-    <Content Include="bin\Release\log4net.xml" />
-    <Content Include="bin\Release\Microsoft.AspNet.Identity.Core.dll" />
-    <Content Include="bin\Release\Microsoft.AspNet.Identity.Core.xml" />
-    <Content Include="bin\Release\Microsoft.AspNet.Identity.EntityFramework.dll" />
-    <Content Include="bin\Release\Microsoft.AspNet.Identity.EntityFramework.xml" />
-    <Content Include="bin\Release\Microsoft.AspNet.Identity.Owin.dll" />
-    <Content Include="bin\Release\Microsoft.AspNet.Identity.Owin.xml" />
-    <Content Include="bin\Release\Microsoft.Owin.dll" />
-    <Content Include="bin\Release\Microsoft.Owin.Host.SystemWeb.dll" />
-    <Content Include="bin\Release\Microsoft.Owin.Host.SystemWeb.xml" />
-    <Content Include="bin\Release\Microsoft.Owin.Security.dll" />
-    <Content Include="bin\Release\Microsoft.Owin.Security.xml" />
-    <Content Include="bin\Release\Microsoft.Owin.xml" />
-    <Content Include="bin\Release\Microsoft.Web.Infrastructure.dll" />
-    <Content Include="bin\Release\Migrations.dll" />
-    <Content Include="bin\Release\Owin.dll" />
-    <Content Include="bin\Release\PlataformaRio2C.Domain.dll" />
-    <Content Include="bin\Release\PlataformaRio2C.Domain.pdb" />
-    <Content Include="bin\Release\PlataformaRio2C.Infra.CrossCutting.Identity.dll" />
-    <Content Include="bin\Release\PlataformaRio2C.Infra.CrossCutting.Identity.pdb" />
-    <Content Include="bin\Release\PlataformaRio2C.Infra.CrossCutting.Resources.dll" />
-    <Content Include="bin\Release\PlataformaRio2C.Infra.CrossCutting.Resources.pdb" />
-    <Content Include="bin\Release\PlataformaRio2C.Infra.CrossCutting.Tools.dll" />
-    <Content Include="bin\Release\PlataformaRio2C.Infra.CrossCutting.Tools.pdb" />
-    <Content Include="bin\Release\PlataformaRio2C.Infra.Data.Context.dll" />
-    <Content Include="bin\Release\PlataformaRio2C.Infra.Data.Context.pdb" />
-    <Content Include="bin\Release\pt-br\Microsoft.AspNet.Identity.Core.resources.dll" />
-    <Content Include="bin\Release\pt-br\System.Web.Mvc.resources.dll" />
-    <Content Include="bin\Release\System.Web.Mvc.dll" />
-    <Content Include="bin\Release\System.Web.Mvc.xml" />
-    <Content Include="bin\Release\System.Web.Razor.dll" />
-    <Content Include="bin\Release\System.Web.Razor.xml" />
-    <Content Include="bin\Release\System.Web.WebPages.Deployment.dll" />
-    <Content Include="bin\Release\System.Web.WebPages.Deployment.xml" />
-    <Content Include="bin\Release\System.Web.WebPages.dll" />
-    <Content Include="bin\Release\System.Web.WebPages.Razor.dll" />
-    <Content Include="bin\Release\System.Web.WebPages.Razor.xml" />
-    <Content Include="bin\Release\System.Web.WebPages.xml" />
+    <Folder Include="EntityData\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201710131419397_Initial.resx">
-      <DependentUpon>201710131419397_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710192001220_UpdateModelSprint2MiniBioAndSocialMediaAndTradeNameAndUserUseTerm.resx">
-      <DependentUpon>201710192001220_UpdateModelSprint2MiniBioAndSocialMediaAndTradeNameAndUserUseTerm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710202007006_AddInterests.resx">
-      <DependentUpon>201710202007006_AddInterests.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710251556148_UpdateRelationshipCollaboratorPlayer.resx">
-      <DependentUpon>201710251556148_UpdateRelationshipCollaboratorPlayer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711091809032_UpdateCollaboratorAddBadge.resx">
-      <DependentUpon>201711091809032_UpdateCollaboratorAddBadge.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711101428058_DropPlayerInterestEvent.resx">
-      <DependentUpon>201711101428058_DropPlayerInterestEvent.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711101438012_UpdatePlayerInterest.resx">
-      <DependentUpon>201711101438012_UpdatePlayerInterest.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711171857562_AddProducerAndUpdateUserUseTerm.resx">
-      <DependentUpon>201711171857562_AddProducerAndUpdateUserUseTerm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711232047039_UpdateProducerAddActivityAndTargetAudianceAndUpdatePlayer.resx">
-      <DependentUpon>201711232047039_UpdateProducerAddActivityAndTargetAudianceAndUpdatePlayer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711241949395_AddProject.resx">
-      <DependentUpon>201711241949395_AddProject.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711271934072_UpdateCollaboratorUserIdUnique.resx">
-      <DependentUpon>201711271934072_UpdateCollaboratorUserIdUnique.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711291349590_UpdateUserUseTermAddRoleId.resx">
-      <DependentUpon>201711291349590_UpdateUserUseTermAddRoleId.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711291512191_UpdateUserUseTermRemoveRoleString.resx">
-      <DependentUpon>201711291512191_UpdateUserUseTermRemoveRoleString.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712011811429_UpdateProjectAndAddRelationshipPlayer.resx">
-      <DependentUpon>201712011811429_UpdateProjectAndAddRelationshipPlayer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712051158572_UpdatePlayerAddCompanyName.resx">
-      <DependentUpon>201712051158572_UpdatePlayerAddCompanyName.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712121312465_UpdateProjectPlayerAddStatus.resx">
-      <DependentUpon>201712121312465_UpdateProjectPlayerAddStatus.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712141517590_UpdatePlayerProjectRemoveId.resx">
-      <DependentUpon>201712141517590_UpdatePlayerProjectRemoveId.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712141519254_UpdatePlayerProjectAddIdPrimaryKey.resx">
-      <DependentUpon>201712141519254_UpdatePlayerProjectAddIdPrimaryKey.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712141521158_AddProjectPlayerEvaluaation.resx">
-      <DependentUpon>201712141521158_AddProjectPlayerEvaluaation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712142145140_UpdateAddressMaxLength.resx">
-      <DependentUpon>201712142145140_UpdateAddressMaxLength.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712191625387_UpdateProducerRemoveRequiredCnpj.resx">
-      <DependentUpon>201712191625387_UpdateProducerRemoveRequiredCnpj.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712291731544_UpdateMaxLenghtProjectSummary.resx">
-      <DependentUpon>201712291731544_UpdateMaxLenghtProjectSummary.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712291844161_UpdateMaxLenghtProjectSummary6000.resx">
-      <DependentUpon>201712291844161_UpdateMaxLenghtProjectSummary6000.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801051643345_AddLogistics.resx">
-      <DependentUpon>201801051643345_AddLogistics.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801101549321_UpdateLogisticsDateTime.resx">
-      <DependentUpon>201801101549321_UpdateLogisticsDateTime.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801102010386_AddConference.resx">
-      <DependentUpon>201801102010386_AddConference.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801111354487_UpdateConferenceRemoveImage.resx">
-      <DependentUpon>201801111354487_UpdateConferenceRemoveImage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801111814092_UpdateConferenceAddArrivalTimeAndDepartureTime.resx">
-      <DependentUpon>201801111814092_UpdateConferenceAddArrivalTimeAndDepartureTime.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801112006319_UpdateConferenceTimeNames.resx">
-      <DependentUpon>201801112006319_UpdateConferenceTimeNames.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801151840096_UpdateMaxValueFieldsProjects.resx">
-      <DependentUpon>201801151840096_UpdateMaxValueFieldsProjects.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801161442183_UpdateMaxValueFieldsProjectsToMax.resx">
-      <DependentUpon>201801161442183_UpdateMaxValueFieldsProjectsToMax.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801171340540_UpdateLogisticsTime.resx">
-      <DependentUpon>201801171340540_UpdateLogisticsTime.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801221246388_AddMessage.resx">
-      <DependentUpon>201801221246388_AddMessage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801291918101_UpdateConferenceAddLectureRole.resx">
-      <DependentUpon>201801291918101_UpdateConferenceAddLectureRole.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801302004568_AddRoom.resx">
-      <DependentUpon>201801302004568_AddRoom.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801311621231_RemoveConference.resx">
-      <DependentUpon>201801311621231_RemoveConference.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802011903051_AddConferenceAndLecturer.resx">
-      <DependentUpon>201802011903051_AddConferenceAndLecturer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802051515308_UpdateConferenceRoleLecturerIsOptional.resx">
-      <DependentUpon>201802051515308_UpdateConferenceRoleLecturerIsOptional.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802062121506_UpdateRoomAddNameTranslate.resx">
-      <DependentUpon>201802062121506_UpdateRoomAddNameTranslate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802191844494_AddConfigNegotiation.resx">
-      <DependentUpon>201802191844494_AddConfigNegotiation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802192027104_AddNegotiation.resx">
-      <DependentUpon>201802192027104_AddNegotiation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802212057123_UpdateNegotiationRoomConfigAddManualTables.resx">
-      <DependentUpon>201802212057123_UpdateNegotiationRoomConfigAddManualTables.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810291754002_Speaker.resx">
-      <DependentUpon>201810291754002_Speaker.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810291820037_Speaker1.resx">
-      <DependentUpon>201810291820037_Speaker1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811221800248_musicalCommission.resx">
-      <DependentUpon>201811221800248_musicalCommission.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202408202223049_Initial.resx">
+      <DependentUpon>202408202223049_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
   </Target>
-  <Import Project="..\..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.targets" Condition="Exists('..\..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" />
+  <Import Project="..\..\..\..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\..\..\..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

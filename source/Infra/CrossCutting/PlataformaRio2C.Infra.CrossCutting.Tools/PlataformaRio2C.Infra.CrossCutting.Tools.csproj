@@ -143,6 +143,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\EnvironmentVariableAtribute.cs" />
     <Compile Include="Attributes\HttpPostedFileExtensionsAttribute.cs" />
     <Compile Include="Attributes\CustomDescriptionAttribute.cs" />
     <Compile Include="Attributes\GroupAttribute.cs" />
@@ -164,6 +165,7 @@
     <Compile Include="Attributes\SystemTextDescriptionAttribute.cs" />
     <Compile Include="Attributes\ValidateJsonAntiForgeryTokenAttribute.cs" />
     <Compile Include="CustomActionResults\ExcelResult.cs" />
+    <Compile Include="Enums\EnumEnvironments.cs" />
     <Compile Include="Enums\LogType.cs" />
     <Compile Include="Enums\MessageType.cs" />
     <Compile Include="Enums\StatusMessageTypeToastr.cs" />

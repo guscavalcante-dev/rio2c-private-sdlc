@@ -29,7 +29,7 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int Clipping1MaxLength = 5000;
         public static readonly int Clipping2MaxLength = 5000;
         public static readonly int Clipping3MaxLength = 5000;
-        public static readonly int ReleaseMaxLength = 12000;
+        public static readonly int ReleaseMaxLength = 8000;//12000;
         public static readonly int ReasonMaxLength = 500;
 
         public int AttendeeMusicBandId { get; private set; }
