@@ -18,6 +18,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
+using System.Configuration;
 
 
 namespace PlataformaRio2C.Infra.Data.Context.Helpers
@@ -35,17 +36,15 @@ namespace PlataformaRio2C.Infra.Data.Context.Helpers
         {
             get
             {
-                var assemblyDir = GetType().Assembly.GetName().Name;
-                var absolutionAssemblyDir = GetType().FullName;
+                var assemblyDir = GetType().Assembly.GetName().Name; //PlataformaRio2C.Infra.Data.Context.
+                var absolutionAssemblyDir = GetType().FullName;  //PlataformaRio2C.Infra.Data.Context.Migrations.Initial
 
-                assemblyDir = absolutionAssemblyDir?.Replace(assemblyDir + ".", "");
+                assemblyDir = absolutionAssemblyDir?.Replace(assemblyDir + ".", ""); //Migrations.Initial
                 var array = assemblyDir?.Split('.');
-                //Pangea.Infra.CrossCutting.Migrations.Migrations.Tenant.insert_data_types_and_system_configuration
-                // "Pangea.Infra.CrossCutting.Migrations"
-
+                
                 var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                //return Path.Combine(path, "Migrations");
-                return Path.Combine(path, array[0], array[1]);
+                           
+                return Path.Combine(path, array[0]);
             }
         }
         /// <summary>
@@ -62,18 +61,18 @@ namespace PlataformaRio2C.Infra.Data.Context.Helpers
         public string MigrationName
         {
             get
-            {
+            {  
                 if (!string.IsNullOrEmpty(_migrationName))
                     return _migrationName;
+
                 if (!Directory.Exists(MigrationsDir))
-                    throw new Exception(string.Format("The migrations directory could not be found. {0}. This path is based on DevEnv.ProjectDirectories.Infra.", MigrationsDir));
+                    throw new Exception(string.Format("The migrations directory could not be found. '{0}'. Path not found.", MigrationsDir));
 
                 var files = Directory.GetFiles(MigrationsDir, "*.sql", SearchOption.AllDirectories);
 
                 var className = GetType().Name;
                 foreach (var file in files)
                 {
-
                     var fileresult = file.Replace(MigrationsDir, "").Replace(".up.sql", "").Replace(".down.sql", "");
 
                     if (fileresult.EndsWith(className))
@@ -160,7 +159,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Helpers
                     if (name == "ALL") return true;
 
                     //todo - Verificar como esta configurado no aws. Precia criar uma variável de ambiente com dos nomes que estão nesse enum: PlataformaRio2C.Infra.CrossCutting.Tools.EnumsEnumEnvironments
-                    var environment = Environment.GetEnvironmentVariable("ENVIRONMENT")?.ToUpper();
+                    var environment = ConfigurationManager.AppSettings["Environment"];
                     if (environment == null) return true;
 
                     if (name == environment)

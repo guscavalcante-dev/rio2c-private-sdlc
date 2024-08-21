@@ -32,6 +32,8 @@ using PlataformaRio2C.Application.Services;
 using PlataformaRio2C.Infra.CrossCutting.CQRS;
 using PlataformaRio2C.Infra.Data.FileRepository;
 using PlataformaRio2C.Web.Site.Services;
+using System.Configuration;
+using PlataformaRio2C.Infra.Data.Context;
 
 namespace PlataformaRio2C.Web.Site
 {
@@ -69,6 +71,14 @@ namespace PlataformaRio2C.Web.Site
 
             var activator = new SimpleInjectorHubActivator(container);
             GlobalHost.DependencyResolver.Register(typeof(IHubActivator), () => activator);
+
+
+            var sqlConnectionString = ConfigurationManager.ConnectionStrings["SignalRConnection"]?.ConnectionString;
+
+
+            container.Register<PlataformaRio2CContext>(Lifestyle.Scoped);
+
+
         }
 
         /// <summary>Initializes the container.</summary>
