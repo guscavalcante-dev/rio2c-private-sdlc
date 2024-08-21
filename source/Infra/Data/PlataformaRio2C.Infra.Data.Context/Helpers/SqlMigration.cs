@@ -142,7 +142,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Helpers
         ///  check Annotation EnvironmentVariable
         /// </summary>
         private bool ExecuteEnvironmentVariable()
-        {
+        {  
             bool result = true;
 
             var dnAttribute = GetType().GetCustomAttributes(typeof(EnvironmentVariableAttribute), true).FirstOrDefault() as EnvironmentVariableAttribute;
@@ -157,12 +157,11 @@ namespace PlataformaRio2C.Infra.Data.Context.Helpers
                     var name = environmentVariables[i].ToString().ToUpper();
 
                     if (name == "ALL") return true;
-
-                    //todo - Verificar como esta configurado no aws. Precia criar uma variável de ambiente com dos nomes que estão nesse enum: PlataformaRio2C.Infra.CrossCutting.Tools.EnumsEnumEnvironments
+                                       
                     var environment = ConfigurationManager.AppSettings["Environment"];
                     if (environment == null) return true;
 
-                    if (name == environment)
+                    if (name == environment.ToUpper())
                     {
                         return true;
                     }

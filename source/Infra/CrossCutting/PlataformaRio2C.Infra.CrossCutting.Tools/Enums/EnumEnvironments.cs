@@ -3,10 +3,8 @@
     public enum EnumEnvironments
     {
         All,
-        Development,
+        Dev,
         Test,
-        Testnet,
-        Production
-
+        Prod
     }
 }
