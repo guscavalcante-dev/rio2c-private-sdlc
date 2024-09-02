@@ -24,7 +24,7 @@
  - Verifique se o arquivo 'PlataformaRio2C.Infra.CrossCutting.SystemParameter.Migrations.Configuration' esta com a propriedade 'AutomaticMigrationsEnabled' marcada como true
  - Selecionar o default project: PlataformaRio2C.Infra.Data.Context e executar o comando abaixo:
  
- ``` 
+``` 
   Update-Database
 ```
 

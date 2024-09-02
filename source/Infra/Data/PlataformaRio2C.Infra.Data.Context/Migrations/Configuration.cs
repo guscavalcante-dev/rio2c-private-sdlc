@@ -1,18 +1,15 @@
 ﻿namespace PlataformaRio2C.Infra.Data.Context.Migrations
 {
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<PlataformaRio2CContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext context)
+        protected override void Seed(PlataformaRio2CContext context)
         {
             //  This method will be called after migrating to the latest version.
 

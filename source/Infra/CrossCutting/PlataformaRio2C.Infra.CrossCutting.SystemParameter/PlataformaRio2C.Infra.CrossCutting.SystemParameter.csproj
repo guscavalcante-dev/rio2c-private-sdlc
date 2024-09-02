@@ -56,9 +56,6 @@
     <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\log4net.2.0.12\lib\net45\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Migrations, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Migrations.1.0.1.0\lib\net40-Client\Migrations.dll</HintPath>
-    </Reference>
     <Reference Include="Security.Cryptography, Version=1.7.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Security.Cryptography.1.7.2\lib\net35\Security.Cryptography.dll</HintPath>
       <Private>True</Private>
@@ -89,15 +86,6 @@
     <Compile Include="Interfaces\ISystemParameterRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWorkSystemParameter.cs" />
     <Compile Include="Mapping\SystemParameterMap.cs" />
-    <Compile Include="Migrations\201710261946109_Initial.cs" />
-    <Compile Include="Migrations\201710261946109_Initial.Designer.cs">
-      <DependentUpon>201710261946109_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801241510205_AddIndexForCode.cs" />
-    <Compile Include="Migrations\201801241510205_AddIndexForCode.Designer.cs">
-      <DependentUpon>201801241510205_AddIndexForCode.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppAesEncryptionInfo.cs" />
     <Compile Include="Models\AppValidationResult.cs" />
     <Compile Include="Models\SystemParameter.cs" />
@@ -128,14 +116,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201710261946109_Initial.resx">
-      <DependentUpon>201710261946109_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801241510205_AddIndexForCode.resx">
-      <DependentUpon>201801241510205_AddIndexForCode.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
