@@ -78,15 +78,11 @@ namespace PlataformaRio2C.Web.Site
             // SignalR
             var sqlConnectionString = ConfigurationManager.ConnectionStrings["SignalRConnection"]?.ConnectionString;
 
-
             if (!string.IsNullOrEmpty(sqlConnectionString))
             {
                 GlobalHost.DependencyResolver.UseSqlServer(sqlConnectionString);
             }
             app.MapSignalR("/signalr", hubConfiguration);
-
-
-
         }
     }
 }

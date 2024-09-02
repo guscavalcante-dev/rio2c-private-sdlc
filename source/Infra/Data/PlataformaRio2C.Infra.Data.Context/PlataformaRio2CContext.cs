@@ -220,7 +220,7 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new SocialMediaPlatformMap());
 
             base.OnModelCreating(modelBuilder);
-        }        
+        }
 
         public DbSet<UserRole> UsersRoles { get; set; }
         public DbSet<Role> Roles { get; set; }

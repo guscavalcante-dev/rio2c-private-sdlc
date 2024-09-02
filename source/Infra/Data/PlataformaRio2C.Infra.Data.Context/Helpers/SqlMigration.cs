@@ -6,12 +6,11 @@
 // Last Modified By : 
 // Last Modified On : 
 // ***********************************************************************
-// <copyright file="EnvironmentVariableAttribute" company="Softo">
+// <copyright file="SqlMigration" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
 using System;
 using System.Reflection;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
@@ -20,11 +19,10 @@ using System.IO;
 using System.Linq;
 using System.Configuration;
 
-
 namespace PlataformaRio2C.Infra.Data.Context.Helpers
 {
     /// <summary>
-    /// Class ScriptMigration
+    /// Class SqlMigration
     /// </summary>
     public abstract class SqlMigration : DbMigration
     {
