@@ -1,0 +1,1 @@
+﻿-- This is only a first blank sql file to start the migrations mapping into "dbo.__MigrationHistory" table

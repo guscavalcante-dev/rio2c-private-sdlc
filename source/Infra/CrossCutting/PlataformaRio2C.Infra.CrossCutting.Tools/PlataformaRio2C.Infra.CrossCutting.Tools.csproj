@@ -81,9 +81,6 @@
       <HintPath>..\..\..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Migrations, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Migrations.1.0.1.0\lib\net40-Client\Migrations.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -143,6 +140,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\EnvironmentVariableAtribute.cs" />
     <Compile Include="Attributes\HttpPostedFileExtensionsAttribute.cs" />
     <Compile Include="Attributes\CustomDescriptionAttribute.cs" />
     <Compile Include="Attributes\GroupAttribute.cs" />
@@ -164,6 +162,7 @@
     <Compile Include="Attributes\SystemTextDescriptionAttribute.cs" />
     <Compile Include="Attributes\ValidateJsonAntiForgeryTokenAttribute.cs" />
     <Compile Include="CustomActionResults\ExcelResult.cs" />
+    <Compile Include="Enums\EnumEnvironments.cs" />
     <Compile Include="Enums\LogType.cs" />
     <Compile Include="Enums\MessageType.cs" />
     <Compile Include="Enums\StatusMessageTypeToastr.cs" />
