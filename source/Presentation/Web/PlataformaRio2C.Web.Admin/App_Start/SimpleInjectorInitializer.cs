@@ -38,8 +38,13 @@ namespace PlataformaRio2C.Web.Admin.App_Start
             var container = new Container();
             container.Options.DefaultScopedLifestyle = new WebRequestLifestyle();
 
-            // Chamada dos módulos do Simple Injector
-            InitializeContainer(container);
+            IoCBootStrapper.RegisterServices(container);
+            FileRepositoryBootStrapper.RegisterServices(container);
+            container.Register<IMailerService, AdminMailerService>(Lifestyle.Scoped);
+            CqrsBootStrapper.RegisterServices(container, new[]
+            {
+                typeof(CreateSalesPlatformWebhookRequestCommandHandler).Assembly
+            });
 
             // Necessário para registrar o ambiente do Owin que é dependência do Identity
             // Feito fora da camada de IoC para não levar o System.Web para fora
@@ -60,20 +65,6 @@ namespace PlataformaRio2C.Web.Admin.App_Start
 
             DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(container));
             GlobalConfiguration.Configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
-        }
-
-        /// <summary>Initializes the container.</summary>
-        /// <param name="container">The container.</param>
-        private static void InitializeContainer(Container container)
-        {
-            IoCBootStrapper.RegisterServices(container);
-            AdminIoCBootStrapper.RegisterServices(container);
-            FileRepositoryBootStrapper.RegisterServices(container);
-            container.Register<IMailerService, AdminMailerService>(Lifestyle.Scoped);
-            CqrsBootStrapper.RegisterServices(container, new[]
-            {
-                typeof(CreateSalesPlatformWebhookRequestCommandHandler).Assembly
-            });
         }
     }
 }

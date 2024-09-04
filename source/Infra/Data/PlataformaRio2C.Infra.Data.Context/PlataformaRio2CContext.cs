@@ -12,6 +12,8 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Enums;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context.Config;
 using PlataformaRio2C.Infra.Data.Context.Mapping;
 using System.Data.Entity;
@@ -25,7 +27,20 @@ namespace PlataformaRio2C.Infra.Data.Context
         /// <summary>Initializes the <see cref="PlataformaRio2CContext"/> class.</summary>
         static PlataformaRio2CContext()
         {
-            Database.SetInitializer<PlataformaRio2CContext>(null);
+            //TODO: Estava ativo esse initializer
+            //Database.SetInitializer<PlataformaRio2CContext>(null);
+            
+            //TODO: Precisa rodar esse aqui
+            // Run Migrations
+            string environment = System.Configuration.ConfigurationManager.AppSettings["Environment"]?.ToLower();
+            //if (environment == EnumEnvironments.Test.ToDescription().ToLower() || environment == EnumEnvironments.Prod.ToDescription().ToLower())
+            //{
+                Database.SetInitializer(new MigrateDatabaseToLatestVersion<PlataformaRio2CContext, Migrations.Configuration>());
+                using (var context = new PlataformaRio2CContext())
+                {
+                    context.Database.Initialize(true);
+                }
+            //}
         }
 
         /// <summary>Initializes a new instance of the <see cref="PlataformaRio2CContext"/> class.</summary>

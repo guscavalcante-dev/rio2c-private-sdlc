@@ -26,6 +26,9 @@ using System.Linq;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms;
 using PlataformaRio2C.Infra.CrossCutting.SystemParameter.Context;
 using PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms;
+using System.Data.Entity;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Enums;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Infra.CrossCutting.IOC
 {
@@ -41,12 +44,25 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
                 throw new ArgumentNullException(nameof(container));
             }
 
-            ResolveBase(container);
+            // Configures PlataformaRio2C.Infra.Data.Context
+            container.Register<PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext>(Lifestyle.Scoped);
+            container.Register<Data.Context.Interfaces.IUnitOfWork, Data.Context.Models.UnitOfWorkWithLog<Data.Context.PlataformaRio2CContext>>(Lifestyle.Scoped);
+            container.Register<ILogService>(() => new LogService(true), Lifestyle.Scoped);
 
+            // Configures PlataformaRio2C.Infra.CrossCutting.Identity
+            container.Register<PlataformaRio2C.Infra.CrossCutting.Identity.Context.PlataformaRio2CContext>(Lifestyle.Scoped);
+            container.Register<IUserStore<ApplicationUser, int>>(() => new CustomUserStore<ApplicationUser>(container.GetInstance<Identity.Context.PlataformaRio2CContext>()), Lifestyle.Scoped);
+            container.Register<IRoleStore<CustomRole, int>>(() => new CustomRoleStore<ApplicationUser>(container.GetInstance<Identity.Context.PlataformaRio2CContext>()), Lifestyle.Scoped);
+            container.Register(() => new ApplicationUserManager<ApplicationUser>(container.GetInstance<IUserStore<ApplicationUser, int>>(), container.GetInstance<IdentityServicesSetup>()), Lifestyle.Scoped);
+            container.Register<ApplicationSignInManager<ApplicationUser>>(Lifestyle.Scoped);
+            container.Register<IdentityAutenticationService>(Lifestyle.Scoped);
+            container.Register(() => MakeIdentityServicesSetup(container), Lifestyle.Scoped);
+
+            // Configures PlataformaRio2C.Infra.CrossCutting.SystemParameter
             container.Register<ISalesPlatformServiceFactory, SalesPlatformServiceFactory>(Lifestyle.Scoped);
             container.Register<ISocialMediaPlatformServiceFactory, SocialMediaPlatformServiceFactory>(Lifestyle.Scoped);
-            container.Register<PlataformaRio2CContext>(Lifestyle.Scoped);
-            container.Register<IUnitOfWorkSystemParameter, SystemParameter.UnitOfWorkWithLog<PlataformaRio2CContext>>(Lifestyle.Scoped);
+            container.Register<PlataformaRio2C.Infra.CrossCutting.SystemParameter.Context.PlataformaRio2CContext>(Lifestyle.Scoped);
+            container.Register<IUnitOfWorkSystemParameter, UnitOfWorkWithLog<PlataformaRio2CContext>>(Lifestyle.Scoped);
 
             RegisterRepositories(container);
         }
@@ -65,26 +81,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
             {
                 container.Register(reg.service, reg.implementation, Lifestyle.Scoped);
             }
-
-            // Disabled at 2023-08-17 for test purposes.
-            // The lines above already register all the repositories, so, this factory isn't necessary.
-            //container.Register<IRepositoryFactory, RepositoryFactory>(Lifestyle.Scoped);
-        }
-
-        /// <summary>Resolves the base.</summary>
-        /// <param name="container">The container.</param>
-        public static void ResolveBase(Container container)
-        {
-            container.Register<Data.Context.PlataformaRio2CContext>(Lifestyle.Scoped);
-            container.Register<Data.Context.Interfaces.IUnitOfWork, Data.Context.Models.UnitOfWorkWithLog<Data.Context.PlataformaRio2CContext>>(Lifestyle.Scoped);
-            container.Register<ILogService>(() => new LogService(true), Lifestyle.Scoped);
-            container.Register<Identity.Context.PlataformaRio2CContext>(Lifestyle.Scoped);
-            container.Register<IUserStore<ApplicationUser, int>>(() => new CustomUserStore<ApplicationUser>(container.GetInstance<Identity.Context.PlataformaRio2CContext>()), Lifestyle.Scoped);
-            container.Register<IRoleStore<CustomRole, int>>(() => new CustomRoleStore<ApplicationUser>(container.GetInstance<Identity.Context.PlataformaRio2CContext>()), Lifestyle.Scoped);
-            container.Register<ApplicationUserManager<ApplicationUser>>(() => new ApplicationUserManager<ApplicationUser>(container.GetInstance<IUserStore<ApplicationUser, int>>(), container.GetInstance<IdentityServicesSetup>()), Lifestyle.Scoped);
-            container.Register<ApplicationSignInManager<ApplicationUser>>(Lifestyle.Scoped);
-            container.Register<IdentityAutenticationService>(Lifestyle.Scoped);
-            container.Register<IdentityServicesSetup>(() => MakeIdentityServicesSetup(container), Lifestyle.Scoped);           
         }
 
         /// <summary>Makes the identity services setup.</summary>

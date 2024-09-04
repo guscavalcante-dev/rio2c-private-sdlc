@@ -58,7 +58,7 @@ namespace PlataformaRio2C.Web.Site
                 }
                 return HttpContext.Current.GetOwinContext().Authentication;
 
-            }, Lifestyle.Scoped);
+            }, Lifestyle.Scoped);                                                                                                                                                           ,                                         
 
             container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
             container.RegisterWebApiControllers(GlobalConfiguration.Configuration);            
