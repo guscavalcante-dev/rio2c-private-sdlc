@@ -380,7 +380,6 @@
   </data>
   <data name="AudiovisualTermsAcceptanceDate" xml:space="preserve">
     <value>Data de aceite do regulamento de Audiovisual</value>
-  
   </data>
   <data name="AudiovisualVirtualMeetingJoinDate" xml:space="preserve">
     <value>Data de ingresso na reunião virtual</value>
@@ -3319,5 +3318,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="ZoomOut" xml:space="preserve">
     <value>Menos Zoom</value>
     <comment>Menos Zoom</comment>
+  </data>
+  <data name="NoAssociatedCompany" xml:space="preserve">
+    <value>Nenhuma empresa vinculada</value>
   </data>
 </root>

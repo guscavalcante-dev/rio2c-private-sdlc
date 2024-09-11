@@ -241,11 +241,9 @@
   </data>
   <data name="CompletePlayerInfo" xml:space="preserve">
     <value>Complete os dados do player &lt;b&gt;{0}&lt;/b&gt;</value>
-    
   </data>
   <data name="CompletePlayerInterestsFor" xml:space="preserve">
     <value>Informe quais as áreas de interesse do player &lt;b&gt;{0}&lt;/b&gt;</value>
-    
   </data>
   <data name="CompleteProjectInfo" xml:space="preserve">
     <value>Complete as informações do projeto</value>
@@ -670,7 +668,6 @@
   </data>
   <data name="OutOfEvaluationPeriod" xml:space="preserve">
     <value>Fora do período de avaliação</value>
-    
   </data>
   <data name="PaginationMessage" xml:space="preserve">
     <value>Exibindo {0} a {1} de {2}</value>
@@ -703,7 +700,6 @@
   </data>
   <data name="PlayerTerms" xml:space="preserve">
     <value>Regulamento de Players</value>
-    
   </data>
   <data name="PleaseClickHereToLogin" xml:space="preserve">
     <value>Por favor clique aqui para logar.</value>
@@ -1136,5 +1132,11 @@
   </data>
   <data name="ZipCodeIsRequired" xml:space="preserve">
     <value>Cep obrigatório.</value>
+  </data>
+  <data name="WeFoundAnError" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UrlIsInvalid" xml:space="preserve">
+    <value>O campo '{0}' deve ser uma Url válida</value>
   </data>
 </root>
