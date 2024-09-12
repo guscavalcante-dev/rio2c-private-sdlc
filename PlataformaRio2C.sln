@@ -57,9 +57,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Infra.Repor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms", "source\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms\PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms.csproj", "{33EC5478-C17A-4A12-A0B6-C11B8B061455}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DC3D88C4-5F37-46F8-B91A-2804FB3FDCE3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0F13F38F-2712-412C-AD33-F33C25F53415}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
+		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
 Global

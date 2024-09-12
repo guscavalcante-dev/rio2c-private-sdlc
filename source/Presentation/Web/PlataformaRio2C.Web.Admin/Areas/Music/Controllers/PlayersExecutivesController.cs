@@ -346,7 +346,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             var attendeeCollaboratorDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByCollaboratorTypeUidAsync(
                 id ?? Guid.Empty,
                 CollaboratorType.PlayerExecutiveMusic.Uid,
-                OrganizationType.MusicPlayer.Uid);
+                null
+            );
 
             if (attendeeCollaboratorDto == null)
             {
