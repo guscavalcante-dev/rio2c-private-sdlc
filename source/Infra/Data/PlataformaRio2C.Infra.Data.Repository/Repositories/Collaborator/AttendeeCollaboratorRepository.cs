@@ -239,12 +239,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="query">The query.</param>
         /// <param name="organizationTypeUid">The collaborator type uid.</param>
         /// <returns></returns>
-        internal static IQueryable<AttendeeCollaborator> FindByOrganizationTypeUid(this IQueryable<AttendeeCollaborator> query, Guid organizationTypeUid)
+        internal static IQueryable<AttendeeCollaborator> FindByOrganizationTypeUid(this IQueryable<AttendeeCollaborator> query, Guid? organizationTypeUid)
         {
-            query = query.Where(
-                ac => ac.AttendeeOrganizationCollaborators.Any(
-                    aoc => aoc.AttendeeOrganization.AttendeeOrganizationTypes.Any(
-                        aot => aot.OrganizationType.Uid == organizationTypeUid)));
+            if (organizationTypeUid.HasValue)
+            {
+                query = query.Where(
+                    ac => ac.AttendeeOrganizationCollaborators.Any(
+                        aoc => aoc.AttendeeOrganization.AttendeeOrganizationTypes.Any(
+                            aot => aot.OrganizationType.Uid == organizationTypeUid)));
+            }
 
             return query;
         }
@@ -412,11 +415,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="collaboratorTypeUid">The collaborator type uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<AttendeeCollaboratorSiteDetailsDto> FindSiteDetailstDtoByCollaboratorUidAndByCollaboratorTypeUidAsync(Guid collaboratorUid, Guid collaboratorTypeUid, Guid organizationTypeUid)
+        public async Task<AttendeeCollaboratorSiteDetailsDto> FindSiteDetailstDtoByCollaboratorUidAndByCollaboratorTypeUidAsync(Guid collaboratorUid, Guid collaboratorTypeUid, Guid? organizationTypeUid)
         {
             var query = this.GetBaseQuery(true)
                                 .FindByCollaboratorUid(collaboratorUid)
-                                //.FindByCollaboratorTypeUid(collaboratorTypeUid) //TODO: Find by collaboratorType when CollaboratorType.PlayerExecutiveAudiovisual has been splited on PlayerExecutiveAudiovisual and ProducerExecutiveAudiovisual
+                                .FindByCollaboratorTypeUid(collaboratorTypeUid) //TODO: Find by collaboratorType when CollaboratorType.PlayerExecutiveAudiovisual has been splited on PlayerExecutiveAudiovisual and ProducerExecutiveAudiovisual
                                 .FindByOrganizationTypeUid(organizationTypeUid);
 
             return await query

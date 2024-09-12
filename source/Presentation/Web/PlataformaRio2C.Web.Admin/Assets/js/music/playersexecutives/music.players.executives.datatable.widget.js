@@ -273,9 +273,9 @@ var MusicPlayersExecutivesDataTableWidget = function () {
                             html += '<button class="dropdown-item" onclick="MusicPlayersExecutivesUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         }
 
-                        //if (full.IsInCurrentEdition) {
-                        //    html += '<button class="dropdown-item" onclick="MusicPlayersExecutivesDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
-                        //}
+                        if (full.IsInCurrentEdition) {
+                            html += '<button class="dropdown-item" onclick="MusicPlayersExecutivesDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
+                        }
 
                         html += '<button class="dropdown-item" onclick="AccountsUpdateUserStatus.showModal(\'' + full.UserBaseDto.Uid + '\',\'' + !full.Active + '\');"><i class="la la-lock"></i> ' + ((full.Active) ? labels.block : labels.unblock) + '</button>';
 
@@ -343,7 +343,7 @@ var MusicPlayersExecutivesDataTableWidget = function () {
         if (MyRio2cCommon.isNullOrEmpty(commissionUid)) {
             return;
         }
-
+        
         window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Music/PlayersExecutives/Details/' + commissionUid);
     };
 
