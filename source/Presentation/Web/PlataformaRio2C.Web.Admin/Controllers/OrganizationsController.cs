@@ -1,16 +1,3 @@
-﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Rafael Dantas Ruiz
-// Created          : 03-08-2020
-//
-// Last Modified By : Renan Valentim
-// Last Modified On : 12-23-2023
-// ***********************************************************************
-// <copyright file="OrganizationsController.cs" company="Softo">
-//     Copyright (c) Softo. All rights reserved.
-// </copyright>
-// <summary></summary>
-// ***********************************************************************
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,15 +15,14 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
-using PlataformaRio2C.Web.Admin.Controllers;
 using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 
-namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
+namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>OrganizationsController</summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminMusic)]
     public class OrganizationsController : BaseController
     {
         private readonly IOrganizationTypeRepository organizationTypeRepo;
@@ -866,8 +852,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                                                         "Audiovisual/ProducersExecutives";
 
 
-            Guid collaboratorTypeUid = organizationTypeUid == OrganizationType.AudiovisualPlayer.Uid ? CollaboratorType.PlayerExecutiveAudiovisual.Uid : 
-                                            organizationTypeUid == OrganizationType.Producer.Uid ? CollaboratorType.Industry.Uid : 
+            Guid collaboratorTypeUid = organizationTypeUid == OrganizationType.AudiovisualPlayer.Uid ? CollaboratorType.PlayerExecutiveAudiovisual.Uid :
+                                            organizationTypeUid == OrganizationType.Producer.Uid ? CollaboratorType.Industry.Uid :
                                                 Guid.Empty;
 
             var executiveWidgetDto = await this.attendeeOrganizationRepo.FindAdminExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(
@@ -1161,7 +1147,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdateBaseModels(
-                    await this.attendeeOrganizationRepo.FindAllApiConfigurationWidgetDtoByHighlight(this.EditionDto.Id, cmd.OrganizationTypeUid), 
+                    await this.attendeeOrganizationRepo.FindAllApiConfigurationWidgetDtoByHighlight(this.EditionDto.Id, cmd.OrganizationTypeUid),
                     cmd.OrganizationTypeUid);
 
                 return Json(new

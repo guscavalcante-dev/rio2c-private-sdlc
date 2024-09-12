@@ -386,18 +386,18 @@ namespace PlataformaRio2C.Web.Admin
 
             #region Organizations
 
-            bundles.Add(new StyleBundle("~/bundles/css/audiovisual.organizations.apiconfiguration.css").Include(
+            bundles.Add(new StyleBundle("~/bundles/css/organizations.apiconfiguration.css").Include(
                 "~/Assets/themes/metronic/css/demo4/pages/pricing/pricing-1.css"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.organizations.widget.js").Include(
-                 "~/Assets/js/audiovisual/organizations/audiovisual.organizations.maininformation.widget.js",
-                 "~/Assets/js/audiovisual/organizations/audiovisual.organizations.socialnetworks.widget.js",
-                 "~/Assets/js/audiovisual/organizations/audiovisual.organizations.address.widget.js",
-                 "~/Assets/js/audiovisual/organizations/audiovisual.organizations.activity.widget.js",
-                 "~/Assets/js/audiovisual/organizations/audiovisual.organizations.targetaudience.widget.js",
-                 "~/Assets/js/audiovisual/organizations/audiovisual.organizations.interest.widget.js",
-                 "~/Assets/js/audiovisual/organizations/audiovisual.organizations.executives.widget.js",
-                 "~/Assets/js/audiovisual/organizations/audiovisual.organizations.apiconfiguration.widget.js",
+            bundles.Add(new ScriptBundle("~/bundles/js/organizations.widget.js").Include(
+                 "~/Assets/js/organizations/organizations.maininformation.widget.js",
+                 "~/Assets/js/organizations/organizations.socialnetworks.widget.js",
+                 "~/Assets/js/organizations/organizations.address.widget.js",
+                 "~/Assets/js/organizations/organizations.activity.widget.js",
+                 "~/Assets/js/organizations/organizations.targetaudience.widget.js",
+                 "~/Assets/js/organizations/organizations.interest.widget.js",
+                 "~/Assets/js/organizations/organizations.executives.widget.js",
+                 "~/Assets/js/organizations/organizations.apiconfiguration.widget.js",
                  "~/Assets/js/myrio2c.companynumber.js",
                  "~/Assets/js/myrio2c.additionalinfo.js"));
 

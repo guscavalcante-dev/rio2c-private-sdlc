@@ -182,9 +182,9 @@ var MusicPlayersDataTableWidget = function () {
                             html += '<button class="dropdown-item" onclick="MusicPlayersUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         }
 
-                        //if (full.IsInCurrentEdition) {
-                        //    html += '<button class="dropdown-item" onclick="MusicPlayersDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
-                        //}
+                        if (full.IsInCurrentEdition) {
+                            html += '<button class="dropdown-item" onclick="MusicPlayersDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
+                        }
 
                         //if (full.IsInCurrentEdition && full.IsInOtherEdition) {
                         //    html += '<button class="dropdown-item" onclick="MusicPlayersDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-minus"></i> ' + removeFromEdition + '</button>';

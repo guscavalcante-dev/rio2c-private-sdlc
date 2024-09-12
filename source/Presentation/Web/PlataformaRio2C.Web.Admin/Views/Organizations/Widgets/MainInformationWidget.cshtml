@@ -5,6 +5,7 @@
 @model AttendeeOrganizationMainInformationWidgetDto
 @{
     var isAudiovisualBuyer = ViewBag.OrganizationTypeUid == OrganizationType.AudiovisualPlayer.Uid;
+    var isMusicPlayer = ViewBag.OrganizationTypeUid == OrganizationType.MusicPlayer.Uid;
 }
 <div class="kt-portlet__body">
     <div class="kt-widget kt-widget--user-profile-3">
@@ -35,7 +36,7 @@
                     @if (Model.IsInCurrentEdition == true)
                     {
                         <div class="kt-widget__action">
-                            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="AudiovisualOrganizationsMainInformationWidget.showUpdateModal();">
+                            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="OrganizationsMainInformationWidget.showUpdateModal();">
                                 <i class="flaticon2-edit"></i>
                             </button>
                         </div>
@@ -48,20 +49,26 @@
                         @(Model.Organization?.TradeName)
                     </div>
                 }
-            <div class="kt-widget__subhead pt-0">
-                @if (!string.IsNullOrEmpty(Model.Organization?.CompanyName))
+                @if (isMusicPlayer && !string.IsNullOrEmpty(Model.Organization?.Holding?.Name))
                 {
-                    @(Model.Organization?.CompanyName)
+                    <div class="kt-widget__subhead pt-0 pb-2">
+                        <strong>Holding</strong>: @(Model.Organization?.Holding?.Name)
+                    </div>
                 }
-                @if (!string.IsNullOrEmpty(Model.Organization?.Document))
-                {
-                    if (!string.IsNullOrEmpty(Model.Organization?.CompanyName))
+                <div class="kt-widget__subhead pt-0">
+                    @if (!string.IsNullOrEmpty(Model.Organization?.CompanyName))
                     {
-                        @:-
+                        @(Model.Organization?.CompanyName)
                     }
-                    @Model.Organization.Document
-                }
-            </div>
+                    @if (!string.IsNullOrEmpty(Model.Organization?.Document))
+                    {
+                        if (!string.IsNullOrEmpty(Model.Organization?.CompanyName))
+                        {
+                            @:-
+                        }
+                        @Model.Organization.Document
+                    }
+                </div>
                 @if (Model.Organization.IsVirtualMeeting.HasValue || Model.IsInCurrentEdition == false)
                 {
                     <div class="kt-widget__subhead pt-0 mt-0">
