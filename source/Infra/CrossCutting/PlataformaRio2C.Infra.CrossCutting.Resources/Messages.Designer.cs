@@ -2436,6 +2436,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Url deve ser uma Url válida.
+        /// </summary>
+        public static string UrlIsInvalid {
+            get {
+                return ResourceManager.GetString("UrlIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Usuário não encontrado.
         /// </summary>
         public static string UserNotFound {
@@ -2495,6 +2504,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string WeFoundAndError {
             get {
                 return ResourceManager.GetString("WeFoundAndError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string WeFoundAnError {
+            get {
+                return ResourceManager.GetString("WeFoundAnError", resourceCulture);
             }
         }
         

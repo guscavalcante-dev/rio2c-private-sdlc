@@ -26,22 +26,27 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "Website", ResourceType = typeof(Labels))]
         [StringLength(300, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [Url(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "UrlIsInvalid")]
         public string Website { get; set; }
 
         [Display(Name = "LinkedIn")]
         [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [Url(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "UrlIsInvalid")]
         public string Linkedin { get; set; }
 
         [Display(Name = "Twitter")]
         [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [Url(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "UrlIsInvalid")]
         public string Twitter { get; set; }
 
         [Display(Name = "Instagram")]
         [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [Url(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "UrlIsInvalid")]
         public string Instagram { get; set; }
 
         [Display(Name = "YouTube")]
         [StringLength(300, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [Url(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "UrlIsInvalid")]
         public string Youtube { get; set; }
 
         /// <summary>

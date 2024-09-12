@@ -1140,4 +1140,7 @@
   <data name="ZipCodeIsRequired" xml:space="preserve">
     <value>Zip code required.</value>
   </data>
+  <data name="UrlIsInvalid" xml:space="preserve">
+    <value>The field '{0}' must be a valid URL.</value>
+  </data>
 </root>

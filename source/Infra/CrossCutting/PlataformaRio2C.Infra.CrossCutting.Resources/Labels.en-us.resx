@@ -3323,4 +3323,7 @@
     <value>Zoom Out</value>
     <comment>Menos Zoom</comment>
   </data>
+  <data name="NoAssociatedCompany" xml:space="preserve">
+    <value>No associated company</value>
+  </data>
 </root>

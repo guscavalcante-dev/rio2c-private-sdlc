@@ -4129,6 +4129,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nenhuma empresa vinculada.
+        /// </summary>
+        public static string NoAssociatedCompany {
+            get {
+                return ResourceManager.GetString("NoAssociatedCompany", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Não há palestras a serem exibidas..
         /// </summary>
         public static string NoConferenceToDisplay {
