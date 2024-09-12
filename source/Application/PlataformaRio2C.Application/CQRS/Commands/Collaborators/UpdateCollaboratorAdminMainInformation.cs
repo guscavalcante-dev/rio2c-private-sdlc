@@ -18,6 +18,7 @@ using System.Linq;
 using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
+using CollaboratorTypeConst = PlataformaRio2C.Domain.Constants.CollaboratorType;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
@@ -32,6 +33,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "LastNames", ResourceType = typeof(Labels))]
         [StringLength(200, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [RequiredIf("CollaboratorTypeName", CollaboratorTypeConst.PlayerExecutiveMusic, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public string LastNames { get; set; }
 
         [Display(Name = "Email", ResourceType = typeof(Labels))]
@@ -43,6 +45,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "BadgeName", ResourceType = typeof(Labels))]
         [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [RequiredIf("CollaboratorTypeName", CollaboratorTypeConst.PlayerExecutiveMusic, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public string Badge { get; set; }
 
         [Display(Name = "PhoneNumber", ResourceType = typeof(Labels))]
