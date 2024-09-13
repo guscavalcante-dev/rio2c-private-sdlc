@@ -119,7 +119,6 @@
   <ItemGroup>
     <Compile Include="HubBootStrapper.cs" />
     <Compile Include="SiteIoCBootStrapper.cs" />
-    <Compile Include="AdminIoCBootStrapper.cs" />
     <Compile Include="IoCBootStrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
