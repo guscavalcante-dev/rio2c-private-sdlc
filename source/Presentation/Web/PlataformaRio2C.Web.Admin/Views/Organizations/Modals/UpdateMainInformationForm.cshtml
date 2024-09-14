@@ -1,14 +1,32 @@
 ﻿@using PlataformaRio2C.Domain.Entities
 @model PlataformaRio2C.Application.CQRS.Commands.UpdateOrganizationAdminMainInformation
 @{
+    IEnumerable<Guid> players = new Guid[] { OrganizationType.AudiovisualPlayer.Uid, OrganizationType.MusicPlayer.Uid };
     var isPlayer = Model.OrganizationTypeUid == OrganizationType.AudiovisualPlayer.Uid;
     var isProducer = Model.OrganizationTypeUid == OrganizationType.Producer.Uid;
     var isAudiovisualCompany = isPlayer || isProducer;
+    bool showName, showHolding, showTradeName, showIsVirtualMeeting;
+    showName = showHolding = showTradeName = showIsVirtualMeeting = false;
+    if (players.Any(p => p == Model.OrganizationTypeUid))
+    {
+        showName = showHolding = showTradeName = showIsVirtualMeeting = true;
+    }
 }
 @if (Model.Country != null)
 {
     <select name="CountryUid" id="CountryUid" class="d-none">
-        <option value="@(Model.Country.Uid)" data-country-code="@(Model.Country.Code)" data-companynumber-required="@(Model.Country.IsCompanyNumberRequired)" data-companynumber-mask="@(Model.Country.CompanyNumberMask)" data-zipcode-mask="@(Model.Country.ZipCodeMask)" data-phonenumber-mask="@(Model.Country.PhoneNumberMask)" data-mobile-mask="@(Model.Country.MobileMask)" selected>@(Model.Country.Name)</option>
+        <option
+            value="@(Model.Country.Uid)"
+            data-country-code="@(Model.Country.Code)"
+            data-companynumber-required="@(Model.Country.IsCompanyNumberRequired)"
+            data-companynumber-mask="@(Model.Country.CompanyNumberMask)"
+            data-zipcode-mask="@(Model.Country.ZipCodeMask)"
+            data-phonenumber-mask="@(Model.Country.PhoneNumberMask)"
+            data-mobile-mask="@(Model.Country.MobileMask)"
+            selected
+        >
+            @(Model.Country.Name)
+        </option>
     </select>
 }
 <div class="row">
@@ -17,7 +35,7 @@
         @Html.EditorFor(m => m.CropperImage)
     </div>
     <div class="col-lg-8">
-        @if (isPlayer)
+        @if (showHolding)
         {
             <div class="form-group row">
                 <div class="col-md-12">
@@ -29,7 +47,7 @@
         }
         <div class="form-group row">
             @Html.HiddenFor(m => m.IsCompanyNameRequired)
-            @if (isPlayer)
+            @if (showName)
             {
                 <div class="col-md-6">
                     @Html.LabelFor(m => m.Name, new { @class = "control-label" })
@@ -54,7 +72,7 @@
         <div class="row">
             <div class="form-group col-md-12">
                 @Html.LabelFor(m => m.TradeName, new { @class = "control-label" })
-                @if (isPlayer)
+                @if (showTradeName)
                 {
                     <span class="form-optional-input text-muted">@Labels.Optional</span>
                 }
@@ -69,7 +87,7 @@
     @Html.HiddenFor(m => m.IsVirtualMeetingRequired)
     @Html.HiddenFor(m => m.IsVirtualMeeting)
 }
-@if (isPlayer)
+@if (showIsVirtualMeeting)
 {
     <div class="kt-section mt-50 mb-0">
         <h3 class="kt-heading kt-heading--md">@Labels.OneToOneMeetingConfiguration</h3>

@@ -26,7 +26,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>UpdateOrganizationAdminMainInformation</summary>
     public class UpdateOrganizationAdminMainInformation : UpdateOrganizationMainInformationBaseCommand
     {
-        public bool IsAudiovisualBuyer => (this.OrganizationType != null && this.OrganizationType?.Name == OrganizationType.AudiovisualPlayer.Name);
+        public bool IsAudiovisualBuyer
+        {
+            get
+            {
+                IEnumerable<string> players = new string[] { OrganizationType.AudiovisualPlayer.Name, OrganizationType.MusicPlayer.Name };
+                return this.OrganizationType != null && players.Any(x => x == this.OrganizationType?.Name);
+            }
+        }
 
         public Guid? OrganizationTypeUid { get; set; }
 
