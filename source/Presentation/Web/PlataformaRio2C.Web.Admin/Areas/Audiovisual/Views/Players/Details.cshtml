@@ -65,7 +65,7 @@
     @Styles.Render("~/bundles/css/cropper.css")
     @Styles.Render("~/bundles/css/select2.css")
     @Styles.Render("~/bundles/css/bootstrap-datepicker.css")
-    @Styles.Render("~/bundles/css/audiovisual.organizations.apiconfiguration.css")
+    @Styles.Render("~/bundles/css/organizations.apiconfiguration.css")
 }
 @section Scripts {
     @Scripts.Render("~/bundles/js/cropper.js")
@@ -75,19 +75,19 @@
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/addresses.form.js")
     @Scripts.Render("~/bundles/js/audiovisual.players.executives.create.js")
-    @Scripts.Render("~/bundles/js/audiovisual.organizations.widget.js")
+    @Scripts.Render("~/bundles/js/organizations.widget.js")
     <script>
         // Page translations ----------------------------------------------------------------------
 
         jQuery(document).ready(function () {
-            AudiovisualOrganizationsMainInformationWidget.init();
-            AudiovisualOrganizationsSocialNetworksWidget.init();
-            AudiovisualOrganizationsAddressWidget.init();
-            AudiovisualOrganizationsActivityWidget.init();
-            AudiovisualOrganizationsTargetAudienceWidget.init();
-            AudiovisualOrganizationsInterestWidget.init();
-            AudiovisualOrganizationsExecutivesWidget.init();
-            AudiovisualOrganizationsApiConfigurationWidget.init();
+            OrganizationsMainInformationWidget.init();
+            OrganizationsSocialNetworksWidget.init();
+            OrganizationsAddressWidget.init();
+            OrganizationsActivityWidget.init();
+            OrganizationsTargetAudienceWidget.init();
+            OrganizationsInterestWidget.init();
+            OrganizationsExecutivesWidget.init();
+            OrganizationsApiConfigurationWidget.init();
         });
     </script>
 }

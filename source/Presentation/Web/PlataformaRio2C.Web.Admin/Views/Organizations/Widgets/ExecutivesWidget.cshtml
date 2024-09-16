@@ -17,7 +17,7 @@
     </div>
     <div class="kt-portlet__head-toolbar">
         <div class="kt-portlet__head-actions">
-            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="AudiovisualOrganizationsExecutivesWidget.showAssociateModal('@Model.AttendeeOrganization.Organization.Uid');">
+            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="OrganizationsExecutivesWidget.showAssociateModal('@Model.AttendeeOrganization.Organization.Uid');">
                 <i class="flaticon2-plus"></i>
             </button>
         </div>
@@ -39,7 +39,7 @@
                             <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right" style="">
                                 <ul class="kt-nav">
                                     <li class="kt-nav__item">
-                                        <a class="kt-nav__link" onclick="AudiovisualOrganizationsExecutivesWidget.showDisassociateModal('@attendeeCollaboratorDto.Collaborator.Uid', '@Model.AttendeeOrganization.Organization.Uid'); return false;">
+                                        <a class="kt-nav__link" onclick="OrganizationsExecutivesWidget.showDisassociateModal('@attendeeCollaboratorDto.Collaborator.Uid', '@Model.AttendeeOrganization.Organization.Uid'); return false;">
                                             <i class="kt-nav__link-icon flaticon2-delete"></i>
                                             <span class="kt-nav__link-text">@Labels.Remove</span>
                                         </a>
