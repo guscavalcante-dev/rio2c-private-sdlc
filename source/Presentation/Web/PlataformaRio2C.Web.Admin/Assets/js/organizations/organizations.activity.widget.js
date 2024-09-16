@@ -32,6 +32,7 @@ var OrganizationsActivityWidget = function () {
 
         var jsonParameters = new Object();
         jsonParameters.organizationUid = $('#AggregateId').val();
+        jsonParameters.projectTypeUid = $('#ProjectTypeUid').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Organizations/ShowActivityWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -92,8 +93,9 @@ var OrganizationsActivityWidget = function () {
 
         var jsonParameters = new Object();
         jsonParameters.organizationUid = $('#AggregateId').val();
+        jsonParameters.projectTypeUid = $('#ProjectTypeUid').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Organizations/ShowUpdateActivityModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Organizations/ShowUpdateActivityModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

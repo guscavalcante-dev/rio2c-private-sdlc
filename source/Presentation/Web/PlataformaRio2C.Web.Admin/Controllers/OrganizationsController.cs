@@ -461,9 +461,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         /// <summary>Shows the activity widget.</summary>
         /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="projectTypeId">Project type id</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowActivityWidget(Guid? organizationUid)
+        public async Task<ActionResult> ShowActivityWidget(Guid? organizationUid, Guid? projectTypeUid)
         {
             var activityWidgetDto = await this.attendeeOrganizationRepo.FindActivityWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id, true);
             if (activityWidgetDto == null)
@@ -471,7 +472,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Activity, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            ViewBag.Activities = await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id);
+            ViewBag.Activities = await this.activityRepo.FindAllByProjectTypeUidAsync(projectTypeUid ?? ProjectType.Audiovisual.Uid);
 
             return Json(new
             {
@@ -487,9 +488,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         /// <summary>Shows the update activity modal.</summary>
         /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="projectTypeId">Project type id</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowUpdateActivityModal(Guid? organizationUid)
+        public async Task<ActionResult> ShowUpdateActivityModal(Guid? organizationUid, Guid? projectTypeUid)
         {
             UpdateOrganizationActivities cmd;
 
@@ -503,7 +505,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd = new UpdateOrganizationActivities(
                     activityWidgetDto,
-                    await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
+                    await this.activityRepo.FindAllByProjectTypeUidAsync(projectTypeUid ?? ProjectType.Audiovisual.Uid));
             }
             catch (DomainException ex)
             {
