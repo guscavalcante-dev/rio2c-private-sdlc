@@ -114,7 +114,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.Document,
                 cmd.CropperImage?.ImageFile != null,
                 cmd.CropperImage?.IsImageDeleted == true,
-                cmd.IsVirtualMeeting,
+                cmd.IsVirtualMeeting.HasValue ? cmd.IsVirtualMeeting : organization.IsVirtualMeeting,
                 cmd.IsApiDisplayEnabled,
                 cmd.ApiHighlightPosition,
                 cmd.Descriptions?.Select(d => new OrganizationDescription(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),

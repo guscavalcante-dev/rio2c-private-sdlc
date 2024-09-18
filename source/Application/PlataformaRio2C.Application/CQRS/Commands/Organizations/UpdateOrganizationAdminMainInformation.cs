@@ -26,22 +26,29 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>UpdateOrganizationAdminMainInformation</summary>
     public class UpdateOrganizationAdminMainInformation : UpdateOrganizationMainInformationBaseCommand
     {
-        public bool IsAudiovisualBuyer => (this.OrganizationType != null && this.OrganizationType?.Name == OrganizationType.AudiovisualPlayer.Name);
+        public bool IsPlayerOrganizationType
+        {
+            get
+            {
+                IEnumerable<string> playerOrganizationTypes = new string[] { OrganizationType.AudiovisualPlayer.Name, OrganizationType.MusicPlayer.Name };
+                return this.OrganizationType != null && playerOrganizationTypes.Any(x => x == this.OrganizationType?.Name);
+            }
+        }
 
         public Guid? OrganizationTypeUid { get; set; }
 
         [Display(Name = "Holding", ResourceType = typeof(Labels))]
-        [RequiredIf(nameof(IsAudiovisualBuyer), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [RequiredIf(nameof(IsPlayerOrganizationType), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? HoldingUid { get; set; }
 
         [Display(Name = "Name", ResourceType = typeof(Labels))]
-        [RequiredIf(nameof(IsAudiovisualBuyer), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [RequiredIf(nameof(IsPlayerOrganizationType), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(81, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Name { get; set; }
 
         [Display(Name = "TradeName", ResourceType = typeof(Labels))]
-        //[RequiredIf(nameof(IsAudiovisualBuyer), "False", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        //[RequiredIf(nameof(IsPlayerOrganizationType), "False", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(100, MinimumLength = 2, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string TradeName { get; set; }
 
@@ -123,7 +130,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.OrganizationType = organizationType;
             this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
 
-            if (!this.IsAudiovisualBuyer)
+            if (!this.IsPlayerOrganizationType)
             {
                 this.Name = TradeName;
             }

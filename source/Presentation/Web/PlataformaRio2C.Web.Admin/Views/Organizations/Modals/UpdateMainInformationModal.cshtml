@@ -9,7 +9,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("UpdateMainInformation", "Organizations", new { Area = "Audiovisual" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UpdateMainInformationForm" }))
+                @using (Html.BeginForm("UpdateMainInformation", "Organizations", null, FormMethod.Post, new { enctype = "multipart/form-data", id = "UpdateMainInformationForm" }))
                 {
                     @Html.HiddenFor(m => m.OrganizationUid)
                     @Html.HiddenFor(m => m.OrganizationTypeUid)
