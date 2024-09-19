@@ -766,7 +766,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="exportToExcel">if set to <c>true</c> [export to excel].</param>
         /// <returns></returns>
-        public async Task<IPagedList<OrganizationDto>> FindAllAudiovisualPlayersByDataTable(
+        public async Task<IPagedList<OrganizationDto>> FindAllPlayersByDataTable(
             int page,
             int pageSize,
             string keywords,
@@ -774,10 +774,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             bool showAllEditions,
             bool showAllOrganizations,
             int? editionId,
-            bool exportToExcel = false)
+            Guid? playerOrganizationTypeUid,
+            bool exportToExcel = false
+        )
         {
-            Guid playerOrganizationTypeUid = OrganizationType.AudiovisualPlayer.Uid;
-
+            playerOrganizationTypeUid = playerOrganizationTypeUid.HasValue
+                ? playerOrganizationTypeUid
+                : OrganizationType.AudiovisualPlayer.Uid;
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords)
                                 .FindByOrganizationTypeUidAndByEditionId(playerOrganizationTypeUid, showAllEditions, showAllOrganizations, editionId);

@@ -73,6 +73,12 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
+        #region Music
+
+        public static InterestGroup MusicLookingFor = new InterestGroup(new Guid("33AE337F-99F1-4C8D-98EC-8044572A104D"));
+
+        #endregion
+
         #endregion
 
         #region Old methods

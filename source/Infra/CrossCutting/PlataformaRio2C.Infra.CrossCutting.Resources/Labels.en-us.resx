@@ -3326,4 +3326,7 @@
   <data name="NoAssociatedCompany" xml:space="preserve">
     <value>No associated company</value>
   </data>
+  <data name="MusicPlayersReport" xml:space="preserve">
+    <value>Music Players Report</value>
+  </data>
 </root>

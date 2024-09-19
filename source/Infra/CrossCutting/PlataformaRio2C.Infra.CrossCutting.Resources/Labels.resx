@@ -3322,4 +3322,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="NoAssociatedCompany" xml:space="preserve">
     <value>Nenhuma empresa vinculada</value>
   </data>
+  <data name="MusicPlayersReport" xml:space="preserve">
+    <value>Relatório de Players de Música</value>
+  </data>
 </root>
