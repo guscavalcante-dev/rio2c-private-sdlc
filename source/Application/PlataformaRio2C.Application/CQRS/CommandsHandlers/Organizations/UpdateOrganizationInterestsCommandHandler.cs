@@ -68,7 +68,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
-            var interestsDtos = await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Audiovisual.Id);
+            var interestsDtos = await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(
+                cmd.ProjectTypeId ?? ProjectType.Audiovisual.Id
+            );
 
             // Interests
             var organizationInterests = new List<OrganizationInterest>();
@@ -78,14 +80,29 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 {
                     foreach (var interestBaseCommand in interestBaseCommands?.Where(ibc => ibc.IsChecked)?.ToList())
                     {
-                        organizationInterests.Add(new OrganizationInterest(interestsDtos?.FirstOrDefault(id => id.Interest.Uid == interestBaseCommand.InterestUid)?.Interest, interestBaseCommand.AdditionalInfo, cmd.UserId));
+                        organizationInterests.Add(
+                            new OrganizationInterest(
+                                interestsDtos?.FirstOrDefault(id => id.Interest.Uid == interestBaseCommand.InterestUid)?.Interest,
+                                interestBaseCommand.AdditionalInfo,
+                                cmd.UserId
+                            )
+                        );
                     }
                 }
             }
 
             organization.UpdateOrganizationRestrictionSpecifics(
-                cmd.RestrictionSpecifics?.Select(d => new OrganizationRestrictionSpecific(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
-                cmd.UserId);
+                cmd.RestrictionSpecifics
+                    ?.Select(d => 
+                        new OrganizationRestrictionSpecific(
+                            d.Value,
+                            languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language,
+                            cmd.UserId
+                        )
+                    )
+                    ?.ToList(),
+                cmd.UserId
+            );
 
             organization.UpdateOrganizationInterests(
                 organizationInterests,

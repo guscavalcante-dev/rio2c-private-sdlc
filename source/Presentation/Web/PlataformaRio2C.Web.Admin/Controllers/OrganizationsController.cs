@@ -777,12 +777,15 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     interestWidgetDto,
                     await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(projectTypeId ?? ProjectType.Audiovisual.Id),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
-                    true);
+                    projectTypeId != ProjectType.Music.Id
+                );
             }
             catch (DomainException ex)
             {
                 return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
             }
+
+            ViewBag.ProjectTypeId = projectTypeId ?? projectTypeId.Audiovisual.Id;
 
             return Json(new
             {
