@@ -51,7 +51,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.Uow.BeginTransaction();
 
             var organization = await this.GetOrganizationByUid(cmd.OrganizationUid);
-            var targetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(cmd.ProjectTypeId);
+            var targetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(
+                cmd.ProjectTypeId ?? ProjectType.Audiovisual.Id
+            );
 
             #region Initial validations
 
@@ -64,8 +66,18 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             organization.UpdateOrganizationTargetAudiences(
-                cmd.OrganizationTargetAudiences?.Where(ota => ota.IsChecked)?.Select(ota => new OrganizationTargetAudience(targetAudiences?.FirstOrDefault(a => a.Uid == ota.TargetAudienceUid), ota.AdditionalInfo, cmd.UserId))?.ToList(),
-                cmd.UserId);
+                cmd.OrganizationTargetAudiences
+                    ?.Where(ota => ota.IsChecked)
+                    ?.Select(ota => 
+                        new OrganizationTargetAudience(
+                            targetAudiences?.FirstOrDefault(a => a.Uid == ota.TargetAudienceUid),
+                            ota.AdditionalInfo,
+                            cmd.UserId
+                        )
+                    )
+                    ?.ToList(),
+                cmd.UserId
+            );
             if (!organization.IsValid())
             {
                 this.AppValidationResult.Add(organization.ValidationResult);
