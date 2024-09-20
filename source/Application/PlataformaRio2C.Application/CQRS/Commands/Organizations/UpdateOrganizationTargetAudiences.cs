@@ -24,7 +24,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>UpdateOrganizationTargetAudiences</summary>
     public class UpdateOrganizationTargetAudiences : BaseCommand
     {
-        public Guid OrganizationUid { get; set; }
+        public Guid OrganizationUid { get; set; }        
         public int ProjectTypeId { get; set; }
 
         [Display(Name = "TargetAudiences", ResourceType = typeof(Labels))]
@@ -36,10 +36,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="targetAudiences">The target audiences.</param>
         public UpdateOrganizationTargetAudiences(
             AttendeeOrganizationSiteTargetAudienceWidgetDto entity,
-            List<TargetAudience> targetAudiences)
+            List<TargetAudience> targetAudiences,
+            int projectTypeId
+        )
         {
             this.OrganizationUid = entity.Organization.Uid;
             this.UpdateTargetAudiences(entity, targetAudiences);
+            this.ProjectTypeId = projectTypeId;
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateOrganizationTargetAudiences"/> class.</summary>
