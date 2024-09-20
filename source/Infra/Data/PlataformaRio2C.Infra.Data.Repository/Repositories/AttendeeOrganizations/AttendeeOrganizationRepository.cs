@@ -576,7 +576,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     OrganizationTargetAudienceUid = ota.Uid,
                                     TargetAudienceId = ota.TargetAudience.Id,
                                     TargetAudienceUid = ota.TargetAudience.Uid,
-                                    TargetAudienceName = ota.TargetAudience.Name
+                                    TargetAudienceName = ota.TargetAudience.Name,
+                                    TargetAudienceHasAdditionalInfo = ota.AdditionalInfo != null,
+                                    OrganizationTargetAudienceAdditionalInfo = ota.AdditionalInfo
                                 })
                             })
                             .FirstOrDefaultAsync();
