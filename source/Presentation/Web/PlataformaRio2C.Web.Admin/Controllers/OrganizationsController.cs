@@ -584,17 +584,25 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         /// <summary>Shows the activity widget.</summary>
         /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="projectTypeId">Project type uid</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowTargetAudienceWidget(Guid? organizationUid)
+        public async Task<ActionResult> ShowTargetAudienceWidget(Guid? organizationUid, int? projectTypeId)
         {
-            var targetAudienceWidgetDto = await this.attendeeOrganizationRepo.FindTargetAudienceWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id, true);
+            var targetAudienceWidgetDto = await this.attendeeOrganizationRepo
+                .FindTargetAudienceWidgetDtoByOrganizationUidAndByEditionIdAsync(
+                    organizationUid ?? Guid.Empty,
+                    this.EditionDto.Id,
+                    true
+                );
             if (targetAudienceWidgetDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.TargetAudience, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            ViewBag.TargetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id);
+            ViewBag.TargetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(
+                projectTypeId ?? ProjectType.Audiovisual.Id
+            );
 
             return Json(new
             {
@@ -610,15 +618,20 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         /// <summary>Shows the update target audience modal.</summary>
         /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="projectTypeId">Project type uid</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowUpdateTargetAudienceModal(Guid? organizationUid)
+        public async Task<ActionResult> ShowUpdateTargetAudienceModal(Guid? organizationUid, int? projectTypeId)
         {
             UpdateOrganizationTargetAudiences cmd;
 
             try
             {
-                var targetAudienceWidgetDto = await this.attendeeOrganizationRepo.FindTargetAudienceWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id, true);
+                var targetAudienceWidgetDto = await this.attendeeOrganizationRepo.FindTargetAudienceWidgetDtoByOrganizationUidAndByEditionIdAsync(
+                    organizationUid ?? Guid.Empty,
+                    this.EditionDto.Id,
+                    true
+                );
                 if (targetAudienceWidgetDto == null)
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundF.ToLowerInvariant()));
@@ -626,7 +639,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd = new UpdateOrganizationTargetAudiences(
                     targetAudienceWidgetDto,
-                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(
+                        projectTypeId ?? ProjectType.Audiovisual.Id
+                    ),
+                    projectTypeId ?? ProjectType.Audiovisual.Id
+                );
             }
             catch (DomainException ex)
             {
@@ -664,7 +681,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
                     this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
+                    this.UserInterfaceLanguage
+                );
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
                 {

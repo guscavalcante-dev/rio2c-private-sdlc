@@ -32,6 +32,7 @@ var OrganizationsTargetAudienceWidget = function () {
 
         var jsonParameters = new Object();
         jsonParameters.organizationUid = $('#AggregateId').val();
+        jsonParameters.projectTypeId = $('#ProjectTypeId').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Organizations/ShowTargetAudienceWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -78,6 +79,10 @@ var OrganizationsTargetAudienceWidget = function () {
     var enableUpdatePlugins = function () {
         enableAjaxForm();
         MyRio2cCommon.enableAtLeastOnCheckboxByNameValidation(updateFormId);
+        // Enable additional info textbox
+        if (typeof (MyRio2cCommonAdditionalInfo) !== 'undefined') {
+            MyRio2cCommonAdditionalInfo.init();
+        }
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
 
@@ -86,6 +91,7 @@ var OrganizationsTargetAudienceWidget = function () {
 
         var jsonParameters = new Object();
         jsonParameters.organizationUid = $('#AggregateId').val();
+        jsonParameters.projectTypeId = $('#ProjectTypeId').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Organizations/ShowUpdateTargetAudienceModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
