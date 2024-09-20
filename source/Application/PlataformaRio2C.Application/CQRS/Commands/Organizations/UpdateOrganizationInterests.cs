@@ -23,6 +23,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     public class UpdateOrganizationInterests : BaseCommand
     {
         public Guid OrganizationUid { get; set; }
+        
+        public int? ProjectTypeId { get; set; }
+
         public List<OrganizationRestrictionSpecificsBaseCommand> RestrictionSpecifics { get; set; }
         public InterestBaseCommand[][] Interests { get; set; }
 
