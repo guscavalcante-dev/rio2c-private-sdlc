@@ -64,7 +64,6 @@ namespace PlataformaRio2C.WebApi
         private static void InitializeContainer(Container container)
         {
             IoCBootStrapper.RegisterServices(container);
-            AdminIoCBootStrapper.RegisterServices(container);
             CqrsBootStrapper.RegisterServices(container, new[]
             {
                 typeof(CreateSalesPlatformWebhookRequestCommandHandler).Assembly

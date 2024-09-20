@@ -75,10 +75,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
             {
                 container.Register(reg.service, reg.implementation, Lifestyle.Scoped);
             }
-
-            // Disabled at 2023-08-17 for test purposes.
-            // The lines above already register all the repositories, so, this factory isn't necessary.
-            //container.Register<IRepositoryFactory, RepositoryFactory>(Lifestyle.Scoped);
         }
     }
 }

@@ -1,13 +1,13 @@
 ﻿@using PlataformaRio2C.Domain.Entities
 @model PlataformaRio2C.Application.CQRS.Commands.UpdateOrganizationAdminMainInformation
 @{
-    IEnumerable<Guid> players = new Guid[] { OrganizationType.AudiovisualPlayer.Uid, OrganizationType.MusicPlayer.Uid };
+    IEnumerable<Guid> playerOrganizationTypes = new Guid[] { OrganizationType.AudiovisualPlayer.Uid, OrganizationType.MusicPlayer.Uid };
     var isPlayer = Model.OrganizationTypeUid == OrganizationType.AudiovisualPlayer.Uid;
     var isProducer = Model.OrganizationTypeUid == OrganizationType.Producer.Uid;
     var isAudiovisualCompany = isPlayer || isProducer;
     bool showName, showHolding, showTradeName, showIsVirtualMeeting;
     showName = showHolding = showTradeName = showIsVirtualMeeting = false;
-    if (players.Any(p => p == Model.OrganizationTypeUid))
+    if (playerOrganizationTypes.Any(p => p == Model.OrganizationTypeUid))
     {
         showName = showHolding = showTradeName = showIsVirtualMeeting = true;
     }
@@ -30,7 +30,7 @@
     </select>
 }
 <div class="row">
-    @Html.HiddenFor(m => m.IsAudiovisualBuyer)
+    @Html.HiddenFor(m => m.IsPlayerOrganizationType)
     <div class="form-group col-lg-4 text-center">
         @Html.EditorFor(m => m.CropperImage)
     </div>

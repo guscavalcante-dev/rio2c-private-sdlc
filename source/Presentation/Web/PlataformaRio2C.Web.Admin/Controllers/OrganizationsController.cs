@@ -1,3 +1,16 @@
+// ***********************************************************************
+// Assembly         : PlataformaRio2C.Web.Admin
+// Author           : Rafael Dantas Ruiz
+// Created          : 03-08-2020
+//
+// Last Modified By : Renan Valentim
+// Last Modified On : 12-23-2023
+// ***********************************************************************
+// <copyright file="OrganizationsController.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using System;
 using System.Collections.Generic;
 using System.Linq;

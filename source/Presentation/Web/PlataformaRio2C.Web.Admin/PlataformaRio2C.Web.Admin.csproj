@@ -10131,7 +10131,6 @@
     <Content Include="Views\Organizations\Widgets\TargetAudienceWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Areas\Audiovisual\Views\Shared\EditorTemplates\" />
     <Folder Include="Areas\Cartoon\Views\Projects\Modals\" />
     <Folder Include="Areas\Cartoon\Views\Projects\Shared\" />

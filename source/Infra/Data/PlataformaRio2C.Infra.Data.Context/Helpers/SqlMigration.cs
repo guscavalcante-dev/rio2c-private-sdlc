@@ -40,7 +40,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Helpers
                 assemblyDir = absolutionAssemblyDir?.Replace(assemblyDir + ".", ""); //Migrations.Initial
                 var array = assemblyDir?.Split('.');
                 
-                var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                var path = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath);
                            
                 return Path.Combine(path, array[0]);
             }

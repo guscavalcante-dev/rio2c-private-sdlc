@@ -884,7 +884,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="CQRS\CommandsHandlers\Audiovisual\Collaborators\BaseCommandHandlers\" />
     <Folder Include="CQRS\CommandsHandlers\Innovation\Collaborators\BaseCommandHandlers\" />
     <Folder Include="CQRS\CommandsHandlers\SalesPlatforms\" />
@@ -894,7 +893,6 @@
     <Folder Include="CQRS\EventsHandlers\" />
     <Folder Include="CQRS\Events\" />
     <Folder Include="Dtos\Editions\" />
-    <Folder Include="Enums\" />
     <Folder Include="Interfaces\Api\" />
     <Folder Include="ViewModels\Common\ProducerProject\" />
   </ItemGroup>
