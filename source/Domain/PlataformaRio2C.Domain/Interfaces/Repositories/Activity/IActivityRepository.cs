@@ -23,6 +23,5 @@ namespace PlataformaRio2C.Domain.Interfaces
     {
         Task<List<Activity>> FindAllByProjectTypeIdAsync(int projectTypeId);
         Task<List<Activity>> FindAllByUidsAsync(List<Guid> activitiesUids);
-        Task<List<Activity>> FindAllByProjectTypeUidAsync(Guid projectTypeUid);
     }    
 }

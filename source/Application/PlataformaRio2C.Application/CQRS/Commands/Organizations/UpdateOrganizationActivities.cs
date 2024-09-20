@@ -26,6 +26,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         public Guid OrganizationUid { get; set; }
 
+        public int? ProjectTypeId { get; set; }
+
         [Display(Name = "Activities", ResourceType = typeof(Labels))]
         public List<OrganizationActivityBaseCommand> OrganizationActivities { get; set; }
 

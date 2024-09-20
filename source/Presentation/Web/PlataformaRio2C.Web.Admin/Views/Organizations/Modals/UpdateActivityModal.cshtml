@@ -9,17 +9,18 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("UpdateActivities", "Organizations", new { Area = "Audiovisual" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UpdateActivityForm" }))
+                @using (Html.BeginForm("UpdateActivities", "Organizations", null, FormMethod.Post, new { enctype = "multipart/form-data", id = "UpdateActivityForm" }))
                 {
                     @Html.HiddenFor(m => m.OrganizationUid)
+                    @Html.Hidden("ProjectTypeId", ViewBag.ProjectTypeId as int?);
                     <div id="form-container">
                         @Html.Partial("Modals/UpdateActivityForm", Model)
                     </div>
                     @*<div class="row">
-                        <div class="col-sm-12 text-right">
-                            @Labels.LastUpdateOn <b>@Model.UpdateDate.ToBrazilTimeZone().ToShortDateString() @Model.UpdateDate.ToBrazilTimeZone().ToLongTimeString()</b> @Labels.By <b>@Model.UpdaterBaseDto.Name</b>.
-                        </div>
-                    </div>*@
+                <div class="col-sm-12 text-right">
+                    @Labels.LastUpdateOn <b>@Model.UpdateDate.ToBrazilTimeZone().ToShortDateString() @Model.UpdateDate.ToBrazilTimeZone().ToLongTimeString()</b> @Labels.By <b>@Model.UpdaterBaseDto.Name</b>.
+                </div>
+            </div>*@
                 }
             </div>
             <div class="modal-footer">
