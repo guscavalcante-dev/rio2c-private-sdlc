@@ -721,9 +721,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         /// <summary>Shows the interest widget.</summary>
         /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="projectTypeId">Project type uid</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowInterestWidget(Guid? organizationUid)
+        public async Task<ActionResult> ShowInterestWidget(Guid? organizationUid, int? projectTypeId)
         {
             var interestWidgetDto = await this.attendeeOrganizationRepo.FindInterestWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id, true);
             if (interestWidgetDto == null)
@@ -731,7 +732,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Interests, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            ViewBag.GroupedInterests = await this.interestRepo.FindAllByProjectTypeIdAndGroupedByInterestGroupAsync(ProjectType.Audiovisual.Id);
+            ViewBag.GroupedInterests = await this.interestRepo.FindAllByProjectTypeIdAndGroupedByInterestGroupAsync(projectTypeId ?? ProjectType.Audiovisual.Id);
 
             return Json(new
             {
@@ -747,9 +748,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         /// <summary>Shows the update interest modal.</summary>
         /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="projectTypeId">Project type uid</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowUpdateInterestModal(Guid? organizationUid)
+        public async Task<ActionResult> ShowUpdateInterestModal(Guid? organizationUid, int? projectTypeId)
         {
             UpdateOrganizationInterests cmd;
 
@@ -768,7 +770,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd = new UpdateOrganizationInterests(
                     interestWidgetDto,
-                    await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Audiovisual.Id),
+                    await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(projectTypeId ?? ProjectType.Audiovisual.Id),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     true);
             }

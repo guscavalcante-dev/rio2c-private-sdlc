@@ -47,7 +47,7 @@
                 </div>
             </div>
         </div>
-        <div class="kt-widget__bottom mt-2">
+        <div class="kt-widget__bottom mt-2 @(groupedInterests.Count == 1 ? "d-block" : "")">
             @if (groupedInterests?.Any() == true)
             {
                 <div class="row">
