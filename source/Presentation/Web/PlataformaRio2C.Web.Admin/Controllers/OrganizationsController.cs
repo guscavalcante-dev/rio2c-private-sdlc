@@ -479,7 +479,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="projectTypeId">Project type id</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowActivityWidget(Guid? organizationUid, Guid? projectTypeUid)
+        public async Task<ActionResult> ShowActivityWidget(Guid? organizationUid, int? projectTypeId)
         {
             var activityWidgetDto = await this.attendeeOrganizationRepo.FindActivityWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id, true);
             if (activityWidgetDto == null)
@@ -487,7 +487,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Activity, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            ViewBag.Activities = await this.activityRepo.FindAllByProjectTypeUidAsync(projectTypeUid ?? ProjectType.Audiovisual.Uid);
+            ViewBag.Activities = await this.activityRepo.FindAllByProjectTypeIdAsync(projectTypeId ?? ProjectType.Audiovisual.Id);
 
             return Json(new
             {
@@ -506,7 +506,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="projectTypeId">Project type id</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowUpdateActivityModal(Guid? organizationUid, Guid? projectTypeUid)
+        public async Task<ActionResult> ShowUpdateActivityModal(Guid? organizationUid, int? projectTypeId)
         {
             UpdateOrganizationActivities cmd;
 
@@ -520,12 +520,15 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd = new UpdateOrganizationActivities(
                     activityWidgetDto,
-                    await this.activityRepo.FindAllByProjectTypeUidAsync(projectTypeUid ?? ProjectType.Audiovisual.Uid));
+                    await this.activityRepo.FindAllByProjectTypeIdAsync(projectTypeId ?? ProjectType.Audiovisual.id)
+                );
             }
             catch (DomainException ex)
             {
                 return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
             }
+
+            ViewBag.ProjectTypeId = projectTypeId ?? ProjectType.Audiovisual.Id;
 
             return Json(new
             {
