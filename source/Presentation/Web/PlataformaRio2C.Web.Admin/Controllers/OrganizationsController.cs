@@ -370,9 +370,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         /// <summary>Shows the update address modal.</summary>
         /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="projectTypeId">Project type uid</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowUpdateAddressModal(Guid? organizationUid)
+        public async Task<ActionResult> ShowUpdateAddressModal(Guid? organizationUid, int? projectTypeId)
         {
             UpdateOrganizationAddress cmd;
 
@@ -392,7 +393,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 cmd = new UpdateOrganizationAddress(
                     addressWidgetDto,
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                    false);
+                    projectTypeId == ProjectType.Music.Id
+                );
             }
             catch (DomainException ex)
             {
