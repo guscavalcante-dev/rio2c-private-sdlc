@@ -32,7 +32,7 @@ var OrganizationsInterestWidget = function () {
 
         var jsonParameters = new Object();
         jsonParameters.organizationUid = $('#AggregateId').val();
-        jsonParameters.projectTypeId = $('#projectTypeId').val();
+        jsonParameters.projectTypeId = $('#ProjectTypeId').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Organizations/ShowInterestWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -93,7 +93,7 @@ var OrganizationsInterestWidget = function () {
 
         var jsonParameters = new Object();
         jsonParameters.organizationUid = $('#AggregateId').val();
-        jsonParameters.projectTypeId = $('#projectTypeId').val();
+        jsonParameters.projectTypeId = $('#ProjectTypeId').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Organizations/ShowUpdateInterestModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({

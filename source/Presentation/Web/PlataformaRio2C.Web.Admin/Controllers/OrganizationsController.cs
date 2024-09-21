@@ -520,7 +520,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd = new UpdateOrganizationActivities(
                     activityWidgetDto,
-                    await this.activityRepo.FindAllByProjectTypeIdAsync(projectTypeId ?? ProjectType.Audiovisual.id)
+                    await this.activityRepo.FindAllByProjectTypeIdAsync(projectTypeId ?? ProjectType.Audiovisual.Id)
                 );
             }
             catch (DomainException ex)
@@ -694,7 +694,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    ProjectType.Audiovisual.Id,
+                    cmd.ProjectTypeId,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -803,7 +803,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
             }
 
-            ViewBag.ProjectTypeId = projectTypeId ?? projectTypeId.Audiovisual.Id;
+            ViewBag.ProjectTypeId = projectTypeId ?? ProjectType.Audiovisual.Id;
 
             return Json(new
             {

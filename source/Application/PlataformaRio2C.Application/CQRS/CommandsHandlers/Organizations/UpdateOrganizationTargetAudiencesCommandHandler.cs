@@ -52,7 +52,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var organization = await this.GetOrganizationByUid(cmd.OrganizationUid);
             var targetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(
-                cmd.ProjectTypeId ?? ProjectType.Audiovisual.Id
+                cmd.ProjectTypeId
             );
 
             #region Initial validations
