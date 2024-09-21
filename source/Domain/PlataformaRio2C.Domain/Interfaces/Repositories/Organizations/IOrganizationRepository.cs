@@ -30,7 +30,17 @@ namespace PlataformaRio2C.Domain.Interfaces
 
         #region Audiovisual Players
 
-        Task<IPagedList<OrganizationDto>> FindAllAudiovisualPlayersByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, bool showAllOrganizations, int? editionId, bool exportToExcel = false);
+        Task<IPagedList<OrganizationDto>> FindAllPlayersByDataTable(
+            int page,
+            int pageSize,
+            string keywords,
+            List<Tuple<string, string>> sortColumns,
+            bool showAllEditions,
+            bool showAllOrganizations,
+            int? editionId,
+            Guid? playerOrganizationTypeUid,
+            bool exportToExcel = false
+        );
         Task<IPagedList<AudiovisualPlayerOrganizationApiDto>> FindAllAudiovisualPlayersPublicApiPaged(int editionId, string keywords, List<Guid> activitiesUids, List<Guid> targetAudiencesUids, List<Guid> interestsUids, DateTime? modifiedAfterDate, bool showDetails, bool showDeleted, int page, int pageSize);
         Task<AudiovisualPlayerOrganizationApiDto> FindAudiovisualPlayerPublicApiDtoByUid(Guid organizationUid, int editionId);
 

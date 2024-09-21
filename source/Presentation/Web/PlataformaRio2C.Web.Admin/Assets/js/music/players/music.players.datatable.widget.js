@@ -54,21 +54,7 @@ var MusicPlayersDataTableWidget = function () {
             searchDelay: 2000,
             processing: true,
             serverSide: true,
-            buttons: [
-                {
-                    extend: 'collection',
-                    text: labels.actions,
-                    buttons: [
-                        //{
-                        //    name: 'btnExportToExcel',
-                        //    text: exportToExcelText,
-                        //    action: function (e, dt, node, config) {
-                        //        $('.dt-button-background').remove();
-                        //        exportToExcel();
-                        //    }
-                        //}
-                    ]
-                }],
+            buttons: [],
             order: [[0, "asc"]],
             sDom: '<"row"<"col-sm-6"l><"col-sm-6 text-right"B>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
             oSearch: {

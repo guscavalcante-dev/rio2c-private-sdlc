@@ -143,21 +143,22 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ExportToExcel(string searchKeywords, bool showAllEditions, bool showAllOrganizations)
         {
-            string fileName = Labels.PlayersReport + "_" + DateTime.UtcNow.ToStringFileNameTimestamp();
+            string fileName = Labels.MusicPlayersReport + "_" + DateTime.UtcNow.ToStringFileNameTimestamp();
             string filePath = Path.Combine(Path.GetTempPath(), fileName + ".xlsx");
 
             try
             {
-                var players = new List<OrganizationDto>();
-                //var players = await this.organizationRepo.FindAllPlayersByDataTable(
-                //    1, 
-                //    10000, 
-                //    searchKeywords, 
-                //    new List<Tuple<string, string>>(), //request.GetSortColumns(),
-                //    showAllEditions,
-                //    showAllOrganizations,
-                //    this.EditionDto.Id,
-                //    true);
+                var players = await this.organizationRepo.FindAllPlayersByDataTable(
+                    1,
+                    10000,
+                    searchKeywords,
+                    new List<Tuple<string, string>>(), //request.GetSortColumns(),
+                    showAllEditions,
+                    showAllOrganizations,
+                    this.EditionDto.Id,
+                    OrganizationType.MusicPlayer.Uid,
+                    true
+                );
 
                 using (var workbook = new XLWorkbook())
                 {
@@ -184,11 +185,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Twitter;
                     worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Description;
                     worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Interest + " - " + Labels.MarketLookingFor;
-                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Interest + " - " + Labels.ProjectStatus;
-                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Interest + " - " + Labels.Platforms;
-                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Interest + " - " + Labels.Format;
-                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Interest + " - " + Labels.Genre;
-                    worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.Interest + " - " + Labels.SubGenre;
                     worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.TargetAudience;
                     worksheet.Cell(lineIndex, columnIndex += 1).Value = Labels.LogoOriginal;
 
@@ -222,14 +218,15 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.Twitter ?? "-";
 
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetOrganizationDescriptionBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value ?? "-";
-                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.AudiovisualLookingFor.Uid, this.UserInterfaceLanguage);
-                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.AudiovisualProjectStatus.Uid, this.UserInterfaceLanguage);
-                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.AudiovisualPlatforms.Uid, this.UserInterfaceLanguage);
-                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.AudiovisualFormat.Uid, this.UserInterfaceLanguage);
-                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.AudiovisualGenre.Uid, this.UserInterfaceLanguage);
-                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.AudiovisualSubGenre.Uid, this.UserInterfaceLanguage);
+                            var musicLookingFor = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(
+                                InterestGroup.MusicLookingFor.Uid,
+                                this.UserInterfaceLanguage
+                            ); 
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = string.IsNullOrEmpty(musicLookingFor) ? "-" : musicLookingFor;
 
-                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.OrganizationTargetAudiencesDtos?.Select(otaDto => otaDto.TargetAudienceName?.GetSeparatorTranslation(this.UserInterfaceLanguage, '|'))?.ToString("; ");
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.OrganizationTargetAudiencesDtos
+                                ?.Select(otaDto => otaDto.TargetAudienceName?.GetSeparatorTranslation(this.UserInterfaceLanguage, '|'))
+                                ?.ToString("; ");
 
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.ImageUploadDate.HasValue ?
                                 this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, organizationDto.Uid, organizationDto.ImageUploadDate, true, "_500x500") 

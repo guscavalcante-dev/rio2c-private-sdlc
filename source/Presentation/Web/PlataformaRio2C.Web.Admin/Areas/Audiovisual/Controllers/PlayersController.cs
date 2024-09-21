@@ -148,7 +148,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             try
             {
-                var players = await this.organizationRepo.FindAllAudiovisualPlayersByDataTable(
+                var players = await this.organizationRepo.FindAllPlayersByDataTable(
                     1, 
                     10000, 
                     searchKeywords, 
@@ -156,7 +156,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     showAllEditions,
                     showAllOrganizations,
                     this.EditionDto.Id,
-                    true);
+                    OrganizationType.AudiovisualPlayer.Uid,
+                    true
+                );
 
                 using (var workbook = new XLWorkbook())
                 {
