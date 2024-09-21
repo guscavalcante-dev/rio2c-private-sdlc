@@ -61,7 +61,17 @@ namespace PlataformaRio2C.Domain.Interfaces
 
         #region Players Executives
 
-        Task<IPagedList<PlayerExecutiveReportDto>> FindAllPlayersExecutivesReportByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, bool showAllParticipants, bool? showHighlights, int? editionId);
+        Task<IPagedList<PlayerExecutiveReportDto>> FindAllPlayersExecutivesReportByDataTable(
+            int page,
+            int pageSize,
+            string keywords,
+            List<Tuple<string, string>> sortColumns,
+            bool showAllEditions,
+            bool showAllParticipants,
+            bool? showHighlights,
+            int? editionId,
+            string collaboratorTypeNames
+        );
 
         #endregion
 

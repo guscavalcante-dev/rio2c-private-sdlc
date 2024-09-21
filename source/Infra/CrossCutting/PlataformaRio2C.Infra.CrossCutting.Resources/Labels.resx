@@ -3325,4 +3325,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="MusicPlayersReport" xml:space="preserve">
     <value>Relatório de Players de Música</value>
   </data>
+  <data name="MusicPlayersExecutivesReport" xml:space="preserve">
+    <value>Relatório de Executivos de Players de Música</value>
+  </data>
 </root>

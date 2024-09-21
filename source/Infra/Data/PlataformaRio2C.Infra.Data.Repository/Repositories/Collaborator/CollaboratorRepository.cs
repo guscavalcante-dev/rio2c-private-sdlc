@@ -2068,18 +2068,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             bool showAllEditions,
             bool showAllParticipants,
             bool? showHighlights,
-            int? editionId)
+            int? editionId,
+            string collaboratorTypeName = null
+        )
         {
             this.SetProxyEnabled(false);
 
-            string[] collaboratorTypeNames = new string[] { CollaboratorType.PlayerExecutiveAudiovisual.Name };
+            string[] collaboratorTypeNames = string.IsNullOrEmpty(collaboratorTypeName)
+                ? new string[] { CollaboratorType.PlayerExecutiveAudiovisual.Name }
+                : new string[] { collaboratorTypeName };
             string[] organizationTypeNames = new string[] { OrganizationType.AudiovisualPlayer.Name };
 
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords, editionId)
                                 .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, showAllEditions, showAllParticipants, editionId)
-                                .FindByHighlights(collaboratorTypeNames, showHighlights)
-                                .FindByOrganizationTypeNames(organizationTypeNames, showAllEditions, showAllParticipants, editionId);
+                                .FindByHighlights(collaboratorTypeNames, showHighlights);
+                                //.FindByOrganizationTypeNames(organizationTypeNames, showAllEditions, showAllParticipants, editionId);
 
             var collaborators = await query
                             .DynamicOrder(

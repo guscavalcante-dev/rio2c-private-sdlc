@@ -3930,6 +3930,14 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
             }
         }
         
+        ///   Looks up a localized string similar to Relatório de Executivos de Players de Música.
+        /// </summary>
+        public static string MusicPlayersExecutivesReport {
+            get {
+                return ResourceManager.GetString("MusicPlayersExecutivesReport", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Projetos de Música.
         /// </summary>

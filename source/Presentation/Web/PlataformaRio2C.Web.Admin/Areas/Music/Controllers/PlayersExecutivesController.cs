@@ -151,7 +151,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ExportPlayersExecutivesReportToExcel(CollaboratorSearchViewModel searchViewModel)
         {
-            string fileName = $@"{Labels.PlayersExecutivesReport}_{DateTime.UtcNow.ToStringFileNameTimestamp()}";
+            string fileName = $@"{Labels.MusicPlayersExecutivesReport}_{DateTime.UtcNow.ToStringFileNameTimestamp()}";
             string filePath = Path.Combine(Path.GetTempPath(), fileName + ".xlsx");
 
             try
@@ -164,7 +164,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     searchViewModel.ShowAllEditions,
                     searchViewModel.ShowAllParticipants,
                     false,
-                    this.EditionDto?.Id
+                    this.EditionDto?.Id,
+                    CollaboratorType.PlayerExecutiveMusic.Name
                 );
 
                 using (var workbook = new XLWorkbook())
