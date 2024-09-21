@@ -24,7 +24,10 @@ namespace PlataformaRio2C.Domain.Dtos
         public Guid InterestGroupUid { get; set; }
         public string InterestGroupName { get; set; }
 
+        [Obsolete("Use the 'InterestName' property instead of this. This property will be deleted!")]
         public Interest Interest { get; set; }
+
+        [Obsolete("Use the 'InterestGroupUid' and 'InterestGroupName' properties instead of this. This property will be deleted!")]
         public InterestGroup InterestGroup { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="InterestDto"/> class.</summary>

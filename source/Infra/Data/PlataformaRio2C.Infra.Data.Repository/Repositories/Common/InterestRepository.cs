@@ -175,7 +175,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         .Select(i => new InterestDto
                         {
                             Interest = i,
-                            InterestGroup = i.InterestGroup
+                            InterestGroup = i.InterestGroup,
+                            InterestGroupUid = i.InterestGroup.Uid,
+                            InterestGroupName = i.InterestGroup.Name,
+                            InterestName = i.Name
                         })
                         .ToListAsync();
         }
