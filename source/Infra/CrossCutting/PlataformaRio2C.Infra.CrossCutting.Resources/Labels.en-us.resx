@@ -3329,4 +3329,7 @@
   <data name="MusicPlayersReport" xml:space="preserve">
     <value>Music Players Report</value>
   </data>
+  <data name="MusicPlayersExecutivesReport" xml:space="preserve">
+    <value>Music Players Executive Report</value>
+  </data>
 </root>

@@ -155,7 +155,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     searchViewModel.ShowAllEditions,
                     searchViewModel.ShowAllParticipants,
                     false,
-                    this.EditionDto?.Id
+                    this.EditionDto?.Id,
+                    CollaboratorType.PlayerExecutiveAudiovisual.Name
                 );
 
                 using (var workbook = new XLWorkbook())
