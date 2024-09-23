@@ -15,14 +15,10 @@ using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.Owin;
 using PlataformaRio2C.Infra.CrossCutting.IOC;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 using SimpleInjector;
-using SimpleInjector.Advanced;
 using SimpleInjector.Integration.Web;
 using SimpleInjector.Integration.Web.Mvc;
 using SimpleInjector.Integration.WebApi;
-using System;
-using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Http;
@@ -32,7 +28,6 @@ using PlataformaRio2C.Application.Services;
 using PlataformaRio2C.Infra.CrossCutting.CQRS;
 using PlataformaRio2C.Infra.Data.FileRepository;
 using PlataformaRio2C.Web.Site.Services;
-using PlataformaRio2C.Infra.Data.Context;
 
 namespace PlataformaRio2C.Web.Site
 {
@@ -44,9 +39,15 @@ namespace PlataformaRio2C.Web.Site
         {
             var container = new Container();
             container.Options.DefaultScopedLifestyle = new WebRequestLifestyle();
-            //container.Options.PropertySelectionBehavior = new InjectPropertySelectionBehavior();
 
-            InitializeContainer(container);
+            IoCBootStrapper.RegisterServices(container);
+            SiteIoCBootStrapper.RegisterServices(container);
+            FileRepositoryBootStrapper.RegisterServices(container);
+            container.Register<IMailerService, SiteMailerService>(Lifestyle.Scoped);
+            CqrsBootStrapper.RegisterServices(container, new[]
+            {
+                typeof(CreateSalesPlatformWebhookRequestCommandHandler).Assembly
+            });
 
             // Necessário para registrar o ambiente do Owin que é dependência do Identity
             // Feito fora da camada de IoC para não levar o System.Web para fora
@@ -61,7 +62,7 @@ namespace PlataformaRio2C.Web.Site
             }, Lifestyle.Scoped);
 
             container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
-            container.RegisterWebApiControllers(GlobalConfiguration.Configuration);            
+            container.RegisterWebApiControllers(GlobalConfiguration.Configuration);
 
             container.Verify();
 
@@ -70,35 +71,6 @@ namespace PlataformaRio2C.Web.Site
 
             var activator = new SimpleInjectorHubActivator(container);
             GlobalHost.DependencyResolver.Register(typeof(IHubActivator), () => activator);
-
-            container.Register<PlataformaRio2CContext>(Lifestyle.Scoped);
-        }
-
-        /// <summary>Initializes the container.</summary>
-        /// <param name="container">The container.</param>
-        private static void InitializeContainer(Container container)
-        {
-            IoCBootStrapper.RegisterServices(container);
-            SiteIoCBootStrapper.RegisterServices(container);
-            FileRepositoryBootStrapper.RegisterServices(container);
-            container.Register<IMailerService, SiteMailerService>(Lifestyle.Scoped);
-            CqrsBootStrapper.RegisterServices(container, new[]
-            {
-                typeof(CreateSalesPlatformWebhookRequestCommandHandler).Assembly
-            });
-        }
-    }
-
-    /// <summary>InjectPropertySelectionBehavior</summary>
-    public class InjectPropertySelectionBehavior : IPropertySelectionBehavior
-    {
-        /// <summary>Selects the property.</summary>
-        /// <param name="type">The type.</param>
-        /// <param name="prop">The property.</param>
-        /// <returns></returns>
-        public bool SelectProperty(Type type, PropertyInfo prop)
-        {
-            return prop.GetCustomAttributes(typeof(InjectAttribute)).Any();
         }
     }
 

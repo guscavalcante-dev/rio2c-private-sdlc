@@ -36,6 +36,10 @@ namespace PlataformaRio2C.Infra.Data.Context
                     context.Database.Initialize(true);
                 }
             }
+            else 
+            {
+                Database.SetInitializer<PlataformaRio2CContext>(null);
+            }
         }
 
         /// <summary>Initializes a new instance of the <see cref="PlataformaRio2CContext"/> class.</summary>

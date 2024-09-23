@@ -26,9 +26,6 @@ using System.Linq;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms;
 using PlataformaRio2C.Infra.CrossCutting.SystemParameter.Context;
 using PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms;
-using System.Data.Entity;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Enums;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Infra.CrossCutting.IOC
 {
