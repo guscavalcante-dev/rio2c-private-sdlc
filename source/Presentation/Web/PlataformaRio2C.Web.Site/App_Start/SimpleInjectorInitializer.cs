@@ -15,14 +15,10 @@ using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.Owin;
 using PlataformaRio2C.Infra.CrossCutting.IOC;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 using SimpleInjector;
-using SimpleInjector.Advanced;
 using SimpleInjector.Integration.Web;
 using SimpleInjector.Integration.Web.Mvc;
 using SimpleInjector.Integration.WebApi;
-using System;
-using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Http;
@@ -32,7 +28,6 @@ using PlataformaRio2C.Application.Services;
 using PlataformaRio2C.Infra.CrossCutting.CQRS;
 using PlataformaRio2C.Infra.Data.FileRepository;
 using PlataformaRio2C.Web.Site.Services;
-using PlataformaRio2C.Infra.Data.Context;
 
 namespace PlataformaRio2C.Web.Site
 {
