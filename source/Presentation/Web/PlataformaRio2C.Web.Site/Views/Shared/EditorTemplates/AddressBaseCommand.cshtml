@@ -4,7 +4,7 @@
     @Html.HiddenFor(m => m.IsRequired)
     <div class="form-group col-md-4">
         @Html.LabelFor(m => m.AddressZipCode, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.AddressZipCode, new { @class = "form-control" })
+        @Html.TextBoxFor(m => m.AddressZipCode, new { @class = "form-control", autocomplete = "new-address-zip-code" })
         @Html.ValidationMessageFor(m => m.AddressZipCode, "", new { @class = "text-danger" })
     </div>
 </div>
