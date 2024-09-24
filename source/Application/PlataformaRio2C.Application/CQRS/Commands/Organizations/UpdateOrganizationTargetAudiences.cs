@@ -34,6 +34,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Initializes a new instance of the <see cref="UpdateOrganizationTargetAudiences"/> class.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="projectTypeId">The project id.</param>
         public UpdateOrganizationTargetAudiences(
             AttendeeOrganizationSiteTargetAudienceWidgetDto entity,
             List<TargetAudience> targetAudiences,
