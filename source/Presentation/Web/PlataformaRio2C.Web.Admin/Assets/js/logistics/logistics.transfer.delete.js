@@ -21,7 +21,7 @@ var LogisticTransferDelete = function () {
         var jsonParameters = new Object();
         jsonParameters.uid = uid;
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/DeleteLogisticTransfer'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/Requests/DeleteLogisticTransfer'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

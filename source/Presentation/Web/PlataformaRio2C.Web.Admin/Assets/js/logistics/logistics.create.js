@@ -65,7 +65,7 @@ var LogisticsCreate = function () {
         var jsonParameters = new Object();
         jsonParameters.attendeeCollaboratorUid = attendeeCollaboratorUid;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/ShowCreateModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/Requests/ShowCreateModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

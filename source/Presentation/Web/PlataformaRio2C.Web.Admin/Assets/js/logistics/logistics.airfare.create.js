@@ -33,7 +33,7 @@ var LogisticAirfareCreate = function () {
         var jsonParameters = new Object();
         jsonParameters.logisticsUid = $('#LogisticAggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/ShowCreateAirfareModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/Requests/ShowCreateAirfareModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

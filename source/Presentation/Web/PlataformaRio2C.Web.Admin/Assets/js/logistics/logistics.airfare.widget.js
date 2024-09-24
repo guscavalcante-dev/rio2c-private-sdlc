@@ -30,7 +30,7 @@ var LogisticsAirfareWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.logisticsUid = $('#LogisticAggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/ShowAirfareWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/Requests/ShowAirfareWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

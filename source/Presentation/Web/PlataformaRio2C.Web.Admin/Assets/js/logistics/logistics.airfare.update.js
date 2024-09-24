@@ -33,7 +33,7 @@ var LogisticAirfareUpdate = function () {
         var jsonParameters = new Object();
         jsonParameters.uid = uid;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/ShowUpdateAirfareModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/Requests/ShowUpdateAirfareModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
