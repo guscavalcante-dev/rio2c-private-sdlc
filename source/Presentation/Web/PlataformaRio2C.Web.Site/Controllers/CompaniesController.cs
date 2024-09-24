@@ -661,7 +661,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 cmd = new UpdateOrganizationTargetAudiences(
                     targetAudienceWidgetDto,
                     await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
-                    ProjectType.Audiovisual.Id);
+                    ProjectType.Audiovisual.Id
+                );
             }
             catch (DomainException ex)
             {

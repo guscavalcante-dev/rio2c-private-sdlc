@@ -146,16 +146,15 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
 
-            //TODO: Disabled on RIO2CMY - 1076, by customer request. We need to reactivate this after music project evaluation are closed on 2024 edition.
-            //var projects = await this.musicProjectRepo.FindAllDtosPagedAsync(
-            //    this.EditionDto.Id,
-            //    searchKeywords,
-            //    musicGenreUid,
-            //    evaluationStatusUid,
-            //    showBusinessRounds ?? false,
-            //    page.Value,
-            //    pageSize.Value);
-            var projects = new List<MusicProjectDto>().ToPagedList();
+            var projects = await this.musicProjectRepo.FindAllDtosPagedAsync(
+                this.EditionDto.Id,
+                searchKeywords,
+                musicGenreUid,
+                evaluationStatusUid,
+                showBusinessRounds ?? false,
+                page.Value,
+                pageSize.Value
+            );
 
             ViewBag.SearchKeywords = searchKeywords;
             ViewBag.MusicGenreUid = musicGenreUid;
