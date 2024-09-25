@@ -21,7 +21,7 @@ var LogisticAirfareDelete = function () {
         var jsonParameters = new Object();
         jsonParameters.uid = uid;
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/DeleteLogisticAirfare'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/Requests/DeleteLogisticAirfare'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

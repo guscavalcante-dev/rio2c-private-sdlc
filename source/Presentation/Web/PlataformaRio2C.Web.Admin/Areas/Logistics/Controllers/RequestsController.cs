@@ -32,15 +32,16 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
+using PlataformaRio2C.Web.Admin.Controllers;
 
-namespace PlataformaRio2C.Web.Admin.Controllers
+namespace PlataformaRio2C.Web.Admin.Areas.Logistics.Controllers
 {
     /// <summary>
     /// LogisticsController
     /// </summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminLogistic)]
-    public class LogisticsController : BaseController
+    public class RequestsController : BaseController
     {
         private readonly ILogisticRepository logisticRepo;
         private IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepo;
@@ -52,7 +53,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
         private readonly ILanguageRepository languageRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="LogisticsController"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="RequestsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="logisticRepository">The logistic repository.</param>
@@ -64,7 +65,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
         /// <param name="languageRepository">The language repository.</param>
-        public LogisticsController(
+        public RequestsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
             ILogisticRepository logisticRepository,
@@ -102,7 +103,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Logistics, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Requests, Url.Action("Index", "Logistics", new { Area = "" }))
+                new BreadcrumbItemHelper(Labels.Requests, Url.Action("Index", "Requests", new { Area = "Logistics" }))
             });
 
             #endregion
@@ -247,14 +248,14 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             if (logisticDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Logistics, Labels.FoundF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "Logistics", new { Area = "" });
+                return RedirectToAction("Index", "Requests", new { Area = "Logistics" });
             }
 
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Logistics, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Requests, Url.Action("Index", "Logistics", new { Area ="", id })),
-                new BreadcrumbItemHelper(logisticDto?.AttendeeCollaboratorDto?.Collaborator?.GetDisplayName(), Url.Action("Details", "Logistics", new { Area ="", id }))
+                new BreadcrumbItemHelper(Labels.Requests, Url.Action("Index", "Requests", new { Area = "Logistics", id })),
+                new BreadcrumbItemHelper(logisticDto?.AttendeeCollaboratorDto?.Collaborator?.GetDisplayName(), Url.Action("Details", "Requests", new { Area = "Logistics", id }))
             });
 
             #endregion

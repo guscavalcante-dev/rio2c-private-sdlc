@@ -31,7 +31,7 @@ var LogisticsMainInformationWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.logisticsUid = $('#LogisticAggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/ShowMainInformationWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/Requests/ShowMainInformationWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -91,7 +91,7 @@ var LogisticsMainInformationWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.logisticsUid = $('#LogisticAggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/ShowUpdateMainInformationModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/Requests/ShowUpdateMainInformationModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

@@ -37,7 +37,7 @@ var LogisticTransferCreate = function () {
         var jsonParameters = new Object();
         jsonParameters.logisticsUid = $('#LogisticAggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/ShowCreateTransferModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/Requests/ShowCreateTransferModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

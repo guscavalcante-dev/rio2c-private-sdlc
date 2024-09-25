@@ -65,7 +65,7 @@ var LogisticsDataTableWidget = function () {
                 sSearch: $('#Search').val()
             },
             ajax: {
-                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/Search'),
+                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/Requests/Search'),
                 data: function (d) {
                     d.ShowAllParticipants = $('#ShowAllParticipants').prop('checked');
                     d.showAllSponsors = $('#ShowAllSponsors').prop('checked');
@@ -257,7 +257,7 @@ var LogisticsDataTableWidget = function () {
             return;
         }
 
-        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/Details/' + logisticsUid);
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/Requests/Details/' + logisticsUid);
     };
 
     return {

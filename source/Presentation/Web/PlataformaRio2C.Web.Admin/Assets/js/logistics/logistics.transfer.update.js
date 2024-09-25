@@ -37,7 +37,7 @@ var LogisticTransferUpdate = function () {
         var jsonParameters = new Object();
         jsonParameters.uid = uid;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/ShowUpdateTransferModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/Requests/ShowUpdateTransferModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

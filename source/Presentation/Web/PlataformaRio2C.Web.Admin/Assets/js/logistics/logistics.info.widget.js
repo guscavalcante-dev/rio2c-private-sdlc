@@ -30,7 +30,7 @@ var LogisticsInfoWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.collaboratorUid = $('#CollaboratorUid').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/ShowInfoWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/Requests/ShowInfoWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

@@ -37,7 +37,7 @@ var LogisticAccommodationCreate = function () {
         var jsonParameters = new Object();
         jsonParameters.logisticsUid = $('#LogisticAggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/ShowCreateAccommodationModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/Requests/ShowCreateAccommodationModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

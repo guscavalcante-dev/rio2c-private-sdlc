@@ -9,7 +9,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("CreateTransfer", "Logistics", new { Area = "" }, FormMethod.Post, new { id = "CreateLogisticTransferForm" }))
+                @using (Html.BeginForm("CreateTransfer", "Requests", new { Area = "Logistics" }, FormMethod.Post, new { id = "CreateLogisticTransferForm" }))
                 {
                     <div id="form-container">
                         @Html.Partial("Modals/_TransferForm", Model)
