@@ -115,7 +115,7 @@
                         <div class="kt-wizard-v2__nav-label">
                             <div class="kt-wizard-v2__nav-label-title">@Labels.Company</div>
                             <div class="kt-wizard-v2__nav-label-desc">
-                                @Html.Raw(string.Format(Messages.CompletePlayerInfo, playerAttendeeOrganization.Organization.Name))
+                                @Html.Raw(string.Format(Messages.CompletePlayerInfo, playerAttendeeOrganization.Organization.TradeName))
                             </div>
                         </div>
                     </div>
@@ -128,7 +128,7 @@
                         <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
                         <div class="kt-wizard-v2__nav-label">
                             <div class="kt-wizard-v2__nav-label-title">@Labels.PlayerInterests</div>
-                            <div class="kt-wizard-v2__nav-label-desc">@Html.Raw(string.Format(Messages.CompletePlayerInterestsFor, playerAttendeeOrganization.Organization.Name))</div>
+                            <div class="kt-wizard-v2__nav-label-desc">@Html.Raw(string.Format(Messages.CompletePlayerInterestsFor, playerAttendeeOrganization.Organization.TradeName))</div>
                         </div>
                     </div>
                 </span>

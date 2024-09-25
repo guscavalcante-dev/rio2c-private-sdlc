@@ -13,17 +13,16 @@
     var isAudiovisualPlayer = userAccessControlDto.IsAudiovisualPlayerExecutive();
     var isInnovationPlayer = userAccessControlDto.IsInnovationPlayerExecutive();
     var isMusicPlayer = userAccessControlDto.IsMusicPlayerExecutive();
-    var initialPlayerIndex = 4 + (isSpeaker ? 1 : 0) + (isAudiovisualPlayer ? 1 : 0) + (isInnovationPlayer ? 1 : 0) + (isMusicPlayer ? 1 : 0);
 
-    var playerIndex = playerAttendeeOrganizations?.FindIndex(pao => pao.Organization.Uid == Model.OrganizationUid) ?? 0;
-    var additionIndex = playerIndex == 0 ? 0 : 1;
+    var initialPlayerIndex = 4 + (isSpeaker ? 1 : 0) + (isAudiovisualPlayer ? 1 : 0) + (isInnovationPlayer ? 1 : 0) + (isMusicPlayer ? 1 : 0) + (playerAttendeeOrganizations.Count(pao => pao.OnboardingInterestsDate.HasValue));
+    var currentPlayerIndex = playerAttendeeOrganizations?.FindIndex(pao => pao.Organization.Uid == Model.OrganizationUid) ?? 0;
 }
 <div class="kt-portlet">
     <div class="kt-portlet__body kt-portlet__body--fit">
         <div class="kt-grid  kt-wizard-v2 kt-wizard-v2--white" id="kt_wizard_v2" data-ktwizard-state="first">
             <div class="kt-grid__item kt-wizard-v2__aside">
                 <!--begin: Form Wizard Nav -->
-                @Html.Partial("Shared/_OnboardingMenu", playerIndex + initialPlayerIndex + additionIndex)
+                @Html.Partial("Shared/_OnboardingMenu", initialPlayerIndex + currentPlayerIndex)
                 <!--end: Form Wizard Nav -->
             </div>
             <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v2__wrapper">
@@ -32,7 +31,7 @@
                     @Html.HiddenFor(m => m.OrganizationUid)
                     <!--begin: Form Wizard Step 1-->
                     <div class="kt-wizard-v2__content" data-ktwizard-type="step-content" data-ktwizard-state="current">
-                        <div class="kt-heading kt-heading--md">@Html.Raw(string.Format(Messages.CompletePlayerInterestsFor, player?.Name ?? string.Empty))</div>
+                        <div class="kt-heading kt-heading--md">@Html.Raw(string.Format(Messages.CompletePlayerInterestsFor, player?.TradeName ?? string.Empty))</div>
                         <div class="kt-form__section kt-form__section--first">
                             <div class="kt-wizard-v2__form">
                                 <div id="form-container">
