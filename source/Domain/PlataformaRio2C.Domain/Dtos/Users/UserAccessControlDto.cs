@@ -150,6 +150,18 @@ namespace PlataformaRio2C.Domain.Dtos
         }
 
         /// <summary>
+        /// Determines whether [is audiovisual or music player executive].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is audiovisual or music player executive]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsAudiovisualOrMusicPlayerExecutive()
+        {
+            var collaboratorTypes = new string[] { Constants.CollaboratorType.PlayerExecutiveAudiovisual, Constants.CollaboratorType.PlayerExecutiveMusic };
+            return this.HasAnyCollaboratorType(collaboratorTypes);
+        }
+
+        /// <summary>
         /// Determines whether [is innovation player executive].
         /// </summary>
         /// <returns>
@@ -304,7 +316,7 @@ namespace PlataformaRio2C.Domain.Dtos
         {
             return !this.IsAdmin() 
                    && (!this.IsAttendeeCollaboratorOnboardingFinished() 
-                       || !this.IsAudiovisualPlayerAttendeeOrganizationsOnboardingFinished() 
+                       || !this.IsPlayerExecutiveAttendeeOrganizationsOnboardingFinished() 
                        || this.IsTicketBuyerOrganizationOnboardingPending());
         }
 
@@ -333,6 +345,22 @@ namespace PlataformaRio2C.Domain.Dtos
         {
             return !this.IsAudiovisualPlayerExecutive()                                                                 // Is not Audiovisual Player
                         || this.EditionAttendeeCollaborator?.AudiovisualPlayerTermsAcceptanceDate != null;              // Or has accepted the player terms
+        }
+
+        /// <summary>
+        /// Determines whether [is audiovisual or music player terms acceptance finished].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is audiovisual or music player terms acceptance finished]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsPlayerExecutiveTermsAcceptanceFinished()
+        {
+            var collaboratorTypes = new string[] { Constants.CollaboratorType.PlayerExecutiveAudiovisual, Constants.CollaboratorType.PlayerExecutiveMusic };
+            return !this.HasAnyCollaboratorType(collaboratorTypes)
+                || (
+                    this.EditionAttendeeCollaborator?.AudiovisualPlayerTermsAcceptanceDate != null
+                        || this.EditionAttendeeCollaborator?.MusicPlayerTermsAcceptanceDate != null
+                    );
         }
 
         /// <summary>
@@ -401,6 +429,44 @@ namespace PlataformaRio2C.Domain.Dtos
         }
 
         /// <summary>
+        /// Determines whether [is audiovisual or music player attendee organizations onboarding finished].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is audiovisual or music player attendee organizations onboarding finished]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsPlayerExecutiveAttendeeOrganizationsOnboardingFinished()
+        {
+            return this.IsPlayerExecutiveOrganizationsOnboardingFinished()
+                   && this.IsPlayerExecutiveOrganizationsInterestsOnboardingFinished();
+        }
+
+        /// <summary>
+        /// Determines whether [is audiovisual or music player organizations onboarding finished].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is audiovisual or music player organizations onboarding finished]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsPlayerExecutiveOrganizationsOnboardingFinished()
+        {
+            var collaboratorTypes = new string[] { Constants.CollaboratorType.PlayerExecutiveAudiovisual, Constants.CollaboratorType.PlayerExecutiveMusic };
+            IEnumerable<string> playerOrganizationTypes = new string[] { OrganizationType.AudiovisualPlayer.Name, OrganizationType.MusicPlayer.Name };
+            return !this.HasAnyCollaboratorType(collaboratorTypes)
+                    || (
+                        this.EditionAttendeeOrganizations?.Any() == false
+                        || (
+                            this.EditionAttendeeOrganizations?.Any() == true
+                            && this.EditionAttendeeOrganizations?.Where(ao => {
+                                return ao.AttendeeOrganizationTypes.Any(aot => {
+                                    return !aot.IsDeleted && playerOrganizationTypes.Any(p => p == aot.OrganizationType.Name);
+                                });
+                            }).All(ao => {
+                                return ao.OnboardingOrganizationDate.HasValue;
+                            }) == true
+                        )
+                    );
+        }
+
+        /// <summary>
         /// Determines whether [is audiovisual player organizations onboarding finished].
         /// </summary>
         /// <returns>
@@ -431,6 +497,27 @@ namespace PlataformaRio2C.Domain.Dtos
         }
 
         /// <summary>
+        /// Determines whether [is audiovisual or music player organization interests onboarding pending].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is audiovisual or music player organization interests onboarding pending]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsPlayerExecutiveOrganizationInterestsOnboardingPending()
+        {
+            var collaboratorTypes = new string[] { Constants.CollaboratorType.PlayerExecutiveAudiovisual, Constants.CollaboratorType.PlayerExecutiveMusic };
+            IEnumerable<string> playerOrganizationTypes = new string[] { OrganizationType.AudiovisualPlayer.Name, OrganizationType.MusicPlayer.Name };
+            return this.HasAnyCollaboratorType(collaboratorTypes)
+                && this.EditionAttendeeOrganizations?.Any() == true
+                && this.EditionAttendeeOrganizations?.Where(ao => {
+                    return ao.AttendeeOrganizationTypes.Any(aot => {
+                        return !aot.IsDeleted && playerOrganizationTypes.Any(p => p == aot.OrganizationType.Name);
+                    });
+                }).Any(ao => {
+                    return ao.OnboardingOrganizationDate.HasValue && !ao.OnboardingInterestsDate.HasValue;
+                }) == true;
+        }
+
+        /// <summary>
         /// Determines whether [is audiovisual player organizations interests onboarding finished].
         /// </summary>
         /// <returns>
@@ -443,6 +530,32 @@ namespace PlataformaRio2C.Domain.Dtos
                        || (this.EditionAttendeeOrganizations?.Any() == true                                                                // or has at least one organization linked
                            && this.EditionAttendeeOrganizations?.Where(ao => ao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted && aot.OrganizationType.Name == OrganizationType.AudiovisualPlayer.Name))
                                                                     .All(ao => ao.OnboardingInterestsDate.HasValue) == true));             // and all organizations interests onboarding are finished
+        }
+
+        /// <summary>
+        /// Determines whether [is audiovisual or music player organizations interests onboarding finished].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is audiovisual or music player organizations interests onboarding finished]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsPlayerExecutiveOrganizationsInterestsOnboardingFinished()
+        {            
+            var collaboratorTypes = new string[] { Constants.CollaboratorType.PlayerExecutiveAudiovisual, Constants.CollaboratorType.PlayerExecutiveMusic };
+            IEnumerable<string> playerOrganizationTypes = new string[] { OrganizationType.AudiovisualPlayer.Name, OrganizationType.MusicPlayer.Name };
+            return !this.HasAnyCollaboratorType(collaboratorTypes)
+                   || (
+                        this.EditionAttendeeOrganizations?.Any() == false
+                        || (
+                            this.EditionAttendeeOrganizations?.Any() == true
+                            && this.EditionAttendeeOrganizations?.Where(ao => {
+                                return ao.AttendeeOrganizationTypes.Any(aot => {
+                                    return !aot.IsDeleted && playerOrganizationTypes.Any(p => p == aot.OrganizationType.Name);
+                                });
+                            }).All(ao => {
+                               return ao.OnboardingInterestsDate.HasValue;
+                            }) == true
+                        )
+                    );
         }
 
         /// <summary>Determines whether [is ticket buyer organization onboarding pending].</summary>

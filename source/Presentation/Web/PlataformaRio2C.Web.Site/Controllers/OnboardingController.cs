@@ -115,15 +115,15 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return RedirectToAction(nameof(OnboardingController.CollaboratorData), nameof(OnboardingController));
             }
 
-            // Redirect to audiovisual organization data if not finished and there is no pending interests to do before
-            if (this.UserAccessControlDto?.IsAudiovisualPlayerOrganizationsOnboardingFinished() != true
-                && this.UserAccessControlDto?.IsAudiovisualPlayerOrganizationInterestsOnboardingPending() != true)
+            // Redirect to audiovisual|music organization data if not finished and there is no pending interests to do before
+            if (this.UserAccessControlDto?.IsPlayerExecutiveOrganizationsOnboardingFinished() != true
+                && this.UserAccessControlDto?.IsPlayerExecutiveOrganizationInterestsOnboardingPending() != true)
             {
                 return RedirectToAction(nameof(OnboardingController.PlayerInfo), nameof(OnboardingController));
             }
 
-            // Redirect to audiovisual organization interests if not finished
-            if (this.UserAccessControlDto?.IsAudiovisualPlayerOrganizationInterestsOnboardingPending() == true)
+            // Redirect to audiovisual|music organization interests if not finished
+            if (this.UserAccessControlDto?.IsPlayerExecutiveOrganizationInterestsOnboardingPending() == true)
             {
                 return RedirectToAction(nameof(OnboardingController.PlayerInterests), nameof(OnboardingController));
             }
@@ -778,7 +778,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> PlayerInfo()
         {
-            if (this.UserAccessControlDto?.IsAudiovisualPlayerOrganizationsOnboardingFinished() == true)
+            if (this.UserAccessControlDto?.IsPlayerExecutiveOrganizationsOnboardingFinished() == true)
             {
                 return RedirectToAction("Index", "Onboarding");
             }
@@ -793,9 +793,25 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             this.SetViewBags();
 
-            var currentOrganization = this.UserAccessControlDto?.EditionAttendeeOrganizations?.FirstOrDefault(eao => !eao.OnboardingOrganizationDate.HasValue
-                                                                                                                     && eao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
-                                                                                                                                                                 && aot.OrganizationType.Name == OrganizationType.AudiovisualPlayer.Name))?.Organization;
+            var playerOrganizationTypeName = OrganizationType.AudiovisualPlayer.Name;
+            var projectTypeId = ProjectType.Audiovisual.Id;
+            if (this.UserAccessControlDto.IsMusicPlayerExecutive())
+            {
+                playerOrganizationTypeName = OrganizationType.MusicPlayer.Name;
+                projectTypeId = ProjectType.Music.Id;
+            }
+
+            var currentOrganization = this.UserAccessControlDto
+                ?.EditionAttendeeOrganizations
+                ?.FirstOrDefault(eao => {
+                    return !eao.OnboardingOrganizationDate.HasValue
+                        && eao.AttendeeOrganizationTypes.Any(aot => {
+                            return !aot.IsDeleted
+                                && aot.OrganizationType.Name == playerOrganizationTypeName;
+                        });
+                    })
+                ?.Organization;
+
             if (currentOrganization == null)
             {
                 return RedirectToAction("Index", "Onboarding");
@@ -805,11 +821,12 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(currentOrganization.Uid, this.EditionDto.Id, this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
-                await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
+                await this.activityRepo.FindAllByProjectTypeIdAsync(projectTypeId),
+                await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(projectTypeId),
                 true,
                 true,
-                true);
+                true
+            );
 
             return View(cmd);
         }
@@ -820,7 +837,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpPost]
         public async Task<ActionResult> PlayerInfo(OnboardPlayerOrganizationData cmd)
         {
-            if (this.UserAccessControlDto?.IsAudiovisualPlayerOrganizationsOnboardingFinished() == true)
+            if (this.UserAccessControlDto?.IsPlayerExecutiveOrganizationsOnboardingFinished() == true)
             {
                 return RedirectToAction("Index", "Onboarding");
             }
@@ -836,6 +853,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
             this.SetViewBags();
 
             var result = new AppValidationResult();
+            var projectTypeId = ProjectType.Audiovisual.Id;
+            var playerOrganizationType = OrganizationType.AudiovisualPlayer;
 
             try
             {
@@ -844,13 +863,21 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(Messages.CorrectFormValues);
                 }
 
+                if (this.UserAccessControlDto.IsMusicPlayerExecutive())
+                {
+                    playerOrganizationType = OrganizationType.MusicPlayer;
+                    projectTypeId = ProjectType.Music.Id;
+                }
+
                 cmd.UpdatePreSendProperties(
-                    OrganizationType.AudiovisualPlayer,
+                    playerOrganizationType,
                     this.UserAccessControlDto.User.Id,
                     this.UserAccessControlDto.User.Uid,
                     this.EditionDto.Id,
                     this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
+                    this.UserInterfaceLanguage,
+                    projectTypeId
+                );
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
                 {
@@ -869,7 +896,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
                 cmd.UpdateDropdownProperties(
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(projectTypeId)
+                );
 
                 return View(cmd);
             }
@@ -880,7 +908,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
                 cmd.UpdateDropdownProperties(
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(projectTypeId)
+                );
 
                 return View(cmd);
             }
@@ -899,7 +928,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> PlayerInterests()
         {
-            if (this.UserAccessControlDto?.IsAudiovisualPlayerOrganizationInterestsOnboardingPending() != true)
+            if (this.UserAccessControlDto?.IsPlayerExecutiveOrganizationInterestsOnboardingPending() != true)
             {
                 return RedirectToAction("Index", "Onboarding");
             }
@@ -914,10 +943,21 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             this.SetViewBags();
 
-            var currentOrganization = this.UserAccessControlDto?.EditionAttendeeOrganizations?.FirstOrDefault(eao => eao.OnboardingOrganizationDate.HasValue
-                                                                                                                     && !eao.OnboardingInterestsDate.HasValue
-                                                                                                                     && eao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
-                                                                                                                                                                 && aot.OrganizationType.Name == OrganizationType.AudiovisualPlayer.Name))?.Organization;
+            var playerOrganizationTypeName = OrganizationType.AudiovisualPlayer.Name;
+            var projectTypeId = ProjectType.Audiovisual.Id;
+            if (this.UserAccessControlDto.IsMusicPlayerExecutive())
+            {
+                playerOrganizationTypeName = OrganizationType.MusicPlayer.Name;
+                projectTypeId = ProjectType.Music.Id;
+            }            
+            var currentOrganization = this.UserAccessControlDto
+                ?.EditionAttendeeOrganizations
+                ?.FirstOrDefault(eao => eao.OnboardingOrganizationDate.HasValue
+                    && !eao.OnboardingInterestsDate.HasValue
+                    && eao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
+                        && aot.OrganizationType.Name == playerOrganizationTypeName)
+                    )
+                ?.Organization;
             if (currentOrganization == null)
             {
                 return RedirectToAction("Index", "Onboarding");
@@ -925,7 +965,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             var cmd = new OnboardPlayerInterests(
                 await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(currentOrganization.Uid, this.EditionDto.Id, this.UserInterfaceLanguage)),
-                await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Audiovisual.Id),
+                await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(projectTypeId),
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 true);
 
@@ -938,7 +978,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpPost]
         public async Task<ActionResult> PlayerInterests(OnboardPlayerInterests cmd)
         {
-            if (this.UserAccessControlDto?.IsAudiovisualPlayerOrganizationInterestsOnboardingPending() != true)
+            if (this.UserAccessControlDto?.IsPlayerExecutiveOrganizationInterestsOnboardingPending() != true)
             {
                 return RedirectToAction("Index", "Onboarding");
             }
@@ -962,13 +1002,23 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(Messages.CorrectFormValues);
                 }
 
+                var playerOrganizationType = OrganizationType.AudiovisualPlayer;
+                var projectTypeId = ProjectType.Audiovisual.Id;
+                if (this.UserAccessControlDto.IsMusicPlayerExecutive())
+                {
+                    playerOrganizationType = OrganizationType.MusicPlayer;
+                    projectTypeId = ProjectType.Music.Id;
+                }
+
                 cmd.UpdatePreSendProperties(
-                    OrganizationType.AudiovisualPlayer,
+                    playerOrganizationType,
                     this.UserAccessControlDto.User.Id,
                     this.UserAccessControlDto.User.Uid,
                     this.EditionDto.Id,
                     this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
+                    this.UserInterfaceLanguage,
+                    projectTypeId
+                );
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
                 {
@@ -1176,14 +1226,20 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <summary>Sets the view bags.</summary>
         private void SetViewBags()
         {
-            if (this.UserAccessControlDto?.IsAudiovisualPlayerExecutive() == true)
+            if (this.UserAccessControlDto?.IsAudiovisualOrMusicPlayerExecutive() == true)
             {
-                ViewBag.PlayerAttendeeOrganizations = this.UserAccessControlDto?.EditionAttendeeOrganizations?
-                                                                .Where(eao => !eao.IsDeleted
-                                                                              && eao.AttendeeOrganizationTypes?
-                                                                                  .Any(aot => !aot.IsDeleted
-                                                                                              && aot.OrganizationType.Name == OrganizationType.AudiovisualPlayer.Name) == true)?
-                                                                .ToList();
+                IEnumerable<string> playerOrganizationTypes = new string[] { OrganizationType.AudiovisualPlayer.Name, OrganizationType.MusicPlayer.Name };
+                ViewBag.PlayerAttendeeOrganizations = this.UserAccessControlDto
+                    ?.EditionAttendeeOrganizations
+                    ?.Where(
+                        eao => !eao.IsDeleted
+                            && (
+                                eao.AttendeeOrganizationTypes?.Any(
+                                    aot => !aot.IsDeleted && playerOrganizationTypes.Any(p => p == aot.OrganizationType.Name)
+                                ) == true
+                            )
+                        )
+                    ?.ToList();
             }
         }
 

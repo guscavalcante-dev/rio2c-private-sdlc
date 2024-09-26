@@ -32,6 +32,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         // Pre send properties
         public OrganizationType OrganizationType { get; private set; }
+        
+        public int? ProjectTypeId { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="OnboardPlayerInterests"/> class.</summary>
         /// <param name="entity">The entity.</param>
@@ -69,9 +71,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             Guid userUid,
             int? editionId,
             Guid? editionUid,
-            string userInterfaceLanguage)
+            string userInterfaceLanguage,
+            int? projectTypeId
+        )
         {
             this.OrganizationType = organizationType;
+            this.ProjectTypeId = projectTypeId;
             this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
         }
 
