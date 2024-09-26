@@ -23,6 +23,7 @@ var ExecutivesCompanyWidget = function () {
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         KTApp.initTooltips();
+        MyRio2cCommon.initScroll();
     };
 
     var show = function () {
