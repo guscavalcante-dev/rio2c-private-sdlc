@@ -42,8 +42,37 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int CollaboratorRoleAdditionalInfoMaxLength = 300;
         public static readonly int CollaboratorIndustryAdditionalInfoMaxLength = 300;
 
-        public string FirstName { get; private set; }
-        public string LastNames { get; private set; }
+        private readonly bool _isSpeaker = false;
+        private string _firstName;
+        public string FirstName
+        {
+            get
+            { 
+                return this._firstName;
+            }
+            set
+            {
+                this._firstName = value;
+                if (this._isSpeaker)
+                {
+                    this._firstName = value.ToPascalCase();
+                }
+            }
+        }
+
+        private string _lastName;
+        public string LastNames
+        {
+            get { return this._lastName; }
+            set
+            {
+                this._lastName = value;
+                if (this._isSpeaker)
+                {
+                    this._lastName = value.ToPascalCase();
+                }
+            }
+        }
         public string Document { get; private set; }
         public string Badge { get; private set; }
         public string PhoneNumber { get; private set; }
@@ -704,6 +733,7 @@ namespace PlataformaRio2C.Domain.Entities
             string document,
             int userId)
         {
+            this._isSpeaker = CollaboratorType.Speaker.Uid == collaboratorType.Uid;
             this.FirstName = firstName?.Trim();
             this.LastNames = lastNames?.Trim();
             this.PublicEmail = email?.Trim();

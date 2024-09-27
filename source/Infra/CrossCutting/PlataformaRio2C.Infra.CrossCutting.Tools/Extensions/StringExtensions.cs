@@ -1053,5 +1053,32 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         {
             return JsonConvert.SerializeObject(JsonConvert.DeserializeObject(s), Formatting.None);
         }
+
+        /// <summary>
+        /// Converts a string to PascalCase
+        /// </summary>
+        /// <param name="str">String to convert</param>
+        /// <param name="removeSpaces">Remove spaces?</param>
+        public static string ToPascalCase(this string str, bool removeSpaces = false)
+        {
+            if (str == null) return str;
+            if (str.Length < 2) return str.ToUpper();
+
+            string[] words = str.Split(
+                new char[] { },
+                StringSplitOptions.RemoveEmptyEntries
+            );
+
+            string result = "";
+            foreach (string word in words)
+            {
+                result +=
+                    word.Substring(0, 1).ToUpper() +
+                    word.Substring(1) +
+                    (removeSpaces ? "" : " ");
+            }
+
+            return result;
+        }
     }
 }
