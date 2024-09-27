@@ -943,6 +943,26 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+
+        /// <summary>Finds the API dto by uid asynchronous.</summary>
+        /// <param name="conferenceUid">The conference uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<ConferenceDto> FindApiConfigurationWidgetDtoByConferenceUidAndByEditionIdAsync(Guid conferenceUid, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(conferenceUid)
+                                .FindByEditionId(false, editionId);
+
+            return await query
+                .Select(c => new ConferenceDto
+                {
+                    Conference = c,
+                    EditionEvent = c.EditionEvent,                                
+                })
+                .FirstOrDefaultAsync();
+        }
+
         #endregion
     }
 }

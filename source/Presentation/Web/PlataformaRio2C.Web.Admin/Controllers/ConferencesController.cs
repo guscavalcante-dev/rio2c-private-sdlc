@@ -879,5 +879,34 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         }
 
         #endregion
+
+        #region Api Configuration Widget
+
+        /// <summary>Shows the API configuration widget.</summary>
+        /// <param name="conferenceUid">The collaborator uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowApiConfigurationWidget(Guid? conferenceUid)
+        {
+            var apiConfigurationWidgetDto = await this.conferenceRepo.FindApiConfigurationWidgetDtoByConferenceUidAndByEditionIdAsync(
+                conferenceUid ?? Guid.Empty,
+                this.EditionDto.Id
+            );
+            if (apiConfigurationWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Speaker, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/ApiConfigurationWidget", apiConfigurationWidgetDto), divIdOrClass = "#ConferenceApiConfigurationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
     }
 }

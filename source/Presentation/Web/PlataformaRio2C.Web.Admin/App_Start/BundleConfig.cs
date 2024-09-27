@@ -591,10 +591,17 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/conferences.details.js").Include(
                 "~/Assets/js/conferences/conferences.maininformation.widget.js",
                 "~/Assets/js/conferences/conferences.tracksandformats.widget.js",
-                "~/Assets/js/conferences/conferences.participants.widget.js"));
+                "~/Assets/js/conferences/conferences.participants.widget.js",
+                "~/Assets/js/conferences/conferences.apiconfiguration.widget.js"
+            ));
 
             bundles.Add(new ScriptBundle("~/bundles/js/conferences.delete.js").Include(
-                "~/Assets/js/conferences/conferences.delete.js"));
+                "~/Assets/js/conferences/conferences.delete.js")
+            );
+
+            bundles.Add(new StyleBundle("~/bundles/css/conferences.details.css").Include(
+                "~/Assets/themes/metronic/css/demo4/pages/pricing/pricing-1.css")
+            );
 
             #endregion
 

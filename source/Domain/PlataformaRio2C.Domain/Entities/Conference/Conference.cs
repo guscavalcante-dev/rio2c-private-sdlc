@@ -30,6 +30,8 @@ namespace PlataformaRio2C.Domain.Entities
 
         public virtual EditionEvent EditionEvent { get; private set; }
         public virtual Room Room { get; private set; }
+        public bool IsApiDisplayEnabled { get; set; }
+        public int? ApiHighlightPosition { get; set; }
 
         public virtual ICollection<ConferenceTitle> ConferenceTitles { get; private set; }
         public virtual ICollection<ConferenceSynopsis> ConferenceSynopses { get; private set; }
