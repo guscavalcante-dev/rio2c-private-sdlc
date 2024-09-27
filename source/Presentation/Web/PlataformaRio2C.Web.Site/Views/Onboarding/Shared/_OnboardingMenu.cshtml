@@ -55,8 +55,6 @@
                     </div>
                 </div>
             </span>
-
-
         }
         @if (userAccessControlDto.IsInnovationPlayerExecutive())
         {
@@ -102,7 +100,7 @@
                 </div>
             </div>
         </span>
-        @if (userAccessControlDto.IsAudiovisualPlayerExecutive())
+        @if (userAccessControlDto.IsAudiovisualOrMusicPlayerExecutive())
         {
             foreach (var playerAttendeeOrganization in playerAttendeeOrganizations)
             {

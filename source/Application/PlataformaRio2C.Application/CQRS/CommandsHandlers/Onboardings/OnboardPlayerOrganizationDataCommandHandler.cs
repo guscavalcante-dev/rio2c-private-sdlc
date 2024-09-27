@@ -90,8 +90,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var beforeImageUploadDate = organization.ImageUploadDate;
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
-            var activities = await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id);
-            var targetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id);
+            var activities = await this.activityRepo.FindAllByProjectTypeIdAsync(
+                cmd.ProjectTypeId ?? ProjectType.Audiovisual.Id
+            );
+            var targetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(
+                cmd.ProjectTypeId ?? ProjectType.Audiovisual.Id
+            );
 
             organization.OnboardPlayerData(
                 await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
