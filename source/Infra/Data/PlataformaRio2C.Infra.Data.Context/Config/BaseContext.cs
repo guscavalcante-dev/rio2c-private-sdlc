@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-28-2024
 // ***********************************************************************
 // <copyright file="BaseContext.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -19,6 +20,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
+using System.Reflection;
 
 namespace PlataformaRio2C.Infra.Data.Context.Config
 {
@@ -66,6 +68,8 @@ namespace PlataformaRio2C.Infra.Data.Context.Config
             //SetupDateRegisterFieldForAllEntities("CreationDate");
             SetupUidRegisterFieldForAllEntities("Uid");
             SetupUidStringRegisterFieldForAllEntities("SecurityStamp");
+            ApplyPascalCaseToStringProperties();
+
             return base.SaveChanges();
         }
 
@@ -98,7 +102,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Config
 
                 if (entry.State == EntityState.Modified && entry.OriginalValues.PropertyNames.Any(e => e == nameDateField))
                 {
-                    entry.Property(nameDateField).IsModified = false;                    
+                    entry.Property(nameDateField).IsModified = false;
                 }
             }
         }
@@ -120,5 +124,41 @@ namespace PlataformaRio2C.Infra.Data.Context.Config
             }
         }
 
+        [LogConfig(NoLog = true)]
+        protected virtual void ApplyPascalCaseToStringProperties()
+        {
+            // Select all properties from added or modified entries that have the [ToPascalCase] attribute
+            var propertiesToUpdate = ChangeTracker.Entries()
+                .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified)
+                .SelectMany(entry => entry.Entity.GetType()
+                    .GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+                    .Where(p => p.PropertyType == typeof(string) && p.IsDefined(typeof(ToPascalCaseAttribute), false))
+                    .Select(p => new { Entry = entry, Property = p }))
+                .ToList();
+
+            if (!propertiesToUpdate.Any())
+                return;
+
+            foreach (var item in propertiesToUpdate)
+            {
+                var currentValue = (string)item.Property.GetValue(item.Entry.Entity, null);
+                if (string.IsNullOrEmpty(currentValue))
+                    continue;
+
+                var pascalValue = currentValue.ToPascalCase();
+
+                // Avoid setting the property if the value hasn't changed
+                if (pascalValue != currentValue)
+                {
+                    // Retrieve the setter method, including non-public setters
+                    var setter = item.Property.GetSetMethod(true);
+                    if (setter != null)
+                    {
+                        // Invoke the setter method directly
+                        setter.Invoke(item.Entry.Entity, new object[] { pascalValue });
+                    }
+                }
+            }
+        }
     }
 }

@@ -155,6 +155,7 @@
     <Compile Include="Attributes\RadioButtonRequiredIfAttribute.cs" />
     <Compile Include="Attributes\SwaggerDefaultValueAttribute.cs" />
     <Compile Include="Attributes\SwaggerParameterDescriptionAttribute.cs" />
+    <Compile Include="Attributes\ToPascalCaseAttribute.cs" />
     <Compile Include="Attributes\ValidCompanyNumberAttribute.cs" />
     <Compile Include="Attributes\RequiredImageOptionalAttribute.cs" />
     <Compile Include="Attributes\RequiredIfOneWithValueAndOtherEmptyAttribute.cs" />
@@ -217,7 +218,9 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Converter\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PlataformaRio2C.Infra.CrossCutting.Resources\PlataformaRio2C.Infra.CrossCutting.Resources.csproj">
       <Project>{7E1DE835-DDC4-416A-A2B7-9B4F5FFFFBF4}</Project>
