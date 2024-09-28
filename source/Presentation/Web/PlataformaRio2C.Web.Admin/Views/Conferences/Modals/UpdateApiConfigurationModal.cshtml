@@ -1,0 +1,27 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateConferenceApiConfiguration
+<div class="modal fade" id="UpdateApiConfigurationModal" role="dialog" aria-labelledby="UpdateApiConfigurationModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    @(Labels.Update + " " + Labels.ApiConfigurations)
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("UpdateApiConfiguration", "Conferences", new { Area = "" }, FormMethod.Post, new { id = "UpdateApiConfigurationForm" }))
+                {
+                    @Html.HiddenFor(m => m.ConferenceUid)
+                    <div id="form-container">
+                        @Html.Partial("Modals/UpdateApiConfigurationForm", Model)
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">@Labels.Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="$('#UpdateApiConfigurationForm').submit();">@Labels.Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+

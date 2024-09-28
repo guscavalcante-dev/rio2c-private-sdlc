@@ -38,6 +38,7 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset SellEndDate { get; private set; }      
         public DateTimeOffset OneToOneMeetingsScheduleDate { get; private set; }
         public int SpeakersApiHighlightPositionsCount { get; private set; }
+        public int ConferenceApiHighlightPositionsCount { get; private set; }        
 
         #endregion
 

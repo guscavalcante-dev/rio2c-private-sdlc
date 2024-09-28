@@ -1,6 +1,6 @@
-﻿var ConferenceApiConfigurationWidget = function () {
+﻿var ConferencesApiConfigurationWidget = function () {
 
-    var widgetElementId = '#ConferenceApiConfigurationWidget';
+    var widgetElementId = '#ConferencesApiConfigurationWidget';
     var widgetElement = $(widgetElementId);
 
     var updateModalId = '#UpdateApiConfigurationModal';
@@ -45,8 +45,8 @@
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (ConferenceApiConfigurationWidget) !== 'undefined') {
-                    ConferenceApiConfigurationWidget.init();
+                if (typeof (ConferencesApiConfigurationWidget) !== 'undefined') {
+                    ConferencesApiConfigurationWidget.init();
                 }
             },
             onError: function (data) {
@@ -74,7 +74,6 @@
 
         var jsonParameters = new Object();
         jsonParameters.conferenceUid = $('#AggregateId').val();
-        jsonParameters.isAddingToCurrentEdition = true;
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Conferences/ShowUpdateApiConfigurationModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({

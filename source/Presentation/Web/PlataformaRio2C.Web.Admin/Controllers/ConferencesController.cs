@@ -902,7 +902,48 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/ApiConfigurationWidget", apiConfigurationWidgetDto), divIdOrClass = "#ConferenceApiConfigurationWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/ApiConfigurationWidget", apiConfigurationWidgetDto), divIdOrClass = "#ConferencesApiConfigurationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Shows the update API configuration modal.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowUpdateApiConfigurationModal(Guid? conferenceUid)
+        {
+            UpdateConferenceApiConfiguration cmd;
+
+            try
+            {
+                var apiConfigurationWidgetDto = await this.conferenceRepo.FindApiConfigurationWidgetDtoByConferenceUidAndByEditionIdAsync(
+                    conferenceUid ?? Guid.Empty,
+                    this.EditionDto.Id
+                );
+
+                if (apiConfigurationWidgetDto == null)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Speaker, Labels.FoundM.ToLowerInvariant()));
+                }
+
+                cmd = new UpdateConferenceApiConfiguration(
+                    apiConfigurationWidgetDto,
+                    await this.conferenceRepo.FindAllApiConfigurationWidgetDtoByHighlight(apiConfigurationWidgetDto.EditionEvent.Id),
+                    this.EditionDto.ConferenceApiHighlightPositionsCount
+                );
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/UpdateApiConfigurationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }

@@ -644,6 +644,32 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
+        /// <summary>Updates the API configuration.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="isApiDisplayEnabled">if set to <c>true</c> [is API display enabled].</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateApiConfiguration(
+            bool isApiDisplayEnabled,
+            int? apiHighlightPosition,
+            int userId)
+        {
+            this.IsApiDisplayEnabled = isApiDisplayEnabled;
+            this.ApiHighlightPosition = apiHighlightPosition;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Deletes the API highlight position.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void DeleteApiHighlightPosition(int userId)
+        {
+            this.ApiHighlightPosition = null;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
         #endregion
     }
 }

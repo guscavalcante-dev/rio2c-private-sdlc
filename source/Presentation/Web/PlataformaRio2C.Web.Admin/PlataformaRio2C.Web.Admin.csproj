@@ -10105,6 +10105,8 @@
     <Content Include="Views\Organizations\Widgets\TargetAudienceWidget.cshtml" />
     <Content Include="Views\Organizations\Widgets\TargetAudienceWidget.cshtml" />
     <Content Include="Views\Conferences\Widgets\ApiConfigurationWidget.cshtml" />
+    <Content Include="Views\Conferences\Modals\UpdateApiConfigurationModal.cshtml" />
+    <Content Include="Views\Conferences\Modals\UpdateApiConfigurationForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Audiovisual\Views\Shared\EditorTemplates\" />

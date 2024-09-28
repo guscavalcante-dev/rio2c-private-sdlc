@@ -29,5 +29,6 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<List<EditionEvent>> FindAllByEditionIdAsync(int editionId);
         Task<IPagedList<EditionEventJsonDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> editionEventUids, int editionId, int languageId);
         Task<int> CountAllByDataTable(bool showAllEditions, int editionId);
+        Task<EditionEventDto> FindByConferenceUidAsync(Guid conferenceUid, int editionId);
     }    
 }
