@@ -237,6 +237,7 @@
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorSiteMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Conferences\ConferenceBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Conferences\CreateConferenceCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Conferences\UpdateConferenceApiConfigurationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Conferences\UpdateConferenceTracksAndPresentationFormatsCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Conferences\UpdateConferenceParticipantCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Conferences\DeleteConferenceParticipantCommandHandler.cs" />
@@ -439,6 +440,7 @@
     <Compile Include="CQRS\Commands\ConferenceParticipantRoles\DeleteConferenceParticipantRole.cs" />
     <Compile Include="CQRS\Commands\ConferenceParticipantRoles\UpdateConferenceParticipantRoleMainInformation.cs" />
     <Compile Include="CQRS\Commands\Conferences\BaseCommands\ConferenceDynamicBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Conferences\UpdateConferenceApiConfiguration.cs" />
     <Compile Include="CQRS\Commands\Connections\CleanUpConnectionsAsync.cs" />
     <Compile Include="CQRS\Commands\Creator\Commissions\BaseCommands\CreatorCommissionCollaboratorBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Creator\Commissions\CreateCreatorCommissionCollaborator.cs" />

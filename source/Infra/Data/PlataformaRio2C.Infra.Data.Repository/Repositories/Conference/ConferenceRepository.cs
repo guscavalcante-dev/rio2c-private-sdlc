@@ -151,7 +151,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="pillarsUids">The pillars uids.</param>
         /// <param name="presentationFormatsUids">The presentation formats uids.</param>
         /// <returns></returns>
-        internal static IQueryable<Conference> FindByApiFilters(this IQueryable<Conference> query, List<DateTimeOffset> editionDates, List<Guid> editionEventsUids, List<Guid> roomsUids, List<Guid> tracksUids, List<Guid> pillarsUids, List<Guid> presentationFormatsUids, bool showDeleted)
+        internal static IQueryable<Conference> FindByApiFilters(this IQueryable<Conference> query, List<DateTimeOffset> editionDates, List<Guid> editionEventsUids, List<Guid> roomsUids, List<Guid> tracksUids, List<Guid> pillarsUids, List<Guid> presentationFormatsUids, bool showDeleted, bool onlyApiEnabled)
         {
             if (editionDates?.Any() == true || editionEventsUids?.Any() == true || roomsUids?.Any() == true || pillarsUids?.Any() == true || tracksUids?.Any() == true || presentationFormatsUids?.Any() == true)
             {
@@ -203,6 +203,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 //query = query.AsExpandable().Where(predicate);
             }
 
+            return query;
+        }
+
+        /// <summary>Determines whether [is API display enabled] [the specified edition identifier].</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="organizationTypeUid">The organization type uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<Conference> IsApiDisplayEnabled(this IQueryable<Conference> query)
+        {
+            query = query.Where(c => c.IsApiDisplayEnabled);
             return query;
         }
 
@@ -757,8 +768,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery(showDeleted: showDeleted)
                                 .FindByEditionId(false, editionId)
-                                .FindByApiFilters(editionDates, editionEventsUids, roomsUids, tracksUids, pillarsUids, presentationFormatsUids, showDeleted)
-                                .FindByCreateOrUpdateDate(modifiedAfterDate);
+                                .FindByApiFilters(editionDates, editionEventsUids, roomsUids, tracksUids, pillarsUids, presentationFormatsUids, showDeleted, true)
+                                .FindByCreateOrUpdateDate(modifiedAfterDate)
+                                .IsApiDisplayEnabled();
 
             return await query
                             .Select(c => new ConferenceDto
@@ -961,6 +973,59 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     EditionEvent = c.EditionEvent,                                
                 })
                 .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="editionEventId"></param>
+        /// <returns></returns>
+        public async Task<List<ConferenceDto>> FindAllApiConfigurationWidgetDtoByHighlight(int editionEventId)
+        {
+            var query = this.GetBaseQuery()
+                .Where(c =>
+                    !c.IsDeleted
+                    && c.EditionEvent.Id == editionEventId
+                    && c.ApiHighlightPosition.HasValue
+                );
+
+            return await query
+                .Select(c => new ConferenceDto
+                {
+                    Conference = c,
+                    ConferenceTitleDtos = c.ConferenceTitles
+                        .Where(ct => !ct.IsDeleted)
+                        .Select(ct => new ConferenceTitleDto
+                        {
+                            ConferenceTitle = ct,
+                            LanguageDto = new LanguageBaseDto
+                            {
+                                Id = ct.Language.Id,
+                                Uid = ct.Language.Uid,
+                                Name = ct.Language.Name,
+                                Code = ct.Language.Code
+                            }
+                        }),
+                })
+                .ToListAsync();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="apiHighlightPosition"></param>
+        /// <param name="editionEventId"></param>
+        /// <returns></returns>
+        public async Task<List<Conference>> FindAllByHightlightPosition(int apiHighlightPosition, int editionEventId)
+        {
+            var query = this.GetBaseQuery()
+                .Where(c =>
+                    !c.IsDeleted
+                    && c.ApiHighlightPosition == apiHighlightPosition
+                    && c.EditionEvent.Id == editionEventId
+                );
+
+            return await query.ToListAsync();
         }
 
         #endregion
