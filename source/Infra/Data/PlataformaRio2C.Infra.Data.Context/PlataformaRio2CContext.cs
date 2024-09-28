@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-27-2022
+// Last Modified On : 09-28-2024
 // ***********************************************************************
 // <copyright file="PlataformaRio2CContext.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,7 +28,8 @@ namespace PlataformaRio2C.Infra.Data.Context
         static PlataformaRio2CContext()
         {
             string environment = System.Configuration.ConfigurationManager.AppSettings["Environment"]?.ToLower();
-            if (environment == EnumEnvironments.Test.ToDescription().ToLower() || environment == EnumEnvironments.Prod.ToDescription().ToLower())
+            if (environment == EnumEnvironments.Test.ToDescription().ToLower() || 
+                environment == EnumEnvironments.Prod.ToDescription().ToLower())
             {
                 Database.SetInitializer(new MigrateDatabaseToLatestVersion<PlataformaRio2CContext, Migrations.Configuration>());
                 using (var context = new PlataformaRio2CContext())

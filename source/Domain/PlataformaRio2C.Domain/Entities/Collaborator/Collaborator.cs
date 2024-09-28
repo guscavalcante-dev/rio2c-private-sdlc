@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 05-05-2024
+// Last Modified On : 09-28-2024
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -42,39 +43,16 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int CollaboratorRoleAdditionalInfoMaxLength = 300;
         public static readonly int CollaboratorIndustryAdditionalInfoMaxLength = 300;
 
-        private readonly bool _isSpeaker = false;
-        private string _firstName;
-        public string FirstName
-        {
-            get
-            { 
-                return this._firstName;
-            }
-            set
-            {
-                this._firstName = value;
-                if (this._isSpeaker)
-                {
-                    this._firstName = value.ToPascalCase();
-                }
-            }
-        }
+        [ToPascalCase]
+        public string FirstName { get; protected set; }
 
-        private string _lastName;
-        public string LastNames
-        {
-            get { return this._lastName; }
-            set
-            {
-                this._lastName = value;
-                if (this._isSpeaker)
-                {
-                    this._lastName = value.ToPascalCase();
-                }
-            }
-        }
+        [ToPascalCase]
+        public string LastNames { get; protected set; }
+
+        [ToPascalCase]
+        public string Badge { get; protected set; }
+
         public string Document { get; private set; }
-        public string Badge { get; private set; }
         public string PhoneNumber { get; private set; }
         public string CellPhone { get; private set; }
         public string PublicEmail { get; private set; }
@@ -733,7 +711,6 @@ namespace PlataformaRio2C.Domain.Entities
             string document,
             int userId)
         {
-            this._isSpeaker = CollaboratorType.Speaker.Uid == collaboratorType.Uid;
             this.FirstName = firstName?.Trim();
             this.LastNames = lastNames?.Trim();
             this.PublicEmail = email?.Trim();
