@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
-// Author           : Rafael Dantas Ruiz
-// Created          : 12-18-2019
+// Author           : Gilson Oliveira
+// Created          : 27-09-2024
 //
-// Last Modified By : Elton Assunção
-// Last Modified On : 02-01-2023
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 30-09-2024
 // ***********************************************************************
-// <copyright file="UpdateCollaboratorApiConfiguration.cs" company="Softo">
+// <copyright file="UpdateConferenceApiConfiguration.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>

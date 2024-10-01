@@ -1,4 +1,17 @@
-﻿using System.Linq;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Application
+// Author           : Gilson Oliveira
+// Created          : 27-09-2024
+//
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 30-09-2024
+// ***********************************************************************
+// <copyright file="UpdateConferenceApiConfigurationCommandHandler.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
