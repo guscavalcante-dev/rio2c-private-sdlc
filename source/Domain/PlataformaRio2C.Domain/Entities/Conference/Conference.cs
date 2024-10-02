@@ -106,7 +106,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void UpdateMainInformation(
             EditionEvent editionEvent,
-            DateTime date,
+            DateTime? date,
             string startTime,
             string endTime,
             Room room,
@@ -117,8 +117,8 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.EditionEventId = editionEvent?.Id ?? 0;
             this.EditionEvent = editionEvent;
-            this.StartDate = date.JoinDateAndTime(startTime, true).ToUtcTimeZone();
-            this.EndDate = date.JoinDateAndTime(endTime, true).ToUtcTimeZone();
+            this.StartDate = date?.JoinDateAndTime(startTime, true).ToUtcTimeZone();
+            this.EndDate = date?.JoinDateAndTime(endTime, true).ToUtcTimeZone();
             this.RoomId = room?.Id ?? 0;
             this.Room = room;
             this.SynchronizeConferenceTitles(conferenceTitles, userId);
@@ -667,8 +667,7 @@ namespace PlataformaRio2C.Domain.Entities
         public void DeleteApiHighlightPosition(int userId)
         {
             this.ApiHighlightPosition = null;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            base.SetUpdateDate(userId);
         }
 
         /// <summary>

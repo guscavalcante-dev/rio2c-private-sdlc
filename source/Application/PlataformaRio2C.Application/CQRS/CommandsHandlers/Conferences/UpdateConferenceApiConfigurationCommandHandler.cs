@@ -95,7 +95,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             if (cmd.IsApiDisplayEnabled && cmd.ApiHighlightPosition != null)
             {
-                var sameHighlightPositionConferences = await this.ConferenceRepo.FindAllByHightlightPosition(
+                var sameHighlightPositionConferences = await this.ConferenceRepo.FindAllByHighlightPosition(
                     cmd.ApiHighlightPosition,
                     conference.EditionEventId
                 );

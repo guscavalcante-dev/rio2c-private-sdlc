@@ -896,7 +896,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             );
             if (apiConfigurationWidgetDto == null)
             {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Speaker, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Conference, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
             
             apiConfigurationWidgetDto.Conference.IsAbleToPublishToApi();

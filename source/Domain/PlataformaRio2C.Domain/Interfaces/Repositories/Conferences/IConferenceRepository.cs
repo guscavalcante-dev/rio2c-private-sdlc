@@ -38,7 +38,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<ConferenceDto> FindApiDtoByUidAsync(Guid conferenceUid, int editionId);
         Task<ConferenceDto> FindApiConfigurationWidgetDtoByConferenceUidAndByEditionIdAsync(Guid conferenceUid, int editionId);
         Task<List<ConferenceDto>> FindAllApiConfigurationWidgetDtoByHighlight(int editionEventId);
-        Task<List<Conference>> FindAllByHightlightPosition(string apiHighlightPosition, int editionEventId);
+        Task<List<Conference>> FindAllByHighlightPosition(string apiHighlightPosition, int editionEventId);
 
         #endregion
     }    

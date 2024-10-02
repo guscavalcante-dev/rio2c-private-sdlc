@@ -151,7 +151,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="pillarsUids">The pillars uids.</param>
         /// <param name="presentationFormatsUids">The presentation formats uids.</param>
         /// <returns></returns>
-        internal static IQueryable<Conference> FindByApiFilters(this IQueryable<Conference> query, List<DateTimeOffset> editionDates, List<Guid> editionEventsUids, List<Guid> roomsUids, List<Guid> tracksUids, List<Guid> pillarsUids, List<Guid> presentationFormatsUids, bool showDeleted, bool onlyApiEnabled)
+        internal static IQueryable<Conference> FindByApiFilters(this IQueryable<Conference> query, List<DateTimeOffset> editionDates, List<Guid> editionEventsUids, List<Guid> roomsUids, List<Guid> tracksUids, List<Guid> pillarsUids, List<Guid> presentationFormatsUids, bool showDeleted)
         {
             if (editionDates?.Any() == true || editionEventsUids?.Any() == true || roomsUids?.Any() == true || pillarsUids?.Any() == true || tracksUids?.Any() == true || presentationFormatsUids?.Any() == true)
             {
@@ -768,7 +768,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery(showDeleted: showDeleted)
                                 .FindByEditionId(false, editionId)
-                                .FindByApiFilters(editionDates, editionEventsUids, roomsUids, tracksUids, pillarsUids, presentationFormatsUids, showDeleted, true)
+                                .FindByApiFilters(editionDates, editionEventsUids, roomsUids, tracksUids, pillarsUids, presentationFormatsUids, showDeleted)
                                 .FindByCreateOrUpdateDate(modifiedAfterDate)
                                 .IsApiDisplayEnabled();
 
@@ -1016,7 +1016,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="apiHighlightPosition"></param>
         /// <param name="editionEventId"></param>
         /// <returns></returns>
-        public async Task<List<Conference>> FindAllByHightlightPosition(string apiHighlightPosition, int editionEventId)
+        public async Task<List<Conference>> FindAllByHighlightPosition(string apiHighlightPosition, int editionEventId)
         {
             var query = this.GetBaseQuery()
                 .Where(c =>
