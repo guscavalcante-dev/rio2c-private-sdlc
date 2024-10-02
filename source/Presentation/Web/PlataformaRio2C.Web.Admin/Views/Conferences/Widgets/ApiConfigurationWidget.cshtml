@@ -47,8 +47,17 @@
             </div>
         </div>
     </div>
-    @{  
-        var languages = ViewBag.Languages as List<LanguageDto>;      
+    <div class="kt-pricing-1">
+        <div class="kt-pricing-1__items pb-0 pt-0 mt-3">
+            <div class="kt-pricing-1__item">
+                <p class="kt-pricing-1__subtitle text-center pt-3 mb-0 border-top">
+                    @Labels.RequiredFields
+                </p>
+            </div>
+        </div>
+    </div>
+    @{
+        var languages = ViewBag.Languages as List<LanguageDto>;
         Dictionary<string, string> pendingFields = new Dictionary<string, string> {
             { "Title_pt-br", Labels.TitlePtBr },
             { "Title_en-us", Labels.TitleEnUs },
@@ -59,7 +68,7 @@
             { "Synopsis_en-us", Labels.SynopsisEnUs },
         };
     }
-    <div class="kt-widget4">
+    <div class="kt-widget4 mt-2">
         @foreach (var pendingField in pendingFields)
         {
             var hasError = Model.Conference.ValidationResult.Errors.Where(e => e.Code == pendingField.Key).Any();
@@ -68,7 +77,7 @@
                     <i class="la la-@(!hasError ? "check": "close")"></i>
                 </div>
                 <div class="kt-widget4__info">
-                    <span class="kt-widget4__title">@pendingField.Value</span>
+                    <span class="kt-pricing-4__description d-block" style="font-weight: normal;">@pendingField.Value</span>
                 </div>
             </div>
         }

@@ -3343,4 +3343,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="TitleEnUs" xml:space="preserve">
     <value>Título EN</value>
   </data>
+  <data name="RequiredFields" xml:space="preserve">
+    <value>Campos obrigatórios</value>
+  </data>
 </root>

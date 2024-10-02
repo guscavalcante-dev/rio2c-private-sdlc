@@ -3922,19 +3922,20 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Relatório de Players de Música.
-        /// </summary>
-        public static string MusicPlayersReport {
-            get {
-                return ResourceManager.GetString("MusicPlayersReport", resourceCulture);
-            }
-        }
-        
         ///   Looks up a localized string similar to Relatório de Executivos de Players de Música.
         /// </summary>
         public static string MusicPlayersExecutivesReport {
             get {
                 return ResourceManager.GetString("MusicPlayersExecutivesReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Relatório de Players de Música.
+        /// </summary>
+        public static string MusicPlayersReport {
+            get {
+                return ResourceManager.GetString("MusicPlayersReport", resourceCulture);
             }
         }
         
@@ -5829,6 +5830,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Campos obrigatórios.
+        /// </summary>
+        public static string RequiredFields {
+            get {
+                return ResourceManager.GetString("RequiredFields", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Código de reserva.
         /// </summary>
         public static string ReservationCode {
@@ -7233,7 +7243,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Título En.
+        ///   Looks up a localized string similar to Título EN.
         /// </summary>
         public static string TitleEnUs {
             get {

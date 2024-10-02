@@ -3341,4 +3341,7 @@
   <data name="TitleEnUs" xml:space="preserve">
     <value>Title EN</value>
   </data>
+  <data name="RequiredFields" xml:space="preserve">
+    <value>Required fields</value>
+  </data>
 </root>
