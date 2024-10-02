@@ -517,10 +517,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return result;
             }
 
-            var organizationConferencesExceptions = new List<Tuple<DateTimeOffset, DateTimeOffset>>();
+            var organizationConferencesExceptions = new List<Tuple<DateTimeOffset?, DateTimeOffset?>>();
             foreach (var organizationConference in organizationConferences)
             {
-                organizationConferencesExceptions.Add(new Tuple<DateTimeOffset, DateTimeOffset>(organizationConference.StartDate.AddMinutes(-30), organizationConference.EndDate.AddMinutes(30)));
+                organizationConferencesExceptions.Add(new Tuple<DateTimeOffset?, DateTimeOffset?>(organizationConference.StartDate?.AddMinutes(-30), organizationConference.EndDate?.AddMinutes(30)));
             }
 
             var conferenceSlotsExceptions = negotiationSlots
@@ -556,10 +556,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return result;
             }
 
-            var organizationConferencesExceptions = new List<Tuple<DateTimeOffset, DateTimeOffset>>();
+            var organizationConferencesExceptions = new List<Tuple<DateTimeOffset?, DateTimeOffset?>>();
             foreach (var organizationConference in organizationConferences)
             {
-                organizationConferencesExceptions.Add(new Tuple<DateTimeOffset, DateTimeOffset>(organizationConference.StartDate.AddMinutes(-30), organizationConference.EndDate.AddMinutes(30)));
+                organizationConferencesExceptions.Add(new Tuple<DateTimeOffset?, DateTimeOffset?>(organizationConference.StartDate?.AddMinutes(-30), organizationConference.EndDate?.AddMinutes(30)));
             }
 
             var conferenceSlotsExceptions = negotiationSlots

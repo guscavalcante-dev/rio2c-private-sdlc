@@ -32,15 +32,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public Guid? EditionEventUid { get; set; }
 
         [Display(Name = "Date", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public DateTime? Date { get; set; }
 
         [Display(Name = "StartTime", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public string StartTime { get; set; }
 
         [Display(Name = "EndTime", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public string EndTime { get; set; }
 
         [Display(Name = "Room", ResourceType = typeof(Labels))]
@@ -70,9 +67,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string userInterfaceLanguage)
         {
             this.EditionEventUid = conferenceDto?.EditionEvent?.Uid;
-            this.Date = conferenceDto?.Conference?.StartDate.ToBrazilTimeZone().Date;
-            this.StartTime = conferenceDto?.Conference?.StartDate.ToBrazilTimeZone().ToShortTimeString();
-            this.EndTime = conferenceDto?.Conference?.EndDate.ToBrazilTimeZone().ToShortTimeString();
+            this.Date = conferenceDto?.Conference?.StartDate?.ToBrazilTimeZone().Date;
+            this.StartTime = conferenceDto?.Conference?.StartDate?.ToBrazilTimeZone().ToShortTimeString();
+            this.EndTime = conferenceDto?.Conference?.EndDate?.ToBrazilTimeZone().ToShortTimeString();
             this.RoomUid = conferenceDto?.RoomDto?.Room?.Uid;
             this.UpdateTitles(conferenceDto, languagesDtos);
             this.UpdateSynopsis(conferenceDto, languagesDtos);

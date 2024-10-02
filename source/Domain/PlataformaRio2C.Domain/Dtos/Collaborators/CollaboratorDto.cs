@@ -205,9 +205,9 @@ namespace PlataformaRio2C.Domain.Dtos
         public string GetConferencesTitlesWithRoomAndDateString(string culture)
         {
             return this.ConferencesDtos?.Select(c => string.Format(@"{0} - {1}/{2} | {3} | {4}",
-                                                                        c.StartDate.ToStringDateBrazilTimeZone(),
-                                                                        c.StartDate.ToStringHourBrazilTimeZone(),
-                                                                        c.EndDate.ToStringHourBrazilTimeZone(),
+                                                                        c.StartDate?.ToStringDateBrazilTimeZone(),
+                                                                        c.StartDate?.ToStringHourBrazilTimeZone(),
+                                                                        c.EndDate?.ToStringHourBrazilTimeZone(),
                                                                         c.GetRoomNameDtoByLanguageCode(culture)?.RoomName?.Value ?? "-",
                                                                         c.GetConferenceTitleDtoByLanguageCode(culture).ConferenceTitle?.Value ?? "-"                                                                        
                                                                     )).ToString("; ");

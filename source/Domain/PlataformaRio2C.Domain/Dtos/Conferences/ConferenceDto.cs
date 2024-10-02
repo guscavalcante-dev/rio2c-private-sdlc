@@ -22,8 +22,8 @@ namespace PlataformaRio2C.Domain.Dtos
     public class ConferenceDto
     {
         public Guid Uid { get; set; }
-        public DateTimeOffset StartDate { get; set; }
-        public DateTimeOffset EndDate { get; set; }
+        public DateTimeOffset? StartDate { get; set; }
+        public DateTimeOffset? EndDate { get; set; }
 
         public Conference Conference { get; set; }
         public EditionEvent EditionEvent { get; set; }

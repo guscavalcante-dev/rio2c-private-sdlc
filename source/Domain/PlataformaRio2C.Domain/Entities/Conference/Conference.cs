@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -25,13 +26,13 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public int EditionEventId { get; private set; }
         public int RoomId { get; private set; }
-        public DateTimeOffset StartDate { get; private set; }
-        public DateTimeOffset EndDate { get; private set; }
+        public DateTimeOffset? StartDate { get; private set; }
+        public DateTimeOffset? EndDate { get; private set; }
 
         public virtual EditionEvent EditionEvent { get; private set; }
         public virtual Room Room { get; private set; }
         public bool IsApiDisplayEnabled { get; set; }
-        public int? ApiHighlightPosition { get; set; }
+        public string ApiHighlightPosition { get; set; }
 
         public virtual ICollection<ConferenceTitle> ConferenceTitles { get; private set; }
         public virtual ICollection<ConferenceSynopsis> ConferenceSynopses { get; private set; }
@@ -57,7 +58,7 @@ namespace PlataformaRio2C.Domain.Entities
         public Conference(
             Guid conferenceUid,
             EditionEvent editionEvent,
-            DateTime date,
+            DateTime? date,
             string startTime,
             string endTime,
             Room room,
@@ -72,8 +73,8 @@ namespace PlataformaRio2C.Domain.Entities
             //this.Uid = conferenceUid;
             this.EditionEventId = editionEvent?.Id ?? 0;
             this.EditionEvent = editionEvent;
-            this.StartDate = date.JoinDateAndTime(startTime, true).ToUtcTimeZone();
-            this.EndDate = date.JoinDateAndTime(endTime, true).ToUtcTimeZone();
+            this.StartDate = date?.JoinDateAndTime(startTime, true).ToUtcTimeZone();
+            this.EndDate = date?.JoinDateAndTime(endTime, true).ToUtcTimeZone();
             this.RoomId = room?.Id ?? 0;
             this.Room = room;
             this.SynchronizeConferenceTitles(conferenceTitles, userId);
@@ -652,7 +653,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void UpdateApiConfiguration(
             bool isApiDisplayEnabled,
-            int? apiHighlightPosition,
+            string apiHighlightPosition,
             int userId)
         {
             this.IsApiDisplayEnabled = isApiDisplayEnabled;
