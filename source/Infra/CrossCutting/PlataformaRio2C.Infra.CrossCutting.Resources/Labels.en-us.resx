@@ -3335,4 +3335,10 @@
   <data name="Published" xml:space="preserve">
     <value>Published</value>
   </data>
+  <data name="TitlePtBr" xml:space="preserve">
+    <value>Title PT</value>
+  </data>
+  <data name="TitleEnUs" xml:space="preserve">
+    <value>Title EN</value>
+  </data>
 </root>

@@ -888,6 +888,7 @@
     <Content Include="Assets\js\collaborators\collaborators.socialnetworks.widget.js" />
     <Content Include="Assets\js\collaborators\collaborators.maininformation.widget.js" />
     <Content Include="Assets\js\collaborators\collaborators.company.widget.js" />
+    <Content Include="Assets\js\conferences\conferences.apiconfiguration.widget.js" />
     <Content Include="Assets\js\editions\editions.events.widget.js" />
     <Content Include="Assets\js\editions\editions.create.js" />
     <Content Include="Assets\js\editions\editions.datatable.widget.js" />
@@ -10178,6 +10179,10 @@
     <ProjectReference Include="..\..\..\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.Tools\PlataformaRio2C.Infra.CrossCutting.Tools.csproj">
       <Project>{ec0b684e-f8a3-417a-9567-819ffc7c41cc}</Project>
       <Name>PlataformaRio2C.Infra.CrossCutting.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Infra\Data\PlataformaRio2C.Infra.Data.Context\PlataformaRio2C.Infra.Data.Context.csproj">
+      <Project>{30C4D007-1A78-410C-9FCD-63699985C39B}</Project>
+      <Name>PlataformaRio2C.Infra.Data.Context</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Infra\Data\PlataformaRio2c.Infra.Data.FileRepository\PlataformaRio2c.Infra.Data.FileRepository.csproj">
       <Project>{6F4648EE-2D98-4E95-BC92-0760AF1FD909}</Project>

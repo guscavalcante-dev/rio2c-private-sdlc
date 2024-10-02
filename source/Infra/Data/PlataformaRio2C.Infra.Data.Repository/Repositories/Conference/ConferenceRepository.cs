@@ -986,7 +986,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 .Where(c =>
                     !c.IsDeleted
                     && c.EditionEvent.Id == editionEventId
-                    && c.ApiHighlightPosition.HasValue
+                    && c.ApiHighlightPosition != null
                 );
 
             return await query
@@ -1016,7 +1016,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="apiHighlightPosition"></param>
         /// <param name="editionEventId"></param>
         /// <returns></returns>
-        public async Task<List<Conference>> FindAllByHightlightPosition(int apiHighlightPosition, int editionEventId)
+        public async Task<List<Conference>> FindAllByHightlightPosition(string apiHighlightPosition, int editionEventId)
         {
             var query = this.GetBaseQuery()
                 .Where(c =>

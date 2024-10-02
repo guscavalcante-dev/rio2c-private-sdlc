@@ -17,7 +17,10 @@ using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using PlataformaRio2C.Domain.Validation;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -61,6 +64,18 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
+            if (!conference.IsAbleToPublishToApi().IsValid)
+            {
+                this.ValidationResult.Add(
+                    new ValidationError(
+                        Messages.PendingFieldsToPublishConference,
+                        new string[] { "ToastrError" }
+                    )
+                );
+                this.AppValidationResult.Add(this.ValidationResult);
+                return this.AppValidationResult;
+            }
+
             #endregion
 
             conference.UpdateApiConfiguration(
@@ -78,10 +93,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #region Disable same highlight position of other collaborators
 
-            if (cmd.IsApiDisplayEnabled && cmd.ApiHighlightPosition.HasValue)
+            if (cmd.IsApiDisplayEnabled && cmd.ApiHighlightPosition != null)
             {
                 var sameHighlightPositionConferences = await this.ConferenceRepo.FindAllByHightlightPosition(
-                    cmd.ApiHighlightPosition.Value,
+                    cmd.ApiHighlightPosition,
                     conference.EditionEventId
                 );
                 if (sameHighlightPositionConferences?.Any() == true)

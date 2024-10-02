@@ -29,7 +29,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public bool IsApiDisplayEnabled { get; set; }
 
         [Display(Name = "HighlightPosition", ResourceType = typeof(Labels))]
-        public int? ApiHighlightPosition { get; set; }
+        public string ApiHighlightPosition { get; set; }
 
         public int[] ApiHighlightPositions { get; private set; }
 
@@ -74,7 +74,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         }
 
         /// <summary>Updates the base models.</summary>
-        /// <param name="conferencesApiConfigurationWidgetDtos">The attendee collaborator API configuration widget dtos.</param>
+        /// <param name="conferencesApiConfigurationWidgetDtos">The conference API configuration widget dtos.</param>
         public void UpdateBaseModels(List<ConferenceDto> conferencesApiConfigurationWidgetDtos)
         {
             this.ConferencesApiConfigurationWidgetDtos = conferencesApiConfigurationWidgetDtos
@@ -84,7 +84,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Generates the count conferences API highlight positions.</summary>
         /// <param name="conferencesApiHighlightPositionsCount">The conferences API highlight positions count.</param>
-        private void GenerateCountConferencesApiHighlightPositions(int conferencesApiHighlightPositionsCount)
+        public void GenerateCountConferencesApiHighlightPositions(int conferencesApiHighlightPositionsCount)
         {
             this.ApiHighlightPositions = Enumerable.Range(1, conferencesApiHighlightPositionsCount).ToArray();
         }

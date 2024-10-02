@@ -35,8 +35,8 @@
                     }
                 </div>
                 <span class="kt-pricing-1__description d-block" style="margin-top: 215px;">
-                    @(Model?.Conference.IsApiDisplayEnabled == true ? 
-                        string.Format(Messages.ShowingOnSiteEdition, editionDto?.UrlCode) : 
+                    @(Model?.Conference.IsApiDisplayEnabled == true ?
+                        string.Format(Messages.ShowingOnSiteEdition, editionDto?.UrlCode) :
                         string.Format(Messages.NotShowingOnSiteEdition, editionDto?.UrlCode))
                 </span>
                 @if (Model?.Conference.IsApiDisplayEnabled == true && Model?.Conference?.ApiHighlightPosition != null)
@@ -46,5 +46,31 @@
                 }
             </div>
         </div>
+    </div>
+    @{  
+        var languages = ViewBag.Languages as List<LanguageDto>;      
+        Dictionary<string, string> pendingFields = new Dictionary<string, string> {
+            { "Title_pt-br", Labels.TitlePtBr },
+            { "Title_en-us", Labels.TitleEnUs },
+            { "Room", Labels.Room },
+            { "StartDate", Labels.StartDate },
+            { "EndDate", Labels.EndDate },
+            { "Synopsis_pt-br", Labels.SynopsisPtBr },
+            { "Synopsis_en-us", Labels.SynopsisEnUs },
+        };
+    }
+    <div class="kt-widget4">
+        @foreach (var pendingField in pendingFields)
+        {
+            var hasError = Model.Conference.ValidationResult.Errors.Where(e => e.Code == pendingField.Key).Any();
+            <div class="kt-widget4__item pt-2 pb-2">
+                <div class="kt-widget4__pic kt-font-@(!hasError ? "success": "danger")">
+                    <i class="la la-@(!hasError ? "check": "close")"></i>
+                </div>
+                <div class="kt-widget4__info">
+                    <span class="kt-widget4__title">@pendingField.Value</span>
+                </div>
+            </div>
+        }
     </div>
 </div>

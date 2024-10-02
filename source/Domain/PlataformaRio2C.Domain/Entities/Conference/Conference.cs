@@ -671,6 +671,36 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
         }
 
+        /// <summary>
+        /// checks conference is able for publication in the API
+        /// </summary>
+        /// <returns></returns>
+        public ValidationResult IsAbleToPublishToApi()
+        {
+            this.ValidationResult = new ValidationResult(); 
+            if (this.StartDate == null)
+            {
+                this.ValidationResult.Add(
+                    new ValidationError("StartDate", string.Format(Messages.TheFieldIsRequired, Labels.StartTime))
+                );
+            }
+            if (this.EndDate == null)
+            {
+                this.ValidationResult.Add(
+                    new ValidationError("EndDate", string.Format(Messages.TheFieldIsRequired, Labels.EndDate))
+                );
+            }
+
+            foreach(var conferenceSynopse in this.ConferenceSynopses?.Where(ct => ct.Value == null))
+            {                
+                this.ValidationResult.Add(
+                    new ValidationError($"Synopsis_{conferenceSynopse.Language.Code}", string.Format(Messages.TheFieldIsRequired, Labels.Synopsis))
+                );
+            }
+
+            return this.ValidationResult;
+        }
+
         #endregion
     }
 }

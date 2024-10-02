@@ -31,6 +31,8 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
+using PlataformaRio2C.Domain.Entities;
+using System.Web.Http.Results;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
@@ -896,6 +898,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Speaker, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
+            
+            apiConfigurationWidgetDto.Conference.IsAbleToPublishToApi();
 
             return Json(new
             {
@@ -913,6 +917,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUpdateApiConfigurationModal(Guid? conferenceUid)
         {
+            var result = new AppValidationResult();
             UpdateConferenceApiConfiguration cmd;
 
             try
@@ -932,10 +937,21 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     await this.conferenceRepo.FindAllApiConfigurationWidgetDtoByHighlight(apiConfigurationWidgetDto.EditionEvent.Id),
                     this.EditionDto.ConferenceApiHighlightPositionsCount
                 );
+                var errors = apiConfigurationWidgetDto.Conference.IsAbleToPublishToApi();
+                if (!errors.IsValid)
+                {
+                    result.Add(apiConfigurationWidgetDto.Conference.ValidationResult);
+                    throw new DomainException(Messages.PendingFieldsToPublishConference);
+                }
             }
             catch (DomainException ex)
             {
-                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+                string message = null;
+                if (ex.Message == Messages.PendingFieldsToPublishConference)
+                {
+                    message = Messages.PendingFieldsToPublishConference;
+                }
+                return Json(new { status = "error", message = message ?? ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
             }
 
             return Json(new
@@ -991,6 +1007,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd.UpdateBaseModels(
                     await this.conferenceRepo.FindAllApiConfigurationWidgetDtoByHighlight(eventEdition.EditionEvent.Id)
+                );
+                cmd.GenerateCountConferencesApiHighlightPositions(
+                    this.EditionDto.ConferenceApiHighlightPositionsCount
                 );
 
                 return Json(new

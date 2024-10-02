@@ -6999,6 +6999,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ementa EN.
+        /// </summary>
+        public static string SynopsisEnUs {
+            get {
+                return ResourceManager.GetString("SynopsisEnUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ementa PT.
+        /// </summary>
+        public static string SynopsisPtBr {
+            get {
+                return ResourceManager.GetString("SynopsisPtBr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mesa.
         /// </summary>
         public static string Table {
@@ -7211,6 +7229,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Título En.
+        /// </summary>
+        public static string TitleEnUs {
+            get {
+                return ResourceManager.GetString("TitleEnUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Título PT.
+        /// </summary>
+        public static string TitlePtBr {
+            get {
+                return ResourceManager.GetString("TitlePtBr", resourceCulture);
             }
         }
         
