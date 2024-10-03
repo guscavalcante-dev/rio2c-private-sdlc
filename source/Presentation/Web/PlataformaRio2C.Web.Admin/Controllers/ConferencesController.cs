@@ -899,7 +899,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Conference, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
             
-            apiConfigurationWidgetDto.Conference.IsAbleToPublishToApi();
+            apiConfigurationWidgetDto.Conference.FillRequiredFieldsToPublishToApi();
 
             return Json(new
             {
@@ -917,7 +917,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUpdateApiConfigurationModal(Guid? conferenceUid)
         {
-            var result = new AppValidationResult();
             UpdateConferenceApiConfiguration cmd;
 
             try
@@ -937,10 +936,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     await this.conferenceRepo.FindAllApiConfigurationWidgetDtoByHighlight(apiConfigurationWidgetDto.EditionEvent.Id),
                     this.EditionDto.ConferenceApiHighlightPositionsCount
                 );
-                var errors = apiConfigurationWidgetDto.Conference.IsAbleToPublishToApi();
-                if (!errors.IsValid)
+                if (!apiConfigurationWidgetDto.Conference.IsAbleToPublishToApi)
                 {
-                    result.Add(apiConfigurationWidgetDto.Conference.ValidationResult);
                     throw new DomainException(Messages.PendingFieldsToPublishConference);
                 }
             }

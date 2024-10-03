@@ -56,28 +56,19 @@
             </div>
         </div>
     </div>
-    @{
-        var languages = ViewBag.Languages as List<LanguageDto>;
-        Dictionary<string, string> pendingFields = new Dictionary<string, string> {
-            { "Title_pt-br", Labels.TitlePtBr },
-            { "Title_en-us", Labels.TitleEnUs },
-            { "Room", Labels.Room },
-            { "StartDate", Labels.StartDate },
-            { "EndDate", Labels.EndDate },
-            { "Synopsis_pt-br", Labels.SynopsisPtBr },
-            { "Synopsis_en-us", Labels.SynopsisEnUs },
-        };
-    }
     <div class="kt-widget4 mt-2">
-        @foreach (var pendingField in pendingFields)
+        @foreach (var field in Model.Conference.RequiredFieldsToPublish)
         {
-            var hasError = Model.Conference.ValidationResult.Errors.Where(e => e.Code == pendingField.Key).Any();
+            dynamic fieldValue = field.Value;
+            var type = fieldValue.GetType();
+            var isValid = type.GetProperty("IsValid").GetValue(fieldValue);
+            var message = type.GetProperty("Message").GetValue(fieldValue);
             <div class="kt-widget4__item pt-2 pb-2">
-                <div class="kt-widget4__pic kt-font-@(!hasError ? "success": "danger")">
-                    <i class="la la-@(!hasError ? "check": "close")"></i>
+                <div class="kt-widget4__pic kt-font-@(isValid ? "success": "danger")">
+                    <i class="la la-@(isValid ? "check": "close")"></i>
                 </div>
                 <div class="kt-widget4__info">
-                    <span class="kt-pricing-4__description d-block" style="font-weight: normal;">@pendingField.Value</span>
+                    <span class="kt-pricing-4__description d-block" style="font-weight: normal;">@message</span>
                 </div>
             </div>
         }

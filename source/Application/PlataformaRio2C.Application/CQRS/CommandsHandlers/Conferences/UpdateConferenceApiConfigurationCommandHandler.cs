@@ -64,7 +64,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            if (!conference.IsAbleToPublishToApi().IsValid)
+            if (!conference.IsAbleToPublishToApi)
             {
                 this.ValidationResult.Add(
                     new ValidationError(

@@ -7009,20 +7009,11 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ementa EN.
+        ///   Looks up a localized string similar to Ementa {0}.
         /// </summary>
-        public static string SynopsisEnUs {
+        public static string TranslatedSynopsis {
             get {
-                return ResourceManager.GetString("SynopsisEnUs", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ementa PT.
-        /// </summary>
-        public static string SynopsisPtBr {
-            get {
-                return ResourceManager.GetString("SynopsisPtBr", resourceCulture);
+                return ResourceManager.GetString("TranslatedSynopsis", resourceCulture);
             }
         }
         

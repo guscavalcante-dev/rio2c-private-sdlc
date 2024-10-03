@@ -42,6 +42,24 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<ConferencePillar> ConferencePillars { get; private set; }
         public virtual ICollection<ConferenceDynamic> ConferenceDynamics { get; private set; }
 
+        public Dictionary<string, object> RequiredFieldsToPublish;
+        public bool IsAbleToPublishToApi
+        {
+            get
+            {
+                this.FillRequiredFieldsToPublishToApi();
+                foreach (var requiredField in this.RequiredFieldsToPublish)
+                {
+                    dynamic val = requiredField.Value;
+                    if (val.IsValid == false)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+
         /// <summary>Initializes a new instance of the <see cref="Conference"/> class.</summary>
         /// <param name="conferenceUid">The conference uid.</param>
         /// <param name="editionEvent">The edition event.</param>
@@ -671,33 +689,26 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>
-        /// checks conference is able for publication in the API
+        /// fill requried fields for publication in the API
         /// </summary>
         /// <returns></returns>
-        public ValidationResult IsAbleToPublishToApi()
+        public void FillRequiredFieldsToPublishToApi()
         {
-            this.ValidationResult = new ValidationResult(); 
-            if (this.StartDate == null)
+            this.RequiredFieldsToPublish = new Dictionary<string, object> {
+                { "StartDate", new { IsValid = this.StartDate != null, Message = Labels.StartDate } },
+                { "EndDate", new { IsValid = this.EndDate != null, Message = Labels.EndDate } },
+            };
+            foreach(var conferenceSynopse in this.ConferenceSynopses)
             {
-                this.ValidationResult.Add(
-                    new ValidationError("StartDate", string.Format(Messages.TheFieldIsRequired, Labels.StartTime))
+                this.RequiredFieldsToPublish.Add(
+                    $"Synopsis_{conferenceSynopse.Language.Code}",
+                    new
+                    { 
+                        IsValid = conferenceSynopse.Value != null,
+                        Message = string.Format(Labels.TranslatedSynopsis, conferenceSynopse.Language.Code)
+                    }
                 );
             }
-            if (this.EndDate == null)
-            {
-                this.ValidationResult.Add(
-                    new ValidationError("EndDate", string.Format(Messages.TheFieldIsRequired, Labels.EndDate))
-                );
-            }
-
-            foreach(var conferenceSynopse in this.ConferenceSynopses?.Where(ct => ct.Value == null))
-            {                
-                this.ValidationResult.Add(
-                    new ValidationError($"Synopsis_{conferenceSynopse.Language.Code}", string.Format(Messages.TheFieldIsRequired, Labels.Synopsis))
-                );
-            }
-
-            return this.ValidationResult;
         }
 
         #endregion

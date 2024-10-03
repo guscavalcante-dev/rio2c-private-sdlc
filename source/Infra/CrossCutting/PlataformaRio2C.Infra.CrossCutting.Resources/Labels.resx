@@ -3331,11 +3331,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Published" xml:space="preserve">
     <value>Publicada</value>
   </data>
-  <data name="SynopsisPtBr" xml:space="preserve">
-    <value>Ementa PT</value>
-  </data>
-  <data name="SynopsisEnUs" xml:space="preserve">
-    <value>Ementa EN</value>
+  <data name="TranslatedSynopsis" xml:space="preserve">
+    <value>Ementa {0}</value>
   </data>
   <data name="TitlePtBr" xml:space="preserve">
     <value>Título PT</value>
