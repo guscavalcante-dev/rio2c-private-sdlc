@@ -3292,6 +3292,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cargo {0}.
+        /// </summary>
+        public static string JobTitleTranslated {
+            get {
+                return ResourceManager.GetString("JobTitleTranslated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cargos.
         /// </summary>
         public static string JobTitles {
@@ -3729,6 +3738,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string MiniBio {
             get {
                 return ResourceManager.GetString("MiniBio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mini-biografia {0}.
+        /// </summary>
+        public static string MiniBioTranslated {
+            get {
+                return ResourceManager.GetString("MiniBioTranslated", resourceCulture);
             }
         }
         

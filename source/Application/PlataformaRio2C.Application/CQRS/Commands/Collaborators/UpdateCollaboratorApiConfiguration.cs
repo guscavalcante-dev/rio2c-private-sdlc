@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-18-2019
 //
-// Last Modified By : Elton Assunção
-// Last Modified On : 02-01-2023
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 10-03-2024
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorApiConfiguration.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -93,7 +93,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Generates the count speakers API highlight positions.</summary>
         /// <param name="speakersApiHighlightPositionsCount">The speakers API highlight positions count.</param>
-        private void GenerateCountSpeakersApiHighlightPositions(int speakersApiHighlightPositionsCount)
+        public void GenerateCountSpeakersApiHighlightPositions(int speakersApiHighlightPositionsCount)
         {
             this.ApiHighlightPositions = Enumerable.Range(1, speakersApiHighlightPositionsCount).ToArray();
         }

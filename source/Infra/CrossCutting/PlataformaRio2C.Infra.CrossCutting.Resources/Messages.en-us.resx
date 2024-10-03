@@ -1143,7 +1143,7 @@
   <data name="UrlIsInvalid" xml:space="preserve">
     <value>The field '{0}' must be a valid URL.</value>
   </data>
-  <data name="PendingFieldsToPublishConference" xml:space="preserve">
+  <data name="PendingFieldsToPublish" xml:space="preserve">
     <value>Fill in the required fields before publishing</value>
   </data>
 </root>

@@ -3343,4 +3343,13 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="RequiredFields" xml:space="preserve">
     <value>Campos obrigatórios</value>
   </data>
+  <data name="RequiredFields" xml:space="preserve">
+    <value>Campos obrigatórios</value>
+  </data>
+  <data name="JobTitleTranslated" xml:space="preserve">
+    <value>Cargo {0}</value>
+  </data>
+  <data name="MiniBioTranslated" xml:space="preserve">
+    <value>Mini-biografia {0}</value>
+  </data>
 </root>

@@ -1473,6 +1473,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Preencha os campos obrigatórios antes de publicar.
+        /// </summary>
+        public static string PendingFieldsToPublish {
+            get {
+                return ResourceManager.GetString("PendingFieldsToPublish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dados do player &apos;{0}&apos; atualizados com sucesso!.
         /// </summary>
         public static string PlayerDataSuccessfullyUpdated {
@@ -2454,7 +2463,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Url deve ser uma Url válida.
+        ///   Looks up a localized string similar to O campo &apos;{0}&apos; deve ser uma Url válida.
         /// </summary>
         public static string UrlIsInvalid {
             get {
@@ -2702,15 +2711,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ZipCodeIsRequired {
             get {
                 return ResourceManager.GetString("ZipCodeIsRequired", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Corrija esses campos antes de prosseguir.
-        /// </summary>
-        public static string PendingFieldsToPublishConference {
-            get {
-                return ResourceManager.GetString("PendingFieldsToPublishConference", resourceCulture);
             }
         }
     }

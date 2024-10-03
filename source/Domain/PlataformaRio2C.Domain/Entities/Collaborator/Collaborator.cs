@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 09-28-2024
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 10-03-2024
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -85,6 +85,24 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<CollaboratorMiniBio> MiniBios { get; private set; }
         public virtual ICollection<AttendeeCollaborator> AttendeeCollaborators { get; private set; }
         public virtual ICollection<CollaboratorEditionParticipation> EditionParticipantions { get; private set; }
+
+        public Dictionary<string, object> RequiredFieldsToPublish;
+        public bool IsAbleToPublishToApi
+        {
+            get
+            {
+                this.FillRequiredFieldsToPublishToApi();
+                foreach (var requiredField in this.RequiredFieldsToPublish)
+                {
+                    dynamic val = requiredField.Value;
+                    if (val.IsValid == false)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
 
         #region Ticket Collaborator
 
@@ -3757,6 +3775,55 @@ namespace PlataformaRio2C.Domain.Entities
             {
                 this.ValidationResult.Add(attendeeCollaborator.ValidationResult);
             }
+        }
+
+        /// <summary>
+        /// checks speaker is able for publication in the API
+        /// </summary>
+        /// <returns></returns>
+        public void FillRequiredFieldsToPublishToApi()
+        {
+            this.RequiredFieldsToPublish = new Dictionary<string, object> {
+                { "Image", new { IsValid = this.ImageUploadDate != null, Message = Labels.Image } },
+                { "FirstName", new { IsValid = this.FirstName != null, Message = Labels.FirstName } },
+                { "LastNames", new { IsValid = this.LastNames != null, Message = Labels.LastNames } },
+                { "Badge", new { IsValid = this.Badge != null, Message = Labels.BadgeName } },
+            };
+
+            foreach (var jobTitle in this.JobTitles)
+            {
+                var lang = jobTitle.Language.Code.GetSplittedWord('-', 0).ToUpper();
+                this.RequiredFieldsToPublish.Add(
+                    $"JobTitle_{lang}",
+                    new
+                    {
+                        IsValid = jobTitle.Value != null,
+                        Message = string.Format(Labels.JobTitleTranslated, lang)
+                    }
+                );
+            }
+
+            foreach (var minioBio in this.MiniBios)
+            {
+                var lang = minioBio.Language.Code.GetSplittedWord('-', 0).ToUpper();
+                this.RequiredFieldsToPublish.Add(
+                    $"MiniBio_{lang}",
+                    new
+                    {
+                        IsValid = minioBio.Value != null,
+                        Message = string.Format(Labels.MiniBioTranslated, lang)
+                    }
+                );
+            }
+
+            this.RequiredFieldsToPublish.Add(
+                "SpeakerTermsAcceptanceDate",
+                new
+                {
+                    IsValid = !this.AttendeeCollaborators?.Where(ct => ct.SpeakerTermsAcceptanceDate == null).Any(),
+                    Message = Messages.ImageAuthorizationForm
+                }
+            );
         }
 
         #endregion

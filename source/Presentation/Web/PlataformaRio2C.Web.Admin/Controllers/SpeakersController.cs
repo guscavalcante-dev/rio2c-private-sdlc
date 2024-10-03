@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-12-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 03-31-2023
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 10-03-2024
 // ***********************************************************************
 // <copyright file="SpeakersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -436,6 +436,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Speaker, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
+            apiConfigurationWidgetDto.Collaborator.FillRequiredFieldsToPublishToApi();
+
             return Json(new
             {
                 status = "success",
@@ -470,10 +472,20 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     Constants.CollaboratorType.Speaker,
                     await this.attendeeCollaboratorRepo.FindAllApiConfigurationWidgetDtoByHighlight(this.EditionDto.Id, Constants.CollaboratorType.Speaker),
                     this.EditionDto.SpeakersApiHighlightPositionsCount);
+
+                if (!apiConfigurationWidgetDto.Collaborator.IsAbleToPublishToApi)
+                {
+                    throw new DomainException(Messages.PendingFieldsToPublish);
+                }
             }
             catch (DomainException ex)
             {
-                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+                string message = null;
+                if (ex.Message == Messages.PendingFieldsToPublish)
+                {
+                    message = Messages.PendingFieldsToPublish;
+                }
+                return Json(new { status = "error", message = message ?? ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
             }
 
             return Json(new
@@ -525,6 +537,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd.UpdateBaseModels(
                     await this.attendeeCollaboratorRepo.FindAllApiConfigurationWidgetDtoByHighlight(this.EditionDto.Id, Constants.CollaboratorType.Speaker));
+                cmd.GenerateCountSpeakersApiHighlightPositions(this.EditionDto.SpeakersApiHighlightPositionsCount);
 
                 return Json(new
                 {
