@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 03-04-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-05-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 10-03-2024
 // ***********************************************************************
 // <copyright file="CreateNegotiationConfigCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -50,10 +50,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.Uow.BeginTransaction();
 
-            var negotiationConfigUid = Guid.NewGuid();
-
             var negotiationConfig = new NegotiationConfig(
-                negotiationConfigUid,
                 await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                 cmd.Date.Value,
                 cmd.StartTime,
