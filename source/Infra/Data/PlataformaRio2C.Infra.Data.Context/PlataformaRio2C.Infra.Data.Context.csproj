@@ -243,7 +243,17 @@
     <Compile Include="Migrations\202408202223049_Initial.Designer.cs">
       <DependentUpon>202408202223049_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202410010030572_AddIsApiDisplayEnabledToConferences.cs" />
+    <Compile Include="Migrations\202410010030572_AddIsApiDisplayEnabledToConferences.Designer.cs">
+      <DependentUpon>202410010030572_AddIsApiDisplayEnabledToConferences.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Compile Include="Models\SaveChangesResult.cs" />
     <Compile Include="Models\UnitOfWorkWithLog.cs" />
     <Compile Include="PlataformaRio2CContext.cs" />
@@ -358,6 +368,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202408202223049_Initial.resx">
       <DependentUpon>202408202223049_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202410010030572_AddIsApiDisplayEnabledToConferences.resx">
+      <DependentUpon>202410010030572_AddIsApiDisplayEnabledToConferences.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

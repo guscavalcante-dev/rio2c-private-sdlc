@@ -5,32 +5,46 @@
 }
 @Html.Hidden("AggregateId", Model.Conference.Uid)
 <div class="row">
-    <div class="col-md-12">
-        <!--begin:Main Information Widget-->
+    <div class="col-md-8 col-lg-9">
         <div class="row">
-            <div class="col-12">
-                <div id="ConferenceMainInformationWidget" class="kt-portlet" style="min-height: 250px;"></div>
+            <div class="col-md-12">
+                <!--begin:Main Information Widget-->
+                <div class="row">
+                    <div class="col-12">
+                        <div id="ConferenceMainInformationWidget" class="kt-portlet" style="min-height: 250px;"></div>
+                    </div>
+                </div>
+                <!--end:Main Information Widget-->
+                <!--begin:Tracks and Presentation Formats Widget-->
+                <div class="row">
+                    <div class="col-12">
+                        <div id="ConferenceTracksAndPresentationFormatsWidget" class="kt-portlet" style="min-height: 250px;"></div>
+                    </div>
+                </div>
+                <!--end:Tracks and Presentation Formats Widget-->
+                <!--begin:Participants Widget-->
+                <div class="row">
+                    <div class="col-12">
+                        <div id="ConferenceParticipantsWidget" class="kt-portlet" style="min-height: 325px;"></div>
+                    </div>
+                </div>
+                <!--end:Participants Widget-->
             </div>
         </div>
-        <!--end:Main Information Widget-->
-        <!--begin:Tracks and Presentation Formats Widget-->
-        <div class="row">
-            <div class="col-12">
-                <div id="ConferenceTracksAndPresentationFormatsWidget" class="kt-portlet" style="min-height: 250px;"></div>
-            </div>
-        </div>
-        <!--end:Tracks and Presentation Formats Widget-->
-        <!--begin:Participants Widget-->
-        <div class="row">
-            <div class="col-12">
-                <div id="ConferenceParticipantsWidget" class="kt-portlet" style="min-height: 325px;"></div>
-            </div>
-        </div>
-        <!--end:Participants Widget-->
     </div>
+    <!--begin: Right Container-->
+    <div class="col-md-4 col-lg-3">
+        <div class="row">
+            <div class="col-12">
+                <div id="ConferencesApiConfigurationWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+        </div>
+    </div>
+    <!--end: Right Container-->
 </div>
 @section Styles {
     @Styles.Render("~/bundles/css/select2.css")
+    @Styles.Render("~/bundles/css/conferences.details.css")
     @Styles.Render("~/bundles/css/bootstrap-datepicker.css")
     @Styles.Render("~/bundles/css/bootstrap-timepicker.css")
 }
@@ -51,6 +65,7 @@
             ConferencesMainInformationWidget.init();
             ConferencesTracksAndPresentationFormatsWidget.init();
             ConferencesParticipantsWidget.init();
+            ConferencesApiConfigurationWidget.init();
         });
     </script>
 }

@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -25,11 +26,13 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public int EditionEventId { get; private set; }
         public int RoomId { get; private set; }
-        public DateTimeOffset StartDate { get; private set; }
-        public DateTimeOffset EndDate { get; private set; }
+        public DateTimeOffset? StartDate { get; private set; }
+        public DateTimeOffset? EndDate { get; private set; }
 
         public virtual EditionEvent EditionEvent { get; private set; }
         public virtual Room Room { get; private set; }
+        public bool IsApiDisplayEnabled { get; set; }
+        public string ApiHighlightPosition { get; set; }
 
         public virtual ICollection<ConferenceTitle> ConferenceTitles { get; private set; }
         public virtual ICollection<ConferenceSynopsis> ConferenceSynopses { get; private set; }
@@ -38,6 +41,24 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<ConferencePresentationFormat> ConferencePresentationFormats { get; private set; }
         public virtual ICollection<ConferencePillar> ConferencePillars { get; private set; }
         public virtual ICollection<ConferenceDynamic> ConferenceDynamics { get; private set; }
+
+        public Dictionary<string, object> RequiredFieldsToPublish;
+        public bool IsAbleToPublishToApi
+        {
+            get
+            {
+                this.FillRequiredFieldsToPublishToApi();
+                foreach (var requiredField in this.RequiredFieldsToPublish)
+                {
+                    dynamic val = requiredField.Value;
+                    if (val.IsValid == false)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
 
         /// <summary>Initializes a new instance of the <see cref="Conference"/> class.</summary>
         /// <param name="conferenceUid">The conference uid.</param>
@@ -55,7 +76,7 @@ namespace PlataformaRio2C.Domain.Entities
         public Conference(
             Guid conferenceUid,
             EditionEvent editionEvent,
-            DateTime date,
+            DateTime? date,
             string startTime,
             string endTime,
             Room room,
@@ -70,8 +91,8 @@ namespace PlataformaRio2C.Domain.Entities
             //this.Uid = conferenceUid;
             this.EditionEventId = editionEvent?.Id ?? 0;
             this.EditionEvent = editionEvent;
-            this.StartDate = date.JoinDateAndTime(startTime, true).ToUtcTimeZone();
-            this.EndDate = date.JoinDateAndTime(endTime, true).ToUtcTimeZone();
+            this.StartDate = date?.JoinDateAndTime(startTime, true).ToUtcTimeZone();
+            this.EndDate = date?.JoinDateAndTime(endTime, true).ToUtcTimeZone();
             this.RoomId = room?.Id ?? 0;
             this.Room = room;
             this.SynchronizeConferenceTitles(conferenceTitles, userId);
@@ -103,7 +124,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void UpdateMainInformation(
             EditionEvent editionEvent,
-            DateTime date,
+            DateTime? date,
             string startTime,
             string endTime,
             Room room,
@@ -114,8 +135,8 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.EditionEventId = editionEvent?.Id ?? 0;
             this.EditionEvent = editionEvent;
-            this.StartDate = date.JoinDateAndTime(startTime, true).ToUtcTimeZone();
-            this.EndDate = date.JoinDateAndTime(endTime, true).ToUtcTimeZone();
+            this.StartDate = date?.JoinDateAndTime(startTime, true).ToUtcTimeZone();
+            this.EndDate = date?.JoinDateAndTime(endTime, true).ToUtcTimeZone();
             this.RoomId = room?.Id ?? 0;
             this.Room = room;
             this.SynchronizeConferenceTitles(conferenceTitles, userId);
@@ -639,6 +660,54 @@ namespace PlataformaRio2C.Domain.Entities
             foreach (var conferenceParticipant in this.ConferenceParticipants?.Where(d => !d.IsValid())?.ToList())
             {
                 this.ValidationResult.Add(conferenceParticipant.ValidationResult);
+            }
+        }
+
+        /// <summary>Updates the API configuration.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="isApiDisplayEnabled">if set to <c>true</c> [is API display enabled].</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateApiConfiguration(
+            bool isApiDisplayEnabled,
+            string apiHighlightPosition,
+            int userId)
+        {
+            this.IsApiDisplayEnabled = isApiDisplayEnabled;
+            this.ApiHighlightPosition = apiHighlightPosition;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Deletes the API highlight position.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void DeleteApiHighlightPosition(int userId)
+        {
+            this.ApiHighlightPosition = null;
+            base.SetUpdateDate(userId);
+        }
+
+        /// <summary>
+        /// fill requried fields for publication in the API
+        /// </summary>
+        /// <returns></returns>
+        public void FillRequiredFieldsToPublishToApi()
+        {
+            this.RequiredFieldsToPublish = new Dictionary<string, object> {
+                { "StartDate", new { IsValid = this.StartDate != null, Message = Labels.StartDate } },
+                { "EndDate", new { IsValid = this.EndDate != null, Message = Labels.EndDate } },
+            };
+            foreach(var conferenceSynopse in this.ConferenceSynopses)
+            {
+                this.RequiredFieldsToPublish.Add(
+                    $"Synopsis_{conferenceSynopse.Language.Code}",
+                    new
+                    { 
+                        IsValid = conferenceSynopse.Value != null,
+                        Message = string.Format(Labels.TranslatedSynopsis, conferenceSynopse.Language.Code)
+                    }
+                );
             }
         }
 

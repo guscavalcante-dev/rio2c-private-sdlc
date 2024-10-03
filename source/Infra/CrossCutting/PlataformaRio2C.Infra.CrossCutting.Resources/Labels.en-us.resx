@@ -3332,4 +3332,19 @@
   <data name="MusicPlayersExecutivesReport" xml:space="preserve">
     <value>Music Players Executive Report</value>
   </data>
+  <data name="Published" xml:space="preserve">
+    <value>Published</value>
+  </data>
+  <data name="TranslatedSynopsis" xml:space="preserve">
+    <value>Synopsis {0}</value>
+  </data>
+  <data name="TitlePtBr" xml:space="preserve">
+    <value>Title PT</value>
+  </data>
+  <data name="TitleEnUs" xml:space="preserve">
+    <value>Title EN</value>
+  </data>
+  <data name="RequiredFields" xml:space="preserve">
+    <value>Required fields</value>
+  </data>
 </root>

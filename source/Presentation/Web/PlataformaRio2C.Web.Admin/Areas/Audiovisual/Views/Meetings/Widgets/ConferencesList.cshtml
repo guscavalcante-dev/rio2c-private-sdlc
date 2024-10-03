@@ -40,11 +40,11 @@
                                     @(conferenceDto.GetConferenceTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ConferenceTitle?.Value)
                                 </a>
                             </td>
-                            <td class="text-center @(startDate.HasValue && endDate.HasValue && (conferenceDto.Conference.StartDate < startDate.Value || conferenceDto.Conference.StartDate > endDate.Value) ? "kt-font-danger" : string.Empty)">
-                                @(conferenceDto.Conference.StartDate.ToBrazilTimeZone().ToStringHourMinute())
+                            <td class="text-center @(startDate.HasValue && endDate.HasValue && (conferenceDto.Conference?.StartDate < startDate.Value || conferenceDto.Conference?.StartDate > endDate.Value) ? "kt-font-danger" : string.Empty)">
+                                @(conferenceDto.Conference.StartDate?.ToBrazilTimeZone().ToStringHourMinute())
                             </td>
-                            <td class="text-center @(startDate.HasValue && endDate.HasValue && (conferenceDto.Conference.EndDate < startDate.Value || conferenceDto.Conference.EndDate > endDate.Value) ? "kt-font-danger" : string.Empty)">
-                                @(conferenceDto.Conference.EndDate.ToBrazilTimeZone().ToStringHourMinute())
+                            <td class="text-center @(startDate.HasValue && endDate.HasValue && (conferenceDto.Conference?.EndDate < startDate.Value || conferenceDto.Conference?.EndDate > endDate.Value) ? "kt-font-danger" : string.Empty)">
+                                @(conferenceDto.Conference.EndDate?.ToBrazilTimeZone().ToStringHourMinute())
                             </td>
                         </tr>
                     }

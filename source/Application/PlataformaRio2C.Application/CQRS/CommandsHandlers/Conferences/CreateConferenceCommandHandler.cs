@@ -78,7 +78,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var conference = new Conference(
                 conferenceUid,
                 await this.editionEventRepo.GetAsync(cmd.EditionEventUid ?? Guid.Empty),
-                cmd.Date.Value,
+                cmd.Date,
                 cmd.StartTime,
                 cmd.EndTime,
                 cmd.RoomUid.HasValue ? await this.roomRepo.FindByUidAsync(cmd.RoomUid.Value) : null,

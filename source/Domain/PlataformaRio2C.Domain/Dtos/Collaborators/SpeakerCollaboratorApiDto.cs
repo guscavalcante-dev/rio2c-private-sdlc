@@ -135,10 +135,10 @@ namespace PlataformaRio2C.Domain.Dtos
                 },
                 Title = c.GetConferenceTitleDtoByLanguageCode(languageCode)?.ConferenceTitle?.Value?.Trim(),
                 Synopsis = c.GetConferenceSynopsisDtoByLanguageCode(languageCode)?.ConferenceSynopsis?.Value?.Trim(),
-                Date = c.StartDate.ToBrazilTimeZone().ToString("yyyy-MM-dd"),
-                StartTime = c.StartDate.ToBrazilTimeZone().ToString("HH:mm"),
-                EndTime = c.EndDate.ToBrazilTimeZone().ToString("HH:mm"),
-                DurationMinutes = (int)((c.EndDate - c.StartDate).TotalMinutes),
+                Date = c.StartDate?.ToBrazilTimeZone().ToString("yyyy-MM-dd"),
+                StartTime = c.StartDate?.ToBrazilTimeZone().ToString("HH:mm"),
+                EndTime = c.EndDate?.ToBrazilTimeZone().ToString("HH:mm"),
+                DurationMinutes = (int)((c.EndDate - c.StartDate)?.TotalMinutes ?? 0),
                 Room = c.RoomDto != null ? new RoomBaseApiResponse
                 {
                     Uid = c.RoomDto.Uid,

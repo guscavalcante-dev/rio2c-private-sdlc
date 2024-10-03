@@ -3922,19 +3922,20 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Relatório de Players de Música.
-        /// </summary>
-        public static string MusicPlayersReport {
-            get {
-                return ResourceManager.GetString("MusicPlayersReport", resourceCulture);
-            }
-        }
-        
         ///   Looks up a localized string similar to Relatório de Executivos de Players de Música.
         /// </summary>
         public static string MusicPlayersExecutivesReport {
             get {
                 return ResourceManager.GetString("MusicPlayersExecutivesReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Relatório de Players de Música.
+        /// </summary>
+        public static string MusicPlayersReport {
+            get {
+                return ResourceManager.GetString("MusicPlayersReport", resourceCulture);
             }
         }
         
@@ -5545,6 +5546,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Publicada.
+        /// </summary>
+        public static string Published {
+            get {
+                return ResourceManager.GetString("Published", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quiz.
         /// </summary>
         public static string Quiz {
@@ -5816,6 +5826,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Requests {
             get {
                 return ResourceManager.GetString("Requests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Campos obrigatórios.
+        /// </summary>
+        public static string RequiredFields {
+            get {
+                return ResourceManager.GetString("RequiredFields", resourceCulture);
             }
         }
         
@@ -6990,6 +7009,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ementa {0}.
+        /// </summary>
+        public static string TranslatedSynopsis {
+            get {
+                return ResourceManager.GetString("TranslatedSynopsis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mesa.
         /// </summary>
         public static string Table {
@@ -7202,6 +7230,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Título EN.
+        /// </summary>
+        public static string TitleEnUs {
+            get {
+                return ResourceManager.GetString("TitleEnUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Título PT.
+        /// </summary>
+        public static string TitlePtBr {
+            get {
+                return ResourceManager.GetString("TitlePtBr", resourceCulture);
             }
         }
         

@@ -1,0 +1,76 @@
+﻿@using PlataformaRio2C.Domain.Constants
+@using PlataformaRio2C.Domain.Dtos
+@model ConferenceDto
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+}
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            @Labels.ApiConfigurations
+        </h3>
+    </div>
+    <div class="kt-portlet__head-toolbar">
+        <div class="kt-portlet__head-actions">
+            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="ConferencesApiConfigurationWidget.showUpdateModal();">
+                <i class="flaticon2-edit"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="kt-portlet__body">
+    <div class="kt-pricing-1">
+        <div class="kt-pricing-1__items row p-0">
+            <div class="kt-pricing-1__item col-lg-12">
+                <div class="kt-pricing-1__visual" style="margin-top: 8rem;">
+                    <div class="kt-pricing-1__hexagon1"></div>
+                    <div class="kt-pricing-1__hexagon2"></div>
+                    @if (Model?.Conference.IsApiDisplayEnabled == true)
+                    {
+                        <span class="kt-pricing-1__icon kt-font-success"><i class="fa flaticon2-checkmark"></i></span>
+                    }
+                    else
+                    {
+                        <span class="kt-pricing-1__icon kt-font-danger"><i class="fa flaticon2-cross"></i></span>
+                    }
+                </div>
+                <span class="kt-pricing-1__description d-block" style="margin-top: 215px;">
+                    @(Model?.Conference.IsApiDisplayEnabled == true ?
+                        string.Format(Messages.ShowingOnSiteEdition, editionDto?.UrlCode) :
+                        string.Format(Messages.NotShowingOnSiteEdition, editionDto?.UrlCode))
+                </span>
+                @if (Model?.Conference.IsApiDisplayEnabled == true && Model?.Conference?.ApiHighlightPosition != null)
+                {
+                    <span class="kt-pricing-1__price mt-2">@(Model?.Conference?.ApiHighlightPosition?.ToString() ?? "-")</span>
+                    <h2 class="kt-pricing-1__subtitle">@Labels.HighlightPosition</h2>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="kt-pricing-1">
+        <div class="kt-pricing-1__items pb-0 pt-0 mt-3">
+            <div class="kt-pricing-1__item">
+                <p class="kt-pricing-1__subtitle text-center pt-3 mb-0 border-top">
+                    @Labels.RequiredFields
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="kt-widget4 mt-2">
+        @foreach (var field in Model.Conference.RequiredFieldsToPublish)
+        {
+            dynamic fieldValue = field.Value;
+            var type = fieldValue.GetType();
+            var isValid = type.GetProperty("IsValid").GetValue(fieldValue);
+            var message = type.GetProperty("Message").GetValue(fieldValue);
+            <div class="kt-widget4__item pt-2 pb-2">
+                <div class="kt-widget4__pic kt-font-@(isValid ? "success": "danger")">
+                    <i class="la la-@(isValid ? "check": "close")"></i>
+                </div>
+                <div class="kt-widget4__info">
+                    <span class="kt-pricing-4__description d-block" style="font-weight: normal;">@message</span>
+                </div>
+            </div>
+        }
+    </div>
+</div>

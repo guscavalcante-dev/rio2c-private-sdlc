@@ -29,15 +29,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public Guid? EditionEventUid { get; set; }
 
         [Display(Name = "Date", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public DateTime? Date { get; set; }
 
         [Display(Name = "StartTime", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public string StartTime { get; set; }
 
         [Display(Name = "EndTime", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public string EndTime { get; set; }
 
         [Display(Name = "Room", ResourceType = typeof(Labels))]

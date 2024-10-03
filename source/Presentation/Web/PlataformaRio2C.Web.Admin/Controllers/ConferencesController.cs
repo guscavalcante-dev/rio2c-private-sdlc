@@ -31,6 +31,8 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
+using PlataformaRio2C.Domain.Entities;
+using System.Web.Http.Results;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
@@ -876,6 +878,154 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }
 
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Conference, Labels.DeletedF) });
+        }
+
+        #endregion
+
+        #region Api Configuration Widget
+
+        /// <summary>Shows the API configuration widget.</summary>
+        /// <param name="conferenceUid">The collaborator uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowApiConfigurationWidget(Guid? conferenceUid)
+        {
+            var apiConfigurationWidgetDto = await this.conferenceRepo.FindApiConfigurationWidgetDtoByConferenceUidAndByEditionIdAsync(
+                conferenceUid ?? Guid.Empty,
+                this.EditionDto.Id
+            );
+            if (apiConfigurationWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Conference, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+            
+            apiConfigurationWidgetDto.Conference.FillRequiredFieldsToPublishToApi();
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/ApiConfigurationWidget", apiConfigurationWidgetDto), divIdOrClass = "#ConferencesApiConfigurationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Shows the update API configuration modal.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowUpdateApiConfigurationModal(Guid? conferenceUid)
+        {
+            UpdateConferenceApiConfiguration cmd;
+
+            try
+            {
+                var apiConfigurationWidgetDto = await this.conferenceRepo.FindApiConfigurationWidgetDtoByConferenceUidAndByEditionIdAsync(
+                    conferenceUid ?? Guid.Empty,
+                    this.EditionDto.Id
+                );
+
+                if (apiConfigurationWidgetDto == null)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Speaker, Labels.FoundM.ToLowerInvariant()));
+                }
+
+                cmd = new UpdateConferenceApiConfiguration(
+                    apiConfigurationWidgetDto,
+                    await this.conferenceRepo.FindAllApiConfigurationWidgetDtoByHighlight(apiConfigurationWidgetDto.EditionEvent.Id),
+                    this.EditionDto.ConferenceApiHighlightPositionsCount
+                );
+                if (!apiConfigurationWidgetDto.Conference.IsAbleToPublishToApi)
+                {
+                    throw new DomainException(Messages.PendingFieldsToPublishConference);
+                }
+            }
+            catch (DomainException ex)
+            {
+                string message = null;
+                if (ex.Message == Messages.PendingFieldsToPublishConference)
+                {
+                    message = Messages.PendingFieldsToPublishConference;
+                }
+                return Json(new { status = "error", message = message ?? ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/UpdateApiConfigurationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Updates the API configuration.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> UpdateApiConfiguration(UpdateConferenceApiConfiguration cmd)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage
+                );
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                var eventEdition = await this.editionEventRepo.FindByConferenceUidAsync(
+                    cmd.ConferenceUid,
+                    this.EditionDto.Id
+                );
+
+                cmd.UpdateBaseModels(
+                    await this.conferenceRepo.FindAllApiConfigurationWidgetDtoByHighlight(eventEdition.EditionEvent.Id)
+                );
+                cmd.GenerateCountConferencesApiHighlightPositions(
+                    this.EditionDto.ConferenceApiHighlightPositionsCount
+                );
+
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/UpdateApiConfigurationForm", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Conference, Labels.Published.ToLower()) });
         }
 
         #endregion

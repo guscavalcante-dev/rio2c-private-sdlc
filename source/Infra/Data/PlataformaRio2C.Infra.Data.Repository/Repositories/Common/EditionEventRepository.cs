@@ -295,5 +295,26 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query
                             .CountAsync();
         }
+
+        /// <summary>Finds the dto asynchronous.</summary>
+        /// <param name="conferenceUid">The edition event uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<EditionEventDto> FindByConferenceUidAsync(Guid conferenceUid, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                .Where(
+                    ev => ev.Conferences.Any(
+                        c => c.Uid == conferenceUid
+                    )
+                )
+                .FindByEditionId(false, editionId);
+            return await query
+                .Select(ee => new EditionEventDto
+                {
+                    EditionEvent = ee
+                })
+                .FirstOrDefaultAsync();
+        }
     }
 }
