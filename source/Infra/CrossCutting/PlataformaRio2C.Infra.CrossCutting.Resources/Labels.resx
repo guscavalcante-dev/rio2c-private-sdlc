@@ -645,6 +645,9 @@
   <data name="CompanyName" xml:space="preserve">
     <value>Razão social</value>
   </data>
+  <data name="EnterpriseName" xml:space="preserve">
+    <value>Nome da empresa</value>
+  </data>
   <data name="CompanyProfile" xml:space="preserve">
     <value>Resumo sobre a empresa</value>
     <comment>Resumo sobre a empresa</comment>

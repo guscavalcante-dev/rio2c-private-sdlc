@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 09-28-2024
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 10-03-2024
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -72,6 +72,7 @@ namespace PlataformaRio2C.Domain.Entities
         public string CollaboratorIndustryAdditionalInfo { get; private set; }
         public bool? HasAnySpecialNeeds { get; private set; }
         public string SpecialNeedsDescription { get; private set; }
+        public string CompanyName { get; protected set; }
 
         public virtual User User { get; private set; }
         public virtual Address Address { get; private set; }
@@ -2764,7 +2765,8 @@ namespace PlataformaRio2C.Domain.Entities
                 bool? haveYouBeenToRio2CBefore,
                 List<Edition> editionsParticipated,
                 Edition edition,
-                int userId)
+                int userId,
+                string companyName)
         {
             this.FirstName = firstName?.Trim();
             this.LastNames = lastNames?.Trim();
@@ -2772,6 +2774,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Badge = badge?.Trim();
             this.PhoneNumber = phoneNumber?.Trim();
             this.CellPhone = cellPhone?.Trim();
+            this.CompanyName = companyName?.Trim();
             this.UpdatePublicEmail(sharePublicEmail, publicEmail);
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             this.SynchronizeJobTitles(jobTitles, userId);

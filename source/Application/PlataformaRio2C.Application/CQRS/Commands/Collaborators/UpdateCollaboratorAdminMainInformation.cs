@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-16-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 08-28-2021
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 10-03-2024
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorAdminMainInformation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -112,6 +112,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public string CollaboratorTypeName { get; set; }
 
+        [Display(Name = "CompanyName", ResourceType = typeof(Labels))]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string CompanyName { get; set; }
+
         public IEnumerable<Guid> EditionsUids { get; set; }
         public IEnumerable<EditionDto> Editions { get; set; }
 
@@ -149,8 +153,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Email = entity?.User?.Email;
             this.Badge = entity?.Collaborator?.Badge;
             this.PhoneNumber = entity?.Collaborator?.PhoneNumber;
-            this.CellPhone = entity?.Collaborator?.CellPhone;   
-            
+            this.CellPhone = entity?.Collaborator?.CellPhone;
+            this.CompanyName = entity.Collaborator?.CompanyName;
+
+
             this.BirthDate = entity?.Collaborator?.BirthDate;
             this.HasAnySpecialNeeds = entity?.Collaborator?.HasAnySpecialNeeds;
             this.HaveYouBeenToRio2CBefore = entity?.EditionParticipationDtos?.Any();
