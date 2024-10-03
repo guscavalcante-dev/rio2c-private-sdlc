@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 03-06-2020
 //
-// Last Modified By : Renan valentim
-// Last Modified On : 06-26-2023
+// Last Modified By : Renan Valentim
+// Last Modified On : 10-03-2024
 // ***********************************************************************
 // <copyright file="MeetingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -37,6 +37,7 @@ using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Application.TemplateDocuments;
 using PlataformaRio2C.Infra.Report.Models;
+using PlataformaRio2C.Application.CQRS.Queries;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 {

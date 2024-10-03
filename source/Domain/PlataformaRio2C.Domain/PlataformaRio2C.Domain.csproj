@@ -528,7 +528,6 @@
     <Compile Include="Entities\WeConnect\WeConnectPublication.cs" />
     <Compile Include="Enums\NegotiationTypeCodes.cs" />
     <Compile Include="Enums\StatusProjectCodes.cs" />
-    <Compile Include="Interfaces\IMailCollaboratorRepository.cs" />
     <Compile Include="Interfaces\Repositories\Audiovisual\Negotiation\IAttendeeNegotiationCollaboratorRepository.cs" />
     <Compile Include="Interfaces\Repositories\Cartoon\IAttendeeCartoonProjectRepository.cs" />
     <Compile Include="Interfaces\Repositories\Cartoon\ICartoonProjectRepository.cs" />
@@ -613,21 +612,6 @@
     <Compile Include="Interfaces\Repositories\User\IConnectionRepository.cs" />
     <Compile Include="Interfaces\Repositories\WeConnect\IWeConnectPublicationRepository.cs" />
     <Compile Include="Interfaces\Repositories\WeConnect\ISocialMediaPlatformRepository.cs" />
-    <Compile Include="Interfaces\Services\IConferenceService.cs" />
-    <Compile Include="Interfaces\Services\ICountryService.cs" />
-    <Compile Include="Interfaces\Services\IMailService.cs" />
-    <Compile Include="Interfaces\Services\INegotiationConfigService.cs" />
-    <Compile Include="Interfaces\Services\INegotiationService.cs" />
-    <Compile Include="Interfaces\Services\IQuizAnswerService.cs" />
-    <Compile Include="Interfaces\Services\IQuizOptionService.cs" />
-    <Compile Include="Interfaces\Services\IQuizQuestionService.cs" />
-    <Compile Include="Interfaces\Services\IQuizService.cs" />
-    <Compile Include="Interfaces\Services\IRoleLecturerService.cs" />
-    <Compile Include="Interfaces\Services\IRoomService.cs" />
-    <Compile Include="Interfaces\Services\IMessageService.cs" />
-    <Compile Include="Interfaces\Services\ILogisticsService.cs" />
-    <Compile Include="Interfaces\Services\MusicalCommission\IMusicalCommissionService.cs" />
-    <Compile Include="Interfaces\Services\Speaker\ISpeakerService.cs" />
     <Compile Include="ApiModels\ApiBaseResponse.cs" />
     <Compile Include="ApiModels\ApiPageBaseRequest.cs" />
     <Compile Include="ApiModels\Collaborators\Responses\CollaboratorBaseApiResponse.cs" />
@@ -648,9 +632,6 @@
     <Compile Include="ApiModels\Players\Responses\TargetAudienceApiResponse.cs" />
     <Compile Include="ApiModels\Speakers\Requests\SpeakersApiRequest.cs" />
     <Compile Include="ApiModels\Speakers\Responses\SpeakersApiResponse.cs" />
-    <Compile Include="Services\NegotiationService.cs" />
-    <Compile Include="Services\QuizAnswerService.cs" />
-    <Compile Include="Services\LogisticsService.cs" />
     <Compile Include="Specifications\AddressSpecs\AddressValueIsRequired.cs" />
     <Compile Include="Specifications\AddressSpecs\AddressCityIsRequired.cs" />
     <Compile Include="Specifications\AddressSpecs\AddressCountryIsRequired.cs" />
@@ -856,28 +837,11 @@
     <Compile Include="Interfaces\Repositories\Player\IPlayerRepository.cs" />
     <Compile Include="Interfaces\Repositories\Holding\IHoldingRepository.cs" />
     <Compile Include="Interfaces\Repositories\IRepository.cs" />
-    <Compile Include="Interfaces\Services\Common\IService.cs" />
-    <Compile Include="Interfaces\Services\ICollaboratorPlayerService.cs" />
-    <Compile Include="Interfaces\Services\ICollaboratorProducerService.cs" />
-    <Compile Include="Interfaces\Services\ICollaboratorService.cs" />
-    <Compile Include="Interfaces\Services\IPlayerRestrictionsSpecificsService.cs" />
-    <Compile Include="Interfaces\Services\IInterestService.cs" />
-    <Compile Include="Interfaces\Services\IInterestGroupService.cs" />
-    <Compile Include="Interfaces\Services\IPlayerInterestService.cs" />
-    <Compile Include="Interfaces\Services\IEditionService.cs" />
-    <Compile Include="Interfaces\Services\IHoldingService.cs" />
-    <Compile Include="Interfaces\Services\ILanguageService.cs" />
-    <Compile Include="Interfaces\Services\IProjectService.cs" />
-    <Compile Include="Interfaces\Services\IProducerService.cs" />
-    <Compile Include="Interfaces\Services\IUserUseTermService.cs" />
-    <Compile Include="Interfaces\Services\IUserService.cs" />
-    <Compile Include="Interfaces\Services\IPlayerService.cs" />
     <Compile Include="Interfaces\Specification\ISpecification.cs" />
     <Compile Include="Interfaces\Validation\ICollaboratorValidator.cs" />
     <Compile Include="Interfaces\Validation\IValidation.cs" />
     <Compile Include="Interfaces\Validation\IValidationRule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Common\Service.cs" />
     <Compile Include="Entities\Users\UserRole.cs" />
     <Compile Include="Validation\Validation.cs" />
     <Compile Include="Validation\ValidationError.cs" />
@@ -895,7 +859,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Dtos\NegotiationConfig\" />
     <Folder Include="Interfaces\Repositories\Speaker\" />
+    <Folder Include="Interfaces\Services\" />
+    <Folder Include="Services\Audiovisual\" />
     <Folder Include="Specifications\Interests\" />
   </ItemGroup>
   <ItemGroup>

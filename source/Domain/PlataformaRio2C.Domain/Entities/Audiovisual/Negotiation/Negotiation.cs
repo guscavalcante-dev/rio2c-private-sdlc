@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 05-15-2024
+// Last Modified On : 10-03-2024
 // ***********************************************************************
 // <copyright file="Negotiation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -64,16 +64,13 @@ namespace PlataformaRio2C.Domain.Entities
             this.RoundNumber = roundNumber;
             this.IsAutomatic = true;
 
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
+            base.SetCreateDate(userId);
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Negotiation" /> class for manual negotiations.
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
-        /// <param name="negotiationUid">The negotiation uid.</param>
         /// <param name="buyerOrganization">The buyer organization.</param>
         /// <param name="project">The project.</param>
         /// <param name="negotiationConfig">The negotiation configuration.</param>
@@ -86,7 +83,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isUsingAutomaticTable">if set to <c>true</c> [is using automatic table].</param>
         public Negotiation(
             int editionId,
-            Guid negotiationUid,
             Organization buyerOrganization,
             Project project,
             NegotiationConfig negotiationConfig,
@@ -118,9 +114,8 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.RoundNumber = roundNumber;
             this.IsAutomatic = isUsingAutomaticTable;
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
+
+            base.SetCreateDate(userId);
         }
 
         /// <summary>
@@ -239,15 +234,6 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.ProjectBuyerEvaluationId = projectBuyerEvaluation?.Id ?? 0;
             this.ProjectBuyerEvaluation = projectBuyerEvaluation;
-        }
-
-        /// <summary>Deletes the specified user identifier.</summary>
-        /// <param name="userId">The user identifier.</param>
-        public void Delete(int userId)
-        {
-            this.IsDeleted = true;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
         }
 
         #region Validations
