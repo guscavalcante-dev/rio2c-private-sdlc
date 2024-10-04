@@ -36,8 +36,8 @@
                     }
                 </div>
                 <span class="kt-pricing-1__description d-block" style="margin-top: 215px;">
-                    @(attendeeCollaboratorTypeDto?.AttendeeCollaboratorType?.IsApiDisplayEnabled == true ? 
-                        string.Format(Messages.ShowingOnSiteEdition, editionDto?.UrlCode) : 
+                    @(attendeeCollaboratorTypeDto?.AttendeeCollaboratorType?.IsApiDisplayEnabled == true ?
+                        string.Format(Messages.ShowingOnSiteEdition, editionDto?.UrlCode) :
                         string.Format(Messages.NotShowingOnSiteEdition, editionDto?.UrlCode))
                 </span>
                 @if (attendeeCollaboratorTypeDto?.AttendeeCollaboratorType?.IsApiDisplayEnabled == true && attendeeCollaboratorTypeDto?.AttendeeCollaboratorType?.ApiHighlightPosition != null)
@@ -47,5 +47,31 @@
                 }
             </div>
         </div>
+    </div>
+    <div class="kt-pricing-1">
+        <div class="kt-pricing-1__items pb-0 pt-0 mt-3">
+            <div class="kt-pricing-1__item">
+                <p class="kt-pricing-1__subtitle text-center pt-3 mb-0 border-top">
+                    @Labels.RequiredFields
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="kt-widget4 mt-2">
+        @foreach (var field in Model.Collaborator.RequiredFieldsToPublish)
+        {
+            dynamic fieldValue = field.Value;
+            var type = fieldValue.GetType();
+            var isValid = type.GetProperty("IsValid").GetValue(fieldValue);
+            var message = type.GetProperty("Message").GetValue(fieldValue);
+            <div class="kt-widget4__item pt-2 pb-2">
+                <div class="kt-widget4__pic kt-font-@(isValid ? "success": "danger")">
+                    <i class="la la-@(isValid ? "check": "close")"></i>
+                </div>
+                <div class="kt-widget4__info">
+                    <span class="kt-pricing-4__description d-block" style="font-weight: normal;">@message</span>
+                </div>
+            </div>
+        }
     </div>
 </div>

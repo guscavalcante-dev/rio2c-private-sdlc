@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-26-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 10-03-2024
 // ***********************************************************************
 // <copyright file="ConferencesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -938,15 +938,15 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 );
                 if (!apiConfigurationWidgetDto.Conference.IsAbleToPublishToApi)
                 {
-                    throw new DomainException(Messages.PendingFieldsToPublishConference);
+                    throw new DomainException(Messages.PendingFieldsToPublish);
                 }
             }
             catch (DomainException ex)
             {
                 string message = null;
-                if (ex.Message == Messages.PendingFieldsToPublishConference)
+                if (ex.Message == Messages.PendingFieldsToPublish)
                 {
-                    message = Messages.PendingFieldsToPublishConference;
+                    message = Messages.PendingFieldsToPublish;
                 }
                 return Json(new { status = "error", message = message ?? ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
             }

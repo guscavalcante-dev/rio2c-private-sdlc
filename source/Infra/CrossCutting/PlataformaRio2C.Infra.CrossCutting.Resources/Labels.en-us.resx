@@ -3350,4 +3350,13 @@
   <data name="RequiredFields" xml:space="preserve">
     <value>Required fields</value>
   </data>
+  <data name="RequiredFields" xml:space="preserve">
+    <value>Required fields</value>
+  </data>
+  <data name="JobTitleTranslated" xml:space="preserve">
+    <value>Job title {0}</value>
+  </data>
+  <data name="MiniBioTranslated" xml:space="preserve">
+    <value>Mini-bio {0}</value>
+  </data>
 </root>

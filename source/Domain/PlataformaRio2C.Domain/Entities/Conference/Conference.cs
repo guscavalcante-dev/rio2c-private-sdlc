@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 05-27-2024
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 10-03-2024
 // ***********************************************************************
 // <copyright file="Conference.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,7 +17,6 @@ using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -700,12 +699,13 @@ namespace PlataformaRio2C.Domain.Entities
             };
             foreach(var conferenceSynopse in this.ConferenceSynopses)
             {
+                var lang = conferenceSynopse.Language.Code.GetSplittedWord('-', 0).ToUpper();
                 this.RequiredFieldsToPublish.Add(
-                    $"Synopsis_{conferenceSynopse.Language.Code}",
+                    $"Synopsis_{lang}",
                     new
                     { 
                         IsValid = conferenceSynopse.Value != null,
-                        Message = string.Format(Labels.TranslatedSynopsis, conferenceSynopse.Language.Code)
+                        Message = string.Format(Labels.TranslatedSynopsis, lang)
                     }
                 );
             }

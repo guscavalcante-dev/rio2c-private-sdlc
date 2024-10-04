@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-18-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-18-2019
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 10-03-2024
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorApiConfigurationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,7 +21,9 @@ using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using PlataformaRio2C.Domain.Validation;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -60,6 +62,18 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             if (!this.ValidationResult.IsValid)
             {
+                this.AppValidationResult.Add(this.ValidationResult);
+                return this.AppValidationResult;
+            }
+
+            if (!collaborator.IsAbleToPublishToApi)
+            {
+                this.ValidationResult.Add(
+                    new ValidationError(
+                        Messages.PendingFieldsToPublish,
+                        new string[] { "ToastrError" }
+                    )
+                );
                 this.AppValidationResult.Add(this.ValidationResult);
                 return this.AppValidationResult;
             }

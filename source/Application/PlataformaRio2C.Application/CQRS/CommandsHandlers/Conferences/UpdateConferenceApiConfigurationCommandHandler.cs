@@ -4,7 +4,7 @@
 // Created          : 27-09-2024
 //
 // Last Modified By : Gilson Oliveira
-// Last Modified On : 30-09-2024
+// Last Modified On : 10-03-2024
 // ***********************************************************************
 // <copyright file="UpdateConferenceApiConfigurationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -68,7 +68,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             {
                 this.ValidationResult.Add(
                     new ValidationError(
-                        Messages.PendingFieldsToPublishConference,
+                        Messages.PendingFieldsToPublish,
                         new string[] { "ToastrError" }
                     )
                 );
