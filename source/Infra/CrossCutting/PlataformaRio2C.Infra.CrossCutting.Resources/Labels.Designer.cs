@@ -1357,6 +1357,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nome da empresa.
+        /// </summary>
+        public static string EnterpriseName {
+            get {
+                return ResourceManager.GetString("EnterpriseName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resumo sobre a empresa.
         /// </summary>
         public static string CompanyProfile {

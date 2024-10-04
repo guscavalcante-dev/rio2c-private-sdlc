@@ -247,6 +247,10 @@
     <Compile Include="Migrations\202410010030572_AddIsApiDisplayEnabledToConferences.Designer.cs">
       <DependentUpon>202410010030572_AddIsApiDisplayEnabledToConferences.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202410022155286_AddCompanyNameToCollaborators.cs" />
+    <Compile Include="Migrations\202410022155286_AddCompanyNameToCollaborators.Designer.cs">
+      <DependentUpon>202410022155286_AddCompanyNameToCollaborators.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -274,7 +278,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Migrations\Scripts\202410022155286_AddCompanyNameToCollaborators.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Migrations\Scripts\202408202223049_Initial.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202410022155286_AddCompanyNameToCollaborators.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202408202223049_Initial.up.sql">
@@ -371,6 +381,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202410010030572_AddIsApiDisplayEnabledToConferences.resx">
       <DependentUpon>202410010030572_AddIsApiDisplayEnabledToConferences.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202410022155286_AddCompanyNameToCollaborators.resx">
+      <DependentUpon>202410022155286_AddCompanyNameToCollaborators.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

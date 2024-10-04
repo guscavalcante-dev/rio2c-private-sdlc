@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-16-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 04-25-2024
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 10-03-2024
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorAdminMainInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -130,7 +130,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.HaveYouBeenToRio2CBefore,
                 this.editionRepo.GetAll(e => cmd.EditionsUids.Contains(e.Uid)).ToList(),
                 await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
-                cmd.UserId);
+                cmd.UserId,
+                cmd.CompanyName);
 
             if (!collaborator.IsValid())
             {

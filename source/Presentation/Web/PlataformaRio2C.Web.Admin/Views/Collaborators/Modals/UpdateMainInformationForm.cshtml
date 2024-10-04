@@ -1,4 +1,5 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateCollaboratorAdminMainInformation
+﻿@using  PlataformaRio2C.Domain.Entities;
+@model PlataformaRio2C.Application.CQRS.Commands.UpdateCollaboratorAdminMainInformation
 <div class="row">
     <div class="form-group col-lg-4 text-center">
         @Html.EditorFor(m => m.CropperImage)
@@ -31,6 +32,16 @@
                 @Html.ValidationMessageFor(m => m.Badge, "", new { @class = "text-danger" })
             </div>
         </div>
+        @if (Model.CollaboratorTypeName == CollaboratorType.Speaker.Name)
+        {
+            <div class="row">
+                <div class="form-group col-md-12 col-xl-12">
+                    @Html.LabelFor(m => m.CompanyName, Labels.EnterpriseName, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
         <div class="row">
             <div class="form-group col-md-6 col-xl-6">
                 @Html.LabelFor(m => m.CellPhone, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
