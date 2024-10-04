@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-25-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 10-03-2024
 // ***********************************************************************
 // <copyright file="INegotiationConfigRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -31,5 +31,6 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<List<NegotiationConfigDto>> FindAllDatesDtosAsync(int editionId, string customFilter, bool buyerAttendeeOrganizationAcceptsVirtualMeeting);
         Task<List<NegotiationConfigDto>> FindAllRoomsDtosAsync(int editionId, Guid negotiationConfigUid, string customFilter, bool buyerAttendeeOrganizationAcceptsVirtualMeeting);
         Task<NegotiationConfigDto> FindAllTimesDtosAsync(int editionId, Guid negotiationRoomConfigUid, string customFilter, bool buyerAttendeeOrganizationAcceptsVirtualMeeting);
+        Task<List<NegotiationConfigDto>> FindAllByEditionIdAsync(int editionId);
     }
 }

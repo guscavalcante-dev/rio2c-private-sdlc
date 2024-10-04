@@ -4,7 +4,7 @@
 // Created          : 03-08-2020
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 05-15-2024
+// Last Modified On : 10-03-2024
 // ***********************************************************************
 // <copyright file="CreateNegotiationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -203,10 +203,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                                         .Where(n => n.StartDate == startDatePreview)
                                                         .ToList();
 
-            var negotiationUid = Guid.NewGuid();
             var negotiation = new Negotiation(
                 cmd.EditionId.Value,
-                negotiationUid,
                 buyerOrganization,
                 project,
                 negotiationConfig,

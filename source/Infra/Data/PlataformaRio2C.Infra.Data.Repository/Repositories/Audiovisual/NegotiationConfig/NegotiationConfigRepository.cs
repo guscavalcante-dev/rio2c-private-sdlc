@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 05-15-2024
+// Last Modified On : 10-03-2024
 // ***********************************************************************
 // <copyright file="NegotiationConfigRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -91,7 +91,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 {
                     query = query
                                 .HasRoomsConfigured()
-                                .Where(n => n.NegotiationRoomConfigs.Any(nrc => !nrc.IsDeleted 
+                                .Where(n => n.NegotiationRoomConfigs.Any(nrc => !nrc.IsDeleted
                                                                                 && (nrc.CountManualTables > 0 || nrc.CountAutomaticTables > 0)
                                                                                 && nrc.Room.IsVirtualMeeting == buyerAttendeeOrganizationAcceptsVirtualMeeting));
                 }
@@ -301,8 +301,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Select(nc => new NegotiationConfigDto
                             {
                                 NegotiationConfig = nc,
-                                NegotiationRoomConfigDtos = nc.NegotiationRoomConfigs.Select(nrc => new NegotiationRoomConfigDto() 
-                                { 
+                                NegotiationRoomConfigDtos = nc.NegotiationRoomConfigs.Select(nrc => new NegotiationRoomConfigDto()
+                                {
                                     NegotiationConfig = nc,
                                     NegotiationRoomConfig = nrc,
                                     RoomDto = new RoomDto()
@@ -332,8 +332,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             {
                                 NegotiationConfig = nc,
                                 NegotiationRoomConfigDtos = nc.NegotiationRoomConfigs
-                                                                    .Where(nrc => !nrc.IsDeleted 
-                                                                                    && !nrc.Room.IsDeleted 
+                                                                    .Where(nrc => !nrc.IsDeleted
+                                                                                    && !nrc.Room.IsDeleted
                                                                                     && (nrc.CountManualTables > 0 || nrc.CountAutomaticTables > 0)
                                                                                     && nrc.Room.IsVirtualMeeting == buyerAttendeeOrganizationAcceptsVirtualMeeting)
                                                                     .Select(nrc => new NegotiationRoomConfigDto
@@ -399,46 +399,27 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
-        #region Old methods
+        /// <summary>Finds all times dtos asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="negotiationRoomConfigUid">The negotiation room configuration uid.</param>
+        /// <param name="customFilter">The custom filter.</param>
+        /// <returns></returns>
+        public async Task<List<NegotiationConfigDto>> FindAllByEditionIdAsync(int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByEditionId(editionId, false)
+                                .Select(nc => new NegotiationConfigDto
+                                {
+                                    NegotiationConfig = nc,
+                                    NegotiationRoomConfigDtos = nc.NegotiationRoomConfigs
+                                                                    .Where(nrc => !nrc.IsDeleted)
+                                                                    .Select(nrc => new NegotiationRoomConfigDto
+                                                                    {
+                                                                        NegotiationRoomConfig = nrc,
+                                                                    })
+                                });
 
-        //public override IQueryable<NegotiationConfig> GetAll(bool @readonly = false)
-        //{
-        //    var consult = this.dbSet
-        //                        .Include(i => i.Rooms)
-        //                        .Include(i => i.Rooms.Select(e => e.Room));
-        //                        //.Include(i => i.Rooms.Select(e => e.Room.Names))
-        //                        //.Include(i => i.Rooms.Select(e => e.Room.Names.Select(r => r.Language)));
-
-        //    return @readonly
-        //      ? consult.AsNoTracking()
-        //      : consult;
-
-        //}
-
-
-        //public override void Delete(NegotiationConfig entity)
-        //{
-        //    if (entity.Rooms != null && entity.Rooms.Any())
-        //    {
-        //        foreach (var item in entity.Rooms.ToList())
-        //        {
-        //            _context.Entry(item).State = EntityState.Deleted;
-        //        }
-
-        //        entity.Rooms.Clear();
-        //    }
-
-        //    base.Delete(entity);
-        //}
-
-        //public override void DeleteAll(IEnumerable<NegotiationConfig> entities)
-        //{
-        //    foreach (var item in entities)
-        //    {
-        //        Delete(item);
-        //    }
-        //}
-
-        #endregion
+            return await query.ToListAsync();
+        }
     }
 }

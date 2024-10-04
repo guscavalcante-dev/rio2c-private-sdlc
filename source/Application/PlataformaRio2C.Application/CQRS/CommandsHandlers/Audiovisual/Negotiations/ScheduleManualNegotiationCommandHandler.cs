@@ -4,7 +4,7 @@
 // Created          : 06-04-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 05-15-2024
+// Last Modified On : 10-03-2024
 // ***********************************************************************
 // <copyright file="ScheduleManualNegotiationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -191,8 +191,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            var negotiationUid = Guid.NewGuid();
-
             // Concat Manual and Automatic negotiations to use inside negotiation.Update();
             var negotiationsInThisRoomAndStartDate = manualScheduledNegotiationsInThisRoom
                                                         .Concat(automaticScheduledNegotiationsInThisRoom)
@@ -201,7 +199,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var negotiation = new Negotiation(
                 cmd.EditionId.Value,
-                negotiationUid,
                 buyerOrganization,
                 project,
                 negotiationConfig,

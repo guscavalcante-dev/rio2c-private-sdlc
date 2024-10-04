@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-05-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 10-03-2024
 // ***********************************************************************
 // <copyright file="NegotiationRoomConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -70,23 +70,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CountAutomaticTables = countAutomaticTables;
             this.CountManualTables = countManualTables;
 
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
-        }
-
-        /// <summary>Deletes the specified user identifier.</summary>
-        /// <param name="userId">The user identifier.</param>
-        public void Delete(int userId)
-        {
-            if (this.IsDeleted)
-            {
-                return;
-            }
-
-            this.IsDeleted = true;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            base.SetUpdateDate(userId);
         }
 
         #region Validations

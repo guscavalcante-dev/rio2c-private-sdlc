@@ -659,6 +659,7 @@
     <Compile Include="CQRS\QueriesHandlers\Collaborators\FindAllCollaboratorIndustryAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Collaborators\FindAllCollaboratorRoleAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Collaborators\FindAllCollaboratorGenderAsyncQueryHandler.cs" />
+    <Compile Include="CQRS\QueriesAndHandlers\NegotiationConfigs\GetMaximumAvailableSlotsByEditionId\GetMaximumAvailableSlotsByEditionIdQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Users\FindAdminAccessControlDtoQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Users\FindUserLanguageDtoQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Users\FindUserAccessControlDtoQueryHandler.cs" />
@@ -681,6 +682,8 @@
     <Compile Include="CQRS\Queries\Collaborators\FindAllCollaboratorGenderAsync.cs" />
     <Compile Include="CQRS\Queries\Collaborators\FindAllCollaboratorIndustryAsync.cs" />
     <Compile Include="CQRS\Queries\Collaborators\FindAllCollaboratorRoleAsync.cs" />
+    <Compile Include="CQRS\QueriesAndHandlers\NegotiationConfigs\GetMaximumAvailableSlotsByEditionId\GetMaximumAvailableSlotsByEditionIdQuery.cs" />
+    <Compile Include="CQRS\QueriesAndHandlers\NegotiationConfigs\GetMaximumAvailableSlotsByEditionId\GetMaximumAvailableSlotsByEditionIdDto.cs" />
     <Compile Include="CQRS\Queries\Users\FindAdminAccessControlDto.cs" />
     <Compile Include="CQRS\Queries\Users\FindUserLanguageDto.cs" />
     <Compile Include="CQRS\Queries\Users\FindUserAccessControlDto.cs" />
@@ -720,7 +723,6 @@
     <Compile Include="Interfaces\Services\IQuizAnswerAppService.cs" />
     <Compile Include="Interfaces\Services\IScheduleAppService.cs" />
     <Compile Include="Interfaces\Services\ISpeakerAppService.cs" />
-    <Compile Include="Services\Api\PlayerAppService.cs" />
     <Compile Include="Interfaces\Services\Common\IAppService.cs" />
     <Compile Include="Interfaces\Services\Common\ITransactionAppService.cs" />
     <Compile Include="Interfaces\Services\Common\IWriteOnlyAppService.cs" />
@@ -749,8 +751,6 @@
     <Compile Include="Interfaces\Services\IUserAppService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Common\NegotiationAppService.cs" />
-    <Compile Include="Services\Common\QuizAnswerAppService.cs" />
-    <Compile Include="Services\Common\LogisticsAppService.cs" />
     <Compile Include="Services\Emails\IMailerService.cs" />
     <Compile Include="TemplateDocuments\Meetings\ScheduledMeetingsReportDocumentTemplate.cs" />
     <Compile Include="TemplateDocuments\Players\PlayerAudiovisualMeetingsDocumentTemplate.cs" />
@@ -894,8 +894,9 @@
     <Folder Include="CQRS\Commands\SalesPlatforms\" />
     <Folder Include="CQRS\EventsHandlers\" />
     <Folder Include="CQRS\Events\" />
+    <Folder Include="CQRS\QueriesHandlers\NegotiationConfigs\" />
     <Folder Include="Dtos\Editions\" />
-    <Folder Include="Interfaces\Api\" />
+    <Folder Include="Services\Api\" />
     <Folder Include="ViewModels\Common\ProducerProject\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

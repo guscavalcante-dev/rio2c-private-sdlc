@@ -3,10 +3,10 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-26-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 10-01-2024
 // ***********************************************************************
-// <copyright file="MusicBand.cs" company="Softo">
+// <copyright file="NegotiationConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -35,8 +35,9 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual Edition Edition { get; private set; }
         public virtual ICollection<NegotiationRoomConfig> NegotiationRoomConfigs { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="NegotiationConfig"/> class.</summary>
-        /// <param name="negotiationConfigUid">The negotiation configuration uid.</param>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NegotiationConfig" /> class.
+        /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="date">The date.</param>
         /// <param name="startTime">The start time.</param>
@@ -48,7 +49,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="timeIntervalBetweenRoundString">The time interval between round string.</param>
         /// <param name="userId">The user identifier.</param>
         public NegotiationConfig(
-            Guid negotiationConfigUid,
             Edition edition,
             DateTime date,
             string startTime,
@@ -60,7 +60,6 @@ namespace PlataformaRio2C.Domain.Entities
             string timeIntervalBetweenRoundString,
             int userId)
         {
-            //this.Uid = negotiationConfigUid;
             this.EditionId = edition?.Id ?? 0;
             this.Edition = edition;
             this.StartDate = date.JoinDateAndTime(startTime, true).ToUtcTimeZone();
@@ -109,21 +108,19 @@ namespace PlataformaRio2C.Domain.Entities
             this.TimeIntervalBetweenTurn = timeIntervalBetweenTurnString.ToTimeSpan();
             this.TimeOfEachRound = timeOfEachRoundString.ToTimeSpan();
             this.TimeIntervalBetweenRound = timeIntervalBetweenRoundString.ToTimeSpan();
-
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            
+            base.SetUpdateDate(userId);
         }
 
-        /// <summary>Deletes the specified user identifier.</summary>
+        /// <summary>
+        /// Deletes the specified user identifier.
+        /// </summary>
         /// <param name="userId">The user identifier.</param>
-        public void Delete(int userId)
+        public new void Delete(int userId)
         {
             this.DeleteNegotiationRoomConfigs(userId);
 
-            this.IsDeleted = true;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            base.Delete(userId);
         }
 
         #region Negotiation Room Configs
@@ -164,19 +161,6 @@ namespace PlataformaRio2C.Domain.Entities
             negotiationRoomConfig?.Delete(userId);
         }
 
-        /// <summary>Gets the negotiation room configuration position.</summary>
-        /// <param name="negotiationRoomConfigUid">The negotiation room configuration uid.</param>
-        /// <returns></returns>
-        public int? GetNegotiationRoomConfigPosition(Guid negotiationRoomConfigUid)
-        {
-            return this.NegotiationRoomConfigs?
-                            .Where(nrc => !nrc.IsDeleted)?
-                            .Select((n, i) => new { Index = i, NegotiationRoomConfig = n })?
-                            .Where(item => item.NegotiationRoomConfig.Uid == negotiationRoomConfigUid)?
-                            .Single()?
-                            .Index;
-        }
-
         /// <summary>Gets the negotiation room configuration by uid.</summary>
         /// <param name="negotiationRoomConfigUid">The negotiation room configuration uid.</param>
         /// <returns></returns>
@@ -198,6 +182,65 @@ namespace PlataformaRio2C.Domain.Entities
             {
                 negotiationRoomConfig.Delete(userId);
             }
+        }
+
+        #endregion
+
+        #region Helpers
+
+        /// <summary>Gets the negotiation room configuration position.</summary>
+        /// <param name="negotiationRoomConfigUid">The negotiation room configuration uid.</param>
+        /// <returns></returns>
+        public int? GetNegotiationRoomConfigPosition(Guid negotiationRoomConfigUid)
+        {
+            return this.NegotiationRoomConfigs?
+                .Where(nrc => !nrc.IsDeleted)?
+                .Select((n, i) => new { Index = i, NegotiationRoomConfig = n })?
+                .Where(item => item.NegotiationRoomConfig.Uid == negotiationRoomConfigUid)?
+                .Single()?
+                .Index;
+        }
+
+        /// <summary>
+        /// Gets the maximum automatic slots count by edition.
+        /// </summary>
+        /// <returns></returns>
+        public int GetMaxAutomaticSlotsCountByEdition()
+        {
+            int tablesTotalCount = this.NegotiationRoomConfigs
+                .Where(nrc => !nrc.IsDeleted)
+                .Sum(nrc => nrc.CountAutomaticTables);
+
+            int roundsTotalCount = this.RoundFirstTurn + this.RoundSecondTurn;
+
+            return tablesTotalCount * roundsTotalCount;
+        }
+
+        /// <summary>
+        /// Gets the maximum manual slots count by edition.
+        /// </summary>
+        /// <returns></returns>
+        public int GetMaxManualSlotsCountByEdition()
+        {
+            int tablesTotalCount = this.NegotiationRoomConfigs
+                .Where(nrc => !nrc.IsDeleted)
+                .Sum(nrc => nrc.CountManualTables);
+
+            int roundsTotalCount = this.RoundFirstTurn + this.RoundSecondTurn;
+
+            return tablesTotalCount * roundsTotalCount;
+        }
+
+        /// <summary>
+        /// Gets the maximum slots count by player.
+        /// </summary>
+        /// <param name="includeManualTables">if set to <c>true</c> [include manual tables].</param>
+        /// <returns></returns>
+        public int GetMaxSlotsCountByPlayer()
+        {
+            int roundsTotalCount = this.RoundFirstTurn + this.RoundSecondTurn;
+
+            return roundsTotalCount;
         }
 
         #endregion
