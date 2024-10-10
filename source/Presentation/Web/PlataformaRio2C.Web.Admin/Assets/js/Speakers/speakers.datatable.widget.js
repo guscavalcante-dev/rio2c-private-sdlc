@@ -244,6 +244,25 @@ var SpeakersDataTableWidget = function () {
                     }
                 },
                 {
+                    data: 'RequiredFieldsToPublish',
+                    render: function (data) {
+                        let tooltip = '';
+                        let isValid = true;
+                        const keys = Object.keys(data);
+                        for (let i = 0; i < keys.length; i++) {
+                            const _key = keys[i];
+                            if (!data[_key].IsValid) {
+                                isValid = false;
+                                tooltip = `${tooltip}${data[_key].Message}\n`;
+                            }
+                        }
+                        if (isValid == true)
+                            return '<span class="kt-pricing-1__icon kt-font-success" data-toggle="tooltip" data-placement="right" style="cursor: pointer;" title="' + publishable + '"><i class="fa flaticon2-check-mark"></i></span>';
+                        else
+                            return '<span class="kt-pricing-1__icon kt-font-danger" data-toggle="tooltip" data-placement="right" style="cursor: pointer;" title="' + tooltip + '"><i class="fa flaticon2-cross"></i></span>';
+                    }
+                },
+                {
                     data: 'IsApiDisplayEnabled',
                     render: function (data) {
                         if (data == true)
@@ -302,7 +321,7 @@ var SpeakersDataTableWidget = function () {
                     orderable: false
                 },
                 {
-                    targets: [5],
+                    targets: [5, 6],
                     width: "5%",
                     className: "dt-center",
                     orderable: false

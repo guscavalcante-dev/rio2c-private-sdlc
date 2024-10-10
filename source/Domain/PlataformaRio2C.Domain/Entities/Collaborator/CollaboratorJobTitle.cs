@@ -46,6 +46,16 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>Initializes a new instance of the <see cref="CollaboratorJobTitle"/> class.</summary>
+        /// <param name="value">The value.</param>
+        /// <param name="language">The language.</param>
+        public CollaboratorJobTitle(string value, Language language)
+        {
+            this.Value = value?.Trim();
+            this.Language = language;
+            this.LanguageId = language?.Id ?? 0;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="CollaboratorJobTitle"/> class.</summary>
         protected CollaboratorJobTitle()
         {
         }

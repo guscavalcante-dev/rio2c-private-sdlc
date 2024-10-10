@@ -19,6 +19,8 @@ using System.Linq;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
+using PlataformaRio2C.Domain.Dtos;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -188,6 +190,57 @@ namespace PlataformaRio2C.Domain.Entities
                 ticketUpdateDate,
                 userId);
             this.UpdateUser(email);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Collaborator" /> class.
+        /// </summary>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastMame">The last mame.</param>
+        /// <param name="badge">The badge.</param>
+        /// <param name="imageUploadDate">The imageUploadDate.</param>
+        /// <param name="jobTitles">The job title</param>
+        /// <param name="miniBios">The mini bios</param>
+        /// <param name="editionAttendeeCollaboratorBaseDto">The attendee collaborator</param>
+        public Collaborator(
+            string firstName,
+            string lastMame,
+            string badge,
+            DateTimeOffset? imageUploadDate,
+            IEnumerable<CollaboratorJobTitleBaseDto> jobTitles,
+            IEnumerable<CollaboratorMiniBioBaseDto> miniBios,
+            AttendeeCollaboratorBaseDto editionAttendeeCollaboratorBaseDto
+        )
+        {
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastMame?.Trim();
+            this.Badge = badge?.Trim();
+            this.ImageUploadDate = imageUploadDate;
+            this.JobTitles = jobTitles.Select(jt =>
+                new CollaboratorJobTitle(
+                    jt.Value,
+                    new Language(
+                        jt.LanguageDto.Name,
+                        jt.LanguageDto.Code
+                    )
+                )
+            )
+            .ToList();
+            this.MiniBios = miniBios.Select(mb =>
+                new CollaboratorMiniBio(
+                    mb.Value,
+                    new Language(
+                        mb.LanguageDto.Name,
+                        mb.LanguageDto.Code
+                    )
+                )
+            )
+            .ToList();
+            this.AttendeeCollaborators = new Collection<AttendeeCollaborator>();
+            if (editionAttendeeCollaboratorBaseDto?.SpeakerTermsAcceptanceDate != null)
+            {
+                this.AttendeeCollaborators.Add(new AttendeeCollaborator(editionAttendeeCollaboratorBaseDto.SpeakerTermsAcceptanceDate));
+            }
         }
 
         /// <summary>
@@ -3823,7 +3876,7 @@ namespace PlataformaRio2C.Domain.Entities
                 "SpeakerTermsAcceptanceDate",
                 new
                 {
-                    IsValid = !this.AttendeeCollaborators?.Where(ct => ct.SpeakerTermsAcceptanceDate == null).Any(),
+                    IsValid = this.AttendeeCollaborators?.Where(ct => ct.SpeakerTermsAcceptanceDate != null)?.Any(),
                     Message = Messages.ImageAuthorizationForm
                 }
             );

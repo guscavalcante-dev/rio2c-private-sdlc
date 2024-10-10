@@ -3355,4 +3355,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="MiniBioTranslated" xml:space="preserve">
     <value>Mini-biografia {0}</value>
   </data>
+  <data name="Publishable" xml:space="preserve">
+    <value>Publicável</value>
+  </data>
 </root>

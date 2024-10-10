@@ -2783,6 +2783,32 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                     Id = c.User.Id,
                                                     Uid = c.User.Uid
                                                 },
+                                                JobTitleBaseDtos = c.JobTitles.Where(jb => !jb.IsDeleted).Select(d => new CollaboratorJobTitleBaseDto
+                                                {
+                                                    Id = d.Id,
+                                                    Uid = d.Uid,
+                                                    Value = d.Value,
+                                                    LanguageDto = new LanguageBaseDto
+                                                    {
+                                                        Id = d.Language.Id,
+                                                        Uid = d.Language.Uid,
+                                                        Name = d.Language.Name,
+                                                        Code = d.Language.Code
+                                                    }
+                                                }),
+                                                MiniBioBaseDtos = c.MiniBios.Where(mb => !mb.IsDeleted).Select(d => new CollaboratorMiniBioBaseDto
+                                                {
+                                                    Id = d.Id,
+                                                    Uid = d.Uid,
+                                                    Value = d.Value,
+                                                    LanguageDto = new LanguageBaseDto
+                                                    {
+                                                        Id = d.Language.Id,
+                                                        Uid = d.Language.Uid,
+                                                        Name = d.Language.Name,
+                                                        Code = d.Language.Code
+                                                    }
+                                                }),
 
                                                 IsApiDisplayEnabled = c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId
                                                                                                         && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted

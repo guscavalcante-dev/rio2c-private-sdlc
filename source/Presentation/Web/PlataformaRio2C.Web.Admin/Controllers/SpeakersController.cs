@@ -39,6 +39,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults;
 using PlataformaRio2C.Domain.ApiModels;
 using ClosedXML.Excel;
 using System.IO;
+using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
@@ -114,6 +115,23 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 showHighlights,
                 this.EditionDto?.Id,
                 false);
+
+            foreach(var speaker in speakers)
+            {
+                var collaborator = new Collaborator(
+                    speaker.FirstName,
+                    speaker.LastNames,
+                    speaker.Badge,
+                    speaker.ImageUploadDate,
+                    speaker.JobTitleBaseDtos,
+                    speaker.MiniBioBaseDtos,
+                    speaker.EditionAttendeeCollaboratorBaseDto
+                );
+                collaborator.FillRequiredFieldsToPublishToApi();
+                speaker.RequiredFieldsToPublish = collaborator.RequiredFieldsToPublish;
+                speaker.JobTitleBaseDtos = Enumerable.Empty<CollaboratorJobTitleBaseDto>();
+                speaker.MiniBioBaseDtos = Enumerable.Empty<CollaboratorMiniBioBaseDto>();
+            }
 
             var response = DataTablesResponse.Create(request, speakers.TotalItemCount, speakers.TotalItemCount, speakers);
 

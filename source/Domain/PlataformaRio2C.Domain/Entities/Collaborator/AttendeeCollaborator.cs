@@ -86,6 +86,13 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
         }
 
+        /// <summary>Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.</summary>
+        /// <param name="speakerTermsAcceptanceDate">The speaker terms acceptance date</param>
+        public AttendeeCollaborator(DateTimeOffset? speakerTermsAcceptanceDate)
+        {
+            this.SpeakerTermsAcceptanceDate = speakerTermsAcceptanceDate;
+        }
+
         /// <summary>
         /// Updates the specified collaborator type.
         /// </summary>

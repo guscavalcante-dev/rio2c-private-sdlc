@@ -3359,4 +3359,7 @@
   <data name="MiniBioTranslated" xml:space="preserve">
     <value>Mini-bio {0}</value>
   </data>
+  <data name="Publishable" xml:space="preserve">
+    <value>Publishable</value>
+  </data>
 </root>

@@ -5573,6 +5573,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Publicável.
+        /// </summary>
+        public static string Publishable {
+            get {
+                return ResourceManager.GetString("Publishable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Publicada.
         /// </summary>
         public static string Published {
