@@ -710,14 +710,8 @@
     <Compile Include="Dtos\CustomFormSympla.cs" />
     <Compile Include="Dtos\GroupCountryDto.cs" />
     <Compile Include="Dtos\GroupCountrySearchDto.cs" />
-    <Compile Include="Dtos\HeaderDtoSympla.cs" />
-    <Compile Include="Dtos\MessageProducerPlayerDto.cs" />
     <Compile Include="Dtos\ParticipantSympla.cs" />
-    <Compile Include="Dtos\ProjectPlayerAppDto.cs" />
-    <Compile Include="Dtos\ProjectPlayerFilterAppDto.cs" />
     <Compile Include="Dtos\Quizzes\QuizDto.cs" />
-    <Compile Include="Dtos\SendToPlayerAppDto.cs" />
-    <Compile Include="Dtos\UidsDto.cs" />
     <Compile Include="Interfaces\Services\IConfigNetworkRio2CAppService.cs" />
     <Compile Include="Interfaces\Services\ICountryAppService.cs" />
     <Compile Include="Interfaces\Services\IMailAppService.cs" />

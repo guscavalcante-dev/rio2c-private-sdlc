@@ -14,9 +14,10 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Domain.Interfaces;
 
-namespace PlataformaRio2C.Application.CQRS.Queries
+namespace PlataformaRio2C.Application.CQRS.QueryHandlers
 {
     /// <summary>
     /// FindAllConferencesByAttendeeCollaboratorIdQueryHandler

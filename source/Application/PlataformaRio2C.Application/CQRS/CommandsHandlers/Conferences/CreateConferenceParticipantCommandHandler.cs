@@ -16,6 +16,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
@@ -60,7 +61,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                         ac.EditionId == cmd.EditionId);
 
             //TODO: Pegar todas as palestras desse attendeeCollaborator!
-            ASDFASDFASDFA
+
+            var findAllConferencesByAttendeeCollaboratorIdResponseDto = await this.CommandBus.Send(new FindAllConferencesByAttendeeCollaboratorIdQuery(attendeeCollaborator.Id));
 
             #region Initial validations
 
