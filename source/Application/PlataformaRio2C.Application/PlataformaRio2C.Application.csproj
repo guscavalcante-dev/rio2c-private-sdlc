@@ -656,6 +656,9 @@
     <Compile Include="CQRS\Commands\Tracks\DeleteTrack.cs" />
     <Compile Include="CQRS\Commands\Tracks\UpdateTrackMainInformation.cs" />
     <Compile Include="CQRS\Commands\WeConnect\SynchronizeWeConnectPublications.cs" />
+    <Compile Include="CQRS\QueriesAndHandlers\Conferences\FindAllConferencesByAttendeeCollaboratorId\FindAllConferencesByAttendeeCollaboratorIdQuery.cs" />
+    <Compile Include="CQRS\QueriesAndHandlers\Conferences\FindAllConferencesByAttendeeCollaboratorId\FindAllConferencesByAttendeeCollaboratorIdQueryHandler.cs" />
+    <Compile Include="CQRS\QueriesAndHandlers\Conferences\FindAllConferencesByAttendeeCollaboratorId\FindAllConferencesByAttendeeCollaboratorIdResponseDto.cs" />
     <Compile Include="CQRS\QueriesHandlers\Collaborators\FindAllCollaboratorIndustryAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Collaborators\FindAllCollaboratorRoleAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Collaborators\FindAllCollaboratorGenderAsyncQueryHandler.cs" />
@@ -683,7 +686,7 @@
     <Compile Include="CQRS\Queries\Collaborators\FindAllCollaboratorIndustryAsync.cs" />
     <Compile Include="CQRS\Queries\Collaborators\FindAllCollaboratorRoleAsync.cs" />
     <Compile Include="CQRS\QueriesAndHandlers\NegotiationConfigs\GetMaximumAvailableSlotsByEditionId\GetMaximumAvailableSlotsByEditionIdQuery.cs" />
-    <Compile Include="CQRS\QueriesAndHandlers\NegotiationConfigs\GetMaximumAvailableSlotsByEditionId\GetMaximumAvailableSlotsByEditionIdDto.cs" />
+    <Compile Include="CQRS\QueriesAndHandlers\NegotiationConfigs\GetMaximumAvailableSlotsByEditionId\GetMaximumAvailableSlotsByEditionIdResponseDto.cs" />
     <Compile Include="CQRS\Queries\Users\FindAdminAccessControlDto.cs" />
     <Compile Include="CQRS\Queries\Users\FindUserLanguageDto.cs" />
     <Compile Include="CQRS\Queries\Users\FindUserAccessControlDto.cs" />

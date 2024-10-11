@@ -218,10 +218,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.SynchronizeProjectImageLinks(imageLink, userId);
             this.SynchronizeProjectTeaserLinks(teaserLink, userId);
-
-            this.IsDeleted = false;
-            this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.UtcNow;
+            base.SetUpdateDate(userId);
 
             this.IsAdmin = isAdmin;
         }
@@ -231,10 +228,7 @@ namespace PlataformaRio2C.Domain.Entities
         public void FinishProject(int userId)
         {
             this.FinishDate = DateTime.UtcNow;
-
-            this.IsDeleted = false;
-            this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.UtcNow;
+            base.SetUpdateDate(userId);
         }
 
         /// <summary>Determines whether this instance is finished.</summary>
@@ -266,9 +260,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.DeleteProjectBuyerEvaluations(userId);
 
-            this.IsDeleted = true;
-            this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.UtcNow;
+            base.Delete(userId);
 
             this.IsAdmin = isAdmin;
         }

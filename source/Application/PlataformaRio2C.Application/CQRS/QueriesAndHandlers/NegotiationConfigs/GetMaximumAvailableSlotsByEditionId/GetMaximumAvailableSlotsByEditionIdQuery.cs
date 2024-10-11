@@ -14,7 +14,7 @@
 namespace PlataformaRio2C.Application.CQRS.Queries
 {
     /// <summary>GetMaximumAvailableSlotsByEditionIdQuery</summary>
-    public class GetMaximumAvailableSlotsByEditionIdQuery : BaseQuery<GetMaximumAvailableSlotsByEditionIdDto>
+    public class GetMaximumAvailableSlotsByEditionIdQuery : BaseQuery<GetMaximumAvailableSlotsByEditionIdResponseDto>
     {
         public int EditionId { get; private set; }
 

@@ -54,6 +54,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.Uow.BeginTransaction();
 
             var conference = await this.GetConferenceByUid(cmd.ConferenceUid ?? Guid.Empty);
+            var attendeeCollaborator = await this.attendeeCollaboratorRepo.GetAsync(ac =>
+                                        !ac.IsDeleted &&
+                                        ac.Collaborator.Uid == cmd.CollaboratorUid &&
+                                        ac.EditionId == cmd.EditionId);
+
+            //TODO: Pegar todas as palestras desse attendeeCollaborator!
+            ASDFASDFASDFA
 
             #region Initial validations
 
@@ -66,7 +73,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             conference.CreateConferenceParticipant(
-                await this.attendeeCollaboratorRepo.GetAsync(ac => !ac.IsDeleted && ac.Collaborator.Uid == cmd.CollaboratorUid && ac.EditionId == cmd.EditionId),
+                attendeeCollaborator,
                 await this.conferenceParticipantRoleRepo.GetAsync(cpr => !cpr.IsDeleted && cpr.Uid == cmd.ConferenceParticipanteRoleUid),
                 cmd.UserId);
             if (!conference.IsValid())

@@ -113,7 +113,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 Id = cd.Conference.Uid.ToString(),
                 Type = "Conference",
                 Title = cd.GetConferenceTitleDtoByLanguageCode(this.UserInterfaceLanguage)?.ConferenceTitle?.Value,
-                Start = cd.Conference.StartDate,
+                Start = cd.Conference.StartDate.HasValue ? cd.Conference.StartDate.Value : new DateTimeOffset(),
                 End = cd.Conference.EndDate,
                 AllDay = false,
                 Css = cd.IsParticipant == true ? "fc-event-solid-warning fc-event-light" : "fc-event-solid-light fc-event-brand",
