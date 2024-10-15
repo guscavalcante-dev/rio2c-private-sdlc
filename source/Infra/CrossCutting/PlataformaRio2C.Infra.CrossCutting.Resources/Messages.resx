@@ -464,8 +464,7 @@
     <comment>{0} {1} possui um voo agendado para {2}</comment>
   </data>
   <data name="HasBusinessRoundScheduled" xml:space="preserve">
-    <value>{0} {1} já possui uma rodada de negócios agendada para {2}</value>
-    <comment>{0} {1} já possui uma rodada de negócios agendada para {2}</comment>
+    <value>{0} {1} possui rodada de negócios agendada para {2}</value>
   </data>
   <data name="HasConferenceScheduled" xml:space="preserve">
     <value>{0} {1} possui uma palestra agendada para {2}</value>

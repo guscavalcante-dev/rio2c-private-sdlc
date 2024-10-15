@@ -11,18 +11,21 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Dtos;
+using System.Collections.Generic;
+
 namespace PlataformaRio2C.Application.CQRS.Queries
 {
     /// <summary>FindAllConferencesByAttendeeCollaboratorIdQuery</summary>
-    public class FindAllConferencesByAttendeeCollaboratorIdQuery : BaseQuery<FindAllConferencesByAttendeeCollaboratorIdResponseDto>
+    public class FindAllConferencesByAttendeeCollaboratorId : BaseQuery<List<ConferenceDto>>
     {
         public int AttendeeCollaboratorId { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FindAllConferencesByAttendeeCollaboratorIdQuery" /> class.
+        /// Initializes a new instance of the <see cref="FindAllConferencesByAttendeeCollaboratorId" /> class.
         /// </summary>
         /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
-        public FindAllConferencesByAttendeeCollaboratorIdQuery(int attendeeCollaboratorId)
+        public FindAllConferencesByAttendeeCollaboratorId(int attendeeCollaboratorId)
         {
             this.AttendeeCollaboratorId = attendeeCollaboratorId;
         }

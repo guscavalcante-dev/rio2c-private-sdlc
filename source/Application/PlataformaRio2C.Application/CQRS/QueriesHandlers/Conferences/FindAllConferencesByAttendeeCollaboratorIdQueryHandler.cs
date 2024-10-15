@@ -11,10 +11,13 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using PlataformaRio2C.Application.CQRS.Dtos;
 using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.QueryHandlers
@@ -22,8 +25,8 @@ namespace PlataformaRio2C.Application.CQRS.QueryHandlers
     /// <summary>
     /// FindAllConferencesByAttendeeCollaboratorIdQueryHandler
     /// </summary>
-    /// <seealso cref="MediatR.IRequestHandler&lt;PlataformaRio2C.Application.CQRS.Queries.FindAllConferencesByAttendeeCollaboratorIdQuery, System.Int32&gt;" />
-    public class FindAllConferencesByAttendeeCollaboratorIdQueryHandler : IRequestHandler<FindAllConferencesByAttendeeCollaboratorIdQuery, FindAllConferencesByAttendeeCollaboratorIdResponseDto>
+    /// <seealso cref="MediatR.IRequestHandler&lt;PlataformaRio2C.Application.CQRS.Queries.FindAllConferencesByAttendeeCollaboratorId, System.Int32&gt;" />
+    public class FindAllConferencesByAttendeeCollaboratorIdQueryHandler : IRequestHandler<FindAllConferencesByAttendeeCollaboratorId, List<ConferenceDto>>
     {
         private readonly IConferenceRepository repo;
 
@@ -40,10 +43,9 @@ namespace PlataformaRio2C.Application.CQRS.QueryHandlers
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<FindAllConferencesByAttendeeCollaboratorIdResponseDto> Handle(FindAllConferencesByAttendeeCollaboratorIdQuery cmd, CancellationToken cancellationToken)
+        public async Task<List<ConferenceDto>> Handle(FindAllConferencesByAttendeeCollaboratorId cmd, CancellationToken cancellationToken)
         {
-            return new FindAllConferencesByAttendeeCollaboratorIdResponseDto(
-                await this.repo.FindAllByAttendeeCollaboratorIdAsync(cmd.AttendeeCollaboratorId));
+            return await this.repo.FindAllByAttendeeCollaboratorIdAsync(cmd.AttendeeCollaboratorId);
         }
     }
 }

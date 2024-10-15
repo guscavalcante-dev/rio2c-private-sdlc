@@ -105,7 +105,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             // Negotiations checks
-            var scheduledNegotiationsAtThisTime = await this.NegotiationRepo.FindAllScheduleDtosAsync(cmd.EditionId.Value, null, startDatePreview, endDatePreview);
+            var scheduledNegotiationsAtThisTime = await this.NegotiationRepo.FindAllScheduledNegotiationsDtosAsync(cmd.EditionId.Value, null, startDatePreview, endDatePreview);
 
             var hasPlayerScheduledNegotiationsAtThisTime = scheduledNegotiationsAtThisTime.Count(ndto => ndto.ProjectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.AttendeeOrganization.OrganizationId == buyerOrganization.Id) > 0;
             if (hasPlayerScheduledNegotiationsAtThisTime)

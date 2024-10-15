@@ -149,7 +149,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.TheFieldIsRequired, Labels.Date) }, JsonRequestBehavior.AllowGet);
             }
 
-            var negotiationsDtos = await this.negotiationRepo.FindAllScheduleDtosAsync(
+            var negotiationsDtos = await this.negotiationRepo.FindAllScheduledNegotiationsDtosAsync(
                 this.EditionDto.Id,
                 this.UserAccessControlDto?.EditionAttendeeCollaborator?.Id ?? 0,
                 DateTimeOffset.FromUnixTimeSeconds(viewModel.StartDate.Value),
@@ -187,7 +187,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> PrintAudiovisualMeetingsToPdfAsync(AgendaSearchViewModel viewModel)
         {
-            var negotiationsDtos = await this.negotiationRepo.FindAllScheduleDtosAsync(
+            var negotiationsDtos = await this.negotiationRepo.FindAllScheduledNegotiationsDtosAsync(
                 this.EditionDto.Id,
                 this.UserAccessControlDto?.EditionAttendeeCollaborator?.Id ?? 0,
                 DateTimeOffset.FromUnixTimeSeconds(viewModel.StartDate.Value),

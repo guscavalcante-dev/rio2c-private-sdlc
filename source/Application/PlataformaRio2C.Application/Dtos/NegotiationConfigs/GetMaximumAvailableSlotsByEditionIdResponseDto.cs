@@ -11,7 +11,7 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-namespace PlataformaRio2C.Application.CQRS.Queries
+namespace PlataformaRio2C.Application.CQRS.Dtos
 {
     public class GetMaximumAvailableSlotsByEditionIdResponseDto
     {

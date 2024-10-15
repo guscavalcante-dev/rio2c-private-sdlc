@@ -466,7 +466,7 @@
     <comment>{0} {1} possui um voo agendado para {2}</comment>
   </data>
   <data name="HasBusinessRoundScheduled" xml:space="preserve">
-    <value>{0} {1} has already a business round scheduled at {2}</value>
+    <value>{0} {1} has business round scheduled at {2}</value>
     <comment>{0} {1} has already a business round scheduled at {2}</comment>
   </data>
   <data name="HasConferenceScheduled" xml:space="preserve">

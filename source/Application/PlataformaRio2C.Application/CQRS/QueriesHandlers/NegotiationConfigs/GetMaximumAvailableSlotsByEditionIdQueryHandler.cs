@@ -15,15 +15,17 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using PlataformaRio2C.Application.CQRS.Dtos;
+using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Domain.Interfaces;
 
-namespace PlataformaRio2C.Application.CQRS.Queries
+namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
 {
     /// <summary>
     /// GetMaximumAvailableSlotsByEditionIdQueryHandler
     /// </summary>
-    /// <seealso cref="MediatR.IRequestHandler&lt;PlataformaRio2C.Application.CQRS.Queries.GetMaximumAvailableSlotsByEditionIdQuery, System.Int32&gt;" />
-    public class GetMaximumAvailableSlotsByEditionIdQueryHandler : IRequestHandler<GetMaximumAvailableSlotsByEditionIdQuery, GetMaximumAvailableSlotsByEditionIdResponseDto>
+    /// <seealso cref="MediatR.IRequestHandler&lt;PlataformaRio2C.Application.CQRS.Queries.GetMaximumAvailableSlotsByEditionId, System.Int32&gt;" />
+    public class GetMaximumAvailableSlotsByEditionIdQueryHandler : IRequestHandler<GetMaximumAvailableSlotsByEditionId, GetMaximumAvailableSlotsByEditionIdResponseDto>
     {
         private readonly INegotiationConfigRepository repo;
 
@@ -40,7 +42,7 @@ namespace PlataformaRio2C.Application.CQRS.Queries
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<GetMaximumAvailableSlotsByEditionIdResponseDto> Handle(GetMaximumAvailableSlotsByEditionIdQuery cmd, CancellationToken cancellationToken)
+        public async Task<GetMaximumAvailableSlotsByEditionIdResponseDto> Handle(GetMaximumAvailableSlotsByEditionId cmd, CancellationToken cancellationToken)
         {
             var negotiationConfigDtos = await this.repo.FindAllByEditionIdAsync(cmd.EditionId);
 

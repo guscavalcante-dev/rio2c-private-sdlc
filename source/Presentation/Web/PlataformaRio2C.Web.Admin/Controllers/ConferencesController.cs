@@ -508,7 +508,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
             }
 
-            ModelState.Clear();
+            //ModelState.Clear();
 
             return Json(new
             {
