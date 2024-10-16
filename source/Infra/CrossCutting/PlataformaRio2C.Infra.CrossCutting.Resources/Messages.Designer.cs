@@ -2272,24 +2272,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
                 return ResourceManager.GetString("SwitchTo", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///   Looks up a localized string similar to O campo &quot;Ementa EN&quot;.
-        /// </summary>
-        public static string SynopsisIsRequiredInEnUs {
-            get {
-                return ResourceManager.GetString("SynopsisIsRequiredInEnUs", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to O campo &quot;Ementa PT&quot;.
-        /// </summary>
-        public static string SynopsisIsRequiredInPtBr {
-            get {
-                return ResourceManager.GetString("SynopsisIsRequiredInPtBr", resourceCulture);
-            }
-        }
         
         /// <summary>
         ///   Looks up a localized string similar to texto em português | texto em inglês.

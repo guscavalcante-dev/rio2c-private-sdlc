@@ -746,12 +746,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return RedirectToAction("TermsAcceptance", "Projects", new { id });
             }
 
-            // Check if player submitted the max number of projects
+            // Check if producer submitted the max number of projects
             var firstAttendeeOrganizationCreated = this.UserAccessControlDto.GetFirstAttendeeOrganizationCreated();
             if (firstAttendeeOrganizationCreated != null)
             {
-                var projectsCount = this.projectRepo.Count(p => p.SellerAttendeeOrganization.Uid == firstAttendeeOrganizationCreated.Uid
-                                                                && !p.IsDeleted);
+                var projectsCount = this.projectRepo.Count(p => p.SellerAttendeeOrganization.Uid == firstAttendeeOrganizationCreated.Uid && !p.IsDeleted);
                 var projectMaxCount = this.EditionDto?.AttendeeOrganizationMaxSellProjectsCount ?? 0;
                 if (projectsCount >= projectMaxCount)
                 {

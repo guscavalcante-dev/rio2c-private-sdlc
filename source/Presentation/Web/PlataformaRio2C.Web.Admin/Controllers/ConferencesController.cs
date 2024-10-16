@@ -542,6 +542,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     this.EditionDto.Uid,
                     this.UserInterfaceLanguage);
                 result = await this.CommandBus.Send(cmd);
+
                 if (!result.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);

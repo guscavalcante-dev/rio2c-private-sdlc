@@ -6,14 +6,14 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 10-01-2024
 // ***********************************************************************
-// <copyright file="GetMaximumAvailableSlotsByEditionIdDto.cs" company="Softo">
+// <copyright file="GetMaximumAvailableSlotsByEditionIdResponseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-namespace PlataformaRio2C.Application.CQRS.Queries
+namespace PlataformaRio2C.Application.CQRS.Dtos
 {
-    public class GetMaximumAvailableSlotsByEditionIdDto
+    public class GetMaximumAvailableSlotsByEditionIdResponseDto
     {
         /// <value>
         /// The maximum automatic slots available by edition.
@@ -36,12 +36,12 @@ namespace PlataformaRio2C.Application.CQRS.Queries
         public int MaximumAvailableSlotsByPlayer { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetMaximumAvailableSlotsByEditionIdDto"/> class.
+        /// Initializes a new instance of the <see cref="GetMaximumAvailableSlotsByEditionIdResponseDto"/> class.
         /// </summary>
         /// <param name="maximumAutomaticSlotsAvailableByEdition">The maximum automatic slots available by edition.</param>
         /// <param name="maximumManualSlotsAvailableByEdition">The maximum manual slots available by edition.</param>
         /// <param name="maximumAvailableSlotsByPlayer">The maximum available slots by player.</param>
-        public GetMaximumAvailableSlotsByEditionIdDto(
+        public GetMaximumAvailableSlotsByEditionIdResponseDto(
             int maximumAutomaticSlotsAvailableByEdition,
             int maximumManualSlotsAvailableByEdition,
             int maximumAvailableSlotsByPlayer)

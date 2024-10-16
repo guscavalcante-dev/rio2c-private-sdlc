@@ -11,18 +11,20 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Application.CQRS.Dtos;
+
 namespace PlataformaRio2C.Application.CQRS.Queries
 {
     /// <summary>GetMaximumAvailableSlotsByEditionIdQuery</summary>
-    public class GetMaximumAvailableSlotsByEditionIdQuery : BaseQuery<GetMaximumAvailableSlotsByEditionIdDto>
+    public class GetMaximumAvailableSlotsByEditionId : BaseQuery<GetMaximumAvailableSlotsByEditionIdResponseDto>
     {
         public int EditionId { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetMaximumAvailableSlotsByEditionIdQuery" /> class.
+        /// Initializes a new instance of the <see cref="GetMaximumAvailableSlotsByEditionId" /> class.
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
-        public GetMaximumAvailableSlotsByEditionIdQuery(int editionId)
+        public GetMaximumAvailableSlotsByEditionId(int editionId)
         {
             this.EditionId = editionId;
         }

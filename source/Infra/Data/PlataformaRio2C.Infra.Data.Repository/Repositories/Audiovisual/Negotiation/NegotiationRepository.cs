@@ -594,13 +594,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             }
         }
 
-        /// <summary>Finds all schedule dtos asynchronous.</summary>
+        /// <summary>
+        /// Finds all scheduled negotiations dtos asynchronous.
+        /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
         /// <param name="startDate">The start date.</param>
         /// <param name="endDate">The end date.</param>
         /// <returns></returns>
-        public Task<List<NegotiationDto>> FindAllScheduleDtosAsync(int editionId, int? attendeeCollaboratorId, DateTimeOffset startDate, DateTimeOffset endDate)
+        public Task<List<NegotiationDto>> FindAllScheduledNegotiationsDtosAsync(int editionId, int? attendeeCollaboratorId, DateTimeOffset startDate, DateTimeOffset endDate)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId, false)

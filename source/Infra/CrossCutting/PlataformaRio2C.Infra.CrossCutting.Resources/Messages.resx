@@ -677,6 +677,9 @@
     <value>Senha de confirmação incorreta.</value>
     <comment>Senha de confirmação incorreta.</comment>
   </data>
+  <data name="PendingFieldsToPublish" xml:space="preserve">
+    <value>Preencha os campos obrigatórios antes de publicar</value>
+  </data>
   <data name="PlayerDataSuccessfullyUpdated" xml:space="preserve">
     <value>Dados do player '{0}' atualizados com sucesso!</value>
   </data>
@@ -1040,6 +1043,9 @@
     <value>Mensagem indefinida.</value>
     <comment>Mensagem indefinida.</comment>
   </data>
+  <data name="UrlIsInvalid" xml:space="preserve">
+    <value>O campo '{0}' deve ser uma Url válida</value>
+  </data>
   <data name="UserNotFound" xml:space="preserve">
     <value>Usuário não encontrado</value>
   </data>
@@ -1063,6 +1069,9 @@
   <data name="WeFoundAndError" xml:space="preserve">
     <value>Encontramos um erro ao realizar essa operação. Já estamos trabalhando para resolvê-lo.</value>
     <comment>Encontramos um erro ao realizar essa operação. Já estamos trabalhando para resolvê-lo.</comment>
+  </data>
+  <data name="WeFoundAnError" xml:space="preserve">
+    <value />
   </data>
   <data name="WelcomeEmailMessage1" xml:space="preserve">
     <value>A sua credencial foi adquirida com sucesso!</value>
@@ -1132,14 +1141,5 @@
   </data>
   <data name="ZipCodeIsRequired" xml:space="preserve">
     <value>Cep obrigatório.</value>
-  </data>
-  <data name="WeFoundAnError" xml:space="preserve">
-    <value />
-  </data>
-  <data name="UrlIsInvalid" xml:space="preserve">
-    <value>O campo '{0}' deve ser uma Url válida</value>
-  </data>
-  <data name="PendingFieldsToPublish" xml:space="preserve">
-    <value>Preencha os campos obrigatórios antes de publicar</value>
   </data>
 </root>

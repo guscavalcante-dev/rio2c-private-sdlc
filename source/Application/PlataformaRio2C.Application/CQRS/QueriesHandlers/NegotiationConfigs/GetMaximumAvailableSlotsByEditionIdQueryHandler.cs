@@ -15,15 +15,17 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using PlataformaRio2C.Application.CQRS.Dtos;
+using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Domain.Interfaces;
 
-namespace PlataformaRio2C.Application.CQRS.Queries
+namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
 {
     /// <summary>
     /// GetMaximumAvailableSlotsByEditionIdQueryHandler
     /// </summary>
-    /// <seealso cref="MediatR.IRequestHandler&lt;PlataformaRio2C.Application.CQRS.Queries.GetMaximumAvailableSlotsByEditionIdQuery, System.Int32&gt;" />
-    public class GetMaximumAvailableSlotsByEditionIdQueryHandler : IRequestHandler<GetMaximumAvailableSlotsByEditionIdQuery, GetMaximumAvailableSlotsByEditionIdDto>
+    /// <seealso cref="MediatR.IRequestHandler&lt;PlataformaRio2C.Application.CQRS.Queries.GetMaximumAvailableSlotsByEditionId, System.Int32&gt;" />
+    public class GetMaximumAvailableSlotsByEditionIdQueryHandler : IRequestHandler<GetMaximumAvailableSlotsByEditionId, GetMaximumAvailableSlotsByEditionIdResponseDto>
     {
         private readonly INegotiationConfigRepository repo;
 
@@ -40,7 +42,7 @@ namespace PlataformaRio2C.Application.CQRS.Queries
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<GetMaximumAvailableSlotsByEditionIdDto> Handle(GetMaximumAvailableSlotsByEditionIdQuery cmd, CancellationToken cancellationToken)
+        public async Task<GetMaximumAvailableSlotsByEditionIdResponseDto> Handle(GetMaximumAvailableSlotsByEditionId cmd, CancellationToken cancellationToken)
         {
             var negotiationConfigDtos = await this.repo.FindAllByEditionIdAsync(cmd.EditionId);
 
@@ -56,7 +58,7 @@ namespace PlataformaRio2C.Application.CQRS.Queries
                     .Any(nrc => nrc.NegotiationRoomConfig.CountManualTables > 0))
                     .ToList();
 
-            return new GetMaximumAvailableSlotsByEditionIdDto(
+            return new GetMaximumAvailableSlotsByEditionIdResponseDto(
                 automaticTablesNegotiationConfigDtos.Sum(dto => dto.NegotiationConfig.GetMaxAutomaticSlotsCountByEdition()),
                 manualTablesNegotiationConfigDtos.Sum(dto => dto.NegotiationConfig.GetMaxManualSlotsCountByEdition()),
                 negotiationConfigDtos.Sum(dto => dto.NegotiationConfig.GetMaxSlotsCountByPlayer())

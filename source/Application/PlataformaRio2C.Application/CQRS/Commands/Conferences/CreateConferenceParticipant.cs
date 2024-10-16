@@ -36,6 +36,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public List<ConferenceParticipantRoleDto> ConferenceParticipantRoleDtos { get; private set; }
 
+        public Guid? InitialCollaboratorUid { get; set; }
+        public string InitialCollaboratorName { get; set; }
+
         /// <summary>Initializes a new instance of the <see cref="CreateConferenceParticipant"/> class.</summary>
         /// <param name="conferenceUid">The conference uid.</param>
         /// <param name="conferenceParticipantRoleDtos">The conference participant role dtos.</param>

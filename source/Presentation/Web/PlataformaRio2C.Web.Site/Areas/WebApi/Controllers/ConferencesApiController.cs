@@ -149,7 +149,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     Date = c.Conference.StartDate?.ToBrazilTimeZone().ToString("yyyy-MM-dd"),
                     StartTime = c.Conference.StartDate?.ToBrazilTimeZone().ToString("HH:mm"),
                     EndTime = c.Conference.EndDate?.ToBrazilTimeZone().ToString("HH:mm"),
-                    DurationMinutes = (int) ((c.Conference?.EndDate - c.Conference?.StartDate).TotalMinutes),
+                    DurationMinutes = (int)((c.Conference?.EndDate - c.Conference?.StartDate)?.TotalMinutes ?? 0),
                     IsDeleted = c.Conference.IsDeleted,
                     Room = c.RoomDto != null ? new RoomBaseApiResponse
                     {
@@ -320,8 +320,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                            collaboratorApiDto.GetConferenceSynopsisDtoByLanguageCode(defaultLanguage?.Code)?.ConferenceSynopsis?.Value?.Trim(),
                 Date = collaboratorApiDto.Conference.StartDate?.ToBrazilTimeZone().ToString("yyyy-MM-dd"),
                 StartTime = collaboratorApiDto.Conference.StartDate?.ToBrazilTimeZone().ToString("HH:mm"),
-                EndTime = collaboratorApiDto.Conference?.EndDate.ToBrazilTimeZone().ToString("HH:mm"),
-                DurationMinutes = (int)((collaboratorApiDto.Conference?.EndDate - collaboratorApiDto.Conference?.StartDate).TotalMinutes),
+                EndTime = collaboratorApiDto.Conference?.EndDate?.ToBrazilTimeZone().ToString("HH:mm"),
+                DurationMinutes = (int)(collaboratorApiDto.Conference?.EndDate - collaboratorApiDto.Conference?.StartDate)?.TotalMinutes,
                 Room = collaboratorApiDto.RoomDto != null ? new RoomBaseApiResponse
                 {
                     Uid = collaboratorApiDto.RoomDto.Room.Uid,
