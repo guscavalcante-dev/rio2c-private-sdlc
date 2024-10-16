@@ -508,7 +508,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
             }
 
-            //ModelState.Clear();
+            ModelState.Clear();
 
             return Json(new
             {
@@ -542,6 +542,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     this.EditionDto.Uid,
                     this.UserInterfaceLanguage);
                 result = await this.CommandBus.Send(cmd);
+
                 if (!result.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);

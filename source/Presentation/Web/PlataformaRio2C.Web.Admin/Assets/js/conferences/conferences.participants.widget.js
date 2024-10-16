@@ -95,22 +95,21 @@ var ConferencesParticipantsWidget = function () {
     };
 
     var enableConferenceParticipantChangeEvent = function () {
-        //var element = $('#CollaboratorUid');
+        var element = $('#CollaboratorUid');
 
-        //element.not('.change-event-enabled').on('change', function () {
-        //    var collaboratorValue = $('#CollaboratorUid').val();
-        //    var collaboratorName = $('#CollaboratorUid option:selected').text();
+        element.not('.change-event-enabled').on('change', function () {
+            var collaboratorValue = $('#CollaboratorUid').val();
+            var collaboratorName = $('#CollaboratorUid option:selected').text();
 
-        //    // Verifica se o campo tem algum valor antes de definir em InitialCollaboratorUid
-        //    if (collaboratorValue) {
-        //        $('#InitialCollaboratorUid').val(collaboratorValue);
-        //        $('#InitialCollaboratorName').val(collaboratorName);
-        //    }
-        //});
+            if (collaboratorValue) {
+                $('#InitialCollaboratorUid').val(collaboratorValue);
+                $('#InitialCollaboratorName').val(collaboratorName);
+            }
+        });
 
-        //element.addClass('change-event-enabled');
+        element.addClass('change-event-enabled');
 
-        //element.change();
+        element.change();
     };
 
     var showCreateModal = function () {

@@ -924,7 +924,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} {1} possui rodada de negócios agendada para {2}.
+        ///   Looks up a localized string similar to {0} {1} já possui uma rodada de negócios agendada para {2}.
         /// </summary>
         public static string HasBusinessRoundScheduled {
             get {

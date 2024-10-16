@@ -466,7 +466,7 @@
     <comment>{0} {1} possui um voo agendado para {2}</comment>
   </data>
   <data name="HasBusinessRoundScheduled" xml:space="preserve">
-    <value>{0} {1} has business round scheduled at {2}</value>
+    <value>{0} {1} has already a business round scheduled at {2}</value>
     <comment>{0} {1} has already a business round scheduled at {2}</comment>
   </data>
   <data name="HasConferenceScheduled" xml:space="preserve">
@@ -683,6 +683,9 @@
   <data name="PasswordConfirmationDoesNotMatch" xml:space="preserve">
     <value>Incorrect confirmation password.</value>
     <comment>Senha de confirmação incorreta.</comment>
+  </data>
+  <data name="PendingFieldsToPublish" xml:space="preserve">
+    <value>Fill in the required fields before publishing</value>
   </data>
   <data name="PlayerDataSuccessfullyUpdated" xml:space="preserve">
     <value>Player '{0}''s update successful!</value>
@@ -1047,6 +1050,9 @@
     <value>Undefined message.</value>
     <comment>Mensagem indefinida.</comment>
   </data>
+  <data name="UrlIsInvalid" xml:space="preserve">
+    <value>The field '{0}' must be a valid URL.</value>
+  </data>
   <data name="UserNotFound" xml:space="preserve">
     <value>User not found</value>
   </data>
@@ -1139,11 +1145,5 @@
   </data>
   <data name="ZipCodeIsRequired" xml:space="preserve">
     <value>Zip code required.</value>
-  </data>
-  <data name="UrlIsInvalid" xml:space="preserve">
-    <value>The field '{0}' must be a valid URL.</value>
-  </data>
-  <data name="PendingFieldsToPublish" xml:space="preserve">
-    <value>Fill in the required fields before publishing</value>
   </data>
 </root>

@@ -3,6 +3,7 @@
     <div class="form-group col-md-8">
         @Html.LabelFor(m => m.CollaboratorUid, new { @class = "control-label" })
         @Html.HiddenFor(m => m.InitialCollaboratorUid)
+        @Html.HiddenFor(m => m.InitialCollaboratorName)
         @Html.DropDownListFor(m => m.CollaboratorUid, Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control enable-collaborator-select2" })
         @Html.ValidationMessageFor(m => m.CollaboratorUid, "", new { @class = "text-danger" })
     </div>
