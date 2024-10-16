@@ -1072,13 +1072,11 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             string result = "";
             foreach (string word in words)
             {
-                result +=
-                    word.Substring(0, 1).ToUpper() +
-                    word.Substring(1) +
-                    (removeSpaces ? "" : " ");
+                // Capitalize the first letter and make the rest lowercase
+                result += char.ToUpper(word[0]) + word.Substring(1).ToLower() + (removeSpaces ? "" : " ");
             }
 
-            return result;
+            return removeSpaces ? result : result.TrimEnd(); // Remove trailing space
         }
     }
 }
