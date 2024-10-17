@@ -321,7 +321,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 Date = collaboratorApiDto.Conference.StartDate?.ToBrazilTimeZone().ToString("yyyy-MM-dd"),
                 StartTime = collaboratorApiDto.Conference.StartDate?.ToBrazilTimeZone().ToString("HH:mm"),
                 EndTime = collaboratorApiDto.Conference?.EndDate?.ToBrazilTimeZone().ToString("HH:mm"),
-                DurationMinutes = (int)(collaboratorApiDto.Conference?.EndDate - collaboratorApiDto.Conference?.StartDate)?.TotalMinutes,
+                DurationMinutes = (int)((collaboratorApiDto.Conference?.EndDate - collaboratorApiDto.Conference?.StartDate)?.TotalMinutes ?? 0),
                 Room = collaboratorApiDto.RoomDto != null ? new RoomBaseApiResponse
                 {
                     Uid = collaboratorApiDto.RoomDto.Room.Uid,

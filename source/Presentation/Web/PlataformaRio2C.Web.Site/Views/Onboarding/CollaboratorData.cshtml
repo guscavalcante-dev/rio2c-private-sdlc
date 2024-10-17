@@ -40,9 +40,23 @@
                                                 <h3 class="kt-section__title mb-0">@Labels.JobTitle</h3>
                                                 @Html.ValidationMessage("JobTitles", new { @class = "text-danger" })
                                                 <div class="kt-section__content mt-3">
-                                                    @Html.EditorFor(m => m.JobTitles, new { id = "vasco" })
+                                                    <div class="row">
+                                                        @Html.EditorFor(m => m.JobTitles, new { id = "vasco" })
+                                                    </div>
                                                 </div>
                                             </div>
+                                            @if (isSpeaker)
+                                            {
+                                                <div class="kt-section">
+                                                    <div class="row">
+                                                        <div class="form-group col-md-12 col-xl-12">
+                                                            @Html.LabelFor(m => m.CompanyName, Labels.EnterpriseName, new { @class = "control-label" })
+                                                            @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
+                                                            @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
                                         </div>
                                     </div>
                                     <div class="kt-section">
