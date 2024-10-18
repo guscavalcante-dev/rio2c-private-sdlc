@@ -3358,4 +3358,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Publishable" xml:space="preserve">
     <value>Publicável</value>
   </data>
+  <data name="ShowNotPublishableToApi" xml:space="preserve">
+    <value>Exibir apenas palestrantes com pendências</value>
+  </data>
 </root>

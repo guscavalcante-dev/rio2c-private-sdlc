@@ -151,6 +151,7 @@ var SpeakersDataTableWidget = function () {
                     d.showAllEditions = $('#ShowAllEditions').prop('checked');
                     d.showAllParticipants = $('#ShowAllParticipants').prop('checked');
                     d.showHighlights = $('#ShowHighlights').prop('checked');
+                    d.showNotPublishableToApi = $('#ShowNotPublishableToApi').prop('checked');
                 },
                 dataFilter: function (data) {
                     var jsonReturned = jQuery.parseJSON(data);
@@ -379,6 +380,7 @@ var SpeakersDataTableWidget = function () {
         jsonParameters.showAllEditions = $('#ShowAllEditions').prop('checked');
         jsonParameters.showAllParticipants = $('#ShowAllParticipants').prop('checked');
         jsonParameters.showHighlights = $('#ShowHighlights').prop('checked');
+        jsonParameters.showNotPublishableToApi = $('#ShowNotPublishableToApi').prop('checked');
 
         //TODO: Needs to upgrade DataTables from current v1.10.19 to v2 to get columns names and send 'jsonParameters.sortColumns'
         //var table = $(tableElementId).DataTable();

@@ -100,10 +100,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
         /// <param name="showHighlights">if set to <c>true</c> [show highlights].</param>
+        /// <param name="showNotPublishableToApi">if set to <c>true</c> [show not publishable to api].</param>
         /// <returns></returns>
         [HttpGet]
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
-        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllParticipants, bool? showHighlights)
+        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllParticipants, bool? showHighlights, bool? showNotPublishableToApi)
         {
             var speakers = await this.collaboratorRepo.FindAllSpeakersByDataTable(
                 request.Start / request.Length,
@@ -114,6 +115,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 showAllParticipants,
                 showHighlights,
                 this.EditionDto?.Id,
+                showNotPublishableToApi,
                 false);
 
             foreach(var speaker in speakers)
@@ -149,10 +151,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
         /// <param name="showHighlights">The show highlights.</param>
+        /// <param name="showNotPublishableToApi">if set to <c>true</c> [show not publishable to api].</param>
         /// <returns></returns>
         [HttpGet]
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
-        public async Task<ActionResult> ExportToExcel(string searchKeywords, bool showAllEditions, bool showAllParticipants, bool? showHighlights)
+        public async Task<ActionResult> ExportToExcel(string searchKeywords, bool showAllEditions, bool showAllParticipants, bool? showHighlights, bool? showNotPublishableToApi)
         {
             string fileName = Labels.SpeakersReport + "_" + DateTime.UtcNow.ToStringFileNameTimestamp();
             string filePath = Path.Combine(Path.GetTempPath(), fileName + ".xlsx");
@@ -168,6 +171,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                      showAllParticipants,
                      showHighlights,
                      this.EditionDto?.Id,
+                     showNotPublishableToApi,
                      true);
 
                 using (var workbook = new XLWorkbook())

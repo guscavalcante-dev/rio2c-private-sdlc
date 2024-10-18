@@ -80,6 +80,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 false,
                 false,
                 cmd.EditionId ?? 0,
+                false,
                 exportToExcel:true);
 
             #region Initial validations

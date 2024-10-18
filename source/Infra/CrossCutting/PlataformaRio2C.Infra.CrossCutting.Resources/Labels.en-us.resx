@@ -3362,4 +3362,7 @@
   <data name="Publishable" xml:space="preserve">
     <value>Publishable</value>
   </data>
+  <data name="ShowNotPublishableToApi" xml:space="preserve">
+    <value>Show not publisable</value>
+  </data>
 </root>

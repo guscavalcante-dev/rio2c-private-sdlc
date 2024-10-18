@@ -221,6 +221,29 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the by not publishable.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="showNotPublishableToApi">The show not publishable.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> FindNotPublishableToApi(this IQueryable<Collaborator> query, int? editionId, bool? showNotPublishableToApi)
+        {
+            if (showNotPublishableToApi == true)
+            {
+                query = query
+                    .Where(o =>
+                        o.ImageUploadDate == null
+                        || o.FirstName == null
+                        || o.LastNames == null
+                        || o.Badge == null
+                        || o.AttendeeCollaborators.Any(ac => !ac.IsDeleted && ac.EditionId == editionId && ac.SpeakerTermsAcceptanceDate == null)
+                        || o.JobTitles.Any(jt => !jt.IsDeleted && jt.Value == null)
+                        || o.MiniBios.Any(mb => !mb.IsDeleted && mb.Value == null)
+                    );
+            }
+            return query;
+        }
+
         /// <summary>Finds the by API highlights.</summary>
         /// <param name="query">The query.</param>
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
@@ -2601,6 +2624,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             bool showAllParticipants,
             bool? showHighlights,
             int? editionId,
+            bool? showNotPublishableToApi,
             bool exportToExcel = false)
         {
             string[] collaboratorTypeNames = new string[] { CollaboratorType.Speaker.Name };
@@ -2610,7 +2634,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery(true)
                                 .FindByKeywords(keywords, editionId)
                                 .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, showAllEditions, showAllParticipants, editionId)
-                                .FindByHighlights(collaboratorTypeNames, showHighlights);
+                                .FindByHighlights(collaboratorTypeNames, showHighlights)
+                                .FindNotPublishableToApi(editionId, showNotPublishableToApi);
 
             IPagedList<CollaboratorDto> collaboratorDtos;
 

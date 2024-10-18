@@ -6577,6 +6577,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exibir não publicáveis.
+        /// </summary>
+        public static string ShowNotPublishableToApi {
+            get {
+                return ResourceManager.GetString("ShowNotPublishableToApi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exibir rodadas de negócio.
         /// </summary>
         public static string ShowOneToOneMeetings {
