@@ -43,13 +43,34 @@
                                                     <small><i class="flaticon-profile"></i> @Labels.SeeDescription</small>
                                                 </a>
                                             </span>
+                                            @{
+                                                double percentage = matchAttendeeOrganizationDto.GetDemandPercentage(ViewBag.ProjectsCount);
+                                                var labelDemand = matchAttendeeOrganizationDto.GetDemandLabel(ViewBag.ProjectsCount);
+                                            }
+                                            <div class="mt-2" title="@string.Format(Labels.PlayerDemandPercentage, labelDemand[0], percentage)">
+                                                <div class="kt-widget__text">
+                                                    @Labels.PlayerDemand: <span class="@labelDemand[1]">@labelDemand[0]</span>
+                                                </div>
+                                                <div class="kt-widget__progress d-flex">
+                                                    <div class="progress progress-sm flex-grow-1 align-self-center mr-2">
+                                                        <div class="progress-bar @labelDemand[2]"
+                                                            role="progressbar"
+                                                            style="width: @(percentage)%;">
+                                                        </div>
+                                                    </div>
+                                                    <div class="kt-widget__text">
+                                                        @(percentage)%
+                                                    </div>
+                                                </div>
+                                            </div>
                                             @if (matchAttendeeOrganizationDto?.Organization?.IsVirtualMeeting != null)
                                             {
                                                 var isVirtualMeeting = matchAttendeeOrganizationDto.Organization.IsVirtualMeeting == true;
                                                 var tooltipTile = string.Format(Messages.PlayerMeetingPreference, (isVirtualMeeting ? Labels.RemoteF : Labels.Presential).ToLowerInvariant());
 
                                                 <div class="kt-widget__subhead pt-0 mt-0">
-                                                    <span class="kt-badge kt-badge--inline kt-badge--warning mt-2 kt-font-boldest" data-toggle="tooltip" data-placement="right" title="@tooltipTile" style="cursor: pointer;">
+                                                    <span class="d-block">@Labels.MeetingType:</span>
+                                                    <span class="kt-badge kt-badge--inline kt-badge--warning mt-1 kt-font-boldest" data-toggle="tooltip" data-placement="right" title="@tooltipTile" style="cursor: pointer;">
                                                         @(isVirtualMeeting ? Labels.Remote : Labels.Presential)
                                                     </span>
                                                 </div>

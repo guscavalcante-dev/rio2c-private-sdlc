@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Dtos
@@ -23,6 +24,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public Organization Organization { get; set; }
         public Edition Edition { get; set; }
         public IEnumerable<AttendeeCollaboratorDto> AttendeeCollaboratorDtos { get; set; }
+        public int ProjectBuyerEvaluationsCount { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeOrganizationDto"/> class.</summary>
         public AttendeeOrganizationDto()
@@ -46,5 +48,36 @@ namespace PlataformaRio2C.Domain.Dtos
         }
 
         #endregion
+
+        public double GetDemandPercentage(int projectsCount = 0)
+        {
+            return (double) projectsCount > 0
+                ? (this.ProjectBuyerEvaluationsCount / projectsCount * 100)
+                : 0;
+        }
+
+        public List<string> GetDemandLabel(int projectsCount = 0)
+        {
+            var percentage = this.GetDemandPercentage(projectsCount);
+            var demand = new List<string>();
+            if (percentage <= 30)
+            {
+                demand.Add(Labels.Low);
+                demand.Add("text-success");
+                demand.Add("kt-bg-brand");
+                return demand;
+            }
+            if (percentage <= 85)
+            {
+                demand.Add(Labels.Medium);
+                demand.Add("text-warning");
+                demand.Add("kt-bg-warning");
+                return demand;
+            }
+            demand.Add(Labels.High);
+            demand.Add("text-danger");
+            demand.Add("kt-bg-danger");
+            return demand;
+        }
     }
 }

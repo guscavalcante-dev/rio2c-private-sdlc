@@ -68,6 +68,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         IEnumerable<AudiovisualProjectSubmissionDto> FindAudiovisualProjectSubmissionDtosByFilter(string keywords, List<Guid?> interestUids, int editionId, bool isPitching, List<Guid> targetAudienceUids, DateTime? startDate, DateTime? endDate, bool showAllEditions = false);
         Task<IPagedList<AudiovisualProjectSubmissionDto>> FindAudiovisualProjectSubmissionDtosByFilterAndByPageAsync(string keywords, List<Guid?> interestUids, int editionId, bool isPitching, List<Guid> targetAudienceUids, DateTime? startDate, DateTime? endDate, int page, int pageSize, bool showAllEditions = false);
         Task<List<AudiovisualProjectSubmissionDto>> FindAudiovisualSubscribedProjectsDtosByFilterAsync(string keywords, List<Guid?> interestUids, int editionId, bool isPitching, List<Guid> targetAudienceUids, DateTime? startDate, DateTime? endDate, bool showAllEditions = false);
+        Task<int> CountProjectsByEditionId(int editionId, bool showAllEditions = false);
 
         #endregion
 

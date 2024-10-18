@@ -2062,6 +2062,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query.CountAsync();
         }
 
+        /// <summary>
+        /// Counts all projects by edition id or in all editions.
+        /// </summary>
+        /// <param name="editionId"></param>
+        /// <param name="showAllEditions"></param>
+        /// <returns></returns>
+        public async Task<int> CountProjectsByEditionId(int editionId, bool showAllEditions = false)
+        {
+            var query = this.GetBaseQuery()
+                .FindByEditionId(editionId, showAllEditions);
+
+            return await query.CountAsync();
+        }
+
         #endregion
 
         #region Audivisual Projects Submissions Report
