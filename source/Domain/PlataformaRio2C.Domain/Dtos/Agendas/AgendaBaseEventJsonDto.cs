@@ -21,7 +21,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public string Id { get; set; }
         public string Type { get; set; }
         public string Title { get; set; }
-        public DateTimeOffset Start { get; set; }
+        public DateTimeOffset? Start { get; set; }
         public DateTimeOffset? End { get; set; }
         public bool AllDay { get; set; }
         public string Css { get; set; }

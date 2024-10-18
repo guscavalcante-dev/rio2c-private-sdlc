@@ -60,6 +60,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(300, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Youtube { get; set; }
 
+        [Display(Name = "EnterpriseName", ResourceType = typeof(Labels))]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string CompanyName { get; set; }
+
         #region CollaboratorIndustry
 
         [Display(Name = "CollaboratorIndustry", ResourceType = typeof(Labels))]
