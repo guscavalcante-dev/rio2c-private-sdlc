@@ -141,6 +141,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>
+        /// Finds the by buyer attendee organization identifier.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="buyerAttendeeOrganizationUid">The buyer attendee organization identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<ProjectBuyerEvaluation> FindByBuyerAttendeeOrganizationUid(this IQueryable<ProjectBuyerEvaluation> query, Guid buyerAttendeeOrganizationUid)
+        {
+            query = query.Where(pbe => pbe.BuyerAttendeeOrganization.Uid == buyerAttendeeOrganizationUid);
+
+            return query;
+        }
     }
 
     #endregion
@@ -329,6 +342,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                });
 
             return await query.FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Counts the negotiation accepted by buyer attendee organization uid asynchronous.
+        /// </summary>
+        /// <param name="buyerAttendeeOrganizationUid">The buyer attendee organization uid.</param>
+        /// <returns></returns>
+        public async Task<int> CountNegotiationsAcceptedByBuyerAttendeeOrganizationUidAsync(Guid buyerAttendeeOrganizationUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByProjectEvaluationStatusUid(ProjectEvaluationStatus.Accepted.Uid)
+                                .FindByBuyerAttendeeOrganizationUid(buyerAttendeeOrganizationUid)
+                                .IsProjectFinished();
+
+            return await query.CountAsync();
         }
     }
 }

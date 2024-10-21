@@ -656,6 +656,7 @@
     <Compile Include="CQRS\Commands\Tracks\DeleteTrack.cs" />
     <Compile Include="CQRS\Commands\Tracks\UpdateTrackMainInformation.cs" />
     <Compile Include="CQRS\Commands\WeConnect\SynchronizeWeConnectPublications.cs" />
+    <Compile Include="CQRS\QueriesHandlers\ProjectBuyerEvaluations\CountNegotiationsAcceptedByBuyerAttendeeOrganizationUidQueryHandler.cs" />
     <Compile Include="CQRS\Queries\Conferences\FindAllConferencesByAttendeeCollaboratorId.cs" />
     <Compile Include="CQRS\QueriesHandlers\Conferences\FindAllConferencesByAttendeeCollaboratorIdQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Collaborators\FindAllCollaboratorIndustryAsyncQueryHandler.cs" />
@@ -685,6 +686,7 @@
     <Compile Include="CQRS\Queries\Collaborators\FindAllCollaboratorIndustryAsync.cs" />
     <Compile Include="CQRS\Queries\Collaborators\FindAllCollaboratorRoleAsync.cs" />
     <Compile Include="CQRS\Queries\NegotiationConfigs\GetMaximumAvailableSlotsByEditionId.cs" />
+    <Compile Include="CQRS\Queries\ProjectBuyerEvaluations\CountNegotiationsAcceptedByBuyerAttendeeOrganizationUid.cs" />
     <Compile Include="Dtos\NegotiationConfigs\GetMaximumAvailableSlotsByEditionIdResponseDto.cs" />
     <Compile Include="CQRS\Queries\Users\FindAdminAccessControlDto.cs" />
     <Compile Include="CQRS\Queries\Users\FindUserLanguageDto.cs" />
@@ -853,7 +855,6 @@
     <Folder Include="CQRS\CommandsHandlers\SalesPlatforms\" />
     <Folder Include="CQRS\Commands\Audiovisual\Collaborators\BaseCommands\" />
     <Folder Include="CQRS\Commands\Innovation\Collaborators\BaseCommands\" />
-    <Folder Include="CQRS\Commands\SalesPlatforms\" />
     <Folder Include="CQRS\EventsHandlers\" />
     <Folder Include="CQRS\Events\" />
     <Folder Include="Dtos\Editions\" />

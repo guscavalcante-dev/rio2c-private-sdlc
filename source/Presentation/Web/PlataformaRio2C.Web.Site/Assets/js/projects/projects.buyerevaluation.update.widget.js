@@ -102,6 +102,7 @@ var ProjectsBuyerEvaluationUpdateWidget = function () {
 
         var jsonParameters = new Object();
         jsonParameters.projectUid = projectUid;
+        jsonParameters.buyerAttendeeOrganizationUid = $('#AttendeeOrganizationUid').val()
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/ShowAcceptEvaluationModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({

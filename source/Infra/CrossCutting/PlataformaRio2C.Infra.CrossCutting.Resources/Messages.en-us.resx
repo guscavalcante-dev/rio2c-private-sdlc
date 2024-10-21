@@ -1124,6 +1124,9 @@
     <value>You have &lt;b&gt;{0} new messages&lt;/b&gt;.</value>
     <comment>Você tem &lt;b&gt;{0} novas mensagens&lt;/b&gt;.</comment>
   </data>
+  <data name="YouReachedProjectsApprovalLimit" xml:space="preserve">
+    <value>You have reached the limit of projects approved for &lt;b&gt;in-person meeting&lt;/b&gt; in this edition ({0}).&lt;br/&gt;&lt;br/&gt;Projects approved from now on will be scheduled as &lt;b&gt;virtual meeting&lt;/b&gt; and business rounds will take place remotely, via Google Meet.</value>
+  </data>
   <data name="YouReachedProjectsLimit" xml:space="preserve">
     <value>Your reached the projects limit.</value>
     <comment>Você atingiu o limite de projetos.</comment>
