@@ -6,7 +6,7 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 10-01-2024
 // ***********************************************************************
-// <copyright file="GetMaximumAvailableSlotsByEditionIdQuery.cs" company="Softo">
+// <copyright file="GetMaximumAvailableSlotsByEditionId.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -15,7 +15,7 @@ using PlataformaRio2C.Application.CQRS.Dtos;
 
 namespace PlataformaRio2C.Application.CQRS.Queries
 {
-    /// <summary>GetMaximumAvailableSlotsByEditionIdQuery</summary>
+    /// <summary>GetMaximumAvailableSlotsByEditionId</summary>
     public class GetMaximumAvailableSlotsByEditionId : BaseQuery<GetMaximumAvailableSlotsByEditionIdResponseDto>
     {
         public int EditionId { get; private set; }

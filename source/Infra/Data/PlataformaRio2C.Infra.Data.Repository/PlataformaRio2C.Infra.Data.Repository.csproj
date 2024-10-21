@@ -214,17 +214,7 @@
     <Compile Include="Repositories\Projects\ProjectEvaluationStatusRepository.cs" />
     <Compile Include="Repositories\Projects\ProjectBuyerEvaluationRepository.cs" />
     <Compile Include="Repositories\Projects\ProjectTypeRepository.cs" />
-    <Compile Include="Repositories\Projects\ProjectLogLineRepository.cs" />
     <Compile Include="Repositories\Projects\ProjectStatusRepository.cs" />
-    <Compile Include="Repositories\Projects\ProjectSummaryRepository.cs" />
-    <Compile Include="Repositories\Projects\ProjectProductionPlanRepository.cs" />
-    <Compile Include="Repositories\Projects\ProjectInterestRepository.cs" />
-    <Compile Include="Repositories\Projects\ProjectAdditionalInformationRepository.cs" />
-    <Compile Include="Repositories\Projects\ProjectLinkTeaserRepository.cs" />
-    <Compile Include="Repositories\Projects\ProjectLinkImageRepository.cs" />
-    <Compile Include="Repositories\Projects\ProjectPlayerRepository.cs" />
-    <Compile Include="Repositories\Projects\ProjectPlayerEvaluationRepository.cs" />
-    <Compile Include="Repositories\Projects\ProjectTitleRepository.cs" />
     <Compile Include="Repositories\Projects\ProjectRepository.cs" />
     <Compile Include="Repositories\Common\TargetAudienceRepository.cs" />
     <Compile Include="Repositories\Collaborator\CollaboratorJobTitleRepository.cs" />
