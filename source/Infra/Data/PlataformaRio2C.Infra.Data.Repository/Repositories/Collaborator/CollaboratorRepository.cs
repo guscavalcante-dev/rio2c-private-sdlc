@@ -2600,6 +2600,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             bool showAllParticipants,
             bool? showHighlights,
             int? editionId,
+            List<Guid?> roomsUids,
             bool exportToExcel = false)
         {
             string[] collaboratorTypeNames = new string[] { CollaboratorType.Speaker.Name };
@@ -2609,7 +2610,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery(true)
                                 .FindByKeywords(keywords, editionId)
                                 .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, showAllEditions, showAllParticipants, editionId)
-                                .FindByHighlights(collaboratorTypeNames, showHighlights);
+                                .FindByHighlights(collaboratorTypeNames, showHighlights)
+                                .FindByConferencesRoomsUids(roomsUids, false);
 
             IPagedList<CollaboratorDto> collaboratorDtos;
 

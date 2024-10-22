@@ -50,6 +50,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
         private readonly IFileRepository fileRepo;
+        private readonly IRoomRepository roomRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SpeakersController" /> class.
@@ -59,17 +60,20 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
         /// <param name="fileRepository">The file repository.</param>
+        /// <param name="roomRepository">The room repository.</param>
         public SpeakersController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
             ICollaboratorRepository collaboratorRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
-            IFileRepository fileRepository)
+            IFileRepository fileRepository,
+            IRoomRepository roomRepository)
             : base(commandBus, identityController)
         {
             this.collaboratorRepo = collaboratorRepository;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
             this.fileRepo = fileRepository;
+            this.roomRepo = roomRepository;
         }
 
         #region List
@@ -79,7 +83,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <returns></returns>
         [HttpGet]
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
-        public ActionResult Index(SpeakerSearchViewModel searchViewModel)
+        public async Task<ActionResult> Index(SpeakerSearchViewModel searchViewModel)
         {
             #region Breadcrumb
 
@@ -88,6 +92,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             });
 
             #endregion
+
+            searchViewModel.UpdateDropdowns(
+                await this.roomRepo.FindAllDtoByEditionIdAsync(this.EditionDto.Id),
+                this.UserInterfaceLanguage
+            );
 
             return View(searchViewModel);
         }
@@ -99,10 +108,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
         /// <param name="showHighlights">if set to <c>true</c> [show highlights].</param>
+        /// <param name="roomsUids">The rooms uids.</param>
         /// <returns></returns>
         [HttpGet]
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
-        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllParticipants, bool? showHighlights)
+        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllParticipants, bool? showHighlights, string roomsUids)
         {
             var speakers = await this.collaboratorRepo.FindAllSpeakersByDataTable(
                 request.Start / request.Length,
@@ -113,6 +123,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 showAllParticipants,
                 showHighlights,
                 this.EditionDto?.Id,
+                roomsUids.ToListNullableGuid(','),
                 false);
 
             var response = DataTablesResponse.Create(request, speakers.TotalItemCount, speakers.TotalItemCount, speakers);
@@ -131,10 +142,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
         /// <param name="showHighlights">The show highlights.</param>
+        /// <param name="roomsUids">The rooms uids.</param>
         /// <returns></returns>
         [HttpGet]
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
-        public async Task<ActionResult> ExportToExcel(string searchKeywords, bool showAllEditions, bool showAllParticipants, bool? showHighlights)
+        public async Task<ActionResult> ExportToExcel(string searchKeywords, bool showAllEditions, bool showAllParticipants, bool? showHighlights, string roomsUids)
         {
             string fileName = Labels.SpeakersReport + "_" + DateTime.UtcNow.ToStringFileNameTimestamp();
             string filePath = Path.Combine(Path.GetTempPath(), fileName + ".xlsx");
@@ -150,6 +162,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                      showAllParticipants,
                      showHighlights,
                      this.EditionDto?.Id,
+                     roomsUids.ToListNullableGuid(','),
                      true);
 
                 using (var workbook = new XLWorkbook())
