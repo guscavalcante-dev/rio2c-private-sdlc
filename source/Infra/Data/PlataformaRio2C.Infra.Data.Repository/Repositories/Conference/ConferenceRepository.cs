@@ -108,6 +108,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>
+        /// Finds the by attendee collaborator identifier.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<Conference> FindByAttendeeCollaboratorId(this IQueryable<Conference> query, int attendeeCollaboratorId)
+        {
+            query = query.Where(c => c.ConferenceParticipants.Any(cp => cp.AttendeeCollaboratorId == attendeeCollaboratorId && !cp.IsDeleted));
+
+            return query;
+        }
+
         /// <summary>Finds the by keywords.</summary>
         /// <param name="query">The query.</param>
         /// <param name="keywords">The keywords.</param>
@@ -237,7 +250,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<Conference> HasParticipants(this IQueryable<Conference> query)
         {
-            query = query.Where(c => c.ConferenceParticipants.Any(cp => !cp.IsDeleted 
+            query = query.Where(c => c.ConferenceParticipants.Any(cp => !cp.IsDeleted
                                                                         && !cp.AttendeeCollaborator.IsDeleted
                                                                         && !cp.AttendeeCollaborator.Collaborator.IsDeleted));
 
@@ -264,7 +277,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             if (modifiedAfterDate.HasValue)
             {
-                query = query.Where(c => c.CreateDate > modifiedAfterDate || c.UpdateDate > modifiedAfterDate || 
+                query = query.Where(c => c.CreateDate > modifiedAfterDate || c.UpdateDate > modifiedAfterDate ||
                                             c.ConferenceParticipants.Any(cp => cp.CreateDate > modifiedAfterDate || cp.UpdateDate > modifiedAfterDate));
             }
 
@@ -372,10 +385,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     ConferenceTitle = ct,
                                     LanguageDto = new LanguageBaseDto
                                     {
-                                       Id = ct.Language.Id,
-                                       Uid = ct.Language.Uid,
-                                       Name = ct.Language.Name,
-                                       Code = ct.Language.Code
+                                        Id = ct.Language.Id,
+                                        Uid = ct.Language.Uid,
+                                        Name = ct.Language.Name,
+                                        Code = ct.Language.Code
                                     }
                                 })
                             })
@@ -565,7 +578,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByKeywords(keywords, languageId)
                                 .FindByEditionId(false, editionId)
                                 .FindByUids(conferencesUids);
-                                //.FindByHighlights(collaboratorTypeName, showHighlights);
+            //.FindByHighlights(collaboratorTypeName, showHighlights);
 
             return await query
                             .DynamicOrder<Conference>(
@@ -594,7 +607,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     Name = c.Room.RoomNames.FirstOrDefault(n => !n.IsDeleted && n.LanguageId == languageId).Value
                                 },
                                 StartDate = c.StartDate,
-                                EndDate =  c.EndDate,
+                                EndDate = c.EndDate,
                                 Title = c.ConferenceTitles.FirstOrDefault(ct => !ct.IsDeleted && ct.LanguageId == languageId).Value,
                                 Synopsis = c.ConferenceSynopses.FirstOrDefault(cs => !cs.IsDeleted && cs.LanguageId == languageId).Value,
                                 CreateDate = c.CreateDate,
@@ -624,9 +637,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByEditionUid(false, editionUid)
                                 .HasParticipants()
                                 .Include(c => c.ConferenceParticipants.Select(cp => cp.AttendeeCollaborator.AttendeeOrganizationCollaborators));
-                                //.IncludeFilter(c => c.ConferenceParticipants.Where(cp => !cp.IsDeleted && !cp.AttendeeCollaborator.IsDeleted))
-                                //.IncludeFilter(c => c.ConferenceParticipants.Where(cp => !cp.IsDeleted && !cp.AttendeeCollaborator.IsDeleted).Select(cp => cp.AttendeeCollaborator))
-                                //.IncludeFilter(c => c.ConferenceParticipants.Where(cp => !cp.IsDeleted && !cp.AttendeeCollaborator.IsDeleted).Select(cp => cp.AttendeeCollaborator.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted)));
+            //.IncludeFilter(c => c.ConferenceParticipants.Where(cp => !cp.IsDeleted && !cp.AttendeeCollaborator.IsDeleted))
+            //.IncludeFilter(c => c.ConferenceParticipants.Where(cp => !cp.IsDeleted && !cp.AttendeeCollaborator.IsDeleted).Select(cp => cp.AttendeeCollaborator))
+            //.IncludeFilter(c => c.ConferenceParticipants.Where(cp => !cp.IsDeleted && !cp.AttendeeCollaborator.IsDeleted).Select(cp => cp.AttendeeCollaborator.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted)));
 
             return await query
                             .ToListAsync();
@@ -736,6 +749,50 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query
                         .ToListAsync();
+        }
+
+        /// <summary>
+        /// Finds all by attendee collaborator identifier asynchronous.
+        /// </summary>
+        /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
+        /// <returns></returns>
+        public Task<List<ConferenceDto>> FindAllByAttendeeCollaboratorIdAsync(int attendeeCollaboratorId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByAttendeeCollaboratorId(attendeeCollaboratorId)
+                                .Select(c => new ConferenceDto
+                                {
+                                    Uid = c.Uid,
+                                    StartDate = c.StartDate,
+                                    EndDate = c.EndDate,
+                                    //RoomDto = new RoomDto
+                                    //{
+                                    //    Room = c.Room,
+                                    //    RoomNameDtos = c.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
+                                    //    {
+                                    //        RoomName = rn,
+                                    //        LanguageDto = new LanguageDto
+                                    //        {
+                                    //            Id = rn.Language.Id,
+                                    //            Uid = rn.Language.Uid,
+                                    //            Code = rn.Language.Code
+                                    //        }
+                                    //    })
+                                    //},
+                                    //ConferenceTitleDtos = c.ConferenceTitles.Where(ct => !ct.IsDeleted).Select(ct => new ConferenceTitleDto
+                                    //{
+                                    //    ConferenceTitle = ct,
+                                    //    LanguageDto = new LanguageBaseDto
+                                    //    {
+                                    //        Id = ct.Language.Id,
+                                    //        Uid = ct.Language.Uid,
+                                    //        Name = ct.Language.Name,
+                                    //        Code = ct.Language.Code
+                                    //    }
+                                    //})
+                                });
+
+            return query.ToListAsync();
         }
 
         #region Api
@@ -970,7 +1027,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 .Select(c => new ConferenceDto
                 {
                     Conference = c,
-                    EditionEvent = c.EditionEvent,                                
+                    EditionEvent = c.EditionEvent,
                 })
                 .FirstOrDefaultAsync();
         }

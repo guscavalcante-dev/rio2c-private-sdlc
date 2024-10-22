@@ -3361,4 +3361,19 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="ShowNotPublishableToApi" xml:space="preserve">
     <value>Exibir apenas palestrantes com pendências</value>
   </data>
+  <data name="PlayerDemand" xml:space="preserve">
+    <value>Demanda do Player</value>
+  </data>
+  <data name="PlayerDemandPercentage" xml:space="preserve">
+    <value>{0}: Concentra {1}% dos projetos cadastrados</value>
+  </data>
+  <data name="High" xml:space="preserve">
+    <value>Alta</value>
+  </data>
+  <data name="Medium" xml:space="preserve">
+    <value>Média</value>
+  </data>
+  <data name="Low" xml:space="preserve">
+    <value>Baixa</value>
+  </data>
 </root>

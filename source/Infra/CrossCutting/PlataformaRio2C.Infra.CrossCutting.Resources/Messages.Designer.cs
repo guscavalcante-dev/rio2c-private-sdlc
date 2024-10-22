@@ -2272,24 +2272,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
                 return ResourceManager.GetString("SwitchTo", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///   Looks up a localized string similar to O campo &quot;Ementa EN&quot;.
-        /// </summary>
-        public static string SynopsisIsRequiredInEnUs {
-            get {
-                return ResourceManager.GetString("SynopsisIsRequiredInEnUs", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to O campo &quot;Ementa PT&quot;.
-        /// </summary>
-        public static string SynopsisIsRequiredInPtBr {
-            get {
-                return ResourceManager.GetString("SynopsisIsRequiredInPtBr", resourceCulture);
-            }
-        }
         
         /// <summary>
         ///   Looks up a localized string similar to texto em português | texto em inglês.
@@ -2657,6 +2639,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string YouHaveNewMessages {
             get {
                 return ResourceManager.GetString("YouHaveNewMessages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Você atingiu o limite de projetos aprovados para &lt;b&gt;reunião presencial&lt;/b&gt; nesta edição ({0}).&lt;br/&gt;&lt;br/&gt;Os projetos aprovados a partir de agora serão agendados como &lt;b&gt;reunião virtual&lt;/b&gt; e as rodadas de negócio acontecerão de maneira remota, via Google Meet..
+        /// </summary>
+        public static string YouReachedProjectsApprovalLimit {
+            get {
+                return ResourceManager.GetString("YouReachedProjectsApprovalLimit", resourceCulture);
             }
         }
         

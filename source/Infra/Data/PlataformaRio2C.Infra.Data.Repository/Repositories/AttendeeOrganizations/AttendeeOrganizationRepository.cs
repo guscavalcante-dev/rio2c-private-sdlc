@@ -887,6 +887,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Select(ao => new MatchAttendeeOrganizationDto
                             {
                                 AttendeeOrganization = ao,
+                                ProjectBuyerEvaluationsCount = ao.ProjectBuyerEvaluations.Count(pbe =>
+                                    pbe.BuyerAttendeeOrganizationId == ao.Id && !pbe.IsDeleted
+                                ),
                                 Organization = ao.Organization,
                                 InterestGroupsMatches = ao.Organization.OrganizationInterests
                                                                             .Where(oi => !oi.IsDeleted && !oi.Interest.IsDeleted && matchInterests.Contains(oi.Interest.Uid))
@@ -919,7 +922,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Select(ao => new AttendeeOrganizationDto
                             {
                                 AttendeeOrganization = ao,
-                                Organization = ao.Organization
+                                Organization = ao.Organization,
+                                ProjectBuyerEvaluationsCount = ao.ProjectBuyerEvaluations.Count(pbe =>
+                                    pbe.BuyerAttendeeOrganizationId == ao.Id && !pbe.IsDeleted
+                                ),
                             })
                             .OrderBy(ao => ao.Organization.TradeName)
                             .ToListPagedAsync(page, pageSize);

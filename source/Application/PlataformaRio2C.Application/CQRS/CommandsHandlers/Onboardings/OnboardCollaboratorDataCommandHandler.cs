@@ -129,7 +129,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.Twitter,
                 cmd.Instagram,
                 cmd.Youtube,
-                cmd.UserId);
+                cmd.UserId,
+                cmd.CompanyName);
 
             if (cmd.UserAccessControlDto.IsMusicPlayerExecutive())
             {

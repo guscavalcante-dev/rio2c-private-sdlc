@@ -16,7 +16,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -25,22 +28,28 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     public class AcceptProjectEvaluationCommandHandler : BaseProjectCommandHandler, IRequestHandler<AcceptProjectEvaluation, AppValidationResult>
     {
         private IProjectEvaluationStatusRepository projectEvaluationStatusRepo;
+        private IProjectBuyerEvaluationRepository projectBuyerEvaluationRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="AcceptProjectEvaluationCommandHandler"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AcceptProjectEvaluationCommandHandler" /> class.
+        /// </summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="projectRepository">The project repository.</param>
         /// <param name="projectEvaluationStatusRepository">The project evaluation status repository.</param>
+        /// <param name="projectBuyerEvaluationRepository">The project buyer evaluation repository.</param>
         public AcceptProjectEvaluationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IProjectRepository projectRepository,
-            IProjectEvaluationStatusRepository projectEvaluationStatusRepository)
+            IProjectEvaluationStatusRepository projectEvaluationStatusRepository,
+            IProjectBuyerEvaluationRepository projectBuyerEvaluationRepository)
             : base(eventBus, uow, attendeeOrganizationRepository, projectRepository)
         {
             this.projectEvaluationStatusRepo = projectEvaluationStatusRepository;
+            this.projectBuyerEvaluationRepo = projectBuyerEvaluationRepository;
         }
 
         /// <summary>Handles the specified accept project evaluation.</summary>
@@ -54,6 +63,20 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var project = await this.GetProjectByUid(cmd.ProjectUid ?? Guid.Empty);
 
             #region Initial validations
+
+            var maximumAvailableSlotsByEditionIdResponseDto = await CommandBus.Send(new GetMaximumAvailableSlotsByEditionId(cmd.EditionId ?? 0));
+            var playerAcceptedProjectsCount = await CommandBus.Send(new CountNegotiationsAcceptedByBuyerAttendeeOrganizationUid(cmd.AttendeeOrganizationUid ?? Guid.Empty));
+            if (playerAcceptedProjectsCount >= maximumAvailableSlotsByEditionIdResponseDto.MaximumAvailableSlotsByPlayer)
+            {
+                cmd.PlayerAcceptedProjectsCount = playerAcceptedProjectsCount;
+                cmd.MaximumAvailableSlotsByPlayer = maximumAvailableSlotsByEditionIdResponseDto.MaximumAvailableSlotsByPlayer;
+
+                //TODO: Implements the change to mark the ProjectBuyerEvaluation.IsVirtualMeeting = true;
+
+                //this.ValidationResult.Add(new ValidationError(string.Format(
+                //    Messages.YouReachedProjectsApprovalLimit, maximumAvailableSlotsByEditionIdResponseDto.MaximumAvailableSlotsByPlayer),
+                //    new string[] { "ToastrError" }));
+            }
 
             if (!this.ValidationResult.IsValid)
             {
@@ -75,13 +98,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             this.ProjectRepo.Update(project);
             this.Uow.SaveChanges();
-            //this.AppValidationResult.Data = project;
 
             return this.AppValidationResult;
-
-            //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
-
-            //return Task.FromResult(propertyId); // use it when the methed is not async
         }
     }
 }

@@ -102,6 +102,7 @@ namespace PlataformaRio2C.Domain.Interfaces
             bool? showHighlights,
             int? editionId,
             bool? showNotPublishableToApi,
+            List<Guid?> roomsUids,
             bool exportToExcel = false
         );
         Task<IPagedList<SpeakerCollaboratorApiDto>> FindAllSpeakersPublicApiPaged(int editionId, string keywords, int? highlights, List<Guid?> conferencesUids, List<DateTimeOffset?> conferencesDates, List<Guid?> roomsUids, string collaboratorTypeName, DateTime? modifiedAfterDate, bool showDetails, bool showDeleted, bool skipIsApiDisplayEnabledVerification, int page, int pageSize);

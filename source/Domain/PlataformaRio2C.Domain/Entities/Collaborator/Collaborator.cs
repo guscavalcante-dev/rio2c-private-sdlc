@@ -3290,7 +3290,8 @@ namespace PlataformaRio2C.Domain.Entities
             string twitter,
             string instagram,
             string youtube,
-            int userId)
+            int userId,
+            string companyName)
         {
             this.UpdatePublicEmail(sharePublicEmail, publicEmail);
             this.UpdateImageUploadDate(isImageUploaded, false);
@@ -3317,6 +3318,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CollaboratorIndustryAdditionalInfo = collaboratorIndustryAdditionalInfo;
             this.HasAnySpecialNeeds = hasAnySpecialNeeds;
             this.SpecialNeedsDescription = specialNeedsDescription;
+            this.CompanyName = companyName;
 
             this.SetUpdateDate(userId);
         }

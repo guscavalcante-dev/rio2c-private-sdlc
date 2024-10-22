@@ -80,9 +80,36 @@ var ConferencesParticipantsWidget = function () {
 
     var enableCreatePlugins = function () {
         enableCreateAjaxForm();
-        MyRio2cCommon.enableCollaboratorSelect2({ url: '/Speakers/FindAllByFilters' });
+        MyRio2cCommon.enableCollaboratorSelect2({
+            url: '/Speakers/FindAllByFilters',
+            selectedOption: {
+                id: $('#InitialCollaboratorUid').val(),
+                text: $('#InitialCollaboratorName').val()
+            }
+        });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: createFormId + ' .enable-select2', allowClear: true });
         MyRio2cCommon.enableFormValidation({ formIdOrClass: createFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
+
+        // Change events
+        enableConferenceParticipantChangeEvent();
+    };
+
+    var enableConferenceParticipantChangeEvent = function () {
+        var element = $('#CollaboratorUid');
+
+        element.not('.change-event-enabled').on('change', function () {
+            var collaboratorValue = $('#CollaboratorUid').val();
+            var collaboratorName = $('#CollaboratorUid option:selected').text();
+
+            if (collaboratorValue) {
+                $('#InitialCollaboratorUid').val(collaboratorValue);
+                $('#InitialCollaboratorName').val(collaboratorName);
+            }
+        });
+
+        element.addClass('change-event-enabled');
+
+        element.change();
     };
 
     var showCreateModal = function () {

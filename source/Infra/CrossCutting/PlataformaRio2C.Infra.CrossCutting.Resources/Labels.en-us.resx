@@ -3365,4 +3365,16 @@
   <data name="ShowNotPublishableToApi" xml:space="preserve">
     <value>Show not publisable</value>
   </data>
+  <data name="PlayerDemand" xml:space="preserve">
+    <value>Player Demand</value>
+  </data>
+  <data name="PlayerDemandPercentage" xml:space="preserve">
+    <value>{0}: Concentrates {1}% of registered projects</value>
+  </data>
+  <data name="Medium" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="Low" xml:space="preserve">
+    <value>Low</value>
+  </data>
 </root>

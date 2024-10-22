@@ -746,12 +746,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return RedirectToAction("TermsAcceptance", "Projects", new { id });
             }
 
-            // Check if player submitted the max number of projects
+            // Check if producer submitted the max number of projects
             var firstAttendeeOrganizationCreated = this.UserAccessControlDto.GetFirstAttendeeOrganizationCreated();
             if (firstAttendeeOrganizationCreated != null)
             {
-                var projectsCount = this.projectRepo.Count(p => p.SellerAttendeeOrganization.Uid == firstAttendeeOrganizationCreated.Uid
-                                                                && !p.IsDeleted);
+                var projectsCount = this.projectRepo.Count(p => p.SellerAttendeeOrganization.Uid == firstAttendeeOrganizationCreated.Uid && !p.IsDeleted);
                 var projectMaxCount = this.EditionDto?.AttendeeOrganizationMaxSellProjectsCount ?? 0;
                 if (projectsCount >= projectMaxCount)
                 {
@@ -1200,8 +1199,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
             return RedirectToAction("SubmittedDetails", "Projects", new { id });
         }
 
-        #region Shared (project creation and details)
-
         /// <summary>Shows the buyer company selected widget.</summary>
         /// <param name="projectUid">The project uid.</param>
         /// <returns></returns>
@@ -1250,9 +1247,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
 
             var matchAttendeeOrganizationDtos = await this.attendeeOrganizationRepo.FindAllDtoByMatchingProjectBuyerAsync(this.EditionDto.Id, interestWidgetDto, searchKeywords, page, pageSize);
+            var projectsCount = await this.projectRepo.CountProjectsByEditionId(this.EditionDto.Id, false);
 
             ViewBag.ShowProjectMatchBuyerCompanySearch = $"&projectUid={projectUid}&pageSize={pageSize}";
             ViewBag.SearchKeywords = searchKeywords;
+            ViewBag.ProjectsCount = projectsCount;
 
             return Json(new
             {
@@ -1285,9 +1284,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
 
             var attendeeOrganizationDtos = await this.attendeeOrganizationRepo.FindAllDtoByProjectBuyerAsync(this.EditionDto.Id, interestWidgetDto, searchKeywords, page, pageSize);
+            var projectsCount = await this.projectRepo.CountProjectsByEditionId(this.EditionDto.Id, false);
 
             ViewBag.ShowProjectAllBuyerCompanySearch = $"&projectUid={projectUid}&pageSize={pageSize}";
             ViewBag.SearchKeywords = searchKeywords;
+            ViewBag.ProjectsCount = projectsCount;
 
             return Json(new
             {
@@ -1398,8 +1399,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM) });
         }
-
-        #endregion
 
         #endregion
 
@@ -1625,8 +1624,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
             return View(projectDto);
         }
 
-        #region Buyer Evaluation
-
         /// <summary>Shows the buyer evaluation widget.</summary>
         /// <param name="projectUid">The project uid.</param>
         /// <returns></returns>
@@ -1660,19 +1657,15 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        #endregion
-
-        #endregion
-
-        #region Common
-
-        #region Accept
-
-        /// <summary>Shows the accept evaluation modal.</summary>
+        /// <summary>
+        /// Shows the accept evaluation modal.
+        /// </summary>
         /// <param name="projectUid">The project uid.</param>
+        /// <param name="buyerAttendeeOrganizationUid">The buyer attendee organization uid.</param>
         /// <returns></returns>
+        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
         [HttpGet]
-        public async Task<ActionResult> ShowAcceptEvaluationModal(Guid? projectUid)
+        public async Task<ActionResult> ShowAcceptEvaluationModal(Guid? projectUid, Guid? buyerAttendeeOrganizationUid)
         {
             AcceptProjectEvaluation cmd;
 
@@ -1699,9 +1692,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
 
+                var maximumAvailableSlotsByEditionIdResponseDto = await CommandBus.Send(new GetMaximumAvailableSlotsByEditionId(this.EditionDto.Id));
+                var playerAcceptedProjectsCount = await CommandBus.Send(new CountNegotiationsAcceptedByBuyerAttendeeOrganizationUid(buyerAttendeeOrganizationUid ?? Guid.Empty));
+
                 cmd = new AcceptProjectEvaluation(
                     projectDto,
-                    this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList());
+                    this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList(),
+                    maximumAvailableSlotsByPlayer: maximumAvailableSlotsByEditionIdResponseDto.MaximumAvailableSlotsByPlayer,
+                    playerAcceptedProjectsCount: playerAcceptedProjectsCount);
             }
             catch (DomainException ex)
             {
@@ -1786,10 +1784,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.ProjectAccepted.ToLowerInvariant())
             });
         }
-
-        #endregion
-
-        #region Refuse
 
         /// <summary>Shows the refuse evaluation modal.</summary>
         /// <param name="projectUid">The project uid.</param>
@@ -1913,9 +1907,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         }
 
         #endregion
-
-        #endregion
-
+     
         #endregion
     }
 }

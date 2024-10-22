@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
-using PlataformaRio2C.Application.Interfaces.Services;
 using System.Threading.Tasks;
 using System.Web.Http;
-using WebApi.OutputCache.V2;
 
 namespace PlataformaRio2C.Web.Admin.Areas.WebApi.Controllers
 {

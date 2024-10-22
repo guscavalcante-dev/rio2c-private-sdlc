@@ -152,6 +152,7 @@ var SpeakersDataTableWidget = function () {
                     d.showAllParticipants = $('#ShowAllParticipants').prop('checked');
                     d.showHighlights = $('#ShowHighlights').prop('checked');
                     d.showNotPublishableToApi = $('#ShowNotPublishableToApi').prop('checked');
+                    d.roomsUids = $('#RoomsUids').val().join(',');
                 },
                 dataFilter: function (data) {
                     var jsonReturned = jQuery.parseJSON(data);
@@ -344,12 +345,14 @@ var SpeakersDataTableWidget = function () {
             }
         });
 
-        
-
         $('#Search').keyup(function (e) {
             if (e.keyCode === 13) {
                 table.search($(this).val()).draw();
             }
+        });
+
+        $('#RoomsUids').change(function () {
+            table.ajax.reload();
         });
 
         $('.enable-datatable-reload').click(function (e) {
@@ -381,6 +384,7 @@ var SpeakersDataTableWidget = function () {
         jsonParameters.showAllParticipants = $('#ShowAllParticipants').prop('checked');
         jsonParameters.showHighlights = $('#ShowHighlights').prop('checked');
         jsonParameters.showNotPublishableToApi = $('#ShowNotPublishableToApi').prop('checked');
+        jsonParameters.roomsUids = $('#RoomsUids').val().join(',');
 
         //TODO: Needs to upgrade DataTables from current v1.10.19 to v2 to get columns names and send 'jsonParameters.sortColumns'
         //var table = $(tableElementId).DataTable();
@@ -401,6 +405,7 @@ var SpeakersDataTableWidget = function () {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             initiListTable();
+            MyRio2cCommon.enableSelect2({ inputIdOrClass: widgetElementId + ' .enable-select2', allowClear: true });
         },
         refreshData: function () {
             refreshData();

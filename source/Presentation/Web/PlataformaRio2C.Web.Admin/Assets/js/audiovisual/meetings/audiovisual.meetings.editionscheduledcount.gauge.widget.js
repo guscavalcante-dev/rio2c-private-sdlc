@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 03-07-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 18-10-2024
 // ***********************************************************************
 // <copyright file="audiovisual.meetings.editionscheduledcount.gauge.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,7 +19,7 @@ var AudiovisualMeetingsEditionScheduledCountGaugeWidget = function () {
     var widgetElement = $(widgetElementId);
 
     // Show ---------------------------------------------------------------------------------------
-    var initChart = function (chartData) {
+    var initChart = function (chartData, totalAvailablSlotsByEdition) {
         if ($('#' + chartElementId).length === 0) {
             return;
         }
@@ -28,54 +28,66 @@ var AudiovisualMeetingsEditionScheduledCountGaugeWidget = function () {
             am4core.useTheme(am4themes_animated);
 
             var totalCountLabelId = "TotalCountLabel";
-            var chartMin = 200;
-            var chartMax = 2000;
+            var chartMin = 0;
+            var chartMax = totalAvailablSlotsByEdition < 100 ? 100 : totalAvailablSlotsByEdition;
+
+            const grading = [
+                {
+                    title: "",
+                    color: "#ee1f25",
+                    lowScore: 0,
+                    highScore: 0
+                },
+                {
+                    title: "",
+                    color: "#f04922",
+                    lowScore: 0,
+                    highScore: 0
+                },
+                {
+                    title: "",
+                    color: "#fdae19",
+                    lowScore: 0,
+                    highScore: 0
+                },
+                {
+                    title: "",
+                    color: "#f3eb0c",
+                    lowScore: 0,
+                    highScore: 0
+                },
+                {
+                    title: "",
+                    color: "#b0d136",
+                    lowScore: 0,
+                    highScore: 0
+                },
+                {
+                    title: "",
+                    color: "#54b947",
+                    lowScore: 0,
+                    highScore: 0
+                },
+                {
+                    title: "",
+                    color: "#0f9747",
+                    lowScore: 0,
+                    highScore: 0
+                }
+            ];
+
+            grading[0].lowScore = 0;
+            for (let multipler = 0; multipler < grading.length; multipler++) {
+                score = Number((chartMax / grading.length * (multipler + 1)).toString().split('.')[0]);
+                grading[multipler].highScore = score;
+                if (grading[multipler + 1]) {
+                    grading[multipler + 1].lowScore = score;
+                }
+            }
+
             var data = {
                 score: chartData,
-                gradingData: [
-                    {
-                        title: "",
-                        color: "#ee1f25",
-                        lowScore: 200,
-                        highScore: 600
-                    },
-                    {
-                        title: "",
-                        color: "#f04922",
-                        lowScore: 600,
-                        highScore: 800
-                    },
-                    {
-                        title: "",
-                        color: "#fdae19",
-                        lowScore: 800,
-                        highScore: 1000
-                    },
-                    {
-                        title: "",
-                        color: "#f3eb0c",
-                        lowScore: 1000,
-                        highScore: 1200
-                    },
-                    {
-                        title: "",
-                        color: "#b0d136",
-                        lowScore: 1200,
-                        highScore: 1400
-                    },
-                    {
-                        title: "",
-                        color: "#54b947",
-                        lowScore: 1400,
-                        highScore: 1600
-                    },
-                    {
-                        title: "",
-                        color: "#0f9747",
-                        lowScore: 1600,
-                        highScore: 2000
-                    }
-                ]
+                gradingData: grading
             };
 
             /**
@@ -232,8 +244,8 @@ var AudiovisualMeetingsEditionScheduledCountGaugeWidget = function () {
         });
     };
 
-    var enableShowPlugins = function (data) {
-        initChart(data);
+    var enableShowPlugins = function (data, totalAvailablSlotsByEdition) {
+        initChart(data, totalAvailablSlotsByEdition);
     };
 
     var show = function () {
@@ -244,7 +256,7 @@ var AudiovisualMeetingsEditionScheduledCountGaugeWidget = function () {
                 data: data,
                 // Success
                 onSuccess: function () {
-                    enableShowPlugins(data.chartData);
+                    enableShowPlugins(data.chartData, data.maximumAvailableSlots.TotalAvailablSlotsByEdition);
                 },
                 // Error
                 onError: function () {
