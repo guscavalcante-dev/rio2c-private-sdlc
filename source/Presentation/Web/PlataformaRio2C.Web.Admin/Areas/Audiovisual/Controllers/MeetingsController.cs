@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 03-06-2020
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 10-03-2024
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 18-10-2024
 // ***********************************************************************
 // <copyright file="MeetingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -38,6 +38,9 @@ using Constants = PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Application.TemplateDocuments;
 using PlataformaRio2C.Infra.Report.Models;
 using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Application.CQRS.QueriesHandlers;
+using DocumentFormat.OpenXml.Office.Word;
+using System.Web.Http.Results;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 {
@@ -228,6 +231,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         public async Task<ActionResult> ShowEditionScheduledCountGaugeWidget()
         {
             var scheduledCount = await this.projectBuyerEvaluationRepo.CountNegotiationScheduledAsync(this.EditionDto.Id, false);
+            var maximumAvailableSlotsByEditionId = new GetMaximumAvailableSlotsByEditionId(this.EditionDto.Id);
 
             return Json(new
             {
@@ -236,7 +240,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 {
                     new { page = this.RenderRazorViewToString("Widgets/EditionScheduledCountGaugeWidget", scheduledCount), divIdOrClass = "#AudiovisualMeetingsEditionScheduledCountGaugeWidget" },
                 },
-                chartData = scheduledCount
+                chartData = scheduledCount,
+                maximumAvailableSlots = await this.CommandBus.Send(maximumAvailableSlotsByEditionId)
             }, JsonRequestBehavior.AllowGet);
         }
 
