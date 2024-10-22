@@ -7979,5 +7979,50 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
                 return ResourceManager.GetString("ZoomOut", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Demanda do Player.
+        /// </summary>
+        public static string PlayerDemand {
+            get {
+                return ResourceManager.GetString("PlayerDemand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}: Concentra mais que {1}% dos projetos cadastrados.
+        /// </summary>
+        public static string PlayerDemandPercentage {
+            get {
+                return ResourceManager.GetString("PlayerDemandPercentage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alta.
+        /// </summary>
+        public static string High {
+            get {
+                return ResourceManager.GetString("High", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Média.
+        /// </summary>
+        public static string Medium {
+            get {
+                return ResourceManager.GetString("Medium", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Baixa.
+        /// </summary>
+        public static string Low {
+            get {
+                return ResourceManager.GetString("Low", resourceCulture);
+            }
+        }
     }
 }

@@ -1247,9 +1247,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
 
             var matchAttendeeOrganizationDtos = await this.attendeeOrganizationRepo.FindAllDtoByMatchingProjectBuyerAsync(this.EditionDto.Id, interestWidgetDto, searchKeywords, page, pageSize);
+            var projectsCount = await this.projectRepo.CountProjectsByEditionId(this.EditionDto.Id, false);
 
             ViewBag.ShowProjectMatchBuyerCompanySearch = $"&projectUid={projectUid}&pageSize={pageSize}";
             ViewBag.SearchKeywords = searchKeywords;
+            ViewBag.ProjectsCount = projectsCount;
 
             return Json(new
             {
@@ -1282,9 +1284,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
 
             var attendeeOrganizationDtos = await this.attendeeOrganizationRepo.FindAllDtoByProjectBuyerAsync(this.EditionDto.Id, interestWidgetDto, searchKeywords, page, pageSize);
+            var projectsCount = await this.projectRepo.CountProjectsByEditionId(this.EditionDto.Id, false);
 
             ViewBag.ShowProjectAllBuyerCompanySearch = $"&projectUid={projectUid}&pageSize={pageSize}";
             ViewBag.SearchKeywords = searchKeywords;
+            ViewBag.ProjectsCount = projectsCount;
 
             return Json(new
             {
