@@ -3370,4 +3370,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Low" xml:space="preserve">
     <value>Baixa</value>
   </data>
+  <data name="ScheduledRounds" xml:space="preserve">
+    <value>Rodadas agendadas</value>
+  </data>
 </root>

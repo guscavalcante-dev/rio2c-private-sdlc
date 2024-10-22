@@ -1,0 +1,124 @@
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Statics
+@using X.PagedList.Mvc
+@using X.PagedList.Mvc.Common
+@model X.PagedList.IPagedList<AttendeeOrganizationDto>
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+}
+@if (Model.TotalItemCount > 0)
+{
+    <div class="row rio2c-scroll" style="height: 460px;">
+        <div class="col-12">
+            <div class="row">
+                @foreach (var attendeeOrganizationDto in Model)
+                {
+                    <div class="col-12">
+                        <!--Begin::Portlet-->
+                        <div class="kt-portlet">
+                            @*<div class="kt-portlet__head kt-portlet__head--noborder"></div>*@
+                            <div class="kt-portlet__body mt-40">
+                                <!--begin::Widget -->
+                                <div class="kt-widget kt-widget--user-profile-2" style="flex-direction: row;">
+                                    <div class="kt-widget__head">
+                                        <div class="kt-widget__media">
+                                            @if (attendeeOrganizationDto.Organization.HasImage())
+                                            {
+                                                <img class="kt-widget__img" src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, attendeeOrganizationDto.Organization.Uid, attendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="image">
+                                            }
+                                            else
+                                            {
+                                                <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest">
+                                                    @(attendeeOrganizationDto.Organization.GetTradeNameAbbreviation())
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="kt-widget__info">
+                                            <a href="@Url.Action("Details", "Companies", new {id = attendeeOrganizationDto.Organization.Uid})" class="kt-widget__username" target="_blank">
+                                                @attendeeOrganizationDto.Organization.TradeName
+                                            </a>
+                                            <span class="kt-widget__desc">
+                                                <a href="@Url.Action("Details", "Companies", new {id = attendeeOrganizationDto.Organization.Uid})" target="_blank">
+                                                    <small><i class="flaticon-profile"></i> @Labels.SeeDescription</small>
+                                                </a>
+                                            </span>
+                                            @if (attendeeOrganizationDto?.Organization?.IsVirtualMeeting != null)
+                                            {
+                                                var isVirtualMeeting = attendeeOrganizationDto.Organization.IsVirtualMeeting == true;
+                                                var tooltipTile = string.Format(Messages.PlayerMeetingPreference, (isVirtualMeeting ? Labels.RemoteF : Labels.Presential).ToLowerInvariant());
+
+                                                <div class="kt-widget__subhead pt-0 mt-0">
+                                                    <span class="kt-badge kt-badge--inline kt-badge--warning mt-2 kt-font-boldest" data-toggle="tooltip" data-placement="right" title="@tooltipTile" style="cursor: pointer;">
+                                                        @(isVirtualMeeting ? Labels.Remote : Labels.Presential)
+                                                    </span>
+                                                </div>
+                                            }
+                                            @if (editionDto?.IsAudiovisualProjectSubmitOpen() == true)
+                                            {
+                                                <span class="kt-widget__desc">
+                                                    <button type="button" class="btn btn-label-info btn-sm btn-upper select-buyer-evaluation-button" onclick="ProjectsBuyerCompanyWidget.selectCompany('@attendeeOrganizationDto.AttendeeOrganization.Uid')" data-attendeeorganizationuid="@attendeeOrganizationDto.AttendeeOrganization.Uid">@Labels.ToSelect</button>
+                                                </span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Widget -->
+                            </div>
+                        </div>
+                        <!--End::Portlet-->
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+    <div class="row mt-10">
+        <div class="col-12">
+            @Html.PagedListPager(
+                Model,
+                page => Url.Action(null, new { page }),
+                PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
+                    new PagedListRenderOptions
+                    {
+                        ItemSliceAndTotalFormat = Messages.PaginationMessage,
+                        DisplayItemSliceAndTotal = true,
+                        DisplayLinkToIndividualPages = false,
+                        DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+                        DisplayLinkToPreviousPage = PagedListDisplayMode.Never,
+                        DisplayLinkToNextPage = PagedListDisplayMode.Never,
+                        DisplayLinkToLastPage = PagedListDisplayMode.Never,
+                        ContainerDivClasses = new[] { "kt-pagination__toolbar" },
+                        UlElementClasses = new string[] { "pagination list-inline mx-auto justify-content-center" },
+                        LiElementClasses = new string[] { "page-item" },
+                        PageClasses = new string[] { "page-link" }
+                    }, null))
+        </div>
+        <div class="col-12">
+            @Html.PagedListPager(
+                Model,
+                page => Url.Action("ShowProjectAllBuyerCompanyWidget", "Projects", new { searchKeywords = ViewBag.SearchKeywords, page }) + ViewBag.ShowProjectAllBuyerCompanySearch,
+                PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
+                    new PagedListRenderOptions
+                    {
+                        DisplayLinkToIndividualPages = true,
+                        MaximumPageNumbersToDisplay = 3,
+                        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                        DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                        DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                        DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                        UlElementClasses = new string[] { "pagination list-inline mx-auto justify-content-center" },
+                        LiElementClasses = new string[] { "page-item" },
+                        PageClasses = new string[] { "page-link" },
+                        EllipsesElementClass = "page-link"
+                    }
+                    , new AjaxOptions { HttpMethod = "GET", OnBegin = "ProjectsMatchBuyerCompanyWidget.changePage", OnSuccess = "ProjectsMatchBuyerCompanyWidget.handlePaginationReturn" }))
+        </div>
+    </div>
+}
+else
+{
+    <div class="col-12 mt-30 text-center">
+        <span>@string.Format(Messages.EntityNotAction, Labels.Player, Labels.FoundM).</span>
+    </div>
+}

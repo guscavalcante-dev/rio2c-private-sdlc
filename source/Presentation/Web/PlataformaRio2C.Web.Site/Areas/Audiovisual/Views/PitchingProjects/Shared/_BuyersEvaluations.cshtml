@@ -1,0 +1,135 @@
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Entities
+@using PlataformaRio2C.Domain.Statics
+@model ProjectDto
+@{
+    var evaluationsCount = Model.ProjectBuyerEvaluationDtos?.Count();
+}
+<div class="kt-widget__details" style="width: 100%;">
+    @if (evaluationsCount > 1)
+    {
+        <span class="kt-widget__subtitle">@Labels.Evaluations</span>
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    @foreach (var projectBuyerEvaluationDto in Model.ProjectBuyerEvaluationDtos)
+                    {
+                        <!-- begin: Player -->
+                        <div class="kt-widget kt-widget--user-profile-4 col-sm-4 col-md-4 col-xl-2">
+                            <div class="kt-widget__head d-block p-0">
+                                <div class="kt-widget__media">
+                                    @if (projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.ImageUploadDate.HasValue)
+                                    {
+                                        <img class="kt-widget__img" src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid, projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="" style="max-width: 45px; max-height: 45px; border: 0.07rem solid #ebedf2;">
+                                    }
+                                    else
+                                    {
+                                        <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest kt-font-light" style="max-width: 45px; max-height: 45px;">
+                                            @projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Name.GetTwoLetterCode()
+                                        </div>
+                                    }
+                                </div>
+                                <div class="kt-widget__content pt-0 d-flex flex-column">
+                                    <div class="kt-widget__section mx-auto">
+                                        <a href="@Url.Action("Details", "Companies", new {id = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid})" class="kt-widget__username" target="_blank">
+                                            <small>@projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Name</small>
+                                        </a>
+                                        @{
+                                            var color = "warning";
+                                            var icon = "fa-diagnoses";
+                                            if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == ProjectEvaluationStatus.Accepted.Code)
+                                            {
+                                                color = "success";
+                                                icon = "fa-thumbs-up";
+                                            }
+                                            else if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == ProjectEvaluationStatus.Refused.Code)
+                                            {
+                                                color = "danger";
+                                                icon = "fa-thumbs-down";
+                                            }
+                                        }
+                                        <span class="kt-widget__button">
+                                            <label class="btn btn-label-@(color) btn-sm">
+                                                <i class="fa @(icon) mr-1"></i> @(projectBuyerEvaluationDto.ProjectEvaluationStatus?.Name?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                            </label>
+                                        </span>
+                                        @if (projectBuyerEvaluationDto.ProjectBuyerEvaluation?.BuyerEvaluationUser != null)
+                                        {
+                                            <span class="kt-widget--user-profile-1 kt-widget__username d-block">
+                                                <small>@Labels.By</small> @(projectBuyerEvaluationDto.ProjectBuyerEvaluation.BuyerEvaluationUser.Name)
+                                            </span>
+                                        }
+                                        @if (projectBuyerEvaluationDto.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Refused.Code && projectBuyerEvaluationDto.ProjectEvaluationRefuseReason != null)
+                                        {
+                                            <span class="kt-widget--user-profile-1 kt-widget__username d-block">
+                                                <small>
+                                                    @if (projectBuyerEvaluationDto.ProjectEvaluationRefuseReason.HasAdditionalInfo && !string.IsNullOrEmpty(projectBuyerEvaluationDto.ProjectBuyerEvaluation?.Reason))
+                                                    {
+                                                        @(projectBuyerEvaluationDto.ProjectBuyerEvaluation?.Reason?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                                    }
+                                                    else
+                                                    {
+                                                        @(projectBuyerEvaluationDto.ProjectEvaluationRefuseReason.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                                    }
+                                                </small>
+                                            </span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end: Player -->
+                    }
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        var projectBuyerEvaluationDto = Model.ProjectBuyerEvaluationDtos?.FirstOrDefault();
+
+        <span class="kt-widget__value text-center" style="min-height: 85px;">
+            @{
+                var color = "warning";
+                var icon = "fa-diagnoses";
+                if (projectBuyerEvaluationDto.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Accepted.Code)
+                {
+                    color = "success";
+                    icon = "fa-thumbs-up";
+                }
+                else if (projectBuyerEvaluationDto.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Refused.Code)
+                {
+                    color = "danger";
+                    icon = "fa-thumbs-down";
+                }
+            }
+            <span class="kt-widget__button">
+                <label class="btn btn-label-@(color) btn-sm">
+                    <i class="fa @(icon) mr-1"></i> @(projectBuyerEvaluationDto.ProjectEvaluationStatus?.Name?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                </label>
+            </span>
+            @if (projectBuyerEvaluationDto.ProjectBuyerEvaluation?.BuyerEvaluationUser != null)
+            {
+                <span class="kt-widget--user-profile-1 kt-widget__username d-block">
+                    <small>@Labels.By</small> @(projectBuyerEvaluationDto.ProjectBuyerEvaluation.BuyerEvaluationUser.Name)
+                </span>
+            }
+            @if (projectBuyerEvaluationDto.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Refused.Code && projectBuyerEvaluationDto.ProjectEvaluationRefuseReason != null)
+            {
+                <span class="kt-widget--user-profile-1 kt-widget__username d-block">
+                    <small>
+                        @if (projectBuyerEvaluationDto.ProjectEvaluationRefuseReason.HasAdditionalInfo && !string.IsNullOrEmpty(projectBuyerEvaluationDto.ProjectBuyerEvaluation?.Reason))
+                        {
+                            @(projectBuyerEvaluationDto.ProjectBuyerEvaluation?.Reason?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                        }
+                        else
+                        {
+                            @(projectBuyerEvaluationDto.ProjectEvaluationRefuseReason.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                        }
+                    </small>
+                </span>
+            }
+        </span>
+    }
+</div>
