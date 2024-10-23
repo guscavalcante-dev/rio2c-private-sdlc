@@ -13,7 +13,6 @@
 // ***********************************************************************
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 

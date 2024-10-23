@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-16-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-21-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 10-22-2024
 // ***********************************************************************
 // <copyright file="BaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -49,6 +49,20 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.EditionUid = editionUid;
             this.UserInterfaceLanguage = userInterfaceLanguage;
             this.IsAdmin = isAdmin.Value;
+        }
+
+        /// <summary>
+        /// Updates the pre send properties.
+        /// </summary>
+        /// <param name="baseCmd">The base command.</param>
+        public void UpdatePreSendProperties(BaseCommand baseCmd)
+        {
+            this.UserId = baseCmd.UserId;
+            this.UserUid = baseCmd.UserUid;
+            this.EditionId = baseCmd.EditionId;
+            this.EditionUid = baseCmd.EditionUid;
+            this.UserInterfaceLanguage = baseCmd.UserInterfaceLanguage;
+            this.IsAdmin = baseCmd.IsAdmin;
         }
     }
 }
