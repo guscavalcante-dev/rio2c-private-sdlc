@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-28-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-27-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 10-23-2024
 // ***********************************************************************
 // <copyright file="SimpleInjectorInitializer.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,6 +26,8 @@ using PlataformaRio2C.Application.Services;
 using PlataformaRio2C.Infra.CrossCutting.CQRS;
 using PlataformaRio2C.Infra.Data.FileRepository;
 using PlataformaRio2C.Web.Admin.Services;
+using PlataformaRio2C.Application.CQRS.Events.Editions;
+using MediatR;
 
 namespace PlataformaRio2C.Web.Admin.App_Start
 {
@@ -39,12 +41,16 @@ namespace PlataformaRio2C.Web.Admin.App_Start
             container.Options.DefaultScopedLifestyle = new WebRequestLifestyle();
 
             IoCBootStrapper.RegisterServices(container);
+
             FileRepositoryBootStrapper.RegisterServices(container);
+
             container.Register<IMailerService, AdminMailerService>(Lifestyle.Scoped);
+
             CqrsBootStrapper.RegisterServices(container, new[]
             {
                 typeof(CreateSalesPlatformWebhookRequestCommandHandler).Assembly
             });
+            container.Collection.Register(typeof(INotificationHandler<>), new[] { typeof(EditionCreated).Assembly });
 
             // Necessário para registrar o ambiente do Owin que é dependência do Identity
             // Feito fora da camada de IoC para não levar o System.Web para fora

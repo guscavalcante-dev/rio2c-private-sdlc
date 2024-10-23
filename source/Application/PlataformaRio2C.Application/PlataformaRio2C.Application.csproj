@@ -328,6 +328,7 @@
     <Compile Include="CQRS\CommandsHandlers\Administrators\CreateAdministratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Administrators\DeleteAdministratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\UpdateOrganizationApiConfigurationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Rooms\CreateDefaultVirtualRoomCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Speakers\SendSpeakersReportCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\User\UpdateUserStatusCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Administrators\UpdateAdministratorCommandHandler.cs" />
@@ -515,6 +516,7 @@
     <Compile Include="CQRS\Commands\Administrators\CreateAdministrator.cs" />
     <Compile Include="CQRS\Commands\Administrators\DeleteAdministrator.cs" />
     <Compile Include="CQRS\Commands\Organizations\UpdateOrganizationApiConfiguration.cs" />
+    <Compile Include="CQRS\Commands\Rooms\CreateDefaultVirtualRoom.cs" />
     <Compile Include="CQRS\Commands\Speakers\SendSpeakersReport.cs" />
     <Compile Include="CQRS\Commands\User\UpdateUserStatus.cs" />
     <Compile Include="CQRS\Commands\Administrators\UpdateAdministrator.cs" />
@@ -656,6 +658,11 @@
     <Compile Include="CQRS\Commands\Tracks\DeleteTrack.cs" />
     <Compile Include="CQRS\Commands\Tracks\UpdateTrackMainInformation.cs" />
     <Compile Include="CQRS\Commands\WeConnect\SynchronizeWeConnectPublications.cs" />
+    <Compile Include="CQRS\EventsHandlers\BaseEventHandler.cs" />
+    <Compile Include="CQRS\EventsHandlers\Editions\EditionEventHandler.cs" />
+    <Compile Include="CQRS\Events\BaseEvent.cs" />
+    <Compile Include="CQRS\Events\Editions\EditionUpdated.cs" />
+    <Compile Include="CQRS\Events\Editions\EditionCreated.cs" />
     <Compile Include="CQRS\QueriesHandlers\ProjectBuyerEvaluations\CountNegotiationsAcceptedByBuyerAttendeeOrganizationUidQueryHandler.cs" />
     <Compile Include="CQRS\Queries\Conferences\FindAllConferencesByAttendeeCollaboratorId.cs" />
     <Compile Include="CQRS\QueriesHandlers\Conferences\FindAllConferencesByAttendeeCollaboratorIdQueryHandler.cs" />
@@ -855,8 +862,6 @@
     <Folder Include="CQRS\CommandsHandlers\SalesPlatforms\" />
     <Folder Include="CQRS\Commands\Audiovisual\Collaborators\BaseCommands\" />
     <Folder Include="CQRS\Commands\Innovation\Collaborators\BaseCommands\" />
-    <Folder Include="CQRS\EventsHandlers\" />
-    <Folder Include="CQRS\Events\" />
     <Folder Include="Dtos\Editions\" />
     <Folder Include="Services\Api\" />
     <Folder Include="ViewModels\Common\ProducerProject\" />

@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-13-2023
+// Last Modified On : 10-23-2024
 // ***********************************************************************
 // <copyright file="CreateEditionCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Application.CQRS.Events.Editions;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;
@@ -149,6 +150,17 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.EditionRepo.Create(edition);
             this.Uow.SaveChanges();
             this.AppValidationResult.Data = edition;
+
+            // Update with this Edition Id to send to event
+            cmd.UpdatePreSendProperties(
+                cmd.UserId, 
+                cmd.UserUid, 
+                edition.Id,
+                edition.Uid, 
+                cmd.UserInterfaceLanguage, 
+                cmd.IsAdmin);
+
+            await this.CommandBus.Publish(new EditionCreated(cmd), cancellationToken);
 
             return this.AppValidationResult;
         }

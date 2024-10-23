@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 01-06-2020
 //
-// Last Modified By : Elton Assunção
-// Last Modified On : 02-01-2023
+// Last Modified By : Renan Valentim
+// Last Modified On : 10-23-2024
 // ***********************************************************************
 // <copyright file="UpdateEditionMainInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Application.CQRS.Events.Editions;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -115,6 +116,17 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             this.EditionRepo.Update(edition);
             this.Uow.SaveChanges();
+
+            // Update with this Edition Id to send to event
+            cmd.UpdatePreSendProperties(
+                cmd.UserId,
+                cmd.UserUid,
+                edition.Id,
+                edition.Uid,
+                cmd.UserInterfaceLanguage,
+                cmd.IsAdmin);
+
+            await this.CommandBus.Publish(new EditionUpdated(cmd), cancellationToken);
 
             return this.AppValidationResult;
         }
