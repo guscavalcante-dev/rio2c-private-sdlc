@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Site
 // Author           : Gilson Oliveira
-// Created          : 22-10-2024
+// Created          : 10-22-2024
 //
 // Last Modified By : Gilson Oliveira
-// Last Modified On : 22-10-2024
+// Last Modified On : 10-22-2024
 // ***********************************************************************
 // <copyright file="BusinessRoundProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -47,6 +47,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo;
         private readonly IProjectEvaluationStatusRepository evaluationStatusRepository;
+        private readonly IProjectModalityRepository projectModalityRepository;
 
         /// <summary>Initializes a new instance of the <see cref="BusinessRoundProjectsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -58,6 +59,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="projectEvaluationRefuseReasonRepo">The project evaluation refuse reason repo.</param>
         /// <param name="evaluationStatusRepository">The project evaluation status repository.</param>
+        /// <param name="projectModalityRepository">The project evaluation status repository.</param>
         public BusinessRoundProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
@@ -67,7 +69,9 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             ITargetAudienceRepository targetAudienceRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo,
-            IProjectEvaluationStatusRepository evaluationStatusRepository)
+            IProjectEvaluationStatusRepository evaluationStatusRepository,
+            IProjectModalityRepository projectModalityRepository
+            )
             : base(commandBus, identityController)
         {
             this.projectRepo = projectRepository;
@@ -77,6 +81,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.projectEvaluationRefuseReasonRepo = projectEvaluationRefuseReasonRepo;
             this.evaluationStatusRepository = evaluationStatusRepository;
+            this.projectModalityRepository = projectModalityRepository;
         }
 
         #region Seller (Industry)
@@ -91,14 +96,14 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "BusinessRoundProjects", new { Area = "Audiovisual" })),
             });
 
             #endregion
 
             if (this.EditionDto?.IsAudiovisualProjectSubmitStarted() != true)
             {
-                return RedirectToAction("Index", "Projects", new { Area = "" });
+                return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Audiovisual" });
             }
 
             var projects = await this.projectRepo.FindAllDtosToSellAsync(
@@ -143,27 +148,27 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         {
             if (this.EditionDto?.IsAudiovisualProjectSubmitStarted() != true)
             {
-                return RedirectToAction("Index", "Projects", new { Area = "" });
+                return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Audiovisual" });
             }
 
             var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(id ?? Guid.Empty, this.EditionDto.Id);
             if (projectDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
+                return RedirectToAction("SubmittedList", "BusinessRoundProjects", new { Area = "Audiovisual" });
             }
 
             if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true) // Is seller
             {
                 this.StatusMessageToastr(Texts.ForbiddenErrorMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
+                return RedirectToAction("SubmittedList", "BusinessRoundProjects", new { Area = "Audiovisual" });
             }
 
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
-                new BreadcrumbItemHelper(projectDto.GetTitleDtoByLanguageCode(this.UserInterfaceLanguage)?.ProjectTitle?.Value ?? Labels.Project, Url.Action("SubmittedDetails", "Projects", new { id }))
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "BusinessRoundProjects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(projectDto.GetTitleDtoByLanguageCode(this.UserInterfaceLanguage)?.ProjectTitle?.Value ?? Labels.Project, Url.Action("SubmittedDetails", "BusinessRoundProjects", new { id }))
             });
 
             #endregion
@@ -705,8 +710,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ProjectInfo, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
-                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "BusinessRoundProjects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "BusinessRoundProjects", new { Area = "Audiovisual" }))
             });
 
             #endregion
@@ -714,29 +719,33 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             if (this.EditionDto?.IsAudiovisualProjectSubmitOpen() != true)
             {
                 this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "Projects");
+                return RedirectToAction("Index", "BusinessRoundProjects");
             }
 
             if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true)
             {
-                return RedirectToAction("CompanyInfo", "Projects");
+                return RedirectToAction("CompanyInfo", "BusinessRoundProjects");
             }
 
             if (this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() == true)
             {
-                return RedirectToAction("TermsAcceptance", "Projects", new { id });
+                return RedirectToAction("TermsAcceptance", "BusinessRoundProjects", new { id });
             }
 
             // Check if producer submitted the max number of projects
             var firstAttendeeOrganizationCreated = this.UserAccessControlDto.GetFirstAttendeeOrganizationCreated();
             if (firstAttendeeOrganizationCreated != null)
             {
-                var projectsCount = this.projectRepo.Count(p => p.SellerAttendeeOrganization.Uid == firstAttendeeOrganizationCreated.Uid && !p.IsDeleted);
+                var projectsCount = this.projectRepo.Count(p => 
+                    p.SellerAttendeeOrganization.Uid == firstAttendeeOrganizationCreated.Uid
+                        && !p.IsDeleted
+                        && new int[] { ProjectModality.Both.Id, ProjectModality.BusinessRound.Id }.Contains(p.ProjectModalityId)
+                );
                 var projectMaxCount = this.EditionDto?.AttendeeOrganizationMaxSellProjectsCount ?? 0;
                 if (projectsCount >= projectMaxCount)
                 {
                     this.StatusMessageToastr(Messages.YouReachedProjectsLimit, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                    return RedirectToAction("SubmittedList", "Projects");
+                    return RedirectToAction("SubmittedList", "BusinessRoundProjects");
                 }
             }
 
@@ -750,7 +759,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                     if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
                     {
                         this.StatusMessageToastr(Texts.ForbiddenErrorMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                        return RedirectToAction("SubmittedList", "Projects", new { Area = "" });
+                        return RedirectToAction("SubmittedList", "BusinessRoundProjects", new { Area = "" });
                     }
                 }
             }
@@ -762,7 +771,10 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Audiovisual.Id),
                 true,
                 false,
-                false);
+                false,
+                this.UserInterfaceLanguage,
+                await this.projectModalityRepository.FindAllAsync()
+            );
 
             return View(cmd);
         }
@@ -776,8 +788,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ProjectInfo, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
-                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "BusinessRoundProjects", new { Area = "" })),
+                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "BusinessRoundProjects", new { Area = "" }))
             });
 
             #endregion
@@ -785,13 +797,13 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             if (this.EditionDto?.IsAudiovisualProjectSubmitOpen() != true)
             {
                 this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "Projects");
+                return RedirectToAction("Index", "BusinessRoundProjects");
             }
 
             if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
                 || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() == true)
             {
-                return RedirectToAction("Submit", "Projects");
+                return RedirectToAction("Submit", "BusinessRoundProjects");
             }
 
             var result = new AppValidationResult();
@@ -829,7 +841,10 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 this.StatusMessageToastr(toastrError?.Message ?? ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
                 cmd.UpdateDropdownProperties(
-                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
+                    this.UserInterfaceLanguage,
+                    await this.projectModalityRepository.FindAllAsync()
+                );
 
                 return View(cmd);
             }
@@ -839,7 +854,10 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
                 cmd.UpdateDropdownProperties(
-                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
+                    this.UserInterfaceLanguage,
+                    await this.projectModalityRepository.FindAllAsync()
+                );
 
                 return View(cmd);
             }
@@ -851,7 +869,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 var project = result.Data as Project;
                 if (project != null)
                 {
-                    return RedirectToAction("SendToPlayers", "Projects", new { id = project.Uid });
+                    return RedirectToAction("SendToPlayers", "BusinessRoundProjects", new { id = project.Uid });
                 }
             }
             catch
@@ -859,7 +877,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 // ignored
             }
 
-            return RedirectToAction("Index", "Projects");
+            return RedirectToAction("Index", "BusinessRoundProjects");
         }
 
         #endregion
@@ -874,8 +892,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CompanyInfo, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
-                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "BusinessRoundProjects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "BusinessRoundProjects", new { Area = "Audiovisual" }))
             });
 
             #endregion
@@ -883,12 +901,12 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             if (this.EditionDto?.IsAudiovisualProjectSubmitOpen() != true)
             {
                 this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "Projects");
+                return RedirectToAction("Index", "BusinessRoundProjects");
             }
 
             if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() != true)
             {
-                return RedirectToAction("Submit", "Projects");
+                return RedirectToAction("Submit", "BusinessRoundProjects");
             }
 
             //this.SetViewBags();
@@ -917,8 +935,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CompanyInfo, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
-                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "BusinessRoundProjects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "BusinessRoundProjects", new { Area = "Audiovisual" }))
             });
 
             #endregion
@@ -926,12 +944,12 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             if (this.EditionDto?.IsAudiovisualProjectSubmitOpen() != true)
             {
                 this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "Projects");
+                return RedirectToAction("Index", "BusinessRoundProjects");
             }
 
             if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() != true)
             {
-                return RedirectToAction("Submit", "Projects");
+                return RedirectToAction("Submit", "BusinessRoundProjects");
             }
 
             var result = new AppValidationResult();
@@ -986,7 +1004,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 
             this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.Company, Labels.UpdatedF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
 
-            return RedirectToAction("Submit", "Projects");
+            return RedirectToAction("Submit", "BusinessRoundProjects");
         }
 
         #endregion
@@ -1002,8 +1020,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ParticipantsTerms, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
-                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "BusinessRoundProjects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "BusinessRoundProjects", new { Area = "Audiovisual" }))
             });
 
             #endregion
@@ -1011,13 +1029,13 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             if (this.EditionDto?.IsAudiovisualProjectSubmitOpen() != true)
             {
                 this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "Projects");
+                return RedirectToAction("Index", "BusinessRoundProjects");
             }
 
             if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
                 || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() != true)
             {
-                return RedirectToAction("Submit", "Projects");
+                return RedirectToAction("Submit", "BusinessRoundProjects");
             }
 
             var cmd = new OnboardProducerTermsAcceptance(id);
@@ -1034,8 +1052,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ParticipantsTerms, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
-                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "BusinessRoundProjects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "BusinessRoundProjects", new { Area = "Audiovisual" }))
             });
 
             #endregion
@@ -1043,13 +1061,13 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             if (this.EditionDto?.IsAudiovisualProjectSubmitOpen() != true)
             {
                 this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "Projects");
+                return RedirectToAction("Index", "BusinessRoundProjects");
             }
 
             if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
                 || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() != true)
             {
-                return RedirectToAction("Submit", "Projects");
+                return RedirectToAction("Submit", "BusinessRoundProjects");
             }
 
             var result = new AppValidationResult();
@@ -1108,14 +1126,14 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 {
                     if (cmd.ProjectUid.HasValue)
                     {
-                        return RedirectToAction("SendToPlayers", "Projects", new { id = cmd.ProjectUid });
+                        return RedirectToAction("SendToPlayers", "BusinessRoundProjects", new { id = cmd.ProjectUid });
                     }
 
-                    return RedirectToAction("SubmittedList", "Projects");
+                    return RedirectToAction("SubmittedList", "BusinessRoundProjects");
                 }
             }
 
-            return RedirectToAction("Submit", "Projects");
+            return RedirectToAction("Submit", "BusinessRoundProjects");
         }
 
         #endregion
@@ -1131,8 +1149,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ParticipantsTerms, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
-                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "BusinessRoundProjects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "BusinessRoundProjects", new { Area = "Audiovisual" }))
             });
 
             #endregion
@@ -1140,26 +1158,26 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             if (this.EditionDto?.IsAudiovisualProjectSubmitOpen() != true)
             {
                 this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "Projects");
+                return RedirectToAction("Index", "BusinessRoundProjects");
             }
 
             if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
                 || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() == true)
             {
-                return RedirectToAction("Submit", "Projects", new { id });
+                return RedirectToAction("Submit", "BusinessRoundProjects", new { id });
             }
 
             var buyerCompanyWidgetDto = await this.projectRepo.FindSiteBuyerCompanyWidgetDtoByProjectUidAsync(id ?? Guid.Empty);
             if (buyerCompanyWidgetDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("SubmittedList", "Projects");
+                return RedirectToAction("SubmittedList", "BusinessRoundProjects");
             }
 
             if (buyerCompanyWidgetDto.Project.IsFinished())
             {
                 this.StatusMessageToastr(Messages.ProjectIsFinishedCannotBeUpdated, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("SubmittedList", "Projects");
+                return RedirectToAction("SubmittedList", "BusinessRoundProjects");
             }
 
             return View(buyerCompanyWidgetDto);
@@ -1173,11 +1191,11 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         {
             if (!id.HasValue)
             {
-                return RedirectToAction("SubmittedList", "Projects");
+                return RedirectToAction("SubmittedList", "BusinessRoundProjects");
             }
 
             this.StatusMessageToastr(Messages.ProjectSavedButNotSentToPlayers, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Warning);
-            return RedirectToAction("SubmittedDetails", "Projects", new { id });
+            return RedirectToAction("SubmittedDetails", "BusinessRoundProjects", new { id });
         }
 
         /// <summary>Shows the buyer company selected widget.</summary>
@@ -1434,7 +1452,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             if (originPage == "SendToPlayers")
             {
                 this.StatusMessageToastr(successMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
-                return Json(new { status = "success", redirectOnly = Url.Action("SubmittedDetails", "Projects", new { id = cmd.ProjectUid }) });
+                return Json(new { status = "success", redirectOnly = Url.Action("SubmittedDetails", "BusinessRoundProjects", new { id = cmd.ProjectUid }) });
             }
 
             return Json(new { status = "success", message = successMessage });
@@ -1461,13 +1479,13 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         {
             if (this.EditionDto?.IsProjectBuyerEvaluationStarted() != true)
             {
-                return RedirectToAction("Index", "Projects", new { Area = "" });
+                return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Audiovisual" });
             }
 
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("EvaluationList", "Projects", new { Area = "" })),
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("EvaluationList", "BusinessRoundProjects", new { Area = "" })),
             });
 
             #endregion
@@ -1567,33 +1585,33 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         {
             if (this.EditionDto?.IsProjectBuyerEvaluationStarted() != true)
             {
-                return RedirectToAction("Index", "Projects", new { Area = "" });
+                return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Audiovisual" });
             }
 
             var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(id ?? Guid.Empty, this.EditionDto.Id);
             if (projectDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("EvaluationList", "Projects", new { Area = "" });
+                return RedirectToAction("EvaluationList", "BusinessRoundProjects", new { Area = "Audiovisual" });
             }
 
             if (!projectDto.Project.IsFinished())
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("EvaluationList", "Projects", new { Area = "" });
+                return RedirectToAction("EvaluationList", "BusinessRoundProjects", new { Area = "Audiovisual" });
             }
 
             if (this.UserAccessControlDto?.HasAnyEditionAttendeeOrganization(projectDto.ProjectBuyerEvaluationDtos?.Select(pbed => pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid)?.ToList()) != true) // Is buyer
             {
                 this.StatusMessageToastr(Texts.ForbiddenErrorMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("EvaluationList", "Projects", new { Area = "" });
+                return RedirectToAction("EvaluationList", "BusinessRoundProjects", new { Area = "Audiovisual" });
             }
 
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("EvaluationList", "Projects", new { Area = "" })),
-                new BreadcrumbItemHelper(projectDto.GetTitleDtoByLanguageCode(this.UserInterfaceLanguage)?.ProjectTitle?.Value ?? Labels.Project, Url.Action("EvaluationDetails", "Projects", new { id }))
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("EvaluationList", "BusinessRoundProjects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(projectDto.GetTitleDtoByLanguageCode(this.UserInterfaceLanguage)?.ProjectTitle?.Value ?? Labels.Project, Url.Action("EvaluationDetails", "BusinessRoundProjects", new { id }))
             });
 
             #endregion

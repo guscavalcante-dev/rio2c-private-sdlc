@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Site
 // Author           : Gilson Oliveira
-// Created          : 22-10-2024
+// Created          : 10-22-2024
 //
 // Last Modified By : Gilson Oliveira
-// Last Modified On : 22-10-2024
+// Last Modified On : 10-22-2024
 // ***********************************************************************
 // <copyright file="PitchingProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -47,6 +47,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo;
         private readonly IProjectEvaluationStatusRepository evaluationStatusRepository;
+        private readonly IProjectModalityRepository projectModalityRepository;
 
         /// <summary>Initializes a new instance of the <see cref="PitchingProjectsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -67,7 +68,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             ITargetAudienceRepository targetAudienceRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo,
-            IProjectEvaluationStatusRepository evaluationStatusRepository)
+            IProjectEvaluationStatusRepository evaluationStatusRepository,
+            IProjectModalityRepository projectModalityRepository)
             : base(commandBus, identityController)
         {
             this.projectRepo = projectRepository;
@@ -77,6 +79,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.projectEvaluationRefuseReasonRepo = projectEvaluationRefuseReasonRepo;
             this.evaluationStatusRepository = evaluationStatusRepository;
+            this.projectModalityRepository = projectModalityRepository;
         }
 
         #region Seller (Industry)
@@ -762,7 +765,9 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Audiovisual.Id),
                 true,
                 false,
-                false);
+                false,
+                this.UserInterfaceLanguage,
+                await this.projectModalityRepository.FindAllAsync());
 
             return View(cmd);
         }

@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 11-06-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 12-23-2023
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 10-23-2024
 // ***********************************************************************
 // <copyright file="ProjectBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -89,6 +89,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public Guid? AttendeeOrganizationUid { get; private set; }
         public Guid ProjectTypeUid { get; private set; }
 
+        [Display(Name = "ProjectModality", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+
+        public Guid? ProjectModalityUid { get; set; }
+
+        public List<ProjectModalityDto> ProjectModalities { get; private set; }
+
+        public int ProjectMaxCount { get; private set; }
+
         /// <summary>Initializes a new instance of the <see cref="ProjectBaseCommand"/> class.</summary>
         public ProjectBaseCommand()
         {
@@ -109,7 +118,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<InterestDto> interestsDtos,
             bool isDataRequired,
             bool isProductionPlanRequired,
-            bool isAdditionalInformationRequired)
+            bool isAdditionalInformationRequired,
+            string userInterfaceLanguage,
+            List<ProjectModalityDto> projectModalities
+        )
         {
             this.TotalPlayingTime = entity?.Project?.TotalPlayingTime;
             this.NumberOfEpisodes = entity?.Project?.NumberOfEpisodes;
@@ -130,7 +142,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateInterests(entity, interestsDtos);
             this.TargetAudiencesUids = entity?.ProjectTargetAudienceDtos?.Select(pta => pta.TargetAudience.Uid)?.ToList();
 
-            this.UpdateDropdownProperties(targetAudiences);
+            this.UpdateDropdownProperties(targetAudiences, userInterfaceLanguage, projectModalities);
         }
 
         /// <summary>Updates the dropdown properties.</summary>
@@ -138,6 +150,21 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public void UpdateDropdownProperties(List<TargetAudience> targetAudiences)
         {
             this.TargetAudiences = targetAudiences;
+        }
+
+        /// <summary>Updates the dropdown properties.</summary>
+        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <param name="projectModalities">The project modalities list.</param>
+        public void UpdateDropdownProperties(
+            List<TargetAudience> targetAudiences,
+            string userInterfaceLanguage,
+            List<ProjectModalityDto> projectModalities
+        )
+        {
+            this.TargetAudiences = targetAudiences;
+            projectModalities.ForEach(g => g.Translate(userInterfaceLanguage));
+            this.ProjectModalities = projectModalities;
         }
 
         /// <summary>Updates the pre send properties.</summary>
