@@ -181,6 +181,7 @@
     <Compile Include="Mapping\Projects\ProjectEvaluationRefuseReasonMap.cs" />
     <Compile Include="Mapping\Projects\ProjectEvaluationStatusMap.cs" />
     <Compile Include="Mapping\Projects\ProjectTargetAudienceMap.cs" />
+    <Compile Include="Mapping\Projects\ProjectModalityMap.cs" />
     <Compile Include="Mapping\Projects\ProjectTypeMap.cs" />
     <Compile Include="Mapping\Projects\ProjectAdditionalInformationMap.cs" />
     <Compile Include="Mapping\Projects\ProjectInterestMap.cs" />
@@ -251,6 +252,10 @@
     <Compile Include="Migrations\202410022155286_AddCompanyNameToCollaborators.Designer.cs">
       <DependentUpon>202410022155286_AddCompanyNameToCollaborators.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202410230342192_CreateProjectModalitiesTable.cs" />
+    <Compile Include="Migrations\202410230342192_CreateProjectModalitiesTable.Designer.cs">
+      <DependentUpon>202410230342192_CreateProjectModalitiesTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -278,10 +283,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Migrations\Scripts\202410230342192_CreateProjectModalitiesTable.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Migrations\Scripts\202410022155286_AddCompanyNameToCollaborators.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202408202223049_Initial.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202410230342192_CreateProjectModalitiesTable.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202410022155286_AddCompanyNameToCollaborators.up.sql">
@@ -384,6 +395,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202410022155286_AddCompanyNameToCollaborators.resx">
       <DependentUpon>202410022155286_AddCompanyNameToCollaborators.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202410230342192_CreateProjectModalitiesTable.resx">
+      <DependentUpon>202410230342192_CreateProjectModalitiesTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
