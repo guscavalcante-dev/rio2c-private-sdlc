@@ -39,6 +39,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults;
 using PlataformaRio2C.Domain.ApiModels;
 using ClosedXML.Excel;
 using System.IO;
+using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
@@ -108,11 +109,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
         /// <param name="showHighlights">if set to <c>true</c> [show highlights].</param>
+        /// <param name="showNotPublishableToApi">if set to <c>true</c> [show not publishable to api].</param>
         /// <param name="roomsUids">The rooms uids.</param>
         /// <returns></returns>
         [HttpGet]
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
-        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllParticipants, bool? showHighlights, string roomsUids)
+        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllParticipants, bool? showHighlights, bool? showNotPublishableToApi, string roomsUids)
         {
             var speakers = await this.collaboratorRepo.FindAllSpeakersByDataTable(
                 request.Start / request.Length,
@@ -123,8 +125,26 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 showAllParticipants,
                 showHighlights,
                 this.EditionDto?.Id,
+                showNotPublishableToApi,
                 roomsUids.ToListNullableGuid(','),
                 false);
+
+            foreach(var speaker in speakers)
+            {
+                var collaborator = new Collaborator(
+                    speaker.FirstName,
+                    speaker.LastNames,
+                    speaker.Badge,
+                    speaker.ImageUploadDate,
+                    speaker.JobTitleBaseDtos,
+                    speaker.MiniBioBaseDtos,
+                    speaker.EditionAttendeeCollaboratorBaseDto
+                );
+                collaborator.FillRequiredFieldsToPublishToApi();
+                speaker.RequiredFieldsToPublish = collaborator.RequiredFieldsToPublish;
+                speaker.JobTitleBaseDtos = Enumerable.Empty<CollaboratorJobTitleBaseDto>();
+                speaker.MiniBioBaseDtos = Enumerable.Empty<CollaboratorMiniBioBaseDto>();
+            }
 
             var response = DataTablesResponse.Create(request, speakers.TotalItemCount, speakers.TotalItemCount, speakers);
 
@@ -142,11 +162,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
         /// <param name="showHighlights">The show highlights.</param>
+        /// <param name="showNotPublishableToApi">if set to <c>true</c> [show not publishable to api].</param>
         /// <param name="roomsUids">The rooms uids.</param>
         /// <returns></returns>
         [HttpGet]
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
-        public async Task<ActionResult> ExportToExcel(string searchKeywords, bool showAllEditions, bool showAllParticipants, bool? showHighlights, string roomsUids)
+        public async Task<ActionResult> ExportToExcel(string searchKeywords, bool showAllEditions, bool showAllParticipants, bool? showHighlights, bool? showNotPublishableToApi, string roomsUids)
         {
             string fileName = Labels.SpeakersReport + "_" + DateTime.UtcNow.ToStringFileNameTimestamp();
             string filePath = Path.Combine(Path.GetTempPath(), fileName + ".xlsx");
@@ -162,6 +183,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                      showAllParticipants,
                      showHighlights,
                      this.EditionDto?.Id,
+                     showNotPublishableToApi,
                      roomsUids.ToListNullableGuid(','),
                      true);
 

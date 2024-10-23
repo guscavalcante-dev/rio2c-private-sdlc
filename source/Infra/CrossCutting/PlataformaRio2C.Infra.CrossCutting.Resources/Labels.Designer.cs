@@ -5573,6 +5573,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Publicável.
+        /// </summary>
+        public static string Publishable {
+            get {
+                return ResourceManager.GetString("Publishable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Publicada.
         /// </summary>
         public static string Published {
@@ -6564,6 +6573,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ShowMyConferences {
             get {
                 return ResourceManager.GetString("ShowMyConferences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exibir não publicáveis.
+        /// </summary>
+        public static string ShowNotPublishableToApi {
+            get {
+                return ResourceManager.GetString("ShowNotPublishableToApi", resourceCulture);
             }
         }
         

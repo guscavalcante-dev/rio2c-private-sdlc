@@ -3359,6 +3359,12 @@
   <data name="MiniBioTranslated" xml:space="preserve">
     <value>Mini-bio {0}</value>
   </data>
+  <data name="Publishable" xml:space="preserve">
+    <value>Publishable</value>
+  </data>
+  <data name="ShowNotPublishableToApi" xml:space="preserve">
+    <value>Show not publisable</value>
+  </data>
   <data name="PlayerDemand" xml:space="preserve">
     <value>Player Demand</value>
   </data>

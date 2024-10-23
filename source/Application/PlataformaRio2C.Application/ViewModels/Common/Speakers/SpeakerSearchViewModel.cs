@@ -36,6 +36,9 @@ namespace PlataformaRio2C.Application.ViewModels
         [Display(Name = "ShowHighlights", ResourceType = typeof(Labels))]
         public bool ShowHighlights { get; set; }
 
+        [Display(Name = "ShowNotPublishableToApi", ResourceType = typeof(Labels))]
+        public bool ShowNotPublishableToApi { get; set; }
+        
         [Display(Name = "Room", ResourceType = typeof(Labels))]
         public Guid? RoomsUids { get; set; }
 

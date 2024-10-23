@@ -68,6 +68,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public int CreateUserId { get; set; }
         public int UpdateUserId { get; set; }
 
+        public Dictionary<string, object> RequiredFieldsToPublish;
+
         public List<Guid> EditionsUids { get; set; }
 
         public HoldingBaseDto HoldingBaseDto { get; set; }

@@ -221,6 +221,29 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the by not publishable.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="showNotPublishableToApi">The show not publishable.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> FindNotPublishableToApi(this IQueryable<Collaborator> query, int? editionId, bool? showNotPublishableToApi)
+        {
+            if (showNotPublishableToApi == true)
+            {
+                query = query
+                    .Where(o =>
+                        o.ImageUploadDate == null
+                        || o.FirstName == null
+                        || o.LastNames == null
+                        || o.Badge == null
+                        || o.AttendeeCollaborators.Any(ac => !ac.IsDeleted && ac.EditionId == editionId && ac.SpeakerTermsAcceptanceDate == null)
+                        || o.JobTitles.Any(jt => !jt.IsDeleted && jt.Value == null)
+                        || o.MiniBios.Any(mb => !mb.IsDeleted && mb.Value == null)
+                    );
+            }
+            return query;
+        }
+
         /// <summary>Finds the by API highlights.</summary>
         /// <param name="query">The query.</param>
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
@@ -2600,6 +2623,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             bool showAllParticipants,
             bool? showHighlights,
             int? editionId,
+            bool? showNotPublishableToApi,
             List<Guid?> roomsUids,
             bool exportToExcel = false)
         {
@@ -2611,6 +2635,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByKeywords(keywords, editionId)
                                 .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, showAllEditions, showAllParticipants, editionId)
                                 .FindByHighlights(collaboratorTypeNames, showHighlights)
+                                .FindNotPublishableToApi(editionId, showNotPublishableToApi)
                                 .FindByConferencesRoomsUids(roomsUids, false);
 
             IPagedList<CollaboratorDto> collaboratorDtos;
@@ -2784,6 +2809,32 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                     Id = c.User.Id,
                                                     Uid = c.User.Uid
                                                 },
+                                                JobTitleBaseDtos = c.JobTitles.Where(jb => !jb.IsDeleted).Select(d => new CollaboratorJobTitleBaseDto
+                                                {
+                                                    Id = d.Id,
+                                                    Uid = d.Uid,
+                                                    Value = d.Value,
+                                                    LanguageDto = new LanguageBaseDto
+                                                    {
+                                                        Id = d.Language.Id,
+                                                        Uid = d.Language.Uid,
+                                                        Name = d.Language.Name,
+                                                        Code = d.Language.Code
+                                                    }
+                                                }),
+                                                MiniBioBaseDtos = c.MiniBios.Where(mb => !mb.IsDeleted).Select(d => new CollaboratorMiniBioBaseDto
+                                                {
+                                                    Id = d.Id,
+                                                    Uid = d.Uid,
+                                                    Value = d.Value,
+                                                    LanguageDto = new LanguageBaseDto
+                                                    {
+                                                        Id = d.Language.Id,
+                                                        Uid = d.Language.Uid,
+                                                        Name = d.Language.Name,
+                                                        Code = d.Language.Code
+                                                    }
+                                                }),
 
                                                 IsApiDisplayEnabled = c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId
                                                                                                         && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
