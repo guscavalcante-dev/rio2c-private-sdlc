@@ -3371,4 +3371,7 @@
   <data name="Low" xml:space="preserve">
     <value>Low</value>
   </data>
+  <data name="ScheduledRounds" xml:space="preserve">
+    <value>Scheduled Rounds</value>
+  </data>
 </root>

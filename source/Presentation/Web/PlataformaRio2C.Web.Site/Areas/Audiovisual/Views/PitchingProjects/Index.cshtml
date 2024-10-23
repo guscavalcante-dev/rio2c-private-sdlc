@@ -1,0 +1,264 @@
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Entities
+@using PlataformaRio2C.Domain.Statics
+@model List<ProjectDto>
+@{
+    ViewBag.Title = Labels.ProjectsSubmission;
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    var isProjectSubmitOpen = editionDto?.IsAudiovisualProjectSubmitOpen() == true;
+    var isEvaluationReleasedForDisclosure = editionDto?.IsProjectBuyerEvaluationReleasedForDisclosure() == true;
+    var hasProjectSpace = Model.Any(m => m.IsFakeProject);
+}
+@section Scripts {
+    <script>
+        jQuery(document).ready(function () {
+            MyRio2cCommon.enableTooltips();
+        });
+    </script>
+}
+<div class="row">
+    <div class="col-md-12">
+        @if (Model?.Any() == true)
+        {
+            foreach (var projectDto in Model)
+            {
+                var projectTitle = projectDto.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value;
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="kt-portlet kt-portlet--height-fluid">
+                            <div class="kt-portlet__body">
+                                <div class="kt-widget5">
+                                    <div class="kt-widget kt-widget--project-1" style="border-bottom: 0.07rem dashed #ebedf2;">
+                                        <div class="kt-widget__head pt-0">
+                                            <div class="kt-widget__label">
+                                                <div class="kt-widget__info mt-0 pl-0">
+                                                    @if (!projectDto.IsFakeProject)
+                                                    {
+                                                        <a href="@Url.Action("SubmittedDetails", "Projects", new { id = projectDto.Project.Uid, Area = "" })" class="kt-widget__title">
+                                                            @projectTitle
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="kt-widget__title">
+                                                            @projectTitle
+                                                        </span>
+                                                    }
+                                                    @if (!projectDto.IsFakeProject)
+                                                    {
+                                                        <span class="kt-widget__desc">
+                                                            @Labels.Producer: @projectDto.SellerAttendeeOrganizationDto.Organization.TradeName
+                                                        </span>
+                                                        <span class="kt-widget__desc">
+                                                            @Labels.Genre:
+                                                            @{
+                                                                var projectInterestsDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualGenre.Uid);
+                                                                if (projectInterestsDtos?.Any() == true)
+                                                                {
+                                                                    foreach (var projectInterestDto in projectInterestsDtos)
+                                                                    {
+                                                                        <span class="kt-badge kt-badge--inline kt-badge--info">@(projectInterestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
+
+                                                                    }
+                                                                }
+                                                            }
+                                                        </span>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="kt-widget__body pb-0">
+                                            @if (!projectDto.IsFakeProject)
+                                            {
+                                                <span class="kt-widget__text mt-0">
+                                                    @(Html.Raw(projectDto.GetLogLineDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectLogLine?.Value))
+                                                </span>
+                                                <div class="kt-widget__content">
+                                                    <div class="kt-widget__details" style="width: 100%;">
+                                                        @if (projectDto.ProjectBuyerEvaluationDtos?.Any() == true)
+                                                        {
+                                                            <span class="kt-widget__subtitle">@Labels.PlayersSelectedForEvaluation:</span>
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div class="row">
+                                                                        @foreach (var projectBuyerEvaluationDto in projectDto.ProjectBuyerEvaluationDtos)
+                                                                        {
+                                                                            <!-- begin: Player -->
+                                                                            <div class="kt-widget kt-widget--user-profile-4 col-sm-4 col-md-4 col-xl-2">
+                                                                                <div class="kt-widget__head d-block p-0">
+                                                                                    <div class="kt-widget__media">
+                                                                                        @if (projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.ImageUploadDate.HasValue)
+                                                                                        {
+                                                                                            <img class="kt-widget__img" src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid, projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="" style="max-width: 45px; max-height: 45px; border: 0.07rem solid #ebedf2;">
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest kt-font-light" style="max-width: 45px; max-height: 45px;">
+                                                                                                @projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Name.GetTwoLetterCode()
+                                                                                            </div>
+                                                                                        }
+                                                                                    </div>
+                                                                                    <div class="kt-widget__content pt-0 d-flex flex-column">
+                                                                                        <div class="kt-widget__section mx-auto">
+                                                                                            <a href="@Url.Action("Details", "Companies", new {id = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid})" class="kt-widget__username" target="_blank" style="min-height: 70px;">
+                                                                                                <small>@projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.TradeName</small>
+                                                                                            </a>
+                                                                                            @if (projectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.Organization?.IsVirtualMeeting != null)
+                                                                                            {
+                                                                                                var isVirtualMeeting = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.IsVirtualMeeting == true;
+                                                                                                var tooltipTile = string.Format(Messages.PlayerMeetingPreference, (isVirtualMeeting ? Labels.RemoteF : Labels.Presential).ToLowerInvariant());
+
+                                                                                                <div class="kt-widget__username text-center mt-0 pt-0">
+                                                                                                    <span class="kt-badge kt-badge--inline kt-badge--warning mt-2 kt-font-boldest" data-toggle="tooltip" data-placement="right" title="@tooltipTile" style="cursor: pointer;">
+                                                                                                        @(isVirtualMeeting ? Labels.Remote : Labels.Presential)
+                                                                                                    </span>
+                                                                                                </div>
+                                                                                            }
+                                                                                            @if (isEvaluationReleasedForDisclosure)
+                                                                                            {
+                                                                                                var color = "warning";
+                                                                                                var icon = "fa-diagnoses";
+                                                                                                if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == ProjectEvaluationStatus.Accepted.Code)
+                                                                                                {
+                                                                                                    color = "success";
+                                                                                                    icon = "fa-thumbs-up";
+                                                                                                }
+                                                                                                else if (projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == ProjectEvaluationStatus.Refused.Code)
+                                                                                                {
+                                                                                                    color = "danger";
+                                                                                                    icon = "fa-thumbs-down";
+                                                                                                }
+                                                                                                else if (editionDto?.IsAudiovisualProjectSubmitEnded() == true &&
+                                                                                                    projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == ProjectEvaluationStatus.UnderEvaluation.Code)
+                                                                                                {
+                                                                                                    color = "danger";
+                                                                                                    icon = "fa-thumbs-down";
+                                                                                                    projectBuyerEvaluationDto.ProjectEvaluationStatus = ProjectEvaluationStatus.Refused;
+                                                                                                }
+                                                                                                <div class="kt-widget__button">
+                                                                                                    <span class="btn btn-label-@(color) btn-sm">
+                                                                                                        <i class="fa @(icon) mr-1"></i> @(projectBuyerEvaluationDto.ProjectEvaluationStatus.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                                                                                    </span>
+                                                                                                </div>
+                                                                                                if (projectBuyerEvaluationDto.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Refused.Code && projectBuyerEvaluationDto.ProjectEvaluationRefuseReason != null)
+                                                                                                {
+                                                                                                    <span class="d-block text-justify mt-2" style="font-size: 11px;">
+                                                                                                        <small>
+                                                                                                            @if (projectBuyerEvaluationDto.ProjectEvaluationRefuseReason.HasAdditionalInfo && !string.IsNullOrEmpty(projectBuyerEvaluationDto.ProjectBuyerEvaluation?.Reason))
+                                                                                                            {
+                                                                                                                @(projectBuyerEvaluationDto.ProjectBuyerEvaluation?.Reason?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                                                                                            }
+                                                                                                            else
+                                                                                                            {
+                                                                                                                @(projectBuyerEvaluationDto.ProjectEvaluationRefuseReason.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                                                                                            }
+                                                                                                        </small>
+                                                                                                    </span>
+                                                                                                }
+                                                                                            }
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- end: Player -->
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="kt-widget__subtitle">@Labels.ProjectNotSubmittedToPlayers.</span>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-20 justify-content-end">
+                                    @if (projectDto.IsFakeProject)
+                                    {
+                                        <div class="col-4 text-center">
+                                            <a href="@Url.Action("Submit", "Projects", new { Area = "" })" class="btn btn-brand">@string.Format(Labels.SubmitEntity, projectTitle)</a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        var isFinished = projectDto.Project.IsFinished();
+
+                                        if (hasProjectSpace)
+                                        {
+                                            <div class="col-4 text-center">
+                                                <a class="btn btn-brand" href="@Url.Action("Submit", "Projects", new { id = projectDto.Project.Uid, Area = "" })">@string.Format(Labels.DuplicateEntity, Labels.Project)</a>
+                                            </div>
+                                        }
+                                        <div class="col-4 text-center">
+                                            <a href="@Url.Action("SubmittedDetails", "Projects", new { id = projectDto.Project.Uid, Area = "" })" class="btn btn-brand">
+                                                @(!isFinished ? Labels.Edit : Labels.View)
+                                            </a>
+                                        </div>
+                                        if (isProjectSubmitOpen)
+                                        {
+                                            <div class="col-4 text-center">
+                                                @if (!isFinished)
+                                                {
+                                                    <a href="@Url.Action("SendToPlayers", "Projects", new { id = projectDto.Project.Uid, Area = "" })" class="btn btn-brand">
+                                                        @Labels.SendProjectsToPlayer
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <a class="btn btn-secondary disabled">
+                                                        @Labels.SendProjectsToPlayer
+                                                    </a>
+                                                }
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="kt-portlet kt-iconbox kt-iconbox--wave" style="height:100%">
+                    <div class="kt-portlet__body" style="height:100%">
+                        <div class="kt-iconbox__body">
+                            <div class="kt-iconbox__icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <rect id="bound" x="0" y="0" width="24" height="24"></rect>
+                                        <path d="M2.56066017,10.6819805 L4.68198052,8.56066017 C5.26776695,7.97487373 6.21751442,7.97487373 6.80330086,8.56066017 L8.9246212,10.6819805 C9.51040764,11.267767 9.51040764,12.2175144 8.9246212,12.8033009 L6.80330086,14.9246212 C6.21751442,15.5104076 5.26776695,15.5104076 4.68198052,14.9246212 L2.56066017,12.8033009 C1.97487373,12.2175144 1.97487373,11.267767 2.56066017,10.6819805 Z M14.5606602,10.6819805 L16.6819805,8.56066017 C17.267767,7.97487373 18.2175144,7.97487373 18.8033009,8.56066017 L20.9246212,10.6819805 C21.5104076,11.267767 21.5104076,12.2175144 20.9246212,12.8033009 L18.8033009,14.9246212 C18.2175144,15.5104076 17.267767,15.5104076 16.6819805,14.9246212 L14.5606602,12.8033009 C13.9748737,12.2175144 13.9748737,11.267767 14.5606602,10.6819805 Z" id="Combined-Shape" fill="#000000" opacity="0.3"></path>
+                                        <path d="M8.56066017,16.6819805 L10.6819805,14.5606602 C11.267767,13.9748737 12.2175144,13.9748737 12.8033009,14.5606602 L14.9246212,16.6819805 C15.5104076,17.267767 15.5104076,18.2175144 14.9246212,18.8033009 L12.8033009,20.9246212 C12.2175144,21.5104076 11.267767,21.5104076 10.6819805,20.9246212 L8.56066017,18.8033009 C7.97487373,18.2175144 7.97487373,17.267767 8.56066017,16.6819805 Z M8.56066017,4.68198052 L10.6819805,2.56066017 C11.267767,1.97487373 12.2175144,1.97487373 12.8033009,2.56066017 L14.9246212,4.68198052 C15.5104076,5.26776695 15.5104076,6.21751442 14.9246212,6.80330086 L12.8033009,8.9246212 C12.2175144,9.51040764 11.267767,9.51040764 10.6819805,8.9246212 L8.56066017,6.80330086 C7.97487373,6.21751442 7.97487373,5.26776695 8.56066017,4.68198052 Z" id="Combined-Shape" fill="#000000"></path>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="kt-iconbox__desc">
+                                <h3 class="kt-iconbox__title">
+                                    <a class="kt-link" href="#">@Labels.Program @Labels.AudiovisualProjects</a>
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="kt-iconbox__content mt-3">
+                            <ul class="pl-0 mb-0">
+                                @Html.Raw(string.Format(
+                                    Texts.ProducerProjectsDates,
+                                    editionDto?.ProjectSubmitStartDate.ToBrazilTimeZone().ToShortDateString(),
+                                    editionDto?.ProjectSubmitEndDate.ToBrazilTimeZone().ToShortDateString(),
+                                    editionDto?.ProjectEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(),
+                                    editionDto?.ProjectEvaluationEndDate.ToBrazilTimeZone().ToShortDateString(),
+                                    editionDto?.OneToOneMeetingsScheduleDate.ToBrazilTimeZone().ToShortDateString()))
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,60 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model ProjectDto
+@{
+    ViewBag.Title = $"{Labels.AudioVisual} | {Model.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value}";
+}
+@Html.Hidden("AggregateId", Model.Project.Uid)
+<div class="row">
+    <div class="col-md-12">
+        <!--begin:Main Information Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="ProjectMainInformationWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+        </div>
+        <!--end:Main Information Widget-->
+        <!--begin:Interest Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="ProjectInterestWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+        </div>
+        <!--end:Interest Widget-->
+        <!--begin:Links Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="ProjectLinksWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+        </div>
+        <!--end:Links Widget-->
+        <!--begin:Evaluation Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="ProjectBuyerEvaluationWidget" class="kt-portlet" style="min-height: 296px;"></div>
+            </div>
+        </div>
+        <!--end:Evaluation Widget-->
+    </div>
+</div>
+@section Styles {
+    @Styles.Render("~/bundles/css/select2.css")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/select2.js")
+    @Scripts.Render("~/bundles/js/inputmask.js")
+    @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/projects.widget.js")
+    @Scripts.Render("~/bundles/js/projects.buyerevaluation.update.widget.js")
+    <script>
+        // Page translations ----------------------------------------------------------------------
+        var translations = {
+        };
+
+        jQuery(document).ready(function () {
+            ProjectsMainInformationWidget.init();
+            ProjectsInterestWidget.init();
+            ProjectsLinksWidget.init();
+            ProjectsBuyerEvaluationUpdateWidget.init();
+        });
+    </script>
+}
