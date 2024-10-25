@@ -4,7 +4,7 @@
 // Created          : 11-06-2019
 //
 // Last Modified By : Gilson Oliveira
-// Last Modified On : 10-23-2024
+// Last Modified On : 10-24-2024
 // ***********************************************************************
 // <copyright file="ProjectBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -91,7 +91,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "ProjectModality", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-
         public Guid? ProjectModalityUid { get; set; }
 
         public List<ProjectModalityDto> ProjectModalities { get; private set; }

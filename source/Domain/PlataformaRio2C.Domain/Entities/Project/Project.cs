@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Gilson Oliveira
-// Last Modified On : 10-23-2024
+// Last Modified On : 10-24-2024
 // ***********************************************************************
 // <copyright file="Project.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -186,7 +186,9 @@ namespace PlataformaRio2C.Domain.Entities
             List<ProjectProductionPlan> projectProductionPlans,
             List<ProjectAdditionalInformation> projectAdditionalInformations,
             int userId,
-            bool isAdmin)
+            bool isAdmin,
+            ProjectModality projectModality
+        )
         {
             this.TotalPlayingTime = totalPlayingTime;
             this.NumberOfEpisodes = numberOfEpisodes;
@@ -208,6 +210,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.UtcNow;
 
             this.IsAdmin = isAdmin;
+            this.ProjectModalityId = projectModality.Id;
         }
 
         /// <summary>
@@ -984,6 +987,15 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Validations
 
+        /// <summary>Gets the maximum sell projects count.</summary>
+        /// <returns></returns>
+        public int GetMaxSellProjectsCount()
+        {
+           return this.SellerAttendeeOrganization
+                ?.Edition
+                ?.AttendeeOrganizationMaxSellProjectsCount ?? 0;
+        }
+
         /// <summary>Returns true if ... is valid.</summary>
         /// <returns>
         ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
@@ -1048,6 +1060,49 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateRequiredProjectBuyerEvaluations();
 
             return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>Determines whether [is update business round valid].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is update business round valid]; otherwise, <c>false</c>.</returns>
+        public bool IsUpdateBusinessRoundValid(int sellProjectsCount)
+        {
+            if (this.ValidationResult == null)
+            {
+                this.ValidationResult = new ValidationResult();
+            }
+            this.ValidateBusinessRoundLimits(sellProjectsCount);
+            return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>Determines whether [is update pitching valid].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is update pitching valid]; otherwise, <c>false</c>.</returns>
+        public bool IsUpdatePitchingValid(int sellProjectsCount)
+        {
+            if (this.ValidationResult == null)
+            {
+                this.ValidationResult = new ValidationResult();
+            }
+            return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>Validates the business rounds limits.</summary>
+        public void ValidateBusinessRoundLimits(int sellProjectsCount)
+        {
+            if (sellProjectsCount > this.GetMaxSellProjectsCount())
+            {
+                this.ValidationResult.Add(new ValidationError(Messages.IsNotPossibleCreateBusinessRoundProjectLimit, new string[] { "ToastrError" }));
+            }
+        }
+
+        /// <summary>Validates the pitching projects limits.</summary>
+        public void ValidatePitchingLimits(int sellProjectsCount)
+        {
+            if (sellProjectsCount > this.GetMaxSellProjectsCount())
+            {
+                this.ValidationResult.Add(new ValidationError(Messages.IsNotPossibleCreatePitchingProjectLimit, new string[] { "ToastrError" }));
+            }
         }
 
         /// <summary>Validates the is finished.</summary>

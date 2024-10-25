@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 04-17-2023
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 10-24-2024
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1685,7 +1685,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 {
                                     CommissionEvaluation = ce,
                                     EvaluatorUser = ce.EvaluatorUser
-                                }).ToList()
+                                }).ToList(),
+                                ProjectModalityDto = new ProjectModalityDto
+                                {
+                                    Id = p.ProjectModality.Id,
+                                    Uid = p.ProjectModality.Uid,
+                                    Name = p.ProjectModality.Name,
+                                }
                             })
                             .FirstOrDefaultAsync();
         }
