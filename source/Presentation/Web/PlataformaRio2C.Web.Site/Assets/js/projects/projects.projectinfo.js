@@ -26,6 +26,7 @@ var ProjectsProjectInfo = function () {
         // Enable additional info textbox
         if (typeof (MyRio2cCommonAdditionalInfo) !== 'undefined') {
             MyRio2cCommonAdditionalInfo.init();
+            MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2', allowClear: true });
         }
     };
 

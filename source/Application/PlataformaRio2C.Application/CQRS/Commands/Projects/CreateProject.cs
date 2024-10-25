@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 11-06-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 10-23-2024
 // ***********************************************************************
 // <copyright file="CreateProject.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,7 +35,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<InterestDto> interestsDtos,
             bool isDataRequired,
             bool isProductionPlanRequired,
-            bool isAdditionalInformationRequired)
+            bool isAdditionalInformationRequired,
+            string userInterfaceLanguage,
+            List<ProjectModalityDto> modalityDtos)
         {
             this.UpdateBaseProperties(
                 entity,
@@ -44,7 +46,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 interestsDtos,
                 isDataRequired,
                 isProductionPlanRequired,
-                isAdditionalInformationRequired);
+                isAdditionalInformationRequired,
+                userInterfaceLanguage,
+                modalityDtos
+            );
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateProject"/> class.</summary>

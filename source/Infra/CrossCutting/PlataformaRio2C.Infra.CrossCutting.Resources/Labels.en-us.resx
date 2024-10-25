@@ -942,9 +942,6 @@
     <value>Duplicate {0}</value>
     <comment>Duplicar {0}</comment>
   </data>
-  <data name="Dynamic" xml:space="preserve">
-    <value>Conference Dynamic</value>
-  </data>
   <data name="EachEpisodePlayingTime" xml:space="preserve">
     <value>Each episode's playing time</value>
     <comment>Minutagem de cada episódio</comment>
@@ -3350,9 +3347,6 @@
   <data name="RequiredFields" xml:space="preserve">
     <value>Required fields</value>
   </data>
-  <data name="RequiredFields" xml:space="preserve">
-    <value>Required fields</value>
-  </data>
   <data name="JobTitleTranslated" xml:space="preserve">
     <value>Job title {0}</value>
   </data>
@@ -3373,5 +3367,17 @@
   </data>
   <data name="ScheduledRounds" xml:space="preserve">
     <value>Scheduled Rounds</value>
+  </data>
+  <data name="Dynamic" xml:space="preserve">
+    <value>Conference Dynamic</value>
+  </data>
+  <data name="ProjectModality" xml:space="preserve">
+    <value>Project modality</value>
+  </data>
+  <data name="BusinessRoundsProjects" xml:space="preserve">
+    <value>Business rounds projects</value>
+  </data>
+  <data name="BusinessRounds" xml:space="preserve">
+    <value>Business rounds</value>
   </data>
 </root>

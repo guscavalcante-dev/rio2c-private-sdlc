@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 08-28-2021
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 10-23-2024
 // ***********************************************************************
 // <copyright file="Project.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -53,6 +53,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         public virtual ProjectType ProjectType { get; private set; }
         public virtual AttendeeOrganization SellerAttendeeOrganization { get; private set; }
+        public virtual ProjectModality ProjectModality { get; private set; }
 
         public virtual ICollection<ProjectTitle> ProjectTitles { get; private set; }
         public virtual ICollection<ProjectLogLine> ProjectLogLines { get; private set; }
@@ -67,6 +68,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<CommissionEvaluation> CommissionEvaluations { get; private set; }
 
         private bool IsAdmin = false;
+        public int ProjectModalityId { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Project"/> class.</summary>
         /// <param name="projectType">Type of the project.</param>
@@ -89,6 +91,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="imageLink">The image link.</param>
         /// <param name="teaserLink">The teaser link.</param>
         /// <param name="userId">The user identifier.</param>
+        /// <param name="projectModality">Modality of the project.</param>
         public Project(
             ProjectType projectType,
             AttendeeOrganization sellerAttendeeOrganization,
@@ -109,10 +112,14 @@ namespace PlataformaRio2C.Domain.Entities
             List<TargetAudience> targetAudiences,
             string imageLink,
             string teaserLink,
-            int userId)
+            int userId,
+            ProjectModality projectModality
+        )
         {
             this.ProjectTypeId = projectType?.Id ?? 0;
+            this.ProjectModalityId = projectModality?.Id ?? 0;
             this.ProjectType = projectType;
+            this.ProjectModality = projectModality;
             this.SellerAttendeeOrganizationId = sellerAttendeeOrganization?.Id ?? 0;
             this.SellerAttendeeOrganization = sellerAttendeeOrganization;
             this.TotalPlayingTime = totalPlayingTime;
