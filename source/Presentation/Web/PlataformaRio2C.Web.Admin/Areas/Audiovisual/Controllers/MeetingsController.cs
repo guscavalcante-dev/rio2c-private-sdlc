@@ -54,9 +54,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         private readonly IRoomRepository roomRepo;
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
-
+        private readonly INegotiationConfigRepository negotiationConfigRepo;
         /// <summary>
-        /// Initializes a new instance of the <see cref="MeetingsController"/> class.
+        /// Initializes a new instance of the <see cref="MeetingsController" /> class.
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
@@ -65,6 +65,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="roomRepository">The room repository.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
+        /// <param name="negotiationConfigRepo">The negotiation configuration repo.</param>
         public MeetingsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
@@ -72,7 +73,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             IProjectBuyerEvaluationRepository projectBuyerEvaluationRepository,
             IRoomRepository roomRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
-            IAttendeeCollaboratorRepository attendeeCollaboratorRepository)
+            IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
+            INegotiationConfigRepository negotiationConfigRepo)
             : base(commandBus, identityController)
         {
             this.negotiationRepo = negotiationRepository;
@@ -80,6 +82,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             this.roomRepo = roomRepository;
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
+            this.negotiationConfigRepo = negotiationConfigRepo;
         }
 
         #region Generate Agenda
@@ -102,17 +105,23 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
         #region Status Widget
 
+        
+
         /// <summary>Shows the status widget.</summary>
         /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> ShowStatusWidget()
         {
+            var generateAgendaStatusWidgetDto = new GenerateAgendaStatusWidgetDto(
+                await this.negotiationConfigRepo.CountNegotiationConfigsWithPresentialRoomConfiguredAsync(this.EditionDto.Id),
+                await this.negotiationConfigRepo.CountNegotiationConfigsWithVirtualRoomConfiguredAsync(this.EditionDto.Id));
+
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/StatusWidget", null), divIdOrClass = "#AudiovisualMeetingsStatusWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/StatusWidget", generateAgendaStatusWidgetDto), divIdOrClass = "#AudiovisualMeetingsStatusWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }

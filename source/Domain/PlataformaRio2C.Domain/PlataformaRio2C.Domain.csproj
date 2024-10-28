@@ -323,6 +323,7 @@
     <Compile Include="Dtos\Music\MusicProject\MusicProjectDto.cs" />
     <Compile Include="Dtos\Music\Player\API\MusicPlayerCollaboratorApiDto.cs" />
     <Compile Include="Dtos\Music\Player\API\MusicPlayerOrganizationApiDto.cs" />
+    <Compile Include="Dtos\NegotiationConfig\GenerateAgendaStatusWidgetDto.cs" />
     <Compile Include="Dtos\OrganizationDescriptions\OrganizationRestrictionSpecificDto.cs" />
     <Compile Include="Dtos\OrganizationDescriptions\OrganizationRestrictionSpecificBaseDto.cs" />
     <Compile Include="Dtos\Organizations\OrganizationDropdownDto.cs" />
@@ -859,7 +860,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Dtos\NegotiationConfig\" />
     <Folder Include="Interfaces\Repositories\Speaker\" />
     <Folder Include="Interfaces\Services\" />
     <Folder Include="Services\Audiovisual\" />

@@ -598,6 +598,9 @@
   <data name="MeetingIsOver" xml:space="preserve">
     <value>O tempo da rodada de negócios se esgotou e esta reunião chegou ao fim! Agradecemos pela sua presença no MyRio2C!</value>
   </data>
+  <data name="MeetingParametersNotFound" xml:space="preserve">
+    <value>Não é possível gerar agenda.&lt;br/&gt;Nenhum &lt;b&gt;Parâmetro de Rodadas de Negócio&lt;/b&gt; contendo &lt;b&gt;{0}&lt;/b&gt; encontrado.&lt;br/&gt;Por favor, acesse os &lt;a href="{1}" target="_blank"&gt;Parâmetros de Rodadas de Negócio&lt;/a&gt; e crie ao menos um parâmetro contendo &lt;b&gt;{0}&lt;/b&gt; e tente novamente.</value>
+  </data>
   <data name="MessageIsTooLong" xml:space="preserve">
     <value>A mensagem é longa demais. Tente encurtá-la ou enviá-la em múltiplas partes.</value>
   </data>

@@ -32,5 +32,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<List<NegotiationConfigDto>> FindAllRoomsDtosAsync(int editionId, Guid negotiationConfigUid, string customFilter, bool buyerAttendeeOrganizationAcceptsVirtualMeeting);
         Task<NegotiationConfigDto> FindAllTimesDtosAsync(int editionId, Guid negotiationRoomConfigUid, string customFilter, bool buyerAttendeeOrganizationAcceptsVirtualMeeting);
         Task<List<NegotiationConfigDto>> FindAllByEditionIdAsync(int editionId);
+        Task<int> CountNegotiationConfigsWithVirtualRoomConfiguredAsync(int editionId);
+        Task<int> CountNegotiationConfigsWithPresentialRoomConfiguredAsync(int editionId);
     }
 }

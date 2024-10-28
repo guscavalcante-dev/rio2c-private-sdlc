@@ -603,6 +603,9 @@
     <value>The time for the business round has run out and this meeting is over! We thank you for your presence on MyRio2C!</value>
     <comment>O tempo da rodada de negócios se esgotou e esta reunião chegou ao fim! Agradecemos pela sua presença no MyRio2C!</comment>
   </data>
+  <data name="MeetingParametersNotFound" xml:space="preserve">
+    <value>Unable to generate agenda.&lt;br/&gt;No &lt;b&gt;Business Rounds Parameters&lt;/b&gt; containing &lt;b&gt;{0}&lt;/b&gt; found.&lt;br/&gt;Please access &lt;a href="{1}" target="_blank"&gt;Business Rounds Parameters&lt;/a&gt; and create at least one parameter containing &lt;b&gt;{0}&lt;/b&gt; and try again.</value>
+  </data>
   <data name="MessageIsTooLong" xml:space="preserve">
     <value>The message is too long. Try shortening it or sending it in multiple parts.</value>
   </data>

@@ -663,7 +663,7 @@
     <Compile Include="CQRS\Events\BaseEvent.cs" />
     <Compile Include="CQRS\Events\Editions\EditionUpdated.cs" />
     <Compile Include="CQRS\Events\Editions\EditionCreated.cs" />
-    <Compile Include="CQRS\QueriesHandlers\ProjectBuyerEvaluations\CountNegotiationsAcceptedByBuyerAttendeeOrganizationUidQueryHandler.cs" />
+    <Compile Include="CQRS\QueriesHandlers\ProjectBuyerEvaluations\CountPresentialNegotiationsAcceptedByBuyerAttendeeOrganizationUidQueryHandler.cs" />
     <Compile Include="CQRS\Queries\Conferences\FindAllConferencesByAttendeeCollaboratorId.cs" />
     <Compile Include="CQRS\QueriesHandlers\Conferences\FindAllConferencesByAttendeeCollaboratorIdQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Collaborators\FindAllCollaboratorIndustryAsyncQueryHandler.cs" />
@@ -693,7 +693,7 @@
     <Compile Include="CQRS\Queries\Collaborators\FindAllCollaboratorIndustryAsync.cs" />
     <Compile Include="CQRS\Queries\Collaborators\FindAllCollaboratorRoleAsync.cs" />
     <Compile Include="CQRS\Queries\NegotiationConfigs\GetMaximumAvailableSlotsByEditionId.cs" />
-    <Compile Include="CQRS\Queries\ProjectBuyerEvaluations\CountNegotiationsAcceptedByBuyerAttendeeOrganizationUid.cs" />
+    <Compile Include="CQRS\Queries\ProjectBuyerEvaluations\CountPresentialNegotiationsAcceptedByBuyerAttendeeOrganizationUid.cs" />
     <Compile Include="Dtos\NegotiationConfigs\GetMaximumAvailableSlotsByEditionIdResponseDto.cs" />
     <Compile Include="CQRS\Queries\Users\FindAdminAccessControlDto.cs" />
     <Compile Include="CQRS\Queries\Users\FindUserLanguageDto.cs" />

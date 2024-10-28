@@ -5,6 +5,7 @@
 
 @if (Model?.Any() == true)
 {
+    @Html.Hidden("AttendeeOrganizationUid", Model.FirstOrDefault().ProjectBuyerEvaluationDtos.FirstOrDefault().BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid)
     <!--begin::List-->
     foreach (var projectDto in Model)
     {

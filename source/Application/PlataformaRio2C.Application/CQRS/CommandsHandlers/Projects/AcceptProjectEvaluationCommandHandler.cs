@@ -18,8 +18,6 @@ using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Domain.Validation;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -28,7 +26,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     public class AcceptProjectEvaluationCommandHandler : BaseProjectCommandHandler, IRequestHandler<AcceptProjectEvaluation, AppValidationResult>
     {
         private IProjectEvaluationStatusRepository projectEvaluationStatusRepo;
-        private IProjectBuyerEvaluationRepository projectBuyerEvaluationRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AcceptProjectEvaluationCommandHandler" /> class.
@@ -44,12 +41,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IUnitOfWork uow,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IProjectRepository projectRepository,
-            IProjectEvaluationStatusRepository projectEvaluationStatusRepository,
-            IProjectBuyerEvaluationRepository projectBuyerEvaluationRepository)
+            IProjectEvaluationStatusRepository projectEvaluationStatusRepository)
             : base(eventBus, uow, attendeeOrganizationRepository, projectRepository)
         {
             this.projectEvaluationStatusRepo = projectEvaluationStatusRepository;
-            this.projectBuyerEvaluationRepo = projectBuyerEvaluationRepository;
         }
 
         /// <summary>Handles the specified accept project evaluation.</summary>
@@ -65,17 +60,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #region Initial validations
 
             var maximumAvailableSlotsByEditionIdResponseDto = await CommandBus.Send(new GetMaximumAvailableSlotsByEditionId(cmd.EditionId ?? 0));
-            var playerAcceptedProjectsCount = await CommandBus.Send(new CountNegotiationsAcceptedByBuyerAttendeeOrganizationUid(cmd.AttendeeOrganizationUid ?? Guid.Empty));
-            if (playerAcceptedProjectsCount >= maximumAvailableSlotsByEditionIdResponseDto.MaximumAvailableSlotsByPlayer)
+            var playerAcceptedProjectsCount = await CommandBus.Send(new CountPresentialNegotiationsAcceptedByBuyerAttendeeOrganizationUid(cmd.AttendeeOrganizationUid ?? Guid.Empty));
+            var projectsApprovalLimitExceeded = playerAcceptedProjectsCount >= maximumAvailableSlotsByEditionIdResponseDto.MaximumAvailableSlotsByPlayer;
+            if (projectsApprovalLimitExceeded)
             {
                 cmd.PlayerAcceptedProjectsCount = playerAcceptedProjectsCount;
                 cmd.MaximumAvailableSlotsByPlayer = maximumAvailableSlotsByEditionIdResponseDto.MaximumAvailableSlotsByPlayer;
-
-                //TODO: Implements the change to mark the ProjectBuyerEvaluation.IsVirtualMeeting = true;
-
-                //this.ValidationResult.Add(new ValidationError(string.Format(
-                //    Messages.YouReachedProjectsApprovalLimit, maximumAvailableSlotsByEditionIdResponseDto.MaximumAvailableSlotsByPlayer),
-                //    new string[] { "ToastrError" }));
             }
 
             if (!this.ValidationResult.IsValid)
@@ -89,6 +79,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var projectBuyerEvaluation = project.AcceptProjectBuyerEvaluation(
                 cmd.AttendeeOrganizationUid.Value, 
                 await this.projectEvaluationStatusRepo.FindAllAsync(),
+                projectsApprovalLimitExceeded,
                 cmd.UserId);
             if (!projectBuyerEvaluation.IsEvaluationValid())
             {

@@ -645,9 +645,6 @@
   <data name="CompanyName" xml:space="preserve">
     <value>Razão social</value>
   </data>
-  <data name="EnterpriseName" xml:space="preserve">
-    <value>Nome da empresa</value>
-  </data>
   <data name="CompanyProfile" xml:space="preserve">
     <value>Resumo sobre a empresa</value>
     <comment>Resumo sobre a empresa</comment>
@@ -1021,6 +1018,9 @@
     <value>Entrar</value>
     <comment>Entrar</comment>
   </data>
+  <data name="EnterpriseName" xml:space="preserve">
+    <value>Nome da empresa</value>
+  </data>
   <data name="EnterToSend" xml:space="preserve">
     <value>Enter para enviar.</value>
   </data>
@@ -1278,6 +1278,9 @@
     <value>Olá</value>
     <comment>Olá</comment>
   </data>
+  <data name="High" xml:space="preserve">
+    <value>Alta</value>
+  </data>
   <data name="HighlightPosition" xml:space="preserve">
     <value>Posição no Destaque</value>
     <comment>Posição no Destaque</comment>
@@ -1446,6 +1449,9 @@
     <value>Cargos</value>
     <comment>Cargos</comment>
   </data>
+  <data name="JobTitleTranslated" xml:space="preserve">
+    <value>Cargo {0}</value>
+  </data>
   <data name="Join" xml:space="preserve">
     <value>Participar</value>
     <comment>Participar</comment>
@@ -1548,6 +1554,9 @@
     <value>Sair</value>
     <comment>Sair</comment>
   </data>
+  <data name="Low" xml:space="preserve">
+    <value>Baixa</value>
+  </data>
   <data name="Main" xml:space="preserve">
     <value>Principal</value>
     <comment>Principal</comment>
@@ -1591,6 +1600,9 @@
     <value>Correspondências</value>
     <comment>Correspondências</comment>
   </data>
+  <data name="Medium" xml:space="preserve">
+    <value>Média</value>
+  </data>
   <data name="MeetingType" xml:space="preserve">
     <value>Tipo de Reunião</value>
     <comment>Tipo de Reunião</comment>
@@ -1621,6 +1633,9 @@
   <data name="MiniBios" xml:space="preserve">
     <value>Mini-biografias</value>
     <comment>Mini-biografias</comment>
+  </data>
+  <data name="MiniBioTranslated" xml:space="preserve">
+    <value>Mini-biografia {0}</value>
   </data>
   <data name="Minutes" xml:space="preserve">
     <value>Minutos</value>
@@ -1695,6 +1710,12 @@
   </data>
   <data name="MusicPlayer" xml:space="preserve">
     <value>Player de Música</value>
+  </data>
+  <data name="MusicPlayersExecutivesReport" xml:space="preserve">
+    <value>Relatório de Executivos de Players de Música</value>
+  </data>
+  <data name="MusicPlayersReport" xml:space="preserve">
+    <value>Relatório de Players de Música</value>
   </data>
   <data name="MusicProjects" xml:space="preserve">
     <value>Projetos de Música</value>
@@ -1784,6 +1805,9 @@
   </data>
   <data name="No" xml:space="preserve">
     <value>Não</value>
+  </data>
+  <data name="NoAssociatedCompany" xml:space="preserve">
+    <value>Nenhuma empresa vinculada</value>
   </data>
   <data name="NoConferenceToDisplay" xml:space="preserve">
     <value>Não há palestras a serem exibidas.</value>
@@ -2024,6 +2048,12 @@
     <value>Player</value>
     <comment>Player</comment>
   </data>
+  <data name="PlayerDemand" xml:space="preserve">
+    <value>Demanda do Player</value>
+  </data>
+  <data name="PlayerDemandPercentage" xml:space="preserve">
+    <value>{0}: Concentra {1}% dos projetos cadastrados</value>
+  </data>
   <data name="PlayerDidNotDefinedGenre" xml:space="preserve">
     <value>Player não definiu gênero como interesse.</value>
   </data>
@@ -2114,6 +2144,9 @@
   <data name="Presential" xml:space="preserve">
     <value>Presencial</value>
     <comment>Presencial</comment>
+  </data>
+  <data name="PresentialRooms" xml:space="preserve">
+    <value>Salas Presenciais</value>
   </data>
   <data name="Press" xml:space="preserve">
     <value>Imprensa</value>
@@ -2351,6 +2384,12 @@
   <data name="PublicEmail" xml:space="preserve">
     <value>Email Público</value>
   </data>
+  <data name="Publishable" xml:space="preserve">
+    <value>Publicável</value>
+  </data>
+  <data name="Published" xml:space="preserve">
+    <value>Publicada</value>
+  </data>
   <data name="Quiz" xml:space="preserve">
     <value>Quiz</value>
     <comment>Quiz</comment>
@@ -2467,6 +2506,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Requests" xml:space="preserve">
     <value>Solicitações</value>
     <comment>Solicitações</comment>
+  </data>
+  <data name="RequiredFields" xml:space="preserve">
+    <value>Campos obrigatórios</value>
+  </data>
+  <data name="RequiredFields_Duplicate[1]" xml:space="preserve">
+    <value>Campos obrigatórios</value>
   </data>
   <data name="ReservationCode" xml:space="preserve">
     <value>Código de reserva</value>
@@ -2757,6 +2802,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Exibir minhas palestras</value>
     <comment>Exibir minhas palestras</comment>
   </data>
+  <data name="ShowNotPublishableToApi" xml:space="preserve">
+    <value>Exibir apenas palestrantes com pendências</value>
+  </data>
   <data name="ShowOneToOneMeetings" xml:space="preserve">
     <value>Exibir rodadas de negócio</value>
     <comment>Exibir rodadas de negócio</comment>
@@ -3030,6 +3078,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Título</value>
     <comment>Título</comment>
   </data>
+  <data name="TitleEnUs" xml:space="preserve">
+    <value>Título EN</value>
+  </data>
+  <data name="TitlePtBr" xml:space="preserve">
+    <value>Título PT</value>
+  </data>
   <data name="Titles" xml:space="preserve">
     <value>Títulos</value>
     <comment>Títulos</comment>
@@ -3083,6 +3137,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Transfers" xml:space="preserve">
     <value>Transfers</value>
     <comment>Transfers</comment>
+  </data>
+  <data name="TranslatedSynopsis" xml:space="preserve">
+    <value>Ementa {0}</value>
   </data>
   <data name="Transport" xml:space="preserve">
     <value>Transporte</value>
@@ -3222,6 +3279,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Virtual</value>
     <comment>Virtual</comment>
   </data>
+  <data name="VirtualRooms" xml:space="preserve">
+    <value>Salas Virtuais</value>
+  </data>
   <data name="Vote" xml:space="preserve">
     <value>Voto</value>
     <comment>Voto</comment>
@@ -3321,59 +3381,5 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="ZoomOut" xml:space="preserve">
     <value>Menos Zoom</value>
     <comment>Menos Zoom</comment>
-  </data>
-  <data name="NoAssociatedCompany" xml:space="preserve">
-    <value>Nenhuma empresa vinculada</value>
-  </data>
-  <data name="MusicPlayersReport" xml:space="preserve">
-    <value>Relatório de Players de Música</value>
-  </data>
-  <data name="MusicPlayersExecutivesReport" xml:space="preserve">
-    <value>Relatório de Executivos de Players de Música</value>
-  </data>
-  <data name="Published" xml:space="preserve">
-    <value>Publicada</value>
-  </data>
-  <data name="TranslatedSynopsis" xml:space="preserve">
-    <value>Ementa {0}</value>
-  </data>
-  <data name="TitlePtBr" xml:space="preserve">
-    <value>Título PT</value>
-  </data>
-  <data name="TitleEnUs" xml:space="preserve">
-    <value>Título EN</value>
-  </data>
-  <data name="RequiredFields" xml:space="preserve">
-    <value>Campos obrigatórios</value>
-  </data>
-  <data name="RequiredFields" xml:space="preserve">
-    <value>Campos obrigatórios</value>
-  </data>
-  <data name="JobTitleTranslated" xml:space="preserve">
-    <value>Cargo {0}</value>
-  </data>
-  <data name="MiniBioTranslated" xml:space="preserve">
-    <value>Mini-biografia {0}</value>
-  </data>
-  <data name="Publishable" xml:space="preserve">
-    <value>Publicável</value>
-  </data>
-  <data name="ShowNotPublishableToApi" xml:space="preserve">
-    <value>Exibir apenas palestrantes com pendências</value>
-  </data>
-  <data name="PlayerDemand" xml:space="preserve">
-    <value>Demanda do Player</value>
-  </data>
-  <data name="PlayerDemandPercentage" xml:space="preserve">
-    <value>{0}: Concentra {1}% dos projetos cadastrados</value>
-  </data>
-  <data name="High" xml:space="preserve">
-    <value>Alta</value>
-  </data>
-  <data name="Medium" xml:space="preserve">
-    <value>Média</value>
-  </data>
-  <data name="Low" xml:space="preserve">
-    <value>Baixa</value>
   </data>
 </root>

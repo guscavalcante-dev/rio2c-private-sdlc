@@ -650,9 +650,6 @@
   <data name="CompanyName" xml:space="preserve">
     <value>Company name</value>
   </data>
-  <data name="EnterpriseName" xml:space="preserve">
-    <value>Enterprise name</value>
-  </data>
   <data name="CompanyProfile" xml:space="preserve">
     <value>Company profile</value>
     <comment>Resumo sobre a empresa</comment>
@@ -1025,6 +1022,9 @@
   <data name="Enter" xml:space="preserve">
     <value>Enter</value>
     <comment>Entrar</comment>
+  </data>
+  <data name="EnterpriseName" xml:space="preserve">
+    <value>Enterprise name</value>
   </data>
   <data name="EnterToSend" xml:space="preserve">
     <value>Enter to send.</value>
@@ -1454,6 +1454,9 @@
     <value>Job titles</value>
     <comment>Cargos</comment>
   </data>
+  <data name="JobTitleTranslated" xml:space="preserve">
+    <value>Job title {0}</value>
+  </data>
   <data name="Join" xml:space="preserve">
     <value>Join</value>
     <comment>Participar</comment>
@@ -1556,6 +1559,9 @@
     <value>Log out</value>
     <comment>Sair</comment>
   </data>
+  <data name="Low" xml:space="preserve">
+    <value>Low</value>
+  </data>
   <data name="Main" xml:space="preserve">
     <value>Main</value>
     <comment>Principal</comment>
@@ -1599,6 +1605,9 @@
     <value>Matches</value>
     <comment>Correspondências</comment>
   </data>
+  <data name="Medium" xml:space="preserve">
+    <value>Medium</value>
+  </data>
   <data name="MeetingType" xml:space="preserve">
     <value>Meeting Type</value>
     <comment>Tipo de Reunião</comment>
@@ -1629,6 +1638,9 @@
   <data name="MiniBios" xml:space="preserve">
     <value>Mini-bios</value>
     <comment>Mini-biografias</comment>
+  </data>
+  <data name="MiniBioTranslated" xml:space="preserve">
+    <value>Mini-bio {0}</value>
   </data>
   <data name="Minutes" xml:space="preserve">
     <value>Minutes</value>
@@ -1705,6 +1717,12 @@
   </data>
   <data name="MusicPlayer" xml:space="preserve">
     <value>Music Player</value>
+  </data>
+  <data name="MusicPlayersExecutivesReport" xml:space="preserve">
+    <value>Music Players Executive Report</value>
+  </data>
+  <data name="MusicPlayersReport" xml:space="preserve">
+    <value>Music Players Report</value>
   </data>
   <data name="MusicProjects" xml:space="preserve">
     <value>Music Projects</value>
@@ -1793,6 +1811,9 @@
   </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
+  </data>
+  <data name="NoAssociatedCompany" xml:space="preserve">
+    <value>No associated company</value>
   </data>
   <data name="NoConferenceToDisplay" xml:space="preserve">
     <value>There are no conferences to be displayed.</value>
@@ -2029,6 +2050,12 @@
     <value>Player</value>
     <comment>Player</comment>
   </data>
+  <data name="PlayerDemand" xml:space="preserve">
+    <value>Player Demand</value>
+  </data>
+  <data name="PlayerDemandPercentage" xml:space="preserve">
+    <value>{0}: Concentrates {1}% of registered projects</value>
+  </data>
   <data name="PlayerDidNotDefinedGenre" xml:space="preserve">
     <value>Player did not define genre as interest.</value>
   </data>
@@ -2120,6 +2147,9 @@
   <data name="Presential" xml:space="preserve">
     <value>Presential</value>
     <comment>Presencial</comment>
+  </data>
+  <data name="PresentialRooms" xml:space="preserve">
+    <value>Presential Rooms</value>
   </data>
   <data name="Press" xml:space="preserve">
     <value>Press</value>
@@ -2358,6 +2388,12 @@
   <data name="PublicEmail" xml:space="preserve">
     <value>Public Email</value>
   </data>
+  <data name="Publishable" xml:space="preserve">
+    <value>Publishable</value>
+  </data>
+  <data name="Published" xml:space="preserve">
+    <value>Published</value>
+  </data>
   <data name="Quiz" xml:space="preserve">
     <value>Quiz</value>
     <comment>Quiz</comment>
@@ -2470,6 +2506,12 @@
   <data name="Requests" xml:space="preserve">
     <value>Requests</value>
     <comment>Solicitações</comment>
+  </data>
+  <data name="RequiredFields" xml:space="preserve">
+    <value>Required fields</value>
+  </data>
+  <data name="RequiredFields_Duplicate[1]" xml:space="preserve">
+    <value>Required fields</value>
   </data>
   <data name="ReservationCode" xml:space="preserve">
     <value>Reservation code</value>
@@ -2757,6 +2799,9 @@
     <value>Show my conferences</value>
     <comment>Exibir minhas palestras</comment>
   </data>
+  <data name="ShowNotPublishableToApi" xml:space="preserve">
+    <value>Show not publisable</value>
+  </data>
   <data name="ShowOneToOneMeetings" xml:space="preserve">
     <value>Show one-to-one meetings</value>
     <comment>Exibir rodadas de negócio</comment>
@@ -3033,6 +3078,12 @@
     <value>Title</value>
     <comment>Título</comment>
   </data>
+  <data name="TitleEnUs" xml:space="preserve">
+    <value>Title EN</value>
+  </data>
+  <data name="TitlePtBr" xml:space="preserve">
+    <value>Title PT</value>
+  </data>
   <data name="Titles" xml:space="preserve">
     <value>Titles</value>
     <comment>Títulos</comment>
@@ -3086,6 +3137,9 @@
   <data name="Transfers" xml:space="preserve">
     <value>Transfers</value>
     <comment>Transfers</comment>
+  </data>
+  <data name="TranslatedSynopsis" xml:space="preserve">
+    <value>Synopsis {0}</value>
   </data>
   <data name="Transport" xml:space="preserve">
     <value>Transport</value>
@@ -3227,6 +3281,9 @@
     <value>Virtual</value>
     <comment>Virtual</comment>
   </data>
+  <data name="VirtualRooms" xml:space="preserve">
+    <value>Virtual Rooms</value>
+  </data>
   <data name="Vote" xml:space="preserve">
     <value>Vote</value>
     <comment>Voto</comment>
@@ -3325,56 +3382,5 @@
   <data name="ZoomOut" xml:space="preserve">
     <value>Zoom Out</value>
     <comment>Menos Zoom</comment>
-  </data>
-  <data name="NoAssociatedCompany" xml:space="preserve">
-    <value>No associated company</value>
-  </data>
-  <data name="MusicPlayersReport" xml:space="preserve">
-    <value>Music Players Report</value>
-  </data>
-  <data name="MusicPlayersExecutivesReport" xml:space="preserve">
-    <value>Music Players Executive Report</value>
-  </data>
-  <data name="Published" xml:space="preserve">
-    <value>Published</value>
-  </data>
-  <data name="TranslatedSynopsis" xml:space="preserve">
-    <value>Synopsis {0}</value>
-  </data>
-  <data name="TitlePtBr" xml:space="preserve">
-    <value>Title PT</value>
-  </data>
-  <data name="TitleEnUs" xml:space="preserve">
-    <value>Title EN</value>
-  </data>
-  <data name="RequiredFields" xml:space="preserve">
-    <value>Required fields</value>
-  </data>
-  <data name="RequiredFields" xml:space="preserve">
-    <value>Required fields</value>
-  </data>
-  <data name="JobTitleTranslated" xml:space="preserve">
-    <value>Job title {0}</value>
-  </data>
-  <data name="MiniBioTranslated" xml:space="preserve">
-    <value>Mini-bio {0}</value>
-  </data>
-  <data name="Publishable" xml:space="preserve">
-    <value>Publishable</value>
-  </data>
-  <data name="ShowNotPublishableToApi" xml:space="preserve">
-    <value>Show not publisable</value>
-  </data>
-  <data name="PlayerDemand" xml:space="preserve">
-    <value>Player Demand</value>
-  </data>
-  <data name="PlayerDemandPercentage" xml:space="preserve">
-    <value>{0}: Concentrates {1}% of registered projects</value>
-  </data>
-  <data name="Medium" xml:space="preserve">
-    <value>Medium</value>
-  </data>
-  <data name="Low" xml:space="preserve">
-    <value>Low</value>
   </data>
 </root>

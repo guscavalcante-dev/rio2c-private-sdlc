@@ -1357,15 +1357,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nome da empresa.
-        /// </summary>
-        public static string EnterpriseName {
-            get {
-                return ResourceManager.GetString("EnterpriseName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Resumo sobre a empresa.
         /// </summary>
         public static string CompanyProfile {
@@ -2284,6 +2275,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nome da empresa.
+        /// </summary>
+        public static string EnterpriseName {
+            get {
+                return ResourceManager.GetString("EnterpriseName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter para enviar..
         /// </summary>
         public static string EnterToSend {
@@ -2896,6 +2896,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Alta.
+        /// </summary>
+        public static string High {
+            get {
+                return ResourceManager.GetString("High", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Posição no Destaque.
         /// </summary>
         public static string HighlightPosition {
@@ -3301,20 +3310,20 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cargo {0}.
-        /// </summary>
-        public static string JobTitleTranslated {
-            get {
-                return ResourceManager.GetString("JobTitleTranslated", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Cargos.
         /// </summary>
         public static string JobTitles {
             get {
                 return ResourceManager.GetString("JobTitles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cargo {0}.
+        /// </summary>
+        public static string JobTitleTranslated {
+            get {
+                return ResourceManager.GetString("JobTitleTranslated", resourceCulture);
             }
         }
         
@@ -3589,6 +3598,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Baixa.
+        /// </summary>
+        public static string Low {
+            get {
+                return ResourceManager.GetString("Low", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Principal.
         /// </summary>
         public static string Main {
@@ -3688,6 +3706,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Média.
+        /// </summary>
+        public static string Medium {
+            get {
+                return ResourceManager.GetString("Medium", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tipo de Reunião.
         /// </summary>
         public static string MeetingType {
@@ -3751,20 +3778,20 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mini-biografia {0}.
-        /// </summary>
-        public static string MiniBioTranslated {
-            get {
-                return ResourceManager.GetString("MiniBioTranslated", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Mini-biografias.
         /// </summary>
         public static string MiniBios {
             get {
                 return ResourceManager.GetString("MiniBios", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mini-biografia {0}.
+        /// </summary>
+        public static string MiniBioTranslated {
+            get {
+                return ResourceManager.GetString("MiniBioTranslated", resourceCulture);
             }
         }
         
@@ -4759,6 +4786,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Demanda do Player.
+        /// </summary>
+        public static string PlayerDemand {
+            get {
+                return ResourceManager.GetString("PlayerDemand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}: Concentra {1}% dos projetos cadastrados.
+        /// </summary>
+        public static string PlayerDemandPercentage {
+            get {
+                return ResourceManager.GetString("PlayerDemandPercentage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Player não definiu gênero como interesse..
         /// </summary>
         public static string PlayerDidNotDefinedGenre {
@@ -4975,6 +5020,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Presential {
             get {
                 return ResourceManager.GetString("Presential", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Salas Presenciais.
+        /// </summary>
+        public static string PresentialRooms {
+            get {
+                return ResourceManager.GetString("PresentialRooms", resourceCulture);
             }
         }
         
@@ -5875,6 +5929,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Campos obrigatórios.
+        /// </summary>
+        public static string RequiredFields_Duplicate_1_ {
+            get {
+                return ResourceManager.GetString("RequiredFields_Duplicate[1]", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Código de reserva.
         /// </summary>
         public static string ReservationCode {
@@ -6577,7 +6640,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exibir não publicáveis.
+        ///   Looks up a localized string similar to Exibir apenas palestrantes com pendências.
         /// </summary>
         public static string ShowNotPublishableToApi {
             get {
@@ -7054,15 +7117,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ementa {0}.
-        /// </summary>
-        public static string TranslatedSynopsis {
-            get {
-                return ResourceManager.GetString("TranslatedSynopsis", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Mesa.
         /// </summary>
         public static string Table {
@@ -7423,6 +7477,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ementa {0}.
+        /// </summary>
+        public static string TranslatedSynopsis {
+            get {
+                return ResourceManager.GetString("TranslatedSynopsis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Transporte.
         /// </summary>
         public static string Transport {
@@ -7765,6 +7828,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Salas Virtuais.
+        /// </summary>
+        public static string VirtualRooms {
+            get {
+                return ResourceManager.GetString("VirtualRooms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Voto.
         /// </summary>
         public static string Vote {
@@ -7995,51 +8067,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ZoomOut {
             get {
                 return ResourceManager.GetString("ZoomOut", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Demanda do Player.
-        /// </summary>
-        public static string PlayerDemand {
-            get {
-                return ResourceManager.GetString("PlayerDemand", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0}: Concentra mais que {1}% dos projetos cadastrados.
-        /// </summary>
-        public static string PlayerDemandPercentage {
-            get {
-                return ResourceManager.GetString("PlayerDemandPercentage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Alta.
-        /// </summary>
-        public static string High {
-            get {
-                return ResourceManager.GetString("High", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Média.
-        /// </summary>
-        public static string Medium {
-            get {
-                return ResourceManager.GetString("Medium", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Baixa.
-        /// </summary>
-        public static string Low {
-            get {
-                return ResourceManager.GetString("Low", resourceCulture);
             }
         }
     }

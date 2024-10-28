@@ -74,7 +74,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         public async Task<AppValidationResult> Handle(CreateNegotiations cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
-
+            
             var edition = await this.editionRepo.FindByUidAsync(cmd.EditionUid ?? Guid.Empty, true);
             if (edition.AudiovisualNegotiationsCreateStartDate.HasValue && !edition.AudiovisualNegotiationsCreateEndDate.HasValue)
             {
@@ -274,13 +274,22 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 foreach (var projectBuyerEvaluation in buyerAttendeeOrganization.ToList())
                 {
                     var roundsExceptions = this.GetRoundsExceptions(negotiationSlots, projectBuyerEvaluation);
+
                     var possibleNegotiationSlots = negotiationSlots?
-                                                        .Where(ns => ns.ProjectBuyerEvaluation == null 
+                                                        .Where(ns => ns.ProjectBuyerEvaluation == null // Is not allocated
                                                                      && ns.ProjectBuyerEvaluation?.ProjectId != projectBuyerEvaluation.ProjectId 
                                                                      && ns.ProjectBuyerEvaluation?.BuyerAttendeeOrganizationId != projectBuyerEvaluation.BuyerAttendeeOrganizationId
-                                                                     && ns.Room.IsVirtualMeeting == projectBuyerEvaluation.BuyerAttendeeOrganization.Organization.IsVirtualMeeting
-                                                                     && !roundsExceptions.Contains(ns.RoundNumber))?
-                                                        .ToList();
+                                                                     && !roundsExceptions.Contains(ns.RoundNumber) // Is not a exception
+                                                                )?.ToList();
+
+                    if (projectBuyerEvaluation.IsVirtualMeeting)
+                    {
+                        possibleNegotiationSlots = possibleNegotiationSlots.Where(ns => ns.Room.IsVirtualMeeting).ToList();
+                    }
+                    else
+                    {
+                        possibleNegotiationSlots = possibleNegotiationSlots.Where(ns => ns.Room.IsVirtualMeeting == projectBuyerEvaluation.BuyerAttendeeOrganization.Organization.IsVirtualMeeting).ToList();
+                    }
 
                     if (possibleNegotiationSlots?.Any() == true)
                     {

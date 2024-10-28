@@ -78,6 +78,34 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
+        /// Determines whether [has virtual room configured].
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<NegotiationConfig> HasVirtualRoomConfigured(this IQueryable<NegotiationConfig> query)
+        {
+            query = query.Where(nc => nc.NegotiationRoomConfigs.Any(nrc => !nrc.IsDeleted && 
+                                                                            !nrc.Room.IsDeleted && 
+                                                                            nrc.Room.IsVirtualMeeting));
+
+            return query;
+        }
+
+        /// <summary>
+        /// Determines whether [has virtual room configured].
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<NegotiationConfig> HasPresentialRoomConfigured(this IQueryable<NegotiationConfig> query)
+        {
+            query = query.Where(nc => nc.NegotiationRoomConfigs.Any(nrc => !nrc.IsDeleted && 
+                                                                            !nrc.Room.IsDeleted && 
+                                                                            !nrc.Room.IsVirtualMeeting));
+
+            return query;
+        }
+
+        /// <summary>
         /// Finds the by custom filter.
         /// </summary>
         /// <param name="query">The query.</param>
@@ -420,6 +448,34 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 });
 
             return await query.ToListAsync();
+        }
+
+        /// <summary>
+        /// Counts the negotiation configs with virtual room configured asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<int> CountNegotiationConfigsWithVirtualRoomConfiguredAsync(int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId)
+                                .HasVirtualRoomConfigured();
+
+            return await query.CountAsync();
+        }
+
+        /// <summary>
+        /// Counts the negotiation configs with presential room configured asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<int> CountNegotiationConfigsWithPresentialRoomConfiguredAsync(int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId)
+                                .HasPresentialRoomConfigured();
+
+            return await query.CountAsync();
         }
     }
 }

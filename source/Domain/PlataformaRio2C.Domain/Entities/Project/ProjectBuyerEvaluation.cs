@@ -34,6 +34,7 @@ namespace PlataformaRio2C.Domain.Entities
         public int? BuyerEvaluationUserId { get; private set; }
         public DateTimeOffset? EvaluationDate { get; private set; }
         public DateTimeOffset? BuyerEmailSendDate { get; private set; }
+        public bool IsVirtualMeeting { get; private set; }
 
         public virtual Project Project { get; private set; }
         public virtual AttendeeOrganization BuyerAttendeeOrganization { get; private set; }
@@ -92,19 +93,23 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Deletes the specified user identifier.</summary>
         /// <param name="userId">The user identifier.</param>
-        public void Delete(int userId)
+        public new void Delete(int userId)
         {
             this.DeleteAllProjectBuyerEvaluations(userId);
 
-            this.IsDeleted = true;
-            this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.UtcNow;
+            base.Delete(userId);
         }
 
-        /// <summary>Accepts the specified project evaluation statuses.</summary>
+        /// <summary>
+        /// Accepts the specified project evaluation statuses.
+        /// </summary>
         /// <param name="projectEvaluationStatuses">The project evaluation statuses.</param>
+        /// <param name="projectsApprovalLimitExceeded">if set to <c>true</c> [projects approval limit exceeded].</param>
         /// <param name="userId">The user identifier.</param>
-        public void Accept(List<ProjectEvaluationStatus> projectEvaluationStatuses, int userId)
+        public void Accept(
+            List<ProjectEvaluationStatus> projectEvaluationStatuses, 
+            bool projectsApprovalLimitExceeded, 
+            int userId)
         {
             var projectEvaluationStatus = projectEvaluationStatuses?.FirstOrDefault(pes => pes.Code == ProjectEvaluationStatus.Accepted.Code);
             this.ProjectEvaluationStatusId = projectEvaluationStatus?.Id ?? 0;
@@ -115,10 +120,13 @@ namespace PlataformaRio2C.Domain.Entities
             this.Reason = null;
             this.BuyerEvaluationUserId = userId;
             this.EvaluationDate = DateTime.UtcNow;
-           
-            this.IsDeleted = false;
-            this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.UtcNow;
+
+            if (projectsApprovalLimitExceeded)
+            {
+                this.IsVirtualMeeting = true;
+            }
+
+            this.SetUpdateDate(userId);
         }
 
         /// <summary>Refuses the specified project evaluation refuse reason.</summary>
@@ -126,7 +134,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="reason">The reason.</param>
         /// <param name="projectEvaluationStatuses">The project evaluation statuses.</param>
         /// <param name="userId">The user identifier.</param>
-        public void Refuse(ProjectEvaluationRefuseReason projectEvaluationRefuseReason, string reason, List<ProjectEvaluationStatus> projectEvaluationStatuses, int userId)
+        public void Refuse(
+            ProjectEvaluationRefuseReason projectEvaluationRefuseReason, 
+            string reason, List<ProjectEvaluationStatus> 
+            projectEvaluationStatuses, 
+            int userId)
         {
             var projectEvaluationStatus = projectEvaluationStatuses?.FirstOrDefault(pes => pes.Code == ProjectEvaluationStatus.Refused.Code);
             this.ProjectEvaluationStatusId = projectEvaluationStatus?.Id ?? 0;
@@ -137,13 +149,14 @@ namespace PlataformaRio2C.Domain.Entities
             this.Reason = reason?.Trim();
             this.BuyerEvaluationUserId = userId;
             this.EvaluationDate = DateTime.UtcNow;
+            this.IsVirtualMeeting = false;
 
-            this.IsDeleted = false;
-            this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.UtcNow;
+            base.SetUpdateDate(userId);
         }
 
-        /// <summary>Sends the buyer email.</summary>
+        /// <summary>
+        /// Sends the buyer email.
+        /// </summary>
         public void SendBuyerEmail()
         {
             this.BuyerEmailSendDate = DateTime.UtcNow;

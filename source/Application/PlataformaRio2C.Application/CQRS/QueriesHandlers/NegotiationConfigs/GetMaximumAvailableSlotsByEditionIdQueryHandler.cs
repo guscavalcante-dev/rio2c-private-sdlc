@@ -49,14 +49,16 @@ namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
             // Get only NegotiationConfigs that have AutomaticTables configured
             var automaticTablesNegotiationConfigDtos = negotiationConfigDtos
                 .Where(nc => nc.NegotiationRoomConfigDtos
-                    .Any(nrc => nrc.NegotiationRoomConfig.CountAutomaticTables > 0))
-                    .ToList();
+                                .Any(dto => dto.NegotiationRoomConfig.CountAutomaticTables > 0 && 
+                                            !dto.NegotiationRoomConfig.Room.IsVirtualMeeting))
+                .ToList();
 
             // Get only NegotiationConfigs that have ManualTables configured
             var manualTablesNegotiationConfigDtos = negotiationConfigDtos
                 .Where(nc => nc.NegotiationRoomConfigDtos
-                    .Any(nrc => nrc.NegotiationRoomConfig.CountManualTables > 0))
-                    .ToList();
+                                .Any(dto => dto.NegotiationRoomConfig.CountManualTables > 0 && 
+                                            !dto.NegotiationRoomConfig.Room.IsVirtualMeeting))
+                .ToList();
 
             return new GetMaximumAvailableSlotsByEditionIdResponseDto(
                 automaticTablesNegotiationConfigDtos.Sum(dto => dto.NegotiationConfig.GetMaxAutomaticSlotsCountByEdition()),

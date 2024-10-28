@@ -59,7 +59,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             negotiationConfig.DeleteNegotiationRoomConfig(
                 cmd.NegotiationRoomConfigUid ?? Guid.Empty,
                 cmd.UserId);
-            if (!negotiationConfig.IsValid())
+            if (!negotiationConfig.IsNegotiationRoomConfigValid())
             {
                 this.AppValidationResult.Add(negotiationConfig.ValidationResult);
                 return this.AppValidationResult;
