@@ -896,6 +896,14 @@
     <Content Include="Assets\js\myrio2c.additionalinfo.js" />
     <Content Include="Assets\js\onboarding\onboarding.interests.js" />
     <Content Include="Assets\js\onboarding\onboarding.companyinfo.js" />
+    <Content Include="Assets\js\projects\businessrounds\businessrounds.buyercompany.widget.js" />
+    <Content Include="Assets\js\projects\businessrounds\businessrounds.buyerevaluation.list.widget.js" />
+    <Content Include="Assets\js\projects\businessrounds\businessrounds.buyerevaluation.update.widget.js" />
+    <Content Include="Assets\js\projects\businessrounds\businessrounds.interest.widget.js" />
+    <Content Include="Assets\js\projects\businessrounds\businessrounds.links.widget.js" />
+    <Content Include="Assets\js\projects\businessrounds\businessrounds.maininformation.widget.js" />
+    <Content Include="Assets\js\projects\businessrounds\businessrounds.producerinfo.js" />
+    <Content Include="Assets\js\projects\businessrounds\businessrounds.projectinfo.js" />
     <Content Include="Assets\js\projects\projects.buyerevaluation.update.widget.js" />
     <Content Include="Assets\js\projects\projects.buyerevaluation.list.widget.js" />
     <Content Include="Assets\js\projects\projects.interest.widget.js" />

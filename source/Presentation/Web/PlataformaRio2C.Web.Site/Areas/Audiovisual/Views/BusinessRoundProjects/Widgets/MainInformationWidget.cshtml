@@ -73,6 +73,14 @@
             </div>
         </div>
         <div class="kt-widget__bottom">
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.ProjectModality</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;">
+                        <span>@Model.ProjectModalityDto.GetTranslatedName(Model.ProjectModalityDto.Name)</span>
+                    </span>
+                </div>
+            </div>
             @{
                 var summaryDto = Model.GetSummaryDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
             }

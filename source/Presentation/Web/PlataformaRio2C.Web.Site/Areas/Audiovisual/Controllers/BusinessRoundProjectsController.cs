@@ -4,7 +4,7 @@
 // Created          : 10-22-2024
 //
 // Last Modified By : Gilson Oliveira
-// Last Modified On : 10-22-2024
+// Last Modified On : 10-24-2024
 // ***********************************************************************
 // <copyright file="BusinessRoundProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -245,7 +245,10 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     true,
                     false,
-                    false);
+                    false,
+                    this.UserInterfaceLanguage,
+                    await this.projectModalityRepository.FindAllAsync()
+                );
             }
             catch (DomainException ex)
             {
@@ -278,11 +281,14 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    this.UserAccessControlDto.User.Id,
-                    this.UserAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
+                   this.UserAccessControlDto.GetFirstAttendeeOrganizationCreated()?.Uid,
+                   ProjectType.Audiovisual.Uid,
+                   this.UserAccessControlDto.User.Id,
+                   this.UserAccessControlDto.User.Uid,
+                   this.EditionDto.Id,
+                   this.EditionDto.Uid,
+                   this.UserInterfaceLanguage
+                );
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
                 {
@@ -297,6 +303,11 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
                 var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
+
+                cmd.UpdateProjectModalities(
+                    this.UserInterfaceLanguage,
+                    await this.projectModalityRepository.FindAllAsync()
+                );
 
                 //cmd.UpdateModelsAndLists(
                 //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());

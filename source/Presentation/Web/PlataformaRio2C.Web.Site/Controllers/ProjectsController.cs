@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Gilson Oliveira
-// Last Modified On : 10-23-2024
+// Last Modified On : 10-24-2024
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -264,7 +264,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     true,
                     false,
-                    false);
+                    false,
+                    this.UserInterfaceLanguage,
+                    await this.projectModalityRepository.FindAllAsync()
+                );
             }
             catch (DomainException ex)
             {

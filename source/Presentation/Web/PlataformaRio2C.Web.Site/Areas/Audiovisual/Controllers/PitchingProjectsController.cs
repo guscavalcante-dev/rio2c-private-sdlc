@@ -4,7 +4,7 @@
 // Created          : 10-22-2024
 //
 // Last Modified By : Gilson Oliveira
-// Last Modified On : 10-22-2024
+// Last Modified On : 10-24-2024
 // ***********************************************************************
 // <copyright file="PitchingProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -243,7 +243,10 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     true,
                     false,
-                    false);
+                    false,
+                    this.UserInterfaceLanguage,
+                    await this.projectModalityRepository.FindAllAsync()
+                );
             }
             catch (DomainException ex)
             {

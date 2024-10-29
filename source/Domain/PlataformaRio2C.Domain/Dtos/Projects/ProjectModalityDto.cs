@@ -4,7 +4,7 @@
 // Created          : 10-23-2024
 //
 // Last Modified By : Gilson Oliveira
-// Last Modified On : 10-23-2024
+// Last Modified On : 10-24-2024
 // ***********************************************************************
 // <copyright file="ProjectModalityDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,6 +19,8 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>ProjectModalityDto</summary>
     public class ProjectModalityDto
     {
+        public int Id { get; set; }
+
         public Guid Uid { get; set; }
 
         public string Name { get; set; }

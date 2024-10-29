@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-28-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 01-13-2024
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 10-24-2024
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -329,6 +329,12 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/js/projects/projects.maininformation.widget.js",
                 "~/Assets/js/projects/projects.interest.widget.js",
                 "~/Assets/js/projects/projects.links.widget.js",
+                "~/Assets/js/myrio2c.additionalinfo.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/projects/businessrounds.widget.js").Include(
+                "~/Assets/js/projects/businessrounds/businessrounds.maininformation.widget.js",
+                "~/Assets/js/projects/businessrounds/businessrounds.interest.widget.js",
+                "~/Assets/js/projects/businessrounds/businessrounds.links.widget.js",
                 "~/Assets/js/myrio2c.additionalinfo.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/projects.buyerevaluation.list.widget.js").Include(
