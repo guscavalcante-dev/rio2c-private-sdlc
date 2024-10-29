@@ -1,6 +1,10 @@
 ﻿BEGIN TRY
 	BEGIN TRANSACTION
-		ALTER TABLE dbo.Collaborators ADD CompanyName varchar(100) NULL;
+		IF COL_LENGTH('dbo.Collaborators', 'CompanyName') IS NULL
+		BEGIN
+			ALTER TABLE dbo.Collaborators
+			ADD CompanyName VARCHAR(100) NULL;
+		END
 	COMMIT TRAN -- Transaction Success!
 END TRY
 BEGIN CATCH

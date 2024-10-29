@@ -1,13 +1,16 @@
 ﻿BEGIN TRY
 	BEGIN TRANSACTION
 
-		ALTER TABLE ProjectBuyerEvaluations 
-		ADD IsVirtualMeeting bit null
+		IF COL_LENGTH('ProjectBuyerEvaluations', 'IsVirtualMeeting') IS NULL
+		BEGIN
+			ALTER TABLE ProjectBuyerEvaluations 
+			ADD IsVirtualMeeting BIT NULL;
 
-		EXEC('UPDATE ProjectBuyerEvaluations SET IsVirtualMeeting = 0')
+			EXEC('UPDATE ProjectBuyerEvaluations SET IsVirtualMeeting = 0');
 
-		ALTER TABLE ProjectBuyerEvaluations 
-		ALTER COLUMN IsVirtualMeeting bit not null
+			ALTER TABLE ProjectBuyerEvaluations 
+			ALTER COLUMN IsVirtualMeeting BIT NOT NULL;
+		END
 
 	COMMIT TRAN -- Transaction Success!
 END TRY
