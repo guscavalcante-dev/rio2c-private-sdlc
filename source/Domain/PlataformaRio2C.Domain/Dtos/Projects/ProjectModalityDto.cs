@@ -12,6 +12,8 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Linq;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Dtos
@@ -47,6 +49,14 @@ namespace PlataformaRio2C.Domain.Dtos
         public void Translate(string userInterfaceLanguage)
         {
             this.Name = this.Name?.GetSeparatorTranslation(userInterfaceLanguage, '|');
+        }
+
+        public bool IsPitching()
+        {
+            return new int[] {
+                ProjectModality.Both.Id,
+                ProjectModality.Pitching.Id
+            }.Contains(this.Id);
         }
     }
 }

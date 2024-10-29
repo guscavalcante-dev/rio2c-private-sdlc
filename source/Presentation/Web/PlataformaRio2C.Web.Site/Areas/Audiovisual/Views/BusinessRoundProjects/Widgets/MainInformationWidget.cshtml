@@ -53,12 +53,6 @@
                         @:- @(Model.SellerAttendeeOrganizationDto?.Organization.Document)
                     }
                 </div>
-                @if (isCollaborator && Model.Project?.IsPitching == true)
-                {
-                    <div class="kt-widget__subhead pt-0 mt-0">
-                        <span class="kt-badge kt-badge--inline kt-badge--info">@Labels.Pitching</span>
-                    </div>
-                }
                 <div class="kt-widget__info" style="display: block;">
                     @{
                         var logLineDto = Model.GetLogLineDtoByLanguageCode(ViewBag.UserInterfaceLanguage);

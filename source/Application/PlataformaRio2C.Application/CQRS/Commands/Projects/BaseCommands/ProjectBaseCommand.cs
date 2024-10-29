@@ -79,9 +79,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(3000, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string TeaserLinks { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAnOption")]
-        public bool? IsPitching { get; set; }
-
         public List<ProjectAdditionalInformationBaseCommand> AdditionalInformations { get; set; }
 
         public List<TargetAudience> TargetAudiences { get; private set; }
@@ -131,7 +128,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.ValueStillNeeded = entity?.Project?.ValueStillNeeded;
             this.ImageLinks = entity?.Project?.ProjectImageLinks?.FirstOrDefault()?.Value;
             this.TeaserLinks = entity?.Project?.ProjectTeaserLinks?.FirstOrDefault()?.Value;
-            this.IsPitching = entity?.Project?.IsPitching;
 
             this.UpdateTitles(entity, languagesDtos, isDataRequired);
             this.UpdateLogLines(entity, languagesDtos, isDataRequired);

@@ -295,7 +295,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             if (showPitchings)
             {
-                query = query.Where(p => p.IsPitching);
+                query = query.Where(p => new int[] { ProjectModality.Both.Id, ProjectModality.Pitching.Id }.Contains(p.ProjectModalityId));
             }
 
             return query;
@@ -537,11 +537,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                 {
                                                     TargetAudience = ta.TargetAudience
                                                 }),
-                                                IsPitching = p.IsPitching,
                                                 CreateDate = p.CreateDate,
                                                 FinishDate = p.FinishDate,
                                                 CommissionGrade = p.CommissionGrade,
-                                                CommissionEvaluationsCount = p.CommissionEvaluationsCount
+                                                CommissionEvaluationsCount = p.CommissionEvaluationsCount,
+                                                ProjectModalityDto = new ProjectModalityDto
+                                                {
+                                                    Id = p.ProjectModality.Id,
+                                                    Uid = p.ProjectModality.Uid,
+                                                    Name = p.ProjectModality.Name,
+                                                }
                                             })
                                             .DynamicOrder(
                                                 sortColumns,
@@ -580,7 +585,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 }
                 else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
                 {
-                    projectBaseDtosResult = projectBaseDtos.Where(dto => !approvedProjectsIds.Contains(dto.Id) && dto.IsPitching == true);
+                    projectBaseDtosResult = projectBaseDtos.Where(dto =>
+                        !approvedProjectsIds.Contains(dto.Id)
+                        && dto.IsPitching()
+                    );
                 }
                 else if (evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
                 {
@@ -671,7 +679,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 }
                 else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
                 {
-                    projectBaseDtosResult = projectBaseDtos.Where(dto => !approvedProjectsIds.Contains(dto.Id) && dto.IsPitching == true);
+                    projectBaseDtosResult = projectBaseDtos.Where(dto => !approvedProjectsIds.Contains(dto.Id) && dto.IsPitching());
                 }
                 else if (evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
                 {
@@ -760,7 +768,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 }
                 else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
                 {
-                    projectBaseDtosResult = projectBaseDtos.Where(dto => !approvedProjectsIds.Contains(dto.Id) && dto.IsPitching == true);
+                    projectBaseDtosResult = projectBaseDtos.Where(dto => !approvedProjectsIds.Contains(dto.Id) && dto.IsPitching());
                 }
                 else if (evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
                 {
@@ -851,7 +859,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         },
                                         ProjectEvaluationStatus = be.ProjectEvaluationStatus,
                                         ProjectEvaluationRefuseReason = be.ProjectEvaluationRefuseReason
-                                    })
+                                    }),
+                                    ProjectModalityDto = new ProjectModalityDto
+                                    {
+                                        Id = p.ProjectModality.Id,
+                                        Uid = p.ProjectModality.Uid,
+                                        Name = p.ProjectModality.Name,
+                                    }
                                 });
 
             return await query
@@ -915,6 +929,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         Interest = i.Interest,
                                         InterestGroup = i.Interest.InterestGroup
                                     }),
+                                    ProjectModalityDto = new ProjectModalityDto
+                                    {
+                                        Id = p.ProjectModality.Id,
+                                        Uid = p.ProjectModality.Uid,
+                                        Name = p.ProjectModality.Name,
+                                    },
                                     InterestGroupsMatches = p.ProjectInterests
                                                                 .Where(pi => !pi.IsDeleted && !pi.Interest.IsDeleted
                                                                              && p.ProjectBuyerEvaluations
@@ -946,7 +966,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         },
                                         ProjectEvaluationStatus = be.ProjectEvaluationStatus,
                                         ProjectEvaluationRefuseReason = be.ProjectEvaluationRefuseReason
-                                    })
+                                    }),
                                 });
 
             return await query
@@ -1003,6 +1023,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                 {
                                                     TargetAudience = ta.TargetAudience
                                                 }),
+                                                ProjectModalityDto = new ProjectModalityDto
+                                                {
+                                                    Id = p.ProjectModality.Id,
+                                                    Uid = p.ProjectModality.Uid,
+                                                    Name = p.ProjectModality.Name,
+                                                }
                                             })
                                             .Order()
                                             .ToListAsync();
@@ -1124,6 +1150,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     {
                                         ProjectImageLink = il
                                     }),
+                                    ProjectModalityDto = new ProjectModalityDto
+                                    {
+                                        Id = p.ProjectModality.Id,
+                                        Uid = p.ProjectModality.Uid,
+                                        Name = p.ProjectModality.Name,
+                                    }
                                 });
 
             return await query
@@ -2162,7 +2194,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     ProjectTargetAudienceDtos = p.ProjectTargetAudiences.Where(ta => !ta.IsDeleted).Select(ta => new ProjectTargetAudienceDto
                                     {
                                         TargetAudience = ta.TargetAudience
-                                    })
+                                    }),
+                                    ProjectModalityDto = new ProjectModalityDto
+                                    {
+                                        Id = p.ProjectModality.Id,
+                                        Uid = p.ProjectModality.Uid,
+                                        Name = p.ProjectModality.Name,
+                                    }
                                 });
             return query;
         }

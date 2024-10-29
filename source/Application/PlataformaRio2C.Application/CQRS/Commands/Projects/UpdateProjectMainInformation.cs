@@ -67,9 +67,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string ValueStillNeeded { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAnOption")]
-        public bool? IsPitching { get; set; }
-
         public List<ProjectAdditionalInformationBaseCommand> AdditionalInformations { get; set; }
 
         public Guid ProjectTypeUid { get; private set; }
@@ -106,7 +103,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.TotalValueOfProject = entity?.Project?.TotalValueOfProject;
             this.ValueAlreadyRaised = entity?.Project?.ValueAlreadyRaised;
             this.ValueStillNeeded = entity?.Project?.ValueStillNeeded;
-            this.IsPitching = entity?.Project?.IsPitching;
 
             this.UpdateTitles(entity, languagesDtos, isDataRequired);
             this.UpdateLogLines(entity, languagesDtos, isDataRequired);

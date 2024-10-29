@@ -343,7 +343,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="totalValueOfProject">The total value of project.</param>
         /// <param name="valueAlreadyRaised">The value already raised.</param>
         /// <param name="valueStillNeeded">The value still needed.</param>
-        /// <param name="isPitching">if set to <c>true</c> [is pitching].</param>
         /// <param name="projectTitles">The project titles.</param>
         /// <param name="projectLogLines">The project log lines.</param>
         /// <param name="projectSummaries">The project summaries.</param>
@@ -364,7 +363,6 @@ namespace PlataformaRio2C.Domain.Entities
             string totalValueOfProject,
             string valueAlreadyRaised,
             string valueStillNeeded,
-            bool isPitching,
             List<ProjectTitle> projectTitles,
             List<ProjectLogLine> projectLogLines,
             List<ProjectSummary> projectSummaries,
@@ -399,7 +397,6 @@ namespace PlataformaRio2C.Domain.Entities
                     totalValueOfProject,
                     valueAlreadyRaised,
                     valueStillNeeded,
-                    isPitching,
                     projectTitles,
                     projectLogLines,
                     projectSummaries,

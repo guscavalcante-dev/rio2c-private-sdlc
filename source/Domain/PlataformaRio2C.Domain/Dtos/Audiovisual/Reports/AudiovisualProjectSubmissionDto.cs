@@ -26,6 +26,7 @@ namespace PlataformaRio2C.Domain.Dtos
         //public bool IsFakeProject { get; set; }
         public Project Project { get; set; }
         public ProjectType ProjectType { get; set; }
+        public ProjectModalityDto ProjectModalityDto { get; set; }
         public AttendeeOrganizationDto SellerAttendeeOrganizationDto { get; set; }
         public IEnumerable<ProjectTitleDto> ProjectTitleDtos { get; set; }
         public IEnumerable<ProjectLogLineDto> ProjectLogLineDtos { get; set; }

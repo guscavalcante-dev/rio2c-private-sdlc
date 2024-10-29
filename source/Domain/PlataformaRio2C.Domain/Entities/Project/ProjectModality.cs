@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
@@ -21,7 +22,7 @@ namespace PlataformaRio2C.Domain.Entities
     public class ProjectModality : Entity
     {
         public static readonly int NameMinLength = 1;
-        public static readonly int NameMaxLength = 50;
+        public static readonly int NameMaxLength = 100;
 
         #region Configurations
 
@@ -54,7 +55,25 @@ namespace PlataformaRio2C.Domain.Entities
         ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
         public override bool IsValid()
         {
-            return true;
+            if (this.ValidationResult == null)
+            {
+                this.ValidationResult = new ValidationResult();
+            }
+
+            this.ValidateName();
+
+            return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>
+        /// Validates the curriculum.
+        /// </summary>
+        private void ValidateName()
+        {
+            if (this.Name?.Trim()?.Length > NameMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(Name), NameMaxLength, 1), new string[] { nameof(Name) }));
+            }
         }
 
         /// <summary>
