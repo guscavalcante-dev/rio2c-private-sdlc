@@ -208,7 +208,7 @@ namespace PlataformaRio2C.Domain.Entities
         public int GetMaxAutomaticSlotsCountByEdition()
         {
             int tablesTotalCount = this.NegotiationRoomConfigs
-                .Where(nrc => !nrc.IsDeleted)
+                .Where(nrc => !nrc.IsDeleted && !nrc.Room.IsVirtualMeeting)
                 .Sum(nrc => nrc.CountAutomaticTables);
 
             int roundsTotalCount = this.RoundFirstTurn + this.RoundSecondTurn;
@@ -223,7 +223,7 @@ namespace PlataformaRio2C.Domain.Entities
         public int GetMaxManualSlotsCountByEdition()
         {
             int tablesTotalCount = this.NegotiationRoomConfigs
-                .Where(nrc => !nrc.IsDeleted)
+                .Where(nrc => !nrc.IsDeleted && !nrc.Room.IsVirtualMeeting)
                 .Sum(nrc => nrc.CountManualTables);
 
             int roundsTotalCount = this.RoundFirstTurn + this.RoundSecondTurn;
@@ -238,6 +238,14 @@ namespace PlataformaRio2C.Domain.Entities
         /// <returns></returns>
         public int GetMaxSlotsCountByPlayer()
         {
+            // If this NegotiationConfig has any virtual room associated, cannot calculate.
+            // TODO: Maybe this rule needs to be reviewed, because a NegotiationConfig can contains Virtual and Presential rooms associated, and this rule only returns 0 and disconsider the Presential rooms.
+            // How to proceed in this cases?
+            if(this.NegotiationRoomConfigs.Any(nrc => nrc.Room.IsVirtualMeeting))
+            {
+                return 0;
+            }
+
             int roundsTotalCount = this.RoundFirstTurn + this.RoundSecondTurn;
 
             return roundsTotalCount;
@@ -258,6 +266,20 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateDates();
             this.ValidateRoundFirstTurn();
             this.ValidateRoundSecondTurn();
+            this.ValidateNegotiationRoomConfigs();
+
+            return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>
+        /// Determines whether [is negotiation room configuration valid].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is negotiation room configuration valid]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsNegotiationRoomConfigValid()
+        {
+            this.ValidationResult = new ValidationResult();
             this.ValidateNegotiationRoomConfigs();
 
             return this.ValidationResult.IsValid;

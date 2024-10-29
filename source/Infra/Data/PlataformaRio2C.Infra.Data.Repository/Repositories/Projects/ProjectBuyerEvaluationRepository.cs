@@ -75,6 +75,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>
+        /// Determines whether [is not virtual meeting].
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<ProjectBuyerEvaluation> IsNotVirtualMeeting(this IQueryable<ProjectBuyerEvaluation> query)
+        {
+            query = query.Where(pbe => !pbe.IsVirtualMeeting);
+
+            return query;
+        }
+
         /// <summary>Determines whether [is negotiation unscheduled].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
@@ -349,12 +361,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="buyerAttendeeOrganizationUid">The buyer attendee organization uid.</param>
         /// <returns></returns>
-        public async Task<int> CountNegotiationsAcceptedByBuyerAttendeeOrganizationUidAsync(Guid buyerAttendeeOrganizationUid)
+        public async Task<int> CountPresentialNegotiationsAcceptedByBuyerAttendeeOrganizationUidAsync(Guid buyerAttendeeOrganizationUid)
         {
             var query = this.GetBaseQuery()
                                 .FindByProjectEvaluationStatusUid(ProjectEvaluationStatus.Accepted.Uid)
                                 .FindByBuyerAttendeeOrganizationUid(buyerAttendeeOrganizationUid)
-                                .IsProjectFinished();
+                                .IsProjectFinished()
+                                .IsNotVirtualMeeting(); // Consider only presential negotiations in count
 
             return await query.CountAsync();
         }

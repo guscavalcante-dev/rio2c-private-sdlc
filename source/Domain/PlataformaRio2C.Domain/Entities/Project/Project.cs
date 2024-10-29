@@ -357,15 +357,22 @@ namespace PlataformaRio2C.Domain.Entities
             return this.ProjectBuyerEvaluations?.Count(be => !be.IsDeleted) ?? 0;
         }
 
-        /// <summary>Accepts the project buyer evaluation.</summary>
+        /// <summary>
+        /// Accepts the project buyer evaluation.
+        /// </summary>
         /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
         /// <param name="projectEvaluationStatuses">The project evaluation statuses.</param>
+        /// <param name="projectsApprovalLimitExceeded">if set to <c>true</c> [projects approval limit exceeded].</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public ProjectBuyerEvaluation AcceptProjectBuyerEvaluation(Guid attendeeOrganizationUid, List<ProjectEvaluationStatus> projectEvaluationStatuses, int userId)
+        public ProjectBuyerEvaluation AcceptProjectBuyerEvaluation(
+            Guid attendeeOrganizationUid, 
+            List<ProjectEvaluationStatus> projectEvaluationStatuses,
+            bool projectsApprovalLimitExceeded,
+            int userId)
         {
             var buyerEvaluation = this.GetProjectBuyerEvaluationByAttendeeOrganizationUid(attendeeOrganizationUid);
-            buyerEvaluation?.Accept(projectEvaluationStatuses, userId);
+            buyerEvaluation?.Accept(projectEvaluationStatuses, projectsApprovalLimitExceeded, userId);
 
             return buyerEvaluation;
         }

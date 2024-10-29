@@ -67,7 +67,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.CountAutomaticTables.Value,
                 cmd.CountManualTables.Value,
                 cmd.UserId);
-            if (!negotiationConfig.IsValid())
+            if (!negotiationConfig.IsNegotiationRoomConfigValid())
             {
                 this.AppValidationResult.Add(negotiationConfig.ValidationResult);
                 return this.AppValidationResult;

@@ -1676,6 +1676,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
 
+                if (!buyerAttendeeOrganizationUid.HasValue)
+                {
+                    throw new DomainException(string.Format(Messages.TheFieldIsRequired, "buyerAttendeeOrganizationUid"));
+                }
+
                 var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(projectUid ?? Guid.Empty, this.EditionDto.Id);
                 if (projectDto == null)
                 {
@@ -1693,7 +1698,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
 
                 var maximumAvailableSlotsByEditionIdResponseDto = await CommandBus.Send(new GetMaximumAvailableSlotsByEditionId(this.EditionDto.Id));
-                var playerAcceptedProjectsCount = await CommandBus.Send(new CountNegotiationsAcceptedByBuyerAttendeeOrganizationUid(buyerAttendeeOrganizationUid ?? Guid.Empty));
+                var playerAcceptedProjectsCount = await CommandBus.Send(new CountPresentialNegotiationsAcceptedByBuyerAttendeeOrganizationUid(buyerAttendeeOrganizationUid ?? Guid.Empty));
 
                 cmd = new AcceptProjectEvaluation(
                     projectDto,

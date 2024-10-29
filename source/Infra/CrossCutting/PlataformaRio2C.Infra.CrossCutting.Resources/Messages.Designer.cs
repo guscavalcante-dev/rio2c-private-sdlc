@@ -1266,6 +1266,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Não é possível gerar agenda.&lt;br/&gt;Nenhum &lt;b&gt;Parâmetro de Rodadas de Negócio&lt;/b&gt; contendo &lt;b&gt;{0}&lt;/b&gt; encontrado.&lt;br/&gt;Por favor, acesse os &lt;a href=&quot;{1}&quot; target=&quot;_blank&quot;&gt;Parâmetros de Rodadas de Negócio&lt;/a&gt; e crie ao menos um parâmetro contendo &lt;b&gt;{0}&lt;/b&gt; e tente novamente..
+        /// </summary>
+        public static string MeetingParametersNotFound {
+            get {
+                return ResourceManager.GetString("MeetingParametersNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A mensagem é longa demais. Tente encurtá-la ou enviá-la em múltiplas partes..
         /// </summary>
         public static string MessageIsTooLong {
