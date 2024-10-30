@@ -138,25 +138,6 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h5>@string.Format(Messages.AudivisualPichingQuestion, ViewBag.EditionDto?.UrlCode)</h5>
-                </div>
-                <div class="form-group col-md-12">
-                    @*@Html.LabelFor(m => m.IsPitching, (string)string.Format(Messages.AudivisualPichingQuestion, ViewBag.EditionDto?.UrlCode), new { @class = "control-label" })*@
-                    <div class="kt-radio-inline">
-                        <label class="kt-radio">
-                            @Html.RadioButtonFor(m => m.IsPitching, true) @Labels.Yes
-                            <span></span>
-                        </label>
-                        <label class="kt-radio">
-                            @Html.RadioButtonFor(m => m.IsPitching, false) @Labels.No
-                            <span></span>
-                        </label>
-                    </div>
-                    @Html.ValidationMessageFor(m => m.IsPitching, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
                     @Html.EditorFor(m => m.AdditionalInformations)
                 </div>
             </div>

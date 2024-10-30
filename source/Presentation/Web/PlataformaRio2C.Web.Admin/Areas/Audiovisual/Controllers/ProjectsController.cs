@@ -58,6 +58,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IFileRepository fileRepo;
         private readonly IProjectEvaluationStatusRepository evaluationStatusRepo;
+        private readonly IProjectModalityRepository projectModalityRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectsController"/> class.
@@ -70,6 +71,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="fileRepository">The file repository.</param>
         /// <param name="evaluationStatusRepository">The evaluation status repository.</param>
+        /// <param name="projectModalityRepository">The project modality repository.</param>
         public ProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
@@ -78,7 +80,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             ITargetAudienceRepository targetAudienceRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IFileRepository fileRepository,
-            IProjectEvaluationStatusRepository evaluationStatusRepository)
+            IProjectEvaluationStatusRepository evaluationStatusRepository,
+            IProjectModalityRepository projectModalityRepository)
             : base(commandBus, identityController)
         {
             this.projectRepo = projectRepository;
@@ -87,6 +90,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.fileRepo = fileRepository;
             this.evaluationStatusRepo = evaluationStatusRepository;
+            this.projectModalityRepository = projectModalityRepository;
         }
 
         #region List
@@ -769,7 +773,10 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     true,
                     false,
-                    false);
+                    false,
+                    this.UserInterfaceLanguage,
+                    await this.projectModalityRepository.FindAllAsync()
+                );
             }
             catch (DomainException ex)
             {

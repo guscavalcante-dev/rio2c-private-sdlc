@@ -527,7 +527,7 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             document.Add(paragraph);
             paragraph.Clear();
 
-            paragraph.Add(GetChunk(this.Project.Project.IsPitching ? Labels.Yes : Labels.No, DefaultFontSize + 4f, Font.NORMAL));
+            paragraph.Add(GetChunk(this.Project.IsPitching() ? Labels.Yes : Labels.No, DefaultFontSize + 4f, Font.NORMAL));
             paragraph.IndentationLeft = 15;
             paragraph.IndentationRight = 15;
             paragraph.SpacingBefore = 5;

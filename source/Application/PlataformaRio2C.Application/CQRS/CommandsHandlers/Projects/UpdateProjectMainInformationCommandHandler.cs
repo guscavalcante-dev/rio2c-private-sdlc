@@ -93,7 +93,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.TotalValueOfProject,
                 cmd.ValueAlreadyRaised,
                 cmd.ValueStillNeeded,
-                cmd.IsPitching ?? false,
                 cmd.Titles?.Select(d => new ProjectTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.LogLines?.Select(d => new ProjectLogLine(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.Summaries?.Select(d => new ProjectSummary(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),

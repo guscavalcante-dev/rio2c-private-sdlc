@@ -1122,7 +1122,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Não é possível criar a rodada de negócio pois essa empresa já atingiu o limite.
+        ///   Looks up a localized string similar to Não é possível criar a rodada de negócio pois essa empresa já atingiu o limite de inscrições..
         /// </summary>
         public static string IsNotPossibleCreateBusinessRoundProjectLimit {
             get {
@@ -1131,7 +1131,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Não é possível criar o projeto pois essa empresa já atingiu o limite..
+        ///   Looks up a localized string similar to Não é possível criar o projeto pitching pois essa empresa já atingiu o limite de inscrições..
         /// </summary>
         public static string IsNotPossibleCreatePitchingProjectLimit {
             get {
@@ -1140,7 +1140,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Não é possível criar o projeto pitching pois essa empresa já atingiu o limite..
+        ///   Looks up a localized string similar to Não é possível criar o projeto pois essa empresa já atingiu o limite..
         /// </summary>
         public static string IsNotPossibleCreateProjectLimit {
             get {

@@ -44,7 +44,6 @@ namespace PlataformaRio2C.Domain.Entities
         public string TotalValueOfProject { get; private set; }
         public string ValueAlreadyRaised { get; private set; }
         public string ValueStillNeeded { get; private set; }
-        public bool IsPitching { get; private set; }
         public DateTimeOffset? FinishDate { get; private set; }
         public int ProjectBuyerEvaluationsCount { get; private set; }
         public int CommissionEvaluationsCount { get; private set; }
@@ -80,7 +79,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="totalValueOfProject">The total value of project.</param>
         /// <param name="valueAlreadyRaised">The value already raised.</param>
         /// <param name="valueStillNeeded">The value still needed.</param>
-        /// <param name="isPitching">if set to <c>true</c> [is pitching].</param>
         /// <param name="projectTitles">The project titles.</param>
         /// <param name="projectLogLines">The project log lines.</param>
         /// <param name="projectSummaries">The project summaries.</param>
@@ -102,7 +100,6 @@ namespace PlataformaRio2C.Domain.Entities
             string totalValueOfProject,
             string valueAlreadyRaised,
             string valueStillNeeded,
-            bool isPitching,
             List<ProjectTitle> projectTitles,
             List<ProjectLogLine> projectLogLines,
             List<ProjectSummary> projectSummaries,
@@ -129,7 +126,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.TotalValueOfProject = totalValueOfProject?.Trim();
             this.ValueAlreadyRaised = valueAlreadyRaised?.Trim();
             this.ValueStillNeeded = valueStillNeeded?.Trim();
-            this.IsPitching = isPitching;
             this.FinishDate = null;
             this.ProjectBuyerEvaluationsCount = 0;
 
@@ -163,7 +159,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="totalValueOfProject">The total value of project.</param>
         /// <param name="valueAlreadyRaised">The value already raised.</param>
         /// <param name="valueStillNeeded">The value still needed.</param>
-        /// <param name="isPitching">if set to <c>true</c> [is pitching].</param>
         /// <param name="projectTitles">The project titles.</param>
         /// <param name="projectLogLines">The project log lines.</param>
         /// <param name="projectSummaries">The project summaries.</param>
@@ -179,7 +174,6 @@ namespace PlataformaRio2C.Domain.Entities
             string totalValueOfProject,
             string valueAlreadyRaised,
             string valueStillNeeded,
-            bool isPitching,
             List<ProjectTitle> projectTitles,
             List<ProjectLogLine> projectLogLines,
             List<ProjectSummary> projectSummaries,
@@ -197,7 +191,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.TotalValueOfProject = totalValueOfProject?.Trim();
             this.ValueAlreadyRaised = valueAlreadyRaised?.Trim();
             this.ValueStillNeeded = valueStillNeeded?.Trim();
-            this.IsPitching = isPitching;
 
             this.SynchronizeProjectTitles(projectTitles, userId);
             this.SynchronizeProjectLogLines(projectLogLines, userId);
@@ -1319,7 +1312,7 @@ namespace PlataformaRio2C.Domain.Entities
                 return;
             }
 
-            if (!this.IsPitching)
+            if (!this.IsPitching())
             {
                 this.ValidationResult.Add(new ValidationError(Messages.ProjectCannotBeEvaluatedIsNotPitching, new string[] { "ToastrError" }));
             }
@@ -1501,6 +1494,14 @@ namespace PlataformaRio2C.Domain.Entities
         //}
 
         #endregion
+        
+        public bool IsPitching()
+        {
+            return new int[] {
+                ProjectModality.Both.Id,
+                ProjectModality.Pitching.Id
+            }.Contains(this.ProjectModalityId);
+        }
     }
 }
 

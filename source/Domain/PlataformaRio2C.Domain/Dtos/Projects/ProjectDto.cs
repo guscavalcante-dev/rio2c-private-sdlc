@@ -177,5 +177,13 @@ namespace PlataformaRio2C.Domain.Dtos
         }
 
         #endregion
+
+        public bool IsPitching()
+        {
+            return new int[] {
+                ProjectModality.Both.Id,
+                ProjectModality.Pitching.Id
+            }.Contains(this.ProjectModalityDto.Id);
+        }
     }
 }

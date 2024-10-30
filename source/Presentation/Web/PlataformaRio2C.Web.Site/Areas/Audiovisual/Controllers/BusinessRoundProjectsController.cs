@@ -59,7 +59,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="projectEvaluationRefuseReasonRepo">The project evaluation refuse reason repo.</param>
         /// <param name="evaluationStatusRepository">The project evaluation status repository.</param>
-        /// <param name="projectModalityRepository">The project evaluation status repository.</param>
+        /// <param name="projectModalityRepository">The project modality repository.</param>
         public BusinessRoundProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
@@ -70,8 +70,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo,
             IProjectEvaluationStatusRepository evaluationStatusRepository,
-            IProjectModalityRepository projectModalityRepository
-            )
+            IProjectModalityRepository projectModalityRepository)
             : base(commandBus, identityController)
         {
             this.projectRepo = projectRepository;
