@@ -350,6 +350,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>Finds the by project modality id.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="projectModalityIds">The project modality id</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> FindByProjectModalityIds(this IQueryable<Project> query, int[] projectModalityIds)
+        {
+            if (projectModalityIds?.Length > 0)
+            {
+                query = query.Where(p => projectModalityIds.Contains(p.ProjectModalityId));
+            }
+            return query;
+        }
     }
 
     #endregion
@@ -817,11 +830,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>Finds all dtos to sell asynchronous.</summary>
         /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
         /// <param name="showAll">if set to <c>true</c> [show all].</param>
+        /// <param name="projectModalityIds">if set to <c>true</c> [show all].</param>
         /// <returns></returns>
-        public async Task<List<ProjectDto>> FindAllDtosToSellAsync(Guid attendeeOrganizationUid, bool showAll)
+        public async Task<List<ProjectDto>> FindAllDtosToSellAsync(Guid attendeeOrganizationUid, bool showAll, int[] projectModalityIds)
         {
             var query = this.GetBaseQuery()
                                 .FindBySellerAttendeeOrganizationUid(attendeeOrganizationUid)
+                                .FindByProjectModalityIds(projectModalityIds)
                                 .Select(p => new ProjectDto
                                 {
                                     Project = p,
