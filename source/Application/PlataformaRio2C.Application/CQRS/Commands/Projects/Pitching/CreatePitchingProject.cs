@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
-// Author           : Rafael Dantas Ruiz
-// Created          : 11-06-2019
+// Author           : Gilson Oliveira
+// Created          : 29-11-2024
 //
 // Last Modified By : Gilson Oliveira
 // Last Modified On : 29-11-2024
 // ***********************************************************************
-// <copyright file="CreateProject.cs" company="Softo">
+// <copyright file="CreatePitchingProject.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -17,10 +17,10 @@ using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>CreateProject</summary>
-    public class CreateProject : ProjectBaseCommand
+    /// <summary>CreatePitchingProject</summary>
+    public class CreatePitchingProject : ProjectBaseCommand
     {
-        /// <summary>Initializes a new instance of the <see cref="CreateProject"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="CreatePitchingProject"/> class.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="targetAudiences">The target audiences.</param>
@@ -29,8 +29,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isProductionPlanRequired">if set to <c>true</c> [is production plan required].</param>
         /// <param name="isAdditionalInformationRequired">if set to <c>true</c> [is additional information required].</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
-        /// <param name="modalityDtos">The project modality list.</param>
-        public CreateProject(
+        public CreatePitchingProject(
             ProjectDto entity,
             List<LanguageDto> languagesDtos,
             List<TargetAudience> targetAudiences,
@@ -38,8 +37,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isDataRequired,
             bool isProductionPlanRequired,
             bool isAdditionalInformationRequired,
-            string userInterfaceLanguage,
-            List<ProjectModalityDto> modalityDtos)
+            string userInterfaceLanguage
+        )
         {
             this.UpdateBaseProperties(
                 entity,
@@ -50,13 +49,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 isProductionPlanRequired,
                 isAdditionalInformationRequired,
                 userInterfaceLanguage,
-                modalityDtos,
-                true
+                new List<ProjectModalityDto> { },
+                false
             );
         }
 
-        /// <summary>Initializes a new instance of the <see cref="CreateProject"/> class.</summary>
-        public CreateProject()
+        /// <summary>Initializes a new instance of the <see cref="CreatePitchingProject"/> class.</summary>
+        public CreatePitchingProject()
         {
         }
     }

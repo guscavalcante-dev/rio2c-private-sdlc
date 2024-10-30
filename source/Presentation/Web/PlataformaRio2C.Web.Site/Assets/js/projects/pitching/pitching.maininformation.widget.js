@@ -1,24 +1,24 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Rafael Dantas Ruiz
-// Created          : 11-16-2019
+// Created          : 11-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 02-21-2020
 // ***********************************************************************
-// <copyright file="projects.links.widget.js" company="Softo">
+// <copyright file="projects.maininformation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var ProjectsLinksWidget = function () {
+var ProjectsMainInformationWidget = function () {
 
-    var widgetElementId = '#ProjectLinksWidget';
+    var widgetElementId = '#ProjectMainInformationWidget';
     var widgetElement = $(widgetElementId);
 
-    var updateModalId = '#UpdateLinksModal';
-    var updateFormId = '#UpdateLinksForm';
+    var updateModalId = '#UpdateMainInformationModal';
+    var updateFormId = '#UpdateMainInformationForm';
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
@@ -34,7 +34,7 @@ var ProjectsLinksWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.projectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/BusinessRoundProjects/ShowLinksWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PitchingProjects/ShowMainInformationWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -62,8 +62,8 @@ var ProjectsLinksWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (ProjectsLinksWidget) !== 'undefined') {
-                    ProjectsLinksWidget.init();
+                if (typeof (ProjectsMainInformationWidget) !== 'undefined') {
+                    ProjectsMainInformationWidget.init();
                 }
             },
             onError: function (data) {
@@ -78,8 +78,11 @@ var ProjectsLinksWidget = function () {
 
     var enableUpdatePlugins = function () {
         //MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2' });
+        MyRio2cInputMask.enableMask('#TotalPlayingTime', '99:99:99');
+        MyRio2cInputMask.enableMask('#EachEpisodePlayingTime', '99:99:99');
         enableAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: updateModalId + ' .enable-select2', allowClear: true });
     };
 
     var showUpdateModal = function () {
@@ -88,7 +91,7 @@ var ProjectsLinksWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.projectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/BusinessRoundProjects/ShowUpdateLinksModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PitchingProjects/ShowUpdateMainInformationModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
             data: data,
             // Success

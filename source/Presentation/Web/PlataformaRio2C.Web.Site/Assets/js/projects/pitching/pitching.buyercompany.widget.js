@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Gilson Oliveira
-// Created          : 10-30-2019
+// Author           : Rafael Dantas Ruiz
+// Created          : 11-11-2019
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 10-30-2019
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 12-09-2019
 // ***********************************************************************
-// <copyright file="businessrounds.buyercompany.widget.js" company="Softo">
+// <copyright file="projects.buyercompany.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -35,7 +35,7 @@ var ProjectsBuyerCompanyWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.projectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/BusinessRoundProjects/ShowBuyerCompanyWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PitchingProjects/ShowBuyerCompanyWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -86,7 +86,7 @@ var ProjectsBuyerCompanyWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.projectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/ShowUpdateBuyerCompanyModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PitchingProjects/ShowUpdateBuyerCompanyModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -148,7 +148,7 @@ var ProjectsBuyerCompanyWidget = function () {
         jsonParameters.projectUid = $('#AggregateId').val();
         jsonParameters.attendeeOrganizationUid = attendeeOrganizationUid;
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/CreateBuyerEvaluation'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PitchingProjects/CreateBuyerEvaluation'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -183,7 +183,7 @@ var ProjectsBuyerCompanyWidget = function () {
         jsonParameters.projectUid = $('#AggregateId').val();
         jsonParameters.attendeeOrganizationUid = attendeeOrganizationUid;
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/DeleteBuyerEvaluation'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PitchingProjects/DeleteBuyerEvaluation'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -219,7 +219,7 @@ var ProjectsBuyerCompanyWidget = function () {
         jsonParameters.projectUid = $('#AggregateId').val();
         jsonParameters.originPage = originPage;
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/Finish'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PitchingProjects/Finish'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -378,7 +378,7 @@ var ProjectsBuyerCompanySelectedWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.projectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/ShowBuyerCompanySelectedWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PitchingProjects/ShowBuyerCompanySelectedWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -439,7 +439,7 @@ var ProjectsMatchBuyerCompanyWidget = function () {
         jsonParameters.projectUid = $('#AggregateId').val();
         jsonParameters.searchKeywords = $('#SearchKeywords').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/ShowProjectMatchBuyerCompanyWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PitchingProjects/ShowProjectMatchBuyerCompanyWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -524,7 +524,7 @@ var ProjectsAllBuyerCompanyWidget = function () {
         jsonParameters.projectUid = $('#AggregateId').val();
         jsonParameters.searchKeywords = $('#SearchKeywords').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/ShowProjectAllBuyerCompanyWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PitchingProjects/ShowProjectAllBuyerCompanyWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
