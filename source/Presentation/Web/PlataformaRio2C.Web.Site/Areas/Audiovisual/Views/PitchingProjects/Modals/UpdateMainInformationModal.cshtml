@@ -1,4 +1,4 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateProjectMainInformation
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdatePitchingProjectMainInformation
 <div class="modal fade" id="UpdateMainInformationModal" role="dialog" aria-labelledby="UpdateMainInformationModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -9,7 +9,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("UpdateMainInformation", "Projects", new { Area = "" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UpdateMainInformationForm" }))
+                @using (Html.BeginForm("UpdateMainInformation", "PitchingProjects", new { Area = "Audiovisual" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UpdateMainInformationForm" }))
                 {
                     @Html.HiddenFor(m => m.ProjectUid)
                     <div id="form-container">

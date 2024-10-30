@@ -329,6 +329,7 @@
     <Compile Include="CQRS\CommandsHandlers\Administrators\DeleteAdministratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\UpdateOrganizationApiConfigurationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Projects\Pitching\CreatePitchingProjectCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Projects\Pitching\UpdatePitchingProjectMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Speakers\SendSpeakersReportCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\User\UpdateUserStatusCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Administrators\UpdateAdministratorCommandHandler.cs" />
@@ -517,6 +518,7 @@
     <Compile Include="CQRS\Commands\Administrators\DeleteAdministrator.cs" />
     <Compile Include="CQRS\Commands\Organizations\UpdateOrganizationApiConfiguration.cs" />
     <Compile Include="CQRS\Commands\Projects\Pitching\CreatePitchingProject.cs" />
+    <Compile Include="CQRS\Commands\Projects\Pitching\UpdatePitchingProjectMainInformation.cs" />
     <Compile Include="CQRS\Commands\Speakers\SendSpeakersReport.cs" />
     <Compile Include="CQRS\Commands\User\UpdateUserStatus.cs" />
     <Compile Include="CQRS\Commands\Administrators\UpdateAdministrator.cs" />
