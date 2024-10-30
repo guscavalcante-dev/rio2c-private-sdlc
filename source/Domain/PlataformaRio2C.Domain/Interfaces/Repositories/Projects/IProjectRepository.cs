@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 07-11-2023
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 29-10-2024
 // ***********************************************************************
 // <copyright file="IProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,7 +27,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     {
         Task<Project> FindByIdAsync(int projectId);
         Task<Project> FindByUidAsync(Guid projectUid);
-        Task<List<ProjectDto>> FindAllDtosToSellAsync(Guid attendeeOrganizationUid, bool showAll);
+        Task<List<ProjectDto>> FindAllDtosToSellAsync(Guid attendeeOrganizationUid, bool showAll, int[] projectModalityIds);
         Task<IPagedList<ProjectDto>> FindAllDtosToEvaluateAsync(Guid attendeeCollaboratorUid, string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int page, int pageSize);
         Task<IPagedList<ProjectBaseDto>> FindAllByDataTableAsync(int page, int pageSize, List<Tuple<string, string>> sortColumns, string keywords, bool showPitchings, Guid? interestUid, Guid? evaluationStatusUid, string languageCode, int editionId);
         Task<IPagedList<ProjectBaseDto>> FindAllEvaluatorsReportByDataTableAsync(int page, int pageSize, List<Tuple<string, string>> sortColumns, string keywords, bool showPitchings, Guid? interestUid, Guid? evaluationStatusUid, string languageCode, int editionId);

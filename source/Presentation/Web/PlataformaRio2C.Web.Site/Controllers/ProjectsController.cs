@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Gilson Oliveira
-// Last Modified On : 10-24-2024
+// Last Modified On : 29-10-2024
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -127,7 +127,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             var projects = await this.projectRepo.FindAllDtosToSellAsync(
                 this.UserAccessControlDto?.GetFirstAttendeeOrganizationCreated()?.Uid ?? Guid.Empty,
-                false);
+                false,
+                new int[] { ProjectModality.Both.Id, ProjectModality.BusinessRound.Id, ProjectModality.Pitching.Id }
+            );
 
             // Create fake projects in the list
             var projectMaxCount = this.EditionDto?.AttendeeOrganizationMaxSellProjectsCount ?? 0;

@@ -4,7 +4,7 @@
 // Created          : 10-22-2024
 //
 // Last Modified By : Gilson Oliveira
-// Last Modified On : 10-24-2024
+// Last Modified On : 29-10-2024
 // ***********************************************************************
 // <copyright file="BusinessRoundProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -95,7 +95,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "BusinessRoundProjects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper($"{Labels.Projects} {Labels.BusinessRound}", Url.Action("SubmittedList", "BusinessRoundProjects", new { Area = "Audiovisual" })),
             });
 
             #endregion
@@ -107,7 +107,9 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 
             var projects = await this.projectRepo.FindAllDtosToSellAsync(
                 this.UserAccessControlDto?.GetFirstAttendeeOrganizationCreated()?.Uid ?? Guid.Empty,
-                false);
+                false,
+                new int[] { ProjectModality.Both.Id, ProjectModality.BusinessRound.Id }
+            );
 
             // Create fake projects in the list
             var projectMaxCount = this.EditionDto?.AttendeeOrganizationMaxSellProjectsCount ?? 0;
@@ -720,7 +722,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ProjectInfo, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "BusinessRoundProjects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper($"{Labels.Projects} {Labels.BusinessRound}", Url.Action("SubmittedList", "BusinessRoundProjects", new { Area = "Audiovisual" })),
                 new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "BusinessRoundProjects", new { Area = "Audiovisual" }))
             });
 
@@ -798,8 +800,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ProjectInfo, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "BusinessRoundProjects", new { Area = "" })),
-                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "BusinessRoundProjects", new { Area = "" }))
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "BusinessRoundProjects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "BusinessRoundProjects", new { Area = "Audiovisual" }))
             });
 
             #endregion
@@ -832,7 +834,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                     this.UserAccessControlDto.User.Uid,
                     this.EditionDto.Id,
                     this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
+                    this.UserInterfaceLanguage
+                );
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
                 {
