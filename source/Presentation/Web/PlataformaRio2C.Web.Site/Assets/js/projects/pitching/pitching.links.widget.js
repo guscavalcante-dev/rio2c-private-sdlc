@@ -34,7 +34,7 @@ var ProjectsLinksWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.projectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/BusinessRoundProjects/ShowLinksWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PitchingProjects/ShowLinksWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -88,7 +88,7 @@ var ProjectsLinksWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.projectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/BusinessRoundProjects/ShowUpdateLinksModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PitchingProjects/ShowUpdateLinksModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
             data: data,
             // Success

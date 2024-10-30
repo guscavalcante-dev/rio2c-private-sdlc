@@ -43,7 +43,7 @@ var ProjectsBuyerEvaluationListWidget = function () {
         jsonParameters.page = $('#Page').val();
         jsonParameters.pageSize = $('#PageSize').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/BusinessRoundProjects/ShowEvaluationListWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PitchingProjects/ShowEvaluationListWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -131,7 +131,7 @@ var ProjectsBuyerEvaluationListWidget = function () {
 	    var jsonParameters = new Object();
 	    jsonParameters.projectUid = projectUid;
 
-	    $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/BusinessRoundProjects/ShowEvaluationListItemWidget'), jsonParameters, function (data) {
+	    $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PitchingProjects/ShowEvaluationListItemWidget'), jsonParameters, function (data) {
 		    MyRio2cCommon.handleAjaxReturn({
 			    data: data,
 			    // Success

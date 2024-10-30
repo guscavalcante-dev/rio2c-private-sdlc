@@ -1,29 +1,28 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Rafael Dantas Ruiz
-// Created          : 11-16-2019
+// Created          : 11-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 02-21-2020
 // ***********************************************************************
-// <copyright file="projects.links.widget.js" company="Softo">
+// <copyright file="projects.interest.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var ProjectsLinksWidget = function () {
+var ProjectsInterestWidget = function () {
 
-    var widgetElementId = '#ProjectLinksWidget';
+    var widgetElementId = '#ProjectInterestWidget';
     var widgetElement = $(widgetElementId);
 
-    var updateModalId = '#UpdateLinksModal';
-    var updateFormId = '#UpdateLinksForm';
+    var updateModalId = '#UpdateInterestModal';
+    var updateFormId = '#UpdateInterestForm';
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         KTApp.initTooltips();
-        MyRio2cCommon.initScroll();
     };
 
     var show = function () {
@@ -34,7 +33,7 @@ var ProjectsLinksWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.projectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/BusinessRoundProjects/ShowLinksWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PitchingProjects/ShowInterestWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -62,8 +61,8 @@ var ProjectsLinksWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (ProjectsLinksWidget) !== 'undefined') {
-                    ProjectsLinksWidget.init();
+                if (typeof (ProjectsInterestWidget) !== 'undefined') {
+                    ProjectsInterestWidget.init();
                 }
             },
             onError: function (data) {
@@ -77,9 +76,14 @@ var ProjectsLinksWidget = function () {
     };
 
     var enableUpdatePlugins = function () {
-        //MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2' });
+        MyRio2cCommon.enableAtLeastOnCheckboxByNameValidation(updateFormId);
         enableAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
+
+        // Enable additional info textbox
+        if (typeof (MyRio2cCommonAdditionalInfo) !== 'undefined') {
+            MyRio2cCommonAdditionalInfo.init();
+        }
     };
 
     var showUpdateModal = function () {
@@ -88,7 +92,7 @@ var ProjectsLinksWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.projectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/BusinessRoundProjects/ShowUpdateLinksModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PitchingProjects/ShowUpdateInterestModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
             data: data,
             // Success
@@ -108,6 +112,20 @@ var ProjectsLinksWidget = function () {
         });
     };
 
+    //// Form submit --------------------------------------------------------------------------------
+    //var submit = function () {
+    //    var validator = $(updateFormId).validate();
+    //    var formValidation = $(updateFormId).valid();
+    //    //var interestsValidation = MyRio2cCommon.validateRequireOneGroup();
+
+    //    if (formValidation/* && interestsValidation*/) {
+    //        MyRio2cCommon.submitForm(updateFormId);
+    //    }
+    //    else {
+    //        validator.focusInvalid();
+    //    }
+    //};
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
@@ -115,6 +133,9 @@ var ProjectsLinksWidget = function () {
         },
         showUpdateModal: function () {
             showUpdateModal();
-        }
+        },
+        //submit: function () {
+        //    submit();
+        //}
     };
 }();
