@@ -3,8 +3,8 @@
 // Author           : William Sergio Almado Junior
 // Created          : 12-13-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 07-10-2023
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 10-30-2024
 // ***********************************************************************
 // <copyright file="audiovisual.projects.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,10 +26,10 @@ var AudiovisualProjectsDataTableWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.selectedProjectsUids = $('#audiovisualprojects-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
         jsonParameters.keyword = $('#Search').val();
-        jsonParameters.showPitchings = $('#ShowPitchings').prop('checked');
+        jsonParameters.projectModalityUid = $('#ProjectModalityUid').val();
         jsonParameters.interestUid = $('#InterestUid').val();
 
-        window.open(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/DownloadPdfs') + '?keyword=' + jsonParameters.keyword + '&showPitchings=' + jsonParameters.showPitchings + '&interestUid=' + jsonParameters.interestUid + '&selectedProjectsUids=' + jsonParameters.selectedProjectsUids);
+        window.open(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/DownloadPdfs') + '?keyword=' + jsonParameters.keyword + '&projectModalityUid=' + jsonParameters.projectModalityUid + '&interestUid=' + jsonParameters.interestUid + '&selectedProjectsUids=' + jsonParameters.selectedProjectsUids);
 
         MyRio2cCommon.unblock();
     };
@@ -142,7 +142,7 @@ var AudiovisualProjectsDataTableWidget = function () {
             ajax: {
                 url: MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/Search'),
                 data: function (d) {
-                    d.showPitchings = $('#ShowPitchings').prop('checked');
+                    d.projectModalityUid = $('#ProjectModalityUid').val();
                     d.interestUid = $('#InterestUid').val();
                     d.evaluationStatusUid = $('#EvaluationStatusUid').val();
                 },
@@ -173,7 +173,7 @@ var AudiovisualProjectsDataTableWidget = function () {
                             searchKeywords = jsonReturned.searchKeywords;
                             interestUid = jsonReturned.interestUid;
                             evaluationStatusUid = jsonReturned.evaluationStatusUid;
-                            showPitchings = jsonReturned.showPitchings;
+                            projectModalityUid = jsonReturned.projectModalityUid;
                             initialPage = jsonReturned.page;
                             initialPageSize = jsonReturned.pageSize;
 
@@ -329,7 +329,7 @@ var AudiovisualProjectsDataTableWidget = function () {
                         html += '\          <i class="la la-ellipsis-h"></i>';
                         html += '\      </a>';
                         html += '\      <div class="dropdown-menu dropdown-menu-right">';
-                        html += '\          <button class="dropdown-item" onclick="AudiovisualProjectsDataTableWidget.showDetails(\'' + row.Id + '\', \'' + searchKeywords + '\', \'' + interestUid + '\', \'' + evaluationStatusUid + '\', \'' + showPitchings + '\', \'' + initialPage + '\', \'' + initialPageSize + '\');">';
+                        html += '\          <button class="dropdown-item" onclick="AudiovisualProjectsDataTableWidget.showDetails(\'' + row.Id + '\', \'' + searchKeywords + '\', \'' + interestUid + '\', \'' + evaluationStatusUid + '\', \'' + projectModalityUid + '\', \'' + initialPage + '\', \'' + initialPageSize + '\');">';
                         html += '\              <i class="la la-eye"></i>' + labels.view + '';
                         html += '\          </button>';
                         html += '\          <button class="dropdown-item" onclick="AudiovisualProjectsDelete.showModal(\'' + row.Uid + '\');">';
@@ -386,7 +386,7 @@ var AudiovisualProjectsDataTableWidget = function () {
             }
         });
 
-        $('#InterestUid').on('change', function (e) {
+        $('#InterestUid, #ProjectModalityUid').on('change', function (e) {
             table.ajax.reload();
         });
 
@@ -405,7 +405,7 @@ var AudiovisualProjectsDataTableWidget = function () {
         table.ajax.reload();
     };
 
-    var showDetails = function (projectId, searchKeywords, interestUid, evaluationStatusUid, showPitchings, page, pageSize) {
+    var showDetails = function (projectId, searchKeywords, interestUid, evaluationStatusUid, projectModalityUid, page, pageSize) {
         if (MyRio2cCommon.isNullOrEmpty(projectId)) {
             return;
         }
@@ -414,7 +414,7 @@ var AudiovisualProjectsDataTableWidget = function () {
             + '?searchKeywords=' + searchKeywords
             + '&interestUid=' + interestUid
             + '&evaluationStatusUid=' + evaluationStatusUid
-            + '&showPitchings=' + showPitchings
+            + '&projectModalityUid=' + projectModalityUid
             + '&page=' + page
             + '&pageSize=' + pageSize
         );
@@ -424,7 +424,7 @@ var AudiovisualProjectsDataTableWidget = function () {
     var getJsonParameters = function () {
         var jsonParameters = new Object();
         jsonParameters.search = $('#Search').val();
-        jsonParameters.showPitchings = $('#ShowPitchings').prop('checked');
+        jsonParameters.projectModalityUid = $('#ProjectModalityUid').val();
         jsonParameters.interestUid = $('#InterestUid').val();
         jsonParameters.evaluationStatusUid = $('#EvaluationStatusUid').val();
 
@@ -449,8 +449,8 @@ var AudiovisualProjectsDataTableWidget = function () {
         refreshData: function () {
             refreshData();
         },
-        showDetails: function (projectId, searchKeywords, interestUid, evaluationStatusUid, showPitchings, page, pageSize) {
-            showDetails(projectId, searchKeywords, interestUid, evaluationStatusUid, showPitchings, page, pageSize);
+        showDetails: function (projectId, searchKeywords, interestUid, evaluationStatusUid, projectModalityUid, page, pageSize) {
+            showDetails(projectId, searchKeywords, interestUid, evaluationStatusUid, projectModalityUid, page, pageSize);
         },
         exportEvaluatorsReportToExcel: function () {
             exportEvaluatorsReportToExcel();

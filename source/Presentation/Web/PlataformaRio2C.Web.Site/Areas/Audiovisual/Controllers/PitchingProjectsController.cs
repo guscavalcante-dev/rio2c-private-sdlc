@@ -4,7 +4,7 @@
 // Created          : 10-22-2024
 //
 // Last Modified By : Gilson Oliveira
-// Last Modified On : 29-10-2024
+// Last Modified On : 10-30-2024
 // ***********************************************************************
 // <copyright file="PitchingProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -94,7 +94,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "PitchingProjects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper($"{Labels.Projects} {Labels.Pitching}", Url.Action("SubmittedList", "PitchingProjects", new { Area = "Audiovisual" })),
             });
 
             #endregion

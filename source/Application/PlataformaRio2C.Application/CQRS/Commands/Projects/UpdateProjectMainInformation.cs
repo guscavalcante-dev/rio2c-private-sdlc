@@ -4,7 +4,7 @@
 // Created          : 11-10-2019
 //
 // Last Modified By : Gilson Oliveira
-// Last Modified On : 29-11-2024
+// Last Modified On : 10-30-2024
 // ***********************************************************************
 // <copyright file="UpdateProjectMainInformation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -87,6 +87,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isDataRequired">if set to <c>true</c> [is data required].</param>
         /// <param name="isProductionPlanRequired">if set to <c>true</c> [is production plan required].</param>
         /// <param name="isAdditionalInformationRequired">if set to <c>true</c> [is additional information required].</param>
+        /// <param name="userInterfaceLanguage">if set to <c>true</c> [is additional information required].</param>
+        /// <param name="projectModalities">The project modality list.</param>
         public UpdateProjectMainInformation(
             ProjectDto entity,
             List<LanguageDto> languagesDtos,
@@ -221,9 +223,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         }
 
         /// <summary>Updates the additional informations.</summary>
-        /// <param name="userInterfaceLanguage">The entity.</param>
-        /// <param name="projectModalities">The languages dtos.</param>
-        /// <param name="entity">The languages dtos.</param>
+        /// <param name="userInterfaceLanguage">User interface language.</param>
+        /// <param name="projectModalities">The project modality list.</param>
+        /// <param name="entity">The project dto</param>
         private void UpdateProjectModalities(
             string userInterfaceLanguage,
             List<ProjectModalityDto> projectModalities,
@@ -236,9 +238,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         }
 
         /// <summary>Updates the additional informations.</summary>
-        /// <param name="userInterfaceLanguage">The entity.</param>
-        /// <param name="projectModalities">The languages dtos.</param>
-        /// <param name="entity">The languages dtos.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <param name="projectModalities">The project modality list.</param>
+        /// <param name="entity">The project modality dtos.</param>
         public void UpdateProjectModalities(
             string userInterfaceLanguage,
             List<ProjectModalityDto> projectModalities
