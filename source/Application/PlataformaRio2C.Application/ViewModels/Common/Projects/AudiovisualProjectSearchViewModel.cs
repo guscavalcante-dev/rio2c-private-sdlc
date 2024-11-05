@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-20-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-20-2021
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 10-30-2024
 // ***********************************************************************
 // <copyright file="AudiovisualProjectSearchViewModel.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,6 +18,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Application.ViewModels
 {
@@ -33,15 +34,17 @@ namespace PlataformaRio2C.Application.ViewModels
         [Display(Name = "Status", ResourceType = typeof(Labels))]
         public Guid? EvaluationStatusUid { get; set; }
 
-        [Display(Name = "ShowPitchings", ResourceType = typeof(Labels))]
-        public bool ShowPitchings { get; set; }
-
         public int? Page { get; set; }
         public int? PageSize { get; set; }
 
         public List<Interest> Interests;
 
         public List<ProjectEvaluationStatus> EvaluationStatuses;
+
+        [Display(Name = "ProjectModality", ResourceType = typeof(Labels))]
+        public Guid? ProjectModalityUid { get; set; }
+
+        public List<ProjectModalityDto> ProjectModalities { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="AudiovisualProjectSearchViewModel"/> class.</summary>
         public AudiovisualProjectSearchViewModel()
@@ -52,14 +55,19 @@ namespace PlataformaRio2C.Application.ViewModels
         /// Updates the models and lists.
         /// </summary>
         /// <param name="interests">The interests.</param>
+        /// <param name="evaluationStatuses">The evaluation status.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <param name="projectModalities">The project modality dto.</param>
         public void UpdateModelsAndLists(
             List<Interest> interests, 
             List<ProjectEvaluationStatus> evaluationStatuses,
-            string userInterfaceLanguage)
+            string userInterfaceLanguage,
+            List<ProjectModalityDto> projectModalities)
         {
             this.Interests = interests.GetSeparatorTranslation(i => i.Name, userInterfaceLanguage, '|')?.OrderBy(i => i.Name)?.ToList();
             this.EvaluationStatuses = evaluationStatuses.GetSeparatorTranslation(i => i.Name, userInterfaceLanguage, '|')?.OrderBy(i => i.Name)?.ToList();
+            projectModalities.ForEach(g => g.Translate(userInterfaceLanguage));
+            this.ProjectModalities = projectModalities;
         }
     }
 }

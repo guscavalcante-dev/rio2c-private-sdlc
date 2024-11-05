@@ -3,8 +3,8 @@
 // Author           : William Sergio Almado Junior
 // Created          : 12-27-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 06-29-2023
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 10-30-2024
 // ***********************************************************************
 // <copyright file="ProjectDocumentTemplate.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -527,7 +527,7 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             document.Add(paragraph);
             paragraph.Clear();
 
-            paragraph.Add(GetChunk(this.Project.IsPitching() ? Labels.Yes : Labels.No, DefaultFontSize + 4f, Font.NORMAL));
+            paragraph.Add(GetChunk(this.Project.IsPitching ? Labels.Yes : Labels.No, DefaultFontSize + 4f, Font.NORMAL));
             paragraph.IndentationLeft = 15;
             paragraph.IndentationRight = 15;
             paragraph.SpacingBefore = 5;
