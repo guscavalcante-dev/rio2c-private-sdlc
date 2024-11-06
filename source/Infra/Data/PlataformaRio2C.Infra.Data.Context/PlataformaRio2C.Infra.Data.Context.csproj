@@ -259,6 +259,10 @@
     <Compile Include="Migrations\202410291947068_RemoveAutomaticMigrations.Designer.cs">
       <DependentUpon>202410291947068_RemoveAutomaticMigrations.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.cs" />
+    <Compile Include="Migrations\202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.Designer.cs">
+      <DependentUpon>202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -286,6 +290,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Migrations\Scripts\202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Migrations\Scripts\202410231438342_AddIsVirtualMeetingToProjectBuyerEvaluations.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -293,6 +300,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202408202223049_Initial.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202410231438342_AddIsVirtualMeetingToProjectBuyerEvaluations.up.sql">
@@ -404,6 +414,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202410291947068_RemoveAutomaticMigrations.resx">
       <DependentUpon>202410291947068_RemoveAutomaticMigrations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.resx">
+      <DependentUpon>202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
