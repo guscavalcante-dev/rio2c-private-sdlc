@@ -995,18 +995,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             List<Tuple<string, string>> sortColumns,
             List<Guid> collaboratorsUids,
             string[] collaboratorTypeNames,
-            string[] organizationTypeNames,
             bool showAllEditions,
             bool showAllParticipants,
             bool? showHighlights,
             int? editionId)
         {
             this.SetProxyEnabled(false);
-
-            if (organizationTypeNames == null)
-            {
-                organizationTypeNames = new string[] { };
-            }
 
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords, editionId)
@@ -1066,15 +1060,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
                                                                     .Where(at => !at.IsDeleted && at.EditionId == editionId)
                                                                     .SelectMany(at => at.AttendeeOrganizationCollaborators
-                                                                                            .Where(aoc => !aoc.IsDeleted
-                                                                                                            && (organizationTypeNames.Any(ctn => !string.IsNullOrEmpty(ctn)) == true ?
-                                                                                                                    //Search by OrganizationType
-                                                                                                                    aoc.AttendeeOrganization.AttendeeOrganizationTypes
-                                                                                                                        .Where(aot => !aot.IsDeleted)
-                                                                                                                        .Any(aot => organizationTypeNames.Contains(aot.OrganizationType.Name))
-                                                                                                                    :
-                                                                                                                    //Return true because isn't searching by OrganizationType
-                                                                                                                    true))
+                                                                                            .Where(aoc => !aoc.IsDeleted)
                                                                                             .Select(aoc => new AttendeeOrganizationBaseDto
                                                                                             {
                                                                                                 Uid = aoc.AttendeeOrganization.Uid,
