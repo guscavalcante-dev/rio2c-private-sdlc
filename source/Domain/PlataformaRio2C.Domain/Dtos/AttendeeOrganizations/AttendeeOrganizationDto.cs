@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 10-09-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-17-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 11-11-2024
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,6 +13,7 @@
 // ***********************************************************************
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using System;
 using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Dtos
@@ -52,7 +53,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public double GetDemandPercentage(int projectsCount = 0)
         {
             return (double) projectsCount > 0
-                ? (this.ProjectBuyerEvaluationsCount / projectsCount * 100)
+                ? Math.Round((double)this.ProjectBuyerEvaluationsCount / projectsCount * 100, 2)
                 : 0;
         }
 
@@ -60,23 +61,23 @@ namespace PlataformaRio2C.Domain.Dtos
         {
             var percentage = this.GetDemandPercentage(projectsCount);
             var demand = new List<string>();
-            if (percentage <= 30)
+            if (percentage <= 5)
             {
                 demand.Add(Labels.Low);
                 demand.Add("text-success");
-                demand.Add("kt-bg-brand");
+                demand.Add("bg-success");
                 return demand;
             }
-            if (percentage <= 85)
+            if (percentage <= 10)
             {
                 demand.Add(Labels.Medium);
                 demand.Add("text-warning");
-                demand.Add("kt-bg-warning");
+                demand.Add("bg-warning");
                 return demand;
             }
             demand.Add(Labels.High);
             demand.Add("text-danger");
-            demand.Add("kt-bg-danger");
+            demand.Add("bg-danger");
             return demand;
         }
     }
