@@ -1612,6 +1612,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return RedirectToAction("EvaluationList", "Projects", new { Area = "" });
             }
 
+            ViewBag.BuyerAttendeeOrganizationUid = this.UserAccessControlDto?.GetAttendeeOrganizationByEditionId(this.EditionDto.Id)?.Uid;
+
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
