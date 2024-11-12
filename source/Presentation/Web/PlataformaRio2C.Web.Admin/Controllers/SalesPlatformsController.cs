@@ -105,7 +105,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     request?.GetSortColumns(),
                     selectedCollaboratorsUids?.ToListGuid(','),
                     new string[] { collaboratorTypeName },
-                    null,
                     showAllEditions,
                     showAllParticipants,
                     showHighlights,

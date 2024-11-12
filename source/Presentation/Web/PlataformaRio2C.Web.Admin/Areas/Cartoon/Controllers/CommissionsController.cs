@@ -107,7 +107,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
                request.GetSortColumns(),
                new List<Guid>(),
                new string[] { Constants.CollaboratorType.CommissionCartoon },
-               null,
                showAllEditions,
                showAllParticipants,
                null,

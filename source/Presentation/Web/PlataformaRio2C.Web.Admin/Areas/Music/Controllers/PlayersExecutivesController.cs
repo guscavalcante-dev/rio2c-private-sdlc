@@ -127,7 +127,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 request.GetSortColumns(),
                 new List<Guid>(),
                 new string[] { CollaboratorType.PlayerExecutiveMusic.Name },
-                null,
                 showAllEditions,
                 showAllParticipants,
                 showHighlights,
@@ -346,8 +345,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         {
             var attendeeCollaboratorDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByCollaboratorTypeUidAsync(
                 id ?? Guid.Empty,
-                CollaboratorType.PlayerExecutiveMusic.Uid,
-                null
+                CollaboratorType.PlayerExecutiveMusic.Uid
             );
 
             if (attendeeCollaboratorDto == null)

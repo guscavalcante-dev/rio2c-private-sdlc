@@ -415,12 +415,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="collaboratorTypeUid">The collaborator type uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<AttendeeCollaboratorSiteDetailsDto> FindSiteDetailstDtoByCollaboratorUidAndByCollaboratorTypeUidAsync(Guid collaboratorUid, Guid collaboratorTypeUid, Guid? organizationTypeUid)
+        public async Task<AttendeeCollaboratorSiteDetailsDto> FindSiteDetailstDtoByCollaboratorUidAndByCollaboratorTypeUidAsync(Guid collaboratorUid, Guid collaboratorTypeUid)
         {
             var query = this.GetBaseQuery(true)
                                 .FindByCollaboratorUid(collaboratorUid)
-                                .FindByCollaboratorTypeUid(collaboratorTypeUid) //TODO: Find by collaboratorType when CollaboratorType.PlayerExecutiveAudiovisual has been splited on PlayerExecutiveAudiovisual and ProducerExecutiveAudiovisual
-                                .FindByOrganizationTypeUid(organizationTypeUid);
+                                .FindByCollaboratorTypeUid(collaboratorTypeUid); //TODO: Find by collaboratorType when CollaboratorType.PlayerExecutiveAudiovisual has been splited on PlayerExecutiveAudiovisual and ProducerExecutiveAudiovisual
 
             return await query
                             .Select(ac => new AttendeeCollaboratorSiteDetailsDto
