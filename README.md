@@ -10,22 +10,12 @@
   ##### Executar migrations para criação do banco de daodos (Package Manager Console)
  
   ```
-  Selecionar o default project: PlataformaRio2C.Infra.CrossCutting.Identity
-  > Update-Database
-  
-  Selecionar o default project: PlataformaRio2C.Infra.Data.Context
-  > Update-Database
-  
-  Selecionar o default project: PlataformaRio2C.Infra.CrossCutting.SystemParameter
-  > Update-Database
+  > Update-Database -Project PlataformaRio2C.Infra.Data.Context
   ```
-  A carga inicial acima não é mais necessario. Apenas popular o arquivo com a carga inicial '202408202223049_Initial.up.sql'
-  
  - Verifique se o arquivo 'PlataformaRio2C.Infra.CrossCutting.SystemParameter.Migrations.Configuration' esta com a propriedade 'AutomaticMigrationsEnabled' marcada como true
  - Selecionar o default project: PlataformaRio2C.Infra.Data.Context e executar o comando abaixo:
- 
 ``` 
-  Update-Database
+  Update-Database -Project PlataformaRio2C.Infra.Data.Context
 ```
 
 
