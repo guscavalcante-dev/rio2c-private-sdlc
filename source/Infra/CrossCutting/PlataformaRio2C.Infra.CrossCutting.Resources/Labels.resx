@@ -3382,4 +3382,37 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Menos Zoom</value>
     <comment>Menos Zoom</comment>
   </data>
+  <data name="Dynamic" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MusicPitchingMaximumProjectsInEdition" xml:space="preserve">
+    <value>Quantidade máxima de projetos inscritos na Edição</value>
+  </data>
+  <data name="MusicPitchingMaximumProjectsPerAttendee" xml:space="preserve">
+    <value>Quantidade máxima de projetos inscritos por participante</value>
+  </data>
+  <data name="MusicPitchingMaximumApprovedProjectsPerMember" xml:space="preserve">
+    <value>Quantidade máxima de projetos aprovados por membro da comissão</value>
+  </data>
+  <data name="MusicPitchingMaximumApprovedProjectsByMembers" xml:space="preserve">
+    <value>Quantidade máxima de projetos aprovados por membros da comissão na Edição</value>
+  </data>
+  <data name="MusicPitchingEvaluationStartDateByCurator" xml:space="preserve">
+    <value>Data de Inicio da avaliação de projetos pelo Curador</value>
+  </data>
+  <data name="MusicPitchingMaximumApprovedProjectsPerCurator" xml:space="preserve">
+    <value>Quantidade máxima de projetos aprovados por curador</value>
+  </data>
+  <data name="MusicPitchingEvaluationStartDateByPopularVote" xml:space="preserve">
+    <value>Data de inicio da avaliação de projetos pela votação popular</value>
+  </data>
+  <data name="MusicPitchingMaximumApprovedProjectsPerPopularVote" xml:space="preserve">
+    <value>Quantidade máxima de projetos aprovados por votação popular</value>
+  </data>
+  <data name="MusicPitchingEvaluationStartDateByRepechage" xml:space="preserve">
+    <value>Data de Inicio da avaliação de projetos pela Repescagem</value>
+  </data>
+  <data name="MusicPitchingMaximumApprovedProjectsPerRepechage" xml:space="preserve">
+    <value>quantidade máxima de projetos aprovados por Repescagem</value>
+  </data>
 </root>
