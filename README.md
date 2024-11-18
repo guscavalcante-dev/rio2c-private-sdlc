@@ -34,7 +34,7 @@
 Antes a configuração de classe classe deve estar habilitados
 
 ```
-Add-Migration [nome_da_migração]
+Add-Migration [NomeDaMigracao] -Project PlataformaRio2C.Infra.Data.Context -StartupProject PlataformaRio2C.Web.Admin
 ```
   
 ### Configurar a classe SqlMigration na migration gerada
