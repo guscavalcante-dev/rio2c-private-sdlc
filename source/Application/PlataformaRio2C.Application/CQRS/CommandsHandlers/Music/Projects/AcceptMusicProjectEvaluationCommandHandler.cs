@@ -32,6 +32,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IMusicBandRepository musicBandRepo;
         private readonly IEditionRepository editionRepo;
         private readonly IUserRepository userRepo;
+        private readonly IAttendeeMusicBandEvaluationRepository attendeeMusicBandEvaluationRepo;
 
         /// <summary>Initializes a new instance of the <see cref="AcceptMusicProjectEvaluationCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
@@ -41,6 +42,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="musicBandRepo">The project evaluation status repository.</param>
         /// <param name="editionRepo">The project evaluation status repository.</param>
         /// <param name="userRepo">The user repo.</param>
+        /// <param name="attendeeMusicBandEvaluationRepo">The attendee music band evaluation repo.</param>
         public AcceptMusicProjectEvaluationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
@@ -48,13 +50,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IProjectEvaluationStatusRepository projectEvaluationStatusRepository,
             IMusicBandRepository musicBandRepo,
             IEditionRepository editionRepo,
-            IUserRepository userRepo)
+            IUserRepository userRepo,
+            IAttendeeMusicBandEvaluationRepository attendeeMusicBandEvaluationRepo
+        )
             : base(eventBus, uow, musicProjectRepository)
         {
             this.projectEvaluationStatusRepo = projectEvaluationStatusRepository;
             this.musicBandRepo = musicBandRepo;
             this.editionRepo = editionRepo;
             this.userRepo = userRepo;
+            this.attendeeMusicBandEvaluationRepo = attendeeMusicBandEvaluationRepo;
         }
 
         /// <summary>Handles the specified accept music project evaluation.</summary>
@@ -91,7 +96,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 projectEvaluationStatuses?.FirstOrDefault(pes => pes.Code == ProjectEvaluationStatus.Accepted.Code)
             );
 
-            if (!musicBand.IsValid())
+            var evaluationsCount = await this.attendeeMusicBandEvaluationRepo.CountByCollaboratorIdAsync(
+                editionDto.Id,
+                cmd.UserId
+            );
+
+            if (!musicBand.IsValidCommissionEvaluation(evaluationsCount, editionDto.MusicPitchingMaximumApprovedProjectsPerMember))
             {
                 this.AppValidationResult.Add(musicBand.ValidationResult);
                 return this.AppValidationResult;
