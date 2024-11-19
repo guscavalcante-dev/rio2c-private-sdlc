@@ -1152,4 +1152,7 @@
   <data name="ZipCodeIsRequired" xml:space="preserve">
     <value>Zip code required.</value>
   </data>
+  <data name="YouCanMusicPitchingMaximumProjectsPerAttendee" xml:space="preserve">
+    <value>You can submit a maximum of {0} of {1} in the edition for {2}</value>
+  </data>
 </root>

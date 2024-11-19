@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-06-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 07-13-2023
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 11-19-2024
 // ***********************************************************************
 // <copyright file="EditionDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -62,6 +62,16 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset MusicCommissionEvaluationEndDate { get; private set; }
         public int MusicCommissionMinimumEvaluationsCount { get; private set; }
         public int MusicCommissionMaximumApprovedBandsCount { get; private set; }
+        public int MusicPitchingMaximumProjectsInEdition { get; private set; }
+        public int MusicPitchingMaximumProjectsPerAttendee { get; private set; }
+        public int MusicPitchingMaximumApprovedProjectsPerMember { get; private set; }
+        public int MusicPitchingMaximumApprovedProjectsByMembers { get; private set; }
+        public DateTimeOffset? MusicPitchingEvaluationStartDateByCurator { get; private set; }
+        public int MusicPitchingMaximumApprovedProjectsPerCurator { get; private set; }
+        public DateTimeOffset? MusicPitchingEvaluationStartDateByPopularVote { get; private set; }
+        public int MusicPitchingMaximumApprovedProjectsPerPopularVote { get; private set; }
+        public DateTimeOffset? MusicPitchingEvaluationStartDateByRepechage { get; private set; }
+        public int MusicPitchingMaximumApprovedProjectsPerRepechage { get; private set; }
 
         // Innovation - Commissions
         public DateTimeOffset InnovationProjectSubmitStartDate { get; private set; }
@@ -150,6 +160,16 @@ namespace PlataformaRio2C.Domain.Dtos
             this.MusicCommissionEvaluationEndDate = entity.MusicCommissionEvaluationEndDate;
             this.MusicCommissionMinimumEvaluationsCount = entity.MusicCommissionMinimumEvaluationsCount;
             this.MusicCommissionMaximumApprovedBandsCount = entity.MusicCommissionMaximumApprovedBandsCount;
+            this.MusicPitchingMaximumProjectsInEdition = entity.MusicPitchingMaximumProjectsInEdition;
+            this.MusicPitchingMaximumProjectsPerAttendee = entity.MusicPitchingMaximumProjectsPerAttendee;
+            this.MusicPitchingMaximumApprovedProjectsPerMember = entity.MusicPitchingMaximumApprovedProjectsPerMember;
+            this.MusicPitchingMaximumApprovedProjectsByMembers = entity.MusicPitchingMaximumApprovedProjectsByMembers;
+            this.MusicPitchingEvaluationStartDateByCurator = entity.MusicPitchingEvaluationStartDateByCurator;
+            this.MusicPitchingMaximumApprovedProjectsPerCurator = entity.MusicPitchingMaximumApprovedProjectsPerCurator;
+            this.MusicPitchingEvaluationStartDateByPopularVote = entity.MusicPitchingEvaluationStartDateByPopularVote;
+            this.MusicPitchingMaximumApprovedProjectsPerPopularVote = entity.MusicPitchingMaximumApprovedProjectsPerPopularVote;
+            this.MusicPitchingEvaluationStartDateByRepechage = entity.MusicPitchingEvaluationStartDateByRepechage;
+            this.MusicPitchingMaximumApprovedProjectsPerRepechage = entity.MusicPitchingMaximumApprovedProjectsPerRepechage;
 
             // Innovation - Commissions
             this.InnovationProjectSubmitStartDate = entity.InnovationProjectSubmitStartDate;
