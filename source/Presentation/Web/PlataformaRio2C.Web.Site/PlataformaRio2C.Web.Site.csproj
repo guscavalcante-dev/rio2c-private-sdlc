@@ -6948,6 +6948,8 @@
     <Content Include="Areas\Creator\Views\Projects\Widgets\AttachmentsWidget.cshtml" />
     <Content Include="Areas\Creator\Views\Projects\Widgets\EvaluationGradeWidget.cshtml" />
     <Content Include="Areas\Creator\Views\Projects\Widgets\EvaluatorsWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Projects\Modals\AcceptMusicProjectEvaluationModal.cshtml" />
+    <Content Include="Areas\Music\Views\Projects\Modals\RefuseMusicProjectEvaluationModal.cshtml" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />
@@ -7820,7 +7822,6 @@
     <Folder Include="Areas\Innovation\Views\Projects\Modals\" />
     <Folder Include="Areas\Innovation\Views\Shared\" />
     <Folder Include="Areas\Music\Data\" />
-    <Folder Include="Areas\Music\Views\Projects\Modals\" />
     <Folder Include="Areas\Music\Views\Shared\" />
     <Folder Include="Areas\Player\Controllers\" />
     <Folder Include="Areas\Player\Views\Shared\" />

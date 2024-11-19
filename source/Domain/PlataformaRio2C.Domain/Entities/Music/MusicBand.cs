@@ -258,6 +258,18 @@ namespace PlataformaRio2C.Domain.Entities
             attendeeMusicBand?.Evaluate(evaluatorUser, grade);
         }
 
+        /// <summary>
+        /// Evaluates the specified edition.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="evaluatorUser">The evaluator user.</param>
+        /// <param name="commissionEvaluationStatus">The comission evaluation status.</param>
+        public void ComissionEvaluation(Edition edition, User evaluatorUser, ProjectEvaluationStatus commissionEvaluationStatus)
+        {
+            var attendeeMusicBand = this.FindAttendeeMusicBandByEditionId(edition.Id);
+            attendeeMusicBand?.ComissionEvaluation(evaluatorUser, commissionEvaluationStatus);
+        }
+
         #endregion
 
         /// <summary>

@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 02-26-2020
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 01-26-2024
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 11-10-2024
 // ***********************************************************************
 // <copyright file="AttendeeMusicBand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -120,6 +120,35 @@ namespace PlataformaRio2C.Domain.Entities
             }
 
             this.Grade = this.GetAverageEvaluation();
+            this.EvaluationsCount = this.GetAttendeeMusicBandEvaluationTotalCount();
+            this.LastEvaluationDate = DateTime.UtcNow;
+        }
+
+        /// <summary>
+        /// Evaluates the specified evaluation user.
+        /// </summary>
+        /// <param name="evaluatorUser">The evaluation user.</param>
+        /// <param name="commissionEvaluationStatus">The project evaluation status.</param>
+        public void ComissionEvaluation(User evaluatorUser, ProjectEvaluationStatus commissionEvaluationStatus)
+        {
+            if (this.AttendeeMusicBandEvaluations == null)
+                this.AttendeeMusicBandEvaluations = new List<AttendeeMusicBandEvaluation>();
+
+            var existentAttendeeMusicBandEvaluation = this.GetAttendeeMusicBandEvaluationByEvaluatorId(evaluatorUser.Id);
+            if (existentAttendeeMusicBandEvaluation != null)
+            {
+                existentAttendeeMusicBandEvaluation.UpdateProjectEvaluation(commissionEvaluationStatus, evaluatorUser.Id);
+            }
+            else
+            {
+                this.AttendeeMusicBandEvaluations.Add(new AttendeeMusicBandEvaluation(
+                    this,
+                    evaluatorUser,
+                    evaluatorUser.Id,
+                    commissionEvaluationStatus)
+                );
+            }
+
             this.EvaluationsCount = this.GetAttendeeMusicBandEvaluationTotalCount();
             this.LastEvaluationDate = DateTime.UtcNow;
         }
