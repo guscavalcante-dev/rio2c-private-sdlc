@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 03-20-2021
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 07-13-2023
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 11-18-2024
 // ***********************************************************************
 // <copyright file="UpdateEditionDatesInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -130,6 +130,17 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.CreatorCommissionEvaluationEndDate,
                 cmd.CreatorCommissionMinimumEvaluationsCount,
                 cmd.CreatorCommissionMaximumApprovedProjectsCount,
+
+                cmd.MusicPitchingMaximumProjectsInEdition,
+                cmd.MusicPitchingMaximumProjectsPerAttendee,
+                cmd.MusicPitchingMaximumApprovedProjectsPerMember,
+                cmd.MusicPitchingMaximumApprovedProjectsByMembers,
+                cmd.MusicPitchingEvaluationStartDateByCurator,
+                cmd.MusicPitchingMaximumApprovedProjectsPerCurator,
+                cmd.MusicPitchingEvaluationStartDateByPopularVote,
+                cmd.MusicPitchingMaximumApprovedProjectsPerPopularVote,
+                cmd.MusicPitchingEvaluationStartDateByRepechage,
+                cmd.MusicPitchingMaximumApprovedProjectsPerRepechage,
 
                 cmd.UserId);
 
