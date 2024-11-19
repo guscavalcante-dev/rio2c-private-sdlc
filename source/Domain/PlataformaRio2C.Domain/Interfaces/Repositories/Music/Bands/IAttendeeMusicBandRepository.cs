@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 03-23-2021
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 03-23-2021
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 11-19-2024
 // ***********************************************************************
 // <copyright file="IAttendeeMusicBandRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,5 +24,6 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface IAttendeeMusicBandRepository : IRepository<AttendeeMusicBand>
     {
         Task<List<AttendeeMusicBand>> FindAllByEditionIdAsync(int editionId);
+        Task<int> CountByResponsibleAsync(int editionId, string document, string email);
     }
 }

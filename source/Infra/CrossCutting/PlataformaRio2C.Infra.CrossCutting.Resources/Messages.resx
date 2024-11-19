@@ -1148,4 +1148,7 @@
   <data name="ZipCodeIsRequired" xml:space="preserve">
     <value>Cep obrigatório.</value>
   </data>
+  <data name="YouCanMusicPitchingMaximumProjectsPerAttendee" xml:space="preserve">
+    <value>Você pode enviar no máximo {0} de {1} na edição para {2}</value>
+  </data>
 </root>
