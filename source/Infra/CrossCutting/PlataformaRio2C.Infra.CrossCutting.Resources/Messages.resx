@@ -1154,4 +1154,7 @@
   <data name="YouCanMusicPitchingMaximumApprovedProjectsPerMember" xml:space="preserve">
     <value>Você pode avaliar no máximo {0} {1} na edição</value>
   </data>
+  <data name="YouCanMusicPitchingMaximumProjectsInEdition" xml:space="preserve">
+    <value>Foi atingido o limite máximo de {0} {1} na edição</value>
+  </data>
 </root>

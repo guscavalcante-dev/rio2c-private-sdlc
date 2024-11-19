@@ -25,5 +25,6 @@ namespace PlataformaRio2C.Domain.Interfaces
     {
         Task<List<AttendeeMusicBand>> FindAllByEditionIdAsync(int editionId);
         Task<int> CountByResponsibleAsync(int editionId, string document, string email);
+        Task<int> CountByEditionIdAsync(int editionId);
     }
 }
