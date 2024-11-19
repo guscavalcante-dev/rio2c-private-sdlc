@@ -119,6 +119,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="document">The document.</param>
+        /// <param name="email">The email.</param>
         /// <returns></returns>
         public async Task<int> CountByResponsibleAsync(int editionId, string document, string email)
         {
@@ -126,6 +127,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 .FindByEditionId(editionId)
                 .FindByResponsible(document, email);
             
+            return await query.CountAsync();
+        }
+
+        /// <summary>
+        /// Count by edition, document and string asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<int> CountByEditionIdAsync(int editionId)
+        {
+            var query = this.GetBaseQuery()
+                .FindByEditionId(editionId);
+
             return await query.CountAsync();
         }
     }

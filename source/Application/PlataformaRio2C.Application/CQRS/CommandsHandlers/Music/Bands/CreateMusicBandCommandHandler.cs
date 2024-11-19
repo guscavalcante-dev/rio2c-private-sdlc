@@ -128,7 +128,21 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             // Pitching validations
             if (cmd.MusicBandDataApiDtos.Any(dto => dto.WouldYouLikeParticipatePitching))
             {
-                var attendeeMusicBandsCount = await this.attendeeMusicBandRepo.CountByResponsibleAsync(editionDto.Id, cmd.MusicBandResponsibleApiDto.Document, cmd.MusicBandResponsibleApiDto.Email);
+                var attendeeMusicBandsCount = await this.attendeeMusicBandRepo.CountByEditionIdAsync(editionDto.Id);
+                attendeeMusicBandsCount += cmd.MusicBandDataApiDtos.Count;
+                if (attendeeMusicBandsCount > editionDto.MusicPitchingMaximumProjectsInEdition)
+                {
+                    string validationMessage = string.Format(
+                        Messages.YouCanMusicPitchingMaximumProjectsInEdition,
+                        editionDto.MusicPitchingMaximumProjectsInEdition,
+                        Labels.MusicProjects
+                    );
+                    this.ValidationResult.Add(new ValidationError(validationMessage));
+                    this.AppValidationResult.Add(this.ValidationResult);
+                    return this.AppValidationResult;
+                }
+                
+                attendeeMusicBandsCount = await this.attendeeMusicBandRepo.CountByResponsibleAsync(editionDto.Id, cmd.MusicBandResponsibleApiDto.Document, cmd.MusicBandResponsibleApiDto.Email);
                 attendeeMusicBandsCount += cmd.MusicBandDataApiDtos.Count;
                 if (attendeeMusicBandsCount > editionDto.MusicPitchingMaximumProjectsPerAttendee)
                 {
