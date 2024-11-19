@@ -160,6 +160,108 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicPitchingMaximumProjectsInEdition</h3>
+            <div class="row">
+                <div class="col-12">
+                    @(Model.Edition.MusicPitchingMaximumProjectsInEdition)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicPitchingMaximumProjectsPerAttendee</h3>
+            <div class="row">
+                <div class="col-12">
+                    @(Model.Edition.MusicPitchingMaximumProjectsPerAttendee)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicPitchingMaximumApprovedProjectsPerMember</h3>
+            <div class="row">
+                <div class="col-12">
+                    @(Model.Edition.MusicPitchingMaximumApprovedProjectsPerMember)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicPitchingMaximumApprovedProjectsByMembers</h3>
+            <div class="row">
+                <div class="col-12">
+                    @(Model.Edition.MusicPitchingMaximumApprovedProjectsByMembers)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicPitchingEvaluationStartDateByCurator</h3>
+            <div class="row">
+                <div class="col-12">
+                    @(
+                        Model.Edition.MusicPitchingEvaluationStartDateByCurator.HasValue ?
+                            Model.Edition.MusicPitchingEvaluationStartDateByCurator?.ToBrazilTimeZone().ToShortDateString()
+                            : "-"
+                    )
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicPitchingMaximumApprovedProjectsPerCurator</h3>
+            <div class="row">
+                <div class="col-12">
+                    @(Model.Edition.MusicPitchingMaximumApprovedProjectsPerCurator)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicPitchingEvaluationStartDateByPopularVote</h3>
+            <div class="row">
+                <div class="col-12">
+                    @(
+                        Model.Edition.MusicPitchingEvaluationStartDateByPopularVote.HasValue ?
+                            Model.Edition.MusicPitchingEvaluationStartDateByPopularVote?.ToBrazilTimeZone().ToShortDateString()
+                            : "-"
+                    )
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicPitchingMaximumApprovedProjectsPerPopularVote</h3>
+            <div class="row">
+                <div class="col-12">
+                    @(Model.Edition.MusicPitchingMaximumApprovedProjectsPerPopularVote)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicPitchingEvaluationStartDateByRepechage</h3>
+            <div class="row">
+                <div class="col-12">
+                    @(
+                        Model.Edition.MusicPitchingEvaluationStartDateByRepechage.HasValue ?
+                            Model.Edition.MusicPitchingEvaluationStartDateByRepechage?.ToBrazilTimeZone().ToShortDateString()
+                            : "-"
+                    )
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicPitchingMaximumApprovedProjectsPerRepechage</h3>
+            <div class="row">
+                <div class="col-12">
+                    @(Model.Edition.MusicPitchingMaximumApprovedProjectsPerRepechage)
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="mt-30 mb-0">
         <h3 class="kt-subheader__title mb-0 mt-30">@Labels.StartupsCommission</h3>
