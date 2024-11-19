@@ -214,6 +214,75 @@
         @Html.ValidationMessageFor(m => m.EditionDate.MusicCommissionMaximumApprovedBandsCount, "", new { @class = "text-danger" })
     </div>
 </div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EditionDate.MusicPitchingMaximumProjectsInEdition, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.EditionDate.MusicPitchingMaximumProjectsInEdition, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.EditionDate.MusicPitchingMaximumProjectsInEdition, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EditionDate.MusicPitchingMaximumProjectsPerAttendee, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.EditionDate.MusicPitchingMaximumProjectsPerAttendee, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.EditionDate.MusicPitchingMaximumProjectsPerAttendee, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsPerMember, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsPerMember, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsPerMember, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsByMembers, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsByMembers, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsByMembers, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EditionDate.MusicPitchingEvaluationStartDateByCurator, new { @class = "control-label" })
+        @Html.TextBox("EditionDate.MusicPitchingEvaluationStartDateByCurator", Model.EditionDate.MusicPitchingEvaluationStartDateByCurator?.ToShortDateString(), new
+        {
+            @class = "form-control enable-datepicker"
+        })
+        @Html.ValidationMessageFor(m => m.EditionDate.MusicPitchingEvaluationStartDateByCurator, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsPerCurator, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsPerCurator, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsPerCurator, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EditionDate.MusicPitchingEvaluationStartDateByPopularVote, new { @class = "control-label" })
+        @Html.TextBox("EditionDate.MusicPitchingEvaluationStartDateByPopularVote", Model.EditionDate.MusicPitchingEvaluationStartDateByPopularVote?.ToShortDateString(), new
+        {
+            @class = "form-control enable-datepicker"
+        })
+        @Html.ValidationMessageFor(m => m.EditionDate.MusicPitchingEvaluationStartDateByPopularVote, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsPerPopularVote, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsPerPopularVote, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsPerPopularVote, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EditionDate.MusicPitchingEvaluationStartDateByRepechage, new { @class = "control-label" })
+        @Html.TextBox("EditionDate.MusicPitchingEvaluationStartDateByRepechage", Model.EditionDate.MusicPitchingEvaluationStartDateByRepechage?.ToShortDateString(), new
+        {
+            @class = "form-control enable-datepicker"
+        })
+        @Html.ValidationMessageFor(m => m.EditionDate.MusicPitchingEvaluationStartDateByRepechage, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsPerRepechage, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsPerRepechage, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsPerRepechage, "", new { @class = "text-danger" })
+    </div>
+</div>
 <!-- Music Commissions - End -->
 <!-- Innovation Commissions - Begin  -->
 <h3 class="kt-section__title mt-30 mb-4">@Labels.StartupsCommission</h3>
