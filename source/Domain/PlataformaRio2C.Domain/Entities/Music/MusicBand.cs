@@ -14,6 +14,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
@@ -389,6 +390,24 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateReleasedMusicProjects();
             this.ValidateAttendeeMusicBands();
 
+            return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>Returns true if ... is valid comission evaluation.</summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
+        public bool IsValidCommissionEvaluation(int evaluationsCount, int maximumApprovedProjectsPerMember)
+        {   
+            this.IsValid();
+            if (evaluationsCount + 1 > maximumApprovedProjectsPerMember)
+            {
+                string validationMessage = string.Format(
+                    Messages.YouCanMusicPitchingMaximumApprovedProjectsPerMember,
+                    maximumApprovedProjectsPerMember,
+                    Labels.MusicProjects
+                );
+                this.ValidationResult.Add(new ValidationError(validationMessage));
+            }
             return this.ValidationResult.IsValid;
         }
 

@@ -1149,6 +1149,9 @@
     <value>Cep obrigatório.</value>
   </data>
   <data name="YouCanMusicPitchingMaximumProjectsPerAttendee" xml:space="preserve">
-    <value>Você pode enviar no máximo {0} de {1} na edição para {2}</value>
+    <value>Você pode enviar no máximo {0} {1} na edição para {2}</value>
+  </data>
+  <data name="YouCanMusicPitchingMaximumApprovedProjectsPerMember" xml:space="preserve">
+    <value>Você pode avaliar no máximo {0} {1} na edição</value>
   </data>
 </root>
