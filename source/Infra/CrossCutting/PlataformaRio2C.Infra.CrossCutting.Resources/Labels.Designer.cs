@@ -3967,65 +3967,56 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quantidade máxima de projetos aprovados por membros da comissão na Edição.
-        /// </summary>
-        public static string MusicPitchingMaximumApprovedProjectsByMembers {
-            get {
-                return ResourceManager.GetString("MusicPitchingMaximumApprovedProjectsByMembers", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Quantidade máxima de projetos aprovados por curador.
         /// </summary>
-        public static string MusicPitchingMaximumApprovedProjectsPerCurator {
+        public static string MusicPitchingMaximumApprovedProjectsByCurator {
             get {
-                return ResourceManager.GetString("MusicPitchingMaximumApprovedProjectsPerCurator", resourceCulture);
+                return ResourceManager.GetString("MusicPitchingMaximumApprovedProjectsByCurator", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Quantidade máxima de projetos aprovados por membro da comissão.
         /// </summary>
-        public static string MusicPitchingMaximumApprovedProjectsPerMember {
+        public static string MusicPitchingMaximumApprovedProjectsByCommissionMember {
             get {
-                return ResourceManager.GetString("MusicPitchingMaximumApprovedProjectsPerMember", resourceCulture);
+                return ResourceManager.GetString("MusicPitchingMaximumApprovedProjectsByCommissionMember", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Quantidade máxima de projetos aprovados por votação popular.
         /// </summary>
-        public static string MusicPitchingMaximumApprovedProjectsPerPopularVote {
+        public static string MusicPitchingMaximumApprovedProjectsByPopularVote {
             get {
-                return ResourceManager.GetString("MusicPitchingMaximumApprovedProjectsPerPopularVote", resourceCulture);
+                return ResourceManager.GetString("MusicPitchingMaximumApprovedProjectsByPopularVote", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to quantidade máxima de projetos aprovados por Repescagem.
         /// </summary>
-        public static string MusicPitchingMaximumApprovedProjectsPerRepechage {
+        public static string MusicPitchingMaximumApprovedProjectsByRepechage {
             get {
-                return ResourceManager.GetString("MusicPitchingMaximumApprovedProjectsPerRepechage", resourceCulture);
+                return ResourceManager.GetString("MusicPitchingMaximumApprovedProjectsByRepechage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quantidade máxima de projetos inscritos na Edição.
+        ///   Looks up a localized string similar to Quantidade máxima de projetos inscritos por Edição.
         /// </summary>
-        public static string MusicPitchingMaximumProjectsInEdition {
+        public static string MusicPitchingMaximumProjectSubmissionsByEdition {
             get {
-                return ResourceManager.GetString("MusicPitchingMaximumProjectsInEdition", resourceCulture);
+                return ResourceManager.GetString("MusicPitchingMaximumProjectSubmissionsByEdition", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Quantidade máxima de projetos inscritos por participante.
         /// </summary>
-        public static string MusicPitchingMaximumProjectsPerAttendee {
+        public static string MusicPitchingMaximumProjectSubmissionsByParticipant {
             get {
-                return ResourceManager.GetString("MusicPitchingMaximumProjectsPerAttendee", resourceCulture);
+                return ResourceManager.GetString("MusicPitchingMaximumProjectSubmissionsByParticipant", resourceCulture);
             }
         }
         

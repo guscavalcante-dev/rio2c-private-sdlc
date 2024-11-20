@@ -2598,29 +2598,29 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Você só pode enviar no máximo {0} na edição.
+        ///   Looks up a localized string similar to Você pode enviar no máximo {0} {1} por edição para {2}.
         /// </summary>
-        public static string YouCanMusicPitchingMaximumProjectsPerAttendee {
+        public static string YouCanMusicPitchingMaximumProjectSubmissionsByParticipant {
             get {
-                return ResourceManager.GetString("YouCanMusicPitchingMaximumProjectsPerAttendee", resourceCulture);
+                return ResourceManager.GetString("YouCanMusicPitchingMaximumProjectSubmissionsByParticipant", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Você pode avaliar no máximo {0} de {1} na edição para {2}.
+        ///   Looks up a localized string similar to Você pode avaliar no máximo {0} {1} por edição.
         /// </summary>
-        public static string YouCanMusicPitchingMaximumApprovedProjectsPerMember {
+        public static string YouCanMusicPitchingMaximumApprovedProjectsByCommissionMember {
             get {
-                return ResourceManager.GetString("YouCanMusicPitchingMaximumApprovedProjectsPerMember", resourceCulture);
+                return ResourceManager.GetString("YouCanMusicPitchingMaximumApprovedProjectsByCommissionMember", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Foi atingido o limite máximo de {0} {1} na edição.
+        ///   Looks up a localized string similar to Você pode enviar no máximo {0} {1} por edição para {2}.
         /// </summary>
-        public static string YouCanMusicPitchingMaximumProjectsInEdition {
+        public static string YouCanMusicPitchingMaximumProjectSubmissionsByEdition {
             get {
-                return ResourceManager.GetString("YouCanMusicPitchingMaximumProjectsInEdition", resourceCulture);
+                return ResourceManager.GetString("YouCanMusicPitchingMaximumProjectSubmissionsByEdition", resourceCulture);
             }
         }
         
