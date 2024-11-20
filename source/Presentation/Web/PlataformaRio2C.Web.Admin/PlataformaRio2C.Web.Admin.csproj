@@ -8285,6 +8285,7 @@
     <Content Include="Areas\Logistics\Views\Availability\Modals\UpdateModal.cshtml" />
     <Content Include="Areas\Agenda\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Agenda\Views\web.config" />
+    <Content Include="Areas\Music\Views\Commissions\Modals\_Form.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

@@ -157,8 +157,6 @@ var AdministratorsDataTableWidget = function () {
                             html += '<span class="kt-badge kt-badge--inline kt-badge--info mt-2">' + labels.notInEdition + '</span>';
                         }
 
-
-
                         return html;
                     }
                 },

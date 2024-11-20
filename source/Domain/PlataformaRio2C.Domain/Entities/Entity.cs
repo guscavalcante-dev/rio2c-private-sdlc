@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 11-19-2024
 // ***********************************************************************
 // <copyright file="Entity.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,6 +14,7 @@
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -28,6 +29,7 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset UpdateDate { get; protected set; }
         public int UpdateUserId { get; protected set; }
 
+        [NotMapped]
         public virtual ValidationResult ValidationResult { get; set; }
 
         public abstract bool IsValid();

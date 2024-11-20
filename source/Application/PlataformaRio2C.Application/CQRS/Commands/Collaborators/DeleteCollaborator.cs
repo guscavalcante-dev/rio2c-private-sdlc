@@ -21,6 +21,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public Guid CollaboratorUid { get; set; }
         public string CollaboratorTypeName { get; set; }
 
+        // Sometimes it's necessary to delete more than 1 CollaboratorType, for this, use this property
+        public string[] CollaboratorTypeNames { get; set; }
+
         /// <summary>
         /// This parameter is only necessary when deleting Producers or Players Executives.
         /// TODO: This will be deleted when split the CollaboratorType.AudiovisualExecutive to PlayerExecutiveAudiovisual and ProducerExecutiveAudiovisual
@@ -75,6 +78,27 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string userInterfaceLanguage)
         {
             this.CollaboratorTypeName = collaboratorTypeName;
+            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, userInterfaceLanguage);
+        }
+
+        /// <summary>
+        /// Updates the pre send properties.
+        /// </summary>
+        /// <param name="collaboratorTypeNames">The collaborator type names.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="userUid">The user uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public void UpdatePreSendProperties(
+            string[] collaboratorTypeNames,
+            int userId,
+            Guid userUid,
+            int? editionId,
+            Guid? editionUid,
+            string userInterfaceLanguage)
+        {
+            this.CollaboratorTypeNames = collaboratorTypeNames;
             this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, userInterfaceLanguage);
         }
     }
