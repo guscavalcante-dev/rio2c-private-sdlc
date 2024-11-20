@@ -17,10 +17,10 @@ var MusicProjectsEvaluationWidget = function () {
     var widgetElementId = '#ProjectEvaluationWidget';
     var widgetElement;
 
-    var acceptModalId = '#AcceptEvaluationModal';
-    var acceptFormId = '#AcceptEvaluationForm';
-    var refuseModalId = '#RefuseEvaluationModal';
-    var refuseFormId = '#RefuseEvaluationForm';
+    var acceptModalId = '#AcceptMusicProjectEvaluationModal';
+    var acceptFormId = '#AcceptMusicProjectEvaluationForm';
+    var refuseModalId = '#RefuseMusicProjectEvaluationModal';
+    var refuseFormId = '#RefuseMusicProjectEvaluationForm';
 
     // Initialize Elements ------------------------------------------------------------------------
     var initElements = function () {
@@ -64,6 +64,115 @@ var MusicProjectsEvaluationWidget = function () {
             });
     };
 
+    var enableAcceptAjaxForm = function () {
+        MyRio2cCommon.enableAjaxForm({
+            idOrClass: acceptFormId,
+            onSuccess: function (data) {
+                $(acceptModalId).modal('hide');
+                if (typeof (MusicProjectsEvaluationWidget) !== 'undefined') {
+                    MusicProjectsEvaluationWidget.init();
+                }
+            },
+            onError: function (data) {
+                if (MyRio2cCommon.hasProperty(data, 'pages')) {
+                    enableAcceptPlugins();
+                }
+                $(acceptFormId).find(":input.input-validation-error:first").focus();
+            }
+        });
+    };
+
+    var enableRefuseAjaxForm = function () {
+        MyRio2cCommon.enableAjaxForm({
+            idOrClass: refuseFormId,
+            onSuccess: function (data) {
+                $(refuseModalId).modal('hide');
+                if (typeof (MusicProjectsEvaluationWidget) !== 'undefined') {
+                    MusicProjectsEvaluationWidget.init();
+                }
+            },
+            onError: function (data) {
+                if (MyRio2cCommon.hasProperty(data, 'pages')) {
+                    enableRefusePlugins();
+                }
+
+                $(refuseFormId).find(":input.input-validation-error:first").focus();
+            }
+        });
+    };
+
+    var enableAcceptPlugins = function () {
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: acceptFormId + ' .enable-select2' });
+        enableAcceptAjaxForm();
+        MyRio2cCommon.enableFormValidation({ formIdOrClass: acceptFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
+    };
+
+    var showAcceptModal = function (musicProjectUid) {
+        if (MyRio2cCommon.isNullOrEmpty(musicProjectUid)) {
+            return;
+        }
+
+        MyRio2cCommon.block({ isModal: true });
+
+        var jsonParameters = new Object();
+        jsonParameters.musicProjectUid = musicProjectUid;
+
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/ShowAcceptEvaluationModal'), jsonParameters, function (data) {
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+                    enableAcceptPlugins();
+                    $(acceptModalId).modal();
+                },
+                // Error
+                onError: function () {
+                }
+            });
+        })
+        .fail(function () {
+        })
+        .always(function () {
+            MyRio2cCommon.unblock();
+        });
+    };
+
+    var enableRefusePlugins = function () {
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: refuseFormId + ' .enable-select2' });
+        enableRefuseAjaxForm();
+        MyRio2cCommon.enableFormValidation({ formIdOrClass: refuseFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
+    };
+
+    var showRefuseModal = function (musicProjectUid) {
+        if (MyRio2cCommon.isNullOrEmpty(musicProjectUid)) {
+            return;
+        }
+
+        MyRio2cCommon.block({ isModal: true });
+
+        var jsonParameters = new Object();
+        jsonParameters.musicProjectUid = musicProjectUid;
+
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/ShowRefuseEvaluationModal'), jsonParameters, function (data) {
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+                    enableRefusePlugins();
+                    $(refuseModalId).modal();
+                },
+                // Error
+                onError: function () {
+                }
+            });
+        })
+        .fail(function () {
+        })
+        .always(function () {
+            MyRio2cCommon.unblock();
+        });
+    };
+
     // Evaluation Grade ---------------------------------------------------------------------------
     var submitEvaluationGrade = function (musicBandId) {
         var jsonParameters = new Object();
@@ -90,6 +199,54 @@ var MusicProjectsEvaluationWidget = function () {
                 MusicProjectsMainInformationWidget.init();
             });
     };
+    
+    var submitAcceptEvaluation = function () {
+        const form = $('#AcceptMusicProjectEvaluationForm');
+        $.post(form.attr('action'), form.serialize(), function (data) {
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+                    $(acceptModalId).modal('hide');
+                },
+                // Error
+                onError: function () {
+                }
+            });
+        })
+            .fail(function () {
+            })
+            .always(function () {
+                MyRio2cCommon.unblock();
+                MusicProjectsEvaluationWidget.init();
+                MusicProjectsEvaluatorsWidget.init();
+                MusicProjectsMainInformationWidget.init();
+            });
+    };
+
+    var submitRefuseEvaluation = function () {
+        const form = $('#RefuseMusicProjectEvaluationForm');
+        $.post(form.attr('action'), form.serialize(), function (data) {
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+                    $(refuseModalId).modal('hide');
+                },
+                // Error
+                onError: function () {
+                }
+            });
+        })
+            .fail(function () {
+            })
+            .always(function () {
+                MyRio2cCommon.unblock();
+                MusicProjectsEvaluationWidget.init();
+                MusicProjectsEvaluatorsWidget.init();
+                MusicProjectsMainInformationWidget.init();
+            });
+    };
 
     return {
         init: function () {
@@ -99,6 +256,14 @@ var MusicProjectsEvaluationWidget = function () {
         },
         submitEvaluationGrade: function (musicBandId) {
             submitEvaluationGrade(musicBandId);
-        }
+        },     
+        showAcceptModal: function (musicProjectUid) {
+            showAcceptModal(musicProjectUid);
+        },
+        showRefuseModal: function (musicProjectUid) {
+            showRefuseModal(musicProjectUid);
+        },
+        submitAcceptEvaluation: submitAcceptEvaluation,
+        submitRefuseEvaluation: submitRefuseEvaluation,
     };
 }();

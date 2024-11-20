@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 03-30-2021
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 09-16-2021
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 11-10-2024
 // ***********************************************************************
 // <copyright file="AttendeeMusicBandEvaluation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,6 +29,9 @@ namespace PlataformaRio2C.Domain.Entities
 
         public virtual AttendeeMusicBand AttendeeMusicBand { get; private set; }
         public virtual User EvaluatorUser { get; private set; }
+        public virtual ProjectEvaluationStatus CommissionEvaluationStatus { get; private set; }
+        public int? CommissionEvaluationStatusId { get; private set; }
+        public DateTimeOffset? CommissionEvaluationDate { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttendeeMusicBandEvaluation"/> class.
@@ -56,6 +59,30 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>
         /// Initializes a new instance of the <see cref="AttendeeMusicBandEvaluation"/> class.
         /// </summary>
+        /// <param name="attendeeMusicBand">The attendee music band.</param>
+        /// <param name="evaluatorUser">The evaluator user.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="commissionEvaluationStatus">The project evaluation status.</param>
+        public AttendeeMusicBandEvaluation(
+            AttendeeMusicBand attendeeMusicBand,
+            User evaluatorUser,
+            int userId,
+            ProjectEvaluationStatus commissionEvaluationStatus
+        )
+        {
+            this.AttendeeMusicBand = attendeeMusicBand;
+            this.EvaluatorUser = evaluatorUser;
+            this.AttendeeMusicBandId = attendeeMusicBand.Id;
+            this.EvaluatorUserId = evaluatorUser.Id;
+            this.Grade = 0;
+
+            base.SetCreateDate(userId);
+            this.CommissionEvaluationStatus = commissionEvaluationStatus;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttendeeMusicBandEvaluation"/> class.
+        /// </summary>
         protected AttendeeMusicBandEvaluation()
         {
         }
@@ -72,6 +99,18 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
+        }
+
+        /// <summary>
+        /// Updates the specified grade.
+        /// </summary>
+        /// <param name="commissionEvaluationStatus">The grade.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateProjectEvaluation(ProjectEvaluationStatus commissionEvaluationStatus, int userId)
+        {
+            this.CommissionEvaluationStatusId = commissionEvaluationStatus.Id;
+            this.CommissionEvaluationDate = DateTime.UtcNow;
+            base.SetUpdateDate(userId);
         }
 
         /// <summary>

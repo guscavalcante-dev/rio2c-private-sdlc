@@ -658,6 +658,190 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             });
         }
 
+        /// <summary>
+        /// Shows the evaluation modal.
+        /// </summary>
+        /// <param name="musicProjectUid">The music project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowAcceptEvaluationModal(Guid? musicProjectUid)
+        {
+            AcceptMusicProjectEvaluation cmd;
+
+            try
+            {
+                if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
+                {
+                    return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+                }
+
+                var evaluationDto = await this.musicProjectRepo.FindEvaluationGradeWidgetDtoAsync(musicProjectUid ?? Guid.Empty, this.UserAccessControlDto.User.Id);
+                if (evaluationDto == null)
+                {
+                    return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+                }
+                cmd = new AcceptMusicProjectEvaluation(
+                    evaluationDto,
+                    evaluationDto.AttendeeMusicBandDto.MusicBand.Uid
+                );
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/AcceptMusicProjectEvaluationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Accepts the specified project evaluation.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> Accept(AcceptMusicProjectEvaluation cmd)
+        {
+           if (this.EditionDto?.IsMusicProjectEvaluationOpen() != true)
+            {
+                return Json(new { status = "error", message = Messages.OutOfEvaluationPeriod }, JsonRequestBehavior.AllowGet);
+            }
+
+            var result = new AppValidationResult();
+
+            try
+            {
+                cmd.UpdatePreSendProperties(
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage
+                );
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors.Select(e => e = new AppValidationError(e.Message, "ToastrError", e.Code))?
+                                            .FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                message = string.Format(Messages.EntityActionSuccessfull, Labels.MusicBand, Labels.Evaluated.ToLowerInvariant())
+            });
+        }
+
+        /// <summary>
+        /// Shows the evaluation modal.
+        /// </summary>
+        /// <param name="musicProjectUid">The music project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowRefuseEvaluationModal(Guid? musicProjectUid)
+        {
+            RefuseMusicProjectEvaluation cmd;
+
+            try
+            {
+                if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
+                {
+                    return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+                }
+
+                var evaluationDto = await this.musicProjectRepo.FindEvaluationGradeWidgetDtoAsync(musicProjectUid ?? Guid.Empty, this.UserAccessControlDto.User.Id);
+                if (evaluationDto == null)
+                {
+                    return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+                }
+                cmd = new RefuseMusicProjectEvaluation(
+                    evaluationDto,
+                    evaluationDto.AttendeeMusicBandDto.MusicBand.Uid
+                );
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/RefuseMusicProjectEvaluationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Refuse the specified project evaluation.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> Refuse(RefuseMusicProjectEvaluation cmd)
+        {
+            if (this.EditionDto?.IsMusicProjectEvaluationOpen() != true)
+            {
+                return Json(new { status = "error", message = Messages.OutOfEvaluationPeriod }, JsonRequestBehavior.AllowGet);
+            }
+
+            var result = new AppValidationResult();
+
+            try
+            {
+                cmd.UpdatePreSendProperties(
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage
+                );
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors.Select(e => e = new AppValidationError(e.Message, "ToastrError", e.Code))?
+                                            .FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                message = string.Format(Messages.EntityActionSuccessfull, Labels.MusicBand, Labels.Evaluated.ToLowerInvariant())
+            });
+        }
+
         #endregion
 
         #region Evaluators Widget
