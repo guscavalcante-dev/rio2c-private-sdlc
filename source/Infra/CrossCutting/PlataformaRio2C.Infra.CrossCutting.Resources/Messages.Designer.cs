@@ -2598,6 +2598,33 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Você só pode enviar no máximo {0} na edição.
+        /// </summary>
+        public static string YouCanMusicPitchingMaximumProjectsPerAttendee {
+            get {
+                return ResourceManager.GetString("YouCanMusicPitchingMaximumProjectsPerAttendee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Você pode avaliar no máximo {0} de {1} na edição para {2}.
+        /// </summary>
+        public static string YouCanMusicPitchingMaximumApprovedProjectsPerMember {
+            get {
+                return ResourceManager.GetString("YouCanMusicPitchingMaximumApprovedProjectsPerMember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Foi atingido o limite máximo de {0} {1} na edição.
+        /// </summary>
+        public static string YouCanMusicPitchingMaximumProjectsInEdition {
+            get {
+                return ResourceManager.GetString("YouCanMusicPitchingMaximumProjectsInEdition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Você pode selecionar no máximo {0} players.
         /// </summary>
         public static string YouCanSelectUpToXPlayers {

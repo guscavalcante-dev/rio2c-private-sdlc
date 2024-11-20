@@ -13,30 +13,25 @@
 // ***********************************************************************
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
-using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
-using PlataformaRio2C.Domain.Dtos;
 using X.PagedList;
-using LinqKit;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using System.Linq.Expressions;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
     #region AttendeeMusicBand IQueryable Extensions
 
     /// <summary>
-    /// AttendeeMusicBandIQueryableExtensions
+    /// AttendeeMusicBandEvaluationIQueryableExtensions
     /// </summary>
-    internal static class AttendeeMusicBandIQueryableExtensions
+    internal static class AttendeeMusicBandEvaluationIQueryableExtensions
     {
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
-        internal static IQueryable<AttendeeMusicBand> IsNotDeleted(this IQueryable<AttendeeMusicBand> query)
+        internal static IQueryable<AttendeeMusicBandEvaluation> IsNotDeleted(this IQueryable<AttendeeMusicBandEvaluation> query)
         {
             query = query.Where(amb => !amb.IsDeleted);
 
@@ -49,9 +44,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="query">The query.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        internal static IQueryable<AttendeeMusicBand> FindByEditionId(this IQueryable<AttendeeMusicBand> query, int editionId)
+        internal static IQueryable<AttendeeMusicBandEvaluation> FindByEditionId(this IQueryable<AttendeeMusicBandEvaluation> query, int editionId)
         {
-            query = query.Where(amb => amb.EditionId == editionId);
+            query = query.Where(amb => amb.AttendeeMusicBand.EditionId == editionId && !amb.AttendeeMusicBand.IsDeleted);
 
             return query;
         }
@@ -60,29 +55,23 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// Finds by edition, document and string asynchronous.
         /// </summary>
         /// <param name="query">The query.</param>
-        /// <param name="document">The document.</param>
-        /// <param name="email">The email.</param>
+        /// <param name="collaboratorId">The collaborator id.</param>
         /// <returns></returns>
-        internal static IQueryable<AttendeeMusicBand> FindByResponsible(this IQueryable<AttendeeMusicBand> query, string document, string email)
+        internal static IQueryable<AttendeeMusicBandEvaluation> FindByCollaboratorId(this IQueryable<AttendeeMusicBandEvaluation> query, int collaboratorId)
         {
-            query = query.Where(amb => amb.AttendeeMusicBandCollaborators.Any(ambc =>
-                !ambc.AttendeeCollaborator.IsDeleted
-                && !ambc.AttendeeCollaborator.Collaborator.IsDeleted
-                && ambc.AttendeeCollaborator.Collaborator.Document == document
-                && ambc.AttendeeCollaborator.Collaborator.User.Email == email
-            ));
+            query = query.Where(ambe => ambe.EvaluatorUserId == collaboratorId && !ambe.IsDeleted);
             return query;
         }
     }
 
     #endregion
 
-    /// <summary>AttendeeMusicBandRepository</summary>
-    public class AttendeeMusicBandRepository : Repository<Context.PlataformaRio2CContext, AttendeeMusicBand>, IAttendeeMusicBandRepository
+    /// <summary>AttendeeMusicBandEvaluationRepository</summary>
+    public class AttendeeMusicBandEvaluationRepository : Repository<Context.PlataformaRio2CContext, AttendeeMusicBandEvaluation>, IAttendeeMusicBandEvaluationRepository
     {
-        /// <summary>Initializes a new instance of the <see cref="AttendeeMusicBandRepository"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="AttendeeMusicBandEvaluationRepository"/> class.</summary>
         /// <param name="context">The context.</param>
-        public AttendeeMusicBandRepository(Context.PlataformaRio2CContext context)
+        public AttendeeMusicBandEvaluationRepository(Context.PlataformaRio2CContext context)
             : base(context)
         {
         }
@@ -90,7 +79,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>Gets the base query.</summary>
         /// <param name="readonly">if set to <c>true</c> [readonly].</param>
         /// <returns></returns>
-        private IQueryable<AttendeeMusicBand> GetBaseQuery(bool @readonly = false)
+        private IQueryable<AttendeeMusicBandEvaluation> GetBaseQuery(bool @readonly = false)
         {
             var consult = this.dbSet
                                 .IsNotDeleted();
@@ -105,7 +94,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<List<AttendeeMusicBand>> FindAllByEditionIdAsync(int editionId)
+        public async Task<List<AttendeeMusicBandEvaluation>> FindAllByEditionIdAsync(int editionId)
         {
             var query = this.GetBaseQuery()
                                .FindByEditionId(editionId);
@@ -118,28 +107,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// Count by edition, document and string asynchronous.
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
-        /// <param name="document">The document.</param>
-        /// <param name="email">The email.</param>
+        /// <param name="collaboratorId">The collaborator id.</param>
         /// <returns></returns>
-        public async Task<int> CountByResponsibleAsync(int editionId, string document, string email)
+        public async Task<int> CountByCollaboratorIdAsync(int editionId, int collaboratorId)
         {
             var query = this.GetBaseQuery()
                 .FindByEditionId(editionId)
-                .FindByResponsible(document, email);
-            
-            return await query.CountAsync();
-        }
-
-        /// <summary>
-        /// Count by edition, document and string asynchronous.
-        /// </summary>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <returns></returns>
-        public async Task<int> CountByEditionIdAsync(int editionId)
-        {
-            var query = this.GetBaseQuery()
-                .FindByEditionId(editionId);
-
+                .FindByCollaboratorId(collaboratorId);            
             return await query.CountAsync();
         }
     }

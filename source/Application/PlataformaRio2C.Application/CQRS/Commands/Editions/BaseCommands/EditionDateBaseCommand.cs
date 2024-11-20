@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 08-20-2021
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 07-13-2023
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 11-18-2024
 // ***********************************************************************
 // <copyright file="EditionDateBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -52,6 +52,46 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Display(Name = nameof(MusicCommissionMinimumEvaluationsCount), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public int? MusicCommissionMinimumEvaluationsCount { get; set; }
+
+        [Display(Name = nameof(MusicPitchingMaximumProjectsInEdition), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public int MusicPitchingMaximumProjectsInEdition { get; set; }
+
+        [Display(Name = nameof(MusicPitchingMaximumProjectsPerAttendee), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public int MusicPitchingMaximumProjectsPerAttendee { get; set; }
+
+        [Display(Name = nameof(MusicPitchingMaximumApprovedProjectsPerMember), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public int MusicPitchingMaximumApprovedProjectsPerMember { get; set; }
+
+        [Display(Name = nameof(MusicPitchingMaximumApprovedProjectsByMembers), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public int MusicPitchingMaximumApprovedProjectsByMembers { get; set; }
+
+        [Display(Name = nameof(MusicPitchingEvaluationStartDateByCurator), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public DateTime? MusicPitchingEvaluationStartDateByCurator { get; set; }
+
+        [Display(Name = nameof(MusicPitchingMaximumApprovedProjectsPerCurator), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public int MusicPitchingMaximumApprovedProjectsPerCurator { get; set; }
+
+        [Display(Name = nameof(MusicPitchingEvaluationStartDateByPopularVote), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public DateTime? MusicPitchingEvaluationStartDateByPopularVote { get; set; }
+
+        [Display(Name = nameof(MusicPitchingMaximumApprovedProjectsPerPopularVote), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public int MusicPitchingMaximumApprovedProjectsPerPopularVote { get; set; }
+
+        [Display(Name = nameof(MusicPitchingEvaluationStartDateByRepechage), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public DateTime? MusicPitchingEvaluationStartDateByRepechage { get; set; }
+
+        [Display(Name = nameof(MusicPitchingMaximumApprovedProjectsPerRepechage), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public int MusicPitchingMaximumApprovedProjectsPerRepechage { get; set; }
 
         #endregion
 
@@ -254,6 +294,16 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.MusicCommissionEvaluationEndDate = editionDto.Edition.MusicCommissionEvaluationEndDate.ToBrazilTimeZone();
             this.MusicCommissionMaximumApprovedBandsCount = editionDto.Edition.MusicCommissionMaximumApprovedBandsCount;
             this.MusicCommissionMinimumEvaluationsCount = editionDto.Edition.MusicCommissionMinimumEvaluationsCount;
+            this.MusicPitchingMaximumProjectsInEdition = editionDto.Edition.MusicPitchingMaximumProjectsInEdition;
+            this.MusicPitchingMaximumProjectsPerAttendee = editionDto.Edition.MusicPitchingMaximumProjectsPerAttendee;
+            this.MusicPitchingMaximumApprovedProjectsPerMember = editionDto.Edition.MusicPitchingMaximumApprovedProjectsPerMember;
+            this.MusicPitchingMaximumApprovedProjectsByMembers = editionDto.Edition.MusicPitchingMaximumApprovedProjectsByMembers;
+            this.MusicPitchingEvaluationStartDateByCurator = editionDto.Edition.MusicPitchingEvaluationStartDateByCurator.ToBrazilTimeZone();
+            this.MusicPitchingMaximumApprovedProjectsPerCurator = editionDto.Edition.MusicPitchingMaximumApprovedProjectsPerCurator;
+            this.MusicPitchingEvaluationStartDateByPopularVote = editionDto.Edition.MusicPitchingEvaluationStartDateByPopularVote.ToBrazilTimeZone();
+            this.MusicPitchingMaximumApprovedProjectsPerPopularVote = editionDto.Edition.MusicPitchingMaximumApprovedProjectsPerPopularVote;
+            this.MusicPitchingEvaluationStartDateByRepechage = editionDto.Edition.MusicPitchingEvaluationStartDateByRepechage.ToBrazilTimeZone();
+            this.MusicPitchingMaximumApprovedProjectsPerRepechage = editionDto.Edition.MusicPitchingMaximumApprovedProjectsPerRepechage;
 
             // Innovation - Commissions
             this.InnovationProjectSubmitStartDate = editionDto.Edition.InnovationProjectSubmitStartDate.ToBrazilTimeZone();
