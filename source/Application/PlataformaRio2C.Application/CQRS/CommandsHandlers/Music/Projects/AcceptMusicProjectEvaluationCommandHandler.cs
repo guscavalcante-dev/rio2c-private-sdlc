@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 02-28-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-28-2020
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 11-10-2024
 // ***********************************************************************
 // <copyright file="AcceptMusicProjectEvaluationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,11 +12,15 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -25,20 +29,32 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     public class AcceptMusicProjectEvaluationCommandHandler : MusicProjectBaseCommandHandler, IRequestHandler<AcceptMusicProjectEvaluation, AppValidationResult>
     {
         private IProjectEvaluationStatusRepository projectEvaluationStatusRepo;
+        private readonly IMusicBandRepository musicBandRepo;
+        private readonly IEditionRepository editionRepo;
+        private readonly IUserRepository userRepo;
 
         /// <summary>Initializes a new instance of the <see cref="AcceptMusicProjectEvaluationCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="musicProjectRepository">The music project repository.</param>
         /// <param name="projectEvaluationStatusRepository">The project evaluation status repository.</param>
+        /// <param name="musicBandRepo">The project evaluation status repository.</param>
+        /// <param name="editionRepo">The project evaluation status repository.</param>
+        /// <param name="userRepo">The user repo.</param>
         public AcceptMusicProjectEvaluationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IMusicProjectRepository musicProjectRepository,
-            IProjectEvaluationStatusRepository projectEvaluationStatusRepository)
+            IProjectEvaluationStatusRepository projectEvaluationStatusRepository,
+            IMusicBandRepository musicBandRepo,
+            IEditionRepository editionRepo,
+            IUserRepository userRepo)
             : base(eventBus, uow, musicProjectRepository)
         {
             this.projectEvaluationStatusRepo = projectEvaluationStatusRepository;
+            this.musicBandRepo = musicBandRepo;
+            this.editionRepo = editionRepo;
+            this.userRepo = userRepo;
         }
 
         /// <summary>Handles the specified accept music project evaluation.</summary>
@@ -48,8 +64,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         public async Task<AppValidationResult> Handle(AcceptMusicProjectEvaluation cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
-
-            var musicProject = await this.GetMusicProjectByUid(cmd.ProjectUid ?? Guid.Empty);
 
             #region Initial validations
 
@@ -61,24 +75,33 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            musicProject.Accept(
-                await this.projectEvaluationStatusRepo.FindAllAsync(),
-                cmd.UserId);
-            if (!musicProject.IsEvaluationValid())
+            var editionDto = await editionRepo.FindDtoAsync(cmd.EditionId.Value);
+            if (editionDto.IsMusicProjectEvaluationOpen() != true)
             {
-                this.AppValidationResult.Add(musicProject.ValidationResult);
+                this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(Texts.ForbiddenErrorMessage, new string[] { "ToastrError" })));
                 return this.AppValidationResult;
             }
 
-            this.MusicProjectRepo.Update(musicProject);
+            var projectEvaluationStatuses = await this.projectEvaluationStatusRepo.FindAllAsync();
+            var musicBand = await this.musicBandRepo.FindByUidAsync(cmd.MusicBandUid.Value);
+
+            musicBand.ComissionEvaluation(
+                editionDto.Edition,
+                await userRepo.FindByIdAsync(cmd.UserId),
+                projectEvaluationStatuses?.FirstOrDefault(pes => pes.Code == ProjectEvaluationStatus.Accepted.Code)
+            );
+
+            if (!musicBand.IsValid())
+            {
+                this.AppValidationResult.Add(musicBand.ValidationResult);
+                return this.AppValidationResult;
+            }
+
+            this.musicBandRepo.Update(musicBand);
             this.Uow.SaveChanges();
-            //this.AppValidationResult.Data = project;
+            this.AppValidationResult.Data = musicBand;
 
             return this.AppValidationResult;
-
-            //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
-
-            //return Task.FromResult(propertyId); // use it when the methed is not async
         }
     }
 }

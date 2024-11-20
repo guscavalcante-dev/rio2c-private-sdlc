@@ -267,11 +267,21 @@
     <Compile Include="Migrations\202411181335073_InsertCollaboratorTypeMusicCurator.Designer.cs">
       <DependentUpon>202411181335073_InsertCollaboratorTypeMusicCurator.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202411092319308_AddCommissionEvaluationToAttendeeMusicBandEvaluations.cs" />
+    <Compile Include="Migrations\202411092319308_AddCommissionEvaluationToAttendeeMusicBandEvaluations.Designer.cs">
+      <DependentUpon>202411092319308_AddCommissionEvaluationToAttendeeMusicBandEvaluations.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202411092319308_AddCommissionEvaluationToAttendeeMusicBandEvaluations.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202411092319308_AddCommissionEvaluationToAttendeeMusicBandEvaluations.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Compile Include="Models\SaveChangesResult.cs" />
@@ -427,9 +437,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.resx">
       <DependentUpon>202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202411181335073_InsertCollaboratorTypeMusicCurator.resx">
-      <DependentUpon>202411181335073_InsertCollaboratorTypeMusicCurator.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

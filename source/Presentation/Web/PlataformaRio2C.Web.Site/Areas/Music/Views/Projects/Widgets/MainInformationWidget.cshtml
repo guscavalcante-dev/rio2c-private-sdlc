@@ -2,6 +2,7 @@
 @using Constants = PlataformaRio2C.Domain.Constants;
 @using PlataformaRio2c.Infra.Data.FileRepository.Helpers
 @using PlataformaRio2C.Domain.Statics
+@using PlataformaRio2C.Domain.Entities;
 @model MusicProjectDto
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
@@ -90,33 +91,27 @@
                             }
                             else if (editionDto?.IsMusicProjectEvaluationOpen() == true)
                             {
-                                var hasCurrentEvaluation = currentEvaluation != null;
-                                if (hasCurrentEvaluation)
-                                {
-                                    <div class="view">
-                                        <form class="form-inline">
-                                            <div class="form-group">
-                                                <div class="myrio2c-evaluation-grade-box-lg form-control" data-toggle="tooltip" title="@Labels.ClickHereToEvaluateProject" onclick="MyRio2cCommon.enableFieldEdit({ dataId: 'EvaluationGradeMain' })" style="cursor: pointer;">
-                                                    <span class="grade-label mr-2">@Labels.Evaluation</span>
-                                                    <span class="grade-vote">@(currentEvaluation?.AttendeeMusicBandEvaluation?.Grade)</span>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                }
-                                <div class="edit @(hasCurrentEvaluation ? "d-none" : "")">
+                                <div class="edit">
                                     <form class="form-inline myrio2c-evaluation-grade-box-form justify-content-center">
-                                        <div class="form-group font-weight-bold ml-3 mr-3 mt-2 mb-2">@Labels.EvaluateProject</div>
-                                        <div class="form-group mt-2 mb-2 mr-3">
-                                            @Html.TextBox("AttendeeMusicBandEvaluationGradeMain", currentEvaluation?.AttendeeMusicBandEvaluation?.Grade, new { @class = "form-control text-center decimal-globalize-mask", placeholder = Labels.Grade, style = "width: 105px;" }) @*, @type = "number", @min = "1", @max = "10", @step = ".10"*@
-                                        </div>
-                                        <button type="button" class="btn btn-success mt-2 mb-2 mr-3" onclick="MusicProjectsMainInformationWidget.submitEvaluationGrade('@Model.MusicProject.AttendeeMusicBand.MusicBandId');">@Labels.Evaluate</button>
-                                        @if (hasCurrentEvaluation)
-                                        {
-                                            <button type="button" class="btn btn-secondary mt-2 mb-2 mr-3 pl-4" onclick="MyRio2cCommon.disableFieldEdit({ dataId: 'EvaluationGradeMain' })" data-toggle="tooltip" title="@(Labels.Cancel)">
-                                                <i class="fa fa-times"></i>
+                                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                                            <button 
+                                                @(currentEvaluation?.AttendeeMusicBandEvaluation.CommissionEvaluationStatusId == ProjectEvaluationStatus.Accepted.Id ? "disabled" : "")
+                                                type="button"
+                                                class="btn btn-success"
+                                                onclick="MusicProjectsEvaluationWidget.showAcceptModal('@Model.MusicProject.Uid');">
+                                                <i class="fa fa-thumbs-up"></i> @Labels.Approve
                                             </button>
-                                        }
+                                        </div>
+                                        <div class="form-group mt-2 mb-2 mr-3">
+                                            <button
+                                                @(currentEvaluation?.AttendeeMusicBandEvaluation.CommissionEvaluationStatusId == ProjectEvaluationStatus.Refused.Id ? "disabled" : "")
+                                                type="button"
+                                                class="btn btn-danger"
+                                                onclick="MusicProjectsEvaluationWidget.showRefuseModal('@Model.MusicProject.Uid');"
+                                            >
+                                                <i class="fa fa-thumbs-down"></i> @Labels.RefuseProject
+                                            </button>
+                                        </div>
                                     </form>
                                 </div>
                             }
