@@ -130,16 +130,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.EditionDate.CreatorCommissionMinimumEvaluationsCount,
                 cmd.EditionDate.CreatorCommissionMaximumApprovedProjectsCount,
 
-                cmd.EditionDate.MusicPitchingMaximumProjectsInEdition,
-                cmd.EditionDate.MusicPitchingMaximumProjectsPerAttendee,
-                cmd.EditionDate.MusicPitchingMaximumApprovedProjectsPerMember,
-                cmd.EditionDate.MusicPitchingMaximumApprovedProjectsByMembers,
+                cmd.EditionDate.MusicPitchingMaximumProjectSubmissionsByEdition,
+                cmd.EditionDate.MusicPitchingMaximumProjectSubmissionsByParticipant,
+                cmd.EditionDate.MusicPitchingMaximumApprovedProjectsByCommissionMember,
                 cmd.EditionDate.MusicPitchingEvaluationStartDateByCurator,
-                cmd.EditionDate.MusicPitchingMaximumApprovedProjectsPerCurator,
+                cmd.EditionDate.MusicPitchingMaximumApprovedProjectsByCurator,
                 cmd.EditionDate.MusicPitchingEvaluationStartDateByPopularVote,
-                cmd.EditionDate.MusicPitchingMaximumApprovedProjectsPerPopularVote,
+                cmd.EditionDate.MusicPitchingMaximumApprovedProjectsByPopularVote,
                 cmd.EditionDate.MusicPitchingEvaluationStartDateByRepechage,
-                cmd.EditionDate.MusicPitchingMaximumApprovedProjectsPerRepechage,
+                cmd.EditionDate.MusicPitchingMaximumApprovedProjectsByRepechage,
 
                 cmd.UserId);
 

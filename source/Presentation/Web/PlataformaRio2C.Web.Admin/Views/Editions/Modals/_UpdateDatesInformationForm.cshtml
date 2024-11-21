@@ -98,26 +98,21 @@
 </div>
 <div class="row">
     <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.MusicPitchingMaximumProjectsInEdition, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.MusicPitchingMaximumProjectsInEdition, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.MusicPitchingMaximumProjectsInEdition, "", new { @class = "text-danger" })
+        @Html.LabelFor(m => m.MusicPitchingMaximumProjectSubmissionsByEdition, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.MusicPitchingMaximumProjectSubmissionsByEdition, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.MusicPitchingMaximumProjectSubmissionsByEdition, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.MusicPitchingMaximumProjectsPerAttendee, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.MusicPitchingMaximumProjectsPerAttendee, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.MusicPitchingMaximumProjectsPerAttendee, "", new { @class = "text-danger" })
+        @Html.LabelFor(m => m.MusicPitchingMaximumProjectSubmissionsByParticipant, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.MusicPitchingMaximumProjectSubmissionsByParticipant, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.MusicPitchingMaximumProjectSubmissionsByParticipant, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="row">
     <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.MusicPitchingMaximumApprovedProjectsPerMember, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.MusicPitchingMaximumApprovedProjectsPerMember, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.MusicPitchingMaximumApprovedProjectsPerMember, "", new { @class = "text-danger" })
-    </div>
-    <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.MusicPitchingMaximumApprovedProjectsByMembers, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.MusicPitchingMaximumApprovedProjectsByMembers, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.MusicPitchingMaximumApprovedProjectsByMembers, "", new { @class = "text-danger" })
+        @Html.LabelFor(m => m.MusicPitchingMaximumApprovedProjectsByCommissionMember, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.MusicPitchingMaximumApprovedProjectsByCommissionMember, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.MusicPitchingMaximumApprovedProjectsByCommissionMember, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="row">
@@ -127,9 +122,9 @@
         @Html.ValidationMessageFor(m => m.MusicPitchingEvaluationStartDateByCurator, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.MusicPitchingMaximumApprovedProjectsPerCurator, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.MusicPitchingMaximumApprovedProjectsPerCurator, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.MusicPitchingMaximumApprovedProjectsPerCurator, "", new { @class = "text-danger" })
+        @Html.LabelFor(m => m.MusicPitchingMaximumApprovedProjectsByCurator, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.MusicPitchingMaximumApprovedProjectsByCurator, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.MusicPitchingMaximumApprovedProjectsByCurator, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="row">
@@ -139,9 +134,9 @@
         @Html.ValidationMessageFor(m => m.MusicPitchingEvaluationStartDateByPopularVote, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.MusicPitchingMaximumApprovedProjectsPerPopularVote, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.MusicPitchingMaximumApprovedProjectsPerPopularVote, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.MusicPitchingMaximumApprovedProjectsPerPopularVote, "", new { @class = "text-danger" })
+        @Html.LabelFor(m => m.MusicPitchingMaximumApprovedProjectsByPopularVote, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.MusicPitchingMaximumApprovedProjectsByPopularVote, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.MusicPitchingMaximumApprovedProjectsByPopularVote, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="row">
@@ -151,9 +146,9 @@
         @Html.ValidationMessageFor(m => m.MusicPitchingEvaluationStartDateByRepechage, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.MusicPitchingMaximumApprovedProjectsPerRepechage, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.MusicPitchingMaximumApprovedProjectsPerRepechage, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.MusicPitchingMaximumApprovedProjectsPerRepechage, "", new { @class = "text-danger" })
+        @Html.LabelFor(m => m.MusicPitchingMaximumApprovedProjectsByRepechage, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.MusicPitchingMaximumApprovedProjectsByRepechage, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.MusicPitchingMaximumApprovedProjectsByRepechage, "", new { @class = "text-danger" })
     </div>
 </div>
 

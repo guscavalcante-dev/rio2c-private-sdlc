@@ -130,11 +130,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             {
                 var attendeeMusicBandsCount = await this.attendeeMusicBandRepo.CountByEditionIdAsync(editionDto.Id);
                 attendeeMusicBandsCount += cmd.MusicBandDataApiDtos.Count;
-                if (attendeeMusicBandsCount > editionDto.MusicPitchingMaximumProjectsInEdition)
+                if (attendeeMusicBandsCount > editionDto.MusicPitchingMaximumProjectSubmissionsByEdition)
                 {
                     string validationMessage = string.Format(
-                        Messages.YouCanMusicPitchingMaximumProjectsInEdition,
-                        editionDto.MusicPitchingMaximumProjectsInEdition,
+                        Messages.YouCanMusicPitchingMaximumProjectSubmissionsByEdition,
+                        editionDto.MusicPitchingMaximumProjectSubmissionsByEdition,
                         Labels.MusicProjects
                     );
                     this.ValidationResult.Add(new ValidationError(validationMessage));
@@ -144,11 +144,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 
                 attendeeMusicBandsCount = await this.attendeeMusicBandRepo.CountByResponsibleAsync(editionDto.Id, cmd.MusicBandResponsibleApiDto.Document, cmd.MusicBandResponsibleApiDto.Email);
                 attendeeMusicBandsCount += cmd.MusicBandDataApiDtos.Count;
-                if (attendeeMusicBandsCount > editionDto.MusicPitchingMaximumProjectsPerAttendee)
+                if (attendeeMusicBandsCount > editionDto.MusicPitchingMaximumProjectSubmissionsByParticipant)
                 {
                     string validationMessage = string.Format(
-                        Messages.YouCanMusicPitchingMaximumProjectsPerAttendee,
-                        editionDto.MusicPitchingMaximumProjectsPerAttendee,
+                        Messages.YouCanMusicPitchingMaximumProjectSubmissionsByParticipant,
+                        editionDto.MusicPitchingMaximumProjectSubmissionsByParticipant,
                         Labels.MusicProjects,
                         Labels.Pitching
                     );

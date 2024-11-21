@@ -87,6 +87,20 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
+            var evaluationsCount = await this.attendeeMusicBandEvaluationRepo.CountByCollaboratorIdAsync(
+                editionDto.Id,
+                cmd.UserId
+            );
+            if (evaluationsCount + 1 > editionDto.MusicPitchingMaximumApprovedProjectsByCommissionMember)
+            {
+                string validationMessage = string.Format(
+                    Messages.YouCanMusicPitchingMaximumApprovedProjectsByCommissionMember,
+                    editionDto.MusicPitchingMaximumApprovedProjectsByCommissionMember,
+                    Labels.MusicProjects
+                );
+                this.ValidationResult.Add(new ValidationError(validationMessage));
+            }
+
             var projectEvaluationStatuses = await this.projectEvaluationStatusRepo.FindAllAsync();
             var musicBand = await this.musicBandRepo.FindByUidAsync(cmd.MusicBandUid.Value);
 
@@ -96,12 +110,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 projectEvaluationStatuses?.FirstOrDefault(pes => pes.Code == ProjectEvaluationStatus.Refused.Code)
             );
 
-            var evaluationsCount = await this.attendeeMusicBandEvaluationRepo.CountByCollaboratorIdAsync(
-                editionDto.Id,
-                cmd.UserId
-            );
-
-            if (!musicBand.IsValidCommissionEvaluation(evaluationsCount, editionDto.MusicPitchingMaximumApprovedProjectsPerMember))
+            if (!musicBand.IsValid())
             {
                 this.AppValidationResult.Add(musicBand.ValidationResult);
                 return this.AppValidationResult;

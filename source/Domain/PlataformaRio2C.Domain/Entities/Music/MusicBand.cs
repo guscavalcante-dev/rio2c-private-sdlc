@@ -393,24 +393,6 @@ namespace PlataformaRio2C.Domain.Entities
             return this.ValidationResult.IsValid;
         }
 
-        /// <summary>Returns true if ... is valid comission evaluation.</summary>
-        /// <returns>
-        ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
-        public bool IsValidCommissionEvaluation(int evaluationsCount, int maximumApprovedProjectsPerMember)
-        {   
-            this.IsValid();
-            if (evaluationsCount + 1 > maximumApprovedProjectsPerMember)
-            {
-                string validationMessage = string.Format(
-                    Messages.YouCanMusicPitchingMaximumApprovedProjectsPerMember,
-                    maximumApprovedProjectsPerMember,
-                    Labels.MusicProjects
-                );
-                this.ValidationResult.Add(new ValidationError(validationMessage));
-            }
-            return this.ValidationResult.IsValid;
-        }
-
         /// <summary>Validates the type of the music band.</summary>
         public void ValidateMusicBandType()
         {
