@@ -3383,34 +3383,31 @@
   <data name="Dynamic" xml:space="preserve">
     <value>Conference Dynamic</value>
   </data>
-  <data name="MusicPitchingMaximumProjectsInEdition" xml:space="preserve">
-    <value>Maximum number of projects registered in the Edition</value>
+  <data name="MusicPitchingMaximumProjectSubmissionsByEdition" xml:space="preserve">
+    <value>Maximum number of projects registered by edition</value>
   </data>
-  <data name="MusicPitchingMaximumProjectsPerAttendee" xml:space="preserve">
-    <value>Maximum number of projects registered per participant</value>
+  <data name="MusicPitchingMaximumProjectSubmissionsByParticipant" xml:space="preserve">
+    <value>Maximum number of projects registered by participant</value>
   </data>
-  <data name="MusicPitchingMaximumApprovedProjectsPerMember" xml:space="preserve">
-    <value>Maximum number of projects approved by committee member</value>
-  </data>
-  <data name="MusicPitchingMaximumApprovedProjectsByMembers" xml:space="preserve">
-    <value>Maximum number of projects approved by committee members in the Edition</value>
+  <data name="MusicPitchingMaximumApprovedProjectsByCommissionMember" xml:space="preserve">
+    <value>Maximum number of projects approved by comission member</value>
   </data>
   <data name="MusicPitchingEvaluationStartDateByCurator" xml:space="preserve">
     <value>Start date for project evaluation by the curator</value>
   </data>
-  <data name="MusicPitchingMaximumApprovedProjectsPerCurator" xml:space="preserve">
+  <data name="MusicPitchingMaximumApprovedProjectsByCurator" xml:space="preserve">
     <value>Maximum number of projects approved by curator</value>
   </data>
   <data name="MusicPitchingEvaluationStartDateByPopularVote" xml:space="preserve">
     <value>Start date for project evaluation by popular vote</value>
   </data>
-  <data name="MusicPitchingMaximumApprovedProjectsPerPopularVote" xml:space="preserve">
+  <data name="MusicPitchingMaximumApprovedProjectsByPopularVote" xml:space="preserve">
     <value>Maximum number of projects approved by popular vote</value>
   </data>
   <data name="MusicPitchingEvaluationStartDateByRepechage" xml:space="preserve">
     <value>Start date for project evaluation by repechage</value>
   </data>
-  <data name="MusicPitchingMaximumApprovedProjectsPerRepechage" xml:space="preserve">
+  <data name="MusicPitchingMaximumApprovedProjectsByRepechage" xml:space="preserve">
     <value>Maximum number of projects approved by repechage</value>
   </data>
 </root>

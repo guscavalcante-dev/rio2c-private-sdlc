@@ -1,15 +1,14 @@
 ﻿BEGIN TRY
 	BEGIN TRANSACTION
-		ALTER TABLE dbo.Editions DROP COLUMN MusicPitchingMaximumProjectsInEdition;
-		ALTER TABLE dbo.Editions DROP COLUMN MusicPitchingMaximumProjectsPerAttendee;
-		ALTER TABLE dbo.Editions DROP COLUMN MusicPitchingMaximumApprovedProjectsPerMember;
-		ALTER TABLE dbo.Editions DROP COLUMN MusicPitchingMaximumApprovedProjectsByMembers;
+		ALTER TABLE dbo.Editions DROP COLUMN MusicPitchingMaximumProjectSubmissionsByEdition;
+		ALTER TABLE dbo.Editions DROP COLUMN MusicPitchingMaximumProjectSubmissionsByParticipant;
+		ALTER TABLE dbo.Editions DROP COLUMN MusicPitchingMaximumApprovedProjectsByCommissionMember;
 		ALTER TABLE dbo.Editions DROP COLUMN MusicPitchingEvaluationStartDateByCurator;
-		ALTER TABLE dbo.Editions DROP COLUMN MusicPitchingMaximumApprovedProjectsPerCurator;
-		ALTER TABLE dbo.Editions DROP COLUMN MusicPitchingMaximumApprovedProjectsPerPopularVote;
+		ALTER TABLE dbo.Editions DROP COLUMN MusicPitchingMaximumApprovedProjectsByCurator;
+		ALTER TABLE dbo.Editions DROP COLUMN MusicPitchingMaximumApprovedProjectsByPopularVote;
 		ALTER TABLE dbo.Editions DROP COLUMN MusicPitchingEvaluationStartDateByPopularVote;
 		ALTER TABLE dbo.Editions DROP COLUMN MusicPitchingEvaluationStartDateByRepechage;
-		ALTER TABLE dbo.Editions DROP COLUMN MusicPitchingMaximumApprovedProjectsPerRepechage;
+		ALTER TABLE dbo.Editions DROP COLUMN MusicPitchingMaximumApprovedProjectsByRepechage;
 	COMMIT TRAN -- Transaction Success!
 END TRY
 BEGIN CATCH
