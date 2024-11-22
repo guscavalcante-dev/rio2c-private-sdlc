@@ -263,6 +263,10 @@
     <Compile Include="Migrations\202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.Designer.cs">
       <DependentUpon>202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202411181335073_InsertCollaboratorTypeMusicCurator.cs" />
+    <Compile Include="Migrations\202411181335073_InsertCollaboratorTypeMusicCurator.Designer.cs">
+      <DependentUpon>202411181335073_InsertCollaboratorTypeMusicCurator.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202411092319308_AddCommissionEvaluationToAttendeeMusicBandEvaluations.cs" />
     <Compile Include="Migrations\202411092319308_AddCommissionEvaluationToAttendeeMusicBandEvaluations.Designer.cs">
       <DependentUpon>202411092319308_AddCommissionEvaluationToAttendeeMusicBandEvaluations.cs</DependentUpon>
@@ -314,6 +318,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202408202223049_Initial.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202411181335073_InsertCollaboratorTypeMusicCurator.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202411181335073_InsertCollaboratorTypeMusicCurator.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.up.sql">

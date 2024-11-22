@@ -1,4 +1,4 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateTinyCollaborator
+﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateMusicCommissionCollaborator
 <div class="modal fade" id="CreateCommissionModal" role="dialog" aria-labelledby="CreateCommissionModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -10,7 +10,7 @@
                 @using (Html.BeginForm("Create", "Commissions", new { Area = "Music" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "CreateCommissionForm" }))
                 {
                     <div id="form-container">
-                        @Html.Partial("/Views/Collaborators/Forms/_TinyForm.cshtml", Model)
+                        @Html.Partial("Modals/_Form", Model)
                     </div>
                 }
             </div>

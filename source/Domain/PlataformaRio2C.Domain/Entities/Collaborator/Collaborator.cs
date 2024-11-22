@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 10-03-2024
+// Last Modified By : Renan Valentim
+// Last Modified On : 11-19-2024
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -57,7 +57,7 @@ namespace PlataformaRio2C.Domain.Entities
         public string Document { get; private set; }
         public string PhoneNumber { get; private set; }
         public string CellPhone { get; private set; }
-        public string PublicEmail { get; private set; }
+        public string PublicEmail { get; protected set; }
         public string Website { get; private set; }
         public string Linkedin { get; private set; }
         public string Twitter { get; private set; }
@@ -86,7 +86,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         public virtual ICollection<CollaboratorJobTitle> JobTitles { get; private set; }
         public virtual ICollection<CollaboratorMiniBio> MiniBios { get; private set; }
-        public virtual ICollection<AttendeeCollaborator> AttendeeCollaborators { get; private set; }
+        public virtual ICollection<AttendeeCollaborator> AttendeeCollaborators { get; protected set; }
         public virtual ICollection<CollaboratorEditionParticipation> EditionParticipantions { get; private set; }
 
         public Dictionary<string, object> RequiredFieldsToPublish;
@@ -696,12 +696,12 @@ namespace PlataformaRio2C.Domain.Entities
 
             if (attendeeCollaborator != null)
             {
-                attendeeCollaborator.UpdateAdministrator(collaboratorTypes, userId);
+                attendeeCollaborator.UpdateAdministratorAttendeeCollaborator(collaboratorTypes, userId);
             }
             // Create attendee collaborator only if is admin partial
             else if (role.Name == Constants.Role.AdminPartial)
             {
-                this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, collaboratorTypes, this, userId));
+                this.AttendeeCollaborators.Add(AttendeeCollaborator.CreateAdministratorAttendeeCollaborator(edition, collaboratorTypes, this, userId));
             }
         }
 
@@ -744,7 +744,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             foreach (var attendeeCollaborator in this.FindAllAttendeeCollaboratorsNotDeleted(edition))
             {
-                attendeeCollaborator?.DeleteAdministrator(userId);
+                attendeeCollaborator?.DeleteAdministratorAttendeeCollaborator(userId);
             }
         }
 
@@ -1224,8 +1224,6 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         #endregion
-
-        
 
         #region Innovation Player Executive Collaborator
 
@@ -2362,7 +2360,7 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
             if (attendeeCollaborator != null)
             {
-                attendeeCollaborator.UpdateInnovationCommissionAttendeeCollaborator(attendeeInnovationOrganizationTracks, collaboratorType,  userId);
+                attendeeCollaborator.UpdateInnovationCommissionAttendeeCollaborator(attendeeInnovationOrganizationTracks, collaboratorType, userId);
             }
             else
             {
@@ -2516,6 +2514,136 @@ namespace PlataformaRio2C.Domain.Entities
             else
             {
                 this.AttendeeCollaborators.Add(AttendeeCollaborator.CreateAudiovisualCommissionAttendeeCollaborator(edition, attendeeCollaboratorInterests, collaboratorType, projectType, this, userId));
+            }
+        }
+
+        #endregion
+
+        #region Music Commission Collaborator
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Collaborator" /> class.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorTypes">The collaborator types.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="userId">The user identifier.</param>
+        private Collaborator(
+            Edition edition,
+            List<CollaboratorType> collaboratorTypes,
+            string firstName,
+            string lastNames,
+            string email,
+            int userId)
+        {
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.PublicEmail = email?.Trim();
+
+            this.SetCreateDate(userId);
+
+            //TODO: Refactor this!
+            //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
+            this.SynchronizeMusicCommissionAttendeeCollaborators(edition, collaboratorTypes, true, userId);
+            this.UpdateUser(email);
+        }
+
+        /// <summary>
+        /// Creates the music commission collaborator.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public static Collaborator CreateMusicCommissionCollaborator(
+            Edition edition,
+            List<CollaboratorType> collaboratorTypes,
+            string firstName,
+            string lastNames,
+            string email,
+            int userId)
+        {
+            return new Collaborator(
+                edition,
+                collaboratorTypes,
+                firstName,
+                lastNames,
+                email,
+                userId);
+        }
+
+        /// <summary>
+        /// Updates the music commission collaborator.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorTypes">Type of the collaborator.</param>
+        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateMusicCommissionCollaborator(
+            Edition edition,
+            List<CollaboratorType> collaboratorTypes,
+            bool isAddingToCurrentEdition,
+            string firstName,
+            string lastNames,
+            string email,
+            int userId)
+        {
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.PublicEmail = email?.Trim();
+
+            this.SetUpdateDate(userId);
+
+            //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
+            this.SynchronizeMusicCommissionAttendeeCollaborators(edition, collaboratorTypes, isAddingToCurrentEdition, userId);
+            this.UpdateUser(email);
+        }
+
+        /// <summary>
+        /// Synchronizes the innovation commission attendee collaborators.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeMusicCommissionAttendeeCollaborators(
+            Edition edition,
+            List<CollaboratorType> collaboratorTypes,
+            bool isAddingToCurrentEdition,
+            int userId)
+        {
+            // Synchronize only when is adding to current edition
+            if (!isAddingToCurrentEdition)
+            {
+                return;
+            }
+
+            if (this.AttendeeCollaborators == null)
+            {
+                this.AttendeeCollaborators = new List<AttendeeCollaborator>();
+            }
+
+            if (edition == null)
+            {
+                return;
+            }
+
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            if (attendeeCollaborator != null)
+            {
+                attendeeCollaborator.UpdateMusicCommissionAttendeeCollaborator(collaboratorTypes, userId);
+            }
+            else
+            {
+                this.AttendeeCollaborators.Add(AttendeeCollaborator.CreateMusicCommissionAttendeeCollaborator(edition, collaboratorTypes, this, userId));
             }
         }
 
@@ -2986,7 +3114,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="cellPhone">The cell phone.</param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateCellPhone(
-            string cellPhone, 
+            string cellPhone,
             int userId)
         {
             this.CellPhone = cellPhone;
@@ -3551,6 +3679,17 @@ namespace PlataformaRio2C.Domain.Entities
         public AttendeeCollaborator GetAttendeeCollaboratorByEditionId(int editionId)
         {
             return this.AttendeeCollaborators?.FirstOrDefault(ac => ac.EditionId == editionId);
+        }
+
+        /// <summary>
+        /// Gets the attendee collaborator by edition identifier.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public T GetAttendeeCollaboratorByEditionId<T>(int editionId) where T : AttendeeCollaborator
+        {
+            return this.AttendeeCollaborators?.FirstOrDefault(ac => ac.EditionId == editionId) as T;
         }
 
         #region Privates

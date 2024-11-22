@@ -118,7 +118,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 request.GetSortColumns(),
                 new List<Guid>(),
                 new string[] { CollaboratorType.PlayerExecutiveAudiovisual.Name },
-                new string[] { OrganizationType.AudiovisualPlayer.Name },
                 showAllEditions,
                 showAllParticipants,
                 showHighlights,
@@ -295,8 +294,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         {
             var attendeeCollaboratorDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByCollaboratorTypeUidAsync(
                 id ?? Guid.Empty,
-                CollaboratorType.PlayerExecutiveAudiovisual.Uid,
-                OrganizationType.AudiovisualPlayer.Uid);
+                CollaboratorType.PlayerExecutiveAudiovisual.Uid
+            );
 
             if (attendeeCollaboratorDto == null)
             {
