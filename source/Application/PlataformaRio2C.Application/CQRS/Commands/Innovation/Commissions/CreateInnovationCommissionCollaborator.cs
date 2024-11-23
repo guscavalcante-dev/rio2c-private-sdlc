@@ -11,7 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
 using PlataformaRio2C.Domain.Dtos;
 using System.Collections.Generic;
 
