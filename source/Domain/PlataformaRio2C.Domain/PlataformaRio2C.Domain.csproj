@@ -416,8 +416,6 @@
     <Compile Include="Entities\Collaborator\CollaboratorIndustry.cs" />
     <Compile Include="Entities\Collaborator\CollaboratorGender.cs" />
     <Compile Include="Entities\Collaborator\CollaboratorRole.cs" />
-    <Compile Include="Entities\Collaborator\MusicCommission\MusicCommissionAttendeeCollaborator.cs" />
-    <Compile Include="Entities\Collaborator\MusicCommission\MusicCommissionCollaborator.cs" />
     <Compile Include="Entities\Common\InterestGroup.cs" />
     <Compile Include="Entities\Common\TranslatedName.cs" />
     <Compile Include="Entities\Common\Pillar.cs" />

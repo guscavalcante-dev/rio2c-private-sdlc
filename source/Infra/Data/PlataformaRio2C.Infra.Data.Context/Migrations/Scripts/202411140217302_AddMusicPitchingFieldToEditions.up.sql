@@ -1,14 +1,31 @@
 ﻿BEGIN TRY
 	BEGIN TRANSACTION
-		ALTER TABLE dbo.Editions ADD MusicPitchingMaximumProjectSubmissionsByEdition int NULL;
-		ALTER TABLE dbo.Editions ADD MusicPitchingMaximumProjectSubmissionsByParticipant int NULL;
-		ALTER TABLE dbo.Editions ADD MusicPitchingMaximumApprovedProjectsByCommissionMember int NULL;
-		ALTER TABLE dbo.Editions ADD MusicPitchingEvaluationStartDateByCurator datetimeoffset NULL;
-		ALTER TABLE dbo.Editions ADD MusicPitchingMaximumApprovedProjectsByCurator int NULL;
-		ALTER TABLE dbo.Editions ADD MusicPitchingEvaluationStartDateByPopularVote datetimeoffset NULL;
-		ALTER TABLE dbo.Editions ADD MusicPitchingMaximumApprovedProjectsByPopularVote int NULL;
-		ALTER TABLE dbo.Editions ADD MusicPitchingEvaluationStartDateByRepechage datetimeoffset NULL;
-		ALTER TABLE dbo.Editions ADD MusicPitchingMaximumApprovedProjectsByRepechage int NULL;
+		IF COL_LENGTH('Editions', 'MusicPitchingMaximumProjectSubmissionsByEdition') IS NULL
+            ALTER TABLE dbo.Editions ADD MusicPitchingMaximumProjectSubmissionsByEdition int NULL;
+
+        IF COL_LENGTH('Editions', 'MusicPitchingMaximumProjectSubmissionsByParticipant') IS NULL
+            ALTER TABLE dbo.Editions ADD MusicPitchingMaximumProjectSubmissionsByParticipant int NULL;
+
+        IF COL_LENGTH('Editions', 'MusicPitchingMaximumApprovedProjectsByCommissionMember') IS NULL
+            ALTER TABLE dbo.Editions ADD MusicPitchingMaximumApprovedProjectsByCommissionMember int NULL;
+
+        IF COL_LENGTH('Editions', 'MusicPitchingEvaluationStartDateByCurator') IS NULL
+            ALTER TABLE dbo.Editions ADD MusicPitchingEvaluationStartDateByCurator datetimeoffset NULL;
+
+        IF COL_LENGTH('Editions', 'MusicPitchingMaximumApprovedProjectsByCurator') IS NULL
+            ALTER TABLE dbo.Editions ADD MusicPitchingMaximumApprovedProjectsByCurator int NULL;
+
+        IF COL_LENGTH('Editions', 'MusicPitchingEvaluationStartDateByPopularVote') IS NULL
+            ALTER TABLE dbo.Editions ADD MusicPitchingEvaluationStartDateByPopularVote datetimeoffset NULL;
+
+        IF COL_LENGTH('Editions', 'MusicPitchingMaximumApprovedProjectsByPopularVote') IS NULL
+            ALTER TABLE dbo.Editions ADD MusicPitchingMaximumApprovedProjectsByPopularVote int NULL;
+
+        IF COL_LENGTH('Editions', 'MusicPitchingEvaluationStartDateByRepechage') IS NULL
+            ALTER TABLE dbo.Editions ADD MusicPitchingEvaluationStartDateByRepechage datetimeoffset NULL;
+
+        IF COL_LENGTH('Editions', 'MusicPitchingMaximumApprovedProjectsByRepechage') IS NULL
+            ALTER TABLE dbo.Editions ADD MusicPitchingMaximumApprovedProjectsByRepechage int NULL;
 
 		EXEC('UPDATE dbo.Editions SET MusicPitchingMaximumProjectSubmissionsByEdition=400, MusicPitchingMaximumProjectSubmissionsByParticipant=3, MusicPitchingMaximumApprovedProjectsByCommissionMember=2, MusicPitchingMaximumApprovedProjectsByCurator=12, MusicPitchingMaximumApprovedProjectsByPopularVote=5, MusicPitchingMaximumApprovedProjectsByRepechage=3');
 		EXEC('ALTER TABLE dbo.Editions ALTER COLUMN MusicPitchingMaximumProjectSubmissionsByEdition int NOT NULL');
