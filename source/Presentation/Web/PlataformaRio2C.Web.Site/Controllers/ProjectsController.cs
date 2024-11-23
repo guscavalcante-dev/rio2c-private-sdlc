@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-28-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 12-23-2023
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 29-10-2024
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -46,6 +46,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo;
         private readonly IProjectEvaluationStatusRepository evaluationStatusRepository;
+        private readonly IProjectModalityRepository projectModalityRepository;
 
         /// <summary>Initializes a new instance of the <see cref="ProjectsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -57,6 +58,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="projectEvaluationRefuseReasonRepo">The project evaluation refuse reason repo.</param>
         /// <param name="evaluationStatusRepository">The project evaluation status repository.</param>
+        /// <param name="projectModalityRepository">The project evaluation status repository.</param>
         public ProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
@@ -66,7 +68,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
             ITargetAudienceRepository targetAudienceRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo,
-            IProjectEvaluationStatusRepository evaluationStatusRepository)
+            IProjectEvaluationStatusRepository evaluationStatusRepository,
+            IProjectModalityRepository projectModalityRepository
+        )
             : base(commandBus, identityController)
         {
             this.projectRepo = projectRepository;
@@ -76,6 +80,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.projectEvaluationRefuseReasonRepo = projectEvaluationRefuseReasonRepo;
             this.evaluationStatusRepository = evaluationStatusRepository;
+            this.projectModalityRepository = projectModalityRepository;
         }
 
         #region Schedule
@@ -122,7 +127,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             var projects = await this.projectRepo.FindAllDtosToSellAsync(
                 this.UserAccessControlDto?.GetFirstAttendeeOrganizationCreated()?.Uid ?? Guid.Empty,
-                false);
+                false,
+                new int[] { ProjectModality.Both.Id, ProjectModality.BusinessRound.Id, ProjectModality.Pitching.Id }
+            );
 
             // Create fake projects in the list
             var projectMaxCount = this.EditionDto?.AttendeeOrganizationMaxSellProjectsCount ?? 0;
@@ -259,7 +266,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     true,
                     false,
-                    false);
+                    false,
+                    this.UserInterfaceLanguage,
+                    await this.projectModalityRepository.FindAllAsync()
+                );
             }
             catch (DomainException ex)
             {
@@ -781,7 +791,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Audiovisual.Id),
                 true,
                 false,
-                false);
+                false,
+                this.UserInterfaceLanguage,
+                await this.projectModalityRepository.FindAllAsync()
+            );
 
             return View(cmd);
         }

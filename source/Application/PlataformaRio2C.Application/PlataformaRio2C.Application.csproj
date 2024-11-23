@@ -328,6 +328,8 @@
     <Compile Include="CQRS\CommandsHandlers\Administrators\CreateAdministratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Administrators\DeleteAdministratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\UpdateOrganizationApiConfigurationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Projects\Pitching\CreatePitchingProjectCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Projects\Pitching\UpdatePitchingProjectMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Rooms\CreateDefaultVirtualRoomCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Speakers\SendSpeakersReportCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\User\UpdateUserStatusCommandHandler.cs" />
@@ -516,6 +518,8 @@
     <Compile Include="CQRS\Commands\Administrators\CreateAdministrator.cs" />
     <Compile Include="CQRS\Commands\Administrators\DeleteAdministrator.cs" />
     <Compile Include="CQRS\Commands\Organizations\UpdateOrganizationApiConfiguration.cs" />
+    <Compile Include="CQRS\Commands\Projects\Pitching\CreatePitchingProject.cs" />
+    <Compile Include="CQRS\Commands\Projects\Pitching\UpdatePitchingProjectMainInformation.cs" />
     <Compile Include="CQRS\Commands\Rooms\CreateDefaultVirtualRoom.cs" />
     <Compile Include="CQRS\Commands\Speakers\SendSpeakersReport.cs" />
     <Compile Include="CQRS\Commands\User\UpdateUserStatus.cs" />

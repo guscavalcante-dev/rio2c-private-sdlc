@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 11-06-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-31-2020
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 10-24-2024
 // ***********************************************************************
 // <copyright file="ProjectDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,6 +26,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public ProjectType ProjectType { get; set; }
         public AttendeeOrganizationDto SellerAttendeeOrganizationDto { get; set; }
         public ProjectCommissionEvaluationDto ProjectCommissionEvaluationDto { get; set; }
+        public ProjectModalityDto ProjectModalityDto { get; set; }
 
         public IEnumerable<ProjectTitleDto> ProjectTitleDtos { get; set; }
         public IEnumerable<ProjectLogLineDto> ProjectLogLineDtos { get; set; }
@@ -176,5 +177,13 @@ namespace PlataformaRio2C.Domain.Dtos
         }
 
         #endregion
+
+        public bool IsPitching()
+        {
+            return new int[] {
+                ProjectModality.Both.Id,
+                ProjectModality.Pitching.Id
+            }.Contains(this.ProjectModalityDto.Id);
+        }
     }
 }

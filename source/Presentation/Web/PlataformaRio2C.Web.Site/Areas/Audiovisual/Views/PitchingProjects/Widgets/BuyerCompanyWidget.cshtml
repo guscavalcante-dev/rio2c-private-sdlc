@@ -1,0 +1,95 @@
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Statics
+@using Constants = PlataformaRio2C.Domain.Constants;
+@model ProjectDto
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var isCollaborator = userAccessControlDto?.HasEditionAttendeeOrganization(Model.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) == true;
+    var isProjectSubmissionOpen = editionDto?.IsAudiovisualProjectSubmitOpen() == true;
+    var isProjectFinished = Model.Project.IsFinished();
+}
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            @Labels.PlayersSelectedForEvaluation
+        </h3>
+    </div>
+    @if (isCollaborator && isProjectSubmissionOpen && !isProjectFinished)
+    {
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-actions">
+                <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="ProjectsBuyerCompanyWidget.showUpdateModal();">
+                    <i class="flaticon2-edit"></i>
+                </button>
+            </div>
+        </div>
+    }
+</div>
+<div class="kt-portlet__body">
+    @if (Model.ProjectBuyerEvaluationDtos?.Any() == true)
+    {
+        <div class="row rio2c-scroll" style="min-height: 20px; max-height: 500px;">
+            @foreach (var projectBuyerEvaluationDto in Model.ProjectBuyerEvaluationDtos)
+            {
+                <div class="col-sm-6 col-md-6 col-xl-4">
+                    <!--Begin::Portlet-->
+                    <div class="kt-portlet kt-portlet--height-fluid">
+                        @*<div class="kt-portlet__head kt-portlet__head--noborder"></div>*@
+                        <div class="kt-portlet__body mt-40">
+                            <!--begin::Widget -->
+                            <div class="kt-widget kt-widget--user-profile-2" style="flex-direction: row;">
+                                <div class="kt-widget__head">
+                                    <div class="kt-widget__media">
+                                        @if (projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.HasImage())
+                                        {
+                                            <img class="kt-widget__img" src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid, projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="image">
+                                        }
+                                        else
+                                        {
+                                            <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest">
+                                                @(projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.GetTradeNameAbbreviation())
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="kt-widget__info">
+                                        <a href="@Url.Action("Details", "Companies", new {id = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid})" class="kt-widget__username" target="_blank">
+                                            @projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.TradeName
+                                        </a>
+                                        @*<span class="kt-widget__desc">@(attendeeOrganizationDto.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value ?? "-")</span>*@
+                                        <span class="kt-widget__desc">
+                                            <a href="@Url.Action("Details", "Companies", new { id = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid })" target="_blank">
+                                                <small><i class="flaticon-profile"></i> @Labels.SeeDescription</small>
+                                            </a>
+                                        </span>
+                                        @if (projectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.Organization?.IsVirtualMeeting != null)
+                                        {
+                                            var isVirtualMeeting = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.IsVirtualMeeting == true;
+                                            var tooltipTile = string.Format(Messages.PlayerMeetingPreference, (isVirtualMeeting ? Labels.RemoteF : Labels.Presential).ToLowerInvariant());
+
+                                            <div class="kt-widget__subhead pt-0 mt-0">
+                                                <span class="kt-badge kt-badge--inline kt-badge--warning mt-2 kt-font-boldest" data-toggle="tooltip" data-placement="right" title="@tooltipTile" style="cursor: pointer;">
+                                                    @(isVirtualMeeting ? Labels.Remote : Labels.Presential)
+                                                </span>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                @*<div class="kt-widget__footer">
+                                        <button type="button" class="btn btn-label-warning btn-lg btn-upper">write message</button>
+                                    </div>*@
+                            </div>
+                            <!--end::Widget -->
+                        </div>
+                    </div>
+                    <!--End::Portlet-->
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <span class="text-center">@Labels.ProjectNotSubmittedToPlayers.</span>
+    }
+</div>

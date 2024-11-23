@@ -1,0 +1,34 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateProjectLinks
+<div class="modal fade" id="UpdateLinksModal" role="dialog" aria-labelledby="UpdateLinksModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    @Labels.Update Links
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("UpdateLinks", "PitchingProjects", new { Area = "Audiovisual" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UpdateLinksForm" }))
+                {
+                    @Html.HiddenFor(m => m.ProjectUid)
+                    <div class="row">
+                        <div class="form-group col-12">@Html.Raw(Messages.LinksForDownloadNotAccepted)</div>
+                    </div>
+                    <div id="form-container">
+                        @Html.Partial("Modals/UpdateLinksForm", Model)
+                    </div>
+                    @*<div class="row">
+                        <div class="col-sm-12 text-right">
+                            @Labels.LastUpdateOn <b>@Model.UpdateDate.ToBrazilTimeZone().ToShortDateString() @Model.UpdateDate.ToBrazilTimeZone().ToLongTimeString()</b> @Labels.By <b>@Model.UpdaterBaseDto.Name</b>.
+                        </div>
+                    </div>*@
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">@Labels.Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="$('#UpdateLinksForm').submit();">@Labels.Save</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 11-10-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-21-2021
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 10-24-2024
 // ***********************************************************************
 // <copyright file="UpdateProjectMainInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,6 +27,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     public class UpdateProjectMainInformationCommandHandler : BaseProjectCommandHandler, IRequestHandler<UpdateProjectMainInformation, AppValidationResult>
     {
         private readonly ILanguageRepository languageRepo;
+        private readonly IProjectModalityRepository projectModalityRepo;
 
         /// <summary>Initializes a new instance of the <see cref="UpdateProjectMainInformationCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
@@ -34,15 +35,18 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="projectRepository">The project repository.</param>
         /// <param name="languageRepository">The language repository.</param>
+        /// <param name="projectModalityRepo">The project modality repository.</param>
         public UpdateProjectMainInformationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IProjectRepository projectRepository,
-            ILanguageRepository languageRepository)
+            ILanguageRepository languageRepository,
+            IProjectModalityRepository projectModalityRepo)
             : base(eventBus, uow, attendeeOrganizationRepository, projectRepository)
         {
             this.languageRepo = languageRepository;
+            this.projectModalityRepo = projectModalityRepo;
         }
 
         /// <summary>Handles the specified update project main information.</summary>
@@ -54,6 +58,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.Uow.BeginTransaction();
 
             var project = await this.GetProjectByUid(cmd.ProjectUid ?? Guid.Empty);
+
+            var attendeeOrganization = await this.GetAttendeeOrganizationByUid(cmd.AttendeeOrganizationUid ?? Guid.Empty);
 
             #region Initial validations
 
@@ -76,6 +82,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
+            var projectModality = await this.projectModalityRepo.GetAsync(pm => pm.Uid == cmd.ProjectModalityUid && !pm.IsDeleted);
+            var projectModalityId = project.ProjectModalityId;
 
             project.UpdateMainInformation(
                 cmd.TotalPlayingTime,
@@ -85,14 +93,53 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.TotalValueOfProject,
                 cmd.ValueAlreadyRaised,
                 cmd.ValueStillNeeded,
-                cmd.IsPitching ?? false,
                 cmd.Titles?.Select(d => new ProjectTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.LogLines?.Select(d => new ProjectLogLine(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.Summaries?.Select(d => new ProjectSummary(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.ProductPlans?.Select(d => new ProjectProductionPlan(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.AdditionalInformations?.Select(d => new ProjectAdditionalInformation(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.UserId,
-                cmd.IsAdmin);
+                cmd.IsAdmin,
+                projectModality
+            );
+
+            if (projectModalityId != project.ProjectModalityId)
+            {
+                if (new int[] { ProjectModality.Both.Id, ProjectModality.BusinessRound.Id }.Contains(projectModality.Id))
+                {
+                    var sellProjectsCount = await this.ProjectRepo.CountAsync(p => 
+                        p.SellerAttendeeOrganizationId == attendeeOrganization.Id
+                        && !p.IsDeleted
+                        && new int[] {
+                            ProjectModality.Both.Id,
+                            ProjectModality.BusinessRound.Id
+                        }.Contains(p.ProjectModalityId)
+                    );
+                    if (!project.IsUpdateBusinessRoundValid(sellProjectsCount))
+                    {
+                        this.AppValidationResult.Add(project.ValidationResult);
+                        return this.AppValidationResult;
+                    }
+                }
+
+                if (new int[] { ProjectModality.Both.Id, ProjectModality.Pitching.Id }.Contains(projectModality.Id))
+                {
+                    var sellProjectsCount = await this.ProjectRepo.CountAsync(p =>
+                        p.SellerAttendeeOrganizationId == attendeeOrganization.Id
+                        && !p.IsDeleted
+                        && new int[] {
+                            ProjectModality.Both.Id,
+                            ProjectModality.Pitching.Id
+                        }.Contains(p.ProjectModalityId)
+                    );
+                    if (!project.IsUpdatePitchingValid(sellProjectsCount))
+                    {
+                        this.AppValidationResult.Add(project.ValidationResult);
+                        return this.AppValidationResult;
+                    }
+                }
+            }
+            
             if (!project.IsValid())
             {
                 this.AppValidationResult.Add(project.ValidationResult);

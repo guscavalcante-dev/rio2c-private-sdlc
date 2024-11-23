@@ -181,6 +181,7 @@
     <Compile Include="Mapping\Projects\ProjectEvaluationRefuseReasonMap.cs" />
     <Compile Include="Mapping\Projects\ProjectEvaluationStatusMap.cs" />
     <Compile Include="Mapping\Projects\ProjectTargetAudienceMap.cs" />
+    <Compile Include="Mapping\Projects\ProjectModalityMap.cs" />
     <Compile Include="Mapping\Projects\ProjectTypeMap.cs" />
     <Compile Include="Mapping\Projects\ProjectAdditionalInformationMap.cs" />
     <Compile Include="Mapping\Projects\ProjectInterestMap.cs" />
@@ -251,6 +252,14 @@
     <Compile Include="Migrations\202410022155286_AddCompanyNameToCollaborators.Designer.cs">
       <DependentUpon>202410022155286_AddCompanyNameToCollaborators.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202410230342192_CreateProjectModalitiesTable.cs" />
+    <Compile Include="Migrations\202410230342192_CreateProjectModalitiesTable.Designer.cs">
+      <DependentUpon>202410230342192_CreateProjectModalitiesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202410252236315_RemoveIsPitchingToProjects.cs" />
+    <Compile Include="Migrations\202410252236315_RemoveIsPitchingToProjects.Designer.cs">
+      <DependentUpon>202410252236315_RemoveIsPitchingToProjects.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202410231438342_AddIsVirtualMeetingToProjectBuyerEvaluations.cs" />
     <Compile Include="Migrations\202410231438342_AddIsVirtualMeetingToProjectBuyerEvaluations.Designer.cs">
       <DependentUpon>202410231438342_AddIsVirtualMeetingToProjectBuyerEvaluations.cs</DependentUpon>
@@ -262,6 +271,10 @@
     <Compile Include="Migrations\202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.cs" />
     <Compile Include="Migrations\202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.Designer.cs">
       <DependentUpon>202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202411231628322_UpdateMigrations.cs" />
+    <Compile Include="Migrations\202411231628322_UpdateMigrations.Designer.cs">
+      <DependentUpon>202411231628322_UpdateMigrations.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
@@ -290,6 +303,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Migrations\Scripts\202410252236315_RemoveIsPitchingToProjects.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202410230342192_CreateProjectModalitiesTable.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Migrations\Scripts\202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -300,6 +319,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202408202223049_Initial.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202410252236315_RemoveIsPitchingToProjects.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202410230342192_CreateProjectModalitiesTable.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.up.sql">
@@ -409,6 +434,12 @@
     <EmbeddedResource Include="Migrations\202410022155286_AddCompanyNameToCollaborators.resx">
       <DependentUpon>202410022155286_AddCompanyNameToCollaborators.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202410230342192_CreateProjectModalitiesTable.resx">
+      <DependentUpon>202410230342192_CreateProjectModalitiesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202410252236315_RemoveIsPitchingToProjects.resx">
+      <DependentUpon>202410252236315_RemoveIsPitchingToProjects.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202410231438342_AddIsVirtualMeetingToProjectBuyerEvaluations.resx">
       <DependentUpon>202410231438342_AddIsVirtualMeetingToProjectBuyerEvaluations.cs</DependentUpon>
     </EmbeddedResource>
@@ -417,6 +448,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.resx">
       <DependentUpon>202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411231628322_UpdateMigrations.resx">
+      <DependentUpon>202411231628322_UpdateMigrations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

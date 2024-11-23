@@ -1,0 +1,175 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model PlataformaRio2C.Application.CQRS.Commands.ProjectBaseCommand
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+}
+<!--begin: Form Wizard Step 3-->
+<div class="kt-wizard-v3__content" data-ktwizard-type="step-content" data-ktwizard-state="current">
+    <div class="kt-heading kt-heading--md">@Labels.ProjectInfo</div>
+    <div class="kt-form__section kt-form__section--first">
+        <div class="kt-wizard-v3__form">
+            <div class="row">
+                <div class="col-12 form-group">
+                    @Html.LabelFor(m => m.ProjectModalityUid, new { @class = "control-label" })
+                    <select name="ProjectModalityUid" id="ProjectModalityUid" class="form-control enable-select2" @Html.GetUnobtrusiveValidationAttributesFor(m => m.ProjectModalityUid)>
+                        <option value="">@($"{Labels.Choose}...")</option>
+                        @if (Model.ProjectModalities != null)
+                        {
+                            foreach (var modality in Model.ProjectModalities)
+                            {
+                                <option value="@modality.Uid" @(Model.ProjectModalityUid == modality.Uid ? "selected" : "")>
+                                    @modality.Name
+                                </option>
+                            }
+                        }
+                    </select>
+                    @Html.ValidationMessageFor(m => m.ProjectModalityUid, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    @Html.EditorFor(m => m.Titles)
+                </div>
+                <div class="col-md-6">
+                    @Html.EditorFor(m => m.LogLines)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.EditorFor(m => m.Summaries)
+                </div>
+            </div>
+            @if (Model.Interests?.Any() == true)
+            {
+                <div class="kt-section">
+                    <div class="kt-section__content">
+                        <div class="kt-checkbox-list">
+                            @for (int i = 0; i < Model.Interests.Length; i++)
+                            {
+                                var group = Model.Interests[i].FirstOrDefault();
+                                <h5 class="mt-30">@(group?.InterestGroupName?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</h5>
+                                @Html.ValidationMessage(group?.InterestGroupUid.ToString(), new { @class = "text-danger" })
+                                <div class="kt-section__content mt-3">
+                                    <div class="row require-one-group" data-id="@(group?.InterestGroupUid)">
+                                        @Html.EditorFor(x => Model.Interests[i])
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="kt-section">
+                <h5>@Labels.TargetAudience <small>@Labels.AgeGroup</small></h5>
+                @Html.ValidationMessage("TargetAudiencesUids", new { @class = "text-danger" })
+                <div class="kt-section__content mt-3">
+                    <div class="kt-checkbox-list">
+                        @foreach (var targetAudience in Model.TargetAudiences)
+                        {
+                            <label class="kt-checkbox">
+                                <input type="checkbox"
+                                       name="TargetAudiencesUids"
+                                       value="@targetAudience.Uid"
+                                       class="require-one"
+                                       data-id="targetaudience-group"
+                                       @if (Model.TargetAudiencesUids?.Contains(targetAudience.Uid) == true) { <text> checked </text> } /> @targetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                                    <span></span>
+                                </label>
+                            }
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h5>@Labels.WorkDuration</h5>
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.TotalPlayingTime, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.TotalPlayingTime, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.TotalPlayingTime, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h5>@Labels.ForSeries</h5>
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.NumberOfEpisodes, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                    @Html.TextBoxFor(m => m.NumberOfEpisodes, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.NumberOfEpisodes, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.EachEpisodePlayingTime, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                    @Html.TextBoxFor(m => m.EachEpisodePlayingTime, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.EachEpisodePlayingTime, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.EditorFor(m => m.ProductPlans)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h5>@Html.Raw(Messages.ProjectBudget)</h5>
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.TotalValueOfProject, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                    @Html.TextBoxFor(m => m.TotalValueOfProject, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.TotalValueOfProject, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.ValuePerEpisode, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                    @Html.TextBoxFor(m => m.ValuePerEpisode, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ValuePerEpisode, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h5>@Html.Raw(Messages.FundingPlan)</h5>
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.ValueAlreadyRaised, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                    @Html.TextBoxFor(m => m.ValueAlreadyRaised, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ValueAlreadyRaised, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.ValueStillNeeded, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                    @Html.TextBoxFor(m => m.ValueStillNeeded, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ValueStillNeeded, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h5>Links <small>(@Html.Raw(Messages.LinksForDownloadNotAccepted))</small></h5>
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.ImageLinks, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                    @Html.TextBoxFor(m => m.ImageLinks, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ImageLinks, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.TeaserLinks, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                    @Html.TextBoxFor(m => m.TeaserLinks, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.TeaserLinks, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.EditorFor(m => m.AdditionalInformations)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 mt-20">
+                    <h4>@Labels.Important</h4>
+                </div>
+                <div class="form-group col-md-12">
+                    <h5>
+                        @Html.Raw(string.Format(Texts.ProjectImportantText, editionDto?.ProjectSubmitEndDate.ToBrazilTimeZone().ToLongDateString()))
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end: Form Wizard Step 3-->

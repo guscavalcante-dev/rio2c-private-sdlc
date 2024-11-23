@@ -548,6 +548,14 @@
     <value>Is not possible to create the project because the company already reached the limit.</value>
     <comment>Não é possível criar o projeto pois essa empresa já atingiu o limite.</comment>
   </data>
+  <data name="IsNotPossibleCreatePitchingProjectLimit" xml:space="preserve">
+    <value>Is not possible to create the project because the company already reached the registrations limit.</value>
+    <comment>Não é possível criar o projeto pois essa empresa já atingiu o limite.</comment>
+  </data>
+  <data name="IsNotPossibleCreateBusinessRoundProjectLimit" xml:space="preserve">
+    <value>Is not possible to create the business round because the company already reached the registrations limit.</value>
+    <comment>Não é possível criar o projeto pois essa empresa já atingiu o limite.</comment>
+  </data>
   <data name="IsNotPossibleCreateProjectSameTicket" xml:space="preserve">
     <value>Is not possible to create the project because a same ticket is being used in more than one company.</value>
     <comment>Não é possível criar o projeto pois um mesmo ingresso está sendo utilizado em mais de uma empresa.</comment>

@@ -934,6 +934,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rodadas de negócio.
+        /// </summary>
+        public static string BusinessRounds {
+            get {
+                return ResourceManager.GetString("BusinessRounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Projetos rodadas de negócio.
+        /// </summary>
+        public static string BusinessRoundsProjects {
+            get {
+                return ResourceManager.GetString("BusinessRoundsProjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rodada de Negócios.
         /// </summary>
         public static string BusinessRoundtable {
@@ -2073,6 +2091,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string DuplicateEntity {
             get {
                 return ResourceManager.GetString("DuplicateEntity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string Dynamic {
+            get {
+                return ResourceManager.GetString("Dynamic", resourceCulture);
             }
         }
         
@@ -5447,6 +5474,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Modalidade do projeto.
+        /// </summary>
+        public static string ProjectModality {
+            get {
+                return ResourceManager.GetString("ProjectModality", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nenhum Player selecionado para avaliação.
         /// </summary>
         public static string ProjectNotSubmittedToPlayers {
@@ -6168,6 +6204,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ScheduledOneToOneMeetings {
             get {
                 return ResourceManager.GetString("ScheduledOneToOneMeetings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rodadas agendadas.
+        /// </summary>
+        public static string ScheduledRounds {
+            get {
+                return ResourceManager.GetString("ScheduledRounds", resourceCulture);
             }
         }
         

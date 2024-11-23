@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 11-10-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-21-2021
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 29-11-2024
 // ***********************************************************************
 // <copyright file="UpdateProjectMainInformation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,6 +17,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
@@ -66,12 +67,19 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string ValueStillNeeded { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAnOption")]
-        public bool? IsPitching { get; set; }
-
         public List<ProjectAdditionalInformationBaseCommand> AdditionalInformations { get; set; }
 
         public Guid ProjectTypeUid { get; private set; }
+
+        public Guid? AttendeeOrganizationUid { get; private set; }
+
+        [Display(Name = "ProjectModality", ResourceType = typeof(Labels))]
+        [RequiredIf("ProjectModalityRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public Guid? ProjectModalityUid { get; set; }
+
+        public List<ProjectModalityDto> ProjectModalities { get; private set; }
+
+        public bool ProjectModalityRequired { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateProjectMainInformation"/> class.</summary>
         /// <param name="entity">The entity.</param>
@@ -84,7 +92,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<LanguageDto> languagesDtos,
             bool isDataRequired,
             bool isProductionPlanRequired,
-            bool isAdditionalInformationRequired)
+            bool isAdditionalInformationRequired,
+            string userInterfaceLanguage,
+            List<ProjectModalityDto> projectModalities
+        )
         {
             this.ProjectUid = entity?.Project?.Uid;
             this.TotalPlayingTime = entity?.Project?.TotalPlayingTime;
@@ -94,18 +105,42 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.TotalValueOfProject = entity?.Project?.TotalValueOfProject;
             this.ValueAlreadyRaised = entity?.Project?.ValueAlreadyRaised;
             this.ValueStillNeeded = entity?.Project?.ValueStillNeeded;
-            this.IsPitching = entity?.Project?.IsPitching;
 
             this.UpdateTitles(entity, languagesDtos, isDataRequired);
             this.UpdateLogLines(entity, languagesDtos, isDataRequired);
             this.UpdateSummaries(entity, languagesDtos, isDataRequired);
             this.UpdateProductionPlans(entity, languagesDtos, isProductionPlanRequired);
             this.UpdateAdditionalInformations(entity, languagesDtos, isAdditionalInformationRequired);
+            this.ProjectModalityRequired = true;
+            this.UpdateProjectModalities(userInterfaceLanguage, projectModalities, entity);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateProjectMainInformation"/> class.</summary>
         public UpdateProjectMainInformation()
         {
+        }
+
+        /// <summary>Updates the pre send properties.</summary>
+        /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
+        /// <param name="projectTypeUid">The project type uid.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="userUid">The user uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public void UpdatePreSendProperties(
+            Guid? attendeeOrganizationUid,
+            Guid projectTypeUid,
+            int userId,
+            Guid userUid,
+            int? editionId,
+            Guid? editionUid,
+            string userInterfaceLanguage
+        )
+        {
+            this.AttendeeOrganizationUid = attendeeOrganizationUid;
+            this.ProjectTypeUid = projectTypeUid;
+            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
         }
 
         #region Private Methods
@@ -183,6 +218,34 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 this.AdditionalInformations.Add(additionalInformation != null ? new ProjectAdditionalInformationBaseCommand(additionalInformation, isDataRequired) :
                     new ProjectAdditionalInformationBaseCommand(languageDto, isDataRequired));
             }
+        }
+
+        /// <summary>Updates the additional informations.</summary>
+        /// <param name="userInterfaceLanguage">The entity.</param>
+        /// <param name="projectModalities">The languages dtos.</param>
+        /// <param name="entity">The languages dtos.</param>
+        private void UpdateProjectModalities(
+            string userInterfaceLanguage,
+            List<ProjectModalityDto> projectModalities,
+            ProjectDto entity
+        )
+        {
+            this.ProjectModalityUid = entity.ProjectModalityDto.Uid;
+            projectModalities.ForEach(g => g.Translate(userInterfaceLanguage));
+            this.ProjectModalities = projectModalities;
+        }
+
+        /// <summary>Updates the additional informations.</summary>
+        /// <param name="userInterfaceLanguage">The entity.</param>
+        /// <param name="projectModalities">The languages dtos.</param>
+        /// <param name="entity">The languages dtos.</param>
+        public void UpdateProjectModalities(
+            string userInterfaceLanguage,
+            List<ProjectModalityDto> projectModalities
+        )
+        {
+            projectModalities.ForEach(g => g.Translate(userInterfaceLanguage));
+            this.ProjectModalities = projectModalities;
         }
 
         #endregion
