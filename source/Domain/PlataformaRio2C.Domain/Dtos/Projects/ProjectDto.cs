@@ -4,7 +4,7 @@
 // Created          : 11-06-2019
 //
 // Last Modified By : Gilson Oliveira
-// Last Modified On : 10-24-2024
+// Last Modified On : 10-30-2024
 // ***********************************************************************
 // <copyright file="ProjectDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -42,6 +42,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<ProjectCommissionEvaluationDto> ProjectCommissionEvaluationDtos { get; set; }
 
         public string ProjectTitle { get; set; }
+        public bool IsPitching { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="ProjectDto"/> class.</summary>
         public ProjectDto()
@@ -177,13 +178,5 @@ namespace PlataformaRio2C.Domain.Dtos
         }
 
         #endregion
-
-        public bool IsPitching()
-        {
-            return new int[] {
-                ProjectModality.Both.Id,
-                ProjectModality.Pitching.Id
-            }.Contains(this.ProjectModalityDto.Id);
-        }
     }
 }

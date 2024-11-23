@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-28-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 12-23-2023
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 10-30-2024
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -115,7 +115,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             searchViewModel.UpdateModelsAndLists(
                 await this.interestRepo.FindAllByInterestGroupUidAsync(InterestGroup.AudiovisualGenre.Uid),
                 await this.evaluationStatusRepo.FindAllAsync(),
-                this.UserInterfaceLanguage);
+                this.UserInterfaceLanguage,
+                await this.projectModalityRepository.FindAllAsync()
+            );
 
             return View(searchViewModel);
         }
@@ -124,11 +126,16 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// Searches the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <param name="showPitchings">if set to <c>true</c> [show pitchings].</param>
+        /// <param name="projectModalityUid">The project modality uid.</param>
         /// <param name="interestUid">The interest uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Search(IDataTablesRequest request, bool showPitchings, Guid? interestUid, Guid? evaluationStatusUid)
+        public async Task<ActionResult> Search(
+            IDataTablesRequest request,
+            Guid? projectModalityUid,
+            Guid? interestUid,
+            Guid? evaluationStatusUid
+        )
         {
             int page = request.Start / request.Length;
             int pageSize = request.Length;
@@ -139,7 +146,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 pageSize,
                 request.GetSortColumns(),
                 request.Search?.Value,
-                showPitchings,
+                projectModalityUid,
                 interestUid,
                 evaluationStatusUid,
                 this.UserInterfaceLanguage,
@@ -194,7 +201,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 searchKeywords = request.Search?.Value,
                 interestUid,
                 evaluationStatusUid,
-                showPitchings,
+                projectModalityUid,
                 page,
                 pageSize
             }, JsonRequestBehavior.AllowGet);
@@ -218,7 +225,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     10000,
                     new List<Tuple<string, string>>(), //request.GetSortColumns(),
                     searchViewModel.Search,
-                    searchViewModel.ShowPitchings,
+                    searchViewModel.ProjectModalityUid,
                     searchViewModel.InterestUid,
                     searchViewModel.EvaluationStatusUid,
                     this.UserInterfaceLanguage,
@@ -335,7 +342,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     10000,
                     new List<Tuple<string, string>>(), //request.GetSortColumns(),
                     searchViewModel.Search,
-                    searchViewModel.ShowPitchings,
+                    searchViewModel.ProjectModalityUid,
                     searchViewModel.InterestUid,
                     searchViewModel.EvaluationStatusUid,
                     this.UserInterfaceLanguage,
@@ -436,16 +443,16 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// Downloads the PDFS.
         /// </summary>
         /// <param name="keyword">The keyword.</param>
-        /// <param name="showPitchings">if set to <c>true</c> [show pitchings].</param>
+        /// <param name="projectModalityUid">The project modality uid.</param>
         /// <param name="interestUid">The interest uid.</param>
         /// <param name="selectedProjectsUids">The selected projects uids.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<FileResult> DownloadPdfs(string keyword, bool showPitchings, Guid? interestUid, string selectedProjectsUids)
+        public async Task<FileResult> DownloadPdfs(string keyword, Guid? projectModalityUid, Guid? interestUid, string selectedProjectsUids)
         {
             var projectsDtos = await this.projectRepo.FindAllDtosByFiltersAsync(
                 keyword,
-                showPitchings,
+                projectModalityUid.HasValue ? new List<Guid?> { projectModalityUid } : new List<Guid?> { },
                 new List<Guid?> { interestUid },
                 selectedProjectsUids?.ToListGuid(','),
                 this.UserInterfaceLanguage,
@@ -588,12 +595,12 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="interestUid">The interest uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
-        /// <param name="showPitchings">The show pitchings.</param>
+        /// <param name="projectModalityUid">The project modality uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Details(int? id, string searchKeywords = null, Guid? interestUid = null, Guid? evaluationStatusUid = null, bool? showPitchings = null, int? page = 1, int? pageSize = 10)
+        public async Task<ActionResult> Details(int? id, string searchKeywords = null, Guid? interestUid = null, Guid? evaluationStatusUid = null, Guid? projectModalityUid = null, int? page = 1, int? pageSize = 10)
         {
             if (!page.HasValue || page <= 0)
             {
@@ -622,7 +629,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 searchKeywords,
                 new List<Guid?> { interestUid },
                 evaluationStatusUid,
-                showPitchings ?? false,
+                projectModalityUid.HasValue ? new List<Guid?> { projectModalityUid } : new List<Guid?> { },
                 page.Value,
                 pageSize.Value);
             var currentProjectIdIndex = Array.IndexOf(allProjectsIds, id.Value) + 1; //Index start at 0, its a fix to "start at 1"
@@ -634,7 +641,15 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             ViewBag.PageSize = pageSize;
             ViewBag.CurrentProjectIndex = currentProjectIdIndex;
 
-            ViewBag.ProjectsTotalCount = await this.projectRepo.CountPagedAsync(this.EditionDto.Edition.Id, searchKeywords, new List<Guid?> { interestUid }, evaluationStatusUid, showPitchings ?? false, page.Value, pageSize.Value);
+            ViewBag.ProjectsTotalCount = await this.projectRepo.CountPagedAsync(
+                this.EditionDto.Edition.Id,
+                searchKeywords,
+                new List<Guid?> { interestUid },
+                evaluationStatusUid,
+                projectModalityUid.HasValue ? new List<Guid?> { projectModalityUid } : new List<Guid?> { },
+                page.Value,
+                pageSize.Value
+            );
             ViewBag.ApprovedProjectsIds = await this.projectRepo.FindAllApprovedCommissionProjectsIdsAsync(this.EditionDto.Edition.Id);
 
             return View(projectDto);
@@ -647,19 +662,19 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="interestUid">The interest uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
-        /// <param name="showPitchings">The show pitchings.</param>
+        /// <param name="projectModalityUid">The project modality uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> PreviousCommissionEvaluationDetails(int? id, string searchKeywords = null, Guid? interestUid = null, Guid? evaluationStatusUid = null, bool? showPitchings = null, int? page = 1, int? pageSize = 10)
+        public async Task<ActionResult> PreviousCommissionEvaluationDetails(int? id, string searchKeywords = null, Guid? interestUid = null, Guid? evaluationStatusUid = null, Guid? projectModalityUid = null, int? page = 1, int? pageSize = 10)
         {
             var allProjectsIds = await this.projectRepo.FindAllProjectsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
                 new List<Guid?> { interestUid },
                 evaluationStatusUid,
-                showPitchings ?? false,
+                projectModalityUid.HasValue ? new List<Guid?> { projectModalityUid } : new List<Guid?> { },
                 page.Value,
                 pageSize.Value);
 
@@ -676,7 +691,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     id = previousProjectId,
                     searchKeywords,
                     interestUid,
-                    showPitchings,
+                    projectModalityUid,
                     page,
                     pageSize
                 });
@@ -689,19 +704,19 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="interestUid">The interest uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
-        /// <param name="showPitchings">The show pitchings.</param>
+        /// <param name="projectModalityUid">The project modality uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> NextCommissionEvaluationDetails(int? id, string searchKeywords = null, Guid? interestUid = null, Guid? evaluationStatusUid = null, bool? showPitchings = null, int? page = 1, int? pageSize = 10)
+        public async Task<ActionResult> NextCommissionEvaluationDetails(int? id, string searchKeywords = null, Guid? interestUid = null, Guid? evaluationStatusUid = null, Guid? projectModalityUid = null, int? page = 1, int? pageSize = 10)
         {
             var allProjectsIds = await this.projectRepo.FindAllProjectsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
                 new List<Guid?> { interestUid },
                 evaluationStatusUid,
-                showPitchings ?? false,
+                projectModalityUid.HasValue ? new List<Guid?> { projectModalityUid } : new List<Guid?> { },
                 page.Value,
                 pageSize.Value);
 
@@ -718,7 +733,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     id = nextProjectId,
                     searchKeywords,
                     interestUid,
-                    showPitchings,
+                    projectModalityUid,
                     page,
                     pageSize
                 });
