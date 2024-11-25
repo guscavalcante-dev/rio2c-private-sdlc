@@ -10110,8 +10110,6 @@
     <Content Include="Views\Conferences\Modals\UpdateApiConfigurationForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Audiovisual\Controllers\BusinessRounds\" />
-    <Folder Include="Areas\Audiovisual\Controllers\Pitching\" />
     <Folder Include="Areas\Audiovisual\Views\Shared\EditorTemplates\" />
     <Folder Include="Areas\Cartoon\Views\Projects\Modals\" />
     <Folder Include="Areas\Cartoon\Views\Projects\Shared\" />

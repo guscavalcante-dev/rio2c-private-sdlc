@@ -108,7 +108,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             var projects = await this.projectRepo.FindAllDtosToSellAsync(
                 this.UserAccessControlDto?.GetFirstAttendeeOrganizationCreated()?.Uid ?? Guid.Empty,
                 false,
-                new int[] { ProjectModality.Both.Id, ProjectModality.BusinessRound.Id }
+                new List<int> { ProjectModality.Both.Id, ProjectModality.BusinessRound.Id }
             );
 
             // Create fake projects in the list
