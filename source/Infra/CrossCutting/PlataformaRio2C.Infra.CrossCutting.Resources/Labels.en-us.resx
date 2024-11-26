@@ -3410,4 +3410,10 @@
   <data name="MusicPitchingMaximumApprovedProjectsByRepechage" xml:space="preserve">
     <value>Maximum number of projects approved by repechage</value>
   </data>
+  <data name="Distributed" xml:space="preserve">
+    <value>Distributed</value>
+  </data>
+  <data name="DistributeCommissionMembers" xml:space="preserve">
+    <value>Distributed commission members</value>
+  </data>
 </root>

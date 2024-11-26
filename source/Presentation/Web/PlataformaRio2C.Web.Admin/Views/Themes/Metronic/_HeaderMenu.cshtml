@@ -177,6 +177,20 @@
                         </div>
                     </li>
                     <!--End-->
+                    <!--Begin-->
+                    <li class="kt-menu__item  kt-menu__item--submenu
+                        @this.IsOpen(menuOpenCssClass, null, "Pitching", "Music")"
+                        data-ktmenu-submenu-toggle="hover" aria-haspopup="true">
+                        <a href="#" class="kt-menu__link kt-menu__toggle"><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Pitching</span><i class="kt-menu__hor-arrow la la-angle-right"></i><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
+                        <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--right">
+                            <ul class="kt-menu__subnav">
+                                <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "Pitching", "Music")" aria-haspopup="true">
+                                    <a href="@Url.Action("Index", "Pitching", new { Area = "Music" })" class="kt-menu__link "><span class="kt-menu__link-text">Distribuir projetos</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <!--End-->
                 </ul>
             </div>
         </li>

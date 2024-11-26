@@ -3412,4 +3412,10 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="MusicPitchingMaximumApprovedProjectsByRepechage" xml:space="preserve">
     <value>quantidade máxima de projetos aprovados por Repescagem</value>
   </data>
+  <data name="Distributed" xml:space="preserve">
+    <value>Distribuído</value>
+  </data>
+  <data name="DistributeCommissionMembers" xml:space="preserve">
+    <value>Distribuir membros</value>
+  </data>
 </root>

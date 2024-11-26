@@ -50,6 +50,7 @@ namespace PlataformaRio2C.Domain.Interfaces
 
         Task<IPagedList<CollaboratorDto>> FindAllMusicCommissionMembersApiPaged(int? editionId, string keywords, int page, int pageSize);
         Task<CollaboratorDto> FindMusicCommissionMemberApi(Guid collaboratorUid, int editionId);
+        Task<List<CollaboratorDto>> FindMusicCommissionMembers(int editionId);
 
         #endregion
 

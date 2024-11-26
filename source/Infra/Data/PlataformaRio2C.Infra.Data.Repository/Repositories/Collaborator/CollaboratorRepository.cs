@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 05-21-2024
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 11-22-2024
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1720,6 +1720,32 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+        /// <summary>
+        /// Finds all music comission members.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<List<CollaboratorDto>> FindMusicCommissionMembers(int editionId)
+        {
+            var query = this.GetBaseQuery()
+                .FindByCollaboratorTypeNameAndByEditionId(
+                    new string[] { Constants.CollaboratorType.CommissionMusic },
+                    editionId
+                );
+
+            return await query
+                .Select(c => new CollaboratorDto
+                {
+                    Id = c.Id,
+                    UserBaseDto = new UserBaseDto
+                    {
+                        Id = c.User.Id,
+                        Uid = c.User.Uid
+                    }
+                })
+                .ToListAsync();
+        }
+
 
         /// <summary>
         /// Finds all music commission members API paged.

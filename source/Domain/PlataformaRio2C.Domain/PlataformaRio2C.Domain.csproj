@@ -302,6 +302,7 @@
     <Compile Include="Dtos\Interests\InterestDto.cs" />
     <Compile Include="Dtos\Music\MusicBand\API\MusicBandDataApiDto.cs" />
     <Compile Include="Dtos\Music\MusicBand\API\MusicBandResponsibleApiDto.cs" />
+    <Compile Include="Dtos\Music\MusicBand\MusicPitchingStatusWidgetDto.cs" />
     <Compile Include="Dtos\Music\MusicProject\API\MusicProjectApiDto.cs" />
     <Compile Include="Dtos\Music\AttendeeCollaborator\AttendeeCollaboratorMusicBandEvaluationsWidgetDto.cs" />
     <Compile Include="Dtos\Music\AttendeeMusicBand\AttendeeMusicBandDto.cs" />

@@ -4,9 +4,9 @@
 // Created          : 02-28-2020
 //
 // Last Modified By : Gilson Oliveira
-// Last Modified On : 11-10-2024
+// Last Modified On : 11-22-2024
 // ***********************************************************************
-// <copyright file="RefuseMusicProjectEvaluationCommandHandler.cs" company="Softo">
+// <copyright file="AcceptMusicProjectEvaluationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -25,16 +25,17 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>RefuseMusicProjectEvaluationCommandHandler</summary>
-    public class RefuseMusicProjectEvaluationCommandHandler : MusicProjectBaseCommandHandler, IRequestHandler<RefuseMusicProjectEvaluation, AppValidationResult>
+    /// <summary>AcceptProjectEvaluationCommandHandler</summary>
+    public class AcceptMusicPitchingEvaluationCommandHandler : MusicProjectBaseCommandHandler, IRequestHandler<AcceptMusicPitchingEvaluation, AppValidationResult>
     {
-        private readonly IProjectEvaluationStatusRepository projectEvaluationStatusRepo;
+        private IProjectEvaluationStatusRepository projectEvaluationStatusRepo;
         private readonly IMusicBandRepository musicBandRepo;
         private readonly IEditionRepository editionRepo;
         private readonly IUserRepository userRepo;
         private readonly IAttendeeMusicBandEvaluationRepository attendeeMusicBandEvaluationRepo;
+        private readonly IAttendeeMusicBandRepository attendeeMusicBandRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="RefuseMusicProjectEvaluationCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="AcceptMusicPitchingEvaluationCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="musicProjectRepository">The music project repository.</param>
@@ -43,7 +44,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="editionRepo">The project evaluation status repository.</param>
         /// <param name="userRepo">The user repo.</param>
         /// <param name="attendeeMusicBandEvaluationRepo">The attendee music band evaluation repo.</param>
-        public RefuseMusicProjectEvaluationCommandHandler(
+        /// <param name="attendeeMusicBandRepo">The attendee music music band repo.</param>
+        public AcceptMusicPitchingEvaluationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IMusicProjectRepository musicProjectRepository,
@@ -51,7 +53,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IMusicBandRepository musicBandRepo,
             IEditionRepository editionRepo,
             IUserRepository userRepo,
-            IAttendeeMusicBandEvaluationRepository attendeeMusicBandEvaluationRepo
+            IAttendeeMusicBandEvaluationRepository attendeeMusicBandEvaluationRepo,
+            IAttendeeMusicBandRepository attendeeMusicBandRepo
         )
             : base(eventBus, uow, musicProjectRepository)
         {
@@ -60,13 +63,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.editionRepo = editionRepo;
             this.userRepo = userRepo;
             this.attendeeMusicBandEvaluationRepo = attendeeMusicBandEvaluationRepo;
+            this.attendeeMusicBandRepo = attendeeMusicBandRepo;
         }
 
-        /// <summary>Handles the specified refuse music project evaluation.</summary>
+        /// <summary>Handles the specified accept music project evaluation.</summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(RefuseMusicProjectEvaluation cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(AcceptMusicPitchingEvaluation cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
@@ -99,15 +103,27 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     Labels.MusicProjects
                 );
                 this.ValidationResult.Add(new ValidationError(validationMessage));
+                this.AppValidationResult.Add(this.ValidationResult);
+                return this.AppValidationResult;
             }
 
             var projectEvaluationStatuses = await this.projectEvaluationStatusRepo.FindAllAsync();
             var musicBand = await this.musicBandRepo.FindByUidAsync(cmd.MusicBandUid.Value);
 
+            var attendeeMusicBand = await this.attendeeMusicBandRepo.FindByMusicBandIdAsync(editionDto.Id, musicBand.Id);
+            if (attendeeMusicBand?.EvaluatorUserId != cmd.UserId)
+            {
+                this.ValidationResult.Add(
+                    new ValidationError(Messages.NoPermissionToEvaluate)
+                );
+                this.AppValidationResult.Add(this.ValidationResult);
+                return this.AppValidationResult;
+            }
+
             musicBand.ComissionEvaluation(
                 editionDto.Edition,
                 await userRepo.FindByIdAsync(cmd.UserId),
-                projectEvaluationStatuses?.FirstOrDefault(pes => pes.Code == ProjectEvaluationStatus.Refused.Code)
+                projectEvaluationStatuses?.FirstOrDefault(pes => pes.Code == ProjectEvaluationStatus.Accepted.Code)
             );
 
             if (!musicBand.IsValid())
