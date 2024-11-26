@@ -302,6 +302,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 interestsUids,
                 evaluationStatusUid,
                 showPitchings,
+                new List<Guid?> { },
                 page.Value,
                 pageSize.Value);
             var currentProjectIdIndex = Array.IndexOf(allProjectsIds, id.Value) + 1; //Index start at 0, its a fix to "start at 1"
@@ -312,7 +313,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
             ViewBag.CurrentProjectIndex = currentProjectIdIndex;
-            ViewBag.ProjectsTotalCount = await this.projectRepo.CountPagedAsync(this.EditionDto.Edition.Id, searchKeywords, interestsUids, evaluationStatusUid, showPitchings, page.Value, pageSize.Value);
+            ViewBag.ProjectsTotalCount = await this.projectRepo.CountPagedAsync(this.EditionDto.Edition.Id, searchKeywords, interestsUids, evaluationStatusUid, showPitchings, new List<Guid?> { }, page.Value, pageSize.Value);
             ViewBag.ApprovedProjectsIds = await this.projectRepo.FindAllApprovedCommissionProjectsIdsAsync(this.EditionDto.Edition.Id);
 
             return View(projectDto);
@@ -335,13 +336,14 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             var interestsUids = await this.GetSearchInterestsUids(interestUid);
 
             var allProjectsIds = await this.projectRepo.FindAllProjectsIdsPagedAsync(
-                  this.EditionDto.Edition.Id,
-                  searchKeywords,
-                  interestsUids,
-                  evaluationStatusUid,
-                  showPitchings,
-                  page.Value,
-                  pageSize.Value);
+                this.EditionDto.Edition.Id,
+                searchKeywords,
+                interestsUids,
+                evaluationStatusUid,
+                showPitchings,
+                new List<Guid?> { },
+                page.Value,
+                pageSize.Value);
 
             var currentProjectIdIndex = Array.IndexOf(allProjectsIds, id.Value);
             var previousProjectId = allProjectsIds.ElementAtOrDefault(currentProjectIdIndex - 1);
@@ -383,6 +385,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 interestsUids,
                 evaluationStatusUid,
                 showPitchings,
+                new List<Guid?> { },
                 page.Value,
                 pageSize.Value);
 

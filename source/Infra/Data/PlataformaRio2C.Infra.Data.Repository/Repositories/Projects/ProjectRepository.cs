@@ -291,9 +291,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="query">The query.</param>
         /// <param name="showPitchings">if set to <c>true</c> [show pitchings].</param>
         /// <returns></returns>
-        internal static IQueryable<Project> IsPitching(this IQueryable<Project> query, bool showPitchings = false)
+        internal static IQueryable<Project> IsPitching(this IQueryable<Project> query, bool? showPitchings = false)
         {
-            if (showPitchings)
+            if (showPitchings.HasValue)
             {
                 query = query.Where(p => new int[] { ProjectModality.Both.Id, ProjectModality.Pitching.Id }.Contains(p.ProjectModalityId));
             }
@@ -1033,6 +1033,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="interestUid">The interest uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showPitchings">The show pitchings.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
@@ -1041,7 +1042,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             string searchKeywords,
             List<Guid?> interestUids,
             Guid? evaluationStatusUid,
-            bool showPitchings,
+            bool? showPitchings,
             int page,
             int pageSize)
         {
@@ -1132,6 +1133,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// Finds all dtos by filters asynchronous.
         /// </summary>
         /// <param name="keywords">The keywords.</param>
+        /// <param name="showPitchings">if set to <c>true</c> [show pitchings].</param>
         /// <param name="projectModalityUids">The project modality uid.</param>
         /// <param name="interestUids">The interest uid.</param>
         /// <param name="projectUids">The project uids.</param>
@@ -1140,6 +1142,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<List<ProjectDto>> FindAllDtosByFiltersAsync(
             string keywords,
+            bool? showPitchings,
             List<Guid?> projectModalityUids,
             List<Guid?> interestUids,
             List<Guid> projectUids,
@@ -1149,6 +1152,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
                                 .IsFinished()
+                                .IsPitching(showPitchings)
                                 .FindByProjectModalityUid(projectModalityUids)
                                 .FindByKeywords(keywords)
                                 .FindByInterestUids(interestUids)
@@ -1251,6 +1255,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             string searchKeywords,
             List<Guid?> interestUids,
             Guid? evaluationStatusUid,
+            bool? showPitchings,
             List<Guid?> projectModalityUid,
             int page,
             int pageSize)
@@ -1258,6 +1263,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var projectsIds = await this.GetBaseQuery()
                                 .FindByEditionId(editionId)
                                 .IsFinished()
+                                .IsPitching(showPitchings)
                                 .FindByProjectModalityUid(projectModalityUid)
                                 .FindByKeywords(searchKeywords)
                                 .FindByInterestUids(interestUids)
@@ -1326,12 +1332,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             string searchKeywords,
             List<Guid?> interestUids,
             Guid? evaluationStatusUid,
+            bool? showPitchings,
             List<Guid?> projectModalityUid,
             int page,
             int pageSize)
         {
             var projectsDtos = await this.FindAllDtosByFiltersAsync(
                 searchKeywords,
+                showPitchings,
                 projectModalityUid,
                 interestUids,
                 null,

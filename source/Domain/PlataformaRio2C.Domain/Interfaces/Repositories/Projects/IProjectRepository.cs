@@ -32,13 +32,13 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<IPagedList<ProjectBaseDto>> FindAllByDataTableAsync(int page, int pageSize, List<Tuple<string, string>> sortColumns, string keywords, Guid? projectModalityUid, Guid? interestUid, Guid? evaluationStatusUid, string languageCode, int editionId);
         Task<IPagedList<ProjectBaseDto>> FindAllEvaluatorsReportByDataTableAsync(int page, int pageSize, List<Tuple<string, string>> sortColumns, string keywords, Guid? projectModalityUid, Guid? interestUid, Guid? evaluationStatusUid, string languageCode, int editionId);
         Task<IPagedList<ProjectBaseDto>> FindAllProjectsReportByDataTableAsync(int page, int pageSize, List<Tuple<string, string>> sortColumns, string keywords, Guid? projectModalityUid, Guid? interestUid, Guid? evaluationStatusUid, string languageCode, int editionId);
-        Task<IPagedList<ProjectDto>> FindAllDtosPagedAsync(int editionId, string searchKeywords, List<Guid?> interestUids, Guid? evaluationStatusUid, bool showPitchings, int page, int pageSize);
-        Task<List<ProjectDto>> FindAllDtosByFiltersAsync(string keywords, List<Guid?> projectModalityUids, List<Guid?> interestUids, List<Guid> projectUids, string languageCode, int editionId);
+        Task<IPagedList<ProjectDto>> FindAllDtosPagedAsync(int editionId, string searchKeywords, List<Guid?> interestUids, Guid? evaluationStatusUid, bool? showPitchings, int page, int pageSize);
+        Task<List<ProjectDto>> FindAllDtosByFiltersAsync(string keywords, bool? showPitchings, List<Guid?> projectModalityUids, List<Guid?> interestUids, List<Guid> projectUids, string languageCode, int editionId);
         Task<List<Project>> FindAllByEditionIdAsync(int editionId);
         Task<int> CountAllByDataTable(int editionId, bool showAllEditions = false);
-        Task<int[]> FindAllProjectsIdsPagedAsync(int editionId, string searchKeywords, List<Guid?> interestUids, Guid? evaluationStatusUid, List<Guid?> projectModalityUids, int page, int pageSize);
+        Task<int[]> FindAllProjectsIdsPagedAsync(int editionId, string searchKeywords, List<Guid?> interestUids, Guid? evaluationStatusUid, bool? showPitchings, List<Guid?> projectModalityUids, int page, int pageSize);
         Task<int[]> FindAllApprovedCommissionProjectsIdsAsync(int editionId);
-        Task<int> CountPagedAsync(int editionId, string searchKeywords, List<Guid?> interestUids, Guid? evaluationStatusUid, List<Guid?> projectModalityUids, int page, int pageSize);
+        Task<int> CountPagedAsync(int editionId, string searchKeywords, List<Guid?> interestUids, Guid? evaluationStatusUid, bool? showPitchings, List<Guid?> projectModalityUids, int page, int pageSize);
 
         #region Admin Widgets
 

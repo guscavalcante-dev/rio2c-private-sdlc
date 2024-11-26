@@ -452,6 +452,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         {
             var projectsDtos = await this.projectRepo.FindAllDtosByFiltersAsync(
                 keyword,
+                null,
                 projectModalityUid.HasValue ? new List<Guid?> { projectModalityUid } : new List<Guid?> { },
                 new List<Guid?> { interestUid },
                 selectedProjectsUids?.ToListGuid(','),
@@ -629,6 +630,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 searchKeywords,
                 new List<Guid?> { interestUid },
                 evaluationStatusUid,
+                null,
                 projectModalityUid.HasValue ? new List<Guid?> { projectModalityUid } : new List<Guid?> { },
                 page.Value,
                 pageSize.Value);
@@ -646,6 +648,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 searchKeywords,
                 new List<Guid?> { interestUid },
                 evaluationStatusUid,
+                null,
                 projectModalityUid.HasValue ? new List<Guid?> { projectModalityUid } : new List<Guid?> { },
                 page.Value,
                 pageSize.Value
@@ -674,6 +677,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 searchKeywords,
                 new List<Guid?> { interestUid },
                 evaluationStatusUid,
+                null,
                 projectModalityUid.HasValue ? new List<Guid?> { projectModalityUid } : new List<Guid?> { },
                 page.Value,
                 pageSize.Value);
@@ -716,6 +720,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 searchKeywords,
                 new List<Guid?> { interestUid },
                 evaluationStatusUid,
+                null,
                 projectModalityUid.HasValue ? new List<Guid?> { projectModalityUid } : new List<Guid?> { },
                 page.Value,
                 pageSize.Value);

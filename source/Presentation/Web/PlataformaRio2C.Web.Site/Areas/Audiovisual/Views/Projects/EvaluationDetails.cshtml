@@ -61,7 +61,7 @@
                 <div id="ProjectLinksWidget" class="kt-portlet" style="min-height: 325px;"></div>
             </div>
         </div>
-        @if (Model.Project.IsPitching == true)
+        @if (Model.Project.IsPitching() == true)
         {
             <div class="row">
                 <div class="col-md-6">
@@ -88,7 +88,7 @@
             AudiovisualProjectsMainInformationWidget.init();
             AudiovisualProjectsInterestWidget.init();
             AudiovisualProjectsLinksWidget.init();
-            @if (Model.Project.IsPitching == true)
+            @if (Model.Project.IsPitching() == true)
             {
                 <text>
                     AudiovisualProjectsCommissionEvaluationWidget.init();
