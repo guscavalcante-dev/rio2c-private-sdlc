@@ -7,15 +7,9 @@
   ou
   Clicar bom o botão direito na solução PlataformaRio2C > clicar em Build Solution
   ```
-  ##### Executar migrations para criação do banco de daodos (Package Manager Console)
- 
-  ```
-  > Update-Database -Project PlataformaRio2C.Infra.Data.Context
-  ```
- - Verifique se o arquivo 'PlataformaRio2C.Infra.CrossCutting.SystemParameter.Migrations.Configuration' esta com a propriedade 'AutomaticMigrationsEnabled' marcada como true
- - Selecionar o default project: PlataformaRio2C.Infra.Data.Context e executar o comando abaixo:
-``` 
-  Update-Database -Project PlataformaRio2C.Infra.Data.Context
+  ##### Executar migrations para atualização do banco de dados (Package Manager Console)
+```
+Update-Database -Project PlataformaRio2C.Infra.Data.Context
 ```
 
 
