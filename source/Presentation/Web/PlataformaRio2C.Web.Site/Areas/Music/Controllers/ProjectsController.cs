@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 02-26-2020
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 03-04-2023
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 11-22-2024
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -153,7 +153,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 evaluationStatusUid,
                 showBusinessRounds ?? false,
                 page.Value,
-                pageSize.Value
+                pageSize.Value,
+                this.UserAccessControlDto.User.Id
             );
 
             ViewBag.SearchKeywords = searchKeywords;
@@ -666,7 +667,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowAcceptEvaluationModal(Guid? musicProjectUid)
         {
-            AcceptMusicProjectEvaluation cmd;
+            AcceptMusicPitchingEvaluation cmd;
 
             try
             {
@@ -680,7 +681,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 {
                     return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
                 }
-                cmd = new AcceptMusicProjectEvaluation(
+                cmd = new AcceptMusicPitchingEvaluation(
                     evaluationDto,
                     evaluationDto.AttendeeMusicBandDto.MusicBand.Uid
                 );
@@ -704,7 +705,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Accept(AcceptMusicProjectEvaluation cmd)
+        public async Task<ActionResult> Accept(AcceptMusicPitchingEvaluation cmd)
         {
            if (this.EditionDto?.IsMusicProjectEvaluationOpen() != true)
             {
@@ -758,7 +759,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowRefuseEvaluationModal(Guid? musicProjectUid)
         {
-            RefuseMusicProjectEvaluation cmd;
+            RefuseMusicPitchingEvaluation cmd;
 
             try
             {
@@ -772,7 +773,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 {
                     return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
                 }
-                cmd = new RefuseMusicProjectEvaluation(
+                cmd = new RefuseMusicPitchingEvaluation(
                     evaluationDto,
                     evaluationDto.AttendeeMusicBandDto.MusicBand.Uid
                 );
@@ -796,7 +797,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Refuse(RefuseMusicProjectEvaluation cmd)
+        public async Task<ActionResult> Refuse(RefuseMusicPitchingEvaluation cmd)
         {
             if (this.EditionDto?.IsMusicProjectEvaluationOpen() != true)
             {
