@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -67,6 +68,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             this.SentEmailRepo.Create(sentEmail);
 
+            var collaboratorTypes = new List<Guid>() {
+                CollaboratorType.ComissionMusic.Uid,
+                CollaboratorType.ComissionMusicCurator.Uid
+            };
+
             // Update collaborator welcome email
             var collaborator = await this.collaboratorRepo.GetAsync(cmd.Collaboratoruid);
             if (collaborator == null || collaborator.IsDeleted 
@@ -74,7 +80,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                                                  && ac.EditionId == cmd.Edition.Id
                                                                  && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
                                                                                                             && !act.CollaboratorType.IsDeleted
-                                                                                                            && act.CollaboratorType.Uid == CollaboratorType.ComissionMusic.Uid)))
+                                                                                                            && collaboratorTypes.Contains(act.CollaboratorType.Uid))))
             {
                 this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Speaker, Labels.FoundM))));
             }

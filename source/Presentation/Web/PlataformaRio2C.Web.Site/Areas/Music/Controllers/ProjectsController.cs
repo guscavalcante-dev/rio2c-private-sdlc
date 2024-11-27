@@ -31,12 +31,13 @@ using PlataformaRio2C.Web.Site.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Domain.Dtos;
 using X.PagedList;
+using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 {
     /// <summary>ProjectsController</summary>
     [AjaxAuthorize(Order = 1)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.CommissionMusic)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.CommissionMusic + "," + Constants.CollaboratorType.CommissionMusicCurator)]
     public class ProjectsController : BaseController
     {
         private readonly IMusicProjectRepository musicProjectRepo;
@@ -97,7 +98,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic + "," + Constants.CollaboratorType.CommissionMusicCurator)]
         [HttpGet]
         public async Task<ActionResult> EvaluationList(string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool? showBusinessRounds = false, int? page = 1, int? pageSize = 12)
         {
@@ -137,7 +138,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic + "," + Constants.CollaboratorType.CommissionMusicCurator)]
         [HttpGet]
         public async Task<ActionResult> ShowEvaluationListWidget(string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool? showBusinessRounds = false, int? page = 1, int? pageSize = 12)
         {
@@ -146,6 +147,13 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
 
+            var isCommissionMusicCurator = this.UserAccessControlDto.IsCommissionMusicCurator();
+            var evaluatorUserId = !isCommissionMusicCurator
+                ? new List<int?>() { this.UserAccessControlDto?.User?.Id }
+                : new List<int?>() { };
+            var commissionEvaluationStatusId = !isCommissionMusicCurator
+                ? new List<int?>() { }
+                : new List<int?>() { ProjectEvaluationStatus.Accepted.Id };
             var projects = await this.musicProjectRepo.FindAllDtosPagedAsync(
                 this.EditionDto.Id,
                 searchKeywords,
@@ -154,7 +162,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 showBusinessRounds ?? false,
                 page.Value,
                 pageSize.Value,
-                this.UserAccessControlDto.User.Id
+                evaluatorUserId,
+                commissionEvaluationStatusId
             );
 
             ViewBag.SearchKeywords = searchKeywords;
@@ -243,6 +252,13 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
             #endregion
 
+            var isCommissionMusicCurator = this.UserAccessControlDto.IsCommissionMusicCurator();
+            var evaluatorUserId = !isCommissionMusicCurator
+                ? new List<int?>() { this.UserAccessControlDto?.User?.Id }
+                : new List<int?>() { };
+            var commissionEvaluationStatusId = !isCommissionMusicCurator
+                ? new List<int?>() { }
+                : new List<int?>() { ProjectEvaluationStatus.Accepted.Id };
             var allMusicProjectsIds = await this.musicProjectRepo.FindAllMusicProjectsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
@@ -250,7 +266,10 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 evaluationStatusUid,
                 showBusinessRounds ?? false,
                 page.Value,
-                pageSize.Value);
+                pageSize.Value,
+                evaluatorUserId,
+                commissionEvaluationStatusId
+            );
 
             var currentMusicProjectIdIndex = Array.IndexOf(allMusicProjectsIds, id.Value) + 1; //Index start at 0, its a fix to "start at 1"
 
@@ -269,7 +288,10 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 evaluationStatusUid, 
                 showBusinessRounds ?? false, 
                 page.Value, 
-                pageSize.Value);
+                pageSize.Value,
+                evaluatorUserId,
+                commissionEvaluationStatusId
+            );
 
             ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id);
 
@@ -287,9 +309,16 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic + "," + Constants.CollaboratorType.CommissionMusicCurator)]
         public async Task<ActionResult> PreviousEvaluationDetails(int? id, string searchKeywords = null, Guid? musicGenreUid = null, Guid? evaluationStatusUid = null, bool? showBusinessRounds = false, int? page = 1, int? pageSize = 12)
         {
+            var isCommissionMusicCurator = this.UserAccessControlDto.IsCommissionMusicCurator();
+            var evaluatorUserId = !isCommissionMusicCurator
+                ? new List<int?>() { this.UserAccessControlDto?.User?.Id }
+                : new List<int?>() { };
+            var commissionEvaluationStatusId = !isCommissionMusicCurator
+                ? new List<int?>() { }
+                : new List<int?>() { ProjectEvaluationStatus.Accepted.Id };
             var allMusicProjectsIds = await this.musicProjectRepo.FindAllMusicProjectsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
@@ -297,7 +326,10 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 evaluationStatusUid,
                 showBusinessRounds ?? false,
                 page.Value,
-                pageSize.Value);
+                pageSize.Value,
+                evaluatorUserId,
+                commissionEvaluationStatusId
+            );
 
             var currentMusicProjectIdIndex = Array.IndexOf(allMusicProjectsIds, id.Value);
             var previousProjectId = allMusicProjectsIds.ElementAtOrDefault(currentMusicProjectIdIndex - 1);
@@ -327,9 +359,16 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic + "," + Constants.CollaboratorType.CommissionMusicCurator)]
         public async Task<ActionResult> NextEvaluationDetails(int? id, string searchKeywords = null, Guid? musicGenreUid = null, Guid? evaluationStatusUid = null, bool? showBusinessRounds = false, int? page = 1, int? pageSize = 12)
         {
+            var isCommissionMusicCurator = this.UserAccessControlDto.IsCommissionMusicCurator();
+            var evaluatorUserId = !isCommissionMusicCurator
+                ? new List<int?>() { this.UserAccessControlDto?.User?.Id }
+                : new List<int?>() { };
+            var commissionEvaluationStatusId = !isCommissionMusicCurator
+                ? new List<int?>() { }
+                : new List<int?>() { ProjectEvaluationStatus.Accepted.Id };
             var allMusicProjectsIds = await this.musicProjectRepo.FindAllMusicProjectsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
@@ -337,7 +376,10 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 evaluationStatusUid,
                 showBusinessRounds ?? false,
                 page.Value,
-                pageSize.Value);
+                pageSize.Value,
+                evaluatorUserId,
+                commissionEvaluationStatusId
+            );
 
             var currentMusicProjectIdIndex = Array.IndexOf(allMusicProjectsIds, id.Value);
             var nextProjectId = allMusicProjectsIds.ElementAtOrDefault(currentMusicProjectIdIndex + 1);

@@ -224,12 +224,29 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="query">The query.</param>
         /// <param name="evaluatorUserId">The evaluator user id.</param>
         /// <returns></returns>
-        internal static IQueryable<MusicProject> FindByEvaluatorUserId(this IQueryable<MusicProject> query, int? evaluatorUserId)
+        internal static IQueryable<MusicProject> FindByEvaluatorUserId(this IQueryable<MusicProject> query, List<int?> evaluatorUserId)
         {
-            if (evaluatorUserId.HasValue)
+            if (evaluatorUserId != null && evaluatorUserId.Count > 0)
             {
                 query = query.Where(mp =>
-                    mp.AttendeeMusicBand.EvaluatorUserId == evaluatorUserId
+                    evaluatorUserId.Contains(mp.AttendeeMusicBand.EvaluatorUserId)
+                );
+            }
+            return query;
+        }
+
+        /// <summary>Finds the by edition identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="commissionEvaluationStatusId">The commission evaluation status id.</param>
+        /// <returns></returns>
+        internal static IQueryable<MusicProject> FindByCommissionEvaluationStatusId(this IQueryable<MusicProject> query, List<int?> commissionEvaluationStatusId)
+        {
+            if (commissionEvaluationStatusId != null && commissionEvaluationStatusId.Count > 0)
+            {
+                query = query.Where(mp =>
+                    mp.AttendeeMusicBand.AttendeeMusicBandEvaluations.Any(ambe =>
+                        commissionEvaluationStatusId.Contains(ambe.CommissionEvaluationStatusId)
+                    )                    
                 );
             }
             return query;
@@ -378,11 +395,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             bool showBusinessRounds,
             int page,
             int pageSize,
-            int? evaluatorUserId
+            List<int?> evaluatorUserId,
+            List<int?> commissionEvaluationStatusId
         )
         {
             var musicProjectsDtos = await this.GetDataTableBaseQuery(editionId, searchKeywords, musicGenreUid, showBusinessRounds)
                                            .FindByEvaluatorUserId(evaluatorUserId)
+                                           .FindByCommissionEvaluationStatusId(commissionEvaluationStatusId)
                                            .Select(mp => new MusicProjectDto
                                            {
                                                MusicProject = mp,
@@ -1158,9 +1177,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<int[]> FindAllMusicProjectsIdsPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize)
+        public async Task<int[]> FindAllMusicProjectsIdsPagedAsync(
+            int editionId,
+            string searchKeywords,
+            Guid? musicGenreUid,
+            Guid? evaluationStatusUid,
+            bool showBusinessRounds,
+            int page,
+            int pageSize,
+            List<int?> evaluatorUserId,
+            List<int?> commissionEvaluationStatusId
+        )
         {
             var musicProjects = await this.GetDataTableBaseQuery(editionId, searchKeywords, musicGenreUid, showBusinessRounds)
+                                            .FindByEvaluatorUserId(evaluatorUserId)
+                                            .FindByCommissionEvaluationStatusId(commissionEvaluationStatusId)
                                             .Order()
                                             .ToListAsync(); 
             
@@ -1236,9 +1267,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<int> CountPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize)
+        public async Task<int> CountPagedAsync(
+            int editionId,
+            string searchKeywords,
+            Guid? musicGenreUid,
+            Guid? evaluationStatusUid,
+            bool showBusinessRounds,
+            int page,
+            int pageSize,
+            List<int?> evaluatorUserId,
+            List<int?> commissionEvaluationStatusId
+        )
         {
             var musicProjects = await this.GetDataTableBaseQuery(editionId, searchKeywords, musicGenreUid, showBusinessRounds)
+                                            .FindByEvaluatorUserId(evaluatorUserId)
+                                            .FindByCommissionEvaluationStatusId(commissionEvaluationStatusId)
                                             .Order()
                                             .ToListAsync();
 

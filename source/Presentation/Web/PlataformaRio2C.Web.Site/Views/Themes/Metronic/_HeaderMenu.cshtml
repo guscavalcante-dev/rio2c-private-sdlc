@@ -150,8 +150,9 @@
     }
     @if (musicCollaboratorTypesCount > 0)
     {
+        var musicCommissionTypes = new string[] { Constants.CollaboratorType.CommissionMusic, Constants.CollaboratorType.CommissionMusicCurator };
         var projectsUrl = Url.Action("Index", "Projects", new { Area = "" });
-        if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.CommissionMusic) == true)
+        if (userAccessControlDto?.CountCollaboratorTypes(musicCommissionTypes) > 0)
         {
             projectsUrl = Url.Action("EvaluationList", "Projects", new { Area = "Music" });
             if (editionDto?.IsMusicProjectEvaluationStarted() != true)
