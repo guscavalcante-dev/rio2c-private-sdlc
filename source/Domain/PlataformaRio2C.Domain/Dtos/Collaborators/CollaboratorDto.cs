@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 10-16-2023
+// Last Modified On : 11-19-2024
 // ***********************************************************************
 // <copyright file="CollaboratorDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -124,7 +124,7 @@ namespace PlataformaRio2C.Domain.Dtos
 
                 // Check if the collaborator has other roles
                 var collaboratorTypesDescriptions = this.AttendeeCollaboratorTypeDtos?
-                    .Select(act => act.CollaboratorType?.Description ?? act.CollaboratorTypeDescription)?
+                    .Select(act => act.CollaboratorType?.Description ?? act.CollaboratorTypeDescription.GetSeparatorTranslation(this.UserInterfaceLanguage))?
                     .OrderBy(ctd => ctd)?
                     .ToList();
                 if (collaboratorTypesDescriptions?.Any(ctd => !string.IsNullOrEmpty(ctd)) == true)

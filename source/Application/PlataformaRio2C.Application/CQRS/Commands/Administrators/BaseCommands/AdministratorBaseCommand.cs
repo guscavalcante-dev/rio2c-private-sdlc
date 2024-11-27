@@ -277,7 +277,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// </summary>
         /// <param name="collaboratorTypes">The collaborator types.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
-        private void UpdateCollaboratorTypes(List<CollaboratorType> collaboratorTypes, string userInterfaceLanguage)
+        public void UpdateCollaboratorTypes(List<CollaboratorType> collaboratorTypes, string userInterfaceLanguage)
         {
             this.CollaboratorTypes = collaboratorTypes?
                             .GetSeparatorTranslation(ct => ct.Description, userInterfaceLanguage, '|')?

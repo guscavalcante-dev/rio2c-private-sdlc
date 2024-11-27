@@ -8293,6 +8293,7 @@
     <Content Include="Areas\Music\Views\Pitching\Widgets\StatusWidget.cshtml" />
     <Content Include="Areas\Music\Views\Pitching\Widgets\EditionScheduledCountWidget.cshtml" />
     <Content Include="Areas\Music\Views\Pitching\Widgets\EditionUnscheduledCountWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Commissions\Modals\_Form.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

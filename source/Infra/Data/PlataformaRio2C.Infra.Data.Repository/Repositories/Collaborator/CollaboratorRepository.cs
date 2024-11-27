@@ -652,7 +652,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
-    }
+        }
 
     #endregion
 
@@ -995,18 +995,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             List<Tuple<string, string>> sortColumns,
             List<Guid> collaboratorsUids,
             string[] collaboratorTypeNames,
-            string[] organizationTypeNames,
             bool showAllEditions,
             bool showAllParticipants,
             bool? showHighlights,
             int? editionId)
         {
             this.SetProxyEnabled(false);
-
-            if (organizationTypeNames == null)
-            {
-                organizationTypeNames = new string[] { };
-            }
 
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords, editionId)
@@ -1066,15 +1060,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
                                                                     .Where(at => !at.IsDeleted && at.EditionId == editionId)
                                                                     .SelectMany(at => at.AttendeeOrganizationCollaborators
-                                                                                            .Where(aoc => !aoc.IsDeleted
-                                                                                                            && (organizationTypeNames.Any(ctn => !string.IsNullOrEmpty(ctn)) == true ?
-                                                                                                                    //Search by OrganizationType
-                                                                                                                    aoc.AttendeeOrganization.AttendeeOrganizationTypes
-                                                                                                                        .Where(aot => !aot.IsDeleted)
-                                                                                                                        .Any(aot => organizationTypeNames.Contains(aot.OrganizationType.Name))
-                                                                                                                    :
-                                                                                                                    //Return true because isn't searching by OrganizationType
-                                                                                                                    true))
+                                                                                            .Where(aoc => !aoc.IsDeleted)
                                                                                             .Select(aoc => new AttendeeOrganizationBaseDto
                                                                                             {
                                                                                                 Uid = aoc.AttendeeOrganization.Uid,
@@ -1104,7 +1090,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 {
                                     Id = c.User.Id,
                                     Uid = c.User.Uid
-                                }
+                                },
+
+                                AttendeeCollaboratorTypeDtos = c.AttendeeCollaborators
+                                                                            .FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                                                .AttendeeCollaboratorTypes
+                                                                                    .Where(act => !act.IsDeleted
+                                                                                                    && !act.CollaboratorType.IsDeleted)
+                                                                                    .Select(act => new AttendeeCollaboratorTypeDto
+                                                                                    {
+                                                                                        CollaboratorTypeDescription = act.CollaboratorType.Description
+                                                                                    }),
                             })
                             .ToListPagedAsync(page, pageSize);
 
@@ -1701,6 +1697,127 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         #endregion
 
         #region Music Commissions
+
+        public async Task<IPagedList<CollaboratorDto>> FindAllMusicCommissionsByDataTable(
+            int page,
+            int pageSize,
+            string keywords,
+            List<Tuple<string, string>> sortColumns,
+            List<Guid> collaboratorsUids,
+            string[] collaboratorTypeNames,
+            bool showAllEditions,
+            bool showAllParticipants,
+            bool? showHighlights,
+            int? editionId)
+        {
+            this.SetProxyEnabled(false);
+
+            var query = this.GetBaseQuery()
+                                .FindByKeywords(keywords, editionId)
+                                .FindByUids(collaboratorsUids)
+                                .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, showAllEditions, showAllParticipants, editionId)
+                                .FindByHighlights(collaboratorTypeNames, showHighlights);
+
+            var collaborators = await query
+                            .DynamicOrder(
+                                sortColumns,
+                                new List<Tuple<string, string>>
+                                {
+                                    new Tuple<string, string>("FullName", "User.Name"),
+                                    new Tuple<string, string>("Email", "User.Email"),
+                                },
+                                new List<string> { "User.Name", "User.Email", "CreateDate", "UpdateDate" },
+                                "User.Name")
+                            .Select(c => new CollaboratorDto
+                            {
+                                Id = c.Id,
+                                Uid = c.Uid,
+                                FirstName = c.FirstName,
+                                LastNames = c.LastNames,
+                                Badge = c.Badge,
+                                Email = c.User.Email,
+                                PhoneNumber = c.PhoneNumber,
+                                CellPhone = c.CellPhone,
+                                PublicEmail = c.PublicEmail,
+                                ImageUploadDate = c.ImageUploadDate,
+                                CreateDate = c.CreateDate,
+                                UpdateDate = c.UpdateDate,
+
+                                EditionAttendeeCollaborator = editionId.HasValue ? c.AttendeeCollaborators.FirstOrDefault(ac => ac.EditionId == editionId
+                                                                                                                                && !ac.Edition.IsDeleted
+                                                                                                                                && !ac.IsDeleted
+                                                                                                                                && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
+                                                                                                                                                                           && collaboratorTypeNames.Contains(act.CollaboratorType.Name))) : null,
+
+                                EditionAttendeeCollaboratorBaseDto = c.AttendeeCollaborators
+                                                                                .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                                                .Select(ac => new AttendeeCollaboratorBaseDto
+                                                                                {
+                                                                                    Id = ac.Id,
+                                                                                    Uid = ac.Uid,
+                                                                                    WelcomeEmailSendDate = ac.WelcomeEmailSendDate,
+                                                                                    OnboardingStartDate = ac.OnboardingStartDate,
+                                                                                    OnboardingFinishDate = ac.OnboardingFinishDate,
+                                                                                    OnboardingUserDate = ac.OnboardingUserDate,
+                                                                                    OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
+                                                                                    AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
+                                                                                    InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
+                                                                                    MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
+                                                                                    ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate,
+                                                                                    SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
+                                                                                }).FirstOrDefault(),
+
+                                AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
+                                                                    .Where(at => !at.IsDeleted && at.EditionId == editionId)
+                                                                    .SelectMany(at => at.AttendeeOrganizationCollaborators
+                                                                                            .Where(aoc => !aoc.IsDeleted)
+                                                                                            .Select(aoc => new AttendeeOrganizationBaseDto
+                                                                                            {
+                                                                                                Uid = aoc.AttendeeOrganization.Uid,
+                                                                                                OrganizationBaseDto = new OrganizationBaseDto
+                                                                                                {
+                                                                                                    Name = aoc.AttendeeOrganization.Organization.Name,
+                                                                                                    TradeName = aoc.AttendeeOrganization.Organization.TradeName,
+                                                                                                    HoldingBaseDto = aoc.AttendeeOrganization.Organization.Holding == null ? null : new HoldingBaseDto
+                                                                                                    {
+                                                                                                        Name = aoc.AttendeeOrganization.Organization.Holding.Name
+                                                                                                    },
+                                                                                                    IsVirtualMeeting = aoc.AttendeeOrganization.Organization.IsVirtualMeeting
+                                                                                                }
+                                                                                            })),
+
+                                IsApiDisplayEnabled = c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId
+                                                                                        && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
+                                                                                                                                    && collaboratorTypeNames.Contains(act.CollaboratorType.Name)
+                                                                                                                                    && act.IsApiDisplayEnabled)),
+
+                                IsInOtherEdition = c.User.Roles.Any(r => r.Name == Constants.Role.Admin)
+                                                   || (editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId && !ac.IsDeleted)),
+
+                                JobTitle = c.JobTitles.FirstOrDefault(jb => !jb.IsDeleted && jb.CollaboratorId == c.Id).Value,
+                                Active = c.User.Active,
+                                UserBaseDto = new UserBaseDto
+                                {
+                                    Id = c.User.Id,
+                                    Uid = c.User.Uid
+                                },
+                                AttendeeCollaboratorTypeDtos = c.AttendeeCollaborators
+                                                                            .FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                                                .AttendeeCollaboratorTypes
+                                                                                    .Where(act => !act.IsDeleted
+                                                                                                    && !act.CollaboratorType.IsDeleted
+                                                                                                    && collaboratorTypeNames.Contains(act.CollaboratorType.Name))
+                                                                                    .Select(act => new AttendeeCollaboratorTypeDto
+                                                                                    {
+                                                                                        CollaboratorTypeDescription = act.CollaboratorType.Description
+                                                                                    }),
+                            })
+                            .ToListPagedAsync(page, pageSize);
+
+            this.SetProxyEnabled(true);
+
+            return collaborators;
+        }
 
         /// <summary>
         /// Gets the music commissions base query.

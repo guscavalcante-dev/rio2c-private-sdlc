@@ -130,7 +130,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                 request.GetSortColumns(),
                 new List<Guid>(),
                 new string[] { CollaboratorType.PlayerExecutiveInnovation.Name },
-                null,
                 showAllEditions,
                 showAllParticipants,
                 showHighlights,
@@ -308,8 +307,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         {
             var attendeeCollaboratorDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByCollaboratorTypeUidAsync(
                 id ?? Guid.Empty,
-                CollaboratorType.PlayerExecutiveInnovation.Uid,
-                OrganizationType.StartupPlayer.Uid);
+                CollaboratorType.PlayerExecutiveInnovation.Uid
+            );
 
             if (attendeeCollaboratorDto == null)
             {

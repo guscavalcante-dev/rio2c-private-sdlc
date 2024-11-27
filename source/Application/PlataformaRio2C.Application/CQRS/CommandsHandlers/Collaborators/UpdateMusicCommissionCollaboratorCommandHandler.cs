@@ -1,19 +1,17 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Renan Valentim
-// Updated          : 08-19-2021
+// Created          : 11-18-2024
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-17-2024
+// Last Modified On : 11-18-2024
 // ***********************************************************************
-// <copyright file="UpdateAudiovisualCommissionCollaboratorCommandHandler.cs" company="Softo">
+// <copyright file="UpdateMusicCommissionCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -26,41 +24,45 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    public class UpdateAudiovisualCommissionCollaboratorCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<UpdateAudiovisualCommissionCollaborator, AppValidationResult>
+    /// <summary>UpdateMusicCommissionCollaboratorCommandHandler</summary>
+    public class UpdateMusicCommissionCollaboratorCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<UpdateMusicCommissionCollaborator, AppValidationResult>
     {
         private readonly IUserRepository userRepo;
         private readonly IEditionRepository editionRepo;
         private readonly ICollaboratorTypeRepository collaboratorTypeRepo;
-        private readonly IInterestRepository interestRepo;
+        private readonly ICountryRepository countryRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateAudiovisualCommissionCollaboratorCommandHandler"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateMusicCommissionCollaboratorCommandHandler" /> class.
+        /// </summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="userRepository">The user repository.</param>
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="collaboratorTypeRepository">The collaborator type repository.</param>
-        public UpdateAudiovisualCommissionCollaboratorCommandHandler(
+        /// <param name="countryRepo">The country repo.</param>
+        public UpdateMusicCommissionCollaboratorCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             ICollaboratorRepository collaboratorRepository,
             IUserRepository userRepository,
             IEditionRepository editionRepository,
             ICollaboratorTypeRepository collaboratorTypeRepository,
-            IInterestRepository interestRepository)
+            ICountryRepository countryRepo)
             : base(eventBus, uow, collaboratorRepository)
         {
             this.userRepo = userRepository;
             this.editionRepo = editionRepository;
             this.collaboratorTypeRepo = collaboratorTypeRepository;
-            this.interestRepo = interestRepository;
+            this.countryRepo = countryRepo;
         }
 
-        /// <summary>Handles the specified create tiny collaborator.</summary>
+        /// <summary>Handles the specified update tiny collaborator.</summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(UpdateAudiovisualCommissionCollaborator cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(UpdateMusicCommissionCollaborator cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
@@ -83,30 +85,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            var interestsDtos = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.AudiovisualGenre.Uid);
-
-            // Interests
-            var attendeeCollaboratorInterests = new List<AttendeeCollaboratorInterest>();
-            if (cmd.Interests?.Any() == true)
-            {
-                foreach (var interestBaseCommands in cmd.Interests)
-                {
-                    foreach (var interestBaseCommand in interestBaseCommands?.Where(ibc => ibc.IsChecked)?.ToList())
-                    {
-                        attendeeCollaboratorInterests.Add(new AttendeeCollaboratorInterest(interestsDtos?.FirstOrDefault(id => id.Interest.Uid == interestBaseCommand.InterestUid)?.Interest, interestBaseCommand.AdditionalInfo, cmd.UserId));
-                    }
-                }
-            }
-
-            collaborator.UpdateAudiovisualCommissionCollaborator(
+            collaborator.UpdateMusicCommissionCollaborator(
                 await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
-                await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
-                cmd.IsAddingToCurrentEdition,
-                ProjectType.Audiovisual,
+                await this.collaboratorTypeRepo.FindAllByNamesAsync(cmd.CollaboratorTypeNames),
+                true,
                 cmd.FirstName,
                 cmd.LastNames,
                 cmd.Email,
-                attendeeCollaboratorInterests,
                 cmd.UserId);
 
             if (!collaborator.IsValid())

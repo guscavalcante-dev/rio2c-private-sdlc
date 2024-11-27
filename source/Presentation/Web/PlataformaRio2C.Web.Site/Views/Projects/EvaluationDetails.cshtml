@@ -4,6 +4,7 @@
     ViewBag.Title = $"{Labels.AudioVisual} | {Model.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value}";
 }
 @Html.Hidden("AggregateId", Model.Project.Uid)
+@Html.Hidden("AttendeeOrganizationUid", ViewBag.BuyerAttendeeOrganizationUid as Guid?)
 <div class="row">
     <div class="col-md-12">
         <!--begin:Main Information Widget-->

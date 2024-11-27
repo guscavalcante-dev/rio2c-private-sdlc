@@ -4,7 +4,7 @@
 // Created          : 09-26-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-31-2024
+// Last Modified On : 11-19-2024
 // ***********************************************************************
 // <copyright file="CollaboratorType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,6 +34,7 @@ namespace PlataformaRio2C.Domain.Constants
 
         public const string CommissionAudiovisual = "Commission | Audiovisual";
         public const string CommissionMusic = "Commission | Music";
+        public const string CommissionMusicCurator = "Commission | Music Curator";
         public const string CommissionInnovation = "Commission | Innovation";
         public const string CommissionCartoon = "Commission | Cartoon";
         public const string CommissionCreator = "Commission | Creator";
@@ -69,7 +70,12 @@ namespace PlataformaRio2C.Domain.Constants
 
         public static readonly string[] Musics =
         {
-            AdminMusic, CommissionMusic, PlayerExecutiveMusic, Music
+            AdminMusic, CommissionMusic, PlayerExecutiveMusic, Music, CommissionMusicCurator
+        };
+
+        public static readonly string[] MusicCommissions =
+        {
+            CommissionMusic, CommissionMusicCurator
         };
 
         public static readonly string[] Innovations =

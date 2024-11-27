@@ -115,6 +115,17 @@ namespace PlataformaRio2C.Domain.Dtos
             return this.EditionAttendeeOrganizations?.Where(eao => !eao.IsDeleted)?.OrderBy(eao => eao.Id).FirstOrDefault();
         }
 
+        /// <summary>Gets the attendee organization by edition id.</summary>
+        /// <param name="editionId">The edition id.</param>
+        /// <returns></returns>
+        public AttendeeOrganization GetAttendeeOrganizationByEditionId(int editionId)
+        {
+            var attendeeOrganizations = this.EditionAttendeeOrganizations
+                ?.Where(eao => !eao.IsDeleted && eao.EditionId == editionId)
+                ?.ToList();
+            return Enumerable.FirstOrDefault(attendeeOrganizations);
+        }
+
         #endregion
 
         #region Permissions

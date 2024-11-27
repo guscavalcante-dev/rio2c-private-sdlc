@@ -222,12 +222,14 @@
     <Compile Include="CQRS\CommandsHandlers\Cartoon\Projects\DeleteCartoonProjectCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Cartoon\Projects\EvaluateCartoonProjectCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\BaseCollaboratorCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Collaborators\CreateMusicCommissionCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\CreateTinyCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\DeleteCollaboratorOrganizationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\DeleteCollaboratorTicketCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorSocialNetworksCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorApiConfigurationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorAdminMainInformationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateMusicCommissionCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateTinyCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\UpdateCollaboratorTicketCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\CreateCollaboratorTicketCommandHandler.cs" />
@@ -478,6 +480,9 @@
     <Compile Include="CQRS\Commands\Logistics\Availability\UpdateAvailability.cs" />
     <Compile Include="CQRS\Commands\Logistics\Availability\CreateAvailability.cs" />
     <Compile Include="CQRS\Commands\Music\Pitching\DistributeMembersMusicPitching.cs" />
+    <Compile Include="CQRS\Commands\Music\Commissions\BaseCommands\MusicCommissionCollaboratorBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Music\Commissions\CreateMusicCommissionCollaborator.cs" />
+    <Compile Include="CQRS\Commands\Music\Commissions\UpdateMusicCommissionCollaborator.cs" />
     <Compile Include="CQRS\Commands\Music\PlayersExecutives\BaseCommands\MusicPlayerExecutiveCollaboratorBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Music\PlayersExecutives\CreateMusicPlayerExecutiveCollaborator.cs" />
     <Compile Include="CQRS\Commands\Music\PlayersExecutives\UpdateMusicPlayerExecutiveCollaborator.cs" />
