@@ -271,9 +271,14 @@
     <Compile Include="Migrations\202411092319308_AddCommissionEvaluationToAttendeeMusicBandEvaluations.Designer.cs">
       <DependentUpon>202411092319308_AddCommissionEvaluationToAttendeeMusicBandEvaluations.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202411220133475_AddEvaluatorUserIdToAttendeeMusicBands.cs" />
+    <Compile Include="Migrations\202411220133475_AddEvaluatorUserIdToAttendeeMusicBands.Designer.cs">
+      <DependentUpon>202411220133475_AddEvaluatorUserIdToAttendeeMusicBands.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202411231452242_UpdateMigrations.cs" />
     <Compile Include="Migrations\202411231452242_UpdateMigrations.Designer.cs">
       <DependentUpon>202411231452242_UpdateMigrations.cs</DependentUpon>
+    </Compile>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
@@ -342,7 +347,13 @@
     <Content Include="Migrations\Scripts\202408202223049_Initial.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Migrations\Scripts\202411220133475_AddEvaluatorUserIdToAttendeeMusicBands.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Migrations\Scripts\202411140217302_AddMusicPitchingFieldToEditions.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202411220133475_AddEvaluatorUserIdToAttendeeMusicBands.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202411140217302_AddMusicPitchingFieldToEditions.up.sql">
@@ -457,6 +468,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202411092319308_AddCommissionEvaluationToAttendeeMusicBandEvaluations.resx">
       <DependentUpon>202411092319308_AddCommissionEvaluationToAttendeeMusicBandEvaluations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411220133475_AddEvaluatorUserIdToAttendeeMusicBands.resx">
+      <DependentUpon>202411220133475_AddEvaluatorUserIdToAttendeeMusicBands.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202411231452242_UpdateMigrations.resx">
       <DependentUpon>202411231452242_UpdateMigrations.cs</DependentUpon>

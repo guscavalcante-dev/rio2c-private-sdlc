@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 02-26-2020
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 03-03-2023
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 11-22-2024
 // ***********************************************************************
 // <copyright file="MusicProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -219,6 +219,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return pagedList;
         }
+
+        /// <summary>Finds the by edition identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="evaluatorUserId">The evaluator user id.</param>
+        /// <returns></returns>
+        internal static IQueryable<MusicProject> FindByEvaluatorUserId(this IQueryable<MusicProject> query, int? evaluatorUserId)
+        {
+            if (evaluatorUserId.HasValue)
+            {
+                query = query.Where(mp =>
+                    mp.AttendeeMusicBand.EvaluatorUserId == evaluatorUserId
+                );
+            }
+            return query;
+        }
     }
 
     #endregion
@@ -353,10 +368,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="showBusinessRounds">if set to <c>true</c> [show business rounds].</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
+        /// <param name="evaluatorUserId">The evaluator user id.</param>
         /// <returns></returns>
-        public async Task<IPagedList<MusicProjectDto>> FindAllDtosPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize)
+        public async Task<IPagedList<MusicProjectDto>> FindAllDtosPagedAsync(
+            int editionId,
+            string searchKeywords,
+            Guid? musicGenreUid,
+            Guid? evaluationStatusUid,
+            bool showBusinessRounds,
+            int page,
+            int pageSize,
+            int? evaluatorUserId
+        )
         {
             var musicProjectsDtos = await this.GetDataTableBaseQuery(editionId, searchKeywords, musicGenreUid, showBusinessRounds)
+                                           .FindByEvaluatorUserId(evaluatorUserId)
                                            .Select(mp => new MusicProjectDto
                                            {
                                                MusicProject = mp,

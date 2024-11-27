@@ -286,6 +286,7 @@
     <Compile Include="CQRS\CommandsHandlers\Logistics\Availability\DeleteAvailabilityCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Logistics\Availability\UpdateAvailabilityCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Logistics\Availability\CreateAvailabilityCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Music\Pitching\DistributeMembersMusicPitchingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\PlayersExecutives\CreateMusicPlayerExecutiveCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\PlayersExecutives\UpdateMusicPlayerExecutiveCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardMusicPlayerTermsAcceptanceCommandHandler.cs" />
@@ -344,11 +345,11 @@
     <Compile Include="CQRS\CommandsHandlers\Music\Bands\CreateMusicBandTeamMemberCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\Bands\CreateMusicBandMemberCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\Bands\CreateMusicBandCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Music\Projects\AcceptMusicProjectEvaluationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Music\Pitching\AcceptMusicPitchingEvaluationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\Projects\MusicProjectBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\Projects\CreateMusicProjectCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\Projects\DeleteMusicProjectCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Music\Projects\RefuseMusicProjectEvaluationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Music\Pitching\RefuseMusicPitchingEvaluationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardSpeakerTermsAcceptanceCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardProducerTermsAcceptanceCommandHandler.cs" />
@@ -478,6 +479,7 @@
     <Compile Include="CQRS\Commands\Logistics\Availability\DeleteLogistic.cs" />
     <Compile Include="CQRS\Commands\Logistics\Availability\UpdateAvailability.cs" />
     <Compile Include="CQRS\Commands\Logistics\Availability\CreateAvailability.cs" />
+    <Compile Include="CQRS\Commands\Music\Pitching\DistributeMembersMusicPitching.cs" />
     <Compile Include="CQRS\Commands\Music\Commissions\BaseCommands\MusicCommissionCollaboratorBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Music\Commissions\CreateMusicCommissionCollaborator.cs" />
     <Compile Include="CQRS\Commands\Music\Commissions\UpdateMusicCommissionCollaborator.cs" />
@@ -532,12 +534,12 @@
     <Compile Include="CQRS\Commands\Music\Bands\CreateMusicBandTeamMember.cs" />
     <Compile Include="CQRS\Commands\Music\Bands\CreateMusicBandMember.cs" />
     <Compile Include="CQRS\Commands\Music\Bands\EvaluateMusicBand.cs" />
-    <Compile Include="CQRS\Commands\Music\Projects\AcceptMusicProjectEvaluation.cs" />
+    <Compile Include="CQRS\Commands\Music\Pitching\AcceptMusicPitchingEvaluation.cs" />
     <Compile Include="CQRS\Commands\Music\Bands\CreateMusicBand.cs" />
     <Compile Include="CQRS\Commands\Music\Projects\BaseCommands\MusicProjectBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Music\Projects\CreateMusicProject.cs" />
     <Compile Include="CQRS\Commands\Music\Projects\DeleteMusicProject.cs" />
-    <Compile Include="CQRS\Commands\Music\Projects\RefuseMusicProjectEvaluation.cs" />
+    <Compile Include="CQRS\Commands\Music\Pitching\RefuseMusicPitchingEvaluation.cs" />
     <Compile Include="CQRS\Commands\Organizations\BaseCommands\UpdateOrganizationMainInformationBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Organizations\UpdateOrganizationAdminMainInformation.cs" />
     <Compile Include="CQRS\Commands\Organizations\UpdateOrganizationSocialNetworks.cs" />

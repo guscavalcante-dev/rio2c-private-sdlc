@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
-// Author           : Rafael Dantas Ruiz
-// Created          : 02-28-2020
+// Author           : Gilson Oliveira
+// Created          : 11-22-2024
 //
 // Last Modified By : Gilson Oliveira
-// Last Modified On : 11-10-2024
+// Last Modified On : 11-22-2024
 // ***********************************************************************
-// <copyright file="AcceptMusicProjectEvaluation.cs" company="Softo">
+// <copyright file="RefuseMusicProjectEvaluation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -19,8 +19,8 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>AcceptMusicProjectEvaluation</summary>
-    public class AcceptMusicProjectEvaluation : BaseCommand
+    /// <summary>RefuseMusicProjectEvaluation</summary>
+    public class RefuseMusicPitchingEvaluation : BaseCommand
     {
         [Display(Name = "Project", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -30,17 +30,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public MusicProjectDto MusicProjectDto { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="AcceptMusicProjectEvaluation"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="RefuseMusicPitchingEvaluation"/> class.</summary>
         /// <param name="musicProjectDto">The music project dto.</param>
         /// <param name="musicBandUid">The music project dto.</param>
-        public AcceptMusicProjectEvaluation(MusicProjectDto musicProjectDto, Guid musicBandUid)
+        public RefuseMusicPitchingEvaluation(MusicProjectDto musicProjectDto, Guid musicBandUid)
         {
             this.MusicBandUid = musicBandUid;
             this.UpdateModelsAndLists(musicProjectDto);
         }
 
-        /// <summary>Initializes a new instance of the <see cref="AcceptMusicProjectEvaluation"/> class.</summary>
-        public AcceptMusicProjectEvaluation()
+        /// <summary>Initializes a new instance of the <see cref="AcceptMusicPitchingEvaluation"/> class.</summary>
+        public RefuseMusicPitchingEvaluation()
         {
         }
 

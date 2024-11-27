@@ -1161,4 +1161,14 @@
   <data name="YouCanMusicPitchingMaximumProjectSubmissionsByEdition" xml:space="preserve">
     <value>The maximum limit of {0} {1} by edition has been reached</value>
   </data>
+  <data name="ThereAreDistributedMembersByEdition" xml:space="preserve">
+    <value>There are distributed members by edition</value>
+  </data>
+  <data name="NoPermissionToEvaluate" xml:space="preserve">
+    <value>No permission to evaluate</value>
+  </data>
+  <data name="CommisionMemberDistributionMessage" xml:space="preserve">
+    <value>The distribution of projects to commission members has already been carried out.&lt;br&gt;
+The distribution can only be carried out once per issue.</value>
+  </data>
 </root>

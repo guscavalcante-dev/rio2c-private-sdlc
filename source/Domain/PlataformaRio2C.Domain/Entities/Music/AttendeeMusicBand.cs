@@ -30,6 +30,7 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset? EvaluationEmailSendDate { get; private set; }
         public bool WouldYouLikeParticipateBusinessRound { get; private set; }
         public bool WouldYouLikeParticipatePitching { get; private set; }
+        public int? EvaluatorUserId { get; private set; }
 
         public virtual Edition Edition { get; private set; }
         public virtual MusicBand MusicBand { get; private set; }
@@ -37,6 +38,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeMusicBandCollaborator> AttendeeMusicBandCollaborators { get; private set; }
         public virtual ICollection<MusicProject> MusicProjects { get; private set; }
         public virtual ICollection<AttendeeMusicBandEvaluation> AttendeeMusicBandEvaluations { get; private set; }
+        public virtual User EvaluatorUser { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttendeeMusicBand" /> class.
@@ -151,6 +153,14 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.EvaluationsCount = this.GetAttendeeMusicBandEvaluationTotalCount();
             this.LastEvaluationDate = DateTime.UtcNow;
+        }
+
+        /// <summary>
+        /// Update evaluator user id.
+        /// </summary>
+        public void UpdateEvaluatorUserId(int evaluatorUserId)
+        {
+            this.EvaluatorUserId = evaluatorUserId;
         }
 
         /// <summary>

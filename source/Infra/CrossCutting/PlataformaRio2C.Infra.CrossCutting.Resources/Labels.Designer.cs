@@ -2032,6 +2032,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Distribuir membros.
+        /// </summary>
+        public static string DistributeCommissionMembers {
+            get {
+                return ResourceManager.GetString("DistributeCommissionMembers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Distribuído.
+        /// </summary>
+        public static string Distributed {
+            get {
+                return ResourceManager.GetString("Distributed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Documento.
         /// </summary>
         public static string Document {
@@ -3931,92 +3949,11 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data de Inicio da avaliação de projetos pelo Curador.
-        /// </summary>
-        public static string MusicPitchingEvaluationStartDateByCurator {
-            get {
-                return ResourceManager.GetString("MusicPitchingEvaluationStartDateByCurator", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Data de inicio da avaliação de projetos pela votação popular.
-        /// </summary>
-        public static string MusicPitchingEvaluationStartDateByPopularVote {
-            get {
-                return ResourceManager.GetString("MusicPitchingEvaluationStartDateByPopularVote", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Data de Inicio da avaliação de projetos pela Repescagem.
-        /// </summary>
-        public static string MusicPitchingEvaluationStartDateByRepechage {
-            get {
-                return ResourceManager.GetString("MusicPitchingEvaluationStartDateByRepechage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Quantidade máxima de bandas aprovadas.
         /// </summary>
         public static string MusicCommissionMaximumApprovedBandsCount {
             get {
                 return ResourceManager.GetString("MusicCommissionMaximumApprovedBandsCount", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Quantidade máxima de projetos aprovados por curador.
-        /// </summary>
-        public static string MusicPitchingMaximumApprovedProjectsByCurator {
-            get {
-                return ResourceManager.GetString("MusicPitchingMaximumApprovedProjectsByCurator", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Quantidade máxima de projetos aprovados por membro da comissão.
-        /// </summary>
-        public static string MusicPitchingMaximumApprovedProjectsByCommissionMember {
-            get {
-                return ResourceManager.GetString("MusicPitchingMaximumApprovedProjectsByCommissionMember", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Quantidade máxima de projetos aprovados por votação popular.
-        /// </summary>
-        public static string MusicPitchingMaximumApprovedProjectsByPopularVote {
-            get {
-                return ResourceManager.GetString("MusicPitchingMaximumApprovedProjectsByPopularVote", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to quantidade máxima de projetos aprovados por Repescagem.
-        /// </summary>
-        public static string MusicPitchingMaximumApprovedProjectsByRepechage {
-            get {
-                return ResourceManager.GetString("MusicPitchingMaximumApprovedProjectsByRepechage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Quantidade máxima de projetos inscritos por Edição.
-        /// </summary>
-        public static string MusicPitchingMaximumProjectSubmissionsByEdition {
-            get {
-                return ResourceManager.GetString("MusicPitchingMaximumProjectSubmissionsByEdition", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Quantidade máxima de projetos inscritos por participante.
-        /// </summary>
-        public static string MusicPitchingMaximumProjectSubmissionsByParticipant {
-            get {
-                return ResourceManager.GetString("MusicPitchingMaximumProjectSubmissionsByParticipant", resourceCulture);
             }
         }
         
@@ -4053,6 +3990,87 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string MusicInstrumentName {
             get {
                 return ResourceManager.GetString("MusicInstrumentName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de Inicio da avaliação de projetos pelo Curador.
+        /// </summary>
+        public static string MusicPitchingEvaluationStartDateByCurator {
+            get {
+                return ResourceManager.GetString("MusicPitchingEvaluationStartDateByCurator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de inicio da avaliação de projetos pela votação popular.
+        /// </summary>
+        public static string MusicPitchingEvaluationStartDateByPopularVote {
+            get {
+                return ResourceManager.GetString("MusicPitchingEvaluationStartDateByPopularVote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de Inicio da avaliação de projetos pela Repescagem.
+        /// </summary>
+        public static string MusicPitchingEvaluationStartDateByRepechage {
+            get {
+                return ResourceManager.GetString("MusicPitchingEvaluationStartDateByRepechage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade máxima de projetos aprovados por membro da comissão.
+        /// </summary>
+        public static string MusicPitchingMaximumApprovedProjectsByCommissionMember {
+            get {
+                return ResourceManager.GetString("MusicPitchingMaximumApprovedProjectsByCommissionMember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade máxima de projetos aprovados por curador.
+        /// </summary>
+        public static string MusicPitchingMaximumApprovedProjectsByCurator {
+            get {
+                return ResourceManager.GetString("MusicPitchingMaximumApprovedProjectsByCurator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade máxima de projetos aprovados por votação popular.
+        /// </summary>
+        public static string MusicPitchingMaximumApprovedProjectsByPopularVote {
+            get {
+                return ResourceManager.GetString("MusicPitchingMaximumApprovedProjectsByPopularVote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to quantidade máxima de projetos aprovados por Repescagem.
+        /// </summary>
+        public static string MusicPitchingMaximumApprovedProjectsByRepechage {
+            get {
+                return ResourceManager.GetString("MusicPitchingMaximumApprovedProjectsByRepechage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade máxima de projetos inscritos por edição.
+        /// </summary>
+        public static string MusicPitchingMaximumProjectSubmissionsByEdition {
+            get {
+                return ResourceManager.GetString("MusicPitchingMaximumProjectSubmissionsByEdition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade máxima de projetos inscritos por participante.
+        /// </summary>
+        public static string MusicPitchingMaximumProjectSubmissionsByParticipant {
+            get {
+                return ResourceManager.GetString("MusicPitchingMaximumProjectSubmissionsByParticipant", resourceCulture);
             }
         }
         
