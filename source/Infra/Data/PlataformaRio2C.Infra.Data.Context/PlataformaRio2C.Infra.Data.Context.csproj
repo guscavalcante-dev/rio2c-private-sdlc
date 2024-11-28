@@ -276,6 +276,10 @@
     <Compile Include="Migrations\202411231628322_UpdateMigrations.Designer.cs">
       <DependentUpon>202411231628322_UpdateMigrations.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202411281739325_InsertAttendeeSalesPlatformsAndTicketTypesForIndustryAndCreator.cs" />
+    <Compile Include="Migrations\202411281739325_InsertAttendeeSalesPlatformsAndTicketTypesForIndustryAndCreator.Designer.cs">
+      <DependentUpon>202411281739325_InsertAttendeeSalesPlatformsAndTicketTypesForIndustryAndCreator.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -325,6 +329,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202410230342192_CreateProjectModalitiesTable.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202411281739325_InsertAttendeeSalesPlatformsAndTicketTypesForIndustryAndCreator.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202411281739325_InsertAttendeeSalesPlatformsAndTicketTypesForIndustryAndCreator.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.up.sql">
@@ -451,6 +461,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202411231628322_UpdateMigrations.resx">
       <DependentUpon>202411231628322_UpdateMigrations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411281739325_InsertAttendeeSalesPlatformsAndTicketTypesForIndustryAndCreator.resx">
+      <DependentUpon>202411281739325_InsertAttendeeSalesPlatformsAndTicketTypesForIndustryAndCreator.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
