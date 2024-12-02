@@ -6948,8 +6948,8 @@
     <Content Include="Areas\Creator\Views\Projects\Widgets\AttachmentsWidget.cshtml" />
     <Content Include="Areas\Creator\Views\Projects\Widgets\EvaluationGradeWidget.cshtml" />
     <Content Include="Areas\Creator\Views\Projects\Widgets\EvaluatorsWidget.cshtml" />
-    <Content Include="Areas\Music\Views\Projects\Modals\AcceptMusicProjectEvaluationModal.cshtml" />
-    <Content Include="Areas\Music\Views\Projects\Modals\RefuseMusicProjectEvaluationModal.cshtml" />
+    <Content Include="Areas\Music\Views\Projects\Modals\AcceptMusicPitchingEvaluationModal.cshtml" />
+    <Content Include="Areas\Music\Views\Projects\Modals\RefuseMusicPitchingEvaluationModal.cshtml" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />

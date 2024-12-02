@@ -3392,19 +3392,19 @@
   <data name="MusicPitchingMaximumApprovedProjectsByCommissionMember" xml:space="preserve">
     <value>Maximum number of projects approved by comission member</value>
   </data>
-  <data name="MusicPitchingEvaluationStartDateByCurator" xml:space="preserve">
+  <data name="MusicPitchingCuratorEvaluationStartDate" xml:space="preserve">
     <value>Start date for project evaluation by the curator</value>
   </data>
   <data name="MusicPitchingMaximumApprovedProjectsByCurator" xml:space="preserve">
     <value>Maximum number of projects approved by curator</value>
   </data>
-  <data name="MusicPitchingEvaluationStartDateByPopularVote" xml:space="preserve">
+  <data name="MusicPitchingPopularEvaluationStartDate" xml:space="preserve">
     <value>Start date for project evaluation by popular vote</value>
   </data>
   <data name="MusicPitchingMaximumApprovedProjectsByPopularVote" xml:space="preserve">
     <value>Maximum number of projects approved by popular vote</value>
   </data>
-  <data name="MusicPitchingEvaluationStartDateByRepechage" xml:space="preserve">
+  <data name="MusicPitchingRepechageEvaluationStartDate" xml:space="preserve">
     <value>Start date for project evaluation by repechage</value>
   </data>
   <data name="MusicPitchingMaximumApprovedProjectsByRepechage" xml:space="preserve">

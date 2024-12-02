@@ -85,7 +85,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             var editionDto = await editionRepo.FindDtoAsync(cmd.EditionId.Value);
-            if (editionDto.IsMusicProjectEvaluationOpen() != true)
+            if (editionDto.IsMusicPitchingComissionEvaluationOpen() != true)
             {
                 this.AppValidationResult.Add(
                     this.ValidationResult.Add(

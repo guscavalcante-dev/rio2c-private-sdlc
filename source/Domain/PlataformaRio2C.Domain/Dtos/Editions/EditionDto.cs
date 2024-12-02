@@ -65,11 +65,11 @@ namespace PlataformaRio2C.Domain.Dtos
         public int MusicPitchingMaximumProjectSubmissionsByEdition { get; private set; }
         public int MusicPitchingMaximumProjectSubmissionsByParticipant { get; private set; }
         public int MusicPitchingMaximumApprovedProjectsByCommissionMember { get; private set; }
-        public DateTimeOffset? MusicPitchingEvaluationStartDateByCurator { get; private set; }
+        public DateTimeOffset? MusicPitchingCuratorEvaluationStartDate { get; private set; }
         public int MusicPitchingMaximumApprovedProjectsByCurator { get; private set; }
-        public DateTimeOffset? MusicPitchingEvaluationStartDateByPopularVote { get; private set; }
+        public DateTimeOffset? MusicPitchingPopularEvaluationStartDate { get; private set; }
         public int MusicPitchingMaximumApprovedProjectsByPopularVote { get; private set; }
-        public DateTimeOffset? MusicPitchingEvaluationStartDateByRepechage { get; private set; }
+        public DateTimeOffset? MusicPitchingRepechageEvaluationStartDate { get; private set; }
         public int MusicPitchingMaximumApprovedProjectsByRepechage { get; private set; }
 
         // Innovation - Commissions
@@ -162,11 +162,11 @@ namespace PlataformaRio2C.Domain.Dtos
             this.MusicPitchingMaximumProjectSubmissionsByEdition = entity.MusicPitchingMaximumProjectSubmissionsByEdition;
             this.MusicPitchingMaximumProjectSubmissionsByParticipant = entity.MusicPitchingMaximumProjectSubmissionsByParticipant;
             this.MusicPitchingMaximumApprovedProjectsByCommissionMember = entity.MusicPitchingMaximumApprovedProjectsByCommissionMember;
-            this.MusicPitchingEvaluationStartDateByCurator = entity.MusicPitchingEvaluationStartDateByCurator;
+            this.MusicPitchingCuratorEvaluationStartDate = entity.MusicPitchingCuratorEvaluationStartDate;
             this.MusicPitchingMaximumApprovedProjectsByCurator = entity.MusicPitchingMaximumApprovedProjectsByCurator;
-            this.MusicPitchingEvaluationStartDateByPopularVote = entity.MusicPitchingEvaluationStartDateByPopularVote;
+            this.MusicPitchingPopularEvaluationStartDate = entity.MusicPitchingPopularEvaluationStartDate;
             this.MusicPitchingMaximumApprovedProjectsByPopularVote = entity.MusicPitchingMaximumApprovedProjectsByPopularVote;
-            this.MusicPitchingEvaluationStartDateByRepechage = entity.MusicPitchingEvaluationStartDateByRepechage;
+            this.MusicPitchingRepechageEvaluationStartDate = entity.MusicPitchingRepechageEvaluationStartDate;
             this.MusicPitchingMaximumApprovedProjectsByRepechage = entity.MusicPitchingMaximumApprovedProjectsByRepechage;
 
             // Innovation - Commissions
@@ -242,7 +242,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <summary>Determines whether [is music project evaluation open].</summary>
         /// <returns>
         ///   <c>true</c> if [is music project evaluation open]; otherwise, <c>false</c>.</returns>
-        public bool IsMusicProjectEvaluationOpen()
+        public bool IsMusicPitchingComissionEvaluationOpen()
         {
             return DateTime.UtcNow >= this.MusicCommissionEvaluationStartDate && DateTime.UtcNow <= this.MusicCommissionEvaluationEndDate;
         }
@@ -261,6 +261,16 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool IsMusicProjectEvaluationEnded()
         {
             return DateTime.UtcNow > this.MusicCommissionEvaluationEndDate;
+        }
+
+        /// <summary>Determines whether [is music project evaluation open].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is music project evaluation open]; otherwise, <c>false</c>.</returns>
+        public bool IsMusicPitchingCuratorEvaluationOpen()
+        {
+            return this.IsMusicPitchingComissionEvaluationOpen() == false
+                && this.MusicPitchingCuratorEvaluationStartDate != null
+                && DateTime.UtcNow >= this.MusicPitchingCuratorEvaluationStartDate;
         }
 
         #endregion

@@ -1,4 +1,4 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.RefuseMusicProjectEvaluation
+﻿@model PlataformaRio2C.Application.CQRS.Commands.RefuseMusicPitchingEvaluation
 <div class="row">
     <div class="form-group col-12">
         @Html.Raw(string.Format(Messages.DoYouReallyWishRefuseObjectEntity, Model.MusicProjectDto?.AttendeeMusicBandDto?.MusicBandType?.Name?.ToLowerInvariant() ?? string.Empty, Model.MusicProjectDto?.AttendeeMusicBandDto?.MusicBand?.Name ?? "-"))

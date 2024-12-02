@@ -134,11 +134,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.MusicPitchingMaximumProjectSubmissionsByEdition,
                 cmd.MusicPitchingMaximumProjectSubmissionsByParticipant,
                 cmd.MusicPitchingMaximumApprovedProjectsByCommissionMember,
-                cmd.MusicPitchingEvaluationStartDateByCurator,
+                cmd.MusicPitchingCuratorEvaluationStartDate,
                 cmd.MusicPitchingMaximumApprovedProjectsByCurator,
-                cmd.MusicPitchingEvaluationStartDateByPopularVote,
+                cmd.MusicPitchingPopularEvaluationStartDate,
                 cmd.MusicPitchingMaximumApprovedProjectsByPopularVote,
-                cmd.MusicPitchingEvaluationStartDateByRepechage,
+                cmd.MusicPitchingRepechageEvaluationStartDate,
                 cmd.MusicPitchingMaximumApprovedProjectsByRepechage,
 
                 cmd.UserId);

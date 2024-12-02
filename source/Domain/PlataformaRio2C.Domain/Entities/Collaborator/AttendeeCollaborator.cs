@@ -2147,7 +2147,7 @@ namespace PlataformaRio2C.Domain.Entities
         private void DeleteAttendeeMusicBandsEvaluations(int userId)
         {
             if (this.Collaborator?.User?.AttendeeMusicBandEvaluations?.Any() == true
-                && this.Edition.IsMusicProjectEvaluationOpen())
+                && this.Edition.IsMusicPitchingComissionEvaluationOpen())
             {
                 foreach (var attendeeMusicBandEvaluation in this.Collaborator.User.AttendeeMusicBandEvaluations.Where(c => !c.IsDeleted))
                 {

@@ -1,5 +1,5 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.AcceptMusicProjectEvaluation
-<div class="modal fade" id="AcceptMusicProjectEvaluationModal" role="dialog" aria-labelledby="AcceptMusicProjectEvaluationModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+﻿@model PlataformaRio2C.Application.CQRS.Commands.AcceptMusicPitchingEvaluation
+<div class="modal fade" id="AcceptMusicPitchingEvaluationModal" role="dialog" aria-labelledby="AcceptMusicPitchingEvaluationModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -9,7 +9,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Accept", "Projects", new { Area = "Music" }, FormMethod.Post, new { id = "AcceptMusicProjectEvaluationForm" }))
+                @using (Html.BeginForm("Accept", "Projects", new { Area = "Music" }, FormMethod.Post, new { id = "AcceptMusicPitchingEvaluationForm" }))
                 {
                     @Html.HiddenFor(m => m.MusicBandUid)
                     <div id="form-container">

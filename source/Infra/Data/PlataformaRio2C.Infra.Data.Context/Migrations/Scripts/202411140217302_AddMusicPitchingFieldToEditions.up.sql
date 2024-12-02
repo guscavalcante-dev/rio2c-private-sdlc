@@ -9,20 +9,20 @@
         IF COL_LENGTH('Editions', 'MusicPitchingMaximumApprovedProjectsByCommissionMember') IS NULL
             ALTER TABLE dbo.Editions ADD MusicPitchingMaximumApprovedProjectsByCommissionMember int NULL;
 
-        IF COL_LENGTH('Editions', 'MusicPitchingEvaluationStartDateByCurator') IS NULL
-            ALTER TABLE dbo.Editions ADD MusicPitchingEvaluationStartDateByCurator datetimeoffset NULL;
+        IF COL_LENGTH('Editions', 'MusicPitchingCuratorEvaluationStartDate') IS NULL
+            ALTER TABLE dbo.Editions ADD MusicPitchingCuratorEvaluationStartDate datetimeoffset NULL;
 
         IF COL_LENGTH('Editions', 'MusicPitchingMaximumApprovedProjectsByCurator') IS NULL
             ALTER TABLE dbo.Editions ADD MusicPitchingMaximumApprovedProjectsByCurator int NULL;
 
-        IF COL_LENGTH('Editions', 'MusicPitchingEvaluationStartDateByPopularVote') IS NULL
-            ALTER TABLE dbo.Editions ADD MusicPitchingEvaluationStartDateByPopularVote datetimeoffset NULL;
+        IF COL_LENGTH('Editions', 'MusicPitchingPopularEvaluationStartDate') IS NULL
+            ALTER TABLE dbo.Editions ADD MusicPitchingPopularEvaluationStartDate datetimeoffset NULL;
 
         IF COL_LENGTH('Editions', 'MusicPitchingMaximumApprovedProjectsByPopularVote') IS NULL
             ALTER TABLE dbo.Editions ADD MusicPitchingMaximumApprovedProjectsByPopularVote int NULL;
 
-        IF COL_LENGTH('Editions', 'MusicPitchingEvaluationStartDateByRepechage') IS NULL
-            ALTER TABLE dbo.Editions ADD MusicPitchingEvaluationStartDateByRepechage datetimeoffset NULL;
+        IF COL_LENGTH('Editions', 'MusicPitchingRepechageEvaluationStartDate') IS NULL
+            ALTER TABLE dbo.Editions ADD MusicPitchingRepechageEvaluationStartDate datetimeoffset NULL;
 
         IF COL_LENGTH('Editions', 'MusicPitchingMaximumApprovedProjectsByRepechage') IS NULL
             ALTER TABLE dbo.Editions ADD MusicPitchingMaximumApprovedProjectsByRepechage int NULL;

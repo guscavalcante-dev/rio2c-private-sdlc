@@ -190,12 +190,12 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicPitchingEvaluationStartDateByCurator</h3>
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicPitchingCuratorEvaluationStartDate</h3>
             <div class="row">
                 <div class="col-12">
                     @(
-                        Model.Edition.MusicPitchingEvaluationStartDateByCurator.HasValue ?
-                            Model.Edition.MusicPitchingEvaluationStartDateByCurator?.ToBrazilTimeZone().ToShortDateString()
+                        Model.Edition.MusicPitchingCuratorEvaluationStartDate.HasValue ?
+                            Model.Edition.MusicPitchingCuratorEvaluationStartDate?.ToBrazilTimeZone().ToShortDateString()
                             : "-"
                     )
                 </div>
@@ -212,12 +212,12 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicPitchingEvaluationStartDateByPopularVote</h3>
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicPitchingPopularEvaluationStartDate</h3>
             <div class="row">
                 <div class="col-12">
                     @(
-                        Model.Edition.MusicPitchingEvaluationStartDateByPopularVote.HasValue ?
-                            Model.Edition.MusicPitchingEvaluationStartDateByPopularVote?.ToBrazilTimeZone().ToShortDateString()
+                        Model.Edition.MusicPitchingPopularEvaluationStartDate.HasValue ?
+                            Model.Edition.MusicPitchingPopularEvaluationStartDate?.ToBrazilTimeZone().ToShortDateString()
                             : "-"
                     )
                 </div>
@@ -234,12 +234,12 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicPitchingEvaluationStartDateByRepechage</h3>
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicPitchingRepechageEvaluationStartDate</h3>
             <div class="row">
                 <div class="col-12">
                     @(
-                        Model.Edition.MusicPitchingEvaluationStartDateByRepechage.HasValue ?
-                            Model.Edition.MusicPitchingEvaluationStartDateByRepechage?.ToBrazilTimeZone().ToShortDateString()
+                        Model.Edition.MusicPitchingRepechageEvaluationStartDate.HasValue ?
+                            Model.Edition.MusicPitchingRepechageEvaluationStartDate?.ToBrazilTimeZone().ToShortDateString()
                             : "-"
                     )
                 </div>

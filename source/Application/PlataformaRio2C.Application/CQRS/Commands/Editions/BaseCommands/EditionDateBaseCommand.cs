@@ -65,25 +65,25 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public int MusicPitchingMaximumApprovedProjectsByCommissionMember { get; set; }
 
-        [Display(Name = nameof(MusicPitchingEvaluationStartDateByCurator), ResourceType = typeof(Labels))]
+        [Display(Name = nameof(MusicPitchingCuratorEvaluationStartDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public DateTime? MusicPitchingEvaluationStartDateByCurator { get; set; }
+        public DateTime? MusicPitchingCuratorEvaluationStartDate { get; set; }
 
         [Display(Name = nameof(MusicPitchingMaximumApprovedProjectsByCurator), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public int MusicPitchingMaximumApprovedProjectsByCurator { get; set; }
 
-        [Display(Name = nameof(MusicPitchingEvaluationStartDateByPopularVote), ResourceType = typeof(Labels))]
+        [Display(Name = nameof(MusicPitchingPopularEvaluationStartDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public DateTime? MusicPitchingEvaluationStartDateByPopularVote { get; set; }
+        public DateTime? MusicPitchingPopularEvaluationStartDate { get; set; }
 
         [Display(Name = nameof(MusicPitchingMaximumApprovedProjectsByPopularVote), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public int MusicPitchingMaximumApprovedProjectsByPopularVote { get; set; }
 
-        [Display(Name = nameof(MusicPitchingEvaluationStartDateByRepechage), ResourceType = typeof(Labels))]
+        [Display(Name = nameof(MusicPitchingRepechageEvaluationStartDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public DateTime? MusicPitchingEvaluationStartDateByRepechage { get; set; }
+        public DateTime? MusicPitchingRepechageEvaluationStartDate { get; set; }
 
         [Display(Name = nameof(MusicPitchingMaximumApprovedProjectsByRepechage), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -293,11 +293,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.MusicPitchingMaximumProjectSubmissionsByEdition = editionDto.Edition.MusicPitchingMaximumProjectSubmissionsByEdition;
             this.MusicPitchingMaximumProjectSubmissionsByParticipant = editionDto.Edition.MusicPitchingMaximumProjectSubmissionsByParticipant;
             this.MusicPitchingMaximumApprovedProjectsByCommissionMember = editionDto.Edition.MusicPitchingMaximumApprovedProjectsByCommissionMember;
-            this.MusicPitchingEvaluationStartDateByCurator = editionDto.Edition.MusicPitchingEvaluationStartDateByCurator.ToBrazilTimeZone();
+            this.MusicPitchingCuratorEvaluationStartDate = editionDto.Edition.MusicPitchingCuratorEvaluationStartDate.ToBrazilTimeZone();
             this.MusicPitchingMaximumApprovedProjectsByCurator = editionDto.Edition.MusicPitchingMaximumApprovedProjectsByCurator;
-            this.MusicPitchingEvaluationStartDateByPopularVote = editionDto.Edition.MusicPitchingEvaluationStartDateByPopularVote.ToBrazilTimeZone();
+            this.MusicPitchingPopularEvaluationStartDate = editionDto.Edition.MusicPitchingPopularEvaluationStartDate.ToBrazilTimeZone();
             this.MusicPitchingMaximumApprovedProjectsByPopularVote = editionDto.Edition.MusicPitchingMaximumApprovedProjectsByPopularVote;
-            this.MusicPitchingEvaluationStartDateByRepechage = editionDto.Edition.MusicPitchingEvaluationStartDateByRepechage.ToBrazilTimeZone();
+            this.MusicPitchingRepechageEvaluationStartDate = editionDto.Edition.MusicPitchingRepechageEvaluationStartDate.ToBrazilTimeZone();
             this.MusicPitchingMaximumApprovedProjectsByRepechage = editionDto.Edition.MusicPitchingMaximumApprovedProjectsByRepechage;
 
             // Innovation - Commissions
