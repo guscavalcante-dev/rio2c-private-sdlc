@@ -263,6 +263,14 @@
     <Compile Include="Migrations\202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.Designer.cs">
       <DependentUpon>202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202411282335053_AddPopularEvaluationToAttendeeMusicBandEvaluations.cs" />
+    <Compile Include="Migrations\202411282335053_AddPopularEvaluationToAttendeeMusicBandEvaluations.Designer.cs">
+      <DependentUpon>202411282335053_AddPopularEvaluationToAttendeeMusicBandEvaluations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202411282335052_AddCuratorEvaluationToAttendeeMusicBandEvaluations.cs" />
+    <Compile Include="Migrations\202411282335052_AddCuratorEvaluationToAttendeeMusicBandEvaluations.Designer.cs">
+      <DependentUpon>202411282335052_AddCuratorEvaluationToAttendeeMusicBandEvaluations.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202411181335073_InsertCollaboratorTypeMusicCurator.cs" />
     <Compile Include="Migrations\202411181335073_InsertCollaboratorTypeMusicCurator.Designer.cs">
       <DependentUpon>202411181335073_InsertCollaboratorTypeMusicCurator.cs</DependentUpon>
@@ -290,7 +298,19 @@
     <Compile Include="Migrations\202411140217302_AddMusicPitchingFieldToEditions.Designer.cs">
       <DependentUpon>202411140217302_AddMusicPitchingFieldToEditions.cs</DependentUpon>
     </Compile>
+    <Content Include="Migrations\Scripts\202411282335052_AddCuratorEvaluationToAttendeeMusicBandEvaluations.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202411282335053_AddPopularEvaluationToAttendeeMusicBandEvaluations.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Migrations\Scripts\202411092319308_AddCommissionEvaluationToAttendeeMusicBandEvaluations.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202411282335053_AddPopularEvaluationToAttendeeMusicBandEvaluations.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202411282335052_AddCuratorEvaluationToAttendeeMusicBandEvaluations.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202411092319308_AddCommissionEvaluationToAttendeeMusicBandEvaluations.up.sql">
@@ -461,6 +481,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.resx">
       <DependentUpon>202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411282335053_AddPopularEvaluationToAttendeeMusicBandEvaluations.resx">
+      <DependentUpon>202411282335053_AddPopularEvaluationToAttendeeMusicBandEvaluations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411282335052_AddCuratorEvaluationToAttendeeMusicBandEvaluations.resx">
+      <DependentUpon>202411282335052_AddCuratorEvaluationToAttendeeMusicBandEvaluations.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202411140217302_AddMusicPitchingFieldToEditions.resx">
       <DependentUpon>202411140217302_AddMusicPitchingFieldToEditions.cs</DependentUpon>

@@ -235,12 +235,12 @@
 </div>
 <div class="row">
     <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.EditionDate.MusicPitchingEvaluationStartDateByCurator, new { @class = "control-label" })
-        @Html.TextBox("EditionDate.MusicPitchingEvaluationStartDateByCurator", Model.EditionDate.MusicPitchingEvaluationStartDateByCurator?.ToShortDateString(), new
+        @Html.LabelFor(m => m.EditionDate.MusicPitchingCuratorEvaluationStartDate, new { @class = "control-label" })
+        @Html.TextBox("EditionDate.MusicPitchingCuratorEvaluationStartDate", Model.EditionDate.MusicPitchingCuratorEvaluationStartDate?.ToShortDateString(), new
         {
             @class = "form-control enable-datepicker"
         })
-        @Html.ValidationMessageFor(m => m.EditionDate.MusicPitchingEvaluationStartDateByCurator, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(m => m.EditionDate.MusicPitchingCuratorEvaluationStartDate, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsByCurator, new { @class = "control-label" })
@@ -250,12 +250,12 @@
 </div>
 <div class="row">
     <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.EditionDate.MusicPitchingEvaluationStartDateByPopularVote, new { @class = "control-label" })
-        @Html.TextBox("EditionDate.MusicPitchingEvaluationStartDateByPopularVote", Model.EditionDate.MusicPitchingEvaluationStartDateByPopularVote?.ToShortDateString(), new
+        @Html.LabelFor(m => m.EditionDate.MusicPitchingPopularEvaluationStartDate, new { @class = "control-label" })
+        @Html.TextBox("EditionDate.MusicPitchingPopularEvaluationStartDate", Model.EditionDate.MusicPitchingPopularEvaluationStartDate?.ToShortDateString(), new
         {
             @class = "form-control enable-datepicker"
         })
-        @Html.ValidationMessageFor(m => m.EditionDate.MusicPitchingEvaluationStartDateByPopularVote, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(m => m.EditionDate.MusicPitchingPopularEvaluationStartDate, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsByPopularVote, new { @class = "control-label" })
@@ -265,12 +265,12 @@
 </div>
 <div class="row">
     <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.EditionDate.MusicPitchingEvaluationStartDateByRepechage, new { @class = "control-label" })
-        @Html.TextBox("EditionDate.MusicPitchingEvaluationStartDateByRepechage", Model.EditionDate.MusicPitchingEvaluationStartDateByRepechage?.ToShortDateString(), new
+        @Html.LabelFor(m => m.EditionDate.MusicPitchingRepechageEvaluationStartDate, new { @class = "control-label" })
+        @Html.TextBox("EditionDate.MusicPitchingRepechageEvaluationStartDate", Model.EditionDate.MusicPitchingRepechageEvaluationStartDate?.ToShortDateString(), new
         {
             @class = "form-control enable-datepicker"
         })
-        @Html.ValidationMessageFor(m => m.EditionDate.MusicPitchingEvaluationStartDateByRepechage, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(m => m.EditionDate.MusicPitchingRepechageEvaluationStartDate, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsByRepechage, new { @class = "control-label" })

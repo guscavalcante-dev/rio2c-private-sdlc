@@ -442,7 +442,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var approvedMusicBandsIds = await this.FindAllApprovedAttendeeMusicBandsIdsAsync(editionId);
 
             IEnumerable<MusicProjectDto> musicProjectDtosResult = musicProjectsDtos;
-            if (editionDto.IsMusicProjectEvaluationOpen())
+            if (editionDto.IsMusicPitchingComissionEvaluationOpen())
             {
                 #region Evaluation is Open
 
@@ -540,7 +540,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var approvedMusicBandsIds = await this.FindAllApprovedAttendeeMusicBandsIdsAsync(editionId);
 
             IEnumerable<MusicProjectJsonDto> musicProjectJsonDtosResult = musicProjectJsonDtos;
-            if (editionDto.IsMusicProjectEvaluationOpen())
+            if (editionDto.IsMusicPitchingComissionEvaluationOpen())
             {
                 #region Evaluation is Open
 
@@ -688,7 +688,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var approvedMusicBandsIds = await this.FindAllApprovedAttendeeMusicBandsIdsAsync(editionId);
 
             IEnumerable<MusicProjectReportDto> musicProjectReportDtosResult = musicProjectReportDtos;
-            if (editionDto.IsMusicProjectEvaluationOpen())
+            if (editionDto.IsMusicPitchingComissionEvaluationOpen())
             {
                 #region Evaluation is Open
 
@@ -1199,7 +1199,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var approvedMusicBandsIds = await this.FindAllApprovedAttendeeMusicBandsIdsAsync(editionId);
 
             IEnumerable<MusicProject> musicProjectsResult = musicProjects;
-            if (editionDto.IsMusicProjectEvaluationOpen())
+            if (editionDto.IsMusicPitchingComissionEvaluationOpen())
             {
                 #region Evaluation is Open
 
@@ -1289,7 +1289,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var approvedMusicBandsIds = await this.FindAllApprovedAttendeeMusicBandsIdsAsync(editionId);
 
             IEnumerable<MusicProject> musicProjectsResult = musicProjects;
-            if (editionDto.IsMusicProjectEvaluationOpen())
+            if (editionDto.IsMusicPitchingComissionEvaluationOpen())
             {
                 #region Evaluation is Open
 

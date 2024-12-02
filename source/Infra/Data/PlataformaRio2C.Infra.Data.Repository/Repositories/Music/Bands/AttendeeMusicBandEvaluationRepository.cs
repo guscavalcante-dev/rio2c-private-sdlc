@@ -62,6 +62,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             query = query.Where(ambe => ambe.EvaluatorUserId == collaboratorId && !ambe.IsDeleted);
             return query;
         }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="musicBandId">The music band id.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeMusicBandEvaluation> ExceptMusicBandId(this IQueryable<AttendeeMusicBandEvaluation> query, int? musicBandId)
+        {
+            if (musicBandId.HasValue)
+            {
+                query = query.Where(ambe => ambe.AttendeeMusicBand.MusicBandId != musicBandId && !ambe.IsDeleted);
+            }
+            return query;
+        }
     }
 
     #endregion
@@ -108,12 +122,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="collaboratorId">The collaborator id.</param>
+        /// <param name="musicBandId">The music band id.</param>
         /// <returns></returns>
-        public async Task<int> CountByCollaboratorIdAsync(int editionId, int collaboratorId)
+        public async Task<int> CountByCollaboratorIdAsync(int editionId, int collaboratorId, int? musicBandId)
         {
             var query = this.GetBaseQuery()
                 .FindByEditionId(editionId)
-                .FindByCollaboratorId(collaboratorId);            
+                .FindByCollaboratorId(collaboratorId)
+                .ExceptMusicBandId(musicBandId);            
             return await query.CountAsync();
         }
     }

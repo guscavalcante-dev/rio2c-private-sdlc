@@ -114,11 +114,13 @@ namespace PlataformaRio2C.Domain.Entities
             }
             else
             {
-                this.AttendeeMusicBandEvaluations.Add(new AttendeeMusicBandEvaluation(
+                var evaluation = new AttendeeMusicBandEvaluation(
                     this,
                     evaluatorUser,
                     grade,
-                    evaluatorUser.Id));
+                    evaluatorUser.Id
+                );
+                this.AttendeeMusicBandEvaluations.Add(evaluation);
             }
 
             this.Grade = this.GetAverageEvaluation();
@@ -139,16 +141,47 @@ namespace PlataformaRio2C.Domain.Entities
             var existentAttendeeMusicBandEvaluation = this.GetAttendeeMusicBandEvaluationByEvaluatorId(evaluatorUser.Id);
             if (existentAttendeeMusicBandEvaluation != null)
             {
-                existentAttendeeMusicBandEvaluation.UpdateProjectEvaluation(commissionEvaluationStatus, evaluatorUser.Id);
+                existentAttendeeMusicBandEvaluation.UpdateCommissionEvaluation(commissionEvaluationStatus, evaluatorUser.Id);
             }
             else
             {
-                this.AttendeeMusicBandEvaluations.Add(new AttendeeMusicBandEvaluation(
+                var evaluation = new AttendeeMusicBandEvaluation(
                     this,
                     evaluatorUser,
-                    evaluatorUser.Id,
-                    commissionEvaluationStatus)
+                    evaluatorUser.Id
                 );
+                evaluation.UpdateCommissionEvaluation(commissionEvaluationStatus, evaluatorUser.Id);
+                this.AttendeeMusicBandEvaluations.Add(evaluation);
+            }
+
+            this.EvaluationsCount = this.GetAttendeeMusicBandEvaluationTotalCount();
+            this.LastEvaluationDate = DateTime.UtcNow;
+        }
+
+        /// <summary>
+        /// Evaluates the specified evaluation user.
+        /// </summary>
+        /// <param name="evaluatorUser">The evaluation user.</param>
+        /// <param name="curatorEvaluationStatusId">The project evaluation status.</param>
+        public void ComissionMusicCuratorEvaluation(User evaluatorUser, ProjectEvaluationStatus curatorEvaluationStatusId)
+        {
+            if (this.AttendeeMusicBandEvaluations == null)
+                this.AttendeeMusicBandEvaluations = new List<AttendeeMusicBandEvaluation>();
+
+            var existentAttendeeMusicBandEvaluation = this.GetAttendeeMusicBandEvaluationByEvaluatorId(evaluatorUser.Id);
+            if (existentAttendeeMusicBandEvaluation != null)
+            {
+                existentAttendeeMusicBandEvaluation.UpdateCuratorEvaluation(curatorEvaluationStatusId, evaluatorUser.Id);
+            }
+            else
+            {
+                var evaluation = new AttendeeMusicBandEvaluation(
+                    this,
+                    evaluatorUser,
+                    evaluatorUser.Id
+                );
+                evaluation.UpdateCuratorEvaluation(curatorEvaluationStatusId, evaluatorUser.Id);
+                this.AttendeeMusicBandEvaluations.Add(evaluation);
             }
 
             this.EvaluationsCount = this.GetAttendeeMusicBandEvaluationTotalCount();

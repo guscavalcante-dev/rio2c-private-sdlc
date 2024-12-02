@@ -21,6 +21,6 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface IAttendeeMusicBandEvaluationRepository : IRepository<AttendeeMusicBandEvaluation>
     {
         Task<List<AttendeeMusicBandEvaluation>> FindAllByEditionIdAsync(int editionId);
-        Task<int> CountByCollaboratorIdAsync(int editionId, int collaboratorId);
+        Task<int> CountByCollaboratorIdAsync(int editionId, int collaboratorId, int? musicBandId);
     }
 }

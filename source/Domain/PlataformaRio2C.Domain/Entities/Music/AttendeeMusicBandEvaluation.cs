@@ -32,6 +32,10 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ProjectEvaluationStatus CommissionEvaluationStatus { get; private set; }
         public int? CommissionEvaluationStatusId { get; private set; }
         public DateTimeOffset? CommissionEvaluationDate { get; private set; }
+        public int? CuratorEvaluationStatusId { get; private set; }
+        public DateTimeOffset? CuratorEvaluationDate { get; private set; }
+        public int? PopularEvaluationStatusId { get; private set; }
+        public DateTimeOffset? PopularEvaluationDate { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttendeeMusicBandEvaluation"/> class.
@@ -66,8 +70,7 @@ namespace PlataformaRio2C.Domain.Entities
         public AttendeeMusicBandEvaluation(
             AttendeeMusicBand attendeeMusicBand,
             User evaluatorUser,
-            int userId,
-            ProjectEvaluationStatus commissionEvaluationStatus
+            int userId
         )
         {
             this.AttendeeMusicBand = attendeeMusicBand;
@@ -77,7 +80,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.Grade = 0;
 
             base.SetCreateDate(userId);
-            this.CommissionEvaluationStatus = commissionEvaluationStatus;
         }
 
         /// <summary>
@@ -106,10 +108,22 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         /// <param name="commissionEvaluationStatus">The grade.</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateProjectEvaluation(ProjectEvaluationStatus commissionEvaluationStatus, int userId)
+        public void UpdateCommissionEvaluation(ProjectEvaluationStatus commissionEvaluationStatus, int userId)
         {
             this.CommissionEvaluationStatusId = commissionEvaluationStatus.Id;
             this.CommissionEvaluationDate = DateTime.UtcNow;
+            base.SetUpdateDate(userId);
+        }
+
+        /// <summary>
+        /// Updates the specified grade.
+        /// </summary>
+        /// <param name="curatorEvaluationStatusId">The grade.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateCuratorEvaluation(ProjectEvaluationStatus curatorEvaluationStatusId, int userId)
+        {
+            this.CuratorEvaluationStatusId = curatorEvaluationStatusId.Id;
+            this.CuratorEvaluationDate = DateTime.UtcNow;
             base.SetUpdateDate(userId);
         }
 

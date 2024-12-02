@@ -3394,19 +3394,19 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="MusicPitchingMaximumApprovedProjectsByCommissionMember" xml:space="preserve">
     <value>Quantidade máxima de projetos aprovados por membro da comissão</value>
   </data>
-  <data name="MusicPitchingEvaluationStartDateByCurator" xml:space="preserve">
+  <data name="MusicPitchingCuratorEvaluationStartDate" xml:space="preserve">
     <value>Data de Inicio da avaliação de projetos pelo Curador</value>
   </data>
   <data name="MusicPitchingMaximumApprovedProjectsByCurator" xml:space="preserve">
     <value>Quantidade máxima de projetos aprovados por curador</value>
   </data>
-  <data name="MusicPitchingEvaluationStartDateByPopularVote" xml:space="preserve">
+  <data name="MusicPitchingPopularEvaluationStartDate" xml:space="preserve">
     <value>Data de inicio da avaliação de projetos pela votação popular</value>
   </data>
   <data name="MusicPitchingMaximumApprovedProjectsByPopularVote" xml:space="preserve">
     <value>Quantidade máxima de projetos aprovados por votação popular</value>
   </data>
-  <data name="MusicPitchingEvaluationStartDateByRepechage" xml:space="preserve">
+  <data name="MusicPitchingRepechageEvaluationStartDate" xml:space="preserve">
     <value>Data de Inicio da avaliação de projetos pela Repescagem</value>
   </data>
   <data name="MusicPitchingMaximumApprovedProjectsByRepechage" xml:space="preserve">

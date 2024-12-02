@@ -92,13 +92,13 @@ else
     var message = string.Format(Messages.NoneEntityAction, Labels.Project.ToLowerInvariant(), Labels.FoundM);
     var evaluationStatusUid = ViewBag.EvaluationStatusUid;
 
-    if (editionDto.IsMusicProjectEvaluationOpen() && (
+    if (editionDto.IsMusicPitchingComissionEvaluationOpen() && (
         evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid ||
         evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid))
     {
         message = $"{string.Format(Messages.TheEvaluationPeriodRunsFrom, editionDto.MusicCommissionEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(), editionDto.MusicCommissionEvaluationEndDate.ToBrazilTimeZone().ToShortDateString())}{Environment.NewLine}{Messages.TheProjectsWillReceiveFinalGradeAtPeriodEnds}";
     }
-    else if(!editionDto.IsMusicProjectEvaluationOpen() &&
+    else if(!editionDto.IsMusicPitchingComissionEvaluationOpen() &&
         evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
     {
         message = $"{Messages.EvaluationPeriodClosed}{Environment.NewLine}{string.Format(Messages.ProjectsNotFoundWithStatus, Labels.UnderEvaluation)}";

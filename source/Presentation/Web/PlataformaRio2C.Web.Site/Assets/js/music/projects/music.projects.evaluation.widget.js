@@ -17,10 +17,10 @@ var MusicProjectsEvaluationWidget = function () {
     var widgetElementId = '#ProjectEvaluationWidget';
     var widgetElement;
 
-    var acceptModalId = '#AcceptMusicProjectEvaluationModal';
-    var acceptFormId = '#AcceptMusicProjectEvaluationForm';
-    var refuseModalId = '#RefuseMusicProjectEvaluationModal';
-    var refuseFormId = '#RefuseMusicProjectEvaluationForm';
+    var acceptModalId = '#AcceptMusicPitchingEvaluationModal';
+    var acceptFormId = '#AcceptMusicPitchingEvaluationForm';
+    var refuseModalId = '#RefuseMusicPitchingEvaluationModal';
+    var refuseFormId = '#RefuseMusicPitchingEvaluationForm';
 
     // Initialize Elements ------------------------------------------------------------------------
     var initElements = function () {
@@ -201,7 +201,7 @@ var MusicProjectsEvaluationWidget = function () {
     };
     
     var submitAcceptEvaluation = function () {
-        const form = $('#AcceptMusicProjectEvaluationForm');
+        const form = $('#AcceptMusicPitchingEvaluationForm');
         $.post(form.attr('action'), form.serialize(), function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
@@ -225,7 +225,7 @@ var MusicProjectsEvaluationWidget = function () {
     };
 
     var submitRefuseEvaluation = function () {
-        const form = $('#RefuseMusicProjectEvaluationForm');
+        const form = $('#RefuseMusicPitchingEvaluationForm');
         $.post(form.attr('action'), form.serialize(), function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,

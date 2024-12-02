@@ -260,7 +260,6 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>
-        /// Evaluates the specified edition.
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="evaluatorUser">The evaluator user.</param>
@@ -269,6 +268,17 @@ namespace PlataformaRio2C.Domain.Entities
         {
             var attendeeMusicBand = this.FindAttendeeMusicBandByEditionId(edition.Id);
             attendeeMusicBand?.ComissionEvaluation(evaluatorUser, commissionEvaluationStatus);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="evaluatorUser">The evaluator user.</param>
+        /// <param name="curatorEvaluationStatusId">The curator evaluation status.</param>
+        public void ComissionMusicCuratorEvaluation(Edition edition, User evaluatorUser, ProjectEvaluationStatus curatorEvaluationStatusId)
+        {
+            var attendeeMusicBand = this.FindAttendeeMusicBandByEditionId(edition.Id);
+            attendeeMusicBand?.ComissionMusicCuratorEvaluation(evaluatorUser, curatorEvaluationStatusId);
         }
 
         #endregion

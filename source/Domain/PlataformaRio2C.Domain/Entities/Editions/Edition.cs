@@ -89,11 +89,11 @@ namespace PlataformaRio2C.Domain.Entities
         public int MusicPitchingMaximumProjectSubmissionsByEdition { get; private set; }
         public int MusicPitchingMaximumProjectSubmissionsByParticipant { get; private set; }
         public int MusicPitchingMaximumApprovedProjectsByCommissionMember { get; private set; }
-        public DateTimeOffset? MusicPitchingEvaluationStartDateByCurator { get; private set; }
+        public DateTimeOffset? MusicPitchingCuratorEvaluationStartDate { get; private set; }
         public int MusicPitchingMaximumApprovedProjectsByCurator { get; private set; }
-        public DateTimeOffset? MusicPitchingEvaluationStartDateByPopularVote { get; private set; }
+        public DateTimeOffset? MusicPitchingPopularEvaluationStartDate { get; private set; }
         public int MusicPitchingMaximumApprovedProjectsByPopularVote { get; private set; }
-        public DateTimeOffset? MusicPitchingEvaluationStartDateByRepechage { get; private set; }
+        public DateTimeOffset? MusicPitchingRepechageEvaluationStartDate { get; private set; }
         public int MusicPitchingMaximumApprovedProjectsByRepechage { get; private set; }
 
         #endregion
@@ -196,11 +196,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="musicPitchingMaximumProjectSubmissionsByEdition"></param>
         /// <param name="musicPitchingMaximumProjectSubmissionsByParticipant"></param>
         /// <param name="musicPitchingMaximumApprovedProjectsByCommissionMember"></param>
-        /// <param name="musicPitchingEvaluationStartDateByCurator"></param>
+        /// <param name="musicPitchingCuratorEvaluationStartDate"></param>
         /// <param name="musicPitchingMaximumApprovedProjectsByCurator"></param>
-        /// <param name="musicPitchingEvaluationStartDateByPopularVote"></param>
+        /// <param name="musicPitchingPopularEvaluationStartDate"></param>
         /// <param name="musicPitchingMaximumApprovedProjectsByPopularVote"></param>
-        /// <param name="musicPitchingEvaluationStartDateByRepechage"></param>
+        /// <param name="musicPitchingRepechageEvaluationStartDate"></param>
         /// <param name="musicPitchingMaximumApprovedProjectsByRepechage"></param>
         /// <param name="userId">The user identifier.</param>
         public Edition(
@@ -261,11 +261,11 @@ namespace PlataformaRio2C.Domain.Entities
             int musicPitchingMaximumProjectSubmissionsByEdition,
             int musicPitchingMaximumProjectSubmissionsByParticipant,
             int musicPitchingMaximumApprovedProjectsByCommissionMember,
-            DateTime? musicPitchingEvaluationStartDateByCurator,
+            DateTime? musicPitchingCuratorEvaluationStartDate,
             int musicPitchingMaximumApprovedProjectsByCurator,
-            DateTime? musicPitchingEvaluationStartDateByPopularVote,
+            DateTime? musicPitchingPopularEvaluationStartDate,
             int musicPitchingMaximumApprovedProjectsByPopularVote,
-            DateTime? musicPitchingEvaluationStartDateByRepechage,
+            DateTime? musicPitchingRepechageEvaluationStartDate,
             int musicPitchingMaximumApprovedProjectsByRepechage,
 
             int userId)
@@ -302,11 +302,11 @@ namespace PlataformaRio2C.Domain.Entities
             this.MusicPitchingMaximumProjectSubmissionsByEdition = musicPitchingMaximumProjectSubmissionsByEdition;
             this.MusicPitchingMaximumProjectSubmissionsByParticipant = musicPitchingMaximumProjectSubmissionsByParticipant;
             this.MusicPitchingMaximumApprovedProjectsByCommissionMember = musicPitchingMaximumApprovedProjectsByCommissionMember;
-            this.MusicPitchingEvaluationStartDateByCurator = musicPitchingEvaluationStartDateByCurator?.ToUtcTimeZone();
+            this.MusicPitchingCuratorEvaluationStartDate = musicPitchingCuratorEvaluationStartDate?.ToUtcTimeZone();
             this.MusicPitchingMaximumApprovedProjectsByCurator = musicPitchingMaximumApprovedProjectsByCurator;
-            this.MusicPitchingEvaluationStartDateByPopularVote = musicPitchingEvaluationStartDateByPopularVote?.ToUtcTimeZone();
+            this.MusicPitchingPopularEvaluationStartDate = musicPitchingPopularEvaluationStartDate?.ToUtcTimeZone();
             this.MusicPitchingMaximumApprovedProjectsByPopularVote = musicPitchingMaximumApprovedProjectsByPopularVote;
-            this.MusicPitchingEvaluationStartDateByRepechage = musicPitchingEvaluationStartDateByRepechage?.ToUtcTimeZone();
+            this.MusicPitchingRepechageEvaluationStartDate = musicPitchingRepechageEvaluationStartDate?.ToUtcTimeZone();
             this.MusicPitchingMaximumApprovedProjectsByRepechage = musicPitchingMaximumApprovedProjectsByRepechage;
 
             // Innovation - Commissions
@@ -424,11 +424,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="musicPitchingMaximumProjectSubmissionsByEdition"></param>
         /// <param name="musicPitchingMaximumProjectSubmissionsByParticipant"></param>
         /// <param name="musicPitchingMaximumApprovedProjectsByCommissionMember"></param>
-        /// <param name="musicPitchingEvaluationStartDateByCurator"></param>
+        /// <param name="musicPitchingCuratorEvaluationStartDate"></param>
         /// <param name="musicPitchingMaximumApprovedProjectsByCurator"></param>
-        /// <param name="musicPitchingEvaluationStartDateByPopularVote"></param>
+        /// <param name="musicPitchingPopularEvaluationStartDate"></param>
         /// <param name="musicPitchingMaximumApprovedProjectsByPopularVote"></param>
-        /// <param name="musicPitchingEvaluationStartDateByRepechage"></param>
+        /// <param name="musicPitchingRepechageEvaluationStartDate"></param>
         /// <param name="musicPitchingMaximumApprovedProjectsByRepechage"></param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateDatesInformation(     
@@ -478,11 +478,11 @@ namespace PlataformaRio2C.Domain.Entities
             int musicPitchingMaximumProjectSubmissionsByEdition,
             int musicPitchingMaximumProjectSubmissionsByParticipant,
             int musicPitchingMaximumApprovedProjectsByCommissionMember,
-            DateTime? musicPitchingEvaluationStartDateByCurator,
+            DateTime? musicPitchingCuratorEvaluationStartDate,
             int musicPitchingMaximumApprovedProjectsByCurator,
-            DateTime? musicPitchingEvaluationStartDateByPopularVote,
+            DateTime? musicPitchingPopularEvaluationStartDate,
             int musicPitchingMaximumApprovedProjectsByPopularVote,
-            DateTime? musicPitchingEvaluationStartDateByRepechage,
+            DateTime? musicPitchingRepechageEvaluationStartDate,
             int musicPitchingMaximumApprovedProjectsByRepechage,
 
             int userId)
@@ -506,11 +506,11 @@ namespace PlataformaRio2C.Domain.Entities
             this.MusicPitchingMaximumProjectSubmissionsByEdition = musicPitchingMaximumProjectSubmissionsByEdition;
             this.MusicPitchingMaximumProjectSubmissionsByParticipant = musicPitchingMaximumProjectSubmissionsByParticipant;
             this.MusicPitchingMaximumApprovedProjectsByCommissionMember = musicPitchingMaximumApprovedProjectsByCommissionMember;
-            this.MusicPitchingEvaluationStartDateByCurator = musicPitchingEvaluationStartDateByCurator?.ToUtcTimeZone();
+            this.MusicPitchingCuratorEvaluationStartDate = musicPitchingCuratorEvaluationStartDate?.ToUtcTimeZone();
             this.MusicPitchingMaximumApprovedProjectsByCurator = musicPitchingMaximumApprovedProjectsByCurator;
-            this.MusicPitchingEvaluationStartDateByPopularVote = musicPitchingEvaluationStartDateByPopularVote?.ToUtcTimeZone();
+            this.MusicPitchingPopularEvaluationStartDate = musicPitchingPopularEvaluationStartDate?.ToUtcTimeZone();
             this.MusicPitchingMaximumApprovedProjectsByPopularVote = musicPitchingMaximumApprovedProjectsByPopularVote;
-            this.MusicPitchingEvaluationStartDateByRepechage = musicPitchingEvaluationStartDateByRepechage?.ToUtcTimeZone();
+            this.MusicPitchingRepechageEvaluationStartDate = musicPitchingRepechageEvaluationStartDate?.ToUtcTimeZone();
             this.MusicPitchingMaximumApprovedProjectsByRepechage = musicPitchingMaximumApprovedProjectsByRepechage;
 
             this.InnovationProjectSubmitStartDate = innovationProjectSubmitStartDate.ToUtcTimeZone();
@@ -626,7 +626,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Determines whether [is music project evaluation open].</summary>
         /// <returns>
         ///   <c>true</c> if [is music project evaluation open]; otherwise, <c>false</c>.</returns>
-        public bool IsMusicProjectEvaluationOpen()
+        public bool IsMusicPitchingComissionEvaluationOpen()
         {
             return DateTime.UtcNow >= this.MusicCommissionEvaluationStartDate && DateTime.UtcNow <= this.MusicCommissionEvaluationEndDate;
         }

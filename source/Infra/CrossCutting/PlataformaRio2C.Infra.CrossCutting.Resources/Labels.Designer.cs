@@ -3996,27 +3996,27 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Data de Inicio da avaliação de projetos pelo Curador.
         /// </summary>
-        public static string MusicPitchingEvaluationStartDateByCurator {
+        public static string MusicPitchingCuratorEvaluationStartDate {
             get {
-                return ResourceManager.GetString("MusicPitchingEvaluationStartDateByCurator", resourceCulture);
+                return ResourceManager.GetString("MusicPitchingCuratorEvaluationStartDate", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Data de inicio da avaliação de projetos pela votação popular.
         /// </summary>
-        public static string MusicPitchingEvaluationStartDateByPopularVote {
+        public static string MusicPitchingPopularEvaluationStartDate {
             get {
-                return ResourceManager.GetString("MusicPitchingEvaluationStartDateByPopularVote", resourceCulture);
+                return ResourceManager.GetString("MusicPitchingPopularEvaluationStartDate", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Data de Inicio da avaliação de projetos pela Repescagem.
         /// </summary>
-        public static string MusicPitchingEvaluationStartDateByRepechage {
+        public static string MusicPitchingRepechageEvaluationStartDate {
             get {
-                return ResourceManager.GetString("MusicPitchingEvaluationStartDateByRepechage", resourceCulture);
+                return ResourceManager.GetString("MusicPitchingRepechageEvaluationStartDate", resourceCulture);
             }
         }
         

@@ -653,7 +653,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
         public async Task<ActionResult> Evaluate(int musicBandId, decimal? grade)
         {
-            if (this.EditionDto?.IsMusicProjectEvaluationOpen() != true)
+            if (this.EditionDto?.IsMusicPitchingComissionEvaluationOpen() != true)
             {
                 return Json(new { status = "error", message = Messages.OutOfEvaluationPeriod }, JsonRequestBehavior.AllowGet);
             }
@@ -725,7 +725,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 }
                 cmd = new AcceptMusicPitchingEvaluation(
                     evaluationDto,
-                    evaluationDto.AttendeeMusicBandDto.MusicBand.Uid
+                    evaluationDto.AttendeeMusicBandDto.MusicBand.Uid,
+                    this.UserAccessControlDto
                 );
             }
             catch (DomainException ex)
@@ -738,7 +739,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Modals/AcceptMusicProjectEvaluationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                    new { page = this.RenderRazorViewToString("Modals/AcceptMusicPitchingEvaluationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -749,7 +750,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         [HttpPost]
         public async Task<ActionResult> Accept(AcceptMusicPitchingEvaluation cmd)
         {
-           if (this.EditionDto?.IsMusicProjectEvaluationOpen() != true)
+            if (this.EditionDto?.IsMusicPitchingComissionEvaluationOpen() != true)
             {
                 return Json(new { status = "error", message = Messages.OutOfEvaluationPeriod }, JsonRequestBehavior.AllowGet);
             }
@@ -763,7 +764,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                     this.UserAccessControlDto.User.Uid,
                     this.EditionDto.Id,
                     this.EditionDto.Uid,
-                    this.UserInterfaceLanguage
+                    this.UserInterfaceLanguage,
+                    this.UserAccessControlDto
                 );
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
@@ -817,7 +819,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 }
                 cmd = new RefuseMusicPitchingEvaluation(
                     evaluationDto,
-                    evaluationDto.AttendeeMusicBandDto.MusicBand.Uid
+                    evaluationDto.AttendeeMusicBandDto.MusicBand.Uid,
+                    this.UserAccessControlDto
                 );
             }
             catch (DomainException ex)
@@ -830,7 +833,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Modals/RefuseMusicProjectEvaluationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                    new { page = this.RenderRazorViewToString("Modals/RefuseMusicPitchingEvaluationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -841,7 +844,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         [HttpPost]
         public async Task<ActionResult> Refuse(RefuseMusicPitchingEvaluation cmd)
         {
-            if (this.EditionDto?.IsMusicProjectEvaluationOpen() != true)
+            if (this.EditionDto?.IsMusicPitchingComissionEvaluationOpen() != true)
             {
                 return Json(new { status = "error", message = Messages.OutOfEvaluationPeriod }, JsonRequestBehavior.AllowGet);
             }
@@ -855,7 +858,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                     this.UserAccessControlDto.User.Uid,
                     this.EditionDto.Id,
                     this.EditionDto.Uid,
-                    this.UserInterfaceLanguage
+                    this.UserInterfaceLanguage,
+                    this.UserAccessControlDto
                 );
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
