@@ -4,10 +4,13 @@
 		ALTER TABLE dbo.Editions DROP COLUMN MusicPitchingMaximumProjectSubmissionsByParticipant;
 		ALTER TABLE dbo.Editions DROP COLUMN MusicPitchingMaximumApprovedProjectsByCommissionMember;
 		ALTER TABLE dbo.Editions DROP COLUMN MusicPitchingCuratorEvaluationStartDate;
+		ALTER TABLE dbo.Editions DROP COLUMN MusicPitchingCuratorEvaluationEndDate;
 		ALTER TABLE dbo.Editions DROP COLUMN MusicPitchingMaximumApprovedProjectsByCurator;
 		ALTER TABLE dbo.Editions DROP COLUMN MusicPitchingMaximumApprovedProjectsByPopularVote;
 		ALTER TABLE dbo.Editions DROP COLUMN MusicPitchingPopularEvaluationStartDate;
+		ALTER TABLE dbo.Editions DROP COLUMN MusicPitchingPopularEvaluationEndDate;
 		ALTER TABLE dbo.Editions DROP COLUMN MusicPitchingRepechageEvaluationStartDate;
+		ALTER TABLE dbo.Editions DROP COLUMN MusicPitchingRepechageEvaluationEndDate;
 		ALTER TABLE dbo.Editions DROP COLUMN MusicPitchingMaximumApprovedProjectsByRepechage;
 	COMMIT TRAN -- Transaction Success!
 END TRY

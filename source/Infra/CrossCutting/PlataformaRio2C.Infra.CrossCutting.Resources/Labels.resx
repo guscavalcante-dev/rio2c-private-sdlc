@@ -290,6 +290,22 @@
     <value>Aprovar</value>
     <comment>Aprovar</comment>
   </data>
+  <data name="CuratorApproval" xml:space="preserve">
+    <value>Aprovação do curador</value>
+    <comment>Aprovar</comment>
+  </data>
+  <data name="ApproveToRepechage" xml:space="preserve">
+    <value>Aprovar repescagem</value>
+    <comment>Aprovar</comment>
+  </data>
+  <data name="DisapproveToRepechage" xml:space="preserve">
+    <value>Reprovar repescagem</value>
+    <comment>Aprovar</comment>
+  </data>
+  <data name="CuratorDisapproval" xml:space="preserve">
+    <value>Reprovação do curador</value>
+    <comment>Aprovar</comment>
+  </data>
   <data name="Arrival" xml:space="preserve">
     <value>Chegada</value>
     <comment>Chegada</comment>
@@ -3395,22 +3411,31 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Quantidade máxima de projetos aprovados por membro da comissão</value>
   </data>
   <data name="MusicPitchingCuratorEvaluationStartDate" xml:space="preserve">
-    <value>Data de Inicio da avaliação de projetos pelo Curador</value>
+    <value>Data de início da avaliação de projetos pelo Curador</value>
+  </data>
+  <data name="MusicPitchingCuratorEvaluationEndDate" xml:space="preserve">
+    <value>Data de término da avaliação de projetos pelo Curador</value>
   </data>
   <data name="MusicPitchingMaximumApprovedProjectsByCurator" xml:space="preserve">
     <value>Quantidade máxima de projetos aprovados por curador</value>
   </data>
   <data name="MusicPitchingPopularEvaluationStartDate" xml:space="preserve">
-    <value>Data de inicio da avaliação de projetos pela votação popular</value>
+    <value>Data de início da avaliação de projetos pela votação popular</value>
+  </data>
+  <data name="MusicPitchingPopularEvaluationEndDate" xml:space="preserve">
+    <value>Data de término da avaliação de projetos pela votação popular</value>
   </data>
   <data name="MusicPitchingMaximumApprovedProjectsByPopularVote" xml:space="preserve">
     <value>Quantidade máxima de projetos aprovados por votação popular</value>
   </data>
   <data name="MusicPitchingRepechageEvaluationStartDate" xml:space="preserve">
-    <value>Data de Inicio da avaliação de projetos pela Repescagem</value>
+    <value>Data de início da avaliação de projetos pela Repescagem</value>
+  </data>
+  <data name="MusicPitchingRepechageEvaluationEndDate" xml:space="preserve">
+    <value>Data de término da avaliação de projetos pela Repescagem</value>
   </data>
   <data name="MusicPitchingMaximumApprovedProjectsByRepechage" xml:space="preserve">
-    <value>quantidade máxima de projetos aprovados por Repescagem</value>
+    <value>Quantidade máxima de projetos aprovados por Repescagem</value>
   </data>
   <data name="Distributed" xml:space="preserve">
     <value>Distribuído</value>

@@ -155,7 +155,7 @@
         if (userAccessControlDto?.CountCollaboratorTypes(musicCommissionTypes) > 0)
         {
             projectsUrl = Url.Action("EvaluationList", "Projects", new { Area = "Music" });
-            if (editionDto?.IsMusicProjectEvaluationStarted() != true)
+            if (editionDto?.IsMusicPitchingCommissionEvaluationStarted() != true)
             {
                 projectsUrl = Url.Action("Index", "Projects", new { Area = "Music" });
             }

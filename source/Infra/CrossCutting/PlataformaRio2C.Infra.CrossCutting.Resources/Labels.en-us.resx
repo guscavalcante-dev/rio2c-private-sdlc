@@ -289,6 +289,20 @@
     <value>Approve</value>
     <comment>Aprovar</comment>
   </data>
+  <data name="CuratorApproval" xml:space="preserve">
+    <value>Curator's approval</value>
+    <comment>Aprovar</comment>
+  </data>
+  <data name="ApproveToRepechage" xml:space="preserve">
+    <value>Approve repechage</value>
+  </data>
+  <data name="DisapproveToRepechage" xml:space="preserve">
+    <value>Disapprove repechage</value>
+  </data>
+  <data name="CuratorDisapproval" xml:space="preserve">
+    <value>Curator's disapproval</value>
+    <comment>Aprovar</comment>
+  </data>
   <data name="Arrival" xml:space="preserve">
     <value>Arrival</value>
     <comment>Chegada</comment>
@@ -3395,17 +3409,26 @@
   <data name="MusicPitchingCuratorEvaluationStartDate" xml:space="preserve">
     <value>Start date for project evaluation by the curator</value>
   </data>
+  <data name="MusicPitchingCuratorEvaluationEndDate" xml:space="preserve">
+    <value>End date for project evaluation by the curator</value>
+  </data>
   <data name="MusicPitchingMaximumApprovedProjectsByCurator" xml:space="preserve">
     <value>Maximum number of projects approved by curator</value>
   </data>
   <data name="MusicPitchingPopularEvaluationStartDate" xml:space="preserve">
     <value>Start date for project evaluation by popular vote</value>
   </data>
+  <data name="MusicPitchingPopularEvaluationEndDate" xml:space="preserve">
+    <value>End date for project evaluation by popular vote</value>
+  </data>
   <data name="MusicPitchingMaximumApprovedProjectsByPopularVote" xml:space="preserve">
     <value>Maximum number of projects approved by popular vote</value>
   </data>
   <data name="MusicPitchingRepechageEvaluationStartDate" xml:space="preserve">
     <value>Start date for project evaluation by repechage</value>
+  </data>
+  <data name="MusicPitchingRepechageEvaluationEndDate" xml:space="preserve">
+    <value>End date for project evaluation by repechage</value>
   </data>
   <data name="MusicPitchingMaximumApprovedProjectsByRepechage" xml:space="preserve">
     <value>Maximum number of projects approved by repechage</value>

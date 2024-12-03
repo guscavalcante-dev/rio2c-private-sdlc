@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Gilson Oliveira
-// Last Modified On : 11-22-2024
+// Last Modified On : 12-02-2024
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -44,6 +44,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         private readonly IMusicGenreRepository musicGenreRepo;
         private readonly IProjectEvaluationStatusRepository evaluationStatusRepo;
         private readonly IMusicBandRepository musicBandRepo;
+        private readonly IAttendeeMusicBandEvaluationRepository attendeeMusicBandEvaluationRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectsController" /> class.
@@ -54,13 +55,15 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         /// <param name="musicGenreRepository">The music genre repository.</param>
         /// <param name="evaluationStatusRepository">The evaluation status repository.</param>
         /// <param name="musicBandRepository">The music band repository.</param>
+        /// <param name="attendeeMusicBandEvaluationRepo">The attendee music band evaluation repo.</param>
         public ProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
             IMusicProjectRepository musicProjectRepository,
             IMusicGenreRepository musicGenreRepository,
             IProjectEvaluationStatusRepository evaluationStatusRepository,
-            IMusicBandRepository musicBandRepository
+            IMusicBandRepository musicBandRepository,
+            IAttendeeMusicBandEvaluationRepository attendeeMusicBandEvaluationRepo
             )
             : base(commandBus, identityController)
         {
@@ -68,6 +71,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             this.musicGenreRepo = musicGenreRepository;
             this.evaluationStatusRepo = evaluationStatusRepository;
             this.musicBandRepo = musicBandRepository;
+            this.attendeeMusicBandEvaluationRepo = attendeeMusicBandEvaluationRepo;
         }
 
         #region Evaluation List
@@ -102,7 +106,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> EvaluationList(string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool? showBusinessRounds = false, int? page = 1, int? pageSize = 12)
         {
-            if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
+            if (this.EditionDto?.IsMusicPitchingCommissionEvaluationStarted() != true)
             {
                 return RedirectToAction("Index", "Projects", new { Area = "Music" });
             }
@@ -142,7 +146,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowEvaluationListWidget(string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool? showBusinessRounds = false, int? page = 1, int? pageSize = 12)
         {
-            if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
+            if (this.EditionDto?.IsMusicPitchingCommissionEvaluationStarted() != true)
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
@@ -191,7 +195,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowEvaluationListItemWidget(Guid? projectUid)
         {
-            if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
+            if (this.EditionDto?.IsMusicPitchingCommissionEvaluationStarted() != true)
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
@@ -230,7 +234,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         /// <returns></returns>
         public async Task<ActionResult> EvaluationDetails(int? id, string searchKeywords = null, Guid? musicGenreUid = null, Guid? evaluationStatusUid = null, bool? showBusinessRounds = false, int? page = 1, int? pageSize = 12)
         {
-            if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
+            if (this.EditionDto?.IsMusicPitchingCommissionEvaluationStarted() != true)
             {
                 this.StatusMessageToastr(Messages.OutOfEvaluationPeriod, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
                 return RedirectToAction("Index", "Projects", new { Area = "Music" });
@@ -415,6 +419,11 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             }
 
             ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id);
+            ViewBag.DisapprovalByPopulation = await this.attendeeMusicBandEvaluationRepo.CountByPopularEvaluationAsync(
+                this.EditionDto.Edition.Id,
+                new List<int?>() { mainInformationWidgetDto.AttendeeMusicBandDto.MusicBand.Id },
+                new List<int?>() { ProjectEvaluationStatus.Refused.Id }
+            );
 
             return Json(new
             {
@@ -620,7 +629,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowEvaluationGradeWidget(Guid? projectUid)
         {
-            if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
+            if (this.EditionDto?.IsMusicPitchingCommissionEvaluationStarted() != true)
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
@@ -632,6 +641,11 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             }
 
             ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id);
+            ViewBag.DisapprovalByPopulation = await this.attendeeMusicBandEvaluationRepo.CountByPopularEvaluationAsync(
+                this.EditionDto.Edition.Id,
+                new List<int?>() { evaluationDto.AttendeeMusicBandDto.MusicBand.Id },
+                new List<int?>() { ProjectEvaluationStatus.Refused.Id }
+            );
 
             return Json(new
             {
@@ -713,7 +727,11 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
             try
             {
-                if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
+                if (this.EditionDto?.IsMusicPitchingCommissionEvaluationStarted() == false
+                    && this.EditionDto?.IsMusicPitchingComissionEvaluationOpen() == false
+                    && this.EditionDto?.IsMusicPitchingCuratorEvaluationOpen() == false
+                    && this.EditionDto?.IsMusicPitchingRepechageEvaluationOpen() == false
+                )
                 {
                     return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
                 }
@@ -750,7 +768,11 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         [HttpPost]
         public async Task<ActionResult> Accept(AcceptMusicPitchingEvaluation cmd)
         {
-            if (this.EditionDto?.IsMusicPitchingComissionEvaluationOpen() != true)
+            if (this.EditionDto?.IsMusicPitchingCommissionEvaluationStarted() == false
+                && this.EditionDto?.IsMusicPitchingComissionEvaluationOpen() == false
+                && this.EditionDto?.IsMusicPitchingCuratorEvaluationOpen() == false
+                && this.EditionDto?.IsMusicPitchingRepechageEvaluationOpen() == false
+            )
             {
                 return Json(new { status = "error", message = Messages.OutOfEvaluationPeriod }, JsonRequestBehavior.AllowGet);
             }
@@ -807,7 +829,11 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
             try
             {
-                if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
+                if (this.EditionDto?.IsMusicPitchingCommissionEvaluationStarted() == false
+                    && this.EditionDto?.IsMusicPitchingComissionEvaluationOpen() == false
+                    && this.EditionDto?.IsMusicPitchingCuratorEvaluationOpen() == false
+                    && this.EditionDto?.IsMusicPitchingRepechageEvaluationOpen() == false
+                )
                 {
                     return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
                 }
@@ -844,7 +870,11 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         [HttpPost]
         public async Task<ActionResult> Refuse(RefuseMusicPitchingEvaluation cmd)
         {
-            if (this.EditionDto?.IsMusicPitchingComissionEvaluationOpen() != true)
+            if (this.EditionDto?.IsMusicPitchingCommissionEvaluationStarted() == false
+                && this.EditionDto?.IsMusicPitchingComissionEvaluationOpen() == false
+                && this.EditionDto?.IsMusicPitchingCuratorEvaluationOpen() == false
+                && this.EditionDto?.IsMusicPitchingRepechageEvaluationOpen() == false
+            )
             {
                 return Json(new { status = "error", message = Messages.OutOfEvaluationPeriod }, JsonRequestBehavior.AllowGet);
             }
@@ -896,7 +926,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowEvaluatorsWidget(Guid? projectUid)
         {
-            if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
+            if (this.EditionDto?.IsMusicPitchingCommissionEvaluationStarted() != true)
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }

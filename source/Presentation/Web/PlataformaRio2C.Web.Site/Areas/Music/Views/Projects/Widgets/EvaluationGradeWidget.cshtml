@@ -9,6 +9,7 @@
     var approvedAttendeeMusicBandsIds = ViewBag.ApprovedAttendeeMusicBandsIds as int[];
     var isThisMusicProjectApproved = approvedAttendeeMusicBandsIds.Contains(Model.AttendeeMusicBandDto.AttendeeMusicBand.Id);
     var isCommissionMusicCurator = userAccessControlDto.IsCommissionMusicCurator();
+    var disapprovalByPopulation = ViewBag.DisapprovalByPopulation as int? ?? 0;
 }
 <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
@@ -16,7 +17,7 @@
     </div>
 </div>
 <div class="kt-portlet__body pt-0">
-    @if (editionDto?.IsMusicProjectEvaluationStarted() != true)
+    @if (editionDto?.IsMusicPitchingCommissionEvaluationStarted() != true)
     {
         <div class="row mt-75">
             <div class="col-12">
@@ -25,28 +26,6 @@
                 </div>
             </div>
         </div>
-    }
-    else if (isCommissionMusicCurator && editionDto.IsMusicPitchingCuratorEvaluationOpen() == true)
-    {
-        <form class="form-inline justify-content-center mt-85">
-            <div class="form-group mb-2 mr-3">
-                <button @(currentEvaluation?.AttendeeMusicBandEvaluation.CuratorEvaluationStatusId == ProjectEvaluationStatus.Accepted.Id ? "disabled" : "")
-                        type="button"
-                        class="btn btn-success"
-                        onclick="MusicProjectsEvaluationWidget.showAcceptModal('@Model.MusicProject.Uid');">
-                    <i class="fa fa-thumbs-up"></i> @Labels.Approve
-                </button>
-            </div>
-
-            <div class="form-group mb-2 mr-3">
-                <button @(currentEvaluation?.AttendeeMusicBandEvaluation.CuratorEvaluationStatusId == ProjectEvaluationStatus.Refused.Id ? "disabled" : "")
-                        type="button"
-                        class="btn btn-danger"
-                        onclick="MusicProjectsEvaluationWidget.showRefuseModal('@Model.MusicProject.Uid');">
-                    <i class="fa fa-thumbs-down"></i> @Labels.RefuseProject
-                </button>
-            </div>
-        </form>
     }
     else if (editionDto?.IsMusicPitchingComissionEvaluationOpen() == true)
     {
@@ -66,6 +45,50 @@
                         class="btn btn-danger"
                         onclick="MusicProjectsEvaluationWidget.showRefuseModal('@Model.MusicProject.Uid');">
                     <i class="fa fa-thumbs-down"></i> @Labels.RefuseProject
+                </button>
+            </div>
+        </form>
+    }
+    else if (isCommissionMusicCurator && editionDto.IsMusicPitchingCuratorEvaluationOpen() == true)
+    {
+        <form class="form-inline justify-content-center mt-85">
+            <div class="form-group mb-2 mr-3">
+                <button @(currentEvaluation?.AttendeeMusicBandEvaluation.CuratorEvaluationStatusId == ProjectEvaluationStatus.Accepted.Id ? "disabled" : "")
+                        type="button"
+                        class="btn btn-success"
+                        onclick="MusicProjectsEvaluationWidget.showAcceptModal('@Model.MusicProject.Uid');">
+                    <i class="fa fa-thumbs-up"></i> @Labels.CuratorApproval
+                </button>
+            </div>
+
+            <div class="form-group mb-2 mr-3">
+                <button @(currentEvaluation?.AttendeeMusicBandEvaluation.CuratorEvaluationStatusId == ProjectEvaluationStatus.Refused.Id ? "disabled" : "")
+                        type="button"
+                        class="btn btn-danger"
+                        onclick="MusicProjectsEvaluationWidget.showRefuseModal('@Model.MusicProject.Uid');">
+                    <i class="fa fa-thumbs-down"></i> @Labels.CuratorDisapproval
+                </button>
+            </div>
+        </form>
+    }
+    else if (isCommissionMusicCurator && editionDto?.IsMusicPitchingRepechageEvaluationOpen() == true && disapprovalByPopulation > 0)
+    {
+        <form class="form-inline justify-content-center mt-85">
+            <div class="form-group mb-2 mr-3">
+                <button @(currentEvaluation?.AttendeeMusicBandEvaluation.RepechageEvaluationStatusId == ProjectEvaluationStatus.Accepted.Id ? "disabled" : "")
+                        type="button"
+                        class="btn btn-success"
+                        onclick="MusicProjectsEvaluationWidget.showAcceptModal('@Model.MusicProject.Uid');">
+                    <i class="fa fa-thumbs-up"></i> @Labels.ApproveToRepechage
+                </button>
+            </div>
+
+            <div class="form-group mb-2 mr-3">
+                <button @(currentEvaluation?.AttendeeMusicBandEvaluation.RepechageEvaluationStatusId == ProjectEvaluationStatus.Refused.Id ? "disabled" : "")
+                        type="button"
+                        class="btn btn-danger"
+                        onclick="MusicProjectsEvaluationWidget.showRefuseModal('@Model.MusicProject.Uid');">
+                    <i class="fa fa-thumbs-down"></i> @Labels.DisapproveToRepechage
                 </button>
             </div>
         </form>

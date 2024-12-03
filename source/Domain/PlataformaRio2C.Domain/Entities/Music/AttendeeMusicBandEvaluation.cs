@@ -4,7 +4,7 @@
 // Created          : 03-30-2021
 //
 // Last Modified By : Gilson Oliveira
-// Last Modified On : 11-10-2024
+// Last Modified On : 12-02-2024
 // ***********************************************************************
 // <copyright file="AttendeeMusicBandEvaluation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,6 +36,8 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset? CuratorEvaluationDate { get; private set; }
         public int? PopularEvaluationStatusId { get; private set; }
         public DateTimeOffset? PopularEvaluationDate { get; private set; }
+        public int? RepechageEvaluationStatusId { get; private set; }
+        public DateTimeOffset? RepechageEvaluationDate { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttendeeMusicBandEvaluation"/> class.
@@ -66,7 +68,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="attendeeMusicBand">The attendee music band.</param>
         /// <param name="evaluatorUser">The evaluator user.</param>
         /// <param name="userId">The user identifier.</param>
-        /// <param name="commissionEvaluationStatus">The project evaluation status.</param>
         public AttendeeMusicBandEvaluation(
             AttendeeMusicBand attendeeMusicBand,
             User evaluatorUser,
@@ -104,7 +105,7 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>
-        /// Updates the specified grade.
+        /// Updates the commission evaluation.
         /// </summary>
         /// <param name="commissionEvaluationStatus">The grade.</param>
         /// <param name="userId">The user identifier.</param>
@@ -116,7 +117,7 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>
-        /// Updates the specified grade.
+        /// Updates the curator evaluation.
         /// </summary>
         /// <param name="curatorEvaluationStatusId">The grade.</param>
         /// <param name="userId">The user identifier.</param>
@@ -124,6 +125,18 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.CuratorEvaluationStatusId = curatorEvaluationStatusId.Id;
             this.CuratorEvaluationDate = DateTime.UtcNow;
+            base.SetUpdateDate(userId);
+        }
+
+        /// <summary>
+        /// Updates the repechage evaluation.
+        /// </summary>
+        /// <param name="repechageEvaluationStatusId">The grade.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateRepechageEvaluation(ProjectEvaluationStatus repechageEvaluationStatusId, int userId)
+        {
+            this.RepechageEvaluationStatusId = repechageEvaluationStatusId.Id;
+            this.RepechageEvaluationDate = DateTime.UtcNow;
             base.SetUpdateDate(userId);
         }
 
