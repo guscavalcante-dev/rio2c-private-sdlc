@@ -68,6 +68,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset? MusicBusinessRoundEvaluationEndDate { get; private set; }
         public DateTimeOffset? MusicBusinessRoundSubmitStartDate { get; private set; }
         public DateTimeOffset? MusicBusinessRoundSubmitEndDate { get; private set; }
+        public DateTimeOffset? MusicBusinessRoundNegotiationStartDate { get; private set; }
+        public DateTimeOffset? MusicBusinessRoundNegotiationEndDate { get; private set; }
         public int MusicBusinessRoundMaximumProjectsBySeller { get; private set; }
         public int MusicBusinessRoundMaximumEvaluatorsByProject { get; private set; }
 
@@ -150,6 +152,16 @@ namespace PlataformaRio2C.Domain.Dtos
             this.NegotiationEndDate = entity.NegotiationEndDate;
             this.AttendeeOrganizationMaxSellProjectsCount = entity.AttendeeOrganizationMaxSellProjectsCount;
             this.ProjectMaxBuyerEvaluationsCount = entity.ProjectMaxBuyerEvaluationsCount;
+
+            // Music - Business Rounds
+            this.MusicBusinessRoundSubmitStartDate = entity.MusicBusinessRoundSubmitStartDate;
+            this.MusicBusinessRoundSubmitEndDate = entity.MusicBusinessRoundSubmitEndDate;
+            this.MusicBusinessRoundEvaluationStartDate = entity.MusicBusinessRoundEvaluationStartDate;
+            this.MusicBusinessRoundEvaluationEndDate = entity.MusicBusinessRoundEvaluationEndDate;
+            this.MusicBusinessRoundNegotiationStartDate = entity.MusicBusinessRoundNegotiationStartDate;
+            this.MusicBusinessRoundNegotiationEndDate = entity.MusicBusinessRoundNegotiationEndDate;
+            this.MusicBusinessRoundMaximumProjectsBySeller = entity.MusicBusinessRoundMaximumProjectsBySeller;
+            this.MusicBusinessRoundMaximumEvaluatorsByProject = entity.MusicBusinessRoundMaximumEvaluatorsByProject;
 
             // Music - Commissions
             this.MusicPitchingSubmitStartDate = entity.MusicPitchingSubmitStartDate;

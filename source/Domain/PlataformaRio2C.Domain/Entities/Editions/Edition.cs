@@ -430,6 +430,15 @@ namespace PlataformaRio2C.Domain.Entities
             int projectMaxBuyerEvaluationsCount,
             short audiovisualNegotiationsVirtualMeetingsJoinMinutes,
 
+            DateTime? musicBusinessRoundSubmitStartDate,
+            DateTime? musicBusinessRoundSubmitEndDate,
+            DateTime? musicBusinessRoundEvaluationStartDate,
+            DateTime? musicBusinessRoundEvaluationEndDate,
+            DateTime? musicBusinessRoundNegotiationStartDate,
+            DateTime? musicBusinessRoundNegotiationEndDate,
+            int musicBusinessRoundMaximumProjectsBySeller,
+            int musicBusinessRoundMaximumEvaluatorsByProject,
+
             DateTime musicPitchingSubmitStartDate,
             DateTime musicPitchingSubmitEndDate,
             DateTime musicCommissionEvaluationStartDate,
@@ -474,6 +483,15 @@ namespace PlataformaRio2C.Domain.Entities
             this.AttendeeOrganizationMaxSellProjectsCount = attendeeOrganizationMaxSellProjectsCount;
             this.ProjectMaxBuyerEvaluationsCount = projectMaxBuyerEvaluationsCount;
             this.AudiovisualNegotiationsVirtualMeetingsJoinMinutes = audiovisualNegotiationsVirtualMeetingsJoinMinutes;
+
+            this.MusicBusinessRoundSubmitStartDate = musicBusinessRoundSubmitStartDate?.ToUtcTimeZone();
+            this.MusicBusinessRoundSubmitEndDate = musicBusinessRoundSubmitEndDate?.ToEndDateTimeOffset();
+            this.MusicBusinessRoundEvaluationStartDate = musicBusinessRoundEvaluationStartDate?.ToUtcTimeZone();
+            this.MusicBusinessRoundEvaluationEndDate = musicBusinessRoundEvaluationEndDate?.ToEndDateTimeOffset();
+            this.MusicBusinessRoundNegotiationStartDate = musicBusinessRoundNegotiationStartDate?.ToUtcTimeZone();
+            this.MusicBusinessRoundNegotiationEndDate = musicBusinessRoundNegotiationEndDate?.ToEndDateTimeOffset();
+            this.MusicBusinessRoundMaximumProjectsBySeller = musicBusinessRoundMaximumProjectsBySeller;
+            this.MusicBusinessRoundMaximumEvaluatorsByProject = musicBusinessRoundMaximumEvaluatorsByProject;
 
             this.MusicPitchingSubmitStartDate = musicPitchingSubmitStartDate.ToUtcTimeZone();
             this.MusicPitchingSubmitEndDate = musicPitchingSubmitEndDate.ToEndDateTimeOffset();
