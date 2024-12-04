@@ -122,7 +122,7 @@
     <comment>Declaro estar ciente e concordar com o termo acima.</comment>
   </data>
   <data name="AcceptTermsAndConditions" xml:space="preserve">
-    <value>I declare that I am aware and agree with the above-mentioned rules and regulations.</value>
+    <value>I declare that I am aware of and agree to the rules and regulations above.</value>
     <comment>Declaro estar ciente e concordar com as regras e regulamentos acima.</comment>
   </data>
   <data name="AccessDenied" xml:space="preserve">
