@@ -97,12 +97,21 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.EditionDate.ProjectMaxBuyerEvaluationsCount.Value,
                 cmd.EditionDate.AudiovisualNegotiationsVirtualMeetingsJoinMinutes.Value,
 
-                cmd.EditionDate.MusicProjectSubmitStartDate.Value,
-                cmd.EditionDate.MusicProjectSubmitEndDate.Value,
+                cmd.EditionDate.MusicPitchingSubmitStartDate.Value,
+                cmd.EditionDate.MusicPitchingSubmitEndDate.Value,
                 cmd.EditionDate.MusicCommissionEvaluationStartDate.Value,
                 cmd.EditionDate.MusicCommissionEvaluationEndDate.Value,
                 cmd.EditionDate.MusicCommissionMinimumEvaluationsCount.Value,
                 cmd.EditionDate.MusicCommissionMaximumApprovedBandsCount.Value,
+
+                cmd.EditionDate.MusicBusinessRoundSubmitStartDate.Value,
+                cmd.EditionDate.MusicBusinessRoundSubmitEndDate.Value,
+                cmd.EditionDate.MusicBusinessRoundEvaluationStartDate.Value,
+                cmd.EditionDate.MusicBusinessRoundEvaluationEndDate.Value,
+                cmd.EditionDate.MusicBusinessRoundNegotiationStartDate.Value,
+                cmd.EditionDate.MusicBusinessRoundNegotiationEndDate.Value,
+                cmd.EditionDate.MusicBusinessRoundMaximumProjectsBySeller,
+                cmd.EditionDate.MusicBusinessRoundMaximumEvaluatorsByProject,
 
                 cmd.EditionDate.InnovationProjectSubmitStartDate.Value,
                 cmd.EditionDate.InnovationProjectSubmitEndDate.Value,

@@ -1721,11 +1721,11 @@
     <value>Projetos de Música</value>
     <comment>Projetos de Música</comment>
   </data>
-  <data name="MusicProjectSubmitEndDate" xml:space="preserve">
+  <data name="MusicPitchingSubmitEndDate" xml:space="preserve">
     <value>Data de término de envio de projeto musical</value>
     <comment>Data de término de envio de projeto musical</comment>
   </data>
-  <data name="MusicProjectSubmitStartDate" xml:space="preserve">
+  <data name="MusicPitchingSubmitStartDate" xml:space="preserve">
     <value>Data de início de envio de projeto musical</value>
     <comment>Data de início de envio de projeto musical</comment>
   </data>
@@ -3441,5 +3441,29 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   </data>
   <data name="BusinessRounds" xml:space="preserve">
     <value>Rodadas de negócio</value>
+  </data>
+  <data name="MusicBusinessRoundSubmitStartDate" xml:space="preserve">
+    <value>Data de início do envio de projetos de música</value>
+  </data>
+  <data name="MusicBusinessRoundSubmitEndDate" xml:space="preserve">
+    <value>Data de término do envio de projetos de música</value>
+  </data>
+  <data name="MusicBusinessRoundEvaluationStartDate" xml:space="preserve">
+    <value>Data de início da avaliação de projetos de música</value>
+  </data>
+  <data name="MusicBusinessRoundEvaluationEndDate" xml:space="preserve">
+    <value>Data de término da avaliação de projetos de música</value>
+  </data>
+  <data name="MusicBusinessRoundNegotiationStartDate" xml:space="preserve">
+    <value>Data de início das negociações de música</value>
+  </data>
+  <data name="MusicBusinessRoundNegotiationEndDate" xml:space="preserve">
+    <value>Data de término das negociações de música</value>
+  </data>
+  <data name="MusicBusinessRoundMaximumProjectsBySeller" xml:space="preserve">
+    <value>Quantidade máxima de projetos por participante</value>
+  </data>
+  <data name="MusicBusinessRoundMaximumEvaluatorsByProject" xml:space="preserve">
+    <value>Quantidade máxima de avaliadores por projeto</value>
   </data>
 </root>
