@@ -86,7 +86,7 @@
     </div>
 </div>
 <!-- Audiovisual Negotiations - Begin  -->
-<h3 class="kt-section__title mb-4">@Labels.AudioVisual</h3>
+<h3 class="kt-section__title mb-4">@Labels.BusinessRounds - @Labels.AudioVisual</h3>
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.ProjectSubmitStartDate, new { @class = "control-label" })
@@ -164,24 +164,93 @@
     </div>
 </div>
 <!-- Audiovisual Negotiations - End  -->
-<!-- Music Commissions - Begin -->
-<h3 class="kt-section__title mt-30 mb-4">@Labels.MusicCommission</h3>
+<!-- Music Business Round - Begin -->
+<h3 class="kt-section__title mt-30 mb-4">@Labels.BusinessRounds - @Labels.Music</h3>
 <div class="row">
     <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.EditionDate.MusicProjectSubmitStartDate, new { @class = "control-label" })
-        @Html.TextBox("EditionDate.MusicProjectSubmitStartDate", Model.EditionDate.MusicProjectSubmitStartDate?.ToShortDateString(), new
+        @Html.LabelFor(m => m.EditionDate.MusicBusinessRoundSubmitStartDate, new { @class = "control-label" })
+        @Html.TextBox("EditionDate.MusicBusinessRoundSubmitStartDate", Model.EditionDate.MusicPitchingSubmitStartDate?.ToShortDateString(), new
         {
             @class = "form-control enable-datepicker"
         })
-        @Html.ValidationMessageFor(m => m.EditionDate.MusicProjectSubmitStartDate, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(m => m.EditionDate.MusicBusinessRoundSubmitStartDate, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.EditionDate.MusicProjectSubmitEndDate, new { @class = "control-label" })
-        @Html.TextBox("EditionDate.MusicProjectSubmitEndDate", Model.EditionDate.MusicProjectSubmitEndDate?.ToShortDateString(), new
+        @Html.LabelFor(m => m.EditionDate.MusicBusinessRoundSubmitEndDate, new { @class = "control-label" })
+        @Html.TextBox("EditionDate.MusicBusinessRoundSubmitEndDate", Model.EditionDate.MusicBusinessRoundSubmitEndDate?.ToShortDateString(), new
         {
             @class = "form-control enable-datepicker"
         })
-        @Html.ValidationMessageFor(m => m.EditionDate.MusicProjectSubmitEndDate, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(m => m.EditionDate.MusicBusinessRoundSubmitEndDate, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EditionDate.MusicBusinessRoundEvaluationStartDate, new { @class = "control-label" })
+        @Html.TextBox("EditionDate.MusicBusinessRoundEvaluationStartDate", Model.EditionDate.MusicBusinessRoundEvaluationStartDate?.ToShortDateString(), new
+        {
+            @class = "form-control enable-datepicker"
+        })
+        @Html.ValidationMessageFor(m => m.EditionDate.MusicBusinessRoundEvaluationStartDate, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EditionDate.MusicBusinessRoundEvaluationEndDate, new { @class = "control-label" })
+        @Html.TextBox("EditionDate.MusicBusinessRoundEvaluationEndDate", Model.EditionDate.MusicBusinessRoundEvaluationEndDate?.ToShortDateString(), new
+        {
+            @class = "form-control enable-datepicker"
+        })
+        @Html.ValidationMessageFor(m => m.EditionDate.MusicBusinessRoundEvaluationEndDate, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EditionDate.MusicBusinessRoundNegotiationStartDate, new { @class = "control-label" })
+        @Html.TextBox("EditionDate.MusicBusinessRoundNegotiationStartDate", Model.EditionDate.MusicBusinessRoundNegotiationStartDate?.ToShortDateString(), new
+        {
+            @class = "form-control enable-datepicker"
+        })
+        @Html.ValidationMessageFor(m => m.EditionDate.MusicBusinessRoundNegotiationStartDate, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EditionDate.MusicBusinessRoundNegotiationEndDate, new { @class = "control-label" })
+        @Html.TextBox("EditionDate.MusicBusinessRoundNegotiationEndDate", Model.EditionDate.MusicBusinessRoundNegotiationEndDate?.ToShortDateString(), new
+        {
+            @class = "form-control enable-datepicker"
+        })
+        @Html.ValidationMessageFor(m => m.EditionDate.MusicBusinessRoundNegotiationEndDate, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EditionDate.MusicBusinessRoundMaximumProjectsBySeller, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.EditionDate.MusicBusinessRoundMaximumProjectsBySeller, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.EditionDate.MusicBusinessRoundMaximumProjectsBySeller, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EditionDate.MusicBusinessRoundMaximumEvaluatorsByProject, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.EditionDate.MusicBusinessRoundMaximumEvaluatorsByProject, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.EditionDate.MusicBusinessRoundMaximumEvaluatorsByProject, "", new { @class = "text-danger" })
+    </div>
+</div>
+<!-- Music Business Round - End -->
+<!-- Music Commissions - Begin -->
+<h3 class="kt-section__title mt-30 mb-4">@Labels.Pitching - @Labels.Music</h3>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EditionDate.MusicPitchingSubmitStartDate, new { @class = "control-label" })
+        @Html.TextBox("EditionDate.MusicPitchingSubmitStartDate", Model.EditionDate.MusicPitchingSubmitStartDate?.ToShortDateString(), new
+        {
+            @class = "form-control enable-datepicker"
+        })
+        @Html.ValidationMessageFor(m => m.EditionDate.MusicPitchingSubmitStartDate, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EditionDate.MusicPitchingSubmitEndDate, new { @class = "control-label" })
+        @Html.TextBox("EditionDate.MusicPitchingSubmitEndDate", Model.EditionDate.MusicPitchingSubmitEndDate?.ToShortDateString(), new
+        {
+            @class = "form-control enable-datepicker"
+        })
+        @Html.ValidationMessageFor(m => m.EditionDate.MusicPitchingSubmitEndDate, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="row">
@@ -216,7 +285,7 @@
 </div>
 <!-- Music Commissions - End -->
 <!-- Innovation Commissions - Begin  -->
-<h3 class="kt-section__title mt-30 mb-4">@Labels.StartupsCommission</h3>
+<h3 class="kt-section__title mt-30 mb-4">@Labels.Pitching - @Labels.Startup</h3>
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.InnovationProjectSubmitStartDate, new { @class = "control-label" })
@@ -267,7 +336,7 @@
 </div>
 <!-- Innovation Commissions - End  -->
 <!-- Audiovisual Commissions - Begin  -->
-<h3 class="kt-section__title mt-30 mb-4">@Labels.AudiovisualCommission</h3>
+<h3 class="kt-section__title mt-30 mb-4">@Labels.Pitching - @Labels.AudioVisual</h3>
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.AudiovisualCommissionEvaluationStartDate, new { @class = "control-label" })
@@ -300,7 +369,7 @@
 </div>
 <!-- Audiovisual Commissions - End  -->
 <!-- Creator Commissions - Begin  -->
-<h3 class="kt-section__title mt-30 mb-4">@Labels.CreatorCommission</h3>
+<h3 class="kt-section__title mt-30 mb-4">@Labels.Pitching - @Labels.Creator</h3>
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.CreatorProjectSubmitStartDate, new { @class = "control-label" })

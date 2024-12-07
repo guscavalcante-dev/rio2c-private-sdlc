@@ -25,16 +25,56 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         public new Guid EditionUid { get; set; }
 
+        #region Music - Business Round
+
+        [Display(Name = nameof(MusicBusinessRoundSubmitStartDate), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public DateTime? MusicBusinessRoundSubmitStartDate { get; set; }
+
+        [Display(Name = nameof(MusicBusinessRoundSubmitEndDate), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [GreaterThanOrEqualTo(nameof(MusicBusinessRoundSubmitStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
+        public DateTime? MusicBusinessRoundSubmitEndDate { get; set; }
+
+        [Display(Name = nameof(MusicBusinessRoundEvaluationStartDate), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public DateTime? MusicBusinessRoundEvaluationStartDate { get; set; }
+
+        [Display(Name = nameof(MusicBusinessRoundEvaluationEndDate), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [GreaterThanOrEqualTo(nameof(MusicBusinessRoundEvaluationStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
+        public DateTime? MusicBusinessRoundEvaluationEndDate { get; set; }
+
+        [Display(Name = nameof(MusicBusinessRoundNegotiationStartDate), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public DateTime? MusicBusinessRoundNegotiationStartDate { get; set; }
+
+        [Display(Name = nameof(MusicBusinessRoundNegotiationEndDate), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [GreaterThanOrEqualTo(nameof(MusicBusinessRoundNegotiationStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
+        public DateTime? MusicBusinessRoundNegotiationEndDate { get; set; }
+
+        [Display(Name = nameof(MusicBusinessRoundMaximumProjectsBySeller), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public int MusicBusinessRoundMaximumProjectsBySeller { get; set; }
+
+        [Display(Name = nameof(MusicBusinessRoundMaximumEvaluatorsByProject), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public int MusicBusinessRoundMaximumEvaluatorsByProject { get; set; }
+
+        #endregion
+
+
         #region Music - Commissions
 
-        [Display(Name = nameof(MusicProjectSubmitStartDate), ResourceType = typeof(Labels))]
+        [Display(Name = nameof(MusicPitchingSubmitStartDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public DateTime? MusicProjectSubmitStartDate { get; set; }
+        public DateTime? MusicPitchingSubmitStartDate { get; set; }
 
-        [Display(Name = nameof(MusicProjectSubmitEndDate), ResourceType = typeof(Labels))]
+        [Display(Name = nameof(MusicPitchingSubmitEndDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [GreaterThanOrEqualTo(nameof(MusicProjectSubmitStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
-        public DateTime? MusicProjectSubmitEndDate { get; set; }
+        [GreaterThanOrEqualTo(nameof(MusicPitchingSubmitStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
+        public DateTime? MusicPitchingSubmitEndDate { get; set; }
 
         [Display(Name = nameof(MusicCommissionEvaluationStartDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -248,8 +288,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.AudiovisualNegotiationsVirtualMeetingsJoinMinutes = editionDto.Edition.AudiovisualNegotiationsVirtualMeetingsJoinMinutes;
 
             // Music - Commissions
-            this.MusicProjectSubmitStartDate = editionDto.Edition.MusicProjectSubmitStartDate.ToBrazilTimeZone();
-            this.MusicProjectSubmitEndDate = editionDto.Edition.MusicProjectSubmitEndDate.ToBrazilTimeZone();
+            this.MusicPitchingSubmitStartDate = editionDto.Edition.MusicPitchingSubmitStartDate.ToBrazilTimeZone();
+            this.MusicPitchingSubmitEndDate = editionDto.Edition.MusicPitchingSubmitEndDate.ToBrazilTimeZone();
             this.MusicCommissionEvaluationStartDate = editionDto.Edition.MusicCommissionEvaluationStartDate.ToBrazilTimeZone();
             this.MusicCommissionEvaluationEndDate = editionDto.Edition.MusicCommissionEvaluationEndDate.ToBrazilTimeZone();
             this.MusicCommissionMaximumApprovedBandsCount = editionDto.Edition.MusicCommissionMaximumApprovedBandsCount;

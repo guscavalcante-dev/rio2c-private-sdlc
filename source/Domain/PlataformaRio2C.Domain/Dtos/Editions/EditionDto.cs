@@ -56,12 +56,20 @@ namespace PlataformaRio2C.Domain.Dtos
         public int ProjectMaxBuyerEvaluationsCount { get; private set; }
 
         // Music - Commissions
-        public DateTimeOffset MusicProjectSubmitStartDate { get; private set; }
-        public DateTimeOffset MusicProjectSubmitEndDate { get; private set; }
+        public DateTimeOffset MusicPitchingSubmitStartDate { get; private set; }
+        public DateTimeOffset MusicPitchingSubmitEndDate { get; private set; }
         public DateTimeOffset MusicCommissionEvaluationStartDate { get; private set; }
         public DateTimeOffset MusicCommissionEvaluationEndDate { get; private set; }
         public int MusicCommissionMinimumEvaluationsCount { get; private set; }
         public int MusicCommissionMaximumApprovedBandsCount { get; private set; }
+
+        // Music - Business round        
+        public DateTimeOffset? MusicBusinessRoundEvaluationStartDate { get; private set; }
+        public DateTimeOffset? MusicBusinessRoundEvaluationEndDate { get; private set; }
+        public DateTimeOffset? MusicBusinessRoundSubmitStartDate { get; private set; }
+        public DateTimeOffset? MusicBusinessRoundSubmitEndDate { get; private set; }
+        public int MusicBusinessRoundMaximumProjectsBySeller { get; private set; }
+        public int MusicBusinessRoundMaximumEvaluatorsByProject { get; private set; }
 
         // Innovation - Commissions
         public DateTimeOffset InnovationProjectSubmitStartDate { get; private set; }
@@ -144,8 +152,8 @@ namespace PlataformaRio2C.Domain.Dtos
             this.ProjectMaxBuyerEvaluationsCount = entity.ProjectMaxBuyerEvaluationsCount;
 
             // Music - Commissions
-            this.MusicProjectSubmitStartDate = entity.MusicProjectSubmitStartDate;
-            this.MusicProjectSubmitEndDate = entity.MusicProjectSubmitEndDate;
+            this.MusicPitchingSubmitStartDate = entity.MusicPitchingSubmitStartDate;
+            this.MusicPitchingSubmitEndDate = entity.MusicPitchingSubmitEndDate;
             this.MusicCommissionEvaluationStartDate = entity.MusicCommissionEvaluationStartDate;
             this.MusicCommissionEvaluationEndDate = entity.MusicCommissionEvaluationEndDate;
             this.MusicCommissionMinimumEvaluationsCount = entity.MusicCommissionMinimumEvaluationsCount;
@@ -198,7 +206,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is music project submit open]; otherwise, <c>false</c>.</returns>
         public bool IsMusicProjectSubmitOpen()
         {
-            return DateTime.UtcNow >= this.MusicProjectSubmitStartDate && DateTime.UtcNow <= this.MusicProjectSubmitEndDate;
+            return DateTime.UtcNow >= this.MusicPitchingSubmitStartDate && DateTime.UtcNow <= this.MusicPitchingSubmitEndDate;
         }
 
         /// <summary>Determines whether [is music project submit started].</summary>
@@ -206,7 +214,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is music project submit started]; otherwise, <c>false</c>.</returns>
         public bool IsMusicProjectSubmitStarted()
         {
-            return DateTime.UtcNow >= this.MusicProjectSubmitStartDate;
+            return DateTime.UtcNow >= this.MusicPitchingSubmitStartDate;
         }
 
         /// <summary>Determines whether [is music project submit ended].</summary>
@@ -214,7 +222,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is music project submit ended]; otherwise, <c>false</c>.</returns>
         public bool IsMusicProjectSubmitEnded()
         {
-            return DateTime.UtcNow > this.MusicProjectSubmitEndDate;
+            return DateTime.UtcNow > this.MusicPitchingSubmitEndDate;
         }
 
         #endregion
