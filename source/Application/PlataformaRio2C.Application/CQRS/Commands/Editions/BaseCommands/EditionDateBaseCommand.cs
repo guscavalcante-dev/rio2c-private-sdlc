@@ -287,6 +287,16 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.ProjectMaxBuyerEvaluationsCount = editionDto.Edition.ProjectMaxBuyerEvaluationsCount;
             this.AudiovisualNegotiationsVirtualMeetingsJoinMinutes = editionDto.Edition.AudiovisualNegotiationsVirtualMeetingsJoinMinutes;
 
+            // Music - Business Rounds
+            this.MusicBusinessRoundSubmitStartDate = editionDto.Edition.MusicBusinessRoundSubmitStartDate.ToBrazilTimeZone();
+            this.MusicBusinessRoundSubmitEndDate = editionDto.Edition.MusicBusinessRoundSubmitEndDate.ToBrazilTimeZone();
+            this.MusicBusinessRoundEvaluationStartDate = editionDto.Edition.MusicBusinessRoundEvaluationStartDate.ToBrazilTimeZone();
+            this.MusicBusinessRoundEvaluationEndDate = editionDto.Edition.MusicBusinessRoundEvaluationEndDate.ToBrazilTimeZone();
+            this.MusicBusinessRoundNegotiationStartDate = editionDto.Edition.MusicBusinessRoundNegotiationStartDate.ToBrazilTimeZone();
+            this.MusicBusinessRoundNegotiationEndDate = editionDto.Edition.MusicBusinessRoundNegotiationEndDate.ToBrazilTimeZone();
+            this.MusicBusinessRoundMaximumProjectsBySeller = editionDto.Edition.MusicBusinessRoundMaximumProjectsBySeller;
+            this.MusicBusinessRoundMaximumEvaluatorsByProject = editionDto.Edition.MusicBusinessRoundMaximumEvaluatorsByProject;
+
             // Music - Commissions
             this.MusicPitchingSubmitStartDate = editionDto.Edition.MusicPitchingSubmitStartDate.ToBrazilTimeZone();
             this.MusicPitchingSubmitEndDate = editionDto.Edition.MusicPitchingSubmitEndDate.ToBrazilTimeZone();

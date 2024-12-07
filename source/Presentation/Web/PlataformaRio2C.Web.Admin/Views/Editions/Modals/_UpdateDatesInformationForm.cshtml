@@ -1,5 +1,5 @@
 ﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateEditionDatesInformation
-<h3 class="kt-section__title mb-4">@Labels.AudioVisual</h3>
+<h3 class="kt-section__title mb-4">@Labels.BusinessRounds - @Labels.AudioVisual</h3>
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.ProjectSubmitStartDate, new { @class = "control-label" })
@@ -59,7 +59,56 @@
     </div>
 </div>
 
-<h3 class="kt-section__title mt-30 mb-4">@Labels.MusicCommission</h3>
+<h3 class="kt-section__title mt-30 mb-4">@Labels.BusinessRounds - @Labels.Music</h3>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.MusicBusinessRoundSubmitStartDate, new { @class = "control-label" })
+        @Html.TextBox("MusicBusinessRoundSubmitStartDate", Model.MusicBusinessRoundSubmitStartDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.MusicBusinessRoundSubmitStartDate, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.MusicBusinessRoundSubmitEndDate, new { @class = "control-label" })
+        @Html.TextBox("MusicBusinessRoundSubmitEndDate", Model.MusicBusinessRoundSubmitEndDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.MusicBusinessRoundSubmitEndDate, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.MusicBusinessRoundEvaluationStartDate, new { @class = "control-label" })
+        @Html.TextBox("MusicBusinessRoundEvaluationStartDate", Model.MusicBusinessRoundEvaluationStartDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.MusicBusinessRoundEvaluationStartDate, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.MusicBusinessRoundEvaluationEndDate, new { @class = "control-label" })
+        @Html.TextBox("MusicBusinessRoundEvaluationEndDate", Model.MusicBusinessRoundEvaluationEndDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.MusicBusinessRoundEvaluationEndDate, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.MusicBusinessRoundNegotiationStartDate, new { @class = "control-label" })
+        @Html.TextBox("MusicBusinessRoundNegotiationStartDate", Model.MusicBusinessRoundNegotiationStartDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.MusicBusinessRoundNegotiationStartDate, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.MusicBusinessRoundNegotiationEndDate, new { @class = "control-label" })
+        @Html.TextBox("MusicBusinessRoundNegotiationEndDate", Model.MusicBusinessRoundNegotiationEndDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.MusicBusinessRoundNegotiationEndDate, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.MusicBusinessRoundMaximumProjectsBySeller, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.MusicBusinessRoundMaximumProjectsBySeller, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.MusicBusinessRoundMaximumProjectsBySeller, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.MusicBusinessRoundMaximumEvaluatorsByProject, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.MusicBusinessRoundMaximumEvaluatorsByProject, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.MusicBusinessRoundMaximumEvaluatorsByProject, "", new { @class = "text-danger" })
+    </div>
+</div>
+<h3 class="kt-section__title mt-30 mb-4">@Labels.Pitching - @Labels.Music</h3>
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.MusicPitchingSubmitStartDate, new { @class = "control-label" })
@@ -97,7 +146,7 @@
     </div>
 </div>
 
-<h3 class="kt-section__title mt-30 mb-4">@Labels.StartupsCommission</h3>
+<h3 class="kt-section__title mt-30 mb-4">@Labels.Pitching - @Labels.Startup</h3>
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.InnovationProjectSubmitStartDate, new { @class = "control-label" })
@@ -135,7 +184,7 @@
     </div>
 </div>
 
-<h3 class="kt-section__title mt-30 mb-4">@Labels.AudiovisualCommission</h3>
+<h3 class="kt-section__title mt-30 mb-4">@Labels.Pitching - @Labels.AudioVisual</h3>
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.AudiovisualCommissionEvaluationStartDate, new { @class = "control-label" })
@@ -161,7 +210,7 @@
     </div>
 </div>
 <!-- Creator Commissions - Begin  -->
-<h3 class="kt-section__title mt-30 mb-4">@Labels.CreatorCommission</h3>
+<h3 class="kt-section__title mt-30 mb-4">@Labels.Pitching - @Labels.Creator</h3>
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.CreatorProjectSubmitStartDate, new { @class = "control-label" })
