@@ -4,7 +4,7 @@
 // Created          : 03-23-2021
 //
 // Last Modified By : Gilson Oliveira
-// Last Modified On : 11-19-2024
+// Last Modified On : 12-02-2024
 // ***********************************************************************
 // <copyright file="AttendeeMusicBandRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -57,9 +57,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="query">The query.</param>
         /// <param name="collaboratorId">The collaborator id.</param>
         /// <returns></returns>
-        internal static IQueryable<AttendeeMusicBandEvaluation> FindByCollaboratorId(this IQueryable<AttendeeMusicBandEvaluation> query, int collaboratorId)
+        internal static IQueryable<AttendeeMusicBandEvaluation> FindByCollaboratorId(this IQueryable<AttendeeMusicBandEvaluation> query, List<int?> collaboratorId)
         {
-            query = query.Where(ambe => ambe.EvaluatorUserId == collaboratorId && !ambe.IsDeleted);
+            if (collaboratorId != null && collaboratorId.Count > 0)
+            {
+                query = query.Where(ambe =>
+                    collaboratorId.Contains(ambe.EvaluatorUserId)
+                    && !ambe.IsDeleted
+                );
+            }
             return query;
         }
 
@@ -68,11 +74,103 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="query">The query.</param>
         /// <param name="musicBandId">The music band id.</param>
         /// <returns></returns>
-        internal static IQueryable<AttendeeMusicBandEvaluation> ExceptMusicBandId(this IQueryable<AttendeeMusicBandEvaluation> query, int? musicBandId)
+        internal static IQueryable<AttendeeMusicBandEvaluation> FindByMusicBandId(this IQueryable<AttendeeMusicBandEvaluation> query, List<int?> musicBandId)
         {
-            if (musicBandId.HasValue)
+            if (musicBandId != null && musicBandId.Count > 0)
             {
-                query = query.Where(ambe => ambe.AttendeeMusicBand.MusicBandId != musicBandId && !ambe.IsDeleted);
+                query = query.Where(ambe =>
+                    musicBandId.Contains(ambe.AttendeeMusicBand.MusicBandId)
+                    && !ambe.IsDeleted
+                );
+            }
+            return query;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="musicBandId">The music band id.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeMusicBandEvaluation> ExceptMusicBandId(this IQueryable<AttendeeMusicBandEvaluation> query, List<int?> musicBandId)
+        {
+            if (musicBandId != null && musicBandId.Count > 0)
+            {
+                query = query.Where(ambe =>
+                    !musicBandId.Contains(ambe.AttendeeMusicBand.MusicBandId)
+                    && !ambe.IsDeleted
+                );
+            }
+            return query;
+        }
+
+        /// <summary>
+        /// Finds by commission evaluation status id asynchronous.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="commissionEvaluationStatusId">The commission evaluation status id.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeMusicBandEvaluation> FindByCommissionEvaluationStatusId(this IQueryable<AttendeeMusicBandEvaluation> query, List<int?> commissionEvaluationStatusId)
+        {
+            if (commissionEvaluationStatusId != null && commissionEvaluationStatusId.Count > 0)
+            {
+                query = query.Where(ambe =>
+                    commissionEvaluationStatusId.Contains(ambe.CommissionEvaluationStatusId)
+                    && !ambe.IsDeleted
+                );
+            }
+            return query;
+        }
+
+        /// <summary>
+        /// Finds by curator evaluation status id asynchronous.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="curatorEvaluationStatusId">The curator evaluation status id.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeMusicBandEvaluation> FindByCuratorEvaluationStatusId(this IQueryable<AttendeeMusicBandEvaluation> query, List<int?> curatorEvaluationStatusId)
+        {
+            if (curatorEvaluationStatusId != null && curatorEvaluationStatusId.Count > 0)
+            {
+                query = query.Where(ambe =>
+                    curatorEvaluationStatusId.Contains(ambe.CuratorEvaluationStatusId)
+                    && !ambe.IsDeleted
+                );
+            }
+            return query;
+        }
+
+        /// <summary>
+        /// Finds by repechage evaluation status id asynchronous.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="popularEvaluationStatusId">The popular evaluation status id.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeMusicBandEvaluation> FindByPopularEvaluationStatusId(this IQueryable<AttendeeMusicBandEvaluation> query, List<int?> popularEvaluationStatusId)
+        {
+            if (popularEvaluationStatusId != null && popularEvaluationStatusId.Count > 0)
+            {
+                query = query.Where(ambe =>
+                    popularEvaluationStatusId.Contains(ambe.PopularEvaluationStatusId)
+                    && !ambe.IsDeleted
+                );
+            }
+            return query;
+        }
+
+        /// <summary>
+        /// Finds by repechage evaluation status id asynchronous.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="repechageEvaluationStatusId">The repechage evaluation status id.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeMusicBandEvaluation> FindByRepechageEvaluationStatusId(this IQueryable<AttendeeMusicBandEvaluation> query, List<int?> repechageEvaluationStatusId)
+        {
+            if (repechageEvaluationStatusId != null && repechageEvaluationStatusId.Count > 0)
+            {
+                query = query.Where(ambe =>
+                    repechageEvaluationStatusId.Contains(ambe.RepechageEvaluationStatusId)
+                    && !ambe.IsDeleted
+                );
             }
             return query;
         }
@@ -118,18 +216,74 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
-        /// Count by edition, document and string asynchronous.
+        /// Count by edition, music band id and collaborator id asynchronous.
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="collaboratorId">The collaborator id.</param>
         /// <param name="musicBandId">The music band id.</param>
         /// <returns></returns>
-        public async Task<int> CountByCollaboratorIdAsync(int editionId, int collaboratorId, int? musicBandId)
+        public async Task<int> CountByCommissionMemberAsync(int editionId, List<int?> musicBandId, List<int?> collaboratorId)
         {
             var query = this.GetBaseQuery()
+                .ExceptMusicBandId(musicBandId)
                 .FindByEditionId(editionId)
                 .FindByCollaboratorId(collaboratorId)
-                .ExceptMusicBandId(musicBandId);            
+                .FindByCommissionEvaluationStatusId(new List<int?>() {
+                    ProjectEvaluationStatus.Accepted.Id,
+                    ProjectEvaluationStatus.Refused.Id
+                });
+            return await query.CountAsync();
+        }
+
+        /// <summary>
+        /// Count by edition, music band id asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="musicBandId">The music band id.</param>
+        /// <returns></returns>
+        public async Task<int> CountByCuratorAsync(int editionId, List<int?> musicBandId)
+        {
+            var query = this.GetBaseQuery()
+                .ExceptMusicBandId(musicBandId)
+                .FindByEditionId(editionId)
+                .FindByCuratorEvaluationStatusId(new List<int?>() {
+                    ProjectEvaluationStatus.Accepted.Id,
+                    ProjectEvaluationStatus.Refused.Id
+                });
+            return await query.CountAsync();
+        }
+
+        /// <summary>
+        /// Count by edition, music band id asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="musicBandId">The music band id.</param>
+        /// <returns></returns>
+        public async Task<int> CountByRepechageAsync(int editionId, List<int?> musicBandId)
+        {
+            var query = this.GetBaseQuery()
+                .ExceptMusicBandId(musicBandId)
+                .FindByEditionId(editionId)
+                .FindByRepechageEvaluationStatusId(new List<int?>() {
+                    ProjectEvaluationStatus.Accepted.Id,
+                    ProjectEvaluationStatus.Refused.Id
+                });
+            return await query.CountAsync();
+        }
+
+        /// <summary>
+        /// Count by edition, music band id asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="musicBandId">The music band id.</param>
+        /// <param name="popularEvaluationStatusId">The popular evaluation status id.</param>
+        /// <returns></returns>
+        public async Task<int> CountByPopularEvaluationAsync(int editionId, List<int?> musicBandId, List<int?> popularEvaluationStatusId)
+        {
+            var query = this.GetBaseQuery()
+                .FindByMusicBandId(musicBandId)
+                .FindByEditionId(editionId)
+                .FindByPopularEvaluationStatusId(popularEvaluationStatusId);
             return await query.CountAsync();
         }
     }

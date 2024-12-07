@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 02-26-2020
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 01-26-2024
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 12-02-2024
 // ***********************************************************************
 // <copyright file="MusicBand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -275,10 +275,21 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="edition">The edition.</param>
         /// <param name="evaluatorUser">The evaluator user.</param>
         /// <param name="curatorEvaluationStatusId">The curator evaluation status.</param>
-        public void ComissionMusicCuratorEvaluation(Edition edition, User evaluatorUser, ProjectEvaluationStatus curatorEvaluationStatusId)
+        public void CuratorEvaluation(Edition edition, User evaluatorUser, ProjectEvaluationStatus curatorEvaluationStatusId)
         {
             var attendeeMusicBand = this.FindAttendeeMusicBandByEditionId(edition.Id);
-            attendeeMusicBand?.ComissionMusicCuratorEvaluation(evaluatorUser, curatorEvaluationStatusId);
+            attendeeMusicBand?.CuratorEvaluation(evaluatorUser, curatorEvaluationStatusId);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="evaluatorUser">The evaluator user.</param>
+        /// <param name="curatorEvaluationStatusId">The curator evaluation status.</param>
+        public void RepechageEvaluation(Edition edition, User evaluatorUser, ProjectEvaluationStatus curatorEvaluationStatusId)
+        {
+            var attendeeMusicBand = this.FindAttendeeMusicBandByEditionId(edition.Id);
+            attendeeMusicBand?.RepechageEvaluation(evaluatorUser, curatorEvaluationStatusId);
         }
 
         #endregion

@@ -475,6 +475,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aprovar repescagem.
+        /// </summary>
+        public static string ApproveToRepechage {
+            get {
+                return ResourceManager.GetString("ApproveToRepechage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chegada.
         /// </summary>
         public static string Arrival {
@@ -1735,6 +1744,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aprovação do curador.
+        /// </summary>
+        public static string CuratorApproval {
+            get {
+                return ResourceManager.GetString("CuratorApproval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reprovação do curador.
+        /// </summary>
+        public static string CuratorDisapproval {
+            get {
+                return ResourceManager.GetString("CuratorDisapproval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Curadoria.
         /// </summary>
         public static string Curatorship {
@@ -1965,6 +1992,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Disabled {
             get {
                 return ResourceManager.GetString("Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reprovar repescagem.
+        /// </summary>
+        public static string DisapproveToRepechage {
+            get {
+                return ResourceManager.GetString("DisapproveToRepechage", resourceCulture);
             }
         }
         
@@ -3994,29 +4030,20 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data de Inicio da avaliação de projetos pelo Curador.
+        ///   Looks up a localized string similar to Data de término da avaliação de projetos pelo Curador.
+        /// </summary>
+        public static string MusicPitchingCuratorEvaluationEndDate {
+            get {
+                return ResourceManager.GetString("MusicPitchingCuratorEvaluationEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de início da avaliação de projetos pelo Curador.
         /// </summary>
         public static string MusicPitchingCuratorEvaluationStartDate {
             get {
                 return ResourceManager.GetString("MusicPitchingCuratorEvaluationStartDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Data de inicio da avaliação de projetos pela votação popular.
-        /// </summary>
-        public static string MusicPitchingPopularEvaluationStartDate {
-            get {
-                return ResourceManager.GetString("MusicPitchingPopularEvaluationStartDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Data de Inicio da avaliação de projetos pela Repescagem.
-        /// </summary>
-        public static string MusicPitchingRepechageEvaluationStartDate {
-            get {
-                return ResourceManager.GetString("MusicPitchingRepechageEvaluationStartDate", resourceCulture);
             }
         }
         
@@ -4048,7 +4075,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to quantidade máxima de projetos aprovados por Repescagem.
+        ///   Looks up a localized string similar to Quantidade máxima de projetos aprovados por Repescagem.
         /// </summary>
         public static string MusicPitchingMaximumApprovedProjectsByRepechage {
             get {
@@ -4071,6 +4098,42 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string MusicPitchingMaximumProjectSubmissionsByParticipant {
             get {
                 return ResourceManager.GetString("MusicPitchingMaximumProjectSubmissionsByParticipant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de término da avaliação de projetos pela votação popular.
+        /// </summary>
+        public static string MusicPitchingPopularEvaluationEndDate {
+            get {
+                return ResourceManager.GetString("MusicPitchingPopularEvaluationEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de início da avaliação de projetos pela votação popular.
+        /// </summary>
+        public static string MusicPitchingPopularEvaluationStartDate {
+            get {
+                return ResourceManager.GetString("MusicPitchingPopularEvaluationStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de término da avaliação de projetos pela Repescagem.
+        /// </summary>
+        public static string MusicPitchingRepechageEvaluationEndDate {
+            get {
+                return ResourceManager.GetString("MusicPitchingRepechageEvaluationEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de início da avaliação de projetos pela Repescagem.
+        /// </summary>
+        public static string MusicPitchingRepechageEvaluationStartDate {
+            get {
+                return ResourceManager.GetString("MusicPitchingRepechageEvaluationStartDate", resourceCulture);
             }
         }
         

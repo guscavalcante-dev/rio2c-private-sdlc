@@ -1321,6 +1321,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to É permitido avaliar no máximo {0} {1} para os curadores.
+        /// </summary>
+        public static string MusicPitchingMaximumApprovedProjectsByCurator {
+            get {
+                return ResourceManager.GetString("MusicPitchingMaximumApprovedProjectsByCurator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to É permitido avaliar no máximo {0} {1} para repescagem.
+        /// </summary>
+        public static string MusicPitchingMaximumApprovedProjectsByRepechage {
+            get {
+                return ResourceManager.GetString("MusicPitchingMaximumApprovedProjectsByRepechage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Regulamento de Players (Música).
         /// </summary>
         public static string MusicPlayerTerms {
@@ -2766,6 +2784,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ZipCodeIsRequired {
             get {
                 return ResourceManager.GetString("ZipCodeIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O projeto precisa estar reprovado pela população.
+        /// </summary>
+        public static string ProjectMustBeDisapprovedByPopulation {
+            get {
+                return ResourceManager.GetString("ProjectMustBeDisapprovedByPopulation", resourceCulture);
             }
         }
     }

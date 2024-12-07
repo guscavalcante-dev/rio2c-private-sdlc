@@ -4,7 +4,7 @@
 // Created          : 11-19-2024
 //
 // Last Modified By : Gilson Oliveira
-// Last Modified On : 11-19-2024
+// Last Modified On : 12-02-2024
 // ***********************************************************************
 // <copyright file="IAttendeeMusicBandEvaluationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,6 +21,9 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface IAttendeeMusicBandEvaluationRepository : IRepository<AttendeeMusicBandEvaluation>
     {
         Task<List<AttendeeMusicBandEvaluation>> FindAllByEditionIdAsync(int editionId);
-        Task<int> CountByCollaboratorIdAsync(int editionId, int collaboratorId, int? musicBandId);
+        Task<int> CountByCommissionMemberAsync(int editionId, List<int?> musicBandId, List<int?> collaboratorId);
+        Task<int> CountByCuratorAsync(int editionId, List<int?> musicBandId);
+        Task<int> CountByRepechageAsync(int editionId, List<int?> musicBandId);
+        Task<int> CountByPopularEvaluationAsync(int editionId, List<int?> musicBandId, List<int?> popularEvaluationStatusId);
     }
 }

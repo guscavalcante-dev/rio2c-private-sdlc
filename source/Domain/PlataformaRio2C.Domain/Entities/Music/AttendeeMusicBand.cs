@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Gilson Oliveira
-// Last Modified On : 11-10-2024
+// Last Modified On : 12-02-2024
 // ***********************************************************************
 // <copyright file="AttendeeMusicBand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -163,7 +163,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         /// <param name="evaluatorUser">The evaluation user.</param>
         /// <param name="curatorEvaluationStatusId">The project evaluation status.</param>
-        public void ComissionMusicCuratorEvaluation(User evaluatorUser, ProjectEvaluationStatus curatorEvaluationStatusId)
+        public void CuratorEvaluation(User evaluatorUser, ProjectEvaluationStatus curatorEvaluationStatusId)
         {
             if (this.AttendeeMusicBandEvaluations == null)
                 this.AttendeeMusicBandEvaluations = new List<AttendeeMusicBandEvaluation>();
@@ -181,6 +181,36 @@ namespace PlataformaRio2C.Domain.Entities
                     evaluatorUser.Id
                 );
                 evaluation.UpdateCuratorEvaluation(curatorEvaluationStatusId, evaluatorUser.Id);
+                this.AttendeeMusicBandEvaluations.Add(evaluation);
+            }
+
+            this.EvaluationsCount = this.GetAttendeeMusicBandEvaluationTotalCount();
+            this.LastEvaluationDate = DateTime.UtcNow;
+        }
+
+        /// <summary>
+        /// Evaluates the specified evaluation user.
+        /// </summary>
+        /// <param name="evaluatorUser">The evaluation user.</param>
+        /// <param name="curatorEvaluationStatusId">The project evaluation status.</param>
+        public void RepechageEvaluation(User evaluatorUser, ProjectEvaluationStatus curatorEvaluationStatusId)
+        {
+            if (this.AttendeeMusicBandEvaluations == null)
+                this.AttendeeMusicBandEvaluations = new List<AttendeeMusicBandEvaluation>();
+
+            var existentAttendeeMusicBandEvaluation = this.GetAttendeeMusicBandEvaluationByEvaluatorId(evaluatorUser.Id);
+            if (existentAttendeeMusicBandEvaluation != null)
+            {
+                existentAttendeeMusicBandEvaluation.UpdateRepechageEvaluation(curatorEvaluationStatusId, evaluatorUser.Id);
+            }
+            else
+            {
+                var evaluation = new AttendeeMusicBandEvaluation(
+                    this,
+                    evaluatorUser,
+                    evaluatorUser.Id
+                );
+                evaluation.UpdateRepechageEvaluation(curatorEvaluationStatusId, evaluatorUser.Id);
                 this.AttendeeMusicBandEvaluations.Add(evaluation);
             }
 
