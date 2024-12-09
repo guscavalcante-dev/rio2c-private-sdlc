@@ -29,7 +29,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isProductionPlanRequired">if set to <c>true</c> [is production plan required].</param>
         /// <param name="isAdditionalInformationRequired">if set to <c>true</c> [is additional information required].</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
-        /// <param name="modalityDtos">The project modality list.</param>
         public CreateProject(
             ProjectDto entity,
             List<LanguageDto> languagesDtos,
@@ -38,8 +37,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isDataRequired,
             bool isProductionPlanRequired,
             bool isAdditionalInformationRequired,
-            string userInterfaceLanguage,
-            List<ProjectModalityDto> modalityDtos)
+            string userInterfaceLanguage)
         {
             this.UpdateBaseProperties(
                 entity,
@@ -50,7 +48,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 isProductionPlanRequired,
                 isAdditionalInformationRequired,
                 userInterfaceLanguage,
-                modalityDtos,
                 true
             );
         }
