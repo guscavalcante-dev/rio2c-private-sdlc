@@ -1152,4 +1152,7 @@
   <data name="ZipCodeIsRequired" xml:space="preserve">
     <value>Zip code required.</value>
   </data>
+  <data name="AudiovisualProducerPitchingAcceptTermsAndConditions" xml:space="preserve">
+    <value>As a candidate for the Pitching Industry, I declare to be aware of and agree to the rules and regulations above, as well as to submit to any penalties and consequences resulting from their violation.</value>
+  </data>
 </root>

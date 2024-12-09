@@ -915,7 +915,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
                                                                                     InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
                                                                                     MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
-                                                                                    ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate,
+                                                                                    AudiovisualProducerBusinessRoundTermsAcceptanceDate = ac.AudiovisualProducerBusinessRoundTermsAcceptanceDate,
+                                                                                    AudiovisualProducerPitchingTermsAcceptanceDate = ac.AudiovisualProducerPitchingTermsAcceptanceDate,                                                                                    
                                                                                     SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
                                                                                 }).FirstOrDefault(),
                                         UpdaterBaseDto = new UserBaseDto
@@ -1053,7 +1054,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
                                                                                     InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
                                                                                     MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
-                                                                                    ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate,
+                                                                                    AudiovisualProducerBusinessRoundTermsAcceptanceDate = ac.AudiovisualProducerBusinessRoundTermsAcceptanceDate,
+                                                                                    AudiovisualProducerPitchingTermsAcceptanceDate = ac.AudiovisualProducerPitchingTermsAcceptanceDate,
                                                                                     SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
                                                                                 }).FirstOrDefault(),
 
@@ -1219,7 +1221,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                 AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
                                                                 InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
                                                                 MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
-                                                                ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate,
+                                                                AudiovisualProducerBusinessRoundTermsAcceptanceDate = ac.AudiovisualProducerBusinessRoundTermsAcceptanceDate,
+                                                                AudiovisualProducerPitchingTermsAcceptanceDate = ac.AudiovisualProducerPitchingTermsAcceptanceDate,
                                                                 SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
                                                             }).FirstOrDefault(),
             }).FirstOrDefaultAsync();
@@ -1398,7 +1401,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                             AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
                                                                                             InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
                                                                                             MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
-                                                                                            ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate,
+                                                                                            AudiovisualProducerBusinessRoundTermsAcceptanceDate = ac.AudiovisualProducerBusinessRoundTermsAcceptanceDate,
+                                                                                            AudiovisualProducerPitchingTermsAcceptanceDate = ac.AudiovisualProducerPitchingTermsAcceptanceDate,
                                                                                             SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
                                                                                         }).FirstOrDefault(),
 
@@ -1526,7 +1530,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
                                                                                     InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
                                                                                     MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
-                                                                                    ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate,
+                                                                                    AudiovisualProducerBusinessRoundTermsAcceptanceDate = ac.AudiovisualProducerBusinessRoundTermsAcceptanceDate,
+                                                                                    AudiovisualProducerPitchingTermsAcceptanceDate = ac.AudiovisualProducerPitchingTermsAcceptanceDate,
                                                                                     SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
                                                                                 }).FirstOrDefault(),
 
@@ -1921,7 +1926,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
                                                                                     InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
                                                                                     MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
-                                                                                    ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate,
+                                                                                    AudiovisualProducerBusinessRoundTermsAcceptanceDate = ac.AudiovisualProducerBusinessRoundTermsAcceptanceDate,
+                                                                                    AudiovisualProducerPitchingTermsAcceptanceDate = ac.AudiovisualProducerPitchingTermsAcceptanceDate,
                                                                                     SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
                                                                                 }).FirstOrDefault(),
 
@@ -2026,7 +2032,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
                                                                                     InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
                                                                                     MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
-                                                                                    ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate,
+                                                                                    AudiovisualProducerBusinessRoundTermsAcceptanceDate = ac.AudiovisualProducerBusinessRoundTermsAcceptanceDate,
+                                                                                    AudiovisualProducerPitchingTermsAcceptanceDate = ac.AudiovisualProducerPitchingTermsAcceptanceDate,
                                                                                     SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
                                                                                 }).FirstOrDefault(),
 

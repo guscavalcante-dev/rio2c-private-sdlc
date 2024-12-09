@@ -8,7 +8,7 @@
         <div class="kt-wizard-v3__nav-items kt-wizard-v3__nav-items--clickable">
             <div class="kt-wizard-v3__nav-item myrio2c-projects-onboarding" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
                 <div class="kt-wizard-v3__nav-body">
-                    <div class="kt-wizard-v3__nav-label">
+                    <div class="kt-wizard-v3__nav-label" title="@Labels.Company">
                         <span>@counter</span> @Labels.Company
                     </div>
                     <div class="kt-wizard-v3__nav-bar"></div>
@@ -19,8 +19,8 @@
             }
             <div class="kt-wizard-v3__nav-item myrio2c-projects-onboarding" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
                 <div class="kt-wizard-v3__nav-body">
-                    <div class="kt-wizard-v3__nav-label">
-                        <span>@counter</span> @Labels.Rules
+                    <div class="kt-wizard-v3__nav-label" title="@Labels.AudiovisualBusinessRoundRules">
+                        <span>@counter</span> @Labels.AudiovisualBusinessRoundRulesShorted
                     </div>
                     <div class="kt-wizard-v3__nav-bar"></div>
                 </div>
@@ -30,7 +30,18 @@
             }
             <div class="kt-wizard-v3__nav-item myrio2c-projects-onboarding" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
                 <div class="kt-wizard-v3__nav-body">
-                    <div class="kt-wizard-v3__nav-label">
+                    <div class="kt-wizard-v3__nav-label" title="@Labels.AudiovisualPitchingRules">
+                        <span>@counter</span> @Labels.AudiovisualPitchingRulesShorted
+                    </div>
+                    <div class="kt-wizard-v3__nav-bar"></div>
+                </div>
+            </div>
+            @{
+                counter++;
+            }
+            <div class="kt-wizard-v3__nav-item myrio2c-projects-onboarding" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
+                <div class="kt-wizard-v3__nav-body">
+                    <div class="kt-wizard-v3__nav-label" title="@Labels.Project">
                         <span>@counter</span> @Labels.Project
                     </div>
                     <div class="kt-wizard-v3__nav-bar"></div>
@@ -41,8 +52,8 @@
             }
             <div class="kt-wizard-v3__nav-item myrio2c-projects-onboarding" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
                 <div class="kt-wizard-v3__nav-body">
-                    <div class="kt-wizard-v3__nav-label">
-                        <span>@counter</span> @Labels.SendProjectsToPlayer
+                    <div class="kt-wizard-v3__nav-label" title="@Labels.SendProjectsToPlayer">
+                        <span>@counter</span> @Labels.Players
                     </div>
                     <div class="kt-wizard-v3__nav-bar"></div>
                 </div>

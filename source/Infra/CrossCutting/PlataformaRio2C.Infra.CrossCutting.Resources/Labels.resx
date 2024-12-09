@@ -3382,4 +3382,19 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Menos Zoom</value>
     <comment>Menos Zoom</comment>
   </data>
+  <data name="Dynamic" xml:space="preserve">
+    <value />
+  </data>
+  <data name="AudiovisualPitchingRules" xml:space="preserve">
+    <value>Regulamento de pitching</value>
+  </data>
+  <data name="AudiovisualPitchingRulesShorted" xml:space="preserve">
+    <value>Reg. de pitching</value>
+  </data>
+  <data name="AudiovisualBusinessRoundRules" xml:space="preserve">
+    <value>Regulamento de rodadas de negócio </value>
+  </data>
+  <data name="AudiovisualBusinessRoundRulesShorted" xml:space="preserve">
+    <value>Reg. de negócio </value>
+  </data>
 </root>
