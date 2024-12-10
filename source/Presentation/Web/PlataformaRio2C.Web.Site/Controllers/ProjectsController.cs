@@ -268,7 +268,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     false,
                     false,
                     this.UserInterfaceLanguage,
-                    await this.projectModalityRepository.FindAllAsync()
+                    ProjectModality.BusinessRound.Uid
                 );
             }
             catch (DomainException ex)
@@ -792,8 +792,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 true,
                 false,
                 false,
-                this.UserInterfaceLanguage,
-                await this.projectModalityRepository.FindAllAsync()
+                this.UserInterfaceLanguage
             );
 
             return View(cmd);
