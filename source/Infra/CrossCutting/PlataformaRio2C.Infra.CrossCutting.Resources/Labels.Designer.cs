@@ -556,6 +556,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Regulamento de rodadas de negócio .
+        /// </summary>
+        public static string AudiovisualBusinessRoundRules {
+            get {
+                return ResourceManager.GetString("AudiovisualBusinessRoundRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reg. de negócio .
+        /// </summary>
+        public static string AudiovisualBusinessRoundRulesShorted {
+            get {
+                return ResourceManager.GetString("AudiovisualBusinessRoundRulesShorted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Comissão de Audiovisual.
         /// </summary>
         public static string AudiovisualCommission {
@@ -642,6 +660,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string AudiovisualNegotiationsVirtualMeetingsJoinMinutes {
             get {
                 return ResourceManager.GetString("AudiovisualNegotiationsVirtualMeetingsJoinMinutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Regulamento de pitching.
+        /// </summary>
+        public static string AudiovisualPitchingRules {
+            get {
+                return ResourceManager.GetString("AudiovisualPitchingRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reg. de pitching.
+        /// </summary>
+        public static string AudiovisualPitchingRulesShorted {
+            get {
+                return ResourceManager.GetString("AudiovisualPitchingRulesShorted", resourceCulture);
             }
         }
         
@@ -2073,6 +2109,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string DuplicateEntity {
             get {
                 return ResourceManager.GetString("DuplicateEntity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string Dynamic {
+            get {
+                return ResourceManager.GetString("Dynamic", resourceCulture);
             }
         }
         

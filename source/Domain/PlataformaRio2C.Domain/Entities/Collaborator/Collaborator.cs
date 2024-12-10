@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Gilson Oliveira
-// Last Modified On : 10-03-2024
+// Last Modified On : 12-06-2024
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -3429,13 +3429,23 @@ namespace PlataformaRio2C.Domain.Entities
             this.SetUpdateDate(userId);
         }
 
-        /// <summary>Called when [producer terms acceptance].</summary>
+        /// <summary>Called when [[audiovisual producer business round terms acceptance].</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="userId">The user identifier.</param>
-        public void OnboardProducerTermsAcceptance(Edition edition, int userId)
+        public void OnboardAudiovisualProducerBusinessRoundTermsAcceptance(Edition edition, int userId)
         {
             var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
-            attendeeCollaborator?.OnboardProducerTermsAcceptance(userId);
+            attendeeCollaborator?.OnboardAudiovisualProducerBusinessRoundTermsAcceptance(userId);
+            this.SetUpdateDate(userId);
+        }
+
+        /// <summary>Called when [audiovisual producer pitching terms acceptance].</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardAudiovisualProducerPitchingTermsAcceptance(Edition edition, int userId)
+        {
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            attendeeCollaborator?.OnboardAudiovisualProducerPitchingTermsAcceptance(userId);
             this.SetUpdateDate(userId);
         }
 

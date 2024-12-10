@@ -7751,9 +7751,9 @@
     <Content Include="Views\Account\Modals\UpdatePasswordModal.cshtml" />
     <Content Include="Views\Executives\Modals\CreateCompanyInfoModal.cshtml" />
     <Content Include="Views\Projects\CompanyInfo.cshtml" />
-    <Content Include="Views\Projects\TermsAcceptance.cshtml" />
+    <Content Include="Views\Projects\AudiovisualBusinessRoundTermsAcceptance.cshtml" />
     <Content Include="Views\Projects\Shared\_ProjectsOnboardingMenu.cshtml" />
-    <Content Include="Views\Projects\Shared\_ProducerTermsAcceptanceText.cshtml" />
+    <Content Include="Views\Projects\Shared\_AudiovisualProducerBusinessRoundTermsText.cshtml" />
     <Content Include="Views\Companies\Shared\_ProducerInfoForm.cshtml" />
     <Content Include="Views\Projects\Submit.cshtml" />
     <Content Include="Views\Projects\Widgets\MainInformationWidget.cshtml" />
@@ -7806,6 +7806,8 @@
     <Content Include="Views\Shared\EditorTemplates\AttendeeCollaboratorTargetAudienceBaseCommand.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\InnovationOrganizationTrackOptionBaseCommand.cshtml" />
     <Content Include="Views\Shared\Widgets\CardsWidget.cshtml" />
+    <Content Include="Views\Projects\AudiovisualPitchingTermsAcceptance.cshtml" />
+    <Content Include="Views\Projects\Shared\_AudiovisualProducerPitchingTermsText.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

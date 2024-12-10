@@ -151,6 +151,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Na qualidade de candidato ao Pitching Industry, declaro estar ciente e concordar com as regras e regulamentos acima, bem como me submeter às eventuais penalidades e consequências decorrentes de sua violação..
+        /// </summary>
+        public static string AudiovisualProducerPitchingAcceptTermsAndConditions {
+            get {
+                return ResourceManager.GetString("AudiovisualProducerPitchingAcceptTermsAndConditions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deseja participar do processo de seleção para apresentar esse projeto nas sessões de PITCHING AUDIOVISUAL da Rio2C {0}?.
         /// </summary>
         public static string AudivisualPichingQuestion {

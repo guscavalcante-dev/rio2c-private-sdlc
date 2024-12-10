@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 04-24-2021
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 01-11-2024
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 12-06-2024
 // ***********************************************************************
 // <copyright file="UpdateAdministrator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,7 +34,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public DateTimeOffset? AudiovisualPlayerTermsAcceptanceDate { get; private set; }
         public DateTimeOffset? InnovationPlayerTermsAcceptanceDate { get; private set; }
         public DateTimeOffset? MusicPlayerTermsAcceptanceDate { get; private set; }
-        public DateTimeOffset? ProducerTermsAcceptanceDate { get; private set; }
+        public DateTimeOffset? AudiovisualProducerBusinessRoundTermsAcceptanceDate { get; private set; }
+        public DateTimeOffset? AudiovisualProducerPitchingTermsAcceptanceDate { get; private set; }
         public UserBaseDto UpdaterBaseDto { get; private set; }
         public DateTimeOffset UpdateDate { get; private set; }
 
@@ -95,7 +96,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.AudiovisualPlayerTermsAcceptanceDate = entity.EditionAttendeeCollaboratorBaseDto?.AudiovisualPlayerTermsAcceptanceDate;
             this.InnovationPlayerTermsAcceptanceDate = entity.EditionAttendeeCollaboratorBaseDto?.InnovationPlayerTermsAcceptanceDate;
             this.MusicPlayerTermsAcceptanceDate = entity.EditionAttendeeCollaboratorBaseDto?.MusicPlayerTermsAcceptanceDate;
-            this.ProducerTermsAcceptanceDate = entity.EditionAttendeeCollaboratorBaseDto?.ProducerTermsAcceptanceDate;
+            this.AudiovisualProducerBusinessRoundTermsAcceptanceDate = entity.EditionAttendeeCollaboratorBaseDto?.AudiovisualProducerBusinessRoundTermsAcceptanceDate;
+            this.AudiovisualProducerPitchingTermsAcceptanceDate = entity.EditionAttendeeCollaboratorBaseDto?.AudiovisualProducerPitchingTermsAcceptanceDate;
             this.UpdaterBaseDto = entity.UpdaterBaseDto;
             this.UpdateDate = entity.UpdateDate;
             base.UpdateDropdownProperties(roles, collaboratorTypes, userInterfaceLanguage);

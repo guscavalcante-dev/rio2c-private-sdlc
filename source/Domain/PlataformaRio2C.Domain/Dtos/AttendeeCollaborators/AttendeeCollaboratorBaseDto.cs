@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-18-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 01-11-2024
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 12-06-2024
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,7 +30,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset? AudiovisualPlayerTermsAcceptanceDate { get; set; }
         public DateTimeOffset? InnovationPlayerTermsAcceptanceDate { get; set; }
         public DateTimeOffset? MusicPlayerTermsAcceptanceDate { get; set; }
-        public DateTimeOffset? ProducerTermsAcceptanceDate { get; set; }
+        public DateTimeOffset? AudiovisualProducerBusinessRoundTermsAcceptanceDate { get; set; }
+        public DateTimeOffset? AudiovisualProducerPitchingTermsAcceptanceDate { get; set; }        
         public DateTimeOffset? SpeakerTermsAcceptanceDate { get; set; }
         public DateTimeOffset? AvailabilityBeginDate { get; set; }
         public DateTimeOffset? AvailabilityEndDate { get; set; }
