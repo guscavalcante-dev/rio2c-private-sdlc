@@ -323,6 +323,12 @@
     <value>Audiovisual</value>
     <comment>Audiovisual</comment>
   </data>
+  <data name="AudiovisualBusinessRoundRules" xml:space="preserve">
+    <value>Business rounds rules</value>
+  </data>
+  <data name="AudiovisualBusinessRoundShorted" xml:space="preserve">
+    <value>B. rounds rules</value>
+  </data>
   <data name="AudiovisualCommission" xml:space="preserve">
     <value>Audiovisual Commission</value>
     <comment>Comissão de Audiovisual</comment>
@@ -361,6 +367,12 @@
   <data name="AudiovisualNegotiationsVirtualMeetingsJoinMinutes" xml:space="preserve">
     <value>Waiting time to release the virtual meeting room</value>
     <comment>Tempo de espera para liberação da sala de reunião virtual</comment>
+  </data>
+  <data name="AudiovisualPitchingRules" xml:space="preserve">
+    <value>Pitching rules</value>
+  </data>
+  <data name="AudiovisualPitchingRules1" xml:space="preserve">
+    <value>Pitching rules</value>
   </data>
   <data name="AudiovisualPitchingSessions" xml:space="preserve">
     <value>Audiovisual Pitching Sessions</value>
@@ -938,6 +950,9 @@
   <data name="DuplicateEntity" xml:space="preserve">
     <value>Duplicate {0}</value>
     <comment>Duplicar {0}</comment>
+  </data>
+  <data name="Dynamic" xml:space="preserve">
+    <value>Conference Dynamic</value>
   </data>
   <data name="EachEpisodePlayingTime" xml:space="preserve">
     <value>Each episode's playing time</value>
@@ -3379,62 +3394,5 @@
   <data name="ZoomOut" xml:space="preserve">
     <value>Zoom Out</value>
     <comment>Menos Zoom</comment>
-  </data>
-  <data name="NoAssociatedCompany" xml:space="preserve">
-    <value>No associated company</value>
-  </data>
-  <data name="MusicPlayersReport" xml:space="preserve">
-    <value>Music Players Report</value>
-  </data>
-  <data name="MusicPlayersExecutivesReport" xml:space="preserve">
-    <value>Music Players Executive Report</value>
-  </data>
-  <data name="Published" xml:space="preserve">
-    <value>Published</value>
-  </data>
-  <data name="TranslatedSynopsis" xml:space="preserve">
-    <value>Synopsis {0}</value>
-  </data>
-  <data name="TitlePtBr" xml:space="preserve">
-    <value>Title PT</value>
-  </data>
-  <data name="TitleEnUs" xml:space="preserve">
-    <value>Title EN</value>
-  </data>
-  <data name="RequiredFields" xml:space="preserve">
-    <value>Required fields</value>
-  </data>
-  <data name="JobTitleTranslated" xml:space="preserve">
-    <value>Job title {0}</value>
-  </data>
-  <data name="MiniBioTranslated" xml:space="preserve">
-    <value>Mini-bio {0}</value>
-  </data>
-  <data name="PlayerDemand" xml:space="preserve">
-    <value>Player Demand</value>
-  </data>
-  <data name="PlayerDemandPercentage" xml:space="preserve">
-    <value>{0}: Concentrates {1}% of registered projects</value>
-  </data>
-  <data name="Medium" xml:space="preserve">
-    <value>Medium</value>
-  </data>
-  <data name="Low" xml:space="preserve">
-    <value>Low</value>
-  </data>
-  <data name="ScheduledRounds" xml:space="preserve">
-    <value>Scheduled Rounds</value>
-  </data>
-  <data name="Dynamic" xml:space="preserve">
-    <value>Conference Dynamic</value>
-  </data>
-  <data name="ProjectModality" xml:space="preserve">
-    <value>Project modality</value>
-  </data>
-  <data name="BusinessRoundsProjects" xml:space="preserve">
-    <value>Business rounds projects</value>
-  </data>
-  <data name="BusinessRounds" xml:space="preserve">
-    <value>Business rounds</value>
   </data>
 </root>

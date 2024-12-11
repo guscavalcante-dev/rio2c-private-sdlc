@@ -556,6 +556,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Regulamento de rodadas de negócio .
+        /// </summary>
+        public static string AudiovisualBusinessRoundRules {
+            get {
+                return ResourceManager.GetString("AudiovisualBusinessRoundRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reg. de negócio .
+        /// </summary>
+        public static string AudiovisualBusinessRoundRulesShorted {
+            get {
+                return ResourceManager.GetString("AudiovisualBusinessRoundRulesShorted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Comissão de Audiovisual.
         /// </summary>
         public static string AudiovisualCommission {
@@ -642,6 +660,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string AudiovisualNegotiationsVirtualMeetingsJoinMinutes {
             get {
                 return ResourceManager.GetString("AudiovisualNegotiationsVirtualMeetingsJoinMinutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Regulamento de pitching.
+        /// </summary>
+        public static string AudiovisualPitchingRules {
+            get {
+                return ResourceManager.GetString("AudiovisualPitchingRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reg. de pitching.
+        /// </summary>
+        public static string AudiovisualPitchingRulesShorted {
+            get {
+                return ResourceManager.GetString("AudiovisualPitchingRulesShorted", resourceCulture);
             }
         }
         
@@ -930,24 +966,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string BusinessRound {
             get {
                 return ResourceManager.GetString("BusinessRound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Rodadas de negócio.
-        /// </summary>
-        public static string BusinessRounds {
-            get {
-                return ResourceManager.GetString("BusinessRounds", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Projetos rodadas de negócio.
-        /// </summary>
-        public static string BusinessRoundsProjects {
-            get {
-                return ResourceManager.GetString("BusinessRoundsProjects", resourceCulture);
             }
         }
         
@@ -5474,15 +5492,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Modalidade do projeto.
-        /// </summary>
-        public static string ProjectModality {
-            get {
-                return ResourceManager.GetString("ProjectModality", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Nenhum Player selecionado para avaliação.
         /// </summary>
         public static string ProjectNotSubmittedToPlayers {
@@ -6204,15 +6213,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ScheduledOneToOneMeetings {
             get {
                 return ResourceManager.GetString("ScheduledOneToOneMeetings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Rodadas agendadas.
-        /// </summary>
-        public static string ScheduledRounds {
-            get {
-                return ResourceManager.GetString("ScheduledRounds", resourceCulture);
             }
         }
         

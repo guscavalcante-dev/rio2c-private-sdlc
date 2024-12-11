@@ -323,6 +323,12 @@
     <value>Audiovisual</value>
     <comment>Audiovisual</comment>
   </data>
+  <data name="AudiovisualBusinessRoundRules" xml:space="preserve">
+    <value>Regulamento de rodadas de negócio </value>
+  </data>
+  <data name="AudiovisualBusinessRoundRulesShorted" xml:space="preserve">
+    <value>Reg. de negócio </value>
+  </data>
   <data name="AudiovisualCommission" xml:space="preserve">
     <value>Comissão de Audiovisual</value>
     <comment>Comissão de Audiovisual</comment>
@@ -358,6 +364,12 @@
   </data>
   <data name="AudiovisualNegotiationsVirtualMeetingsJoinMinutes" xml:space="preserve">
     <value>Tempo de espera para liberação da sala de reunião virtual</value>
+  </data>
+  <data name="AudiovisualPitchingRules" xml:space="preserve">
+    <value>Regulamento de pitching</value>
+  </data>
+  <data name="AudiovisualPitchingRulesShorted" xml:space="preserve">
+    <value>Reg. de pitching</value>
   </data>
   <data name="AudiovisualPitchingSessions" xml:space="preserve">
     <value>Pitching de Audiovisual</value>
@@ -936,6 +948,9 @@
   <data name="DuplicateEntity" xml:space="preserve">
     <value>Duplicar {0}</value>
     <comment>Duplicar {0}</comment>
+  </data>
+  <data name="Dynamic" xml:space="preserve">
+    <value />
   </data>
   <data name="EachEpisodePlayingTime" xml:space="preserve">
     <value>Minutagem de cada episódio</value>
@@ -3381,65 +3396,5 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="ZoomOut" xml:space="preserve">
     <value>Menos Zoom</value>
     <comment>Menos Zoom</comment>
-  </data>
-  <data name="NoAssociatedCompany" xml:space="preserve">
-    <value>Nenhuma empresa vinculada</value>
-  </data>
-  <data name="MusicPlayersReport" xml:space="preserve">
-    <value>Relatório de Players de Música</value>
-  </data>
-  <data name="MusicPlayersExecutivesReport" xml:space="preserve">
-    <value>Relatório de Executivos de Players de Música</value>
-  </data>
-  <data name="Published" xml:space="preserve">
-    <value>Publicada</value>
-  </data>
-  <data name="TranslatedSynopsis" xml:space="preserve">
-    <value>Ementa {0}</value>
-  </data>
-  <data name="TitlePtBr" xml:space="preserve">
-    <value>Título PT</value>
-  </data>
-  <data name="TitleEnUs" xml:space="preserve">
-    <value>Título EN</value>
-  </data>
-  <data name="RequiredFields" xml:space="preserve">
-    <value>Campos obrigatórios</value>
-  </data>
-  <data name="JobTitleTranslated" xml:space="preserve">
-    <value>Cargo {0}</value>
-  </data>
-  <data name="MiniBioTranslated" xml:space="preserve">
-    <value>Mini-biografia {0}</value>
-  </data>
-  <data name="PlayerDemand" xml:space="preserve">
-    <value>Demanda do Player</value>
-  </data>
-  <data name="PlayerDemandPercentage" xml:space="preserve">
-    <value>{0}: Concentra {1}% dos projetos cadastrados</value>
-  </data>
-  <data name="High" xml:space="preserve">
-    <value>Alta</value>
-  </data>
-  <data name="Medium" xml:space="preserve">
-    <value>Média</value>
-  </data>
-  <data name="Low" xml:space="preserve">
-    <value>Baixa</value>
-  </data>
-  <data name="ScheduledRounds" xml:space="preserve">
-    <value>Rodadas agendadas</value>
-  </data>
-  <data name="Dynamic" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ProjectModality" xml:space="preserve">
-    <value>Modalidade do projeto</value>
-  </data>
-  <data name="BusinessRoundsProjects" xml:space="preserve">
-    <value>Projetos rodadas de negócio</value>
-  </data>
-  <data name="BusinessRounds" xml:space="preserve">
-    <value>Rodadas de negócio</value>
   </data>
 </root>

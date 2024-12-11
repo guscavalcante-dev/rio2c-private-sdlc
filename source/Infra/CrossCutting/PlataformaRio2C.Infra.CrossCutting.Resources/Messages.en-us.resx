@@ -151,6 +151,9 @@
   <data name="AudiovisualPlayerTerms" xml:space="preserve">
     <value>Player’s Regulation (Audiovisual)</value>
   </data>
+  <data name="AudiovisualProducerPitchingAcceptTermsAndConditions" xml:space="preserve">
+    <value>As a candidate for the Pitching Industry, I declare to be aware of and agree to the rules and regulations above, as well as to submit to any penalties and consequences resulting from their violation.</value>
+  </data>
   <data name="AudivisualPichingQuestion" xml:space="preserve">
     <value>Do you wish to take part in the selection proccess for the AUDIOVISUAL PITCHING sessions at Rio2C {0}?</value>
     <comment>Deseja participar do processo de seleção para apresentar esse projeto nas sessões de PITCHING AUDIOVISUAL da Rio2C {0}?</comment>
@@ -546,14 +549,6 @@
   </data>
   <data name="IsNotPossibleCreateProjectLimit" xml:space="preserve">
     <value>Is not possible to create the project because the company already reached the limit.</value>
-    <comment>Não é possível criar o projeto pois essa empresa já atingiu o limite.</comment>
-  </data>
-  <data name="IsNotPossibleCreatePitchingProjectLimit" xml:space="preserve">
-    <value>Is not possible to create the project because the company already reached the registrations limit.</value>
-    <comment>Não é possível criar o projeto pois essa empresa já atingiu o limite.</comment>
-  </data>
-  <data name="IsNotPossibleCreateBusinessRoundProjectLimit" xml:space="preserve">
-    <value>Is not possible to create the business round because the company already reached the registrations limit.</value>
     <comment>Não é possível criar o projeto pois essa empresa já atingiu o limite.</comment>
   </data>
   <data name="IsNotPossibleCreateProjectSameTicket" xml:space="preserve">
