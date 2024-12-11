@@ -49,7 +49,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 isProductionPlanRequired,
                 isAdditionalInformationRequired,
                 userInterfaceLanguage,
-                new List<ProjectModalityDto> { },
                 false
             );
         }

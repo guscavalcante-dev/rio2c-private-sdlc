@@ -795,7 +795,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     false,
                     false,
                     this.UserInterfaceLanguage,
-                    await this.projectModalityRepository.FindAllAsync()
+                    ProjectModality.BusinessRound.Uid
                 );
             }
             catch (DomainException ex)

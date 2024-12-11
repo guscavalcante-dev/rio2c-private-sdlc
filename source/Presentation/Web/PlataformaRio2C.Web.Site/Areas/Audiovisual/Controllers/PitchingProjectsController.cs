@@ -94,7 +94,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper($"{Labels.Projects} {Labels.Pitching}", Url.Action("SubmittedList", "PitchingProjects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper($"{Labels.Projects} {Labels.Pitching}", Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
             });
 
             #endregion
@@ -155,19 +155,19 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             if (projectDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("SubmittedList", "PitchingProjects", new { Area = "Audiovisual" });
+                return RedirectToAction("Index", "PitchingProjects", new { Area = "Audiovisual" });
             }
 
             if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true) // Is seller
             {
                 this.StatusMessageToastr(Texts.ForbiddenErrorMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("SubmittedList", "PitchingProjects", new { Area = "Audiovisual" });
+                return RedirectToAction("Index", "PitchingProjects", new { Area = "Audiovisual" });
             }
 
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "PitchingProjects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
                 new BreadcrumbItemHelper(projectDto.GetTitleDtoByLanguageCode(this.UserInterfaceLanguage)?.ProjectTitle?.Value ?? Labels.Project, Url.Action("SubmittedDetails", "PitchingProjects", new { id }))
             });
 
@@ -715,7 +715,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ProjectInfo, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper($"{Labels.Projects} {Labels.Pitching}", Url.Action("SubmittedList", "PitchingProjects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper($"{Labels.Projects} {Labels.Pitching}", Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
                 new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "PitchingProjects", new { Area = "Audiovisual" }))
             });
 
@@ -746,7 +746,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 if (projectsCount >= projectMaxCount)
                 {
                     this.StatusMessageToastr(Messages.YouReachedProjectsLimit, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                    return RedirectToAction("SubmittedList", "PitchingProjects");
+                    return RedirectToAction("Index", "PitchingProjects");
                 }
             }
 
@@ -760,7 +760,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                     if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
                     {
                         this.StatusMessageToastr(Texts.ForbiddenErrorMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                        return RedirectToAction("SubmittedList", "PitchingProjects", new { Area = "Audiovisual" });
+                        return RedirectToAction("Index", "PitchingProjects", new { Area = "Audiovisual" });
                     }
                 }
             }
@@ -788,7 +788,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ProjectInfo, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "PitchingProjects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
                 new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "PitchingProjects", new { Area = "Audiovisual" }))
             });
 
@@ -842,7 +842,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 this.StatusMessageToastr(toastrError?.Message ?? ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
                 cmd.UpdateDropdownProperties(
-                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id)
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
+                    this.UserInterfaceLanguage
                 );
 
                 return View(cmd);
@@ -853,7 +854,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
                 cmd.UpdateDropdownProperties(
-                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id)
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
+                    this.UserInterfaceLanguage
                 );
 
                 return View(cmd);
@@ -889,7 +891,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CompanyInfo, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "PitchingProjects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
                 new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "PitchingProjects", new { Area = "Audiovisual" }))
             });
 
@@ -932,7 +934,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CompanyInfo, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "PitchingProjects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
                 new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "PitchingProjects", new { Area = "Audiovisual" }))
             });
 
@@ -1017,7 +1019,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ParticipantsTerms, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "PitchingProjects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
                 new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "PitchingProjects", new { Area = "Audiovisual" }))
             });
 
@@ -1049,7 +1051,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ParticipantsTerms, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "PitchingProjects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
                 new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "PitchingProjects", new { Area = "Audiovisual" }))
             });
 
@@ -1126,7 +1128,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                         return RedirectToAction("SendToPlayers", "PitchingProjects", new { id = cmd.ProjectUid });
                     }
 
-                    return RedirectToAction("SubmittedList", "PitchingProjects");
+                    return RedirectToAction("Index", "PitchingProjects");
                 }
             }
 
@@ -1146,7 +1148,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ParticipantsTerms, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "PitchingProjects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
                 new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "PitchingProjects", new { Area = "Audiovisual" }))
             });
 
@@ -1168,13 +1170,13 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             if (buyerCompanyWidgetDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("SubmittedList", "PitchingProjects");
+                return RedirectToAction("Index", "PitchingProjects");
             }
 
             if (buyerCompanyWidgetDto.Project.IsFinished())
             {
                 this.StatusMessageToastr(Messages.ProjectIsFinishedCannotBeUpdated, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("SubmittedList", "PitchingProjects");
+                return RedirectToAction("Index", "PitchingProjects");
             }
 
             return View(buyerCompanyWidgetDto);
@@ -1188,7 +1190,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         {
             if (!id.HasValue)
             {
-                return RedirectToAction("SubmittedList", "PitchingProjects");
+                return RedirectToAction("Index", "PitchingProjects");
             }
 
             this.StatusMessageToastr(Messages.ProjectSavedButNotSentToPlayers, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Warning);
