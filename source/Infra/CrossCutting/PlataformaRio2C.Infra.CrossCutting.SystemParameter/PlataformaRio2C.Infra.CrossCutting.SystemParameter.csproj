@@ -106,10 +106,6 @@
       <Project>{EC0B684E-F8A3-417A-9567-819FFC7C41CC}</Project>
       <Name>PlataformaRio2C.Infra.CrossCutting.Tools</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Data\PlataformaRio2C.Infra.Data.Context\PlataformaRio2C.Infra.Data.Context.csproj">
-      <Project>{30C4D007-1A78-410C-9FCD-63699985C39B}</Project>
-      <Name>PlataformaRio2C.Infra.Data.Context</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
