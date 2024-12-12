@@ -112,7 +112,7 @@
                         var termsAcceptanceDate = ViewBag.CollaboratorTypeUid == CollaboratorType.PlayerExecutiveAudiovisual.Uid ? Model.AttendeeCollaborator?.AudiovisualPlayerTermsAcceptanceDate?.ToBrazilTimeZone() :
                                                   ViewBag.CollaboratorTypeUid == CollaboratorType.PlayerExecutiveInnovation.Uid ? Model.AttendeeCollaborator?.InnovationPlayerTermsAcceptanceDate?.ToBrazilTimeZone() :
                                                   ViewBag.CollaboratorTypeUid == CollaboratorType.PlayerExecutiveMusic.Uid ? Model.AttendeeCollaborator?.MusicPlayerTermsAcceptanceDate?.ToBrazilTimeZone() :
-                                                  ViewBag.CollaboratorTypeUid == CollaboratorType.Industry.Uid ? Model.AttendeeCollaborator?.ProducerTermsAcceptanceDate?.ToBrazilTimeZone() :
+                                                  ViewBag.CollaboratorTypeUid == CollaboratorType.Industry.Uid ? Model.AttendeeCollaborator?.AudiovisualProducerBusinessRoundTermsAcceptanceDate?.ToBrazilTimeZone() :
                                                   ViewBag.CollaboratorTypeUid == CollaboratorType.Speaker.Uid ? Model.AttendeeCollaborator?.SpeakerTermsAcceptanceDate?.ToBrazilTimeZone() :
                                                   Model.AttendeeCollaboratorTypeDto?.AttendeeCollaboratorType?.TermsAcceptanceDate?.ToBrazilTimeZone();
                     }

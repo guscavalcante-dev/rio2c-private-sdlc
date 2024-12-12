@@ -1151,4 +1151,7 @@
   <data name="ZipCodeIsRequired" xml:space="preserve">
     <value>Cep obrigatório.</value>
   </data>
+  <data name="AudiovisualProducerPitchingAcceptTermsAndConditions" xml:space="preserve">
+    <value>Na qualidade de candidato ao Pitching Industry, declaro estar ciente e concordar com as regras e regulamentos acima, bem como me submeter às eventuais penalidades e consequências decorrentes de sua violação.</value>
+  </data>
 </root>

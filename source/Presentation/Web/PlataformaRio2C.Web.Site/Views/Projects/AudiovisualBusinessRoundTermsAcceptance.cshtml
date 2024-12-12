@@ -1,4 +1,4 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.OnboardProducerTermsAcceptance
+﻿@model PlataformaRio2C.Application.CQRS.Commands.OnboardAudiovisualProducerBusinessRoundTerms
 @{
     ViewBag.Title = Labels.ProjectSubmission;
 }
@@ -15,7 +15,7 @@
             </div>
             <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v3__wrapper">
                 <!--begin: Form Wizard Form-->
-                @using (Html.BeginForm("TermsAcceptance", "Projects", FormMethod.Post, new { id = "PlayerTermsAcceptanceForm", @class = "kt-form" }))
+                @using (Html.BeginForm("AudiovisualBusinessRoundTermsAcceptance", "Projects", FormMethod.Post, new { id = "PlayerTermsAcceptanceForm", @class = "kt-form" }))
                 {
                     @Html.HiddenFor(m => m.ProjectUid)
                     <!--begin: Form Wizard Step 2-->
@@ -28,7 +28,7 @@
                                         <div class="kt-portlet">
                                             <div class="kt-portlet__body">
                                                 <div class="rio2c-scroll" data-height="400" data-scrollbar-shown="true">
-                                                    @Html.Partial("Shared/_ProducerTermsAcceptanceText")
+                                                    @Html.Partial("Shared/_AudiovisualProducerBusinessRoundTermsText")
                                                 </div>
                                             </div>
                                         </div>

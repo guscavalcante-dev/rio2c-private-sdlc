@@ -272,6 +272,14 @@
     <Compile Include="Migrations\202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.Designer.cs">
       <DependentUpon>202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202412061444540_AddAudiovisualProducerTerms.cs" />
+    <Compile Include="Migrations\202412061444540_AddAudiovisualProducerTerms.Designer.cs">
+      <DependentUpon>202412061444540_AddAudiovisualProducerTerms.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202412111830573_UpdateForInterestsAndInterestGroups.cs" />
+    <Compile Include="Migrations\202412111830573_UpdateForInterestsAndInterestGroups.Designer.cs">
+      <DependentUpon>202412111830573_UpdateForInterestsAndInterestGroups.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202411231628322_UpdateMigrations.cs" />
     <Compile Include="Migrations\202411231628322_UpdateMigrations.Designer.cs">
       <DependentUpon>202411231628322_UpdateMigrations.cs</DependentUpon>
@@ -307,6 +315,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Migrations\Scripts\202412061444540_AddAudiovisualProducerTerms.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202412111830573_UpdateForInterestsAndInterestGroups.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202412111830573_UpdateForInterestsAndInterestGroups.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202412061444540_AddAudiovisualProducerTerms.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Migrations\Scripts\202410252236315_RemoveIsPitchingToProjects.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -458,6 +478,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.resx">
       <DependentUpon>202411061920064_AddIsVirtualMeetingToProjectBuyerEvaluationsUpdated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202412061444540_AddAudiovisualProducerTerms.resx">
+      <DependentUpon>202412061444540_AddAudiovisualProducerTerms.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202412111830573_UpdateForInterestsAndInterestGroups.resx">
+      <DependentUpon>202412111830573_UpdateForInterestsAndInterestGroups.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202411231628322_UpdateMigrations.resx">
       <DependentUpon>202411231628322_UpdateMigrations.cs</DependentUpon>
