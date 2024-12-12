@@ -359,6 +359,7 @@
 			SET IsDeleted=1,DisplayOrder=0
 			WHERE Id=52;
 
+		UPDATE Interests set CreateDate = GETDATE(), UpdateDate = GETDATE() where CreateDate is null or UpdateDate is null
 	COMMIT TRAN -- Transaction Success!
 END TRY
 BEGIN CATCH
