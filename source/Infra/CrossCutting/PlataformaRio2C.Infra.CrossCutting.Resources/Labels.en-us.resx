@@ -326,7 +326,13 @@
   <data name="AudiovisualBusinessRoundRules" xml:space="preserve">
     <value>Business rounds rules</value>
   </data>
+  <data name="AudiovisualBusinessRoundRules_Duplicate[1]" xml:space="preserve">
+    <value>Business rounds rules</value>
+  </data>
   <data name="AudiovisualBusinessRoundShorted" xml:space="preserve">
+    <value>B. rounds rules</value>
+  </data>
+  <data name="AudiovisualBusinessRoundShorted_Duplicate[1]" xml:space="preserve">
     <value>B. rounds rules</value>
   </data>
   <data name="AudiovisualCommission" xml:space="preserve">
@@ -372,6 +378,12 @@
     <value>Pitching rules</value>
   </data>
   <data name="AudiovisualPitchingRules1" xml:space="preserve">
+    <value>Pitching rules</value>
+  </data>
+  <data name="AudiovisualPitchingRules1_Duplicate[1]" xml:space="preserve">
+    <value>Pitching rules</value>
+  </data>
+  <data name="AudiovisualPitchingRules_Duplicate[1]" xml:space="preserve">
     <value>Pitching rules</value>
   </data>
   <data name="AudiovisualPitchingSessions" xml:space="preserve">
@@ -950,6 +962,9 @@
   <data name="DuplicateEntity" xml:space="preserve">
     <value>Duplicate {0}</value>
     <comment>Duplicar {0}</comment>
+  </data>
+  <data name="Dynamic" xml:space="preserve">
+    <value>Conference Dynamic</value>
   </data>
   <data name="EachEpisodePlayingTime" xml:space="preserve">
     <value>Each episode's playing time</value>
@@ -2619,6 +2634,9 @@
   <data name="ScheduledOneToOneMeetings" xml:space="preserve">
     <value>Scheduled One to One Meetings</value>
   </data>
+  <data name="ScheduledRounds" xml:space="preserve">
+    <value>Scheduled Rounds</value>
+  </data>
   <data name="ScheduleManually" xml:space="preserve">
     <value>Schedule Manually</value>
     <comment>Agendar Manualmente</comment>
@@ -3391,20 +3409,5 @@
   <data name="ZoomOut" xml:space="preserve">
     <value>Zoom Out</value>
     <comment>Menos Zoom</comment>
-  </data>
-  <data name="Dynamic" xml:space="preserve">
-    <value>Conference Dynamic</value>
-  </data>
-  <data name="AudiovisualPitchingRules" xml:space="preserve">
-    <value>Pitching rules</value>
-  </data>
-  <data name="AudiovisualPitchingRules1" xml:space="preserve">
-    <value>Pitching rules</value>
-  </data>
-  <data name="AudiovisualBusinessRoundRules" xml:space="preserve">
-    <value>Business rounds rules</value>
-  </data>
-  <data name="AudiovisualBusinessRoundShorted" xml:space="preserve">
-    <value>B. rounds rules</value>
   </data>
 </root>

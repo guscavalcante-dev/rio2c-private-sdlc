@@ -329,6 +329,12 @@
   <data name="AudiovisualBusinessRoundRulesShorted" xml:space="preserve">
     <value>Reg. de negócio </value>
   </data>
+  <data name="AudiovisualBusinessRoundRulesShorted_Duplicate[1]" xml:space="preserve">
+    <value>Reg. de negócio </value>
+  </data>
+  <data name="AudiovisualBusinessRoundRules_Duplicate[1]" xml:space="preserve">
+    <value>Regulamento de rodadas de negócio </value>
+  </data>
   <data name="AudiovisualCommission" xml:space="preserve">
     <value>Comissão de Audiovisual</value>
     <comment>Comissão de Audiovisual</comment>
@@ -370,6 +376,12 @@
   </data>
   <data name="AudiovisualPitchingRulesShorted" xml:space="preserve">
     <value>Reg. de pitching</value>
+  </data>
+  <data name="AudiovisualPitchingRulesShorted_Duplicate[1]" xml:space="preserve">
+    <value>Reg. de pitching</value>
+  </data>
+  <data name="AudiovisualPitchingRules_Duplicate[1]" xml:space="preserve">
+    <value>Regulamento de pitching</value>
   </data>
   <data name="AudiovisualPitchingSessions" xml:space="preserve">
     <value>Pitching de Audiovisual</value>
@@ -950,6 +962,9 @@
     <comment>Duplicar {0}</comment>
   </data>
   <data name="Dynamic" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Dynamic_Duplicate[1]" xml:space="preserve">
     <value />
   </data>
   <data name="EachEpisodePlayingTime" xml:space="preserve">
@@ -2625,6 +2640,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="ScheduledOneToOneMeetings" xml:space="preserve">
     <value>Rodadas de Negócio agendadas</value>
   </data>
+  <data name="ScheduledRounds" xml:space="preserve">
+    <value>Rodadas de Negócio Agendadas</value>
+  </data>
   <data name="ScheduleManually" xml:space="preserve">
     <value>Agendar Manualmente</value>
     <comment>Agendar Manualmente</comment>
@@ -3396,20 +3414,5 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="ZoomOut" xml:space="preserve">
     <value>Menos Zoom</value>
     <comment>Menos Zoom</comment>
-  </data>
-  <data name="Dynamic" xml:space="preserve">
-    <value />
-  </data>
-  <data name="AudiovisualPitchingRules" xml:space="preserve">
-    <value>Regulamento de pitching</value>
-  </data>
-  <data name="AudiovisualPitchingRulesShorted" xml:space="preserve">
-    <value>Reg. de pitching</value>
-  </data>
-  <data name="AudiovisualBusinessRoundRules" xml:space="preserve">
-    <value>Regulamento de rodadas de negócio </value>
-  </data>
-  <data name="AudiovisualBusinessRoundRulesShorted" xml:space="preserve">
-    <value>Reg. de negócio </value>
   </data>
 </root>
