@@ -732,7 +732,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 return RedirectToAction("CompanyInfo", "PitchingProjects");
             }
 
-            if (this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() == true)
+            if (this.UserAccessControlDto?.IsAudiovisualProducerBusinessRoundTermsAcceptanceDatePending() == true)
             {
                 return RedirectToAction("TermsAcceptance", "PitchingProjects", new { id });
             }
@@ -801,7 +801,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             }
 
             if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
-                || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() == true)
+                || this.UserAccessControlDto?.IsAudiovisualProducerBusinessRoundTermsAcceptanceDatePending() == true)
             {
                 return RedirectToAction("Submit", "PitchingProjects");
             }
@@ -1032,12 +1032,12 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             }
 
             if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
-                || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() != true)
+                || this.UserAccessControlDto?.IsAudiovisualProducerBusinessRoundTermsAcceptanceDatePending() != true)
             {
                 return RedirectToAction("Submit", "PitchingProjects");
             }
 
-            var cmd = new OnboardProducerTermsAcceptance(id);
+            var cmd = new OnboardAudiovisualProducerPitchingTerms(id);
 
             return View(cmd);
         }
@@ -1046,7 +1046,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> TermsAcceptance(OnboardProducerTermsAcceptance cmd)
+        public async Task<ActionResult> TermsAcceptance(OnboardAudiovisualProducerPitchingTerms cmd)
         {
             #region Breadcrumb
 
@@ -1064,7 +1064,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             }
 
             if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
-                || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() != true)
+                || this.UserAccessControlDto?.IsAudiovisualProducerBusinessRoundTermsAcceptanceDatePending() != true)
             {
                 return RedirectToAction("Submit", "PitchingProjects");
             }
@@ -1161,7 +1161,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             }
 
             if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
-                || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() == true)
+                || this.UserAccessControlDto?.IsAudiovisualProducerBusinessRoundTermsAcceptanceDatePending() == true)
             {
                 return RedirectToAction("Submit", "PitchingProjects", new { id });
             }

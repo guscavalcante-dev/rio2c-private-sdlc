@@ -735,7 +735,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 return RedirectToAction("CompanyInfo", "BusinessRoundProjects");
             }
 
-            if (this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() == true)
+            if (this.UserAccessControlDto?.IsAudiovisualProducerBusinessRoundTermsAcceptanceDatePending() == true)
             {
                 return RedirectToAction("TermsAcceptance", "BusinessRoundProjects", new { id });
             }
@@ -808,7 +808,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             }
 
             if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
-                || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() == true)
+                || this.UserAccessControlDto?.IsAudiovisualProducerBusinessRoundTermsAcceptanceDatePending() == true)
             {
                 return RedirectToAction("Submit", "BusinessRoundProjects");
             }
@@ -1040,12 +1040,12 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             }
 
             if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
-                || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() != true)
+                || this.UserAccessControlDto?.IsAudiovisualProducerBusinessRoundTermsAcceptanceDatePending() != true)
             {
                 return RedirectToAction("Submit", "BusinessRoundProjects");
             }
 
-            var cmd = new OnboardProducerTermsAcceptance(id);
+            var cmd = new OnboardAudiovisualProducerBusinessRoundTerms(id);
 
             return View(cmd);
         }
@@ -1054,7 +1054,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> TermsAcceptance(OnboardProducerTermsAcceptance cmd)
+        public async Task<ActionResult> TermsAcceptance(OnboardAudiovisualProducerBusinessRoundTerms cmd)
         {
             #region Breadcrumb
 
@@ -1072,7 +1072,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             }
 
             if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
-                || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() != true)
+                || this.UserAccessControlDto?.IsAudiovisualProducerBusinessRoundTermsAcceptanceDatePending() != true)
             {
                 return RedirectToAction("Submit", "BusinessRoundProjects");
             }
@@ -1169,7 +1169,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             }
 
             if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
-                || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() == true)
+                || this.UserAccessControlDto?.IsAudiovisualProducerBusinessRoundTermsAcceptanceDatePending() == true)
             {
                 return RedirectToAction("Submit", "BusinessRoundProjects", new { id });
             }
