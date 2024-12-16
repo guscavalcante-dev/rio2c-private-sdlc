@@ -74,6 +74,10 @@
       <Project>{ec0b684e-f8a3-417a-9567-819ffc7c41cc}</Project>
       <Name>PlataformaRio2C.Infra.CrossCutting.Tools</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Infra\Data\PlataformaRio2C.Infra.Data.Context\PlataformaRio2C.Infra.Data.Context.csproj">
+      <Project>{30C4D007-1A78-410C-9FCD-63699985C39B}</Project>
+      <Name>PlataformaRio2C.Infra.Data.Context</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PlataformaRio2C.Application\PlataformaRio2C.Application.csproj">
       <Project>{5c6e9cb9-b206-4ecf-ae1a-7e07995d39f7}</Project>
       <Name>PlataformaRio2C.Application</Name>
