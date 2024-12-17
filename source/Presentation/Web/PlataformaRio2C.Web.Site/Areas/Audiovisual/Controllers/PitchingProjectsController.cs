@@ -49,7 +49,9 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         private readonly IProjectEvaluationStatusRepository evaluationStatusRepository;
         private readonly IProjectModalityRepository projectModalityRepository;
 
-        /// <summary>Initializes a new instance of the <see cref="PitchingProjectsController"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PitchingProjectsController" /> class.
+        /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="projectRepository">The project repository.</param>
@@ -59,6 +61,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="projectEvaluationRefuseReasonRepo">The project evaluation refuse reason repo.</param>
         /// <param name="evaluationStatusRepository">The project evaluation status repository.</param>
+        /// <param name="projectModalityRepository">The project modality repository.</param>
         public PitchingProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
@@ -82,8 +85,6 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             this.projectModalityRepository = projectModalityRepository;
         }
 
-        #region Seller (Industry)
-
         #region Submitted List
 
         /// <summary>Submitteds the list.</summary>
@@ -93,8 +94,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         {
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper($"{Labels.Projects} {Labels.Pitching}", Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
+            ViewBag.Breadcrumb = new BreadcrumbHelper($"{Labels.AudiovisualProjects} - {Labels.Pitching}", new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.PitchingProjects, Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
             });
 
             #endregion
@@ -166,8 +167,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
+            ViewBag.Breadcrumb = new BreadcrumbHelper($"{Labels.AudiovisualProjects} - {Labels.Pitching}", new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.PitchingProjects, Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
                 new BreadcrumbItemHelper(projectDto.GetTitleDtoByLanguageCode(this.UserInterfaceLanguage)?.ProjectTitle?.Value ?? Labels.Project, Url.Action("SubmittedDetails", "PitchingProjects", new { id }))
             });
 
@@ -715,7 +716,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ProjectInfo, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper($"{Labels.Projects} {Labels.Pitching}", Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(Labels.PitchingProjects, Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
                 new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "PitchingProjects", new { Area = "Audiovisual" }))
             });
 
@@ -741,7 +742,10 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             var firstAttendeeOrganizationCreated = this.UserAccessControlDto.GetFirstAttendeeOrganizationCreated();
             if (firstAttendeeOrganizationCreated != null)
             {
-                var projectsCount = this.projectRepo.Count(p => p.SellerAttendeeOrganization.Uid == firstAttendeeOrganizationCreated.Uid && !p.IsDeleted);
+                var projectsCount = this.projectRepo.Count(p => p.SellerAttendeeOrganization.Uid == firstAttendeeOrganizationCreated.Uid && !p.IsDeleted && p.ProjectModalityId == ProjectModality.Pitching.Id);
+
+                // TODO: Separate the AttendeeOrganizationMaxSellProjectsCount into AudiovisualBusinessRoundsMaxSellProjectsCount and AudiovisualPitchingMaxSellProjectsCount
+                // today is using the same parameter value to both (Pitching and Business Rounds)
                 var projectMaxCount = this.EditionDto?.AttendeeOrganizationMaxSellProjectsCount ?? 0;
                 if (projectsCount >= projectMaxCount)
                 {
@@ -788,7 +792,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ProjectInfo, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(Labels.PitchingProjects, Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
                 new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "PitchingProjects", new { Area = "Audiovisual" }))
             });
 
@@ -868,7 +872,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 var project = result.Data as Project;
                 if (project != null)
                 {
-                    return RedirectToAction("SendToPlayers", "PitchingProjects", new { id = project.Uid });
+                    return RedirectToAction("SubmittedDetails", "PitchingProjects", new { id = project.Uid });
                 }
             }
             catch
@@ -891,7 +895,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CompanyInfo, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(Labels.PitchingProjects, Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
                 new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "PitchingProjects", new { Area = "Audiovisual" }))
             });
 
@@ -934,7 +938,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CompanyInfo, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(Labels.PitchingProjects, Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
                 new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "PitchingProjects", new { Area = "Audiovisual" }))
             });
 
@@ -1019,7 +1023,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ParticipantsTerms, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(Labels.PitchingProjects, Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
                 new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "PitchingProjects", new { Area = "Audiovisual" }))
             });
 
@@ -1051,7 +1055,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ParticipantsTerms, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(Labels.PitchingProjects, Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
                 new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "PitchingProjects", new { Area = "Audiovisual" }))
             });
 
@@ -1114,284 +1118,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 
             this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.ParticipantsTerms, Labels.Accepted.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
 
-            // Check if player submitted the max number of projects
-            var firstAttendeeOrganizationCreated = this.UserAccessControlDto.GetFirstAttendeeOrganizationCreated();
-            if (firstAttendeeOrganizationCreated != null)
-            {
-                var projectsCount = this.projectRepo.Count(p => p.SellerAttendeeOrganization.Uid == firstAttendeeOrganizationCreated.Uid
-                                                                && !p.IsDeleted);
-                var projectMaxCount = this.EditionDto?.AttendeeOrganizationMaxSellProjectsCount ?? 0;
-                if (projectsCount >= projectMaxCount)
-                {
-                    if (cmd.ProjectUid.HasValue)
-                    {
-                        return RedirectToAction("SendToPlayers", "PitchingProjects", new { id = cmd.ProjectUid });
-                    }
-
-                    return RedirectToAction("Index", "PitchingProjects");
-                }
-            }
-
             return RedirectToAction("Submit", "PitchingProjects");
-        }
-
-        #endregion
-
-        #region Send to Players
-
-        /// <summary>Sends to players.</summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> SendToPlayers(Guid? id)
-        {
-            #region Breadcrumb
-
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ParticipantsTerms, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
-                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "PitchingProjects", new { Area = "Audiovisual" }))
-            });
-
-            #endregion
-
-            if (this.EditionDto?.IsAudiovisualProjectSubmitOpen() != true)
-            {
-                this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "PitchingProjects");
-            }
-
-            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
-                || this.UserAccessControlDto?.IsAudiovisualProducerBusinessRoundTermsAcceptanceDatePending() == true)
-            {
-                return RedirectToAction("Submit", "PitchingProjects", new { id });
-            }
-
-            var buyerCompanyWidgetDto = await this.projectRepo.FindSiteBuyerCompanyWidgetDtoByProjectUidAsync(id ?? Guid.Empty);
-            if (buyerCompanyWidgetDto == null)
-            {
-                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "PitchingProjects");
-            }
-
-            if (buyerCompanyWidgetDto.Project.IsFinished())
-            {
-                this.StatusMessageToastr(Messages.ProjectIsFinishedCannotBeUpdated, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "PitchingProjects");
-            }
-
-            return View(buyerCompanyWidgetDto);
-        }
-
-        /// <summary>Saves the specified identifier.</summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> Save(Guid? id)
-        {
-            if (!id.HasValue)
-            {
-                return RedirectToAction("Index", "PitchingProjects");
-            }
-
-            this.StatusMessageToastr(Messages.ProjectSavedButNotSentToPlayers, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Warning);
-            return RedirectToAction("SubmittedDetails", "PitchingProjects", new { id });
-        }
-
-        /// <summary>Shows the buyer company selected widget.</summary>
-        /// <param name="projectUid">The project uid.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowBuyerCompanySelectedWidget(Guid? projectUid)
-        {
-            var buyerCompanyWidgetDto = await this.projectRepo.FindSiteBuyerCompanyWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
-            if (buyerCompanyWidgetDto == null)
-            {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-            }
-
-            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(buyerCompanyWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
-            {
-                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Widgets/BuyerCompanySelectedWidget", buyerCompanyWidgetDto), divIdOrClass = "#ProjectBuyerCompanySelectedWidget" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>Shows the project match buyer company widget.</summary>
-        /// <param name="projectUid">The project uid.</param>
-        /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="page">The page.</param>
-        /// <param name="pageSize">Size of the page.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowProjectMatchBuyerCompanyWidget(Guid? projectUid, string searchKeywords, int page = 1, int pageSize = 10)
-        {
-            var interestWidgetDto = await this.projectRepo.FindSiteInterestWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
-            if (interestWidgetDto == null)
-            {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-            }
-
-            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
-            {
-                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-            }
-
-            var matchAttendeeOrganizationDtos = await this.attendeeOrganizationRepo.FindAllDtoByMatchingProjectBuyerAsync(this.EditionDto.Id, interestWidgetDto, searchKeywords, page, pageSize);
-
-            ViewBag.ShowProjectMatchBuyerCompanySearch = $"&projectUid={projectUid}&pageSize={pageSize}";
-            ViewBag.SearchKeywords = searchKeywords;
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Widgets/ProjectMatchBuyerCompanyWidget", matchAttendeeOrganizationDtos), divIdOrClass = "#ProjectMatchBuyerCompanyWidget" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>Shows the project all buyer company widget.</summary>
-        /// <param name="projectUid">The project uid.</param>
-        /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="page">The page.</param>
-        /// <param name="pageSize">Size of the page.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowProjectAllBuyerCompanyWidget(Guid? projectUid, string searchKeywords, int page = 1, int pageSize = 10)
-        {
-            var interestWidgetDto = await this.projectRepo.FindSiteInterestWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
-            if (interestWidgetDto == null)
-            {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-            }
-
-            if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
-            {
-                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-            }
-
-            var attendeeOrganizationDtos = await this.attendeeOrganizationRepo.FindAllDtoByProjectBuyerAsync(this.EditionDto.Id, interestWidgetDto, searchKeywords, page, pageSize);
-
-            ViewBag.ShowProjectAllBuyerCompanySearch = $"&projectUid={projectUid}&pageSize={pageSize}";
-            ViewBag.SearchKeywords = searchKeywords;
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Widgets/ProjectAllBuyerCompanyWidget", attendeeOrganizationDtos), divIdOrClass = "#ProjectAllBuyerCompanyWidget" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>Creates the buyer evaluation.</summary>
-        /// <param name="cmd">The command.</param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> CreateBuyerEvaluation(CreateProjectBuyerEvaluation cmd)
-        {
-            var result = new AppValidationResult();
-
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-
-                cmd.UpdatePreSendProperties(
-                    this.UserAccessControlDto.User.Id,
-                    this.UserAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
-                result = await this.CommandBus.Send(cmd);
-                if (!result.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-            }
-            catch (DomainException ex)
-            {
-                foreach (var error in result.Errors)
-                {
-                    var target = error.Target ?? "";
-                    ModelState.AddModelError(target, error.Message);
-                }
-                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
-
-                //cmd.UpdateModelsAndLists(
-                //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
-
-                return Json(new { status = "error", message = toastrError?.Message ?? ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM) });
-        }
-
-        /// <summary>Deletes the buyer evaluation.</summary>
-        /// <param name="cmd">The command.</param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> DeleteBuyerEvaluation(DeleteProjectBuyerEvaluation cmd)
-        {
-            var result = new AppValidationResult();
-
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-
-                cmd.UpdatePreSendProperties(
-                    this.UserAccessControlDto.User.Id,
-                    this.UserAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
-                result = await this.CommandBus.Send(cmd);
-                if (!result.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-            }
-            catch (DomainException ex)
-            {
-                foreach (var error in result.Errors)
-                {
-                    var target = error.Target ?? "";
-                    ModelState.AddModelError(target, error.Message);
-                }
-                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
-
-                //cmd.UpdateModelsAndLists(
-                //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
-
-                return Json(new { status = "error", message = toastrError?.Message ?? ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM) });
         }
 
         #endregion
@@ -1457,451 +1184,6 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             return Json(new { status = "success", message = successMessage });
         }
 
-        #endregion
-
-        #endregion
-
-        #region Buyer (Executive Audiovisual)
-
-        #region Evaluation List
-
-        /// <summary>Evaluations the list.</summary>
-        /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="interestUid">The interest uid.</param>
-        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
-        /// <param name="page">The page.</param>
-        /// <param name="pageSize">Size of the page.</param>
-        /// <returns></returns>
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.PlayerExecutiveAudiovisual)]
-        [HttpGet]
-        public async Task<ActionResult> EvaluationList(string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 10)
-        {
-            if (this.EditionDto?.IsProjectBuyerEvaluationStarted() != true)
-            {
-                return RedirectToAction("Index", "PitchingProjects", new { Area = "Audiovisual" });
-            }
-
-            #region Breadcrumb
-
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("EvaluationList", "PitchingProjects", new { Area = "Audiovisual" })),
-            });
-
-            #endregion
-
-            ViewBag.SearchKeywords = searchKeywords;
-            ViewBag.InterestUid = interestUid;
-            ViewBag.EvaluationStatusUid = evaluationStatusUid;
-            ViewBag.Page = page;
-            ViewBag.PageSize = pageSize;
-
-            ViewBag.GenreInterests = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.AudiovisualGenre.Uid);
-            ViewBag.ProjectEvaluationStatuses = await this.evaluationStatusRepository.FindAllAsync();
-
-            return View();
-        }
-
-        /// <summary>Shows the evaluation list widget.</summary>
-        /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="interestUid">The interest uid.</param>
-        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
-        /// <param name="page">The page.</param>
-        /// <param name="pageSize">Size of the page.</param>
-        /// <returns></returns>
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.PlayerExecutiveAudiovisual)]
-        [HttpGet]
-        public async Task<ActionResult> ShowEvaluationListWidget(string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 10)
-        {
-            if (this.EditionDto?.IsProjectBuyerEvaluationStarted() != true)
-            {
-                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-            }
-
-            var projects = await this.projectRepo.FindAllDtosToEvaluateAsync(
-                this.UserAccessControlDto?.EditionAttendeeCollaborator?.Uid ?? Guid.Empty, 
-                searchKeywords, 
-                interestUid,
-                evaluationStatusUid,
-                page.Value, 
-                pageSize.Value);
-
-            ViewBag.SearchKeywords = searchKeywords;
-            ViewBag.InterestUid = interestUid;
-            ViewBag.EvaluationStatusUid = evaluationStatusUid;
-            ViewBag.Page = page;
-            ViewBag.PageSize = pageSize;
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Widgets/EvaluationListWidget", projects), divIdOrClass = "#ProjectBuyerEvaluationListWidget" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>Shows the evaluation list item widget.</summary>
-        /// <param name="projectUid">The project uid.</param>
-        /// <returns></returns>
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.PlayerExecutiveAudiovisual)]
-        [HttpGet]
-        public async Task<ActionResult> ShowEvaluationListItemWidget(Guid? projectUid)
-        {
-            if (this.EditionDto?.IsProjectBuyerEvaluationStarted() != true)
-            {
-                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-            }
-
-            if (!projectUid.HasValue)
-            {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM)}, JsonRequestBehavior.AllowGet);
-            }
-
-            var projects = await this.projectRepo.FindDtoToEvaluateAsync(
-                this.UserAccessControlDto?.EditionAttendeeCollaborator?.Uid ?? Guid.Empty,
-                projectUid.Value);
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Widgets/EvaluationListItemWidget", projects), divIdOrClass = $"#project-{projectUid}" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        #endregion
-
-        #region Evaluation Details
-
-        /// <summary>Evaluations the details.</summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns></returns>
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.PlayerExecutiveAudiovisual)]
-        public async Task<ActionResult> EvaluationDetails(Guid? id)
-        {
-            if (this.EditionDto?.IsProjectBuyerEvaluationStarted() != true)
-            {
-                return RedirectToAction("Index", "PitchingProjects", new { Area = "Audiovisual" });
-            }
-
-            var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(id ?? Guid.Empty, this.EditionDto.Id);
-            if (projectDto == null)
-            {
-                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("EvaluationList", "PitchingProjects", new { Area = "Audiovisual" });
-            }
-
-            if (!projectDto.Project.IsFinished())
-            {
-                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("EvaluationList", "PitchingProjects", new { Area = "Audiovisual" });
-            }
-
-            if (this.UserAccessControlDto?.HasAnyEditionAttendeeOrganization(projectDto.ProjectBuyerEvaluationDtos?.Select(pbed => pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid)?.ToList()) != true) // Is buyer
-            {
-                this.StatusMessageToastr(Texts.ForbiddenErrorMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("EvaluationList", "PitchingProjects", new { Area = "Audiovisual" });
-            }
-
-            #region Breadcrumb
-
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper($"{Labels.Projects} {Labels.Pitching}", Url.Action("EvaluationList", "PitchingProjects", new { Area = "Audiovisual" })),
-                new BreadcrumbItemHelper(projectDto.GetTitleDtoByLanguageCode(this.UserInterfaceLanguage)?.ProjectTitle?.Value ?? Labels.Project, Url.Action("EvaluationDetails", "PitchingProjects", new { id }))
-            });
-
-            #endregion
-
-            return View(projectDto);
-        }
-
-        /// <summary>Shows the buyer evaluation widget.</summary>
-        /// <param name="projectUid">The project uid.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowBuyerEvaluationWidget(Guid? projectUid)
-        {
-            if (this.EditionDto?.IsProjectBuyerEvaluationStarted() != true)
-            {
-                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-            }
-
-            var projectBuyerEvaluationDto = await this.projectRepo.FindSiteBuyerEvaluationWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty, this.UserAccessControlDto?.EditionAttendeeCollaborator?.Uid ?? Guid.Empty);
-            if (projectBuyerEvaluationDto == null)
-            {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-            }
-
-            if (this.UserAccessControlDto?.HasAnyEditionAttendeeOrganization(projectBuyerEvaluationDto.ProjectBuyerEvaluationDtos?.Select(pbed => pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid)?.ToList()) != true   // Buyer with project finished
-                || projectBuyerEvaluationDto.Project?.IsFinished() != true)
-            {
-                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Widgets/BuyerEvaluationWidget", projectBuyerEvaluationDto), divIdOrClass = "#ProjectBuyerEvaluationWidget" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>
-        /// Shows the accept evaluation modal.
-        /// </summary>
-        /// <param name="projectUid">The project uid.</param>
-        /// <param name="buyerAttendeeOrganizationUid">The buyer attendee organization uid.</param>
-        /// <returns></returns>
-        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
-        [HttpGet]
-        public async Task<ActionResult> ShowAcceptEvaluationModal(Guid? projectUid, Guid? buyerAttendeeOrganizationUid)
-        {
-            AcceptProjectEvaluation cmd;
-
-            try
-            {
-                if (this.EditionDto?.IsProjectBuyerEvaluationOpen() != true)
-                {
-                    throw new DomainException(Texts.ForbiddenErrorMessage);
-                }
-
-                var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(projectUid ?? Guid.Empty, this.EditionDto.Id);
-                if (projectDto == null)
-                {
-                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
-                }
-
-                if (!projectDto.Project.IsFinished())
-                {
-                    throw new DomainException(Texts.ForbiddenErrorMessage);
-                }
-
-                if (this.UserAccessControlDto?.HasAnyEditionAttendeeOrganization(projectDto.ProjectBuyerEvaluationDtos?.Select(pbed => pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid)?.ToList()) != true) // Is buyer
-                {
-                    throw new DomainException(Texts.ForbiddenErrorMessage);
-                }
-
-                var maximumAvailableSlotsByEditionIdResponseDto = await CommandBus.Send(new GetMaximumAvailableSlotsByEditionId(this.EditionDto.Id));
-                var playerAcceptedProjectsCount = await CommandBus.Send(new CountPresentialNegotiationsAcceptedByBuyerAttendeeOrganizationUid(buyerAttendeeOrganizationUid ?? Guid.Empty));
-
-                cmd = new AcceptProjectEvaluation(
-                    projectDto,
-                    this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList(),
-                    maximumAvailableSlotsByPlayer: maximumAvailableSlotsByEditionIdResponseDto.MaximumAvailableSlotsByPlayer,
-                    playerAcceptedProjectsCount: playerAcceptedProjectsCount);
-            }
-            catch (DomainException ex)
-            {
-                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Modals/AcceptEvaluationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>Accepts the specified project evaluation.</summary>
-        /// <param name="cmd">The command.</param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> Accept(AcceptProjectEvaluation cmd)
-        {
-            var result = new AppValidationResult();
-
-            try
-            {
-                if (this.EditionDto?.IsProjectBuyerEvaluationOpen() != true)
-                {
-                    throw new DomainException(Texts.ForbiddenErrorMessage);
-                }
-
-                if (!ModelState.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-
-                cmd.UpdatePreSendProperties(
-                    this.UserAccessControlDto.User.Id,
-                    this.UserAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
-                result = await this.CommandBus.Send(cmd);
-                if (!result.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-            }
-            catch (DomainException ex)
-            {
-                foreach (var error in result.Errors)
-                {
-                    var target = error.Target ?? "";
-                    ModelState.AddModelError(target, error.Message);
-                }
-                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
-
-                cmd.UpdateModelsAndLists(
-                    await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(cmd.ProjectUid ?? Guid.Empty, this.EditionDto.Id),
-                    this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList());
-
-                return Json(new
-                {
-                    status = "error",
-                    message = toastrError?.Message ?? ex.GetInnerMessage(),
-                    pages = new List<dynamic>
-                    {
-                        new { page = this.RenderRazorViewToString("Modals/AcceptEvaluationForm", cmd), divIdOrClass = "#form-container" },
-                    }
-                }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new
-            {
-                status = "success",
-                projectUid = cmd.ProjectUid,
-                message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.ProjectAccepted.ToLowerInvariant())
-            });
-        }
-
-        /// <summary>Shows the refuse evaluation modal.</summary>
-        /// <param name="projectUid">The project uid.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowRefuseEvaluationModal(Guid? projectUid)
-        {
-            RefuseProjectEvaluation cmd;
-
-            try
-            {
-                if (this.EditionDto?.IsProjectBuyerEvaluationOpen() != true)
-                {
-                    throw new DomainException(Texts.ForbiddenErrorMessage);
-                }
-
-                var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(projectUid ?? Guid.Empty, this.EditionDto.Id);
-                if (projectDto == null)
-                {
-                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
-                }
-
-                if (!projectDto.Project.IsFinished())
-                {
-                    throw new DomainException(Texts.ForbiddenErrorMessage);
-                }
-
-                if (this.UserAccessControlDto?.HasAnyEditionAttendeeOrganization(projectDto.ProjectBuyerEvaluationDtos?.Select(pbed => pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid)?.ToList()) != true) // Is buyer
-                {
-                    throw new DomainException(Texts.ForbiddenErrorMessage);
-                }
-
-                cmd = new RefuseProjectEvaluation(
-                    projectDto,
-                    this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList(),
-                    await this.projectEvaluationRefuseReasonRepo.FindAllByProjectTypeUidAsync(ProjectType.Audiovisual.Uid));
-            }
-            catch (DomainException ex)
-            {
-                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Modals/RefuseEvaluationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>Refuses the specified project evaluation.</summary>
-        /// <param name="cmd">The command.</param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> Refuse(RefuseProjectEvaluation cmd)
-        {
-            var result = new AppValidationResult();
-
-            try
-            {
-                if (this.EditionDto?.IsProjectBuyerEvaluationOpen() != true)
-                {
-                    throw new DomainException(Texts.ForbiddenErrorMessage);
-                }
-
-                if (!ModelState.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-
-                cmd.UpdatePreSendProperties(
-                    this.UserAccessControlDto.User.Id,
-                    this.UserAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
-                result = await this.CommandBus.Send(cmd);
-                if (!result.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-            }
-            catch (DomainException ex)
-            {
-                foreach (var error in result.Errors)
-                {
-                    var target = error.Target ?? "";
-                    ModelState.AddModelError(target, error.Message);
-                }
-                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
-
-                cmd.UpdateModelsAndLists(
-                    await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(cmd.ProjectUid ?? Guid.Empty, this.EditionDto.Id),
-                    this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList(),
-                    await this.projectEvaluationRefuseReasonRepo.FindAllByProjectTypeUidAsync(ProjectType.Audiovisual.Uid));
-
-                return Json(new
-                {
-                    status = "error",
-                    message = toastrError?.Message ?? ex.GetInnerMessage(),
-                    pages = new List<dynamic>
-                    {
-                        new { page = this.RenderRazorViewToString("Modals/RefuseEvaluationForm", cmd), divIdOrClass = "#form-container" },
-                    }
-                }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new
-            {
-                status = "success",
-                projectUid = cmd.ProjectUid,
-                message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.ProjectRefused.ToLowerInvariant())
-            });
-        }
-
-        #endregion
-     
         #endregion
     }
 }
