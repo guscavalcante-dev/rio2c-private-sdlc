@@ -744,7 +744,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             {
                 var projectsCount = this.projectRepo.Count(p => p.SellerAttendeeOrganization.Uid == firstAttendeeOrganizationCreated.Uid && !p.IsDeleted && p.ProjectModalityId == ProjectModality.Pitching.Id);
 
-                // TODO: Separate the AttendeeOrganizationMaxSellProjectsCount into AudiovisualBusinessRoundsMaxSellProjectsCount and AudiovisualPitchingRoundsMaxSellProjectsCount
+                // TODO: Separate the AttendeeOrganizationMaxSellProjectsCount into AudiovisualBusinessRoundsMaxSellProjectsCount and AudiovisualPitchingMaxSellProjectsCount
                 // today is using the same parameter value to both (Pitching and Business Rounds)
                 var projectMaxCount = this.EditionDto?.AttendeeOrganizationMaxSellProjectsCount ?? 0;
                 if (projectsCount >= projectMaxCount)
