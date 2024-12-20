@@ -1,4 +1,4 @@
-BEGIN TRY
+ï»¿BEGIN TRY
     BEGIN TRANSACTION
 
         -----------------------------------------------
@@ -24,7 +24,7 @@ BEGIN TRY
         IF EXISTS (SELECT 1 FROM [dbo].[InterestGroups] WHERE Uid = '33AE337F-99F1-4C8D-98EC-8044572A104D')
         BEGIN
             UPDATE [dbo].[InterestGroups]
-            SET [Name] = 'Está buscando | Looking For'
+            SET [Name] = 'EstÃ¡ buscando | Looking For'
             WHERE [Uid] = '33AE337F-99F1-4C8D-98EC-8044572A104D';
         END;
 
@@ -39,7 +39,7 @@ BEGIN TRY
         -- Revert Interest Name Update
         -----------------------------------------------
         UPDATE [dbo].[Interests]
-        SET [Name] = 'Captação de Novos Talentos/Novos Negócios | Talent/New Business Acquisition'
+        SET [Name] = 'CaptaÃ§Ã£o de Novos Talentos/Novos NegÃ³cios | Talent/New Business Acquisition'
         WHERE [Uid] = '88E30899-BE53-408A-84F1-BBFF7C8CBB93';
 
             -----------------------------------------------
@@ -58,11 +58,11 @@ BEGIN TRY
         UPDATE [dbo].[TargetAudiences]
         SET [IsDeleted] = 0
         WHERE [Uid] IN (
-            'A92A28DD-3732-4288-A092-55E4A0AED26A', -- Empresário ou Agenciamento de Artistas
+            'A92A28DD-3732-4288-A092-55E4A0AED26A', -- EmpresÃ¡rio ou Agenciamento de Artistas
             '8C35D600-7B9D-4F85-8990-CCF955C8C45C', -- Marketing Musical
             '30044E05-1F56-4CA7-B253-2CADD9407196', -- Compositor
             '9743EFB8-3994-47E6-9BF4-1A8E82CF23B7', -- Criadores de Podcast
-            'B40A3592-BA93-44B0-A710-2702DB4F7C39', -- Agências
+            'B40A3592-BA93-44B0-A710-2702DB4F7C39', -- AgÃªncias
             '597CF20B-5774-4229-B584-5CE44B818E94'  -- Outros
         );
         -----------------------------------------------
@@ -70,21 +70,36 @@ BEGIN TRY
         -----------------------------------------------
         DELETE FROM [dbo].[TargetAudiences]
         WHERE [Uid] IN (
-            'D2B2D0E5-8337-4D91-8E98-AF1F0E0E1CC1', -- Empresarios artístico
+            'D2B2D0E5-8337-4D91-8E98-AF1F0E0E1CC1', -- Empresarios artÃ­stico
             'F1C159F9-1F5F-45E2-8D2C-FF5429BB4213', -- Agentes
             'ABF2CDE5-88FF-4B8E-82F2-5E8F0F16D9A4', -- Produtor Musical
-            '94BEF8B3-0A57-4774-99B0-BCBB4EBDFFDC'  -- Produtoras (agências de talentos)
+            '94BEF8B3-0A57-4774-99B0-BCBB4EBDFFDC'  -- Produtoras (agÃªncias de talentos)
+        );
+
+         -----------------------------------------------
+        -- Update IsDeleted to 0
+        -----------------------------------------------
+        UPDATE [dbo].[Activities]
+        SET [IsDeleted] = 0
+        WHERE [Uid] IN (
+            '0F2BB02C-1480-4E88-9B9A-4C1D12F03470',
+            '4E30B7E8-B9F4-4882-9C1C-D6760513DFD7',
+            'C830BFC0-33F1-47E5-8114-43A703AF7F9C', 
+            '0B7524D8-7007-4289-8A01-BCD699353DD6', 
+            '9E5481A5-B81E-4100-A6EB-08AEB8DFCDCD', 
+            '667142F8-8F28-49A4-817D-994298E3EDF0', 
+            '28826C44-4276-4FEC-8014-EC451FFD6594'  
         );
 
         -----------------------------------------------
-        -- Update IsDeleted to 1 for Activities instead of deleting
+        -- Update IsDeleted to 1
         -----------------------------------------------
         UPDATE [dbo].[Activities]
         SET [IsDeleted] = 1
         WHERE [Uid] IN (
-            '6007DE3E-2DA9-4115-8727-419524F2F11E', -- Gravadoras | Record Labels
+            'A93B2FCD-78E6-4A8D-B123-56C7E1F9D4B2', -- Gravadoras | Record Labels
             '525C166D-0CAC-4F11-831E-974381DDAE49', -- Agregadoras | Aggregators
-            'E47E5CFA-5082-48DE-B995-AC55323AEFB2', -- Editoras e Associações | Publishers and Associations
+            'E57A1FC4-62F7-4D1B-9EA6-1207B1F2C3A8', -- Editoras e AssociaÃ§Ãµes | Publishers and Associations
             '6007DE3E-2DA9-4115-8727-419524F2F11E', -- Selo | Label
             'E47E5CFA-5082-48DE-B995-AC55323AEFB2'  -- Palco (Festivais e Casas de Show) | Stage (Festivals and Concert Venues)
         );
@@ -92,7 +107,7 @@ BEGIN TRY
         -- Revert the edit on "Editoras"
         UPDATE [dbo].[Activities]
         SET [Name] = 'Editoras | Publishers'
-        WHERE [Uid] = 'E47E5CFA-5082-48DE-B995-AC55323AEFB2';
+        WHERE [Uid] = 'E57A1FC4-62F7-4D1B-9EA6-1207B1F2C3A8';
 
         COMMIT TRAN -- Transaction Success!
 END TRY
