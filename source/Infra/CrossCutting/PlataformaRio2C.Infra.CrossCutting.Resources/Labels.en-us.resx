@@ -155,7 +155,7 @@
     <comment>Ações</comment>
   </data>
   <data name="Activities" xml:space="preserve">
-    <value>Activities</value>
+    <value>What is your company's main activity?</value>
     <comment>Atividades</comment>
   </data>
   <data name="Activity" xml:space="preserve">
@@ -369,9 +369,6 @@
     <comment>Tempo de espera para liberação da sala de reunião virtual</comment>
   </data>
   <data name="AudiovisualPitchingRules" xml:space="preserve">
-    <value>Pitching rules</value>
-  </data>
-  <data name="AudiovisualPitchingRules1" xml:space="preserve">
     <value>Pitching rules</value>
   </data>
   <data name="AudiovisualPitchingRulesShorted" xml:space="preserve">
@@ -3024,7 +3021,7 @@
     <comment>Público-Alvo</comment>
   </data>
   <data name="TargetAudiences" xml:space="preserve">
-    <value>Target audiences</value>
+    <value>What participant profile are you interested in for the Business Rounds?</value>
     <comment>Público-alvo/Faixa-etária</comment>
   </data>
   <data name="TeaserLink" xml:space="preserve">
@@ -3400,5 +3397,8 @@
   <data name="ZoomOut" xml:space="preserve">
     <value>Zoom Out</value>
     <comment>Menos Zoom</comment>
+  </data>
+  <data name="AudiovisualPitchingRules1" xml:space="preserve">
+    <value>Pitching rules</value>
   </data>
 </root>
