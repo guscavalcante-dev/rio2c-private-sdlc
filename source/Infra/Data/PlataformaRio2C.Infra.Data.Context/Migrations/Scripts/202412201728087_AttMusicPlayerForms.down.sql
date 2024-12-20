@@ -6,10 +6,10 @@ BEGIN TRY
         -----------------------------------------------
         DELETE FROM [dbo].[Interests]
         WHERE [Uid] IN (
-            'A7B3D9E1-4237-4F3D-B1C5-29A4FEC1239F',
-            'E2B2C3D4-F5G6-7890-1234-56789ABCDEF2',
-            'E3B2C3D4-F5G6-7890-1234-56789ABCDEF3',
-            'E4B2C3D4-F5G6-7890-1234-56789ABCDEF4'
+            'F7A9C3D2-85D7-4EEC-8D26-8F7F9382346B',
+            'BC3D6F92-9B3E-4A92-9F32-AF74A7B0D832',
+            'AE42C3A8-4734-4A5D-8C2B-CB39AB3DC6E9',
+            'A56EEDB0-234D-4732-B9D9-C9D1B7037C68' 
         );
 
         -----------------------------------------------
@@ -18,7 +18,7 @@ BEGIN TRY
         DELETE FROM [dbo].[InterestGroups]
         WHERE [Uid] = 'A1B2C3D4-E5F6-7890-1234-56789ABCDEF0';
 
-           -----------------------------------------------
+        -----------------------------------------------
         -- Revert InterestGroups Name Update
         -----------------------------------------------
         IF EXISTS (SELECT 1 FROM [dbo].[InterestGroups] WHERE Uid = '33AE337F-99F1-4C8D-98EC-8044572A104D')
@@ -28,31 +28,12 @@ BEGIN TRY
             WHERE [Uid] = '33AE337F-99F1-4C8D-98EC-8044572A104D';
         END;
 
-         -----------------------------------------------
-        -- Reinsert Interest 'OTHERS' Record
+       -----------------------------------------------
+        -- Revert OTHERS Interest 'IsDeleted' Update
         -----------------------------------------------
-        INSERT INTO [dbo].[Interests]
-                   ([Uid]
-                   ,[InterestGroupId]
-                   ,[Name]
-                   ,[DisplayOrder]
-                   ,[IsDeleted]
-                   ,[CreateDate]
-                   ,[CreateUserId]
-                   ,[UpdateDate]
-                   ,[UpdateUserId]
-                   ,[HasAdditionalInfo])
-             VALUES
-                   ('E4D8195E-2A7F-48AC-85C2-065B6E4101E4' -- Uid
-                   ,8 -- InterestGroupId
-                   ,'Outros | Others' -- Name
-                   ,5 -- DisplayOrder
-                   ,0 -- IsDeleted
-                   ,'2023-12-26 18:55:43.8000000 +00:00' -- CreateDate
-                   ,1 -- CreateUserId
-                   ,'2023-12-26 18:55:43.8000000 +00:00' -- UpdateDate
-                   ,1 -- UpdateUserId
-                   ,1); -- HasAdditionalInfo
+        UPDATE [dbo].[Interests]
+        SET [IsDeleted] = 0
+        WHERE [Uid] = 'E4D8195E-2A7F-48AC-85C2-065B6E4101E4';
 
         -----------------------------------------------
         -- Revert Interest Name Update
@@ -70,29 +51,20 @@ BEGIN TRY
             '9F36A7DE-5678-4A9C-BD91-0E12A3B4C5D6'  -- Show / Tour
         );
 
-          -----------------------------------------------
-        -- Reinsert Deleted TargetAudiences Records
+
         -----------------------------------------------
-        INSERT INTO [dbo].[TargetAudiences]
-                   ([Uid]
-                   ,[ProjectTypeId]
-                   ,[Name]
-                   ,[DisplayOrder]
-                   ,[IsDeleted]
-                   ,[CreateDate]
-                   ,[CreateUserId]
-                   ,[UpdateDate]
-                   ,[UpdateUserId]
-                   ,[HasAdditionalInfo])
-             VALUES
-                   ('A92A28DD-3732-4288-A092-55E4A0AED26A', 3, 'Empresário ou Agenciamento de Artistas | Artist Manager or Agency', 2, 0, '2023-12-26 18:55:43.7966667 +00:00', 1, '2023-12-26 18:55:43.7966667 +00:00', 1, 0),
-                   ('8C35D600-7B9D-4F85-8990-CCF955C8C45C', 3, 'Marketing Musical | Music Marketing', 3, 0, '2023-12-26 18:55:43.7966667 +00:00', 1, '2023-12-26 18:55:43.7966667 +00:00', 1, 0),
-                   ('30044E05-1F56-4CA7-B253-2CADD9407196', 3, 'Compositor | Composer', 5, 0, '2023-12-26 18:55:43.7966667 +00:00', 1, '2023-12-26 18:55:43.7966667 +00:00', 1, 0),
-                   ('9743EFB8-3994-47E6-9BF4-1A8E82CF23B7', 3, 'Criadores de Podcast | Podcast Creators', 6, 0, '2023-12-26 18:55:43.7966667 +00:00', 1, '2023-12-26 18:55:43.7966667 +00:00', 1, 0),
-                   ('B40A3592-BA93-44B0-A710-2702DB4F7C39', 3, 'Agências | Agencies', 7, 0, '2023-12-26 18:55:43.7966667 +00:00', 1, '2023-12-26 18:55:43.7966667 +00:00', 1, 0),
-                   ('597CF20B-5774-4229-B584-5CE44B818E94', 3, 'Outros | Others', 7, 0, '2023-12-26 18:55:43.7966667 +00:00', 1, '2023-12-26 18:55:43.7966667 +00:00', 1, 1);
-
-
+        -- Revert IsDeleted Status for TargetAudiences Records
+        -----------------------------------------------
+        UPDATE [dbo].[TargetAudiences]
+        SET [IsDeleted] = 0
+        WHERE [Uid] IN (
+            'A92A28DD-3732-4288-A092-55E4A0AED26A', -- Empresário ou Agenciamento de Artistas
+            '8C35D600-7B9D-4F85-8990-CCF955C8C45C', -- Marketing Musical
+            '30044E05-1F56-4CA7-B253-2CADD9407196', -- Compositor
+            '9743EFB8-3994-47E6-9BF4-1A8E82CF23B7', -- Criadores de Podcast
+            'B40A3592-BA93-44B0-A710-2702DB4F7C39', -- Agências
+            '597CF20B-5774-4229-B584-5CE44B818E94'  -- Outros
+        );
         -----------------------------------------------
         -- Revert new TargetAudiences records
         -----------------------------------------------
@@ -104,8 +76,11 @@ BEGIN TRY
             '94BEF8B3-0A57-4774-99B0-BCBB4EBDFFDC'  -- Produtoras (agências de talentos)
         );
 
-        -- Revert changes and delete inserted records
-        DELETE FROM [dbo].[Activities]
+        -----------------------------------------------
+        -- Update IsDeleted to 1 for Activities instead of deleting
+        -----------------------------------------------
+        UPDATE [dbo].[Activities]
+        SET [IsDeleted] = 1
         WHERE [Uid] IN (
             '6007DE3E-2DA9-4115-8727-419524F2F11E', -- Gravadoras | Record Labels
             '525C166D-0CAC-4F11-831E-974381DDAE49', -- Agregadoras | Aggregators
