@@ -326,13 +326,7 @@
   <data name="AudiovisualBusinessRoundRules" xml:space="preserve">
     <value>Business rounds rules</value>
   </data>
-  <data name="AudiovisualBusinessRoundRules_Duplicate[1]" xml:space="preserve">
-    <value>Business rounds rules</value>
-  </data>
-  <data name="AudiovisualBusinessRoundShorted" xml:space="preserve">
-    <value>B. rounds rules</value>
-  </data>
-  <data name="AudiovisualBusinessRoundShorted_Duplicate[1]" xml:space="preserve">
+  <data name="AudiovisualBusinessRoundRulesShorted" xml:space="preserve">
     <value>B. rounds rules</value>
   </data>
   <data name="AudiovisualCommission" xml:space="preserve">
@@ -380,10 +374,7 @@
   <data name="AudiovisualPitchingRules1" xml:space="preserve">
     <value>Pitching rules</value>
   </data>
-  <data name="AudiovisualPitchingRules1_Duplicate[1]" xml:space="preserve">
-    <value>Pitching rules</value>
-  </data>
-  <data name="AudiovisualPitchingRules_Duplicate[1]" xml:space="preserve">
+  <data name="AudiovisualPitchingRulesShorted" xml:space="preserve">
     <value>Pitching rules</value>
   </data>
   <data name="AudiovisualPitchingSessions" xml:space="preserve">
@@ -2051,6 +2042,9 @@
     <value>Pitching participation objectives</value>
     <comment>Objetivos em participar do Pitching</comment>
   </data>
+  <data name="PitchingProjects" xml:space="preserve">
+    <value>Pitching Projects</value>
+  </data>
   <data name="Place" xml:space="preserve">
     <value>Place</value>
     <comment>Local</comment>
@@ -2340,6 +2334,9 @@
     <value>Maximum number of evaluators by project</value>
     <comment>Quantidade máxima de avaliadores por projeto</comment>
   </data>
+  <data name="ProjectModality" xml:space="preserve">
+    <value>Project Modality</value>
+  </data>
   <data name="ProjectNotSubmittedToPlayers" xml:space="preserve">
     <value>No Player selected for evaluation</value>
     <comment>Nenhum Player selecionado para avaliação</comment>
@@ -2534,9 +2531,6 @@
   <data name="RequiredFields" xml:space="preserve">
     <value>Required fields</value>
   </data>
-  <data name="RequiredFields_Duplicate[1]" xml:space="preserve">
-    <value>Required fields</value>
-  </data>
   <data name="ReservationCode" xml:space="preserve">
     <value>Reservation code</value>
     <comment>Código de reserva</comment>
@@ -2633,9 +2627,6 @@
   </data>
   <data name="ScheduledOneToOneMeetings" xml:space="preserve">
     <value>Scheduled One to One Meetings</value>
-  </data>
-  <data name="ScheduledRounds" xml:space="preserve">
-    <value>Scheduled Rounds</value>
   </data>
   <data name="ScheduleManually" xml:space="preserve">
     <value>Schedule Manually</value>

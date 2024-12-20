@@ -194,16 +194,16 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             var paragraph = new Paragraph();
 
             paragraph.Add(GetChunk($"{Labels.ScheduledNegotiationsReport}", DefaultFontSize + 12f, Font.BOLD));
-            paragraph.IndentationLeft = 170;
-            paragraph.SpacingBefore = 150;
+            paragraph.IndentationLeft = 100;
+            paragraph.SpacingBefore = 500;
             paragraph.SetLeading(1.0f, 2.5f);
-            paragraph.Alignment = Element.ALIGN_RIGHT;
+            paragraph.Alignment = Element.ALIGN_MIDDLE;
             document.Add(paragraph);
             paragraph.Clear();
 
             paragraph.Add(GetChunk(_editionDto.Edition.Name, DefaultFontSize + 6f, Font.NORMAL));
-            paragraph.Alignment = Element.ALIGN_RIGHT;
-            paragraph.IndentationLeft = 170;
+            paragraph.Alignment = Element.ALIGN_MIDDLE;
+            paragraph.IndentationLeft = 235;
             paragraph.SpacingBefore = 20;
             paragraph.SetLeading(1.0f, 1.0f);
             document.Add(paragraph);

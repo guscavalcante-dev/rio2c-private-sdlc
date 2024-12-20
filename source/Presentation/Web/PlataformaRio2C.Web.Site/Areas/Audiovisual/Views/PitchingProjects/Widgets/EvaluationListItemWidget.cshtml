@@ -70,28 +70,9 @@
                         <span class="kt-widget__text mt-0">
                             @(Html.Raw(Model.GetLogLineDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectLogLine?.Value))
                         </span>
-                        @Html.Partial("Shared/_BuyersEvaluations", Model)
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row mt-20 justify-content-end">
-            <div class="col-4 text-center">
-                <a href="@Url.Action("EvaluationDetails", "Projects", new { id = Model.Project.Uid, Area = "" })" class="btn btn-brand">@Labels.View</a>
-            </div>
-            @if (editionDto?.IsProjectBuyerEvaluationOpen() == true)
-            {
-                <div class="col-4 text-center">
-                    <button type="button" class="btn btn-success" onclick="ProjectsBuyerEvaluationUpdateWidget.showAcceptModal('@Model.Project.Uid');">
-                        <i class="fa fa-thumbs-up"></i> @Labels.AcceptProject
-                    </button>
-                </div>
-                <div class="col-4 text-center">
-                    <button type="button" class="btn btn-danger" onclick="ProjectsBuyerEvaluationUpdateWidget.showRefuseModal('@Model.Project.Uid');">
-                        <i class="fa fa-thumbs-down"></i> @Labels.RefuseProject
-                    </button>
-                </div>
-            }
         </div>
     </div>
 }
