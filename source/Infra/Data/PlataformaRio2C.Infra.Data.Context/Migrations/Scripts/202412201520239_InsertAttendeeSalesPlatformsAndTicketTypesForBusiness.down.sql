@@ -7,7 +7,7 @@
         WHERE [Uid] = 'DE5D4CD9-CEC9-4E18-8172-406FA8E07DAD';
 
         -----------------------------------------------
-        -- Revert RIO2C 2025 | CREATOR
+        -- Revert RIO2C 2025 | BUSINESS
         -----------------------------------------------
         DELETE FROM [dbo].[AttendeeSalesPlatforms]
         WHERE [Uid] = '07937D79-3A74-455A-8FD7-BE0AD638F91B';
