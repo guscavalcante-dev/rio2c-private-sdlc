@@ -501,6 +501,9 @@
     <value>One-to-one-meetings</value>
     <comment>Rodadas de Negócios</comment>
   </data>
+  <data name="BusinessRounds" xml:space="preserve">
+    <value>Business Rounds</value>
+  </data>
   <data name="BusinessRoundtable" xml:space="preserve">
     <value>Business Roundtable</value>
     <comment>Rodada de Negócios</comment>

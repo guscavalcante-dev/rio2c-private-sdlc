@@ -495,6 +495,9 @@
     <value>Rodadas de Negócios</value>
     <comment>Rodadas de Negócios</comment>
   </data>
+  <data name="BusinessRounds" xml:space="preserve">
+    <value>Rodadas de Negócio</value>
+  </data>
   <data name="BusinessRoundtable" xml:space="preserve">
     <value>Rodada de Negócios</value>
     <comment>Rodada de Negócios</comment>
@@ -972,9 +975,6 @@
     <comment>Duplicar {0}</comment>
   </data>
   <data name="Dynamic" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Dynamic_Duplicate[1]" xml:space="preserve">
     <value />
   </data>
   <data name="EachEpisodePlayingTime" xml:space="preserve">
@@ -1719,6 +1719,30 @@
     <value>Membro da Equipe</value>
     <comment>Membro da Equipe</comment>
   </data>
+  <data name="MusicBusinessRoundEvaluationEndDate" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MusicBusinessRoundEvaluationStartDate" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MusicBusinessRoundMaximumEvaluatorsByProject" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MusicBusinessRoundMaximumProjectsBySeller" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MusicBusinessRoundNegotiationEndDate" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MusicBusinessRoundNegotiationStartDate" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MusicBusinessRoundSubmitEndDate" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MusicBusinessRoundSubmitStartDate" xml:space="preserve">
+    <value></value>
+  </data>
   <data name="MusicCommission" xml:space="preserve">
     <value>Comissão de Música</value>
     <comment>Comissão de Música</comment>
@@ -1783,6 +1807,12 @@
   </data>
   <data name="MusicPitchingRepechageEvaluationStartDate" xml:space="preserve">
     <value>Data de início da avaliação de projetos pela Repescagem</value>
+  </data>
+  <data name="MusicPitchingSubmitEndDate" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MusicPitchingSubmitStartDate" xml:space="preserve">
+    <value></value>
   </data>
   <data name="MusicPlayer" xml:space="preserve">
     <value>Player de Música</value>
