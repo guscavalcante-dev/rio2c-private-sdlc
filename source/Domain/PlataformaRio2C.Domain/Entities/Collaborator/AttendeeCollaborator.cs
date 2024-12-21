@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-26-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 11-19-2024
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 12-06-2024
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,7 +33,8 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset? AudiovisualPlayerTermsAcceptanceDate { get; private set; }
         public DateTimeOffset? InnovationPlayerTermsAcceptanceDate { get; private set; }
         public DateTimeOffset? MusicPlayerTermsAcceptanceDate { get; private set; }
-        public DateTimeOffset? ProducerTermsAcceptanceDate { get; private set; }
+        public DateTimeOffset? AudiovisualProducerBusinessRoundTermsAcceptanceDate { get; private set; }
+        public DateTimeOffset? AudiovisualProducerPitchingTermsAcceptanceDate { get; private set; }        
         public DateTimeOffset? SpeakerTermsAcceptanceDate { get; private set; }
         public DateTimeOffset? AvailabilityBeginDate { get; private set; }
         public DateTimeOffset? AvailabilityEndDate { get; private set; }
@@ -1241,12 +1242,21 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
         }
 
-        /// <summary>Called when [producer terms acceptance].</summary>
+        /// <summary>Called when [audiovisual producer business round terms acceptance].</summary>
         /// <param name="userId">The user identifier.</param>
-        public void OnboardProducerTermsAcceptance(int userId)
+        public void OnboardAudiovisualProducerBusinessRoundTermsAcceptance(int userId)
         {
-            this.ProducerTermsAcceptanceDate = DateTime.UtcNow;
+            this.AudiovisualProducerBusinessRoundTermsAcceptanceDate = DateTime.UtcNow;
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
 
+        /// <summary>Called when [audiovisual producer pitching terms acceptance].</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardAudiovisualProducerPitchingTermsAcceptance(int userId)
+        {
+            this.AudiovisualProducerPitchingTermsAcceptanceDate = DateTime.UtcNow;
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;

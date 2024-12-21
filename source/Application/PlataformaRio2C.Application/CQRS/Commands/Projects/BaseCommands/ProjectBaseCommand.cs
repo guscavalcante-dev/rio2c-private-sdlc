@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 11-06-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 12-23-2023
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 29-11-2024
 // ***********************************************************************
 // <copyright file="ProjectBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -79,15 +79,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(3000, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string TeaserLinks { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAnOption")]
-        public bool? IsPitching { get; set; }
-
         public List<ProjectAdditionalInformationBaseCommand> AdditionalInformations { get; set; }
 
         public List<TargetAudience> TargetAudiences { get; private set; }
 
         public Guid? AttendeeOrganizationUid { get; private set; }
         public Guid ProjectTypeUid { get; private set; }
+        public Guid ProjectModalityUid { get; private set; }
+
+        public int ProjectMaxCount { get; private set; }
+
+        public bool ProjectModalityRequired { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="ProjectBaseCommand"/> class.</summary>
         public ProjectBaseCommand()
@@ -102,6 +104,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isDataRequired">if set to <c>true</c> [is data required].</param>
         /// <param name="isProductionPlanRequired">if set to <c>true</c> [is production plan required].</param>
         /// <param name="isAdditionalInformationRequired">if set to <c>true</c> [is additional information required].</param>
+        /// <param name="modalityRequired">if set to <c>true</c> [is modality required].</param>
         public void UpdateBaseProperties(
             ProjectDto entity,
             List<LanguageDto> languagesDtos,
@@ -109,7 +112,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<InterestDto> interestsDtos,
             bool isDataRequired,
             bool isProductionPlanRequired,
-            bool isAdditionalInformationRequired)
+            bool isAdditionalInformationRequired,
+            string userInterfaceLanguage,
+            bool modalityRequired
+        )
         {
             this.TotalPlayingTime = entity?.Project?.TotalPlayingTime;
             this.NumberOfEpisodes = entity?.Project?.NumberOfEpisodes;
@@ -120,7 +126,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.ValueStillNeeded = entity?.Project?.ValueStillNeeded;
             this.ImageLinks = entity?.Project?.ProjectImageLinks?.FirstOrDefault()?.Value;
             this.TeaserLinks = entity?.Project?.ProjectTeaserLinks?.FirstOrDefault()?.Value;
-            this.IsPitching = entity?.Project?.IsPitching;
 
             this.UpdateTitles(entity, languagesDtos, isDataRequired);
             this.UpdateLogLines(entity, languagesDtos, isDataRequired);
@@ -130,12 +135,24 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateInterests(entity, interestsDtos);
             this.TargetAudiencesUids = entity?.ProjectTargetAudienceDtos?.Select(pta => pta.TargetAudience.Uid)?.ToList();
 
-            this.UpdateDropdownProperties(targetAudiences);
+            this.ProjectModalityRequired = modalityRequired;
+            this.UpdateDropdownProperties(targetAudiences, userInterfaceLanguage);
         }
 
         /// <summary>Updates the dropdown properties.</summary>
         /// <param name="targetAudiences">The target audiences.</param>
         public void UpdateDropdownProperties(List<TargetAudience> targetAudiences)
+        {
+            this.TargetAudiences = targetAudiences;
+        }
+
+        /// <summary>Updates the dropdown properties.</summary>
+        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public void UpdateDropdownProperties(
+            List<TargetAudience> targetAudiences,
+            string userInterfaceLanguage
+        )
         {
             this.TargetAudiences = targetAudiences;
         }
@@ -148,6 +165,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="editionUid">The edition uid.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <param name="projectModalityUid">The project modality uid.</param>
         public void UpdatePreSendProperties(
             Guid? attendeeOrganizationUid,
             Guid projectTypeUid,
@@ -159,6 +177,32 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             this.AttendeeOrganizationUid = attendeeOrganizationUid;
             this.ProjectTypeUid = projectTypeUid;
+            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
+        }
+
+        /// <summary>Updates the pre send properties.</summary>
+        /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
+        /// <param name="projectTypeUid">The project type uid.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="userUid">The user uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <param name="projectModalityUid">The project modality uid.</param>
+        public void UpdatePreSendProperties(
+            Guid? attendeeOrganizationUid,
+            Guid projectTypeUid,
+            int userId,
+            Guid userUid,
+            int? editionId,
+            Guid? editionUid,
+            string userInterfaceLanguage,
+            Guid projectModalityUid
+        )
+        {
+            this.AttendeeOrganizationUid = attendeeOrganizationUid;
+            this.ProjectTypeUid = projectTypeUid;
+            this.ProjectModalityUid = projectModalityUid;
             this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
         }
 

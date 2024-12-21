@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-28-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 12-23-2023
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 29-10-2024
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -46,6 +46,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo;
         private readonly IProjectEvaluationStatusRepository evaluationStatusRepository;
+        private readonly IProjectModalityRepository projectModalityRepository;
 
         /// <summary>Initializes a new instance of the <see cref="ProjectsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -57,6 +58,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="projectEvaluationRefuseReasonRepo">The project evaluation refuse reason repo.</param>
         /// <param name="evaluationStatusRepository">The project evaluation status repository.</param>
+        /// <param name="projectModalityRepository">The project evaluation status repository.</param>
         public ProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
@@ -66,7 +68,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
             ITargetAudienceRepository targetAudienceRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo,
-            IProjectEvaluationStatusRepository evaluationStatusRepository)
+            IProjectEvaluationStatusRepository evaluationStatusRepository,
+            IProjectModalityRepository projectModalityRepository
+        )
             : base(commandBus, identityController)
         {
             this.projectRepo = projectRepository;
@@ -76,6 +80,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.projectEvaluationRefuseReasonRepo = projectEvaluationRefuseReasonRepo;
             this.evaluationStatusRepository = evaluationStatusRepository;
+            this.projectModalityRepository = projectModalityRepository;
         }
 
         #region Schedule
@@ -122,7 +127,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             var projects = await this.projectRepo.FindAllDtosToSellAsync(
                 this.UserAccessControlDto?.GetFirstAttendeeOrganizationCreated()?.Uid ?? Guid.Empty,
-                false);
+                false,
+                new List<int> { ProjectModality.Both.Id, ProjectModality.BusinessRound.Id, ProjectModality.Pitching.Id }
+            );
 
             // Create fake projects in the list
             var projectMaxCount = this.EditionDto?.AttendeeOrganizationMaxSellProjectsCount ?? 0;
@@ -259,7 +266,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     true,
                     false,
-                    false);
+                    false,
+                    this.UserInterfaceLanguage,
+                    ProjectModality.BusinessRound.Uid
+                );
             }
             catch (DomainException ex)
             {
@@ -741,9 +751,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return RedirectToAction("CompanyInfo", "Projects");
             }
 
-            if (this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() == true)
+            if (this.UserAccessControlDto?.IsAudiovisualProducerBusinessRoundTermsAcceptanceDatePending() == true)
             {
-                return RedirectToAction("TermsAcceptance", "Projects", new { id });
+                return RedirectToAction("AudiovisualBusinessRoundTermsAcceptance", "Projects", new { id });
+            }
+
+            if (this.UserAccessControlDto?.IsAudiovisualProducerPitchingTermsAcceptanceDatePending() == true)
+            {
+                return RedirectToAction("AudiovisualPitchingTermsAcceptance", "Projects", new { id });
             }
 
             // Check if producer submitted the max number of projects
@@ -781,7 +796,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Audiovisual.Id),
                 true,
                 false,
-                false);
+                false,
+                this.UserInterfaceLanguage
+            );
 
             return View(cmd);
         }
@@ -807,8 +824,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return RedirectToAction("Index", "Projects");
             }
 
-            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
-                || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() == true)
+            if (this.UserAccessControlDto?.IsAudiovisualProducerPitchingTermsAcceptanceDatePending() == true)
             {
                 return RedirectToAction("Submit", "Projects");
             }
@@ -1016,7 +1032,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> TermsAcceptance(Guid? id)
+        public async Task<ActionResult> AudiovisualBusinessRoundTermsAcceptance(Guid? id)
         {
             #region Breadcrumb
 
@@ -1034,12 +1050,12 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
 
             if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
-                || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() != true)
+                || this.UserAccessControlDto?.IsAudiovisualProducerBusinessRoundTermsAcceptanceDatePending() != true)
             {
-                return RedirectToAction("Submit", "Projects");
+                return RedirectToAction("AudiovisualPitchingTermsAcceptance", "Projects");
             }
 
-            var cmd = new OnboardProducerTermsAcceptance(id);
+            var cmd = new OnboardAudiovisualProducerBusinessRoundTerms(id);
 
             return View(cmd);
         }
@@ -1048,7 +1064,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> TermsAcceptance(OnboardProducerTermsAcceptance cmd)
+        public async Task<ActionResult> AudiovisualBusinessRoundTermsAcceptance(OnboardAudiovisualProducerBusinessRoundTerms cmd)
         {
             #region Breadcrumb
 
@@ -1066,7 +1082,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
 
             if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
-                || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() != true)
+                || this.UserAccessControlDto?.IsAudiovisualProducerBusinessRoundTermsAcceptanceDatePending() != true)
             {
                 return RedirectToAction("Submit", "Projects");
             }
@@ -1137,6 +1153,139 @@ namespace PlataformaRio2C.Web.Site.Controllers
             return RedirectToAction("Submit", "Projects");
         }
 
+
+        /// <summary>Termses the acceptance.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> AudiovisualPitchingTermsAcceptance(Guid? id)
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ParticipantsTerms, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
+                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
+            });
+
+            #endregion
+
+            if (this.EditionDto?.IsAudiovisualProjectSubmitOpen() != true)
+            {
+                this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Projects");
+            }
+
+            if (this.UserAccessControlDto?.IsAudiovisualProducerBusinessRoundTermsAcceptanceDatePending() == true)
+            {
+                return RedirectToAction("AudiovisualBusinessRoundTermsAcceptance", "Projects");
+            }
+
+            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
+                || this.UserAccessControlDto?.IsAudiovisualProducerPitchingTermsAcceptanceDatePending() != true)
+            {
+                return RedirectToAction("Submit", "Projects");
+            }
+
+            var cmd = new OnboardAudiovisualProducerPitchingTerms(id);
+
+            return View(cmd);
+        }
+
+        /// <summary>Termses the acceptance.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> AudiovisualPitchingTermsAcceptance(OnboardAudiovisualProducerPitchingTerms cmd)
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ParticipantsTerms, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("SubmittedList", "Projects", new { Area = "" })),
+                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "Projects", new { Area = "" }))
+            });
+
+            #endregion
+
+            if (this.EditionDto?.IsAudiovisualProjectSubmitOpen() != true)
+            {
+                this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Projects");
+            }
+
+            if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
+                || this.UserAccessControlDto?.IsAudiovisualProducerPitchingTermsAcceptanceDatePending() != true)
+            {
+                return RedirectToAction("Submit", "Projects");
+            }
+
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.UserAccessControlDto.Collaborator.Uid,
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
+
+                this.StatusMessageToastr(toastrError?.Message ?? ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+
+                return View(cmd);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+
+                return View(cmd);
+            }
+
+            this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.ParticipantsTerms, Labels.Accepted.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
+
+            // Check if player submitted the max number of projects
+            var firstAttendeeOrganizationCreated = this.UserAccessControlDto.GetFirstAttendeeOrganizationCreated();
+            if (firstAttendeeOrganizationCreated != null)
+            {
+                var projectsCount = this.projectRepo.Count(p => p.SellerAttendeeOrganization.Uid == firstAttendeeOrganizationCreated.Uid
+                                                                && !p.IsDeleted);
+                var projectMaxCount = this.EditionDto?.AttendeeOrganizationMaxSellProjectsCount ?? 0;
+                if (projectsCount >= projectMaxCount)
+                {
+                    if (cmd.ProjectUid.HasValue)
+                    {
+                        return RedirectToAction("SendToPlayers", "Projects", new { id = cmd.ProjectUid });
+                    }
+
+                    return RedirectToAction("SubmittedList", "Projects");
+                }
+            }
+
+            return RedirectToAction("Submit", "Projects");
+        }
+
+
+
         #endregion
 
         #region Send to Players
@@ -1163,7 +1312,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
 
             if (this.UserAccessControlDto?.IsProjectSubmissionOrganizationInformationPending() == true
-                || this.UserAccessControlDto?.IsProjectSubmissionTermsAcceptancePending() == true)
+                || this.UserAccessControlDto?.IsAudiovisualProducerPitchingTermsAcceptanceDatePending() == true)
             {
                 return RedirectToAction("Submit", "Projects", new { id });
             }

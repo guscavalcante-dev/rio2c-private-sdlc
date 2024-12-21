@@ -139,6 +139,10 @@
       <Project>{9CFDDB5C-4DA2-437B-AEDD-CABE12EF09BC}</Project>
       <Name>PlataformaRio2C.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Data\PlataformaRio2C.Infra.Data.Context\PlataformaRio2C.Infra.Data.Context.csproj">
+      <Project>{30c4d007-1a78-410c-9fcd-63699985c39b}</Project>
+      <Name>PlataformaRio2C.Infra.Data.Context</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PlataformaRio2C.Infra.CrossCutting.CQRS\PlataformaRio2C.Infra.CrossCutting.CQRS.csproj">
       <Project>{E414D342-6A28-4844-9F2F-A6022D5AE929}</Project>
       <Name>PlataformaRio2C.Infra.CrossCutting.CQRS</Name>
@@ -162,10 +166,6 @@
     <ProjectReference Include="..\PlataformaRio2C.Infra.CrossCutting.Tools\PlataformaRio2C.Infra.CrossCutting.Tools.csproj">
       <Project>{EC0B684E-F8A3-417A-9567-819FFC7C41CC}</Project>
       <Name>PlataformaRio2C.Infra.CrossCutting.Tools</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Data\PlataformaRio2C.Infra.Data.Context\PlataformaRio2C.Infra.Data.Context.csproj">
-      <Project>{30C4D007-1A78-410C-9FCD-63699985C39B}</Project>
-      <Name>PlataformaRio2C.Infra.Data.Context</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Data\PlataformaRio2C.Infra.Data.Repository\PlataformaRio2C.Infra.Data.Repository.csproj">
       <Project>{CF083D1D-24AD-412F-B28C-648A27D78D7D}</Project>

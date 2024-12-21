@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
-// Author           : Rafael Dantas Ruiz
-// Created          : 10-29-2019
+// Author           : Gilson Oliveira
+// Created          : 12-06-2024
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-18-2019
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 12-06-2024
 // ***********************************************************************
-// <copyright file="OnboardProducerTermsAcceptance.cs" company="Softo">
+// <copyright file="OnboardAudiovisualProducerBusinessRoundTerms.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -17,8 +17,8 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>OnboardProducerTermsAcceptance</summary>
-    public class OnboardProducerTermsAcceptance : BaseCommand
+    /// <summary>OnboardAudiovisualProducerBusinessRoundTerms</summary>
+    public class OnboardAudiovisualProducerBusinessRoundTerms : BaseCommand
     {
         [Range(typeof(bool), "true", "true", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "ToProceedYouMustAcceptTheTerm")]
         public bool AcceptTerms { get; set; }
@@ -27,15 +27,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public Guid CollaboratorUid { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="OnboardProducerTermsAcceptance"/> class.</summary>
-        public OnboardProducerTermsAcceptance(Guid? projectUid)
+        /// <summary>Initializes a new instance of the <see cref="OnboardAudiovisualProducerBusinessRoundTerms"/> class.</summary>
+        public OnboardAudiovisualProducerBusinessRoundTerms(Guid? projectUid)
         {
             this.ProjectUid = projectUid;
             this.AcceptTerms = false;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="OnboardProducerTermsAcceptance"/> class.</summary>
-        public OnboardProducerTermsAcceptance()
+        /// <summary>Initializes a new instance of the <see cref="OnboardAudiovisualProducerBusinessRoundTerms"/> class.</summary>
+        public OnboardAudiovisualProducerBusinessRoundTerms()
         {
         }
 

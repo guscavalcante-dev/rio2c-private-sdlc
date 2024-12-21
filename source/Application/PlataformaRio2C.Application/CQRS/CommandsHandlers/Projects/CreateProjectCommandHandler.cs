@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 11-07-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 10-23-2024
 // ***********************************************************************
 // <copyright file="CreateProjectCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -31,6 +31,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly ILanguageRepository languageRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
         private readonly IInterestRepository interestRepo;
+        private readonly IProjectModalityRepository projectModalityRepo;
 
         /// <summary>Initializes a new instance of the <see cref="CreateProjectCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
@@ -41,6 +42,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="languageRepository">The language repository.</param>
         /// <param name="targetAudienceRepository">The target audience repository.</param>
         /// <param name="interestRepository">The interest repository.</param>
+        /// <param name="projectModalityRepo">The project modality repository.</param>
         public CreateProjectCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
@@ -49,13 +51,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IProjectTypeRepository projectTypeRepository,
             ILanguageRepository languageRepository,
             ITargetAudienceRepository targetAudienceRepository,
-            IInterestRepository interestRepository)
+            IInterestRepository interestRepository,
+            IProjectModalityRepository projectModalityRepo)
             : base(eventBus, uow, attendeeOrganizationRepository, projectRepository)
         {
             this.projectTypeRepo = projectTypeRepository;
             this.languageRepo = languageRepository;
             this.targetAudienceRepo = targetAudienceRepository;
             this.interestRepo = interestRepository;
+            this.projectModalityRepo = projectModalityRepo;
         }
 
         /// <summary>Handles the specified create project.</summary>
@@ -94,6 +98,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 }
             }
 
+            var projectModality = await this.projectModalityRepo.GetAsync(pm => pm.Uid == cmd.ProjectModalityUid && !pm.IsDeleted);
+
             attendeeOrganization.CreateProject(
                 await this.projectTypeRepo.GetAsync(pt => pt.Uid == cmd.ProjectTypeUid && !pt.IsDeleted),
                 cmd.TotalPlayingTime,
@@ -103,7 +109,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.TotalValueOfProject,
                 cmd.ValueAlreadyRaised,
                 cmd.ValueStillNeeded,
-                cmd.IsPitching ?? false,
                 cmd.Titles?.Select(d => new ProjectTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.LogLines?.Select(d => new ProjectLogLine(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.Summaries?.Select(d => new ProjectSummary(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
@@ -113,11 +118,26 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<TargetAudience>(),
                 cmd.ImageLinks,
                 cmd.TeaserLinks,
-                cmd.UserId);
-            if (!attendeeOrganization.IsCreateProjectValid())
+                cmd.UserId,
+                projectModality
+            );
+
+            if (new int[] { ProjectModality.Both.Id, ProjectModality.Pitching.Id }.Contains(projectModality.Id))
             {
-                this.AppValidationResult.Add(attendeeOrganization.ValidationResult);
-                return this.AppValidationResult;
+                if (!attendeeOrganization.IsCreatePitchingValid())
+                {
+                    this.AppValidationResult.Add(attendeeOrganization.ValidationResult);
+                    return this.AppValidationResult;
+                }
+            }
+
+            if (new int[] { ProjectModality.Both.Id, ProjectModality.BusinessRound.Id }.Contains(projectModality.Id))
+            {
+                if (!attendeeOrganization.IsCreateBusinessRoundValid())
+                {
+                    this.AppValidationResult.Add(attendeeOrganization.ValidationResult);
+                    return this.AppValidationResult;
+                }
             }
 
             this.AttendeeOrganizationRepo.Update(attendeeOrganization);

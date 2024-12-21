@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 08-28-2021
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 10-24-2024
 // ***********************************************************************
 // <copyright file="Project.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -44,7 +44,6 @@ namespace PlataformaRio2C.Domain.Entities
         public string TotalValueOfProject { get; private set; }
         public string ValueAlreadyRaised { get; private set; }
         public string ValueStillNeeded { get; private set; }
-        public bool IsPitching { get; private set; }
         public DateTimeOffset? FinishDate { get; private set; }
         public int ProjectBuyerEvaluationsCount { get; private set; }
         public int CommissionEvaluationsCount { get; private set; }
@@ -53,6 +52,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         public virtual ProjectType ProjectType { get; private set; }
         public virtual AttendeeOrganization SellerAttendeeOrganization { get; private set; }
+        public virtual ProjectModality ProjectModality { get; private set; }
 
         public virtual ICollection<ProjectTitle> ProjectTitles { get; private set; }
         public virtual ICollection<ProjectLogLine> ProjectLogLines { get; private set; }
@@ -67,6 +67,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<CommissionEvaluation> CommissionEvaluations { get; private set; }
 
         private bool IsAdmin = false;
+        public int ProjectModalityId { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Project"/> class.</summary>
         /// <param name="projectType">Type of the project.</param>
@@ -78,7 +79,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="totalValueOfProject">The total value of project.</param>
         /// <param name="valueAlreadyRaised">The value already raised.</param>
         /// <param name="valueStillNeeded">The value still needed.</param>
-        /// <param name="isPitching">if set to <c>true</c> [is pitching].</param>
         /// <param name="projectTitles">The project titles.</param>
         /// <param name="projectLogLines">The project log lines.</param>
         /// <param name="projectSummaries">The project summaries.</param>
@@ -89,6 +89,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="imageLink">The image link.</param>
         /// <param name="teaserLink">The teaser link.</param>
         /// <param name="userId">The user identifier.</param>
+        /// <param name="projectModality">Modality of the project.</param>
         public Project(
             ProjectType projectType,
             AttendeeOrganization sellerAttendeeOrganization,
@@ -99,7 +100,6 @@ namespace PlataformaRio2C.Domain.Entities
             string totalValueOfProject,
             string valueAlreadyRaised,
             string valueStillNeeded,
-            bool isPitching,
             List<ProjectTitle> projectTitles,
             List<ProjectLogLine> projectLogLines,
             List<ProjectSummary> projectSummaries,
@@ -109,10 +109,14 @@ namespace PlataformaRio2C.Domain.Entities
             List<TargetAudience> targetAudiences,
             string imageLink,
             string teaserLink,
-            int userId)
+            int userId,
+            ProjectModality projectModality
+        )
         {
             this.ProjectTypeId = projectType?.Id ?? 0;
+            this.ProjectModalityId = projectModality?.Id ?? 0;
             this.ProjectType = projectType;
+            this.ProjectModality = projectModality;
             this.SellerAttendeeOrganizationId = sellerAttendeeOrganization?.Id ?? 0;
             this.SellerAttendeeOrganization = sellerAttendeeOrganization;
             this.TotalPlayingTime = totalPlayingTime;
@@ -122,7 +126,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.TotalValueOfProject = totalValueOfProject?.Trim();
             this.ValueAlreadyRaised = valueAlreadyRaised?.Trim();
             this.ValueStillNeeded = valueStillNeeded?.Trim();
-            this.IsPitching = isPitching;
             this.FinishDate = null;
             this.ProjectBuyerEvaluationsCount = 0;
 
@@ -156,7 +159,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="totalValueOfProject">The total value of project.</param>
         /// <param name="valueAlreadyRaised">The value already raised.</param>
         /// <param name="valueStillNeeded">The value still needed.</param>
-        /// <param name="isPitching">if set to <c>true</c> [is pitching].</param>
         /// <param name="projectTitles">The project titles.</param>
         /// <param name="projectLogLines">The project log lines.</param>
         /// <param name="projectSummaries">The project summaries.</param>
@@ -172,14 +174,15 @@ namespace PlataformaRio2C.Domain.Entities
             string totalValueOfProject,
             string valueAlreadyRaised,
             string valueStillNeeded,
-            bool isPitching,
             List<ProjectTitle> projectTitles,
             List<ProjectLogLine> projectLogLines,
             List<ProjectSummary> projectSummaries,
             List<ProjectProductionPlan> projectProductionPlans,
             List<ProjectAdditionalInformation> projectAdditionalInformations,
             int userId,
-            bool isAdmin)
+            bool isAdmin,
+            ProjectModality projectModality
+        )
         {
             this.TotalPlayingTime = totalPlayingTime;
             this.NumberOfEpisodes = numberOfEpisodes;
@@ -188,7 +191,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.TotalValueOfProject = totalValueOfProject?.Trim();
             this.ValueAlreadyRaised = valueAlreadyRaised?.Trim();
             this.ValueStillNeeded = valueStillNeeded?.Trim();
-            this.IsPitching = isPitching;
 
             this.SynchronizeProjectTitles(projectTitles, userId);
             this.SynchronizeProjectLogLines(projectLogLines, userId);
@@ -201,6 +203,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.UtcNow;
 
             this.IsAdmin = isAdmin;
+            this.ProjectModalityId = projectModality.Id;
         }
 
         /// <summary>
@@ -984,6 +987,15 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Validations
 
+        /// <summary>Gets the maximum sell projects count.</summary>
+        /// <returns></returns>
+        public int GetMaxSellProjectsCount()
+        {
+           return this.SellerAttendeeOrganization
+                ?.Edition
+                ?.AttendeeOrganizationMaxSellProjectsCount ?? 0;
+        }
+
         /// <summary>Returns true if ... is valid.</summary>
         /// <returns>
         ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
@@ -1048,6 +1060,49 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateRequiredProjectBuyerEvaluations();
 
             return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>Determines whether [is update business round valid].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is update business round valid]; otherwise, <c>false</c>.</returns>
+        public bool IsUpdateBusinessRoundValid(int sellProjectsCount)
+        {
+            if (this.ValidationResult == null)
+            {
+                this.ValidationResult = new ValidationResult();
+            }
+            this.ValidateBusinessRoundLimits(sellProjectsCount);
+            return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>Determines whether [is update pitching valid].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is update pitching valid]; otherwise, <c>false</c>.</returns>
+        public bool IsUpdatePitchingValid(int sellProjectsCount)
+        {
+            if (this.ValidationResult == null)
+            {
+                this.ValidationResult = new ValidationResult();
+            }
+            return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>Validates the business rounds limits.</summary>
+        public void ValidateBusinessRoundLimits(int sellProjectsCount)
+        {
+            if (sellProjectsCount > this.GetMaxSellProjectsCount())
+            {
+                this.ValidationResult.Add(new ValidationError(Messages.IsNotPossibleCreateBusinessRoundProjectLimit, new string[] { "ToastrError" }));
+            }
+        }
+
+        /// <summary>Validates the pitching projects limits.</summary>
+        public void ValidatePitchingLimits(int sellProjectsCount)
+        {
+            if (sellProjectsCount > this.GetMaxSellProjectsCount())
+            {
+                this.ValidationResult.Add(new ValidationError(Messages.IsNotPossibleCreatePitchingProjectLimit, new string[] { "ToastrError" }));
+            }
         }
 
         /// <summary>Validates the is finished.</summary>
@@ -1264,7 +1319,7 @@ namespace PlataformaRio2C.Domain.Entities
                 return;
             }
 
-            if (!this.IsPitching)
+            if (!this.IsPitching())
             {
                 this.ValidationResult.Add(new ValidationError(Messages.ProjectCannotBeEvaluatedIsNotPitching, new string[] { "ToastrError" }));
             }
@@ -1446,6 +1501,14 @@ namespace PlataformaRio2C.Domain.Entities
         //}
 
         #endregion
+        
+        public bool IsPitching()
+        {
+            return new int[] {
+                ProjectModality.Both.Id,
+                ProjectModality.Pitching.Id
+            }.Contains(this.ProjectModalityId);
+        }
     }
 }
 

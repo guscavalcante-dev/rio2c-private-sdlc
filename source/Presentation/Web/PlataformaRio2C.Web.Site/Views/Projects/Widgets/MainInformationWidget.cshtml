@@ -1,6 +1,8 @@
 ﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
 @using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Domain.Statics
+@using PlataformaRio2C.Domain.Entities;
+@using System.Linq;
 @model ProjectDto
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
@@ -33,9 +35,9 @@
                     <span class="kt-widget__username">
                         @(Model.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value ?? "-")
                         @*@if (Model.SellerAttendeeOrganizationDto?.AttendeeOrganization.OnboardingFinishDate.HasValue) //Show if approved by any player
-                {
-                    <i class="flaticon2-correct"></i>
-                }*@
+                            {
+                                <i class="flaticon2-correct"></i>
+                            }*@
                     </span>
                     @if (isCollaborator && isProjectSubmissionOpen && !isProjectFinished)
                     {
@@ -53,7 +55,7 @@
                         @:- @(Model.SellerAttendeeOrganizationDto?.Organization.Document)
                     }
                 </div>
-                @if (isCollaborator && Model.Project?.IsPitching == true)
+                @if (isCollaborator && new int[] { ProjectModality.Both.Id, ProjectModality.Pitching.Id }.Contains(Model.Project.ProjectModalityId))
                 {
                     <div class="kt-widget__subhead pt-0 mt-0">
                         <span class="kt-badge kt-badge--inline kt-badge--info">@Labels.Pitching</span>

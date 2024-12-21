@@ -351,9 +351,11 @@
     <Compile Include="App_Start\SimpleInjectorInitializer.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
+    <Compile Include="Areas\Audiovisual\Controllers\PitchingProjectsController.cs" />
     <Compile Include="Areas\Audiovisual\Controllers\MeetingsController.cs" />
-    <Compile Include="Areas\Audiovisual\Controllers\ProjectsController.cs" />
     <Compile Include="Areas\Audiovisual\AudiovisualAreaRegistration.cs" />
+    <Compile Include="Areas\Audiovisual\Controllers\BusinessRoundProjectsController.cs" />
+    <Compile Include="Areas\Audiovisual\Controllers\ProjectsController.cs" />
     <Compile Include="Areas\Cartoon\CartoonAreaRegistration.cs" />
     <Compile Include="Areas\Cartoon\Controllers\CartoonController.cs" />
     <Compile Include="Areas\Cartoon\Controllers\ProjectsController.cs" />
@@ -411,6 +413,17 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Audiovisual\Views\Projects\CommissionEvaluationList.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\EvaluationDetails.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Index.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Shared\_Evaluation.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\AudiovisualCommissionEvaluationWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\AudiovisualCommissionEvaluatorsWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EvaluationListItemWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EvaluationListWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\InterestWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\LinksWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Areas\Producer\Views\Collaborator\ProfileDetails.cshtml" />
     <Content Include="Areas\Producer\Views\Collaborator\ProfileEdit.cshtml" />
     <Content Include="Assets\components\bootstrap-maxlength\src\bootstrap-maxlength.js" />
@@ -894,6 +907,19 @@
     <Content Include="Assets\js\myrio2c.additionalinfo.js" />
     <Content Include="Assets\js\onboarding\onboarding.interests.js" />
     <Content Include="Assets\js\onboarding\onboarding.companyinfo.js" />
+    <Content Include="Assets\js\projects\pitching\pitching.interest.widget.js" />
+    <Content Include="Assets\js\projects\pitching\pitching.links.widget.js" />
+    <Content Include="Assets\js\projects\pitching\pitching.maininformation.widget.js" />
+    <Content Include="Assets\js\projects\pitching\pitching.producerinfo.js" />
+    <Content Include="Assets\js\projects\pitching\pitching.projectinfo.js" />
+    <Content Include="Assets\js\projects\businessrounds\businessrounds.buyercompany.widget.js" />
+    <Content Include="Assets\js\projects\businessrounds\businessrounds.buyerevaluation.list.widget.js" />
+    <Content Include="Assets\js\projects\businessrounds\businessrounds.buyerevaluation.update.widget.js" />
+    <Content Include="Assets\js\projects\businessrounds\businessrounds.interest.widget.js" />
+    <Content Include="Assets\js\projects\businessrounds\businessrounds.links.widget.js" />
+    <Content Include="Assets\js\projects\businessrounds\businessrounds.maininformation.widget.js" />
+    <Content Include="Assets\js\projects\businessrounds\businessrounds.producerinfo.js" />
+    <Content Include="Assets\js\projects\businessrounds\businessrounds.projectinfo.js" />
     <Content Include="Assets\js\projects\projects.buyerevaluation.update.widget.js" />
     <Content Include="Assets\js\projects\projects.buyerevaluation.list.widget.js" />
     <Content Include="Assets\js\projects\projects.interest.widget.js" />
@@ -6904,18 +6930,7 @@
     <Content Include="Areas\Innovation\Views\Projects\Widgets\BusinessInformationWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Projects\Widgets\PresentationWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Projects\EvaluationDetails.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Projects\CommissionEvaluationList.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Projects\Index.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Projects\Shared\_Evaluation.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EvaluationListItemWidget.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EvaluationListWidget.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\web.config" />
-    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\InterestWidget.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\LinksWidget.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\AudiovisualCommissionEvaluationWidget.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\AudiovisualCommissionEvaluatorsWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Index.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\ScheduledDataWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\ScheduledWidget.cshtml" />
@@ -6948,6 +6963,71 @@
     <Content Include="Areas\Creator\Views\Projects\Widgets\AttachmentsWidget.cshtml" />
     <Content Include="Areas\Creator\Views\Projects\Widgets\EvaluationGradeWidget.cshtml" />
     <Content Include="Areas\Creator\Views\Projects\Widgets\EvaluatorsWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\EditorTemplates\ProjectAdditionalInformationBaseCommand.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\EditorTemplates\ProjectLogLineBaseCommand.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\EditorTemplates\ProjectProductionPlanBaseCommand.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\EditorTemplates\ProjectSummaryBaseCommand.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\EditorTemplates\ProjectTitleBaseCommand.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Modals\AcceptEvaluationForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Modals\AcceptEvaluationModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Modals\RefuseEvaluationForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Modals\RefuseEvaluationModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Modals\UpdateBuyerCompanyForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Modals\UpdateBuyerCompanyModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Modals\UpdateInterestForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Modals\UpdateInterestModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Modals\UpdateLinksForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Modals\UpdateLinksModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Modals\UpdateMainInformationForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Modals\UpdateMainInformationModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Shared\_BuyersEvaluations.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Shared\_ProducerTermsAcceptanceText.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Shared\_ProjectInfoForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Shared\_ProjectsOnboardingMenu.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Widgets\BuyerCompanySelectedWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Widgets\BuyerCompanyWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Widgets\BuyerEvaluationWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Widgets\EvaluationListItemWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Widgets\EvaluationListWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Widgets\InterestWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Widgets\LinksWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Widgets\ProjectAllBuyerCompanyWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Widgets\ProjectMatchBuyerCompanyWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\CompanyInfo.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\EvaluationDetails.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\EvaluationList.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\SendToPlayers.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Submit.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Index.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\SubmittedDetails.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\TermsAcceptance.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\CompanyInfo.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\EditorTemplates\ProjectAdditionalInformationBaseCommand.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\EditorTemplates\ProjectLogLineBaseCommand.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\EditorTemplates\ProjectProductionPlanBaseCommand.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\EditorTemplates\ProjectSummaryBaseCommand.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\EditorTemplates\ProjectTitleBaseCommand.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\EvaluationDetails.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\EvaluationList.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\Modals\UpdateInterestForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\Modals\UpdateInterestModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\Modals\UpdateLinksForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\Modals\UpdateLinksModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\Modals\UpdateMainInformationForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\Modals\UpdateMainInformationModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\Shared\_ProducerTermsAcceptanceText.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\Shared\_ProjectInfoForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\Shared\_ProjectsOnboardingMenu.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\Submit.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\SubmittedDetails.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\Index.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\TermsAcceptance.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\Widgets\EvaluationListItemWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\Widgets\EvaluationListWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\Widgets\InterestWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\Widgets\LinksWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Areas\Music\Views\Projects\Modals\AcceptMusicPitchingEvaluationModal.cshtml" />
     <Content Include="Areas\Music\Views\Projects\Modals\RefuseMusicPitchingEvaluationModal.cshtml" />
     <None Include="Content\less\components\gallery.less" />
@@ -7753,9 +7833,9 @@
     <Content Include="Views\Account\Modals\UpdatePasswordModal.cshtml" />
     <Content Include="Views\Executives\Modals\CreateCompanyInfoModal.cshtml" />
     <Content Include="Views\Projects\CompanyInfo.cshtml" />
-    <Content Include="Views\Projects\TermsAcceptance.cshtml" />
+    <Content Include="Views\Projects\AudiovisualBusinessRoundTermsAcceptance.cshtml" />
     <Content Include="Views\Projects\Shared\_ProjectsOnboardingMenu.cshtml" />
-    <Content Include="Views\Projects\Shared\_ProducerTermsAcceptanceText.cshtml" />
+    <Content Include="Views\Projects\Shared\_AudiovisualProducerBusinessRoundTermsText.cshtml" />
     <Content Include="Views\Companies\Shared\_ProducerInfoForm.cshtml" />
     <Content Include="Views\Projects\Submit.cshtml" />
     <Content Include="Views\Projects\Widgets\MainInformationWidget.cshtml" />
@@ -7808,11 +7888,12 @@
     <Content Include="Views\Shared\EditorTemplates\AttendeeCollaboratorTargetAudienceBaseCommand.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\InnovationOrganizationTrackOptionBaseCommand.cshtml" />
     <Content Include="Views\Shared\Widgets\CardsWidget.cshtml" />
+    <Content Include="Views\Projects\AudiovisualPitchingTermsAcceptance.cshtml" />
+    <Content Include="Views\Projects\Shared\_AudiovisualProducerPitchingTermsText.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Audiovisual\Data\" />
-    <Folder Include="Areas\Audiovisual\Views\Projects\Modals\" />
     <Folder Include="Areas\Audiovisual\Views\Shared\" />
     <Folder Include="Areas\Cartoon\Views\Projects\Modals\" />
     <Folder Include="Areas\Cartoon\Views\Shared\" />
@@ -7904,7 +7985,7 @@
       <Name>PlataformaRio2C.Infra.CrossCutting.Tools</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Infra\Data\PlataformaRio2C.Infra.Data.Context\PlataformaRio2C.Infra.Data.Context.csproj">
-      <Project>{30c4d007-1a78-410c-9fcd-63699985c39b}</Project>
+      <Project>{30C4D007-1A78-410C-9FCD-63699985C39B}</Project>
       <Name>PlataformaRio2C.Infra.Data.Context</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Infra\Data\PlataformaRio2c.Infra.Data.FileRepository\PlataformaRio2c.Infra.Data.FileRepository.csproj">

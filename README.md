@@ -7,25 +7,9 @@
   ou
   Clicar bom o botão direito na solução PlataformaRio2C > clicar em Build Solution
   ```
-  ##### Executar migrations para criação do banco de daodos (Package Manager Console)
- 
-  ```
-  Selecionar o default project: PlataformaRio2C.Infra.CrossCutting.Identity
-  > Update-Database
-  
-  Selecionar o default project: PlataformaRio2C.Infra.Data.Context
-  > Update-Database
-  
-  Selecionar o default project: PlataformaRio2C.Infra.CrossCutting.SystemParameter
-  > Update-Database
-  ```
-  A carga inicial acima não é mais necessario. Apenas popular o arquivo com a carga inicial '202408202223049_Initial.up.sql'
-  
- - Verifique se o arquivo 'PlataformaRio2C.Infra.CrossCutting.SystemParameter.Migrations.Configuration' esta com a propriedade 'AutomaticMigrationsEnabled' marcada como true
- - Selecionar o default project: PlataformaRio2C.Infra.Data.Context e executar o comando abaixo:
- 
-``` 
-  Update-Database
+  ##### Executar migrations para atualização do banco de dados (Package Manager Console)
+```
+Update-Database -Project PlataformaRio2C.Infra.Data.Context
 ```
 
 
@@ -34,7 +18,7 @@
 Antes a configuração de classe classe deve estar habilitados
 
 ```
-Add-Migration [nome_da_migração]
+Add-Migration [NomeDaMigracao] -Project PlataformaRio2C.Infra.Data.Context -StartupProject PlataformaRio2C.Web.Admin
 ```
   
 ### Configurar a classe SqlMigration na migration gerada

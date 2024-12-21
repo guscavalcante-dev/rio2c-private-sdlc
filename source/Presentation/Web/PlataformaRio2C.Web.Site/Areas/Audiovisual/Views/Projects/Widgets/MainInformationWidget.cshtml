@@ -31,7 +31,7 @@
             </div>
             <div class="kt-widget__content" style="overflow: hidden;">
                 <div class="kt-widget__info col-md-12 mr-0 pr-0 pl-0">
-                    <div class="kt-widget__desc pl-0 @(Model?.Project?.IsPitching == true ? "col-md-6" : "col-md-12")">
+                    <div class="kt-widget__desc pl-0 @(Model?.Project?.IsPitching() == true ? "col-md-6" : "col-md-12")">
                         <div class="kt-widget__head">
                             <span class="kt-widget__username">
                                 @(Model.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value ?? "-")
@@ -44,14 +44,14 @@
                                 @:- @(Model.SellerAttendeeOrganizationDto?.Organization.Document)
                             }
                         </div>
-                        @if (Model.Project?.IsPitching == true)
+                        @if (Model.Project?.IsPitching() == true)
                         {
                             <div class="kt-widget__subhead pt-0 mt-0">
                                 <span class="kt-badge kt-badge--inline kt-badge--info">@Labels.Pitching</span>
                             </div>
                         }
                     </div>
-                    @if (Model.Project?.IsPitching == true)
+                    @if (Model.Project?.IsPitching() == true)
                     {
                         <div class="kt-widget__desc myrio2c-evaluation-position col-md-6 pr-0">
                             <div class="kt-widget__text pull-right" data-id="EvaluationGradeMain">

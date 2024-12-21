@@ -269,7 +269,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 worksheetAudiovisual.Cells[row, column++].Value = publicMail;
                 worksheetAudiovisual.Cells[row, column++].Value = projectDto.GetTitleDtoByLanguageCode(Language.Portuguese.Code)?.ProjectTitle?.Value;
                 worksheetAudiovisual.Cells[row, column++].Value = projectDto.GetTitleDtoByLanguageCode(Language.English.Code)?.ProjectTitle?.Value;
-                worksheetAudiovisual.Cells[row, column++].Value = projectDto.Project.IsPitching ? Labels.Yes : Labels.No;
+                worksheetAudiovisual.Cells[row, column++].Value = projectDto.Project.IsPitching() ? Labels.Yes : Labels.No;
 
                 var playersSelectedForEvaluation = string.Empty;
                 firstLine = true;

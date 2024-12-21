@@ -359,6 +359,7 @@
     <Compile Include="Dtos\ConferenceParticipantRoles\ConferenceParticipantRoleDto.cs" />
     <Compile Include="Dtos\ConferenceParticipantRoles\ConferenceParticipantRoleJsonDto.cs" />
     <Compile Include="Dtos\ConferenceParticipantRoles\ConferenceParticipantRoleTitleDto.cs" />
+    <Compile Include="Dtos\Projects\ProjectModalityDto.cs" />
     <Compile Include="Dtos\Rooms\RoomNameDto.cs" />
     <Compile Include="Dtos\Rooms\RoomDto.cs" />
     <Compile Include="Dtos\Rooms\RoomJsonDto.cs" />
@@ -495,6 +496,7 @@
     <Compile Include="Entities\Project\ProjectEvaluationRefuseReason.cs" />
     <Compile Include="Entities\Project\ProjectEvaluationStatus.cs" />
     <Compile Include="Entities\Project\ProjectTargetAudience.cs" />
+    <Compile Include="Entities\Project\ProjectModality.cs" />
     <Compile Include="Entities\Project\ProjectType.cs" />
     <Compile Include="Entities\Project\ProjectInterest.cs" />
     <Compile Include="Entities\Project\Project.cs" />
@@ -588,6 +590,7 @@
     <Compile Include="Interfaces\Repositories\Projects\IProjectEvaluationRefuseReasonRepository.cs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectEvaluationStatusRepository.cs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectBuyerEvaluationRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Projects\IProjectModalityRepository.cs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectTypeRepository.cs" />
     <Compile Include="Interfaces\Repositories\SalesPlatform\IAttendeeSalesPlatformTicketTypeRepository.cs" />
     <Compile Include="Interfaces\Repositories\SentEmails\ISentEmailRepository.cs" />

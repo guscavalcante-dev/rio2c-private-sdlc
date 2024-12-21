@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 04-17-2023
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 10-30-2024
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -291,11 +291,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="query">The query.</param>
         /// <param name="showPitchings">if set to <c>true</c> [show pitchings].</param>
         /// <returns></returns>
-        internal static IQueryable<Project> IsPitching(this IQueryable<Project> query, bool showPitchings = false)
+        internal static IQueryable<Project> IsPitching(this IQueryable<Project> query, bool? showPitchings = false)
         {
-            if (showPitchings)
+            if (showPitchings.HasValue)
             {
-                query = query.Where(p => p.IsPitching);
+                query = query.Where(p => new int[] { ProjectModality.Both.Id, ProjectModality.Pitching.Id }.Contains(p.ProjectModalityId));
             }
 
             return query;
@@ -348,6 +348,37 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             query = query.OrderBy(p => p.FinishDate);
 
+            return query;
+        }
+
+        /// <summary>Finds the by project modality id.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="projectModalityIds">The project modality id</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> FindByProjectModalityIds(this IQueryable<Project> query, List<int> projectModalityIds)
+        {
+            if (projectModalityIds?.Count > 0)
+            {
+                query = query.Where(p => projectModalityIds.Contains(p.ProjectModalityId));
+            }
+            return query;
+        }
+
+        /// <summary>Finds the by project modality id.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="projectModalityUids">The project modality uid</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> FindByProjectModalityUid(this IQueryable<Project> query, List<Guid?> projectModalityUids)
+        {
+            if (projectModalityUids?.Count > 0)
+            {
+                if (projectModalityUids.Any(uid => uid == ProjectModality.Both.Uid))
+                {
+                    projectModalityUids.Add(ProjectModality.BusinessRound.Uid);
+                    projectModalityUids.Add(ProjectModality.Pitching.Uid);
+                }
+                query = query.Where(p => projectModalityUids.Contains(p.ProjectModality.Uid));
+            }
             return query;
         }
     }
@@ -473,16 +504,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="keywords">The keywords.</param>
-        /// <param name="showPitchings">if set to <c>true</c> [show pitchings].</param>
+        /// <param name="projectModalityUids">The project modality uid.</param>
         /// <param name="interestUid">The interest uid.</param>
         /// <returns></returns>
-        private IQueryable<Project> GetDataTableBaseQuery(int editionId, string keywords, bool showPitchings, Guid? interestUid)
+        private IQueryable<Project> GetDataTableBaseQuery(int editionId, string keywords, List<Guid?> projectModalityUids, Guid? interestUid)
         {
             var query = this.GetBaseQuery(true)
                            .FindByEditionId(editionId)
                            .IsFinished()
                            .FindByKeywords(keywords)
-                           .IsPitching(showPitchings)
+                           .FindByProjectModalityUid(projectModalityUids)
                            .FindByInterestUid(interestUid);
 
             return query;
@@ -511,7 +542,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             int pageSize,
             List<Tuple<string, string>> sortColumns,
             string keywords,
-            bool showPitchings,
+            Guid? projectModalityUid,
             Guid? interestUid,
             Guid? evaluationStatusUid,
             string languageCode,
@@ -519,7 +550,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             this.SetProxyEnabled(false);
 
-            var projectBaseDtos = await this.GetDataTableBaseQuery(editionId, keywords, showPitchings, interestUid)
+            var projectBaseDtos = await this.GetDataTableBaseQuery(
+                                                editionId,
+                                                keywords,
+                                                projectModalityUid.HasValue ? new List<Guid?> { projectModalityUid } : new List<Guid?> { },
+                                                interestUid
+                                            )
                                             .Select(p => new ProjectBaseDto
                                             {
                                                 Id = p.Id,
@@ -537,11 +573,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                 {
                                                     TargetAudience = ta.TargetAudience
                                                 }),
-                                                IsPitching = p.IsPitching,
                                                 CreateDate = p.CreateDate,
                                                 FinishDate = p.FinishDate,
                                                 CommissionGrade = p.CommissionGrade,
-                                                CommissionEvaluationsCount = p.CommissionEvaluationsCount
+                                                CommissionEvaluationsCount = p.CommissionEvaluationsCount,
+                                                ProjectModalityDto = new ProjectModalityDto
+                                                {
+                                                    Id = p.ProjectModality.Id,
+                                                    Uid = p.ProjectModality.Uid,
+                                                    Name = p.ProjectModality.Name,
+                                                },
+                                                IsPitching = new List<int> { ProjectModality.Both.Id, ProjectModality.Pitching.Id }.Contains(p.ProjectModality.Id)
                                             })
                                             .DynamicOrder(
                                                 sortColumns,
@@ -580,7 +622,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 }
                 else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
                 {
-                    projectBaseDtosResult = projectBaseDtos.Where(dto => !approvedProjectsIds.Contains(dto.Id) && dto.IsPitching == true);
+                    projectBaseDtosResult = projectBaseDtos.Where(dto =>
+                        !approvedProjectsIds.Contains(dto.Id)
+                        && dto.IsPitching
+                    );
                 }
                 else if (evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
                 {
@@ -616,7 +661,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             int pageSize,
             List<Tuple<string, string>> sortColumns,
             string keywords,
-            bool showPitchings,
+            Guid? projectModalityUid,
             Guid? interestUid,
             Guid? evaluationStatusUid,
             string languageCode,
@@ -624,7 +669,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             this.SetProxyEnabled(false);
 
-            var projectBaseDtos = await this.GetDataTableBaseQuery(editionId, keywords, showPitchings, interestUid)
+            var projectBaseDtos = await this.GetDataTableBaseQuery(
+                                                editionId,
+                                                keywords,
+                                                projectModalityUid.HasValue ? new List<Guid?> { projectModalityUid } : new List<Guid?> { },
+                                                interestUid
+                                            )
                                             .Select(p => new ProjectBaseDto
                                             {
                                                 Id = p.Id,
@@ -636,6 +686,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                     CommissionEvaluation = ce,
                                                     EvaluatorUser = ce.EvaluatorUser
                                                 }),
+                                                IsPitching = new List<int> { ProjectModality.Both.Id, ProjectModality.Pitching.Id }.Contains(p.ProjectModality.Id)
                                             })
                                             .OrderBy(p => p.ProducerName)
                                             .ThenBy(p => p.ProjectName)
@@ -671,7 +722,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 }
                 else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
                 {
-                    projectBaseDtosResult = projectBaseDtos.Where(dto => !approvedProjectsIds.Contains(dto.Id) && dto.IsPitching == true);
+                    projectBaseDtosResult = projectBaseDtos.Where(dto => !approvedProjectsIds.Contains(dto.Id) && dto.IsPitching);
                 }
                 else if (evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
                 {
@@ -694,7 +745,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="sortColumns">The sort columns.</param>
         /// <param name="keywords">The keywords.</param>
-        /// <param name="showPitchings">if set to <c>true</c> [show pitchings].</param>
+        /// <param name="projectModalityUid">if set to <c>true</c> [show pitchings].</param>
         /// <param name="interestUid">The interest uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="languageCode">The language code.</param>
@@ -705,7 +756,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             int pageSize,
             List<Tuple<string, string>> sortColumns,
             string keywords,
-            bool showPitchings,
+            Guid? projectModalityUid,
             Guid? interestUid,
             Guid? evaluationStatusUid,
             string languageCode,
@@ -713,7 +764,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             this.SetProxyEnabled(false);
 
-            var projectBaseDtos = await this.GetDataTableBaseQuery(editionId, keywords, showPitchings, interestUid)
+            var projectBaseDtos = await this.GetDataTableBaseQuery(
+                                                editionId,
+                                                keywords,
+                                                projectModalityUid.HasValue ? new List<Guid?> { projectModalityUid } : new List<Guid?> { },
+                                                interestUid
+                                            )
                                             .Select(p => new ProjectBaseDto
                                             {
                                                 Id = p.Id,
@@ -725,6 +781,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                     CommissionEvaluation = ce,
                                                     EvaluatorUser = ce.EvaluatorUser
                                                 }),
+                                                IsPitching = new List<int> { ProjectModality.Both.Id, ProjectModality.Pitching.Id }.Contains(p.ProjectModality.Id)
                                             })
                                             .OrderBy(p => p.ProducerName)
                                             .ThenBy(p => p.ProjectName)
@@ -760,7 +817,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 }
                 else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
                 {
-                    projectBaseDtosResult = projectBaseDtos.Where(dto => !approvedProjectsIds.Contains(dto.Id) && dto.IsPitching == true);
+                    projectBaseDtosResult = projectBaseDtos.Where(dto => !approvedProjectsIds.Contains(dto.Id) && dto.IsPitching);
                 }
                 else if (evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
                 {
@@ -809,11 +866,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>Finds all dtos to sell asynchronous.</summary>
         /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
         /// <param name="showAll">if set to <c>true</c> [show all].</param>
+        /// <param name="projectModalityIds">if set to <c>true</c> [show all].</param>
         /// <returns></returns>
-        public async Task<List<ProjectDto>> FindAllDtosToSellAsync(Guid attendeeOrganizationUid, bool showAll)
+        public async Task<List<ProjectDto>> FindAllDtosToSellAsync(Guid attendeeOrganizationUid, bool showAll, List<int> projectModalityIds)
         {
             var query = this.GetBaseQuery()
                                 .FindBySellerAttendeeOrganizationUid(attendeeOrganizationUid)
+                                .FindByProjectModalityIds(projectModalityIds)
                                 .Select(p => new ProjectDto
                                 {
                                     Project = p,
@@ -851,7 +910,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         },
                                         ProjectEvaluationStatus = be.ProjectEvaluationStatus,
                                         ProjectEvaluationRefuseReason = be.ProjectEvaluationRefuseReason
-                                    })
+                                    }),
+                                    ProjectModalityDto = new ProjectModalityDto
+                                    {
+                                        Id = p.ProjectModality.Id,
+                                        Uid = p.ProjectModality.Uid,
+                                        Name = p.ProjectModality.Name,
+                                    }
                                 });
 
             return await query
@@ -915,6 +980,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         Interest = i.Interest,
                                         InterestGroup = i.Interest.InterestGroup
                                     }),
+                                    ProjectModalityDto = new ProjectModalityDto
+                                    {
+                                        Id = p.ProjectModality.Id,
+                                        Uid = p.ProjectModality.Uid,
+                                        Name = p.ProjectModality.Name,
+                                    },
                                     InterestGroupsMatches = p.ProjectInterests
                                                                 .Where(pi => !pi.IsDeleted && !pi.Interest.IsDeleted
                                                                              && p.ProjectBuyerEvaluations
@@ -946,7 +1017,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         },
                                         ProjectEvaluationStatus = be.ProjectEvaluationStatus,
                                         ProjectEvaluationRefuseReason = be.ProjectEvaluationRefuseReason
-                                    })
+                                    }),
                                 });
 
             return await query
@@ -962,6 +1033,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="interestUid">The interest uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showPitchings">The show pitchings.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
@@ -970,7 +1042,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             string searchKeywords,
             List<Guid?> interestUids,
             Guid? evaluationStatusUid,
-            bool showPitchings,
+            bool? showPitchings,
             int page,
             int pageSize)
         {
@@ -1003,6 +1075,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                 {
                                                     TargetAudience = ta.TargetAudience
                                                 }),
+                                                ProjectModalityDto = new ProjectModalityDto
+                                                {
+                                                    Id = p.ProjectModality.Id,
+                                                    Uid = p.ProjectModality.Uid,
+                                                    Name = p.ProjectModality.Name,
+                                                }
                                             })
                                             .Order()
                                             .ToListAsync();
@@ -1056,6 +1134,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="keywords">The keywords.</param>
         /// <param name="showPitchings">if set to <c>true</c> [show pitchings].</param>
+        /// <param name="projectModalityUids">The project modality uid.</param>
         /// <param name="interestUids">The interest uid.</param>
         /// <param name="projectUids">The project uids.</param>
         /// <param name="languageCode">The language code.</param>
@@ -1063,7 +1142,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<List<ProjectDto>> FindAllDtosByFiltersAsync(
             string keywords,
-            bool showPitchings,
+            bool? showPitchings,
+            List<Guid?> projectModalityUids,
             List<Guid?> interestUids,
             List<Guid> projectUids,
             string languageCode,
@@ -1073,6 +1153,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByEditionId(editionId)
                                 .IsFinished()
                                 .IsPitching(showPitchings)
+                                .FindByProjectModalityUid(projectModalityUids)
                                 .FindByKeywords(keywords)
                                 .FindByInterestUids(interestUids)
                                 .FindByUids(projectUids)
@@ -1124,6 +1205,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     {
                                         ProjectImageLink = il
                                     }),
+                                    ProjectModalityDto = new ProjectModalityDto
+                                    {
+                                        Id = p.ProjectModality.Id,
+                                        Uid = p.ProjectModality.Uid,
+                                        Name = p.ProjectModality.Name,
+                                    }
                                 });
 
             return await query
@@ -1168,7 +1255,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             string searchKeywords,
             List<Guid?> interestUids,
             Guid? evaluationStatusUid,
-            bool showPitchings,
+            bool? showPitchings,
+            List<Guid?> projectModalityUid,
             int page,
             int pageSize)
         {
@@ -1176,6 +1264,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByEditionId(editionId)
                                 .IsFinished()
                                 .IsPitching(showPitchings)
+                                .FindByProjectModalityUid(projectModalityUid)
                                 .FindByKeywords(searchKeywords)
                                 .FindByInterestUids(interestUids)
                                 .Order()
@@ -1243,11 +1332,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             string searchKeywords,
             List<Guid?> interestUids,
             Guid? evaluationStatusUid,
-            bool showPitchings,
+            bool? showPitchings,
+            List<Guid?> projectModalityUid,
             int page,
             int pageSize)
         {
-            var projectsDtos = await this.FindAllDtosByFiltersAsync(searchKeywords, showPitchings, interestUids, null, null, editionId);
+            var projectsDtos = await this.FindAllDtosByFiltersAsync(
+                searchKeywords,
+                showPitchings,
+                projectModalityUid,
+                interestUids,
+                null,
+                null,
+                editionId
+            );
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
             var approvedProjectsIds = await this.FindAllApprovedCommissionProjectsIdsAsync(editionId);
 
@@ -1685,7 +1783,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 {
                                     CommissionEvaluation = ce,
                                     EvaluatorUser = ce.EvaluatorUser
-                                }).ToList()
+                                }).ToList(),
+                                ProjectModalityDto = new ProjectModalityDto
+                                {
+                                    Id = p.ProjectModality.Id,
+                                    Uid = p.ProjectModality.Uid,
+                                    Name = p.ProjectModality.Name,
+                                }
                             })
                             .FirstOrDefaultAsync();
         }
@@ -2156,7 +2260,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     ProjectTargetAudienceDtos = p.ProjectTargetAudiences.Where(ta => !ta.IsDeleted).Select(ta => new ProjectTargetAudienceDto
                                     {
                                         TargetAudience = ta.TargetAudience
-                                    })
+                                    }),
+                                    ProjectModalityDto = new ProjectModalityDto
+                                    {
+                                        Id = p.ProjectModality.Id,
+                                        Uid = p.ProjectModality.Uid,
+                                        Name = p.ProjectModality.Name,
+                                    }
                                 });
             return query;
         }

@@ -122,7 +122,7 @@
     <comment>Declaro estar ciente e concordar com o termo acima.</comment>
   </data>
   <data name="AcceptTermsAndConditions" xml:space="preserve">
-    <value>I declare that I am aware and agree with the above-mentioned rules and regulations.</value>
+    <value>I declare that I am aware of and agree to the rules and regulations above.</value>
     <comment>Declaro estar ciente e concordar com as regras e regulamentos acima.</comment>
   </data>
   <data name="AccessDenied" xml:space="preserve">
@@ -150,6 +150,12 @@
   </data>
   <data name="AudiovisualPlayerTerms" xml:space="preserve">
     <value>Player’s Regulation (Audiovisual)</value>
+  </data>
+  <data name="AudiovisualProducerPitchingAcceptTermsAndConditions" xml:space="preserve">
+    <value>As a candidate for the Pitching Industry, I declare to be aware of and agree to the rules and regulations above, as well as to submit to any penalties and consequences resulting from their violation.</value>
+  </data>
+  <data name="AudiovisualProducerPitchingAcceptTermsAndConditions_Duplicate[1]" xml:space="preserve">
+    <value>As a candidate for the Pitching Industry, I declare to be aware of and agree to the rules and regulations above, as well as to submit to any penalties and consequences resulting from their violation.</value>
   </data>
   <data name="AudivisualPichingQuestion" xml:space="preserve">
     <value>Do you wish to take part in the selection proccess for the AUDIOVISUAL PITCHING sessions at Rio2C {0}?</value>
@@ -543,6 +549,12 @@
   </data>
   <data name="InvalidResolutionPlayer" xml:space="preserve">
     <value>The image size must be between 1KB and 10MB!</value>
+  </data>
+  <data name="IsNotPossibleCreateBusinessRoundProjectLimit" xml:space="preserve">
+    <value>It is not possible to create a business round as this company has already reached the registration limit.</value>
+  </data>
+  <data name="IsNotPossibleCreatePitchingProjectLimit" xml:space="preserve">
+    <value>It is not possible to create the pitching project as this company has already reached the registration limit.</value>
   </data>
   <data name="IsNotPossibleCreateProjectLimit" xml:space="preserve">
     <value>Is not possible to create the project because the company already reached the limit.</value>

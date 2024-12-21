@@ -34,7 +34,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public DateTimeOffset? AudiovisualPlayerTermsAcceptanceDate { get; private set; }
         public DateTimeOffset? InnovationPlayerTermsAcceptanceDate { get; private set; }
         public DateTimeOffset? MusicPlayerTermsAcceptanceDate { get; private set; }
-        public DateTimeOffset? ProducerTermsAcceptanceDate { get; private set; }
+        public DateTimeOffset? AudiovisualProducerBusinessRoundTermsAcceptanceDate { get; private set; }
+        public DateTimeOffset? AudiovisualProducerPitchingTermsAcceptanceDate { get; private set; }        
         public UserBaseDto UpdaterBaseDto { get; private set; }
         public DateTimeOffset UpdateDate { get; private set; }
 
@@ -162,7 +163,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.AudiovisualPlayerTermsAcceptanceDate = entity.EditionAttendeeCollaboratorBaseDto?.AudiovisualPlayerTermsAcceptanceDate;
             this.InnovationPlayerTermsAcceptanceDate = entity.EditionAttendeeCollaboratorBaseDto?.InnovationPlayerTermsAcceptanceDate;
             this.MusicPlayerTermsAcceptanceDate = entity.EditionAttendeeCollaboratorBaseDto?.MusicPlayerTermsAcceptanceDate;
-            this.ProducerTermsAcceptanceDate = entity.EditionAttendeeCollaboratorBaseDto?.ProducerTermsAcceptanceDate;
+            this.AudiovisualProducerBusinessRoundTermsAcceptanceDate = entity.EditionAttendeeCollaboratorBaseDto?.AudiovisualProducerBusinessRoundTermsAcceptanceDate;
+            this.AudiovisualProducerPitchingTermsAcceptanceDate = entity.EditionAttendeeCollaboratorBaseDto?.AudiovisualProducerPitchingTermsAcceptanceDate;            
             this.UpdaterBaseDto = entity.UpdaterBaseDto;
             this.UpdateDate = entity.UpdateDate;
 

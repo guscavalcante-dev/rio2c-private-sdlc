@@ -11,7 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
@@ -71,6 +70,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.LastNames = cmd.LastNames;
             this.Email = cmd.Email;
             this.InnovationOrganizationTrackGroups = cmd.InnovationOrganizationTrackGroups;
+        }
+
+        public UpdateInnovationCommissionCollaborator()
+        {
         }
     }
 }

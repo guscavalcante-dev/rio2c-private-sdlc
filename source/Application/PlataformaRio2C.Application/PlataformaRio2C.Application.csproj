@@ -289,6 +289,7 @@
     <Compile Include="CQRS\CommandsHandlers\Music\Pitching\DistributeMembersMusicPitchingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\PlayersExecutives\CreateMusicPlayerExecutiveCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\PlayersExecutives\UpdateMusicPlayerExecutiveCollaboratorCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardingAudiovisualProducerPitchingTermsCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardMusicPlayerTermsAcceptanceCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardInnovationPlayerTermsAcceptanceCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\DisassociateOrganizationCollaboratorCommandHandler.cs" />
@@ -331,6 +332,8 @@
     <Compile Include="CQRS\CommandsHandlers\Administrators\CreateAdministratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Administrators\DeleteAdministratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\UpdateOrganizationApiConfigurationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Projects\Pitching\CreatePitchingProjectCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Projects\Pitching\UpdatePitchingProjectMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Rooms\CreateDefaultVirtualRoomCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Speakers\SendSpeakersReportCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\User\UpdateUserStatusCommandHandler.cs" />
@@ -352,7 +355,7 @@
     <Compile Include="CQRS\CommandsHandlers\Music\Pitching\RefuseMusicPitchingEvaluationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardSpeakerTermsAcceptanceCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardProducerTermsAcceptanceCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardingAudiovisualProducerBusinessRoundTermsCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\SkipOnboardTicketBuyerOrganizationDataCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\CreateTicketBuyerOrganizationDataCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardAudiovisualPlayerTermsAcceptanceCommandHandler.cs" />
@@ -486,8 +489,10 @@
     <Compile Include="CQRS\Commands\Music\PlayersExecutives\BaseCommands\MusicPlayerExecutiveCollaboratorBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Music\PlayersExecutives\CreateMusicPlayerExecutiveCollaborator.cs" />
     <Compile Include="CQRS\Commands\Music\PlayersExecutives\UpdateMusicPlayerExecutiveCollaborator.cs" />
+    <Compile Include="CQRS\Commands\Onboardings\OnboardAudiovisualProducerPitchingTerms.cs" />
     <Compile Include="CQRS\Commands\Onboardings\OnboardMusicPlayerTermsAcceptance.cs" />
     <Compile Include="CQRS\Commands\Onboardings\OnboardInnovationPlayerTermsAcceptance.cs" />
+    <Compile Include="CQRS\Commands\Onboardings\OnboardAudiovisualProducerBusinessRoundTermsAcceptance.cs" />
     <Compile Include="CQRS\Commands\Organizations\BaseCommands\OrganizationTargetAudienceBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Organizations\DisassociateOrganizationCollaborator.cs" />
     <Compile Include="CQRS\Commands\Organizations\AssociateOrganizationCollaborator.cs" />
@@ -523,6 +528,8 @@
     <Compile Include="CQRS\Commands\Administrators\CreateAdministrator.cs" />
     <Compile Include="CQRS\Commands\Administrators\DeleteAdministrator.cs" />
     <Compile Include="CQRS\Commands\Organizations\UpdateOrganizationApiConfiguration.cs" />
+    <Compile Include="CQRS\Commands\Projects\Pitching\CreatePitchingProject.cs" />
+    <Compile Include="CQRS\Commands\Projects\Pitching\UpdatePitchingProjectMainInformation.cs" />
     <Compile Include="CQRS\Commands\Rooms\CreateDefaultVirtualRoom.cs" />
     <Compile Include="CQRS\Commands\Speakers\SendSpeakersReport.cs" />
     <Compile Include="CQRS\Commands\User\UpdateUserStatus.cs" />
@@ -588,7 +595,6 @@
     <Compile Include="CQRS\Commands\Messages\SendUnreadConversationsEmailsAsync.cs" />
     <Compile Include="CQRS\Commands\Onboardings\OnboardCollaborator.cs" />
     <Compile Include="CQRS\Commands\Onboardings\OnboardSpeakerTermsAcceptance.cs" />
-    <Compile Include="CQRS\Commands\Onboardings\OnboardProducerTermsAcceptance.cs" />
     <Compile Include="CQRS\Commands\Onboardings\SkipOnboardTicketBuyerOrganizationData.cs" />
     <Compile Include="CQRS\Commands\Collaborators\CreateTicketBuyerOrganizationData.cs" />
     <Compile Include="CQRS\Commands\Organizations\BaseCommands\OrganizationSiteBaseCommand.cs" />
@@ -837,7 +843,7 @@
       <Name>PlataformaRio2C.Infra.CrossCutting.Tools</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Infra\Data\PlataformaRio2C.Infra.Data.Context\PlataformaRio2C.Infra.Data.Context.csproj">
-      <Project>{30c4d007-1a78-410c-9fcd-63699985c39b}</Project>
+      <Project>{30C4D007-1A78-410C-9FCD-63699985C39B}</Project>
       <Name>PlataformaRio2C.Infra.Data.Context</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Infra\Data\PlataformaRio2c.Infra.Data.FileRepository\PlataformaRio2c.Infra.Data.FileRepository.csproj">

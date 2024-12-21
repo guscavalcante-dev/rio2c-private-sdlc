@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 09-28-2024
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 10-23-2024
 // ***********************************************************************
 // <copyright file="PlataformaRio2CContext.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -111,6 +111,7 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new ProjectEvaluationStatusMap());
             modelBuilder.Configurations.Add(new ProjectEvaluationRefuseReasonMap());
             modelBuilder.Configurations.Add(new CommissionEvaluationMap());
+            modelBuilder.Configurations.Add(new ProjectModalityMap());
 
             // Addresses
             modelBuilder.Configurations.Add(new CountryMap());

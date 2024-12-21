@@ -214,6 +214,7 @@
     <Compile Include="Repositories\Projects\ProjectEvaluationRefuseReasonRepository.cs" />
     <Compile Include="Repositories\Projects\ProjectEvaluationStatusRepository.cs" />
     <Compile Include="Repositories\Projects\ProjectBuyerEvaluationRepository.cs" />
+    <Compile Include="Repositories\Projects\ProjectModalityRepository.cs" />
     <Compile Include="Repositories\Projects\ProjectTypeRepository.cs" />
     <Compile Include="Repositories\Projects\ProjectStatusRepository.cs" />
     <Compile Include="Repositories\Projects\ProjectRepository.cs" />

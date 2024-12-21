@@ -1,4 +1,4 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.OnboardProducerTermsAcceptance
+﻿@model PlataformaRio2C.Application.CQRS.Commands.OnboardAudiovisualProducerPitchingTerms
 @{
     ViewBag.Title = Labels.ProjectSubmission;
 }
@@ -10,12 +10,12 @@
         <div class="kt-grid kt-wizard-v3 kt-wizard-v3--white" data-ktwizard-state="between">
             <div class="kt-grid__item">
                 <!--begin: Form Wizard Nav -->
-                @Html.Partial("Shared/_ProjectsOnboardingMenu", 2)
+                @Html.Partial("Shared/_ProjectsOnboardingMenu", 3)
                 <!--end: Form Wizard Nav -->
             </div>
             <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v3__wrapper">
                 <!--begin: Form Wizard Form-->
-                @using (Html.BeginForm("TermsAcceptance", "Projects", FormMethod.Post, new { id = "PlayerTermsAcceptanceForm", @class = "kt-form" }))
+                @using (Html.BeginForm("AudiovisualPitchingTermsAcceptance", "PitchingProjects", FormMethod.Post, new { id = "PlayerTermsAcceptanceForm", @class = "kt-form" }))
                 {
                     @Html.HiddenFor(m => m.ProjectUid)
                     <!--begin: Form Wizard Step 2-->
@@ -28,7 +28,7 @@
                                         <div class="kt-portlet">
                                             <div class="kt-portlet__body">
                                                 <div class="rio2c-scroll" data-height="400" data-scrollbar-shown="true">
-                                                    @Html.Partial("Shared/_ProducerTermsAcceptanceText")
+                                                    @Html.Partial("Shared/_AudiovisualProducerPitchingTermsText")
                                                 </div>
                                             </div>
                                         </div>
@@ -37,7 +37,7 @@
                                 <div class="row">
                                     <div class="form-group col-md-12">
                                         <label class="kt-checkbox">
-                                            @Html.CheckBoxFor(m => m.AcceptTerms, new { @class = "" }) @Messages.AcceptTermsAndConditions
+                                            @Html.CheckBoxFor(m => m.AcceptTerms, new { @class = "" }) @Messages.AudiovisualProducerPitchingAcceptTermsAndConditions
                                             <span></span>
                                         </label><br />
                                         @Html.ValidationMessageFor(m => m.AcceptTerms, "", new { @class = "text-danger" })

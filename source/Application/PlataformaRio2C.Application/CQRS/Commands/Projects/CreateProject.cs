@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 11-06-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 29-11-2024
 // ***********************************************************************
 // <copyright file="CreateProject.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,6 +28,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isDataRequired">if set to <c>true</c> [is data required].</param>
         /// <param name="isProductionPlanRequired">if set to <c>true</c> [is production plan required].</param>
         /// <param name="isAdditionalInformationRequired">if set to <c>true</c> [is additional information required].</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
         public CreateProject(
             ProjectDto entity,
             List<LanguageDto> languagesDtos,
@@ -35,7 +36,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<InterestDto> interestsDtos,
             bool isDataRequired,
             bool isProductionPlanRequired,
-            bool isAdditionalInformationRequired)
+            bool isAdditionalInformationRequired,
+            string userInterfaceLanguage)
         {
             this.UpdateBaseProperties(
                 entity,
@@ -44,7 +46,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 interestsDtos,
                 isDataRequired,
                 isProductionPlanRequired,
-                isAdditionalInformationRequired);
+                isAdditionalInformationRequired,
+                userInterfaceLanguage,
+                true
+            );
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateProject"/> class.</summary>

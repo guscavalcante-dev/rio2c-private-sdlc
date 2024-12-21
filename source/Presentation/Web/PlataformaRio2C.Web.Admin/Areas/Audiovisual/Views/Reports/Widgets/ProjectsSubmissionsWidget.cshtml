@@ -81,7 +81,7 @@
                         </td>
                         <td class="col-2">@(projectDto.GetTitleDtoByLanguageCode(Language.Portuguese.Code)?.ProjectTitle?.Value)</td>
                         <td class="col-2">@(projectDto.GetTitleDtoByLanguageCode(Language.English.Code)?.ProjectTitle?.Value)</td>
-                        <td class="col-1">@(projectDto.Project.IsPitching ? Labels.Yes : Labels.No)</td>
+                        <td class="col-1">@(projectDto.Project.IsPitching() == true ? Labels.Yes : Labels.No)</td>
                         <td class="col-3">
                             @{ var firstLine = true;}
                             @foreach (var item in projectDto.ProjectBuyerEvaluationDtos)

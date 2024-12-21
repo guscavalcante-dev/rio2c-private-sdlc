@@ -565,6 +565,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Regulamento de rodadas de negócio.
+        /// </summary>
+        public static string AudiovisualBusinessRoundRules {
+            get {
+                return ResourceManager.GetString("AudiovisualBusinessRoundRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reg. de negócio.
+        /// </summary>
+        public static string AudiovisualBusinessRoundRulesShorted {
+            get {
+                return ResourceManager.GetString("AudiovisualBusinessRoundRulesShorted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Comissão de Audiovisual.
         /// </summary>
         public static string AudiovisualCommission {
@@ -651,6 +669,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string AudiovisualNegotiationsVirtualMeetingsJoinMinutes {
             get {
                 return ResourceManager.GetString("AudiovisualNegotiationsVirtualMeetingsJoinMinutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Regulamento de pitching.
+        /// </summary>
+        public static string AudiovisualPitchingRules {
+            get {
+                return ResourceManager.GetString("AudiovisualPitchingRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reg. de pitching.
+        /// </summary>
+        public static string AudiovisualPitchingRulesShorted {
+            get {
+                return ResourceManager.GetString("AudiovisualPitchingRulesShorted", resourceCulture);
             }
         }
         
@@ -4903,6 +4939,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Projetos Pitching.
+        /// </summary>
+        public static string PitchingProjects {
+            get {
+                return ResourceManager.GetString("PitchingProjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Local.
         /// </summary>
         public static string Place {
@@ -5618,6 +5663,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Modalidade do Projeto.
+        /// </summary>
+        public static string ProjectModality {
+            get {
+                return ResourceManager.GetString("ProjectModality", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nenhum Player selecionado para avaliação.
         /// </summary>
         public static string ProjectNotSubmittedToPlayers {
@@ -6096,15 +6150,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string RequiredFields {
             get {
                 return ResourceManager.GetString("RequiredFields", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Campos obrigatórios.
-        /// </summary>
-        public static string RequiredFields_Duplicate_1_ {
-            get {
-                return ResourceManager.GetString("RequiredFields_Duplicate[1]", resourceCulture);
             }
         }
         

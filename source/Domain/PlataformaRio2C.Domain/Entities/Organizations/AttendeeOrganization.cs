@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-09-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 12-21-2023
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 10-23-2024
 // ***********************************************************************
 // <copyright file="AttendeeOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -343,7 +343,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="totalValueOfProject">The total value of project.</param>
         /// <param name="valueAlreadyRaised">The value already raised.</param>
         /// <param name="valueStillNeeded">The value still needed.</param>
-        /// <param name="isPitching">if set to <c>true</c> [is pitching].</param>
         /// <param name="projectTitles">The project titles.</param>
         /// <param name="projectLogLines">The project log lines.</param>
         /// <param name="projectSummaries">The project summaries.</param>
@@ -354,6 +353,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="imageLink">The image link.</param>
         /// <param name="teaserLink">The teaser link.</param>
         /// <param name="userId">The user identifier.</param>
+        /// <param name="projectModality">Modality of the project.</param>
         public void CreateProject(
             ProjectType projectType,
             string totalPlayingTime,
@@ -363,7 +363,6 @@ namespace PlataformaRio2C.Domain.Entities
             string totalValueOfProject,
             string valueAlreadyRaised,
             string valueStillNeeded,
-            bool isPitching,
             List<ProjectTitle> projectTitles,
             List<ProjectLogLine> projectLogLines,
             List<ProjectSummary> projectSummaries,
@@ -373,7 +372,8 @@ namespace PlataformaRio2C.Domain.Entities
             List<TargetAudience> targetAudiences,
             string imageLink,
             string teaserLink,
-            int userId)
+            int userId,
+            ProjectModality projectModality)
         {
             if (this.SellProjects == null)
             {
@@ -386,27 +386,30 @@ namespace PlataformaRio2C.Domain.Entities
                 this.ValidationResult = new ValidationResult();
             }
 
-            this.SellProjects.Add(new Project(
-                projectType,
-                this,
-                totalPlayingTime,
-                numberOfEpisodes,
-                eachEpisodePlayingTime,
-                valuePerEpisode,
-                totalValueOfProject,
-                valueAlreadyRaised,
-                valueStillNeeded,
-                isPitching,
-                projectTitles,
-                projectLogLines,
-                projectSummaries,
-                projectProductionPlans,
-                projectAdditionalInformations,
-                projectInterests,
-                targetAudiences,
-                imageLink,
-                teaserLink,
-                userId));
+            this.SellProjects.Add(
+                new Project(
+                    projectType,
+                    this,
+                    totalPlayingTime,
+                    numberOfEpisodes,
+                    eachEpisodePlayingTime,
+                    valuePerEpisode,
+                    totalValueOfProject,
+                    valueAlreadyRaised,
+                    valueStillNeeded,
+                    projectTitles,
+                    projectLogLines,
+                    projectSummaries,
+                    projectProductionPlans,
+                    projectAdditionalInformations,
+                    projectInterests,
+                    targetAudiences,
+                    imageLink,
+                    teaserLink,
+                    userId,
+                    projectModality
+                )
+            );
 
             this.UpdateProjectsCount();
             this.SynchronizeAttendeeOrganizationTypes(projectType.OrganizationTypes?.FirstOrDefault(ot => ot.IsSeller), false, null, userId);
@@ -583,6 +586,66 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateProjects();
 
             return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>Determines whether [is create business round valid].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is create business round valid]; otherwise, <c>false</c>.</returns>
+        public bool IsCreateBusinessRoundValid()
+        {
+            if (this.ValidationResult == null)
+            {
+                this.ValidationResult = new ValidationResult();
+            }
+            this.SellProjectsCount = this.SellProjects?.Count(p =>
+                !p.IsDeleted
+                && new int[] {
+                    ProjectModality.Both.Id,
+                    ProjectModality.BusinessRound.Id
+                }.Contains(p.ProjectModalityId)
+             ) ?? 0;
+            this.ValidateBusinessRoundLimits();
+            this.ValidateProjects();
+            return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>Determines whether [is create pitching valid].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is create pitching valid]; otherwise, <c>false</c>.</returns>
+        public bool IsCreatePitchingValid()
+        {
+            if (this.ValidationResult == null)
+            {
+                this.ValidationResult = new ValidationResult();
+            }
+            this.SellProjectsCount = this.SellProjects?.Count(p =>
+                !p.IsDeleted
+                && new int[] {
+                    ProjectModality.Both.Id,
+                    ProjectModality.Pitching.Id
+                }.Contains(p.ProjectModalityId)
+             ) ?? 0;
+            this.ValidatePitchingLimits();
+            this.ValidateProjects();
+            return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>Validates the business rounds limits.</summary>
+        public void ValidateBusinessRoundLimits()
+        {
+            if (this.SellProjectsCount > this.GetMaxSellProjectsCount())
+            {
+                this.ValidationResult.Add(new ValidationError(Messages.IsNotPossibleCreateBusinessRoundProjectLimit, new string[] { "ToastrError" }));
+            }
+        }
+
+        /// <summary>Validates the pitching projects limits.</summary>
+        public void ValidatePitchingLimits()
+        {
+            if (this.SellProjectsCount > this.GetMaxSellProjectsCount())
+            {
+                this.ValidationResult.Add(new ValidationError(Messages.IsNotPossibleCreatePitchingProjectLimit, new string[] { "ToastrError" }));
+            }
         }
 
         /// <summary>Validates the projects limits.</summary>

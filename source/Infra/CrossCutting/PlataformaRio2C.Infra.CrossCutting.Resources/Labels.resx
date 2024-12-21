@@ -339,6 +339,12 @@
     <value>Audiovisual</value>
     <comment>Audiovisual</comment>
   </data>
+  <data name="AudiovisualBusinessRoundRules" xml:space="preserve">
+    <value>Regulamento de rodadas de negócio</value>
+  </data>
+  <data name="AudiovisualBusinessRoundRulesShorted" xml:space="preserve">
+    <value>Reg. de negócio</value>
+  </data>
   <data name="AudiovisualCommission" xml:space="preserve">
     <value>Comissão de Audiovisual</value>
     <comment>Comissão de Audiovisual</comment>
@@ -374,6 +380,12 @@
   </data>
   <data name="AudiovisualNegotiationsVirtualMeetingsJoinMinutes" xml:space="preserve">
     <value>Tempo de espera para liberação da sala de reunião virtual</value>
+  </data>
+  <data name="AudiovisualPitchingRules" xml:space="preserve">
+    <value>Regulamento de pitching</value>
+  </data>
+  <data name="AudiovisualPitchingRulesShorted" xml:space="preserve">
+    <value>Reg. de pitching</value>
   </data>
   <data name="AudiovisualPitchingSessions" xml:space="preserve">
     <value>Pitching de Audiovisual</value>
@@ -952,6 +964,9 @@
   <data name="DuplicateEntity" xml:space="preserve">
     <value>Duplicar {0}</value>
     <comment>Duplicar {0}</comment>
+  </data>
+  <data name="Dynamic" xml:space="preserve">
+    <value />
   </data>
   <data name="EachEpisodePlayingTime" xml:space="preserve">
     <value>Minutagem de cada episódio</value>
@@ -2041,6 +2056,9 @@
     <value>Objetivos em participar do Pitching</value>
     <comment>Objetivos em participar do Pitching</comment>
   </data>
+  <data name="PitchingProjects" xml:space="preserve">
+    <value>Projetos Pitching</value>
+  </data>
   <data name="Place" xml:space="preserve">
     <value>Local</value>
     <comment>Local</comment>
@@ -2328,6 +2346,9 @@
     <value>Quantidade máxima de avaliadores por projeto</value>
     <comment>Quantidade máxima de avaliadores por projeto</comment>
   </data>
+  <data name="ProjectModality" xml:space="preserve">
+    <value>Modalidade do Projeto</value>
+  </data>
   <data name="ProjectNotSubmittedToPlayers" xml:space="preserve">
     <value>Nenhum Player selecionado para avaliação</value>
     <comment>Nenhum Player selecionado para avaliação</comment>
@@ -2524,9 +2545,6 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Solicitações</comment>
   </data>
   <data name="RequiredFields" xml:space="preserve">
-    <value>Campos obrigatórios</value>
-  </data>
-  <data name="RequiredFields_Duplicate[1]" xml:space="preserve">
     <value>Campos obrigatórios</value>
   </data>
   <data name="ReservationCode" xml:space="preserve">
