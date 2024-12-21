@@ -289,6 +289,9 @@
     <value>Approve</value>
     <comment>Aprovar</comment>
   </data>
+  <data name="ApproveToRepechage" xml:space="preserve">
+    <value>Approve repechage</value>
+  </data>
   <data name="Arrival" xml:space="preserve">
     <value>Arrival</value>
     <comment>Chegada</comment>
@@ -322,6 +325,12 @@
   <data name="AudioVisual" xml:space="preserve">
     <value>Audiovisual</value>
     <comment>Audiovisual</comment>
+  </data>
+  <data name="AudiovisualBusinessRoundRules" xml:space="preserve">
+    <value>Business rounds rules</value>
+  </data>
+  <data name="AudiovisualBusinessRoundRulesShorted" xml:space="preserve">
+    <value>B. rounds rules</value>
   </data>
   <data name="AudiovisualCommission" xml:space="preserve">
     <value>Audiovisual Commission</value>
@@ -361,6 +370,15 @@
   <data name="AudiovisualNegotiationsVirtualMeetingsJoinMinutes" xml:space="preserve">
     <value>Waiting time to release the virtual meeting room</value>
     <comment>Tempo de espera para liberação da sala de reunião virtual</comment>
+  </data>
+  <data name="AudiovisualPitchingRules" xml:space="preserve">
+    <value>Pitching rules</value>
+  </data>
+  <data name="AudiovisualPitchingRules1" xml:space="preserve">
+    <value>Pitching rules</value>
+  </data>
+  <data name="AudiovisualPitchingRulesShorted" xml:space="preserve">
+    <value>Pitching rules</value>
   </data>
   <data name="AudiovisualPitchingSessions" xml:space="preserve">
     <value>Audiovisual Pitching Sessions</value>
@@ -482,12 +500,6 @@
   <data name="BusinessRound" xml:space="preserve">
     <value>One-to-one-meetings</value>
     <comment>Rodadas de Negócios</comment>
-  </data>
-  <data name="BusinessRounds" xml:space="preserve">
-    <value>Business rounds</value>
-  </data>
-  <data name="BusinessRoundsProjects" xml:space="preserve">
-    <value>Business rounds projects</value>
   </data>
   <data name="BusinessRoundtable" xml:space="preserve">
     <value>Business Roundtable</value>
@@ -804,6 +816,14 @@
   <data name="Credentialing" xml:space="preserve">
     <value>Credentialing</value>
   </data>
+  <data name="CuratorApproval" xml:space="preserve">
+    <value>Curator's approval</value>
+    <comment>Aprovar</comment>
+  </data>
+  <data name="CuratorDisapproval" xml:space="preserve">
+    <value>Curator's disapproval</value>
+    <comment>Aprovar</comment>
+  </data>
   <data name="Curatorship" xml:space="preserve">
     <value>Curatorship</value>
     <comment>Curadoria</comment>
@@ -899,6 +919,9 @@
     <value>Disabled</value>
     <comment>Desativado</comment>
   </data>
+  <data name="DisapproveToRepechage" xml:space="preserve">
+    <value>Disapprove repechage</value>
+  </data>
   <data name="Disassociate" xml:space="preserve">
     <value>Disassociate</value>
     <comment>Desassociar</comment>
@@ -926,6 +949,12 @@
   <data name="DisplayOrder" xml:space="preserve">
     <value>Display order</value>
     <comment>Ordem de exibição</comment>
+  </data>
+  <data name="DistributeCommissionMembers" xml:space="preserve">
+    <value>Distributed commission members</value>
+  </data>
+  <data name="Distributed" xml:space="preserve">
+    <value>Distributed</value>
   </data>
   <data name="Document" xml:space="preserve">
     <value>Document</value>
@@ -1463,9 +1492,6 @@
   <data name="JobTitleTranslated" xml:space="preserve">
     <value>Job title {0}</value>
   </data>
-  <data name="JobTitleTranslated_Duplicate[1]" xml:space="preserve">
-    <value>Job title {0}</value>
-  </data>
   <data name="Join" xml:space="preserve">
     <value>Join</value>
     <comment>Participar</comment>
@@ -1571,9 +1597,6 @@
   <data name="Low" xml:space="preserve">
     <value>Low</value>
   </data>
-  <data name="Low_Duplicate[1]" xml:space="preserve">
-    <value>Low</value>
-  </data>
   <data name="Main" xml:space="preserve">
     <value>Main</value>
     <comment>Principal</comment>
@@ -1620,9 +1643,6 @@
   <data name="Medium" xml:space="preserve">
     <value>Medium</value>
   </data>
-  <data name="Medium_Duplicate[1]" xml:space="preserve">
-    <value>Medium</value>
-  </data>
   <data name="MeetingType" xml:space="preserve">
     <value>Meeting Type</value>
     <comment>Tipo de Reunião</comment>
@@ -1655,9 +1675,6 @@
     <comment>Mini-biografias</comment>
   </data>
   <data name="MiniBioTranslated" xml:space="preserve">
-    <value>Mini-bio {0}</value>
-  </data>
-  <data name="MiniBioTranslated_Duplicate[1]" xml:space="preserve">
     <value>Mini-bio {0}</value>
   </data>
   <data name="Minutes" xml:space="preserve">
@@ -1702,30 +1719,6 @@
     <value>Team Member</value>
     <comment>Membro da Equipe</comment>
   </data>
-  <data name="MusicBusinessRoundEvaluationEndDate" xml:space="preserve">
-    <value>Music business round evaluation end date</value>
-  </data>
-  <data name="MusicBusinessRoundEvaluationStartDate" xml:space="preserve">
-    <value>Music business round evaluation start date</value>
-  </data>
-  <data name="MusicBusinessRoundMaximumEvaluatorsByProject" xml:space="preserve">
-    <value>Maximum number of evaluators by business round</value>
-  </data>
-  <data name="MusicBusinessRoundMaximumProjectsBySeller" xml:space="preserve">
-    <value>Maximum number of business round by participant</value>
-  </data>
-  <data name="MusicBusinessRoundNegotiationEndDate" xml:space="preserve">
-    <value>Music business round negotiations end date</value>
-  </data>
-  <data name="MusicBusinessRoundNegotiationStartDate" xml:space="preserve">
-    <value>Music business round negotiations start date</value>
-  </data>
-  <data name="MusicBusinessRoundSubmitEndDate" xml:space="preserve">
-    <value>Music business round submission end date</value>
-  </data>
-  <data name="MusicBusinessRoundSubmitStartDate" xml:space="preserve">
-    <value>Music business round submission start date</value>
-  </data>
   <data name="MusicCommission" xml:space="preserve">
     <value>Music Commission</value>
     <comment>Comissão de Música</comment>
@@ -1757,13 +1750,41 @@
     <value>Musical instrument</value>
     <comment>Instrumento musical</comment>
   </data>
-  <data name="MusicPitchingSubmitEndDate" xml:space="preserve">
-    <value>Music project submission end date</value>
-    <comment>Data de término de envio de projeto musical</comment>
+  <data name="MusicPitchingCuratorEvaluationEndDate" xml:space="preserve">
+    <value>End date for project evaluation by the curator</value>
   </data>
-  <data name="MusicPitchingSubmitStartDate" xml:space="preserve">
-    <value>Music project submission start date</value>
-    <comment>Data de início de envio de projeto musical</comment>
+  <data name="MusicPitchingCuratorEvaluationStartDate" xml:space="preserve">
+    <value>Start date for project evaluation by the curator</value>
+  </data>
+  <data name="MusicPitchingMaximumApprovedProjectsByCommissionMember" xml:space="preserve">
+    <value>Maximum number of projects approved by comission member</value>
+  </data>
+  <data name="MusicPitchingMaximumApprovedProjectsByCurator" xml:space="preserve">
+    <value>Maximum number of projects approved by curator</value>
+  </data>
+  <data name="MusicPitchingMaximumApprovedProjectsByPopularVote" xml:space="preserve">
+    <value>Maximum number of projects approved by popular vote</value>
+  </data>
+  <data name="MusicPitchingMaximumApprovedProjectsByRepechage" xml:space="preserve">
+    <value>Maximum number of projects approved by repechage</value>
+  </data>
+  <data name="MusicPitchingMaximumProjectSubmissionsByEdition" xml:space="preserve">
+    <value>Maximum number of projects registered by edition</value>
+  </data>
+  <data name="MusicPitchingMaximumProjectSubmissionsByParticipant" xml:space="preserve">
+    <value>Maximum number of projects registered by participant</value>
+  </data>
+  <data name="MusicPitchingPopularEvaluationEndDate" xml:space="preserve">
+    <value>End date for project evaluation by popular vote</value>
+  </data>
+  <data name="MusicPitchingPopularEvaluationStartDate" xml:space="preserve">
+    <value>Start date for project evaluation by popular vote</value>
+  </data>
+  <data name="MusicPitchingRepechageEvaluationEndDate" xml:space="preserve">
+    <value>End date for project evaluation by repechage</value>
+  </data>
+  <data name="MusicPitchingRepechageEvaluationStartDate" xml:space="preserve">
+    <value>Start date for project evaluation by repechage</value>
   </data>
   <data name="MusicPlayer" xml:space="preserve">
     <value>Music Player</value>
@@ -1771,18 +1792,20 @@
   <data name="MusicPlayersExecutivesReport" xml:space="preserve">
     <value>Music Players Executive Report</value>
   </data>
-  <data name="MusicPlayersExecutivesReport_Duplicate[1]" xml:space="preserve">
-    <value>Music Players Executive Report</value>
-  </data>
   <data name="MusicPlayersReport" xml:space="preserve">
-    <value>Music Players Report</value>
-  </data>
-  <data name="MusicPlayersReport_Duplicate[1]" xml:space="preserve">
     <value>Music Players Report</value>
   </data>
   <data name="MusicProjects" xml:space="preserve">
     <value>Music Projects</value>
     <comment>Projetos de Música</comment>
+  </data>
+  <data name="MusicProjectSubmitEndDate" xml:space="preserve">
+    <value>Music project submission end date</value>
+    <comment>Data de término de envio de projeto musical</comment>
+  </data>
+  <data name="MusicProjectSubmitStartDate" xml:space="preserve">
+    <value>Music project submission start date</value>
+    <comment>Data de início de envio de projeto musical</comment>
   </data>
   <data name="MusicTermsAcceptanceDate" xml:space="preserve">
     <value>Music terms acceptance date</value>
@@ -1861,9 +1884,6 @@
     <value>No</value>
   </data>
   <data name="NoAssociatedCompany" xml:space="preserve">
-    <value>No associated company</value>
-  </data>
-  <data name="NoAssociatedCompany_Duplicate[1]" xml:space="preserve">
     <value>No associated company</value>
   </data>
   <data name="NoConferenceToDisplay" xml:space="preserve">
@@ -2078,6 +2098,9 @@
     <value>Pitching participation objectives</value>
     <comment>Objetivos em participar do Pitching</comment>
   </data>
+  <data name="PitchingProjects" xml:space="preserve">
+    <value>Pitching Projects</value>
+  </data>
   <data name="Place" xml:space="preserve">
     <value>Place</value>
     <comment>Local</comment>
@@ -2106,12 +2129,6 @@
   </data>
   <data name="PlayerDemandPercentage" xml:space="preserve">
     <value>{0}: Concentrates {1}% of registered projects</value>
-  </data>
-  <data name="PlayerDemandPercentage_Duplicate[1]" xml:space="preserve">
-    <value>{0}: Concentrates {1}% of registered projects</value>
-  </data>
-  <data name="PlayerDemand_Duplicate[1]" xml:space="preserve">
-    <value>Player Demand</value>
   </data>
   <data name="PlayerDidNotDefinedGenre" xml:space="preserve">
     <value>Player did not define genre as interest.</value>
@@ -2374,7 +2391,7 @@
     <comment>Quantidade máxima de avaliadores por projeto</comment>
   </data>
   <data name="ProjectModality" xml:space="preserve">
-    <value>Project modality</value>
+    <value>Project Modality</value>
   </data>
   <data name="ProjectNotSubmittedToPlayers" xml:space="preserve">
     <value>No Player selected for evaluation</value>
@@ -2452,9 +2469,6 @@
     <value>Publishable</value>
   </data>
   <data name="Published" xml:space="preserve">
-    <value>Published</value>
-  </data>
-  <data name="Published_Duplicate[1]" xml:space="preserve">
     <value>Published</value>
   </data>
   <data name="Quiz" xml:space="preserve">
@@ -2573,12 +2587,6 @@
   <data name="RequiredFields" xml:space="preserve">
     <value>Required fields</value>
   </data>
-  <data name="RequiredFields_Duplicate[1]" xml:space="preserve">
-    <value>Required fields</value>
-  </data>
-  <data name="RequiredFields_Duplicate[2]" xml:space="preserve">
-    <value>Required fields</value>
-  </data>
   <data name="ReservationCode" xml:space="preserve">
     <value>Reservation code</value>
     <comment>Código de reserva</comment>
@@ -2675,9 +2683,6 @@
   </data>
   <data name="ScheduledOneToOneMeetings" xml:space="preserve">
     <value>Scheduled One to One Meetings</value>
-  </data>
-  <data name="ScheduledRounds" xml:space="preserve">
-    <value>Scheduled Rounds</value>
   </data>
   <data name="ScheduleManually" xml:space="preserve">
     <value>Schedule Manually</value>
@@ -3150,13 +3155,7 @@
   <data name="TitleEnUs" xml:space="preserve">
     <value>Title EN</value>
   </data>
-  <data name="TitleEnUs_Duplicate[1]" xml:space="preserve">
-    <value>Title EN</value>
-  </data>
   <data name="TitlePtBr" xml:space="preserve">
-    <value>Title PT</value>
-  </data>
-  <data name="TitlePtBr_Duplicate[1]" xml:space="preserve">
     <value>Title PT</value>
   </data>
   <data name="Titles" xml:space="preserve">
@@ -3214,9 +3213,6 @@
     <comment>Transfers</comment>
   </data>
   <data name="TranslatedSynopsis" xml:space="preserve">
-    <value>Synopsis {0}</value>
-  </data>
-  <data name="TranslatedSynopsis_Duplicate[1]" xml:space="preserve">
     <value>Synopsis {0}</value>
   </data>
   <data name="Transport" xml:space="preserve">

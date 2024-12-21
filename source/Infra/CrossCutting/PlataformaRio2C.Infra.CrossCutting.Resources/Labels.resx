@@ -290,6 +290,10 @@
     <value>Aprovar</value>
     <comment>Aprovar</comment>
   </data>
+  <data name="ApproveToRepechage" xml:space="preserve">
+    <value>Aprovar repescagem</value>
+    <comment>Aprovar</comment>
+  </data>
   <data name="Arrival" xml:space="preserve">
     <value>Chegada</value>
     <comment>Chegada</comment>
@@ -322,6 +326,12 @@
   <data name="AudioVisual" xml:space="preserve">
     <value>Audiovisual</value>
     <comment>Audiovisual</comment>
+  </data>
+  <data name="AudiovisualBusinessRoundRules" xml:space="preserve">
+    <value>Regulamento de rodadas de negócio</value>
+  </data>
+  <data name="AudiovisualBusinessRoundRulesShorted" xml:space="preserve">
+    <value>Reg. de negócio</value>
   </data>
   <data name="AudiovisualCommission" xml:space="preserve">
     <value>Comissão de Audiovisual</value>
@@ -358,6 +368,12 @@
   </data>
   <data name="AudiovisualNegotiationsVirtualMeetingsJoinMinutes" xml:space="preserve">
     <value>Tempo de espera para liberação da sala de reunião virtual</value>
+  </data>
+  <data name="AudiovisualPitchingRules" xml:space="preserve">
+    <value>Regulamento de pitching</value>
+  </data>
+  <data name="AudiovisualPitchingRulesShorted" xml:space="preserve">
+    <value>Reg. de pitching</value>
   </data>
   <data name="AudiovisualPitchingSessions" xml:space="preserve">
     <value>Pitching de Audiovisual</value>
@@ -478,12 +494,6 @@
   <data name="BusinessRound" xml:space="preserve">
     <value>Rodadas de Negócios</value>
     <comment>Rodadas de Negócios</comment>
-  </data>
-  <data name="BusinessRounds" xml:space="preserve">
-    <value>Rodadas de negócio</value>
-  </data>
-  <data name="BusinessRoundsProjects" xml:space="preserve">
-    <value>Projetos rodadas de negócio</value>
   </data>
   <data name="BusinessRoundtable" xml:space="preserve">
     <value>Rodada de Negócios</value>
@@ -801,6 +811,14 @@
   <data name="Credentialing" xml:space="preserve">
     <value>Credenciamento</value>
   </data>
+  <data name="CuratorApproval" xml:space="preserve">
+    <value>Aprovação do curador</value>
+    <comment>Aprovar</comment>
+  </data>
+  <data name="CuratorDisapproval" xml:space="preserve">
+    <value>Reprovação do curador</value>
+    <comment>Aprovar</comment>
+  </data>
   <data name="Curatorship" xml:space="preserve">
     <value>Curadoria</value>
     <comment>Curadoria</comment>
@@ -896,6 +914,10 @@
     <value>Desativado</value>
     <comment>Desativado</comment>
   </data>
+  <data name="DisapproveToRepechage" xml:space="preserve">
+    <value>Reprovar repescagem</value>
+    <comment>Aprovar</comment>
+  </data>
   <data name="Disassociate" xml:space="preserve">
     <value>Desassociar</value>
     <comment>Desassociar</comment>
@@ -924,6 +946,12 @@
     <value>Ordem de exibição</value>
     <comment>Ordem de exibição</comment>
   </data>
+  <data name="DistributeCommissionMembers" xml:space="preserve">
+    <value>Distribuir membros</value>
+  </data>
+  <data name="Distributed" xml:space="preserve">
+    <value>Distribuído</value>
+  </data>
   <data name="Document" xml:space="preserve">
     <value>Documento</value>
     <comment>Documento</comment>
@@ -944,6 +972,9 @@
     <comment>Duplicar {0}</comment>
   </data>
   <data name="Dynamic" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Dynamic_Duplicate[1]" xml:space="preserve">
     <value />
   </data>
   <data name="EachEpisodePlayingTime" xml:space="preserve">
@@ -1294,9 +1325,6 @@
     <value>Posição no Destaque</value>
     <comment>Posição no Destaque</comment>
   </data>
-  <data name="High_Duplicate[1]" xml:space="preserve">
-    <value>Alta</value>
-  </data>
   <data name="History" xml:space="preserve">
     <value>História</value>
   </data>
@@ -1464,9 +1492,6 @@
   <data name="JobTitleTranslated" xml:space="preserve">
     <value>Cargo {0}</value>
   </data>
-  <data name="JobTitleTranslated_Duplicate[1]" xml:space="preserve">
-    <value>Cargo {0}</value>
-  </data>
   <data name="Join" xml:space="preserve">
     <value>Participar</value>
     <comment>Participar</comment>
@@ -1572,9 +1597,6 @@
   <data name="Low" xml:space="preserve">
     <value>Baixa</value>
   </data>
-  <data name="Low_Duplicate[1]" xml:space="preserve">
-    <value>Baixa</value>
-  </data>
   <data name="Main" xml:space="preserve">
     <value>Principal</value>
     <comment>Principal</comment>
@@ -1621,9 +1643,6 @@
   <data name="Medium" xml:space="preserve">
     <value>Média</value>
   </data>
-  <data name="Medium_Duplicate[1]" xml:space="preserve">
-    <value>Média</value>
-  </data>
   <data name="MeetingType" xml:space="preserve">
     <value>Tipo de Reunião</value>
     <comment>Tipo de Reunião</comment>
@@ -1656,9 +1675,6 @@
     <comment>Mini-biografias</comment>
   </data>
   <data name="MiniBioTranslated" xml:space="preserve">
-    <value>Mini-biografia {0}</value>
-  </data>
-  <data name="MiniBioTranslated_Duplicate[1]" xml:space="preserve">
     <value>Mini-biografia {0}</value>
   </data>
   <data name="Minutes" xml:space="preserve">
@@ -1703,30 +1719,6 @@
     <value>Membro da Equipe</value>
     <comment>Membro da Equipe</comment>
   </data>
-  <data name="MusicBusinessRoundEvaluationEndDate" xml:space="preserve">
-    <value>Data de término da avaliação de projetos de música</value>
-  </data>
-  <data name="MusicBusinessRoundEvaluationStartDate" xml:space="preserve">
-    <value>Data de início da avaliação de projetos de música</value>
-  </data>
-  <data name="MusicBusinessRoundMaximumEvaluatorsByProject" xml:space="preserve">
-    <value>Quantidade máxima de avaliadores por projeto</value>
-  </data>
-  <data name="MusicBusinessRoundMaximumProjectsBySeller" xml:space="preserve">
-    <value>Quantidade máxima de projetos por participante</value>
-  </data>
-  <data name="MusicBusinessRoundNegotiationEndDate" xml:space="preserve">
-    <value>Data de término das negociações de música</value>
-  </data>
-  <data name="MusicBusinessRoundNegotiationStartDate" xml:space="preserve">
-    <value>Data de início das negociações de música</value>
-  </data>
-  <data name="MusicBusinessRoundSubmitEndDate" xml:space="preserve">
-    <value>Data de término do envio de projetos de música</value>
-  </data>
-  <data name="MusicBusinessRoundSubmitStartDate" xml:space="preserve">
-    <value>Data de início do envio de projetos de música</value>
-  </data>
   <data name="MusicCommission" xml:space="preserve">
     <value>Comissão de Música</value>
     <comment>Comissão de Música</comment>
@@ -1756,13 +1748,41 @@
     <value>Instrumento musical</value>
     <comment>Instrumento musical</comment>
   </data>
-  <data name="MusicPitchingSubmitEndDate" xml:space="preserve">
-    <value>Data de término de envio de projeto musical</value>
-    <comment>Data de término de envio de projeto musical</comment>
+  <data name="MusicPitchingCuratorEvaluationEndDate" xml:space="preserve">
+    <value>Data de término da avaliação de projetos pelo Curador</value>
   </data>
-  <data name="MusicPitchingSubmitStartDate" xml:space="preserve">
-    <value>Data de início de envio de projeto musical</value>
-    <comment>Data de início de envio de projeto musical</comment>
+  <data name="MusicPitchingCuratorEvaluationStartDate" xml:space="preserve">
+    <value>Data de início da avaliação de projetos pelo Curador</value>
+  </data>
+  <data name="MusicPitchingMaximumApprovedProjectsByCommissionMember" xml:space="preserve">
+    <value>Quantidade máxima de projetos aprovados por membro da comissão</value>
+  </data>
+  <data name="MusicPitchingMaximumApprovedProjectsByCurator" xml:space="preserve">
+    <value>Quantidade máxima de projetos aprovados por curador</value>
+  </data>
+  <data name="MusicPitchingMaximumApprovedProjectsByPopularVote" xml:space="preserve">
+    <value>Quantidade máxima de projetos aprovados por votação popular</value>
+  </data>
+  <data name="MusicPitchingMaximumApprovedProjectsByRepechage" xml:space="preserve">
+    <value>Quantidade máxima de projetos aprovados por Repescagem</value>
+  </data>
+  <data name="MusicPitchingMaximumProjectSubmissionsByEdition" xml:space="preserve">
+    <value>Quantidade máxima de projetos inscritos por edição</value>
+  </data>
+  <data name="MusicPitchingMaximumProjectSubmissionsByParticipant" xml:space="preserve">
+    <value>Quantidade máxima de projetos inscritos por participante</value>
+  </data>
+  <data name="MusicPitchingPopularEvaluationEndDate" xml:space="preserve">
+    <value>Data de término da avaliação de projetos pela votação popular</value>
+  </data>
+  <data name="MusicPitchingPopularEvaluationStartDate" xml:space="preserve">
+    <value>Data de início da avaliação de projetos pela votação popular</value>
+  </data>
+  <data name="MusicPitchingRepechageEvaluationEndDate" xml:space="preserve">
+    <value>Data de término da avaliação de projetos pela Repescagem</value>
+  </data>
+  <data name="MusicPitchingRepechageEvaluationStartDate" xml:space="preserve">
+    <value>Data de início da avaliação de projetos pela Repescagem</value>
   </data>
   <data name="MusicPlayer" xml:space="preserve">
     <value>Player de Música</value>
@@ -1770,18 +1790,20 @@
   <data name="MusicPlayersExecutivesReport" xml:space="preserve">
     <value>Relatório de Executivos de Players de Música</value>
   </data>
-  <data name="MusicPlayersExecutivesReport_Duplicate[1]" xml:space="preserve">
-    <value>Relatório de Executivos de Players de Música</value>
-  </data>
   <data name="MusicPlayersReport" xml:space="preserve">
-    <value>Relatório de Players de Música</value>
-  </data>
-  <data name="MusicPlayersReport_Duplicate[1]" xml:space="preserve">
     <value>Relatório de Players de Música</value>
   </data>
   <data name="MusicProjects" xml:space="preserve">
     <value>Projetos de Música</value>
     <comment>Projetos de Música</comment>
+  </data>
+  <data name="MusicProjectSubmitEndDate" xml:space="preserve">
+    <value>Data de término de envio de projeto musical</value>
+    <comment>Data de término de envio de projeto musical</comment>
+  </data>
+  <data name="MusicProjectSubmitStartDate" xml:space="preserve">
+    <value>Data de início de envio de projeto musical</value>
+    <comment>Data de início de envio de projeto musical</comment>
   </data>
   <data name="MusicTermsAcceptanceDate" xml:space="preserve">
     <value>Data de aceite do regulamento de Musica</value>
@@ -1861,9 +1883,6 @@
     <value>Não</value>
   </data>
   <data name="NoAssociatedCompany" xml:space="preserve">
-    <value>Nenhuma empresa vinculada</value>
-  </data>
-  <data name="NoAssociatedCompany_Duplicate[1]" xml:space="preserve">
     <value>Nenhuma empresa vinculada</value>
   </data>
   <data name="NoConferenceToDisplay" xml:space="preserve">
@@ -2082,6 +2101,9 @@
     <value>Objetivos em participar do Pitching</value>
     <comment>Objetivos em participar do Pitching</comment>
   </data>
+  <data name="PitchingProjects" xml:space="preserve">
+    <value>Projetos Pitching</value>
+  </data>
   <data name="Place" xml:space="preserve">
     <value>Local</value>
     <comment>Local</comment>
@@ -2110,12 +2132,6 @@
   </data>
   <data name="PlayerDemandPercentage" xml:space="preserve">
     <value>{0}: Concentra {1}% dos projetos cadastrados</value>
-  </data>
-  <data name="PlayerDemandPercentage_Duplicate[1]" xml:space="preserve">
-    <value>{0}: Concentra {1}% dos projetos cadastrados</value>
-  </data>
-  <data name="PlayerDemand_Duplicate[1]" xml:space="preserve">
-    <value>Demanda do Player</value>
   </data>
   <data name="PlayerDidNotDefinedGenre" xml:space="preserve">
     <value>Player não definiu gênero como interesse.</value>
@@ -2376,7 +2392,7 @@
     <comment>Quantidade máxima de avaliadores por projeto</comment>
   </data>
   <data name="ProjectModality" xml:space="preserve">
-    <value>Modalidade do projeto</value>
+    <value>Modalidade do Projeto</value>
   </data>
   <data name="ProjectNotSubmittedToPlayers" xml:space="preserve">
     <value>Nenhum Player selecionado para avaliação</value>
@@ -2454,9 +2470,6 @@
     <value>Publicável</value>
   </data>
   <data name="Published" xml:space="preserve">
-    <value>Publicada</value>
-  </data>
-  <data name="Published_Duplicate[1]" xml:space="preserve">
     <value>Publicada</value>
   </data>
   <data name="Quiz" xml:space="preserve">
@@ -2579,12 +2592,6 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="RequiredFields" xml:space="preserve">
     <value>Campos obrigatórios</value>
   </data>
-  <data name="RequiredFields_Duplicate[1]" xml:space="preserve">
-    <value>Campos obrigatórios</value>
-  </data>
-  <data name="RequiredFields_Duplicate[2]" xml:space="preserve">
-    <value>Campos obrigatórios</value>
-  </data>
   <data name="ReservationCode" xml:space="preserve">
     <value>Código de reserva</value>
     <comment>Código de reserva</comment>
@@ -2681,9 +2688,6 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   </data>
   <data name="ScheduledOneToOneMeetings" xml:space="preserve">
     <value>Rodadas de Negócio agendadas</value>
-  </data>
-  <data name="ScheduledRounds" xml:space="preserve">
-    <value>Rodadas agendadas</value>
   </data>
   <data name="ScheduleManually" xml:space="preserve">
     <value>Agendar Manualmente</value>
@@ -3156,13 +3160,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="TitleEnUs" xml:space="preserve">
     <value>Título EN</value>
   </data>
-  <data name="TitleEnUs_Duplicate[1]" xml:space="preserve">
-    <value>Título EN</value>
-  </data>
   <data name="TitlePtBr" xml:space="preserve">
-    <value>Título PT</value>
-  </data>
-  <data name="TitlePtBr_Duplicate[1]" xml:space="preserve">
     <value>Título PT</value>
   </data>
   <data name="Titles" xml:space="preserve">
@@ -3220,9 +3218,6 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Transfers</comment>
   </data>
   <data name="TranslatedSynopsis" xml:space="preserve">
-    <value>Ementa {0}</value>
-  </data>
-  <data name="TranslatedSynopsis_Duplicate[1]" xml:space="preserve">
     <value>Ementa {0}</value>
   </data>
   <data name="Transport" xml:space="preserve">

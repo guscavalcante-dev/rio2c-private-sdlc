@@ -151,6 +151,12 @@
   <data name="AudiovisualPlayerTerms" xml:space="preserve">
     <value>Regulamento de Players (Audiovisual)</value>
   </data>
+  <data name="AudiovisualProducerPitchingAcceptTermsAndConditions" xml:space="preserve">
+    <value>Na qualidade de candidato ao Pitching Industry, declaro estar ciente e concordar com as regras e regulamentos acima, bem como me submeter às eventuais penalidades e consequências decorrentes de sua violação.</value>
+  </data>
+  <data name="AudiovisualProducerPitchingAcceptTermsAndConditions_Duplicate[1]" xml:space="preserve">
+    <value>Na qualidade de candidato ao Pitching Industry, declaro estar ciente e concordar com as regras e regulamentos acima, bem como me submeter às eventuais penalidades e consequências decorrentes de sua violação.</value>
+  </data>
   <data name="AudivisualPichingQuestion" xml:space="preserve">
     <value>Deseja participar do processo de seleção para apresentar esse projeto nas sessões de PITCHING AUDIOVISUAL da Rio2C {0}?</value>
     <comment>Deseja participar do processo de seleção para apresentar esse projeto nas sessões de PITCHING AUDIOVISUAL da Rio2C {0}?</comment>
@@ -222,6 +228,11 @@
   </data>
   <data name="CollaboratorMustHaveAProducer" xml:space="preserve">
     <value>O colaborador deve ter pelo menos uma produtora.</value>
+  </data>
+  <data name="CommisionMemberDistributionMessage" xml:space="preserve">
+    <value>A distribuição de projetos para membros da comissão já foi executada.&lt;br&gt;
+A distribuição só pode ser executada uma única vez por edição.
+    </value>
   </data>
   <data name="CompanyNameIsRequired" xml:space="preserve">
     <value>Razão Social obrigatório!</value>
@@ -544,11 +555,9 @@
   </data>
   <data name="IsNotPossibleCreateBusinessRoundProjectLimit" xml:space="preserve">
     <value>Não é possível criar a rodada de negócio pois essa empresa já atingiu o limite de inscrições.</value>
-    <comment>Não é possível criar o projeto pois essa empresa já atingiu o limite.</comment>
   </data>
   <data name="IsNotPossibleCreatePitchingProjectLimit" xml:space="preserve">
     <value>Não é possível criar o projeto pitching pois essa empresa já atingiu o limite de inscrições.</value>
-    <comment>Não é possível criar o projeto pois essa empresa já atingiu o limite.</comment>
   </data>
   <data name="IsNotPossibleCreateProjectLimit" xml:space="preserve">
     <value>Não é possível criar o projeto pois essa empresa já atingiu o limite.</value>

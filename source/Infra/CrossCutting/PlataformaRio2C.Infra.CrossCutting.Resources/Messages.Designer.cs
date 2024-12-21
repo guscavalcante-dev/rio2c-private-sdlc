@@ -151,6 +151,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Na qualidade de candidato ao Pitching Industry, declaro estar ciente e concordar com as regras e regulamentos acima, bem como me submeter às eventuais penalidades e consequências decorrentes de sua violação..
+        /// </summary>
+        public static string AudiovisualProducerPitchingAcceptTermsAndConditions {
+            get {
+                return ResourceManager.GetString("AudiovisualProducerPitchingAcceptTermsAndConditions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Na qualidade de candidato ao Pitching Industry, declaro estar ciente e concordar com as regras e regulamentos acima, bem como me submeter às eventuais penalidades e consequências decorrentes de sua violação..
+        /// </summary>
+        public static string AudiovisualProducerPitchingAcceptTermsAndConditions_Duplicate_1_ {
+            get {
+                return ResourceManager.GetString("AudiovisualProducerPitchingAcceptTermsAndConditions_Duplicate[1]", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deseja participar do processo de seleção para apresentar esse projeto nas sessões de PITCHING AUDIOVISUAL da Rio2C {0}?.
         /// </summary>
         public static string AudivisualPichingQuestion {
@@ -327,6 +345,17 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string CollaboratorMustHaveAProducer {
             get {
                 return ResourceManager.GetString("CollaboratorMustHaveAProducer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A distribuição de projetos para membros da comissão já foi executada.&lt;br&gt;
+        ///A distribuição só pode ser executada uma única vez por edição.
+        ///    .
+        /// </summary>
+        public static string CommisionMemberDistributionMessage {
+            get {
+                return ResourceManager.GetString("CommisionMemberDistributionMessage", resourceCulture);
             }
         }
         
