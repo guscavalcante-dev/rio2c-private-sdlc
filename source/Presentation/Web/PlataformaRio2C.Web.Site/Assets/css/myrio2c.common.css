@@ -132,13 +132,13 @@ section.footer .social-networks a{
 }
 
 a.r2c-login__footer-link, a.r2c-footer-link {
-    color: rgba(255, 255, 255, 0.4);
+    color: #74788d;
     text-decoration: underline !important;
     background-color: transparent !important;
 }
 
     a.r2c-login__footer-link:hover, a.r2c-footer-link:hover {
-        color: rgba(255, 255, 255, 0.4) !important;
+        color: #79a7b9 !important;
         text-decoration: underline !important;
     }
 
@@ -247,7 +247,7 @@ a.r2c-login__footer-link, a.r2c-footer-link {
 }
 
 .kt-wizard-v3 .kt-wizard-v3__nav .kt-wizard-v3__nav-items .kt-wizard-v3__nav-item.myrio2c-projects-onboarding {
-    flex: 0 0 25% !important;
+    flex: 0 0 20% !important;
 }
 
 
@@ -615,4 +615,21 @@ a.r2c-login__footer-link, a.r2c-footer-link {
     border-radius: 5px;
     object-fit: scale-down;
     cursor: pointer;
+}
+/*
+    Login font colors
+*/
+.kt-login.kt-login--v1 .kt-login__aside .kt-login__title {
+    color: #000000 !important;
+    font-size: 2rem !important;
+    font-weight: 500 !important;
+}
+
+.kt-login.kt-login--v1 .kt-login__aside .kt-login__subtitle {
+    color: #000000 !important;
+    margin: 2.5rem 0 3.5rem 0 !important;
+}
+
+.kt-login.kt-login--v1 .kt-login__aside .kt-login__info .kt-login__copyright {
+    color: #000000 !important;
 }

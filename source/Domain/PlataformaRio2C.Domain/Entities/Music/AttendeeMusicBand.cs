@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 02-26-2020
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 01-26-2024
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 12-02-2024
 // ***********************************************************************
 // <copyright file="AttendeeMusicBand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,6 +30,7 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset? EvaluationEmailSendDate { get; private set; }
         public bool WouldYouLikeParticipateBusinessRound { get; private set; }
         public bool WouldYouLikeParticipatePitching { get; private set; }
+        public int? EvaluatorUserId { get; private set; }
 
         public virtual Edition Edition { get; private set; }
         public virtual MusicBand MusicBand { get; private set; }
@@ -37,6 +38,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeMusicBandCollaborator> AttendeeMusicBandCollaborators { get; private set; }
         public virtual ICollection<MusicProject> MusicProjects { get; private set; }
         public virtual ICollection<AttendeeMusicBandEvaluation> AttendeeMusicBandEvaluations { get; private set; }
+        public virtual User EvaluatorUser { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttendeeMusicBand" /> class.
@@ -112,16 +114,116 @@ namespace PlataformaRio2C.Domain.Entities
             }
             else
             {
-                this.AttendeeMusicBandEvaluations.Add(new AttendeeMusicBandEvaluation(
+                var evaluation = new AttendeeMusicBandEvaluation(
                     this,
                     evaluatorUser,
                     grade,
-                    evaluatorUser.Id));
+                    evaluatorUser.Id
+                );
+                this.AttendeeMusicBandEvaluations.Add(evaluation);
             }
 
             this.Grade = this.GetAverageEvaluation();
             this.EvaluationsCount = this.GetAttendeeMusicBandEvaluationTotalCount();
             this.LastEvaluationDate = DateTime.UtcNow;
+        }
+
+        /// <summary>
+        /// Evaluates the specified evaluation user.
+        /// </summary>
+        /// <param name="evaluatorUser">The evaluation user.</param>
+        /// <param name="commissionEvaluationStatus">The project evaluation status.</param>
+        public void ComissionEvaluation(User evaluatorUser, ProjectEvaluationStatus commissionEvaluationStatus)
+        {
+            if (this.AttendeeMusicBandEvaluations == null)
+                this.AttendeeMusicBandEvaluations = new List<AttendeeMusicBandEvaluation>();
+
+            var existentAttendeeMusicBandEvaluation = this.GetAttendeeMusicBandEvaluationByEvaluatorId(evaluatorUser.Id);
+            if (existentAttendeeMusicBandEvaluation != null)
+            {
+                existentAttendeeMusicBandEvaluation.UpdateCommissionEvaluation(commissionEvaluationStatus, evaluatorUser.Id);
+            }
+            else
+            {
+                var evaluation = new AttendeeMusicBandEvaluation(
+                    this,
+                    evaluatorUser,
+                    evaluatorUser.Id
+                );
+                evaluation.UpdateCommissionEvaluation(commissionEvaluationStatus, evaluatorUser.Id);
+                this.AttendeeMusicBandEvaluations.Add(evaluation);
+            }
+
+            this.EvaluationsCount = this.GetAttendeeMusicBandEvaluationTotalCount();
+            this.LastEvaluationDate = DateTime.UtcNow;
+        }
+
+        /// <summary>
+        /// Evaluates the specified evaluation user.
+        /// </summary>
+        /// <param name="evaluatorUser">The evaluation user.</param>
+        /// <param name="curatorEvaluationStatusId">The project evaluation status.</param>
+        public void CuratorEvaluation(User evaluatorUser, ProjectEvaluationStatus curatorEvaluationStatusId)
+        {
+            if (this.AttendeeMusicBandEvaluations == null)
+                this.AttendeeMusicBandEvaluations = new List<AttendeeMusicBandEvaluation>();
+
+            var existentAttendeeMusicBandEvaluation = this.GetAttendeeMusicBandEvaluationByEvaluatorId(evaluatorUser.Id);
+            if (existentAttendeeMusicBandEvaluation != null)
+            {
+                existentAttendeeMusicBandEvaluation.UpdateCuratorEvaluation(curatorEvaluationStatusId, evaluatorUser.Id);
+            }
+            else
+            {
+                var evaluation = new AttendeeMusicBandEvaluation(
+                    this,
+                    evaluatorUser,
+                    evaluatorUser.Id
+                );
+                evaluation.UpdateCuratorEvaluation(curatorEvaluationStatusId, evaluatorUser.Id);
+                this.AttendeeMusicBandEvaluations.Add(evaluation);
+            }
+
+            this.EvaluationsCount = this.GetAttendeeMusicBandEvaluationTotalCount();
+            this.LastEvaluationDate = DateTime.UtcNow;
+        }
+
+        /// <summary>
+        /// Evaluates the specified evaluation user.
+        /// </summary>
+        /// <param name="evaluatorUser">The evaluation user.</param>
+        /// <param name="curatorEvaluationStatusId">The project evaluation status.</param>
+        public void RepechageEvaluation(User evaluatorUser, ProjectEvaluationStatus curatorEvaluationStatusId)
+        {
+            if (this.AttendeeMusicBandEvaluations == null)
+                this.AttendeeMusicBandEvaluations = new List<AttendeeMusicBandEvaluation>();
+
+            var existentAttendeeMusicBandEvaluation = this.GetAttendeeMusicBandEvaluationByEvaluatorId(evaluatorUser.Id);
+            if (existentAttendeeMusicBandEvaluation != null)
+            {
+                existentAttendeeMusicBandEvaluation.UpdateRepechageEvaluation(curatorEvaluationStatusId, evaluatorUser.Id);
+            }
+            else
+            {
+                var evaluation = new AttendeeMusicBandEvaluation(
+                    this,
+                    evaluatorUser,
+                    evaluatorUser.Id
+                );
+                evaluation.UpdateRepechageEvaluation(curatorEvaluationStatusId, evaluatorUser.Id);
+                this.AttendeeMusicBandEvaluations.Add(evaluation);
+            }
+
+            this.EvaluationsCount = this.GetAttendeeMusicBandEvaluationTotalCount();
+            this.LastEvaluationDate = DateTime.UtcNow;
+        }
+
+        /// <summary>
+        /// Update evaluator user id.
+        /// </summary>
+        public void UpdateEvaluatorUserId(int evaluatorUserId)
+        {
+            this.EvaluatorUserId = evaluatorUserId;
         }
 
         /// <summary>

@@ -83,7 +83,7 @@
                             <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Meetings", "Audiovisual")" aria-haspopup="true">
                                 <a class="kt-menu__link" href="@Url.Action("Index", "Meetings", new { Area = "Audiovisual", CollaboratorTypeUid = CollaboratorType.Industry.Uid })">
                                     <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                                    <span class="kt-menu__link-text">@Labels.ScheduledRounds</span>
+                                    <span class="kt-menu__link-text">@Labels.ScheduledNegotiations</span>
                                 </a>
                             </li>
                         </ul>
@@ -179,11 +179,12 @@
     }
     @if (musicCollaboratorTypesCount > 0)
     {
+        var musicCommissionTypes = new string[] { Constants.CollaboratorType.CommissionMusic, Constants.CollaboratorType.CommissionMusicCurator };
         var projectsUrl = Url.Action("Index", "Projects", new { Area = "" });
-        if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.CommissionMusic) == true)
+        if (userAccessControlDto?.CountCollaboratorTypes(musicCommissionTypes) > 0)
         {
             projectsUrl = Url.Action("EvaluationList", "Projects", new { Area = "Music" });
-            if (editionDto?.IsMusicProjectEvaluationStarted() != true)
+            if (editionDto?.IsMusicPitchingCommissionEvaluationStarted() != true)
             {
                 projectsUrl = Url.Action("Index", "Projects", new { Area = "Music" });
             }

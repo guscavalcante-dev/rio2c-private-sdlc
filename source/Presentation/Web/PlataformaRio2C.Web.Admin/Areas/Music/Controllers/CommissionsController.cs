@@ -24,7 +24,6 @@ using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
@@ -45,23 +44,31 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
         private readonly IMusicProjectRepository musicProjectRepo;
+        private readonly ICollaboratorTypeRepository collaboratorTypeRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="CommissionsController"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CommissionsController" /> class.
+        /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
+        /// <param name="musicProjectRepository">The music project repository.</param>
+        /// <param name="collaboratorTypeRepository">The collaborator type repository.</param>
         public CommissionsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
             ICollaboratorRepository collaboratorRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
-            IMusicProjectRepository musicProjectRepository)
+            IMusicProjectRepository musicProjectRepository,
+            ICollaboratorTypeRepository collaboratorTypeRepository)
             : base(commandBus, identityController)
         {
             this.collaboratorRepo = collaboratorRepository;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
             this.musicProjectRepo = musicProjectRepository;
+            this.collaboratorRepo = collaboratorRepository;
+            this.collaboratorTypeRepo = collaboratorTypeRepository;
         }
 
         #region List
@@ -100,7 +107,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 request.Search?.Value,
                 request.GetSortColumns(),
                 new List<Guid>(),
-                new string[] { Constants.CollaboratorType.CommissionMusic },
+                Constants.CollaboratorType.MusicCommissions,
                 showAllEditions,
                 showAllParticipants,
                 null,
@@ -314,8 +321,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()
         {
-            //TODO: Refactor this! Create specific command and commandHandler "CreateMusicCommissionCollaborator" for this!
-            var cmd = new CreateTinyCollaborator();
+            var cmd = new CreateMusicCommissionCollaborator(
+                await this.collaboratorTypeRepo.FindAllByNamesAsync(Constants.CollaboratorType.MusicCommissions), 
+                UserInterfaceLanguage);
 
             return Json(new
             {
@@ -332,7 +340,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <returns></returns>
         [HttpPost]
         //TODO: Refactor this! Create specific command and commandHandler "CreateMusicCommissionCollaborator" for this!
-        public async Task<ActionResult> Create(CreateTinyCollaborator cmd)
+        public async Task<ActionResult> Create(CreateMusicCommissionCollaborator cmd)
         {
             var result = new AppValidationResult();
 
@@ -344,7 +352,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    Constants.CollaboratorType.CommissionMusic,
+                    cmd.CollaboratorTypeNames,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -394,14 +402,15 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUpdateModal(Guid? collaboratorUid, bool? isAddingToCurrentEdition)
         {
-            UpdateTinyCollaborator cmd;
+            UpdateMusicCommissionCollaborator cmd;
 
             try
             {
-                //TODO: Refactor this! Create specific command and commandHandler "UpdateMusicCommissionCollaborator" for this!
-                cmd = new UpdateTinyCollaborator(
+                cmd = new UpdateMusicCommissionCollaborator(
                     await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
-                    isAddingToCurrentEdition);
+                    await this.collaboratorTypeRepo.FindAllByNamesAsync(Constants.CollaboratorType.MusicCommissions), 
+                    isAddingToCurrentEdition ?? false,
+                    UserInterfaceLanguage);
             }
             catch (DomainException ex)
             {
@@ -422,8 +431,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        //TODO: Refactor this! Create specific command and commandHandler "UpdateMusicCommissionCollaborator" for this!
-        public async Task<ActionResult> Update(UpdateTinyCollaborator cmd)
+        public async Task<ActionResult> Update(UpdateMusicCommissionCollaborator cmd)
         {
             var result = new AppValidationResult();
 
@@ -435,7 +443,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    Constants.CollaboratorType.CommissionMusic,
+                    cmd.CollaboratorTypeNames,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -494,7 +502,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    Constants.CollaboratorType.CommissionMusic,
+                    Constants.CollaboratorType.MusicCommissions,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,

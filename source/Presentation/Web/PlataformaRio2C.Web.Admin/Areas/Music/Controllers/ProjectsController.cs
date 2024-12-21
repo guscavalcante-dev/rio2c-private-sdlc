@@ -166,14 +166,14 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             IDictionary<string, object> additionalParameters = new Dictionary<string, object>();
             if (musicProjectJsonDtos.TotalItemCount <= 0)
             {
-                if (this.EditionDto.IsMusicProjectEvaluationOpen() && (
+                if (this.EditionDto.IsMusicPitchingComissionEvaluationOpen() && (
                     searchViewModel.EvaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid ||
                     searchViewModel.EvaluationStatusUid == ProjectEvaluationStatus.Refused.Uid))
                 {
                     additionalParameters.Add("noRecordsFoundMessage",
                         $"{string.Format(Messages.TheEvaluationPeriodRunsFrom, this.EditionDto.MusicCommissionEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(), this.EditionDto.MusicCommissionEvaluationEndDate.ToBrazilTimeZone().ToShortDateString())}.</br>{Messages.TheProjectsWillReceiveFinalGradeAtPeriodEnds}");
                 }
-                else if (!this.EditionDto.IsMusicProjectEvaluationOpen() &&
+                else if (!this.EditionDto.IsMusicPitchingComissionEvaluationOpen() &&
                     searchViewModel.EvaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
                 {
                     additionalParameters.Add("noRecordsFoundMessage",
@@ -390,7 +390,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.MusicBandType.GetNameTranslation(this.UserInterfaceLanguage);
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.MusicGenresApiDtos?.Select(mg => $"{mg.MusicGenre.GetNameTranslation(this.UserInterfaceLanguage)}" + (mg.MusicGenre.HasAdditionalInfo ? $" ({mg.AdditionalInfo})" : ""))?.ToString("; ");
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.TargetAudiencesApiDtos?.Select(ta => $"{ta.TargetAudience.GetNameTranslation(this.UserInterfaceLanguage)}")?.ToString("; ");
-                            worksheet.Cell(lineIndex, columnIndex += 1).Value = this.EditionDto.IsMusicProjectEvaluationOpen() ? Labels.UnderEvaluation :
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = this.EditionDto.IsMusicPitchingComissionEvaluationOpen() ? Labels.UnderEvaluation :
                                 (approvedAttendeeMusicBandsIds.Contains(musicProjectReportDto.MusicBandId) ? Labels.ProjectAccepted : Labels.ProjectRefused);
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.CreateDate.ToStringHourMinute();
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = musicProjectReportDto.UpdateDate.ToStringHourMinute();
@@ -588,7 +588,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 evaluationStatusUid,
                 showBusinessRounds ?? false,
                 page.Value,
-                pageSize.Value);
+                pageSize.Value,
+                null,
+                null);
             var currentMusicProjectIdIndex = Array.IndexOf(allMusicProjectsIds, id.Value) + 1; //Index start at 0, its a fix to "start at 1"
 
             ViewBag.SearchKeywords = searchKeywords;
@@ -607,7 +609,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 evaluationStatusUid, 
                 showBusinessRounds ?? false, 
                 page.Value, 
-                pageSize.Value);
+                pageSize.Value,
+                null,
+                null);
 
             ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id);
 
@@ -635,7 +639,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 evaluationStatusUid,
                 showBusinessRounds ?? false,
                 page.Value,
-                pageSize.Value);
+                pageSize.Value,
+                null,
+                null);
 
             var currentMusicProjectIdIndex = Array.IndexOf(allMusicProjectsIds, id.Value);
             var previousProjectId = allMusicProjectsIds.ElementAtOrDefault(currentMusicProjectIdIndex - 1);
@@ -678,7 +684,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 evaluationStatusUid,
                 showBusinessRounds ?? false,
                 page.Value,
-                pageSize.Value);
+                pageSize.Value,
+                null,
+                null);
 
             var currentMusicProjectIdIndex = Array.IndexOf(allMusicProjectsIds, id.Value);
             var nextProjectId = allMusicProjectsIds.ElementAtOrDefault(currentMusicProjectIdIndex + 1);
@@ -945,7 +953,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpPost]
         public async Task<ActionResult> Evaluate(int musicBandId, decimal? grade)
         {
-            if (this.EditionDto?.IsMusicProjectEvaluationOpen() != true)
+            if (this.EditionDto?.IsMusicPitchingComissionEvaluationOpen() != true)
             {
                 return Json(new { status = "error", message = Messages.EvaluationPeriodClosed }, JsonRequestBehavior.AllowGet);
             }

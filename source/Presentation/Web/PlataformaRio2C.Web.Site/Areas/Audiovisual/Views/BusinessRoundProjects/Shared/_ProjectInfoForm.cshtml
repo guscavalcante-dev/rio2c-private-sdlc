@@ -9,24 +9,6 @@
     <div class="kt-form__section kt-form__section--first">
         <div class="kt-wizard-v3__form">
             <div class="row">
-                <div class="col-12 form-group">
-                    @Html.LabelFor(m => m.ProjectModalityUid, new { @class = "control-label" })
-                    <select name="ProjectModalityUid" id="ProjectModalityUid" class="form-control enable-select2" @Html.GetUnobtrusiveValidationAttributesFor(m => m.ProjectModalityUid)>
-                        <option value="">@($"{Labels.Choose}...")</option>
-                        @if (Model.ProjectModalities != null)
-                        {
-                            foreach (var modality in Model.ProjectModalities)
-                            {
-                                <option value="@modality.Uid" @(Model.ProjectModalityUid == modality.Uid ? "selected" : "")>
-                                    @modality.Name
-                                </option>
-                            }
-                        }
-                    </select>
-                    @Html.ValidationMessageFor(m => m.ProjectModalityUid, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-md-6">
                     @Html.EditorFor(m => m.Titles)
                 </div>

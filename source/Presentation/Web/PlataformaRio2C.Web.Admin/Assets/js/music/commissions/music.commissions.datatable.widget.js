@@ -16,9 +16,7 @@ var MusicCommissionsDataTableWidget = function () {
 
     var widgetElementId = '#MusicCommissionsDataTableWidget';
     var tableElementId = '#music-commissions-list-table';
-    var modalId = '#ExportEventbriteCsvModal';
     var table;
-    var eventbriteCsvExport;
 
     // Invitation email ---------------------------------------------------------------------------
     var sendInvitationEmails = function () {
@@ -213,6 +211,13 @@ var MusicCommissionsDataTableWidget = function () {
                                     </tr>\
                                 </table>';
 
+                        for (var item in full.TranslatedCollaboratorTypes) {
+                            if (full.TranslatedCollaboratorTypes.hasOwnProperty(item)) {
+                                var r = full.TranslatedCollaboratorTypes[item];
+                                html += '<span class="kt-badge kt-badge--inline kt-badge--success mt-2 mr-2">' + r + '</span>';
+                            }
+                        }
+
                         if (!full.IsInCurrentEdition) {
                             html += '<span class="kt-badge kt-badge--inline kt-badge--info mt-2">' + labels.notInEdition + '</span>';
                         }
@@ -304,7 +309,6 @@ var MusicCommissionsDataTableWidget = function () {
                 {
                     targets: [0],
                     width: "25%",
-                    className: "dt-center"
                 },
                 {
                     targets: [2],

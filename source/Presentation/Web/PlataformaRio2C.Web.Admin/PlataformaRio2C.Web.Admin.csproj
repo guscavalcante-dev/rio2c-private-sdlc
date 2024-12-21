@@ -384,6 +384,7 @@
     <Compile Include="Areas\Innovation\InnovationAreaRegistration.cs" />
     <Compile Include="Areas\Logistics\Controllers\AvailabilityController.cs" />
     <Compile Include="Areas\Logistics\LogisticsAreaRegistration.cs" />
+    <Compile Include="Areas\Music\Controllers\PitchingController.cs" />
     <Compile Include="Areas\Music\Controllers\CommissionsController.cs" />
     <Compile Include="Areas\Music\Controllers\PlayersController.cs" />
     <Compile Include="Areas\Music\Controllers\PlayersExecutivesController.cs" />
@@ -1013,6 +1014,9 @@
     <Content Include="Assets\js\administrators\administrators.totalcount.widget.js" />
     <Content Include="Assets\js\administrators\administrators.update.js" />
     <Content Include="Assets\js\music\commissions\music.commissions.evaluations.widget.js" />
+    <Content Include="Assets\js\music\pitching\music.pitching.editionscheduledcount.widget.js" />
+    <Content Include="Assets\js\music\pitching\music.pitching.editionunscheduledcount.widget.js" />
+    <Content Include="Assets\js\music\pitching\music.pitching.status.widget.js" />
     <Content Include="Assets\js\music\playersexecutives\music.players.executives.create.js" />
     <Content Include="Assets\js\music\playersexecutives\music.players.executives.delete.js" />
     <Content Include="Assets\js\music\playersexecutives\music.players.executives.update.js" />
@@ -8285,6 +8289,11 @@
     <Content Include="Areas\Logistics\Views\Availability\Modals\UpdateModal.cshtml" />
     <Content Include="Areas\Agenda\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Agenda\Views\web.config" />
+    <Content Include="Areas\Music\Views\Pitching\Index.cshtml" />
+    <Content Include="Areas\Music\Views\Pitching\Widgets\StatusWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Pitching\Widgets\EditionScheduledCountWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Pitching\Widgets\EditionUnscheduledCountWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Commissions\Modals\_Form.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
@@ -10179,10 +10188,6 @@
     <ProjectReference Include="..\..\..\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.Tools\PlataformaRio2C.Infra.CrossCutting.Tools.csproj">
       <Project>{ec0b684e-f8a3-417a-9567-819ffc7c41cc}</Project>
       <Name>PlataformaRio2C.Infra.CrossCutting.Tools</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Infra\Data\PlataformaRio2C.Infra.Data.Context\PlataformaRio2C.Infra.Data.Context.csproj">
-      <Project>{30C4D007-1A78-410C-9FCD-63699985C39B}</Project>
-      <Name>PlataformaRio2C.Infra.Data.Context</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Infra\Data\PlataformaRio2c.Infra.Data.FileRepository\PlataformaRio2c.Infra.Data.FileRepository.csproj">
       <Project>{6F4648EE-2D98-4E95-BC92-0760AF1FD909}</Project>

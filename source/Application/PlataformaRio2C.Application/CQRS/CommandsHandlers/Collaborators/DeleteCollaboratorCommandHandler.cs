@@ -4,7 +4,7 @@
 // Created          : 08-27-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-16-2021
+// Last Modified On : 11-19-2024
 // ***********************************************************************
 // <copyright file="DeleteCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -75,11 +76,26 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             // Before update values
             var beforeImageUploadDate = collaborator.ImageUploadDate;
 
-            collaborator.Delete(
-                edition,
-                await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
-                await this.organizationTypeRepo.FindByNameAsync(cmd.OrganizationTypeName),
-                cmd.UserId);
+            if (cmd.CollaboratorTypeNames?.Any(ctn => !string.IsNullOrEmpty(ctn)) == true)
+            {
+                foreach (var collaboratorTypeName in cmd.CollaboratorTypeNames)
+                {
+                    collaborator.Delete(
+                        edition,
+                        await this.collaboratorTypeRepo.FindByNameAsync(collaboratorTypeName),
+                        await this.organizationTypeRepo.FindByNameAsync(cmd.OrganizationTypeName),
+                        cmd.UserId);
+                }
+            }
+            else
+            {
+                collaborator.Delete(
+                    edition,
+                    await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
+                    await this.organizationTypeRepo.FindByNameAsync(cmd.OrganizationTypeName),
+                    cmd.UserId);
+            }
+
             if (!collaborator.IsValid())
             {
                 this.AppValidationResult.Add(collaborator.ValidationResult);

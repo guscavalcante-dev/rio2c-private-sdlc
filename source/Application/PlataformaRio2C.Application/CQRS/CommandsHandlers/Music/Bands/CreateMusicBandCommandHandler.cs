@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 23-03-2021
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 01-26-2024
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 11-19-2024
 // ***********************************************************************
 // <copyright file="CreateMusicBandCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,6 +36,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IMusicGenreRepository musicGenreRepo;
         private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
+        private readonly IAttendeeMusicBandRepository attendeeMusicBandRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateMusicBandCommandHandler" /> class.
@@ -58,7 +59,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             ITargetAudienceRepository targetAudienceRepo,
             IMusicGenreRepository musicGenreRepo,
             ICollaboratorRepository collaboratorRepo,
-            IAttendeeCollaboratorRepository attendeeCollaboratorRepo)
+            IAttendeeCollaboratorRepository attendeeCollaboratorRepo,
+            IAttendeeMusicBandRepository attendeeMusicBandRepo)
             : base(commandBus, uow, musicBandRepo)
         {
             this.musicBandTypeRepo = musicBandTypeRepo;
@@ -67,6 +69,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.musicGenreRepo = musicGenreRepo;
             this.collaboratorRepo = collaboratorRepo;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepo;
+            this.attendeeMusicBandRepo = attendeeMusicBandRepo;
         }
 
         /// <summary>
@@ -125,6 +128,35 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             // Pitching validations
             if (cmd.MusicBandDataApiDtos.Any(dto => dto.WouldYouLikeParticipatePitching))
             {
+                var attendeeMusicBandsCount = await this.attendeeMusicBandRepo.CountByEditionIdAsync(editionDto.Id);
+                attendeeMusicBandsCount += cmd.MusicBandDataApiDtos.Count;
+                if (attendeeMusicBandsCount > editionDto.MusicPitchingMaximumProjectSubmissionsByEdition)
+                {
+                    string validationMessage = string.Format(
+                        Messages.YouCanMusicPitchingMaximumProjectSubmissionsByEdition,
+                        editionDto.MusicPitchingMaximumProjectSubmissionsByEdition,
+                        Labels.MusicProjects
+                    );
+                    this.ValidationResult.Add(new ValidationError(validationMessage));
+                    this.AppValidationResult.Add(this.ValidationResult);
+                    return this.AppValidationResult;
+                }
+                
+                attendeeMusicBandsCount = await this.attendeeMusicBandRepo.CountByResponsibleAsync(editionDto.Id, cmd.MusicBandResponsibleApiDto.Document, cmd.MusicBandResponsibleApiDto.Email);
+                attendeeMusicBandsCount += cmd.MusicBandDataApiDtos.Count;
+                if (attendeeMusicBandsCount > editionDto.MusicPitchingMaximumProjectSubmissionsByParticipant)
+                {
+                    string validationMessage = string.Format(
+                        Messages.YouCanMusicPitchingMaximumProjectSubmissionsByParticipant,
+                        editionDto.MusicPitchingMaximumProjectSubmissionsByParticipant,
+                        Labels.MusicProjects,
+                        Labels.Pitching
+                    );
+                    this.ValidationResult.Add(new ValidationError(validationMessage));
+                    this.AppValidationResult.Add(this.ValidationResult);
+                    return this.AppValidationResult;
+                }
+
                 if (attendeeCollaboratorTicketsInformationDto == null)
                 {
                     // Is a new responsible, validate if have subscriptions available by document type

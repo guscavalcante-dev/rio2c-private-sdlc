@@ -302,6 +302,7 @@
     <Compile Include="Dtos\Interests\InterestDto.cs" />
     <Compile Include="Dtos\Music\MusicBand\API\MusicBandDataApiDto.cs" />
     <Compile Include="Dtos\Music\MusicBand\API\MusicBandResponsibleApiDto.cs" />
+    <Compile Include="Dtos\Music\MusicBand\MusicPitchingStatusWidgetDto.cs" />
     <Compile Include="Dtos\Music\MusicProject\API\MusicProjectApiDto.cs" />
     <Compile Include="Dtos\Music\AttendeeCollaborator\AttendeeCollaboratorMusicBandEvaluationsWidgetDto.cs" />
     <Compile Include="Dtos\Music\AttendeeMusicBand\AttendeeMusicBandDto.cs" />
@@ -577,6 +578,7 @@
     <Compile Include="Interfaces\Repositories\Logistics\ILogisticRepository.cs" />
     <Compile Include="Interfaces\Repositories\Logistics\IPlaceRepository.cs" />
     <Compile Include="Interfaces\Repositories\Logistics\ILogisticSponsorRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Music\Bands\IAttendeeMusicBandEvaluationRepository.cs" />
     <Compile Include="Interfaces\Repositories\Music\Bands\IAttendeeMusicBandRepository.cs" />
     <Compile Include="Interfaces\Repositories\Music\Bands\IMusicBandTypeRepository.cs" />
     <Compile Include="Interfaces\Repositories\Music\Bands\IReleasedMusicProjectRepository.cs" />

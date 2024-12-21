@@ -14,9 +14,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -60,8 +62,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public int? RoleId { get; set; }
         public IEnumerable<Role> Roles { get; set; }
 
+        [Obsolete("All the new screens that have the CollaboratorType must be Multi-selection now! Use the 'CollaboratorTypeNames' instead")]
         [Display(Name = "CollaboratorType", ResourceType = typeof(Labels))]
         public string CollaboratorTypeName { get; set; }
+
+        [Display(Name = "CollaboratorType", ResourceType = typeof(Labels))]
+        public string[] CollaboratorTypeNames { get; set; }
+
         public IEnumerable<CollaboratorType> CollaboratorTypes { get; set; }
 
         #region Address
@@ -219,6 +226,39 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             this.CollaboratorTypeName = collabboratorTypeName;
             this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, userInterfaceLanguage);
+        }
+
+        /// <summary>
+        /// Updates the pre send properties.
+        /// </summary>
+        /// <param name="collabboratorTypeNames">The collabborator type names.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="userUid">The user uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public void UpdatePreSendProperties(
+            string[] collabboratorTypeNames,
+            int userId,
+            Guid userUid,
+            int? editionId,
+            Guid? editionUid,
+            string userInterfaceLanguage)
+        {
+            this.CollaboratorTypeNames = collabboratorTypeNames;
+            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, userInterfaceLanguage);
+        }
+
+        /// <summary>
+        /// Updates the collaborator types.
+        /// </summary>
+        /// <param name="collaboratorTypes">The collaborator types.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public void UpdateCollaboratorTypes(List<CollaboratorType> collaboratorTypes, string userInterfaceLanguage)
+        {
+            this.CollaboratorTypes = collaboratorTypes?
+                            .GetSeparatorTranslation(ct => ct.Description, userInterfaceLanguage, '|')?
+                            .OrderBy(ct => ct.Description);
         }
     }
 }

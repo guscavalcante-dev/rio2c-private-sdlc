@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-04-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 01-11-2024
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 12-06-2024
 // ***********************************************************************
 // <copyright file="UserAccessControlDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -214,6 +214,17 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool IsIndustry()
         {
             return this.HasCollaboratorType(Constants.CollaboratorType.Industry);
+        }
+
+        /// <summary>
+        /// Determines whether this instance is commission music curator.
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is commission curator; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsCommissionMusicCurator()
+        {
+            return this.HasCollaboratorType(Constants.CollaboratorType.CommissionMusicCurator);
         }
 
         /// <summary>
@@ -601,10 +612,19 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <summary>Determines whether [is project submission terms acceptance pending].</summary>
         /// <returns>
         ///   <c>true</c> if [is project submission terms acceptance pending]; otherwise, <c>false</c>.</returns>
-        public bool IsProjectSubmissionTermsAcceptancePending()
+        public bool IsAudiovisualProducerBusinessRoundTermsAcceptanceDatePending()
         {
             return this.HasCollaboratorType(Constants.CollaboratorType.Industry)
-                   && this.EditionAttendeeCollaborator?.ProducerTermsAcceptanceDate.HasValue == false;
+                   && this.EditionAttendeeCollaborator?.AudiovisualProducerBusinessRoundTermsAcceptanceDate.HasValue == false;
+        }
+
+        /// <summary>Determines whether [is project submission terms acceptance pending].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is project submission terms acceptance pending]; otherwise, <c>false</c>.</returns>
+        public bool IsAudiovisualProducerPitchingTermsAcceptanceDatePending()
+        {
+            return this.HasCollaboratorType(Constants.CollaboratorType.Industry)
+                   && this.EditionAttendeeCollaborator?.AudiovisualProducerPitchingTermsAcceptanceDate.HasValue == false;
         }
 
         #endregion

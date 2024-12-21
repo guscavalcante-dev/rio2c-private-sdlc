@@ -542,16 +542,16 @@
   <data name="InvalidResolutionPlayer" xml:space="preserve">
     <value>A imagem deve ter entre 1KB  e 10MB!</value>
   </data>
-  <data name="IsNotPossibleCreateProjectLimit" xml:space="preserve">
-    <value>Não é possível criar o projeto pois essa empresa já atingiu o limite.</value>
+  <data name="IsNotPossibleCreateBusinessRoundProjectLimit" xml:space="preserve">
+    <value>Não é possível criar a rodada de negócio pois essa empresa já atingiu o limite de inscrições.</value>
     <comment>Não é possível criar o projeto pois essa empresa já atingiu o limite.</comment>
   </data>
   <data name="IsNotPossibleCreatePitchingProjectLimit" xml:space="preserve">
     <value>Não é possível criar o projeto pitching pois essa empresa já atingiu o limite de inscrições.</value>
     <comment>Não é possível criar o projeto pois essa empresa já atingiu o limite.</comment>
   </data>
-  <data name="IsNotPossibleCreateBusinessRoundProjectLimit" xml:space="preserve">
-    <value>Não é possível criar a rodada de negócio pois essa empresa já atingiu o limite de inscrições.</value>
+  <data name="IsNotPossibleCreateProjectLimit" xml:space="preserve">
+    <value>Não é possível criar o projeto pois essa empresa já atingiu o limite.</value>
     <comment>Não é possível criar o projeto pois essa empresa já atingiu o limite.</comment>
   </data>
   <data name="IsNotPossibleCreateProjectSameTicket" xml:space="preserve">

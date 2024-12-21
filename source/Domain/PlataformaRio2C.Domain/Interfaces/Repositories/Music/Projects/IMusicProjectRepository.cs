@@ -23,7 +23,17 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IMusicProjectRepository</summary>
     public interface IMusicProjectRepository : IRepository<MusicProject>
     {
-        Task<IPagedList<MusicProjectDto>> FindAllDtosPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize);
+        Task<IPagedList<MusicProjectDto>> FindAllDtosPagedAsync(
+            int editionId,
+            string searchKeywords,
+            Guid? musicGenreUid,
+            Guid? evaluationStatusUid,
+            bool showBusinessRounds,
+            int page,
+            int pageSize,
+            List<int?> evaluatorUserId,
+            List<int?> commissionEvaluationStatusId
+        );
         Task<IPagedList<MusicProjectJsonDto>> FindAllByDataTableAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize, List<Tuple<string, string>> sortColumns);
         Task<IPagedList<MusicProjectReportDto>> FindAllMusicProjectsReportByDataTable(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize, List<Tuple<string, string>> sortColumns);
         Task<MusicProjectDto> FindDtoToEvaluateAsync(Guid musicProjectUid);
@@ -41,9 +51,29 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<List<MusicProjectDto>> FindAllApprovedAttendeeMusicBandsAsync(int editionId);
         Task<int[]> FindAllApprovedAttendeeMusicBandsIdsAsync(int editionId);
         Task<int[]> FindAllMusicProjectsIdsAsync(int editionId);
-        Task<int[]> FindAllMusicProjectsIdsPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize);
+        Task<int[]> FindAllMusicProjectsIdsPagedAsync(
+            int editionId,
+            string searchKeywords,
+            Guid? musicGenreUid,
+            Guid? evaluationStatusUid,
+            bool showBusinessRounds,
+            int page,
+            int pageSize,
+            List<int?> evaluatorUserId,
+            List<int?> commissionEvaluationStatusId
+           );
         Task<int> CountAsync(int editionId, bool showAllEditions = false);
-        Task<int> CountPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize);
+        Task<int> CountPagedAsync(
+            int editionId,
+            string searchKeywords,
+            Guid? musicGenreUid,
+            Guid? evaluationStatusUid,
+            bool showBusinessRounds,
+            int page,
+            int pageSize,
+            List<int?> evaluatorUserId,
+            List<int?> commissionEvaluationStatusId
+        );
         Task<List<MusicBandGroupedByGenreDto>> FindEditionCountPieWidgetDto(int editionId);
     }
 }

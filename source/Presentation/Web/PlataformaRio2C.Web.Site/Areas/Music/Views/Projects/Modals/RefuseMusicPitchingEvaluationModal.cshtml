@@ -1,0 +1,30 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.RefuseMusicPitchingEvaluation
+<div class="modal fade" id="RefuseMusicPitchingEvaluationModal" role="dialog" aria-labelledby="RefuseMusicPitchingEvaluationModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    @Labels.RefuseProject @Labels.Project
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Refuse", "Projects", new { Area = "Music" }, FormMethod.Post, new { id = "RefuseMusicPitchingEvaluationForm" }))
+                {
+                    @Html.HiddenFor(m => m.MusicBandUid)
+                    <div id="form-container">
+                        <div class="form-group col-12">
+                            @Html.Raw(string.Format(Texts.DoYouReallyWishRefuse, Model.MusicProjectDto?.AttendeeMusicBandDto?.MusicBand?.Name ?? "-"))
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">@Labels.Cancel</button>
+                <button type="button" class="btn btn-danger" onclick="MusicProjectsEvaluationWidget.submitRefuseEvaluation();">
+                    <i class="fa fa-thumbs-down"></i> @Labels.RefuseProject
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
