@@ -320,6 +320,10 @@
     <Compile Include="Migrations\202412201520239_InsertAttendeeSalesPlatformsAndTicketTypesForBusiness.Designer.cs">
       <DependentUpon>202412201520239_InsertAttendeeSalesPlatformsAndTicketTypesForBusiness.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202412211741310_UpdateMigrations_202412211441.cs" />
+    <Compile Include="Migrations\202412211741310_UpdateMigrations_202412211441.Designer.cs">
+      <DependentUpon>202412211741310_UpdateMigrations_202412211441.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202412211323514_UpdateMigrations_202412211023.cs" />
     <Compile Include="Migrations\202412211323514_UpdateMigrations_202412211023.Designer.cs">
       <DependentUpon>202412211323514_UpdateMigrations_202412211023.cs</DependentUpon>
@@ -621,6 +625,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202412201520239_InsertAttendeeSalesPlatformsAndTicketTypesForBusiness.resx">
       <DependentUpon>202412201520239_InsertAttendeeSalesPlatformsAndTicketTypesForBusiness.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202412211741310_UpdateMigrations_202412211441.resx">
+      <DependentUpon>202412211741310_UpdateMigrations_202412211441.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202412211323514_UpdateMigrations_202412211023.resx">
       <DependentUpon>202412211323514_UpdateMigrations_202412211023.cs</DependentUpon>
