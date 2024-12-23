@@ -155,8 +155,8 @@
     <comment>Ações</comment>
   </data>
   <data name="Activities" xml:space="preserve">
-    <value>Atividades</value>
-    <comment>Atividades</comment>
+    <value>Qual e a principal atividade da sua empresa?</value>
+    <comment>Qual e a principal atividade da sua empresa?</comment>
   </data>
   <data name="Activity" xml:space="preserve">
     <value>Atividade</value>
@@ -3024,8 +3024,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Público-Alvo</comment>
   </data>
   <data name="TargetAudiences" xml:space="preserve">
-    <value>Público-alvo/Faixa-etária</value>
-    <comment>Público-alvo/Faixa-etária</comment>
+    <value>Qual o perfil de participante que te interessa para as Rodadas de Negocios?</value>
+    <comment>Qual o perfil de participante que te interessa para as Rodadas de Negocios?</comment>
   </data>
   <data name="TeaserLink" xml:space="preserve">
     <value>Link do teaser</value>
