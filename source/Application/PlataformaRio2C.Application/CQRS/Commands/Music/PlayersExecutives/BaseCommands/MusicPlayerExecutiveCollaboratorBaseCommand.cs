@@ -18,6 +18,7 @@ using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -136,9 +137,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Display(Name = "MeetingType", ResourceType = typeof(Labels))]
         [RadioButtonRequiredIf(nameof(IsVirtualMeetingRequired), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public bool? IsVirtualMeeting { get; set; }
-
         #endregion
 
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneGroupOption")]
+        [RequiredList(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneGroupOption")]
         public List<AttendeeOrganizationBaseCommand> AttendeeOrganizationBaseCommands { get; set; }
         public List<CollaboratorJobTitleBaseCommand> JobTitles { get; set; }
         public List<CollaboratorMiniBioBaseCommand> MiniBios { get; set; }
