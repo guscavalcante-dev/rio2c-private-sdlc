@@ -98,6 +98,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\..\Data\PlataformaRio2C.Infra.Data.Context\PlataformaRio2C.Infra.Data.Context.csproj">
+      <Project>{30c4d007-1a78-410c-9fcd-63699985c39b}</Project>
+      <Name>PlataformaRio2C.Infra.Data.Context</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PlataformaRio2C.Infra.CrossCutting.Resources\PlataformaRio2C.Infra.CrossCutting.Resources.csproj">
       <Project>{7E1DE835-DDC4-416A-A2B7-9B4F5FFFFBF4}</Project>
       <Name>PlataformaRio2C.Infra.CrossCutting.Resources</Name>
