@@ -153,6 +153,7 @@
     <Compile Include="Attributes\PermissionGroupAttribute.cs" />
     <Compile Include="Attributes\CkEditorMaxCharsAttribute.cs" />
     <Compile Include="Attributes\RadioButtonRequiredIfAttribute.cs" />
+    <Compile Include="Attributes\RequiredListAttribute.cs" />
     <Compile Include="Attributes\SwaggerDefaultValueAttribute.cs" />
     <Compile Include="Attributes\SwaggerParameterDescriptionAttribute.cs" />
     <Compile Include="Attributes\ToPascalCaseAttribute.cs" />

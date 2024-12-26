@@ -770,9 +770,6 @@ namespace PlataformaRio2C.Domain.Entities
             int? apiHighlightPosition,
             bool shouldDeleteOrganizations,
             List<AttendeeOrganization> attendeeOrganizations,
-            List<AttendeeCollaboratorActivity> attendeeCollaboratorActivities,
-            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
-            List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences,
             int userId)
         {
             this.Edition = edition;
@@ -782,9 +779,6 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.SynchronizeAttendeeCollaboratorType(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
             this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
-            this.SynchronizeAttendeeCollaboratorActivities(attendeeCollaboratorActivities, projectType, userId);
-            this.SynchronizeAttendeeCollaboratorInterests(attendeeCollaboratorInterests, projectType, userId);
-            this.SynchronizeAttendeeCollaboratorTargetAudiences(attendeeCollaboratorTargetAudiences, projectType, userId);
         }
 
         /// <summary>
@@ -812,9 +806,6 @@ namespace PlataformaRio2C.Domain.Entities
             int? apiHighlightPosition,
             bool shouldDeleteOrganizations,
             List<AttendeeOrganization> attendeeOrganizations,
-            List<AttendeeCollaboratorActivity> attendeeCollaboratorActivities,
-            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
-            List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences,
             int userId)
         {
             return new AttendeeCollaborator(
@@ -826,9 +817,6 @@ namespace PlataformaRio2C.Domain.Entities
                 apiHighlightPosition,
                 shouldDeleteOrganizations,
                 attendeeOrganizations,
-                attendeeCollaboratorActivities,
-                attendeeCollaboratorInterests,
-                attendeeCollaboratorTargetAudiences,
                 userId);
         }
 
@@ -852,18 +840,12 @@ namespace PlataformaRio2C.Domain.Entities
             int? apiHighlightPosition,
             bool shouldDeleteOrganizations,
             List<AttendeeOrganization> attendeeOrganizations,
-            List<AttendeeCollaboratorActivity> attendeeCollaboratorActivities,
-            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
-            List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences,
             int userId)
         {
             this.SetUpdateDate(userId);
 
             this.SynchronizeAttendeeCollaboratorType(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
             this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
-            this.SynchronizeAttendeeCollaboratorActivities(attendeeCollaboratorActivities, projectType, userId);
-            this.SynchronizeAttendeeCollaboratorInterests(attendeeCollaboratorInterests, projectType, userId);
-            this.SynchronizeAttendeeCollaboratorTargetAudiences(attendeeCollaboratorTargetAudiences, projectType, userId);
         }
 
         #endregion
