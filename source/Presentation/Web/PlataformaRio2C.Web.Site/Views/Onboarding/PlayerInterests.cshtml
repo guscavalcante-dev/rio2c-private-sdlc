@@ -14,7 +14,7 @@
     var isInnovationPlayer = userAccessControlDto.IsInnovationPlayerExecutive();
     var isMusicPlayer = userAccessControlDto.IsMusicPlayerExecutive();
 
-    var initialPlayerIndex = 4 + (isSpeaker ? 1 : 0) + (isAudiovisualPlayer ? 1 : 0) + (isInnovationPlayer ? 1 : 0) + (isMusicPlayer ? 1 : 0) + (playerAttendeeOrganizations.Count(pao => pao.OnboardingInterestsDate.HasValue));
+    var initialPlayerIndex = 4 + (isSpeaker ? 1 : 0) + (isAudiovisualPlayer ? 1 : 0) + (isInnovationPlayer ? 1 : 0) + (isMusicPlayer ? 1 : 0);
     var currentPlayerIndex = playerAttendeeOrganizations?.FindIndex(pao => pao.Organization.Uid == Model.OrganizationUid) ?? 0;
 }
 <div class="kt-portlet">
