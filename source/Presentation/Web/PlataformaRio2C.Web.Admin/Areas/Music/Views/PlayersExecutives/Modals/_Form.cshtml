@@ -17,11 +17,12 @@
                         <div id="attendeeorganization-list">
                             @Html.EditorFor(m => m.AttendeeOrganizationBaseCommands)
                         </div>
-                        <div class="row">
+                        @*TODO:Esta função não está enviando informacoes da lista para o backend,apenas o primeiro item. Necessário rever lógica de multiplos players.
+                            <div class="row">
                             <div class="col-md-12">
                                 <button type="button" class="btn btn-primary" onclick="AttendeeOrganizationsForm.add(); return false;">@Labels.NewM @Labels.Player</button>
                             </div>
-                        </div>
+                        </div>*@
                     </div>
                 </div>
             </div>
