@@ -766,7 +766,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.PersonalInformation, Labels.UpdatedM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
 
-            return RedirectToAction("Index", "Onboarding");
+            return RedirectToAction(nameof(OnboardingController.PlayerInfo), nameof(OnboardingController));
+            //return RedirectToAction("Index", "Onboarding");
         }
 
         #endregion
@@ -778,10 +779,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> PlayerInfo()
         {
-            if (this.UserAccessControlDto?.IsPlayerExecutiveOrganizationsOnboardingFinished() == true)
-            {
-                return RedirectToAction("Index", "Onboarding");
-            }
+            //if (this.UserAccessControlDto?.IsPlayerExecutiveOrganizationsOnboardingFinished() == true)
+            //{
+            //    return RedirectToAction("Index", "Onboarding");
+            //}
 
             #region Breadcrumb
 
@@ -804,8 +805,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             var currentOrganization = this.UserAccessControlDto
                 ?.EditionAttendeeOrganizations
                 ?.FirstOrDefault(eao => {
-                    return !eao.OnboardingOrganizationDate.HasValue
-                        && eao.AttendeeOrganizationTypes.Any(aot => {
+                    return eao.AttendeeOrganizationTypes.Any(aot => {
                             return !aot.IsDeleted
                                 && aot.OrganizationType.Name == playerOrganizationTypeName;
                         });
@@ -837,10 +837,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpPost]
         public async Task<ActionResult> PlayerInfo(OnboardPlayerOrganizationData cmd)
         {
-            if (this.UserAccessControlDto?.IsPlayerExecutiveOrganizationsOnboardingFinished() == true)
-            {
-                return RedirectToAction("Index", "Onboarding");
-            }
+            //if (this.UserAccessControlDto?.IsPlayerExecutiveOrganizationsOnboardingFinished() == true)
+            //{
+            //    return RedirectToAction("Index", "Onboarding");
+            //}
 
             #region Breadcrumb
 
@@ -916,7 +916,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.PlayerInfo, Labels.UpdatedM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
 
-            return RedirectToAction("Index", "Onboarding");
+            return RedirectToAction(nameof(OnboardingController.PlayerInterests), nameof(OnboardingController));
+
+            //return RedirectToAction("Index", "Onboarding");
         }
 
         #endregion
@@ -928,10 +930,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> PlayerInterests()
         {
-            if (this.UserAccessControlDto?.IsPlayerExecutiveOrganizationInterestsOnboardingPending() != true)
-            {
-                return RedirectToAction("Index", "Onboarding");
-            }
+            //if (this.UserAccessControlDto?.IsPlayerExecutiveOrganizationInterestsOnboardingPending() != true)
+            //{
+            //    return RedirectToAction("Index", "Onboarding");
+            //}
 
             #region Breadcrumb
 
@@ -952,9 +954,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }            
             var currentOrganization = this.UserAccessControlDto
                 ?.EditionAttendeeOrganizations
-                ?.FirstOrDefault(eao => eao.OnboardingOrganizationDate.HasValue
-                    && !eao.OnboardingInterestsDate.HasValue
-                    && eao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
+                ?.FirstOrDefault(eao => eao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
                         && aot.OrganizationType.Name == playerOrganizationTypeName)
                     )
                 ?.Organization;
@@ -978,10 +978,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpPost]
         public async Task<ActionResult> PlayerInterests(OnboardPlayerInterests cmd)
         {
-            if (this.UserAccessControlDto?.IsPlayerExecutiveOrganizationInterestsOnboardingPending() != true)
-            {
-                return RedirectToAction("Index", "Onboarding");
-            }
+            //if (this.UserAccessControlDto?.IsPlayerExecutiveOrganizationInterestsOnboardingPending() != true)
+            //{
+            //    return RedirectToAction("Index", "Onboarding");
+            //}
 
             #region Breadcrumb
 
