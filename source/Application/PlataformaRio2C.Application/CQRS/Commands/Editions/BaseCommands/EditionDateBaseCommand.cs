@@ -135,9 +135,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public DateTime? MusicPitchingRepechageEvaluationStartDate { get; set; }
 
-        [Display(Name = nameof(MusicPitchingRepechageEvaluationStartDate), ResourceType = typeof(Labels))]
+        [Display(Name = nameof(MusicPitchingRepechageEvaluationEndDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [GreaterThanOrEqualTo(nameof(MusicCommissionEvaluationStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
+        [GreaterThanOrEqualTo(nameof(MusicPitchingRepechageEvaluationStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
         public DateTime? MusicPitchingRepechageEvaluationEndDate { get; set; }
 
         [Display(Name = nameof(MusicPitchingMaximumApprovedProjectsByRepechage), ResourceType = typeof(Labels))]
