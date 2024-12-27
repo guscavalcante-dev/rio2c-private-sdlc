@@ -919,6 +919,13 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/music.projects.delete.js").Include(
                 "~/Assets/js/music/projects/music.projects.delete.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/music.pitching.generate.widget.js").Include(
+                "~/Assets/js/music/pitching/music.pitching.status.widget.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/music.pitching.editionscheduledcount.widget.js").Include(
+                "~/Assets/js/music/pitching/music.pitching.editionscheduledcount.widget.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/music.pitching.editionunscheduledcount.widget.js").Include(
+                "~/Assets/js/music/pitching/music.pitching.editionunscheduledcount.widget.js"));
+
             #endregion
 
             #region Players

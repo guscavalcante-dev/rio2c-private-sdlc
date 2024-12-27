@@ -353,9 +353,9 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="Areas\Audiovisual\Controllers\PitchingProjectsController.cs" />
     <Compile Include="Areas\Audiovisual\Controllers\MeetingsController.cs" />
-    <Compile Include="Areas\Audiovisual\Controllers\ProjectsController.cs" />
     <Compile Include="Areas\Audiovisual\AudiovisualAreaRegistration.cs" />
     <Compile Include="Areas\Audiovisual\Controllers\BusinessRoundProjectsController.cs" />
+    <Compile Include="Areas\Audiovisual\Controllers\ProjectsController.cs" />
     <Compile Include="Areas\Cartoon\CartoonAreaRegistration.cs" />
     <Compile Include="Areas\Cartoon\Controllers\CartoonController.cs" />
     <Compile Include="Areas\Cartoon\Controllers\ProjectsController.cs" />
@@ -413,6 +413,17 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Audiovisual\Views\Projects\CommissionEvaluationList.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\EvaluationDetails.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Index.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Shared\_Evaluation.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\AudiovisualCommissionEvaluationWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\AudiovisualCommissionEvaluatorsWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EvaluationListItemWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EvaluationListWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\InterestWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\LinksWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Areas\Producer\Views\Collaborator\ProfileDetails.cshtml" />
     <Content Include="Areas\Producer\Views\Collaborator\ProfileEdit.cshtml" />
     <Content Include="Assets\components\bootstrap-maxlength\src\bootstrap-maxlength.js" />
@@ -6919,18 +6930,7 @@
     <Content Include="Areas\Innovation\Views\Projects\Widgets\BusinessInformationWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Projects\Widgets\PresentationWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Projects\EvaluationDetails.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Projects\CommissionEvaluationList.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Projects\Index.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Projects\Shared\_Evaluation.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EvaluationListItemWidget.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EvaluationListWidget.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\web.config" />
-    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\InterestWidget.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\LinksWidget.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\AudiovisualCommissionEvaluationWidget.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\AudiovisualCommissionEvaluatorsWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Index.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\ScheduledDataWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\ScheduledWidget.cshtml" />
@@ -7028,6 +7028,8 @@
     <Content Include="Areas\Audiovisual\Views\PitchingProjects\Widgets\InterestWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\PitchingProjects\Widgets\LinksWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\PitchingProjects\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Projects\Modals\AcceptMusicPitchingEvaluationModal.cshtml" />
+    <Content Include="Areas\Music\Views\Projects\Modals\RefuseMusicPitchingEvaluationModal.cshtml" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />
@@ -7892,7 +7894,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Audiovisual\Data\" />
-    <Folder Include="Areas\Audiovisual\Views\Projects\Modals\" />
     <Folder Include="Areas\Audiovisual\Views\Shared\" />
     <Folder Include="Areas\Cartoon\Views\Projects\Modals\" />
     <Folder Include="Areas\Cartoon\Views\Shared\" />
@@ -7902,7 +7903,6 @@
     <Folder Include="Areas\Innovation\Views\Projects\Modals\" />
     <Folder Include="Areas\Innovation\Views\Shared\" />
     <Folder Include="Areas\Music\Data\" />
-    <Folder Include="Areas\Music\Views\Projects\Modals\" />
     <Folder Include="Areas\Music\Views\Shared\" />
     <Folder Include="Areas\Player\Controllers\" />
     <Folder Include="Areas\Player\Views\Shared\" />
@@ -7985,7 +7985,7 @@
       <Name>PlataformaRio2C.Infra.CrossCutting.Tools</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Infra\Data\PlataformaRio2C.Infra.Data.Context\PlataformaRio2C.Infra.Data.Context.csproj">
-      <Project>{30C4D007-1A78-410C-9FCD-63699985C39B}</Project>
+      <Project>{30c4d007-1a78-410c-9fcd-63699985c39b}</Project>
       <Name>PlataformaRio2C.Infra.Data.Context</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Infra\Data\PlataformaRio2c.Infra.Data.FileRepository\PlataformaRio2c.Infra.Data.FileRepository.csproj">

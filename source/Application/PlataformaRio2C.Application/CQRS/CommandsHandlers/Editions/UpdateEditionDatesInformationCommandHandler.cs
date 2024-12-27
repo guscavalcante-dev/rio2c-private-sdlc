@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 03-20-2021
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 07-13-2023
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 12-02-2024
 // ***********************************************************************
 // <copyright file="UpdateEditionDatesInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -98,8 +98,17 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.ProjectMaxBuyerEvaluationsCount.Value,
                 cmd.AudiovisualNegotiationsVirtualMeetingsJoinMinutes.Value,
 
-                cmd.MusicProjectSubmitStartDate.Value,
-                cmd.MusicProjectSubmitEndDate.Value,
+                cmd.MusicBusinessRoundSubmitStartDate.Value,
+                cmd.MusicBusinessRoundSubmitEndDate.Value,
+                cmd.MusicBusinessRoundEvaluationStartDate.Value,
+                cmd.MusicBusinessRoundEvaluationEndDate.Value,
+                cmd.MusicBusinessRoundNegotiationStartDate.Value,
+                cmd.MusicBusinessRoundNegotiationEndDate.Value,
+                cmd.MusicBusinessRoundMaximumProjectsBySeller,
+                cmd.MusicBusinessRoundMaximumEvaluatorsByProject,
+
+                cmd.MusicPitchingSubmitStartDate.Value,
+                cmd.MusicPitchingSubmitEndDate.Value,
                 cmd.MusicCommissionEvaluationStartDate.Value,
                 cmd.MusicCommissionEvaluationEndDate.Value,
                 cmd.MusicCommissionMinimumEvaluationsCount.Value,
@@ -130,6 +139,19 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.CreatorCommissionEvaluationEndDate,
                 cmd.CreatorCommissionMinimumEvaluationsCount,
                 cmd.CreatorCommissionMaximumApprovedProjectsCount,
+
+                cmd.MusicPitchingMaximumProjectSubmissionsByEdition,
+                cmd.MusicPitchingMaximumProjectSubmissionsByParticipant,
+                cmd.MusicPitchingMaximumApprovedProjectsByCommissionMember,
+                cmd.MusicPitchingCuratorEvaluationStartDate,
+                cmd.MusicPitchingCuratorEvaluationEndDate,
+                cmd.MusicPitchingMaximumApprovedProjectsByCurator,
+                cmd.MusicPitchingPopularEvaluationStartDate,
+                cmd.MusicPitchingPopularEvaluationEndDate,
+                cmd.MusicPitchingMaximumApprovedProjectsByPopularVote,
+                cmd.MusicPitchingRepechageEvaluationStartDate,
+                cmd.MusicPitchingRepechageEvaluationEndDate,
+                cmd.MusicPitchingMaximumApprovedProjectsByRepechage,
 
                 cmd.UserId);
 

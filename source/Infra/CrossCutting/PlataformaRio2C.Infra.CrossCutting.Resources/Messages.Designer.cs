@@ -349,6 +349,17 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A distribuição de projetos para membros da comissão já foi executada.&lt;br&gt;
+        ///A distribuição só pode ser executada uma única vez por edição.
+        ///    .
+        /// </summary>
+        public static string CommisionMemberDistributionMessage {
+            get {
+                return ResourceManager.GetString("CommisionMemberDistributionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Razão Social obrigatório!.
         /// </summary>
         public static string CompanyNameIsRequired {
@@ -1347,6 +1358,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to É permitido avaliar no máximo {0} {1} para os curadores.
+        /// </summary>
+        public static string MusicPitchingMaximumApprovedProjectsByCurator {
+            get {
+                return ResourceManager.GetString("MusicPitchingMaximumApprovedProjectsByCurator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to É permitido avaliar no máximo {0} {1} para repescagem.
+        /// </summary>
+        public static string MusicPitchingMaximumApprovedProjectsByRepechage {
+            get {
+                return ResourceManager.GetString("MusicPitchingMaximumApprovedProjectsByRepechage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Regulamento de Players (Música).
         /// </summary>
         public static string MusicPlayerTerms {
@@ -1415,6 +1444,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string NoneEntityAction {
             get {
                 return ResourceManager.GetString("NoneEntityAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sem permissão para avaliar.
+        /// </summary>
+        public static string NoPermissionToEvaluate {
+            get {
+                return ResourceManager.GetString("NoPermissionToEvaluate", resourceCulture);
             }
         }
         
@@ -1748,6 +1786,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ProjectLookingFor {
             get {
                 return ResourceManager.GetString("ProjectLookingFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O projeto precisa estar reprovado pela votação popular.
+        /// </summary>
+        public static string ProjectMustBeDisapprovedByPopulation {
+            get {
+                return ResourceManager.GetString("ProjectMustBeDisapprovedByPopulation", resourceCulture);
             }
         }
         
@@ -2364,6 +2411,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Já existe membros distribuidos por edição.
+        /// </summary>
+        public static string ThereAreDistributedMembersByEdition {
+            get {
+                return ResourceManager.GetString("ThereAreDistributedMembersByEdition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ainda restam {0} slots para inscrição de {1} para {2}.
         /// </summary>
         public static string ThereAreStillXSlotsLeftToRegisterProjects {
@@ -2630,6 +2686,33 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string WouldYouLikeParticipatePitching {
             get {
                 return ResourceManager.GetString("WouldYouLikeParticipatePitching", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Você pode avaliar no máximo {0} {1} por edição.
+        /// </summary>
+        public static string YouCanMusicPitchingMaximumApprovedProjectsByCommissionMember {
+            get {
+                return ResourceManager.GetString("YouCanMusicPitchingMaximumApprovedProjectsByCommissionMember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Foi atingido o limite máximo de {0} {1} por edição.
+        /// </summary>
+        public static string YouCanMusicPitchingMaximumProjectSubmissionsByEdition {
+            get {
+                return ResourceManager.GetString("YouCanMusicPitchingMaximumProjectSubmissionsByEdition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Você pode enviar no máximo {0} {1} por edição para {2}.
+        /// </summary>
+        public static string YouCanMusicPitchingMaximumProjectSubmissionsByParticipant {
+            get {
+                return ResourceManager.GetString("YouCanMusicPitchingMaximumProjectSubmissionsByParticipant", resourceCulture);
             }
         }
         

@@ -26,6 +26,7 @@ var MusicCommissionsCreate = function () {
     var enablePlugins = function () {
         enableAjaxForm();
         enableFormValidation();
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
     };
 
     // Show modal ---------------------------------------------------------------------------------

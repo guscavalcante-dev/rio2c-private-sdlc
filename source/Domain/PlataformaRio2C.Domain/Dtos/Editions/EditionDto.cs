@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-06-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 07-13-2023
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 12-02-2024
 // ***********************************************************************
 // <copyright file="EditionDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -56,12 +56,34 @@ namespace PlataformaRio2C.Domain.Dtos
         public int ProjectMaxBuyerEvaluationsCount { get; private set; }
 
         // Music - Commissions
-        public DateTimeOffset MusicProjectSubmitStartDate { get; private set; }
-        public DateTimeOffset MusicProjectSubmitEndDate { get; private set; }
+        public DateTimeOffset MusicPitchingSubmitStartDate { get; private set; }
+        public DateTimeOffset MusicPitchingSubmitEndDate { get; private set; }
         public DateTimeOffset MusicCommissionEvaluationStartDate { get; private set; }
         public DateTimeOffset MusicCommissionEvaluationEndDate { get; private set; }
         public int MusicCommissionMinimumEvaluationsCount { get; private set; }
         public int MusicCommissionMaximumApprovedBandsCount { get; private set; }
+        public int MusicPitchingMaximumProjectSubmissionsByEdition { get; private set; }
+        public int MusicPitchingMaximumProjectSubmissionsByParticipant { get; private set; }
+        public int MusicPitchingMaximumApprovedProjectsByCommissionMember { get; private set; }
+        public DateTimeOffset? MusicPitchingCuratorEvaluationStartDate { get; private set; }
+        public DateTimeOffset? MusicPitchingCuratorEvaluationEndDate { get; private set; }
+        public int MusicPitchingMaximumApprovedProjectsByCurator { get; private set; }
+        public DateTimeOffset? MusicPitchingPopularEvaluationStartDate { get; private set; }
+        public DateTimeOffset? MusicPitchingPopularEvaluationEndDate { get; private set; }
+        public int MusicPitchingMaximumApprovedProjectsByPopularVote { get; private set; }
+        public DateTimeOffset? MusicPitchingRepechageEvaluationStartDate { get; private set; }
+        public DateTimeOffset? MusicPitchingRepechageEvaluationEndDate { get; private set; }
+        public int MusicPitchingMaximumApprovedProjectsByRepechage { get; private set; }
+
+        // Music - Business round        
+        public DateTimeOffset? MusicBusinessRoundEvaluationStartDate { get; private set; }
+        public DateTimeOffset? MusicBusinessRoundEvaluationEndDate { get; private set; }
+        public DateTimeOffset? MusicBusinessRoundSubmitStartDate { get; private set; }
+        public DateTimeOffset? MusicBusinessRoundSubmitEndDate { get; private set; }
+        public DateTimeOffset? MusicBusinessRoundNegotiationStartDate { get; private set; }
+        public DateTimeOffset? MusicBusinessRoundNegotiationEndDate { get; private set; }
+        public int MusicBusinessRoundMaximumProjectsBySeller { get; private set; }
+        public int MusicBusinessRoundMaximumEvaluatorsByProject { get; private set; }
 
         // Innovation - Commissions
         public DateTimeOffset InnovationProjectSubmitStartDate { get; private set; }
@@ -143,13 +165,35 @@ namespace PlataformaRio2C.Domain.Dtos
             this.AttendeeOrganizationMaxSellProjectsCount = entity.AttendeeOrganizationMaxSellProjectsCount;
             this.ProjectMaxBuyerEvaluationsCount = entity.ProjectMaxBuyerEvaluationsCount;
 
+            // Music - Business Rounds
+            this.MusicBusinessRoundSubmitStartDate = entity.MusicBusinessRoundSubmitStartDate;
+            this.MusicBusinessRoundSubmitEndDate = entity.MusicBusinessRoundSubmitEndDate;
+            this.MusicBusinessRoundEvaluationStartDate = entity.MusicBusinessRoundEvaluationStartDate;
+            this.MusicBusinessRoundEvaluationEndDate = entity.MusicBusinessRoundEvaluationEndDate;
+            this.MusicBusinessRoundNegotiationStartDate = entity.MusicBusinessRoundNegotiationStartDate;
+            this.MusicBusinessRoundNegotiationEndDate = entity.MusicBusinessRoundNegotiationEndDate;
+            this.MusicBusinessRoundMaximumProjectsBySeller = entity.MusicBusinessRoundMaximumProjectsBySeller;
+            this.MusicBusinessRoundMaximumEvaluatorsByProject = entity.MusicBusinessRoundMaximumEvaluatorsByProject;
+
             // Music - Commissions
-            this.MusicProjectSubmitStartDate = entity.MusicProjectSubmitStartDate;
-            this.MusicProjectSubmitEndDate = entity.MusicProjectSubmitEndDate;
+            this.MusicPitchingSubmitStartDate = entity.MusicPitchingSubmitStartDate;
+            this.MusicPitchingSubmitEndDate = entity.MusicPitchingSubmitEndDate;
             this.MusicCommissionEvaluationStartDate = entity.MusicCommissionEvaluationStartDate;
             this.MusicCommissionEvaluationEndDate = entity.MusicCommissionEvaluationEndDate;
             this.MusicCommissionMinimumEvaluationsCount = entity.MusicCommissionMinimumEvaluationsCount;
             this.MusicCommissionMaximumApprovedBandsCount = entity.MusicCommissionMaximumApprovedBandsCount;
+            this.MusicPitchingMaximumProjectSubmissionsByEdition = entity.MusicPitchingMaximumProjectSubmissionsByEdition;
+            this.MusicPitchingMaximumProjectSubmissionsByParticipant = entity.MusicPitchingMaximumProjectSubmissionsByParticipant;
+            this.MusicPitchingMaximumApprovedProjectsByCommissionMember = entity.MusicPitchingMaximumApprovedProjectsByCommissionMember;
+            this.MusicPitchingCuratorEvaluationStartDate = entity.MusicPitchingCuratorEvaluationStartDate;
+            this.MusicPitchingCuratorEvaluationEndDate = entity.MusicPitchingCuratorEvaluationEndDate;
+            this.MusicPitchingMaximumApprovedProjectsByCurator = entity.MusicPitchingMaximumApprovedProjectsByCurator;
+            this.MusicPitchingPopularEvaluationStartDate = entity.MusicPitchingPopularEvaluationStartDate;
+            this.MusicPitchingPopularEvaluationEndDate = entity.MusicPitchingPopularEvaluationEndDate;
+            this.MusicPitchingMaximumApprovedProjectsByPopularVote = entity.MusicPitchingMaximumApprovedProjectsByPopularVote;
+            this.MusicPitchingRepechageEvaluationStartDate = entity.MusicPitchingRepechageEvaluationStartDate;
+            this.MusicPitchingRepechageEvaluationEndDate = entity.MusicPitchingRepechageEvaluationEndDate;
+            this.MusicPitchingMaximumApprovedProjectsByRepechage = entity.MusicPitchingMaximumApprovedProjectsByRepechage;
 
             // Innovation - Commissions
             this.InnovationProjectSubmitStartDate = entity.InnovationProjectSubmitStartDate;
@@ -198,7 +242,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is music project submit open]; otherwise, <c>false</c>.</returns>
         public bool IsMusicProjectSubmitOpen()
         {
-            return DateTime.UtcNow >= this.MusicProjectSubmitStartDate && DateTime.UtcNow <= this.MusicProjectSubmitEndDate;
+            return DateTime.UtcNow >= this.MusicPitchingSubmitStartDate && DateTime.UtcNow <= this.MusicPitchingSubmitEndDate;
         }
 
         /// <summary>Determines whether [is music project submit started].</summary>
@@ -206,7 +250,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is music project submit started]; otherwise, <c>false</c>.</returns>
         public bool IsMusicProjectSubmitStarted()
         {
-            return DateTime.UtcNow >= this.MusicProjectSubmitStartDate;
+            return DateTime.UtcNow >= this.MusicPitchingSubmitStartDate;
         }
 
         /// <summary>Determines whether [is music project submit ended].</summary>
@@ -214,7 +258,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is music project submit ended]; otherwise, <c>false</c>.</returns>
         public bool IsMusicProjectSubmitEnded()
         {
-            return DateTime.UtcNow > this.MusicProjectSubmitEndDate;
+            return DateTime.UtcNow > this.MusicPitchingSubmitEndDate;
         }
 
         #endregion
@@ -224,7 +268,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <summary>Determines whether [is music project evaluation open].</summary>
         /// <returns>
         ///   <c>true</c> if [is music project evaluation open]; otherwise, <c>false</c>.</returns>
-        public bool IsMusicProjectEvaluationOpen()
+        public bool IsMusicPitchingComissionEvaluationOpen()
         {
             return DateTime.UtcNow >= this.MusicCommissionEvaluationStartDate && DateTime.UtcNow <= this.MusicCommissionEvaluationEndDate;
         }
@@ -232,7 +276,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <summary>Determines whether [is music project evaluation started].</summary>
         /// <returns>
         ///   <c>true</c> if [is music project evaluation started]; otherwise, <c>false</c>.</returns>
-        public bool IsMusicProjectEvaluationStarted()
+        public bool IsMusicPitchingCommissionEvaluationStarted()
         {
             return DateTime.UtcNow >= this.MusicCommissionEvaluationStartDate;
         }
@@ -240,9 +284,42 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <summary>Determines whether [is music project evaluation ended].</summary>
         /// <returns>
         ///   <c>true</c> if [is music project evaluation ended]; otherwise, <c>false</c>.</returns>
-        public bool IsMusicProjectEvaluationEnded()
+        public bool IsMusicPitchingCommissionEvaluationEnded()
         {
             return DateTime.UtcNow > this.MusicCommissionEvaluationEndDate;
+        }
+
+        /// <summary>Determines whether [is music project evaluation open].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is music project evaluation open]; otherwise, <c>false</c>.</returns>
+        public bool IsMusicPitchingCuratorEvaluationOpen()
+        {
+            return !this.IsMusicPitchingComissionEvaluationOpen()
+                && DateTime.UtcNow >= this.MusicPitchingCuratorEvaluationStartDate
+                && DateTime.UtcNow <= this.MusicPitchingCuratorEvaluationEndDate;
+        }
+
+        /// <summary>Determines whether [is music pitching popular evaluation open].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is music pitching popular evaluation open]; otherwise, <c>false</c>.</returns>
+        public bool IsMusicPitchingPopularEvaluationOpen()
+        {
+            return !this.IsMusicPitchingComissionEvaluationOpen()
+                && !this.IsMusicPitchingCuratorEvaluationOpen()
+                && DateTime.UtcNow >= this.MusicPitchingPopularEvaluationStartDate
+                && DateTime.UtcNow <= this.MusicPitchingPopularEvaluationEndDate;
+        }
+
+        /// <summary>Determines whether [is music pitching repechage evaluation open].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is music pitching repechage evaluation open]; otherwise, <c>false</c>.</returns>
+        public bool IsMusicPitchingRepechageEvaluationOpen()
+        {
+            return !this.IsMusicPitchingComissionEvaluationOpen()
+                && !this.IsMusicPitchingCuratorEvaluationOpen()
+                && !this.IsMusicPitchingPopularEvaluationOpen()
+                && DateTime.UtcNow >= this.MusicPitchingRepechageEvaluationStartDate
+                && DateTime.UtcNow <= this.MusicPitchingRepechageEvaluationEndDate;
         }
 
         #endregion

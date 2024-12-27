@@ -4,7 +4,7 @@
 // Created          : 09-26-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-21-2023
+// Last Modified On : 11-19-2024
 // ***********************************************************************
 // <copyright file="CollaboratorType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -45,6 +45,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         public static CollaboratorType ComissionAudiovisual = new CollaboratorType(new Guid("60AAFB26-B483-425F-BFA6-ED0D45F3CBCB"), "Commission | Audiovisual");
         public static CollaboratorType ComissionMusic = new CollaboratorType(new Guid("3633CF67-840F-4061-B480-C075A5E9F5EE"), "Commission | Music");
+        public static CollaboratorType ComissionMusicCurator = new CollaboratorType(new Guid("D8C837A7-C612-4181-A37E-DA1FBF5339EE"), "Commission | Music Curator");
         public static CollaboratorType ComissionInnovation = new CollaboratorType(new Guid("758A53BB-7C3C-4B6F-967B-C6E613568586"), "Commission | Innovation");
         public static CollaboratorType ComissionCartoon = new CollaboratorType(new Guid("A2D0F90D-EA2E-4226-A3EC-47C3360CA1C0"), "Commission | Cartoon");
         public static CollaboratorType ComissionCreator = new CollaboratorType(new Guid("0A043B0C-547A-4F3E-BF79-FB47E520ADB3"), "Commission | Creator");

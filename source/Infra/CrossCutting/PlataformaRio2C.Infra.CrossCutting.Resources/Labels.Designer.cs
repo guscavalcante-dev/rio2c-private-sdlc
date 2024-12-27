@@ -475,6 +475,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aprovar repescagem.
+        /// </summary>
+        public static string ApproveToRepechage {
+            get {
+                return ResourceManager.GetString("ApproveToRepechage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chegada.
         /// </summary>
         public static string Arrival {
@@ -966,6 +975,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string BusinessRound {
             get {
                 return ResourceManager.GetString("BusinessRound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rodadas de Negócio.
+        /// </summary>
+        public static string BusinessRounds {
+            get {
+                return ResourceManager.GetString("BusinessRounds", resourceCulture);
             }
         }
         
@@ -1771,6 +1789,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aprovação do curador.
+        /// </summary>
+        public static string CuratorApproval {
+            get {
+                return ResourceManager.GetString("CuratorApproval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reprovação do curador.
+        /// </summary>
+        public static string CuratorDisapproval {
+            get {
+                return ResourceManager.GetString("CuratorDisapproval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Curadoria.
         /// </summary>
         public static string Curatorship {
@@ -2005,6 +2041,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reprovar repescagem.
+        /// </summary>
+        public static string DisapproveToRepechage {
+            get {
+                return ResourceManager.GetString("DisapproveToRepechage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Desassociar.
         /// </summary>
         public static string Disassociate {
@@ -2064,6 +2109,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string DisplayOrder {
             get {
                 return ResourceManager.GetString("DisplayOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Distribuir membros.
+        /// </summary>
+        public static string DistributeCommissionMembers {
+            get {
+                return ResourceManager.GetString("DistributeCommissionMembers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Distribuído.
+        /// </summary>
+        public static string Distributed {
+            get {
+                return ResourceManager.GetString("Distributed", resourceCulture);
             }
         }
         
@@ -3940,6 +4003,78 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string MusicBusinessRoundEvaluationEndDate {
+            get {
+                return ResourceManager.GetString("MusicBusinessRoundEvaluationEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string MusicBusinessRoundEvaluationStartDate {
+            get {
+                return ResourceManager.GetString("MusicBusinessRoundEvaluationStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string MusicBusinessRoundMaximumEvaluatorsByProject {
+            get {
+                return ResourceManager.GetString("MusicBusinessRoundMaximumEvaluatorsByProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string MusicBusinessRoundMaximumProjectsBySeller {
+            get {
+                return ResourceManager.GetString("MusicBusinessRoundMaximumProjectsBySeller", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string MusicBusinessRoundNegotiationEndDate {
+            get {
+                return ResourceManager.GetString("MusicBusinessRoundNegotiationEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string MusicBusinessRoundNegotiationStartDate {
+            get {
+                return ResourceManager.GetString("MusicBusinessRoundNegotiationStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string MusicBusinessRoundSubmitEndDate {
+            get {
+                return ResourceManager.GetString("MusicBusinessRoundSubmitEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string MusicBusinessRoundSubmitStartDate {
+            get {
+                return ResourceManager.GetString("MusicBusinessRoundSubmitStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Comissão de Música.
         /// </summary>
         public static string MusicCommission {
@@ -4008,6 +4143,132 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string MusicInstrumentName {
             get {
                 return ResourceManager.GetString("MusicInstrumentName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de término da avaliação de projetos pelo Curador.
+        /// </summary>
+        public static string MusicPitchingCuratorEvaluationEndDate {
+            get {
+                return ResourceManager.GetString("MusicPitchingCuratorEvaluationEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de início da avaliação de projetos pelo Curador.
+        /// </summary>
+        public static string MusicPitchingCuratorEvaluationStartDate {
+            get {
+                return ResourceManager.GetString("MusicPitchingCuratorEvaluationStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade máxima de projetos aprovados por membro da comissão.
+        /// </summary>
+        public static string MusicPitchingMaximumApprovedProjectsByCommissionMember {
+            get {
+                return ResourceManager.GetString("MusicPitchingMaximumApprovedProjectsByCommissionMember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade máxima de projetos aprovados por curador.
+        /// </summary>
+        public static string MusicPitchingMaximumApprovedProjectsByCurator {
+            get {
+                return ResourceManager.GetString("MusicPitchingMaximumApprovedProjectsByCurator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade máxima de projetos aprovados por votação popular.
+        /// </summary>
+        public static string MusicPitchingMaximumApprovedProjectsByPopularVote {
+            get {
+                return ResourceManager.GetString("MusicPitchingMaximumApprovedProjectsByPopularVote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade máxima de projetos aprovados por Repescagem.
+        /// </summary>
+        public static string MusicPitchingMaximumApprovedProjectsByRepechage {
+            get {
+                return ResourceManager.GetString("MusicPitchingMaximumApprovedProjectsByRepechage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade máxima de projetos inscritos por edição.
+        /// </summary>
+        public static string MusicPitchingMaximumProjectSubmissionsByEdition {
+            get {
+                return ResourceManager.GetString("MusicPitchingMaximumProjectSubmissionsByEdition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade máxima de projetos inscritos por participante.
+        /// </summary>
+        public static string MusicPitchingMaximumProjectSubmissionsByParticipant {
+            get {
+                return ResourceManager.GetString("MusicPitchingMaximumProjectSubmissionsByParticipant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de término da avaliação de projetos pela votação popular.
+        /// </summary>
+        public static string MusicPitchingPopularEvaluationEndDate {
+            get {
+                return ResourceManager.GetString("MusicPitchingPopularEvaluationEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de início da avaliação de projetos pela votação popular.
+        /// </summary>
+        public static string MusicPitchingPopularEvaluationStartDate {
+            get {
+                return ResourceManager.GetString("MusicPitchingPopularEvaluationStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de término da avaliação de projetos pela Repescagem.
+        /// </summary>
+        public static string MusicPitchingRepechageEvaluationEndDate {
+            get {
+                return ResourceManager.GetString("MusicPitchingRepechageEvaluationEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de início da avaliação de projetos pela Repescagem.
+        /// </summary>
+        public static string MusicPitchingRepechageEvaluationStartDate {
+            get {
+                return ResourceManager.GetString("MusicPitchingRepechageEvaluationStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string MusicPitchingSubmitEndDate {
+            get {
+                return ResourceManager.GetString("MusicPitchingSubmitEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string MusicPitchingSubmitStartDate {
+            get {
+                return ResourceManager.GetString("MusicPitchingSubmitStartDate", resourceCulture);
             }
         }
         

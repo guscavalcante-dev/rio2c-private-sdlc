@@ -290,6 +290,10 @@
     <value>Aprovar</value>
     <comment>Aprovar</comment>
   </data>
+  <data name="ApproveToRepechage" xml:space="preserve">
+    <value>Aprovar repescagem</value>
+    <comment>Aprovar</comment>
+  </data>
   <data name="Arrival" xml:space="preserve">
     <value>Chegada</value>
     <comment>Chegada</comment>
@@ -490,6 +494,9 @@
   <data name="BusinessRound" xml:space="preserve">
     <value>Rodadas de Negócios</value>
     <comment>Rodadas de Negócios</comment>
+  </data>
+  <data name="BusinessRounds" xml:space="preserve">
+    <value>Rodadas de Negócio</value>
   </data>
   <data name="BusinessRoundtable" xml:space="preserve">
     <value>Rodada de Negócios</value>
@@ -807,6 +814,14 @@
   <data name="Credentialing" xml:space="preserve">
     <value>Credenciamento</value>
   </data>
+  <data name="CuratorApproval" xml:space="preserve">
+    <value>Aprovação do curador</value>
+    <comment>Aprovar</comment>
+  </data>
+  <data name="CuratorDisapproval" xml:space="preserve">
+    <value>Reprovação do curador</value>
+    <comment>Aprovar</comment>
+  </data>
   <data name="Curatorship" xml:space="preserve">
     <value>Curadoria</value>
     <comment>Curadoria</comment>
@@ -902,6 +917,10 @@
     <value>Desativado</value>
     <comment>Desativado</comment>
   </data>
+  <data name="DisapproveToRepechage" xml:space="preserve">
+    <value>Reprovar repescagem</value>
+    <comment>Aprovar</comment>
+  </data>
   <data name="Disassociate" xml:space="preserve">
     <value>Desassociar</value>
     <comment>Desassociar</comment>
@@ -929,6 +948,12 @@
   <data name="DisplayOrder" xml:space="preserve">
     <value>Ordem de exibição</value>
     <comment>Ordem de exibição</comment>
+  </data>
+  <data name="DistributeCommissionMembers" xml:space="preserve">
+    <value>Distribuir membros</value>
+  </data>
+  <data name="Distributed" xml:space="preserve">
+    <value>Distribuído</value>
   </data>
   <data name="Document" xml:space="preserve">
     <value>Documento</value>
@@ -1694,6 +1719,30 @@
     <value>Membro da Equipe</value>
     <comment>Membro da Equipe</comment>
   </data>
+  <data name="MusicBusinessRoundEvaluationEndDate" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MusicBusinessRoundEvaluationStartDate" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MusicBusinessRoundMaximumEvaluatorsByProject" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MusicBusinessRoundMaximumProjectsBySeller" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MusicBusinessRoundNegotiationEndDate" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MusicBusinessRoundNegotiationStartDate" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MusicBusinessRoundSubmitEndDate" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MusicBusinessRoundSubmitStartDate" xml:space="preserve">
+    <value></value>
+  </data>
   <data name="MusicCommission" xml:space="preserve">
     <value>Comissão de Música</value>
     <comment>Comissão de Música</comment>
@@ -1722,6 +1771,48 @@
   <data name="MusicInstrumentName" xml:space="preserve">
     <value>Instrumento musical</value>
     <comment>Instrumento musical</comment>
+  </data>
+  <data name="MusicPitchingCuratorEvaluationEndDate" xml:space="preserve">
+    <value>Data de término da avaliação de projetos pelo Curador</value>
+  </data>
+  <data name="MusicPitchingCuratorEvaluationStartDate" xml:space="preserve">
+    <value>Data de início da avaliação de projetos pelo Curador</value>
+  </data>
+  <data name="MusicPitchingMaximumApprovedProjectsByCommissionMember" xml:space="preserve">
+    <value>Quantidade máxima de projetos aprovados por membro da comissão</value>
+  </data>
+  <data name="MusicPitchingMaximumApprovedProjectsByCurator" xml:space="preserve">
+    <value>Quantidade máxima de projetos aprovados por curador</value>
+  </data>
+  <data name="MusicPitchingMaximumApprovedProjectsByPopularVote" xml:space="preserve">
+    <value>Quantidade máxima de projetos aprovados por votação popular</value>
+  </data>
+  <data name="MusicPitchingMaximumApprovedProjectsByRepechage" xml:space="preserve">
+    <value>Quantidade máxima de projetos aprovados por Repescagem</value>
+  </data>
+  <data name="MusicPitchingMaximumProjectSubmissionsByEdition" xml:space="preserve">
+    <value>Quantidade máxima de projetos inscritos por edição</value>
+  </data>
+  <data name="MusicPitchingMaximumProjectSubmissionsByParticipant" xml:space="preserve">
+    <value>Quantidade máxima de projetos inscritos por participante</value>
+  </data>
+  <data name="MusicPitchingPopularEvaluationEndDate" xml:space="preserve">
+    <value>Data de término da avaliação de projetos pela votação popular</value>
+  </data>
+  <data name="MusicPitchingPopularEvaluationStartDate" xml:space="preserve">
+    <value>Data de início da avaliação de projetos pela votação popular</value>
+  </data>
+  <data name="MusicPitchingRepechageEvaluationEndDate" xml:space="preserve">
+    <value>Data de término da avaliação de projetos pela Repescagem</value>
+  </data>
+  <data name="MusicPitchingRepechageEvaluationStartDate" xml:space="preserve">
+    <value>Data de início da avaliação de projetos pela Repescagem</value>
+  </data>
+  <data name="MusicPitchingSubmitEndDate" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MusicPitchingSubmitStartDate" xml:space="preserve">
+    <value></value>
   </data>
   <data name="MusicPlayer" xml:space="preserve">
     <value>Player de Música</value>

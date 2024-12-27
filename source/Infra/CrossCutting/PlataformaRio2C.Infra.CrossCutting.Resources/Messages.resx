@@ -229,6 +229,11 @@
   <data name="CollaboratorMustHaveAProducer" xml:space="preserve">
     <value>O colaborador deve ter pelo menos uma produtora.</value>
   </data>
+  <data name="CommisionMemberDistributionMessage" xml:space="preserve">
+    <value>A distribuição de projetos para membros da comissão já foi executada.&lt;br&gt;
+A distribuição só pode ser executada uma única vez por edição.
+    </value>
+  </data>
   <data name="CompanyNameIsRequired" xml:space="preserve">
     <value>Razão Social obrigatório!</value>
   </data>
@@ -625,6 +630,12 @@
   <data name="MinimumNumberOfCharacters" xml:space="preserve">
     <value>O '{0}' deve ter no mínimo '{2}' caracteres.</value>
   </data>
+  <data name="MusicPitchingMaximumApprovedProjectsByCurator" xml:space="preserve">
+    <value>É permitido avaliar no máximo {0} {1} para os curadores</value>
+  </data>
+  <data name="MusicPitchingMaximumApprovedProjectsByRepechage" xml:space="preserve">
+    <value>É permitido avaliar no máximo {0} {1} para repescagem</value>
+  </data>
   <data name="MusicPlayerTerms" xml:space="preserve">
     <value>Regulamento de Players (Música)</value>
   </data>
@@ -652,6 +663,9 @@
   <data name="NoneEntityAction" xml:space="preserve">
     <value>Nenhum {0} {1}.</value>
     <comment>Nenhum {0} {1}.</comment>
+  </data>
+  <data name="NoPermissionToEvaluate" xml:space="preserve">
+    <value>Sem permissão para avaliar</value>
   </data>
   <data name="NotEvaluated" xml:space="preserve">
     <value>Não avaliado</value>
@@ -781,6 +795,9 @@
   </data>
   <data name="ProjectLookingFor" xml:space="preserve">
     <value>'Está buscando' é obrigatório.</value>
+  </data>
+  <data name="ProjectMustBeDisapprovedByPopulation" xml:space="preserve">
+    <value>O projeto precisa estar reprovado pela votação popular</value>
   </data>
   <data name="ProjectMustHaveAFormat" xml:space="preserve">
     <value>'Formato' é obrigatório.</value>
@@ -1010,6 +1027,9 @@
     <value>Os projetos receberão a nota final e o status de aprovação somente ao final desse período</value>
     <comment>Os projetos receberão a nota final e o status de aprovação somente ao final desse período</comment>
   </data>
+  <data name="ThereAreDistributedMembersByEdition" xml:space="preserve">
+    <value>Já existe membros distribuidos por edição</value>
+  </data>
   <data name="ThereAreStillXSlotsLeftToRegisterProjects" xml:space="preserve">
     <value>Ainda restam {0} slots para inscrição de {1} para {2}</value>
   </data>
@@ -1113,6 +1133,15 @@
   </data>
   <data name="WouldYouLikeParticipatePitching" xml:space="preserve">
     <value>Você gostaria de participar do Pitching?</value>
+  </data>
+  <data name="YouCanMusicPitchingMaximumApprovedProjectsByCommissionMember" xml:space="preserve">
+    <value>Você pode avaliar no máximo {0} {1} por edição</value>
+  </data>
+  <data name="YouCanMusicPitchingMaximumProjectSubmissionsByEdition" xml:space="preserve">
+    <value>Foi atingido o limite máximo de {0} {1} por edição</value>
+  </data>
+  <data name="YouCanMusicPitchingMaximumProjectSubmissionsByParticipant" xml:space="preserve">
+    <value>Você pode enviar no máximo {0} {1} por edição para {2}</value>
   </data>
   <data name="YouCanSelectUpToXPlayers" xml:space="preserve">
     <value>Você pode selecionar no máximo {0} players</value>

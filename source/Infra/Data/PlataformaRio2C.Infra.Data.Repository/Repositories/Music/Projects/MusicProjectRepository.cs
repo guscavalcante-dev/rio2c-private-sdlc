@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 02-26-2020
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 03-03-2023
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 11-22-2024
 // ***********************************************************************
 // <copyright file="MusicProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -219,6 +219,38 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return pagedList;
         }
+
+        /// <summary>Finds the by edition identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="evaluatorUserId">The evaluator user id.</param>
+        /// <returns></returns>
+        internal static IQueryable<MusicProject> FindByEvaluatorUserId(this IQueryable<MusicProject> query, List<int?> evaluatorUserId)
+        {
+            if (evaluatorUserId != null && evaluatorUserId.Count > 0)
+            {
+                query = query.Where(mp =>
+                    evaluatorUserId.Contains(mp.AttendeeMusicBand.EvaluatorUserId)
+                );
+            }
+            return query;
+        }
+
+        /// <summary>Finds the by edition identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="commissionEvaluationStatusId">The commission evaluation status id.</param>
+        /// <returns></returns>
+        internal static IQueryable<MusicProject> FindByCommissionEvaluationStatusId(this IQueryable<MusicProject> query, List<int?> commissionEvaluationStatusId)
+        {
+            if (commissionEvaluationStatusId != null && commissionEvaluationStatusId.Count > 0)
+            {
+                query = query.Where(mp =>
+                    mp.AttendeeMusicBand.AttendeeMusicBandEvaluations.Any(ambe =>
+                        commissionEvaluationStatusId.Contains(ambe.CommissionEvaluationStatusId)
+                    )                    
+                );
+            }
+            return query;
+        }
     }
 
     #endregion
@@ -353,10 +385,23 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="showBusinessRounds">if set to <c>true</c> [show business rounds].</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
+        /// <param name="evaluatorUserId">The evaluator user id.</param>
         /// <returns></returns>
-        public async Task<IPagedList<MusicProjectDto>> FindAllDtosPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize)
+        public async Task<IPagedList<MusicProjectDto>> FindAllDtosPagedAsync(
+            int editionId,
+            string searchKeywords,
+            Guid? musicGenreUid,
+            Guid? evaluationStatusUid,
+            bool showBusinessRounds,
+            int page,
+            int pageSize,
+            List<int?> evaluatorUserId,
+            List<int?> commissionEvaluationStatusId
+        )
         {
             var musicProjectsDtos = await this.GetDataTableBaseQuery(editionId, searchKeywords, musicGenreUid, showBusinessRounds)
+                                           .FindByEvaluatorUserId(evaluatorUserId)
+                                           .FindByCommissionEvaluationStatusId(commissionEvaluationStatusId)
                                            .Select(mp => new MusicProjectDto
                                            {
                                                MusicProject = mp,
@@ -397,7 +442,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var approvedMusicBandsIds = await this.FindAllApprovedAttendeeMusicBandsIdsAsync(editionId);
 
             IEnumerable<MusicProjectDto> musicProjectDtosResult = musicProjectsDtos;
-            if (editionDto.IsMusicProjectEvaluationOpen())
+            if (editionDto.IsMusicPitchingComissionEvaluationOpen())
             {
                 #region Evaluation is Open
 
@@ -495,7 +540,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var approvedMusicBandsIds = await this.FindAllApprovedAttendeeMusicBandsIdsAsync(editionId);
 
             IEnumerable<MusicProjectJsonDto> musicProjectJsonDtosResult = musicProjectJsonDtos;
-            if (editionDto.IsMusicProjectEvaluationOpen())
+            if (editionDto.IsMusicPitchingComissionEvaluationOpen())
             {
                 #region Evaluation is Open
 
@@ -643,7 +688,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var approvedMusicBandsIds = await this.FindAllApprovedAttendeeMusicBandsIdsAsync(editionId);
 
             IEnumerable<MusicProjectReportDto> musicProjectReportDtosResult = musicProjectReportDtos;
-            if (editionDto.IsMusicProjectEvaluationOpen())
+            if (editionDto.IsMusicPitchingComissionEvaluationOpen())
             {
                 #region Evaluation is Open
 
@@ -1132,9 +1177,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<int[]> FindAllMusicProjectsIdsPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize)
+        public async Task<int[]> FindAllMusicProjectsIdsPagedAsync(
+            int editionId,
+            string searchKeywords,
+            Guid? musicGenreUid,
+            Guid? evaluationStatusUid,
+            bool showBusinessRounds,
+            int page,
+            int pageSize,
+            List<int?> evaluatorUserId,
+            List<int?> commissionEvaluationStatusId
+        )
         {
             var musicProjects = await this.GetDataTableBaseQuery(editionId, searchKeywords, musicGenreUid, showBusinessRounds)
+                                            .FindByEvaluatorUserId(evaluatorUserId)
+                                            .FindByCommissionEvaluationStatusId(commissionEvaluationStatusId)
                                             .Order()
                                             .ToListAsync(); 
             
@@ -1142,7 +1199,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var approvedMusicBandsIds = await this.FindAllApprovedAttendeeMusicBandsIdsAsync(editionId);
 
             IEnumerable<MusicProject> musicProjectsResult = musicProjects;
-            if (editionDto.IsMusicProjectEvaluationOpen())
+            if (editionDto.IsMusicPitchingComissionEvaluationOpen())
             {
                 #region Evaluation is Open
 
@@ -1210,9 +1267,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<int> CountPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, bool showBusinessRounds, int page, int pageSize)
+        public async Task<int> CountPagedAsync(
+            int editionId,
+            string searchKeywords,
+            Guid? musicGenreUid,
+            Guid? evaluationStatusUid,
+            bool showBusinessRounds,
+            int page,
+            int pageSize,
+            List<int?> evaluatorUserId,
+            List<int?> commissionEvaluationStatusId
+        )
         {
             var musicProjects = await this.GetDataTableBaseQuery(editionId, searchKeywords, musicGenreUid, showBusinessRounds)
+                                            .FindByEvaluatorUserId(evaluatorUserId)
+                                            .FindByCommissionEvaluationStatusId(commissionEvaluationStatusId)
                                             .Order()
                                             .ToListAsync();
 
@@ -1220,7 +1289,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var approvedMusicBandsIds = await this.FindAllApprovedAttendeeMusicBandsIdsAsync(editionId);
 
             IEnumerable<MusicProject> musicProjectsResult = musicProjects;
-            if (editionDto.IsMusicProjectEvaluationOpen())
+            if (editionDto.IsMusicPitchingComissionEvaluationOpen())
             {
                 #region Evaluation is Open
 

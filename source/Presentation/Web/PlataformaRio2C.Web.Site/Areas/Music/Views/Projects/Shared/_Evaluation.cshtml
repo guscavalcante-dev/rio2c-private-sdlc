@@ -8,7 +8,7 @@
     var approvedAttendeeMusicBandsIds = ViewBag.ApprovedAttendeeMusicBandsIds as int[];
     var isThisMusicProjectApproved = approvedAttendeeMusicBandsIds?.Contains(Model.AttendeeMusicBandDto.AttendeeMusicBand.Id) == true;
 }
-@if (editionDto?.IsMusicProjectEvaluationOpen() == true)
+@if (editionDto?.IsMusicPitchingComissionEvaluationOpen() == true)
 {
     var hasCurrentEvaluation = currentEvaluation != null;
     if (hasCurrentEvaluation)
@@ -33,7 +33,7 @@
         </div>
     }
 }
-else if (editionDto?.IsMusicProjectEvaluationEnded() == true)
+else if (editionDto?.IsMusicPitchingCommissionEvaluationEnded() == true)
 {
     var icon = "fa-diagnoses";
     var color = "warning";

@@ -40,10 +40,10 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset? AvailabilityEndDate { get; private set; }
         public DateTimeOffset? AgendaEmailSendDate { get; private set; }
 
-        public virtual Edition Edition { get; private set; }
-        public virtual Collaborator Collaborator { get; private set; }
+        public virtual Edition Edition { get; protected set; }
+        public virtual Collaborator Collaborator { get; protected set; }
 
-        public virtual ICollection<AttendeeCollaboratorType> AttendeeCollaboratorTypes { get; private set; }
+        public virtual ICollection<AttendeeCollaboratorType> AttendeeCollaboratorTypes { get; protected set; }
         public virtual ICollection<AttendeeOrganizationCollaborator> AttendeeOrganizationCollaborators { get; private set; }
         public virtual ICollection<AttendeeCollaboratorTicket> AttendeeCollaboratorTickets { get; private set; }
         public virtual ICollection<ConferenceParticipant> ConferenceParticipants { get; private set; }
@@ -58,6 +58,22 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeCollaboratorTargetAudience> AttendeeCollaboratorTargetAudiences { get; private set; }
 
         #region Attendee Collaborator
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaborator">The collaborator.</param>
+        /// <param name="userId">The user identifier.</param>
+        private AttendeeCollaborator(
+            Edition edition,
+            Collaborator collaborator,
+            int userId)
+        {
+            this.Edition = edition;
+            this.Collaborator = collaborator;
+            base.SetCreateDate(userId);
+        }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.</summary>
         /// <param name="edition">The edition.</param>
@@ -620,6 +636,102 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
+        #region Music Commission Attendee Collaborator
+
+        /// <summary>
+        /// Creates the audiovisual commission attendee collaborator.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorTypes">The collaborator types.</param>
+        /// <param name="collaborator">The collaborator.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public static AttendeeCollaborator CreateMusicCommissionAttendeeCollaborator(
+            Edition edition,
+            List<CollaboratorType> collaboratorTypes,
+            Collaborator collaborator,
+            int userId)
+        {
+            var baseAttendeeCollaborator = new AttendeeCollaborator(
+                edition,
+                collaborator,
+                userId);
+
+            baseAttendeeCollaborator.SynchronizeMusicCommissionAttendeeCollaboratorTypes(collaboratorTypes, userId);
+
+            return baseAttendeeCollaborator;
+        }
+
+        /// <summary>
+        /// Updates the audiovisual commission attendee collaborator.
+        /// </summary>
+        /// <param name="collaboratorTypes">Type of the collaborator.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateMusicCommissionAttendeeCollaborator(
+            List<CollaboratorType> collaboratorTypes,
+            int userId)
+        {
+            this.SetUpdateDate(userId);
+
+            this.SynchronizeMusicCommissionAttendeeCollaboratorTypes(collaboratorTypes, userId);
+
+            //TODO: Review the "shouldDeleteOrganizations" logic. It seems deleting AttendeeOrganizationCollaborators incorrectly. This parameters allways come "true";
+            this.SynchronizeAttendeeOrganizationCollaborators(null, true, userId);
+        }
+
+        /// <summary>
+        /// Synchronizes the attendee collaborator types.
+        /// </summary>
+        /// <param name="collaboratorTypes">The collaborator types.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeMusicCommissionAttendeeCollaboratorTypes(List<CollaboratorType> collaboratorTypes, int userId)
+        {
+            if (this.AttendeeCollaboratorTypes == null)
+            {
+                this.AttendeeCollaboratorTypes = new List<AttendeeCollaboratorType>();
+            }
+
+            this.DeleteMusicCommissionAttendeeCollaboratorTypes(collaboratorTypes, userId);
+
+            if (collaboratorTypes?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var collaboratorType in collaboratorTypes)
+            {
+                var attendeeCollaboratorType = this.FindAttendeeCollaboratorTypeByUid(collaboratorType?.Uid ?? Guid.Empty);
+                if (attendeeCollaboratorType == null)
+                {
+                    this.AttendeeCollaboratorTypes.Add(new AttendeeCollaboratorType(this, collaboratorType, false, null, userId));
+                }
+                else
+                {
+                    attendeeCollaboratorType.Update(false, null, userId);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deletes the administrator attendee collaborator types.
+        /// </summary>
+        /// <param name="newCollaboratorTypes">The new collaborator types.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteMusicCommissionAttendeeCollaboratorTypes(List<CollaboratorType> newCollaboratorTypes, int userId)
+        {
+            var collaboratorTypesToDelete = this.AttendeeCollaboratorTypes.Where(act => !act.IsDeleted &&
+                                                                                        Constants.CollaboratorType.MusicCommissions.Contains(act.CollaboratorType.Name) &&
+                                                                                        newCollaboratorTypes?.Select(nct => nct.Id)?.Contains(act.CollaboratorTypeId) == false)
+                                                                          .ToList();
+
+            foreach (var attendeeCollaboratorType in collaboratorTypesToDelete)
+            {
+                attendeeCollaboratorType.Delete(userId);
+            }
+        }
+
+        #endregion
+
         #region Innovation Player Executive Attendee Collaborator
 
         /// <summary>
@@ -918,25 +1030,27 @@ namespace PlataformaRio2C.Domain.Entities
         #region Administrators
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeCollaborator"/> class for Administrator (Partial).
+        /// Creates the administrator attendee collaborator.
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorTypes">The collaborator types.</param>
         /// <param name="collaborator">The collaborator.</param>
         /// <param name="userId">The user identifier.</param>
-        public AttendeeCollaborator(
+        /// <returns></returns>
+        public static AttendeeCollaborator CreateAdministratorAttendeeCollaborator(
             Edition edition,
             List<CollaboratorType> collaboratorTypes,
             Collaborator collaborator,
             int userId)
         {
-            this.Edition = edition;
-            this.Collaborator = collaborator;
-            this.SynchronizeAdministratorAttendeeCollaboratorTypes(collaboratorTypes, userId);
+            var baseAttendeeCollaborator = new AttendeeCollaborator(
+                edition,
+                collaborator,
+                userId);
 
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
+            baseAttendeeCollaborator.SynchronizeAdministratorAttendeeCollaboratorTypes(collaboratorTypes, userId);
+
+            return baseAttendeeCollaborator;
         }
 
         /// <summary>
@@ -944,7 +1058,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         /// <param name="collaboratorTypes">The collaborator types.</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateAdministrator(
+        public void UpdateAdministratorAttendeeCollaborator(
             List<CollaboratorType> collaboratorTypes,
             int userId)
         {
@@ -968,7 +1082,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// Deletes the administrator.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
-        public void DeleteAdministrator(int userId)
+        public void DeleteAdministratorAttendeeCollaborator(int userId)
         {
             this.DeleteAdministratorAttendeeCollaboratorTypes(new List<CollaboratorType>(), userId);
 
@@ -1296,7 +1410,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Finds the attendee collaborator type by uid.</summary>
         /// <param name="collaboratorTypeUid">The collaborator type uid.</param>
         /// <returns></returns>
-        private AttendeeCollaboratorType FindAttendeeCollaboratorTypeByUid(Guid collaboratorTypeUid)
+        protected AttendeeCollaboratorType FindAttendeeCollaboratorTypeByUid(Guid collaboratorTypeUid)
         {
             return this.AttendeeCollaboratorTypes?.FirstOrDefault(act => act.CollaboratorType.Uid == collaboratorTypeUid);
         }
@@ -2025,7 +2139,7 @@ namespace PlataformaRio2C.Domain.Entities
         private void DeleteAttendeeMusicBandsEvaluations(int userId)
         {
             if (this.Collaborator?.User?.AttendeeMusicBandEvaluations?.Any() == true
-                && this.Edition.IsMusicProjectEvaluationOpen())
+                && this.Edition.IsMusicPitchingComissionEvaluationOpen())
             {
                 foreach (var attendeeMusicBandEvaluation in this.Collaborator.User.AttendeeMusicBandEvaluations.Where(c => !c.IsDeleted))
                 {
