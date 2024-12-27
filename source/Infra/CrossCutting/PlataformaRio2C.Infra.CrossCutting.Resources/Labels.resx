@@ -1720,28 +1720,28 @@
     <comment>Membro da Equipe</comment>
   </data>
   <data name="MusicBusinessRoundEvaluationEndDate" xml:space="preserve">
-    <value></value>
+    <value>Data de término da avaliação de projetos de música</value>
   </data>
   <data name="MusicBusinessRoundEvaluationStartDate" xml:space="preserve">
-    <value></value>
+    <value>Data de início da avaliação de projetos de música</value>
   </data>
   <data name="MusicBusinessRoundMaximumEvaluatorsByProject" xml:space="preserve">
-    <value></value>
+    <value>Quantidade máxima de avaliadores por projeto</value>
   </data>
   <data name="MusicBusinessRoundMaximumProjectsBySeller" xml:space="preserve">
-    <value></value>
+    <value>Quantidade máxima de projetos por participante</value>
   </data>
   <data name="MusicBusinessRoundNegotiationEndDate" xml:space="preserve">
-    <value></value>
+    <value>Data de término das negociações de música</value>
   </data>
   <data name="MusicBusinessRoundNegotiationStartDate" xml:space="preserve">
-    <value></value>
+    <value>Data de início das negociações de música</value>
   </data>
   <data name="MusicBusinessRoundSubmitEndDate" xml:space="preserve">
-    <value></value>
+    <value>Data de término do envio de projetos de música</value>
   </data>
   <data name="MusicBusinessRoundSubmitStartDate" xml:space="preserve">
-    <value></value>
+    <value>Data de início do envio de projetos de música</value>
   </data>
   <data name="MusicCommission" xml:space="preserve">
     <value>Comissão de Música</value>
@@ -1809,10 +1809,10 @@
     <value>Data de início da avaliação de projetos pela Repescagem</value>
   </data>
   <data name="MusicPitchingSubmitEndDate" xml:space="preserve">
-    <value></value>
+    <value>Data de término de envio de projeto musical</value>
   </data>
   <data name="MusicPitchingSubmitStartDate" xml:space="preserve">
-    <value></value>
+    <value>Data de início de envio de projeto musical</value>
   </data>
   <data name="MusicPlayer" xml:space="preserve">
     <value>Player de Música</value>
