@@ -342,8 +342,8 @@ A distribuição só pode ser executada uma única vez por edição.
     <value>Prezados, segue em anexo o {0} cadastrados na edição {1}</value>
   </data>
   <data name="DescribeRestrictionSpecifics" xml:space="preserve">
-    <value>Descreve as restrições e/ou especificações sobre o conteúdo desejado.</value>
-    <comment>Descreve as restrições e/ou especificações sobre o conteúdo desejado.</comment>
+    <value>Descreva mais detalhadamente o que está buscando.</value>
+    <comment>Descreva mais detalhadamente o que está buscando.</comment>
   </data>
   <data name="DescribeYourMiniBiography" xml:space="preserve">
     <value>Descreva sua mini-biografia</value>

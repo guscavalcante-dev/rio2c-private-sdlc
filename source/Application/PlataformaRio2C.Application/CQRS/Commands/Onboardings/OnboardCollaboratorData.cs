@@ -149,19 +149,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public Guid CollaboratorUid { get; set; }
         public UserAccessControlDto UserAccessControlDto { get; set; }
 
-        #region Music Player Executive
-
-        [Display(Name = "Activities", ResourceType = typeof(Labels))]
-        public List<AttendeeCollaboratorActivityBaseCommand> MusicAttendeeCollaboratorActivities { get; set; }
-
-        [Display(Name = "TargetAudiences", ResourceType = typeof(Labels))]
-        public List<AttendeeCollaboratorTargetAudienceBaseCommand> MusicAttendeeCollaboratorTargetAudiences { get; set; }
-
-        [Display(Name = "Interests", ResourceType = typeof(Labels))]
-        public InterestBaseCommand[][] MusicInterests { get; set; }
-
-        #endregion
-
         #region Innovation Player Executive
 
         [Display(Name = "Verticals", ResourceType = typeof(Labels))]
@@ -254,9 +241,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
             this.UpdateJobTitles(entity, languagesDtos, isJobTitleRequired);
             this.UpdateMiniBios(entity, languagesDtos, isMiniBioRequired);
-            this.UpdateMusicAttendeeCollaboratorActivities(entity, musicAttendeeCollaboratorActivities);
-            this.UpdateMusicTargetAudiences(entity, musicAttendeeCollaboratorTargetAudiences);
-            this.UpdateMusicInterests(entity, musicInterestsDtos);
             this.UpdateInnovationOrganizationTrackOptionGroups(entity, innovationOrganizationTrackOptionDtos);
             this.UpdateInnovationAttendeeCollaboratorActivities(entity, innovationAttendeeCollaboratorActivities);
             this.UpdateInnovationInterests(entity, innovationInterestsDtos);
@@ -416,82 +400,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.CollaboratorRoleUid = collaboratorRoleUid;
             this.CollaboratorRoleAdditionalInfo = collaboratorRoleAdditionalInfo;
         }
-
-        #region Music Player Executive
-
-        /// <summary>
-        /// Updates the music attendee collaborator activities.
-        /// </summary>
-        /// <param name="entity">The entity.</param>
-        /// <param name="activities">The activities.</param>
-        /// <param name="isActivitiesRequired">if set to <c>true</c> [is activities required].</param>
-        private void UpdateMusicAttendeeCollaboratorActivities(CollaboratorDto entity, List<Activity> activities)
-        {
-            if (activities?.Any() == true)
-            {
-                this.MusicAttendeeCollaboratorActivities = new List<AttendeeCollaboratorActivityBaseCommand>();
-                foreach (var activity in activities)
-                {
-                    var attendeeCollaboratorActivityDto = entity?.AttendeeCollaboratorActivityDtos?.FirstOrDefault(oad => oad.ActivityUid == activity.Uid);
-                    this.MusicAttendeeCollaboratorActivities.Add(attendeeCollaboratorActivityDto != null ? new AttendeeCollaboratorActivityBaseCommand(attendeeCollaboratorActivityDto) :
-                                                                                                           new AttendeeCollaboratorActivityBaseCommand(activity));
-                }
-            }
-        }
-
-        /// <summary>
-        /// Updates the target audiences.
-        /// </summary>
-        /// <param name="entity">The entity.</param>
-        /// <param name="targetAudiences">The target audiences.</param>
-        private void UpdateMusicTargetAudiences(CollaboratorDto entity, List<TargetAudience> targetAudiences)
-        {
-            if (targetAudiences?.Any() == true)
-            {
-                this.MusicAttendeeCollaboratorTargetAudiences = new List<AttendeeCollaboratorTargetAudienceBaseCommand>();
-                foreach (var targetAudience in targetAudiences)
-                {
-                    var attendeeCollaboratorTargetAudience = entity?.AttendeeCollaboratorTargetAudiencesDtos?.FirstOrDefault(ota => ota.TargetAudienceUid == targetAudience.Uid);
-                    this.MusicAttendeeCollaboratorTargetAudiences.Add(attendeeCollaboratorTargetAudience != null ? new AttendeeCollaboratorTargetAudienceBaseCommand(attendeeCollaboratorTargetAudience) :
-                                                                                                                   new AttendeeCollaboratorTargetAudienceBaseCommand(targetAudience));
-                }
-            }
-        }
-
-        /// <summary>
-        /// Updates the music interests.
-        /// </summary>
-        /// <param name="entity">The entity.</param>
-        /// <param name="interestsDtos">The interests dtos.</param>
-        private void UpdateMusicInterests(CollaboratorDto entity, List<InterestDto> interestsDtos)
-        {
-            if (interestsDtos?.Any() == true)
-            {
-                var interestsBaseCommands = new List<InterestBaseCommand>();
-                foreach (var interestDto in interestsDtos)
-                {
-                    var attendeeCollaboratorInterestDto = entity?.AttendeeCollaboratorInterestDtos?.FirstOrDefault(oad => oad.Interest.Uid == interestDto.Interest.Uid);
-                    interestsBaseCommands.Add(attendeeCollaboratorInterestDto != null ? new InterestBaseCommand(attendeeCollaboratorInterestDto) :
-                                                                                        new InterestBaseCommand(interestDto));
-                }
-
-                var groupedInterestsDtos = interestsBaseCommands?
-                                                .GroupBy(i => new { i.InterestGroupUid, i.InterestGroupName, i.InterestGroupDisplayOrder })?
-                                                .OrderBy(g => g.Key.InterestGroupDisplayOrder)?
-                                                .ToList();
-
-                if (groupedInterestsDtos?.Any() == true)
-                {
-                    this.MusicInterests = new InterestBaseCommand[groupedInterestsDtos.Count][];
-                    for (int i = 0; i < groupedInterestsDtos.Count; i++)
-                    {
-                        this.MusicInterests[i] = groupedInterestsDtos[i].ToArray();
-                    }
-                }
-            }
-        }
-
-        #endregion
 
         #region Innovation Player Executive
 

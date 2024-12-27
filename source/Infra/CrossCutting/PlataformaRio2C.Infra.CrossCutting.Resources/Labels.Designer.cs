@@ -151,7 +151,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Atividades.
+        ///   Looks up a localized string similar to Qual e a principal atividade da sua empresa?.
         /// </summary>
         public static string Activities {
             get {
@@ -7468,7 +7468,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Público-alvo/Faixa-etária.
+        ///   Looks up a localized string similar to Qual o perfil de participante que te interessa para as Rodadas de Negocios?.
         /// </summary>
         public static string TargetAudiences {
             get {

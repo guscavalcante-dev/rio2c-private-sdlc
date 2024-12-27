@@ -344,8 +344,8 @@ The distribution can only be carried out once per issue.</value>
     <value>Dear all, attached is the {0} registered in the {1} edition</value>
   </data>
   <data name="DescribeRestrictionSpecifics" xml:space="preserve">
-    <value>Describe the desired content restriction and/or specifics.</value>
-    <comment>Descreve as restrições e/ou especificações sobre o conteúdo desejado.</comment>
+    <value>Describe in more detail what you are looking for.</value>
+    <comment>Descreva mais detalhadamente o que está buscando.</comment>
   </data>
   <data name="DescribeYourMiniBiography" xml:space="preserve">
     <value>Descibre your mini biography</value>
