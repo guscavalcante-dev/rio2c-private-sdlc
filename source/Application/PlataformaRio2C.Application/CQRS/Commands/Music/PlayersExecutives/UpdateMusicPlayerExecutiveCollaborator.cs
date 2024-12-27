@@ -25,7 +25,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         public Guid CollaboratorUid { get; set; }
         public bool IsAddingToCurrentEdition { get; set; }
-
         public DateTimeOffset? WelcomeEmailSendDate { get; private set; }
         public DateTimeOffset? OnboardingStartDate { get; private set; }
         public DateTimeOffset? OnboardingFinishDate { get; private set; }
@@ -71,9 +70,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<CollaboratorIndustry> industries,
             List<CollaboratorRole> collaboratorRoles,
             List<EditionDto> editionsDtos,
-            List<Activity> activities,
-            List<InterestDto> interestsDtos,
-            List<TargetAudience> targetAudiences,
             int currentEditionId,
             bool? isAddingToCurrentEdition,
             bool isJobTitleRequired,
@@ -107,9 +103,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 industries,
                 collaboratorRoles,
                 editionsDtos,
-                activities,
-                interestsDtos,
-                targetAudiences,
                 currentEditionId,
                 isJobTitleRequired,
                 isMiniBioRequired,

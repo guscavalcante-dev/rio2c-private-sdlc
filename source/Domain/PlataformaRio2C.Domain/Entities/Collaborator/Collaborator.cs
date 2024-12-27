@@ -1732,9 +1732,6 @@ namespace PlataformaRio2C.Domain.Entities
             List<CollaboratorJobTitle> jobTitles,
             List<CollaboratorMiniBio> miniBios,
             bool? isVirtualMeeting,
-            List<AttendeeCollaboratorActivity> attendeeCollaboratorActivities,
-            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
-            List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences,
             int userId)
         {
             this.FirstName = firstName?.Trim();
@@ -1777,9 +1774,6 @@ namespace PlataformaRio2C.Domain.Entities
                null,
                attendeeOrganizations,
                isVirtualMeeting,
-               attendeeCollaboratorActivities,
-               attendeeCollaboratorInterests,
-               attendeeCollaboratorTargetAudiences,
                true,
                userId);
 
@@ -1859,9 +1853,6 @@ namespace PlataformaRio2C.Domain.Entities
             List<CollaboratorJobTitle> jobTitles,
             List<CollaboratorMiniBio> miniBios,
             bool? isVirtualMeeting,
-            List<AttendeeCollaboratorActivity> attendeeCollaboratorActivities,
-            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
-            List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences,
             int userId)
         {
             return new Collaborator(
@@ -1897,9 +1888,6 @@ namespace PlataformaRio2C.Domain.Entities
                jobTitles,
                miniBios,
                isVirtualMeeting,
-               attendeeCollaboratorActivities,
-               attendeeCollaboratorInterests,
-               attendeeCollaboratorTargetAudiences,
                userId);
         }
 
@@ -1972,9 +1960,6 @@ namespace PlataformaRio2C.Domain.Entities
             List<CollaboratorMiniBio> miniBios,
             bool isAddingToCurrentEdition,
             bool? isVirtualMeeting,
-            List<AttendeeCollaboratorActivity> attendeeCollaboratorActivities,
-            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
-            List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences,
             int userId)
         {
             //this.Uid = uid;
@@ -2012,9 +1997,6 @@ namespace PlataformaRio2C.Domain.Entities
                 null,
                 attendeeOrganizations,
                 isVirtualMeeting,
-                attendeeCollaboratorActivities,
-                attendeeCollaboratorInterests,
-                attendeeCollaboratorTargetAudiences,
                 isAddingToCurrentEdition,
                 userId);
         }
@@ -2042,9 +2024,6 @@ namespace PlataformaRio2C.Domain.Entities
             int? apiHighlightPosition,
             List<AttendeeOrganization> attendeeOrganizations,
             bool? isVirtualMeeting,
-            List<AttendeeCollaboratorActivity> attendeeCollaboratorActivities,
-            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
-            List<AttendeeCollaboratorTargetAudience> attendeeCollaboratorTargetAudiences,
             bool isAddingToCurrentEdition,
             int userId)
         {
@@ -2075,9 +2054,6 @@ namespace PlataformaRio2C.Domain.Entities
                     apiHighlightPosition,
                     true,
                     attendeeOrganizations,
-                    attendeeCollaboratorActivities,
-                    attendeeCollaboratorInterests,
-                    attendeeCollaboratorTargetAudiences,
                     userId);
             }
             else
@@ -2092,9 +2068,6 @@ namespace PlataformaRio2C.Domain.Entities
                     apiHighlightPosition,
                     true,
                     attendeeOrganizations,
-                    attendeeCollaboratorActivities,
-                    attendeeCollaboratorInterests,
-                    attendeeCollaboratorTargetAudiences,
                     userId));
             }
         }

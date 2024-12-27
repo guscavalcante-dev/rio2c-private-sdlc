@@ -18,6 +18,7 @@ using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -136,23 +137,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Display(Name = "MeetingType", ResourceType = typeof(Labels))]
         [RadioButtonRequiredIf(nameof(IsVirtualMeetingRequired), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public bool? IsVirtualMeeting { get; set; }
-
         #endregion
 
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneGroupOption")]
+        [RequiredList(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneGroupOption")]
         public List<AttendeeOrganizationBaseCommand> AttendeeOrganizationBaseCommands { get; set; }
         public List<CollaboratorJobTitleBaseCommand> JobTitles { get; set; }
         public List<CollaboratorMiniBioBaseCommand> MiniBios { get; set; }
         public CropperImageBaseCommand CropperImage { get; set; }
         public List<TemplateAttendeeOrganizationBaseCommand> TemplateAttendeeOrganizationBaseCommands { get; set; }
-
-        [Display(Name = "Activities", ResourceType = typeof(Labels))]
-        public List<AttendeeCollaboratorActivityBaseCommand> AttendeeCollaboratorActivities { get; set; }
-
-        [Display(Name = "TargetAudiences", ResourceType = typeof(Labels))]
-        public List<AttendeeCollaboratorTargetAudienceBaseCommand> AttendeeCollaboratorTargetAudiences { get; set; }
-
-        [Display(Name = "Interests", ResourceType = typeof(Labels))]
-        public InterestBaseCommand[][] AttendeeCollaboratorInterests { get; set; }
 
         #region Dropdowns Properties
 
@@ -180,9 +173,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="industries">The industries.</param>
         /// <param name="collaboratorRoles">The collaborator roles.</param>
         /// <param name="editionsDtos">The editions dtos.</param>
-        /// <param name="activities">The activities.</param>
-        /// <param name="interestsDtos">The interests dtos.</param>
-        /// <param name="targetAudiences">The targetAudiences track option dtos.</param>
         /// <param name="currentEditionId">The current edition identifier.</param>
         /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
         /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
@@ -198,9 +188,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<CollaboratorIndustry> industries,
             List<CollaboratorRole> collaboratorRoles,
             List<EditionDto> editionsDtos,
-            List<Activity> activities,
-            List<InterestDto> interestsDtos,
-            List<TargetAudience> targetAudiences,
             int currentEditionId,
             bool isJobTitleRequired,
             bool isMiniBioRequired,
@@ -230,9 +217,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateJobTitles(entity, languagesDtos, isJobTitleRequired);
             this.UpdateMiniBios(entity, languagesDtos, isMiniBioRequired);
             this.UpdateCropperImage(entity, isImageRequired);
-            this.UpdateActivities(entity, activities);
-            this.UpdateTargetAudiences(entity, targetAudiences);
-            this.UpdateInterests(entity, interestsDtos);
 
             this.UpdateDropdownProperties(
                 attendeeOrganizationsBaseDtos,
@@ -396,78 +380,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             this.CropperImage = new CropperImageBaseCommand(entity?.ImageUploadDate, entity?.Uid, FileRepositoryPathType.UserImage, isImageRequired);
         }
-
-        /// <summary>
-        /// Updates the activities.
-        /// </summary>
-        /// <param name="entity">The entity.</param>
-        /// <param name="activities">The activities.</param>
-        private void UpdateActivities(CollaboratorDto entity, List<Activity> activities)
-        {
-            this.AttendeeCollaboratorActivities = new List<AttendeeCollaboratorActivityBaseCommand>();
-            if (activities?.Any() == true)
-            {
-                foreach (var activity in activities)
-                {
-                    var attendeeCollaboratorActivityDto = entity?.AttendeeCollaboratorActivityDtos?.FirstOrDefault(oad => oad.ActivityUid == activity.Uid);
-                    this.AttendeeCollaboratorActivities.Add(attendeeCollaboratorActivityDto != null ? new AttendeeCollaboratorActivityBaseCommand(attendeeCollaboratorActivityDto) :
-                                                                                                      new AttendeeCollaboratorActivityBaseCommand(activity));
-                }
-            }
-        }
-
-        /// <summary>
-        /// Updates the interests.
-        /// </summary>
-        /// <param name="entity">The entity.</param>
-        /// <param name="interestDtos">The interest dtos.</param>
-        private void UpdateInterests(
-            CollaboratorDto entity,
-            List<InterestDto> interestsDtos)
-        {
-            if (interestsDtos == null) return;
-
-            var interestsBaseCommands = new List<InterestBaseCommand>();
-            foreach (var interestDto in interestsDtos)
-            {
-                var organizationInterest = entity?.AttendeeCollaboratorInterestDtos?.FirstOrDefault(oad => oad.Interest.Uid == interestDto.Interest.Uid);
-                interestsBaseCommands.Add(organizationInterest != null ? new InterestBaseCommand(organizationInterest) :
-                                                                         new InterestBaseCommand(interestDto));
-            }
-
-            var groupedInterestsDtos = interestsBaseCommands?
-                                            .GroupBy(i => new { i.InterestGroupUid, i.InterestGroupName, i.InterestGroupDisplayOrder })?
-                                            .OrderBy(g => g.Key.InterestGroupDisplayOrder)?
-                                            .ToList();
-
-            if (groupedInterestsDtos?.Any() == true)
-            {
-                this.AttendeeCollaboratorInterests = new InterestBaseCommand[groupedInterestsDtos.Count][];
-                for (int i = 0; i < groupedInterestsDtos.Count; i++)
-                {
-                    this.AttendeeCollaboratorInterests[i] = groupedInterestsDtos[i].ToArray();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Updates the target audiences.
-        /// </summary>
-        /// <param name="entity">The entity.</param>
-        /// <param name="targetAudiences">The target audiences.</param>
-        private void UpdateTargetAudiences(CollaboratorDto entity, List<TargetAudience> targetAudiences)
-        {
-            if (targetAudiences == null) return;
-
-            this.AttendeeCollaboratorTargetAudiences = new List<AttendeeCollaboratorTargetAudienceBaseCommand>();
-            foreach (var targetAudience in targetAudiences)
-            {
-                var attendeeCollaboratorTargetAudience = entity?.AttendeeCollaboratorTargetAudiencesDtos?.FirstOrDefault(ota => ota.TargetAudienceUid == targetAudience.Uid);
-                this.AttendeeCollaboratorTargetAudiences.Add(attendeeCollaboratorTargetAudience != null ? new AttendeeCollaboratorTargetAudienceBaseCommand(attendeeCollaboratorTargetAudience) :
-                                                                                                          new AttendeeCollaboratorTargetAudienceBaseCommand(targetAudience));
-            }
-        }
-
         #endregion
     }
 }

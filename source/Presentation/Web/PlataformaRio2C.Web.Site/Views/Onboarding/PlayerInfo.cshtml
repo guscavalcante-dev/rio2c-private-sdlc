@@ -14,7 +14,7 @@
     var isInnovationPlayer = userAccessControlDto.IsInnovationPlayerExecutive();
     var isMusicPlayer = userAccessControlDto.IsMusicPlayerExecutive();
 
-    var initialPlayerIndex = 3 + (isSpeaker ? 1 : 0) + (isAudiovisualPlayer ? 1 : 0) + (isInnovationPlayer ? 1 : 0) + (isMusicPlayer ? 1 : 0) + (playerAttendeeOrganizations.Count(pao => pao.OnboardingInterestsDate.HasValue));
+    var initialPlayerIndex = 3 + (isSpeaker ? 1 : 0) + (isAudiovisualPlayer ? 1 : 0) + (isInnovationPlayer ? 1 : 0) + (isMusicPlayer ? 1 : 0);
     var currentPlayerIndex = playerAttendeeOrganizations?.FindIndex(pao => pao.Organization.Uid == Model.OrganizationUid) ?? 0;
 }
 <div class="kt-portlet">
@@ -139,7 +139,7 @@
                                     <div class="row">
                                         <div class="form-group col-md-6">
                                             <div class="kt-section">
-                                                <h3 class="kt-heading kt-heading--md">@Labels.Activity</h3>
+                                                <h3 class="kt-heading kt-heading--md">@Labels.Activities</h3>
                                                 @Html.ValidationMessage("OrganizationActivities", new { @class = "text-danger OrganizationActivities" })
                                                 <div class="error">
                                                     <span></span>
@@ -153,7 +153,7 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <div class="kt-section">
-                                                <h3 class="kt-heading kt-heading--md">@Labels.TargetAudience</h3>
+                                                <h3 class="kt-heading kt-heading--md">@Labels.TargetAudiences</h3>
                                                 @Html.ValidationMessage("OrganizationTargetAudiences", new { @class = "text-danger OrganizationTargetAudiences" })
                                                 <div class="error">
                                                     <span></span>

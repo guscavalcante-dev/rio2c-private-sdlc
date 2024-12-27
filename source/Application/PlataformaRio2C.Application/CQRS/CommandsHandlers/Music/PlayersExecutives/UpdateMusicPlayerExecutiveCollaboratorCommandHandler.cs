@@ -135,19 +135,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var activities = await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id);
             var targetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id);
 
-            // Interests
-            var attendeeCollaboratorInterests = new List<AttendeeCollaboratorInterest>();
-            if (cmd.AttendeeCollaboratorInterests?.Any() == true)
-            {
-                foreach (var interestBaseCommands in cmd.AttendeeCollaboratorInterests)
-                {
-                    foreach (var interestBaseCommand in interestBaseCommands?.Where(ibc => ibc.IsChecked)?.ToList())
-                    {
-                        attendeeCollaboratorInterests.Add(new AttendeeCollaboratorInterest(interestsDtos?.FirstOrDefault(id => id.Interest.Uid == interestBaseCommand.InterestUid)?.Interest, interestBaseCommand.AdditionalInfo, cmd.UserId));
-                    }
-                }
-            }
-
             List<Guid> attendeeOrganizationUids = cmd.AttendeeOrganizationBaseCommands?.Where(ao => ao.AttendeeOrganizationUid.HasValue)?.Select(aobc => aobc.AttendeeOrganizationUid.Value)?.ToList();
 
             collaborator.UpdateMusicPlayerExecutive(
@@ -185,9 +172,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.MiniBios?.Select(d => new CollaboratorMiniBio(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 true, // TODO: Get isAddingToCurrentEdition from command for UpdateCollaborator
                 cmd.IsVirtualMeeting,
-                cmd.AttendeeCollaboratorActivities?.Where(aca => aca.IsChecked)?.Select(aca => new AttendeeCollaboratorActivity(activities?.FirstOrDefault(a => a.Uid == aca.ActivityUid), aca.AdditionalInfo, cmd.UserId))?.ToList(),
-                attendeeCollaboratorInterests,
-                cmd.AttendeeCollaboratorTargetAudiences?.Where(ota => ota.IsChecked)?.Select(ota => new AttendeeCollaboratorTargetAudience(targetAudiences?.FirstOrDefault(a => a.Uid == ota.TargetAudienceUid), ota.AdditionalInfo, cmd.UserId))?.ToList(),
                 cmd.UserId);
 
             if (!collaborator.IsValid())

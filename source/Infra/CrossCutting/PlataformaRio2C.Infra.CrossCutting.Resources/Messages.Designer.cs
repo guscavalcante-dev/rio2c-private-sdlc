@@ -630,7 +630,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Descreve as restrições e/ou especificações sobre o conteúdo desejado..
+        ///   Looks up a localized string similar to Descreva mais detalhadamente o que está buscando..
         /// </summary>
         public static string DescribeRestrictionSpecifics {
             get {

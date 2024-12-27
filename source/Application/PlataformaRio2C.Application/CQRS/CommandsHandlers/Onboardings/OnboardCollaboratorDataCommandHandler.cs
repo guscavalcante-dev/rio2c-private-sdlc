@@ -132,36 +132,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.UserId,
                 cmd.CompanyName);
 
-            if (cmd.UserAccessControlDto.IsMusicPlayerExecutive())
-            {
-                var activities = await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id);
-                var targetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id);
-
-                // Interests
-                var attendeeCollaboratorInterests = new List<AttendeeCollaboratorInterest>();
-                if (cmd.MusicInterests?.Any() == true)
-                {
-                    var interestsDtos = await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Music.Id);
-
-                    foreach (var interestBaseCommands in cmd.MusicInterests)
-                    {
-                        foreach (var interestBaseCommand in interestBaseCommands?.Where(ibc => ibc.IsChecked)?.ToList())
-                        {
-                            var interestDto = interestsDtos?.FirstOrDefault(id => id.Interest.Uid == interestBaseCommand.InterestUid);
-                            attendeeCollaboratorInterests.Add(new AttendeeCollaboratorInterest(interestDto?.Interest, interestBaseCommand.AdditionalInfo, cmd.UserId));
-                        }
-                    }
-                }
-
-                collaborator.OnboardMusicPlayerData(
-                    edition,
-                    ProjectType.Music,
-                    cmd.MusicAttendeeCollaboratorActivities?.Where(aca => aca.IsChecked)?.Select(aca => new AttendeeCollaboratorActivity(activities?.FirstOrDefault(a => a.Uid == aca.ActivityUid), aca.AdditionalInfo, cmd.UserId))?.ToList(),
-                    cmd.MusicAttendeeCollaboratorTargetAudiences?.Where(ota => ota.IsChecked)?.Select(ota => new AttendeeCollaboratorTargetAudience(targetAudiences?.FirstOrDefault(a => a.Uid == ota.TargetAudienceUid), ota.AdditionalInfo, cmd.UserId))?.ToList(),
-                    attendeeCollaboratorInterests,
-                    cmd.UserId);
-            }
-
             if (cmd.UserAccessControlDto.IsInnovationPlayerExecutive())
             {
                 var activities = await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id);
