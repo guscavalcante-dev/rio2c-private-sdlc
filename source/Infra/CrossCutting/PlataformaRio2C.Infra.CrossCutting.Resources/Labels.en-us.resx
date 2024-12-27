@@ -1719,6 +1719,30 @@
     <value>Team Member</value>
     <comment>Membro da Equipe</comment>
   </data>
+  <data name="MusicBusinessRoundEvaluationEndDate" xml:space="preserve">
+    <value>Music business round evaluation end date</value>
+  </data>
+  <data name="MusicBusinessRoundEvaluationStartDate" xml:space="preserve">
+    <value>Music business round evaluation start date</value>
+  </data>
+  <data name="MusicBusinessRoundMaximumEvaluatorsByProject" xml:space="preserve">
+    <value>Maximum number of evaluators by business round</value>
+  </data>
+  <data name="MusicBusinessRoundMaximumProjectsBySeller" xml:space="preserve">
+    <value>Maximum number of business round by participant</value>
+  </data>
+  <data name="MusicBusinessRoundNegotiationEndDate" xml:space="preserve">
+    <value>Music business round negotiations end date</value>
+  </data>
+  <data name="MusicBusinessRoundNegotiationStartDate" xml:space="preserve">
+    <value>Music business round negotiations start date</value>
+  </data>
+  <data name="MusicBusinessRoundSubmitEndDate" xml:space="preserve">
+    <value>Music business round submission end date</value>
+  </data>
+  <data name="MusicBusinessRoundSubmitStartDate" xml:space="preserve">
+    <value>Music business round submission start date</value>
+  </data>
   <data name="MusicCommission" xml:space="preserve">
     <value>Music Commission</value>
     <comment>Comissão de Música</comment>
@@ -1749,6 +1773,12 @@
   <data name="MusicInstrumentName" xml:space="preserve">
     <value>Musical instrument</value>
     <comment>Instrumento musical</comment>
+  </data>
+  <data name="MusicPitchingSubmitEndDate" xml:space="preserve">
+    <value>Music project submission end date</value>
+  </data>
+  <data name="MusicPitchingSubmitStartDate" xml:space="preserve">
+    <value>Music project submission start date</value>
   </data>
   <data name="MusicPitchingCuratorEvaluationEndDate" xml:space="preserve">
     <value>End date for project evaluation by the curator</value>
