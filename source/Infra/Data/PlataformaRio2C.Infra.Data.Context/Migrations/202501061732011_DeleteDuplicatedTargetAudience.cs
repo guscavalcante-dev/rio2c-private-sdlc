@@ -4,5 +4,6 @@
     
     public partial class DeleteDuplicatedTargetAudience : SqlMigration
     {
+      
     }
 }

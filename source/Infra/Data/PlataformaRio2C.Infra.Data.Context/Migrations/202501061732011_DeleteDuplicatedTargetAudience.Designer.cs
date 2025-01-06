@@ -7,13 +7,13 @@ namespace PlataformaRio2C.Infra.Data.Context.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.5.1")]
-    public sealed partial class AttMusicPlayerFormFix : IMigrationMetadata
+    public sealed partial class DeleteDuplicatedTargetAudience : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AttMusicPlayerFormFix));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(DeleteDuplicatedTargetAudience));
         
         string IMigrationMetadata.Id
         {
-            get { return "202501061512587_AttMusicPlayerFormFix"; }
+            get { return "202501061732011_DeleteDuplicatedTargetAudience"; }
         }
         
         string IMigrationMetadata.Source
