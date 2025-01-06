@@ -2,7 +2,7 @@
 {
     using PlataformaRio2C.Infra.Data.Context.Helpers;
     
-    public partial class AttMusicPlayerFormFix : SqlMigration
+    public partial class DeleteDuplicatedTargetAudience : SqlMigration
     {
     }
 }
