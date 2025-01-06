@@ -340,6 +340,10 @@
     <Compile Include="Migrations\202412201728087_AttMusicPlayerForms.Designer.cs">
       <DependentUpon>202412201728087_AttMusicPlayerForms.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202501061512587_RemoveDuplicatedTargetAudience.cs" />
+    <Compile Include="Migrations\202501061512587_RemoveDuplicatedTargetAudience.Designer.cs">
+      <DependentUpon>202501061512587_RemoveDuplicatedTargetAudience.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -489,6 +493,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202412201728087_AttMusicPlayerForms.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202501061512587_RemoveDuplicatedTargetAudience.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202501061512587_RemoveDuplicatedTargetAudience.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="SqlScripts\Deltas\20190930_114613_0001_ChangesForPlayersApi.sql" />
@@ -654,6 +664,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202412201728087_AttMusicPlayerForms.resx">
       <DependentUpon>202412201728087_AttMusicPlayerForms.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501061512587_RemoveDuplicatedTargetAudience.resx">
+      <DependentUpon>202501061512587_RemoveDuplicatedTargetAudience.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
