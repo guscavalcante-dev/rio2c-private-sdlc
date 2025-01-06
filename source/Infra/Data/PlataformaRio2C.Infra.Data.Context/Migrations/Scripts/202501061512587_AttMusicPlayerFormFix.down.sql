@@ -1,13 +1,6 @@
 ﻿BEGIN TRY
 	BEGIN TRANSACTION
-		   -----------------------------------------------
-        -- Update IsDeleted to 1 produtor musical in TargetAudiences records
-        -----------------------------------------------
-        UPDATE [dbo].[TargetAudiences]
-        SET [IsDeleted] = 0
-        WHERE [Uid] IN (
-            'ABF2CDE5-88FF-4B8E-82F2-5E8F0F16D9A4' -- Produtor Musical
-        );
+		--Nothing to do here
 	COMMIT TRAN -- Transaction Success!
 END TRY
 BEGIN CATCH
