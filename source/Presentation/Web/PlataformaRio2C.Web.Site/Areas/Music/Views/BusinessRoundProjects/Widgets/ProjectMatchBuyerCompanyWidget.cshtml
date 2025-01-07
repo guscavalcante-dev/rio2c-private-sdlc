@@ -64,7 +64,7 @@
                                                     <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@interestGroupsMatch.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
                                                 }
                                             </span>
-                                            @if (editionDto?.IsAudiovisualProjectSubmitOpen() == true)
+                                            @if (editionDto?.IsMusicProjectSubmitOpen() == true)
                                             {
                                                 <span class="kt-widget__desc">
                                                     <button type="button" class="btn btn-label-info btn-sm btn-upper select-buyer-evaluation-button" onclick="ProjectsBuyerCompanyWidget.selectCompany('@matchAttendeeOrganizationDto.AttendeeOrganization.Uid')" data-attendeeorganizationuid="@matchAttendeeOrganizationDto.AttendeeOrganization.Uid">@Labels.ToSelect</button>

@@ -6,7 +6,7 @@
 @{
     ViewBag.Title = Labels.ProjectsSubmission;
     var editionDto = ViewBag.EditionDto as EditionDto;
-    var isProjectSubmitOpen = editionDto?.IsAudiovisualProjectSubmitOpen() == true;
+    var isProjectSubmitOpen = editionDto?.IsMusicProjectSubmitOpen() == true;
     var isEvaluationReleasedForDisclosure = editionDto?.IsProjectBuyerEvaluationReleasedForDisclosure() == true;
     var hasProjectSpace = Model.Any(m => m.IsFakeProject);
 }
@@ -36,7 +36,7 @@
                                                 <div class="kt-widget__info mt-0 pl-0">
                                                     @if (!projectDto.IsFakeProject)
                                                     {
-                                                        <a href="@Url.Action("SubmittedDetails", "BusinessRoundProjects", new { id = projectDto.Project.Uid, Area = "Audiovisual" })" class="kt-widget__title">
+                                                        <a href="@Url.Action("SubmittedDetails", "BusinessRoundProjects", new { id = projectDto.Project.Uid, Area = "Music" })" class="kt-widget__title">
                                                             @projectTitle
                                                         </a>
                                                     }
@@ -130,7 +130,7 @@
                                                                                                     color = "danger";
                                                                                                     icon = "fa-thumbs-down";
                                                                                                 }
-                                                                                                else if (editionDto?.IsAudiovisualProjectSubmitEnded() == true &&
+                                                                                                else if (editionDto?.IsMusicProjectSubmitEnded() == true &&
                                                                                                     projectBuyerEvaluationDto.ProjectEvaluationStatus.Code == ProjectEvaluationStatus.UnderEvaluation.Code)
                                                                                                 {
                                                                                                     color = "danger";
@@ -182,7 +182,7 @@
                                     @if (projectDto.IsFakeProject)
                                     {
                                         <div class="col-4 text-center">
-                                            <a href="@Url.Action("Submit", "BusinessRoundProjects", new { Area = "Audiovisual" })" class="btn btn-brand">@string.Format(Labels.SubmitEntity, projectTitle)</a>
+                                            <a href="@Url.Action("Submit", "BusinessRoundProjects", new { Area = "Music" })" class="btn btn-brand">@string.Format(Labels.SubmitEntity, projectTitle)</a>
                                         </div>
                                     }
                                     else
@@ -192,11 +192,11 @@
                                         if (hasProjectSpace)
                                         {
                                             <div class="col-4 text-center">
-                                                <a class="btn btn-brand" href="@Url.Action("Submit", "BusinessRoundProjects", new { id = projectDto.Project.Uid, Area = "Audiovisual" })">@string.Format(Labels.DuplicateEntity, Labels.Project)</a>
+                                                <a class="btn btn-brand" href="@Url.Action("Submit", "BusinessRoundProjects", new { id = projectDto.Project.Uid, Area = "Music" })">@string.Format(Labels.DuplicateEntity, Labels.Project)</a>
                                             </div>
                                         }
                                         <div class="col-4 text-center">
-                                            <a href="@Url.Action("SubmittedDetails", "BusinessRoundProjects", new { id = projectDto.Project.Uid, Area = "Audiovisual" })" class="btn btn-brand">
+                                            <a href="@Url.Action("SubmittedDetails", "BusinessRoundProjects", new { id = projectDto.Project.Uid, Area = "Music" })" class="btn btn-brand">
                                                 @(!isFinished ? Labels.Edit : Labels.View)
                                             </a>
                                         </div>
@@ -205,7 +205,7 @@
                                             <div class="col-4 text-center">
                                                 @if (!isFinished)
                                                 {
-                                                    <a href="@Url.Action("SendToPlayers", "BusinessRoundProjects", new { id = projectDto.Project.Uid, Area = "Audiovisual" })" class="btn btn-brand">
+                                                    <a href="@Url.Action("SendToPlayers", "BusinessRoundProjects", new { id = projectDto.Project.Uid, Area = "Music" })" class="btn btn-brand">
                                                         @Labels.SendProjectsToPlayer
                                                     </a>
                                                 }
@@ -241,7 +241,7 @@
                             </div>
                             <div class="kt-iconbox__desc">
                                 <h3 class="kt-iconbox__title">
-                                    <a class="kt-link" href="#">@Labels.Program @Labels.AudiovisualProjects</a>
+                                    <a class="kt-link" href="#">@Labels.Program @Labels.MusicProjects</a>
                                 </h3>
                             </div>
                         </div>
