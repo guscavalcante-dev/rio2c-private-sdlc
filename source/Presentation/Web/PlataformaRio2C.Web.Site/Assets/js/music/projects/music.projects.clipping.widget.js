@@ -34,7 +34,7 @@ var MusicProjectsClippingWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.projectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/ShowClippingWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/PitchingProjects/ShowClippingWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -90,7 +90,7 @@ var MusicProjectsClippingWidget = function () {
     //    var jsonParameters = new Object();
     //    jsonParameters.projectUid = $('#AggregateId').val();
 
-    //    $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/ShowUpdateMainInformationModal'), jsonParameters, function (data) {
+    //    $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/PitchingProjects/ShowUpdateMainInformationModal'), jsonParameters, function (data) {
     //        MyRio2cCommon.handleAjaxReturn({
     //        data: data,
     //        // Success

@@ -44,7 +44,7 @@ var MusicProjectsEvaluationListWidget = function () {
         jsonParameters.page = $('#Page').val();
         jsonParameters.pageSize = $('#PageSize').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/ShowEvaluationListWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/PitchingProjects/ShowEvaluationListWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -137,7 +137,7 @@ var MusicProjectsEvaluationListWidget = function () {
 	    var jsonParameters = new Object();
 	    jsonParameters.projectUid = projectUid;
 
-	    $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/ShowEvaluationListItemWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/PitchingProjects/ShowEvaluationListItemWidget'), jsonParameters, function (data) {
 		    MyRio2cCommon.handleAjaxReturn({
 			    data: data,
 			    // Success

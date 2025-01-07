@@ -42,8 +42,8 @@ var MusicProjectsEvaluationWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.projectUid = $('#AggregateId').val();
 
-        //$.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/ShowEvaluationWidget'), jsonParameters, function (data) {
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/ShowEvaluationGradeWidget'), jsonParameters, function (data) {
+        //$.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/PitchingProjects/ShowEvaluationWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/PitchingProjects/ShowEvaluationGradeWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -117,7 +117,7 @@ var MusicProjectsEvaluationWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.musicProjectUid = musicProjectUid;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/ShowAcceptEvaluationModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/PitchingProjects/ShowAcceptEvaluationModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -153,7 +153,7 @@ var MusicProjectsEvaluationWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.musicProjectUid = musicProjectUid;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/ShowRefuseEvaluationModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/PitchingProjects/ShowRefuseEvaluationModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -179,7 +179,7 @@ var MusicProjectsEvaluationWidget = function () {
         jsonParameters.musicBandId = musicBandId;
         jsonParameters.grade = $('#AttendeeMusicBandEvaluationGrade').val();
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/Evaluate'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/PitchingProjects/Evaluate'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

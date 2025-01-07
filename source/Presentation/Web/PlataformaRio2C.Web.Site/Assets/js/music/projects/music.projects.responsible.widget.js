@@ -34,7 +34,7 @@ var MusicProjectResponsibleWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.projectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/ShowResponsibleWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/PitchingProjects/ShowResponsibleWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -90,7 +90,7 @@ var MusicProjectResponsibleWidget = function () {
     //    var jsonParameters = new Object();
     //    jsonParameters.projectUid = $('#AggregateId').val();
 
-    //    $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/ShowUpdateMainInformationModal'), jsonParameters, function (data) {
+    //    $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/PitchingProjects/ShowUpdateMainInformationModal'), jsonParameters, function (data) {
     //        MyRio2cCommon.handleAjaxReturn({
     //        data: data,
     //        // Success
