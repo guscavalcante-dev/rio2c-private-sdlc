@@ -428,6 +428,17 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         ///&lt;li&gt;Período de avaliação: {2} a {3}&lt;/li&gt;
         ///&lt;li&gt;Agenda online disponível em: {4}&lt;/li&gt;.
         /// </summary>
+        public static string ProducerMusicProjectsDates {
+            get {
+                return ResourceManager.GetString("ProducerMusicProjectsDates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;li&gt;Submissão de projetos para as Rodadas de Negócios e Pitching de Audiovisual: {0} a {1}&lt;/li&gt;
+        ///&lt;li&gt;Período de avaliação: {2} a {3}&lt;/li&gt;
+        ///&lt;li&gt;Agenda online disponível em: {4}&lt;/li&gt;.
+        /// </summary>
         public static string ProducerProjectsDates {
             get {
                 return ResourceManager.GetString("ProducerProjectsDates", resourceCulture);

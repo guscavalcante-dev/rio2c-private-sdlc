@@ -274,6 +274,14 @@ O MyRio2C também é um canal de comunicação do Rio2C com você, trazendo info
 &lt;li&gt;Período de avaliação: {2} a {3}&lt;/li&gt;
 &lt;li&gt;Agenda online disponível em: {4}&lt;/li&gt;</comment>
   </data>
+  <data name="ProducerMusicProjectsDates" xml:space="preserve">
+    <value>&lt;li&gt;Projects submissions for One-to-One Meetings and Music Pitching: {0} a {1}&lt;/li&gt;
+&lt;li&gt;Evaluation Period: {2} a {3}&lt;/li&gt;
+&lt;li&gt;Agenda Available Online: {4}&lt;/li&gt;</value>
+    <comment>&lt;li&gt;Submissão de projetos para as Rodadas de Negócios e Pitching de Audiovisual: {0} a {1}&lt;/li&gt;
+&lt;li&gt;Período de avaliação: {2} a {3}&lt;/li&gt;
+&lt;li&gt;Agenda online disponível em: {4}&lt;/li&gt;</comment>
+  </data>
   <data name="ProjectBudget" xml:space="preserve">
     <value>Project budget (only for projects under development/production)</value>
   </data>
