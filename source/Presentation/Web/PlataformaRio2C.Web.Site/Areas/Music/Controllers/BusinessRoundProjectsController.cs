@@ -1468,7 +1468,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
         #endregion
 
-        #region Buyer (Executive Audiovisual)
+        #region Buyer (Executive Music)
 
         #region Evaluation List
 
