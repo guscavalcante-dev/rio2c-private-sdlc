@@ -3,8 +3,8 @@
 // Author           : Gilson Oliveira
 // Created          : 10-22-2024
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 29-10-2024
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 07/01/2025
 // ***********************************************************************
 // <copyright file="BusinessRoundProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 02-26-2020
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 03-04-2023
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 07/01/2025
 // ***********************************************************************
 // <copyright file="music.projects.evaluation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
