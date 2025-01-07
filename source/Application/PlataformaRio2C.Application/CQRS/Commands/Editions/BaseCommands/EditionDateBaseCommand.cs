@@ -274,21 +274,21 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = nameof(Labels.ProjectSubmitStartDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public DateTime CreatorProjectSubmitStartDate { get; set; }
+        public DateTime? CreatorProjectSubmitStartDate { get; set; }
 
         [Display(Name = nameof(Labels.ProjectSubmitEndDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [GreaterThanOrEqualTo(nameof(CreatorProjectSubmitStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
-        public DateTime CreatorProjectSubmitEndDate { get; set; }
+        public DateTime? CreatorProjectSubmitEndDate { get; set; }
 
         [Display(Name = nameof(Labels.ProjectEvaluationStartDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public DateTime CreatorCommissionEvaluationStartDate { get; set; }
+        public DateTime? CreatorCommissionEvaluationStartDate { get; set; }
 
         [Display(Name = nameof(Labels.ProjectEvaluationEndDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [GreaterThanOrEqualTo(nameof(CreatorCommissionEvaluationStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
-        public DateTime CreatorCommissionEvaluationEndDate { get; set; }
+        public DateTime? CreatorCommissionEvaluationEndDate { get; set; }
 
         [Display(Name = nameof(Labels.CommissionMaximumApprovedProjectsCount), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]

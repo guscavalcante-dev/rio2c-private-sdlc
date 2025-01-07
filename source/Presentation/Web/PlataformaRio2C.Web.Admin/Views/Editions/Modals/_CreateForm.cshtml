@@ -481,7 +481,7 @@
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.CreatorProjectSubmitStartDate, new { @class = "control-label" })
-        @Html.TextBox("EditionDate.CreatorProjectSubmitStartDate", Model.EditionDate.CreatorProjectSubmitStartDate.ToShortDateString(), new
+        @Html.TextBox("EditionDate.CreatorProjectSubmitStartDate", Model.EditionDate.CreatorProjectSubmitStartDate?.ToShortDateString(), new
         {
             @class = "form-control enable-datepicker"
         })
@@ -489,7 +489,7 @@
     </div>
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.CreatorProjectSubmitEndDate, new { @class = "control-label" })
-        @Html.TextBox("EditionDate.CreatorProjectSubmitEndDate", Model.EditionDate.CreatorProjectSubmitEndDate.ToShortDateString(), new
+        @Html.TextBox("EditionDate.CreatorProjectSubmitEndDate", Model.EditionDate.CreatorProjectSubmitEndDate?.ToShortDateString(), new
         {
             @class = "form-control enable-datepicker"
         })
@@ -499,7 +499,7 @@
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.CreatorCommissionEvaluationStartDate, new { @class = "control-label" })
-        @Html.TextBox("EditionDate.CreatorCommissionEvaluationStartDate", Model.EditionDate.CreatorCommissionEvaluationStartDate.ToShortDateString(), new
+        @Html.TextBox("EditionDate.CreatorCommissionEvaluationStartDate", Model.EditionDate.CreatorCommissionEvaluationStartDate?.ToShortDateString(), new
         {
             @class = "form-control enable-datepicker"
         })
@@ -507,7 +507,7 @@
     </div>
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.CreatorCommissionEvaluationEndDate, new { @class = "control-label" })
-        @Html.TextBox("EditionDate.CreatorCommissionEvaluationEndDate", Model.EditionDate.CreatorCommissionEvaluationEndDate.ToShortDateString(), new
+        @Html.TextBox("EditionDate.CreatorCommissionEvaluationEndDate", Model.EditionDate.CreatorCommissionEvaluationEndDate?.ToShortDateString(), new
         {
             @class = "form-control enable-datepicker"
         })

@@ -133,10 +133,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.CartoonCommissionMinimumEvaluationsCount,
                 cmd.CartoonCommissionMaximumApprovedProjectsCount,
 
-                cmd.CreatorProjectSubmitStartDate,
-                cmd.CreatorProjectSubmitEndDate,
-                cmd.CreatorCommissionEvaluationStartDate,
-                cmd.CreatorCommissionEvaluationEndDate,
+                cmd.CreatorProjectSubmitStartDate.Value,
+                cmd.CreatorProjectSubmitEndDate.Value,
+                cmd.CreatorCommissionEvaluationStartDate.Value,
+                cmd.CreatorCommissionEvaluationEndDate.Value,
                 cmd.CreatorCommissionMinimumEvaluationsCount,
                 cmd.CreatorCommissionMaximumApprovedProjectsCount,
 
