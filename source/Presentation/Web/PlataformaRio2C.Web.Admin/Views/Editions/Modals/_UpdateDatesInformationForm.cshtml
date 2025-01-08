@@ -300,24 +300,24 @@
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.CreatorProjectSubmitStartDate, new { @class = "control-label" })
-        @Html.TextBox("CreatorProjectSubmitStartDate", Model.CreatorProjectSubmitStartDate.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.TextBox("CreatorProjectSubmitStartDate", Model.CreatorProjectSubmitStartDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
         @Html.ValidationMessageFor(m => m.CreatorProjectSubmitStartDate, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.CreatorProjectSubmitEndDate, new { @class = "control-label" })
-        @Html.TextBox("CreatorProjectSubmitEndDate", Model.CreatorProjectSubmitEndDate.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.TextBox("CreatorProjectSubmitEndDate", Model.CreatorProjectSubmitEndDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
         @Html.ValidationMessageFor(m => m.CreatorProjectSubmitEndDate, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.CreatorCommissionEvaluationStartDate, new { @class = "control-label" })
-        @Html.TextBox("CreatorCommissionEvaluationStartDate", Model.CreatorCommissionEvaluationStartDate.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.TextBox("CreatorCommissionEvaluationStartDate", Model.CreatorCommissionEvaluationStartDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
         @Html.ValidationMessageFor(m => m.CreatorCommissionEvaluationStartDate, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.CreatorCommissionEvaluationEndDate, new { @class = "control-label" })
-        @Html.TextBox("CreatorCommissionEvaluationEndDate", Model.CreatorCommissionEvaluationEndDate.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.TextBox("CreatorCommissionEvaluationEndDate", Model.CreatorCommissionEvaluationEndDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
         @Html.ValidationMessageFor(m => m.CreatorCommissionEvaluationEndDate, "", new { @class = "text-danger" })
     </div>
 </div>
