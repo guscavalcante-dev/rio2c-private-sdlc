@@ -4,7 +4,7 @@
 // Created          : 02-29-2020
 //
 // Last Modified By : Daniel Giese Rodrigues
-// Last Modified On : 07/01/2025
+// Last Modified On : 01-07-2025
 // ***********************************************************************
 // <copyright file="music.projects.videoandmusic.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

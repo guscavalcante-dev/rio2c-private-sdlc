@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 12-06-2024
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 01-08-2025
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -3460,6 +3460,19 @@ namespace PlataformaRio2C.Domain.Entities
         {
             var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
             attendeeCollaborator?.OnboardMusicPlayerTermsAcceptance(userId);
+            this.SetUpdateDate(userId);
+        }
+
+
+        /// <summary>
+        /// Called when [music participant terms acceptance].
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardMusicProducerTermsAcceptanceDate(Edition edition, int userId)
+        {
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            attendeeCollaborator?.OnboardMusicProducerTermsAcceptanceDate(userId);
             this.SetUpdateDate(userId);
         }
 

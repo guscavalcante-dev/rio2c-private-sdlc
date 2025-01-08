@@ -6,7 +6,7 @@
 @{
     ViewBag.Title = Labels.ProjectsSubmission;
     var editionDto = ViewBag.EditionDto as EditionDto;
-    var isProjectSubmitOpen = editionDto?.IsMusicProjectSubmitOpen() == true;
+    var isProjectSubmitOpen = editionDto?.IsMusicPitchingProjectSubmitOpen() == true;
     var isEvaluationReleasedForDisclosure = editionDto?.IsProjectBuyerEvaluationReleasedForDisclosure() == true;
     var hasProjectSpace = Model.Any(m => m.IsFakeProject);
 }

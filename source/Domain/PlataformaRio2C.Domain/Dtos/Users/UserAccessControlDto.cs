@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-04-2019
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 12-06-2024
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 01-08-2025
 // ***********************************************************************
 // <copyright file="UserAccessControlDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -627,6 +627,34 @@ namespace PlataformaRio2C.Domain.Dtos
                    && this.EditionAttendeeCollaborator?.AudiovisualProducerPitchingTermsAcceptanceDate.HasValue == false;
         }
 
+        #endregion 
+
+        #region Music - BusinessRound
+
+        /// <summary>Determines whether [is project submission terms acceptance pending].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is project submission terms acceptance pending]; otherwise, <c>false</c>.</returns>
+        public bool IsMusicProducerBusinessRoundTermsAcceptanceDatePending()
+        {
+            var collaboratorTypes = new string[] { Constants.CollaboratorType.Creator, Constants.CollaboratorType.Industry };
+            return this.HasAnyCollaboratorType(collaboratorTypes)
+                   && this.EditionAttendeeCollaborator?.MusicProducerTermsAcceptanceDate.HasValue == false;
+        }
+
+        /// <summary>Determines whether [is project submission organization information pending].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is project submission organization information pending]; otherwise, <c>false</c>.</returns>
+        public bool IsMusicProjectSubmissionOrganizationInformationPending()
+        {
+            return false;
+            //TODO:Daniel > Checar com Renan se será necessário novo campo de controle no AttendeeOrganizations tbm.
+            var collaboratorTypes = new string[] { Constants.CollaboratorType.Creator, Constants.CollaboratorType.Industry };
+            return this.HasAnyCollaboratorType(collaboratorTypes)
+                   && (this.EditionAttendeeOrganizations?.Any() == false
+                       || this.EditionAttendeeOrganizations?.Any(ao => ao.ProjectSubmissionOrganizationDate.HasValue) == false);
+        }
+
         #endregion
+
     }
 }

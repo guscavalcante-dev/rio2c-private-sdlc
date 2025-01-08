@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-06-2019
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 12-02-2024
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 01-08-2025
 // ***********************************************************************
 // <copyright file="EditionDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -240,9 +240,17 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <summary>Determines whether [is music project submit open].</summary>
         /// <returns>
         ///   <c>true</c> if [is music project submit open]; otherwise, <c>false</c>.</returns>
-        public bool IsMusicProjectSubmitOpen()
+        public bool IsMusicPitchingProjectSubmitOpen()
         {
             return DateTime.UtcNow >= this.MusicPitchingSubmitStartDate && DateTime.UtcNow <= this.MusicPitchingSubmitEndDate;
+        }
+
+        /// <summary>Determines whether [is music project submit open].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is music project submit open]; otherwise, <c>false</c>.</returns>
+        public bool IsMusicBusinessRoundProjectSubmitOpen()
+        {
+            return DateTime.UtcNow >= this.MusicBusinessRoundSubmitStartDate && DateTime.UtcNow <= this.MusicBusinessRoundSubmitEndDate;
         }
 
         /// <summary>Determines whether [is music project submit started].</summary>

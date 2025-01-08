@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 11-22-2024
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 01-08-2025
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -915,6 +915,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
                                                                                     InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
                                                                                     MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
+                                                                                    MusicProducerTermsAcceptanceDate = ac.MusicProducerTermsAcceptanceDate,
                                                                                     AudiovisualProducerBusinessRoundTermsAcceptanceDate = ac.AudiovisualProducerBusinessRoundTermsAcceptanceDate,
                                                                                     AudiovisualProducerPitchingTermsAcceptanceDate = ac.AudiovisualProducerPitchingTermsAcceptanceDate,                                                                                    
                                                                                     SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
@@ -1053,6 +1054,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
                                                                                     AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
                                                                                     InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
+                                                                                    MusicProducerTermsAcceptanceDate = ac.MusicProducerTermsAcceptanceDate,
                                                                                     MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
                                                                                     AudiovisualProducerBusinessRoundTermsAcceptanceDate = ac.AudiovisualProducerBusinessRoundTermsAcceptanceDate,
                                                                                     AudiovisualProducerPitchingTermsAcceptanceDate = ac.AudiovisualProducerPitchingTermsAcceptanceDate,
@@ -1230,6 +1232,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                 OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
                                                                 AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
                                                                 InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
+                                                                MusicProducerTermsAcceptanceDate  = ac.MusicProducerTermsAcceptanceDate,
                                                                 MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
                                                                 AudiovisualProducerBusinessRoundTermsAcceptanceDate = ac.AudiovisualProducerBusinessRoundTermsAcceptanceDate,
                                                                 AudiovisualProducerPitchingTermsAcceptanceDate = ac.AudiovisualProducerPitchingTermsAcceptanceDate,
@@ -1410,6 +1413,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                             OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
                                                                                             AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
                                                                                             InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
+                                                                                            MusicProducerTermsAcceptanceDate = ac.MusicProducerTermsAcceptanceDate,
                                                                                             MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
                                                                                             AudiovisualProducerBusinessRoundTermsAcceptanceDate = ac.AudiovisualProducerBusinessRoundTermsAcceptanceDate,
                                                                                             AudiovisualProducerPitchingTermsAcceptanceDate = ac.AudiovisualProducerPitchingTermsAcceptanceDate,
@@ -1539,6 +1543,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
                                                                                     AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
                                                                                     InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
+                                                                                    MusicProducerTermsAcceptanceDate = ac.MusicProducerTermsAcceptanceDate,
                                                                                     MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
                                                                                     AudiovisualProducerBusinessRoundTermsAcceptanceDate = ac.AudiovisualProducerBusinessRoundTermsAcceptanceDate,
                                                                                     AudiovisualProducerPitchingTermsAcceptanceDate = ac.AudiovisualProducerPitchingTermsAcceptanceDate,
@@ -1768,6 +1773,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
                                                                                     InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
                                                                                     MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
+                                                                                    MusicProducerTermsAcceptanceDate = ac.MusicProducerTermsAcceptanceDate,
                                                                                     AudiovisualProducerBusinessRoundTermsAcceptanceDate = ac.AudiovisualProducerBusinessRoundTermsAcceptanceDate,
                                                                                     AudiovisualProducerPitchingTermsAcceptanceDate = ac.AudiovisualProducerPitchingTermsAcceptanceDate,
                                                                                     SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
@@ -2083,6 +2089,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
                                                                                     AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
                                                                                     InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
+                                                                                    MusicProducerTermsAcceptanceDate = ac.MusicProducerTermsAcceptanceDate,
                                                                                     MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
                                                                                     AudiovisualProducerBusinessRoundTermsAcceptanceDate = ac.AudiovisualProducerBusinessRoundTermsAcceptanceDate,
                                                                                     AudiovisualProducerPitchingTermsAcceptanceDate = ac.AudiovisualProducerPitchingTermsAcceptanceDate,
@@ -2189,6 +2196,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
                                                                                     AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
                                                                                     InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
+                                                                                    MusicProducerTermsAcceptanceDate = ac.MusicProducerTermsAcceptanceDate,
                                                                                     MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
                                                                                     AudiovisualProducerBusinessRoundTermsAcceptanceDate = ac.AudiovisualProducerBusinessRoundTermsAcceptanceDate,
                                                                                     AudiovisualProducerPitchingTermsAcceptanceDate = ac.AudiovisualProducerPitchingTermsAcceptanceDate,
