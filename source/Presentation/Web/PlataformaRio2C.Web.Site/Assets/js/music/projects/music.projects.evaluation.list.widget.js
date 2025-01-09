@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 02-26-2020
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 03-04-2023
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 01-07-2025
 // ***********************************************************************
 // <copyright file="music.projects.evaluation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -44,7 +44,7 @@ var MusicProjectsEvaluationListWidget = function () {
         jsonParameters.page = $('#Page').val();
         jsonParameters.pageSize = $('#PageSize').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/ShowEvaluationListWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/PitchingProjects/ShowEvaluationListWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -137,7 +137,7 @@ var MusicProjectsEvaluationListWidget = function () {
 	    var jsonParameters = new Object();
 	    jsonParameters.projectUid = projectUid;
 
-	    $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/ShowEvaluationListItemWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/PitchingProjects/ShowEvaluationListItemWidget'), jsonParameters, function (data) {
 		    MyRio2cCommon.handleAjaxReturn({
 			    data: data,
 			    // Success
