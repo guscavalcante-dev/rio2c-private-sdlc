@@ -125,6 +125,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         cmd.UserId);
                 }
 
+                collaborator.SetCreateDate(cmd.UserId);
+
                 if (!collaborator.IsValid())
                 {
                     this.AppValidationResult.Add(collaborator.ValidationResult);
