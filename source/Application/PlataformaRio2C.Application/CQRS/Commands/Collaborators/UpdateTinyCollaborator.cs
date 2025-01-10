@@ -64,6 +64,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isAddingToCurrentEdition,
             string firstName,
             string lastNames,
+            string stagename,
             string email,
             string phoneNumber,
             string cellPhone,
@@ -80,6 +81,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             base.UpdateBaseProperties(
                 firstName,
                 lastNames,
+                stagename,
                 email,
                 phoneNumber,
                 cellPhone,

@@ -43,6 +43,9 @@ namespace PlataformaRio2C.Domain.Entities
         public string Twitter { get; private set; }
         public string Youtube { get; private set; }
         public string Tiktok { get; private set; }
+        public string Deezer { get; private set; }
+        public string Spotify { get; private set; }
+
         public DateTimeOffset? ImageUploadDate { get; private set; }
 
         //TODO: Delete this field!
@@ -87,20 +90,14 @@ namespace PlataformaRio2C.Domain.Entities
             Edition edition,
             string name,
             string formationDate,
-            string mainMusicInfluences,
-            string facebook,
+            string deezer,
             string instagram,
-            string twitter,
+            string spotify,
             string youtube,
-            string tiktok,
-            bool wouldYouLikeParticipateBusinessRound,
-            bool wouldYouLikeParticipatePitching,
             bool isImageUploaded,
             MusicProject musicProject,
             AttendeeCollaborator attendeeCollaborator,
             List<MusicBandGenre> musicBandGenres,
-            List<MusicBandTargetAudience> musicBandTargetAudiences,
-            List<MusicBandMember> musicBandMembers,
             List<MusicBandTeamMember> musicBandTeamMembers,
             List<ReleasedMusicProject> releasedMusicProjects,
             int userId)
@@ -108,26 +105,23 @@ namespace PlataformaRio2C.Domain.Entities
             this.MusicBandType = musicBandType;
             this.Name = name;
             this.FormationDate = formationDate;
-            this.MainMusicInfluences = mainMusicInfluences;
-            this.Facebook = facebook;
+            this.Deezer = deezer;
             this.Instagram = instagram;
-            this.Twitter = twitter;
+            this.Spotify = spotify;
             this.Youtube = youtube;
-            this.Tiktok = tiktok;
 
             this.UpdateImageUploadDate(isImageUploaded, false);
             base.SetCreateDate(userId);
 
+            //TODO:false e true tao fixos, pois agora via api será somente para Pitching.
             this.SynchronizeAttendeeMusicBands(
                 edition, 
                 attendeeCollaborator,
                 musicProject,
-                wouldYouLikeParticipateBusinessRound, 
-                wouldYouLikeParticipatePitching, 
+                false, 
+                true, 
                 userId);  
             this.SynchronizeMusicBandGenres(musicBandGenres, userId);
-            this.SynchronizeMusicBandTargetAudience(musicBandTargetAudiences, userId);
-            this.SynchronizeMusicBandMembers(musicBandMembers, userId);
             this.SynchronizeMusicBandTeamMembers(musicBandTeamMembers, userId);
             this.SynchronizeReleasedMusicProjects(releasedMusicProjects, userId);
         }

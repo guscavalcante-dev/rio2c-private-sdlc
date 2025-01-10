@@ -52,6 +52,9 @@ namespace PlataformaRio2C.Domain.Entities
         public string LastNames { get; protected set; }
 
         [ToPascalCase]
+        public string StageName { get; protected set; }
+
+        [ToPascalCase]
         public string Badge { get; protected set; }
 
         public string Document { get; private set; }
@@ -777,6 +780,7 @@ namespace PlataformaRio2C.Domain.Entities
             CollaboratorType collaboratorType,
             string firstName,
             string lastNames,
+            string stageName,
             string email,
             string phoneNumber,
             string cellPhone,
@@ -785,8 +789,8 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.FirstName = firstName?.Trim();
             this.LastNames = lastNames?.Trim();
+            this.StageName = stageName?.Trim();
             this.PublicEmail = email?.Trim();
-
             this.PhoneNumber = phoneNumber?.Trim();
             this.CellPhone = cellPhone?.Trim();
             this.Document = document?.Trim();
@@ -816,6 +820,7 @@ namespace PlataformaRio2C.Domain.Entities
             CollaboratorType collaboratorType,
             string firstName,
             string lastNames,
+            string stageName,
             string email,
             string phoneNumber,
             string cellPhone,
@@ -827,6 +832,7 @@ namespace PlataformaRio2C.Domain.Entities
                 collaboratorType,
                 firstName,
                 lastNames,
+                stageName,
                 email,
                 phoneNumber,
                 cellPhone,
