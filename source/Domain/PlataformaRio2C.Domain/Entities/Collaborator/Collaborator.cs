@@ -799,7 +799,7 @@ namespace PlataformaRio2C.Domain.Entities
             //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
             this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, null, null, true, userId);
             this.UpdateUser(email);
-            this.SetUpdateDate(userId);
+            this.SetCreateDate(userId);
         }
 
         /// <summary>

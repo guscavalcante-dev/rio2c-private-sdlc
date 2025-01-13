@@ -124,8 +124,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         true,
                         cmd.UserId);
                 }
-
-                collaborator.SetCreateDate(cmd.UserId);
+                
 
                 if (!collaborator.IsValid())
                 {
