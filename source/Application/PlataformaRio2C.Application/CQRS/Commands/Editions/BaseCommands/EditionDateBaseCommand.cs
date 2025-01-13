@@ -56,11 +56,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = nameof(MusicBusinessRoundMaximumProjectsBySeller), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public int MusicBusinessRoundMaximumProjectsBySeller { get; set; }
+        public int? MusicBusinessRoundMaximumProjectsBySeller { get; set; }
 
         [Display(Name = nameof(MusicBusinessRoundMaximumEvaluatorsByProject), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public int MusicBusinessRoundMaximumEvaluatorsByProject { get; set; }
+        public int? MusicBusinessRoundMaximumEvaluatorsByProject { get; set; }
 
         #endregion
 
@@ -95,15 +95,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = nameof(MusicPitchingMaximumProjectSubmissionsByEdition), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public int MusicPitchingMaximumProjectSubmissionsByEdition { get; set; }
+        public int? MusicPitchingMaximumProjectSubmissionsByEdition { get; set; }
 
         [Display(Name = nameof(MusicPitchingMaximumProjectSubmissionsByParticipant), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public int MusicPitchingMaximumProjectSubmissionsByParticipant { get; set; }
+        public int? MusicPitchingMaximumProjectSubmissionsByParticipant { get; set; }
 
         [Display(Name = nameof(MusicPitchingMaximumApprovedProjectsByCommissionMember), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public int MusicPitchingMaximumApprovedProjectsByCommissionMember { get; set; }
+        public int? MusicPitchingMaximumApprovedProjectsByCommissionMember { get; set; }
 
         [Display(Name = nameof(MusicPitchingCuratorEvaluationStartDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -116,7 +116,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = nameof(MusicPitchingMaximumApprovedProjectsByCurator), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public int MusicPitchingMaximumApprovedProjectsByCurator { get; set; }
+        public int? MusicPitchingMaximumApprovedProjectsByCurator { get; set; }
 
         [Display(Name = nameof(MusicPitchingPopularEvaluationStartDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -129,7 +129,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = nameof(MusicPitchingMaximumApprovedProjectsByPopularVote), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public int MusicPitchingMaximumApprovedProjectsByPopularVote { get; set; }
+        public int? MusicPitchingMaximumApprovedProjectsByPopularVote { get; set; }
 
         [Display(Name = nameof(MusicPitchingRepechageEvaluationStartDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -142,7 +142,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = nameof(MusicPitchingMaximumApprovedProjectsByRepechage), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public int MusicPitchingMaximumApprovedProjectsByRepechage { get; set; }
+        public int? MusicPitchingMaximumApprovedProjectsByRepechage { get; set; }
 
         #endregion
 
@@ -292,11 +292,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = nameof(Labels.CommissionMaximumApprovedProjectsCount), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public int CreatorCommissionMaximumApprovedProjectsCount { get; set; }
+        public int? CreatorCommissionMaximumApprovedProjectsCount { get; set; }
 
         [Display(Name = nameof(Labels.CommissionMinimumEvaluationsCount), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public int CreatorCommissionMinimumEvaluationsCount { get; set; }
+        public int? CreatorCommissionMinimumEvaluationsCount { get; set; }
 
         #endregion
 

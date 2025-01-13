@@ -104,6 +104,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
                     cmd.FirstName,
                     cmd.LastNames,
+                    cmd.StageName,
                     cmd.Email,
                     cmd.PhoneNumber,
                     cmd.CellPhone,
@@ -123,6 +124,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         true,
                         cmd.UserId);
                 }
+                
 
                 if (!collaborator.IsValid())
                 {
@@ -145,6 +147,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     true,
                     cmd.FirstName,
                     cmd.LastNames,
+                    cmd.StageName,
                     cmd.Email,
                     cmd.PhoneNumber,
                     cmd.CellPhone,

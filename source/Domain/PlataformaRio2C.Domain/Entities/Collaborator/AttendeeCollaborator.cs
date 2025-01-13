@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-26-2019
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 12-06-2024
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 01-08-2025
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,6 +33,7 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset? AudiovisualPlayerTermsAcceptanceDate { get; private set; }
         public DateTimeOffset? InnovationPlayerTermsAcceptanceDate { get; private set; }
         public DateTimeOffset? MusicPlayerTermsAcceptanceDate { get; private set; }
+        public DateTimeOffset? MusicProducerTermsAcceptanceDate { get; private set; }
         public DateTimeOffset? AudiovisualProducerBusinessRoundTermsAcceptanceDate { get; private set; }
         public DateTimeOffset? AudiovisualProducerPitchingTermsAcceptanceDate { get; private set; }        
         public DateTimeOffset? SpeakerTermsAcceptanceDate { get; private set; }
@@ -1210,6 +1211,16 @@ namespace PlataformaRio2C.Domain.Entities
         public void OnboardMusicPlayerTermsAcceptance(int userId)
         {
             this.MusicPlayerTermsAcceptanceDate = DateTime.UtcNow;
+            this.SetUpdateDate(userId);
+        }
+
+        /// <summary>
+        /// Called when [music player terms acceptance].
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        public void OnboardMusicProducerTermsAcceptanceDate(int userId)
+        {
+            this.MusicProducerTermsAcceptanceDate = DateTime.UtcNow;
             this.SetUpdateDate(userId);
         }
 

@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 04-03-2021
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 04-23-2020
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 01-07-2025
 // ***********************************************************************
 // <copyright file="music.projects.evaluators.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -31,7 +31,7 @@ var MusicProjectsEvaluatorsWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.projectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/ShowEvaluatorsWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/PitchingProjects/ShowEvaluatorsWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

@@ -630,9 +630,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                        MusicBandType = mp.AttendeeMusicBand.MusicBand.MusicBandType,
                                                        MusicProjectApiDto = new MusicProjectApiDto
                                                        {
-                                                           Clipping1 = mp.Clipping1,
-                                                           Clipping2 = mp.Clipping2,
-                                                           Clipping3 = mp.Clipping3,
+                                                           Clipping = mp.Clipping1,
                                                            Music1Url = mp.Music1Url,
                                                            Music2Url = mp.Music2Url,
                                                            Release = mp.Release,
@@ -643,7 +641,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                            Name = ambc.AttendeeCollaborator.Collaborator.FirstName,
                                                            Email = ambc.AttendeeCollaborator.Collaborator.User.Email,
                                                            Document = ambc.AttendeeCollaborator.Collaborator.Document,
-                                                           CellPhone = ambc.AttendeeCollaborator.Collaborator.CellPhone,
                                                            PhoneNumber = ambc.AttendeeCollaborator.Collaborator.PhoneNumber,
                                                            Country = ambc.AttendeeCollaborator.Collaborator.Address.Country.Name,
                                                            State = ambc.AttendeeCollaborator.Collaborator.Address.State.Name,
