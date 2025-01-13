@@ -3,8 +3,8 @@
 // Author           : Gilson Oliveira
 // Created          : 29-10-2024
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 29-10-2024
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-13-2025
 // ***********************************************************************
 // <copyright file="CreatePitchingProjectCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 11-06-2019
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 29-11-2024
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-13-2025
 // ***********************************************************************
 // <copyright file="CreateAudiovisualBusinessRoundProject.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
