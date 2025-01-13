@@ -356,6 +356,10 @@
     <Compile Include="Migrations\202501092310114_AddStagenameFieldToCollaborators.Designer.cs">
       <DependentUpon>202501092310114_AddStagenameFieldToCollaborators.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202501071924046_AddMusicProducerTermsAcceptanceDateFieldToAttendeeCollaborators.cs" />
+    <Compile Include="Migrations\202501071924046_AddMusicProducerTermsAcceptanceDateFieldToAttendeeCollaborators.Designer.cs">
+      <DependentUpon>202501071924046_AddMusicProducerTermsAcceptanceDateFieldToAttendeeCollaborators.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -367,6 +371,9 @@
     <Compile Include="Migrations\202411140217302_AddMusicPitchingFieldToEditions.Designer.cs">
       <DependentUpon>202411140217302_AddMusicPitchingFieldToEditions.cs</DependentUpon>
     </Compile>
+    <Content Include="Migrations\Scripts\202501071924046_AddMusicProducerTermsAcceptanceDateFieldToAttendeeCollaborators.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Migrations\Scripts\202411282335052_AddCuratorEvaluationToAttendeeMusicBandEvaluations.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -498,7 +505,7 @@
     <Content Include="Migrations\Scripts\202411220133475_AddEvaluatorUserIdToAttendeeMusicBands.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Migrations\Scripts\202411140217302_AddMusicPitchingFieldToEditions.up.sql">
+    <Content Include="Migrations\Scripts\202501071924046_AddMusicProducerTermsAcceptanceDateFieldToAttendeeCollaborators.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202501061732011_DeleteDuplicatedTargetAudience.down.sql">
@@ -695,6 +702,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202501092310114_AddStagenameFieldToCollaborators.resx">
       <DependentUpon>202501092310114_AddStagenameFieldToCollaborators.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501071924046_AddMusicProducerTermsAcceptanceDateFieldToAttendeeCollaborators.resx">
+      <DependentUpon>202501071924046_AddMusicProducerTermsAcceptanceDateFieldToAttendeeCollaborators.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

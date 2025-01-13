@@ -131,6 +131,10 @@
   <data name="ChatIsOffline" xml:space="preserve">
     <value>A Rede Rio2C está dessincronizada, recarregue a página para sincronizar novamente.</value>
   </data>
+  <data name="CommissionProjectsDates" xml:space="preserve">
+    <value>&lt;li&gt;Projetos disponíveis para avaliação a partir de: {0}&lt;/li&gt;
+&lt;li&gt;Período de avaliação: {0} a {1}&lt;/li&gt;</value>
+  </data>
   <data name="ConferenceSoon" xml:space="preserve">
     <value>A programação do Rio2C será divulgada a partir de fevereiro.</value>
     <comment>A programação do Rio2C será divulgada à partir de fevereiro.</comment>
@@ -325,10 +329,6 @@ maira@rio2c.com&lt;br/&gt;
   <data name="LinksImageTeaser" xml:space="preserve">
     <value>(Não serão aceitos links para download, só para sites de compartilhamento de imagem ou vídeo, ex: youtube e Vimeo.) </value>
   </data>
-  <data name="CommissionProjectsDates" xml:space="preserve">
-    <value>&lt;li&gt;Projetos disponíveis para avaliação a partir de: {0}&lt;/li&gt;
-&lt;li&gt;Período de avaliação: {0} a {1}&lt;/li&gt;</value>
-  </data>
   <data name="MyRio2cDescription" xml:space="preserve">
     <value>MyRio2C é a plataforma criada pelo Rio2C para integrar os participantes antes do evento e promover mais um ambiente de negócios para quem vai ao evento.&lt;br/&gt;
 No MyRio2C, os participantes poderão consultar a programação e montar a agenda, mesmo antes do evento, conhecer os demais participantes através da pesquisa de perfis e empresas, ter acesso ao seu e-ticket e se cadastrar no Banco de Talentos.&lt;br/&gt;
@@ -497,7 +497,6 @@ O MyRio2C também é um canal de comunicação do Rio2C com você, trazendo info
   </data>
   <data name="WelcomeLogin" xml:space="preserve">
     <value>O maior evento de criatividade e inovação da América Latina.</value>
-    
   </data>
   <data name="WelcomeText" xml:space="preserve">
     <value>&lt;p&gt;Olá @{Name},&lt;/p&gt;
@@ -521,5 +520,10 @@ O MyRio2C também é um canal de comunicação do Rio2C com você, trazendo info
   <data name="YouAreCurrentlyBrowsingAs" xml:space="preserve">
     <value>Você está acessando como</value>
     <comment>Você está acessando como</comment>
+  </data>
+  <data name="ProducerMusicProjectsDates" xml:space="preserve">
+    <value>&lt;li&gt;Submissão de projetos para as Rodadas de Negócios e Pitching de Música : {0} a {1}&lt;/li&gt;
+&lt;li&gt;Período de avaliação: {2} a {3}&lt;/li&gt;
+&lt;li&gt;Agenda online disponível em: {4}&lt;/li&gt;</value>
   </data>
 </root>
