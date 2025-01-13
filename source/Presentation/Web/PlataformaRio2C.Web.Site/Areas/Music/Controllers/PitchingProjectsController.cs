@@ -38,7 +38,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
     /// <summary>ProjectsController</summary>
     [AjaxAuthorize(Order = 1)]
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.CommissionMusic + "," + Constants.CollaboratorType.CommissionMusicCurator)]
-    public class ProjectsController : BaseController
+    public class PitchingProjectsController : BaseController
     {
         private readonly IMusicProjectRepository musicProjectRepo;
         private readonly IMusicGenreRepository musicGenreRepo;
@@ -47,7 +47,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         private readonly IAttendeeMusicBandEvaluationRepository attendeeMusicBandEvaluationRepo;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProjectsController" /> class.
+        /// Initializes a new instance of the <see cref="PitchingProjectsController" /> class.
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
@@ -56,7 +56,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         /// <param name="evaluationStatusRepository">The evaluation status repository.</param>
         /// <param name="musicBandRepository">The music band repository.</param>
         /// <param name="attendeeMusicBandEvaluationRepo">The attendee music band evaluation repo.</param>
-        public ProjectsController(
+        public PitchingProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
             IMusicProjectRepository musicProjectRepository,

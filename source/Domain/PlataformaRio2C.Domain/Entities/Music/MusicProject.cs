@@ -63,9 +63,7 @@ namespace PlataformaRio2C.Domain.Entities
             string videoUrlPassword,
             string music1Url,
             string music2Url,
-            string clipping1,
-            string clipping2,
-            string clipping3,
+            string clipping,
             string release,
             int userId)
         {
@@ -75,9 +73,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.VideoUrlPassword = videoUrlPassword;
             this.Music1Url = music1Url?.Trim();
             this.Music2Url = music2Url?.Trim();
-            this.Clipping1 = clipping1?.Trim();
-            this.Clipping2 = clipping2?.Trim();
-            this.Clipping3 = clipping3?.Trim();
+            this.Clipping1 = clipping?.Trim();
             this.Release = release?.Trim();
 
             //this.ProjectEvaluationStatusId = ProjectEvaluationStatus.UnderEvaluation.Id;

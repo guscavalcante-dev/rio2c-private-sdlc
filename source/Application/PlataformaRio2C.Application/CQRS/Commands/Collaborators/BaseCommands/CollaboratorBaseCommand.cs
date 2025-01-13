@@ -34,6 +34,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(200, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string LastNames { get; set; }
 
+        [Display(Name = "StageName", ResourceType = typeof(Labels))]
+        [StringLength(200, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string StageName { get; set; }
+
         [Display(Name = "Email", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [EmailAddress(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "EmailISInvalid")]
@@ -181,6 +185,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public void UpdateBaseProperties(
             string firstName,
             string lastName,
+            string stageName,
             string email,
             string phoneNumber,
             string cellPhone,
@@ -194,11 +199,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             this.FirstName = firstName;
             this.LastNames = lastName;
+            this.StageName = stageName;
             this.Email = email;
             this.PhoneNumber = phoneNumber;
             this.CellPhone = cellPhone;
             this.Document = document;
-
             this.Address = address;
             this.Country = country;
             this.State = state;

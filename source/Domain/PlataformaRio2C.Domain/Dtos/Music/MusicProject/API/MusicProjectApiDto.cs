@@ -31,14 +31,8 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonProperty(PropertyName = "music2Url", Order = 300)]
         public string Music2Url { get; set; }
 
-        [JsonProperty(PropertyName = "clipping1", Order = 400)]
-        public string Clipping1 { get; set; }
-
-        [JsonProperty(PropertyName = "clipping2", Order = 500)]
-        public string Clipping2 { get; set; }
-
-        [JsonProperty(PropertyName = "clipping3", Order = 600)]
-        public string Clipping3 { get; set; }
+        [JsonProperty(PropertyName = "clipping", Order = 400)]
+        public string Clipping { get; set; }
 
         [JsonProperty(PropertyName = "release", Order = 700)]
         public string Release { get; set; }
@@ -59,9 +53,9 @@ namespace PlataformaRio2C.Domain.Dtos
                 this.VideoUrlPassword,
                 this.Music1Url,
                 this.Music2Url,
-                this.Clipping1,
-                this.Clipping2,
-                this.Clipping3,
+                this.Clipping,
+                null,
+                null,
                 this.Release,
                 userId);
         }

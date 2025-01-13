@@ -125,9 +125,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var attendeeCollaboratorTicketsInformationDto = await attendeeCollaboratorRepo.FindUserTicketsInformationDtoByEmail(editionDto.Id, cmd.MusicBandResponsibleApiDto.Email);
 
-            // Pitching validations
-            if (cmd.MusicBandDataApiDtos.Any(dto => dto.WouldYouLikeParticipatePitching))
-            {
                 var attendeeMusicBandsCount = await this.attendeeMusicBandRepo.CountByEditionIdAsync(editionDto.Id);
                 attendeeMusicBandsCount += cmd.MusicBandDataApiDtos.Count;
                 if (attendeeMusicBandsCount > editionDto.MusicPitchingMaximumProjectSubmissionsByEdition)
@@ -141,7 +138,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     this.AppValidationResult.Add(this.ValidationResult);
                     return this.AppValidationResult;
                 }
-                
+
                 attendeeMusicBandsCount = await this.attendeeMusicBandRepo.CountByResponsibleAsync(editionDto.Id, cmd.MusicBandResponsibleApiDto.Document, cmd.MusicBandResponsibleApiDto.Email);
                 attendeeMusicBandsCount += cmd.MusicBandDataApiDtos.Count;
                 if (attendeeMusicBandsCount > editionDto.MusicPitchingMaximumProjectSubmissionsByParticipant)
@@ -162,8 +159,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     // Is a new responsible, validate if have subscriptions available by document type
                     var newAttendeeCollaboratorTicketsInformationDto = new AttendeeCollaboratorTicketsInformationDto(editionDto.Edition);
                     if (!newAttendeeCollaboratorTicketsInformationDto.HasMusicPitchingProjectsSubscriptionsAvailable(
-                            cmd.MusicBandResponsibleApiDto.Document, 
-                            cmd.MusicBandDataApiDtos.Count(dto => dto.WouldYouLikeParticipatePitching))) 
+                            cmd.MusicBandResponsibleApiDto.Document,
+                            cmd.MusicBandDataApiDtos.Count()))
                     {
                         string validationMessage = string.Format(Messages.YouCanSubmitMaxXProjectsFor,
                                                                  newAttendeeCollaboratorTicketsInformationDto.GetMusicPitchingMaxSellProjectsCount(cmd.MusicBandResponsibleApiDto.Document),
@@ -178,46 +175,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 {
                     // Has no more subscriptions available
                     if (!attendeeCollaboratorTicketsInformationDto.HasMusicPitchingProjectsSubscriptionsAvailable(
-                            cmd.MusicBandResponsibleApiDto.Document, 
-                            cmd.MusicBandDataApiDtos.Count(dto => dto.WouldYouLikeParticipatePitching)))
+                            cmd.MusicBandResponsibleApiDto.Document,
+                            cmd.MusicBandDataApiDtos.Count()))
                     {
                         this.ValidationResult.Add(new ValidationError(string.Format(Messages.ProjectRegistrationLimitReachedFor, Labels.MusicProjects, Labels.Pitching)));
                         this.AppValidationResult.Add(this.ValidationResult);
                         return this.AppValidationResult;
                     }
                 }
-            }
-
-            // Business Rounds validations
-            if (cmd.MusicBandDataApiDtos.Any(dto => dto.WouldYouLikeParticipateBusinessRound))
-            {
-                // Has no existent responsible, so, has no ticket. Cannot subscribe projects for Business Rounds
-                if (attendeeCollaboratorTicketsInformationDto == null)
-                {
-                    this.ValidationResult.Add(new ValidationError(string.Format(Messages.NoTicketsFoundForEmail, cmd.MusicBandResponsibleApiDto.Email)));
-                    this.AppValidationResult.Add(this.ValidationResult);
-                    return this.AppValidationResult;
-                }
-                else
-                {
-                    // Has existent responsible, but, has no ticket. Cannot subscribe projects for Business Rounds
-                    if (!attendeeCollaboratorTicketsInformationDto.HasTicket())
-                    {
-                        this.ValidationResult.Add(new ValidationError(string.Format(Messages.NoTicketsFoundForEmail, cmd.MusicBandResponsibleApiDto.Email)));
-                        this.AppValidationResult.Add(this.ValidationResult);
-                        return this.AppValidationResult;
-                    }
-
-                    // Has no more subscriptions available
-                    if (!attendeeCollaboratorTicketsInformationDto.HasMusicBusinessRoundsProjectsSubscriptionsAvailable(
-                            cmd.MusicBandDataApiDtos.Count(dto => dto.WouldYouLikeParticipateBusinessRound)))
-                    {
-                        this.ValidationResult.Add(new ValidationError(string.Format(Messages.ProjectRegistrationLimitReachedFor, Labels.MusicProjects, Labels.BusinessRound)));
-                        this.AppValidationResult.Add(this.ValidationResult);
-                        return this.AppValidationResult;
-                    }
-                }
-            }
 
             #endregion
 
@@ -234,9 +199,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 createCollaboratorCommand.UpdateBaseProperties(
                     cmd.MusicBandResponsibleApiDto.Name,
                     null,
+                    cmd.MusicBandResponsibleApiDto.StageName,
                     cmd.MusicBandResponsibleApiDto.Email,
                     cmd.MusicBandResponsibleApiDto.PhoneNumber,
-                    cmd.MusicBandResponsibleApiDto.CellPhone,
+                    null,
                     cmd.MusicBandResponsibleApiDto.Document,
                     cmd.MusicBandResponsibleApiDto.Address,
                     cmd.MusicBandResponsibleApiDto.Country,
@@ -282,9 +248,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 updateCollaboratorCommand.UpdateBaseProperties(
                     cmd.MusicBandResponsibleApiDto.Name,
                     null,
+                    cmd.MusicBandResponsibleApiDto.StageName,
                     cmd.MusicBandResponsibleApiDto.Email,
                     cmd.MusicBandResponsibleApiDto.PhoneNumber,
-                    cmd.MusicBandResponsibleApiDto.CellPhone,
+                    null,
                     cmd.MusicBandResponsibleApiDto.Document,
                     cmd.MusicBandResponsibleApiDto.Address,
                     cmd.MusicBandResponsibleApiDto.Country,
@@ -335,20 +302,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     editionDto.Edition,
                     musicBandDataApiDto.Name,
                     musicBandDataApiDto.FormationDate,
-                    musicBandDataApiDto.MainMusicInfluences,
-                    musicBandDataApiDto.Facebook,
+                    musicBandDataApiDto.Deezer,
                     musicBandDataApiDto.Instagram,
-                    musicBandDataApiDto.Twitter,
+                    musicBandDataApiDto.Spotify,
                     musicBandDataApiDto.Youtube,
-                    musicBandDataApiDto.Tiktok,
-                    musicBandDataApiDto.WouldYouLikeParticipateBusinessRound,
-                    musicBandDataApiDto.WouldYouLikeParticipatePitching,
                     !string.IsNullOrEmpty(musicBandDataApiDto.ImageFile),
                     musicBandDataApiDto.MusicProjectApiDto.ToMusicProject(cmd.UserId),
                     collaboratorDto?.EditionAttendeeCollaborator,
                     musicBandDataApiDto.MusicGenresApiDtos.Select(dto => dto.ToMusicBandGenre(cmd.UserId))?.ToList(),
-                    musicBandDataApiDto.TargetAudiencesApiDtos.Select(dto => dto.ToMusicBandTargetAudience(cmd.UserId))?.ToList(),
-                    musicBandDataApiDto.MusicBandMembersApiDtos.Select(dto => dto.ToMusicBandMember(cmd.UserId))?.ToList(),
                     musicBandDataApiDto.MusicBandTeamMembersApiDtos.Select(dto => dto.ToMusicBandTeamMember(cmd.UserId))?.ToList(),
                     musicBandDataApiDto.ReleasedMusicProjectsApiDtos.Select(dto => dto.ToReleasedMusicProject(cmd.UserId))?.ToList(),
                     cmd.UserId);
@@ -387,26 +348,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             foreach (var musicBandDataApiDto in cmd.MusicBandDataApiDtos)
             {
-                // ---------------------------------------------------
-                // TargetAudiencesApiDtos
-                // ---------------------------------------------------
-                musicBandDataApiDto.TargetAudiencesApiDtos = musicBandDataApiDto.TargetAudiencesApiDtos.Select(ta =>
-                                                               new TargetAudienceApiDto()
-                                                               {
-                                                                   Uid = ta.Uid,
-                                                                   TargetAudience = this.targetAudienceRepo.Get(ta.Uid)
-                                                               }).ToList();
-
-                if (musicBandDataApiDto.TargetAudiencesApiDtos.Any(dto => dto.TargetAudience == null))
-                {
-                    var uidsNotFound = musicBandDataApiDto.TargetAudiencesApiDtos.Where(dto => dto.TargetAudience == null).Select(dto => dto.Uid);
-
-                    validationResult.Add(new ValidationError(string.Format(
-                        Messages.EntityNotAction,
-                        $@"{MusicBandDataApiDto.GetJsonPropertyAttributeName(nameof(MusicBandDataApiDto.TargetAudiencesApiDtos))}: {string.Join(", ", uidsNotFound)}",
-                        Labels.FoundM)));
-                }
-
                 // ---------------------------------------------------
                 // MusicGenresApiDtos
                 // ---------------------------------------------------

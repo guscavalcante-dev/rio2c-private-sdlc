@@ -349,8 +349,6 @@ namespace PlataformaRio2C.Domain.Entities
                 musicProject.Music1Url,
                 musicProject.Music2Url,
                 musicProject.Clipping1,
-                musicProject.Clipping2,
-                musicProject.Clipping3,
                 musicProject.Release,
                 userId));
         }

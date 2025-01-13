@@ -131,6 +131,12 @@
   <data name="ChatIsOffline" xml:space="preserve">
     <value>The Rio2C Network is out of sync, reload the page to sync again.</value>
   </data>
+  <data name="CommissionProjectsDates" xml:space="preserve">
+    <value>&lt;li&gt;Projects available for evaluation starting from: {0}&lt;/li&gt;
+&lt;li&gt;Evaluation period: {0} to {1}&lt;/li&gt;</value>
+    <comment>&lt;li&gt;Projetos disponíveis para avaliação a partir de: {0}&lt;/li&gt;
+&lt;li&gt;Período de avaliação: {0} a {1}&lt;/li&gt;</comment>
+  </data>
   <data name="ConferenceSoon" xml:space="preserve">
     <value>Rio2C's programming will be announced starting from February.</value>
     <comment>The programming of Rio2C will be announced starting in February.</comment>
@@ -212,12 +218,6 @@
   </data>
   <data name="LinksImageTeaser" xml:space="preserve">
     <value>(Links for download will not be accepted, only for image or video sharing sites, ex: youtube e Vimeo.)</value>
-  </data>
-  <data name="CommissionProjectsDates" xml:space="preserve">
-    <value>&lt;li&gt;Projects available for evaluation starting from: {0}&lt;/li&gt;
-&lt;li&gt;Evaluation period: {0} to {1}&lt;/li&gt;</value>
-    <comment>&lt;li&gt;Projetos disponíveis para avaliação a partir de: {0}&lt;/li&gt;
-&lt;li&gt;Período de avaliação: {0} a {1}&lt;/li&gt;</comment>
   </data>
   <data name="MyRio2cDescription" xml:space="preserve">
     <value>MyRio2C is a platform designed to connect participants prior to the event and to cultivate an online business environment for all those attending.&lt;br/&gt;
@@ -416,5 +416,10 @@ O MyRio2C também é um canal de comunicação do Rio2C com você, trazendo info
   <data name="YouAreCurrentlyBrowsingAs" xml:space="preserve">
     <value>You are currently browsing as</value>
     <comment>Você está acessando como</comment>
+  </data>
+  <data name="ProducerMusicProjectsDates" xml:space="preserve">
+    <value>&lt;li&gt;Projects submissions for One-to-One Meetings and Music Pitching: {0} a {1}&lt;/li&gt;
+&lt;li&gt;Evaluation Period: {2} a {3}&lt;/li&gt;
+&lt;li&gt;Agenda Available Online: {4}&lt;/li&gt;</value>
   </data>
 </root>
