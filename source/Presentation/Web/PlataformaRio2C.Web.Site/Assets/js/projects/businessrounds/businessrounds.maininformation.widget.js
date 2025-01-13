@@ -80,6 +80,7 @@ var ProjectsMainInformationWidget = function () {
         //MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2' });
         MyRio2cInputMask.enableMask('#TotalPlayingTime', '99:99:99');
         MyRio2cInputMask.enableMask('#EachEpisodePlayingTime', '99:99:99');
+        MyRio2cCommon.enableYesNoRadioEvent("HasAnyTypeOfFinancing");
         enableAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: updateModalId + ' .enable-select2', allowClear: true });

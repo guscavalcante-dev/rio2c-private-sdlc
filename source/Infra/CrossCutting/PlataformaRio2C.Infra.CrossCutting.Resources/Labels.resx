@@ -1310,6 +1310,9 @@
     <value>Possui necessidades especiais?</value>
     <comment>Possui necessidades especiais?</comment>
   </data>
+  <data name="HasAnyTypeOfFinancing" xml:space="preserve">
+    <value>Já possui algum tipo de financiamento?</value>
+  </data>
   <data name="HaveYouBeenToRio2CBefore" xml:space="preserve">
     <value>Já esteve em outras edições do Rio2C?</value>
     <comment>Já esteve em outras edições do Rio2C?</comment>
@@ -3449,6 +3452,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="WhichSpecialNeedsQ" xml:space="preserve">
     <value>Qual?</value>
     <comment>Qual?</comment>
+  </data>
+  <data name="WhichTypeOfFinancing" xml:space="preserve">
+    <value>Qual modelo? (aprovado em lei de incentivo, edital, patrocinador, etc)</value>
   </data>
   <data name="With" xml:space="preserve">
     <value>Com</value>

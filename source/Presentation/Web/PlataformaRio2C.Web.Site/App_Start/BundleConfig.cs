@@ -309,46 +309,44 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
 
-            #region Projects - Negotiations
+            #region Projects - Business Rounds
 
-            bundles.Add(new ScriptBundle("~/bundles/js/projects.producerinfo.js").Include(
-                "~/Assets/js/projects/projects.producerinfo.js",
+            bundles.Add(new ScriptBundle("~/bundles/js/businessrounds.producerinfo.js").Include(
+                "~/Assets/js/projects/businessrounds/businessrounds.producerinfo.js",
                 "~/Assets/js/companies/companyinfo.autocomplete.js",
                 "~/Assets/js/myrio2c.companynumber.js",
                 "~/Assets/js/myrio2c.additionalinfo.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/projects.projectinfo.js").Include(
-                "~/Assets/js/projects/projects.projectinfo.js",
+            bundles.Add(new ScriptBundle("~/bundles/js/businessrounds.projectinfo.js").Include(
+                "~/Assets/js/projects/businessrounds/businessrounds.projectinfo.js",
                 "~/Assets/js/myrio2c.additionalinfo.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/projects.buyercompany.widget.js").Include(
-                "~/Assets/js/projects/projects.buyercompany.widget.js",
+            bundles.Add(new ScriptBundle("~/bundles/js/businessrounds.buyercompany.widget.js").Include(
+                "~/Assets/js/projects/businessrounds/businessrounds.buyercompany.widget.js",
                 "~/Scripts/jquery.unobtrusive-ajax.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/projects.widget.js").Include(
-                "~/Assets/js/projects/projects.maininformation.widget.js",
-                "~/Assets/js/projects/projects.interest.widget.js",
-                "~/Assets/js/projects/projects.links.widget.js",
-                "~/Assets/js/myrio2c.additionalinfo.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/projects/businessrounds.widget.js").Include(
+            bundles.Add(new ScriptBundle("~/bundles/js/businessrounds.widget.js").Include(
                 "~/Assets/js/projects/businessrounds/businessrounds.maininformation.widget.js",
                 "~/Assets/js/projects/businessrounds/businessrounds.interest.widget.js",
                 "~/Assets/js/projects/businessrounds/businessrounds.links.widget.js",
                 "~/Assets/js/myrio2c.additionalinfo.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/projects/pitching.widget.js").Include(
-                "~/Assets/js/projects/pitching/pitching.maininformation.widget.js",
-                "~/Assets/js/projects/pitching/pitching.interest.widget.js",
-                "~/Assets/js/projects/pitching/pitching.links.widget.js",
-                "~/Assets/js/myrio2c.additionalinfo.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/projects.buyerevaluation.list.widget.js").Include(
-                "~/Assets/js/projects/projects.buyerevaluation.list.widget.js",
+            bundles.Add(new ScriptBundle("~/bundles/js/businessrounds.buyerevaluation.list.widget.js").Include(
+                "~/Assets/js/projects/businessrounds/businessrounds.buyerevaluation.list.widget.js",
                 "~/Scripts/jquery.unobtrusive-ajax.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/projects.buyerevaluation.update.widget.js").Include(
-                "~/Assets/js/projects/projects.buyerevaluation.update.widget.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/businessrounds.buyerevaluation.update.widget.js").Include(
+                "~/Assets/js/projects/businessrounds/businessrounds.buyerevaluation.update.widget.js"));
+
+            #endregion
+
+            #region Projects - Pitching
+
+            bundles.Add(new ScriptBundle("~/bundles/js/pitching.widget.js").Include(
+               "~/Assets/js/projects/pitching/pitching.maininformation.widget.js",
+               "~/Assets/js/projects/pitching/pitching.interest.widget.js",
+               "~/Assets/js/projects/pitching/pitching.links.widget.js",
+               "~/Assets/js/myrio2c.additionalinfo.js"));
 
             #endregion
 

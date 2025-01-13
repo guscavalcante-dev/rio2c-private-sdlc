@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 02-21-2020
 // ***********************************************************************
-// <copyright file="projects.buyerevaluation.update.widget.js" company="Softo">
+// <copyright file="businessrounds.buyerevaluation.update.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>

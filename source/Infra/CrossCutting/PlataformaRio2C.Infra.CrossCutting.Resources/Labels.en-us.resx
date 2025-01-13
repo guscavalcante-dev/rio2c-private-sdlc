@@ -374,6 +374,9 @@
   <data name="AudiovisualPitchingRules" xml:space="preserve">
     <value>Pitching rules</value>
   </data>
+  <data name="AudiovisualPitchingRules1" xml:space="preserve">
+    <value>Pitching rules</value>
+  </data>
   <data name="AudiovisualPitchingRulesShorted" xml:space="preserve">
     <value>Pitching rules</value>
   </data>
@@ -1774,12 +1777,6 @@
     <value>Musical instrument</value>
     <comment>Instrumento musical</comment>
   </data>
-  <data name="MusicPitchingSubmitEndDate" xml:space="preserve">
-    <value>Music project submission end date</value>
-  </data>
-  <data name="MusicPitchingSubmitStartDate" xml:space="preserve">
-    <value>Music project submission start date</value>
-  </data>
   <data name="MusicPitchingCuratorEvaluationEndDate" xml:space="preserve">
     <value>End date for project evaluation by the curator</value>
   </data>
@@ -1815,6 +1812,12 @@
   </data>
   <data name="MusicPitchingRepechageEvaluationStartDate" xml:space="preserve">
     <value>Start date for project evaluation by repechage</value>
+  </data>
+  <data name="MusicPitchingSubmitEndDate" xml:space="preserve">
+    <value>Music project submission end date</value>
+  </data>
+  <data name="MusicPitchingSubmitStartDate" xml:space="preserve">
+    <value>Music project submission start date</value>
   </data>
   <data name="MusicPlayer" xml:space="preserve">
     <value>Music Player</value>
@@ -3486,8 +3489,5 @@
   <data name="ZoomOut" xml:space="preserve">
     <value>Zoom Out</value>
     <comment>Menos Zoom</comment>
-  </data>
-  <data name="AudiovisualPitchingRules1" xml:space="preserve">
-    <value>Pitching rules</value>
   </data>
 </root>

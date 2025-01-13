@@ -34,6 +34,8 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int ValueAlreadyRaisedMaxLength = 50;
         public static readonly int ValueStillNeededMinLength = 1;
         public static readonly int ValueStillNeededMaxLength = 50;
+        public static readonly int WhichTypeOfFinancingDescriptionMinLength = 1;
+        public static readonly int WhichTypeOfFinancingDescriptionMaxLength = 300;
 
         public int ProjectTypeId { get; private set; }
         public int SellerAttendeeOrganizationId { get; private set; }
@@ -44,6 +46,8 @@ namespace PlataformaRio2C.Domain.Entities
         public string TotalValueOfProject { get; private set; }
         public string ValueAlreadyRaised { get; private set; }
         public string ValueStillNeeded { get; private set; }
+        public bool HasAnyTypeOfFinancing { get; private set; }
+        public string WhichTypeOfFinancingDescription { get; private set; }
         public DateTimeOffset? FinishDate { get; private set; }
         public int ProjectBuyerEvaluationsCount { get; private set; }
         public int CommissionEvaluationsCount { get; private set; }
@@ -69,7 +73,9 @@ namespace PlataformaRio2C.Domain.Entities
         private bool IsAdmin = false;
         public int ProjectModalityId { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="Project"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Project" /> class.
+        /// </summary>
         /// <param name="projectType">Type of the project.</param>
         /// <param name="sellerAttendeeOrganization">The seller attendee organization.</param>
         /// <param name="totalPlayingTime">The total playing time.</param>
@@ -79,6 +85,8 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="totalValueOfProject">The total value of project.</param>
         /// <param name="valueAlreadyRaised">The value already raised.</param>
         /// <param name="valueStillNeeded">The value still needed.</param>
+        /// <param name="hasAnyTypeOfFinancing">if set to <c>true</c> [has any type of financing].</param>
+        /// <param name="whichTypeOfFinancingDescription">The wich type of financing description.</param>
         /// <param name="projectTitles">The project titles.</param>
         /// <param name="projectLogLines">The project log lines.</param>
         /// <param name="projectSummaries">The project summaries.</param>
@@ -100,6 +108,8 @@ namespace PlataformaRio2C.Domain.Entities
             string totalValueOfProject,
             string valueAlreadyRaised,
             string valueStillNeeded,
+            bool hasAnyTypeOfFinancing,
+            string whichTypeOfFinancingDescription,
             List<ProjectTitle> projectTitles,
             List<ProjectLogLine> projectLogLines,
             List<ProjectSummary> projectSummaries,
@@ -126,6 +136,9 @@ namespace PlataformaRio2C.Domain.Entities
             this.TotalValueOfProject = totalValueOfProject?.Trim();
             this.ValueAlreadyRaised = valueAlreadyRaised?.Trim();
             this.ValueStillNeeded = valueStillNeeded?.Trim();
+            this.HasAnyTypeOfFinancing = hasAnyTypeOfFinancing;
+            this.WhichTypeOfFinancingDescription = whichTypeOfFinancingDescription?.Trim();
+
             this.FinishDate = null;
             this.ProjectBuyerEvaluationsCount = 0;
 
@@ -139,9 +152,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeProjectImageLinks(imageLink, userId);
             this.SynchronizeProjectTeaserLinks(teaserLink, userId);
 
-            this.IsDeleted = false;
-            this.CreateUserId = this.UpdateUserId = userId;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.SetCreateDate(userId);
         }
 
         /// <summary>Initializes a new instance of the <see cref="Project"/> class.</summary>
@@ -159,6 +170,8 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="totalValueOfProject">The total value of project.</param>
         /// <param name="valueAlreadyRaised">The value already raised.</param>
         /// <param name="valueStillNeeded">The value still needed.</param>
+        /// <param name="hasAnyTypeOfFinancing">if set to <c>true</c> [has any type of financing].</param>
+        /// <param name="whichTypeOfFinancingDescription">The which type of financing description.</param>
         /// <param name="projectTitles">The project titles.</param>
         /// <param name="projectLogLines">The project log lines.</param>
         /// <param name="projectSummaries">The project summaries.</param>
@@ -166,6 +179,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="projectAdditionalInformations">The project additional informations.</param>
         /// <param name="userId">The user identifier.</param>
         /// <param name="isAdmin">if set to <c>true</c> [is admin].</param>
+        /// <param name="projectModality">The project modality.</param>
         public void UpdateMainInformation(
             string totalPlayingTime,
             int? numberOfEpisodes,
@@ -174,6 +188,8 @@ namespace PlataformaRio2C.Domain.Entities
             string totalValueOfProject,
             string valueAlreadyRaised,
             string valueStillNeeded,
+            bool hasAnyTypeOfFinancing,
+            string whichTypeOfFinancingDescription,
             List<ProjectTitle> projectTitles,
             List<ProjectLogLine> projectLogLines,
             List<ProjectSummary> projectSummaries,
@@ -191,6 +207,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.TotalValueOfProject = totalValueOfProject?.Trim();
             this.ValueAlreadyRaised = valueAlreadyRaised?.Trim();
             this.ValueStillNeeded = valueStillNeeded?.Trim();
+            this.HasAnyTypeOfFinancing = hasAnyTypeOfFinancing;
+            this.WhichTypeOfFinancingDescription = whichTypeOfFinancingDescription?.Trim();
 
             this.SynchronizeProjectTitles(projectTitles, userId);
             this.SynchronizeProjectLogLines(projectLogLines, userId);
@@ -198,9 +216,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeProjectProductionPlans(projectProductionPlans, userId);
             this.SynchronizeProjectAdditionalInformations(projectAdditionalInformations, userId);
 
-            this.IsDeleted = false;
-            this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.UtcNow;
+            this.SetUpdateDate(userId);
 
             this.IsAdmin = isAdmin;
             this.ProjectModalityId = projectModality.Id;
@@ -1010,6 +1026,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateTotalValueOfProject();
             this.ValidateValueAlreadyRaised();
             this.ValidateValueStillNeeded();
+            this.ValidateWhichTypeOfFinancingDescription();
             this.ValidateProjectTitles();
             this.ValidateProjectLogLines();
             this.ValidateProjectSummaries();
@@ -1036,6 +1053,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateTotalValueOfProject();
             this.ValidateValueAlreadyRaised();
             this.ValidateValueStillNeeded();
+            this.ValidateWhichTypeOfFinancingDescription();
             this.ValidateProjectTitles();
             this.ValidateProjectLogLines();
             this.ValidateProjectSummaries();
@@ -1167,6 +1185,14 @@ namespace PlataformaRio2C.Domain.Entities
             if (!string.IsNullOrEmpty(this.ValueStillNeeded) && this.ValueStillNeeded?.Trim().Length > ValueStillNeededMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.ValueStillNeeded, ValueStillNeededMaxLength, ValueStillNeededMinLength), new string[] { "ValueStillNeeded" }));
+            }
+        }
+
+        public void ValidateWhichTypeOfFinancingDescription()
+        {
+            if (!string.IsNullOrEmpty(this.WhichTypeOfFinancingDescription) && this.WhichTypeOfFinancingDescription?.Trim().Length > WhichTypeOfFinancingDescriptionMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.WhichTypeOfFinancing, WhichTypeOfFinancingDescriptionMaxLength, WhichTypeOfFinancingDescriptionMinLength), new string[] { "WhichTypeOfFinancing" }));
             }
         }
 

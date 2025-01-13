@@ -334,7 +334,9 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Projects
 
-        /// <summary>Creates the project.</summary>
+        /// <summary>
+        /// Creates the project.
+        /// </summary>
         /// <param name="projectType">Type of the project.</param>
         /// <param name="totalPlayingTime">The total playing time.</param>
         /// <param name="numberOfEpisodes">The number of episodes.</param>
@@ -343,6 +345,8 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="totalValueOfProject">The total value of project.</param>
         /// <param name="valueAlreadyRaised">The value already raised.</param>
         /// <param name="valueStillNeeded">The value still needed.</param>
+        /// <param name="hasAnyTypeOfFinancing">if set to <c>true</c> [has any type of financing].</param>
+        /// <param name="whichTypeOfFinancingDescription">The wich type of financing description.</param>
         /// <param name="projectTitles">The project titles.</param>
         /// <param name="projectLogLines">The project log lines.</param>
         /// <param name="projectSummaries">The project summaries.</param>
@@ -363,6 +367,8 @@ namespace PlataformaRio2C.Domain.Entities
             string totalValueOfProject,
             string valueAlreadyRaised,
             string valueStillNeeded,
+            bool hasAnyTypeOfFinancing,
+            string whichTypeOfFinancingDescription,
             List<ProjectTitle> projectTitles,
             List<ProjectLogLine> projectLogLines,
             List<ProjectSummary> projectSummaries,
@@ -373,7 +379,8 @@ namespace PlataformaRio2C.Domain.Entities
             string imageLink,
             string teaserLink,
             int userId,
-            ProjectModality projectModality)
+            ProjectModality projectModality
+           )
         {
             if (this.SellProjects == null)
             {
@@ -397,6 +404,8 @@ namespace PlataformaRio2C.Domain.Entities
                     totalValueOfProject,
                     valueAlreadyRaised,
                     valueStillNeeded,
+                    hasAnyTypeOfFinancing,
+                    whichTypeOfFinancingDescription,
                     projectTitles,
                     projectLogLines,
                     projectSummaries,

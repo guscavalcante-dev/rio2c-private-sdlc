@@ -67,6 +67,18 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string ValueStillNeeded { get; set; }
 
+        #region Type of Financing
+
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public bool HasAnyTypeOfFinancing { get; set; }
+
+        [Display(Name = "WhichTypeOfFinancing", ResourceType = typeof(Labels))]
+        [RequiredIf("HasAnyTypeOfFinancing", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string WhichTypeOfFinancingDescription { get; set; }
+
+        #endregion
+
         public List<ProjectAdditionalInformationBaseCommand> AdditionalInformations { get; set; }
 
         public Guid ProjectTypeUid { get; private set; }
