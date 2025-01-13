@@ -40,32 +40,12 @@ namespace PlataformaRio2C.Domain.Dtos
         public string FormationDate { get; set; }
 
         [JsonRequired]
-        [JsonProperty("mainMusicInfluences")]
-        public string MainMusicInfluences { get; set; }
-
-        [JsonRequired]
-        [JsonProperty("wouldYouLikeParticipateBusinessRound")]
-        public bool WouldYouLikeParticipateBusinessRound { get; set; }
-
-        [JsonRequired]
-        [JsonProperty("wouldYouLikeParticipatePitching")]
-        public bool WouldYouLikeParticipatePitching { get; set; }
-
-        [JsonRequired]
         [JsonProperty("musicProject")]
         public MusicProjectApiDto MusicProjectApiDto { get; set; }
 
         [JsonRequired]
-        [JsonProperty("musicBandMembers")]
-        public List<MusicBandMemberApiDto> MusicBandMembersApiDtos { get; set; }
-
-        [JsonRequired]
         [JsonProperty("musicGenres")]
         public List<MusicGenreApiDto> MusicGenresApiDtos { get; set; }
-
-        [JsonRequired]
-        [JsonProperty("targetAudiences")]
-        public List<TargetAudienceApiDto> TargetAudiencesApiDtos { get; set; }
 
         /// <summary>
         /// Don't remove order. This is for JSON beauty design. 
@@ -79,20 +59,17 @@ namespace PlataformaRio2C.Domain.Dtos
 
         #region NotRequired
 
-        [JsonProperty("facebook")]
-        public string Facebook { get; set; }
-
         [JsonProperty("instagram")]
         public string Instagram { get; set; }
 
-        [JsonProperty("tiktok")]
-        public string Tiktok { get; set; }
-
-        [JsonProperty("x")]
-        public string Twitter { get; set; }
-
         [JsonProperty("youtube")]
         public string Youtube { get; set; }
+
+        [JsonProperty("spotify")]
+        public string Spotify { get; set; }
+
+        [JsonProperty("deezer")]
+        public string Deezer { get; set; }
 
         [JsonProperty("musicBandTeamMembers")]
         public List<MusicBandTeamMemberApiDto> MusicBandTeamMembersApiDtos { get; set; }
@@ -110,12 +87,6 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool IsValid()
         {
             this.ValidationResult = new ValidationResult();
-
-            if (this.WouldYouLikeParticipateBusinessRound == false &&
-                this.WouldYouLikeParticipatePitching == false)
-            {
-                this.ValidationResult.Add(new ValidationError($"{Messages.SelectAtLeastOneOfTheOptions}: {Messages.WouldYouLikeParticipateBusinessRound} | {Messages.WouldYouLikeParticipatePitching}"));
-            }
 
             return this.ValidationResult.IsValid;
         }

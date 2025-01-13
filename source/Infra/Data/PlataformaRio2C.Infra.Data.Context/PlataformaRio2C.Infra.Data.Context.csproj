@@ -348,6 +348,14 @@
     <Compile Include="Migrations\202412211741310_UpdateMigrations_202412211441.Designer.cs">
       <DependentUpon>202412211741310_UpdateMigrations_202412211441.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202501092256457_AddSocialNetworkFieldsToMusicBands.cs" />
+    <Compile Include="Migrations\202501092256457_AddSocialNetworkFieldsToMusicBands.Designer.cs">
+      <DependentUpon>202501092256457_AddSocialNetworkFieldsToMusicBands.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202501092310114_AddStagenameFieldToCollaborators.cs" />
+    <Compile Include="Migrations\202501092310114_AddStagenameFieldToCollaborators.Designer.cs">
+      <DependentUpon>202501092310114_AddStagenameFieldToCollaborators.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -499,7 +507,17 @@
     <Content Include="Migrations\Scripts\202412201728087_AttMusicPlayerForms.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Migrations\Scripts\202501061732011_DeleteDuplicatedTargetAudience.up.sql">
+    <Content Include="Migrations\Scripts\202501061732011_DeleteDuplicatedTargetAudience.up.sql" />
+    <Content Include="Migrations\Scripts\202501092310114_AddStagenameFieldToCollaborators.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202501092310114_AddStagenameFieldToCollaborators.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202501092256457_AddSocialNetworkFieldsToMusicBands.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202501092256457_AddSocialNetworkFieldsToMusicBands.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202412201728087_AttMusicPlayerForms.up.sql">
@@ -671,6 +689,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202501061732011_DeleteDuplicatedTargetAudience.resx">
       <DependentUpon>202501061732011_DeleteDuplicatedTargetAudience.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501092256457_AddSocialNetworkFieldsToMusicBands.resx">
+      <DependentUpon>202501092256457_AddSocialNetworkFieldsToMusicBands.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501092310114_AddStagenameFieldToCollaborators.resx">
+      <DependentUpon>202501092310114_AddStagenameFieldToCollaborators.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

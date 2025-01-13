@@ -23,15 +23,15 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonProperty(PropertyName = "name", Order = 100)]
         public string Name { get; set; }
 
+        [JsonProperty(PropertyName = "stagename", Order = 150)]
+        public string StageName { get; set; }
+
         [JsonRequired]
         [JsonProperty(PropertyName = "email", Order = 200)]
         public string Email { get; set; }
 
         [JsonProperty(PropertyName = "phoneNumber", Order = 300)]
         public string PhoneNumber { get; set; }
-
-        [JsonProperty(PropertyName = "cellPhone", Order = 400)]
-        public string CellPhone { get; set; }
 
         [JsonRequired]
         [JsonProperty(PropertyName = "document", Order = 500)]

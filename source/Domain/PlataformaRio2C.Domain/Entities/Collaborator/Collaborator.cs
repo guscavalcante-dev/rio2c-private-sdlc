@@ -52,6 +52,9 @@ namespace PlataformaRio2C.Domain.Entities
         public string LastNames { get; protected set; }
 
         [ToPascalCase]
+        public string StageName { get; protected set; }
+
+        [ToPascalCase]
         public string Badge { get; protected set; }
 
         public string Document { get; private set; }
@@ -777,6 +780,7 @@ namespace PlataformaRio2C.Domain.Entities
             CollaboratorType collaboratorType,
             string firstName,
             string lastNames,
+            string stageName,
             string email,
             string phoneNumber,
             string cellPhone,
@@ -785,8 +789,8 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.FirstName = firstName?.Trim();
             this.LastNames = lastNames?.Trim();
+            this.StageName = stageName?.Trim();
             this.PublicEmail = email?.Trim();
-
             this.PhoneNumber = phoneNumber?.Trim();
             this.CellPhone = cellPhone?.Trim();
             this.Document = document?.Trim();
@@ -795,7 +799,7 @@ namespace PlataformaRio2C.Domain.Entities
             //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
             this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, null, null, true, userId);
             this.UpdateUser(email);
-            this.SetUpdateDate(userId);
+            this.SetCreateDate(userId);
         }
 
         /// <summary>
@@ -816,6 +820,7 @@ namespace PlataformaRio2C.Domain.Entities
             CollaboratorType collaboratorType,
             string firstName,
             string lastNames,
+            string stageName,
             string email,
             string phoneNumber,
             string cellPhone,
@@ -827,6 +832,7 @@ namespace PlataformaRio2C.Domain.Entities
                 collaboratorType,
                 firstName,
                 lastNames,
+                stageName,
                 email,
                 phoneNumber,
                 cellPhone,
