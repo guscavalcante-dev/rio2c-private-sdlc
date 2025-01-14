@@ -344,9 +344,13 @@
     <Compile Include="Migrations\202501061732011_DeleteDuplicatedTargetAudience.Designer.cs">
       <DependentUpon>202501061732011_DeleteDuplicatedTargetAudience.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202412211741310_UpdateMigrations_202412211441.cs" />
-    <Compile Include="Migrations\202412211741310_UpdateMigrations_202412211441.Designer.cs">
-      <DependentUpon>202412211741310_UpdateMigrations_202412211441.cs</DependentUpon>
+    <Compile Include="Migrations\202501101731074_UpdateTargetAudiencesDescriptions.cs" />
+    <Compile Include="Migrations\202501101731074_UpdateTargetAudiencesDescriptions.Designer.cs">
+      <DependentUpon>202501101731074_UpdateTargetAudiencesDescriptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202501131639495_AddHasAnyTypeOfFinancingToProjects.cs" />
+    <Compile Include="Migrations\202501131639495_AddHasAnyTypeOfFinancingToProjects.Designer.cs">
+      <DependentUpon>202501131639495_AddHasAnyTypeOfFinancingToProjects.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\202501092256457_AddSocialNetworkFieldsToMusicBands.cs" />
     <Compile Include="Migrations\202501092256457_AddSocialNetworkFieldsToMusicBands.Designer.cs">
@@ -518,7 +522,21 @@
     <Content Include="Migrations\Scripts\202412201728087_AttMusicPlayerForms.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Migrations\Scripts\202501061732011_DeleteDuplicatedTargetAudience.up.sql" />
+    <Content Include="Migrations\Scripts\202501101731074_UpdateTargetAudiencesDescriptions.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202501131639495_AddHasAnyTypeOfFinancingToProjects.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202501131639495_AddHasAnyTypeOfFinancingToProjects.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202501101731074_UpdateTargetAudiencesDescriptions.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202501061732011_DeleteDuplicatedTargetAudience.up.sql">
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</Content>
     <Content Include="Migrations\Scripts\202501092310114_AddStagenameFieldToCollaborators.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -712,6 +730,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202501131729087_UpdateMigrations_202501131427.resx">
       <DependentUpon>202501131729087_UpdateMigrations_202501131427.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501101731074_UpdateTargetAudiencesDescriptions.resx">
+      <DependentUpon>202501101731074_UpdateTargetAudiencesDescriptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501131639495_AddHasAnyTypeOfFinancingToProjects.resx">
+      <DependentUpon>202501131639495_AddHasAnyTypeOfFinancingToProjects.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -2986,6 +2986,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Já possui algum tipo de financiamento?.
+        /// </summary>
+        public static string HasAnyTypeOfFinancing {
+            get {
+                return ResourceManager.GetString("HasAnyTypeOfFinancing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Já esteve em outras edições do Rio2C?.
         /// </summary>
         public static string HaveYouBeenToRio2CBefore {
@@ -4003,7 +4012,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Data de término da avaliação de projetos de música.
         /// </summary>
         public static string MusicBusinessRoundEvaluationEndDate {
             get {
@@ -4012,7 +4021,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Data de início da avaliação de projetos de música.
         /// </summary>
         public static string MusicBusinessRoundEvaluationStartDate {
             get {
@@ -4021,7 +4030,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Quantidade máxima de avaliadores por projeto.
         /// </summary>
         public static string MusicBusinessRoundMaximumEvaluatorsByProject {
             get {
@@ -4030,7 +4039,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Quantidade máxima de projetos por participante.
         /// </summary>
         public static string MusicBusinessRoundMaximumProjectsBySeller {
             get {
@@ -4039,7 +4048,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Data de término das negociações de música.
         /// </summary>
         public static string MusicBusinessRoundNegotiationEndDate {
             get {
@@ -4048,7 +4057,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Data de início das negociações de música.
         /// </summary>
         public static string MusicBusinessRoundNegotiationStartDate {
             get {
@@ -4057,7 +4066,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Data de término do envio de projetos de música.
         /// </summary>
         public static string MusicBusinessRoundSubmitEndDate {
             get {
@@ -4066,7 +4075,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Data de início do envio de projetos de música.
         /// </summary>
         public static string MusicBusinessRoundSubmitStartDate {
             get {
@@ -4255,7 +4264,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Data de término de envio de projeto musical.
         /// </summary>
         public static string MusicPitchingSubmitEndDate {
             get {
@@ -4264,7 +4273,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Data de início de envio de projeto musical.
         /// </summary>
         public static string MusicPitchingSubmitStartDate {
             get {
@@ -8283,6 +8292,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string WhichSpecialNeedsQ {
             get {
                 return ResourceManager.GetString("WhichSpecialNeedsQ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Qual modelo? (aprovado em lei de incentivo, edital, patrocinador, etc).
+        /// </summary>
+        public static string WhichTypeOfFinancing {
+            get {
+                return ResourceManager.GetString("WhichTypeOfFinancing", resourceCulture);
             }
         }
         

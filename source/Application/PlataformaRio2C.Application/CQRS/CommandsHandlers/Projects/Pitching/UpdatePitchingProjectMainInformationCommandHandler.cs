@@ -3,8 +3,8 @@
 // Author           : Gilson Oliveira
 // Created          : 29-10-2024
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 29-10-2024
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-13-2025
 // ***********************************************************************
 // <copyright file="UpdateProjectMainInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -92,6 +92,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.TotalValueOfProject,
                 cmd.ValueAlreadyRaised,
                 cmd.ValueStillNeeded,
+                false,
+                "",
                 cmd.Titles?.Select(d => new ProjectTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.LogLines?.Select(d => new ProjectLogLine(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.Summaries?.Select(d => new ProjectSummary(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),

@@ -401,7 +401,6 @@
     <Compile Include="Services\SiteMailerService.cs" />
     <Compile Include="Controllers\OnboardingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\AgendasController.cs" />
     <Compile Include="Controllers\Ticket4youController.cs" />
     <Compile Include="Hub\ConnectionMapping.cs" />
@@ -908,11 +907,6 @@
     <Content Include="Assets\js\myrio2c.additionalinfo.js" />
     <Content Include="Assets\js\onboarding\onboarding.interests.js" />
     <Content Include="Assets\js\onboarding\onboarding.companyinfo.js" />
-    <Content Include="Assets\js\projects\pitching\pitching.interest.widget.js" />
-    <Content Include="Assets\js\projects\pitching\pitching.links.widget.js" />
-    <Content Include="Assets\js\projects\pitching\pitching.maininformation.widget.js" />
-    <Content Include="Assets\js\projects\pitching\pitching.producerinfo.js" />
-    <Content Include="Assets\js\projects\pitching\pitching.projectinfo.js" />
     <Content Include="Assets\js\projects\businessrounds\businessrounds.buyercompany.widget.js" />
     <Content Include="Assets\js\projects\businessrounds\businessrounds.buyerevaluation.list.widget.js" />
     <Content Include="Assets\js\projects\businessrounds\businessrounds.buyerevaluation.update.widget.js" />
@@ -921,18 +915,15 @@
     <Content Include="Assets\js\projects\businessrounds\businessrounds.maininformation.widget.js" />
     <Content Include="Assets\js\projects\businessrounds\businessrounds.producerinfo.js" />
     <Content Include="Assets\js\projects\businessrounds\businessrounds.projectinfo.js" />
-    <Content Include="Assets\js\projects\projects.buyerevaluation.update.widget.js" />
-    <Content Include="Assets\js\projects\projects.buyerevaluation.list.widget.js" />
-    <Content Include="Assets\js\projects\projects.interest.widget.js" />
-    <Content Include="Assets\js\projects\projects.buyercompany.widget.js" />
-    <Content Include="Assets\js\projects\projects.links.widget.js" />
-    <Content Include="Assets\js\projects\projects.maininformation.widget.js" />
-    <Content Include="Assets\js\projects\projects.producerinfo.js" />
+    <Content Include="Assets\js\projects\pitching\pitching.interest.widget.js" />
+    <Content Include="Assets\js\projects\pitching\pitching.links.widget.js" />
+    <Content Include="Assets\js\projects\pitching\pitching.maininformation.widget.js" />
+    <Content Include="Assets\js\projects\pitching\pitching.producerinfo.js" />
+    <Content Include="Assets\js\projects\pitching\pitching.projectinfo.js" />
     <Content Include="Assets\js\onboarding\onboarding.playerinfo.js" />
     <Content Include="Assets\js\onboarding\onboarding.collaboratordata.js" />
     <Content Include="Assets\js\agendas\agendas.widget.js" />
     <Content Include="Assets\js\companies\companyinfo.autocomplete.js" />
-    <Content Include="Assets\js\projects\projects.projectinfo.js" />
     <Content Include="Assets\js\weconnect\weconnect.widget.js" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.css" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.min.css" />
@@ -7682,7 +7673,6 @@
     <Content Include="Views\Player\ProfileDetails.cshtml" />
     <Content Include="Views\Player\ProfileEdit.cshtml" />
     <Content Include="Views\Player\Interests.cshtml" />
-    <Content Include="Views\Projects\Index.cshtml" />
     <Content Include="Views\Agendas\Index.cshtml" />
     <Content Include="Views\Conference\Index.cshtml" />
     <Content Include="Views\Term\Player.cshtml" />
@@ -7731,15 +7721,6 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\Shared\_DashboardMenu.cshtml" />
-    <Content Include="Views\Projects\SubmittedList.cshtml" />
-    <Content Include="Views\Projects\Shared\_ProjectInfoForm.cshtml" />
-    <Content Include="Views\Projects\EditorTemplates\ProjectTitleBaseCommand.cshtml" />
-    <Content Include="Views\Projects\EditorTemplates\ProjectLogLineBaseCommand.cshtml" />
-    <Content Include="Views\Projects\EditorTemplates\ProjectSummaryBaseCommand.cshtml" />
-    <Content Include="Views\Projects\EditorTemplates\ProjectProductionPlanBaseCommand.cshtml" />
-    <Content Include="Views\Projects\EditorTemplates\ProjectAdditionalInformationBaseCommand.cshtml" />
-    <Content Include="Views\Projects\SubmittedDetails.cshtml" />
-    <Content Include="Views\Projects\SendToPlayers.cshtml" />
     <Content Include="Views\Networks\Index.cshtml" />
     <Content Include="Views\Networks\Messages.cshtml" />
     <Content Include="Views\Networks\Widgets\ConversationsWidget.cshtml" />
@@ -7750,19 +7731,6 @@
     <Content Include="Views\Networks\Modals\ShowContactsListModal.cshtml" />
     <Content Include="Views\Onboarding\SpeakerTermsAcceptance.cshtml" />
     <Content Include="Views\Onboarding\Shared\_SpeakerTermsAcceptanceText.cshtml" />
-    <Content Include="Views\Projects\Modals\UpdateMainInformationModal.cshtml" />
-    <Content Include="Views\Projects\Modals\UpdateMainInformationForm.cshtml" />
-    <Content Include="Views\Projects\Modals\UpdateInterestForm.cshtml" />
-    <Content Include="Views\Projects\Modals\UpdateInterestModal.cshtml" />
-    <Content Include="Views\Projects\Modals\UpdateBuyerCompanyModal.cshtml" />
-    <Content Include="Views\Projects\Modals\UpdateBuyerCompanyForm.cshtml" />
-    <Content Include="Views\Projects\Modals\UpdateLinksModal.cshtml" />
-    <Content Include="Views\Projects\Modals\UpdateLinksForm.cshtml" />
-    <Content Include="Views\Projects\Modals\AcceptEvaluationModal.cshtml" />
-    <Content Include="Views\Projects\Modals\AcceptEvaluationForm.cshtml" />
-    <Content Include="Views\Projects\Modals\RefuseEvaluationModal.cshtml" />
-    <Content Include="Views\Projects\Modals\RefuseEvaluationForm.cshtml" />
-    <Content Include="Views\Projects\Shared\_BuyersEvaluations.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -7840,25 +7808,9 @@
     <Content Include="Views\Account\Modals\UpdatePasswordForm.cshtml" />
     <Content Include="Views\Account\Modals\UpdatePasswordModal.cshtml" />
     <Content Include="Views\Executives\Modals\CreateCompanyInfoModal.cshtml" />
-    <Content Include="Views\Projects\CompanyInfo.cshtml" />
-    <Content Include="Views\Projects\AudiovisualBusinessRoundTermsAcceptance.cshtml" />
-    <Content Include="Views\Projects\Shared\_ProjectsOnboardingMenu.cshtml" />
-    <Content Include="Views\Projects\Shared\_AudiovisualProducerBusinessRoundTermsText.cshtml" />
     <Content Include="Views\Companies\Shared\_ProducerInfoForm.cshtml" />
-    <Content Include="Views\Projects\Submit.cshtml" />
-    <Content Include="Views\Projects\Widgets\MainInformationWidget.cshtml" />
-    <Content Include="Views\Projects\Widgets\InterestWidget.cshtml" />
-    <Content Include="Views\Projects\Widgets\BuyerCompanyWidget.cshtml" />
-    <Content Include="Views\Projects\Widgets\BuyerCompanySelectedWidget.cshtml" />
-    <Content Include="Views\Projects\Widgets\ProjectMatchBuyerCompanyWidget.cshtml" />
-    <Content Include="Views\Projects\Widgets\ProjectAllBuyerCompanyWidget.cshtml" />
-    <Content Include="Views\Projects\Widgets\LinksWidget.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\InterestBaseCommand.cshtml" />
-    <Content Include="Views\Projects\EvaluationList.cshtml" />
-    <Content Include="Views\Projects\Widgets\EvaluationListWidget.cshtml" />
     <Content Include="Views\SiteMailerService\UnreadConversationEmail.cshtml" />
-    <Content Include="Views\Projects\EvaluationDetails.cshtml" />
-    <Content Include="Views\Projects\Widgets\BuyerEvaluationWidget.cshtml" />
     <Content Include="Views\SiteMailerService\ProjectBuyerEvaluationEmail.cshtml" />
     <Content Include="Views\Executives\Modals\UpdateSocialNetworksModal.cshtml" />
     <Content Include="Views\Executives\Modals\UpdateSocialNetworksForm.cshtml" />
@@ -7866,7 +7818,6 @@
     <Content Include="Views\Companies\Modals\UpdateSocialNetworksModal.cshtml" />
     <Content Include="Views\Companies\Modals\UpdateSocialNetworksForm.cshtml" />
     <Content Include="Views\Networks\Shared\_ContactListSearchForm.cshtml" />
-    <Content Include="Views\Projects\Widgets\EvaluationListItemWidget.cshtml" />
     <Content Include="Views\Shared\SocialNetworks\_FacebookItem.cshtml" />
     <Content Include="Views\Shared\SocialNetworks\_InstagramItem.cshtml" />
     <Content Include="Views\Shared\SocialNetworks\_LinkedInItem.cshtml" />
@@ -7896,8 +7847,6 @@
     <Content Include="Views\Shared\EditorTemplates\AttendeeCollaboratorTargetAudienceBaseCommand.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\InnovationOrganizationTrackOptionBaseCommand.cshtml" />
     <Content Include="Views\Shared\Widgets\CardsWidget.cshtml" />
-    <Content Include="Views\Projects\AudiovisualPitchingTermsAcceptance.cshtml" />
-    <Content Include="Views\Projects\Shared\_AudiovisualProducerPitchingTermsText.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

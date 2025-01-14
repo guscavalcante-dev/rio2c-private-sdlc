@@ -133,6 +133,18 @@
                     <span class="kt-widget__value"><span>@(Model.Project?.ValueStillNeeded?.ToString() ?? "-")</span></span>
                 </div>
             </div>
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.HasAnyTypeOfFinancing</span>
+                    <span class="kt-widget__value"><span>@(Model.Project?.HasAnyTypeOfFinancing.ToYesOrNoString())</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.WhichTypeOfFinancing</span>
+                    <span class="kt-widget__value"><span>@(Model.Project?.WhichTypeOfFinancingDescription?.ToString() ?? "-")</span></span>
+                </div>
+            </div>
             @{
                 var additionalInformationDto = Model.GetAdditionalInformationDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
             }

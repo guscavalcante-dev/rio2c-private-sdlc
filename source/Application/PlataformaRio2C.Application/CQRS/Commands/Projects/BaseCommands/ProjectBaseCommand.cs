@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 11-06-2019
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 29-11-2024
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-13-2025
 // ***********************************************************************
 // <copyright file="ProjectBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -90,6 +90,18 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public int ProjectMaxCount { get; private set; }
 
         public bool ProjectModalityRequired { get; private set; }
+
+        #region Type of Financing
+
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public bool HasAnyTypeOfFinancing { get; set; }
+
+        [Display(Name = "WhichTypeOfFinancing", ResourceType = typeof(Labels))]
+        [RequiredIf("HasAnyTypeOfFinancing", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string WhichTypeOfFinancingDescription { get; set; }
+
+        #endregion
 
         /// <summary>Initializes a new instance of the <see cref="ProjectBaseCommand"/> class.</summary>
         public ProjectBaseCommand()

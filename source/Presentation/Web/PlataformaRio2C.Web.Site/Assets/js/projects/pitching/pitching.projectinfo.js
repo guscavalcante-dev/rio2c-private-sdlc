@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 11-22-2019
 // ***********************************************************************
-// <copyright file="projects.projectinfo.js" company="Softo">
+// <copyright file="pitching.projectinfo.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>

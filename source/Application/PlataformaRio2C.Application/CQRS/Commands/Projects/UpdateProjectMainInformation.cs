@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 11-10-2019
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 10-30-2024
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-13-2025
 // ***********************************************************************
 // <copyright file="UpdateProjectMainInformation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -66,6 +66,18 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string ValueStillNeeded { get; set; }
+
+        #region Type of Financing
+
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public bool HasAnyTypeOfFinancing { get; set; }
+
+        [Display(Name = "WhichTypeOfFinancing", ResourceType = typeof(Labels))]
+        [RequiredIf("HasAnyTypeOfFinancing", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string WhichTypeOfFinancingDescription { get; set; }
+
+        #endregion
 
         public List<ProjectAdditionalInformationBaseCommand> AdditionalInformations { get; set; }
 
