@@ -1,0 +1,149 @@
+﻿@using System.Globalization
+@model PlataformaRio2C.Application.CQRS.Commands.OnboardMusicProducerOrganizationData
+<!--begin: Form Wizard Step 1-->
+<div class="kt-wizard-v3__content" data-ktwizard-type="step-content" data-ktwizard-state="current">
+    <div class="kt-heading kt-heading--md">@Labels.CompanyInfo</div>
+    <div class="kt-form__section kt-form__section--first">
+        <div class="kt-wizard-v3__form">
+            <div class="row">
+                <div class="form-group col-lg-5 col-xl-3">
+                    @Html.EditorFor(m => m.CropperImage)
+                </div>
+                <div class="form-group col-lg-7 col-xl-9 pl-lg-5">
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(m => m.TradeName, new { @class = "control-label" })
+                            <div class="spinner-container">
+                                @Html.TextBoxFor(m => m.TradeName, new {@class = "form-control ", autocomplete = "off" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.TradeName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(m => m.CompanyName, new { @class = "control-label" })
+                            <div class="spinner-container">
+                                @Html.TextBoxFor(m => m.CompanyName, new {@class = "form-control", autocomplete = "off" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-12 col-xl-6" data-id="Country">
+                            @Html.LabelFor(m => m.CountryUid, new { @class = "control-label" })
+                            @Html.HiddenFor(m => m.IsCompanyNumberRequired)
+                            <select name="@Html.NameFor(m => m.CountryUid)" id="@Html.IdFor(m => m.CountryUid)" @Html.GetUnobtrusiveValidationAttributesFor(m => m.CountryUid) class="form-control">
+                                <option value="" data-country-code="" data-companynumber-required="" data-companynumber-mask="" data-zipcode-mask="" data-phonenumber-mask="" data-mobile-mask="">@(Labels.Select)...</option>
+                                @foreach (var countryBaseDto in Model.CountriesBaseDtos)
+                                {
+                                    <option value="@countryBaseDto.Uid" @(countryBaseDto.Uid == Model.CountryUid ? "selected" : "") data-country-code="@countryBaseDto.Code" data-companynumber-required="@countryBaseDto.IsCompanyNumberRequired" data-companynumber-mask="@countryBaseDto.CompanyNumberMask" data-zipcode-mask="@countryBaseDto.ZipCodeMask" data-phonenumber-mask="@countryBaseDto.PhoneNumberMask" data-mobile-mask="@countryBaseDto.MobileMask">
+                                        @countryBaseDto.DisplayName
+                                    </option>
+                                }
+                            </select>
+                            @Html.ValidationMessageFor(m => m.CountryUid, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group col-sm-12 col-xl-6">
+                            @Html.LabelFor(m => m.Document, new { @class = "control-label" })
+                            <div class="spinner-container">
+                                @Html.TextBoxFor(m => m.Document, new {@class = "form-control", autocomplete = "off" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.Document, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-section mb-0">
+                <h3 class="kt-heading kt-heading--md">@Labels.SocialNetworks</h3>
+                <div class="kt-section__content mt-3">
+                    <div class="row">
+                        <div class="form-group col-xl-6">
+                            @Html.LabelFor(m => m.Website, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                            @Html.TextBoxFor(m => m.Website, new { @class = "form-control" }) 
+                            <span class="form-text text-muted">@Messages.WebsiteUrl</span>
+                            <span class="form-text text-muted">@Labels.Eg: site.com @Labels.Or www.site.com</span>
+                            @Html.ValidationMessageFor(m => m.Website, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group col-xl-6">
+                            @Html.LabelFor(m => m.Linkedin, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                            @Html.TextBoxFor(m => m.Linkedin, new { @class = "form-control" })
+                            <span class="form-text text-muted">@Messages.LinkedinUser</span>
+                            <span class="form-text text-muted">@Labels.Eg: https://www.linkedin.com/in/<span style="background: #e0e0e0;">abcdefg</span> @Labels.Is <span style="background: #e0e0e0;">abcdefg</span></span>
+                            @Html.ValidationMessageFor(m => m.Linkedin, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xl-6">
+                            @Html.LabelFor(m => m.Twitter, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                            @Html.TextBoxFor(m => m.Twitter, new { @class = "form-control" })
+                            <span class="form-text text-muted">@Messages.TwitterUser</span>
+                            <span class="form-text text-muted">@Labels.Eg: https://twitter.com/<span style="background: #e0e0e0;">abcdefg</span> @Labels.Is <span style="background: #e0e0e0;">abcdefg</span></span>
+                            @Html.ValidationMessageFor(m => m.Twitter, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group col-xl-6">
+                            @Html.LabelFor(m => m.Instagram, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                            @Html.TextBoxFor(m => m.Instagram, new { @class = "form-control" })
+                            <span class="form-text text-muted">@Messages.InstagramUser</span>
+                            <span class="form-text text-muted">@Labels.Eg: https://www.instagram.com/<span style="background: #e0e0e0;">abcdefg</span> @Labels.Is <span style="background: #e0e0e0;">abcdefg</span>.</span>
+                            @Html.ValidationMessageFor(m => m.Instagram, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xl-6">
+                            @Html.LabelFor(m => m.Youtube, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                            @Html.TextBoxFor(m => m.Youtube, new { @class = "form-control" })
+                            <span class="form-text text-muted">@Messages.YoutubeUrl</span>
+                            <span class="form-text text-muted">@Labels.Eg: youtube.com/channel/abcdefg </span>
+                            @Html.ValidationMessageFor(m => m.Youtube, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>            
+            <div class="kt-section mt-30">
+                <h3 class="kt-heading kt-heading--md">@Labels.Address</h3>
+                <div class="kt-section__content mt-3">
+                    @Html.EditorFor(m => m.Address)
+                </div>
+            </div>
+            <div class="kt-section mt-30">
+                <h3 class="kt-heading kt-heading--md">@Labels.CompanyResume</h3>
+                @Html.ValidationMessage("Descriptions", new {@class = "text-danger"})
+                <div class="kt-section__content mt-3">
+                    @Html.EditorFor(m => m.Descriptions)
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <div class="kt-section">
+                        <h3 class="kt-heading kt-heading--md">@Labels.Activity</h3>
+                        @Html.ValidationMessage("OrganizationActivities", new {@class = "text-danger OrganizationActivities"})
+                        <div class="error">
+                            <span></span>
+                        </div>
+                        <div class="kt-section__content mt-3">
+                            <div class="kt-checkbox-list">
+                                @Html.EditorFor(m => m.OrganizationActivities)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <div class="kt-section">
+                        <h3 class="kt-heading kt-heading--md">@Labels.TargetAudience</h3>
+                        @Html.ValidationMessage("OrganizationTargetAudiences", new { @class = "text-danger OrganizationTargetAudiences" })
+                        <div class="error">
+                            <span></span>
+                        </div>
+                        <div class="kt-section__content mt-3">
+                            <div class="kt-checkbox-list">
+                                @Html.EditorFor(m => m.OrganizationTargetAudiences)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--end: Form Wizard Step 1-->

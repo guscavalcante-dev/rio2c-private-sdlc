@@ -293,6 +293,7 @@
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardingAudiovisualProducerPitchingTermsCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardMusicPlayerTermsAcceptanceCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardInnovationPlayerTermsAcceptanceCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardMusicProducerOrganizationDataCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\DisassociateOrganizationCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\AssociateOrganizationCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\BaseHoldingCommandHandler.cs" />
@@ -495,6 +496,7 @@
     <Compile Include="CQRS\Commands\Onboardings\OnboardMusicPlayerTermsAcceptance.cs" />
     <Compile Include="CQRS\Commands\Onboardings\OnboardInnovationPlayerTermsAcceptance.cs" />
     <Compile Include="CQRS\Commands\Onboardings\OnboardAudiovisualProducerBusinessRoundTermsAcceptance.cs" />
+    <Compile Include="CQRS\Commands\Onboardings\OnboardMusicProducerOrganizationData.cs" />
     <Compile Include="CQRS\Commands\Organizations\BaseCommands\OrganizationTargetAudienceBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Organizations\DisassociateOrganizationCollaborator.cs" />
     <Compile Include="CQRS\Commands\Organizations\AssociateOrganizationCollaborator.cs" />
