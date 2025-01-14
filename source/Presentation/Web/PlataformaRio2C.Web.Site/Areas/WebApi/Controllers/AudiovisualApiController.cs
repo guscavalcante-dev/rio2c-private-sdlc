@@ -104,6 +104,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 request?.Page ?? 1,
                 request?.PageSize ?? 10);
 
+
             return await Json(new AudiovisualCommissionsApiResponse
             {
                 Status = ApiStatus.Success,
@@ -120,7 +121,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     Name = c.FullName?.Trim(),
                     Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.Uid, c.ImageUploadDate, true, "_500x500") : null,
                     JobTitle = c.GetCollaboratorJobTitleBaseDtoByLanguageCode(requestLanguage?.Code ?? defaultLanguage?.Code)?.Value?.Trim(),
-                    OrganizationsNames = c.AttendeeOrganizationBasesDtos.Select(ao => ao.OrganizationBaseDto.Name ?? "-")?.ToString(", ")
+                    OrganizationsNames = c.AttendeeOrganizationBasesDtos?.Select(ao => ao.OrganizationBaseDto?.Name ?? "-")?.ToString(", ")
                 })?.ToList()
             });
         }
