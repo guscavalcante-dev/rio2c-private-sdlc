@@ -799,11 +799,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// 
 
         private readonly ICollaboratorJobTitleRepository collaboratorRepo;
+        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepository;
+        private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepository;
 
-        public CollaboratorRepository(PlataformaRio2CContext context, ICollaboratorJobTitleRepository collaboratorRepo)
+
+        public CollaboratorRepository(PlataformaRio2CContext context, ICollaboratorJobTitleRepository collaboratorRepo, IAttendeeOrganizationRepository attendeeOrganizationRepository, IAttendeeCollaboratorRepository attendeeCollaboratorRepository)
             : base(context)
         {
             this.collaboratorRepo = collaboratorRepo;
+            this.attendeeOrganizationRepository = attendeeOrganizationRepository;
+            this.attendeeCollaboratorRepository = attendeeCollaboratorRepository;
         }
 
         /// <summary>Gets the base query.</summary>
@@ -1610,7 +1615,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             foreach (var collaborator in collaboratorsDtos)
             {
                 collaborator.JobTitleBaseDtos = await collaboratorRepo.FindAllJobTitlesDtosByCollaboratorId(collaborator.Id);
-                //collaborator.AttendeeOrganizationBasesDtos = ;
+                var attendeeCollaborator = await attendeeCollaboratorRepository.FindSiteDetailstDtoByCollaboratorUidAndByEditionIdAsync(collaborator.Uid, editionId.Value);
+                collaborator.AttendeeOrganizationBasesDtos = await attendeeOrganizationRepository.FindOrganizationBaseDtosByCollaboratorIdAndEditionIdAsync(attendeeCollaborator.AttendeeCollaborator.Id, editionId == null ? 0 : editionId.Value, editionId == null);
             }
 
             return collaboratorsDtos;

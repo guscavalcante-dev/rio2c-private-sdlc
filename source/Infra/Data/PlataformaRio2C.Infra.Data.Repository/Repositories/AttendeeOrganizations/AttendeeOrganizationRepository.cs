@@ -80,6 +80,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the by collaborator id.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeOrganization> FindByCollaboratorId(this IQueryable<AttendeeOrganization> query, int collaboratorId)
+        {
+            query = query.Where(ao => ao.AttendeeOrganizationCollaborators.Any(p => p.AttendeeCollaboratorId == collaboratorId && !p.IsDeleted));
+            return query;
+        }
+
         /// <summary>Finds the by keywords.</summary>
         /// <param name="query">The query.</param>
         /// <param name="keywords">The keywords.</param>
@@ -431,6 +441,33 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query.FirstOrDefaultAsync();
         }
 
+        /// <summary>
+        /// Finds the AttendeeOrganizationBaseDto list by collaboratorId and Editionid.
+        /// </summary>
+        /// <param name="collaboratorId">The collaborator ID</param>
+        /// <param name="editionId">The edition id</param>
+        /// <param name="showAllEditions"> boolean to show all editions default false uid.</param>
+        /// <returns></returns>
+        public async Task<IEnumerable<AttendeeOrganizationBaseDto>> FindOrganizationBaseDtosByCollaboratorIdAndEditionIdAsync(int collaboratorId, int editionId, bool showAllEditions = false)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId, showAllEditions)
+                                .FindByCollaboratorId(collaboratorId);
+
+            return await query.Select(aoc => new AttendeeOrganizationBaseDto
+            {
+                Uid = aoc.Uid,
+                OrganizationBaseDto = new OrganizationBaseDto
+                {
+                    Name = aoc.Organization.Name,
+                    TradeName = aoc.Organization.TradeName,
+                    HoldingBaseDto = aoc.Organization.Holding == null ? null : new HoldingBaseDto
+                    {
+                        Name =  aoc.Organization.Holding.Name
+                    }
+                }
+            }).ToListAsync();
+        }
 
         /// <summary>
         /// Finds the details dto by organization uid and by edition identifier asynchronous.

@@ -11,6 +11,7 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
 using PlataformaRio2C.Infra.Data.Repository.Repositories;
@@ -67,12 +68,30 @@ namespace PlataformaRio2C.Infra.Data.Repository
             }
         }
 
+        private IAttendeeOrganizationRepository _attendeeOrganizationRepository;
+        public IAttendeeOrganizationRepository AttendeeOrganizationRepository
+        {
+            get
+            {
+                return this._attendeeOrganizationRepository ?? (this._attendeeOrganizationRepository = new AttendeeOrganizationRepository(_context));
+            }
+        }
+
+        private IAttendeeCollaboratorRepository _attendeeCollaboratorRepository;
+        public IAttendeeCollaboratorRepository AttendeeCollaboratorRepository
+        {
+            get
+            {
+                return this._attendeeCollaboratorRepository ?? (this._attendeeCollaboratorRepository = new AttendeeCollaboratorRepository(_context));
+            }
+        }
+
         private ICollaboratorRepository _collaboratorRepository;
         public ICollaboratorRepository CollaboratorRepository
         {
             get
             {
-                return this._collaboratorRepository ?? (this._collaboratorRepository = new CollaboratorRepository(_context, CollaboratorJobTitleRepository));
+                return this._collaboratorRepository ?? (this._collaboratorRepository = new CollaboratorRepository(_context, CollaboratorJobTitleRepository, AttendeeOrganizationRepository, AttendeeCollaboratorRepository));
             }
         }
 
