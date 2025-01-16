@@ -105,107 +105,107 @@ var CompanyInfoAutocomplete = function () {
         }
     };
 
-    // Enable trade name autocomplete -------------------------------------------------------------
-    var enableTradeNameAutocomplete = function () {
-        var tradeNameElement = $(tradeNameId);
+    //// Enable trade name autocomplete -------------------------------------------------------------
+    //var enableTradeNameAutocomplete = function () {
+    //    var tradeNameElement = $(tradeNameId);
 
-        if (tradeNameElement.length <= 0) {
-            return;
-        }
+    //    if (tradeNameElement.length <= 0) {
+    //        return;
+    //    }
 
-        tradeNameElement.autocomplete({
-            serviceUrl: '/api/v1.0/organizations',
-            paramName: 'tradeName',
-            minChars: 3,
-            deferRequestBy: 500,
-            //noCache: true,
-            transformResult: function (data) {
-                var json = jQuery.parseJSON(data);
+    //    tradeNameElement.autocomplete({
+    //        serviceUrl: '/api/v1.0/organizations',
+    //        paramName: 'tradeName',
+    //        minChars: 3,
+    //        deferRequestBy: 500,
+    //        //noCache: true,
+    //        transformResult: function (data) {
+    //            var json = jQuery.parseJSON(data);
 
-                return MyRio2cCommon.handleAjaxReturn({
-                    data: json,
-                    // Success
-                    onSuccess: function () {
-                        return {
-                            suggestions: $.map(json.organizations, function (dataItem) {
-                                if (!MyRio2cCommon.isNullOrEmpty(dataItem.tradeName)) {
-                                    return { value: dataItem.tradeName, data: dataItem };
-                                }
-                            })
-                        };
-                    },
-                    // Error
-                    onError: function () {
-                    }
-                });
-            },
-            onSearchStart: function (query) {
-                tradeNameElement.parent('div.spinner-container').addClass(spinnerClass);
-            },
-            onSearchComplete: function (query, suggestions) {
-                tradeNameElement.parent('div.spinner-container').removeClass(spinnerClass);
-            },
-            onSelect: function (suggestion) {
-                updateOrganizationUid(suggestion.data.uid, 'tradeName');
-            },
-            onHint: function (hint) {
-            },
-            onInvalidateSelection: function () {
-                updateOrganizationUid('', 'tradeName');
-            }
-        });
-    };
+    //            return MyRio2cCommon.handleAjaxReturn({
+    //                data: json,
+    //                // Success
+    //                onSuccess: function () {
+    //                    return {
+    //                        suggestions: $.map(json.organizations, function (dataItem) {
+    //                            if (!MyRio2cCommon.isNullOrEmpty(dataItem.tradeName)) {
+    //                                return { value: dataItem.tradeName, data: dataItem };
+    //                            }
+    //                        })
+    //                    };
+    //                },
+    //                // Error
+    //                onError: function () {
+    //                }
+    //            });
+    //        },
+    //        onSearchStart: function (query) {
+    //            tradeNameElement.parent('div.spinner-container').addClass(spinnerClass);
+    //        },
+    //        onSearchComplete: function (query, suggestions) {
+    //            tradeNameElement.parent('div.spinner-container').removeClass(spinnerClass);
+    //        },
+    //        onSelect: function (suggestion) {
+    //            updateOrganizationUid(suggestion.data.uid, 'tradeName');
+    //        },
+    //        onHint: function (hint) {
+    //        },
+    //        onInvalidateSelection: function () {
+    //            updateOrganizationUid('', 'tradeName');
+    //        }
+    //    });
+    //};
 
-    // Enable company name autocomplete -----------------------------------------------------------
-    var enableCompanyNameAutocomplete = function () {
-        var companyNameElement = $(companyNameId);
+    //// Enable company name autocomplete -----------------------------------------------------------
+    //var enableCompanyNameAutocomplete = function () {
+    //    var companyNameElement = $(companyNameId);
 
-        if (companyNameElement.length <= 0) {
-            return;
-        }
+    //    if (companyNameElement.length <= 0) {
+    //        return;
+    //    }
 
-        companyNameElement.autocomplete({
-            serviceUrl: '/api/v1.0/organizations',
-            paramName: 'companyName',
-            minChars: 3,
-            deferRequestBy: 500,
-            //noCache: true,
-            transformResult: function (data) {
-                var json = jQuery.parseJSON(data);
+    //    companyNameElement.autocomplete({
+    //        serviceUrl: '/api/v1.0/organizations',
+    //        paramName: 'companyName',
+    //        minChars: 3,
+    //        deferRequestBy: 500,
+    //        //noCache: true,
+    //        transformResult: function (data) {
+    //            var json = jQuery.parseJSON(data);
 
-                return MyRio2cCommon.handleAjaxReturn({
-                    data: json,
-                    // Success
-                    onSuccess: function () {
-                        return {
-                            suggestions: $.map(json.organizations, function (dataItem) {
-                                if (!MyRio2cCommon.isNullOrEmpty(dataItem.companyName)) {
-                                    return { value: dataItem.companyName, data: dataItem };
-                                }
-                            })
-                        };
-                    },
-                    // Error
-                    onError: function () {
-                    }
-                });
-            },
-            onSearchStart: function (query) {
-                companyNameElement.parent('div.spinner-container').addClass(spinnerClass);
-            },
-            onSearchComplete: function (query, suggestions) {
-                companyNameElement.parent('div.spinner-container').removeClass(spinnerClass);
-            },
-            onSelect: function (suggestion) {
-                updateOrganizationUid(suggestion.data.uid, 'companyName');
-            },
-            onHint: function (hint) {
-            },
-            onInvalidateSelection: function () {
-                updateOrganizationUid('', 'companyName');
-            }
-        });
-    };
+    //            return MyRio2cCommon.handleAjaxReturn({
+    //                data: json,
+    //                // Success
+    //                onSuccess: function () {
+    //                    return {
+    //                        suggestions: $.map(json.organizations, function (dataItem) {
+    //                            if (!MyRio2cCommon.isNullOrEmpty(dataItem.companyName)) {
+    //                                return { value: dataItem.companyName, data: dataItem };
+    //                            }
+    //                        })
+    //                    };
+    //                },
+    //                // Error
+    //                onError: function () {
+    //                }
+    //            });
+    //        },
+    //        onSearchStart: function (query) {
+    //            companyNameElement.parent('div.spinner-container').addClass(spinnerClass);
+    //        },
+    //        onSearchComplete: function (query, suggestions) {
+    //            companyNameElement.parent('div.spinner-container').removeClass(spinnerClass);
+    //        },
+    //        onSelect: function (suggestion) {
+    //            updateOrganizationUid(suggestion.data.uid, 'companyName');
+    //        },
+    //        onHint: function (hint) {
+    //        },
+    //        onInvalidateSelection: function () {
+    //            updateOrganizationUid('', 'companyName');
+    //        }
+    //    });
+    //};
 
     // Enable company number autocomplete ---------------------------------------------------------
     var enableCompanyNumberAutocomplete = function () {
@@ -261,8 +261,8 @@ var CompanyInfoAutocomplete = function () {
 
     // Enable plugins -----------------------------------------------------------------------------
     var enablePlugins = function () {
-        enableTradeNameAutocomplete();
-        enableCompanyNameAutocomplete();
+        //enableTradeNameAutocomplete();
+        //enableCompanyNameAutocomplete();
         enableCompanyNumberAutocomplete();
     };
 

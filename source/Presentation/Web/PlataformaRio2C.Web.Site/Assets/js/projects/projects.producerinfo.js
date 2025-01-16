@@ -16,11 +16,36 @@ var ProjectsProducerInfo = function () {
 
     //var modalId = '#UpdatePlayerExecutiveModal';
     var formId = '#OrganizationDataForm';
+    var countryUid = '#CountryUid';
+    var isCompanyNumberRequired = '#IsCompanyNumberRequired';
+    var document = '#Document';
 
     // Enable form validation ---------------------------------------------------------------------
     //var enableFormValidation = function () {
     //    MyRio2cCommon.enableFormValidation({ formIdOrClass: formId, enableHiddenInputsValidation: true, enableMaxlength: true });
     //};
+
+
+    // Enable country change to prevent document number if not brazil event -----------------------------------------------------------------------
+    var enableCountryChangePreventDocumentNumberIfNotBrazilEvent = function () {
+        var countryUidElement = $(countryUid);
+        var isCompanyNumberRequiredElement = $(isCompanyNumberRequired);
+        var documentElement = $(document);
+
+        countryUidElement.on('change', function () {
+            //Brazil UID.
+            if (countryUidElement.val() == 'a659270e-f221-40e8-aaf6-fe5db29d8ce9') {
+                isCompanyNumberRequiredElement.val(true);
+                documentElement.val('');
+                documentElement.closest('.form-group').show();
+            }
+            else {
+                isCompanyNumberRequiredElement.val(false);
+                documentElement.val('');
+                documentElement.closest('.form-group').hide();
+            }
+        });
+    };
 
     // Enable plugins -----------------------------------------------------------------------------
     var enablePlugins = function () {
@@ -50,6 +75,7 @@ var ProjectsProducerInfo = function () {
     return {
         init: function() {
             enablePlugins();
+            enableCountryChangePreventDocumentNumberIfNotBrazilEvent();
         }
     };
 }();
