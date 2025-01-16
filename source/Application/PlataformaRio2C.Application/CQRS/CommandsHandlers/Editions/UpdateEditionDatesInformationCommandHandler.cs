@@ -104,7 +104,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.MusicBusinessRoundEvaluationEndDate.Value,
                 cmd.MusicBusinessRoundNegotiationStartDate.Value,
                 cmd.MusicBusinessRoundNegotiationEndDate.Value,
-                cmd.MusicBusinessRoundMaximumProjectsBySeller.Value,
+                cmd.MusicBusinessRoundsMaximumProjectSubmissionsByCompany.Value,
                 cmd.MusicBusinessRoundMaximumEvaluatorsByProject.Value,
 
                 cmd.MusicPitchingSubmitStartDate.Value,

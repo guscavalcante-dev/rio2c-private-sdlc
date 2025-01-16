@@ -54,9 +54,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [GreaterThanOrEqualTo(nameof(MusicBusinessRoundNegotiationStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
         public DateTime? MusicBusinessRoundNegotiationEndDate { get; set; }
 
-        [Display(Name = nameof(MusicBusinessRoundMaximumProjectsBySeller), ResourceType = typeof(Labels))]
+        [Display(Name = nameof(MusicBusinessRoundsMaximumProjectSubmissionsByCompany), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public int? MusicBusinessRoundMaximumProjectsBySeller { get; set; }
+        public int? MusicBusinessRoundsMaximumProjectSubmissionsByCompany { get; set; }
 
         [Display(Name = nameof(MusicBusinessRoundMaximumEvaluatorsByProject), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -100,15 +100,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public int? MusicPitchingMaximumProjectSubmissionsByParticipant { get; set; }
 
-
-        //[Display(Name = nameof(MusicPitchingMaximumProjectSubmissionsByParticipant), ResourceType = typeof(Labels))]
-        //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        //public int? MusicPitchingMaximumProjectSubmissionsByParticipant { get; set; }
-
-
-
-
-
+        [Display(Name = nameof(MusicPitchingMaximumProjectSubmissionsByCompany), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public int? MusicPitchingMaximumProjectSubmissionsByCompany { get; set; }
 
         [Display(Name = nameof(MusicPitchingMaximumApprovedProjectsByCommissionMember), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -354,7 +348,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.MusicBusinessRoundEvaluationEndDate = editionDto.Edition.MusicBusinessRoundEvaluationEndDate.ToBrazilTimeZone();
             this.MusicBusinessRoundNegotiationStartDate = editionDto.Edition.MusicBusinessRoundNegotiationStartDate.ToBrazilTimeZone();
             this.MusicBusinessRoundNegotiationEndDate = editionDto.Edition.MusicBusinessRoundNegotiationEndDate.ToBrazilTimeZone();
-            this.MusicBusinessRoundMaximumProjectsBySeller = editionDto.Edition.MusicBusinessRoundMaximumProjectsBySeller;
+            this.MusicBusinessRoundsMaximumProjectSubmissionsByCompany = editionDto.Edition.MusicBusinessRoundsMaximumProjectSubmissionsByCompany;
             this.MusicBusinessRoundMaximumEvaluatorsByProject = editionDto.Edition.MusicBusinessRoundMaximumEvaluatorsByProject;
 
             // Music - Pitching

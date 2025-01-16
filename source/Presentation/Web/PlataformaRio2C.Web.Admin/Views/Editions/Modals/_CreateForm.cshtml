@@ -85,7 +85,7 @@
         </div>
     </div>
 </div>
-<!-- Audiovisual Negotiations - Begin  -->
+<!-- Audiovisual - Business Rounds - Begin  -->
 <h3 class="kt-section__title mb-4">@Labels.BusinessRounds - @Labels.AudioVisual</h3>
 <div class="row">
     <div class="form-group col-md-6">
@@ -163,8 +163,8 @@
         @Html.ValidationMessageFor(m => m.EditionDate.AudiovisualNegotiationsVirtualMeetingsJoinMinutes, "", new { @class = "text-danger" })
     </div>
 </div>
-<!-- Audiovisual Negotiations - End  -->
-<!-- Music Business Round - Begin -->
+<!-- Audiovisual - Business Rounds - End  -->
+<!-- Music - Business Round - Begin -->
 <h3 class="kt-section__title mt-30 mb-4">@Labels.BusinessRounds - @Labels.Music</h3>
 <div class="row">
     <div class="form-group col-md-6">
@@ -222,9 +222,9 @@
 </div>
 <div class="row">
     <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.EditionDate.MusicBusinessRoundMaximumProjectsBySeller, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.EditionDate.MusicBusinessRoundMaximumProjectsBySeller, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.EditionDate.MusicBusinessRoundMaximumProjectsBySeller, "", new { @class = "text-danger" })
+        @Html.LabelFor(m => m.EditionDate.MusicBusinessRoundsMaximumProjectSubmissionsByCompany, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.EditionDate.MusicBusinessRoundsMaximumProjectSubmissionsByCompany, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.EditionDate.MusicBusinessRoundsMaximumProjectSubmissionsByCompany, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.MusicBusinessRoundMaximumEvaluatorsByProject, new { @class = "control-label" })
@@ -232,8 +232,8 @@
         @Html.ValidationMessageFor(m => m.EditionDate.MusicBusinessRoundMaximumEvaluatorsByProject, "", new { @class = "text-danger" })
     </div>
 </div>
-<!-- Music Business Round - End -->
-<!-- Music Commissions - Begin -->
+<!-- Music - Business Round - End -->
+<!-- Music - Pitching - Begin -->
 <h3 class="kt-section__title mt-30 mb-4">@Labels.Pitching - @Labels.Music</h3>
 <div class="row">
     <div class="form-group col-md-6">
@@ -301,10 +301,17 @@
 </div>
 <div class="row">
     <div class="form-group col-md-6 col-lg-6">
+        @Html.LabelFor(m => m.EditionDate.MusicPitchingMaximumProjectSubmissionsByCompany, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.EditionDate.MusicPitchingMaximumProjectSubmissionsByCompany, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.EditionDate.MusicPitchingMaximumProjectSubmissionsByCompany, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6 col-lg-6">
         @Html.LabelFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsByCommissionMember, new { @class = "control-label" })
         @Html.TextBoxFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsByCommissionMember, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsByCommissionMember, "", new { @class = "text-danger" })
     </div>
+</div>
+<div class="row">
     <div class="form-group col-md-6 col-lg-6">
         @Html.LabelFor(
             m => m.EditionDate.MusicPitchingCuratorEvaluationStartDate,
@@ -317,8 +324,6 @@
         })
         @Html.ValidationMessageFor(m => m.EditionDate.MusicPitchingCuratorEvaluationStartDate, "", new { @class = "text-danger" })
     </div>
-</div>
-<div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.MusicPitchingCuratorEvaluationEndDate, new { @class = "control-label" })
         @Html.TextBox("EditionDate.MusicPitchingCuratorEvaluationEndDate", Model.EditionDate.MusicPitchingCuratorEvaluationEndDate?.ToShortDateString(), new
@@ -327,11 +332,13 @@
         })
         @Html.ValidationMessageFor(m => m.EditionDate.MusicPitchingCuratorEvaluationEndDate, "", new { @class = "text-danger" })
     </div>
+</div>
+<div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsByCurator, new { @class = "control-label" })
         @Html.TextBoxFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsByCurator, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsByCurator, "", new { @class = "text-danger" })
-    </div>
+    </div> 
 </div>
 <div class="row">
     <div class="form-group col-md-6">
@@ -357,7 +364,8 @@
         @Html.TextBoxFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsByPopularVote, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsByPopularVote, "", new { @class = "text-danger" })
     </div>
-
+</div>
+<div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.MusicPitchingRepechageEvaluationStartDate, new { @class = "control-label" })
         @Html.TextBox("EditionDate.MusicPitchingRepechageEvaluationStartDate", Model.EditionDate.MusicPitchingRepechageEvaluationStartDate?.ToShortDateString(), new
@@ -366,8 +374,6 @@
         })
         @Html.ValidationMessageFor(m => m.EditionDate.MusicPitchingRepechageEvaluationStartDate, "", new { @class = "text-danger" })
     </div>
-</div>
-<div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.MusicPitchingRepechageEvaluationEndDate, new { @class = "control-label" })
         @Html.TextBox("EditionDate.MusicPitchingRepechageEvaluationEndDate", Model.EditionDate.MusicPitchingRepechageEvaluationEndDate?.ToShortDateString(), new
@@ -375,15 +381,17 @@
             @class = "form-control enable-datepicker"
         })
         @Html.ValidationMessageFor(m => m.EditionDate.MusicPitchingRepechageEvaluationEndDate, "", new { @class = "text-danger" })
-    </div>
+    </div> 
+</div>
+<div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsByRepechage, new { @class = "control-label" })
         @Html.TextBoxFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsByRepechage, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.EditionDate.MusicPitchingMaximumApprovedProjectsByRepechage, "", new { @class = "text-danger" })
     </div>
 </div>
-<!-- Music Commissions - End -->
-<!-- Innovation Commissions - Begin  -->
+<!-- Music - Pitching - End -->
+<!-- Innovation - Pitching - Begin  -->
 <h3 class="kt-section__title mt-30 mb-4">@Labels.Pitching - @Labels.Startup</h3>
 <div class="row">
     <div class="form-group col-md-6">
@@ -437,8 +445,8 @@
         @Html.ValidationMessageFor(m => m.EditionDate.InnovationCommissionMaximumApprovedCompaniesCount, "", new { @class = "text-danger" })
     </div>
 </div>
-<!-- Innovation Commissions - End  -->
-<!-- Audiovisual Commissions - Begin  -->
+<!-- Innovation - Pitching - End  -->
+<!-- Audiovisual - Pitching - Begin  -->
 <h3 class="kt-section__title mt-30 mb-4">@Labels.Pitching - @Labels.AudioVisual</h3>
 <div class="row">
     <div class="form-group col-md-6">
@@ -458,7 +466,6 @@
         @Html.ValidationMessageFor(m => m.EditionDate.AudiovisualCommissionEvaluationEndDate, "", new { @class = "text-danger" })
     </div>
 </div>
-
 <div class="row">
     <div class="form-group col-md-6 col-lg-6">
         @Html.LabelFor(
@@ -475,8 +482,8 @@
         @Html.ValidationMessageFor(m => m.EditionDate.AudiovisualCommissionMaximumApprovedProjectsCount, "", new { @class = "text-danger" })
     </div>
 </div>
-<!-- Audiovisual Commissions - End  -->
-<!-- Creator Commissions - Begin  -->
+<!-- Audiovisual - Pitching - End  -->
+<!-- Creator - Pitching - Begin  -->
 <h3 class="kt-section__title mt-30 mb-4">@Labels.Pitching - @Labels.Creator</h3>
 <div class="row">
     <div class="form-group col-md-6">
@@ -526,56 +533,56 @@
         @Html.ValidationMessageFor(m => m.EditionDate.CreatorCommissionMaximumApprovedProjectsCount, "", new { @class = "text-danger" })
     </div>
 </div>
-<!--Creator Commissions - End -->
-<!-- Cartoon Commissions - Begin  -->
+<!--Creator - Pitching - End -->
+<!-- Cartoon - Pitching - Begin  -->
 @*Disabled on https://softohq.atlassian.net/browse/RIO2CMY-802*@
 @*<h3 class="kt-section__title mt-30 mb-4">@Labels.CartoonCommission</h3>
-<div class="row">
-    <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.EditionDate.CartoonProjectSubmitStartDate, new { @class = "control-label" })
-        @Html.TextBox("EditionDate.CartoonProjectSubmitStartDate", Model.EditionDate.CartoonProjectSubmitStartDate?.ToShortDateString(), new
-        {
-            @class = "form-control enable-datepicker"
-        })
-        @Html.ValidationMessageFor(m => m.EditionDate.CartoonProjectSubmitStartDate, "", new { @class = "text-danger" })
+    <div class="row">
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.EditionDate.CartoonProjectSubmitStartDate, new { @class = "control-label" })
+            @Html.TextBox("EditionDate.CartoonProjectSubmitStartDate", Model.EditionDate.CartoonProjectSubmitStartDate?.ToShortDateString(), new
+            {
+                @class = "form-control enable-datepicker"
+            })
+            @Html.ValidationMessageFor(m => m.EditionDate.CartoonProjectSubmitStartDate, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.EditionDate.CartoonProjectSubmitEndDate, new { @class = "control-label" })
+            @Html.TextBox("EditionDate.CartoonProjectSubmitEndDate", Model.EditionDate.CartoonProjectSubmitEndDate?.ToShortDateString(), new
+            {
+                @class = "form-control enable-datepicker"
+            })
+            @Html.ValidationMessageFor(m => m.EditionDate.CartoonProjectSubmitEndDate, "", new { @class = "text-danger" })
+        </div>
     </div>
-    <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.EditionDate.CartoonProjectSubmitEndDate, new { @class = "control-label" })
-        @Html.TextBox("EditionDate.CartoonProjectSubmitEndDate", Model.EditionDate.CartoonProjectSubmitEndDate?.ToShortDateString(), new
-        {
-            @class = "form-control enable-datepicker"
-        })
-        @Html.ValidationMessageFor(m => m.EditionDate.CartoonProjectSubmitEndDate, "", new { @class = "text-danger" })
+    <div class="row">
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.EditionDate.CartoonCommissionEvaluationStartDate, new { @class = "control-label" })
+            @Html.TextBox("EditionDate.CartoonCommissionEvaluationStartDate", Model.EditionDate.CartoonCommissionEvaluationStartDate?.ToShortDateString(), new
+            {
+                @class = "form-control enable-datepicker"
+            })
+            @Html.ValidationMessageFor(m => m.EditionDate.CartoonCommissionEvaluationStartDate, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.EditionDate.CartoonCommissionEvaluationEndDate, new { @class = "control-label" })
+            @Html.TextBox("EditionDate.CartoonCommissionEvaluationEndDate", Model.EditionDate.CartoonCommissionEvaluationEndDate?.ToShortDateString(), new
+            {
+                @class = "form-control enable-datepicker"
+            })
+            @Html.ValidationMessageFor(m => m.EditionDate.CartoonCommissionEvaluationEndDate, "", new { @class = "text-danger" })
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.EditionDate.CartoonCommissionEvaluationStartDate, new { @class = "control-label" })
-        @Html.TextBox("EditionDate.CartoonCommissionEvaluationStartDate", Model.EditionDate.CartoonCommissionEvaluationStartDate?.ToShortDateString(), new
-        {
-            @class = "form-control enable-datepicker"
-        })
-        @Html.ValidationMessageFor(m => m.EditionDate.CartoonCommissionEvaluationStartDate, "", new { @class = "text-danger" })
-    </div>
-    <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.EditionDate.CartoonCommissionEvaluationEndDate, new { @class = "control-label" })
-        @Html.TextBox("EditionDate.CartoonCommissionEvaluationEndDate", Model.EditionDate.CartoonCommissionEvaluationEndDate?.ToShortDateString(), new
-        {
-            @class = "form-control enable-datepicker"
-        })
-        @Html.ValidationMessageFor(m => m.EditionDate.CartoonCommissionEvaluationEndDate, "", new { @class = "text-danger" })
-    </div>
-</div>
-<div class="row">
-    <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.EditionDate.CartoonCommissionMinimumEvaluationsCount, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.EditionDate.CartoonCommissionMinimumEvaluationsCount, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.EditionDate.CartoonCommissionMinimumEvaluationsCount, "", new { @class = "text-danger" })
-    </div>
-    <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.EditionDate.CartoonCommissionMaximumApprovedProjectsCount, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.EditionDate.CartoonCommissionMaximumApprovedProjectsCount, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.EditionDate.CartoonCommissionMaximumApprovedProjectsCount, "", new { @class = "text-danger" })
-    </div>
-</div>*@
-<!-- Cartoon Commissions - End  -->
+    <div class="row">
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.EditionDate.CartoonCommissionMinimumEvaluationsCount, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.EditionDate.CartoonCommissionMinimumEvaluationsCount, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.EditionDate.CartoonCommissionMinimumEvaluationsCount, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.EditionDate.CartoonCommissionMaximumApprovedProjectsCount, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.EditionDate.CartoonCommissionMaximumApprovedProjectsCount, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.EditionDate.CartoonCommissionMaximumApprovedProjectsCount, "", new { @class = "text-danger" })
+        </div>
+    </div>*@
+<!-- Cartoon Pitching - End  -->

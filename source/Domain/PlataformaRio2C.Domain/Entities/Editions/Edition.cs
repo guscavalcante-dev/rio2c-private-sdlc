@@ -72,15 +72,13 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Music - Business Rounds
 
-        public int MusicBusinessRoundsMaximumProjectSubmissionsByCompany { get; private set; }
-
         public DateTimeOffset? MusicBusinessRoundSubmitStartDate { get; private set; }
         public DateTimeOffset? MusicBusinessRoundSubmitEndDate { get; private set; }
         public DateTimeOffset? MusicBusinessRoundEvaluationStartDate { get; private set; }
         public DateTimeOffset? MusicBusinessRoundEvaluationEndDate { get; private set; }
         public DateTimeOffset? MusicBusinessRoundNegotiationStartDate { get; private set; }
         public DateTimeOffset? MusicBusinessRoundNegotiationEndDate { get; private set; }
-        public int MusicBusinessRoundMaximumProjectsBySeller { get; private set; }
+        public int MusicBusinessRoundsMaximumProjectSubmissionsByCompany { get; private set; }
         public int MusicBusinessRoundMaximumEvaluatorsByProject { get; private set; }
 
         #endregion
@@ -94,10 +92,8 @@ namespace PlataformaRio2C.Domain.Entities
         public int MusicCommissionMinimumEvaluationsCount { get; private set; }
         public int MusicCommissionMaximumApprovedBandsCount { get; private set; }
         public int MusicPitchingMaximumProjectSubmissionsByEdition { get; private set; }
-        
         public int MusicPitchingMaximumProjectSubmissionsByParticipant { get; private set; }
         public int MusicPitchingMaximumProjectSubmissionsByCompany { get; private set; }
-
         public int MusicPitchingMaximumApprovedProjectsByCommissionMember { get; private set; }
         public DateTimeOffset? MusicPitchingCuratorEvaluationStartDate { get; private set; }
         public DateTimeOffset? MusicPitchingCuratorEvaluationEndDate { get; private set; }
@@ -190,7 +186,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="musicBusinessRoundEvaluationEndDate"></param>
         /// <param name="musicBusinessRoundNegotiationStartDate"></param>
         /// <param name="musicBusinessRoundNegotiationEndDate"></param>
-        /// <param name="musicBusinessRoundMaximumProjectsBySeller"></param>
+        /// <param name="MusicBusinessRoundsMaximumProjectSubmissionsByCompany"></param>
         /// <param name="musicBusinessRoundMaximumEvaluatorsByProject"></param>
         /// <param name="innovationProjectSubmitStartDate">The innovation project submit start date.</param>
         /// <param name="innovationProjectSubmitEndDate">The innovation project submit end date.</param>
@@ -262,7 +258,7 @@ namespace PlataformaRio2C.Domain.Entities
             DateTime? musicBusinessRoundEvaluationEndDate,
             DateTime? musicBusinessRoundNegotiationStartDate,
             DateTime? musicBusinessRoundNegotiationEndDate,
-            int musicBusinessRoundMaximumProjectsBySeller,
+            int MusicBusinessRoundsMaximumProjectSubmissionsByCompany,
             int musicBusinessRoundMaximumEvaluatorsByProject,
 
             DateTime innovationProjectSubmitStartDate,
@@ -355,7 +351,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.MusicBusinessRoundEvaluationEndDate = musicBusinessRoundEvaluationEndDate?.ToEndDateTimeOffset();
             this.MusicBusinessRoundNegotiationStartDate = musicBusinessRoundNegotiationStartDate?.ToUtcTimeZone();
             this.MusicBusinessRoundNegotiationEndDate = musicBusinessRoundNegotiationEndDate?.ToEndDateTimeOffset();
-            this.MusicBusinessRoundMaximumProjectsBySeller = musicBusinessRoundMaximumProjectsBySeller;
+            this.MusicBusinessRoundsMaximumProjectSubmissionsByCompany = MusicBusinessRoundsMaximumProjectSubmissionsByCompany;
             this.MusicBusinessRoundMaximumEvaluatorsByProject = musicBusinessRoundMaximumEvaluatorsByProject;
 
             // Innovation - Pitching
@@ -500,7 +496,7 @@ namespace PlataformaRio2C.Domain.Entities
             DateTime? musicBusinessRoundEvaluationEndDate,
             DateTime? musicBusinessRoundNegotiationStartDate,
             DateTime? musicBusinessRoundNegotiationEndDate,
-            int musicBusinessRoundMaximumProjectsBySeller,
+            int MusicBusinessRoundsMaximumProjectSubmissionsByCompany,
             int musicBusinessRoundMaximumEvaluatorsByProject,
 
             DateTime musicPitchingSubmitStartDate,
@@ -567,7 +563,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.MusicBusinessRoundEvaluationEndDate = musicBusinessRoundEvaluationEndDate?.ToEndDateTimeOffset();
             this.MusicBusinessRoundNegotiationStartDate = musicBusinessRoundNegotiationStartDate?.ToUtcTimeZone();
             this.MusicBusinessRoundNegotiationEndDate = musicBusinessRoundNegotiationEndDate?.ToEndDateTimeOffset();
-            this.MusicBusinessRoundMaximumProjectsBySeller = musicBusinessRoundMaximumProjectsBySeller;
+            this.MusicBusinessRoundsMaximumProjectSubmissionsByCompany = MusicBusinessRoundsMaximumProjectSubmissionsByCompany;
             this.MusicBusinessRoundMaximumEvaluatorsByProject = musicBusinessRoundMaximumEvaluatorsByProject;
 
             this.MusicPitchingSubmitStartDate = musicPitchingSubmitStartDate.ToUtcTimeZone();
