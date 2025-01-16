@@ -125,64 +125,64 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var attendeeCollaboratorTicketsInformationDto = await attendeeCollaboratorRepo.FindUserTicketsInformationDtoByEmail(editionDto.Id, cmd.MusicBandResponsibleApiDto.Email);
 
-                var attendeeMusicBandsCount = await this.attendeeMusicBandRepo.CountByEditionIdAsync(editionDto.Id);
-                attendeeMusicBandsCount += cmd.MusicBandDataApiDtos.Count;
-                if (attendeeMusicBandsCount > editionDto.MusicPitchingMaximumProjectSubmissionsByEdition)
+            var attendeeMusicBandsCount = await this.attendeeMusicBandRepo.CountByEditionIdAsync(editionDto.Id);
+            attendeeMusicBandsCount += cmd.MusicBandDataApiDtos.Count;
+            if (attendeeMusicBandsCount > editionDto.MusicPitchingMaximumProjectSubmissionsByEdition)
+            {
+                string validationMessage = string.Format(
+                    Messages.YouCanMusicPitchingMaximumProjectSubmissionsByEdition,
+                    editionDto.MusicPitchingMaximumProjectSubmissionsByEdition,
+                    Labels.MusicProjects
+                );
+                this.ValidationResult.Add(new ValidationError(validationMessage));
+                this.AppValidationResult.Add(this.ValidationResult);
+                return this.AppValidationResult;
+            }
+
+            attendeeMusicBandsCount = await this.attendeeMusicBandRepo.CountByResponsibleAsync(editionDto.Id, cmd.MusicBandResponsibleApiDto.Document, cmd.MusicBandResponsibleApiDto.Email);
+            attendeeMusicBandsCount += cmd.MusicBandDataApiDtos.Count;
+            if (attendeeMusicBandsCount > editionDto.MusicPitchingMaximumProjectSubmissionsByParticipant)
+            {
+                string validationMessage = string.Format(
+                    Messages.YouCanMusicPitchingMaximumProjectSubmissionsByParticipant,
+                    editionDto.MusicPitchingMaximumProjectSubmissionsByParticipant,
+                    Labels.MusicProjects,
+                    Labels.Pitching
+                );
+                this.ValidationResult.Add(new ValidationError(validationMessage));
+                this.AppValidationResult.Add(this.ValidationResult);
+                return this.AppValidationResult;
+            }
+
+            if (attendeeCollaboratorTicketsInformationDto == null)
+            {
+                // Is a new responsible, validate if have subscriptions available by document type
+                var newAttendeeCollaboratorTicketsInformationDto = new AttendeeCollaboratorTicketsInformationDto(editionDto.Edition);
+                if (!newAttendeeCollaboratorTicketsInformationDto.HasMusicPitchingProjectsSubscriptionsAvailable(
+                        cmd.MusicBandResponsibleApiDto.Document,
+                        cmd.MusicBandDataApiDtos.Count()))
                 {
-                    string validationMessage = string.Format(
-                        Messages.YouCanMusicPitchingMaximumProjectSubmissionsByEdition,
-                        editionDto.MusicPitchingMaximumProjectSubmissionsByEdition,
-                        Labels.MusicProjects
-                    );
+                    string validationMessage = string.Format(Messages.YouCanSubmitMaxXProjectsFor,
+                                                             newAttendeeCollaboratorTicketsInformationDto.GetMusicPitchingMaxSellProjectsCount(cmd.MusicBandResponsibleApiDto.Document),
+                                                             Labels.MusicProjects,
+                                                             Labels.Pitching);
                     this.ValidationResult.Add(new ValidationError(validationMessage));
                     this.AppValidationResult.Add(this.ValidationResult);
                     return this.AppValidationResult;
                 }
-
-                attendeeMusicBandsCount = await this.attendeeMusicBandRepo.CountByResponsibleAsync(editionDto.Id, cmd.MusicBandResponsibleApiDto.Document, cmd.MusicBandResponsibleApiDto.Email);
-                attendeeMusicBandsCount += cmd.MusicBandDataApiDtos.Count;
-                if (attendeeMusicBandsCount > editionDto.MusicPitchingMaximumProjectSubmissionsByParticipant)
+            }
+            else
+            {
+                // Has no more subscriptions available
+                if (!attendeeCollaboratorTicketsInformationDto.HasMusicPitchingProjectsSubscriptionsAvailable(
+                        cmd.MusicBandResponsibleApiDto.Document,
+                        cmd.MusicBandDataApiDtos.Count()))
                 {
-                    string validationMessage = string.Format(
-                        Messages.YouCanMusicPitchingMaximumProjectSubmissionsByParticipant,
-                        editionDto.MusicPitchingMaximumProjectSubmissionsByParticipant,
-                        Labels.MusicProjects,
-                        Labels.Pitching
-                    );
-                    this.ValidationResult.Add(new ValidationError(validationMessage));
+                    this.ValidationResult.Add(new ValidationError(string.Format(Messages.ProjectRegistrationLimitReachedFor, Labels.MusicProjects, Labels.Pitching)));
                     this.AppValidationResult.Add(this.ValidationResult);
                     return this.AppValidationResult;
                 }
-
-                if (attendeeCollaboratorTicketsInformationDto == null)
-                {
-                    // Is a new responsible, validate if have subscriptions available by document type
-                    var newAttendeeCollaboratorTicketsInformationDto = new AttendeeCollaboratorTicketsInformationDto(editionDto.Edition);
-                    if (!newAttendeeCollaboratorTicketsInformationDto.HasMusicPitchingProjectsSubscriptionsAvailable(
-                            cmd.MusicBandResponsibleApiDto.Document,
-                            cmd.MusicBandDataApiDtos.Count()))
-                    {
-                        string validationMessage = string.Format(Messages.YouCanSubmitMaxXProjectsFor,
-                                                                 newAttendeeCollaboratorTicketsInformationDto.GetMusicPitchingMaxSellProjectsCount(cmd.MusicBandResponsibleApiDto.Document),
-                                                                 Labels.MusicProjects,
-                                                                 Labels.Pitching);
-                        this.ValidationResult.Add(new ValidationError(validationMessage));
-                        this.AppValidationResult.Add(this.ValidationResult);
-                        return this.AppValidationResult;
-                    }
-                }
-                else
-                {
-                    // Has no more subscriptions available
-                    if (!attendeeCollaboratorTicketsInformationDto.HasMusicPitchingProjectsSubscriptionsAvailable(
-                            cmd.MusicBandResponsibleApiDto.Document,
-                            cmd.MusicBandDataApiDtos.Count()))
-                    {
-                        this.ValidationResult.Add(new ValidationError(string.Format(Messages.ProjectRegistrationLimitReachedFor, Labels.MusicProjects, Labels.Pitching)));
-                        this.AppValidationResult.Add(this.ValidationResult);
-                        return this.AppValidationResult;
-                    }
-                }
+            }
 
             #endregion
 

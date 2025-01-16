@@ -72,20 +72,20 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns></returns>
         public int GetMusicPitchingMaxSellProjectsCount(string document)
         {
-            // TODO: Always returning MusicPitchingEntityMaxSellProjectsCount(3) because we have a problem to identify if a foreigner is an Individual or Entity by the document.
+            // TODO: Always returning MusicPitchingMaximumProjectSubmissionsByCompany(3) because we have a problem to identify if a foreigner is an Individual or Entity by the document.
             // For now, validating the number of projects a participant can register is only on the front-end.
             // The customer opened https://softohq.atlassian.net/browse/RIO2CMY-1032 to review this rule later.
-            return this.Edition.MusicPitchingEntityMaxSellProjectsCount;
+            return this.Edition.MusicPitchingMaximumProjectSubmissionsByCompany;
 
             //if (!string.IsNullOrEmpty(document))
             //{
-            //    return document.IsCnpj() ? this.Edition.MusicPitchingEntityMaxSellProjectsCount :
-            //                               this.Edition.MusicPitchingIndividualMaxSellProjectsCount;
+            //    return document.IsCnpj() ? this.Edition.MusicPitchingMaximumProjectSubmissionsByCompany :
+            //                               this.Edition.MusicPitchingMaximumProjectSubmissionsByParticipant;
             //}
             //else
             //{
-            //    return this.CollaboratorDto?.Document?.IsCnpj() == true ? this.Edition.MusicPitchingEntityMaxSellProjectsCount :
-            //                                                              this.Edition.MusicPitchingIndividualMaxSellProjectsCount;
+            //    return this.CollaboratorDto?.Document?.IsCnpj() == true ? this.Edition.MusicPitchingMaximumProjectSubmissionsByCompany :
+            //                                                              this.Edition.MusicPitchingMaximumProjectSubmissionsByParticipant;
             //}
         }
 
@@ -155,11 +155,11 @@ namespace PlataformaRio2C.Domain.Dtos
             if (addingMusicProjectsCount > 0)
             {
                 // When adding new music pitching project, we need to use <= operator
-                return this.HasTicket() && this.GetMusicBusinessRoundsProjectsCount(addingMusicProjectsCount) <= this.Edition.MusicBusinessRoundsMaxSellProjectsCount;
+                return this.HasTicket() && this.GetMusicBusinessRoundsProjectsCount(addingMusicProjectsCount) <= this.Edition.MusicBusinessRoundsMaximumProjectSubmissionsByCompany;
             }
             else
             {
-                return this.HasTicket() && this.GetMusicBusinessRoundsProjectsCount(addingMusicProjectsCount) < this.Edition.MusicBusinessRoundsMaxSellProjectsCount;
+                return this.HasTicket() && this.GetMusicBusinessRoundsProjectsCount(addingMusicProjectsCount) < this.Edition.MusicBusinessRoundsMaximumProjectSubmissionsByCompany;
             }
         }
 
@@ -172,7 +172,7 @@ namespace PlataformaRio2C.Domain.Dtos
         {
             if (this.HasTicket())
             {
-                return (this.AttendeeCollaboratorTicketsCount * this.Edition.MusicBusinessRoundsMaxSellProjectsCount) - this.GetMusicBusinessRoundsProjectsCount(addingMusicProjectsCount);
+                return (this.AttendeeCollaboratorTicketsCount * this.Edition.MusicBusinessRoundsMaximumProjectSubmissionsByCompany) - this.GetMusicBusinessRoundsProjectsCount(addingMusicProjectsCount);
             }
             else
             {

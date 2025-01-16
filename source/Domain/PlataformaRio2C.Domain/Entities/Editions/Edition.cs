@@ -61,7 +61,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Audiovisual - Commissions
+        #region Audiovisual - Pitching
 
         public DateTimeOffset AudiovisualCommissionEvaluationStartDate { get; private set; }
         public DateTimeOffset AudiovisualCommissionEvaluationEndDate { get; private set; }
@@ -72,9 +72,8 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Music - Business Rounds
 
-        public int MusicPitchingIndividualMaxSellProjectsCount { get; private set; }
-        public int MusicPitchingEntityMaxSellProjectsCount { get; private set; }
-        public int MusicBusinessRoundsMaxSellProjectsCount { get; private set; }
+        public int MusicBusinessRoundsMaximumProjectSubmissionsByCompany { get; private set; }
+
         public DateTimeOffset? MusicBusinessRoundSubmitStartDate { get; private set; }
         public DateTimeOffset? MusicBusinessRoundSubmitEndDate { get; private set; }
         public DateTimeOffset? MusicBusinessRoundEvaluationStartDate { get; private set; }
@@ -86,7 +85,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Music - Commissions
+        #region Music - Pitching
 
         public DateTimeOffset MusicPitchingSubmitStartDate { get; private set; }
         public DateTimeOffset MusicPitchingSubmitEndDate { get; private set; }
@@ -95,7 +94,10 @@ namespace PlataformaRio2C.Domain.Entities
         public int MusicCommissionMinimumEvaluationsCount { get; private set; }
         public int MusicCommissionMaximumApprovedBandsCount { get; private set; }
         public int MusicPitchingMaximumProjectSubmissionsByEdition { get; private set; }
+        
         public int MusicPitchingMaximumProjectSubmissionsByParticipant { get; private set; }
+        public int MusicPitchingMaximumProjectSubmissionsByCompany { get; private set; }
+
         public int MusicPitchingMaximumApprovedProjectsByCommissionMember { get; private set; }
         public DateTimeOffset? MusicPitchingCuratorEvaluationStartDate { get; private set; }
         public DateTimeOffset? MusicPitchingCuratorEvaluationEndDate { get; private set; }
@@ -116,7 +118,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Innovation - Commissions
+        #region Innovation - Pitching
 
         public DateTimeOffset InnovationProjectSubmitStartDate { get; private set; }
         public DateTimeOffset InnovationProjectSubmitEndDate { get; private set; }
@@ -127,7 +129,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Cartoon - Commissions
+        #region Cartoon - Pitching
 
         public DateTimeOffset? CartoonProjectSubmitStartDate { get; private set; }
         public DateTimeOffset? CartoonProjectSubmitEndDate { get; private set; }
@@ -138,7 +140,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Creator - Commissions
+        #region Creator - Pitching
 
         public DateTimeOffset CreatorProjectSubmitStartDate { get; private set; }
         public DateTimeOffset CreatorProjectSubmitEndDate { get; private set; }
@@ -326,7 +328,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ProjectMaxBuyerEvaluationsCount = projectMaxBuyerEvaluationsCount;
             this.AudiovisualNegotiationsVirtualMeetingsJoinMinutes = audiovisualNegotiationsVirtualMeetingsJoinMinutes;
 
-            // Music - Commissions
+            // Music - Pitching
             this.MusicPitchingSubmitStartDate = musicPitchingSubmitStartDate.ToUtcTimeZone();
             this.MusicPitchingSubmitEndDate = musicPitchingSubmitEndDate.ToEndDateTimeOffset();
             this.MusicCommissionEvaluationStartDate = musicCommissionEvaluationStartDate.ToUtcTimeZone();
@@ -356,7 +358,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.MusicBusinessRoundMaximumProjectsBySeller = musicBusinessRoundMaximumProjectsBySeller;
             this.MusicBusinessRoundMaximumEvaluatorsByProject = musicBusinessRoundMaximumEvaluatorsByProject;
 
-            // Innovation - Commissions
+            // Innovation - Pitching
             this.InnovationProjectSubmitStartDate = innovationProjectSubmitStartDate.ToUtcTimeZone();
             this.InnovationProjectSubmitEndDate = innovationProjectSubmitEndDate.ToEndDateTimeOffset();
             this.InnovationCommissionEvaluationStartDate = innovationCommissionEvaluationStartDate.ToUtcTimeZone();
@@ -364,13 +366,13 @@ namespace PlataformaRio2C.Domain.Entities
             this.InnovationCommissionMinimumEvaluationsCount = innovationCommissionMinimumEvaluationsCount;
             this.InnovationCommissionMaximumApprovedCompaniesCount = innovationCommissionMaximumApprovedCompaniesCount;
 
-            // Audiovisual - Commissions           
+            // Audiovisual - Pitching           
             this.AudiovisualCommissionEvaluationStartDate = audiovisualCommissionEvaluationStartDate.ToUtcTimeZone();
             this.AudiovisualCommissionEvaluationEndDate = audiovisualCommissionEvaluationEndDate.ToEndDateTimeOffset();
             this.AudiovisualCommissionMinimumEvaluationsCount = audiovisualCommissionMinimumEvaluationsCount;
             this.AudiovisualCommissionMaximumApprovedProjectsCount = audiovisualCommissionMaximumApprovedProjectsCount;
 
-            // Cartoon - Commissions
+            // Cartoon - Pitching
             this.CartoonProjectSubmitStartDate = cartoonProjectSubmitStartDate?.ToUtcTimeZone();
             this.CartoonProjectSubmitEndDate = cartoonProjectSubmitEndDate?.ToEndDateTimeOffset();
             this.CartoonCommissionEvaluationStartDate = cartoonCommissionEvaluationStartDate?.ToUtcTimeZone();
@@ -378,7 +380,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CartoonCommissionMinimumEvaluationsCount = cartoonCommissionMinimumEvaluationsCount;
             this.CartoonCommissionMaximumApprovedProjectsCount = cartoonCommissionMaximumApprovedProjectsCount;
 
-            // Creator - Commissions
+            // Creator - Pitching
             this.CreatorProjectSubmitStartDate = creatorProjectSubmitStartDate.ToUtcTimeZone();
             this.CreatorProjectSubmitEndDate = creatorProjectSubmitEndDate.ToEndDateTimeOffset();
             this.CreatorCommissionEvaluationStartDate = creatorCommissionEvaluationStartDate.ToUtcTimeZone();
@@ -693,7 +695,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Music - Commissions
+        #region Music - Pitching
 
         #region Project Evaluation
 
@@ -709,7 +711,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Innovation - Commissions
+        #region Innovation - Pitching
 
         #region Project Evaluation
 
@@ -725,7 +727,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Creator - Commissions
+        #region Creator - Pitching
 
         #region Project Evaluation
 

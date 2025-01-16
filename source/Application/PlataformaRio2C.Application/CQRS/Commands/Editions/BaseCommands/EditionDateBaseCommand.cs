@@ -64,8 +64,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         #endregion
 
-
-        #region Music - Commissions
+        #region Music - Pitching
 
         [Display(Name = nameof(MusicPitchingSubmitStartDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -85,13 +84,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [GreaterThanOrEqualTo(nameof(MusicCommissionEvaluationStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
         public DateTime? MusicCommissionEvaluationEndDate { get; set; }
 
-        [Display(Name = nameof(MusicCommissionMaximumApprovedBandsCount), ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public int? MusicCommissionMaximumApprovedBandsCount { get; set; }
-
         [Display(Name = nameof(MusicCommissionMinimumEvaluationsCount), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public int? MusicCommissionMinimumEvaluationsCount { get; set; }
+
+        [Display(Name = nameof(MusicCommissionMaximumApprovedBandsCount), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public int? MusicCommissionMaximumApprovedBandsCount { get; set; }
 
         [Display(Name = nameof(MusicPitchingMaximumProjectSubmissionsByEdition), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -100,6 +99,16 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Display(Name = nameof(MusicPitchingMaximumProjectSubmissionsByParticipant), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public int? MusicPitchingMaximumProjectSubmissionsByParticipant { get; set; }
+
+
+        //[Display(Name = nameof(MusicPitchingMaximumProjectSubmissionsByParticipant), ResourceType = typeof(Labels))]
+        //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        //public int? MusicPitchingMaximumProjectSubmissionsByParticipant { get; set; }
+
+
+
+
+
 
         [Display(Name = nameof(MusicPitchingMaximumApprovedProjectsByCommissionMember), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -146,7 +155,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         #endregion
 
-        #region Innovation - Commissions
+        #region Innovation - Pitching
 
         [Display(Name = nameof(InnovationProjectSubmitStartDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -176,7 +185,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         #endregion
 
-        #region Audiovisual - Commissions
+        #region Audiovisual - Pitching
 
         [Display(Name = nameof(AudiovisualCommissionEvaluationStartDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -240,7 +249,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         #endregion
 
-        #region Cartoon - Commissions
+        #region Cartoon - Pitching
 
         [Display(Name = nameof(CartoonProjectSubmitStartDate), ResourceType = typeof(Labels))]
         //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -270,7 +279,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         #endregion
 
-        #region Creator - Commissions
+        #region Creator - Pitching
 
         [Display(Name = nameof(Labels.ProjectSubmitStartDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -348,7 +357,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.MusicBusinessRoundMaximumProjectsBySeller = editionDto.Edition.MusicBusinessRoundMaximumProjectsBySeller;
             this.MusicBusinessRoundMaximumEvaluatorsByProject = editionDto.Edition.MusicBusinessRoundMaximumEvaluatorsByProject;
 
-            // Music - Commissions
+            // Music - Pitching
             this.MusicPitchingSubmitStartDate = editionDto.Edition.MusicPitchingSubmitStartDate.ToBrazilTimeZone();
             this.MusicPitchingSubmitEndDate = editionDto.Edition.MusicPitchingSubmitEndDate.ToBrazilTimeZone();
             this.MusicCommissionEvaluationStartDate = editionDto.Edition.MusicCommissionEvaluationStartDate.ToBrazilTimeZone();
@@ -368,7 +377,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.MusicPitchingRepechageEvaluationEndDate = editionDto.Edition.MusicPitchingRepechageEvaluationEndDate.ToBrazilTimeZone();
             this.MusicPitchingMaximumApprovedProjectsByRepechage = editionDto.Edition.MusicPitchingMaximumApprovedProjectsByRepechage;
 
-            // Innovation - Commissions
+            // Innovation - Pitching
             this.InnovationProjectSubmitStartDate = editionDto.Edition.InnovationProjectSubmitStartDate.ToBrazilTimeZone();
             this.InnovationProjectSubmitEndDate = editionDto.Edition.InnovationProjectSubmitEndDate.ToBrazilTimeZone();
             this.InnovationCommissionEvaluationStartDate = editionDto.Edition.InnovationCommissionEvaluationStartDate.ToBrazilTimeZone();
@@ -376,13 +385,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.InnovationCommissionMaximumApprovedCompaniesCount = editionDto.Edition.InnovationCommissionMaximumApprovedCompaniesCount;
             this.InnovationCommissionMinimumEvaluationsCount = editionDto.Edition.InnovationCommissionMinimumEvaluationsCount;
 
-            // Audiovisual - Commissions
+            // Audiovisual - Pitching
             this.AudiovisualCommissionEvaluationStartDate = editionDto.Edition.AudiovisualCommissionEvaluationStartDate.ToBrazilTimeZone();
             this.AudiovisualCommissionEvaluationEndDate = editionDto.Edition.AudiovisualCommissionEvaluationEndDate.ToBrazilTimeZone();
             this.AudiovisualCommissionMaximumApprovedProjectsCount = editionDto.Edition.AudiovisualCommissionMaximumApprovedProjectsCount;
             this.AudiovisualCommissionMinimumEvaluationsCount = editionDto.Edition.AudiovisualCommissionMinimumEvaluationsCount;
 
-            // Cartoon - Commissions
+            // Cartoon - Pitching
             this.CartoonProjectSubmitStartDate = editionDto.Edition.CartoonProjectSubmitStartDate.ToBrazilTimeZone();
             this.CartoonProjectSubmitEndDate = editionDto.Edition.CartoonProjectSubmitEndDate.ToBrazilTimeZone();
             this.CartoonCommissionEvaluationStartDate = editionDto.Edition.CartoonCommissionEvaluationStartDate.ToBrazilTimeZone();
@@ -390,7 +399,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.CartoonCommissionMaximumApprovedProjectsCount = editionDto.Edition.CartoonCommissionMaximumApprovedProjectsCount;
             this.CartoonCommissionMinimumEvaluationsCount = editionDto.Edition.CartoonCommissionMinimumEvaluationsCount;
 
-            // Creator - Commissions
+            // Creator - Pitching
             this.CreatorProjectSubmitStartDate = editionDto.Edition.CreatorProjectSubmitStartDate.ToBrazilTimeZone();
             this.CreatorProjectSubmitEndDate = editionDto.Edition.CreatorProjectSubmitEndDate.ToBrazilTimeZone();
             this.CreatorCommissionEvaluationStartDate = editionDto.Edition.CreatorCommissionEvaluationStartDate.ToBrazilTimeZone();
