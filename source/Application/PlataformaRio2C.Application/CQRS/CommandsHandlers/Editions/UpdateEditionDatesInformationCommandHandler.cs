@@ -142,6 +142,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
                 cmd.MusicPitchingMaximumProjectSubmissionsByEdition.Value,
                 cmd.MusicPitchingMaximumProjectSubmissionsByParticipant.Value,
+                cmd.MusicPitchingMaximumProjectSubmissionsByCompany.Value,
                 cmd.MusicPitchingMaximumApprovedProjectsByCommissionMember.Value,
                 cmd.MusicPitchingCuratorEvaluationStartDate,
                 cmd.MusicPitchingCuratorEvaluationEndDate,

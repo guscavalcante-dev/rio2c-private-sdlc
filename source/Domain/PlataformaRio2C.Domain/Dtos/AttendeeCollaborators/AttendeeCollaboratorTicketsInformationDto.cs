@@ -75,18 +75,18 @@ namespace PlataformaRio2C.Domain.Dtos
             // TODO: Always returning MusicPitchingMaximumProjectSubmissionsByCompany(3) because we have a problem to identify if a foreigner is an Individual or Entity by the document.
             // For now, validating the number of projects a participant can register is only on the front-end.
             // The customer opened https://softohq.atlassian.net/browse/RIO2CMY-1032 to review this rule later.
-            //return this.Edition.MusicPitchingMaximumProjectSubmissionsByCompany;
+            return this.Edition.MusicPitchingMaximumProjectSubmissionsByCompany;
 
-            if (!string.IsNullOrEmpty(document))
-            {
-                return document.IsCnpj() ? this.Edition.MusicPitchingMaximumProjectSubmissionsByCompany :
-                                           this.Edition.MusicPitchingMaximumProjectSubmissionsByParticipant;
-            }
-            else
-            {
-                return this.CollaboratorDto?.Document?.IsCnpj() == true ? this.Edition.MusicPitchingMaximumProjectSubmissionsByCompany :
-                                                                          this.Edition.MusicPitchingMaximumProjectSubmissionsByParticipant;
-            }
+            //if (!string.IsNullOrEmpty(document))
+            //{
+            //    return document.IsCnpj() ? this.Edition.MusicPitchingMaximumProjectSubmissionsByCompany :
+            //                               this.Edition.MusicPitchingMaximumProjectSubmissionsByParticipant;
+            //}
+            //else
+            //{
+            //    return this.CollaboratorDto?.Document?.IsCnpj() == true ? this.Edition.MusicPitchingMaximumProjectSubmissionsByCompany :
+            //                                                              this.Edition.MusicPitchingMaximumProjectSubmissionsByParticipant;
+            //}
         }
 
         /// <summary>

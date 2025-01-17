@@ -154,7 +154,9 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeSalesPlatform> AttendeeSalesPlatforms { get; private set; }
         public virtual ICollection<EditionEvent> EditionEvents { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="Edition" /> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Edition" /> class.
+        /// </summary>
         /// <param name="uid">The uid.</param>
         /// <param name="name">The name.</param>
         /// <param name="urlCode">The URL code.</param>
@@ -180,14 +182,14 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="musicCommissionEvaluationEndDate">The music commission evaluation end date.</param>
         /// <param name="musicCommissionMinimumEvaluationsCount">The music commission minimum evaluations count.</param>
         /// <param name="musicCommissionMaximumApprovedBandsCount">The music commission maximum approved bands count.</param>
-        /// <param name="musicBusinessRoundSubmitStartDate"></param>
-        /// <param name="musicBusinessRoundSubmitEndDate"></param>
-        /// <param name="musicBusinessRoundEvaluationStartDate"></param>
-        /// <param name="musicBusinessRoundEvaluationEndDate"></param>
-        /// <param name="musicBusinessRoundNegotiationStartDate"></param>
-        /// <param name="musicBusinessRoundNegotiationEndDate"></param>
-        /// <param name="MusicBusinessRoundsMaximumProjectSubmissionsByCompany"></param>
-        /// <param name="musicBusinessRoundMaximumEvaluatorsByProject"></param>
+        /// <param name="musicBusinessRoundSubmitStartDate">The music business round submit start date.</param>
+        /// <param name="musicBusinessRoundSubmitEndDate">The music business round submit end date.</param>
+        /// <param name="musicBusinessRoundEvaluationStartDate">The music business round evaluation start date.</param>
+        /// <param name="musicBusinessRoundEvaluationEndDate">The music business round evaluation end date.</param>
+        /// <param name="musicBusinessRoundNegotiationStartDate">The music business round negotiation start date.</param>
+        /// <param name="musicBusinessRoundNegotiationEndDate">The music business round negotiation end date.</param>
+        /// <param name="musicBusinessRoundsMaximumProjectSubmissionsByCompany">The music business rounds maximum project submissions by company.</param>
+        /// <param name="musicBusinessRoundMaximumEvaluatorsByProject">The music business round maximum evaluators by project.</param>
         /// <param name="innovationProjectSubmitStartDate">The innovation project submit start date.</param>
         /// <param name="innovationProjectSubmitEndDate">The innovation project submit end date.</param>
         /// <param name="innovationCommissionEvaluationStartDate">The innovation commission evaluation start date.</param>
@@ -204,24 +206,25 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="cartoonCommissionEvaluationEndDate">The cartoon commission evaluation end date.</param>
         /// <param name="cartoonCommissionMinimumEvaluationsCount">The cartoon commission minimum evaluations count.</param>
         /// <param name="cartoonCommissionMaximumApprovedProjectsCount">The cartoon commission maximum approved companies count.</param>
-        /// <param name="creatorProjectSubmitStartDate"></param>
-        /// <param name="creatorProjectSubmitEndDate"></param>
-        /// <param name="creatorCommissionEvaluationStartDate"></param>
-        /// <param name="creatorCommissionEvaluationEndDate"></param>
-        /// <param name="creatorCommissionMinimumEvaluationsCount"></param>
-        /// <param name="creatorCommissionMaximumApprovedProjectsCount"></param>
-        /// <param name="musicPitchingMaximumProjectSubmissionsByEdition"></param>
-        /// <param name="musicPitchingMaximumProjectSubmissionsByParticipant"></param>
-        /// <param name="musicPitchingMaximumApprovedProjectsByCommissionMember"></param>
-        /// <param name="musicPitchingCuratorEvaluationStartDate"></param>
-        /// <param name="musicPitchingCuratorEvaluationEndDate"></param>
-        /// <param name="musicPitchingMaximumApprovedProjectsByCurator"></param>
-        /// <param name="musicPitchingPopularEvaluationStartDate"></param>
-        /// <param name="musicPitchingPopularEvaluationEndDate"></param>
-        /// <param name="musicPitchingMaximumApprovedProjectsByPopularVote"></param>
-        /// <param name="musicPitchingRepechageEvaluationStartDate"></param>
-        /// <param name="musicPitchingRepechageEvaluationEndDate"></param>
-        /// <param name="musicPitchingMaximumApprovedProjectsByRepechage"></param>
+        /// <param name="creatorProjectSubmitStartDate">The creator project submit start date.</param>
+        /// <param name="creatorProjectSubmitEndDate">The creator project submit end date.</param>
+        /// <param name="creatorCommissionEvaluationStartDate">The creator commission evaluation start date.</param>
+        /// <param name="creatorCommissionEvaluationEndDate">The creator commission evaluation end date.</param>
+        /// <param name="creatorCommissionMinimumEvaluationsCount">The creator commission minimum evaluations count.</param>
+        /// <param name="creatorCommissionMaximumApprovedProjectsCount">The creator commission maximum approved projects count.</param>
+        /// <param name="musicPitchingMaximumProjectSubmissionsByEdition">The music pitching maximum project submissions by edition.</param>
+        /// <param name="musicPitchingMaximumProjectSubmissionsByParticipant">The music pitching maximum project submissions by participant.</param>
+        /// <param name="musicPitchingMaximumProjectSubmissionsByCompany">The music pitching maximum project submissions by company.</param>
+        /// <param name="musicPitchingMaximumApprovedProjectsByCommissionMember">The music pitching maximum approved projects by commission member.</param>
+        /// <param name="musicPitchingCuratorEvaluationStartDate">The music pitching curator evaluation start date.</param>
+        /// <param name="musicPitchingCuratorEvaluationEndDate">The music pitching curator evaluation end date.</param>
+        /// <param name="musicPitchingMaximumApprovedProjectsByCurator">The music pitching maximum approved projects by curator.</param>
+        /// <param name="musicPitchingPopularEvaluationStartDate">The music pitching popular evaluation start date.</param>
+        /// <param name="musicPitchingPopularEvaluationEndDate">The music pitching popular evaluation end date.</param>
+        /// <param name="musicPitchingMaximumApprovedProjectsByPopularVote">The music pitching maximum approved projects by popular vote.</param>
+        /// <param name="musicPitchingRepechageEvaluationStartDate">The music pitching repechage evaluation start date.</param>
+        /// <param name="musicPitchingRepechageEvaluationEndDate">The music pitching repechage evaluation end date.</param>
+        /// <param name="musicPitchingMaximumApprovedProjectsByRepechage">The music pitching maximum approved projects by repechage.</param>
         /// <param name="userId">The user identifier.</param>
         public Edition(
             Guid uid,
@@ -258,7 +261,7 @@ namespace PlataformaRio2C.Domain.Entities
             DateTime? musicBusinessRoundEvaluationEndDate,
             DateTime? musicBusinessRoundNegotiationStartDate,
             DateTime? musicBusinessRoundNegotiationEndDate,
-            int MusicBusinessRoundsMaximumProjectSubmissionsByCompany,
+            int musicBusinessRoundsMaximumProjectSubmissionsByCompany,
             int musicBusinessRoundMaximumEvaluatorsByProject,
 
             DateTime innovationProjectSubmitStartDate,
@@ -289,6 +292,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             int musicPitchingMaximumProjectSubmissionsByEdition,
             int musicPitchingMaximumProjectSubmissionsByParticipant,
+            int musicPitchingMaximumProjectSubmissionsByCompany,
             int musicPitchingMaximumApprovedProjectsByCommissionMember,
             DateTime? musicPitchingCuratorEvaluationStartDate,
             DateTime? musicPitchingCuratorEvaluationEndDate,
@@ -333,6 +337,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.MusicCommissionMaximumApprovedBandsCount = musicCommissionMaximumApprovedBandsCount;
             this.MusicPitchingMaximumProjectSubmissionsByEdition = musicPitchingMaximumProjectSubmissionsByEdition;
             this.MusicPitchingMaximumProjectSubmissionsByParticipant = musicPitchingMaximumProjectSubmissionsByParticipant;
+            this.MusicPitchingMaximumProjectSubmissionsByCompany = musicPitchingMaximumProjectSubmissionsByCompany;
             this.MusicPitchingMaximumApprovedProjectsByCommissionMember = musicPitchingMaximumApprovedProjectsByCommissionMember;
             this.MusicPitchingCuratorEvaluationStartDate = musicPitchingCuratorEvaluationStartDate?.ToUtcTimeZone();
             this.MusicPitchingCuratorEvaluationEndDate = musicPitchingCuratorEvaluationEndDate?.ToUtcTimeZone();
@@ -351,7 +356,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.MusicBusinessRoundEvaluationEndDate = musicBusinessRoundEvaluationEndDate?.ToEndDateTimeOffset();
             this.MusicBusinessRoundNegotiationStartDate = musicBusinessRoundNegotiationStartDate?.ToUtcTimeZone();
             this.MusicBusinessRoundNegotiationEndDate = musicBusinessRoundNegotiationEndDate?.ToEndDateTimeOffset();
-            this.MusicBusinessRoundsMaximumProjectSubmissionsByCompany = MusicBusinessRoundsMaximumProjectSubmissionsByCompany;
+            this.MusicBusinessRoundsMaximumProjectSubmissionsByCompany = musicBusinessRoundsMaximumProjectSubmissionsByCompany;
             this.MusicBusinessRoundMaximumEvaluatorsByProject = musicBusinessRoundMaximumEvaluatorsByProject;
 
             // Innovation - Pitching
@@ -444,6 +449,14 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="attendeeOrganizationMaxSellProjectsCount">The attendee organization maximum sell projects count.</param>
         /// <param name="projectMaxBuyerEvaluationsCount">The project maximum buyer evaluations count.</param>
         /// <param name="audiovisualNegotiationsVirtualMeetingsJoinMinutes">The audiovisual negotiations virtual meetings join minutes.</param>
+        /// <param name="musicBusinessRoundSubmitStartDate">The music business round submit start date.</param>
+        /// <param name="musicBusinessRoundSubmitEndDate">The music business round submit end date.</param>
+        /// <param name="musicBusinessRoundEvaluationStartDate">The music business round evaluation start date.</param>
+        /// <param name="musicBusinessRoundEvaluationEndDate">The music business round evaluation end date.</param>
+        /// <param name="musicBusinessRoundNegotiationStartDate">The music business round negotiation start date.</param>
+        /// <param name="musicBusinessRoundNegotiationEndDate">The music business round negotiation end date.</param>
+        /// <param name="MusicBusinessRoundsMaximumProjectSubmissionsByCompany">The music business rounds maximum project submissions by company.</param>
+        /// <param name="musicBusinessRoundMaximumEvaluatorsByProject">The music business round maximum evaluators by project.</param>
         /// <param name="musicPitchingSubmitStartDate">The music project submit start date.</param>
         /// <param name="musicPitchingSubmitEndDate">The music project submit end date.</param>
         /// <param name="musicCommissionEvaluationStartDate">The music commission evaluation start date.</param>
@@ -466,18 +479,25 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="cartoonCommissionEvaluationEndDate">The cartoon commission evaluation end date.</param>
         /// <param name="cartoonCommissionMinimumEvaluationsCount">The cartoon commission minimum evaluations count.</param>
         /// <param name="cartoonCommissionMaximumApprovedProjectsCount">The cartoon commission maximum approved projects count.</param>
-        /// <param name="musicPitchingMaximumProjectSubmissionsByEdition"></param>
-        /// <param name="musicPitchingMaximumProjectSubmissionsByParticipant"></param>
-        /// <param name="musicPitchingMaximumApprovedProjectsByCommissionMember"></param>
-        /// <param name="musicPitchingCuratorEvaluationStartDate"></param>
-        /// <param name="musicPitchingCuratorEvaluationEndDate"></param>
-        /// <param name="musicPitchingMaximumApprovedProjectsByCurator"></param>
-        /// <param name="musicPitchingPopularEvaluationStartDate"></param>
-        /// <param name="musicPitchingPopularEvaluationEndDate"></param>
-        /// <param name="musicPitchingMaximumApprovedProjectsByPopularVote"></param>
-        /// <param name="musicPitchingRepechageEvaluationStartDate"></param>
-        /// <param name="musicPitchingRepechageEvaluationEndDate"></param>
-        /// <param name="musicPitchingMaximumApprovedProjectsByRepechage"></param>
+        /// <param name="creatorProjectSubmitStartDate">The creator project submit start date.</param>
+        /// <param name="creatorProjectSubmitEndDate">The creator project submit end date.</param>
+        /// <param name="creatorCommissionEvaluationStartDate">The creator commission evaluation start date.</param>
+        /// <param name="creatorCommissionEvaluationEndDate">The creator commission evaluation end date.</param>
+        /// <param name="creatorCommissionMinimumEvaluationsCount">The creator commission minimum evaluations count.</param>
+        /// <param name="creatorCommissionMaximumApprovedProjectsCount">The creator commission maximum approved projects count.</param>
+        /// <param name="musicPitchingMaximumProjectSubmissionsByEdition">The music pitching maximum project submissions by edition.</param>
+        /// <param name="musicPitchingMaximumProjectSubmissionsByParticipant">The music pitching maximum project submissions by participant.</param>
+        /// <param name="musicPitchingMaximumProjectSubmissionsByCompany">The music pitching maximum project submissions by company.</param>
+        /// <param name="musicPitchingMaximumApprovedProjectsByCommissionMember">The music pitching maximum approved projects by commission member.</param>
+        /// <param name="musicPitchingCuratorEvaluationStartDate">The music pitching curator evaluation start date.</param>
+        /// <param name="musicPitchingCuratorEvaluationEndDate">The music pitching curator evaluation end date.</param>
+        /// <param name="musicPitchingMaximumApprovedProjectsByCurator">The music pitching maximum approved projects by curator.</param>
+        /// <param name="musicPitchingPopularEvaluationStartDate">The music pitching popular evaluation start date.</param>
+        /// <param name="musicPitchingPopularEvaluationEndDate">The music pitching popular evaluation end date.</param>
+        /// <param name="musicPitchingMaximumApprovedProjectsByPopularVote">The music pitching maximum approved projects by popular vote.</param>
+        /// <param name="musicPitchingRepechageEvaluationStartDate">The music pitching repechage evaluation start date.</param>
+        /// <param name="musicPitchingRepechageEvaluationEndDate">The music pitching repechage evaluation end date.</param>
+        /// <param name="musicPitchingMaximumApprovedProjectsByRepechage">The music pitching maximum approved projects by repechage.</param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateDatesInformation(     
             DateTime projectSubmitStartDate,
@@ -534,6 +554,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             int musicPitchingMaximumProjectSubmissionsByEdition,
             int musicPitchingMaximumProjectSubmissionsByParticipant,
+            int musicPitchingMaximumProjectSubmissionsByCompany,
             int musicPitchingMaximumApprovedProjectsByCommissionMember,
             DateTime? musicPitchingCuratorEvaluationStartDate,
             DateTime? musicPitchingCuratorEvaluationEndDate,
@@ -574,6 +595,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.MusicCommissionMaximumApprovedBandsCount = musicCommissionMaximumApprovedBandsCount;
             this.MusicPitchingMaximumProjectSubmissionsByEdition = musicPitchingMaximumProjectSubmissionsByEdition;
             this.MusicPitchingMaximumProjectSubmissionsByParticipant = musicPitchingMaximumProjectSubmissionsByParticipant;
+            this.MusicPitchingMaximumProjectSubmissionsByCompany = musicPitchingMaximumProjectSubmissionsByCompany;
             this.MusicPitchingMaximumApprovedProjectsByCommissionMember = musicPitchingMaximumApprovedProjectsByCommissionMember;
             this.MusicPitchingCuratorEvaluationStartDate = musicPitchingCuratorEvaluationStartDate?.ToUtcTimeZone();
             this.MusicPitchingCuratorEvaluationEndDate = musicPitchingCuratorEvaluationEndDate?.ToUtcTimeZone();

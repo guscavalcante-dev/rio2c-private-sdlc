@@ -1802,7 +1802,7 @@
     <value>Maximum number of music bands registered by edition</value>
   </data>
   <data name="MusicPitchingMaximumProjectSubmissionsByParticipant" xml:space="preserve">
-    <value>Maximum number of music bands registered by participant (ID number)</value>
+    <value>Maximum number of music bands registered by participant (Tax ID)</value>
   </data>
   <data name="MusicPitchingPopularEvaluationEndDate" xml:space="preserve">
     <value>End date for music band evaluation by popular vote</value>

@@ -360,6 +360,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.MusicCommissionMinimumEvaluationsCount = editionDto.Edition.MusicCommissionMinimumEvaluationsCount;
             this.MusicPitchingMaximumProjectSubmissionsByEdition = editionDto.Edition.MusicPitchingMaximumProjectSubmissionsByEdition;
             this.MusicPitchingMaximumProjectSubmissionsByParticipant = editionDto.Edition.MusicPitchingMaximumProjectSubmissionsByParticipant;
+            this.MusicPitchingMaximumProjectSubmissionsByCompany = editionDto.Edition.MusicPitchingMaximumProjectSubmissionsByCompany;
+
             this.MusicPitchingMaximumApprovedProjectsByCommissionMember = editionDto.Edition.MusicPitchingMaximumApprovedProjectsByCommissionMember;
             this.MusicPitchingCuratorEvaluationStartDate = editionDto.Edition.MusicPitchingCuratorEvaluationStartDate.ToBrazilTimeZone();
             this.MusicPitchingCuratorEvaluationEndDate = editionDto.Edition.MusicPitchingCuratorEvaluationEndDate.ToBrazilTimeZone();
