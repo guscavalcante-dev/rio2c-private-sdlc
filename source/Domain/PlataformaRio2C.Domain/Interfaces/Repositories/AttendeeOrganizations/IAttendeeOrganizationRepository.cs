@@ -27,6 +27,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<List<AttendeeOrganization>> FindAllByUidsAsync(List<Guid> attendeeOrganizationsUids);
         Task<AttendeeOrganization> FindByUidAsync(Guid attendeeOrganizationUid);
         Task<AttendeeOrganization> FindByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId, bool showAllEditions);
+        Task<IEnumerable<AttendeeOrganizationBaseDto>> FindOrganizationBaseDtosByCollaboratorIdAndEditionIdAsync(int collaboratorId, int editionId, bool showAllEditions = false);
 
         #region Common Widgets
 

@@ -175,8 +175,8 @@ namespace PlataformaRio2C.Domain.Dtos
                 culture = "pt-br";
             }
 
-            return this.JobTitleBaseDtos?.FirstOrDefault(jtd => jtd.LanguageDto.Code == culture) ??
-                   this.JobTitleBaseDtos?.FirstOrDefault(jtd => jtd.LanguageDto.Code == "pt-br");
+            return this.JobTitleBaseDtos?.FirstOrDefault(jtd => jtd.LanguageDto?.Code == culture) ??
+                   this.JobTitleBaseDtos?.FirstOrDefault(jtd => jtd.LanguageDto?.Code == "pt-br");
         }
 
         /// <summary>
