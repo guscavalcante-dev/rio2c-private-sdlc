@@ -8,7 +8,7 @@
 		ALTER TABLE dbo.Editions DROP COLUMN MusicBusinessRoundEvaluationEndDate;
 		ALTER TABLE dbo.Editions DROP COLUMN MusicBusinessRoundNegotiationStartDate;
 		ALTER TABLE dbo.Editions DROP COLUMN MusicBusinessRoundNegotiationEndDate;
-		ALTER TABLE dbo.Editions DROP COLUMN MusicBusinessRoundsMaximumProjectSubmissionsByCompany;
+		ALTER TABLE dbo.Editions DROP COLUMN MusicBusinessRoundMaximumProjectsBySeller;
 		ALTER TABLE dbo.Editions DROP COLUMN MusicBusinessRoundMaximumEvaluatorsByProject;
     COMMIT TRAN -- Transaction Success!
 END TRY

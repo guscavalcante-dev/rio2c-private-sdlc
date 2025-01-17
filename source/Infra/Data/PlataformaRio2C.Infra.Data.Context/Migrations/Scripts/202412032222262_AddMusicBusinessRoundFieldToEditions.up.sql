@@ -14,12 +14,12 @@
             ALTER TABLE dbo.Editions ADD MusicBusinessRoundNegotiationStartDate datetimeoffset NULL;
         IF COL_LENGTH('Editions', 'MusicBusinessRoundNegotiationEndDate') IS NULL
             ALTER TABLE dbo.Editions ADD MusicBusinessRoundNegotiationEndDate datetimeoffset NULL;
-		IF COL_LENGTH('Editions', 'MusicBusinessRoundsMaximumProjectSubmissionsByCompany') IS NULL
-            ALTER TABLE dbo.Editions ADD MusicBusinessRoundsMaximumProjectSubmissionsByCompany int NULL;
+		IF COL_LENGTH('Editions', 'MusicBusinessRoundMaximumProjectsBySeller') IS NULL
+            ALTER TABLE dbo.Editions ADD MusicBusinessRoundMaximumProjectsBySeller int NULL;
 		IF COL_LENGTH('Editions', 'MusicBusinessRoundMaximumEvaluatorsByProject') IS NULL
             ALTER TABLE dbo.Editions ADD MusicBusinessRoundMaximumEvaluatorsByProject int NULL;
-		EXEC('UPDATE dbo.Editions SET MusicBusinessRoundsMaximumProjectSubmissionsByCompany=1, MusicBusinessRoundMaximumEvaluatorsByProject=3');
-		EXEC('ALTER TABLE dbo.Editions ALTER COLUMN MusicBusinessRoundsMaximumProjectSubmissionsByCompany int NOT NULL');
+		EXEC('UPDATE dbo.Editions SET MusicBusinessRoundMaximumProjectsBySeller=1, MusicBusinessRoundMaximumEvaluatorsByProject=3');
+		EXEC('ALTER TABLE dbo.Editions ALTER COLUMN MusicBusinessRoundMaximumProjectsBySeller int NOT NULL');
 		EXEC('ALTER TABLE dbo.Editions ALTER COLUMN MusicBusinessRoundMaximumEvaluatorsByProject int NOT NULL');
 	COMMIT TRAN -- Transaction Success!
 END TRY

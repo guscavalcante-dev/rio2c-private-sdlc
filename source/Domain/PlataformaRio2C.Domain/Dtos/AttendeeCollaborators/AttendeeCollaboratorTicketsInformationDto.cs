@@ -69,44 +69,54 @@ namespace PlataformaRio2C.Domain.Dtos
         /// Gets the music pitching maximum sell projects count.
         /// </summary>
         /// <param name="document">The document.</param>
+        /// <param name="isCompany">if set to <c>true</c> [is company].</param>
+        /// <param name="country">The country.</param>
         /// <returns></returns>
-        public int GetMusicPitchingMaxSellProjectsCount(string document)
+        public int GetMusicPitchingMaxSellProjectsCount(string document, bool isCompany, Country country)
         {
-            // TODO: Always returning MusicPitchingMaximumProjectSubmissionsByCompany(3) because we have a problem to identify if a foreigner is an Individual or Entity by the document.
-            // For now, validating the number of projects a participant can register is only on the front-end.
-            // The customer opened https://softohq.atlassian.net/browse/RIO2CMY-1032 to review this rule later.
-            return this.Edition.MusicPitchingMaximumProjectSubmissionsByCompany;
-
-            //if (!string.IsNullOrEmpty(document))
-            //{
-            //    return document.IsCnpj() ? this.Edition.MusicPitchingMaximumProjectSubmissionsByCompany :
-            //                               this.Edition.MusicPitchingMaximumProjectSubmissionsByParticipant;
-            //}
-            //else
-            //{
-            //    return this.CollaboratorDto?.Document?.IsCnpj() == true ? this.Edition.MusicPitchingMaximumProjectSubmissionsByCompany :
-            //                                                              this.Edition.MusicPitchingMaximumProjectSubmissionsByParticipant;
-            //}
+            if(country?.Code == Country.Brazil.Code)
+            {
+                if (!string.IsNullOrEmpty(document))
+                {
+                    return document.IsCnpj() ? 
+                        this.Edition.MusicPitchingMaximumProjectSubmissionsByCompany :
+                        this.Edition.MusicPitchingMaximumProjectSubmissionsByParticipant;
+                }
+                else
+                {
+                    return this.CollaboratorDto?.Document?.IsCnpj() == true ? 
+                        this.Edition.MusicPitchingMaximumProjectSubmissionsByCompany :
+                        this.Edition.MusicPitchingMaximumProjectSubmissionsByParticipant;
+                }
+            }
+            else
+            {
+                return isCompany ? 
+                    this.Edition.MusicPitchingMaximumProjectSubmissionsByCompany :
+                    this.Edition.MusicPitchingMaximumProjectSubmissionsByParticipant;
+            }
         }
 
         /// <summary>
         /// Determines whether [has music pitching projects subscriptions available].
         /// </summary>
         /// <param name="document">The document.</param>
+        /// <param name="isCompany">if set to <c>true</c> [is company].</param>
+        /// <param name="country">The country.</param>
         /// <param name="addingMusicProjectsCount">The adding music pitching projects count.</param>
         /// <returns>
         ///   <c>true</c> if [has music pitching projects subscriptions available]; otherwise, <c>false</c>.
         /// </returns>
-        public bool HasMusicPitchingProjectsSubscriptionsAvailable(string document, int addingMusicProjectsCount)
+        public bool HasMusicPitchingProjectsSubscriptionsAvailable(string document, bool isCompany, Country country, int addingMusicProjectsCount)
         {
             if (addingMusicProjectsCount > 0)
             {
                 // When adding new music pitching project, we need to use <= operator
-                return this.GetMusicPitchingProjectsCount(addingMusicProjectsCount) <= this.GetMusicPitchingMaxSellProjectsCount(document);
+                return this.GetMusicPitchingProjectsCount(addingMusicProjectsCount) <= this.GetMusicPitchingMaxSellProjectsCount(document, isCompany, country);
             }
             else
             {
-                return this.GetMusicPitchingProjectsCount(addingMusicProjectsCount) < this.GetMusicPitchingMaxSellProjectsCount(document);
+                return this.GetMusicPitchingProjectsCount(addingMusicProjectsCount) < this.GetMusicPitchingMaxSellProjectsCount(document, isCompany, country);
             }
         }
 
@@ -114,13 +124,15 @@ namespace PlataformaRio2C.Domain.Dtos
         /// Gets the music pitching projects subscriptions available.
         /// </summary>
         /// <param name="document">The document.</param>
+        /// <param name="isCompany">if set to <c>true</c> [is company].</param>
+        /// <param name="country">The country.</param>
         /// <param name="addingMusicProjectsCount">The adding music pitching projects count.</param>
         /// <returns></returns>
-        public int GetMusicPitchingProjectsSubscriptionsAvailable(string document, int addingMusicProjectsCount)
+        public int GetMusicPitchingProjectsSubscriptionsAvailable(string document, bool isCompany, Country country, int addingMusicProjectsCount)
         {
             if (this.HasTicket())
             {
-                return this.GetMusicPitchingMaxSellProjectsCount(document) - this.GetMusicPitchingProjectsCount(addingMusicProjectsCount);
+                return this.GetMusicPitchingMaxSellProjectsCount(document, isCompany, country) - this.GetMusicPitchingProjectsCount(addingMusicProjectsCount);
             }
             else
             {
@@ -186,10 +198,17 @@ namespace PlataformaRio2C.Domain.Dtos
         /// Gets the music messages.
         /// </summary>
         /// <param name="document">The document.</param>
+        /// <param name="isCompany">if set to <c>true</c> [is company].</param>
+        /// <param name="country">The country.</param>
         /// <param name="addingMusicPitchingProjectsCount">The adding music pitching projects count.</param>
         /// <param name="addingMusicBusinessRoundsProjectsCount">The adding music business rounds projects count.</param>
         /// <returns></returns>
-        public string[] GetMusicMessages(string document, int addingMusicPitchingProjectsCount, int addingMusicBusinessRoundsProjectsCount)
+        public string[] GetMusicMessages(
+            string document,
+            bool isCompany,
+            Country country,
+            int addingMusicPitchingProjectsCount,
+            int addingMusicBusinessRoundsProjectsCount)
         {
             if (!this.HasTicket())
             {
@@ -198,9 +217,9 @@ namespace PlataformaRio2C.Domain.Dtos
 
             List<string> messages = new List<string>();
 
-            if (this.HasMusicPitchingProjectsSubscriptionsAvailable(document, addingMusicPitchingProjectsCount))
+            if (this.HasMusicPitchingProjectsSubscriptionsAvailable(document, isCompany, country, addingMusicPitchingProjectsCount))
             {
-                messages.Add(string.Format(Messages.ThereAreStillXSlotsLeftToRegisterProjects, this.GetMusicPitchingProjectsSubscriptionsAvailable(document, addingMusicPitchingProjectsCount), Labels.MusicProjects, Labels.Pitching));
+                messages.Add(string.Format(Messages.ThereAreStillXSlotsLeftToRegisterProjects, this.GetMusicPitchingProjectsSubscriptionsAvailable(document, isCompany, country, addingMusicPitchingProjectsCount), Labels.MusicProjects, Labels.Pitching));
             }
             else
             {
@@ -354,12 +373,19 @@ namespace PlataformaRio2C.Domain.Dtos
         /// Gets all messages.
         /// </summary>
         /// <param name="document">The document.</param>
+        /// <param name="isCompany">if set to <c>true</c> [is company].</param>
+        /// <param name="country">The country.</param>
         /// <param name="addingMusicPitchingProjectsCount">The adding music pitching projects count.</param>
         /// <param name="addingMusicBusinessRoundsProjectsCount">The adding music business rounds projects count.</param>
         /// <returns></returns>
-        public string[] GetAllMessages(string document, int addingMusicPitchingProjectsCount, int addingMusicBusinessRoundsProjectsCount)
+        public string[] GetAllMessages(
+            string document,
+            bool isCompany,
+            Country country,
+            int addingMusicPitchingProjectsCount,
+            int addingMusicBusinessRoundsProjectsCount)
         {
-            return this.GetMusicMessages(document, addingMusicPitchingProjectsCount, addingMusicBusinessRoundsProjectsCount)
+            return this.GetMusicMessages(document, isCompany, country, addingMusicPitchingProjectsCount, addingMusicBusinessRoundsProjectsCount)
                         .Concat(this.GetInnovationMessages())
                         .Distinct()
                         .ToArray();
