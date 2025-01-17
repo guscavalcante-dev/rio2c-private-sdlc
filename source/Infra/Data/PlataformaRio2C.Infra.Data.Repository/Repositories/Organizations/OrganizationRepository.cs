@@ -1321,7 +1321,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             var query = this.GetBaseQuery(showDeleted: showDeleted)
                                 .FindByOrganizationTypeUidAndByEditionId(playerOrganizationTypeUid, false, false, editionId, showDeleted)
-                                //.IsApiDisplayEnabled(editionId, playerOrganizationTypeUid, showDeleted) //TODO: Enable this filter after implementing: Admin area > Player details view > API Configuration widget
+                                .IsApiDisplayEnabled(editionId, playerOrganizationTypeUid, showDeleted) 
                                 .FindByFiltersUids(activitiesUids, targetAudiencesUids, interestsUids, showDeleted)
                                 .FindByKeywords(keywords)
                                 .FindByCreateOrUpdateDate(modifiedAfterDate);
