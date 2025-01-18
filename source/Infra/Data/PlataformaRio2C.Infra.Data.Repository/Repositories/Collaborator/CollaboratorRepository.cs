@@ -672,12 +672,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static async Task<IPagedList<CollaboratorDto>> ToListPagedAsync(this IQueryable<CollaboratorDto> query, int page, int pageSize)
         {
-            page++;
+            var totalItemCount = await query.CountAsync(); 
+            var items = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync(); 
 
-            // Page the list
-            var pagedList = await query.ToPagedListAsync(page, pageSize);
-            if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
-                pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
+            var pagedList = new StaticPagedList<CollaboratorDto>(items, page, pageSize, totalItemCount);
 
             return pagedList;
         }
@@ -796,9 +797,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     {
         /// <summary>Initializes a new instance of the <see cref="CollaboratorRepository"/> class.</summary>
         /// <param name="context">The context.</param>
-        public CollaboratorRepository(PlataformaRio2CContext context)
+        /// 
+
+        private readonly ICollaboratorJobTitleRepository collaboratorRepo;
+        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepository;
+        private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepository;
+
+
+        public CollaboratorRepository(PlataformaRio2CContext context, ICollaboratorJobTitleRepository collaboratorRepo, IAttendeeOrganizationRepository attendeeOrganizationRepository, IAttendeeCollaboratorRepository attendeeCollaboratorRepository)
             : base(context)
         {
+            this.collaboratorRepo = collaboratorRepo;
+            this.attendeeOrganizationRepository = attendeeOrganizationRepository;
+            this.attendeeCollaboratorRepository = attendeeCollaboratorRepository;
         }
 
         /// <summary>Gets the base query.</summary>
@@ -1594,47 +1605,27 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 false,
                 false);
 
-            return await baseQuery
+            var collaboratorsDtos =  await baseQuery
                             .Select(c => new CollaboratorDto
                             {
                                 Id = c.Id,
                                 Uid = c.Uid,
                                 FirstName = c.FirstName,
                                 LastNames = c.LastNames,
-                                ImageUploadDate = c.ImageUploadDate,
-                                JobTitleBaseDtos = c.JobTitles.Where(jb => !jb.IsDeleted).Select(d => new CollaboratorJobTitleBaseDto
-                                {
-                                    Id = d.Id,
-                                    Uid = d.Uid,
-                                    Value = d.Value,
-                                    LanguageDto = new LanguageBaseDto
-                                    {
-                                        Id = d.Language.Id,
-                                        Uid = d.Language.Uid,
-                                        Name = d.Language.Name,
-                                        Code = d.Language.Code
-                                    }
-                                }),
-                                AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
-                                                                            .Where(at => !at.IsDeleted && at.EditionId == editionId)
-                                                                            .SelectMany(at => at.AttendeeOrganizationCollaborators
-                                                                                                    .Where(aoc => !aoc.IsDeleted)
-                                                                                                    .Select(aoc => new AttendeeOrganizationBaseDto
-                                                                                                    {
-                                                                                                        Uid = aoc.AttendeeOrganization.Uid,
-                                                                                                        OrganizationBaseDto = new OrganizationBaseDto
-                                                                                                        {
-                                                                                                            Name = aoc.AttendeeOrganization.Organization.Name,
-                                                                                                            TradeName = aoc.AttendeeOrganization.Organization.TradeName,
-                                                                                                            HoldingBaseDto = aoc.AttendeeOrganization.Organization.Holding == null ? null : new HoldingBaseDto
-                                                                                                            {
-                                                                                                                Name = aoc.AttendeeOrganization.Organization.Holding.Name
-                                                                                                            }
-                                                                                                        }
-                                                                                                    }))
+                                ImageUploadDate = c.ImageUploadDate
                             })
                             .OrderBy(c => c.FirstName)
                             .ToListPagedAsync(page, pageSize);
+
+
+            foreach (var collaborator in collaboratorsDtos)
+            {
+                collaborator.JobTitleBaseDtos = await collaboratorRepo.FindAllJobTitlesDtosByCollaboratorId(collaborator.Id);
+                var attendeeCollaborator = await attendeeCollaboratorRepository.FindSiteDetailstDtoByCollaboratorUidAndByEditionIdAsync(collaborator.Uid, editionId.Value);
+                collaborator.AttendeeOrganizationBasesDtos = await attendeeOrganizationRepository.FindOrganizationBaseDtosByCollaboratorIdAndEditionIdAsync(attendeeCollaborator.AttendeeCollaborator.Id, editionId == null ? 0 : editionId.Value, editionId == null);
+            }
+
+            return collaboratorsDtos;
         }
 
         /// <summary>

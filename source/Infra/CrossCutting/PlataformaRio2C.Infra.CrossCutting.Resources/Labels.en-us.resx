@@ -661,7 +661,7 @@
     <value>Company</value>
   </data>
   <data name="CompanyDocument" xml:space="preserve">
-    <value>Company registration number</value>
+    <value>Company registration number (Tax ID)</value>
     <comment>CNPJ</comment>
   </data>
   <data name="CompanyInfo" xml:space="preserve">
@@ -1821,6 +1821,12 @@
   </data>
   <data name="MusicPitchingSubmitStartDate" xml:space="preserve">
     <value>Music bands submission start date</value>
+  </data>
+  <data name="MusicPitchingSubmitEndDate" xml:space="preserve">
+    <value>Music project submission end date</value>
+  </data>
+  <data name="MusicPitchingSubmitStartDate" xml:space="preserve">
+    <value>Music project submission start date</value>
   </data>
   <data name="MusicPlayer" xml:space="preserve">
     <value>Music Player</value>

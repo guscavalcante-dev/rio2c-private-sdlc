@@ -4048,7 +4048,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quantidade máxima de projetos por participante.
+        ///   Looks up a localized string similar to Quantidade máxima de projetos por empresa (CNPJ).
         /// </summary>
         public static string MusicBusinessRoundsMaximumProjectSubmissionsByCompany {
             get {
