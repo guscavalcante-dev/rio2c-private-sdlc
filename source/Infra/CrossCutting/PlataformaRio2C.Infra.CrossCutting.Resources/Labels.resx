@@ -292,7 +292,6 @@
   </data>
   <data name="ApproveToRepechage" xml:space="preserve">
     <value>Aprovar repescagem</value>
-    <comment>Aprovar</comment>
   </data>
   <data name="Arrival" xml:space="preserve">
     <value>Chegada</value>
@@ -919,7 +918,6 @@
   </data>
   <data name="DisapproveToRepechage" xml:space="preserve">
     <value>Reprovar repescagem</value>
-    <comment>Aprovar</comment>
   </data>
   <data name="Disassociate" xml:space="preserve">
     <value>Desassociar</value>
@@ -1728,14 +1726,14 @@
   <data name="MusicBusinessRoundMaximumEvaluatorsByProject" xml:space="preserve">
     <value>Quantidade máxima de avaliadores por projeto</value>
   </data>
-  <data name="MusicBusinessRoundMaximumProjectsBySeller" xml:space="preserve">
-    <value>Quantidade máxima de projetos por participante</value>
-  </data>
   <data name="MusicBusinessRoundNegotiationEndDate" xml:space="preserve">
     <value>Data de término das negociações de música</value>
   </data>
   <data name="MusicBusinessRoundNegotiationStartDate" xml:space="preserve">
     <value>Data de início das negociações de música</value>
+  </data>
+  <data name="MusicBusinessRoundsMaximumProjectSubmissionsByCompany" xml:space="preserve">
+    <value>Quantidade máxima de projetos por participante</value>
   </data>
   <data name="MusicBusinessRoundSubmitEndDate" xml:space="preserve">
     <value>Data de término do envio de projetos de música</value>
@@ -1748,12 +1746,10 @@
     <comment>Comissão de Música</comment>
   </data>
   <data name="MusicCommissionEvaluationEndDate" xml:space="preserve">
-    <value>Data de término da avaliação de projeto musical</value>
-    <comment>Data de término da avaliação de projeto musical</comment>
+    <value>Data de término da avaliação de bandas</value>
   </data>
   <data name="MusicCommissionEvaluationStartDate" xml:space="preserve">
-    <value>Data de início da avaliação de projeto musical</value>
-    <comment>Data de início da avaliação de projeto musical</comment>
+    <value>Data de início da avaliação de bandas</value>
   </data>
   <data name="MusicCommissionMaximumApprovedBandsCount" xml:space="preserve">
     <value>Quantidade máxima de bandas aprovadas</value>
@@ -1773,46 +1769,49 @@
     <comment>Instrumento musical</comment>
   </data>
   <data name="MusicPitchingCuratorEvaluationEndDate" xml:space="preserve">
-    <value>Data de término da avaliação de projetos pelo Curador</value>
+    <value>Data de término da avaliação de bandas por curador</value>
   </data>
   <data name="MusicPitchingCuratorEvaluationStartDate" xml:space="preserve">
-    <value>Data de início da avaliação de projetos pelo Curador</value>
+    <value>Data de início da avaliação de bandas por curador</value>
   </data>
   <data name="MusicPitchingMaximumApprovedProjectsByCommissionMember" xml:space="preserve">
     <value>Quantidade máxima de projetos aprovados por membro da comissão</value>
   </data>
   <data name="MusicPitchingMaximumApprovedProjectsByCurator" xml:space="preserve">
-    <value>Quantidade máxima de projetos aprovados por curador</value>
+    <value>Quantidade máxima de bandas aprovadas por curador</value>
   </data>
   <data name="MusicPitchingMaximumApprovedProjectsByPopularVote" xml:space="preserve">
-    <value>Quantidade máxima de projetos aprovados por votação popular</value>
+    <value>Quantidade máxima de bandas aprovadas por votação popular</value>
   </data>
   <data name="MusicPitchingMaximumApprovedProjectsByRepechage" xml:space="preserve">
-    <value>Quantidade máxima de projetos aprovados por Repescagem</value>
+    <value>Quantidade máxima de bandas aprovadas por repescagem</value>
+  </data>
+  <data name="MusicPitchingMaximumProjectSubmissionsByCompany" xml:space="preserve">
+    <value>Quantidade máxima de bandas inscritas por empresa (CNPJ)</value>
   </data>
   <data name="MusicPitchingMaximumProjectSubmissionsByEdition" xml:space="preserve">
-    <value>Quantidade máxima de projetos inscritos por edição</value>
+    <value>Quantidade máxima de bandas inscritas por edição</value>
   </data>
   <data name="MusicPitchingMaximumProjectSubmissionsByParticipant" xml:space="preserve">
-    <value>Quantidade máxima de projetos inscritos por participante</value>
+    <value>Quantidade máxima de bandas inscritas por participante (CPF)</value>
   </data>
   <data name="MusicPitchingPopularEvaluationEndDate" xml:space="preserve">
-    <value>Data de término da avaliação de projetos pela votação popular</value>
+    <value>Data de término da avaliação de bandas por votação popular</value>
   </data>
   <data name="MusicPitchingPopularEvaluationStartDate" xml:space="preserve">
-    <value>Data de início da avaliação de projetos pela votação popular</value>
+    <value>Data de início da avaliação de bandas por votação popular</value>
   </data>
   <data name="MusicPitchingRepechageEvaluationEndDate" xml:space="preserve">
-    <value>Data de término da avaliação de projetos pela Repescagem</value>
+    <value>Data de término da avaliação de bandas por repescagem</value>
   </data>
   <data name="MusicPitchingRepechageEvaluationStartDate" xml:space="preserve">
-    <value>Data de início da avaliação de projetos pela Repescagem</value>
+    <value>Data de início da avaliação de bandas por repescagem</value>
   </data>
   <data name="MusicPitchingSubmitEndDate" xml:space="preserve">
-    <value>Data de término de envio de projeto musical</value>
+    <value>Data de término do cadastro de bandas</value>
   </data>
   <data name="MusicPitchingSubmitStartDate" xml:space="preserve">
-    <value>Data de início de envio de projeto musical</value>
+    <value>Data de início do cadastro de bandas</value>
   </data>
   <data name="MusicPlayer" xml:space="preserve">
     <value>Player de Música</value>
@@ -1824,16 +1823,15 @@
     <value>Relatório de Players de Música</value>
   </data>
   <data name="MusicProjects" xml:space="preserve">
-    <value>Projetos de Música</value>
+    <value>Bandas</value>
     <comment>Projetos de Música</comment>
   </data>
   <data name="MusicProjectSubmitEndDate" xml:space="preserve">
-    <value>Data de término de envio de projeto musical</value>
+    <value>Data de término do cadastro de bandas</value>
     <comment>Data de término de envio de projeto musical</comment>
   </data>
   <data name="MusicProjectSubmitStartDate" xml:space="preserve">
-    <value>Data de início de envio de projeto musical</value>
-    <comment>Data de início de envio de projeto musical</comment>
+    <value>Data de início do cadastro de bandas</value>
   </data>
   <data name="MusicTermsAcceptanceDate" xml:space="preserve">
     <value>Data de aceite do regulamento de Musica</value>

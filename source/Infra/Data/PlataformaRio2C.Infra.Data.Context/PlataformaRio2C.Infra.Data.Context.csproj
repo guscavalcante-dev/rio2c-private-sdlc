@@ -364,6 +364,14 @@
     <Compile Include="Migrations\202501131729087_UpdateMigrations_202501131427.Designer.cs">
       <DependentUpon>202501131729087_UpdateMigrations_202501131427.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202501161558250_ChangesForEditions.cs" />
+    <Compile Include="Migrations\202501161558250_ChangesForEditions.Designer.cs">
+      <DependentUpon>202501161558250_ChangesForEditions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202501161729220_UpdateMigrations_202501161429.cs" />
+    <Compile Include="Migrations\202501161729220_UpdateMigrations_202501161429.Designer.cs">
+      <DependentUpon>202501161729220_UpdateMigrations_202501161429.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -520,6 +528,12 @@
     </Content>
     <Content Include="Migrations\Scripts\202501061732011_DeleteDuplicatedTargetAudience.up.sql" />
     <Content Include="Migrations\Scripts\202501092310114_AddStagenameFieldToCollaborators.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202501161558250_ChangesForEditions.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202501161558250_ChangesForEditions.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202501092310114_AddStagenameFieldToCollaborators.up.sql">
@@ -712,6 +726,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202501131729087_UpdateMigrations_202501131427.resx">
       <DependentUpon>202501131729087_UpdateMigrations_202501131427.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501161558250_ChangesForEditions.resx">
+      <DependentUpon>202501161558250_ChangesForEditions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501161729220_UpdateMigrations_202501161429.resx">
+      <DependentUpon>202501161729220_UpdateMigrations_202501161429.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -37,6 +37,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
         private readonly IAttendeeMusicBandRepository attendeeMusicBandRepo;
+        private readonly ICountryRepository countryRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateMusicBandCommandHandler" /> class.
@@ -50,6 +51,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="musicGenreRepo">The music genre repo.</param>
         /// <param name="collaboratorRepo">The collaborator repo.</param>
         /// <param name="attendeeCollaboratorRepo">The attendee collaborator repo.</param>
+        /// <param name="attendeeMusicBandRepo">The attendee music band repo.</param>
+        /// <param name="countryRepo">The country repo.</param>
         public CreateMusicBandCommandHandler(
             IMediator commandBus,
             IUnitOfWork uow,
@@ -60,7 +63,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IMusicGenreRepository musicGenreRepo,
             ICollaboratorRepository collaboratorRepo,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepo,
-            IAttendeeMusicBandRepository attendeeMusicBandRepo)
+            IAttendeeMusicBandRepository attendeeMusicBandRepo,
+            ICountryRepository countryRepo)
             : base(commandBus, uow, musicBandRepo)
         {
             this.musicBandTypeRepo = musicBandTypeRepo;
@@ -70,6 +74,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.collaboratorRepo = collaboratorRepo;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepo;
             this.attendeeMusicBandRepo = attendeeMusicBandRepo;
+            this.countryRepo = countryRepo;
         }
 
         /// <summary>
@@ -123,66 +128,84 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #region Validates User Ticket and Project registrations available
 
-            var attendeeCollaboratorTicketsInformationDto = await attendeeCollaboratorRepo.FindUserTicketsInformationDtoByEmail(editionDto.Id, cmd.MusicBandResponsibleApiDto.Email);
+            var country = await this.countryRepo.FindByNameAsync(cmd.MusicBandResponsibleApiDto.Country);
 
-                var attendeeMusicBandsCount = await this.attendeeMusicBandRepo.CountByEditionIdAsync(editionDto.Id);
-                attendeeMusicBandsCount += cmd.MusicBandDataApiDtos.Count;
-                if (attendeeMusicBandsCount > editionDto.MusicPitchingMaximumProjectSubmissionsByEdition)
+            var attendeeCollaboratorTicketsInformationDto = await attendeeCollaboratorRepo.FindUserTicketsInformationDtoByEmail(
+                editionDto.Id, 
+                cmd.MusicBandResponsibleApiDto.Email);
+
+            var attendeeMusicBandsCount = await this.attendeeMusicBandRepo.CountByEditionIdAsync(editionDto.Id);
+            attendeeMusicBandsCount += cmd.MusicBandDataApiDtos.Count;
+            if (attendeeMusicBandsCount > editionDto.MusicPitchingMaximumProjectSubmissionsByEdition)
+            {
+                string validationMessage = string.Format(
+                    Messages.YouCanMusicPitchingMaximumProjectSubmissionsByEdition,
+                    editionDto.MusicPitchingMaximumProjectSubmissionsByEdition,
+                    Labels.MusicProjects
+                );
+                this.ValidationResult.Add(new ValidationError(validationMessage));
+                this.AppValidationResult.Add(this.ValidationResult);
+                return this.AppValidationResult;
+            }
+
+            attendeeMusicBandsCount = await this.attendeeMusicBandRepo.CountByResponsibleAsync(
+                editionDto.Id, 
+                cmd.MusicBandResponsibleApiDto.Document, 
+                cmd.MusicBandResponsibleApiDto.Email);
+            attendeeMusicBandsCount += cmd.MusicBandDataApiDtos.Count;
+
+            if (attendeeMusicBandsCount > editionDto.MusicPitchingMaximumProjectSubmissionsByParticipant)
+            {
+                string validationMessage = string.Format(
+                    Messages.YouCanMusicPitchingMaximumProjectSubmissionsByParticipant,
+                    editionDto.MusicPitchingMaximumProjectSubmissionsByParticipant,
+                    Labels.MusicProjects,
+                    Labels.Pitching
+                );
+                this.ValidationResult.Add(new ValidationError(validationMessage));
+                this.AppValidationResult.Add(this.ValidationResult);
+                return this.AppValidationResult;
+            }
+
+            if (attendeeCollaboratorTicketsInformationDto == null)
+            {
+                // Is a new responsible, validate if have subscriptions available by document type
+                var newAttendeeCollaboratorTicketsInformationDto = new AttendeeCollaboratorTicketsInformationDto(editionDto.Edition);
+                if (!newAttendeeCollaboratorTicketsInformationDto.HasMusicPitchingProjectsSubscriptionsAvailable(
+                        cmd.MusicBandResponsibleApiDto.Document,
+                        cmd.MusicBandResponsibleApiDto.IsCompany,
+                        country,
+                        cmd.MusicBandDataApiDtos.Count()))
                 {
-                    string validationMessage = string.Format(
-                        Messages.YouCanMusicPitchingMaximumProjectSubmissionsByEdition,
-                        editionDto.MusicPitchingMaximumProjectSubmissionsByEdition,
-                        Labels.MusicProjects
-                    );
+                    var musicPitchingMaxSellProjectsCount = newAttendeeCollaboratorTicketsInformationDto.GetMusicPitchingMaxSellProjectsCount(
+                        cmd.MusicBandResponsibleApiDto.Document,
+                        cmd.MusicBandResponsibleApiDto.IsCompany,
+                        country);
+
+                    string validationMessage = string.Format(Messages.YouCanSubmitMaxXProjectsFor,
+                                                             musicPitchingMaxSellProjectsCount,
+                                                             Labels.MusicProjects,
+                                                             Labels.Pitching);
+
                     this.ValidationResult.Add(new ValidationError(validationMessage));
                     this.AppValidationResult.Add(this.ValidationResult);
                     return this.AppValidationResult;
                 }
-
-                attendeeMusicBandsCount = await this.attendeeMusicBandRepo.CountByResponsibleAsync(editionDto.Id, cmd.MusicBandResponsibleApiDto.Document, cmd.MusicBandResponsibleApiDto.Email);
-                attendeeMusicBandsCount += cmd.MusicBandDataApiDtos.Count;
-                if (attendeeMusicBandsCount > editionDto.MusicPitchingMaximumProjectSubmissionsByParticipant)
+            }
+            else
+            {
+                // Has no more subscriptions available
+                if (!attendeeCollaboratorTicketsInformationDto.HasMusicPitchingProjectsSubscriptionsAvailable(
+                        cmd.MusicBandResponsibleApiDto.Document,
+                        cmd.MusicBandResponsibleApiDto.IsCompany,
+                        country,
+                        cmd.MusicBandDataApiDtos.Count()))
                 {
-                    string validationMessage = string.Format(
-                        Messages.YouCanMusicPitchingMaximumProjectSubmissionsByParticipant,
-                        editionDto.MusicPitchingMaximumProjectSubmissionsByParticipant,
-                        Labels.MusicProjects,
-                        Labels.Pitching
-                    );
-                    this.ValidationResult.Add(new ValidationError(validationMessage));
+                    this.ValidationResult.Add(new ValidationError(string.Format(Messages.ProjectRegistrationLimitReachedFor, Labels.MusicProjects, Labels.Pitching)));
                     this.AppValidationResult.Add(this.ValidationResult);
                     return this.AppValidationResult;
                 }
-
-                if (attendeeCollaboratorTicketsInformationDto == null)
-                {
-                    // Is a new responsible, validate if have subscriptions available by document type
-                    var newAttendeeCollaboratorTicketsInformationDto = new AttendeeCollaboratorTicketsInformationDto(editionDto.Edition);
-                    if (!newAttendeeCollaboratorTicketsInformationDto.HasMusicPitchingProjectsSubscriptionsAvailable(
-                            cmd.MusicBandResponsibleApiDto.Document,
-                            cmd.MusicBandDataApiDtos.Count()))
-                    {
-                        string validationMessage = string.Format(Messages.YouCanSubmitMaxXProjectsFor,
-                                                                 newAttendeeCollaboratorTicketsInformationDto.GetMusicPitchingMaxSellProjectsCount(cmd.MusicBandResponsibleApiDto.Document),
-                                                                 Labels.MusicProjects,
-                                                                 Labels.Pitching);
-                        this.ValidationResult.Add(new ValidationError(validationMessage));
-                        this.AppValidationResult.Add(this.ValidationResult);
-                        return this.AppValidationResult;
-                    }
-                }
-                else
-                {
-                    // Has no more subscriptions available
-                    if (!attendeeCollaboratorTicketsInformationDto.HasMusicPitchingProjectsSubscriptionsAvailable(
-                            cmd.MusicBandResponsibleApiDto.Document,
-                            cmd.MusicBandDataApiDtos.Count()))
-                    {
-                        this.ValidationResult.Add(new ValidationError(string.Format(Messages.ProjectRegistrationLimitReachedFor, Labels.MusicProjects, Labels.Pitching)));
-                        this.AppValidationResult.Add(this.ValidationResult);
-                        return this.AppValidationResult;
-                    }
-                }
+            }
 
             #endregion
 

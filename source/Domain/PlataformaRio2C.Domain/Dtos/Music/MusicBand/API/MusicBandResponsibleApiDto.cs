@@ -37,6 +37,8 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonProperty(PropertyName = "document", Order = 500)]
         public string Document { get; set; }
 
+        public bool IsCompany { get; set; }
+
         [JsonRequired]
         [JsonProperty(PropertyName = "address", Order = 600)]
         public string Address { get; set; }
