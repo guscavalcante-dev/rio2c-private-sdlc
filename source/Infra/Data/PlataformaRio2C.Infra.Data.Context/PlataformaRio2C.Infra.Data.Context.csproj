@@ -152,18 +152,18 @@
     <Compile Include="Mapping\Message\MessageMap.cs" />
     <Compile Include="Mapping\MusicalCommission\MusicalCommissionMap.cs" />
     <Compile Include="Mapping\Cartoon\AttendeeCartoonProjectCollaboratorMap.cs" />
-    <Compile Include="Mapping\Music\AttendeeMusicBandCollaboratorMap.cs" />
+    <Compile Include="Mapping\Music\Pitching\AttendeeMusicBandCollaboratorMap.cs" />
     <Compile Include="Mapping\Cartoon\AttendeeCartoonProjectEvaluationMap.cs" />
-    <Compile Include="Mapping\Music\AttendeeMusicBandEvaluationMap.cs" />
-    <Compile Include="Mapping\Music\AttendeeMusicBandMap.cs" />
-    <Compile Include="Mapping\Music\ReleasedMusicProjectMap.cs" />
-    <Compile Include="Mapping\Music\MusicBandTeamMemberMap.cs" />
-    <Compile Include="Mapping\Music\MusicBandMemberMap.cs" />
-    <Compile Include="Mapping\Music\MusicGenreMap.cs" />
-    <Compile Include="Mapping\Music\MusicProjectMap.cs" />
-    <Compile Include="Mapping\Music\MusicBandMap.cs" />
-    <Compile Include="Mapping\Music\MusicBandGenreMap.cs" />
-    <Compile Include="Mapping\Music\MusicBandTargetAudienceMap.cs" />
+    <Compile Include="Mapping\Music\Pitching\AttendeeMusicBandEvaluationMap.cs" />
+    <Compile Include="Mapping\Music\Pitching\AttendeeMusicBandMap.cs" />
+    <Compile Include="Mapping\Music\Pitching\ReleasedMusicProjectMap.cs" />
+    <Compile Include="Mapping\Music\Pitching\MusicBandTeamMemberMap.cs" />
+    <Compile Include="Mapping\Music\Pitching\MusicBandMemberMap.cs" />
+    <Compile Include="Mapping\Music\Pitching\MusicGenreMap.cs" />
+    <Compile Include="Mapping\Music\Pitching\MusicProjectMap.cs" />
+    <Compile Include="Mapping\Music\Pitching\MusicBandMap.cs" />
+    <Compile Include="Mapping\Music\Pitching\MusicBandGenreMap.cs" />
+    <Compile Include="Mapping\Music\Pitching\MusicBandTargetAudienceMap.cs" />
     <Compile Include="Mapping\Audiovisual\NegotiationConfig\NegotiationRoomConfigMap.cs" />
     <Compile Include="Mapping\Audiovisual\NegotiationConfig\NegotiationConfigMap.cs" />
     <Compile Include="Mapping\Audiovisual\Negotiation\NegotiationMap.cs" />
@@ -175,7 +175,7 @@
     <Compile Include="Mapping\Organizations\OrganizationTargetAudienceMap.cs" />
     <Compile Include="Mapping\Organizations\OrganizationActivityMap.cs" />
     <Compile Include="Mapping\Organizations\OrganizationDescriptionMap.cs" />
-    <Compile Include="Mapping\Music\MusicBandTypeMap.cs" />
+    <Compile Include="Mapping\Music\Pitching\MusicBandTypeMap.cs" />
     <Compile Include="Mapping\Organizations\OrganizationTypeMap.cs" />
     <Compile Include="Mapping\Organizations\OrganizationMap.cs" />
     <Compile Include="Mapping\Projects\ProjectEvaluationRefuseReasonMap.cs" />
@@ -368,6 +368,10 @@
     <Compile Include="Migrations\202501131729087_UpdateMigrations_202501131427.Designer.cs">
       <DependentUpon>202501131729087_UpdateMigrations_202501131427.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202501181608178_CreateMusicBusinessRoundsTables.cs" />
+    <Compile Include="Migrations\202501181608178_CreateMusicBusinessRoundsTables.Designer.cs">
+      <DependentUpon>202501181608178_CreateMusicBusinessRoundsTables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -528,6 +532,12 @@
     <Content Include="Migrations\Scripts\202501131639495_AddHasAnyTypeOfFinancingToProjects.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Migrations\Scripts\202501181608178_CreateMusicBusinessRoundsTables.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202501181608178_CreateMusicBusinessRoundsTables.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Migrations\Scripts\202501131639495_AddHasAnyTypeOfFinancingToProjects.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -535,8 +545,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202501061732011_DeleteDuplicatedTargetAudience.up.sql">
-		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	</Content>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Migrations\Scripts\202501092310114_AddStagenameFieldToCollaborators.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -636,6 +646,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="EntityData\" />
+    <Folder Include="Mapping\Music\BusinessRound\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202408202223049_Initial.resx">
@@ -736,6 +747,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202501131639495_AddHasAnyTypeOfFinancingToProjects.resx">
       <DependentUpon>202501131639495_AddHasAnyTypeOfFinancingToProjects.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501181608178_CreateMusicBusinessRoundsTables.resx">
+      <DependentUpon>202501181608178_CreateMusicBusinessRoundsTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

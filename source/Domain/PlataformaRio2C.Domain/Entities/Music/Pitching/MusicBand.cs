@@ -68,20 +68,14 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="edition">The edition.</param>
         /// <param name="name">The name.</param>
         /// <param name="formationDate">The formation date.</param>
-        /// <param name="mainMusicInfluences">The main music influences.</param>
-        /// <param name="facebook">The facebook.</param>
+        /// <param name="deezer">The deezer.</param>
         /// <param name="instagram">The instagram.</param>
-        /// <param name="twitter">The twitter.</param>
+        /// <param name="spotify">The spotify.</param>
         /// <param name="youtube">The youtube.</param>
-        /// <param name="tiktok">The tiktok.</param>
-        /// <param name="wouldYouLikeParticipateBusinessRound">if set to <c>true</c> [would you like participate business round].</param>
-        /// <param name="wouldYouLikeParticipatePitching">if set to <c>true</c> [would you like participate pitching].</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="musicProject">The music project.</param>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
         /// <param name="musicBandGenres">The music genres.</param>
-        /// <param name="musicBandTargetAudiences">The target audiences.</param>
-        /// <param name="musicBandMembers">The music band members.</param>
         /// <param name="musicBandTeamMembers">The music band team members.</param>
         /// <param name="releasedMusicProjects">The released music projects.</param>
         /// <param name="userId">The user identifier.</param>
@@ -113,13 +107,10 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateImageUploadDate(isImageUploaded, false);
             base.SetCreateDate(userId);
 
-            //TODO:false e true tao fixos, pois agora via api será somente para Pitching.
             this.SynchronizeAttendeeMusicBands(
                 edition, 
                 attendeeCollaborator,
                 musicProject,
-                false, 
-                true, 
                 userId);  
             this.SynchronizeMusicBandGenres(musicBandGenres, userId);
             this.SynchronizeMusicBandTeamMembers(musicBandTeamMembers, userId);
@@ -169,15 +160,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="edition">The edition.</param>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
         /// <param name="musicProject">The music project.</param>
-        /// <param name="wouldYouLikeParticipateBusinessRound">if set to <c>true</c> [would you like participate business round].</param>
-        /// <param name="wouldYouLikeParticipatePitching">if set to <c>true</c> [would you like participate pitching].</param>
         /// <param name="userId">The user identifier.</param>
         private void SynchronizeAttendeeMusicBands(
             Edition edition,
             AttendeeCollaborator attendeeCollaborator,
             MusicProject musicProject,
-            bool wouldYouLikeParticipateBusinessRound,
-            bool wouldYouLikeParticipatePitching,
             int userId)
         {
             if (this.AttendeeMusicBands == null)
@@ -202,8 +189,6 @@ namespace PlataformaRio2C.Domain.Entities
                     edition,
                     this,
                     musicProject,
-                    wouldYouLikeParticipateBusinessRound,
-                    wouldYouLikeParticipatePitching,
                     userId);
                 this.AttendeeMusicBands.Add(newAttendeeMusicBand);
                 attendeeCollaborator?.SynchronizeAttendeeMusicBandCollaborators(new List<AttendeeMusicBand> { newAttendeeMusicBand }, false, userId);
