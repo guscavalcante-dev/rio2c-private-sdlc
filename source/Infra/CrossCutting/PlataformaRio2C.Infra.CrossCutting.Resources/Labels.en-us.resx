@@ -1828,6 +1828,12 @@
   <data name="MusicPitchingSubmitStartDate" xml:space="preserve">
     <value>Music project submission start date</value>
   </data>
+  <data name="MusicPitchingSubmitEndDate" xml:space="preserve">
+    <value>Music project submission end date</value>
+  </data>
+  <data name="MusicPitchingSubmitStartDate" xml:space="preserve">
+    <value>Music project submission start date</value>
+  </data>
   <data name="MusicPlayer" xml:space="preserve">
     <value>Music Player</value>
   </data>

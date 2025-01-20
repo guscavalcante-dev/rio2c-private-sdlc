@@ -2986,6 +2986,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Já possui algum tipo de financiamento?.
+        /// </summary>
+        public static string HasAnyTypeOfFinancing {
+            get {
+                return ResourceManager.GetString("HasAnyTypeOfFinancing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Já esteve em outras edições do Rio2C?.
         /// </summary>
         public static string HaveYouBeenToRio2CBefore {
@@ -8292,6 +8301,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string WhichSpecialNeedsQ {
             get {
                 return ResourceManager.GetString("WhichSpecialNeedsQ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Qual modelo? (aprovado em lei de incentivo, edital, patrocinador, etc).
+        /// </summary>
+        public static string WhichTypeOfFinancing {
+            get {
+                return ResourceManager.GetString("WhichTypeOfFinancing", resourceCulture);
             }
         }
         

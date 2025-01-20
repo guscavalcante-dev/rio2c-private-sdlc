@@ -393,7 +393,7 @@
     <Compile Include="CQRS\CommandsHandlers\Projects\UpdateProjectLinksCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Projects\DeleteProjectCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Projects\UpdateProjectMainInformationCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Projects\CreateProjectCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Projects\CreateAudiovisualBusinessRoundProjectCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\ConferenceParticipantRoles\CreateConferenceParticipantRoleCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\ConferenceParticipantRoles\DeleteConferenceParticipantRoleCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\ConferenceParticipantRoles\ConferenceParticipantRoleBaseCommandHandler.cs" />
@@ -642,7 +642,7 @@
     <Compile Include="CQRS\Commands\Projects\BaseCommands\ProjectSummaryBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Projects\BaseCommands\ProjectTitleBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Projects\BaseCommands\ProjectBaseCommand.cs" />
-    <Compile Include="CQRS\Commands\Projects\CreateProject.cs" />
+    <Compile Include="CQRS\Commands\Projects\CreateAudiovisualBusinessRoundProject.cs" />
     <Compile Include="CQRS\Commands\Projects\AcceptProjectEvaluation.cs" />
     <Compile Include="CQRS\Commands\Projects\FinishProject.cs" />
     <Compile Include="CQRS\Commands\Projects\DeleteProjectBuyerEvaluation.cs" />

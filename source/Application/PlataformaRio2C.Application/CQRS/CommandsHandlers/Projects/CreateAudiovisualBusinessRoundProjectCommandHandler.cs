@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 11-07-2019
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 10-23-2024
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-13-2025
 // ***********************************************************************
 // <copyright file="CreateProjectCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,7 +25,7 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
     /// <summary>CreateProjectCommandHandler</summary>
-    public class CreateProjectCommandHandler : BaseProjectCommandHandler, IRequestHandler<CreateProject, AppValidationResult>
+    public class CreateAudiovisualBusinessRoundProjectCommandHandler : BaseProjectCommandHandler, IRequestHandler<CreateAudiovisualBusinessRoundProject, AppValidationResult>
     {
         private readonly IProjectTypeRepository projectTypeRepo;
         private readonly ILanguageRepository languageRepo;
@@ -33,7 +33,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IInterestRepository interestRepo;
         private readonly IProjectModalityRepository projectModalityRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="CreateProjectCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="CreateAudiovisualBusinessRoundProjectCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
@@ -43,7 +43,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="targetAudienceRepository">The target audience repository.</param>
         /// <param name="interestRepository">The interest repository.</param>
         /// <param name="projectModalityRepo">The project modality repository.</param>
-        public CreateProjectCommandHandler(
+        public CreateAudiovisualBusinessRoundProjectCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
@@ -66,7 +66,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(CreateProject cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(CreateAudiovisualBusinessRoundProject cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
@@ -109,6 +109,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.TotalValueOfProject,
                 cmd.ValueAlreadyRaised,
                 cmd.ValueStillNeeded,
+                cmd.HasAnyTypeOfFinancing,
+                cmd.WhichTypeOfFinancingDescription,
                 cmd.Titles?.Select(d => new ProjectTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.LogLines?.Select(d => new ProjectLogLine(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.Summaries?.Select(d => new ProjectSummary(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
