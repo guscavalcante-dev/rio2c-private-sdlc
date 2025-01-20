@@ -300,6 +300,10 @@
     <Compile Include="Dtos\Messages\MessageDto.cs" />
     <Compile Include="Dtos\Messages\ConversationDto.cs" />
     <Compile Include="Dtos\Interests\InterestDto.cs" />
+    <Compile Include="Dtos\Music\BusinessRoundProject\MusicBusinessRoundProjectDto.cs" />
+    <Compile Include="Dtos\Music\BusinessRoundProject\MusicBusinessRoundProjectInterestDto.cs" />
+    <Compile Include="Dtos\Music\BusinessRoundProject\MusicBusinessRoundProjectPlayerCategoryDto.cs" />
+    <Compile Include="Dtos\Music\BusinessRoundProject\MusicBusinessRoundProjectTargetAudienceDto.cs" />
     <Compile Include="Dtos\Music\MusicBand\API\MusicBandDataApiDto.cs" />
     <Compile Include="Dtos\Music\MusicBand\API\MusicBandResponsibleApiDto.cs" />
     <Compile Include="Dtos\Music\MusicBand\MusicPitchingStatusWidgetDto.cs" />
