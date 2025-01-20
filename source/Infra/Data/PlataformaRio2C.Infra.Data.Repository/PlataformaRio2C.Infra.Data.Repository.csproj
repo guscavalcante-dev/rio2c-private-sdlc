@@ -200,6 +200,7 @@
     <Compile Include="Repositories\Music\Bands\MusicBandTeamMemberRepository.cs" />
     <Compile Include="Repositories\Music\Bands\MusicBandMemberRepository.cs" />
     <Compile Include="Repositories\Music\Bands\MusicBandRepository.cs" />
+    <Compile Include="Repositories\Music\Projects\MusicBusinessRoundProjectRepository.cs" />
     <Compile Include="Repositories\Music\Projects\MusicProjectRepository.cs" />
     <Compile Include="Repositories\Music\Projects\MusicGenreRepository.cs" />
     <Compile Include="Repositories\Organizations\OrganizationTypeRepository.cs" />
