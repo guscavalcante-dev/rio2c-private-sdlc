@@ -152,6 +152,10 @@
     <Compile Include="Mapping\Message\MessageMap.cs" />
     <Compile Include="Mapping\MusicalCommission\MusicalCommissionMap.cs" />
     <Compile Include="Mapping\Cartoon\AttendeeCartoonProjectCollaboratorMap.cs" />
+    <Compile Include="Mapping\Music\BusinessRound\MusicBusinessRoundProjectInterestMap.cs" />
+    <Compile Include="Mapping\Music\BusinessRound\MusicBusinessRoundProjectMap.cs" />
+    <Compile Include="Mapping\Music\BusinessRound\MusicBusinessRoundProjectPlayerCategoryMap.cs" />
+    <Compile Include="Mapping\Music\BusinessRound\MusicBusinessRoundProjectTargetAudienceMap.cs" />
     <Compile Include="Mapping\Music\Pitching\AttendeeMusicBandCollaboratorMap.cs" />
     <Compile Include="Mapping\Cartoon\AttendeeCartoonProjectEvaluationMap.cs" />
     <Compile Include="Mapping\Music\Pitching\AttendeeMusicBandEvaluationMap.cs" />
@@ -646,7 +650,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="EntityData\" />
-    <Folder Include="Mapping\Music\BusinessRound\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202408202223049_Initial.resx">

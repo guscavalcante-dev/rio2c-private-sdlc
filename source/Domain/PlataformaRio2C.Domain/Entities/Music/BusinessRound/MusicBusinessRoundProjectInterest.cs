@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 01-18-2025
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 01-18-2025
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 01-20-2025
 // ***********************************************************************
 // <copyright file="MusicBusinessRoundProjectInterest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,7 +20,9 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int AdditionalInfoMaxLength = 200;
 
         public int MusicBusinessRoundProjectId { get; private set; }
+        public virtual MusicBusinessRoundProject MusicBusinessRoundProject { get; private set; }
         public int InterestId { get; private set; }
+        public virtual Interest Interest { get; private set; }
         public string AdditionalInfo { get; private set; }
 
         public override bool IsValid()
