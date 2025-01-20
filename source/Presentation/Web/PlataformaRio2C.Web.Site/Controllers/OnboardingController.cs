@@ -53,7 +53,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="interestRepository">The interest repository.</param>
         /// <param name="innovationOrganizationTrackOptionRepo">The innovation organization track option repo.</param>
         public OnboardingController(
-            IMediator commandBus, 
+            IMediator commandBus,
             IdentityAutenticationService identityController,
             IActivityRepository activityRepository,
             ITargetAudienceRepository targetAudienceRepository,
@@ -111,7 +111,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             // Redirect to collaborator data if not finished
             if (this.UserAccessControlDto?.IsCollaboratorOnboardingFinished() != true)
             {
-                
+
                 return RedirectToAction(nameof(OnboardingController.CollaboratorData), nameof(OnboardingController));
             }
 
@@ -561,7 +561,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             return View(cmd);
         }
 
-  
+
         [HttpPost]
         public async Task<ActionResult> MusicPlayerTermsAcceptance(OnboardMusicPlayerTermsAcceptance cmd)
         {
@@ -737,9 +737,9 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
-                this.StatusMessageToastr(ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);                
-                
-                cmd.UpdateModelsAndLists(                
+                this.StatusMessageToastr(ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+
+                cmd.UpdateModelsAndLists(
                     await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
@@ -752,8 +752,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
             catch (Exception ex)
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);                
-                cmd.UpdateModelsAndLists(                
+                this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                cmd.UpdateModelsAndLists(
                     await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
@@ -766,8 +766,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.PersonalInformation, Labels.UpdatedM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
 
-            return RedirectToAction(nameof(OnboardingController.PlayerInfo), nameof(OnboardingController));
-            //return RedirectToAction("Index", "Onboarding");
+            return RedirectToAction("Index", "Onboarding");
         }
 
         #endregion
@@ -779,10 +778,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> PlayerInfo()
         {
-            //if (this.UserAccessControlDto?.IsPlayerExecutiveOrganizationsOnboardingFinished() == true)
-            //{
-            //    return RedirectToAction("Index", "Onboarding");
-            //}
+            if (this.UserAccessControlDto?.IsPlayerExecutiveOrganizationsOnboardingFinished() == true)
+            {
+                return RedirectToAction("Index", "Onboarding");
+            }
 
             #region Breadcrumb
 
@@ -804,12 +803,15 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             var currentOrganization = this.UserAccessControlDto
                 ?.EditionAttendeeOrganizations
-                ?.FirstOrDefault(eao => {
-                    return eao.AttendeeOrganizationTypes.Any(aot => {
+                ?.FirstOrDefault(eao =>
+                {
+                    return !eao.OnboardingOrganizationDate.HasValue
+                        && eao.AttendeeOrganizationTypes.Any(aot =>
+                        {
                             return !aot.IsDeleted
                                 && aot.OrganizationType.Name == playerOrganizationTypeName;
                         });
-                    })
+                })
                 ?.Organization;
 
             if (currentOrganization == null)
@@ -837,10 +839,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpPost]
         public async Task<ActionResult> PlayerInfo(OnboardPlayerOrganizationData cmd)
         {
-            //if (this.UserAccessControlDto?.IsPlayerExecutiveOrganizationsOnboardingFinished() == true)
-            //{
-            //    return RedirectToAction("Index", "Onboarding");
-            //}
+            if (this.UserAccessControlDto?.IsPlayerExecutiveOrganizationsOnboardingFinished() == true)
+            {
+                return RedirectToAction("Index", "Onboarding");
+            }
 
             #region Breadcrumb
 
@@ -916,9 +918,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.PlayerInfo, Labels.UpdatedM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
 
-            return RedirectToAction(nameof(OnboardingController.PlayerInterests), nameof(OnboardingController));
-
-            //return RedirectToAction("Index", "Onboarding");
+            return RedirectToAction("Index", "Onboarding");
         }
 
         #endregion
@@ -930,10 +930,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> PlayerInterests()
         {
-            //if (this.UserAccessControlDto?.IsPlayerExecutiveOrganizationInterestsOnboardingPending() != true)
-            //{
-            //    return RedirectToAction("Index", "Onboarding");
-            //}
+            if (this.UserAccessControlDto?.IsPlayerExecutiveOrganizationInterestsOnboardingPending() != true)
+            {
+                return RedirectToAction("Index", "Onboarding");
+            }
 
             #region Breadcrumb
 
@@ -951,10 +951,12 @@ namespace PlataformaRio2C.Web.Site.Controllers
             {
                 playerOrganizationTypeName = OrganizationType.MusicPlayer.Name;
                 projectTypeId = ProjectType.Music.Id;
-            }            
+            }
             var currentOrganization = this.UserAccessControlDto
                 ?.EditionAttendeeOrganizations
-                ?.FirstOrDefault(eao => eao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
+                ?.FirstOrDefault(eao => eao.OnboardingOrganizationDate.HasValue
+                    && !eao.OnboardingInterestsDate.HasValue
+                    && eao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
                         && aot.OrganizationType.Name == playerOrganizationTypeName)
                     )
                 ?.Organization;
@@ -978,10 +980,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpPost]
         public async Task<ActionResult> PlayerInterests(OnboardPlayerInterests cmd)
         {
-            //if (this.UserAccessControlDto?.IsPlayerExecutiveOrganizationInterestsOnboardingPending() != true)
-            //{
-            //    return RedirectToAction("Index", "Onboarding");
-            //}
+            if (this.UserAccessControlDto?.IsPlayerExecutiveOrganizationInterestsOnboardingPending() != true)
+            {
+                return RedirectToAction("index", "onboarding");
+            }
 
             #region Breadcrumb
 

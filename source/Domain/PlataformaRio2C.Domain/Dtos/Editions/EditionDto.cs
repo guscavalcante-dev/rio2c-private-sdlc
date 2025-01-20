@@ -82,7 +82,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset? MusicBusinessRoundSubmitEndDate { get; private set; }
         public DateTimeOffset? MusicBusinessRoundNegotiationStartDate { get; private set; }
         public DateTimeOffset? MusicBusinessRoundNegotiationEndDate { get; private set; }
-        public int MusicBusinessRoundMaximumProjectsBySeller { get; private set; }
+        public int MusicBusinessRoundsMaximumProjectSubmissionsByCompany { get; private set; }
         public int MusicBusinessRoundMaximumEvaluatorsByProject { get; private set; }
 
         // Innovation - Commissions
@@ -172,7 +172,7 @@ namespace PlataformaRio2C.Domain.Dtos
             this.MusicBusinessRoundEvaluationEndDate = entity.MusicBusinessRoundEvaluationEndDate;
             this.MusicBusinessRoundNegotiationStartDate = entity.MusicBusinessRoundNegotiationStartDate;
             this.MusicBusinessRoundNegotiationEndDate = entity.MusicBusinessRoundNegotiationEndDate;
-            this.MusicBusinessRoundMaximumProjectsBySeller = entity.MusicBusinessRoundMaximumProjectsBySeller;
+            this.MusicBusinessRoundsMaximumProjectSubmissionsByCompany = entity.MusicBusinessRoundsMaximumProjectSubmissionsByCompany;
             this.MusicBusinessRoundMaximumEvaluatorsByProject = entity.MusicBusinessRoundMaximumEvaluatorsByProject;
 
             // Music - Commissions
