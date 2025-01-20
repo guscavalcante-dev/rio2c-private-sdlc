@@ -24,11 +24,10 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         {
             this.ToTable("MusicBusinessRoundProjects");
 
-            //Relationships
-            //TODO: Checar com Renan se devemos criar um projectMusics dentro de AttendeeOrganizations.
-            //this.HasRequired(t => t.SellerAttendeeOrganization)
-            //    .WithMany(e => e.SellProjects)
-            //    .HasForeignKey(d => d.SellerAttendeeOrganizationId);
+        //Relationships
+            this.HasRequired(t => t.SellerAttendeeOrganization)
+                .WithMany(e => e.MusicBusinessRoundProjects)
+                .HasForeignKey(d => d.SellerAttendeeOrganizationId);
         }
     }
 }
