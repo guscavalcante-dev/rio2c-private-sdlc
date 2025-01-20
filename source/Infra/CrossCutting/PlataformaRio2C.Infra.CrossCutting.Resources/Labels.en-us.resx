@@ -1814,25 +1814,13 @@
     <value>End date for music bands evaluation by repechage</value>
   </data>
   <data name="MusicPitchingRepechageEvaluationStartDate" xml:space="preserve">
-    <value>Start date for musi bands evaluation by repechage</value>
+    <value>Start date for music bands evaluation by repechage</value>
   </data>
   <data name="MusicPitchingSubmitEndDate" xml:space="preserve">
     <value>Music bands submission end date</value>
   </data>
   <data name="MusicPitchingSubmitStartDate" xml:space="preserve">
     <value>Music bands submission start date</value>
-  </data>
-  <data name="MusicPitchingSubmitEndDate" xml:space="preserve">
-    <value>Music project submission end date</value>
-  </data>
-  <data name="MusicPitchingSubmitStartDate" xml:space="preserve">
-    <value>Music project submission start date</value>
-  </data>
-  <data name="MusicPitchingSubmitEndDate" xml:space="preserve">
-    <value>Music project submission end date</value>
-  </data>
-  <data name="MusicPitchingSubmitStartDate" xml:space="preserve">
-    <value>Music project submission start date</value>
   </data>
   <data name="MusicPlayer" xml:space="preserve">
     <value>Music Player</value>
