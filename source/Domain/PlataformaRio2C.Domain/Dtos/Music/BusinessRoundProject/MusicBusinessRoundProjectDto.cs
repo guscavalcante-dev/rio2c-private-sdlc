@@ -5,6 +5,7 @@ namespace PlataformaRio2C.Domain.Dtos.Music.BusinessRoundProject
 {
     public class MusicBusinessRoundProjectDto
     {
+        public bool IsFakeProject { get; set; }
         public int SellerAttendeeOrganizationId { get; set; }
         public AttendeeOrganizationDto SellerAttendeeOrganizationDto { get; set; }
         public string PlayerCategoriesThatHaveOrHadContract { get; set; }

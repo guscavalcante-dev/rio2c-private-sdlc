@@ -32,6 +32,8 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Site.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Web.Site.Controllers;
+using PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects;
+using PlataformaRio2C.Domain.Dtos.Music.BusinessRoundProject;
 
 namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 {
@@ -41,6 +43,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
     public class BusinessRoundProjectsController : BaseController
     {
         private readonly IProjectRepository projectRepo;
+        private readonly IMusicBusinessRoundProjectRepository musicProjectRepo;
         private readonly IInterestRepository interestRepo;
         private readonly IActivityRepository activityRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
@@ -63,6 +66,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         public BusinessRoundProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
+            IMusicBusinessRoundProjectRepository musicProjectRepository,
             IProjectRepository projectRepository,
             IInterestRepository interestRepository,
             IActivityRepository activityRepository,
@@ -73,6 +77,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             IProjectModalityRepository projectModalityRepository)
             : base(commandBus, identityController)
         {
+            musicProjectRepo = musicProjectRepository;
             projectRepo = projectRepository;
             interestRepo = interestRepository;
             activityRepo = activityRepository;
@@ -105,11 +110,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             //    return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
             //}
 
-            var projects = await projectRepo.FindAllDtosToSellAsync(
-                UserAccessControlDto?.GetFirstAttendeeOrganizationCreated()?.Uid ?? Guid.Empty,
-                false,
-                new List<int> { ProjectModality.Both.Id, ProjectModality.BusinessRound.Id }
-            );
+            var projects = await musicProjectRepo.FindAllMusicBusinessRoundProjectDtosToSellAsync(UserAccessControlDto?.GetFirstAttendeeOrganizationCreated()?.Uid ?? Guid.Empty);
 
             // Create fake projects in the list
             var projectMaxCount = EditionDto?.AttendeeOrganizationMaxSellProjectsCount ?? 0;
@@ -119,17 +120,18 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
                 for (int i = initialProject; i < projectMaxCount + 1; i++)
                 {
-                    projects.Add(new ProjectDto
+                    projects.Add(new MusicBusinessRoundProjectDto
                     {
                         IsFakeProject = true,
-                        ProjectTitleDtos = new List<ProjectTitleDto>
-                        {
-                            new ProjectTitleDto
-                            {
-                                ProjectTitle = new ProjectTitle(Labels.Project + " " + i, new Language("", ViewBag.UserInterfaceLanguage), 0),
-                                Language = new Language("", ViewBag.UserInterfaceLanguage)
-                            }
-                        }
+
+                        //ProjectTitleDtos = new List<ProjectTitleDto>
+                        //{
+                        //    new ProjectTitleDto
+                        //    {
+                        //        ProjectTitle = new ProjectTitle(Labels.Project + " " + i, new Language("", ViewBag.UserInterfaceLanguage), 0),
+                        //        Language = new Language("", ViewBag.UserInterfaceLanguage)
+                        //    }
+                        //}
                     });
                 }
             }
