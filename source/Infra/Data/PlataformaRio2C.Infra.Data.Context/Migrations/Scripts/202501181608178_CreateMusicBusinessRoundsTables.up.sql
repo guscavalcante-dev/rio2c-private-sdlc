@@ -86,6 +86,7 @@
 			"Uid"                uniqueidentifier  NOT NULL ,
 			"MusicBusinessRoundProjectId" int  NOT NULL ,
 			"LanguageId"         int  NOT NULL ,
+			"Value"				 varchar(256) NOT NULL,
 			"IsDeleted"          bit  NOT NULL ,
 			"CreateDate"         datetimeoffset  NOT NULL ,
 			"CreateUserId"       int  NOT NULL ,
