@@ -5,8 +5,9 @@
     var editionDto = ViewBag.EditionDto as EditionDto;
     var isSeller = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true;
     var isBuyer = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.PlayerExecutiveAudiovisual) == true;
+    var audiovisualCollaboratorTypesCount = userAccessControlDto?.CountCollaboratorTypes(Constants.CollaboratorType.Audiovisuals);
 }
-@if (isSeller || isBuyer)
+@if (audiovisualCollaboratorTypesCount > 0)
 {
     <div class="kt-portlet">
         <div class="kt-portlet__head">
@@ -20,7 +21,7 @@
             <div class="kt-notification">
                 @if (isSeller)
                 {
-                    if (editionDto?.IsAudiovisualProjectSubmitStarted() != true || editionDto.IsAudiovisualProjectSubmitEnded() != true)
+                    if (editionDto?.IsAudiovisualProjectSubmitStarted() == true)
                     {
                         var subscriptionUrl = Url.Action("Index", "BusinessRoundProjects", new { Area = "Audiovisual" });
                         var editionUrl = Url.Action("Index", "BusinessRoundProjects", new { Area = "Audiovisual" });

@@ -5,6 +5,7 @@
     var editionDto = ViewBag.EditionDto as EditionDto;
     var isSeller = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true || userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Creator) == true;
     var isBuyer = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.PlayerExecutiveMusic) == true;
+    var musicCollaboratorTypesCount = userAccessControlDto?.CountCollaboratorTypes(Constants.CollaboratorType.Musics);
 }
 @if (isSeller || isBuyer)
 {

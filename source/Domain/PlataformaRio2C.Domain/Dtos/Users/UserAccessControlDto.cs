@@ -646,8 +646,6 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is project submission organization information pending]; otherwise, <c>false</c>.</returns>
         public bool IsMusicProjectSubmissionOrganizationInformationPending()
         {
-            return false;
-            //TODO:Daniel > Checar com Renan se será necessário novo campo de controle no AttendeeOrganizations tbm.
             var collaboratorTypes = new string[] { Constants.CollaboratorType.Creator, Constants.CollaboratorType.Industry };
             return this.HasAnyCollaboratorType(collaboratorTypes)
                    && (this.EditionAttendeeOrganizations?.Any() == false
