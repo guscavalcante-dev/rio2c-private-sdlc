@@ -1832,7 +1832,7 @@
     <value>Music Players Report</value>
   </data>
   <data name="MusicProjects" xml:space="preserve">
-    <value>Music Bands</value>
+    <value>Music Projects</value>
     <comment>Projetos de Música</comment>
   </data>
   <data name="MusicProjectSubmitEndDate" xml:space="preserve">
@@ -2989,6 +2989,9 @@
   <data name="Sponsors" xml:space="preserve">
     <value>Sponsors</value>
     <comment>Patrocinadores</comment>
+  </data>
+  <data name="StageName" xml:space="preserve">
+    <value>Stage name</value>
   </data>
   <data name="Start" xml:space="preserve">
     <value>Start</value>

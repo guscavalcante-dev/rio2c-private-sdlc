@@ -4057,7 +4057,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quantidade máxima de projetos por empresa (CNPJ).
+        ///   Looks up a localized string similar to Quantidade máxima de projetos por participante.
         /// </summary>
         public static string MusicBusinessRoundsMaximumProjectSubmissionsByCompany {
             get {
@@ -4318,7 +4318,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bandas.
+        ///   Looks up a localized string similar to Projetos de Música.
         /// </summary>
         public static string MusicProjects {
             get {
@@ -7167,6 +7167,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Sponsors {
             get {
                 return ResourceManager.GetString("Sponsors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nome artístico.
+        /// </summary>
+        public static string StageName {
+            get {
+                return ResourceManager.GetString("StageName", resourceCulture);
             }
         }
         

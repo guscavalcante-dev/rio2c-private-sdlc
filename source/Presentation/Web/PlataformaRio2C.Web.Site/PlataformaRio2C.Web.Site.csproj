@@ -364,7 +364,6 @@
     <Compile Include="Areas\Creator\CreatorAreaRegistration.cs" />
     <Compile Include="Areas\Innovation\Controllers\ProjectsController.cs" />
     <Compile Include="Areas\Innovation\InnovationAreaRegistration.cs" />
-    <Compile Include="Areas\Music\Controllers\MusicBandController.cs" />
     <Compile Include="Areas\Music\Controllers\PitchingProjectsController.cs" />
     <Compile Include="Areas\Music\MusicAreaRegistration.cs" />
     <Compile Include="Areas\Player\PlayerAreaRegistration.cs" />
@@ -7849,6 +7848,7 @@
     <Content Include="Views\Shared\EditorTemplates\AttendeeCollaboratorTargetAudienceBaseCommand.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\InnovationOrganizationTrackOptionBaseCommand.cshtml" />
     <Content Include="Views\Shared\Widgets\CardsWidget.cshtml" />
+    <Content Include="Views\Shared\Widgets\MusicProjectsWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
