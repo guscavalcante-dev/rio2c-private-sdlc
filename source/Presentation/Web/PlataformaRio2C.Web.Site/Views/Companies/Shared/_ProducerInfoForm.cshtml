@@ -11,24 +11,6 @@
                 </div>
                 <div class="form-group col-lg-7 col-xl-9 pl-lg-5">
                     <div class="row">
-                        <div class="form-group col-md-12">
-                            @Html.LabelFor(m => m.TradeName, new { @class = "control-label" })
-                            <div class="spinner-container">
-                                @Html.TextBoxFor(m => m.TradeName, new {@class = "form-control ", autocomplete = "off" })
-                            </div>
-                            @Html.ValidationMessageFor(m => m.TradeName, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-12">
-                            @Html.LabelFor(m => m.CompanyName, new { @class = "control-label" })
-                            <div class="spinner-container">
-                                @Html.TextBoxFor(m => m.CompanyName, new {@class = "form-control", autocomplete = "off" })
-                            </div>
-                            @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="form-group col-sm-12 col-xl-6" data-id="Country">
                             @Html.LabelFor(m => m.CountryUid, new { @class = "control-label" })
                             @Html.HiddenFor(m => m.IsCompanyNumberRequired)
@@ -44,13 +26,39 @@
                             @Html.ValidationMessageFor(m => m.CountryUid, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group col-sm-12 col-xl-6">
-                            @Html.LabelFor(m => m.Document, new { @class = "control-label" })
-                            <div class="spinner-container">
-                                @Html.TextBoxFor(m => m.Document, new {@class = "form-control", autocomplete = "off" })
+                            @{
+                                var style = !(Model.CountryUid.HasValue && Model.CountryUid == new Guid("a659270e-f221-40e8-aaf6-fe5db29d8ce9"))
+                                    ? "display: none;"
+                                    : "";
+                            }
+                            <div class="form-group" style="@style">
+                                @Html.LabelFor(m => m.Document, new { @class = "control-label" })
+                                <div class="spinner-container">
+                                    @Html.TextBoxFor(m => m.Document, new { @class = "form-control", autocomplete = "off" })
+                                </div>
+                                @Html.ValidationMessageFor(m => m.Document, "", new { @class = "text-danger" })
                             </div>
-                            @Html.ValidationMessageFor(m => m.Document, "", new { @class = "text-danger" })
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(m => m.TradeName, new { @class = "control-label" })
+                            <div class="spinner-container">
+                                @Html.TextBoxFor(m => m.TradeName, new { @class = "form-control ", autocomplete = "off" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.TradeName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(m => m.CompanyName, new { @class = "control-label" })
+                            <div class="spinner-container">
+                                @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control", autocomplete = "off" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <div class="kt-section mb-0">
