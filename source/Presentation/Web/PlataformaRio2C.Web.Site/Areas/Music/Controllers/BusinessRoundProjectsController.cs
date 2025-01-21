@@ -33,7 +33,6 @@ using PlataformaRio2C.Web.Site.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Web.Site.Controllers;
 using PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects;
-using PlataformaRio2C.Domain.Dtos.Music.BusinessRoundProject;
 
 namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 {
@@ -113,7 +112,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             var projects = await musicProjectRepo.FindAllMusicBusinessRoundProjectDtosToSellAsync(UserAccessControlDto?.GetFirstAttendeeOrganizationCreated()?.Uid ?? Guid.Empty);
 
             // Create fake projects in the list
-            var projectMaxCount = EditionDto?.AttendeeOrganizationMaxSellProjectsCount ?? 0;
+            var projectMaxCount = EditionDto?.MusicBusinessRoundMaximumProjectsBySeller ?? 0;
             if (projects.Count < projectMaxCount)
             {
                 var initialProject = projects.Count + 1;
@@ -124,14 +123,14 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                     {
                         IsFakeProject = true,
 
-                        //ProjectTitleDtos = new List<ProjectTitleDto>
-                        //{
-                        //    new ProjectTitleDto
-                        //    {
-                        //        ProjectTitle = new ProjectTitle(Labels.Project + " " + i, new Language("", ViewBag.UserInterfaceLanguage), 0),
-                        //        Language = new Language("", ViewBag.UserInterfaceLanguage)
-                        //    }
-                        //}
+                        MusicBusinessRoundProjectExpectationsForMeetingDtos = new List<MusicBusinessRoundProjectExpectationsForMeetingDto>
+                        {
+                            new MusicBusinessRoundProjectExpectationsForMeetingDto
+                            {
+                                Value = Labels.Project + " " + i, //ProjectTitle = new ProjectTitle(Labels.Project + " " + i, new Language("", ViewBag.UserInterfaceLanguage), 0),
+                                Language = new Language("", ViewBag.UserInterfaceLanguage)
+                            }
+                        }
                     });
                 }
             }

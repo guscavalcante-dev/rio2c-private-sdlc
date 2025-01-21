@@ -2,7 +2,7 @@
 @using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Domain.Entities
 @using PlataformaRio2C.Domain.Statics
-@model List<ProjectDto>
+@model List<MusicBusinessRoundProjectDto>
 @{
     ViewBag.Title = Labels.ProjectsSubmission;
     var editionDto = ViewBag.EditionDto as EditionDto;
@@ -23,7 +23,7 @@
         {
             foreach (var projectDto in Model)
             {
-                var projectTitle = projectDto.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value;
+                var projectTitle = projectDto.GetProjectExpectationsDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value;
 
                 <div class="row">
                     <div class="col-md-12">
@@ -36,7 +36,7 @@
                                                 <div class="kt-widget__info mt-0 pl-0">
                                                     @if (!projectDto.IsFakeProject)
                                                     {
-                                                        <a href="@Url.Action("SubmittedDetails", "BusinessRoundProjects", new { id = projectDto.Project.Uid, Area = "Music" })" class="kt-widget__title">
+                                                        <a href="@Url.Action("SubmittedDetails", "BusinessRoundProjects", new { id = projectDto.Uid, Area = "Music" })" class="kt-widget__title">
                                                             @projectTitle
                                                         </a>
                                                     }
@@ -49,10 +49,30 @@
                                                     @if (!projectDto.IsFakeProject)
                                                     {
                                                         <span class="kt-widget__desc">
-                                                            @Labels.Producer: @projectDto.SellerAttendeeOrganizationDto.Organization.TradeName
+                                                            @Labels.Participant: @projectDto.SellerAttendeeCollaboratorDto.Collaborator.GetFullName();
                                                         </span>
                                                         <span class="kt-widget__desc">
-                                                            @Labels.Genre:
+                                                            @Labels.SocialName: @projectDto.SellerAttendeeCollaboratorDto.Collaborator.StageName;
+                                                        </span>
+                                                        <span class="kt-widget__desc">
+                                                            @Labels.JobTitle: @projectDto.SellerAttendeeCollaboratorDto.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
+                                                        </span>
+                                                        <span class="kt-widget__desc">
+                                                            @Labels.CompanyName: @projectDto.SellerAttendeeCollaboratorDto.Collaborator.CompanyName;
+                                                        </span>
+                                                        <span class="kt-widget__desc">
+                                                            @Labels.Document: @projectDto.SellerAttendeeCollaboratorDto.Collaborator.Document;
+                                                        </span>
+                                                        <span class="kt-widget__desc">
+                                                            @Labels.Email: @projectDto.SellerAttendeeCollaboratorDto.Collaborator.PublicEmail;
+                                                        </span>
+                                                        <span class="kt-widget__desc">
+                                                            @Labels.PhoneNumber: @projectDto.SellerAttendeeCollaboratorDto.Collaborator.PhoneNumber;
+                                                        </span>
+
+                                                        <!--TODO: CONTINUAR A PARTIR DAQUI. Exibir o "Perfil do Participante" tabela "TargetAudiences" com ProjectType = Musica-->
+                                                        <span class="kt-widget__desc">
+                                                            @Labels.ParticipantProfile:
                                                             @{
                                                                 var projectInterestsDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualGenre.Uid);
                                                                 if (projectInterestsDtos?.Any() == true)
@@ -73,17 +93,17 @@
                                             @if (!projectDto.IsFakeProject)
                                             {
                                                 <span class="kt-widget__text mt-0">
-                                                    @(Html.Raw(projectDto.GetLogLineDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectLogLine?.Value))
+                                                    @(Html.Raw(projectDto.GetProjectExpectationsDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value))
                                                 </span>
                                                 <div class="kt-widget__content">
                                                     <div class="kt-widget__details" style="width: 100%;">
-                                                        @if (projectDto.ProjectBuyerEvaluationDtos?.Any() == true)
+                                                        @if (projectDto.MusicBusinessRoundProjectBuyerEvaluationDtos?.Any() == true)
                                                         {
                                                             <span class="kt-widget__subtitle">@Labels.PlayersSelectedForEvaluation:</span>
                                                             <div class="row">
                                                                 <div class="col-12">
                                                                     <div class="row">
-                                                                        @foreach (var projectBuyerEvaluationDto in projectDto.ProjectBuyerEvaluationDtos)
+                                                                        @foreach (var projectBuyerEvaluationDto in projectDto.MusicBusinessRoundProjectBuyerEvaluationDtos)
                                                                         {
                                                                             <!-- begin: Player -->
                                                                             <div class="kt-widget kt-widget--user-profile-4 col-sm-4 col-md-4 col-xl-2">

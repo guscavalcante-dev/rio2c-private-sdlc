@@ -2,16 +2,12 @@
 using PlataformaRio2C.Domain.Interfaces;
 using System;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
 using PlataformaRio2C.Domain.Dtos;
 using X.PagedList;
-using LinqKit;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects;
-using PlataformaRio2C.Domain.Dtos.Music.BusinessRoundProject;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
 {
@@ -28,7 +24,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
         }
         internal static IQueryable<MusicBusinessRoundProject> FindBySellerAttendeeOrganizationUid(this IQueryable<MusicBusinessRoundProject> query, Guid sellerAttendeeOrganizationUid)
         {
-            query = query.Where(p => p.SellerAttendeeOrganization.Uid == sellerAttendeeOrganizationUid);
+            query = query.Where(p => p.SellerAttendeeCollaborator.Uid == sellerAttendeeOrganizationUid);
 
             return query;
         }
@@ -71,7 +67,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
         /// <param name="query">The query.</param>
         /// <param name="sellerAttendeeOrganizationUid">The seller attendee organization uid.</param>
         /// <returns></returns>
-     
+
         #endregion
 
         /// <summary>Finds all dtos to sell asynchronous.</summary>
@@ -79,19 +75,34 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
         /// <returns></returns>
         public async Task<List<MusicBusinessRoundProjectDto>> FindAllMusicBusinessRoundProjectDtosToSellAsync(Guid attendeeOrganizationUid)
         {
-            var query = this.GetBaseQuery() 
-                            .FindBySellerAttendeeOrganizationUid(attendeeOrganizationUid) 
+            var query = this.GetBaseQuery()
+                            .FindBySellerAttendeeOrganizationUid(attendeeOrganizationUid)
                             .Select(m => new MusicBusinessRoundProjectDto
                             {
-                                SellerAttendeeOrganizationId = m.SellerAttendeeOrganizationId,
-                                SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                Uid = m.Uid,
+                                SellerAttendeeCollaboratorId = m.SellerAttendeeCollaboratorId,
+                                SellerAttendeeCollaboratorDto = new AttendeeCollaboratorDto
                                 {
-                                    AttendeeOrganization = m.SellerAttendeeOrganization,
-                                    Organization = m.SellerAttendeeOrganization.Organization,
-                                    Edition = m.SellerAttendeeOrganization.Edition
+                                    //AttendeeCollaborator = m.SellerAttendeeCollaborator,
+                                    //Organization = m.SellerAttendeeCollaborator.Organization,
+                                    //Edition = m.SellerAttendeeCollaborator.Edition
+                                    AttendeeCollaborator = m.SellerAttendeeCollaborator,
+                                    Collaborator = m.SellerAttendeeCollaborator.Collaborator,
+                                    JobTitlesDtos = m.SellerAttendeeCollaborator.Collaborator.JobTitles.Where(jb => !jb.IsDeleted).Select(jb => new CollaboratorJobTitleBaseDto
+                                    {
+                                        Id = jb.Id,
+                                        Uid = jb.Uid,
+                                        Value = jb.Value,
+                                        LanguageDto = new LanguageBaseDto
+                                        {
+                                            Id = jb.Language.Id,
+                                            Uid = jb.Language.Uid,
+                                            Name = jb.Language.Name,
+                                            Code = jb.Language.Code
+                                        }
+                                    })
                                 },
                                 PlayerCategoriesThatHaveOrHadContract = m.PlayerCategoriesThatHaveOrHadContract,
-                                ExpectationsForOneToOneMeetings = m.ExpectationsForOneToOneMeetings,
                                 AttachmentUrl = m.AttachmentUrl,
                                 FinishDate = m.FinishDate,
                                 ProjectBuyerEvaluationsCount = m.ProjectBuyerEvaluationsCount,
@@ -116,7 +127,28 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
                                     {
                                         MusicBusinessRoundProjectPlayerCategory = pc,
                                         PlayerCategory = pc.PlayerCategory
-                                    })
+                                    }),
+                                MusicBusinessRoundProjectExpectationsForMeetingDtos = m.MusicBusinessRoundProjectExpectationsForMeetings
+                                    .Where(pc => !pc.IsDeleted)
+                                    .Select(pc => new MusicBusinessRoundProjectExpectationsForMeetingDto
+                                    {
+                                        Value = pc.Value,
+                                        Language = pc.Language
+                                    }),
+                                MusicBusinessRoundProjectBuyerEvaluationDtos = m.MusicBusinessRoundProjectBuyerEvaluations
+                                    .Where(pc => !pc.IsDeleted)
+                                    .Select(pc => new MusicBusinessRoundProjectBuyerEvaluationDto
+                                    {
+                                        //ProjectBuyerEvaluation = be,
+                                        //BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                        //{
+                                        //    AttendeeOrganization = be.BuyerAttendeeOrganization,
+                                        //    Organization = be.BuyerAttendeeOrganization.Organization,
+                                        //    Edition = be.BuyerAttendeeOrganization.Edition
+                                        //},
+                                        //ProjectEvaluationStatus = be.ProjectEvaluationStatus,
+                                        //ProjectEvaluationRefuseReason = be.ProjectEvaluationRefuseReason
+                                    }),
                             });
 
             return await query

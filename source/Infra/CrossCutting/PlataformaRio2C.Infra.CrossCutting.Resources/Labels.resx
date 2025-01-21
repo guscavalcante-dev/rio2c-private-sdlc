@@ -435,7 +435,6 @@
   </data>
   <data name="BandType" xml:space="preserve">
     <value>Tipo de artista</value>
-    <comment>Tipo de artist</comment>
   </data>
   <data name="BeingProcessed" xml:space="preserve">
     <value>Sendo executado</value>
@@ -2053,8 +2052,7 @@
     <comment>Participante</comment>
   </data>
   <data name="ParticipantProfile" xml:space="preserve">
-    <value>Tipo de artista</value>
-    <comment>Tipo de artista</comment>
+    <value>Tipo de Participante</value>
   </data>
   <data name="Participants" xml:space="preserve">
     <value>Participantes</value>
@@ -2949,6 +2947,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="SocialMedia" xml:space="preserve">
     <value>Redes sociais</value>
     <comment>Redes sociais</comment>
+  </data>
+  <data name="SocialName" xml:space="preserve">
+    <value>Nome social</value>
   </data>
   <data name="SocialNetworks" xml:space="preserve">
     <value>Redes Sociais</value>

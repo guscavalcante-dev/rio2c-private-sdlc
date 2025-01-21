@@ -1,6 +1,6 @@
 ﻿using PlataformaRio2C.Domain.Entities;
 
-namespace PlataformaRio2C.Domain.Dtos.Music.BusinessRoundProject
+namespace PlataformaRio2C.Domain.Dtos
 {
     public class MusicBusinessRoundProjectTargetAudienceDto
     {

@@ -22,16 +22,18 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int PlayerCategoriesThatHaveOrHadContractMaxLength = 300;
         public static readonly int AttachmentUrlMaxLength = 300;
 
-        public int SellerAttendeeOrganizationId { get; private set; }
-        public virtual AttendeeOrganization SellerAttendeeOrganization { get; private set; }
+        public int SellerAttendeeCollaboratorId { get; private set; }
         public string PlayerCategoriesThatHaveOrHadContract { get; private set; }
-        public string ExpectationsForOneToOneMeetings { get; private set; }
         public string AttachmentUrl { get; private set; }
         public DateTimeOffset? FinishDate { get; private set; }
         public int ProjectBuyerEvaluationsCount { get; private set; }
+
+        public virtual AttendeeCollaborator SellerAttendeeCollaborator { get; private set; }
         public virtual ICollection<MusicBusinessRoundProjectTargetAudience> MusicBusinessRoundProjectTargetAudience { get; private set; }
         public virtual ICollection<MusicBusinessRoundProjectInterest> MusicBusinessRoundProjectInterests { get; private set; }
         public virtual ICollection<MusicBusinessRoundProjectPlayerCategory> PlayerCategories { get; private set; }
+        public virtual ICollection<MusicBusinessRoundProjectExpectationsForMeeting> MusicBusinessRoundProjectExpectationsForMeetings { get; private set; }
+        public virtual ICollection<MusicBusinessRoundProjectBuyerEvaluation> MusicBusinessRoundProjectBuyerEvaluations { get; private set; }
 
         public override bool IsValid()
         {

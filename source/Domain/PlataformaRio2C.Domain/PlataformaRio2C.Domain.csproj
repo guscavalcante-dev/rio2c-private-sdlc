@@ -300,6 +300,8 @@
     <Compile Include="Dtos\Messages\MessageDto.cs" />
     <Compile Include="Dtos\Messages\ConversationDto.cs" />
     <Compile Include="Dtos\Interests\InterestDto.cs" />
+    <Compile Include="Dtos\Music\BusinessRoundProject\MusicBusinessRoundProjectBuyerEvaluationDto.cs" />
+    <Compile Include="Dtos\Music\BusinessRoundProject\MusicBusinessRoundProjectExpectationsForMeetingDto.cs" />
     <Compile Include="Dtos\Music\BusinessRoundProject\MusicBusinessRoundProjectDto.cs" />
     <Compile Include="Dtos\Music\BusinessRoundProject\MusicBusinessRoundProjectInterestDto.cs" />
     <Compile Include="Dtos\Music\BusinessRoundProject\MusicBusinessRoundProjectPlayerCategoryDto.cs" />
@@ -472,6 +474,8 @@
     <Compile Include="Entities\Logistics\AttendeeLogisticsSponsor.cs" />
     <Compile Include="Entities\Logistics\Logistic.cs" />
     <Compile Include="Entities\Message\Message.cs" />
+    <Compile Include="Entities\Music\BusinessRound\MusicBusinessRoundProjectExpectationsForMeeting.cs" />
+    <Compile Include="Entities\Music\BusinessRound\MusicBusinessRoundProjectBuyerEvaluation.cs" />
     <Compile Include="Entities\Music\BusinessRound\MusicBusinessRoundProjectPlayerCategory.cs" />
     <Compile Include="Entities\Music\BusinessRound\MusicBusinessRoundProject.cs" />
     <Compile Include="Entities\Music\BusinessRound\MusicBusinessRoundProjectInterest.cs" />

@@ -37,9 +37,9 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .HasForeignKey(pc => pc.MusicBusinessRoundProjectId);
 
             //Relationships
-            this.HasRequired(t => t.SellerAttendeeOrganization)
+            this.HasRequired(t => t.SellerAttendeeCollaborator)
                 .WithMany(e => e.MusicBusinessRoundProjects)
-                .HasForeignKey(d => d.SellerAttendeeOrganizationId);
+                .HasForeignKey(d => d.SellerAttendeeCollaboratorId);
         }
     }
 }

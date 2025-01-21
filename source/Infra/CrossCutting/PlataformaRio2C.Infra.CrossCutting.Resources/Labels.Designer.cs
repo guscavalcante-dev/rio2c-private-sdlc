@@ -4858,7 +4858,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tipo de artista.
+        ///   Looks up a localized string similar to Tipo de Participante.
         /// </summary>
         public static string ParticipantProfile {
             get {
@@ -7050,6 +7050,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string SocialMedia {
             get {
                 return ResourceManager.GetString("SocialMedia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nome social.
+        /// </summary>
+        public static string SocialName {
+            get {
+                return ResourceManager.GetString("SocialName", resourceCulture);
             }
         }
         

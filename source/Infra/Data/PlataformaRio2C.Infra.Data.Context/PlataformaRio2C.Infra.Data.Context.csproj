@@ -152,7 +152,9 @@
     <Compile Include="Mapping\Message\MessageMap.cs" />
     <Compile Include="Mapping\MusicalCommission\MusicalCommissionMap.cs" />
     <Compile Include="Mapping\Cartoon\AttendeeCartoonProjectCollaboratorMap.cs" />
+    <Compile Include="Mapping\Music\BusinessRound\MusicBusinessRoundProjectExpectationsForMeetingMap.cs" />
     <Compile Include="Mapping\Music\BusinessRound\MusicBusinessRoundProjectInterestMap.cs" />
+    <Compile Include="Mapping\Music\BusinessRound\MusicBusinessRoundProjectBuyerEvaluationMap.cs" />
     <Compile Include="Mapping\Music\BusinessRound\MusicBusinessRoundProjectMap.cs" />
     <Compile Include="Mapping\Music\BusinessRound\MusicBusinessRoundProjectPlayerCategoryMap.cs" />
     <Compile Include="Mapping\Music\BusinessRound\PlayerCategoryMap.cs" />
