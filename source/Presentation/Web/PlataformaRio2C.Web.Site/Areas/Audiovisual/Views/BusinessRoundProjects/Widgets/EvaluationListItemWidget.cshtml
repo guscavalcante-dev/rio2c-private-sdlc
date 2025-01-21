@@ -32,7 +32,7 @@
                             </a>
                         </div>
                         <div class="kt-widget__info mt-0 pl-0">
-                            <a href="@Url.Action("EvaluationDetails", "Projects", new { id = Model.Project.Uid, Area = "" })" class="kt-widget__title">
+                            <a href="@Url.Action("EvaluationDetails", "BusinessRoundProjects", new { id = Model.Project.Uid, Area = "Audiovisual" })" class="kt-widget__title">
                                 @projectTitle
                             </a>
                             <span class="kt-widget__desc">
@@ -77,7 +77,7 @@
         </div>
         <div class="row mt-20 justify-content-end">
             <div class="col-4 text-center">
-                <a href="@Url.Action("EvaluationDetails", "Projects", new { id = Model.Project.Uid, Area = "" })" class="btn btn-brand">@Labels.View</a>
+                <a href="@Url.Action("EvaluationDetails", "BusinessRoundProjects", new { id = Model.Project.Uid, Area = "Audiovisual" })" class="btn btn-brand">@Labels.View</a>
             </div>
             @if (editionDto?.IsProjectBuyerEvaluationOpen() == true)
             {

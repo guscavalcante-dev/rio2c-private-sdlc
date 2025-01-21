@@ -100,10 +100,10 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 
             #endregion
 
-            if (this.EditionDto?.IsAudiovisualProjectSubmitStarted() != true)
-            {
-                return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Audiovisual" });
-            }
+            //if (this.EditionDto?.IsAudiovisualProjectSubmitStarted() != true)
+            //{
+            //    return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Audiovisual" });
+            //}
 
             var projects = await this.projectRepo.FindAllDtosToSellAsync(
                 this.UserAccessControlDto?.GetFirstAttendeeOrganizationCreated()?.Uid ?? Guid.Empty,

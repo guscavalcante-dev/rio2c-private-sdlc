@@ -1826,8 +1826,7 @@
     <value>Relatório de Players de Música</value>
   </data>
   <data name="MusicProjects" xml:space="preserve">
-    <value>Bandas</value>
-    <comment>Projetos de Música</comment>
+    <value>Projetos de Música</value>
   </data>
   <data name="MusicProjectSubmitEndDate" xml:space="preserve">
     <value>Data de término do cadastro de bandas</value>
@@ -2993,6 +2992,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Sponsors" xml:space="preserve">
     <value>Patrocinadores</value>
     <comment>Patrocinadores</comment>
+  </data>
+  <data name="StageName" xml:space="preserve">
+    <value>Nome artístico</value>
   </data>
   <data name="Start" xml:space="preserve">
     <value>Início</value>
