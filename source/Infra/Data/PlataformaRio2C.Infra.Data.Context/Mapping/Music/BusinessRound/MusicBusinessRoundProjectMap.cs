@@ -23,8 +23,20 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         public MusicBusinessRoundProjectMap()
         {
             this.ToTable("MusicBusinessRoundProjects");
+            this.HasKey(t => t.Id);
 
-        //Relationships
+            //Mapping props
+            this.Property(t => t.PlayerCategoriesThatHaveOrHadContract)
+                .HasMaxLength(MusicBusinessRoundProject.PlayerCategoriesThatHaveOrHadContractMaxLength);
+            this.Property(t => t.AttachmentUrl)
+                .HasMaxLength(MusicBusinessRoundProject.AttachmentUrlMaxLength);
+
+            // Player caterogories
+            this.HasMany(t => t.PlayerCategories)
+                .WithRequired(pc => pc.MusicBusinessRoundProject)
+                .HasForeignKey(pc => pc.MusicBusinessRoundProjectId);
+
+            //Relationships
             this.HasRequired(t => t.SellerAttendeeOrganization)
                 .WithMany(e => e.MusicBusinessRoundProjects)
                 .HasForeignKey(d => d.SellerAttendeeOrganizationId);
