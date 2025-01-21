@@ -5,9 +5,9 @@
 		ADD Description  varchar(500)  NULL
 
 		ALTER TABLE "dbo"."InterestGroups" 
-		   ALTER COLUMN "Name" varchar(300)
+		ALTER COLUMN "Name" varchar(300)
 
-		CREATE TABLE "MusicBusinessRoundProjectsInterests"
+		CREATE TABLE "MusicBusinessRoundProjectInterests"
 		( 
 			"Id"                 int IDENTITY ( 1,1 ) ,
 			"Uid"                uniqueidentifier  NOT NULL ,
@@ -21,7 +21,7 @@
 			"UpdateUserId"       int  NOT NULL 
 		)
 
-		CREATE TABLE "MusicBusinessRoundProjectsTargetAudiences"
+		CREATE TABLE "MusicBusinessRoundProjectTargetAudiences"
 		( 
 			"Id"                 int IDENTITY ( 1,1 ) ,
 			"Uid"                uniqueidentifier  NOT NULL ,
@@ -39,9 +39,8 @@
 		( 
 			"Id"                 int IDENTITY ( 1,1 ) ,
 			"Uid"                uniqueidentifier  NOT NULL ,
-			"SellerAttendeeOrganizationId" int  NULL ,
+			"SellerAttendeeCollaboratorId" int  NOT NULL ,
 			"PlayerCategoriesThatHaveOrHadContract" varchar(300)  NULL ,
-			"ExpectationsForOneToOneMeetings" varchar(max)  NULL ,
 			"AttachmentUrl"      varchar(300)  NULL ,
 			"FinishDate"         datetimeoffset  NULL ,
 			"ProjectBuyerEvaluationsCount" int  NOT NULL ,
@@ -67,7 +66,7 @@
 			"UpdateUserId"       int  NOT NULL 
 		)
 
-		CREATE TABLE "MusicBusinessRoundProjectsPlayerCategories"
+		CREATE TABLE "MusicBusinessRoundProjectPlayerCategories"
 		( 
 			"Id"                 int IDENTITY ( 1,1 ) ,
 			"Uid"                uniqueidentifier  NOT NULL ,
@@ -81,17 +80,50 @@
 			"UpdateUserId"       int  NOT NULL 
 		)
 
-		ALTER TABLE "MusicBusinessRoundProjectsInterests"
-		ADD CONSTRAINT "PK_MusicBusinessRoundProjectsInterests" PRIMARY KEY  CLUSTERED ("Id" ASC)
+		CREATE TABLE "MusicBusinessRoundProjectExpectationsForMeetings"
+		( 
+			"Id"                 int IDENTITY ( 1,1 ) ,
+			"Uid"                uniqueidentifier  NOT NULL ,
+			"MusicBusinessRoundProjectId" int  NOT NULL ,
+			"LanguageId"         int  NOT NULL ,
+			"IsDeleted"          bit  NOT NULL ,
+			"CreateDate"         datetimeoffset  NOT NULL ,
+			"CreateUserId"       int  NOT NULL ,
+			"UpdateDate"         datetimeoffset  NOT NULL ,
+			"UpdateUserId"       int  NOT NULL 
+		)
 
-		ALTER TABLE "MusicBusinessRoundProjectsInterests"
-		ADD CONSTRAINT "IDX_UQ_MusicBusinessRoundProjectsInterests" UNIQUE ("Uid"  ASC)
+		CREATE TABLE "MusicBusinessRoundProjectBuyerEvaluations"
+		( 
+			"Id"                 int IDENTITY ( 1,1 ) ,
+			"Uid"                uniqueidentifier  NOT NULL ,
+			"MusicBusinessRoundProjectId" int  NOT NULL ,
+			"BuyerAttendeeOrganizationId" int  NOT NULL ,
+			"ProjectEvaluationStatusId" int  NOT NULL ,
+			"ProjectEvaluationRefuseReasonId" int  NOT NULL ,
+			"Reason"             varchar(1500)  NULL ,
+			"SellerUserId"       int  NOT NULL ,
+			"BuyerEvaluationUserId" int  NOT NULL ,
+			"EvaluationDate"     datetimeoffset  NULL ,
+			"IsDeleted"          bit  NOT NULL ,
+			"CreateDate"         datetimeoffset  NOT NULL ,
+			"CreateUserId"       int  NOT NULL ,
+			"UpdateDate"         datetimeoffset  NOT NULL ,
+			"UpdateUserId"       int  NOT NULL ,
+			"BuyerEmailSendDate" datetimeoffset  NULL 
+		)
 
-		ALTER TABLE "MusicBusinessRoundProjectsTargetAudiences"
-		ADD CONSTRAINT "PK_MusicBusinessRoundProjectsTargetAudiences" PRIMARY KEY  CLUSTERED ("Id" ASC)
+		ALTER TABLE "MusicBusinessRoundProjectInterests"
+		ADD CONSTRAINT "PK_MusicBusinessRoundProjectInterests" PRIMARY KEY  CLUSTERED ("Id" ASC)
 
-		ALTER TABLE "MusicBusinessRoundProjectsTargetAudiences"
-		ADD CONSTRAINT "IDX_UQ_MusicBusinessRoundProjectsTargetAudiences" UNIQUE ("Uid"  ASC)
+		ALTER TABLE "MusicBusinessRoundProjectInterests"
+		ADD CONSTRAINT "IDX_UQ_MusicBusinessRoundProjectInterests" UNIQUE ("Uid"  ASC)
+
+		ALTER TABLE "MusicBusinessRoundProjectTargetAudiences"
+		ADD CONSTRAINT "PK_MusicBusinessRoundProjectTargetAudiences" PRIMARY KEY  CLUSTERED ("Id" ASC)
+
+		ALTER TABLE "MusicBusinessRoundProjectTargetAudiences"
+		ADD CONSTRAINT "IDX_UQ_MusicBusinessRoundProjectTargetAudiences" UNIQUE ("Uid"  ASC)
 
 		ALTER TABLE "MusicBusinessRoundProjects"
 		ADD CONSTRAINT "PK_MusicBusinessRoundProjects" PRIMARY KEY  CLUSTERED ("Id" ASC)
@@ -105,35 +137,47 @@
 		ALTER TABLE "PlayerCategories"
 		ADD CONSTRAINT "IDX_UQ_PlayerCategories" UNIQUE ("Uid"  ASC)
 
-		ALTER TABLE "MusicBusinessRoundProjectsPlayerCategories"
-		ADD CONSTRAINT "PK_MusicBusinessRoundProjectsPlayerCategories" PRIMARY KEY  CLUSTERED ("Id" ASC)
+		ALTER TABLE "MusicBusinessRoundProjectPlayerCategories"
+		ADD CONSTRAINT "PK_MusicBusinessRoundProjectPlayerCategories" PRIMARY KEY  CLUSTERED ("Id" ASC)
 
-		ALTER TABLE "MusicBusinessRoundProjectsPlayerCategories"
-		ADD CONSTRAINT "IDX_UQ_MusicBusinessRoundProjectsPlayerCategories" UNIQUE ("Uid"  ASC)
+		ALTER TABLE "MusicBusinessRoundProjectPlayerCategories"
+		ADD CONSTRAINT "IDX_UQ_MusicBusinessRoundProjectPlayerCategories" UNIQUE ("Uid"  ASC)
 
-		ALTER TABLE "MusicBusinessRoundProjectsInterests"
-			ADD CONSTRAINT "FK_Users_MusicBusinessRoundProjectsInterests_CreateUserId" FOREIGN KEY ("CreateUserId") REFERENCES "dbo"."Users"("Id")
+		ALTER TABLE "MusicBusinessRoundProjectExpectationsForMeetings"
+		ADD CONSTRAINT "PK_MusicBusinessRoundProjectExpectationsForMeetings" PRIMARY KEY  CLUSTERED ("Id" ASC)
 
-		ALTER TABLE "MusicBusinessRoundProjectsInterests"
-			ADD CONSTRAINT "FK_Users_MusicBusinessRoundProjectsInterests_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
+		ALTER TABLE "MusicBusinessRoundProjectExpectationsForMeetings"
+		ADD CONSTRAINT "IDX_UQ_MusicBusinessRoundProjectExpectationsForMeetings" UNIQUE ("Uid"  ASC)
 
-		ALTER TABLE "MusicBusinessRoundProjectsInterests"
-			ADD CONSTRAINT "FK_MusicBusinessRoundProjects_MusicBusinessRoundProjectsInterests_MusicBusinessRoundProjectId" FOREIGN KEY ("MusicBusinessRoundProjectId") REFERENCES "MusicBusinessRoundProjects"("Id")
+		ALTER TABLE "MusicBusinessRoundProjectBuyerEvaluations"
+		ADD CONSTRAINT "PK_MusicBusinessRoundProjectBuyerEvaluations" PRIMARY KEY  CLUSTERED ("Id" ASC)
 
-		ALTER TABLE "MusicBusinessRoundProjectsInterests"
-			ADD CONSTRAINT "FK_Interests_MusicBusinessRoundProjectsInterests_InterestId" FOREIGN KEY ("InterestId") REFERENCES "dbo"."Interests"("Id")
+		ALTER TABLE "MusicBusinessRoundProjectBuyerEvaluations"
+		ADD CONSTRAINT "IDX_UQ_MusicBusinessRoundProjectBuyerEvaluations" UNIQUE ("Uid"  ASC)
 
-		ALTER TABLE "MusicBusinessRoundProjectsTargetAudiences"
-			ADD CONSTRAINT "FK_Users_MusicBusinessRoundProjectsTargetAudiences_CreateUserId" FOREIGN KEY ("CreateUserId") REFERENCES "dbo"."Users"("Id")
+		ALTER TABLE "MusicBusinessRoundProjectInterests"
+			ADD CONSTRAINT "FK_Users_MusicBusinessRoundProjectInterests_CreateUserId" FOREIGN KEY ("CreateUserId") REFERENCES "dbo"."Users"("Id")
 
-		ALTER TABLE "MusicBusinessRoundProjectsTargetAudiences"
-			ADD CONSTRAINT "FK_Users_MusicBusinessRoundProjectsTargetAudiences_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
+		ALTER TABLE "MusicBusinessRoundProjectInterests"
+			ADD CONSTRAINT "FK_Users_MusicBusinessRoundProjectInterests_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
 
-		ALTER TABLE "MusicBusinessRoundProjectsTargetAudiences"
-			ADD CONSTRAINT "FK_MusicBusinessRoundProjects_MusicBusinessRoundProjectsTargetAudiences_MusicBusinessRoundProjectId" FOREIGN KEY ("MusicBusinessRoundProjectId") REFERENCES "MusicBusinessRoundProjects"("Id")
+		ALTER TABLE "MusicBusinessRoundProjectInterests"
+			ADD CONSTRAINT "FK_MusicBusinessRoundProjects_MusicBusinessRoundProjectInterests_MusicBusinessRoundProjectId" FOREIGN KEY ("MusicBusinessRoundProjectId") REFERENCES "MusicBusinessRoundProjects"("Id")
 
-		ALTER TABLE "MusicBusinessRoundProjectsTargetAudiences"
-			ADD CONSTRAINT "FK_TargetAudiences_MusicBusinessRoundProjectsTargetAudiences_TargetAudienceId" FOREIGN KEY ("TargetAudienceId") REFERENCES "dbo"."TargetAudiences"("Id")
+		ALTER TABLE "MusicBusinessRoundProjectInterests"
+			ADD CONSTRAINT "FK_Interests_MusicBusinessRoundProjectInterests_InterestId" FOREIGN KEY ("InterestId") REFERENCES "dbo"."Interests"("Id")
+
+		ALTER TABLE "MusicBusinessRoundProjectTargetAudiences"
+			ADD CONSTRAINT "FK_Users_MusicBusinessRoundProjectTargetAudiences_CreateUserId" FOREIGN KEY ("CreateUserId") REFERENCES "dbo"."Users"("Id")
+
+		ALTER TABLE "MusicBusinessRoundProjectTargetAudiences"
+			ADD CONSTRAINT "FK_Users_MusicBusinessRoundProjectTargetAudiences_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
+
+		ALTER TABLE "MusicBusinessRoundProjectTargetAudiences"
+			ADD CONSTRAINT "FK_MusicBusinessRoundProjects_MusicBusinessRoundProjectTargetAudiences_MusicBusinessRoundProjectId" FOREIGN KEY ("MusicBusinessRoundProjectId") REFERENCES "MusicBusinessRoundProjects"("Id")
+
+		ALTER TABLE "MusicBusinessRoundProjectTargetAudiences"
+			ADD CONSTRAINT "FK_TargetAudiences_MusicBusinessRoundProjectTargetAudiences_TargetAudienceId" FOREIGN KEY ("TargetAudienceId") REFERENCES "dbo"."TargetAudiences"("Id")
 
 		ALTER TABLE "MusicBusinessRoundProjects"
 			ADD CONSTRAINT "FK_Users_MusicBusinessRoundProjects_CreateUserId" FOREIGN KEY ("CreateUserId") REFERENCES "dbo"."Users"("Id")
@@ -142,7 +186,7 @@
 			ADD CONSTRAINT "FK_Users_MusicBusinessRoundProjects_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
 
 		ALTER TABLE "MusicBusinessRoundProjects"
-			ADD CONSTRAINT "FK_AttendeeOrganizations_MusicBusinessRoundProjects_SellerAttendeeOrganizationId" FOREIGN KEY ("SellerAttendeeOrganizationId") REFERENCES "dbo"."AttendeeOrganizations"("Id")
+			ADD CONSTRAINT "FK_AttendeeCollaborators_MusicBusinessRoundProjects_SellerAttendeeCollaboratorId" FOREIGN KEY ("SellerAttendeeCollaboratorId") REFERENCES "dbo"."AttendeeCollaborators"("Id")
 
 		ALTER TABLE "PlayerCategories"
 			ADD CONSTRAINT "FK_Users_PlayerCategories_CreateUserId" FOREIGN KEY ("CreateUserId") REFERENCES "dbo"."Users"("Id")
@@ -153,17 +197,54 @@
 		ALTER TABLE "PlayerCategories"
 			ADD CONSTRAINT "FK_ProjectTypes_PlayerCategories_ProjectTypeId" FOREIGN KEY ("ProjectTypeId") REFERENCES "dbo"."ProjectTypes"("Id")
 
-		ALTER TABLE "MusicBusinessRoundProjectsPlayerCategories"
-			ADD CONSTRAINT "FK_Users_MusicBusinessRoundProjectsPlayerCategories_CreateUserId" FOREIGN KEY ("CreateUserId") REFERENCES "dbo"."Users"("Id")
+		ALTER TABLE "MusicBusinessRoundProjectPlayerCategories"
+			ADD CONSTRAINT "FK_Users_MusicBusinessRoundProjectPlayerCategories_CreateUserId" FOREIGN KEY ("CreateUserId") REFERENCES "dbo"."Users"("Id")
 
-		ALTER TABLE "MusicBusinessRoundProjectsPlayerCategories"
-			ADD CONSTRAINT "FK_Users_MusicBusinessRoundProjectsPlayerCategories_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
+		ALTER TABLE "MusicBusinessRoundProjectPlayerCategories"
+			ADD CONSTRAINT "FK_Users_MusicBusinessRoundProjectPlayerCategories_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
 
-		ALTER TABLE "MusicBusinessRoundProjectsPlayerCategories"
-			ADD CONSTRAINT "FK_MusicBusinessRoundProjects_MusicBusinessRoundProjectsPlayerCategories_MusicBusinessRoundProjectId" FOREIGN KEY ("MusicBusinessRoundProjectId") REFERENCES "MusicBusinessRoundProjects"("Id")
+		ALTER TABLE "MusicBusinessRoundProjectPlayerCategories"
+			ADD CONSTRAINT "FK_MusicBusinessRoundProjects_MusicBusinessRoundProjectPlayerCategories_MusicBusinessRoundProjectId" FOREIGN KEY ("MusicBusinessRoundProjectId") REFERENCES "MusicBusinessRoundProjects"("Id")
 
-		ALTER TABLE "MusicBusinessRoundProjectsPlayerCategories"
-			ADD CONSTRAINT "FK_PlayerCategories_MusicBusinessRoundProjectsPlayerCategories_PlayerCategoryId" FOREIGN KEY ("PlayerCategoryId") REFERENCES "PlayerCategories"("Id")
+		ALTER TABLE "MusicBusinessRoundProjectPlayerCategories"
+			ADD CONSTRAINT "FK_PlayerCategories_MusicBusinessRoundProjectPlayerCategories_PlayerCategoryId" FOREIGN KEY ("PlayerCategoryId") REFERENCES "PlayerCategories"("Id")
+
+		ALTER TABLE "MusicBusinessRoundProjectExpectationsForMeetings"
+			ADD CONSTRAINT "FK_Users_MusicBusinessRoundProjectExpectationsForMeetings_CreateUserId" FOREIGN KEY ("CreateUserId") REFERENCES "dbo"."Users"("Id")
+
+		ALTER TABLE "MusicBusinessRoundProjectExpectationsForMeetings"
+			ADD CONSTRAINT "FK_Users_MusicBusinessRoundProjectExpectationsForMeetings_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
+
+		ALTER TABLE "MusicBusinessRoundProjectExpectationsForMeetings"
+			ADD CONSTRAINT "FK_MusicBusinessRoundProjects_MusicBusinessRoundProjectExpectationsForMeetings_MusicBusinessRoundProjectId" FOREIGN KEY ("MusicBusinessRoundProjectId") REFERENCES "MusicBusinessRoundProjects"("Id")
+
+		ALTER TABLE "MusicBusinessRoundProjectExpectationsForMeetings"
+			ADD CONSTRAINT "FK_Languages_MusicBusinessRoundProjectExpectationsForMeetings_LanguageId" FOREIGN KEY ("LanguageId") REFERENCES "dbo"."Languages"("Id")
+
+		ALTER TABLE "MusicBusinessRoundProjectBuyerEvaluations"
+			ADD CONSTRAINT "FK_Users_MusicBusinessRoundProjectBuyerEvaluations_CreateUserId" FOREIGN KEY ("CreateUserId") REFERENCES "dbo"."Users"("Id")
+
+		ALTER TABLE "MusicBusinessRoundProjectBuyerEvaluations"
+			ADD CONSTRAINT "FK_Users_MusicBusinessRoundProjectBuyerEvaluations_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
+
+		ALTER TABLE "MusicBusinessRoundProjectBuyerEvaluations"
+			ADD CONSTRAINT "FK_Users_MusicBusinessRoundProjectBuyerEvaluations_SellerUserId" FOREIGN KEY ("SellerUserId") REFERENCES "dbo"."Users"("Id")
+
+		ALTER TABLE "MusicBusinessRoundProjectBuyerEvaluations"
+			ADD CONSTRAINT "FK_Users_MusicBusinessRoundProjectBuyerEvaluations_BuyerEvaluationUserId" FOREIGN KEY ("BuyerEvaluationUserId") REFERENCES "dbo"."Users"("Id")
+
+		ALTER TABLE "MusicBusinessRoundProjectBuyerEvaluations"
+			ADD CONSTRAINT "FK_MusicBusinessRoundProjects_MusicBusinessRoundProjectBuyerEvaluations_MusicBusinessRoundProjectId" FOREIGN KEY ("MusicBusinessRoundProjectId") REFERENCES "MusicBusinessRoundProjects"("Id")
+
+		ALTER TABLE "MusicBusinessRoundProjectBuyerEvaluations"
+			ADD CONSTRAINT "FK_AttendeeOrganizations_MusicBusinessRoundProjectBuyerEvaluations_BuyerAttendeeOrganizationId" FOREIGN KEY ("BuyerAttendeeOrganizationId") REFERENCES "dbo"."AttendeeOrganizations"("Id")
+
+		ALTER TABLE "MusicBusinessRoundProjectBuyerEvaluations"
+			ADD CONSTRAINT "FK_ProjectEvaluationStatuses_MusicBusinessRoundProjectBuyerEvaluations_ProjectEvaluationStatusId" FOREIGN KEY ("ProjectEvaluationStatusId") REFERENCES "dbo"."ProjectEvaluationStatuses"("Id")
+
+		ALTER TABLE "MusicBusinessRoundProjectBuyerEvaluations"
+			ADD CONSTRAINT "FK_ProjectEvaluationRefuseReasons_MusicBusinessRoundProjectBuyerEvaluations_ProjectEvaluationRefuseReasonId" FOREIGN KEY ("ProjectEvaluationRefuseReasonId") REFERENCES "dbo"."ProjectEvaluationRefuseReasons"("Id")
+
 	COMMIT TRAN -- Transaction Success!
 END TRY
 BEGIN CATCH
