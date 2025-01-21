@@ -377,9 +377,9 @@
     <Compile Include="Migrations\202501181608178_CreateMusicBusinessRoundsTables.Designer.cs">
       <DependentUpon>202501181608178_CreateMusicBusinessRoundsTables.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202501211456430_teste.cs" />
-    <Compile Include="Migrations\202501211456430_teste.Designer.cs">
-      <DependentUpon>202501211456430_teste.cs</DependentUpon>
+    <Compile Include="Migrations\202501211601462_UpdateMigrationsCreateTableBusinessRoundProjects.cs" />
+    <Compile Include="Migrations\202501211601462_UpdateMigrationsCreateTableBusinessRoundProjects.Designer.cs">
+      <DependentUpon>202501211601462_UpdateMigrationsCreateTableBusinessRoundProjects.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
@@ -759,8 +759,8 @@
     <EmbeddedResource Include="Migrations\202501181608178_CreateMusicBusinessRoundsTables.resx">
       <DependentUpon>202501181608178_CreateMusicBusinessRoundsTables.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202501211456430_teste.resx">
-      <DependentUpon>202501211456430_teste.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202501211601462_UpdateMigrationsCreateTableBusinessRoundProjects.resx">
+      <DependentUpon>202501211601462_UpdateMigrationsCreateTableBusinessRoundProjects.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

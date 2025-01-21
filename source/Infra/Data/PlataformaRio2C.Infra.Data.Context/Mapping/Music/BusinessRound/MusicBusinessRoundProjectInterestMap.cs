@@ -30,7 +30,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             //Relationships
             this.HasRequired(t => t.MusicBusinessRoundProject)
                 .WithMany(p => p.MusicBusinessRoundProjectInterests)
-                .HasForeignKey(t => t.MusicBusinessRoundProject);
+                .HasForeignKey(t => t.MusicBusinessRoundProjectId);
 
             this.HasRequired(t => t.Interest)
                 .WithMany()
