@@ -155,6 +155,7 @@
     <Compile Include="Mapping\Music\BusinessRound\MusicBusinessRoundProjectInterestMap.cs" />
     <Compile Include="Mapping\Music\BusinessRound\MusicBusinessRoundProjectMap.cs" />
     <Compile Include="Mapping\Music\BusinessRound\MusicBusinessRoundProjectPlayerCategoryMap.cs" />
+    <Compile Include="Mapping\Music\BusinessRound\PlayerCategoryMap.cs" />
     <Compile Include="Mapping\Music\BusinessRound\MusicBusinessRoundProjectTargetAudienceMap.cs" />
     <Compile Include="Mapping\Music\Pitching\AttendeeMusicBandCollaboratorMap.cs" />
     <Compile Include="Mapping\Cartoon\AttendeeCartoonProjectEvaluationMap.cs" />
@@ -375,6 +376,10 @@
     <Compile Include="Migrations\202501181608178_CreateMusicBusinessRoundsTables.cs" />
     <Compile Include="Migrations\202501181608178_CreateMusicBusinessRoundsTables.Designer.cs">
       <DependentUpon>202501181608178_CreateMusicBusinessRoundsTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202501211456430_teste.cs" />
+    <Compile Include="Migrations\202501211456430_teste.Designer.cs">
+      <DependentUpon>202501211456430_teste.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
@@ -753,6 +758,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202501181608178_CreateMusicBusinessRoundsTables.resx">
       <DependentUpon>202501181608178_CreateMusicBusinessRoundsTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501211456430_teste.resx">
+      <DependentUpon>202501211456430_teste.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

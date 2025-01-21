@@ -19,7 +19,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
     /// <summary>ProjectMap</summary>
     public class MusicBusinessRoundProjectMap : EntityTypeConfiguration<MusicBusinessRoundProject>
     {
-        /// <summary>Initializes a new instance of the <see cref="ProjectMap"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="MusicBusinessRoundProjectMap"/> class.</summary>
         public MusicBusinessRoundProjectMap()
         {
             this.ToTable("MusicBusinessRoundProjects");

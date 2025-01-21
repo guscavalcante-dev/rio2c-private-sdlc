@@ -17,26 +17,12 @@ using System.Data.Entity.ModelConfiguration;
 namespace PlataformaRio2C.Infra.Data.Context.Mapping
 {
     /// <summary>ProjectTargetAudienceMap</summary>
-    public class MusicBusinessRoundProjectPlayerCategoryMap : EntityTypeConfiguration<MusicBusinessRoundProjectPlayerCategory>
+    public class PlayerCategoryMap : EntityTypeConfiguration<PlayerCategory>
     {
         /// <summary>Initializes a new instance of the <see cref="ProjectTargetAudienceMap"/> class.</summary>
-        public MusicBusinessRoundProjectPlayerCategoryMap()
+        public PlayerCategoryMap()
         {
-            this.ToTable("MusicBusinessRoundProjectPlayerCategory");
-            this.HasKey(t => t.Id);
-
-            // AdditionInfoMaxLenght
-            this.Property(t => t.AdditionalInfo)
-                .HasMaxLength(MusicBusinessRoundProjectPlayerCategory.AdditionalInfoMaxLength);
-
-            //Relationships
-            this.HasRequired(t => t.MusicBusinessRoundProject)
-                .WithMany(e => e.PlayerCategories) 
-                .HasForeignKey(d => d.MusicBusinessRoundProjectId);
-
-            this.HasRequired(t => t.PlayerCategory)
-                .WithMany() 
-                .HasForeignKey(d => d.PlayerCategoryId);
+            this.ToTable("PlayerCategories");
         }
     }
 }

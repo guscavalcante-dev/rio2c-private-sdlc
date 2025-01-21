@@ -82,16 +82,16 @@
 		)
 
 		ALTER TABLE "MusicBusinessRoundProjectsInterests"
-		ADD CONSTRAINT "PK_MusicBusinessRoundProjects" PRIMARY KEY  CLUSTERED ("Id" ASC)
+		ADD CONSTRAINT "PK_MusicBusinessRoundProjectsInterests" PRIMARY KEY  CLUSTERED ("Id" ASC)
 
 		ALTER TABLE "MusicBusinessRoundProjectsInterests"
-		ADD CONSTRAINT "IDX_UQ_MusicBusinessRoundProjects" UNIQUE ("Uid"  ASC)
+		ADD CONSTRAINT "IDX_UQ_MusicBusinessRoundProjectsInterests" UNIQUE ("Uid"  ASC)
 
 		ALTER TABLE "MusicBusinessRoundProjectsTargetAudiences"
-		ADD CONSTRAINT "PK_MusicBusinessRoundProjects" PRIMARY KEY  CLUSTERED ("Id" ASC)
+		ADD CONSTRAINT "PK_MusicBusinessRoundProjectsTargetAudiences" PRIMARY KEY  CLUSTERED ("Id" ASC)
 
 		ALTER TABLE "MusicBusinessRoundProjectsTargetAudiences"
-		ADD CONSTRAINT "IDX_UQ_MusicBusinessRoundProjects" UNIQUE ("Uid"  ASC)
+		ADD CONSTRAINT "IDX_UQ_MusicBusinessRoundProjectsTargetAudiences" UNIQUE ("Uid"  ASC)
 
 		ALTER TABLE "MusicBusinessRoundProjects"
 		ADD CONSTRAINT "PK_MusicBusinessRoundProjects" PRIMARY KEY  CLUSTERED ("Id" ASC)
@@ -100,16 +100,16 @@
 		ADD CONSTRAINT "IDX_UQ_MusicBusinessRoundProjects" UNIQUE ("Uid"  ASC)
 
 		ALTER TABLE "PlayerCategories"
-		ADD CONSTRAINT "PK_MusicBusinessRoundProjects" PRIMARY KEY  CLUSTERED ("Id" ASC)
+		ADD CONSTRAINT "PK_PlayerCategories" PRIMARY KEY  CLUSTERED ("Id" ASC)
 
 		ALTER TABLE "PlayerCategories"
-		ADD CONSTRAINT "IDX_UQ_MusicBusinessRoundProjects" UNIQUE ("Uid"  ASC)
+		ADD CONSTRAINT "IDX_UQ_PlayerCategories" UNIQUE ("Uid"  ASC)
 
 		ALTER TABLE "MusicBusinessRoundProjectsPlayerCategories"
-		ADD CONSTRAINT "PK_MusicBusinessRoundProjects" PRIMARY KEY  CLUSTERED ("Id" ASC)
+		ADD CONSTRAINT "PK_MusicBusinessRoundProjectsPlayerCategories" PRIMARY KEY  CLUSTERED ("Id" ASC)
 
 		ALTER TABLE "MusicBusinessRoundProjectsPlayerCategories"
-		ADD CONSTRAINT "IDX_UQ_MusicBusinessRoundProjects" UNIQUE ("Uid"  ASC)
+		ADD CONSTRAINT "IDX_UQ_MusicBusinessRoundProjectsPlayerCategories" UNIQUE ("Uid"  ASC)
 
 		ALTER TABLE "MusicBusinessRoundProjectsInterests"
 			ADD CONSTRAINT "FK_Users_MusicBusinessRoundProjectsInterests_CreateUserId" FOREIGN KEY ("CreateUserId") REFERENCES "dbo"."Users"("Id")
