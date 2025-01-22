@@ -24,6 +24,10 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         {
             this.ToTable("MusicBusinessRoundProjectTargetAudiences");
 
+            // AdditionInfoMaxLenght
+            this.Property(t => t.AdditionalInfo)
+                .HasMaxLength(MusicBusinessRoundProjectTargetAudience.AdditionalInfoMaxLength);
+
             //Relationships
             this.HasRequired(t => t.MusicBusinessRoundProject)
                 .WithMany(e => e.MusicBusinessRoundProjectTargetAudience)

@@ -17,6 +17,8 @@ namespace PlataformaRio2C.Domain.Entities
 {
     public class PlayerCategory : Entity
     {
+        public static readonly int NameMaxLength = 500;
+
         public int ProjectTypeId { get; private set; }
         public string Name { get; private set; }
         public int DisplayOrder { get; private set; }

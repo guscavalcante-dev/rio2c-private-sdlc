@@ -23,6 +23,10 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         public PlayerCategoryMap()
         {
             this.ToTable("PlayerCategories");
+
+            // NameMaxLenght
+            this.Property(t => t.Name)
+                .HasMaxLength(PlayerCategory.NameMaxLength);
         }
     }
 }

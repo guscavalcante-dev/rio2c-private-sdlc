@@ -25,7 +25,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.ToTable("MusicBusinessRoundProjects");
             this.HasKey(t => t.Id);
 
-            //Mapping props
+            //Mapping props max lenghts
             this.Property(t => t.PlayerCategoriesThatHaveOrHadContract)
                 .HasMaxLength(MusicBusinessRoundProject.PlayerCategoriesThatHaveOrHadContractMaxLength);
             this.Property(t => t.AttachmentUrl)

@@ -18,7 +18,7 @@ namespace PlataformaRio2C.Domain.Entities
 {
     public class MusicBusinessRoundProjectExpectationsForMeeting : Entity
     {
-        public static readonly int ValueMaxLength = 300;
+        public static readonly int ValueMaxLength = 256;
 
         public int MusicBusinessRoundProjectId { get; private set; }
         public int LanguageId { get; private set; }
