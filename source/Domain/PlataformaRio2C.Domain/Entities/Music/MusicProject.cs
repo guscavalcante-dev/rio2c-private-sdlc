@@ -171,7 +171,7 @@ namespace PlataformaRio2C.Domain.Entities
         public void Delete(int userId)
         {
             this.IsDeleted = true;
-            //this.DeleteAttendeeMusicBand(userId); // Must be after of this.IsDeleted = true // Don't want to delete other things than the project for now
+            this.DeleteAttendeeMusicBand(userId);
 
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
