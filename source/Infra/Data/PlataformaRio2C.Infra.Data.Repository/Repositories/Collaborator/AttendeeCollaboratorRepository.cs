@@ -1449,7 +1449,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     }
                                 }),
                                 AttendeeMusicBandDtos = ac.AttendeeMusicBandCollaborators
-                                                                .Where(ambc => !ambc.IsDeleted)
+                                                                .Where(ambc => !ambc.IsDeleted && !ambc.AttendeeMusicBand.IsDeleted)
                                                                 .Select(ambc => new AttendeeMusicBandDto
                                                                 {
                                                                     WouldYouLikeParticipateBusinessRound = ambc.AttendeeMusicBand.WouldYouLikeParticipateBusinessRound,
