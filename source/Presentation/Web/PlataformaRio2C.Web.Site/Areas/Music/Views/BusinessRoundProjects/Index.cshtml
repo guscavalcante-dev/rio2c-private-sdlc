@@ -2,7 +2,7 @@
 @using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Domain.Entities
 @using PlataformaRio2C.Domain.Statics
-@model List<ProjectDto>
+@model List<MusicBusinessRoundProjectDto>
 @{
     ViewBag.Title = Labels.ProjectsSubmission;
     var editionDto = ViewBag.EditionDto as EditionDto;
@@ -23,7 +23,7 @@
         {
             foreach (var projectDto in Model)
             {
-                var projectTitle = projectDto.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value;
+                var projectTitle = projectDto.GetProjectExpectationsDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value;
 
                 <div class="row">
                     <div class="col-md-12">
@@ -36,7 +36,7 @@
                                                 <div class="kt-widget__info mt-0 pl-0">
                                                     @if (!projectDto.IsFakeProject)
                                                     {
-                                                        <a href="@Url.Action("SubmittedDetails", "BusinessRoundProjects", new { id = projectDto.Project.Uid, Area = "Music" })" class="kt-widget__title">
+                                                        <a href="@Url.Action("SubmittedDetails", "BusinessRoundProjects", new { id = projectDto.Uid, Area = "Music" })" class="kt-widget__title">
                                                             @projectTitle
                                                         </a>
                                                     }
@@ -49,17 +49,34 @@
                                                     @if (!projectDto.IsFakeProject)
                                                     {
                                                         <span class="kt-widget__desc">
-                                                            @Labels.Producer: @projectDto.SellerAttendeeOrganizationDto.Organization.TradeName
+                                                            @Labels.Participant: @projectDto.SellerAttendeeCollaboratorDto.Collaborator.GetFullName()
                                                         </span>
                                                         <span class="kt-widget__desc">
-                                                            @Labels.Genre:
+                                                            @Labels.SocialName: @(projectDto.SellerAttendeeCollaboratorDto.Collaborator.StageName.GetDashIfNullOrEmpty())
+                                                        </span>
+                                                        <span class="kt-widget__desc">
+                                                            @Labels.JobTitle: @(projectDto.SellerAttendeeCollaboratorDto.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage).Value)
+                                                        </span>
+                                                        <span class="kt-widget__desc">
+                                                            @Labels.CompanyName: @projectDto.SellerAttendeeCollaboratorDto.Collaborator.CompanyName.GetDashIfNullOrEmpty()
+                                                        </span>
+                                                        <span class="kt-widget__desc">
+                                                            @Labels.Document: @projectDto.SellerAttendeeCollaboratorDto.Collaborator.Document.GetDashIfNullOrEmpty()
+                                                        </span>
+                                                        <span class="kt-widget__desc">
+                                                            @Labels.Email: @projectDto.SellerAttendeeCollaboratorDto.Collaborator.PublicEmail.GetDashIfNullOrEmpty()
+                                                        </span>
+                                                        <span class="kt-widget__desc">
+                                                            @Labels.PhoneNumber: @projectDto.SellerAttendeeCollaboratorDto.Collaborator.PhoneNumber.GetDashIfNullOrEmpty()
+                                                        </span>
+                                                        <span class="kt-widget__desc">
+                                                            @Labels.ParticipantProfile:
                                                             @{
-                                                                var projectInterestsDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualGenre.Uid);
-                                                                if (projectInterestsDtos?.Any() == true)
+                                                                if (projectDto.MusicBusinessRoundProjectTargetAudienceDtos?.Any() == true)
                                                                 {
-                                                                    foreach (var projectInterestDto in projectInterestsDtos)
+                                                                    foreach (var targetAudienceDto in projectDto.MusicBusinessRoundProjectTargetAudienceDtos)
                                                                     {
-                                                                        <span class="kt-badge kt-badge--inline kt-badge--info">@(projectInterestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
+                                                                        <span class="kt-badge kt-badge--inline kt-badge--info">@(targetAudienceDto.TargetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
 
                                                                     }
                                                                 }
@@ -73,17 +90,17 @@
                                             @if (!projectDto.IsFakeProject)
                                             {
                                                 <span class="kt-widget__text mt-0">
-                                                    @(Html.Raw(projectDto.GetLogLineDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectLogLine?.Value))
+                                                    @(Html.Raw(projectDto.GetProjectExpectationsDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value))
                                                 </span>
                                                 <div class="kt-widget__content">
                                                     <div class="kt-widget__details" style="width: 100%;">
-                                                        @if (projectDto.ProjectBuyerEvaluationDtos?.Any() == true)
+                                                        @if (projectDto.MusicBusinessRoundProjectBuyerEvaluationDtos?.Any() == true)
                                                         {
                                                             <span class="kt-widget__subtitle">@Labels.PlayersSelectedForEvaluation:</span>
                                                             <div class="row">
                                                                 <div class="col-12">
                                                                     <div class="row">
-                                                                        @foreach (var projectBuyerEvaluationDto in projectDto.ProjectBuyerEvaluationDtos)
+                                                                        @foreach (var projectBuyerEvaluationDto in projectDto.MusicBusinessRoundProjectBuyerEvaluationDtos)
                                                                         {
                                                                             <!-- begin: Player -->
                                                                             <div class="kt-widget kt-widget--user-profile-4 col-sm-4 col-md-4 col-xl-2">
@@ -146,9 +163,9 @@
                                                                                                 {
                                                                                                     <span class="d-block text-justify mt-2" style="font-size: 11px;">
                                                                                                         <small>
-                                                                                                            @if (projectBuyerEvaluationDto.ProjectEvaluationRefuseReason.HasAdditionalInfo && !string.IsNullOrEmpty(projectBuyerEvaluationDto.ProjectBuyerEvaluation?.Reason))
+                                                                                                            @if (projectBuyerEvaluationDto.ProjectEvaluationRefuseReason.HasAdditionalInfo && !string.IsNullOrEmpty(projectBuyerEvaluationDto.MusicBusinessRoundProjectBuyerEvaluation?.Reason))
                                                                                                             {
-                                                                                                                @(projectBuyerEvaluationDto.ProjectBuyerEvaluation?.Reason?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                                                                                                @(projectBuyerEvaluationDto.MusicBusinessRoundProjectBuyerEvaluation?.Reason?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
                                                                                                             }
                                                                                                             else
                                                                                                             {
@@ -187,16 +204,16 @@
                                     }
                                     else
                                     {
-                                        var isFinished = projectDto.Project.IsFinished();
+                                        var isFinished = projectDto.IsFinished();
 
                                         if (hasProjectSpace)
                                         {
                                             <div class="col-4 text-center">
-                                                <a class="btn btn-brand" href="@Url.Action("Submit", "BusinessRoundProjects", new { id = projectDto.Project.Uid, Area = "Music" })">@string.Format(Labels.DuplicateEntity, Labels.Project)</a>
+                                                <a class="btn btn-brand" href="@Url.Action("Submit", "BusinessRoundProjects", new { id = projectDto.Uid, Area = "Music" })">@string.Format(Labels.DuplicateEntity, Labels.Project)</a>
                                             </div>
                                         }
                                         <div class="col-4 text-center">
-                                            <a href="@Url.Action("SubmittedDetails", "BusinessRoundProjects", new { id = projectDto.Project.Uid, Area = "Music" })" class="btn btn-brand">
+                                            <a href="@Url.Action("SubmittedDetails", "BusinessRoundProjects", new { id = projectDto.Uid, Area = "Music" })" class="btn btn-brand">
                                                 @(!isFinished ? Labels.Edit : Labels.View)
                                             </a>
                                         </div>
@@ -205,7 +222,7 @@
                                             <div class="col-4 text-center">
                                                 @if (!isFinished)
                                                 {
-                                                    <a href="@Url.Action("SendToPlayers", "BusinessRoundProjects", new { id = projectDto.Project.Uid, Area = "Music" })" class="btn btn-brand">
+                                                    <a href="@Url.Action("SendToPlayers", "BusinessRoundProjects", new { id = projectDto.Uid, Area = "Music" })" class="btn btn-brand">
                                                         @Labels.SendProjectsToPlayer
                                                     </a>
                                                 }

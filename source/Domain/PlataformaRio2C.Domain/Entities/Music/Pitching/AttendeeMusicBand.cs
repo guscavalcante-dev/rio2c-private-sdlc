@@ -46,23 +46,19 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="edition">The edition.</param>
         /// <param name="musicBand">The music band.</param>
         /// <param name="musicProject">The music project.</param>
-        /// <param name="wouldYouLikeParticipateBusinessRound">if set to <c>true</c> [would you like participate business round].</param>
-        /// <param name="wouldYouLikeParticipatePitching">if set to <c>true</c> [would you like participate pitching].</param>
         /// <param name="userId">The user identifier.</param>
         public AttendeeMusicBand(
             Edition edition,
             MusicBand musicBand,
             MusicProject musicProject,
-            bool wouldYouLikeParticipateBusinessRound,
-            bool wouldYouLikeParticipatePitching,
             int userId)
         {
             this.Edition = edition;
             this.MusicBand = musicBand;
             this.EditionId = edition.Id;
             this.MusicBandId = musicBand.Id;
-            this.WouldYouLikeParticipateBusinessRound = wouldYouLikeParticipateBusinessRound;
-            this.WouldYouLikeParticipatePitching = wouldYouLikeParticipatePitching;
+            this.WouldYouLikeParticipateBusinessRound = false;  // This field is no longer used, but have data into database
+            this.WouldYouLikeParticipatePitching = true;        // This field is no longer used, but have data into database
 
             this.CreateProject(
                 musicProject,

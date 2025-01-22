@@ -374,9 +374,6 @@
   <data name="AudiovisualPitchingRules" xml:space="preserve">
     <value>Pitching rules</value>
   </data>
-  <data name="AudiovisualPitchingRules1" xml:space="preserve">
-    <value>Pitching rules</value>
-  </data>
   <data name="AudiovisualPitchingRulesShorted" xml:space="preserve">
     <value>Pitching rules</value>
   </data>
@@ -1731,9 +1728,6 @@
   <data name="MusicBusinessRoundMaximumEvaluatorsByProject" xml:space="preserve">
     <value>Maximum number of evaluators by business round</value>
   </data>
-  <data name="MusicBusinessRoundMaximumProjectsBySeller" xml:space="preserve">
-    <value>Maximum number of business round by participant</value>
-  </data>
   <data name="MusicBusinessRoundNegotiationEndDate" xml:space="preserve">
     <value>Music business round negotiations end date</value>
   </data>
@@ -2945,6 +2939,9 @@
     <value>Social media</value>
     <comment>Redes sociais</comment>
   </data>
+  <data name="SocialName" xml:space="preserve">
+    <value>Social name</value>
+  </data>
   <data name="SocialNetworks" xml:space="preserve">
     <value>Social Networks</value>
     <comment>Redes Sociais</comment>
@@ -3495,5 +3492,17 @@
   <data name="ZoomOut" xml:space="preserve">
     <value>Zoom Out</value>
     <comment>Menos Zoom</comment>
+  </data>
+  <data name="AudiovisualPitchingRules1" xml:space="preserve">
+    <value>Pitching rules</value>
+  </data>
+  <data name="MusicBusinessRoundMaximumProjectsBySeller" xml:space="preserve">
+    <value>Maximum number of business round by participant</value>
+  </data>
+  <data name="PlayerCategoriesThatHaveOrHadContract" xml:space="preserve">
+    <value>Player category (discursive)</value>
+  </data>
+  <data name="ExpectationsForMeeting" xml:space="preserve">
+    <value>Expectations for one-to-one meetings</value>
   </data>
 </root>

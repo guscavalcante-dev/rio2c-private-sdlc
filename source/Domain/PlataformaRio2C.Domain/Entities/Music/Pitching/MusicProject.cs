@@ -43,9 +43,6 @@ namespace PlataformaRio2C.Domain.Entities
         public string Clipping3 { get; private set; }
 
         public virtual AttendeeMusicBand AttendeeMusicBand { get; private set; }
-        //public virtual ProjectEvaluationStatus ProjectEvaluationStatus { get; private set; }
-        //public virtual ProjectEvaluationRefuseReason ProjectEvaluationRefuseReason { get; private set; }
-        //public virtual User EvaluationUser { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="MusicProject"/> class.</summary>
         /// <param name="attendeeMusicBand">The attendee music band.</param>
