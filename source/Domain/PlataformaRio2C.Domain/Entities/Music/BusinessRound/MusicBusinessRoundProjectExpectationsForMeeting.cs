@@ -7,6 +7,8 @@ namespace PlataformaRio2C.Domain.Entities
     public class MusicBusinessRoundProjectExpectationsForMeeting : Entity
     {
         public static readonly int ValueMaxLength = 256;
+        public static readonly int ValueMinLength = 1;
+
 
         public int MusicBusinessRoundProjectId { get; private set; }
         public int LanguageId { get; private set; }
@@ -43,10 +45,10 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void ValidateValue()
         {
-            if (this.Value?.Trim().Length > ValueMaxLength)
+            if (this.Value?.Trim().Length < ValueMinLength || this.Value?.Trim().Length > ValueMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(
-                    string.Format(Messages.PropertyBetweenLengths, Labels.ExpectationsForMeeting, ValueMaxLength, 1),
+                    string.Format(Messages.PropertyBetweenLengths, Labels.ExpectationsForMeeting, ValueMaxLength, ValueMinLength),
                     new string[] { "Value" }));
             }
         }
