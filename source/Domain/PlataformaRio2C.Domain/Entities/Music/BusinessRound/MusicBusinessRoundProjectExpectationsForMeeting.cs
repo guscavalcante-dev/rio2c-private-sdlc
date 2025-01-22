@@ -1,17 +1,5 @@
-﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Domain
-// Author           : Renan Valentim
-// Created          : 01-18-2025
-//
-// Last Modified By : Daniel Giese Rodrigues
-// Last Modified On : 01-20-2025
-// ***********************************************************************
-// <copyright file="MusicBusinessRoundProjectExpectationsForMeeting.cs" company="Softo">
-//     Copyright (c) Softo. All rights reserved.
-// </copyright>
-// <summary></summary>
-// ***********************************************************************
-using PlataformaRio2C.Domain.Validation;
+﻿using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 
 namespace PlataformaRio2C.Domain.Entities
@@ -48,9 +36,19 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.ValidationResult = new ValidationResult();
 
-            //TODO: Implement validations here
+            this.ValidateValue();
 
             return this.ValidationResult.IsValid;
+        }
+
+        private void ValidateValue()
+        {
+            if (this.Value?.Trim().Length > ValueMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(
+                    string.Format(Messages.PropertyBetweenLengths, Labels.ExpectationsForMeeting, ValueMaxLength, 1),
+                    new string[] { "Value" }));
+            }
         }
 
         #endregion

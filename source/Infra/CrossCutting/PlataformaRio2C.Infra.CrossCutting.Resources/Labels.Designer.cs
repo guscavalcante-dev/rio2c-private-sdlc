@@ -682,6 +682,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string AudiovisualPitchingRules1 {
+            get {
+                return ResourceManager.GetString("AudiovisualPitchingRules1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reg. de pitching.
         /// </summary>
         public static string AudiovisualPitchingRulesShorted {
@@ -2644,6 +2653,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expectativas para as Rodadas de Negócios.
+        /// </summary>
+        public static string ExpectationsForMeeting {
+            get {
+                return ResourceManager.GetString("ExpectationsForMeeting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Experiência.
         /// </summary>
         public static string Experience {
@@ -4039,6 +4057,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string MusicBusinessRoundMaximumProjectsBySeller {
+            get {
+                return ResourceManager.GetString("MusicBusinessRoundMaximumProjectsBySeller", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data de término das negociações de música.
         /// </summary>
         public static string MusicBusinessRoundNegotiationEndDate {
@@ -5115,6 +5142,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Player {
             get {
                 return ResourceManager.GetString("Player", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Categoria de players (discursiva).
+        /// </summary>
+        public static string PlayerCategoriesThatHaveOrHadContract {
+            get {
+                return ResourceManager.GetString("PlayerCategoriesThatHaveOrHadContract", resourceCulture);
             }
         }
         

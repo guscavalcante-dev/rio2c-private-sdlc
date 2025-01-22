@@ -3494,4 +3494,16 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Menos Zoom</value>
     <comment>Menos Zoom</comment>
   </data>
+  <data name="AudiovisualPitchingRules1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MusicBusinessRoundMaximumProjectsBySeller" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PlayerCategoriesThatHaveOrHadContract" xml:space="preserve">
+    <value>Categoria de players (discursiva)</value>
+  </data>
+  <data name="ExpectationsForMeeting" xml:space="preserve">
+    <value>Expectativas para as Rodadas de Negócios</value>
+  </data>
 </root>

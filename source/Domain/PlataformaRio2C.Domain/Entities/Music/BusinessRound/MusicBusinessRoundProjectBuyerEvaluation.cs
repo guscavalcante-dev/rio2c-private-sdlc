@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 
 namespace PlataformaRio2C.Domain.Entities
@@ -41,9 +42,19 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.ValidationResult = new ValidationResult();
 
-            //TODO: Implement validations here
+            this.ValidateReason();
 
             return this.ValidationResult.IsValid;
+        }
+
+        private void ValidateReason()
+        {
+            if (this.Reason?.Trim().Length > ReasonMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(
+                    string.Format(Messages.PropertyBetweenLengths, Labels.Reason, ReasonMaxLength, 1),
+                    new string[] { "Reason" }));
+            }
         }
     }
 }

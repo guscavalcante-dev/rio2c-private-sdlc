@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
 
@@ -46,9 +47,25 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.ValidationResult = new ValidationResult();
 
-            //TODO: Implement validations here
+            this.ValidatePlayerCategoriesThatHaveOrHadContract();
+            this.ValidateAttachmentUrl();
 
             return this.ValidationResult.IsValid;
+        }
+
+        private void ValidatePlayerCategoriesThatHaveOrHadContract()
+        {
+            if (this.AttachmentUrl?.Trim().Length > AttachmentUrlMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Attachments, AttachmentUrlMaxLength, 1), new string[] { "AttachmentUrl" }));
+            }
+        }
+        private void ValidateAttachmentUrl()
+        {
+            if (this.PlayerCategoriesThatHaveOrHadContract?.Trim().Length > PlayerCategoriesThatHaveOrHadContractMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.PlayerCategoriesThatHaveOrHadContract, PlayerCategoriesThatHaveOrHadContractMaxLength, 1), new string[] { "PlayerCategoriesThatHaveOrHadContract" }));
+            }
         }
 
         #endregion
