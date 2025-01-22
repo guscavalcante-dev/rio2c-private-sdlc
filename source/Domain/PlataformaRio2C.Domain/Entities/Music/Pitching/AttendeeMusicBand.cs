@@ -89,6 +89,7 @@ namespace PlataformaRio2C.Domain.Entities
             }
 
             base.Delete(userId);
+            this.MusicBand.Delete(userId);
         }
 
         #region Evaluation
