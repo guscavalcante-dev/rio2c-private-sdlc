@@ -385,7 +385,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                         TicketClassName = dto.AttendeeSalesPlatformTicketTypeDto.TicketClassName,
                     }),
 
-                    HasPitchingMusicBandsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.HasMusicPitchingProjectsSubscriptionsAvailable("", 0) ?? false,
+                    HasPitchingMusicBandsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.HasMusicPitchingProjectsSubscriptionsAvailable("", false, null, 0) ?? false,
                     HasBusinessRoundsMusicBandsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.HasMusicBusinessRoundsProjectsSubscriptionsAvailable(0) ?? false,
 
                     HasPitchingStartupsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.HasInnovationPitchingProjectsSubscriptionsAvailable() ?? false,
@@ -393,9 +393,9 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
                     MusicProject = new MusicProject
                     {
-                        PitchingProjectsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.GetMusicPitchingProjectsSubscriptionsAvailable("", 0) ?? 0, 
+                        PitchingProjectsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.GetMusicPitchingProjectsSubscriptionsAvailable("", false, null, 0) ?? 0, 
                         BusinessRoundsProjectsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.GetMusicBusinessRoundsProjectsSubscriptionsAvailable(0) ?? 0,
-                        Messages = attendeeCollaboratorTicketsInformationDto?.GetMusicMessages("", 0, 0),
+                        Messages = attendeeCollaboratorTicketsInformationDto?.GetMusicMessages("", false, null, 0, 0),
                     },
 
                     StartupProject = new StartupProject
@@ -405,8 +405,9 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                         Messages = attendeeCollaboratorTicketsInformationDto?.GetInnovationMessages()
                     },
 
-                    Messages = attendeeCollaboratorTicketsInformationDto?.HasTicket() == true ? attendeeCollaboratorTicketsInformationDto?.GetAllMessages("", 0, 0) :
-                                                                                                new string[] { string.Format(Messages.NoTicketsFoundForEmail, request.Email) },
+                    Messages = attendeeCollaboratorTicketsInformationDto?.HasTicket() == true ? 
+                    attendeeCollaboratorTicketsInformationDto?.GetAllMessages("", false, null, 0, 0) :
+                    new string[] { string.Format(Messages.NoTicketsFoundForEmail, request.Email) },
                 });
             }
             catch (DomainException ex)

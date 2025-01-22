@@ -28,6 +28,8 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int CodeMinLength = 1;
         public static readonly int CodeMaxLength = 3;
 
+        public static Country Brazil = new Country(new Guid("A659270E-F221-40E8-AAF6-FE5DB29D8CE9"), "BR");
+
         public string Name { get; private set; }
         public string Code { get; private set; }
         public string CompanyNumberMask { get; set; }
@@ -54,6 +56,17 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Country" /> class.
+        /// </summary>
+        /// <param name="uid">The uid.</param>
+        /// <param name="code">The code.</param>
+        public Country(Guid uid, string code)
+        {
+            this.Uid = uid;
+            this.Code = code;
         }
 
         /// <summary>Initializes a new instance of the <see cref="Country"/> class.</summary>

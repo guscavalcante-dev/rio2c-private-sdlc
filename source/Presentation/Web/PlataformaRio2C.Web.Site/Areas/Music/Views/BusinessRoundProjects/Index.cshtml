@@ -23,7 +23,7 @@
         {
             foreach (var projectDto in Model)
             {
-                var projectTitle = projectDto.GetProjectExpectationsDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value;
+                var projectTitle = projectDto.GetProjectExpectationsDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value;
 
                 <div class="row">
                     <div class="col-md-12">
@@ -49,37 +49,34 @@
                                                     @if (!projectDto.IsFakeProject)
                                                     {
                                                         <span class="kt-widget__desc">
-                                                            @Labels.Participant: @projectDto.SellerAttendeeCollaboratorDto.Collaborator.GetFullName();
+                                                            @Labels.Participant: @projectDto.SellerAttendeeCollaboratorDto.Collaborator.GetFullName()
                                                         </span>
                                                         <span class="kt-widget__desc">
-                                                            @Labels.SocialName: @projectDto.SellerAttendeeCollaboratorDto.Collaborator.StageName;
+                                                            @Labels.SocialName: @(projectDto.SellerAttendeeCollaboratorDto.Collaborator.StageName.GetDashIfNullOrEmpty())
                                                         </span>
                                                         <span class="kt-widget__desc">
-                                                            @Labels.JobTitle: @projectDto.SellerAttendeeCollaboratorDto.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
+                                                            @Labels.JobTitle: @(projectDto.SellerAttendeeCollaboratorDto.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage).Value)
                                                         </span>
                                                         <span class="kt-widget__desc">
-                                                            @Labels.CompanyName: @projectDto.SellerAttendeeCollaboratorDto.Collaborator.CompanyName;
+                                                            @Labels.CompanyName: @projectDto.SellerAttendeeCollaboratorDto.Collaborator.CompanyName.GetDashIfNullOrEmpty()
                                                         </span>
                                                         <span class="kt-widget__desc">
-                                                            @Labels.Document: @projectDto.SellerAttendeeCollaboratorDto.Collaborator.Document;
+                                                            @Labels.Document: @projectDto.SellerAttendeeCollaboratorDto.Collaborator.Document.GetDashIfNullOrEmpty()
                                                         </span>
                                                         <span class="kt-widget__desc">
-                                                            @Labels.Email: @projectDto.SellerAttendeeCollaboratorDto.Collaborator.PublicEmail;
+                                                            @Labels.Email: @projectDto.SellerAttendeeCollaboratorDto.Collaborator.PublicEmail.GetDashIfNullOrEmpty()
                                                         </span>
                                                         <span class="kt-widget__desc">
-                                                            @Labels.PhoneNumber: @projectDto.SellerAttendeeCollaboratorDto.Collaborator.PhoneNumber;
+                                                            @Labels.PhoneNumber: @projectDto.SellerAttendeeCollaboratorDto.Collaborator.PhoneNumber.GetDashIfNullOrEmpty()
                                                         </span>
-
-                                                        <!--TODO: CONTINUAR A PARTIR DAQUI. Exibir o "Perfil do Participante" tabela "TargetAudiences" com ProjectType = Musica-->
                                                         <span class="kt-widget__desc">
                                                             @Labels.ParticipantProfile:
                                                             @{
-                                                                var projectInterestsDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualGenre.Uid);
-                                                                if (projectInterestsDtos?.Any() == true)
+                                                                if (projectDto.MusicBusinessRoundProjectTargetAudienceDtos?.Any() == true)
                                                                 {
-                                                                    foreach (var projectInterestDto in projectInterestsDtos)
+                                                                    foreach (var targetAudienceDto in projectDto.MusicBusinessRoundProjectTargetAudienceDtos)
                                                                     {
-                                                                        <span class="kt-badge kt-badge--inline kt-badge--info">@(projectInterestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
+                                                                        <span class="kt-badge kt-badge--inline kt-badge--info">@(targetAudienceDto.TargetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
 
                                                                     }
                                                                 }
@@ -166,9 +163,9 @@
                                                                                                 {
                                                                                                     <span class="d-block text-justify mt-2" style="font-size: 11px;">
                                                                                                         <small>
-                                                                                                            @if (projectBuyerEvaluationDto.ProjectEvaluationRefuseReason.HasAdditionalInfo && !string.IsNullOrEmpty(projectBuyerEvaluationDto.ProjectBuyerEvaluation?.Reason))
+                                                                                                            @if (projectBuyerEvaluationDto.ProjectEvaluationRefuseReason.HasAdditionalInfo && !string.IsNullOrEmpty(projectBuyerEvaluationDto.MusicBusinessRoundProjectBuyerEvaluation?.Reason))
                                                                                                             {
-                                                                                                                @(projectBuyerEvaluationDto.ProjectBuyerEvaluation?.Reason?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                                                                                                @(projectBuyerEvaluationDto.MusicBusinessRoundProjectBuyerEvaluation?.Reason?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
                                                                                                             }
                                                                                                             else
                                                                                                             {
@@ -207,16 +204,16 @@
                                     }
                                     else
                                     {
-                                        var isFinished = projectDto.Project.IsFinished();
+                                        var isFinished = projectDto.IsFinished();
 
                                         if (hasProjectSpace)
                                         {
                                             <div class="col-4 text-center">
-                                                <a class="btn btn-brand" href="@Url.Action("Submit", "BusinessRoundProjects", new { id = projectDto.Project.Uid, Area = "Music" })">@string.Format(Labels.DuplicateEntity, Labels.Project)</a>
+                                                <a class="btn btn-brand" href="@Url.Action("Submit", "BusinessRoundProjects", new { id = projectDto.Uid, Area = "Music" })">@string.Format(Labels.DuplicateEntity, Labels.Project)</a>
                                             </div>
                                         }
                                         <div class="col-4 text-center">
-                                            <a href="@Url.Action("SubmittedDetails", "BusinessRoundProjects", new { id = projectDto.Project.Uid, Area = "Music" })" class="btn btn-brand">
+                                            <a href="@Url.Action("SubmittedDetails", "BusinessRoundProjects", new { id = projectDto.Uid, Area = "Music" })" class="btn btn-brand">
                                                 @(!isFinished ? Labels.Edit : Labels.View)
                                             </a>
                                         </div>
@@ -225,7 +222,7 @@
                                             <div class="col-4 text-center">
                                                 @if (!isFinished)
                                                 {
-                                                    <a href="@Url.Action("SendToPlayers", "BusinessRoundProjects", new { id = projectDto.Project.Uid, Area = "Music" })" class="btn btn-brand">
+                                                    <a href="@Url.Action("SendToPlayers", "BusinessRoundProjects", new { id = projectDto.Uid, Area = "Music" })" class="btn btn-brand">
                                                         @Labels.SendProjectsToPlayer
                                                     </a>
                                                 }

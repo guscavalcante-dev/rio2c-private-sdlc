@@ -22,7 +22,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         /// <summary>Initializes a new instance of the <see cref="ProjectTargetAudienceMap"/> class.</summary>
         public MusicBusinessRoundProjectTargetAudienceMap()
         {
-            this.ToTable("MusicBusinessRoundProjectsTargetAudiences");
+            this.ToTable("MusicBusinessRoundProjectTargetAudiences");
 
             //Relationships
             this.HasRequired(t => t.MusicBusinessRoundProject)

@@ -21,17 +21,17 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int ReasonMaxLength = 1500;
 
         public int MusicBusinessRoundProjectId { get; private set; }
-        public int BuyerAttendeeCollaboratorId { get; private set; }
-        public int ProjectEvaluationStatusId { get; private set; }
-        public int ProjectEvaluationRefuseReasonId { get; private set; }
+        public int BuyerAttendeeOrganizationId { get; private set; }
+        public int? ProjectEvaluationStatusId { get; private set; }
+        public int? ProjectEvaluationRefuseReasonId { get; private set; }
         public string Reason { get; private set; }
         public int SellerUserId { get; private set; }
-        public int BuyerEvaluationUserId { get; private set; }
+        public int? BuyerEvaluationUserId { get; private set; }
         public DateTimeOffset? EvaluationDate { get; private set; }
         public DateTimeOffset? BuyerEmailSendDate { get; private set; }
 
         public virtual MusicBusinessRoundProject MusicBusinessRoundProject { get; private set; }
-        public virtual AttendeeCollaborator BuyerAttendeeCollaborator { get; private set; }
+        public virtual AttendeeOrganization BuyerAttendeeOrganization { get; private set; }
         public virtual ProjectEvaluationStatus ProjectEvaluationStatus { get; private set; }
         public virtual ProjectEvaluationRefuseReason ProjectEvaluationRefuseReason { get; private set; }
         public virtual User SellerUser { get; private set; }

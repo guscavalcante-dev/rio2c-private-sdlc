@@ -652,7 +652,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
-        }
+    }
 
     #endregion
 
@@ -672,11 +672,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static async Task<IPagedList<CollaboratorDto>> ToListPagedAsync(this IQueryable<CollaboratorDto> query, int page, int pageSize)
         {
-            var totalItemCount = await query.CountAsync(); 
+            if (page <= 0)
+                page = 1;
+
+            var totalItemCount = await query.CountAsync();
             var items = await query
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
-                .ToListAsync(); 
+                .ToListAsync();
+
+            if (totalItemCount < 0)
+                totalItemCount = 0;
 
             var pagedList = new StaticPagedList<CollaboratorDto>(items, page, pageSize, totalItemCount);
 
@@ -928,7 +934,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
                                                                                     MusicProducerTermsAcceptanceDate = ac.MusicProducerTermsAcceptanceDate,
                                                                                     AudiovisualProducerBusinessRoundTermsAcceptanceDate = ac.AudiovisualProducerBusinessRoundTermsAcceptanceDate,
-                                                                                    AudiovisualProducerPitchingTermsAcceptanceDate = ac.AudiovisualProducerPitchingTermsAcceptanceDate,                                                                                    
+                                                                                    AudiovisualProducerPitchingTermsAcceptanceDate = ac.AudiovisualProducerPitchingTermsAcceptanceDate,
                                                                                     SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
                                                                                 }).FirstOrDefault(),
                                         UpdaterBaseDto = new UserBaseDto
@@ -1605,7 +1611,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 false,
                 false);
 
-            var collaboratorsDtos =  await baseQuery
+            var collaboratorsDtos = await baseQuery
                             .Select(c => new CollaboratorDto
                             {
                                 Id = c.Id,
@@ -2255,7 +2261,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByKeywords(keywords, editionId)
                                 .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, showAllEditions, showAllParticipants, editionId)
                                 .FindByHighlights(collaboratorTypeNames, showHighlights);
-                                //.FindByOrganizationTypeNames(organizationTypeNames, showAllEditions, showAllParticipants, editionId);
+            //.FindByOrganizationTypeNames(organizationTypeNames, showAllEditions, showAllParticipants, editionId);
 
             var collaborators = await query
                             .DynamicOrder(

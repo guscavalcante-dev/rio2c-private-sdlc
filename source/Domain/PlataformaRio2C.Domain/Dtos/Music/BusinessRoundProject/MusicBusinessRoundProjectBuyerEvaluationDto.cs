@@ -1,22 +1,16 @@
-﻿using System;
+﻿using PlataformaRio2C.Domain.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
     public class MusicBusinessRoundProjectBuyerEvaluationDto
     {
-        public bool IsFakeProject { get; set; }
-        public int SellerAttendeeOrganizationId { get; set; }
-        public AttendeeOrganizationDto SellerAttendeeOrganizationDto { get; set; }
-        public string PlayerCategoriesThatHaveOrHadContract { get; set; }
-        public string ExpectationsForOneToOneMeetings { get; set; }
-        public string AttachmentUrl { get; set; }
-        public DateTimeOffset? FinishDate { get; set; }
-        public int ProjectBuyerEvaluationsCount { get; set; }
-
-        public IEnumerable<MusicBusinessRoundProjectTargetAudienceDto> MusicBusinessRoundProjectTargetAudienceDtos { get; set; }
-        public IEnumerable<MusicBusinessRoundProjectInterestDto> MusicBusinessRoundProjectInterestDtos { get; set; }
-        public IEnumerable<MusicBusinessRoundProjectPlayerCategoryDto> PlayerCategoriesDtos { get; set; }
+        public MusicBusinessRoundProjectBuyerEvaluation MusicBusinessRoundProjectBuyerEvaluation { get; set; }
+        public AttendeeOrganizationDto BuyerAttendeeOrganizationDto { get; set; }
+        public ProjectEvaluationStatus ProjectEvaluationStatus { get; set; }
+        public ProjectEvaluationRefuseReason ProjectEvaluationRefuseReason { get; set; }
+        public MusicBusinessRoundProjectDto MusicBusinessRoundProjectDto { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MusicBusinessRoundProjectBuyerEvaluationDto"/> class.

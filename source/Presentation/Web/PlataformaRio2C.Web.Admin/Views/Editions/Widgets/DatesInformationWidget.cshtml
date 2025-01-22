@@ -162,10 +162,10 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicBusinessRoundMaximumProjectsBySeller</h3>
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicBusinessRoundsMaximumProjectSubmissionsByCompany</h3>
             <div class="row">
                 <div class="col-12">
-                    @(Model.Edition.MusicBusinessRoundMaximumProjectsBySeller)
+                    @(Model.Edition.MusicBusinessRoundsMaximumProjectSubmissionsByCompany)
                 </div>
             </div>
         </div>
@@ -256,6 +256,14 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-md-6 col-lg-6" ">
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicPitchingMaximumProjectSubmissionsByCompany</h3>
+            <div class="row">
+                <div class="col-12">
+                    @(Model.Edition.MusicPitchingMaximumProjectSubmissionsByCompany)
+                </div>
+            </div>
+        </div>
         <div class="col-md-6 col-lg-6">
             <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicPitchingMaximumApprovedProjectsByCommissionMember</h3>
             <div class="row">
@@ -264,20 +272,20 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
         <div class="col-md-6 col-lg-6">
             <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicPitchingCuratorEvaluationStartDate</h3>
             <div class="row">
                 <div class="col-12">
                     @(
-                        Model.Edition.MusicPitchingCuratorEvaluationStartDate.HasValue ?
-                            Model.Edition.MusicPitchingCuratorEvaluationStartDate?.ToBrazilTimeZone().ToShortDateString()
-                            : "-"
-                    )
+                Model.Edition.MusicPitchingCuratorEvaluationStartDate.HasValue ?
+                    Model.Edition.MusicPitchingCuratorEvaluationStartDate?.ToBrazilTimeZone().ToShortDateString()
+                    : "-"
+            )
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
         <div class="col-md-6 col-lg-6">
             <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicPitchingCuratorEvaluationEndDate</h3>
             <div class="row">
@@ -290,6 +298,8 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
         <div class="col-md-6 col-lg-6">
             <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicPitchingMaximumApprovedProjectsByCurator</h3>
             <div class="row">
@@ -333,21 +343,21 @@
                     @(Model.Edition.MusicPitchingMaximumApprovedProjectsByPopularVote)
                 </div>
             </div>
-        </div>
+        </div> 
+    </div>
+    <div class="row">
         <div class="col-md-6 col-lg-6">
             <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicPitchingRepechageEvaluationStartDate</h3>
             <div class="row">
                 <div class="col-12">
                     @(
-                        Model.Edition.MusicPitchingRepechageEvaluationStartDate.HasValue ?
-                            Model.Edition.MusicPitchingRepechageEvaluationStartDate?.ToBrazilTimeZone().ToShortDateString()
-                            : "-"
-                    )
+                Model.Edition.MusicPitchingRepechageEvaluationStartDate.HasValue ?
+                    Model.Edition.MusicPitchingRepechageEvaluationStartDate?.ToBrazilTimeZone().ToShortDateString()
+                    : "-"
+            )
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
         <div class="col-md-6 col-lg-6">
             <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicPitchingRepechageEvaluationEndDate</h3>
             <div class="row">
@@ -360,6 +370,8 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
         <div class="col-md-6 col-lg-6">
             <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicPitchingMaximumApprovedProjectsByRepechage</h3>
             <div class="row">
@@ -369,7 +381,6 @@
             </div>
         </div>
     </div>
-
     <div class="mt-30 mb-0">
         <h3 class="kt-subheader__title mb-0 mt-30">@Labels.Pitching - @Labels.Startup</h3>
         <div class="kt-separator kt-separator--border kt-separator--border w-100 mt-2"></div>

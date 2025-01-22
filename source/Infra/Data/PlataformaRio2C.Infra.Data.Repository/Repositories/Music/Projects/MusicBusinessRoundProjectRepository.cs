@@ -115,11 +115,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
                                         TargetAudience = ta.TargetAudience
                                     }),
                                 MusicBusinessRoundProjectInterestDtos = m.MusicBusinessRoundProjectInterests
-                                    .Where(i => !i.IsDeleted)
-                                    .Select(i => new MusicBusinessRoundProjectInterestDto
+                                    .Where(pi => !pi.IsDeleted)
+                                    .Select(pi => new MusicBusinessRoundProjectInterestDto
                                     {
-                                        MusicBusinessRoundProjectInterest = i,
-                                        Interest = i.Interest
+                                        MusicBusinessRoundProjectInterest = pi,
+                                        Interest = pi.Interest
                                     }),
                                 PlayerCategoriesDtos = m.PlayerCategories
                                     .Where(pc => !pc.IsDeleted)
@@ -129,25 +129,24 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
                                         PlayerCategory = pc.PlayerCategory
                                     }),
                                 MusicBusinessRoundProjectExpectationsForMeetingDtos = m.MusicBusinessRoundProjectExpectationsForMeetings
-                                    .Where(pc => !pc.IsDeleted)
-                                    .Select(pc => new MusicBusinessRoundProjectExpectationsForMeetingDto
+                                    .Where(pe => !pe.IsDeleted)
+                                    .Select(pe => new MusicBusinessRoundProjectExpectationsForMeetingDto
                                     {
-                                        Value = pc.Value,
-                                        Language = pc.Language
+                                        Value = pe.Value,
+                                        Language = pe.Language
                                     }),
                                 MusicBusinessRoundProjectBuyerEvaluationDtos = m.MusicBusinessRoundProjectBuyerEvaluations
-                                    .Where(pc => !pc.IsDeleted)
-                                    .Select(pc => new MusicBusinessRoundProjectBuyerEvaluationDto
+                                    .Where(pbe => !pbe.IsDeleted)
+                                    .Select(pbe => new MusicBusinessRoundProjectBuyerEvaluationDto
                                     {
-                                        //ProjectBuyerEvaluation = be,
-                                        //BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
-                                        //{
-                                        //    AttendeeOrganization = be.BuyerAttendeeOrganization,
-                                        //    Organization = be.BuyerAttendeeOrganization.Organization,
-                                        //    Edition = be.BuyerAttendeeOrganization.Edition
-                                        //},
-                                        //ProjectEvaluationStatus = be.ProjectEvaluationStatus,
-                                        //ProjectEvaluationRefuseReason = be.ProjectEvaluationRefuseReason
+                                        //MusicBusinessRoundProjectBuyerEvaluation = pbe, //TODO: Enable it! Its returning "Nome de coluna 'AttendeeCollaborator_Id' inválido." error
+                                        BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                        {
+                                            AttendeeOrganization = pbe.BuyerAttendeeOrganization,
+                                            Organization = pbe.BuyerAttendeeOrganization.Organization,
+                                        },
+                                        ProjectEvaluationStatus = pbe.ProjectEvaluationStatus,
+                                        ProjectEvaluationRefuseReason = pbe.ProjectEvaluationRefuseReason
                                     }),
                             });
 

@@ -34,15 +34,15 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .WithMany(e => e.MusicBusinessRoundProjectBuyerEvaluations)
                 .HasForeignKey(t => t.MusicBusinessRoundProjectId);
 
-            this.HasRequired(t => t.BuyerAttendeeCollaborator)
+            this.HasRequired(t => t.BuyerAttendeeOrganization)
                 .WithMany(e => e.MusicBusinessRoundProjectBuyerEvaluations)
-                .HasForeignKey(t => t.BuyerAttendeeCollaboratorId);
+                .HasForeignKey(t => t.BuyerAttendeeOrganizationId);
 
-            this.HasRequired(t => t.ProjectEvaluationStatus)
+            this.HasOptional(t => t.ProjectEvaluationStatus)
                 .WithMany()
                 .HasForeignKey(d => d.ProjectEvaluationStatusId);
 
-            this.HasRequired(t => t.ProjectEvaluationRefuseReason)
+            this.HasOptional(t => t.ProjectEvaluationRefuseReason)
                 .WithMany()
                 .HasForeignKey(d => d.ProjectEvaluationRefuseReasonId);
 
@@ -50,7 +50,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .WithMany()
                 .HasForeignKey(d => d.SellerUserId);
 
-            this.HasRequired(t => t.BuyerEvaluationUser)
+            this.HasOptional(t => t.BuyerEvaluationUser)
                 .WithMany()
                 .HasForeignKey(d => d.BuyerEvaluationUserId);
         }

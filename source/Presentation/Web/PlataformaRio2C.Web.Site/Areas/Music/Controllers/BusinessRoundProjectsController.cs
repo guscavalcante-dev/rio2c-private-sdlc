@@ -41,50 +41,45 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.PlayerExecutiveMusic + "," + Constants.CollaboratorType.Industry + "," + Constants.CollaboratorType.Creator)]
     public class BusinessRoundProjectsController : BaseController
     {
-        private readonly IProjectRepository projectRepo;
-        private readonly IMusicBusinessRoundProjectRepository musicProjectRepo;
+        private readonly IMusicBusinessRoundProjectRepository musicBusinessRoundProjectRepo;
         private readonly IInterestRepository interestRepo;
         private readonly IActivityRepository activityRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo;
         private readonly IProjectEvaluationStatusRepository evaluationStatusRepository;
-        private readonly IProjectModalityRepository projectModalityRepository;
 
-        /// <summary>Initializes a new instance of the <see cref="BusinessRoundProjectsController"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BusinessRoundProjectsController" /> class.
+        /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        /// <param name="projectRepository">The project repository.</param>
+        /// <param name="musicBusinessRoundProjectRepository">The music business round project repository.</param>
         /// <param name="interestRepository">The interest repository.</param>
         /// <param name="activityRepository">The activity repository.</param>
         /// <param name="targetAudienceRepository">The target audience repository.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="projectEvaluationRefuseReasonRepo">The project evaluation refuse reason repo.</param>
         /// <param name="evaluationStatusRepository">The project evaluation status repository.</param>
-        /// <param name="projectModalityRepository">The project modality repository.</param>
         public BusinessRoundProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
-            IMusicBusinessRoundProjectRepository musicProjectRepository,
-            IProjectRepository projectRepository,
+            IMusicBusinessRoundProjectRepository musicBusinessRoundProjectRepository,
             IInterestRepository interestRepository,
             IActivityRepository activityRepository,
             ITargetAudienceRepository targetAudienceRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo,
-            IProjectEvaluationStatusRepository evaluationStatusRepository,
-            IProjectModalityRepository projectModalityRepository)
+            IProjectEvaluationStatusRepository evaluationStatusRepository)
             : base(commandBus, identityController)
         {
-            musicProjectRepo = musicProjectRepository;
-            projectRepo = projectRepository;
+            musicBusinessRoundProjectRepo = musicBusinessRoundProjectRepository;
             interestRepo = interestRepository;
             activityRepo = activityRepository;
             targetAudienceRepo = targetAudienceRepository;
             attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.projectEvaluationRefuseReasonRepo = projectEvaluationRefuseReasonRepo;
             this.evaluationStatusRepository = evaluationStatusRepository;
-            this.projectModalityRepository = projectModalityRepository;
         }
 
         #region Seller (Industry or Creator)
@@ -109,10 +104,10 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             //    return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
             //}
 
-            var projects = await musicProjectRepo.FindAllMusicBusinessRoundProjectDtosToSellAsync(UserAccessControlDto?.GetFirstAttendeeOrganizationCreated()?.Uid ?? Guid.Empty);
+            var projects = await musicBusinessRoundProjectRepo.FindAllMusicBusinessRoundProjectDtosToSellAsync(UserAccessControlDto?.EditionAttendeeCollaborator?.Uid ?? Guid.Empty);
 
             // Create fake projects in the list
-            var projectMaxCount = EditionDto?.MusicBusinessRoundMaximumProjectsBySeller ?? 0;
+            var projectMaxCount = EditionDto?.MusicBusinessRoundsMaximumProjectSubmissionsByCompany ?? 0;
             if (projects.Count < projectMaxCount)
             {
                 var initialProject = projects.Count + 1;
@@ -142,41 +137,41 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
         #region Submitted Details
 
-        /// <summary>Submitteds the details.</summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns></returns>
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.Industry + "," + Constants.CollaboratorType.Creator)]
-        public async Task<ActionResult> SubmittedDetails(Guid? id)
-        {
-            if (EditionDto?.IsMusicProjectSubmitStarted() != true)
-            {
-                return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
-            }
+        ///// <summary>Submitteds the details.</summary>
+        ///// <param name="id">The identifier.</param>
+        ///// <returns></returns>
+        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.Industry + "," + Constants.CollaboratorType.Creator)]
+        //public async Task<ActionResult> SubmittedDetails(Guid? id)
+        //{
+        //    if (EditionDto?.IsMusicProjectSubmitStarted() != true)
+        //    {
+        //        return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
+        //    }
 
-            var projectDto = await projectRepo.FindSiteDetailsDtoByProjectUidAsync(id ?? Guid.Empty, EditionDto.Id);
-            if (projectDto == null)
-            {
-                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
-            }
+        //    var projectDto = await projectRepo.FindSiteDetailsDtoByProjectUidAsync(id ?? Guid.Empty, EditionDto.Id);
+        //    if (projectDto == null)
+        //    {
+        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+        //        return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
+        //    }
 
-            if (UserAccessControlDto?.HasEditionAttendeeOrganization(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true) // Is seller
-            {
-                this.StatusMessageToastr(Texts.ForbiddenErrorMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
-            }
+        //    if (UserAccessControlDto?.HasEditionAttendeeOrganization(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true) // Is seller
+        //    {
+        //        this.StatusMessageToastr(Texts.ForbiddenErrorMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+        //        return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
+        //    }
 
-            #region Breadcrumb
+        //    #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper($"{Labels.MusicProjects} - {Labels.BusinessRound}", new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "BusinessRoundProjects", new { Area = "Music" })),
-                new BreadcrumbItemHelper(projectDto.GetTitleDtoByLanguageCode(UserInterfaceLanguage)?.ProjectTitle?.Value ?? Labels.Project, Url.Action("SubmittedDetails", "BusinessRoundProjects", new { id }))
-            });
+        //    ViewBag.Breadcrumb = new BreadcrumbHelper($"{Labels.MusicProjects} - {Labels.BusinessRound}", new List<BreadcrumbItemHelper> {
+        //        new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "BusinessRoundProjects", new { Area = "Music" })),
+        //        new BreadcrumbItemHelper(projectDto.GetTitleDtoByLanguageCode(UserInterfaceLanguage)?.ProjectTitle?.Value ?? Labels.Project, Url.Action("SubmittedDetails", "BusinessRoundProjects", new { id }))
+        //    });
 
-            #endregion
+        //    #endregion
 
-            return View(projectDto);
-        }
+        //    return View(projectDto);
+        //}
 
         //#region Main Information Widget
 
@@ -741,36 +736,33 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 return RedirectToAction("TermsAcceptance", "BusinessRoundProjects", new { id });
             }
 
-            // Check if producer submitted the max number of projects
-            var firstAttendeeOrganizationCreated = UserAccessControlDto.GetFirstAttendeeOrganizationCreated();
-            if (firstAttendeeOrganizationCreated != null)
+            // Check if player submitted the max number of projects
+            var editionAttendeeCollaborator = UserAccessControlDto.EditionAttendeeCollaborator;
+            if (editionAttendeeCollaborator != null)
             {
-                var projectsCount = projectRepo.Count(p =>
-                    p.SellerAttendeeOrganization.Uid == firstAttendeeOrganizationCreated.Uid
-                        && !p.IsDeleted
-                        && new int[] { ProjectModality.Both.Id, ProjectModality.BusinessRound.Id }.Contains(p.ProjectModalityId)
-                );
-                var projectMaxCount = EditionDto?.AttendeeOrganizationMaxSellProjectsCount ?? 0;
+                var projectsCount = GetSellerMusicBusinessRoundProjectsCount(UserAccessControlDto.EditionAttendeeCollaborator.Uid);
+                var projectMaxCount = EditionDto?.MusicBusinessRoundsMaximumProjectSubmissionsByCompany ?? 0;
                 if (projectsCount >= projectMaxCount)
                 {
                     this.StatusMessageToastr(Messages.YouReachedProjectsLimit, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
                     return RedirectToAction("Index", "BusinessRoundProjects");
                 }
             }
-
+           
             // Duplicate project
             ProjectDto projectDto = null;
             if (id.HasValue)
             {
-                projectDto = await projectRepo.FindSiteDuplicateDtoByProjectUidAsync(id.Value);
-                if (projectDto != null)
-                {
-                    if (UserAccessControlDto?.HasEditionAttendeeOrganization(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
-                    {
-                        this.StatusMessageToastr(Texts.ForbiddenErrorMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                        return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "" });
-                    }
-                }
+                //TODO: Enable the project duplication into RIO2CMY-1339 task
+                //projectDto = await musicBusinessRoundProjectRepo.FindSiteDuplicateDtoByProjectUidAsync(id.Value);
+                //if (projectDto != null)
+                //{
+                //    if (UserAccessControlDto?.HasEditionAttendeeOrganization(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+                //    {
+                //        this.StatusMessageToastr(Texts.ForbiddenErrorMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                //        return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "" });
+                //    }
+                //}
             }
 
             var cmd = new CreateAudiovisualBusinessRoundProject(
@@ -896,12 +888,11 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.ParticipantsTerms, Labels.Accepted.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
 
             // Check if player submitted the max number of projects
-            var firstAttendeeOrganizationCreated = UserAccessControlDto.GetFirstAttendeeOrganizationCreated();
-            if (firstAttendeeOrganizationCreated != null)
+            var editionAttendeeCollaborator = UserAccessControlDto.EditionAttendeeCollaborator;
+            if (editionAttendeeCollaborator != null)
             {
-                var projectsCount = projectRepo.Count(p => p.SellerAttendeeOrganization.Uid == firstAttendeeOrganizationCreated.Uid
-                                                                && !p.IsDeleted);
-                var projectMaxCount = EditionDto?.AttendeeOrganizationMaxSellProjectsCount ?? 0;
+                var projectsCount = GetSellerMusicBusinessRoundProjectsCount(UserAccessControlDto.EditionAttendeeCollaborator.Uid);
+                var projectMaxCount = EditionDto?.MusicBusinessRoundsMaximumProjectSubmissionsByCompany ?? 0;
                 if (projectsCount >= projectMaxCount)
                 {
                     if (cmd.ProjectUid.HasValue)
@@ -914,6 +905,16 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             }
 
             return RedirectToAction("Submit", "BusinessRoundProjects");
+        }
+
+        /// <summary>
+        /// Gets the seller music business round projects count.
+        /// </summary>
+        /// <param name="uid">The uid.</param>
+        /// <returns></returns>
+        private int GetSellerMusicBusinessRoundProjectsCount(Guid uid)
+        {
+            return musicBusinessRoundProjectRepo.Count(p => p.SellerAttendeeCollaborator.Uid == uid && !p.IsDeleted);
         }
 
         #endregion

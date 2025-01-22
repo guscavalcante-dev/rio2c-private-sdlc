@@ -22,7 +22,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         /// <summary>Initializes a new instance of the <see cref="ProjectInterestMap"/> class.</summary>
         public MusicBusinessRoundProjectInterestMap()
         {
-            this.ToTable("MusicBusinessRoundProjectsInterests");
+            this.ToTable("MusicBusinessRoundProjectInterests");
 
             this.Property(t => t.AdditionalInfo)
                 .HasMaxLength(OrganizationActivity.AdditionalInfoMaxLength);

@@ -22,7 +22,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         /// <summary>Initializes a new instance of the <see cref="ProjectTargetAudienceMap"/> class.</summary>
         public MusicBusinessRoundProjectPlayerCategoryMap()
         {
-            this.ToTable("MusicBusinessRoundProjectPlayerCategory");
+            this.ToTable("MusicBusinessRoundProjectPlayerCategories");
             this.HasKey(t => t.Id);
 
             // AdditionInfoMaxLenght

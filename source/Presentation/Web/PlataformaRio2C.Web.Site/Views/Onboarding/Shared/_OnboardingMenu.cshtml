@@ -106,7 +106,7 @@
             {
                 counter++;
                 <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" :
-                                                                                                          Model > counter ? "done" :
+                                                                                                          Model > counter || playerAttendeeOrganization.OnboardingOrganizationDate.HasValue ? "done" :
                                                                                                           "pending")">
                     <div class="kt-wizard-v2__nav-body">
                         <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
@@ -120,7 +120,7 @@
                 </span>
                 counter++;
                 <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" :
-                                                                                                          Model > counter ? "done" :
+                                                                                                          Model > counter || playerAttendeeOrganization.OnboardingInterestsDate.HasValue ? "done" :
                                                                                                           "pending")">
                     <div class="kt-wizard-v2__nav-body">
                         <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>

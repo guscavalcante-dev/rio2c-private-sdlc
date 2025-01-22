@@ -35,6 +35,13 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<MusicBusinessRoundProjectExpectationsForMeeting> MusicBusinessRoundProjectExpectationsForMeetings { get; private set; }
         public virtual ICollection<MusicBusinessRoundProjectBuyerEvaluation> MusicBusinessRoundProjectBuyerEvaluations { get; private set; }
 
+        public bool IsFinished()
+        {
+            return this.FinishDate.HasValue;
+        }
+
+        #region Validations
+
         public override bool IsValid()
         {
             this.ValidationResult = new ValidationResult();
@@ -43,5 +50,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             return this.ValidationResult.IsValid;
         }
+
+        #endregion
     }
 }

@@ -375,6 +375,22 @@
     <Compile Include="Migrations\202501131729087_UpdateMigrations_202501131427.Designer.cs">
       <DependentUpon>202501131729087_UpdateMigrations_202501131427.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202501161558250_ChangesForEditions.cs" />
+    <Compile Include="Migrations\202501161558250_ChangesForEditions.Designer.cs">
+      <DependentUpon>202501161558250_ChangesForEditions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202501161729220_UpdateMigrations_202501161429.cs" />
+    <Compile Include="Migrations\202501161729220_UpdateMigrations_202501161429.Designer.cs">
+      <DependentUpon>202501161729220_UpdateMigrations_202501161429.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202501182026267_UpdateMigrations_202501181725.cs" />
+    <Compile Include="Migrations\202501182026267_UpdateMigrations_202501181725.Designer.cs">
+      <DependentUpon>202501182026267_UpdateMigrations_202501181725.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202501201507553_UpdateMigrations_202501201203.cs" />
+    <Compile Include="Migrations\202501201507553_UpdateMigrations_202501201203.Designer.cs">
+      <DependentUpon>202501201507553_UpdateMigrations_202501201203.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202501181608178_CreateMusicBusinessRoundsTables.cs" />
     <Compile Include="Migrations\202501181608178_CreateMusicBusinessRoundsTables.Designer.cs">
       <DependentUpon>202501181608178_CreateMusicBusinessRoundsTables.cs</DependentUpon>
@@ -382,6 +398,10 @@
     <Compile Include="Migrations\202501211601462_UpdateMigrationsCreateTableBusinessRoundProjects.cs" />
     <Compile Include="Migrations\202501211601462_UpdateMigrationsCreateTableBusinessRoundProjects.Designer.cs">
       <DependentUpon>202501211601462_UpdateMigrationsCreateTableBusinessRoundProjects.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202501221535487_Update_Migrations_202501201203.cs" />
+    <Compile Include="Migrations\202501221535487_Update_Migrations_202501201203.Designer.cs">
+      <DependentUpon>202501221535487_Update_Migrations_202501201203.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
@@ -561,6 +581,12 @@
     <Content Include="Migrations\Scripts\202501092310114_AddStagenameFieldToCollaborators.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Migrations\Scripts\202501161558250_ChangesForEditions.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202501161558250_ChangesForEditions.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Migrations\Scripts\202501092310114_AddStagenameFieldToCollaborators.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -673,17 +699,32 @@
     <EmbeddedResource Include="Migrations\202501131729087_UpdateMigrations_202501131427.resx">
       <DependentUpon>202501131729087_UpdateMigrations_202501131427.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501161558250_ChangesForEditions.resx">
+      <DependentUpon>202501161558250_ChangesForEditions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501161729220_UpdateMigrations_202501161429.resx">
+      <DependentUpon>202501161729220_UpdateMigrations_202501161429.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501182026267_UpdateMigrations_202501181725.resx">
+      <DependentUpon>202501182026267_UpdateMigrations_202501181725.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202501101731074_UpdateTargetAudiencesDescriptions.resx">
       <DependentUpon>202501101731074_UpdateTargetAudiencesDescriptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202501131639495_AddHasAnyTypeOfFinancingToProjects.resx">
       <DependentUpon>202501131639495_AddHasAnyTypeOfFinancingToProjects.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501201507553_UpdateMigrations_202501201203.resx">
+      <DependentUpon>202501201507553_UpdateMigrations_202501201203.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202501181608178_CreateMusicBusinessRoundsTables.resx">
       <DependentUpon>202501181608178_CreateMusicBusinessRoundsTables.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202501211601462_UpdateMigrationsCreateTableBusinessRoundProjects.resx">
       <DependentUpon>202501211601462_UpdateMigrationsCreateTableBusinessRoundProjects.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501221535487_Update_Migrations_202501201203.resx">
+      <DependentUpon>202501221535487_Update_Migrations_202501201203.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
