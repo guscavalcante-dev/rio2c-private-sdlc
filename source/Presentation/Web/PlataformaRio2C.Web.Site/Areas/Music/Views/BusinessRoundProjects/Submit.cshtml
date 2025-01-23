@@ -1,29 +1,30 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.OnboardMusicProducerOrganizationData
+﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateAudiovisualBusinessRoundProject
 @{
-    ViewBag.Title = Labels.ProjectSubmission;
+    ViewBag.Title = $"{Labels.ProjectSubmission} ({Labels.BusinessRound})";
 }
 <div class="kt-portlet">
     <div class="kt-portlet__body kt-portlet__body--fit">
         <div class="row mb-3" style="padding-top:30px">
-            <div class="col-md-12 text-center"><h3>@Messages.StepsToProjectSubscription</h3></div>
+            <div class="col-md-12 text-center"><h3>@Messages.StepsToProjectSubscription (@Labels.BusinessRound)</h3></div>
         </div>
         <div class="kt-grid kt-wizard-v3 kt-wizard-v3--white" data-ktwizard-state="between">
             <div class="kt-grid__item">
                 <!--begin: Form Wizard Nav -->
-                @Html.Partial("Shared/_ProjectsOnboardingMenu", 3)
+                @Html.Partial("Shared/_ProjectsOnboardingMenu", 2)
                 <!--end: Form Wizard Nav -->
             </div>
             <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v3__wrapper">
                 <!--begin: Form Wizard Form-->
-                @using (Html.BeginForm("CompanyInfo", "BusinessRoundProjects", FormMethod.Post, new { enctype = "multipart/form-data", id = "OrganizationDataForm", @class = "kt-form" }))
+                @using (Html.BeginForm("Submit", "BusinessRoundProjects", FormMethod.Post, new { enctype = "multipart/form-data", id = "CreateProjectForm", @class = "kt-form" }))
                 {
-                    @Html.HiddenFor(m => m.OrganizationUid)
+                    @*@Html.HiddenFor(m => m.OrganizationUid)*@
+                    @Html.HiddenFor(m => m.ProjectModalityRequired)
                     <div id="form-container">
-                        @Html.Partial("Shared/_ProducerInfoForm", Model)
+                        @Html.Partial("Shared/_ProjectInfoForm", Model)
                     </div>
                     <!--begin: Form Actions -->
                     <div class="kt-form__actions">
-                        <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="MyRio2cCommon.submitForm('#OrganizationDataForm');">
+                        <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto" onclick="MyRio2cCommon.submitForm('#CreateProjectForm');">
                             @Labels.NextStep
                         </button>
                     </div>
@@ -47,10 +48,10 @@
     @Scripts.Render("~/bundles/js/inputmask.js")
     @Scripts.Render("~/bundles/js/jquery.autocomplete.js")
     @Scripts.Render("~/bundles/js/addresses.form.js")
-    @Scripts.Render("~/bundles/js/projects.producerinfo.js")
+    @Scripts.Render("~/bundles/js/businessrounds.projectinfo.js")
     <script>
         jQuery(document).ready(function () {
-            ProjectsProducerInfo.init();
+            ProjectsProjectInfo.init();
         });
     </script>
 }

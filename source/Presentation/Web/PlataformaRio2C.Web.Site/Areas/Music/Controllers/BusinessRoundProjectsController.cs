@@ -726,10 +726,10 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 return RedirectToAction("Index", "BusinessRoundProjects");
             }
 
-            if (UserAccessControlDto?.IsMusicProjectSubmissionOrganizationInformationPending() == true)
-            {
-                return RedirectToAction("CompanyInfo", "BusinessRoundProjects");
-            }
+            //if (UserAccessControlDto?.IsMusicProjectSubmissionOrganizationInformationPending() == true)
+            //{
+            //    return RedirectToAction("CompanyInfo", "BusinessRoundProjects");
+            //}
 
             if (UserAccessControlDto?.IsMusicProducerBusinessRoundTermsAcceptanceDatePending() == true)
             {
@@ -781,132 +781,132 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
         #endregion
 
-        #region Producer Info
+        //#region Producer Info
 
-        /// <summary>Companies the information.</summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> CompanyInfo()
-        {
-            #region Breadcrumb
+        ///// <summary>Companies the information.</summary>
+        ///// <returns></returns>
+        //[HttpGet]
+        //public async Task<ActionResult> CompanyInfo()
+        //{
+        //    #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CompanyInfo, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "BusinessRoundProjects", new { Area = "Music" })),
-                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "BusinessRoundProjects", new { Area = "Music" }))
-            });
+        //    ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CompanyInfo, new List<BreadcrumbItemHelper> {
+        //        new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "BusinessRoundProjects", new { Area = "Music" })),
+        //        new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "BusinessRoundProjects", new { Area = "Music" }))
+        //    });
 
-            #endregion
+        //    #endregion
 
-            if (this.EditionDto?.IsMusicBusinessRoundProjectSubmitOpen() != true)
-            {
-                this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "BusinessRoundProjects");
-            }
+        //    if (this.EditionDto?.IsMusicBusinessRoundProjectSubmitOpen() != true)
+        //    {
+        //        this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+        //        return RedirectToAction("Index", "BusinessRoundProjects");
+        //    }
 
-            if (this.UserAccessControlDto?.IsMusicProjectSubmissionOrganizationInformationPending() != true)
-            {
-                return RedirectToAction("Submit", "BusinessRoundProjects");
-            }
+        //    if (this.UserAccessControlDto?.IsMusicProjectSubmissionOrganizationInformationPending() != true)
+        //    {
+        //        return RedirectToAction("Submit", "BusinessRoundProjects");
+        //    }
 
-            //this.SetViewBags();
+        //    //this.SetViewBags();
 
-            var currentOrganization = this.UserAccessControlDto?.EditionAttendeeOrganizations?.FirstOrDefault(eao => !eao.ProjectSubmissionOrganizationDate.HasValue)?.Organization;
+        //    var currentOrganization = this.UserAccessControlDto?.EditionAttendeeOrganizations?.FirstOrDefault(eao => !eao.ProjectSubmissionOrganizationDate.HasValue)?.Organization;
 
-            var cmd = new OnboardMusicProducerOrganizationData(
-                currentOrganization != null ? await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(currentOrganization.Uid, this.EditionDto.Id, this.UserInterfaceLanguage)) : null,
-                await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
-                await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
-                await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
-                true,
-                true,
-                true);
+        //    var cmd = new OnboardMusicProducerOrganizationData(
+        //        currentOrganization != null ? await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(currentOrganization.Uid, this.EditionDto.Id, this.UserInterfaceLanguage)) : null,
+        //        await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+        //        await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
+        //        await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
+        //        await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
+        //        true,
+        //        true,
+        //        true);
 
-            return View(cmd);
-        }
+        //    return View(cmd);
+        //}
 
-        /// <summary>Companies the information.</summary>
-        /// <param name="cmd">The command.</param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> CompanyInfo(OnboardMusicProducerOrganizationData cmd)
-        {
-            #region Breadcrumb
+        ///// <summary>Companies the information.</summary>
+        ///// <param name="cmd">The command.</param>
+        ///// <returns></returns>
+        //[HttpPost]
+        //public async Task<ActionResult> CompanyInfo(OnboardMusicProducerOrganizationData cmd)
+        //{
+        //    #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CompanyInfo, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "BusinessRoundProjects", new { Area = "Music" })),
-                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "BusinessRoundProjects", new { Area = "Music" }))
-            });
+        //    ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CompanyInfo, new List<BreadcrumbItemHelper> {
+        //        new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "BusinessRoundProjects", new { Area = "Music" })),
+        //        new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "BusinessRoundProjects", new { Area = "Music" }))
+        //    });
 
-            #endregion
+        //    #endregion
 
-            if (this.EditionDto?.IsMusicBusinessRoundProjectSubmitOpen() != true)
-            {
-                this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "BusinessRoundProjects");
-            }
+        //    if (this.EditionDto?.IsMusicBusinessRoundProjectSubmitOpen() != true)
+        //    {
+        //        this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+        //        return RedirectToAction("Index", "BusinessRoundProjects");
+        //    }
 
-            if (this.UserAccessControlDto?.IsMusicProjectSubmissionOrganizationInformationPending() != true)
-            {
-                return RedirectToAction("Submit", "BusinessRoundProjects");
-            }
+        //    if (this.UserAccessControlDto?.IsMusicProjectSubmissionOrganizationInformationPending() != true)
+        //    {
+        //        return RedirectToAction("Submit", "BusinessRoundProjects");
+        //    }
 
-            var result = new AppValidationResult();
+        //    var result = new AppValidationResult();
 
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
+        //    try
+        //    {
+        //        if (!ModelState.IsValid)
+        //        {
+        //            throw new DomainException(Messages.CorrectFormValues);
+        //        }
 
-                cmd.UpdatePreSendProperties(
-                    this.UserAccessControlDto.User.Id,
-                    this.UserAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
-                result = await this.CommandBus.Send(cmd);
-                if (!result.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-            }
-            catch (DomainException ex)
-            {
-                foreach (var error in result.Errors)
-                {
-                    var target = error.Target ?? "";
-                    ModelState.AddModelError(target, error.Message);
-                }
-                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
+        //        cmd.UpdatePreSendProperties(
+        //            this.UserAccessControlDto.User.Id,
+        //            this.UserAccessControlDto.User.Uid,
+        //            this.EditionDto.Id,
+        //            this.EditionDto.Uid,
+        //            this.UserInterfaceLanguage);
+        //        result = await this.CommandBus.Send(cmd);
+        //        if (!result.IsValid)
+        //        {
+        //            throw new DomainException(Messages.CorrectFormValues);
+        //        }
+        //    }
+        //    catch (DomainException ex)
+        //    {
+        //        foreach (var error in result.Errors)
+        //        {
+        //            var target = error.Target ?? "";
+        //            ModelState.AddModelError(target, error.Message);
+        //        }
+        //        var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
 
-                this.StatusMessageToastr(toastrError?.Message ?? ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+        //        this.StatusMessageToastr(toastrError?.Message ?? ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
-                cmd.UpdateDropdownProperties(
-                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id));
+        //        cmd.UpdateDropdownProperties(
+        //            await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
+        //            await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id));
 
-                return View(cmd);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+        //        return View(cmd);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+        //        this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
-                cmd.UpdateDropdownProperties(
-                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id));
+        //        cmd.UpdateDropdownProperties(
+        //            await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
+        //            await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id));
 
-                return View(cmd);
-            }
+        //        return View(cmd);
+        //    }
 
-            this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.Company, Labels.UpdatedF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
+        //    this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.Company, Labels.UpdatedF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
 
-            return RedirectToAction("Submit", "BusinessRoundProjects");
-        }
+        //    return RedirectToAction("Submit", "BusinessRoundProjects");
+        //}
 
-        #endregion
+        //#endregion
 
         #region Producer Terms Acceptance
 

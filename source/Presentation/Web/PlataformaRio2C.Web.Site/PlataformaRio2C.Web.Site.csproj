@@ -7030,6 +7030,8 @@
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Widgets\EvaluationListWidget.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\CompanyInfo.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Shared\_ProducerInfoForm.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Submit.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Shared\_ProjectInfoForm.cshtml" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />

@@ -879,6 +879,7 @@
     <Folder Include="CQRS\CommandsHandlers\SalesPlatforms\" />
     <Folder Include="CQRS\Commands\Audiovisual\Collaborators\BaseCommands\" />
     <Folder Include="CQRS\Commands\Innovation\Collaborators\BaseCommands\" />
+    <Folder Include="CQRS\Commands\Music\BusinessRoundProjects\BaseCommands\" />
     <Folder Include="Dtos\Editions\" />
     <Folder Include="Services\Api\" />
     <Folder Include="ViewModels\Common\ProducerProject\" />
