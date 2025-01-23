@@ -485,6 +485,9 @@
     <Compile Include="CQRS\Commands\Logistics\Availability\UpdateAvailability.cs" />
     <Compile Include="CQRS\Commands\Logistics\Availability\CreateAvailability.cs" />
     <Compile Include="CQRS\Commands\Music\BusinessRoundProjects\BaseCommands\MusicBusinessRoundProjectBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Music\BusinessRoundProjects\BaseCommands\MusicBusinessRoundProjectExpectationsForMeetingBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Music\BusinessRoundProjects\BaseCommands\MusicBusinessRoundProjectInterestBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Music\BusinessRoundProjects\BaseCommands\MusicBusinessRoundProjectPlayerCategoryBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Music\BusinessRoundProjects\CreateMusicBusinessRoundProject.cs" />
     <Compile Include="CQRS\Commands\Music\Pitching\DistributeMembersMusicPitching.cs" />
     <Compile Include="CQRS\Commands\Music\Commissions\BaseCommands\MusicCommissionCollaboratorBaseCommand.cs" />

@@ -765,16 +765,18 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 //}
             }
 
-            var cmd = new CreateAudiovisualBusinessRoundProject(
-                projectDto,
-                await CommandBus.Send(new FindAllLanguagesDtosAsync(UserInterfaceLanguage)),
-                await targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
-                await interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Music.Id),
-                true,
-                false,
-                false,
-                UserInterfaceLanguage
-            );
+            //var cmd = new CreateAudiovisualBusinessRoundProject(
+            //    projectDto,
+            //    await CommandBus.Send(new FindAllLanguagesDtosAsync(UserInterfaceLanguage)),
+            //    await targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
+            //    await interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Music.Id),
+            //    true,
+            //    false,
+            //    false,
+            //    UserInterfaceLanguage
+            //);
+
+            var cmd = new CreateMusicBusinessRoundProject();
 
             return View(cmd);
         }
@@ -931,8 +933,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 return RedirectToAction("Index", "BusinessRoundProjects");
             }
 
-            if (UserAccessControlDto?.IsMusicProjectSubmissionOrganizationInformationPending() == true
-                || UserAccessControlDto?.IsMusicProducerBusinessRoundTermsAcceptanceDatePending() != true)
+            if (UserAccessControlDto?.IsMusicProducerBusinessRoundTermsAcceptanceDatePending() != true)
             {
                 return RedirectToAction("Submit", "BusinessRoundProjects");
             }
