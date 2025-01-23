@@ -4,7 +4,7 @@
 // Created          : 01-22-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-15-2024
+// Last Modified On : 01-23-2025
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorTicketsInformationDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Dtos
@@ -78,15 +79,21 @@ namespace PlataformaRio2C.Domain.Dtos
             {
                 if (!string.IsNullOrEmpty(document))
                 {
-                    return document.IsCnpj() ? 
-                        this.Edition.MusicPitchingMaximumProjectSubmissionsByCompany :
-                        this.Edition.MusicPitchingMaximumProjectSubmissionsByParticipant;
+                    if (document.IsCnpj())
+                        return this.Edition.MusicPitchingMaximumProjectSubmissionsByCompany;
+                    else if (document.IsCpf())
+                        return this.Edition.MusicPitchingMaximumProjectSubmissionsByParticipant;
+                    else
+                        throw new DomainException(string.Format(Labels.ThisDocumentIsNotValid, $@"{Labels.Document} ({document})"));
                 }
                 else
                 {
-                    return this.CollaboratorDto?.Document?.IsCnpj() == true ? 
-                        this.Edition.MusicPitchingMaximumProjectSubmissionsByCompany :
-                        this.Edition.MusicPitchingMaximumProjectSubmissionsByParticipant;
+                    if (this.CollaboratorDto?.Document?.IsCnpj() == true)
+                        return this.Edition.MusicPitchingMaximumProjectSubmissionsByCompany;
+                    else if (this.CollaboratorDto?.Document?.IsCpf() == true)
+                        return this.Edition.MusicPitchingMaximumProjectSubmissionsByParticipant;
+                    else
+                        throw new DomainException(string.Format(Labels.ThisDocumentIsNotValid, $@"{Labels.Document} ({this.CollaboratorDto?.Document?.GetDashIfNullOrEmpty()})"));
                 }
             }
             else
