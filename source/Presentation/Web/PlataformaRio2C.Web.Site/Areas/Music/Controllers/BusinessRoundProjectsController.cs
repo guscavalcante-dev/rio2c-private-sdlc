@@ -964,8 +964,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 return RedirectToAction("Index", "BusinessRoundProjects");
             }
 
-            if (UserAccessControlDto?.IsMusicProjectSubmissionOrganizationInformationPending() == true
-                || UserAccessControlDto?.IsMusicProducerBusinessRoundTermsAcceptanceDatePending() != true)
+            if (UserAccessControlDto?.IsMusicProducerBusinessRoundTermsAcceptanceDatePending() != true)
             {
                 return RedirectToAction("Submit", "BusinessRoundProjects");
             }
