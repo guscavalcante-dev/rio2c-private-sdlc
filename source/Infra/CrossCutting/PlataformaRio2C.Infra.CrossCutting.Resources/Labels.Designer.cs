@@ -160,6 +160,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Perfil de Executivos: Selecione até 3 opções para as reuniões individuais.
+        /// </summary>
+        public static string ActivitiesBusinessRoundProjects {
+            get {
+                return ResourceManager.GetString("ActivitiesBusinessRoundProjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Atividade.
         /// </summary>
         public static string Activity {
@@ -7581,6 +7590,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string TargetAudiences {
             get {
                 return ResourceManager.GetString("TargetAudiences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Perfil do Participante: Selecione a opção que melhor descreve suas atividades.
+        /// </summary>
+        public static string TargetAudiencesMusicBusinessRoundProject {
+            get {
+                return ResourceManager.GetString("TargetAudiencesMusicBusinessRoundProject", resourceCulture);
             }
         }
         

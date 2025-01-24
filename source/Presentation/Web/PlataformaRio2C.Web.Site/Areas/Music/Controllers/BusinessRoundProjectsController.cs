@@ -786,6 +786,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 await CommandBus.Send(new FindAllLanguagesDtosAsync(UserInterfaceLanguage)),
                 await targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
                 await interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Music.Id),
+                await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
                 true,
                 false,
                 false,

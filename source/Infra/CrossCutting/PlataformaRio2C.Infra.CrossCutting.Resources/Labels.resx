@@ -158,6 +158,9 @@
     <value>Qual e a principal atividade da sua empresa?</value>
     <comment>Qual e a principal atividade da sua empresa?</comment>
   </data>
+  <data name="ActivitiesBusinessRoundProjects" xml:space="preserve">
+    <value>Perfil de Executivos: Selecione até 3 opções para as reuniões individuais</value>
+  </data>
   <data name="Activity" xml:space="preserve">
     <value>Atividade</value>
     <comment>Atividade</comment>
@@ -3144,6 +3147,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="TargetAudiences" xml:space="preserve">
     <value>Qual o perfil de participante que te interessa para as Rodadas de Negocios?</value>
     <comment>Qual o perfil de participante que te interessa para as Rodadas de Negocios?</comment>
+  </data>
+  <data name="TargetAudiencesMusicBusinessRoundProject" xml:space="preserve">
+    <value>Perfil do Participante: Selecione a opção que melhor descreve suas atividades</value>
   </data>
   <data name="TeaserLink" xml:space="preserve">
     <value>Link do teaser</value>

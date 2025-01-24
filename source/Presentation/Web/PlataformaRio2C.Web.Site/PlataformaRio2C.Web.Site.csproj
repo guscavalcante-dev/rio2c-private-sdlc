@@ -7037,6 +7037,7 @@
     <Content Include="Areas\Audiovisual\Views\PitchingProjects\Index.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Index.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Shared\_BuyersEvaluations.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\EditorTemplates\MusicBusinessRoundProjectExpectationsForMeetingBaseCommand.cshtml" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />

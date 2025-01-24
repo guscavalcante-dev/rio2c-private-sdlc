@@ -46,6 +46,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<MusicBusinessRoundProjectTargetAudience> MusicBusinessRoundProjectTargetAudience { get; set; }
         public InterestBaseCommand[][] Interests { get; set; }
         //public List<MusicBusinessRoundProjectInterestBaseCommand> MusicBusinessRoundProjectInterests { get; set; }
+        public List<TargetAudience> TargetAudiences { get; private set; }
+        public List<Activity> Activities { get; private set; }
         public List<MusicBusinessRoundProjectPlayerCategoryBaseCommand> PlayerCategories { get; set; }
         public List<MusicBusinessRoundProjectExpectationsForMeetingBaseCommand> MusicBusinessRoundProjectExpectationsForMeetings { get; set; }
 
@@ -59,6 +61,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
           List<LanguageDto> languagesDtos,
           List<TargetAudience> targetAudiences,
           List<InterestDto> interestsDtos,
+          List<Activity> activities,
           bool isDataRequired,
           bool isProductionPlanRequired,
           bool isAdditionalInformationRequired,
@@ -68,10 +71,25 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             this.UpdateInterests(entity, interestsDtos);
             this.UpdateExpectationsForMeetings(entity, languagesDtos, isDataRequired);
+            this.UpdateDropdownProperties(targetAudiences, activities, userInterfaceLanguage);
 
             //TODO:Implementar na parte de edicao/duplicacao de projeto.
             /*this.AttachmentUrl = entity.AttachmentUrl;*/
         }
+
+        /// <summary>Updates the dropdown properties.</summary>
+        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public void UpdateDropdownProperties(
+            List<TargetAudience> targetAudiences,
+            List<Activity> activities,
+            string userInterfaceLanguage
+        )
+        {
+            this.Activities = activities;
+            this.TargetAudiences = targetAudiences;
+        }
+
 
         /// <summary>Updates the summaries.</summary>
         /// <param name="entity">The entity.</param>

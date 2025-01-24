@@ -158,6 +158,10 @@
     <value>What is your company's main activity?</value>
     <comment>Atividades</comment>
   </data>
+  <data name="ActivitiesBusinessRoundProjects" xml:space="preserve">
+    <value>Segment of
+Interest: Select up to 3 options for individual meetings</value>
+  </data>
   <data name="Activity" xml:space="preserve">
     <value>Activity</value>
     <comment>Atividade</comment>
@@ -3143,6 +3147,9 @@ Material</value>
   <data name="TargetAudiences" xml:space="preserve">
     <value>What participant profile are you interested in for the Business Rounds?</value>
     <comment>Público-alvo/Faixa-etária</comment>
+  </data>
+  <data name="TargetAudiencesMusicBusinessRoundProject" xml:space="preserve">
+    <value>Participant's Profile: Select the option that best describes your activities</value>
   </data>
   <data name="TeaserLink" xml:space="preserve">
     <value>Teaser Link</value>
