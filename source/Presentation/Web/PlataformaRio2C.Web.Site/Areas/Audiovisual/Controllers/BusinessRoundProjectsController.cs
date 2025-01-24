@@ -83,6 +83,22 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             this.projectModalityRepository = projectModalityRepository;
         }
 
+        /// <summary>Indexes this instance.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Index()
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "BusinessRoundProjects", new { Area = "Audiovisual" }))
+            });
+
+            #endregion
+
+            return View();
+        }
+
         #region Seller (Industry)
 
         #region Submitted List
@@ -90,7 +106,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         /// <summary>Submitteds the list.</summary>
         /// <returns></returns>
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.Industry)]
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> SubmittedList()
         {
             #region Breadcrumb
 
@@ -100,10 +116,10 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 
             #endregion
 
-            //if (this.EditionDto?.IsAudiovisualProjectSubmitStarted() != true)
-            //{
-            //    return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Audiovisual" });
-            //}
+            if (this.EditionDto?.IsAudiovisualProjectSubmitStarted() != true)
+            {
+                return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Audiovisual" });
+            }
 
             var projects = await this.projectRepo.FindAllDtosToSellAsync(
                 this.UserAccessControlDto?.GetFirstAttendeeOrganizationCreated()?.Uid ?? Guid.Empty,
@@ -1492,7 +1508,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper($"{Labels.AudiovisualProjects} - {Labels.BusinessRound}", new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper($"{Labels.Projects} - {Labels.BusinessRound}", Url.Action("EvaluationList", "BusinessRoundProjects", new { Area = "" })),
+                new BreadcrumbItemHelper($"{Labels.Projects} - {Labels.BusinessRound}", Url.Action("EvaluationList", "BusinessRoundProjects", new { Area = "Audiovisual" })),
             });
 
             #endregion

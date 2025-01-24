@@ -54,14 +54,14 @@
                         <div class="kt-portlet__foot pl-0 pr-0">
                             <div class="row align-items-center">
                                 <div class="col-lg-12 kt-align-right pl-0 pr-0">
-                                    @if (editionDto?.IsMusicProjectSubmitStarted() != true || editionDto.IsMusicProjectSubmitEnded() != true)
+                                    @if (editionDto?.IsMusicPitchingProjectSubmitStarted() != true || editionDto.IsMusicPitchingProjectSubmitEnded() != true)
                                     {
                                         var subscriptionUrl = Url.Action("SubmittedList", "Projects", new { Area = "Music" });
                                         var editionUrl = Url.Action("SubmittedList", "Projects", new { Area = "Music" });
-                                        if (editionDto?.IsMusicProjectSubmitStarted() != true)
+                                        if (editionDto?.IsMusicPitchingProjectSubmitStarted() != true)
                                         {
                                             subscriptionUrl = Url.Action("Index", "Projects", new { Area = "Music" });
-                                            editionUrl = Url.Action("Index", "Projects", new { Area = "Music" });                            
+                                            editionUrl = Url.Action("Index", "Projects", new { Area = "Music" });
                                         }
 
                                         <a href="@subscriptionUrl" class="btn btn-brand mt-1">@Labels.Submit</a>
@@ -69,7 +69,7 @@
                                     }
                                     @{
                                         var resultUrl = Url.Action("SubmittedList", "Projects", new { Area = "Music" });
-                                        if (editionDto?.IsMusicProjectSubmitEnded() != true)
+                                        if (editionDto?.IsMusicPitchingProjectSubmitEnded() != true)
                                         {
                                             resultUrl = Url.Action("Index", "Projects", new { Area = "Music" });
                                         }

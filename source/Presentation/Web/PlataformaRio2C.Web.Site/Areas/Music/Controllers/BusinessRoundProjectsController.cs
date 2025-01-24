@@ -82,6 +82,22 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             this.evaluationStatusRepository = evaluationStatusRepository;
         }
 
+        /// <summary>Indexes this instance.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Index()
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "BusinessRoundProjects", new { Area = "Music" }))
+            });
+
+            #endregion
+
+            return View();
+        }
+
         #region Seller (Industry or Creator)
 
         #region Submitted List
@@ -89,7 +105,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         /// <summary>Submitteds the list.</summary>
         /// <returns></returns>
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.Industry + "," + Constants.CollaboratorType.Creator)]
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> SubmittedList()
         {
             #region Breadcrumb
 
@@ -99,10 +115,10 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
             #endregion
 
-            //if (EditionDto?.IsMusicProjectSubmitStarted() != true)
-            //{
-            //    return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
-            //}
+            if (EditionDto?.IsMusicBusinessRoundProjectSubmitStarted() != true)
+            {
+                return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
+            }
 
             var projects = await musicBusinessRoundProjectRepo.FindAllMusicBusinessRoundProjectDtosToSellAsync(UserAccessControlDto?.EditionAttendeeCollaborator?.Uid ?? Guid.Empty);
 
@@ -1048,5 +1064,447 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
         #endregion
 
+        #region Buyer (Executive Music)
+
+        #region Evaluation List
+
+        /// <summary>Evaluations the list.</summary>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="interestUid">The interest uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.PlayerExecutiveMusic)]
+        [HttpGet]
+        public async Task<ActionResult> EvaluationList(string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 10)
+        {
+            if (this.EditionDto?.IsMusicBusinessRoundProjectBuyerEvaluationStarted() != true)
+            {
+                return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
+            }
+
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper($"{Labels.MusicProjects} - {Labels.BusinessRound}", new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper($"{Labels.Projects} - {Labels.BusinessRound}", Url.Action("EvaluationList", "BusinessRoundProjects", new { Area = "Music" })),
+            });
+
+            #endregion
+
+            ViewBag.SearchKeywords = searchKeywords;
+            ViewBag.InterestUid = interestUid;
+            ViewBag.EvaluationStatusUid = evaluationStatusUid;
+            ViewBag.Page = page;
+            ViewBag.PageSize = pageSize;
+
+            //ViewBag.GenreInterests = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.AudiovisualGenre.Uid);
+            ViewBag.ProjectEvaluationStatuses = await this.evaluationStatusRepository.FindAllAsync();
+
+            return View();
+        }
+
+        /// <summary>Shows the evaluation list widget.</summary>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="interestUid">The interest uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.PlayerExecutiveMusic)]
+        [HttpGet]
+        public async Task<ActionResult> ShowEvaluationListWidget(string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 10)
+        {
+            if (this.EditionDto?.IsMusicBusinessRoundProjectBuyerEvaluationStarted() != true)
+            {
+                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            }
+
+            var projects = await this.musicBusinessRoundProjectRepo.FindAllDtosToEvaluateAsync(
+                this.UserAccessControlDto?.EditionAttendeeCollaborator?.Uid ?? Guid.Empty,
+                searchKeywords,
+                interestUid,
+                evaluationStatusUid,
+                page.Value,
+                pageSize.Value);
+
+            ViewBag.SearchKeywords = searchKeywords;
+            ViewBag.InterestUid = interestUid;
+            ViewBag.EvaluationStatusUid = evaluationStatusUid;
+            ViewBag.Page = page;
+            ViewBag.PageSize = pageSize;
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EvaluationListWidget", projects), divIdOrClass = "#ProjectBuyerEvaluationListWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        ///// <summary>Shows the evaluation list item widget.</summary>
+        ///// <param name="projectUid">The project uid.</param>
+        ///// <returns></returns>
+        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.PlayerExecutiveAudiovisual)]
+        //[HttpGet]
+        //public async Task<ActionResult> ShowEvaluationListItemWidget(Guid? projectUid)
+        //{
+        //    if (this.EditionDto?.IsProjectBuyerEvaluationStarted() != true)
+        //    {
+        //        return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    if (!projectUid.HasValue)
+        //    {
+        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM) }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    var projects = await this.projectRepo.FindDtoToEvaluateAsync(
+        //        this.UserAccessControlDto?.EditionAttendeeCollaborator?.Uid ?? Guid.Empty,
+        //        projectUid.Value);
+
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        pages = new List<dynamic>
+        //        {
+        //            new { page = this.RenderRazorViewToString("Widgets/EvaluationListItemWidget", projects), divIdOrClass = $"#project-{projectUid}" },
+        //        }
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
+
+        #endregion
+
+        #region Evaluation Details
+
+        ///// <summary>Evaluations the details.</summary>
+        ///// <param name="id">The identifier.</param>
+        ///// <returns></returns>
+        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.PlayerExecutiveAudiovisual)]
+        //public async Task<ActionResult> EvaluationDetails(Guid? id)
+        //{
+        //    if (this.EditionDto?.IsProjectBuyerEvaluationStarted() != true)
+        //    {
+        //        return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Audiovisual" });
+        //    }
+
+        //    var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(id ?? Guid.Empty, this.EditionDto.Id);
+        //    if (projectDto == null)
+        //    {
+        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+        //        return RedirectToAction("EvaluationList", "BusinessRoundProjects", new { Area = "Audiovisual" });
+        //    }
+
+        //    if (!projectDto.Project.IsFinished())
+        //    {
+        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+        //        return RedirectToAction("EvaluationList", "BusinessRoundProjects", new { Area = "Audiovisual" });
+        //    }
+
+        //    if (this.UserAccessControlDto?.HasAnyEditionAttendeeOrganization(projectDto.ProjectBuyerEvaluationDtos?.Select(pbed => pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid)?.ToList()) != true) // Is buyer
+        //    {
+        //        this.StatusMessageToastr(Texts.ForbiddenErrorMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+        //        return RedirectToAction("EvaluationList", "BusinessRoundProjects", new { Area = "Audiovisual" });
+        //    }
+
+        //    #region Breadcrumb
+
+        //    ViewBag.Breadcrumb = new BreadcrumbHelper($"{Labels.AudiovisualProjects} - {Labels.BusinessRound}", new List<BreadcrumbItemHelper> {
+        //        new BreadcrumbItemHelper($"{Labels.Projects} - {Labels.BusinessRound}", Url.Action("EvaluationList", "BusinessRoundProjects", new { Area = "Audiovisual" })),
+        //        new BreadcrumbItemHelper(projectDto.GetTitleDtoByLanguageCode(this.UserInterfaceLanguage)?.ProjectTitle?.Value ?? Labels.Project, Url.Action("EvaluationDetails", "BusinessRoundProjects", new { id }))
+        //    });
+
+        //    #endregion
+
+        //    return View(projectDto);
+        //}
+
+        ///// <summary>Shows the buyer evaluation widget.</summary>
+        ///// <param name="projectUid">The project uid.</param>
+        ///// <returns></returns>
+        //[HttpGet]
+        //public async Task<ActionResult> ShowBuyerEvaluationWidget(Guid? projectUid)
+        //{
+        //    if (this.EditionDto?.IsProjectBuyerEvaluationStarted() != true)
+        //    {
+        //        return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    var projectBuyerEvaluationDto = await this.projectRepo.FindSiteBuyerEvaluationWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty, this.UserAccessControlDto?.EditionAttendeeCollaborator?.Uid ?? Guid.Empty);
+        //    if (projectBuyerEvaluationDto == null)
+        //    {
+        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    if (this.UserAccessControlDto?.HasAnyEditionAttendeeOrganization(projectBuyerEvaluationDto.ProjectBuyerEvaluationDtos?.Select(pbed => pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid)?.ToList()) != true   // Buyer with project finished
+        //        || projectBuyerEvaluationDto.Project?.IsFinished() != true)
+        //    {
+        //        return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        pages = new List<dynamic>
+        //        {
+        //            new { page = this.RenderRazorViewToString("Widgets/BuyerEvaluationWidget", projectBuyerEvaluationDto), divIdOrClass = "#ProjectBuyerEvaluationWidget" },
+        //        }
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
+
+        ///// <summary>
+        ///// Shows the accept evaluation modal.
+        ///// </summary>
+        ///// <param name="projectUid">The project uid.</param>
+        ///// <param name="buyerAttendeeOrganizationUid">The buyer attendee organization uid.</param>
+        ///// <returns></returns>
+        ///// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
+        //[HttpGet]
+        //public async Task<ActionResult> ShowAcceptEvaluationModal(Guid? projectUid, Guid? buyerAttendeeOrganizationUid)
+        //{
+        //    AcceptProjectEvaluation cmd;
+
+        //    try
+        //    {
+        //        if (this.EditionDto?.IsProjectBuyerEvaluationOpen() != true)
+        //        {
+        //            throw new DomainException(Texts.ForbiddenErrorMessage);
+        //        }
+
+        //        var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(projectUid ?? Guid.Empty, this.EditionDto.Id);
+        //        if (projectDto == null)
+        //        {
+        //            throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
+        //        }
+
+        //        if (!projectDto.Project.IsFinished())
+        //        {
+        //            throw new DomainException(Texts.ForbiddenErrorMessage);
+        //        }
+
+        //        if (this.UserAccessControlDto?.HasAnyEditionAttendeeOrganization(projectDto.ProjectBuyerEvaluationDtos?.Select(pbed => pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid)?.ToList()) != true) // Is buyer
+        //        {
+        //            throw new DomainException(Texts.ForbiddenErrorMessage);
+        //        }
+
+        //        var maximumAvailableSlotsByEditionIdResponseDto = await CommandBus.Send(new GetMaximumAvailableSlotsByEditionId(this.EditionDto.Id));
+        //        var playerAcceptedProjectsCount = await CommandBus.Send(new CountPresentialNegotiationsAcceptedByBuyerAttendeeOrganizationUid(buyerAttendeeOrganizationUid ?? Guid.Empty));
+
+        //        cmd = new AcceptProjectEvaluation(
+        //            projectDto,
+        //            this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList(),
+        //            maximumAvailableSlotsByPlayer: maximumAvailableSlotsByEditionIdResponseDto.MaximumAvailableSlotsByPlayer,
+        //            playerAcceptedProjectsCount: playerAcceptedProjectsCount);
+        //    }
+        //    catch (DomainException ex)
+        //    {
+        //        return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        pages = new List<dynamic>
+        //        {
+        //            new { page = this.RenderRazorViewToString("Modals/AcceptEvaluationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+        //        }
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
+
+        ///// <summary>Accepts the specified project evaluation.</summary>
+        ///// <param name="cmd">The command.</param>
+        ///// <returns></returns>
+        //[HttpPost]
+        //public async Task<ActionResult> Accept(AcceptProjectEvaluation cmd)
+        //{
+        //    var result = new AppValidationResult();
+
+        //    try
+        //    {
+        //        if (this.EditionDto?.IsProjectBuyerEvaluationOpen() != true)
+        //        {
+        //            throw new DomainException(Texts.ForbiddenErrorMessage);
+        //        }
+
+        //        if (!ModelState.IsValid)
+        //        {
+        //            throw new DomainException(Messages.CorrectFormValues);
+        //        }
+
+        //        cmd.UpdatePreSendProperties(
+        //            this.UserAccessControlDto.User.Id,
+        //            this.UserAccessControlDto.User.Uid,
+        //            this.EditionDto.Id,
+        //            this.EditionDto.Uid,
+        //            this.UserInterfaceLanguage);
+        //        result = await this.CommandBus.Send(cmd);
+        //        if (!result.IsValid)
+        //        {
+        //            throw new DomainException(Messages.CorrectFormValues);
+        //        }
+        //    }
+        //    catch (DomainException ex)
+        //    {
+        //        foreach (var error in result.Errors)
+        //        {
+        //            var target = error.Target ?? "";
+        //            ModelState.AddModelError(target, error.Message);
+        //        }
+        //        var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
+
+        //        cmd.UpdateModelsAndLists(
+        //            await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(cmd.ProjectUid ?? Guid.Empty, this.EditionDto.Id),
+        //            this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList());
+
+        //        return Json(new
+        //        {
+        //            status = "error",
+        //            message = toastrError?.Message ?? ex.GetInnerMessage(),
+        //            pages = new List<dynamic>
+        //            {
+        //                new { page = this.RenderRazorViewToString("Modals/AcceptEvaluationForm", cmd), divIdOrClass = "#form-container" },
+        //            }
+        //        }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        projectUid = cmd.ProjectUid,
+        //        message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.ProjectAccepted.ToLowerInvariant())
+        //    });
+        //}
+
+        ///// <summary>Shows the refuse evaluation modal.</summary>
+        ///// <param name="projectUid">The project uid.</param>
+        ///// <returns></returns>
+        //[HttpGet]
+        //public async Task<ActionResult> ShowRefuseEvaluationModal(Guid? projectUid)
+        //{
+        //    RefuseProjectEvaluation cmd;
+
+        //    try
+        //    {
+        //        if (this.EditionDto?.IsProjectBuyerEvaluationOpen() != true)
+        //        {
+        //            throw new DomainException(Texts.ForbiddenErrorMessage);
+        //        }
+
+        //        var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(projectUid ?? Guid.Empty, this.EditionDto.Id);
+        //        if (projectDto == null)
+        //        {
+        //            throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
+        //        }
+
+        //        if (!projectDto.Project.IsFinished())
+        //        {
+        //            throw new DomainException(Texts.ForbiddenErrorMessage);
+        //        }
+
+        //        if (this.UserAccessControlDto?.HasAnyEditionAttendeeOrganization(projectDto.ProjectBuyerEvaluationDtos?.Select(pbed => pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid)?.ToList()) != true) // Is buyer
+        //        {
+        //            throw new DomainException(Texts.ForbiddenErrorMessage);
+        //        }
+
+        //        cmd = new RefuseProjectEvaluation(
+        //            projectDto,
+        //            this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList(),
+        //            await this.projectEvaluationRefuseReasonRepo.FindAllByProjectTypeUidAsync(ProjectType.Audiovisual.Uid));
+        //    }
+        //    catch (DomainException ex)
+        //    {
+        //        return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        pages = new List<dynamic>
+        //        {
+        //            new { page = this.RenderRazorViewToString("Modals/RefuseEvaluationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+        //        }
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
+
+        ///// <summary>Refuses the specified project evaluation.</summary>
+        ///// <param name="cmd">The command.</param>
+        ///// <returns></returns>
+        //[HttpPost]
+        //public async Task<ActionResult> Refuse(RefuseProjectEvaluation cmd)
+        //{
+        //    var result = new AppValidationResult();
+
+        //    try
+        //    {
+        //        if (this.EditionDto?.IsProjectBuyerEvaluationOpen() != true)
+        //        {
+        //            throw new DomainException(Texts.ForbiddenErrorMessage);
+        //        }
+
+        //        if (!ModelState.IsValid)
+        //        {
+        //            throw new DomainException(Messages.CorrectFormValues);
+        //        }
+
+        //        cmd.UpdatePreSendProperties(
+        //            this.UserAccessControlDto.User.Id,
+        //            this.UserAccessControlDto.User.Uid,
+        //            this.EditionDto.Id,
+        //            this.EditionDto.Uid,
+        //            this.UserInterfaceLanguage);
+        //        result = await this.CommandBus.Send(cmd);
+        //        if (!result.IsValid)
+        //        {
+        //            throw new DomainException(Messages.CorrectFormValues);
+        //        }
+        //    }
+        //    catch (DomainException ex)
+        //    {
+        //        foreach (var error in result.Errors)
+        //        {
+        //            var target = error.Target ?? "";
+        //            ModelState.AddModelError(target, error.Message);
+        //        }
+        //        var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
+
+        //        cmd.UpdateModelsAndLists(
+        //            await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(cmd.ProjectUid ?? Guid.Empty, this.EditionDto.Id),
+        //            this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList(),
+        //            await this.projectEvaluationRefuseReasonRepo.FindAllByProjectTypeUidAsync(ProjectType.Audiovisual.Uid));
+
+        //        return Json(new
+        //        {
+        //            status = "error",
+        //            message = toastrError?.Message ?? ex.GetInnerMessage(),
+        //            pages = new List<dynamic>
+        //            {
+        //                new { page = this.RenderRazorViewToString("Modals/RefuseEvaluationForm", cmd), divIdOrClass = "#form-container" },
+        //            }
+        //        }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        projectUid = cmd.ProjectUid,
+        //        message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.ProjectRefused.ToLowerInvariant())
+        //    });
+        //}
+
+        #endregion
+
+        #endregion
     }
 }

@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-sm-6 mt-2">
+            @*<div class="col-12 col-sm-6 mt-2">
                 <select name="InterestUid" id="InterestUid" class="form-control">
                     <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Genre.ToLowerInvariant()))...</option>
                     @foreach (var interestDto in genreInterests)
@@ -28,7 +28,7 @@
                         </option>
                     }
                 </select>
-            </div>
+            </div>*@
             <div class="col-12 col-sm-6 mt-2">
                 <select name="EvaluationStatusUid" id="EvaluationStatusUid" class="form-control">
                     <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Status.ToLowerInvariant()))...</option>
@@ -67,10 +67,11 @@
                 <div class="kt-iconbox__content mt-3">
                     <ul class="pl-0 mb-0">
                         @Html.Raw(string.Format(
-                            Texts.PlayerProjectsDates,
-                            editionDto?.ProjectEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(),
-                            editionDto?.ProjectEvaluationEndDate.ToBrazilTimeZone().ToShortDateString(),
-                            editionDto?.OneToOneMeetingsScheduleDate.ToBrazilTimeZone().ToShortDateString()))
+                            Texts.MusicPlayerProjectsDates,
+                            editionDto?.MusicBusinessRoundEvaluationStartDate?.ToBrazilTimeZone().ToShortDateString(),
+                            editionDto?.MusicBusinessRoundEvaluationEndDate?.ToBrazilTimeZone().ToShortDateString(),
+                            editionDto?.OneToOneMeetingsScheduleDate.ToBrazilTimeZone().ToShortDateString(),
+                            /*editionDto?.OneToOneMeetingsScheduleDate.ToBrazilTimeZone().ToShortDateString()*/"-"))
                     </ul>
                 </div>
             </div>
@@ -82,8 +83,8 @@
 }
 @section Scripts {
     @Scripts.Render("~/bundles/js/select2.js")
-    @Scripts.Render("~/bundles/js/projects.buyerevaluation.list.widget.js")
-    @Scripts.Render("~/bundles/js/projects.buyerevaluation.update.widget.js")
+    @Scripts.Render("~/bundles/js/music.businessrounds.buyerevaluation.list.widget.js")
+    @Scripts.Render("~/bundles/js/music.businessrounds.buyerevaluation.update.widget.js")
     <script>
         // Page translations ----------------------------------------------------------------------
         var translations = {

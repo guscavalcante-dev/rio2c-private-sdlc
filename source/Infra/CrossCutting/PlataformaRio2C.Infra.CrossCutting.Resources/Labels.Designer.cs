@@ -3733,6 +3733,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Buscando por.
+        /// </summary>
+        public static string LookingFor {
+            get {
+                return ResourceManager.GetString("LookingFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Baixa.
         /// </summary>
         public static string Low {

@@ -371,6 +371,9 @@
   <data name="AudiovisualPitchingRules" xml:space="preserve">
     <value>Regulamento de pitching</value>
   </data>
+  <data name="AudiovisualPitchingRules1" xml:space="preserve">
+    <value />
+  </data>
   <data name="AudiovisualPitchingRulesShorted" xml:space="preserve">
     <value>Reg. de pitching</value>
   </data>
@@ -1165,6 +1168,9 @@
     <value>Executivos cadastrados</value>
     <comment>Executivos cadastrados</comment>
   </data>
+  <data name="ExpectationsForMeeting" xml:space="preserve">
+    <value>Expectativas para as Rodadas de Negócios</value>
+  </data>
   <data name="Experience" xml:space="preserve">
     <value>Experiência</value>
     <comment>Experiência</comment>
@@ -1594,6 +1600,9 @@
     <value>Sair</value>
     <comment>Sair</comment>
   </data>
+  <data name="LookingFor" xml:space="preserve">
+    <value>Buscando por</value>
+  </data>
   <data name="Low" xml:space="preserve">
     <value>Baixa</value>
   </data>
@@ -1727,6 +1736,9 @@
   </data>
   <data name="MusicBusinessRoundMaximumEvaluatorsByProject" xml:space="preserve">
     <value>Quantidade máxima de avaliadores por projeto</value>
+  </data>
+  <data name="MusicBusinessRoundMaximumProjectsBySeller" xml:space="preserve">
+    <value />
   </data>
   <data name="MusicBusinessRoundNegotiationEndDate" xml:space="preserve">
     <value>Data de término das negociações de música</value>
@@ -2153,6 +2165,9 @@
   <data name="Player" xml:space="preserve">
     <value>Player</value>
     <comment>Player</comment>
+  </data>
+  <data name="PlayerCategoriesThatHaveOrHadContract" xml:space="preserve">
+    <value>Categoria de players (discursiva)</value>
   </data>
   <data name="PlayerDemand" xml:space="preserve">
     <value>Demanda do Player</value>
@@ -3496,17 +3511,5 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="ZoomOut" xml:space="preserve">
     <value>Menos Zoom</value>
     <comment>Menos Zoom</comment>
-  </data>
-  <data name="AudiovisualPitchingRules1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="MusicBusinessRoundMaximumProjectsBySeller" xml:space="preserve">
-    <value />
-  </data>
-  <data name="PlayerCategoriesThatHaveOrHadContract" xml:space="preserve">
-    <value>Categoria de players (discursiva)</value>
-  </data>
-  <data name="ExpectationsForMeeting" xml:space="preserve">
-    <value>Expectativas para as Rodadas de Negócios</value>
   </data>
 </root>

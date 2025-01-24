@@ -880,6 +880,7 @@
     <Content Include="Assets\js\innovation\projects\innovation.projects.presentation.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.technologies.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.tracks.widget.js" />
+    <Content Include="Assets\js\music\businessrounds\music.businessrounds.buyerevaluation.list.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.evaluators.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.socialnetworks.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.videoandmusic.widget.js" />
@@ -6990,7 +6991,7 @@
     <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\EvaluationList.cshtml" />
     <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\SendToPlayers.cshtml" />
     <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Submit.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Index.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\SubmittedList.cshtml" />
     <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\SubmittedDetails.cshtml" />
     <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\TermsAcceptance.cshtml" />
     <Content Include="Areas\Audiovisual\Views\PitchingProjects\CompanyInfo.cshtml" />
@@ -7012,7 +7013,7 @@
     <Content Include="Areas\Audiovisual\Views\PitchingProjects\Shared\_ProjectsOnboardingMenu.cshtml" />
     <Content Include="Areas\Audiovisual\Views\PitchingProjects\Submit.cshtml" />
     <Content Include="Areas\Audiovisual\Views\PitchingProjects\SubmittedDetails.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\PitchingProjects\Index.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\SubmittedList.cshtml" />
     <Content Include="Areas\Audiovisual\Views\PitchingProjects\TermsAcceptance.cshtml" />
     <Content Include="Areas\Audiovisual\Views\PitchingProjects\Widgets\EvaluationListItemWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\PitchingProjects\Widgets\EvaluationListWidget.cshtml" />
@@ -7022,7 +7023,7 @@
     <Content Include="Areas\Music\Views\PitchingProjects\Modals\AcceptMusicPitchingEvaluationModal.cshtml" />
     <Content Include="Areas\Music\Views\PitchingProjects\Modals\RefuseMusicPitchingEvaluationModal.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\EvaluationList.cshtml" />
-    <Content Include="Areas\Music\Views\BusinessRoundProjects\Index.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\SubmittedList.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Shared\_ProducerTermsAcceptanceText.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Shared\_ProjectsOnboardingMenu.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\TermsAcceptance.cshtml" />
@@ -7030,6 +7031,10 @@
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Widgets\EvaluationListWidget.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\CompanyInfo.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Shared\_ProducerInfoForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Index.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\Index.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Index.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Shared\_BuyersEvaluations.cshtml" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />

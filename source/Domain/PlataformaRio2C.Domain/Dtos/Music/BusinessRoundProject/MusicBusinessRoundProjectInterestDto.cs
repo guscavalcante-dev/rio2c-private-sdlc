@@ -5,6 +5,7 @@ namespace PlataformaRio2C.Domain.Dtos
     public class MusicBusinessRoundProjectInterestDto
     {
         public MusicBusinessRoundProjectInterest MusicBusinessRoundProjectInterest { get; set; }
+        public InterestGroup InterestGroup { get; set; }
         public Interest Interest { get; set; }
 
         /// <summary>

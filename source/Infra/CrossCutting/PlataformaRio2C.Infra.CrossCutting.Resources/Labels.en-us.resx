@@ -374,6 +374,9 @@
   <data name="AudiovisualPitchingRules" xml:space="preserve">
     <value>Pitching rules</value>
   </data>
+  <data name="AudiovisualPitchingRules1" xml:space="preserve">
+    <value>Pitching rules</value>
+  </data>
   <data name="AudiovisualPitchingRulesShorted" xml:space="preserve">
     <value>Pitching rules</value>
   </data>
@@ -1168,6 +1171,9 @@
     <value>Registered executives</value>
     <comment>Executivos cadastrados</comment>
   </data>
+  <data name="ExpectationsForMeeting" xml:space="preserve">
+    <value>Expectations for one-to-one meetings</value>
+  </data>
   <data name="Experience" xml:space="preserve">
     <value>Experience</value>
     <comment>Experiência</comment>
@@ -1594,6 +1600,9 @@
     <value>Log out</value>
     <comment>Sair</comment>
   </data>
+  <data name="LookingFor" xml:space="preserve">
+    <value>Looking for</value>
+  </data>
   <data name="Low" xml:space="preserve">
     <value>Low</value>
   </data>
@@ -1727,6 +1736,9 @@
   </data>
   <data name="MusicBusinessRoundMaximumEvaluatorsByProject" xml:space="preserve">
     <value>Maximum number of evaluators by business round</value>
+  </data>
+  <data name="MusicBusinessRoundMaximumProjectsBySeller" xml:space="preserve">
+    <value>Maximum number of business round by participant</value>
   </data>
   <data name="MusicBusinessRoundNegotiationEndDate" xml:space="preserve">
     <value>Music business round negotiations end date</value>
@@ -2153,6 +2165,9 @@
   <data name="Player" xml:space="preserve">
     <value>Player</value>
     <comment>Player</comment>
+  </data>
+  <data name="PlayerCategoriesThatHaveOrHadContract" xml:space="preserve">
+    <value>Player category (discursive)</value>
   </data>
   <data name="PlayerDemand" xml:space="preserve">
     <value>Player Demand</value>
@@ -3492,17 +3507,5 @@
   <data name="ZoomOut" xml:space="preserve">
     <value>Zoom Out</value>
     <comment>Menos Zoom</comment>
-  </data>
-  <data name="AudiovisualPitchingRules1" xml:space="preserve">
-    <value>Pitching rules</value>
-  </data>
-  <data name="MusicBusinessRoundMaximumProjectsBySeller" xml:space="preserve">
-    <value>Maximum number of business round by participant</value>
-  </data>
-  <data name="PlayerCategoriesThatHaveOrHadContract" xml:space="preserve">
-    <value>Player category (discursive)</value>
-  </data>
-  <data name="ExpectationsForMeeting" xml:space="preserve">
-    <value>Expectations for one-to-one meetings</value>
   </data>
 </root>
