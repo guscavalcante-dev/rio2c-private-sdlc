@@ -30,7 +30,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isAdditionalInformationRequired">if set to <c>true</c> [is additional information required].</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public CreateMusicBusinessRoundProject(
-            ProjectDto entity,
+            MusicBusinessRoundProjectDto entity,
             List<LanguageDto> languagesDtos,
             List<TargetAudience> targetAudiences,
             List<InterestDto> interestsDtos,

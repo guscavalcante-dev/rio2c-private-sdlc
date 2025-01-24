@@ -7,6 +7,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public MusicBusinessRoundProjectInterest MusicBusinessRoundProjectInterest { get; set; }
         public InterestGroup InterestGroup { get; set; }
         public Interest Interest { get; set; }
+        public InterestGroup InterestGroup { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MusicBusinessRoundProjectInterestDto"/> class.

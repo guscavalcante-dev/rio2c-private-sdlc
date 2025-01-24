@@ -318,6 +318,10 @@
   <data name="Attachments" xml:space="preserve">
     <value>Attachments</value>
   </data>
+  <data name="AttachmentUrl" xml:space="preserve">
+    <value>Attach Press Release, Streaming Platform Link, or Presentation
+Material</value>
+  </data>
   <data name="AttendeeOrganizationMaxSellProjectsCount" xml:space="preserve">
     <value>Maximum number of projects by participant</value>
     <comment>Quantidade máxima de projetos por participante</comment>
@@ -500,6 +504,9 @@
   <data name="BusinessRound" xml:space="preserve">
     <value>One-to-one-meetings</value>
     <comment>Rodadas de Negócios</comment>
+  </data>
+  <data name="BusinessRoundProjectsObjetives" xml:space="preserve">
+    <value>Objectives for the Meetings</value>
   </data>
   <data name="BusinessRounds" xml:space="preserve">
     <value>Business Rounds</value>
@@ -1434,6 +1441,9 @@
   <data name="Interest" xml:space="preserve">
     <value>Interest</value>
     <comment>Interesse</comment>
+  </data>
+  <data name="InterestArea" xml:space="preserve">
+    <value>Areas of Interest</value>
   </data>
   <data name="Interests" xml:space="preserve">
     <value>Interests</value>

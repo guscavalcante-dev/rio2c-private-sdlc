@@ -764,9 +764,9 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                     return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
                 }
             }
-           
+
             // Duplicate project
-            ProjectDto projectDto = null;
+            MusicBusinessRoundProjectDto projectDto = null;
             if (id.HasValue)
             {
                 //TODO: Enable the project duplication into RIO2CMY-1339 task
@@ -781,7 +781,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 //}
             }
 
-            var cmd = new CreateAudiovisualBusinessRoundProject(
+            var cmd = new CreateMusicBusinessRoundProject(
                 projectDto,
                 await CommandBus.Send(new FindAllLanguagesDtosAsync(UserInterfaceLanguage)),
                 await targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),

@@ -547,6 +547,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Anexar Release, Link da plataforma de streaming ou Material de Apresentação.
+        /// </summary>
+        public static string AttachmentUrl {
+            get {
+                return ResourceManager.GetString("AttachmentUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quantidade máxima de projetos por produtora.
         /// </summary>
         public static string AttendeeOrganizationMaxSellProjectsCount {
@@ -984,6 +993,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string BusinessRound {
             get {
                 return ResourceManager.GetString("BusinessRound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Objetivos para as Rodada.
+        /// </summary>
+        public static string BusinessRoundProjectsObjetives {
+            get {
+                return ResourceManager.GetString("BusinessRoundProjectsObjetives", resourceCulture);
             }
         }
         
@@ -3315,6 +3333,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Interest {
             get {
                 return ResourceManager.GetString("Interest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Áreas de Interesse.
+        /// </summary>
+        public static string InterestArea {
+            get {
+                return ResourceManager.GetString("InterestArea", resourceCulture);
             }
         }
         
