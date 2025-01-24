@@ -6,10 +6,21 @@
     <!--begin: Form Wizard Nav -->
     <div class="kt-wizard-v3__nav">
         <div class="kt-wizard-v3__nav-items kt-wizard-v3__nav-items--clickable">
-            <div class="kt-wizard-v3__nav-item myrio2c-projects-onboarding" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
+            @*<div class="kt-wizard-v3__nav-item myrio2c-projects-onboarding" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
                 <div class="kt-wizard-v3__nav-body">
                     <div class="kt-wizard-v3__nav-label">
                         <span>@counter</span> @Labels.Company
+                    </div>
+                    <div class="kt-wizard-v3__nav-bar"></div>
+                </div>
+            </div>
+            @{
+                counter++;
+            }*@
+            <div class="kt-wizard-v3__nav-item myrio2c-projects-onboarding" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
+                <div class="kt-wizard-v3__nav-body">
+                    <div class="kt-wizard-v3__nav-label">
+                        <span>@counter</span> @Labels.Rules
                     </div>
                     <div class="kt-wizard-v3__nav-bar"></div>
                 </div>
@@ -20,23 +31,12 @@
             <div class="kt-wizard-v3__nav-item myrio2c-projects-onboarding" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
                 <div class="kt-wizard-v3__nav-body">
                     <div class="kt-wizard-v3__nav-label">
-                        <span>@counter</span> @Labels.Rules
-                    </div>
-                    <div class="kt-wizard-v3__nav-bar"></div>
-                </div>
-            </div>
-            @*@{
-                counter++;
-            }*@
-            @*<div class="kt-wizard-v3__nav-item myrio2c-projects-onboarding" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">
-                <div class="kt-wizard-v3__nav-body">
-                    <div class="kt-wizard-v3__nav-label">
                         <span>@counter</span> @Labels.Project
                     </div>
                     <div class="kt-wizard-v3__nav-bar"></div>
                 </div>
             </div>
-            @{
+            @*@{
                 counter++;
             }
             <div class="kt-wizard-v3__nav-item myrio2c-projects-onboarding" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : (Model > counter ? "done" : "pending"))">

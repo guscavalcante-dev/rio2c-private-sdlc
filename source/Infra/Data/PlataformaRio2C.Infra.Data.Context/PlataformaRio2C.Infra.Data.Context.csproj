@@ -152,6 +152,7 @@
     <Compile Include="Mapping\Message\MessageMap.cs" />
     <Compile Include="Mapping\MusicalCommission\MusicalCommissionMap.cs" />
     <Compile Include="Mapping\Cartoon\AttendeeCartoonProjectCollaboratorMap.cs" />
+    <Compile Include="Mapping\Music\BusinessRound\MusicBusinessRoundProjectActivityMap.cs" />
     <Compile Include="Mapping\Music\BusinessRound\MusicBusinessRoundProjectExpectationsForMeetingMap.cs" />
     <Compile Include="Mapping\Music\BusinessRound\MusicBusinessRoundProjectInterestMap.cs" />
     <Compile Include="Mapping\Music\BusinessRound\MusicBusinessRoundProjectBuyerEvaluationMap.cs" />
@@ -407,6 +408,14 @@
     <Compile Include="Migrations\202501222000286_UpdateMigrations22012025.Designer.cs">
       <DependentUpon>202501222000286_UpdateMigrations22012025.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202501231550221_CreateMusicBusinessRoundActivitiesTable.cs" />
+    <Compile Include="Migrations\202501231550221_CreateMusicBusinessRoundActivitiesTable.Designer.cs">
+      <DependentUpon>202501231550221_CreateMusicBusinessRoundActivitiesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202501231606167_UpdateMigrationsCreateTableBusinessRoundProjectActivities.cs" />
+    <Compile Include="Migrations\202501231606167_UpdateMigrationsCreateTableBusinessRoundProjectActivities.Designer.cs">
+      <DependentUpon>202501231606167_UpdateMigrationsCreateTableBusinessRoundProjectActivities.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202501231248049_UpdateMigrations_202501210947.cs" />
     <Compile Include="Migrations\202501231248049_UpdateMigrations_202501210947.Designer.cs">
       <DependentUpon>202501231248049_UpdateMigrations_202501210947.cs</DependentUpon>
@@ -575,7 +584,13 @@
     <Content Include="Migrations\Scripts\202501131639495_AddHasAnyTypeOfFinancingToProjects.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Migrations\Scripts\202501231550221_CreateMusicBusinessRoundActivitiesTable.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Migrations\Scripts\202501181608178_CreateMusicBusinessRoundsTables.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202501231550221_CreateMusicBusinessRoundActivitiesTable.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202501241333002_UpdateMusicInterestGroupsNames.down.sql">
@@ -746,6 +761,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202501222000286_UpdateMigrations22012025.resx">
       <DependentUpon>202501222000286_UpdateMigrations22012025.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501231550221_CreateMusicBusinessRoundActivitiesTable.resx">
+      <DependentUpon>202501231550221_CreateMusicBusinessRoundActivitiesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501231606167_UpdateMigrationsCreateTableBusinessRoundProjectActivities.resx">
+      <DependentUpon>202501231606167_UpdateMigrationsCreateTableBusinessRoundProjectActivities.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202501231248049_UpdateMigrations_202501210947.resx">
       <DependentUpon>202501231248049_UpdateMigrations_202501210947.cs</DependentUpon>

@@ -7031,6 +7031,8 @@
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Widgets\EvaluationListWidget.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\CompanyInfo.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Shared\_ProducerInfoForm.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Submit.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Shared\_ProjectInfoForm.cshtml" />
     <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Index.cshtml" />
     <Content Include="Areas\Audiovisual\Views\PitchingProjects\Index.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Index.cshtml" />

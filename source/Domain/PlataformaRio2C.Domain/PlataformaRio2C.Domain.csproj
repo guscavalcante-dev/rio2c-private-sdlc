@@ -474,6 +474,7 @@
     <Compile Include="Entities\Logistics\AttendeeLogisticsSponsor.cs" />
     <Compile Include="Entities\Logistics\Logistic.cs" />
     <Compile Include="Entities\Message\Message.cs" />
+    <Compile Include="Entities\Music\BusinessRound\MusicBusinessRoundProjectActivity.cs" />
     <Compile Include="Entities\Music\BusinessRound\MusicBusinessRoundProjectExpectationsForMeeting.cs" />
     <Compile Include="Entities\Music\BusinessRound\MusicBusinessRoundProjectBuyerEvaluation.cs" />
     <Compile Include="Entities\Music\BusinessRound\MusicBusinessRoundProjectPlayerCategory.cs" />
