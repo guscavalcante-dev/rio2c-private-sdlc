@@ -25,18 +25,16 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         public static readonly int ValueMaxLength = 256;
         public static readonly int ValueMinLength = 1;
-
         public int MusicBusinessRoundProjectId { get; set; }
-
         public int LanguageId { get; set; }
-
+        
         [Display(Name = "ExpectationsForMeeting", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [RequiredIf("IsRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(256, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Value { get; set; }
-
         public string LanguageCode { get; set; }
         public string LanguageName { get; set; }
+        public bool IsRequired { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MusicBusinessRoundProjectExpectationsForMeetingBaseCommand"/> class.
@@ -74,6 +72,26 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.LanguageName = languageDto.Name;
             this.MusicBusinessRoundProjectId = musicBusinessRoundProjectId;
         }
-    }
 
+        /// <summary>Initializes a new instance of the <see cref="ProjectSummaryBaseCommand"/> class.</summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="isRequired">if set to <c>true</c> [is required].</param>
+        public MusicBusinessRoundProjectExpectationsForMeetingBaseCommand(MusicBusinessRoundProjectExpectationsForMeetingDto entity, bool isRequired)
+        {
+            this.Value = entity.Value;
+            this.LanguageCode = entity.Language.Code;
+            this.LanguageName = entity.Language.Name;
+            this.IsRequired = isRequired;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="ProjectSummaryBaseCommand"/> class.</summary>
+        /// <param name="languageDto">The language dto.</param>
+        /// <param name="isRequired">if set to <c>true</c> [is required].</param>
+        public MusicBusinessRoundProjectExpectationsForMeetingBaseCommand(LanguageDto languageDto, bool isRequired)
+        {
+            this.LanguageCode = languageDto.Code;
+            this.LanguageName = languageDto.Name;
+            this.IsRequired = isRequired;
+        }
+    }
 }

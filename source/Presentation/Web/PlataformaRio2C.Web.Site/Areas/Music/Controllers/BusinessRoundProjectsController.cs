@@ -748,9 +748,9 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                     return RedirectToAction("Index", "BusinessRoundProjects");
                 }
             }
-           
+
             // Duplicate project
-            ProjectDto projectDto = null;
+            MusicBusinessRoundProjectDto projectDto = null;
             if (id.HasValue)
             {
                 //TODO: Enable the project duplication into RIO2CMY-1339 task
@@ -765,18 +765,16 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 //}
             }
 
-            //var cmd = new CreateAudiovisualBusinessRoundProject(
-            //    projectDto,
-            //    await CommandBus.Send(new FindAllLanguagesDtosAsync(UserInterfaceLanguage)),
-            //    await targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
-            //    await interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Music.Id),
-            //    true,
-            //    false,
-            //    false,
-            //    UserInterfaceLanguage
-            //);
-
-            var cmd = new CreateMusicBusinessRoundProject();
+            var cmd = new CreateMusicBusinessRoundProject(
+                projectDto,
+                await CommandBus.Send(new FindAllLanguagesDtosAsync(UserInterfaceLanguage)),
+                await targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
+                await interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Music.Id),
+                true,
+                false,
+                false,
+                UserInterfaceLanguage
+            );
 
             return View(cmd);
         }

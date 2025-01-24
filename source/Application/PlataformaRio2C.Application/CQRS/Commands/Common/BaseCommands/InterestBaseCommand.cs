@@ -15,6 +15,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
@@ -25,7 +26,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public Guid InterestGroupUid { get; set; }
         public string InterestGroupName { get; set; }
         public int InterestGroupDisplayOrder { get; set; }
-
         public Guid InterestUid { get; set; }
         public string InterestName { get; set; }
         public int InterestDisplayOrder { get; set; }
@@ -44,9 +44,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public InterestBaseCommand(AttendeeCollaboratorInterestDto entity)
         {
             this.InterestGroupUid = entity.InterestGroup.Uid;
-            this.InterestGroupName = entity.InterestGroup.Name;
-            this.InterestGroupDisplayOrder = entity.InterestGroup.DisplayOrder;
 
+          
+
+            this.InterestGroupDisplayOrder = entity.InterestGroup.DisplayOrder;
             this.InterestUid = entity.Interest.Uid;
             this.InterestName = entity.Interest.Name;
             this.InterestDisplayOrder = entity.Interest.DisplayOrder;
@@ -92,11 +93,52 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         }
 
         /// <summary>Initializes a new instance of the <see cref="InterestBaseCommand"/> class.</summary>
+        /// <param name="entity">The entity.</param>
+        public InterestBaseCommand(MusicBusinessRoundProjectInterestDto entity)
+        {
+            //Todo : Refactor this.
+            if (entity.InterestGroup.ProjectTypeId == ProjectType.Music.Id)
+            {
+                if (entity.InterestGroup.Uid == InterestGroup.MusicLookingFor.Uid)
+                    this.InterestGroupName = Labels.BusinessRoundProjectsObjetives;
+                else if (entity.InterestGroup.Uid == InterestGroup.MusicOpportunitiesYouOffer.Uid)
+                    this.InterestGroupName = Labels.InterestArea;
+                else
+                    this.InterestGroupName = entity.InterestGroup.Name;
+            }
+            else
+                this.InterestGroupName = entity.InterestGroup.Name;
+
+            this.InterestGroupUid = entity.InterestGroup.Uid;
+            this.InterestGroupDisplayOrder = entity.InterestGroup.DisplayOrder;
+
+            this.InterestUid = entity.Interest.Uid;
+            this.InterestName = entity.Interest.Name;
+            this.InterestDisplayOrder = entity.Interest.DisplayOrder;
+            this.InterestHasAdditionalInfo = entity.Interest.HasAdditionalInfo;
+
+            this.AdditionalInfo = entity.MusicBusinessRoundProjectInterest.AdditionalInfo;
+            this.IsChecked = true;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="InterestBaseCommand"/> class.</summary>
         /// <param name="interestDto">The interest dto.</param>
         public InterestBaseCommand(InterestDto interestDto)
         {
+            //Todo : Refactor this.
+            if (interestDto.InterestGroup.ProjectTypeId == ProjectType.Music.Id)
+            {
+                if (interestDto.InterestGroup.Uid == InterestGroup.MusicLookingFor.Uid)
+                    this.InterestGroupName = Labels.BusinessRoundProjectsObjetives;
+                else if (interestDto.InterestGroup.Uid == InterestGroup.MusicOpportunitiesYouOffer.Uid)
+                    this.InterestGroupName = Labels.InterestArea;
+                else
+                    this.InterestGroupName = interestDto.InterestGroup.Name;
+            }
+            else
+                this.InterestGroupName = interestDto.InterestGroup.Name;
+
             this.InterestGroupUid = interestDto.InterestGroup.Uid;
-            this.InterestGroupName = interestDto.InterestGroup.Name;
             this.InterestGroupDisplayOrder = interestDto.InterestGroup.DisplayOrder;
 
             this.InterestUid = interestDto.Interest.Uid;
