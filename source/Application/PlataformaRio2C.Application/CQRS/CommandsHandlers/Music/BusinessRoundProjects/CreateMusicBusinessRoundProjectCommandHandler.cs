@@ -89,7 +89,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
-            var interestsDtos = await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Audiovisual.Id);
+            var interestsDtos = await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Music.Id);
 
             // Interests
             var projectInterests = new List<MusicBusinessRoundProjectInterest>();
@@ -106,9 +106,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var musicProject = new MusicBusinessRoundProject(cmd.SellerAttendeeCollaboratorId, cmd.PlayerCategoriesThatHaveOrHadContract, cmd.AttachmentUrl, null
                 ,null /*TODO:Converter objeto para o novo targetaudientes,activies blabla,cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<MusicBusinessRoundProjectTargetAudience>()*/
-                ,null //TODO: projectInterest. 
-                ,null //TODO: PlayersCategory aguardando definicao
-                ,null,
+                ,projectInterests
+                , null //TODO: PlayersCategory aguardando definicao
+                ,null, //TODO: Trazer activies UIDS e carregar para o novo objeto
                 cmd.MusicBusinessRoundProjectExpectationsForMeetings?.Select(d => new MusicBusinessRoundProjectExpectationsForMeeting(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList()
                 ,cmd.UserId
                 );
@@ -123,59 +123,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
             catch (Exception ex)
             {
+                //TODO:Remove this catch, for debug purposes only.
                 throw;
             }
-
-            //var attendeeOrganization = await this.GetAttendeeOrganizationByUid(cmd.AttendeeOrganizationUid ?? Guid.Empty);
-
-
-
-            //var languageDtos = await this.languageRepo.FindAllDtosAsync();
-            //var interestsDtos = await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Audiovisual.Id);
-
-            //// Interests
-            //var projectInterests = new List<ProjectInterest>();
-            //if (cmd.Interests?.Any() == true)
-            //{
-            //    foreach (var interestBaseCommands in cmd.Interests)
-            //    {
-            //        foreach (var interestBaseCommand in interestBaseCommands?.Where(ibc => ibc.IsChecked)?.ToList())
-            //        {
-            //            projectInterests.Add(new ProjectInterest(interestsDtos?.FirstOrDefault(id => id.Interest.Uid == interestBaseCommand.InterestUid)?.Interest, interestBaseCommand.AdditionalInfo, cmd.UserId));
-            //        }
-            //    }
-            //}
-
-            //var projectModality = await this.projectModalityRepo.GetAsync(pm => pm.Uid == cmd.ProjectModalityUid && !pm.IsDeleted);
-
-            //attendeeOrganization.CreateProject(
-            //    await this.projectTypeRepo.GetAsync(pt => pt.Uid == cmd.ProjectTypeUid && !pt.IsDeleted),
-            //    cmd.TotalPlayingTime,
-            //    cmd.NumberOfEpisodes,
-            //    cmd.EachEpisodePlayingTime,
-            //    cmd.ValuePerEpisode,
-            //    cmd.TotalValueOfProject,
-            //    cmd.ValueAlreadyRaised,
-            //    cmd.ValueStillNeeded,
-            //    cmd.HasAnyTypeOfFinancing,
-            //    cmd.WhichTypeOfFinancingDescription,
-            //    cmd.Titles?.Select(d => new ProjectTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
-            //    cmd.LogLines?.Select(d => new ProjectLogLine(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
-            //    cmd.Summaries?.Select(d => new ProjectSummary(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
-            //    cmd.ProductPlans?.Select(d => new ProjectProductionPlan(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
-            //    cmd.AdditionalInformations?.Select(d => new ProjectAdditionalInformation(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
-            //    projectInterests,
-            //    cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<TargetAudience>(),
-            //    cmd.ImageLinks,
-            //    cmd.TeaserLinks,
-            //    cmd.UserId,
-            //    projectModality
-            //);
-
-
-            //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
-
-            //return Task.FromResult(propertyId); // use it when the methed is not async
         }
     }
 }
