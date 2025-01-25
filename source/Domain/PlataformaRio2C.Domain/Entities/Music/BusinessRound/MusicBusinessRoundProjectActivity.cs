@@ -13,11 +13,31 @@
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using System;
 
 namespace PlataformaRio2C.Domain.Entities
 {
     public class MusicBusinessRoundProjectActivity : Entity
     {
+        /// <summary>Initializes a new instance of the <see cref="OrganizationActivity"/> class.</summary>
+        /// <param name="activity">The activity.</param>
+        /// <param name="additionalInfo">The additional information.</param>
+        /// <param name="userId">The user identifier.</param>
+        public MusicBusinessRoundProjectActivity(Activity activity, string additionalInfo, int userId)
+        {
+            this.Activity = activity;
+            this.ActivityId = activity?.Id ?? 0;
+            this.AdditionalInfo = additionalInfo?.Trim();
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+        public MusicBusinessRoundProjectActivity()
+        {
+                
+        }
+
         public static readonly int AdditionalInfoMaxLength = 200;
 
         public int MusicBusinessRoundProjectId { get; private set; }
@@ -58,5 +78,7 @@ namespace PlataformaRio2C.Domain.Entities
                 AdditionalInfo = additionalInfo
             };
         }
+
+        
     }
 }

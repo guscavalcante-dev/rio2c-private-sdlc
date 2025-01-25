@@ -833,7 +833,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    this.UserAccessControlDto.Collaborator.Id,
+                    this.UserAccessControlDto.EditionAttendeeCollaborator.Id,
                     this.UserAccessControlDto.User.Id,
                     this.UserAccessControlDto.User.Uid,
                     this.EditionDto.Id,

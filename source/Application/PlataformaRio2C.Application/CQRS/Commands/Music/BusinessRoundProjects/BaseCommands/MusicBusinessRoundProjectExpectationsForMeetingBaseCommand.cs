@@ -29,7 +29,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public int LanguageId { get; set; }
         
         [Display(Name = "ExpectationsForMeeting", ResourceType = typeof(Labels))]
-        [RequiredIf("IsRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(256, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Value { get; set; }
         public string LanguageCode { get; set; }

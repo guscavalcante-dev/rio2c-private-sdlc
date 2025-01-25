@@ -20,6 +20,7 @@ using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -32,6 +33,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly ITargetAudienceRepository targetAudienceRepo;
         private readonly IInterestRepository interestRepo;
         private readonly IProjectModalityRepository projectModalityRepo;
+        private readonly IMusicBusinessRoundProjectRepository musicBusinessRoundProjectRepo;
+        private readonly IActivityRepository activityRepo;
+
 
         /// <summary>Initializes a new instance of the <see cref="CreateAudiovisualBusinessRoundProjectCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
@@ -52,14 +56,18 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             ILanguageRepository languageRepository,
             ITargetAudienceRepository targetAudienceRepository,
             IInterestRepository interestRepository,
-            IProjectModalityRepository projectModalityRepo)
+            IProjectModalityRepository projectModalityRepo,
+            IMusicBusinessRoundProjectRepository musicProjectRepo,
+            IActivityRepository activityRepo)
             : base(eventBus, uow, attendeeOrganizationRepository, projectRepository)
         {
+            this.musicBusinessRoundProjectRepo = musicProjectRepo;
             this.projectTypeRepo = projectTypeRepository;
             this.languageRepo = languageRepository;
             this.targetAudienceRepo = targetAudienceRepository;
             this.interestRepo = interestRepository;
             this.projectModalityRepo = projectModalityRepo;
+            this.activityRepo = activityRepo;
         }
 
         /// <summary>Handles the specified create project.</summary>
@@ -70,17 +78,52 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.Uow.BeginTransaction();
 
+            #region Initial validations
+
+            if (!this.ValidationResult.IsValid)
+            {
+                this.AppValidationResult.Add(this.ValidationResult);
+                return this.AppValidationResult;
+            }
+
+            #endregion
+
+            var languageDtos = await this.languageRepo.FindAllDtosAsync();
+            var interestsDtos = await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Audiovisual.Id);
+
+            // Interests
+            var projectInterests = new List<MusicBusinessRoundProjectInterest>();
+            if (cmd.Interests?.Any() == true)
+            {
+                foreach (var interestBaseCommands in cmd.Interests)
+                {
+                    foreach (var interestBaseCommand in interestBaseCommands?.Where(ibc => ibc.IsChecked)?.ToList())
+                    {
+                        projectInterests.Add(new MusicBusinessRoundProjectInterest(interestsDtos?.FirstOrDefault(id => id.Interest.Uid == interestBaseCommand.InterestUid)?.Interest, interestBaseCommand.AdditionalInfo, cmd.UserId));
+                    }
+                }
+            }
+
+            var musicProject = new MusicBusinessRoundProject(cmd.SellerAttendeeCollaboratorId, cmd.PlayerCategoriesThatHaveOrHadContract, cmd.AttachmentUrl, null
+                , null /*TODO:Converter objeto para o novo targetaudientes,activies blabla,cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<MusicBusinessRoundProjectTargetAudience>()*/
+                , projectInterests
+                ,null //TODO: PlayersCategory aguardando definicao
+                ,null,
+                cmd.MusicBusinessRoundProjectExpectationsForMeetings?.Select(d => new MusicBusinessRoundProjectExpectationsForMeeting(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList()
+                );
+            
+
+
+
+            this.musicBusinessRoundProjectRepo.Update(musicProject);
+            this.Uow.SaveChanges();
+            this.AppValidationResult.Data = musicProject;
+
+            return this.AppValidationResult;
+
             //var attendeeOrganization = await this.GetAttendeeOrganizationByUid(cmd.AttendeeOrganizationUid ?? Guid.Empty);
 
-            //#region Initial validations
 
-            //if (!this.ValidationResult.IsValid)
-            //{
-            //    this.AppValidationResult.Add(this.ValidationResult);
-            //    return this.AppValidationResult;
-            //}
-
-            //#endregion
 
             //var languageDtos = await this.languageRepo.FindAllDtosAsync();
             //var interestsDtos = await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Audiovisual.Id);
@@ -124,29 +167,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             //    projectModality
             //);
 
-            //if (new int[] { ProjectModality.Both.Id, ProjectModality.Pitching.Id }.Contains(projectModality.Id))
-            //{
-            //    if (!attendeeOrganization.IsCreatePitchingValid())
-            //    {
-            //        this.AppValidationResult.Add(attendeeOrganization.ValidationResult);
-            //        return this.AppValidationResult;
-            //    }
-            //}
-
-            //if (new int[] { ProjectModality.Both.Id, ProjectModality.BusinessRound.Id }.Contains(projectModality.Id))
-            //{
-            //    if (!attendeeOrganization.IsCreateBusinessRoundValid())
-            //    {
-            //        this.AppValidationResult.Add(attendeeOrganization.ValidationResult);
-            //        return this.AppValidationResult;
-            //    }
-            //}
-
-            //this.AttendeeOrganizationRepo.Update(attendeeOrganization);
-            //this.Uow.SaveChanges();
-            //this.AppValidationResult.Data = attendeeOrganization.GetLastCreatedProject();
-
-            return this.AppValidationResult;
 
             //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
 
