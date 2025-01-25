@@ -77,6 +77,27 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             /*this.AttachmentUrl = entity.AttachmentUrl;*/
         }
 
+        /// <summary>Updates the pre send properties.</summary>
+        /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
+        /// <param name="projectTypeUid">The project type uid.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="userUid">The user uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <param name="projectModalityUid">The project modality uid.</param>
+        public void UpdatePreSendProperties(
+            int collaboratorId,
+            int userId,
+            Guid userUid,
+            int? editionId,
+            Guid? editionUid
+        )
+        {
+            this.SellerAttendeeCollaboratorId = collaboratorId;
+            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
+        }
+
         /// <summary>Updates the dropdown properties.</summary>
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
@@ -87,6 +108,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         )
         {
             this.Activities = activities;
+            this.TargetAudiences = targetAudiences;
+        }
+
+        /// <summary>Updates the dropdown properties.</summary>
+        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public void UpdateDropdownProperties(
+            List<TargetAudience> targetAudiences,
+            string userInterfaceLanguage
+        )
+        {
             this.TargetAudiences = targetAudiences;
         }
 

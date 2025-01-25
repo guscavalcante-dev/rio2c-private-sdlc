@@ -286,6 +286,7 @@
     <Compile Include="CQRS\CommandsHandlers\Logistics\Availability\DeleteAvailabilityCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Logistics\Availability\UpdateAvailabilityCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Logistics\Availability\CreateAvailabilityCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Music\BusinessRoundProjects\CreateMusicBusinessRoundProjectCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\Pitching\DistributeMembersMusicPitchingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\PlayersExecutives\CreateMusicPlayerExecutiveCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\PlayersExecutives\UpdateMusicPlayerExecutiveCollaboratorCommandHandler.cs" />
