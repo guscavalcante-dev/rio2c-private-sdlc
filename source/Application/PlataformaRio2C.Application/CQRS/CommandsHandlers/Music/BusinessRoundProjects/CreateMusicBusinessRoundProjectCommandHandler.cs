@@ -105,21 +105,26 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             var musicProject = new MusicBusinessRoundProject(cmd.SellerAttendeeCollaboratorId, cmd.PlayerCategoriesThatHaveOrHadContract, cmd.AttachmentUrl, null
-                , null /*TODO:Converter objeto para o novo targetaudientes,activies blabla,cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<MusicBusinessRoundProjectTargetAudience>()*/
-                , projectInterests
+                ,null /*TODO:Converter objeto para o novo targetaudientes,activies blabla,cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<MusicBusinessRoundProjectTargetAudience>()*/
+                ,null //TODO: projectInterest. 
                 ,null //TODO: PlayersCategory aguardando definicao
                 ,null,
                 cmd.MusicBusinessRoundProjectExpectationsForMeetings?.Select(d => new MusicBusinessRoundProjectExpectationsForMeeting(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList()
+                ,cmd.UserId
                 );
-            
+            try
+            {
 
+                this.musicBusinessRoundProjectRepo.Create(musicProject);
+                this.Uow.SaveChanges();
+                this.AppValidationResult.Data = musicProject;
 
-
-            this.musicBusinessRoundProjectRepo.Update(musicProject);
-            this.Uow.SaveChanges();
-            this.AppValidationResult.Data = musicProject;
-
-            return this.AppValidationResult;
+                return this.AppValidationResult;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
 
             //var attendeeOrganization = await this.GetAttendeeOrganizationByUid(cmd.AttendeeOrganizationUid ?? Guid.Empty);
 

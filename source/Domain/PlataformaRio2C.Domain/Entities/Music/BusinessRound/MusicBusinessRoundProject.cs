@@ -78,8 +78,8 @@ namespace PlataformaRio2C.Domain.Entities
                ICollection<MusicBusinessRoundProjectInterest> musicBusinessRoundProjectInterests,
                ICollection<MusicBusinessRoundProjectPlayerCategory> playerCategories,
                ICollection<MusicBusinessRoundProjectActivity> musicBusinessRoundProjectActivities,
-               ICollection<MusicBusinessRoundProjectExpectationsForMeeting> musicBusinessRoundProjectExpectationsForMeetings
-)
+               ICollection<MusicBusinessRoundProjectExpectationsForMeeting> musicBusinessRoundProjectExpectationsForMeetings,
+               int userId)
         {
             SellerAttendeeCollaboratorId = sellerAttendeeCollaboratorId;
             PlayerCategoriesThatHaveOrHadContract = playerCategoriesThatHaveOrHadContract;
@@ -90,6 +90,9 @@ namespace PlataformaRio2C.Domain.Entities
             PlayerCategories = playerCategories ?? new List<MusicBusinessRoundProjectPlayerCategory>();
             MusicBusinessRoundProjectActivities = musicBusinessRoundProjectActivities ?? new List<MusicBusinessRoundProjectActivity>();
             MusicBusinessRoundProjectExpectationsForMeetings = musicBusinessRoundProjectExpectationsForMeetings ?? new List<MusicBusinessRoundProjectExpectationsForMeeting>();
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
         }
 
 

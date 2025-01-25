@@ -45,6 +45,10 @@ namespace PlataformaRio2C.Domain.Entities
                     new string[] { "AdditionalInfo" }));
             }
         }
+        public MusicBusinessRoundProjectInterest()
+        {
+                
+        }
 
         /// <summary>Initializes a new instance of the <see cref="ProjectInterest"/> class.</summary>
         /// <param name="interest">The interest.</param>
