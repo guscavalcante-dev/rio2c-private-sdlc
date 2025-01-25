@@ -858,6 +858,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
                 cmd.UpdateDropdownProperties(
                     await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
+                    await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
                     this.UserInterfaceLanguage
                 );
 
@@ -870,6 +871,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
                 cmd.UpdateDropdownProperties(
                     await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
+                    await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
                     this.UserInterfaceLanguage
                 );
 
@@ -880,7 +882,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
             try
             {
-                var project = result.Data as Project;
+                var project = result.Data as CreateMusicBusinessRoundProject;
                 if (project != null)
                 {
                     //return RedirectToAction("SendToPlayers", "BusinessRoundProjects", new { Area = "Music", id = project.Uid });

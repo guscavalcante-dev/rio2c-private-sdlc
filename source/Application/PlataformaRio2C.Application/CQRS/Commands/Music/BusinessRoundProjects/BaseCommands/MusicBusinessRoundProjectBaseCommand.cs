@@ -32,7 +32,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public int SellerAttendeeCollaboratorId { get; set; }
 
         [Display(Name = "PlayerCategoriesThatHaveOrHadContract", ResourceType = typeof(Labels))]
-        [RequiredIfEmpty("PlayerCategories", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        //TODO: Enable this when PlayersCategory is implemented; [RequiredIfEmpty("PlayerCategories", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(300, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string PlayerCategoriesThatHaveOrHadContract { get; set; }
 
@@ -40,6 +40,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(300, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string AttachmentUrl { get; set; }
         public List<Guid> TargetAudiencesUids { get; set; }
+        public List<Guid> ActivitiesUids { get; set; }
         public Guid? SellerAttendeeCollaboratorUid { get; private set; }
         public int ProjectBuyerEvaluationsCount { get; set; }
         public IEnumerable<ProjectInterestDto> ProjectInterestDtos { get; set; }
