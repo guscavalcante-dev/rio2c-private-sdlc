@@ -30,75 +30,142 @@
                             </a>
                         </div>
                         <div class="kt-widget__info mt-0 pl-0">
-                            <a href="@Url.Action("EvaluationDetails", "BusinessRoundProjects", new { Area = "Music", id = Model.Uid })" class="kt-widget__title">
-                                @(Model.SellerAttendeeCollaboratorDto?.Collaborator?.GetFullName())
+                            <a href="@Url.Action("Details", "Executives", new { Area = "", id = Model.SellerAttendeeCollaboratorDto?.Collaborator?.Uid })" target="_blank" class="kt-widget__title">
+                                @(Model.SellerAttendeeCollaboratorDto?.Collaborator?.GetStageNameOrBadgeOrFullName())
                             </a>
-                            @*<span class="kt-widget__desc">
-            @Labels.Participant: <a href="@Url.Action("Details", "Executives", new { Area = "", id = Model.SellerAttendeeCollaboratorDto?.Collaborator?.Uid })" target="_blank">@(Model.SellerAttendeeCollaboratorDto?.Collaborator?.GetFullName())</a>
-        </span>*@
-                            <span class="kt-widget__desc">
-                                @Labels.ParticipantProfile:
-                                @{
-                                    if (Model.MusicBusinessRoundProjectTargetAudienceDtos?.Any() == true)
+                            <div class="kt-widget__desc pt-3">
+                                @Labels.ParticipantProfile
+                            </div>
+                            <div class="kt-widget__desc pt-0">
+                                @if (Model.MusicBusinessRoundProjectTargetAudienceDtos?.Any() == true)
+                                {
+                                    foreach (var targetAudienceDto in Model.MusicBusinessRoundProjectTargetAudienceDtos)
                                     {
-                                        foreach (var targetAudienceDto in Model.MusicBusinessRoundProjectTargetAudienceDtos)
-                                        {
-                                            <span class="kt-badge kt-badge--inline kt-badge--info ml-2">@(targetAudienceDto.TargetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
-                                        }
+                                        <span class="kt-badge kt-badge--inline kt-badge--info kt-badge--md mt-1">@(targetAudienceDto.TargetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
                                     }
                                 }
-                            </span>
-                            <span class="kt-widget__desc">
-                                @Labels.LookingFor:
+                                else
+                                {
+                                    @("-")
+                                }
+                            </div>
+                            <div class="kt-widget__desc pt-4">
+                                @Labels.LookingFor
+                            </div>
+                            <div class="kt-widget__desc pt-0">
+                                @if (Model.MusicBusinessRoundProjectActivityDtos?.Any() == true)
+                                {
+                                    foreach (var activityDto in Model.MusicBusinessRoundProjectActivityDtos)
+                                    {
+                                        <span class="kt-badge kt-badge--inline kt-badge--info kt-badge--md mt-1">@(activityDto.Activity.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
+                                    }
+                                }
+                                else
+                                {
+                                    @("-")
+                                }
+                            </div>
+                            <div class="kt-widget__desc pt-4">
+                                @Labels.BusinessRoundProjectsObjetives
+                            </div>
+                            <div class="kt-widget__desc pt-0">
                                 @{
                                     var projectInterestsLookingForDtos = Model.GetAllInterestsByInterestGroupUid(InterestGroup.MusicLookingFor.Uid);
                                     if (projectInterestsLookingForDtos?.Any() == true)
                                     {
                                         foreach (var projectInterestLookingForDto in projectInterestsLookingForDtos)
                                         {
-                                            <span class="kt-badge kt-badge--inline kt-badge--info ml-2">@(projectInterestLookingForDto.Interest.GetNameTranslation(ViewBag.UserInterfaceLanguage))</span>
+                                            <span class="kt-badge kt-badge--inline kt-badge--info kt-badge--md mt-1">@(projectInterestLookingForDto.Interest.GetNameTranslation(ViewBag.UserInterfaceLanguage))</span>
                                         }
                                     }
+                                    else
+                                    {
+                                        @("-")
+                                    }
                                 }
-                            </span>
-                            <span class="kt-widget__desc">
-                                @Labels.Interest:
+                            </div>
+                            <div class="kt-widget__desc pt-4">
+                                @Labels.Interests
+                            </div>
+                            <div class="kt-widget__desc pt-0">
                                 @{
                                     var projectInterestsDtos = Model.GetAllInterestsByInterestGroupUid(InterestGroup.MusicOpportunitiesYouOffer.Uid);
                                     if (projectInterestsDtos?.Any() == true)
                                     {
                                         foreach (var projectInterestDto in projectInterestsDtos)
                                         {
-                                            <span class="kt-badge kt-badge--inline kt-badge--info ml-2">@(projectInterestDto.Interest.GetNameTranslation(ViewBag.UserInterfaceLanguage))</span>
+                                            <span class="kt-badge kt-badge--inline kt-badge--info kt-badge--md mt-1">@(projectInterestDto.Interest.GetNameTranslation(ViewBag.UserInterfaceLanguage))</span>
                                         }
                                     }
+                                    else
+                                    {
+                                        @("-")
+                                    }
                                 }
-                            </span>
+
+                            </div>
+                            <div class="kt-widget__desc pt-4">
+                                @Labels.PlayerCategoriesThatHaveOrHadContract
+                            </div>
+                            @if (Model.MusicBusinessRoundProjectPlayerCategoryDtos?.Any() == true)
+                            {
+                                <div class="kt-widget__desc pt-0">
+                                    @foreach (var playerCategoryDto in Model.MusicBusinessRoundProjectPlayerCategoryDtos)
+                                    {
+                                        <span class="kt-badge kt-badge--inline kt-badge--info kt-badge--md mt-1">@(playerCategoryDto.PlayerCategory.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
+                                    }
+                                    <span class="form-optional-input text-muted">
+                                        (@Labels.Companies: @(Model.PlayerCategoriesThatHaveOrHadContract?.GetDashIfNullOrEmpty()))
+                                    </span>
+                                </div>
+                            }
+                            else
+                            {
+                                @("-")
+                            }
+                            <div class="kt-widget__desc pt-4">
+                                @Labels.ExpectationsForMeeting
+                            </div>
+                            <div class="kt-widget__desc font-weight-normal pt-0">
+                                @(Model.GetProjectExpectationsDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value)
+                            </div>
+                            <div class="kt-widget__desc pt-4">
+                                @Labels.PresentationFile
+                            </div>
+                            @if (!string.IsNullOrEmpty(Model.AttachmentUrl))
+                            {
+                                <div class="kt-widget__desc font-weight-normal pt-0">
+                                    <a href="@Model.AttachmentUrl" target="_blank">
+                                        @(Model.AttachmentUrl.GetDashIfNullOrEmpty())
+                                    </a>
+                                </div>
+                            }
+                            else
+                            {
+                                @("-")
+                            }
                         </div>
                     </div>
                 </div>
                 <div class="kt-widget__body pb-0">
                     <div class="kt-widget__content">
-                        @Labels.ExpectationsForMeeting:
-                        @(Model.GetProjectExpectationsDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value)
-
                         @Html.Partial("Shared/_BuyersEvaluations", Model)
                     </div>
                 </div>
             </div>
         </div>
         <div class="row mt-20 pt-4 justify-content-end">
-            <div class="col-4 text-center">
-                <a href="@Url.Action("EvaluationDetails", "BusinessRoundProjects", new { Area = "Music", id = Model.Uid })" class="btn btn-brand">@Labels.View</a>
-            </div>
+            @*<div class="col-4 text-center">
+                    <a href="@Url.Action("EvaluationDetails", "BusinessRoundProjects", new { Area = "Music", id = Model.Uid })" class="btn btn-brand">@Labels.View</a>
+                </div>*@
             @if (editionDto?.IsMusicBusinessRoundProjectBuyerEvaluationOpen() == true)
             {
-                <div class="col-4 text-center">
+                <div class="col-6 text-center">
                     <button type="button" class="btn btn-success" onclick="ProjectsBuyerEvaluationUpdateWidget.showAcceptModal('@Model.Uid');">
                         <i class="fa fa-thumbs-up"></i> @Labels.AcceptProject
                     </button>
                 </div>
-                <div class="col-4 text-center">
+                <div class="col-6 text-center">
                     <button type="button" class="btn btn-danger" onclick="ProjectsBuyerEvaluationUpdateWidget.showRefuseModal('@Model.Uid');">
                         <i class="fa fa-thumbs-down"></i> @Labels.RefuseProject
                     </button>

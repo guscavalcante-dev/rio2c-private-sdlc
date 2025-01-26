@@ -10,6 +10,6 @@ namespace PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects
     public interface IMusicBusinessRoundProjectRepository : IRepository<MusicBusinessRoundProject>
     {
         Task<List<MusicBusinessRoundProjectDto>> FindAllMusicBusinessRoundProjectDtosToSellAsync(Guid attendeeOrganizationUid);
-        Task<IPagedList<MusicBusinessRoundProjectDto>> FindAllDtosToEvaluateAsync(Guid attendeeCollaboratorUid, string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int page, int pageSize);
+        Task<IPagedList<MusicBusinessRoundProjectDto>> FindAllDtosToEvaluateAsync(Guid attendeeCollaboratorUid, string searchKeywords, Guid? evaluationStatusUid, Guid? targetAudienceUid, Guid? interestAreaInterestUid, Guid? businessRoundObjetiveInterestsUid, int page, int pageSize);
     }
 }

@@ -19,9 +19,10 @@ namespace PlataformaRio2C.Domain.Dtos
 
         public IEnumerable<MusicBusinessRoundProjectTargetAudienceDto> MusicBusinessRoundProjectTargetAudienceDtos { get; set; }
         public IEnumerable<MusicBusinessRoundProjectInterestDto> MusicBusinessRoundProjectInterestDtos { get; set; }
-        public IEnumerable<MusicBusinessRoundProjectPlayerCategoryDto> PlayerCategoriesDtos { get; set; }
+        public IEnumerable<MusicBusinessRoundProjectPlayerCategoryDto> MusicBusinessRoundProjectPlayerCategoryDtos { get; set; }
         public IEnumerable<MusicBusinessRoundProjectExpectationsForMeetingDto> MusicBusinessRoundProjectExpectationsForMeetingDtos { get; set; }
         public IEnumerable<MusicBusinessRoundProjectBuyerEvaluationDto> MusicBusinessRoundProjectBuyerEvaluationDtos { get; set; }
+        public IEnumerable<MusicBusinessRoundProjectActivityDto> MusicBusinessRoundProjectActivityDtos { get; set; }
 
         public bool IsFinished()
         {
@@ -66,6 +67,12 @@ namespace PlataformaRio2C.Domain.Dtos
         {
             return this.MusicBusinessRoundProjectInterestDtos?.Count() ?? 0;
         }
+
+        #endregion
+
+        #region Activities
+
+
 
         #endregion
 

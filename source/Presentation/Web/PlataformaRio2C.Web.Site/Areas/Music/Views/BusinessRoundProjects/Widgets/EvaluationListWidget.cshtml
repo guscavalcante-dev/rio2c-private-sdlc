@@ -29,7 +29,15 @@
                     <div class="kt-pagination kt-pagination--brand justify-content-center justify-content-sm-between">
                         @Html.PagedListPager(
                             Model,
-                            page => Url.Action("ShowEvaluationListWidget", "BusinessRoundProjects", new { Area = "Music", searchKeywords = ViewBag.SearchKeywords, interestUid = ViewBag.InterestUid, evaluationStatusUid = ViewBag.EvaluationStatusUid, page, pageSize = ViewBag.PageSize }),
+                            page => Url.Action("ShowEvaluationListWidget", "BusinessRoundProjects", new { 
+                                Area = "Music",
+                                searchKeywords = ViewBag.SearchKeywords,
+                                evaluationStatusUid = ViewBag.EvaluationStatusUid,
+                                targetAudienceUid = ViewBag.TargetAudienceUid,
+                                interestAreaInterestUid = ViewBag.InterestAreaInterestUid,
+                                businessRoundObjetiveInterestsUid = ViewBag.BusinessRoundObjetiveInterestsUid,
+                                page,
+                                pageSize = ViewBag.PageSize }),
                             PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
                                 new PagedListRenderOptions
                                 {

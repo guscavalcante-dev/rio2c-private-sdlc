@@ -880,6 +880,7 @@
     <Content Include="Assets\js\innovation\projects\innovation.projects.presentation.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.technologies.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.tracks.widget.js" />
+    <Content Include="Assets\js\music\businessrounds\music.businessrounds.buyerevaluation.update.widget.js" />
     <Content Include="Assets\js\music\businessrounds\music.businessrounds.buyerevaluation.list.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.evaluators.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.socialnetworks.widget.js" />

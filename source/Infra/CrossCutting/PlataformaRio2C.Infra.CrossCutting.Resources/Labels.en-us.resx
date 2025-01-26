@@ -509,6 +509,9 @@ Material</value>
     <value>One-to-one-meetings</value>
     <comment>Rodadas de Negócios</comment>
   </data>
+  <data name="BusinessRoundObjective" xml:space="preserve">
+    <value>Business Round Objective</value>
+  </data>
   <data name="BusinessRoundProjectsObjetives" xml:space="preserve">
     <value>Objectives for the Meetings</value>
   </data>
@@ -1169,6 +1172,9 @@ Material</value>
   <data name="ExecutiveName" xml:space="preserve">
     <value>Executive Name</value>
     <comment>Nome do Executivo</comment>
+  </data>
+  <data name="ExecutiveProfile" xml:space="preserve">
+    <value>Executive Profile</value>
   </data>
   <data name="Executives" xml:space="preserve">
     <value>Executives</value>
@@ -1988,6 +1994,9 @@ Material</value>
     <value>Number of episodes</value>
     <comment>Número de episódios</comment>
   </data>
+  <data name="Objective" xml:space="preserve">
+    <value>Objective</value>
+  </data>
   <data name="Of" xml:space="preserve">
     <value>of</value>
     <comment>of</comment>
@@ -2181,7 +2190,7 @@ Material</value>
     <comment>Player</comment>
   </data>
   <data name="PlayerCategoriesThatHaveOrHadContract" xml:space="preserve">
-    <value>Player category (discursive)</value>
+    <value>Player categories that have/had contract</value>
   </data>
   <data name="PlayerDemand" xml:space="preserve">
     <value>Player Demand</value>
@@ -3475,6 +3484,9 @@ Material</value>
   </data>
   <data name="WhereToStay" xml:space="preserve">
     <value>Where to stay</value>
+  </data>
+  <data name="WhichCompanies" xml:space="preserve">
+    <value>Which companies?</value>
   </data>
   <data name="WhichEditionQ" xml:space="preserve">
     <value>When?</value>

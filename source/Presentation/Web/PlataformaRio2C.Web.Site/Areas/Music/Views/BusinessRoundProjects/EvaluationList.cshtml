@@ -2,8 +2,10 @@
 @{
     ViewBag.Title = Labels.ProjectsEvaluation;
     var editionDto = ViewBag.EditionDto as EditionDto;
-    var genreInterests = ViewBag.GenreInterests as List<InterestDto>;
     var projectEvaluationStatuses = ViewBag.ProjectEvaluationStatuses as List<PlataformaRio2C.Domain.Entities.ProjectEvaluationStatus>;
+    var targetAudienceDtos = ViewBag.TargetAudienceDtos as List<TargetAudienceDto>;
+    var interestAreaInterestDtos = ViewBag.InterestAreaInterestDtos as List<InterestDto>;
+    var businessRoundObjetiveInterestDtos = ViewBag.BusinessRoundObjetiveInterestDtos as List<InterestDto>;
 }
 <div class="kt-portlet">
     <div class="kt-portlet__body">
@@ -18,24 +20,48 @@
             </div>
         </div>
         <div class="row">
-            @*<div class="col-12 col-sm-6 mt-2">
-                <select name="InterestUid" id="InterestUid" class="form-control">
-                    <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Genre.ToLowerInvariant()))...</option>
-                    @foreach (var interestDto in genreInterests)
-                    {
-                        <option value="@interestDto.Interest.Uid" @(interestDto.Interest.Uid == ViewBag.InterestUid ? "selected" : string.Empty)>
-                            @interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
-                        </option>
-                    }
-                </select>
-            </div>*@
-            <div class="col-12 col-sm-6 mt-2">
+            <div class="col-md-6 col-sm-12 mt-2">
                 <select name="EvaluationStatusUid" id="EvaluationStatusUid" class="form-control">
                     <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Status.ToLowerInvariant()))...</option>
                     @foreach (var evaluationStatus in projectEvaluationStatuses)
                     {
                         <option value="@evaluationStatus.Uid" @(evaluationStatus.Uid == ViewBag.EvaluationStatusUid ? "selected" : string.Empty)>
                             @evaluationStatus.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                        </option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-6 col-sm-12 mt-2">
+                <select name="TargetAudienceUid" id="TargetAudienceUid" class="form-control">
+                    <option value="">@(string.Format(Labels.SelectAMEntity, Labels.ParticipantProfile.ToLowerInvariant()))...</option>
+                    @foreach (var targetAudienceDto in targetAudienceDtos)
+                    {
+                        <option value="@targetAudienceDto.Uid" @(targetAudienceDto.Uid == ViewBag.TargetAudienceUid ? "selected" : string.Empty)>
+                            @targetAudienceDto.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                        </option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-12 mt-2">
+                <select name="BusinessRoundObjetiveInterestsUid" id="BusinessRoundObjetiveInterestsUid" class="form-control">
+                    <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Objective.ToLowerInvariant()))...</option>
+                    @foreach (var interestDto in businessRoundObjetiveInterestDtos)
+                    {
+                        <option value="@interestDto.InterestUid" @(interestDto.InterestUid == ViewBag.BusinessRoundProjectObjetiveInterestsUid ? "selected" : string.Empty)>
+                            @interestDto.InterestName.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                        </option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-6 col-sm-12 mt-2">
+                <select name="InterestAreaInterestUid" id="InterestAreaInterestUid" class="form-control">
+                    <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Interest.ToLowerInvariant()))...</option>
+                    @foreach (var interestDto in interestAreaInterestDtos)
+                    {
+                        <option value="@interestDto.InterestUid" @(interestDto.InterestUid == ViewBag.InterestAreaInterestUid ? "selected" : string.Empty)>
+                            @interestDto.InterestName.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
                         </option>
                     }
                 </select>
@@ -89,8 +115,10 @@
         // Page translations ----------------------------------------------------------------------
         var translations = {
             selectPlaceholder: '@Labels.SelectAMEntity',
-            genre: '@Html.Raw(Labels.Genre.ToLowerInvariant())',
-            status: '@Labels.Status.ToLowerInvariant()'
+            status: '@Labels.Status.ToLowerInvariant()',
+            participantProfile: '@Html.Raw(Labels.ParticipantProfile.ToLowerInvariant())',
+            interest: '@Html.Raw(Labels.Interest.ToLowerInvariant())',
+            objective: '@Html.Raw(Labels.Objective.ToLowerInvariant())',
         };
 
         jQuery(document).ready(function () {

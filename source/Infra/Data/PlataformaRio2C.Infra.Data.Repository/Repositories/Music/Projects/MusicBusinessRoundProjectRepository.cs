@@ -125,6 +125,42 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
         }
 
         /// <summary>
+        /// Finds the by target audience.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="targetAudienceUid">The target audience uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<MusicBusinessRoundProject> FindByTargetAudience(this IQueryable<MusicBusinessRoundProject> query, Guid? targetAudienceUid)
+        {
+            if (targetAudienceUid != null)
+            {
+                query = query.Where(p => p.MusicBusinessRoundProjectTargetAudiences.Any(ta => !ta.IsDeleted && 
+                                                                                              !ta.TargetAudience.IsDeleted && 
+                                                                                              ta.TargetAudience.Uid == targetAudienceUid));
+            }
+
+            return query;
+        }
+
+        /// <summary>
+        /// Finds the by interest.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="interestUid">The interest uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<MusicBusinessRoundProject> FindByInterest(this IQueryable<MusicBusinessRoundProject> query, Guid? interestUid)
+        {
+            if (interestUid != null)
+            {
+                query = query.Where(p => p.MusicBusinessRoundProjectInterests.Any(i => !i.IsDeleted &&
+                                                                                       !i.Interest.IsDeleted &&
+                                                                                        i.Interest.Uid == interestUid));
+            }
+
+            return query;
+        }
+
+        /// <summary>
         /// Converts to listpagedasync.
         /// </summary>
         /// <param name="query">The query.</param>
@@ -218,7 +254,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
                                         }
                                     })
                                 },
-                                MusicBusinessRoundProjectTargetAudienceDtos = p.MusicBusinessRoundProjectTargetAudience
+                                MusicBusinessRoundProjectTargetAudienceDtos = p.MusicBusinessRoundProjectTargetAudiences
                                     .Where(ta => !ta.IsDeleted)
                                     .Select(ta => new MusicBusinessRoundProjectTargetAudienceDto
                                     {
@@ -267,19 +303,25 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
                         .ToListAsync();
         }
 
-        /// <summary>Finds all dtos to evaluate asynchronous.</summary>
+        /// <summary>
+        /// Finds all dtos to evaluate asynchronous.
+        /// </summary>
         /// <param name="attendeeCollaboratorUid">The attendee collaborator uid.</param>
         /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="interestUid">The interest uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="targetAudienceUid">The target audience uid.</param>
+        /// <param name="interestAreaInterestUid">The interest area interest uid.</param>
+        /// <param name="businessRoundObjetiveInterestsUid">The business round objetive interests uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         public async Task<IPagedList<MusicBusinessRoundProjectDto>> FindAllDtosToEvaluateAsync(
             Guid attendeeCollaboratorUid,
             string searchKeywords,
-            Guid? interestUid,
             Guid? evaluationStatusUid,
+            Guid? targetAudienceUid,
+            Guid? interestAreaInterestUid,
+            Guid? businessRoundObjetiveInterestsUid,
             int page,
             int pageSize)
         {
@@ -295,20 +337,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
                                 .FindByBuyerAttendeeCollabratorUid(attendeeCollaboratorUid)
                                 .IsFinished()
                                 .FindByKeywords(searchKeywords)
-                                //.FindByInterestUid(interestUid)
                                 .FindByProjectEvaluationStatus(evaluationStatusUid, attendeeCollaboratorUid)
+                                .FindByTargetAudience(targetAudienceUid)
+                                .FindByInterest(interestAreaInterestUid)
+                                .FindByInterest(businessRoundObjetiveInterestsUid)
                                 .Select(p => new MusicBusinessRoundProjectDto
                                 {
                                     Uid = p.Uid,
                                     CreateDate = p.CreateDate,
-                                    //Project = p,
+                                    PlayerCategoriesThatHaveOrHadContract = p.PlayerCategoriesThatHaveOrHadContract,
+                                    AttachmentUrl = p.AttachmentUrl,
                                     SellerAttendeeCollaboratorDto = new AttendeeCollaboratorDto
                                     {
                                         AttendeeCollaborator = p.SellerAttendeeCollaborator,
                                         Collaborator = p.SellerAttendeeCollaborator.Collaborator,
-                                        //Edition = p.SellerAttendeeOrganization.Edition
                                     },
-                                    MusicBusinessRoundProjectTargetAudienceDtos = p.MusicBusinessRoundProjectTargetAudience
+                                    MusicBusinessRoundProjectTargetAudienceDtos = p.MusicBusinessRoundProjectTargetAudiences
                                         .Where(ta => !ta.IsDeleted)
                                         .Select(ta => new MusicBusinessRoundProjectTargetAudienceDto
                                         {
@@ -330,12 +374,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
                                             Interest = pi.Interest,
                                             InterestGroup = pi.Interest.InterestGroup
                                         }),
-                                    PlayerCategoriesDtos = p.PlayerCategories
+                                    MusicBusinessRoundProjectPlayerCategoryDtos = p.MusicBusinessRoundProjectPlayerCategories
                                         .Where(pc => !pc.IsDeleted)
                                         .Select(pc => new MusicBusinessRoundProjectPlayerCategoryDto
                                         {
                                             MusicBusinessRoundProjectPlayerCategory = pc,
                                             PlayerCategory = pc.PlayerCategory
+                                        }),
+                                    MusicBusinessRoundProjectActivityDtos = p.MusicBusinessRoundProjectActivities
+                                        .Where(pa => !pa.IsDeleted)
+                                        .Select(pa => new MusicBusinessRoundProjectActivityDto
+                                        {
+                                            MusicBusinessRoundProjectActivity = pa,
+                                            Activity = pa.Activity
                                         }),
                                     MusicBusinessRoundProjectBuyerEvaluationDtos = p.MusicBusinessRoundProjectBuyerEvaluations
                                         .Where(pbe => !pbe.IsDeleted

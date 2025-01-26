@@ -471,6 +471,9 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/js/music/businessrounds/music.businessrounds.buyerevaluation.list.widget.js",
                 "~/Scripts/jquery.unobtrusive-ajax.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/music.businessrounds.buyerevaluation.update.widget.js").Include(
+                "~/Assets/js/music/businessrounds/music.businessrounds.buyerevaluation.update.widget.js"));
+
             #endregion
 
             #endregion

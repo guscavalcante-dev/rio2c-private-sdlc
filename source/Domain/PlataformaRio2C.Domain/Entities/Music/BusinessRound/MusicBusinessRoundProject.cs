@@ -29,9 +29,9 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset? FinishDate { get; private set; }
         public int ProjectBuyerEvaluationsCount { get; private set; }
         public virtual AttendeeCollaborator SellerAttendeeCollaborator { get; private set; }
-        public virtual ICollection<MusicBusinessRoundProjectTargetAudience> MusicBusinessRoundProjectTargetAudience { get; private set; }
+        public virtual ICollection<MusicBusinessRoundProjectTargetAudience> MusicBusinessRoundProjectTargetAudiences { get; private set; }
         public virtual ICollection<MusicBusinessRoundProjectInterest> MusicBusinessRoundProjectInterests { get; private set; }
-        public virtual ICollection<MusicBusinessRoundProjectPlayerCategory> PlayerCategories { get; private set; }
+        public virtual ICollection<MusicBusinessRoundProjectPlayerCategory> MusicBusinessRoundProjectPlayerCategories { get; private set; }
         public virtual ICollection<MusicBusinessRoundProjectActivity> MusicBusinessRoundProjectActivities { get; private set; }
         public virtual ICollection<MusicBusinessRoundProjectExpectationsForMeeting> MusicBusinessRoundProjectExpectationsForMeetings { get; private set; }
         public virtual ICollection<MusicBusinessRoundProjectBuyerEvaluation> MusicBusinessRoundProjectBuyerEvaluations { get; private set; }
@@ -61,9 +61,9 @@ namespace PlataformaRio2C.Domain.Entities
             FinishDate = finishDate;
             ProjectBuyerEvaluationsCount = projectBuyerEvaluationsCount;
             SellerAttendeeCollaborator = sellerAttendeeCollaborator;
-            MusicBusinessRoundProjectTargetAudience = musicBusinessRoundProjectTargetAudience ?? new List<MusicBusinessRoundProjectTargetAudience>();
+            MusicBusinessRoundProjectTargetAudiences = musicBusinessRoundProjectTargetAudience ?? new List<MusicBusinessRoundProjectTargetAudience>();
             MusicBusinessRoundProjectInterests = musicBusinessRoundProjectInterests ?? new List<MusicBusinessRoundProjectInterest>();
-            PlayerCategories = playerCategories ?? new List<MusicBusinessRoundProjectPlayerCategory>();
+            MusicBusinessRoundProjectPlayerCategories = playerCategories ?? new List<MusicBusinessRoundProjectPlayerCategory>();
             MusicBusinessRoundProjectActivities = musicBusinessRoundProjectActivities ?? new List<MusicBusinessRoundProjectActivity>();
             MusicBusinessRoundProjectExpectationsForMeetings = musicBusinessRoundProjectExpectationsForMeetings ?? new List<MusicBusinessRoundProjectExpectationsForMeeting>();
             MusicBusinessRoundProjectBuyerEvaluations = musicBusinessRoundProjectBuyerEvaluations ?? new List<MusicBusinessRoundProjectBuyerEvaluation>();
@@ -85,9 +85,9 @@ namespace PlataformaRio2C.Domain.Entities
             PlayerCategoriesThatHaveOrHadContract = playerCategoriesThatHaveOrHadContract;
             AttachmentUrl = attachmentUrl;
             FinishDate = finishDate;
-            MusicBusinessRoundProjectTargetAudience = musicBusinessRoundProjectTargetAudience ?? new List<MusicBusinessRoundProjectTargetAudience>();
+            MusicBusinessRoundProjectTargetAudiences = musicBusinessRoundProjectTargetAudience ?? new List<MusicBusinessRoundProjectTargetAudience>();
             MusicBusinessRoundProjectInterests = musicBusinessRoundProjectInterests ?? new List<MusicBusinessRoundProjectInterest>();
-            PlayerCategories = playerCategories ?? new List<MusicBusinessRoundProjectPlayerCategory>();
+            MusicBusinessRoundProjectPlayerCategories = playerCategories ?? new List<MusicBusinessRoundProjectPlayerCategory>();
             MusicBusinessRoundProjectActivities = musicBusinessRoundProjectActivities ?? new List<MusicBusinessRoundProjectActivity>();
             MusicBusinessRoundProjectExpectationsForMeetings = musicBusinessRoundProjectExpectationsForMeetings ?? new List<MusicBusinessRoundProjectExpectationsForMeeting>();
             this.IsDeleted = false;

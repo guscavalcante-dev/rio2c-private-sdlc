@@ -26,8 +26,10 @@ var ProjectsBuyerEvaluationListWidget = function () {
     var enableShowPlugins = function () {
         KTApp.initTooltips();
         MyRio2cCommon.initScroll();
-        //MyRio2cCommon.enableSelect2({ inputIdOrClass: '#InterestUid', allowClear: true, placeholder: translations.selectPlaceholder.replace('{0}', translations.genre) + '...' });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: '#EvaluationStatusUid', allowClear: true, placeholder: translations.selectPlaceholder.replace('{0}', translations.status) + '...' });
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: '#TargetAudienceUid', allowClear: true, placeholder: translations.selectPlaceholder.replace('{0}', translations.participantProfile) + '...' });
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: '#InterestAreaInterestUid', allowClear: true, placeholder: translations.selectPlaceholder.replace('{0}', translations.interest) + '...' });
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: '#BusinessRoundObjetiveInterestsUid', allowClear: true, placeholder: translations.selectPlaceholder.replace('{0}', translations.objective) + '...' });        
         enablePageSizeChangeEvent();
     };
 
@@ -38,8 +40,10 @@ var ProjectsBuyerEvaluationListWidget = function () {
 
         var jsonParameters = new Object();
         jsonParameters.searchKeywords = $('#SearchKeywords').val();
-        //jsonParameters.interestUid = $('#InterestUid').val();
         jsonParameters.evaluationStatusUid = $('#EvaluationStatusUid').val();
+        jsonParameters.targetAudienceUid = $('#TargetAudienceUid').val();
+        jsonParameters.interestAreaInterestUid = $('#InterestAreaInterestUid').val();
+        jsonParameters.businessRoundObjetiveInterestsUid = $('#BusinessRoundObjetiveInterestsUid').val();
         jsonParameters.page = $('#Page').val();
         jsonParameters.pageSize = $('#PageSize').val();
 
@@ -74,15 +78,29 @@ var ProjectsBuyerEvaluationListWidget = function () {
         });
         $('#SearchKeywords').addClass('search-event-enabled');
 
-        //$('#InterestUid').not('.change-event-enabled').on('change', function () {
-        //    search();
-        //});
-        //$('#InterestUid').addClass('change-event-enabled');
-
+        // Evaluation Status
         $('#EvaluationStatusUid').not('.change-event-enabled').on('change', function () {
             search();
         });
         $('#EvaluationStatusUid').addClass('change-event-enabled');
+
+        // Target Audience
+        $('#TargetAudienceUid').not('.change-event-enabled').on('change', function () {
+            search();
+        });
+        $('#TargetAudienceUid').addClass('change-event-enabled');
+
+        // Interest - Interest Area
+        $('#InterestAreaInterestUid').not('.change-event-enabled').on('change', function () {
+            search();
+        });
+        $('#InterestAreaInterestUid').addClass('change-event-enabled');
+
+        // Interest - Business Round Objetive
+        $('#BusinessRoundObjetiveInterestsUid').not('.change-event-enabled').on('change', function () {
+            search();
+        });
+        $('#BusinessRoundObjetiveInterestsUid').addClass('change-event-enabled');
     };
 
     // Pagination ---------------------------------------------------------------------------------

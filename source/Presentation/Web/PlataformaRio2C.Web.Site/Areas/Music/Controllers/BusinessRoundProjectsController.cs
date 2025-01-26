@@ -1167,16 +1167,27 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
         #region Evaluation List
 
-        /// <summary>Evaluations the list.</summary>
+        /// <summary>
+        /// Evaluations the list.
+        /// </summary>
         /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="interestUid">The interest uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="targetAudienceUid">The target audience uid.</param>
+        /// <param name="interestAreaInterestUid">The interest area interest uid.</param>
+        /// <param name="businessRoundObjetiveInterestsUid">The business round objetive interests uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.PlayerExecutiveMusic)]
         [HttpGet]
-        public async Task<ActionResult> EvaluationList(string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 10)
+        public async Task<ActionResult> EvaluationList(
+            string searchKeywords, 
+            Guid? evaluationStatusUid,
+            Guid? targetAudienceUid,
+            Guid? interestAreaInterestUid,
+            Guid? businessRoundObjetiveInterestsUid,
+            int? page = 1, 
+            int? pageSize = 10)
         {
             if (this.EditionDto?.IsMusicBusinessRoundProjectBuyerEvaluationStarted() != true)
             {
@@ -1192,27 +1203,42 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             #endregion
 
             ViewBag.SearchKeywords = searchKeywords;
-            ViewBag.InterestUid = interestUid;
             ViewBag.EvaluationStatusUid = evaluationStatusUid;
+            ViewBag.TargetAudienceUid = targetAudienceUid;
+            ViewBag.InterestAreaInterestUid = interestAreaInterestUid;
+            ViewBag.BusinessRoundObjetiveInterestsUid = businessRoundObjetiveInterestsUid;
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
 
-            //ViewBag.GenreInterests = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.AudiovisualGenre.Uid);
             ViewBag.ProjectEvaluationStatuses = await this.evaluationStatusRepository.FindAllAsync();
+            ViewBag.TargetAudienceDtos = await this.targetAudienceRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.Music.Id);
+            ViewBag.InterestAreaInterestDtos = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.MusicOpportunitiesYouOffer.Uid);
+            ViewBag.BusinessRoundObjetiveInterestDtos = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.MusicLookingFor.Uid);
 
             return View();
         }
 
-        /// <summary>Shows the evaluation list widget.</summary>
+        /// <summary>
+        /// Shows the evaluation list widget.
+        /// </summary>
         /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="interestUid">The interest uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="targetAudienceUid">The target audience uid.</param>
+        /// <param name="interestAreaInterestUid">The interest area interest uid.</param>
+        /// <param name="businessRoundObjetiveInterestsUid">The business round objetive interests uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.PlayerExecutiveMusic)]
         [HttpGet]
-        public async Task<ActionResult> ShowEvaluationListWidget(string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 10)
+        public async Task<ActionResult> ShowEvaluationListWidget(
+            string searchKeywords,
+            Guid? evaluationStatusUid,
+            Guid? targetAudienceUid,
+            Guid? interestAreaInterestUid,
+            Guid? businessRoundObjetiveInterestsUid,
+            int? page = 1,
+            int? pageSize = 10)
         {
             if (this.EditionDto?.IsMusicBusinessRoundProjectBuyerEvaluationStarted() != true)
             {
@@ -1222,14 +1248,18 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             var projects = await this.musicBusinessRoundProjectRepo.FindAllDtosToEvaluateAsync(
                 this.UserAccessControlDto?.EditionAttendeeCollaborator?.Uid ?? Guid.Empty,
                 searchKeywords,
-                interestUid,
                 evaluationStatusUid,
+                targetAudienceUid,
+                interestAreaInterestUid,
+                businessRoundObjetiveInterestsUid,
                 page.Value,
                 pageSize.Value);
 
             ViewBag.SearchKeywords = searchKeywords;
-            ViewBag.InterestUid = interestUid;
             ViewBag.EvaluationStatusUid = evaluationStatusUid;
+            ViewBag.TargetAudienceUid = targetAudienceUid;
+            ViewBag.InterestAreaInterestUid = interestAreaInterestUid;
+            ViewBag.BusinessRoundObjetiveInterestsUid = businessRoundObjetiveInterestsUid;
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
 

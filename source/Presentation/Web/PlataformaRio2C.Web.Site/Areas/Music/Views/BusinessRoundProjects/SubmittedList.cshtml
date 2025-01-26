@@ -23,8 +23,7 @@
         {
             foreach (var projectDto in Model)
             {
-                var projectTitle = projectDto.GetProjectExpectationsDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value;
-
+                var projectTitle = projectDto.SellerAttendeeCollaboratorDto?.Collaborator?.GetStageNameOrBadgeOrFullName();
                 <div class="row">
                     <div class="col-md-12">
                         <div class="kt-portlet kt-portlet--height-fluid">
@@ -33,9 +32,25 @@
                                     <div class="kt-widget kt-widget--project-1" style="border-bottom: 0.07rem dashed #ebedf2;">
                                         <div class="kt-widget__head pt-0">
                                             <div class="kt-widget__label">
+                                                <div class="kt-widget__media" style="padding-right: 10px">
+                                                    <a href="@Url.Action("Details", "Executives", new { Area = "", id = projectDto.SellerAttendeeCollaboratorDto?.Collaborator?.Uid })" target="_blank">
+                                                        @if (projectDto.SellerAttendeeCollaboratorDto?.Collaborator?.HasImage() == true)
+                                                        {
+                                                            <span class="kt-media kt-media--lg kt-margin-r-5 kt-margin-t-5">
+                                                                <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, projectDto.SellerAttendeeCollaboratorDto.Collaborator.Uid, projectDto.SellerAttendeeCollaboratorDto.Collaborator.ImageUploadDate, true)" alt="" style="max-width: 65px; max-height: 65px;">
+                                                            </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="kt-userpic kt-userpic--lg kt-userpic--brand kt-margin-r-5 kt-margin-t-5">
+                                                                <span>@(projectDto.SellerAttendeeCollaboratorDto?.Collaborator?.GetDisplayNameAbbreviation())</span>
+                                                            </div>
+                                                        }
+                                                    </a>
+                                                </div>
                                                 <div class="kt-widget__info mt-0 pl-0">
-                                                    @if (!projectDto.IsFakeProject) 
-                                                    { 
+                                                    @if (!projectDto.IsFakeProject)
+                                                    {
                                                         <a href="@Url.Action("SubmittedDetails", "BusinessRoundProjects", new { id = projectDto.Uid, Area = "Music" })" class="kt-widget__title">
                                                             @projectTitle
                                                         </a>
@@ -48,40 +63,66 @@
                                                     }
                                                     @if (!projectDto.IsFakeProject)
                                                     {
-                                                        <span class="kt-widget__desc">
-                                                            @Labels.Participant: @projectDto.SellerAttendeeCollaboratorDto.Collaborator.GetFullName()
-                                                        </span>
-                                                        <span class="kt-widget__desc">
-                                                            @Labels.SocialName: @(projectDto.SellerAttendeeCollaboratorDto.Collaborator.StageName.GetDashIfNullOrEmpty())
-                                                        </span>
-                                                        <span class="kt-widget__desc">
-                                                            @Labels.JobTitle: @(projectDto.SellerAttendeeCollaboratorDto.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage).Value)
-                                                        </span>
-                                                        <span class="kt-widget__desc">
-                                                            @Labels.CompanyName: @projectDto.SellerAttendeeCollaboratorDto.Collaborator.CompanyName.GetDashIfNullOrEmpty()
-                                                        </span>
-                                                        <span class="kt-widget__desc">
-                                                            @Labels.Document: @projectDto.SellerAttendeeCollaboratorDto.Collaborator.Document.GetDashIfNullOrEmpty()
-                                                        </span>
-                                                        <span class="kt-widget__desc">
-                                                            @Labels.Email: @projectDto.SellerAttendeeCollaboratorDto.Collaborator.PublicEmail.GetDashIfNullOrEmpty()
-                                                        </span>
-                                                        <span class="kt-widget__desc">
-                                                            @Labels.PhoneNumber: @projectDto.SellerAttendeeCollaboratorDto.Collaborator.PhoneNumber.GetDashIfNullOrEmpty()
-                                                        </span>
-                                                        <span class="kt-widget__desc">
-                                                            @Labels.ParticipantProfile:
-                                                            @{
-                                                                if (projectDto.MusicBusinessRoundProjectTargetAudienceDtos?.Any() == true)
+                                                        <div class="kt-widget__desc pt-3">
+                                                            @Labels.ParticipantProfile
+                                                        </div>
+                                                        <div class="kt-widget__desc pt-0">
+                                                            @if (projectDto.MusicBusinessRoundProjectTargetAudienceDtos?.Any() == true)
+                                                            {
+                                                                foreach (var targetAudienceDto in projectDto.MusicBusinessRoundProjectTargetAudienceDtos)
                                                                 {
-                                                                    foreach (var targetAudienceDto in projectDto.MusicBusinessRoundProjectTargetAudienceDtos)
-                                                                    {
-                                                                        <span class="kt-badge kt-badge--inline kt-badge--info">@(targetAudienceDto.TargetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
-
-                                                                    }
+                                                                    <span class="kt-badge kt-badge--inline kt-badge--info kt-badge--md mt-1">@(targetAudienceDto.TargetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
                                                                 }
                                                             }
-                                                        </span>
+                                                            else
+                                                            {
+                                                                @("-")
+                                                            }
+                                                        </div>
+                                                        <div class="kt-widget__desc pt-4">
+                                                            @Labels.BusinessRoundProjectsObjetives
+                                                        </div>
+                                                        <div class="kt-widget__desc pt-0">
+                                                            @{
+                                                                var projectInterestsLookingForDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.MusicLookingFor.Uid);
+                                                                if (projectInterestsLookingForDtos?.Any() == true)
+                                                                {
+                                                                    foreach (var projectInterestLookingForDto in projectInterestsLookingForDtos)
+                                                                    {
+                                                                        <span class="kt-badge kt-badge--inline kt-badge--info kt-badge--md mt-1">@(projectInterestLookingForDto.Interest.GetNameTranslation(ViewBag.UserInterfaceLanguage))</span>
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    @("-")
+                                                                }
+                                                            }
+                                                        </div>
+                                                        <div class="kt-widget__desc pt-4">
+                                                            @Labels.Interests
+                                                        </div>
+                                                        <div class="kt-widget__desc pt-0">
+                                                            @{
+                                                                var projectInterestsDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.MusicOpportunitiesYouOffer.Uid);
+                                                                if (projectInterestsDtos?.Any() == true)
+                                                                {
+                                                                    foreach (var projectInterestDto in projectInterestsDtos)
+                                                                    {
+                                                                        <span class="kt-badge kt-badge--inline kt-badge--info kt-badge--md mt-1">@(projectInterestDto.Interest.GetNameTranslation(ViewBag.UserInterfaceLanguage))</span>
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    @("-")
+                                                                }
+                                                            }
+                                                        </div>
+                                                        <div class="kt-widget__desc pt-4">
+                                                            @Labels.ExpectationsForMeeting
+                                                        </div>
+                                                        <div class="kt-widget__desc font-weight-normal pt-0">
+                                                            @(projectDto.GetProjectExpectationsDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value)
+                                                        </div>
                                                     }
                                                 </div>
                                             </div>
@@ -89,11 +130,8 @@
                                         <div class="kt-widget__body pb-0">
                                             @if (!projectDto.IsFakeProject)
                                             {
-                                                <span class="kt-widget__text mt-0">
-                                                    @(Url.Action(projectDto.GetProjectExpectationsDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value))
-                                                </span>
-                                                <div class="kt-widget__content">
-                                                    <div class="kt-widget__details" style="width: 100%;">
+                                                <div class="kt-widget__content pt-0">
+                                                    <div class="kt-widget__details pt-0" style="width: 100%;">
                                                         @if (projectDto.MusicBusinessRoundProjectBuyerEvaluationDtos?.Any() == true)
                                                         {
                                                             <span class="kt-widget__subtitle">@Labels.PlayersSelectedForEvaluation:</span>
@@ -119,20 +157,9 @@
                                                                                     </div>
                                                                                     <div class="kt-widget__content pt-0 d-flex flex-column">
                                                                                         <div class="kt-widget__section mx-auto">
-                                                                                            <a href="@Url.Action("Details", "Companies", new {id = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid})" class="kt-widget__username" target="_blank" style="min-height: 70px;">
+                                                                                            <a href="@Url.Action("Details", "Companies", new { Area = "", id = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid})" class="kt-widget__username" target="_blank" style="min-height: 70px;">
                                                                                                 <small>@projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.TradeName</small>
                                                                                             </a>
-                                                                                            @if (projectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.Organization?.IsVirtualMeeting != null)
-                                                                                            {
-                                                                                                var isVirtualMeeting = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.IsVirtualMeeting == true;
-                                                                                                var tooltipTile = string.Format(Messages.PlayerMeetingPreference, (isVirtualMeeting ? Labels.RemoteF : Labels.Presential).ToLowerInvariant());
-
-                                                                                                <div class="kt-widget__username text-center mt-0 pt-0">
-                                                                                                    <span class="kt-badge kt-badge--inline kt-badge--warning mt-2 kt-font-boldest" data-toggle="tooltip" data-placement="right" title="@tooltipTile" style="cursor: pointer;">
-                                                                                                        @(isVirtualMeeting ? Labels.Remote : Labels.Presential)
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            }
                                                                                             @if (isEvaluationReleasedForDisclosure)
                                                                                             {
                                                                                                 var color = "warning";

@@ -19,6 +19,14 @@ namespace PlataformaRio2C.Domain.Entities
 {
     public class MusicBusinessRoundProjectActivity : Entity
     {
+        public static readonly int AdditionalInfoMaxLength = 200;
+
+        public int MusicBusinessRoundProjectId { get; private set; }
+        public int ActivityId { get; private set; }
+        public virtual MusicBusinessRoundProject MusicBusinessRoundProject { get; private set; }
+        public virtual Activity Activity { get; private set; }
+        public string AdditionalInfo { get; private set; }
+
         /// <summary>Initializes a new instance of the <see cref="OrganizationActivity"/> class.</summary>
         /// <param name="activity">The activity.</param>
         /// <param name="additionalInfo">The additional information.</param>
@@ -37,14 +45,6 @@ namespace PlataformaRio2C.Domain.Entities
         {
                 
         }
-
-        public static readonly int AdditionalInfoMaxLength = 200;
-
-        public int MusicBusinessRoundProjectId { get; private set; }
-        public int ActivityId { get; private set; }
-        public virtual MusicBusinessRoundProject MusicBusinessRoundProject { get; private set; }
-        public virtual Activity Activity { get; private set; }
-        public string AdditionalInfo { get; private set; }
 
         public override bool IsValid()
         {
