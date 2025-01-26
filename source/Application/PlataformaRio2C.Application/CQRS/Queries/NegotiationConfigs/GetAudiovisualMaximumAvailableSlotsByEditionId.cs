@@ -6,7 +6,7 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 10-01-2024
 // ***********************************************************************
-// <copyright file="GetMaximumAvailableSlotsByEditionId.cs" company="Softo">
+// <copyright file="GetAudiovisualMaximumAvailableSlotsByEditionId.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -15,16 +15,16 @@ using PlataformaRio2C.Application.CQRS.Dtos;
 
 namespace PlataformaRio2C.Application.CQRS.Queries
 {
-    /// <summary>GetMaximumAvailableSlotsByEditionId</summary>
-    public class GetMaximumAvailableSlotsByEditionId : BaseQuery<GetMaximumAvailableSlotsByEditionIdResponseDto>
+    /// <summary>GetAudiovisualMaximumAvailableSlotsByEditionId</summary>
+    public class GetAudiovisualMaximumAvailableSlotsByEditionId : BaseQuery<GetAudiovisualMaximumAvailableSlotsByEditionIdResponseDto>
     {
         public int EditionId { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetMaximumAvailableSlotsByEditionId" /> class.
+        /// Initializes a new instance of the <see cref="GetAudiovisualMaximumAvailableSlotsByEditionId" /> class.
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
-        public GetMaximumAvailableSlotsByEditionId(int editionId)
+        public GetAudiovisualMaximumAvailableSlotsByEditionId(int editionId)
         {
             this.EditionId = editionId;
         }

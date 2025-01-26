@@ -70,12 +70,6 @@ namespace PlataformaRio2C.Domain.Dtos
 
         #endregion
 
-        #region Activities
-
-
-
-        #endregion
-
         #region Translations
 
         /// <summary>
