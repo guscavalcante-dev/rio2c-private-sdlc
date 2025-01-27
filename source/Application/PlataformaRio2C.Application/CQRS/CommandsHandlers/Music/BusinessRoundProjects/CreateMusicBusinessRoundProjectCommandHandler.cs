@@ -108,7 +108,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             var musicProject = new MusicBusinessRoundProject(cmd.SellerAttendeeCollaboratorId, cmd.PlayerCategoriesThatHaveOrHadContract, cmd.AttachmentUrl, null
-                ,null /*TODO:Converter objeto para o novo targetaudientes,activies blabla,cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<MusicBusinessRoundProjectTargetAudience>()*/
+                ,cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<TargetAudience>()
                 ,projectInterests
                 , cmd.PlayerCategoriesUids?.Any() == true ? await this.playersCategoryRepo.FindAllByUidsAsync(cmd.PlayerCategoriesUids) : new List<PlayerCategory>()
                 , null, //TODO: Trazer activies UIDS e carregar para o novo objeto

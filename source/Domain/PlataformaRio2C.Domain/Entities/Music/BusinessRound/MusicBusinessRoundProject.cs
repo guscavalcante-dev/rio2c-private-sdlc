@@ -107,7 +107,7 @@ namespace PlataformaRio2C.Domain.Entities
             string playerCategoriesThatHaveOrHadContract,
             string attachmentUrl,
             DateTimeOffset? finishDate,
-            ICollection<MusicBusinessRoundProjectTargetAudience> musicBusinessRoundProjectTargetAudience,
+            ICollection<TargetAudience> musicBusinessRoundProjectTargetAudience,
             ICollection<MusicBusinessRoundProjectInterest> musicBusinessRoundProjectInterests,
             ICollection<PlayerCategory> playerCategories,
             ICollection<MusicBusinessRoundProjectActivity> musicBusinessRoundProjectActivities,
@@ -118,8 +118,17 @@ namespace PlataformaRio2C.Domain.Entities
             this.PlayerCategoriesThatHaveOrHadContract = playerCategoriesThatHaveOrHadContract;
             this.AttachmentUrl = attachmentUrl;
             this.FinishDate = finishDate;
-            this.MusicBusinessRoundProjectTargetAudiences = musicBusinessRoundProjectTargetAudience ?? new List<MusicBusinessRoundProjectTargetAudience>();
-            this.MusicBusinessRoundProjectInterests = musicBusinessRoundProjectInterests ?? new List<MusicBusinessRoundProjectInterest>();
+
+            // casting TargetAudience into MusicBusinessRoundProjectTargetAudience
+            this.MusicBusinessRoundProjectTargetAudiences = musicBusinessRoundProjectTargetAudience?
+                .Select(targetAudience => new MusicBusinessRoundProjectTargetAudience(
+                    this.Id,              
+                    targetAudience,
+                    userId,
+                    string.Empty          
+                )).ToList() ?? new List<MusicBusinessRoundProjectTargetAudience>();
+
+            // casting playerCategories into MusicBusinessRoundProjectPlayerCategory
             this.MusicBusinessRoundProjectPlayerCategories = playerCategories?
               .Select(playerCategory => new MusicBusinessRoundProjectPlayerCategory(
                   this.Id,             
@@ -127,6 +136,8 @@ namespace PlataformaRio2C.Domain.Entities
                   string.Empty,
                   userId
               )).ToList() ?? new List<MusicBusinessRoundProjectPlayerCategory>();
+
+            this.MusicBusinessRoundProjectInterests = musicBusinessRoundProjectInterests ?? new List<MusicBusinessRoundProjectInterest>();
 
 
             this.MusicBusinessRoundProjectActivities = musicBusinessRoundProjectActivities ?? new List<MusicBusinessRoundProjectActivity>();

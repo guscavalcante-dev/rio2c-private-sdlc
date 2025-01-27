@@ -18,8 +18,26 @@ namespace PlataformaRio2C.Domain.Entities
 {
     public class MusicBusinessRoundProjectTargetAudience : Entity
     {
-        public static readonly int AdditionalInfoMaxLength = 200;
+        public MusicBusinessRoundProjectTargetAudience()
+        {
+                
+        }
+        public MusicBusinessRoundProjectTargetAudience(
+            int musicBusinessRoundProjectId,
+            TargetAudience targetAudience,
+            int userId,
+            string additionalInfo)
+        {
+            this.MusicBusinessRoundProjectId = musicBusinessRoundProjectId;
+            this.TargetAudienceId = targetAudience.Id;
+            this.TargetAudience = targetAudience;
+            this.AdditionalInfo = additionalInfo;
+            this.UpdateUserId = userId;
+            this.CreateUserId = userId;
+            this.CreateDate = System.DateTimeOffset.Now;
+        }
 
+        public static readonly int AdditionalInfoMaxLength = 200;
         public int MusicBusinessRoundProjectId { get; private set; }
         public int TargetAudienceId { get; private set; }
         public virtual MusicBusinessRoundProject MusicBusinessRoundProject { get; private set; }
