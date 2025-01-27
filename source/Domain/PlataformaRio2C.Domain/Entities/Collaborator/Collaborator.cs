@@ -2628,7 +2628,15 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Collaborator"/> class.
+        /// </summary>
+        /// <param name="badge">The badge.</param>
+        public Collaborator(string badge)
+        {
+            this.Badge = badge;
+        }
+
         protected Collaborator()
         {
         }

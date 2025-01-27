@@ -134,13 +134,9 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                     {
                         IsFakeProject = true,
 
-                        MusicBusinessRoundProjectExpectationsForMeetingDtos = new List<MusicBusinessRoundProjectExpectationsForMeetingDto>
+                        SellerAttendeeCollaboratorDto = new AttendeeCollaboratorDto()
                         {
-                            new MusicBusinessRoundProjectExpectationsForMeetingDto
-                            {
-                                Value = Labels.Project + " " + i, //ProjectTitle = new ProjectTitle(Labels.Project + " " + i, new Language("", ViewBag.UserInterfaceLanguage), 0),
-                                Language = new Language("", ViewBag.UserInterfaceLanguage)
-                            }
+                            Collaborator = new Collaborator($@"{Labels.Project} {i}")
                         }
                     });
                 }
