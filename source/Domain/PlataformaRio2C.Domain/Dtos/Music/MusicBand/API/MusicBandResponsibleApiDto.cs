@@ -20,7 +20,7 @@ namespace PlataformaRio2C.Domain.Dtos
     public class MusicBandResponsibleApiDto
     {
         [JsonRequired]
-        [JsonProperty(PropertyName = "stagename", Order = 100)]
+        [JsonProperty(PropertyName = "stageName", Order = 100)]
         public string StageName { get; set; }
 
         [JsonProperty(PropertyName = "name", Order = 150)]
