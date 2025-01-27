@@ -85,6 +85,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
+        /// Finds the by document.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="document">The document.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> FindByDocument(this IQueryable<Collaborator> query, string document)
+        {
+            query = query.Where(c => c.Document == document);
+
+            return query;
+        }
+
+        /// <summary>
         /// Finds the by admin role name and admin collaborator type name and by edition identifier.
         /// </summary>
         /// <param name="query">The query.</param>
@@ -1250,6 +1263,109 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                 AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
                                                                 InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
                                                                 MusicProducerTermsAcceptanceDate  = ac.MusicProducerTermsAcceptanceDate,
+                                                                MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
+                                                                AudiovisualProducerBusinessRoundTermsAcceptanceDate = ac.AudiovisualProducerBusinessRoundTermsAcceptanceDate,
+                                                                AudiovisualProducerPitchingTermsAcceptanceDate = ac.AudiovisualProducerPitchingTermsAcceptanceDate,
+                                                                SpeakerTermsAcceptanceDate = ac.SpeakerTermsAcceptanceDate
+                                                            }).FirstOrDefault(),
+            }).FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the by document asynchronous.
+        /// </summary>
+        /// <param name="document">The document.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<CollaboratorDto> FindByDocumentAsync(string document, int? editionId)
+        {
+            var query = this.GetBaseQuery()
+                               .FindByDocument(document);
+
+            return await query.Select(c => new CollaboratorDto
+            {
+                Id = c.Id,
+                Uid = c.Uid,
+                FirstName = c.FirstName,
+                LastNames = c.LastNames,
+                Badge = c.Badge,
+                Email = c.User.Email,
+                PhoneNumber = c.PhoneNumber,
+                CellPhone = c.CellPhone,
+                PublicEmail = c.PublicEmail,
+                BirthDate = c.BirthDate,
+                Gender = c.Gender,
+                Industry = c.Industry,
+                CollaboratorRole = c.Role,
+                CollaboratorGenderAdditionalInfo = c.CollaboratorGenderAdditionalInfo,
+                CollaboratorIndustryAdditionalInfo = c.CollaboratorIndustryAdditionalInfo,
+                CollaboratorRoleAdditionalInfo = c.CollaboratorRoleAdditionalInfo,
+                HasAnySpecialNeeds = c.HasAnySpecialNeeds,
+                SpecialNeedsDescription = c.SpecialNeedsDescription,
+                EditionsUids = c.EditionParticipantions.Where(p => !p.IsDeleted).Select(p => p.Edition.Uid).ToList(),
+                ImageUploadDate = c.ImageUploadDate,
+                Website = c.Website,
+                Linkedin = c.Linkedin,
+                Twitter = c.Twitter,
+                Instagram = c.Instagram,
+                Youtube = c.Youtube,
+                CreateDate = c.CreateDate,
+                CreateUserId = c.CreateUserId,
+                UpdateDate = c.UpdateDate,
+                UpdateUserId = c.UpdateUserId,
+                Roles = c.User.Roles,
+                UpdaterBaseDto = new UserBaseDto
+                {
+                    Id = c.Updater.Id,
+                    Uid = c.Updater.Uid,
+                    Name = c.Updater.Name,
+                    Email = c.Updater.Email
+                },
+                JobTitleBaseDtos = c.JobTitles.Select(d => new CollaboratorJobTitleBaseDto
+                {
+                    Id = d.Id,
+                    Uid = d.Uid,
+                    Value = d.Value,
+                    LanguageDto = new LanguageBaseDto
+                    {
+                        Id = d.Language.Id,
+                        Uid = d.Language.Uid,
+                        Name = d.Language.Name,
+                        Code = d.Language.Code
+                    }
+                }),
+                MiniBioBaseDtos = c.MiniBios.Select(d => new CollaboratorMiniBioBaseDto
+                {
+                    Id = d.Id,
+                    Uid = d.Uid,
+                    Value = d.Value,
+                    LanguageDto = new LanguageBaseDto
+                    {
+                        Id = d.Language.Id,
+                        Uid = d.Language.Uid,
+                        Name = d.Language.Name,
+                        Code = d.Language.Code
+                    }
+                }),
+                EditionAttendeeCollaborator = editionId.HasValue ? c.AttendeeCollaborators.FirstOrDefault(ac => ac.EditionId == editionId
+                                                                                                                && !ac.Edition.IsDeleted
+                                                                                                                && !ac.IsDeleted
+                                                                                                                && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted)) : null,
+
+                EditionAttendeeCollaboratorBaseDto = c.AttendeeCollaborators
+                                                            .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                            .Select(ac => new AttendeeCollaboratorBaseDto
+                                                            {
+                                                                Id = ac.Id,
+                                                                Uid = ac.Uid,
+                                                                WelcomeEmailSendDate = ac.WelcomeEmailSendDate,
+                                                                OnboardingStartDate = ac.OnboardingStartDate,
+                                                                OnboardingFinishDate = ac.OnboardingFinishDate,
+                                                                OnboardingUserDate = ac.OnboardingUserDate,
+                                                                OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
+                                                                AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
+                                                                InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
+                                                                MusicProducerTermsAcceptanceDate = ac.MusicProducerTermsAcceptanceDate,
                                                                 MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
                                                                 AudiovisualProducerBusinessRoundTermsAcceptanceDate = ac.AudiovisualProducerBusinessRoundTermsAcceptanceDate,
                                                                 AudiovisualProducerPitchingTermsAcceptanceDate = ac.AudiovisualProducerPitchingTermsAcceptanceDate,
