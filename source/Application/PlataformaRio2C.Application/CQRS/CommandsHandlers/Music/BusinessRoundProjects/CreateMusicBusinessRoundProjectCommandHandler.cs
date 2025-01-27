@@ -20,6 +20,7 @@ using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Interfaces.Repositories.Music.BusinessRoundProjects;
 using PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
@@ -35,7 +36,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IProjectModalityRepository projectModalityRepo;
         private readonly IMusicBusinessRoundProjectRepository musicBusinessRoundProjectRepo;
         private readonly IActivityRepository activityRepo;
-
+        private readonly IPlayersCategoryRepository playersCategoryRepo;
 
         /// <summary>Initializes a new instance of the <see cref="CreateAudiovisualBusinessRoundProjectCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
@@ -58,7 +59,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IInterestRepository interestRepository,
             IProjectModalityRepository projectModalityRepo,
             IMusicBusinessRoundProjectRepository musicProjectRepo,
-            IActivityRepository activityRepo)
+            IActivityRepository activityRepo,
+            IPlayersCategoryRepository playersCategoryRepo)
             : base(eventBus, uow, attendeeOrganizationRepository, projectRepository)
         {
             this.musicBusinessRoundProjectRepo = musicProjectRepo;
@@ -68,6 +70,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.interestRepo = interestRepository;
             this.projectModalityRepo = projectModalityRepo;
             this.activityRepo = activityRepo;
+            this.playersCategoryRepo = playersCategoryRepo;
         }
 
         /// <summary>Handles the specified create project.</summary>
@@ -107,8 +110,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var musicProject = new MusicBusinessRoundProject(cmd.SellerAttendeeCollaboratorId, cmd.PlayerCategoriesThatHaveOrHadContract, cmd.AttachmentUrl, null
                 ,null /*TODO:Converter objeto para o novo targetaudientes,activies blabla,cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<MusicBusinessRoundProjectTargetAudience>()*/
                 ,projectInterests
-                , null //TODO: PlayersCategory aguardando definicao
-                ,null, //TODO: Trazer activies UIDS e carregar para o novo objeto
+                , cmd.PlayerCategoriesUids?.Any() == true ? await this.playersCategoryRepo.FindAllByUidsAsync(cmd.PlayerCategoriesUids) : new List<PlayerCategory>()
+                , null, //TODO: Trazer activies UIDS e carregar para o novo objeto
                 cmd.MusicBusinessRoundProjectExpectationsForMeetings?.Select(d => new MusicBusinessRoundProjectExpectationsForMeeting(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList()
                 ,cmd.UserId
                 );

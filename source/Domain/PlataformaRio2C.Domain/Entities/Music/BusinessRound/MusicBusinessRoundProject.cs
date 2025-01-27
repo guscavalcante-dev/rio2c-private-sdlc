@@ -109,7 +109,7 @@ namespace PlataformaRio2C.Domain.Entities
             DateTimeOffset? finishDate,
             ICollection<MusicBusinessRoundProjectTargetAudience> musicBusinessRoundProjectTargetAudience,
             ICollection<MusicBusinessRoundProjectInterest> musicBusinessRoundProjectInterests,
-            ICollection<MusicBusinessRoundProjectPlayerCategory> playerCategories,
+            ICollection<PlayerCategory> playerCategories,
             ICollection<MusicBusinessRoundProjectActivity> musicBusinessRoundProjectActivities,
             ICollection<MusicBusinessRoundProjectExpectationsForMeeting> musicBusinessRoundProjectExpectationsForMeetings,
             int userId)
@@ -120,14 +120,22 @@ namespace PlataformaRio2C.Domain.Entities
             this.FinishDate = finishDate;
             this.MusicBusinessRoundProjectTargetAudiences = musicBusinessRoundProjectTargetAudience ?? new List<MusicBusinessRoundProjectTargetAudience>();
             this.MusicBusinessRoundProjectInterests = musicBusinessRoundProjectInterests ?? new List<MusicBusinessRoundProjectInterest>();
-            this.MusicBusinessRoundProjectPlayerCategories = playerCategories ?? new List<MusicBusinessRoundProjectPlayerCategory>();
+            this.MusicBusinessRoundProjectPlayerCategories = playerCategories?
+              .Select(playerCategory => new MusicBusinessRoundProjectPlayerCategory(
+                  this.Id,             
+                  playerCategory,
+                  string.Empty,
+                  userId
+              )).ToList() ?? new List<MusicBusinessRoundProjectPlayerCategory>();
+
+
             this.MusicBusinessRoundProjectActivities = musicBusinessRoundProjectActivities ?? new List<MusicBusinessRoundProjectActivity>();
             this.MusicBusinessRoundProjectExpectationsForMeetings = musicBusinessRoundProjectExpectationsForMeetings ?? new List<MusicBusinessRoundProjectExpectationsForMeeting>();
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
         }
-
+        
 
         public bool IsFinished()
         {
