@@ -33,6 +33,7 @@ using PlataformaRio2C.Web.Site.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Web.Site.Controllers;
 using PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects;
+using PlataformaRio2C.Domain.Interfaces.Repositories.Music.BusinessRoundProjects;
 
 namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 {
@@ -48,6 +49,9 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo;
         private readonly IProjectEvaluationStatusRepository evaluationStatusRepository;
+        private readonly IPlayersCategoryRepository playersCategoryRepo;
+
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BusinessRoundProjectsController" /> class.
@@ -61,6 +65,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="projectEvaluationRefuseReasonRepo">The project evaluation refuse reason repo.</param>
         /// <param name="evaluationStatusRepository">The project evaluation status repository.</param>
+        /// <param name="playersCategoryRepository">The players category of the onboarding project.</param>
         public BusinessRoundProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
@@ -70,7 +75,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             ITargetAudienceRepository targetAudienceRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo,
-            IProjectEvaluationStatusRepository evaluationStatusRepository)
+            IProjectEvaluationStatusRepository evaluationStatusRepository,
+            IPlayersCategoryRepository playersCategoryRepository)
             : base(commandBus, identityController)
         {
             musicBusinessRoundProjectRepo = musicBusinessRoundProjectRepository;
@@ -80,6 +86,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.projectEvaluationRefuseReasonRepo = projectEvaluationRefuseReasonRepo;
             this.evaluationStatusRepository = evaluationStatusRepository;
+            this.playersCategoryRepo = playersCategoryRepository;
         }
 
         /// <summary>Indexes this instance.</summary>
@@ -787,6 +794,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 await targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
                 await interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Music.Id),
                 await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
+                await this.playersCategoryRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
                 true,
                 false,
                 false,
@@ -859,6 +867,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 cmd.UpdateDropdownProperties(
                     await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
                     await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
+                    await this.playersCategoryRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
                     this.UserInterfaceLanguage
                 );
 
@@ -872,6 +881,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 cmd.UpdateDropdownProperties(
                     await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
                     await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
+                    await this.playersCategoryRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
                     this.UserInterfaceLanguage
                 );
 

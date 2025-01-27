@@ -512,6 +512,9 @@ Material</value>
   <data name="BusinessRoundObjective" xml:space="preserve">
     <value>Business Round Objective</value>
   </data>
+  <data name="BusinessRoundPlayersCategories" xml:space="preserve">
+    <value>Do you have or already have a contract with any category of players below?</value>
+  </data>
   <data name="BusinessRoundProjectsObjetives" xml:space="preserve">
     <value>Objectives for the Meetings</value>
   </data>
@@ -1377,6 +1380,9 @@ Material</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Id</value>
+  </data>
+  <data name="IfAffirmativeWhichCompanies" xml:space="preserve">
+    <value>If so, which companies?</value>
   </data>
   <data name="IfAlreadyHaveLogin" xml:space="preserve">
     <value>If you already have a login and password</value>

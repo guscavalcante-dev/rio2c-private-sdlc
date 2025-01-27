@@ -505,6 +505,9 @@
   <data name="BusinessRoundObjective" xml:space="preserve">
     <value>Objetivo da Rodada de Negócio</value>
   </data>
+  <data name="BusinessRoundPlayersCategories" xml:space="preserve">
+    <value>Você possui ou já possuiu contrato com alguma das categorias de players abaixo?</value>
+  </data>
   <data name="BusinessRoundProjectsObjetives" xml:space="preserve">
     <value>Objetivos para as Rodadas de Negócio</value>
   </data>
@@ -1377,6 +1380,9 @@
   </data>
   <data name="Id" xml:space="preserve">
     <value>Id</value>
+  </data>
+  <data name="IfAffirmativeWhichCompanies" xml:space="preserve">
+    <value>Se sim, quais empresas?</value>
   </data>
   <data name="IfAlreadyHaveLogin" xml:space="preserve">
     <value>Se já tiver login e senha</value>
