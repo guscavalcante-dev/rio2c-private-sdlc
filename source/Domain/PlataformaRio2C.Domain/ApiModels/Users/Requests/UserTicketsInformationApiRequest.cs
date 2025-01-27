@@ -22,9 +22,8 @@ namespace PlataformaRio2C.Domain.ApiModels
         [SwaggerParameterDescription(description: "The API Key.", isRequired: true)]
         public string Key { get; set; }
 
-        [JsonProperty("email")]
-        [SwaggerParameterDescription(description: "The email to get tickets information from.", isRequired: true)]
-        
-        public string Email { get; set; }
+        [JsonProperty("document")]
+        [SwaggerParameterDescription(description: "The Document to get tickets information from.", isRequired: true)]
+        public string Document { get; set; }
     }
 }

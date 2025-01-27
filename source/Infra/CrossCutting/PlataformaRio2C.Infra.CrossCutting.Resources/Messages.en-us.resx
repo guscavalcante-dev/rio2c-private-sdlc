@@ -676,8 +676,8 @@ The distribution can only be carried out once per issue.</value>
     <value>Not evaluated</value>
     <comment>Não avaliado</comment>
   </data>
-  <data name="NoTicketsFoundForEmail" xml:space="preserve">
-    <value>No tickets found for email {0}</value>
+  <data name="NoTicketsFoundForDocument" xml:space="preserve">
+    <value>No tickets found for document {0}</value>
   </data>
   <data name="NotScheduledOneToOneMeetings" xml:space="preserve">
     <value>Not Scheduled One-to-One Meetings</value>

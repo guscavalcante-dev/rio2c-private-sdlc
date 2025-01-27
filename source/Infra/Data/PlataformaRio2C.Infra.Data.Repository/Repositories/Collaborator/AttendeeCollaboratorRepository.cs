@@ -293,6 +293,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>
+        /// Finds the by collaborator document.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="document">The document.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeCollaborator> FindByCollaboratorDocument(this IQueryable<AttendeeCollaborator> query, string document)
+        {
+            query = query.Where(ac => ac.Collaborator.Document == document);
+
+            return query;
+        }
     }
 
     #endregion
@@ -1420,15 +1433,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
-        /// Finds the user tickets information dto by email.
+        /// Finds the user tickets information dto by document.
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
-        /// <param name="email">The email.</param>
+        /// <param name="document">The document.</param>
         /// <returns></returns>
-        public async Task<AttendeeCollaboratorTicketsInformationDto> FindUserTicketsInformationDtoByEmail(int editionId, string email)
+        public async Task<AttendeeCollaboratorTicketsInformationDto> FindUserTicketsInformationDtoByDocument(int editionId, string document)
         {
             var query = this.GetBaseQuery()
-                                .FindByUserEmail(email)
+                                .FindByCollaboratorDocument(document)
                                 .FindByEditionId(editionId, false);
 
             return await query

@@ -20,11 +20,11 @@ namespace PlataformaRio2C.Domain.Dtos
     public class MusicBandResponsibleApiDto
     {
         [JsonRequired]
-        [JsonProperty(PropertyName = "name", Order = 100)]
-        public string Name { get; set; }
-
-        [JsonProperty(PropertyName = "stagename", Order = 150)]
+        [JsonProperty(PropertyName = "stageName", Order = 100)]
         public string StageName { get; set; }
+
+        [JsonProperty(PropertyName = "name", Order = 150)]
+        public string Name { get; set; }
 
         [JsonRequired]
         [JsonProperty(PropertyName = "email", Order = 200)]
@@ -79,9 +79,9 @@ namespace PlataformaRio2C.Domain.Dtos
         {
             this.ValidationResult = new ValidationResult();
 
-            if (string.IsNullOrEmpty(this.Name))
+            if (string.IsNullOrEmpty(this.StageName))
             {
-                this.ValidationResult.Add(new ValidationError("The Responsible must have a Name!", new string[] { "Name" }));
+                this.ValidationResult.Add(new ValidationError("The Responsible must have a StageName!", new string[] { "StageName" }));
             }
 
             if (string.IsNullOrEmpty(this.Email))
