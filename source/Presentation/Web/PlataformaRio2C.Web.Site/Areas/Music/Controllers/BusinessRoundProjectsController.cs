@@ -836,9 +836,13 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             try
             {
                 if (!ModelState.IsValid)
-                {
                     throw new DomainException(Messages.CorrectFormValues);
-                }
+
+                else if (cmd.PlayerCategoriesUids?.Count() > 0 && cmd.PlayerCategoriesThatHaveOrHadContract == null)
+                    throw new DomainException(Messages.MusicBusinessRoundProjectDiscursiveRequired);
+
+                else if (cmd.PlayerCategoriesUids == null && cmd.PlayerCategoriesThatHaveOrHadContract != null)
+                    cmd.PlayerCategoriesThatHaveOrHadContract = null;
 
                 cmd.UpdatePreSendProperties(
                     this.UserAccessControlDto.EditionAttendeeCollaborator.Id,

@@ -634,6 +634,10 @@ The distribution can only be carried out once per issue.</value>
   <data name="MinimumNumberOfCharacters" xml:space="preserve">
     <value>The '{0}' must be at least '{2}' characters long.</value>
   </data>
+  <data name="MusicBusinessRoundProjectDiscursiveRequired" xml:space="preserve">
+    <value>
+The discursive field of player categories is mandatory if any player option has been selected.</value>
+  </data>
   <data name="MusicPitchingMaximumApprovedProjectsByCurator" xml:space="preserve">
     <value>It is allowed to evaluate a maximum of {0} {1} for curators</value>
   </data>

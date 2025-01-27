@@ -110,27 +110,20 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             var musicProject = new MusicBusinessRoundProject(cmd.SellerAttendeeCollaboratorId, cmd.PlayerCategoriesThatHaveOrHadContract, cmd.AttachmentUrl, null
-                ,cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<TargetAudience>()
-                ,projectInterests
-                ,cmd.PlayerCategoriesUids?.Any() == true ? await this.playersCategoryRepo.FindAllByUidsAsync(cmd.PlayerCategoriesUids) : new List<PlayerCategory>()
-                ,cmd.ActivitiesUids?.Any() == true ? await this.activityRepo.FindAllByUidsAsync(cmd.ActivitiesUids) : new List<Activity>()
-                ,cmd.MusicBusinessRoundProjectExpectationsForMeetings?.Select(d => new MusicBusinessRoundProjectExpectationsForMeeting(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList()
-                ,cmd.UserId
-                );
-            try
-            {
+                , cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<TargetAudience>()
+                , projectInterests
+                , cmd.PlayerCategoriesUids?.Any() == true ? await this.playersCategoryRepo.FindAllByUidsAsync(cmd.PlayerCategoriesUids) : new List<PlayerCategory>()
+                , cmd.ActivitiesUids?.Any() == true ? await this.activityRepo.FindAllByUidsAsync(cmd.ActivitiesUids) : new List<Activity>()
+                , cmd.MusicBusinessRoundProjectExpectationsForMeetings?.Select(d => new MusicBusinessRoundProjectExpectationsForMeeting(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList()
+                , cmd.UserId );
 
-                this.musicBusinessRoundProjectRepo.Create(musicProject);
-                this.Uow.SaveChanges();
-                this.AppValidationResult.Data = musicProject;
 
-                return this.AppValidationResult;
-            }
-            catch (Exception ex)
-            {
-                //TODO:Remove this catch, for debug purposes only.
-                throw;
-            }
+            this.musicBusinessRoundProjectRepo.Create(musicProject);
+            this.Uow.SaveChanges();
+            this.AppValidationResult.Data = musicProject;
+
+            return this.AppValidationResult;
+
         }
     }
 }
