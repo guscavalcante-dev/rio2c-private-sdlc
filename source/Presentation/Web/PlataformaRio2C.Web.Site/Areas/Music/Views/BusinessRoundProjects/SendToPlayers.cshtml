@@ -1,0 +1,69 @@
+﻿@model PlataformaRio2C.Domain.Dtos.MusicBusinessRoundProjectDto
+@{
+    ViewBag.Title = Labels.ProjectSubmission;
+}
+<div class="kt-portlet">
+    <div class="kt-portlet__body kt-portlet__body--fit">
+        <div class="row mb-3" style="padding-top:30px">
+            <div class="col-md-12 text-center"><h3>@Labels.SendProjectsToPlayer</h3></div>
+        </div>
+        <div class="kt-grid kt-wizard-v3 kt-wizard-v3--white" data-ktwizard-state="between">
+            <div class="kt-grid__item">
+                <!--begin: Form Wizard Nav -->
+                @Html.Partial("Shared/_ProjectsOnboardingMenu", 3)
+                <!--end: Form Wizard Nav -->
+            </div>
+            <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v3__wrapper">
+                <!--begin: Form Wizard Form-->
+                <div class="kt-form">
+                    @Html.Hidden("AggregateId", Model.Uid)
+                    <div id="form-container">
+                        <!--begin: Form Wizard Step 1-->
+                        <div class="kt-wizard-v3__content" data-ktwizard-type="step-content" data-ktwizard-state="current">
+                            <div class="kt-heading kt-heading--md">@Labels.SendProjectsToPlayer</div>
+                            <div class="kt-form__section kt-form__section--first">
+                                <div class="kt-wizard-v3__form">
+                                    @Html.Partial("Modals/UpdateBuyerCompanyForm", Model)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--begin: Form Actions -->
+                    <div class="kt-form__actions">
+                        <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ml-auto mr-3" onclick="ProjectsBuyerCompanyWidget.save('@Url.Action("Save", "BusinessRoundProjects", new { id = Model.Uid })');">
+                            @Labels.Save
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" onclick="ProjectsBuyerCompanyWidget.showFinishModal('SendToPlayers');">
+                            @Labels.Save @Labels.And @Labels.Send
+                        </button>
+                    </div>
+                    <!--end: Form Actions -->
+                </div>
+                <!--end: Form Wizard Form-->
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles {
+    @Styles.Render("~/bundles/css/onboarding.projects.css")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/businessrounds.buyercompany.widget.js")
+    <script>
+        // Page translations ----------------------------------------------------------------------
+        var translations = {
+            finishModalTitle: '@Labels.Finish @Labels.Project',
+            finishModalMessage: '@Html.Raw(Texts.FinishProjectConfirmationText)',
+            finishPendingModalMessage: '@Html.Raw(string.Format(Texts.FinishProjectPendingConfirmationText, "{0}", "{1}", Labels.Players))',
+            player: '@Labels.Player',
+            players: '@Labels.Players'
+        };
+
+        jQuery(document).ready(function () {
+            ProjectsBuyerCompanySelectedWidget.init();
+            ProjectsMatchBuyerCompanyWidget.init();
+            ProjectsAllBuyerCompanyWidget.init();
+        });
+    </script>
+}

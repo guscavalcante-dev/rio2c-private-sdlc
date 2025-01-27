@@ -51,8 +51,6 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         private readonly IProjectEvaluationStatusRepository evaluationStatusRepository;
         private readonly IPlayersCategoryRepository playersCategoryRepo;
 
-
-
         /// <summary>
         /// Initializes a new instance of the <see cref="BusinessRoundProjectsController" /> class.
         /// </summary>
@@ -896,10 +894,10 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
             try
             {
-                var project = result.Data as CreateMusicBusinessRoundProject;
+                var project = result.Data as MusicBusinessRoundProject;
                 if (project != null)
                 {
-                    //return RedirectToAction("SendToPlayers", "BusinessRoundProjects", new { Area = "Music", id = project.Uid });
+                    return RedirectToAction("SendToPlayers", "BusinessRoundProjects", new { Area = "Music", id = project.Uid });
                 }
             }
             catch
@@ -911,6 +909,68 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         }
 
         #endregion
+
+        #region Send to Players
+
+        /// <summary>Sends to players.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> SendToPlayers(Guid? id)
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ParticipantsTerms, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper($"{Labels.Projects} - {Labels.BusinessRound}", Url.Action("Index", "BusinessRoundProjects", new { Area = "Music" })),
+                new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "BusinessRoundProjects", new { Area = "Music" }))
+            });
+
+            #endregion
+
+            if (this.EditionDto?.IsMusicBusinessRoundProjectSubmitOpen() != true)
+            {
+                this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
+            }
+
+            if (this.UserAccessControlDto?.IsMusicProducerBusinessRoundTermsAcceptanceDatePending() == true)
+            {
+                return RedirectToAction("Submit", "BusinessRoundProjects", new { Area = "Music", id });
+            }
+
+            var buyerCompanyWidgetDto = await this.musicBusinessRoundProjectRepo.FindSiteDetailsDtoByProjectUidAsync(id ?? Guid.Empty, this.EditionDto.Id);
+            if (buyerCompanyWidgetDto == null)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
+            }
+
+            if (buyerCompanyWidgetDto.FinishDate != null)
+            {
+                this.StatusMessageToastr(Messages.ProjectIsFinishedCannotBeUpdated, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
+            }
+
+            return View(buyerCompanyWidgetDto);
+        }
+
+        /// <summary>Saves the specified identifier.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> Save(Guid? id)
+        {
+            if (!id.HasValue)
+            {
+                return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
+            }
+
+            this.StatusMessageToastr(Messages.ProjectSavedButNotSentToPlayers, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Warning);
+            return RedirectToAction("SubmittedDetails", "BusinessRoundProjects", new { Area = "Music", id });
+        }
+
+        #endregion
+
 
         //#region Producer Info
 
@@ -1290,7 +1350,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         ///// <summary>Shows the evaluation list item widget.</summary>
         ///// <param name="projectUid">The project uid.</param>
         ///// <returns></returns>
-        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.PlayerExecutiveAudiovisual)]
+        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.PlayerExecutiveMusic)]
         //[HttpGet]
         //public async Task<ActionResult> ShowEvaluationListItemWidget(Guid? projectUid)
         //{

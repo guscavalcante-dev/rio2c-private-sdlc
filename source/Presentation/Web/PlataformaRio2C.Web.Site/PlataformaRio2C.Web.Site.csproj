@@ -7043,6 +7043,8 @@
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Modals\AcceptEvaluationModal.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Modals\RefuseEvaluationForm.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Modals\RefuseEvaluationModal.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\SendToPlayers.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Modals\UpdateBuyerCompanyForm.cshtml" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />

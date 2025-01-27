@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.BusinessRoundProjects
+namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
 {
     #region Activity IQueryable Extensions
 
@@ -94,7 +94,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.BusinessRound
         /// <returns></returns>
         private IQueryable<PlayerCategory> GetBaseQuery(bool @readonly = false)
         {
-            var consult = this.dbSet
+            var consult = dbSet
                                 .IsNotDeleted();
 
             return @readonly
@@ -107,7 +107,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.BusinessRound
         /// <returns></returns>
         public async Task<List<PlayerCategory>> FindAllByProjectTypeIdAsync(int projectTypeId)
         {
-            var query = this.GetBaseQuery()
+            var query = GetBaseQuery()
                                 .FindByProjectTypeId(projectTypeId);
 
             return await query
@@ -117,7 +117,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.BusinessRound
 
         public async Task<List<PlayerCategory>> FindAllByUidsAsync(List<Guid> playersCategoryUid)
         {
-            var query = this.GetBaseQuery()
+            var query = GetBaseQuery()
                                 .FindByUids(playersCategoryUid);
 
             return await query
