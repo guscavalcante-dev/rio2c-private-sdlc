@@ -94,6 +94,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
             var interestsDtos = await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Music.Id);
 
+            #region Interests Iterations
             // Interests
             var projectInterests = new List<MusicBusinessRoundProjectInterest>();
             if (cmd.Interests?.Any() == true)
@@ -106,13 +107,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     }
                 }
             }
+            #endregion
 
             var musicProject = new MusicBusinessRoundProject(cmd.SellerAttendeeCollaboratorId, cmd.PlayerCategoriesThatHaveOrHadContract, cmd.AttachmentUrl, null
                 ,cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<TargetAudience>()
                 ,projectInterests
-                , cmd.PlayerCategoriesUids?.Any() == true ? await this.playersCategoryRepo.FindAllByUidsAsync(cmd.PlayerCategoriesUids) : new List<PlayerCategory>()
-                , null, //TODO: Trazer activies UIDS e carregar para o novo objeto
-                cmd.MusicBusinessRoundProjectExpectationsForMeetings?.Select(d => new MusicBusinessRoundProjectExpectationsForMeeting(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList()
+                ,cmd.PlayerCategoriesUids?.Any() == true ? await this.playersCategoryRepo.FindAllByUidsAsync(cmd.PlayerCategoriesUids) : new List<PlayerCategory>()
+                ,cmd.ActivitiesUids?.Any() == true ? await this.activityRepo.FindAllByUidsAsync(cmd.ActivitiesUids) : new List<Activity>()
+                ,cmd.MusicBusinessRoundProjectExpectationsForMeetings?.Select(d => new MusicBusinessRoundProjectExpectationsForMeeting(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList()
                 ,cmd.UserId
                 );
             try

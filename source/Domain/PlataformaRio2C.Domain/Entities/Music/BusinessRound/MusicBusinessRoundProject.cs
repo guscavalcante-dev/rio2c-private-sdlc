@@ -110,7 +110,7 @@ namespace PlataformaRio2C.Domain.Entities
             ICollection<TargetAudience> musicBusinessRoundProjectTargetAudience,
             ICollection<MusicBusinessRoundProjectInterest> musicBusinessRoundProjectInterests,
             ICollection<PlayerCategory> playerCategories,
-            ICollection<MusicBusinessRoundProjectActivity> musicBusinessRoundProjectActivities,
+            ICollection<Activity> musicBusinessRoundProjectActivities,
             ICollection<MusicBusinessRoundProjectExpectationsForMeeting> musicBusinessRoundProjectExpectationsForMeetings,
             int userId)
         {
@@ -137,16 +137,20 @@ namespace PlataformaRio2C.Domain.Entities
                   userId
               )).ToList() ?? new List<MusicBusinessRoundProjectPlayerCategory>();
 
+            // casting Activity into MusicBusinessRoundProjectActivity
+            this.MusicBusinessRoundProjectActivities = musicBusinessRoundProjectActivities?
+                .Select(activity => new MusicBusinessRoundProjectActivity(
+                    activity,          
+                    string.Empty,      
+                    userId              
+                )).ToList() ?? new List<MusicBusinessRoundProjectActivity>();
+
             this.MusicBusinessRoundProjectInterests = musicBusinessRoundProjectInterests ?? new List<MusicBusinessRoundProjectInterest>();
-
-
-            this.MusicBusinessRoundProjectActivities = musicBusinessRoundProjectActivities ?? new List<MusicBusinessRoundProjectActivity>();
             this.MusicBusinessRoundProjectExpectationsForMeetings = musicBusinessRoundProjectExpectationsForMeetings ?? new List<MusicBusinessRoundProjectExpectationsForMeeting>();
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
         }
-        
 
         public bool IsFinished()
         {
