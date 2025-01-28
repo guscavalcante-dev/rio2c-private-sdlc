@@ -969,8 +969,74 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             return RedirectToAction("SubmittedDetails", "BusinessRoundProjects", new { Area = "Music", id });
         }
 
-        #endregion
+       /// <summary>Shows the buyer company selected widget.</summary>
+        /// <param name="projectUid"></param>
+        /// <returns></returns>
+        public async Task<ActionResult> ShowBuyerCompanySelectedWidget(Guid? projectUid)
+        {
+            var buyerCompanyWidgetDto = await this.musicBusinessRoundProjectRepo.FindSiteBuyerCompanyWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
+            if (buyerCompanyWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
 
+            //TODO: Checar com renan o que fazer com essas ligacoes com organizacao.
+            //if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(buyerCompanyWidgetDto.SellerAttendeeCollaboratorDto.AttendeeOrganizationsDtos.First().AttendeeOrganization.Uid) != true)
+            //{
+            //    return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            //}
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/BuyerCompanySelectedWidget", buyerCompanyWidgetDto), divIdOrClass = "#ProjectBuyerCompanySelectedWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Shows the project match buyer company widget.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowProjectMatchBuyerCompanyWidget(Guid? projectUid, string searchKeywords, int page = 1, int pageSize = 10)
+        {
+            var interestWidgetDto = await this.musicBusinessRoundProjectRepo.FindSiteInterestWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
+            if (interestWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            //TODO: Checar com renan o que fazer com essas ligacoes com organizacao.
+            //if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+            //{
+            //    return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            //}
+
+            var matchAttendeeOrganizationDtos = await this.attendeeOrganizationRepo.FindAllDtoByMatchingProjectBuyerAsync(this.EditionDto.Id, interestWidgetDto, searchKeywords, page, pageSize);
+
+            ViewBag.ShowProjectMatchBuyerCompanySearch = $"&projectUid={projectUid}&pageSize={pageSize}";
+            ViewBag.SearchKeywords = searchKeywords;
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/ProjectMatchBuyerCompanyWidget", matchAttendeeOrganizationDtos), divIdOrClass = "#ProjectMatchBuyerCompanyWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+
+
+        #endregion
 
         //#region Producer Info
 

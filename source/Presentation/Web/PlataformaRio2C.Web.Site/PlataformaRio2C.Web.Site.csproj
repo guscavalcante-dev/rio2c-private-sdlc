@@ -7045,6 +7045,8 @@
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Modals\RefuseEvaluationModal.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\SendToPlayers.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Modals\UpdateBuyerCompanyForm.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Widgets\ProjectMatchBuyerCompanyWidget.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Widgets\BuyerCompanySelectedWidget.cshtml" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />
