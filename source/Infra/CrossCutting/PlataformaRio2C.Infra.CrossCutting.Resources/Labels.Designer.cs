@@ -1015,6 +1015,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Você possui ou já possuiu contrato com alguma das categorias de players abaixo?.
+        /// </summary>
+        public static string BusinessRoundPlayersCategories {
+            get {
+                return ResourceManager.GetString("BusinessRoundPlayersCategories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Objetivos para as Rodadas de Negócio.
         /// </summary>
         public static string BusinessRoundProjectsObjetives {
@@ -3171,6 +3180,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Id {
             get {
                 return ResourceManager.GetString("Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Se sim, quais empresas?.
+        /// </summary>
+        public static string IfAffirmativeWhichCompanies {
+            get {
+                return ResourceManager.GetString("IfAffirmativeWhichCompanies", resourceCulture);
             }
         }
         

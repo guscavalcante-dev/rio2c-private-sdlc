@@ -30,9 +30,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public static readonly int AttachmentUrlMaxLength = 300;
 
         public int SellerAttendeeCollaboratorId { get; set; }
+        public List<Guid> PlayerCategoriesUids { get; set; }
 
-        [Display(Name = "PlayerCategoriesThatHaveOrHadContract", ResourceType = typeof(Labels))]
-        //TODO: Enable this when PlayersCategory is implemented; [RequiredIfEmpty("PlayerCategories", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [Display(Name = "IfAffirmativeWhichCompanies", ResourceType = typeof(Labels))]
+        //[RequiredIfNotEmpty("PlayerCategoriesUids", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(300, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string PlayerCategoriesThatHaveOrHadContract { get; set; }
 
@@ -49,7 +50,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         //public List<MusicBusinessRoundProjectInterestBaseCommand> MusicBusinessRoundProjectInterests { get; set; }
         public List<TargetAudience> TargetAudiences { get; private set; }
         public List<Activity> Activities { get; private set; }
-        public List<MusicBusinessRoundProjectPlayerCategoryBaseCommand> PlayerCategories { get; set; }
+
+        //public List<MusicBusinessRoundProjectPlayerCategoryBaseCommand> PlayerCategories { get; set; }
+        public List<PlayerCategory> PlayerCategories { get; set; }
         public List<MusicBusinessRoundProjectExpectationsForMeetingBaseCommand> MusicBusinessRoundProjectExpectationsForMeetings { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="MusicBusinessRoundProjectBaseCommand"/> class.</summary>
@@ -63,6 +66,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
           List<TargetAudience> targetAudiences,
           List<InterestDto> interestsDtos,
           List<Activity> activities,
+          List<PlayerCategory> playersCategories,
           bool isDataRequired,
           bool isProductionPlanRequired,
           bool isAdditionalInformationRequired,
@@ -70,9 +74,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
           bool modalityRequired
       )
         {
+
             this.UpdateInterests(entity, interestsDtos);
             this.UpdateExpectationsForMeetings(entity, languagesDtos, isDataRequired);
-            this.UpdateDropdownProperties(targetAudiences, activities, userInterfaceLanguage);
+            this.UpdateDropdownProperties(targetAudiences, activities, playersCategories, userInterfaceLanguage);
 
             //TODO:Implementar na parte de edicao/duplicacao de projeto.
             /*this.AttachmentUrl = entity.AttachmentUrl;*/
@@ -105,9 +110,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public void UpdateDropdownProperties(
             List<TargetAudience> targetAudiences,
             List<Activity> activities,
+            List<PlayerCategory> playersCategories,
             string userInterfaceLanguage
         )
         {
+            this.PlayerCategories = playersCategories;
             this.Activities = activities;
             this.TargetAudiences = targetAudiences;
         }

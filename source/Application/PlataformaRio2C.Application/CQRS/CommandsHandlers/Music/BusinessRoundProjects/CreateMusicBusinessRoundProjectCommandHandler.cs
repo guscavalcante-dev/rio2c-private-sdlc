@@ -20,6 +20,7 @@ using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Interfaces.Repositories.Music.BusinessRoundProjects;
 using PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
@@ -35,7 +36,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IProjectModalityRepository projectModalityRepo;
         private readonly IMusicBusinessRoundProjectRepository musicBusinessRoundProjectRepo;
         private readonly IActivityRepository activityRepo;
-
+        private readonly IPlayersCategoryRepository playersCategoryRepo;
 
         /// <summary>Initializes a new instance of the <see cref="CreateAudiovisualBusinessRoundProjectCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
@@ -58,7 +59,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IInterestRepository interestRepository,
             IProjectModalityRepository projectModalityRepo,
             IMusicBusinessRoundProjectRepository musicProjectRepo,
-            IActivityRepository activityRepo)
+            IActivityRepository activityRepo,
+            IPlayersCategoryRepository playersCategoryRepo)
             : base(eventBus, uow, attendeeOrganizationRepository, projectRepository)
         {
             this.musicBusinessRoundProjectRepo = musicProjectRepo;
@@ -68,6 +70,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.interestRepo = interestRepository;
             this.projectModalityRepo = projectModalityRepo;
             this.activityRepo = activityRepo;
+            this.playersCategoryRepo = playersCategoryRepo;
         }
 
         /// <summary>Handles the specified create project.</summary>
@@ -91,6 +94,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
             var interestsDtos = await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Music.Id);
 
+            #region Interests Iterations
             // Interests
             var projectInterests = new List<MusicBusinessRoundProjectInterest>();
             if (cmd.Interests?.Any() == true)
@@ -103,29 +107,23 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     }
                 }
             }
+            #endregion
 
             var musicProject = new MusicBusinessRoundProject(cmd.SellerAttendeeCollaboratorId, cmd.PlayerCategoriesThatHaveOrHadContract, cmd.AttachmentUrl, null
-                ,null /*TODO:Converter objeto para o novo targetaudientes,activies blabla,cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<MusicBusinessRoundProjectTargetAudience>()*/
-                ,projectInterests
-                , null //TODO: PlayersCategory aguardando definicao
-                ,null, //TODO: Trazer activies UIDS e carregar para o novo objeto
-                cmd.MusicBusinessRoundProjectExpectationsForMeetings?.Select(d => new MusicBusinessRoundProjectExpectationsForMeeting(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList()
-                ,cmd.UserId
-                );
-            try
-            {
+                , cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<TargetAudience>()
+                , projectInterests
+                , cmd.PlayerCategoriesUids?.Any() == true ? await this.playersCategoryRepo.FindAllByUidsAsync(cmd.PlayerCategoriesUids) : new List<PlayerCategory>()
+                , cmd.ActivitiesUids?.Any() == true ? await this.activityRepo.FindAllByUidsAsync(cmd.ActivitiesUids) : new List<Activity>()
+                , cmd.MusicBusinessRoundProjectExpectationsForMeetings?.Select(d => new MusicBusinessRoundProjectExpectationsForMeeting(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList()
+                , cmd.UserId );
 
-                this.musicBusinessRoundProjectRepo.Create(musicProject);
-                this.Uow.SaveChanges();
-                this.AppValidationResult.Data = musicProject;
 
-                return this.AppValidationResult;
-            }
-            catch (Exception ex)
-            {
-                //TODO:Remove this catch, for debug purposes only.
-                throw;
-            }
+            this.musicBusinessRoundProjectRepo.Create(musicProject);
+            this.Uow.SaveChanges();
+            this.AppValidationResult.Data = musicProject;
+
+            return this.AppValidationResult;
+
         }
     }
 }

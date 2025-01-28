@@ -33,7 +33,21 @@ namespace PlataformaRio2C.Domain.Entities
 
             return this.ValidationResult.IsValid;
         }
+        public MusicBusinessRoundProjectPlayerCategory()
+        {
+        }
 
+        public MusicBusinessRoundProjectPlayerCategory(int musicBusinessRoundProjectId,PlayerCategory playerCategory,string additionalInfo,int userId)
+
+        {
+            this.MusicBusinessRoundProjectId = musicBusinessRoundProjectId;
+            this.PlayerCategoryId = playerCategory.Id;
+            this.PlayerCategory = playerCategory;
+            this.AdditionalInfo = additionalInfo;
+            this.CreateDate = System.DateTimeOffset.Now;
+            this.CreateUserId = userId;
+            this.UpdateUserId = userId;
+        }
         private void ValidateAdditionalInfo()
         {
             if (this.AdditionalInfo?.Trim().Length > AdditionalInfoMaxLength)

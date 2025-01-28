@@ -601,6 +601,7 @@
     <Compile Include="Interfaces\Repositories\Music\Bands\IMusicBandTeamMemberRepository.cs" />
     <Compile Include="Interfaces\Repositories\Music\Bands\IMusicBandMemberRepository.cs" />
     <Compile Include="Interfaces\Repositories\Music\Bands\IMusicBandRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Music\BusinessRoundProjects\IPlayersCategoryRepository.cs" />
     <Compile Include="Interfaces\Repositories\Music\Projects\IMusicBusinessRoundProjectRepository.cs" />
     <Compile Include="Interfaces\Repositories\Music\Projects\IMusicProjectRepository.cs" />
     <Compile Include="Interfaces\Repositories\Music\Projects\IMusicGenreRepository.cs" />

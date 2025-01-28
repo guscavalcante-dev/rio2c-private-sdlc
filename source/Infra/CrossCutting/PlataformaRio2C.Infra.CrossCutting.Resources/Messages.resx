@@ -630,6 +630,9 @@ A distribuição só pode ser executada uma única vez por edição.
   <data name="MinimumNumberOfCharacters" xml:space="preserve">
     <value>O '{0}' deve ter no mínimo '{2}' caracteres.</value>
   </data>
+  <data name="MusicBusinessRoundProjectDiscursiveRequired" xml:space="preserve">
+    <value>O campo discursivo das categorias de players é obrigatório caso alguma opção de player tenha sido selecionada.</value>
+  </data>
   <data name="MusicPitchingMaximumApprovedProjectsByCurator" xml:space="preserve">
     <value>É permitido avaliar no máximo {0} {1} para os curadores</value>
   </data>

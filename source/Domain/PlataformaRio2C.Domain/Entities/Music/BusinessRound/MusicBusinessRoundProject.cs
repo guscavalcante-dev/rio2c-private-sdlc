@@ -107,10 +107,10 @@ namespace PlataformaRio2C.Domain.Entities
             string playerCategoriesThatHaveOrHadContract,
             string attachmentUrl,
             DateTimeOffset? finishDate,
-            ICollection<MusicBusinessRoundProjectTargetAudience> musicBusinessRoundProjectTargetAudience,
+            ICollection<TargetAudience> musicBusinessRoundProjectTargetAudience,
             ICollection<MusicBusinessRoundProjectInterest> musicBusinessRoundProjectInterests,
-            ICollection<MusicBusinessRoundProjectPlayerCategory> playerCategories,
-            ICollection<MusicBusinessRoundProjectActivity> musicBusinessRoundProjectActivities,
+            ICollection<PlayerCategory> playerCategories,
+            ICollection<Activity> musicBusinessRoundProjectActivities,
             ICollection<MusicBusinessRoundProjectExpectationsForMeeting> musicBusinessRoundProjectExpectationsForMeetings,
             int userId)
         {
@@ -118,16 +118,39 @@ namespace PlataformaRio2C.Domain.Entities
             this.PlayerCategoriesThatHaveOrHadContract = playerCategoriesThatHaveOrHadContract;
             this.AttachmentUrl = attachmentUrl;
             this.FinishDate = finishDate;
-            this.MusicBusinessRoundProjectTargetAudiences = musicBusinessRoundProjectTargetAudience ?? new List<MusicBusinessRoundProjectTargetAudience>();
+
+            // casting TargetAudience into MusicBusinessRoundProjectTargetAudience
+            this.MusicBusinessRoundProjectTargetAudiences = musicBusinessRoundProjectTargetAudience?
+                .Select(targetAudience => new MusicBusinessRoundProjectTargetAudience(
+                    this.Id,              
+                    targetAudience,
+                    userId,
+                    string.Empty          
+                )).ToList() ?? new List<MusicBusinessRoundProjectTargetAudience>();
+
+            // casting playerCategories into MusicBusinessRoundProjectPlayerCategory
+            this.MusicBusinessRoundProjectPlayerCategories = playerCategories?
+              .Select(playerCategory => new MusicBusinessRoundProjectPlayerCategory(
+                  this.Id,             
+                  playerCategory,
+                  string.Empty,
+                  userId
+              )).ToList() ?? new List<MusicBusinessRoundProjectPlayerCategory>();
+
+            // casting Activity into MusicBusinessRoundProjectActivity
+            this.MusicBusinessRoundProjectActivities = musicBusinessRoundProjectActivities?
+                .Select(activity => new MusicBusinessRoundProjectActivity(
+                    activity,          
+                    string.Empty,      
+                    userId              
+                )).ToList() ?? new List<MusicBusinessRoundProjectActivity>();
+
             this.MusicBusinessRoundProjectInterests = musicBusinessRoundProjectInterests ?? new List<MusicBusinessRoundProjectInterest>();
-            this.MusicBusinessRoundProjectPlayerCategories = playerCategories ?? new List<MusicBusinessRoundProjectPlayerCategory>();
-            this.MusicBusinessRoundProjectActivities = musicBusinessRoundProjectActivities ?? new List<MusicBusinessRoundProjectActivity>();
             this.MusicBusinessRoundProjectExpectationsForMeetings = musicBusinessRoundProjectExpectationsForMeetings ?? new List<MusicBusinessRoundProjectExpectationsForMeeting>();
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
         }
-
 
         public bool IsFinished()
         {
