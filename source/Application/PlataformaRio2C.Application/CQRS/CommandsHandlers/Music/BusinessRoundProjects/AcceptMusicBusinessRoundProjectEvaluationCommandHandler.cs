@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
-// Author           : William Sergio Almado Junior
-// Created          : 12-04-2019
+// Author           : Renan Valentim
+// Created          : 01-26-2025
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-10-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-26-2025
 // ***********************************************************************
-// <copyright file="AcceptProjectEvaluationCommandHandler.cs" company="Softo">
+// <copyright file="AcceptMusicBusinessRoundProjectEvaluationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -18,31 +18,31 @@ using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>AcceptProjectEvaluationCommandHandler</summary>
-    public class AcceptProjectEvaluationCommandHandler : BaseProjectCommandHandler, IRequestHandler<AcceptProjectEvaluation, AppValidationResult>
+    /// <summary>AcceptMusicBusinessRoundProjectEvaluationCommandHandler</summary>
+    public class AcceptMusicBusinessRoundProjectEvaluationCommandHandler : BaseMusicBusinessRoundProjectCommandHandler, IRequestHandler<AcceptMusicBusinessRoundProjectEvaluation, AppValidationResult>
     {
         private IProjectEvaluationStatusRepository projectEvaluationStatusRepo;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AcceptProjectEvaluationCommandHandler" /> class.
+        /// Initializes a new instance of the <see cref="AcceptMusicBusinessRoundProjectEvaluationCommandHandler" /> class.
         /// </summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
-        /// <param name="projectRepository">The project repository.</param>
+        /// <param name="musicBusinessRoundProjectRepository">The project repository.</param>
         /// <param name="projectEvaluationStatusRepository">The project evaluation status repository.</param>
-        /// <param name="projectBuyerEvaluationRepository">The project buyer evaluation repository.</param>
-        public AcceptProjectEvaluationCommandHandler(
+        public AcceptMusicBusinessRoundProjectEvaluationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
-            IProjectRepository projectRepository,
+            IMusicBusinessRoundProjectRepository musicBusinessRoundProjectRepository,
             IProjectEvaluationStatusRepository projectEvaluationStatusRepository)
-            : base(eventBus, uow, attendeeOrganizationRepository, projectRepository)
+            : base(eventBus, uow, attendeeOrganizationRepository, musicBusinessRoundProjectRepository)
         {
             this.projectEvaluationStatusRepo = projectEvaluationStatusRepository;
         }
@@ -51,22 +51,23 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(AcceptProjectEvaluation cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(AcceptMusicBusinessRoundProjectEvaluation cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
-            var project = await this.GetProjectByUid(cmd.ProjectUid ?? Guid.Empty);
+            var project = await this.GetProjectByUid(cmd.MusicBusinessRoundProjectUid ?? Guid.Empty);
 
             #region Initial validations
 
-            var maximumAvailableSlotsByEditionIdResponseDto = await CommandBus.Send(new GetAudiovisualMaximumAvailableSlotsByEditionId(cmd.EditionId ?? 0));
-            var playerAcceptedProjectsCount = await CommandBus.Send(new CountPresentialNegotiationsAcceptedByBuyerAttendeeOrganizationUid(cmd.AttendeeOrganizationUid ?? Guid.Empty));
-            var projectsApprovalLimitExceeded = playerAcceptedProjectsCount >= maximumAvailableSlotsByEditionIdResponseDto.MaximumAvailableSlotsByPlayer;
-            if (projectsApprovalLimitExceeded)
-            {
-                cmd.PlayerAcceptedProjectsCount = playerAcceptedProjectsCount;
-                cmd.MaximumAvailableSlotsByPlayer = maximumAvailableSlotsByEditionIdResponseDto.MaximumAvailableSlotsByPlayer;
-            }
+            //TODO: Refactor this! Create "GetMusicMaximumAvailableSlotsByEditionId"
+            //var audiovisualMaximumAvailableSlotsByEditionIdResponseDto = await CommandBus.Send(new GetAudiovisualMaximumAvailableSlotsByEditionId(cmd.EditionId ?? 0));
+            //var playerAcceptedProjectsCount = await CommandBus.Send(new CountPresentialNegotiationsAcceptedByBuyerAttendeeOrganizationUid(cmd.AttendeeOrganizationUid ?? Guid.Empty));
+            //var projectsApprovalLimitExceeded = playerAcceptedProjectsCount >= audiovisualMaximumAvailableSlotsByEditionIdResponseDto.MaximumAvailableSlotsByPlayer;
+            //if (projectsApprovalLimitExceeded)
+            //{
+            //    cmd.PlayerAcceptedProjectsCount = playerAcceptedProjectsCount;
+            //    cmd.MaximumAvailableSlotsByPlayer = audiovisualMaximumAvailableSlotsByEditionIdResponseDto.MaximumAvailableSlotsByPlayer;
+            //}
 
             if (!this.ValidationResult.IsValid)
             {
@@ -76,10 +77,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            var projectBuyerEvaluation = project.AcceptProjectBuyerEvaluation(
+            var projectBuyerEvaluation = project.AcceptMusicBusinessRoundProjectBuyerEvaluation(
                 cmd.AttendeeOrganizationUid.Value, 
                 await this.projectEvaluationStatusRepo.FindAllAsync(),
-                projectsApprovalLimitExceeded,
+                false,//projectsApprovalLimitExceeded,
                 cmd.UserId);
             if (!projectBuyerEvaluation.IsEvaluationValid())
             {
@@ -87,7 +88,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            this.ProjectRepo.Update(project);
+            this.MusicBusinessRoundProjectRepo.Update(project);
             this.Uow.SaveChanges();
 
             return this.AppValidationResult;

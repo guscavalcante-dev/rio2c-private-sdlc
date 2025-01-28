@@ -6,7 +6,7 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 10-01-2024
 // ***********************************************************************
-// <copyright file="GetMaximumAvailableSlotsByEditionIdQueryHandler.cs" company="Softo">
+// <copyright file="GetAudiovisualMaximumAvailableSlotsByEditionIdQueryHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -24,16 +24,16 @@ namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
     /// <summary>
     /// GetMaximumAvailableSlotsByEditionIdQueryHandler
     /// </summary>
-    /// <seealso cref="MediatR.IRequestHandler&lt;PlataformaRio2C.Application.CQRS.Queries.GetMaximumAvailableSlotsByEditionId, System.Int32&gt;" />
-    public class GetMaximumAvailableSlotsByEditionIdQueryHandler : IRequestHandler<GetMaximumAvailableSlotsByEditionId, GetMaximumAvailableSlotsByEditionIdResponseDto>
+    /// <seealso cref="MediatR.IRequestHandler&lt;PlataformaRio2C.Application.CQRS.Queries.GetAudiovisualMaximumAvailableSlotsByEditionId, System.Int32&gt;" />
+    public class GetAudiovisualMaximumAvailableSlotsByEditionIdQueryHandler : IRequestHandler<GetAudiovisualMaximumAvailableSlotsByEditionId, GetAudiovisualMaximumAvailableSlotsByEditionIdResponseDto>
     {
         private readonly INegotiationConfigRepository repo;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetMaximumAvailableSlotsByEditionIdQueryHandler"/> class.
+        /// Initializes a new instance of the <see cref="GetAudiovisualMaximumAvailableSlotsByEditionIdQueryHandler"/> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
-        public GetMaximumAvailableSlotsByEditionIdQueryHandler(INegotiationConfigRepository repository)
+        public GetAudiovisualMaximumAvailableSlotsByEditionIdQueryHandler(INegotiationConfigRepository repository)
         {
             this.repo = repository;
         }
@@ -42,7 +42,7 @@ namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<GetMaximumAvailableSlotsByEditionIdResponseDto> Handle(GetMaximumAvailableSlotsByEditionId cmd, CancellationToken cancellationToken)
+        public async Task<GetAudiovisualMaximumAvailableSlotsByEditionIdResponseDto> Handle(GetAudiovisualMaximumAvailableSlotsByEditionId cmd, CancellationToken cancellationToken)
         {
             var negotiationConfigDtos = await this.repo.FindAllByEditionIdAsync(cmd.EditionId);
 
@@ -60,7 +60,7 @@ namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
                                             !dto.NegotiationRoomConfig.Room.IsVirtualMeeting))
                 .ToList();
 
-            return new GetMaximumAvailableSlotsByEditionIdResponseDto(
+            return new GetAudiovisualMaximumAvailableSlotsByEditionIdResponseDto(
                 automaticTablesNegotiationConfigDtos.Sum(dto => dto.NegotiationConfig.GetMaxAutomaticSlotsCountByEdition()),
                 manualTablesNegotiationConfigDtos.Sum(dto => dto.NegotiationConfig.GetMaxManualSlotsCountByEdition()),
                 negotiationConfigDtos.Sum(dto => dto.NegotiationConfig.GetMaxSlotsCountByPlayer())

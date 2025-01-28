@@ -1710,7 +1710,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
 
-                var maximumAvailableSlotsByEditionIdResponseDto = await CommandBus.Send(new GetMaximumAvailableSlotsByEditionId(this.EditionDto.Id));
+                var maximumAvailableSlotsByEditionIdResponseDto = await CommandBus.Send(new GetAudiovisualMaximumAvailableSlotsByEditionId(this.EditionDto.Id));
                 var playerAcceptedProjectsCount = await CommandBus.Send(new CountPresentialNegotiationsAcceptedByBuyerAttendeeOrganizationUid(buyerAttendeeOrganizationUid ?? Guid.Empty));
 
                 cmd = new AcceptProjectEvaluation(

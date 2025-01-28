@@ -25,6 +25,33 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
         }
 
         /// <summary>
+        /// Finds the by uid.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<MusicBusinessRoundProject> FindByUid(this IQueryable<MusicBusinessRoundProject> query, Guid projectUid)
+        {
+            query = query.Where(p => p.Uid == projectUid);
+
+            return query;
+        }
+
+        /// <summary>
+        /// Finds the by edition identifier.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <returns></returns>
+        internal static IQueryable<MusicBusinessRoundProject> FindByEditionId(this IQueryable<MusicBusinessRoundProject> query, int editionId, bool showAllEditions = false)
+        {
+            query = query.Where(p => (showAllEditions || p.SellerAttendeeCollaborator.EditionId == editionId));
+
+            return query;
+        }
+
+        /// <summary>
         /// Finds the by seller attendee organization uid.
         /// </summary>
         /// <param name="query">The query.</param>
@@ -159,6 +186,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
 
             return query;
         }
+
+
 
         /// <summary>
         /// Converts to listpagedasync.
@@ -412,6 +441,49 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
                             //.OrderByDescending(ao => ao.InterestGroupsMatches.Count())
                             .OrderBy(pd => pd.CreateDate)
                             .ToListPagedAsync(page, pageSize);
+        }
+
+        public async Task<MusicBusinessRoundProjectDto> FindSiteDetailsDtoByProjectUidAsync(Guid projectUid, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByUid(projectUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(p => new MusicBusinessRoundProjectDto
+                            {
+
+                                Uid = p.Uid,
+                                CreateDate = p.CreateDate,
+                                PlayerCategoriesThatHaveOrHadContract = p.PlayerCategoriesThatHaveOrHadContract,
+                                AttachmentUrl = p.AttachmentUrl,
+                                FinishDate = p.FinishDate,
+                                SellerAttendeeCollaboratorDto = new AttendeeCollaboratorDto
+                                {
+                                    AttendeeCollaborator = p.SellerAttendeeCollaborator,
+                                    Collaborator = p.SellerAttendeeCollaborator.Collaborator,
+                                    //Edition = p.SellerAttendeeOrganization.Edition
+                                },
+                                //ProjectTitleDtos = p.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                //{
+                                //    ProjectTitle = t,
+                                //    Language = t.Language
+                                //}),
+                                MusicBusinessRoundProjectBuyerEvaluationDtos = p.MusicBusinessRoundProjectBuyerEvaluations
+                                    .Where(pbe => !pbe.IsDeleted)
+                                    .Select(pbe => new MusicBusinessRoundProjectBuyerEvaluationDto
+                                    {
+                                        //MusicBusinessRoundProjectBuyerEvaluation = pbe, //TODO: Enable it! Its returning "Nome de coluna 'AttendeeCollaborator_Id' inválido." error
+                                        BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                        {
+                                            AttendeeOrganization = pbe.BuyerAttendeeOrganization,
+                                            Organization = pbe.BuyerAttendeeOrganization.Organization,
+                                        },
+                                        ProjectEvaluationStatus = pbe.ProjectEvaluationStatus,
+                                        ProjectEvaluationRefuseReason = pbe.ProjectEvaluationRefuseReason
+                                    }),
+                            })
+                            .FirstOrDefaultAsync();
         }
     }
 }

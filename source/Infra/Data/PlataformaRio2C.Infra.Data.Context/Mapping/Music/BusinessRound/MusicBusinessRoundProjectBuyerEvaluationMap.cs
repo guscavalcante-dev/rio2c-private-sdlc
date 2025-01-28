@@ -23,7 +23,6 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         public MusicBusinessRoundProjectBuyerEvaluationMap()
         {
             this.ToTable("MusicBusinessRoundProjectBuyerEvaluations");
-            this.HasKey(t => t.Id);
 
             // Max lengths
             Property(u => u.Reason)
@@ -38,21 +37,21 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .WithMany(e => e.MusicBusinessRoundProjectBuyerEvaluations)
                 .HasForeignKey(t => t.BuyerAttendeeOrganizationId);
 
-            this.HasOptional(t => t.ProjectEvaluationStatus)
+            this.HasRequired(t => t.SellerUser)
+                .WithMany()
+                .HasForeignKey(d => d.SellerUserId);
+
+            this.HasRequired(t => t.BuyerEvaluationUser)
+                .WithMany()
+                .HasForeignKey(d => d.BuyerEvaluationUserId);
+
+            this.HasRequired(t => t.ProjectEvaluationStatus)
                 .WithMany()
                 .HasForeignKey(d => d.ProjectEvaluationStatusId);
 
             this.HasOptional(t => t.ProjectEvaluationRefuseReason)
                 .WithMany()
                 .HasForeignKey(d => d.ProjectEvaluationRefuseReasonId);
-
-            this.HasRequired(t => t.SellerUser)
-                .WithMany()
-                .HasForeignKey(d => d.SellerUserId);
-
-            this.HasOptional(t => t.BuyerEvaluationUser)
-                .WithMany()
-                .HasForeignKey(d => d.BuyerEvaluationUserId);
         }
     }
 }
