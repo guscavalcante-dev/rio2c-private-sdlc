@@ -26,6 +26,10 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual TargetAudience TargetAudience { get; private set; }
         public string AdditionalInfo { get; private set; }
 
+        public MusicBusinessRoundProjectTargetAudience()
+        {
+        }
+
         public override bool IsValid()
         {
             this.ValidationResult = new ValidationResult();

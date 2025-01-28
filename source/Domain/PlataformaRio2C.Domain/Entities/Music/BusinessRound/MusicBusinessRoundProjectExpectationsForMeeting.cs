@@ -32,6 +32,10 @@ namespace PlataformaRio2C.Domain.Entities
             base.SetCreateDate(userId);
         }
 
+        public MusicBusinessRoundProjectExpectationsForMeeting()
+        {
+        }
+
         #region Validations
 
         public override bool IsValid()

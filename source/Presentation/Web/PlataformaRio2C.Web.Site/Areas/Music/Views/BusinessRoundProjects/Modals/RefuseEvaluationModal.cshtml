@@ -9,7 +9,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Refuse", "BusinessRoundProjects", new { Area = "Audiovisual" }, FormMethod.Post, new { id = "RefuseEvaluationForm" }))
+                @using (Html.BeginForm("Refuse", "BusinessRoundProjects", new { Area = "Music" }, FormMethod.Post, new { id = "RefuseEvaluationForm" }))
                 {
                     @Html.HiddenFor(m => m.MusicBusinessRoundProjectUid)
                     <div id="form-container">
