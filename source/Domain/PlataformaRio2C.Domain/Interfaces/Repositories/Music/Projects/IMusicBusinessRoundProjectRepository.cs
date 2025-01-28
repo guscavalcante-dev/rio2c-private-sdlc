@@ -12,6 +12,7 @@ namespace PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects
         Task<List<MusicBusinessRoundProjectDto>> FindAllMusicBusinessRoundProjectDtosToSellAsync(Guid attendeeOrganizationUid);
         Task<IPagedList<MusicBusinessRoundProjectDto>> FindAllDtosToEvaluateAsync(Guid attendeeCollaboratorUid, string searchKeywords, Guid? evaluationStatusUid, Guid? targetAudienceUid, Guid? interestAreaInterestUid, Guid? businessRoundObjetiveInterestsUid, int page, int pageSize);
         Task<MusicBusinessRoundProjectDto> FindSiteDetailsDtoByProjectUidAsync(Guid projectUid, int editionId);
+        Task<MusicBusinessRoundProjectDto> FindDtoToEvaluateAsync(Guid attendeeCollaboratorUid, Guid projectUid);
         Task<MusicBusinessRoundProjectDto> FindSiteInterestWidgetDtoByProjectUidAsync(Guid guid);
         Task<MusicBusinessRoundProjectDto> FindSiteBuyerCompanyWidgetDtoByProjectUidAsync(Guid projectUid);
     }

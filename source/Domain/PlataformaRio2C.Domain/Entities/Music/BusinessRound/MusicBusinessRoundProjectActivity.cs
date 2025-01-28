@@ -43,7 +43,6 @@ namespace PlataformaRio2C.Domain.Entities
         }
         public MusicBusinessRoundProjectActivity()
         {
-                
         }
 
         public override bool IsValid()

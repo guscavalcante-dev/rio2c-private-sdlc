@@ -15,6 +15,7 @@ using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace PlataformaRio2C.Domain.Entities
@@ -30,6 +31,7 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset? FinishDate { get; private set; }
         public int ProjectBuyerEvaluationsCount { get; private set; }
 
+        [NotMapped]
         private bool IsAdmin = false;
 
         public virtual AttendeeCollaborator SellerAttendeeCollaborator { get; private set; }
@@ -39,11 +41,6 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<MusicBusinessRoundProjectActivity> MusicBusinessRoundProjectActivities { get; private set; }
         public virtual ICollection<MusicBusinessRoundProjectExpectationsForMeeting> MusicBusinessRoundProjectExpectationsForMeetings { get; private set; }
         public virtual ICollection<MusicBusinessRoundProjectBuyerEvaluation> MusicBusinessRoundProjectBuyerEvaluations { get; private set; }
-
-        public MusicBusinessRoundProject()
-        {
-            
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MusicBusinessRoundProject"/> class.
@@ -72,8 +69,7 @@ namespace PlataformaRio2C.Domain.Entities
             ICollection<MusicBusinessRoundProjectPlayerCategory> playerCategories,
             ICollection<MusicBusinessRoundProjectActivity> musicBusinessRoundProjectActivities,
             ICollection<MusicBusinessRoundProjectExpectationsForMeeting> musicBusinessRoundProjectExpectationsForMeetings,
-            ICollection<MusicBusinessRoundProjectBuyerEvaluation> musicBusinessRoundProjectBuyerEvaluations
-)
+            ICollection<MusicBusinessRoundProjectBuyerEvaluation> musicBusinessRoundProjectBuyerEvaluations)
         {
             this.SellerAttendeeCollaboratorId = sellerAttendeeCollaboratorId;
             this.PlayerCategoriesThatHaveOrHadContract = playerCategoriesThatHaveOrHadContract;
@@ -152,6 +148,16 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
+        public MusicBusinessRoundProject()
+        {
+        }
+
+        /// <summary>
+        /// Determines whether this instance is finished.
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is finished; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsFinished()
         {
             return this.FinishDate.HasValue;

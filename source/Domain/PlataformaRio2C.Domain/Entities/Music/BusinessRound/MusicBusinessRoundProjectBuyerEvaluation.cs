@@ -15,6 +15,7 @@ using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace PlataformaRio2C.Domain.Entities
@@ -34,6 +35,8 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset? EvaluationDate { get; private set; }
         public DateTimeOffset? BuyerEmailSendDate { get; private set; }
 
+        public int? AttendeeCollaboratorId { get; set; }
+
         public virtual MusicBusinessRoundProject MusicBusinessRoundProject { get; private set; }
         public virtual AttendeeOrganization BuyerAttendeeOrganization { get; private set; }
         public virtual ProjectEvaluationStatus ProjectEvaluationStatus { get; private set; }
@@ -49,10 +52,10 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="projectEvaluationStatus">The project evaluation status.</param>
         /// <param name="userId">The user identifier.</param>
         public MusicBusinessRoundProjectBuyerEvaluation(
-            MusicBusinessRoundProject musicBusinessRoundProject, 
-            AttendeeOrganization buyerAttendeeOrganization, 
-            ProjectEvaluationStatus projectEvaluationStatus, 
-            int userId)
+                MusicBusinessRoundProject musicBusinessRoundProject,
+                AttendeeOrganization buyerAttendeeOrganization,
+                ProjectEvaluationStatus projectEvaluationStatus,
+                int userId)
         {
             this.MusicBusinessRoundProjectId = musicBusinessRoundProject?.Id ?? 0;
             this.MusicBusinessRoundProject = musicBusinessRoundProject;
