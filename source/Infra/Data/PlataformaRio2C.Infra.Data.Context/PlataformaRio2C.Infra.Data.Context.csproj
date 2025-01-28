@@ -428,6 +428,14 @@
     <Compile Include="Migrations\202501251421222_InsertPlayerCategoriesValues.Designer.cs">
       <DependentUpon>202501251421222_InsertPlayerCategoriesValues.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202501281753043_InsertNewProjectEvaluationRefuseReasonsValues.cs" />
+    <Compile Include="Migrations\202501281753043_InsertNewProjectEvaluationRefuseReasonsValues.Designer.cs">
+      <DependentUpon>202501281753043_InsertNewProjectEvaluationRefuseReasonsValues.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202501282100584_AddAttendeCollabIdFieldToMusicProject.cs" />
+    <Compile Include="Migrations\202501282100584_AddAttendeCollabIdFieldToMusicProject.Designer.cs">
+      <DependentUpon>202501282100584_AddAttendeCollabIdFieldToMusicProject.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -601,6 +609,18 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202501241333002_UpdateMusicInterestGroupsNames.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202501282100584_AddAttendeCollabIdFieldToMusicProject.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202501281753043_InsertNewProjectEvaluationRefuseReasonsValues.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202501282100584_AddAttendeCollabIdFieldToMusicProject.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202501281753043_InsertNewProjectEvaluationRefuseReasonsValues.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202501251421222_InsertPlayerCategoriesValues.up.sql">
@@ -786,6 +806,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202501251421222_InsertPlayerCategoriesValues.resx">
       <DependentUpon>202501251421222_InsertPlayerCategoriesValues.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501281753043_InsertNewProjectEvaluationRefuseReasonsValues.resx">
+      <DependentUpon>202501281753043_InsertNewProjectEvaluationRefuseReasonsValues.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501282100584_AddAttendeCollabIdFieldToMusicProject.resx">
+      <DependentUpon>202501282100584_AddAttendeCollabIdFieldToMusicProject.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -23,6 +23,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         public MusicBusinessRoundProjectBuyerEvaluationMap()
         {
             this.ToTable("MusicBusinessRoundProjectBuyerEvaluations");
+            this.HasKey(t => t.Id);
 
             // Max lengths
             Property(u => u.Reason)
@@ -52,6 +53,10 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.HasOptional(t => t.ProjectEvaluationRefuseReason)
                 .WithMany()
                 .HasForeignKey(d => d.ProjectEvaluationRefuseReasonId);
+
+            //this.HasOptional(t => t.AttendeeCollaborator)
+            //    .WithMany()
+            //    .HasForeignKey(d => d.AttendeeCollaboratorId);
         }
     }
 }

@@ -474,6 +474,9 @@ namespace PlataformaRio2C.Web.Site
             bundles.Add(new ScriptBundle("~/bundles/js/music.businessrounds.buyerevaluation.update.widget.js").Include(
                 "~/Assets/js/music/businessrounds/music.businessrounds.buyerevaluation.update.widget.js"));
 
+              bundles.Add(new ScriptBundle("~/bundles/js/music.businessrounds.buyercompany.widget.js").Include(
+                "~/Assets/js/music/businessrounds/music.businessrounds.buyercompany.widget.js"));
+
             #endregion
 
             #endregion

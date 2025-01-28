@@ -25,6 +25,10 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual PlayerCategory PlayerCategory { get; private set; }
         public string AdditionalInfo { get; private set; }
 
+        public MusicBusinessRoundProjectPlayerCategory()
+        {
+        }
+
         public override bool IsValid()
         {
             this.ValidationResult = new ValidationResult();
@@ -32,9 +36,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateAdditionalInfo();
 
             return this.ValidationResult.IsValid;
-        }
-        public MusicBusinessRoundProjectPlayerCategory()
-        {
         }
 
         public MusicBusinessRoundProjectPlayerCategory(int musicBusinessRoundProjectId,PlayerCategory playerCategory,string additionalInfo,int userId)

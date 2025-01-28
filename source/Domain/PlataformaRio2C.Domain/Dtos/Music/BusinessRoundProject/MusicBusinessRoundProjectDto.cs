@@ -84,6 +84,32 @@ namespace PlataformaRio2C.Domain.Dtos
 
         #endregion
 
+           #region Project Buyer Evaluations
+
+        /// <summary>Gets the project buyer evaluation maximum.</summary>
+        /// <returns></returns>
+        public int GetProjectBuyerEvaluationMax()
+        {
+            return 3; //TODO: Nao sei o que fazer com organizacao.
+            //return this.SellerAttendeeOrganizationDto.GetProjectMaxBuyerEvaluationsCount();
+        }
+
+        /// <summary>Gets the projects buyer evaluations used.</summary>
+        /// <returns></returns>
+        public int GetProjectsBuyerEvaluationsUsed()
+        {
+            return this.ProjectBuyerEvaluationsCount;
+        }
+
+        /// <summary>Gets the projects buyer evaluations available.</summary>
+        /// <returns></returns>
+        public int GetProjectsBuyerEvaluationsAvailable()
+        {
+            return this.GetProjectBuyerEvaluationMax() - this.GetProjectsBuyerEvaluationsUsed();
+        }
+
+        #endregion
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MusicBusinessRoundProjectDto"/> class.
         /// </summary>
