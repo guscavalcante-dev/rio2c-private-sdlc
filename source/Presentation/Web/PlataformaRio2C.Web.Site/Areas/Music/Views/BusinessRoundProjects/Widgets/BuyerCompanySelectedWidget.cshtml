@@ -31,12 +31,12 @@
     </div>
 </div>
 @Html.Hidden("ProjectsBuyerEvaluationsAvailable", Model.GetProjectsBuyerEvaluationsAvailable())
-@if (Model.ProjectBuyerEvaluationDtos?.Any() == true)
+@if (Model.MusicBusinessRoundProjectBuyerEvaluationDtos?.Any() == true)
 {
     <div class="row rio2c-scroll" style="height: 590px;">
         <div class="col-12">
             <div class="row">
-                @foreach (var projectBuyerEvaluationDto in Model.ProjectBuyerEvaluationDtos)
+                @foreach (var projectBuyerEvaluationDto in Model.MusicBusinessRoundProjectBuyerEvaluationDtos)
                 {
                     <div class="col-12 selected-buyer-evaluation" data-attendeeorganizationuid="@projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid">
                         <!--Begin::Portlet-->
@@ -78,7 +78,7 @@
                                                     </span>
                                                 </div>
                                             }
-                                            @if (editionDto?.IsAudiovisualProjectSubmitOpen() == true)
+                                            @if (editionDto?.IsMusicBusinessRoundProjectSubmitOpen() == true)
                                             {
                                                 <span class="kt-widget__desc">
                                                     <button type="button" class="btn btn-label-danger btn-sm btn-upper" onclick="ProjectsBuyerCompanyWidget.unselectCompany('@projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid')">@Labels.Remove</button>

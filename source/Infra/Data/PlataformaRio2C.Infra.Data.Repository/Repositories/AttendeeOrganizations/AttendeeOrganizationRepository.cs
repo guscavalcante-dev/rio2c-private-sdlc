@@ -1067,6 +1067,36 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ToListPagedAsync(page, pageSize);
         }
 
+        /// <summary>Finds all dto by project buyer asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="projectDto">The project dto.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<AttendeeOrganizationDto>> FindAllDtoByProjectBuyerAsync(int editionId, MusicBusinessRoundProjectDto projectDto, string searchKeywords, int page, int pageSize)
+        {   //no caso de musica, nao existe projectType
+            //var buyerOrganizationType = projectDto.ProjectType?.OrganizationTypes?.FirstOrDefault(ot => !ot.IsDeleted && !ot.IsSeller);
+
+            var query = this.GetBaseQuery()
+                                .FindByOrganizationTypeUidAndEditionId(editionId, false)
+                                //.FindNotByUid(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) //Todo : Rever com Renan o que fazer em casos de organization
+                                .FindByKeywords(searchKeywords)
+                                .IsOnboardingFinished();
+
+            return await query
+                            .Select(ao => new AttendeeOrganizationDto
+                            {
+                                AttendeeOrganization = ao,
+                                Organization = ao.Organization,
+                                ProjectBuyerEvaluationsCount = ao.ProjectBuyerEvaluations.Count(pbe =>
+                                    pbe.BuyerAttendeeOrganizationId == ao.Id && !pbe.IsDeleted
+                                ),
+                            })
+                            .OrderBy(ao => ao.Organization.TradeName)
+                            .ToListPagedAsync(page, pageSize);
+        }
+
         #endregion
 
         #region Negotiations
