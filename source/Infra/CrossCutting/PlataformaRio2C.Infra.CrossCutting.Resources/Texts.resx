@@ -329,6 +329,16 @@ maira@rio2c.com&lt;br/&gt;
   <data name="LinksImageTeaser" xml:space="preserve">
     <value>(Não serão aceitos links para download, só para sites de compartilhamento de imagem ou vídeo, ex: youtube e Vimeo.) </value>
   </data>
+  <data name="MusicPlayerProjectsDates" xml:space="preserve">
+    <value>&lt;li&gt;Projetos disponíveis para avaliação a partir de: {0}&lt;/li&gt;
+&lt;li&gt;Período de avaliação: {0} a {1}&lt;/li&gt;
+&lt;li&gt;Agenda das Rodadas de Negócios disponível online a partir de: {2}&lt;/li&gt;</value>
+  </data>
+  <data name="MusicProducerProjectsDates" xml:space="preserve">
+    <value>&lt;li&gt;Submissão de projetos para as Rodadas de Negócios e Pitching de Audiovisual: {0} a {1}&lt;/li&gt;
+&lt;li&gt;Período de avaliação: {2} a {3}&lt;/li&gt;
+&lt;li&gt;Agenda online disponível em: {4}&lt;/li&gt;</value>
+  </data>
   <data name="MyRio2cDescription" xml:space="preserve">
     <value>MyRio2C é a plataforma criada pelo Rio2C para integrar os participantes antes do evento e promover mais um ambiente de negócios para quem vai ao evento.&lt;br/&gt;
 No MyRio2C, os participantes poderão consultar a programação e montar a agenda, mesmo antes do evento, conhecer os demais participantes através da pesquisa de perfis e empresas, ter acesso ao seu e-ticket e se cadastrar no Banco de Talentos.&lt;br/&gt;
@@ -365,9 +375,6 @@ O MyRio2C também é um canal de comunicação do Rio2C com você, trazendo info
     <value>&lt;li&gt;Projetos disponíveis para avaliação a partir de: {0}&lt;/li&gt;
 &lt;li&gt;Período de avaliação: {0} a {1}&lt;/li&gt;
 &lt;li&gt;Agenda das Rodadas de Negócios disponível online a partir de: {2}&lt;/li&gt;</value>
-    <comment>&lt;li&gt;Projetos disponíveis para avaliação a partir de: {0}&lt;/li&gt;
-&lt;li&gt;Período de avaliação: {0} a {1}&lt;/li&gt;
-&lt;li&gt;Agenda das Rodadas de Negócios disponível online a partir de: {2}&lt;/li&gt;</comment>
   </data>
   <data name="PlayersSavedSuccess" xml:space="preserve">
     <value>Player(s) salvo(s) com sucesso</value>
@@ -376,13 +383,15 @@ O MyRio2C também é um canal de comunicação do Rio2C com você, trazendo info
   <data name="PlayersSelectedForEvaluation" xml:space="preserve">
     <value>Players selecionados para avaliação deste projeto</value>
   </data>
+  <data name="ProducerMusicProjectsDates" xml:space="preserve">
+    <value>&lt;li&gt;Submissão de projetos para as Rodadas de Negócios e Pitching de Música : {0} a {1}&lt;/li&gt;
+&lt;li&gt;Período de avaliação: {2} a {3}&lt;/li&gt;
+&lt;li&gt;Agenda online disponível em: {4}&lt;/li&gt;</value>
+  </data>
   <data name="ProducerProjectsDates" xml:space="preserve">
     <value>&lt;li&gt;Submissão de projetos para as Rodadas de Negócios e Pitching de Audiovisual: {0} a {1}&lt;/li&gt;
 &lt;li&gt;Período de avaliação: {2} a {3}&lt;/li&gt;
 &lt;li&gt;Agenda online disponível em: {4}&lt;/li&gt;</value>
-    <comment>&lt;li&gt;Submissão de projetos para as Rodadas de Negócios e Pitching de Audiovisual: {0} a {1}&lt;/li&gt;
-&lt;li&gt;Período de avaliação: {2} a {3}&lt;/li&gt;
-&lt;li&gt;Agenda online disponível em: {4}&lt;/li&gt;</comment>
   </data>
   <data name="ProjectBudget" xml:space="preserve">
     <value>Orçamento do projeto (apenas para projetos em desenvolvimento / produção)</value>
@@ -520,10 +529,5 @@ O MyRio2C também é um canal de comunicação do Rio2C com você, trazendo info
   <data name="YouAreCurrentlyBrowsingAs" xml:space="preserve">
     <value>Você está acessando como</value>
     <comment>Você está acessando como</comment>
-  </data>
-  <data name="ProducerMusicProjectsDates" xml:space="preserve">
-    <value>&lt;li&gt;Submissão de projetos para as Rodadas de Negócios e Pitching de Música : {0} a {1}&lt;/li&gt;
-&lt;li&gt;Período de avaliação: {2} a {3}&lt;/li&gt;
-&lt;li&gt;Agenda online disponível em: {4}&lt;/li&gt;</value>
   </data>
 </root>

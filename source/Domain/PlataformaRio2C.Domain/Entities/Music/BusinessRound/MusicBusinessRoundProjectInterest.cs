@@ -13,6 +13,7 @@
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using System;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -43,6 +44,25 @@ namespace PlataformaRio2C.Domain.Entities
                     string.Format(Messages.PropertyBetweenLengths, Labels.AdditionalInfo, AdditionalInfoMaxLength, 1),
                     new string[] { "AdditionalInfo" }));
             }
+        }
+        public MusicBusinessRoundProjectInterest()
+        {
+                
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="ProjectInterest"/> class.</summary>
+        /// <param name="interest">The interest.</param>
+        /// <param name="additionalInfo">The additional information.</param>
+        /// <param name="userId">The user identifier.</param>
+        public MusicBusinessRoundProjectInterest(Interest interest, string additionalInfo, int userId)
+        {
+            this.InterestId = interest?.Id ?? 0;
+            this.Interest = interest;
+            this.AdditionalInfo = additionalInfo?.Trim();
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
         }
     }
 }

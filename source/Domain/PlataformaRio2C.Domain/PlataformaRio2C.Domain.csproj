@@ -303,6 +303,7 @@
     <Compile Include="Dtos\Music\BusinessRoundProject\MusicBusinessRoundProjectBuyerEvaluationDto.cs" />
     <Compile Include="Dtos\Music\BusinessRoundProject\MusicBusinessRoundProjectExpectationsForMeetingDto.cs" />
     <Compile Include="Dtos\Music\BusinessRoundProject\MusicBusinessRoundProjectDto.cs" />
+    <Compile Include="Dtos\Music\BusinessRoundProject\MusicBusinessRoundProjectActivityDto.cs" />
     <Compile Include="Dtos\Music\BusinessRoundProject\MusicBusinessRoundProjectInterestDto.cs" />
     <Compile Include="Dtos\Music\BusinessRoundProject\MusicBusinessRoundProjectPlayerCategoryDto.cs" />
     <Compile Include="Dtos\Music\BusinessRoundProject\MusicBusinessRoundProjectTargetAudienceDto.cs" />
@@ -390,6 +391,7 @@
     <Compile Include="Dtos\Languages\LanguageBaseDto.cs" />
     <Compile Include="Dtos\Pillars\PillarDto.cs" />
     <Compile Include="Dtos\Pillars\PillarJsonDto.cs" />
+    <Compile Include="Dtos\TargetAudiences\TargetAudienceDto.cs" />
     <Compile Include="Dtos\Users\AdminAccessControlDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorTicketsInformationDto.cs" />
     <Compile Include="Dtos\Users\UserUnsubscribedListDto.cs" />
@@ -474,6 +476,7 @@
     <Compile Include="Entities\Logistics\AttendeeLogisticsSponsor.cs" />
     <Compile Include="Entities\Logistics\Logistic.cs" />
     <Compile Include="Entities\Message\Message.cs" />
+    <Compile Include="Entities\Music\BusinessRound\MusicBusinessRoundProjectActivity.cs" />
     <Compile Include="Entities\Music\BusinessRound\MusicBusinessRoundProjectExpectationsForMeeting.cs" />
     <Compile Include="Entities\Music\BusinessRound\MusicBusinessRoundProjectBuyerEvaluation.cs" />
     <Compile Include="Entities\Music\BusinessRound\MusicBusinessRoundProjectPlayerCategory.cs" />

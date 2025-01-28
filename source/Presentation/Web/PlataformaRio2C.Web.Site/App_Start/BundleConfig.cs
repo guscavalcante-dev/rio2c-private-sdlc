@@ -11,6 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.Presentation;
 using System.Web.Optimization;
 
 namespace PlataformaRio2C.Web.Site
@@ -448,7 +450,7 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/js/music/projects/music.projects.members.widget.js",
                 "~/Assets/js/music/projects/music.projects.teammembers.widget.js",
                 "~/Assets/js/music/projects/music.projects.releasedprojects.widget.js",
-                "~/Assets/js/music/projects/music.projects.evaluators.widget.js", 
+                "~/Assets/js/music/projects/music.projects.evaluators.widget.js",
                 "~/Assets/js/music/projects/music.projects.responsible.widget.js",
                 "~/Assets/js/music/projects/music.projects.clipping.widget.js",
                 "~/Assets/js/music/projects/music.projects.videoandmusic.widget.js",
@@ -460,6 +462,17 @@ namespace PlataformaRio2C.Web.Site
 
             bundles.Add(new ScriptBundle("~/bundles/js/music.projects.evaluation.widget.js").Include(
                 "~/Assets/js/music/projects/music.projects.evaluation.widget.js"));
+
+            #endregion
+
+            #region Projects - Business Rounds
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.businessrounds.buyerevaluation.list.widget.js").Include(
+                "~/Assets/js/music/businessrounds/music.businessrounds.buyerevaluation.list.widget.js",
+                "~/Scripts/jquery.unobtrusive-ajax.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.businessrounds.buyerevaluation.update.widget.js").Include(
+                "~/Assets/js/music/businessrounds/music.businessrounds.buyerevaluation.update.widget.js"));
 
             #endregion
 
@@ -593,24 +606,24 @@ namespace PlataformaRio2C.Web.Site
             //    "~/Assets/themes/metronic/css/demo4/pages/wizard/wizard-3.css"));
 
             #endregion
-                        
+
             #region Bootstrap Datepicker
 
             bundles.Add(new StyleBundle("~/bundles/css/bootstrap-datepicker.css")
                 .Include("~/Assets/themes/metronic/vendors/general/bootstrap-datepicker/dist/css/bootstrap-datepicker.css", new CssRewriteUrlTransform()));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/bootstrap-datepicker.js").Include(                
+            bundles.Add(new ScriptBundle("~/bundles/js/bootstrap-datepicker.js").Include(
                 //"~/Assets/themes/metronic/vendors/general/moment/min/moment-with-locales.min.js",
                 "~/Assets/themes/metronic/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.js",
                 "~/Assets/components/bootstrap-timepicker/bootstrap-datepicker.en-us.js",
                 "~/Assets/components/bootstrap-timepicker/bootstrap-datepicker.pt-br.js"));
 
             #endregion
-                            
+
             // Required to generate bundles on release running in visual studio
-            #if !DEBUG
+#if !DEBUG
             BundleTable.EnableOptimizations = true;
-            #endif
+#endif
         }
     }
 }

@@ -219,6 +219,16 @@
   <data name="LinksImageTeaser" xml:space="preserve">
     <value>(Links for download will not be accepted, only for image or video sharing sites, ex: youtube e Vimeo.)</value>
   </data>
+  <data name="MusicPlayerProjectsDates" xml:space="preserve">
+    <value>&lt;li&gt;Projects available for evaluation starting from: {0}&lt;/li&gt;
+&lt;li&gt;Evaluation period: {0} to {1}&lt;/li&gt;
+&lt;li&gt;One-to-One Meetings’ agenda available online from: {2}&lt;/li&gt;</value>
+  </data>
+  <data name="MusicProducerProjectsDates" xml:space="preserve">
+    <value>&lt;li&gt;Projects submissions for One-to-One Meetings and Audiovisual Pitching: {0} a {1}&lt;/li&gt;
+&lt;li&gt;Evaluation Period: {2} a {3}&lt;/li&gt;
+&lt;li&gt;Agenda Available Online: {4}&lt;/li&gt;</value>
+  </data>
   <data name="MyRio2cDescription" xml:space="preserve">
     <value>MyRio2C is a platform designed to connect participants prior to the event and to cultivate an online business environment for all those attending.&lt;br/&gt;
 Via MyRio2C, participants will be able to consult the program and define their agenda in the lead-up to the event; get to know other participants’ profiles and companies; get access to e-tickets and register for the online Talent Database.&lt;br/&gt;
@@ -265,6 +275,11 @@ O MyRio2C também é um canal de comunicação do Rio2C com você, trazendo info
   </data>
   <data name="PlayersSelectedForEvaluation" xml:space="preserve">
     <value>Players selected to evaluate this project</value>
+  </data>
+  <data name="ProducerMusicProjectsDates" xml:space="preserve">
+    <value>&lt;li&gt;Projects submissions for One-to-One Meetings and Music Pitching: {0} a {1}&lt;/li&gt;
+&lt;li&gt;Evaluation Period: {2} a {3}&lt;/li&gt;
+&lt;li&gt;Agenda Available Online: {4}&lt;/li&gt;</value>
   </data>
   <data name="ProducerProjectsDates" xml:space="preserve">
     <value>&lt;li&gt;Projects submissions for One-to-One Meetings and Audiovisual Pitching: {0} a {1}&lt;/li&gt;
@@ -416,10 +431,5 @@ O MyRio2C também é um canal de comunicação do Rio2C com você, trazendo info
   <data name="YouAreCurrentlyBrowsingAs" xml:space="preserve">
     <value>You are currently browsing as</value>
     <comment>Você está acessando como</comment>
-  </data>
-  <data name="ProducerMusicProjectsDates" xml:space="preserve">
-    <value>&lt;li&gt;Projects submissions for One-to-One Meetings and Music Pitching: {0} a {1}&lt;/li&gt;
-&lt;li&gt;Evaluation Period: {2} a {3}&lt;/li&gt;
-&lt;li&gt;Agenda Available Online: {4}&lt;/li&gt;</value>
   </data>
 </root>

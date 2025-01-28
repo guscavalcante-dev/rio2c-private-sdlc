@@ -97,7 +97,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            if (editionDto.IsMusicProjectSubmitEnded())
+            if (editionDto.IsMusicPitchingProjectSubmitEnded())
             {
                 this.ValidationResult.Add(new ValidationError(Messages.ProjectSubmitPeriodClosed));
                 this.AppValidationResult.Add(this.ValidationResult);

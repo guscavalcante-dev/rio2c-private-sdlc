@@ -175,6 +175,7 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new MusicBusinessRoundProjectPlayerCategoryMap());
             modelBuilder.Configurations.Add(new MusicBusinessRoundProjectTargetAudienceMap());
             modelBuilder.Configurations.Add(new PlayerCategoryMap());
+            modelBuilder.Configurations.Add(new MusicBusinessRoundProjectActivityMap());
 
             // Common
             modelBuilder.Configurations.Add(new ActivityMap());

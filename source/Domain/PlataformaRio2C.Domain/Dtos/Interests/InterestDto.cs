@@ -20,6 +20,7 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>InterestDto</summary>
     public class InterestDto
     {
+        public Guid InterestUid { get; set; }
         public string InterestName { get; set; }
         public Guid InterestGroupUid { get; set; }
         public string InterestGroupName { get; set; }

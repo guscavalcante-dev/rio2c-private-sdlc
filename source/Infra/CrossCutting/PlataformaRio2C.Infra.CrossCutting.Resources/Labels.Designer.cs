@@ -160,6 +160,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Perfil de Executivos: Selecione até 3 opções para as reuniões individuais.
+        /// </summary>
+        public static string ActivitiesBusinessRoundProjects {
+            get {
+                return ResourceManager.GetString("ActivitiesBusinessRoundProjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Atividade.
         /// </summary>
         public static string Activity {
@@ -543,6 +552,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Attachments {
             get {
                 return ResourceManager.GetString("Attachments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Anexar Release, Link da plataforma de streaming ou Material de Apresentação.
+        /// </summary>
+        public static string AttachmentUrl {
+            get {
+                return ResourceManager.GetString("AttachmentUrl", resourceCulture);
             }
         }
         
@@ -984,6 +1002,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string BusinessRound {
             get {
                 return ResourceManager.GetString("BusinessRound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Objetivo da Rodada de Negócio.
+        /// </summary>
+        public static string BusinessRoundObjective {
+            get {
+                return ResourceManager.GetString("BusinessRoundObjective", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Objetivos para as Rodadas de Negócio.
+        /// </summary>
+        public static string BusinessRoundProjectsObjetives {
+            get {
+                return ResourceManager.GetString("BusinessRoundProjectsObjetives", resourceCulture);
             }
         }
         
@@ -2626,6 +2662,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Perfil de Executivo.
+        /// </summary>
+        public static string ExecutiveProfile {
+            get {
+                return ResourceManager.GetString("ExecutiveProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Executivos.
         /// </summary>
         public static string Executives {
@@ -2653,7 +2698,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Expectativas para as Rodadas de Negócios.
+        ///   Looks up a localized string similar to Expectativas para as Rodadas de Negócio.
         /// </summary>
         public static string ExpectationsForMeeting {
             get {
@@ -3319,6 +3364,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Áreas de Interesse.
+        /// </summary>
+        public static string InterestArea {
+            get {
+                return ResourceManager.GetString("InterestArea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Interesses.
         /// </summary>
         public static string Interests {
@@ -3729,6 +3783,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string LogOut {
             get {
                 return ResourceManager.GetString("LogOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Buscando por.
+        /// </summary>
+        public static string LookingFor {
+            get {
+                return ResourceManager.GetString("LookingFor", resourceCulture);
             }
         }
         
@@ -4687,6 +4750,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Objetivo.
+        /// </summary>
+        public static string Objective {
+            get {
+                return ResourceManager.GetString("Objective", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to de.
         /// </summary>
         public static string Of {
@@ -4894,7 +4966,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tipo de Participante.
+        ///   Looks up a localized string similar to Perfil do Participante.
         /// </summary>
         public static string ParticipantProfile {
             get {
@@ -5146,7 +5218,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Categoria de players (discursiva).
+        ///   Looks up a localized string similar to Categoria de players com que tem/teve contrato.
         /// </summary>
         public static string PlayerCategoriesThatHaveOrHadContract {
             get {
@@ -7549,6 +7621,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Perfil do Participante: Selecione a opção que melhor descreve suas atividades.
+        /// </summary>
+        public static string TargetAudiencesMusicBusinessRoundProject {
+            get {
+                return ResourceManager.GetString("TargetAudiencesMusicBusinessRoundProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Link do teaser.
         /// </summary>
         public static string TeaserLink {
@@ -8337,6 +8418,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string WhereToStay {
             get {
                 return ResourceManager.GetString("WhereToStay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quais empresas?.
+        /// </summary>
+        public static string WhichCompanies {
+            get {
+                return ResourceManager.GetString("WhichCompanies", resourceCulture);
             }
         }
         

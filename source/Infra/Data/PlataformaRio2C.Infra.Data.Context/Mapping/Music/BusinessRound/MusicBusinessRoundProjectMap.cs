@@ -32,7 +32,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .HasMaxLength(MusicBusinessRoundProject.AttachmentUrlMaxLength);
 
             // Player caterogories
-            this.HasMany(t => t.PlayerCategories)
+            this.HasMany(t => t.MusicBusinessRoundProjectPlayerCategories)
                 .WithRequired(pc => pc.MusicBusinessRoundProject)
                 .HasForeignKey(pc => pc.MusicBusinessRoundProjectId);
 

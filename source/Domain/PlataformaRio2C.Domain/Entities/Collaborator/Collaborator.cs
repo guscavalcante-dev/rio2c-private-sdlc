@@ -3667,6 +3667,20 @@ namespace PlataformaRio2C.Domain.Entities
             return this.GetFullName().GetTwoLetterCode();
         }
 
+        /// <summary>
+        /// Gets the full name of the stage name or badge or.
+        /// </summary>
+        /// <returns></returns>
+        public string GetStageNameOrBadgeOrFullName()
+        {
+            if (!string.IsNullOrEmpty(this.StageName))
+                return this.StageName;
+            else if (!string.IsNullOrEmpty(this.Badge))
+                return this.Badge;
+            else
+                return this.GetFullName();
+        }
+
         /// <summary>Determines whether this instance has image.</summary>
         /// <returns>
         ///   <c>true</c> if this instance has image; otherwise, <c>false</c>.</returns>

@@ -28,13 +28,73 @@ namespace PlataformaRio2C.Domain.Entities
         public string AttachmentUrl { get; private set; }
         public DateTimeOffset? FinishDate { get; private set; }
         public int ProjectBuyerEvaluationsCount { get; private set; }
-
         public virtual AttendeeCollaborator SellerAttendeeCollaborator { get; private set; }
-        public virtual ICollection<MusicBusinessRoundProjectTargetAudience> MusicBusinessRoundProjectTargetAudience { get; private set; }
+        public virtual ICollection<MusicBusinessRoundProjectTargetAudience> MusicBusinessRoundProjectTargetAudiences { get; private set; }
         public virtual ICollection<MusicBusinessRoundProjectInterest> MusicBusinessRoundProjectInterests { get; private set; }
-        public virtual ICollection<MusicBusinessRoundProjectPlayerCategory> PlayerCategories { get; private set; }
+        public virtual ICollection<MusicBusinessRoundProjectPlayerCategory> MusicBusinessRoundProjectPlayerCategories { get; private set; }
+        public virtual ICollection<MusicBusinessRoundProjectActivity> MusicBusinessRoundProjectActivities { get; private set; }
         public virtual ICollection<MusicBusinessRoundProjectExpectationsForMeeting> MusicBusinessRoundProjectExpectationsForMeetings { get; private set; }
         public virtual ICollection<MusicBusinessRoundProjectBuyerEvaluation> MusicBusinessRoundProjectBuyerEvaluations { get; private set; }
+
+        public MusicBusinessRoundProject()
+        {
+            
+        }
+        public MusicBusinessRoundProject(
+                int sellerAttendeeCollaboratorId,
+                string playerCategoriesThatHaveOrHadContract,
+                string attachmentUrl,
+                DateTimeOffset? finishDate,
+                int projectBuyerEvaluationsCount,
+                AttendeeCollaborator sellerAttendeeCollaborator,
+                ICollection<MusicBusinessRoundProjectTargetAudience> musicBusinessRoundProjectTargetAudience,
+                ICollection<MusicBusinessRoundProjectInterest> musicBusinessRoundProjectInterests,
+                ICollection<MusicBusinessRoundProjectPlayerCategory> playerCategories,
+                ICollection<MusicBusinessRoundProjectActivity> musicBusinessRoundProjectActivities,
+                ICollection<MusicBusinessRoundProjectExpectationsForMeeting> musicBusinessRoundProjectExpectationsForMeetings,
+                ICollection<MusicBusinessRoundProjectBuyerEvaluation> musicBusinessRoundProjectBuyerEvaluations
+)
+        {
+            SellerAttendeeCollaboratorId = sellerAttendeeCollaboratorId;
+            PlayerCategoriesThatHaveOrHadContract = playerCategoriesThatHaveOrHadContract;
+            AttachmentUrl = attachmentUrl;
+            FinishDate = finishDate;
+            ProjectBuyerEvaluationsCount = projectBuyerEvaluationsCount;
+            SellerAttendeeCollaborator = sellerAttendeeCollaborator;
+            MusicBusinessRoundProjectTargetAudiences = musicBusinessRoundProjectTargetAudience ?? new List<MusicBusinessRoundProjectTargetAudience>();
+            MusicBusinessRoundProjectInterests = musicBusinessRoundProjectInterests ?? new List<MusicBusinessRoundProjectInterest>();
+            MusicBusinessRoundProjectPlayerCategories = playerCategories ?? new List<MusicBusinessRoundProjectPlayerCategory>();
+            MusicBusinessRoundProjectActivities = musicBusinessRoundProjectActivities ?? new List<MusicBusinessRoundProjectActivity>();
+            MusicBusinessRoundProjectExpectationsForMeetings = musicBusinessRoundProjectExpectationsForMeetings ?? new List<MusicBusinessRoundProjectExpectationsForMeeting>();
+            MusicBusinessRoundProjectBuyerEvaluations = musicBusinessRoundProjectBuyerEvaluations ?? new List<MusicBusinessRoundProjectBuyerEvaluation>();
+        }
+
+        public MusicBusinessRoundProject(
+               int sellerAttendeeCollaboratorId,
+               string playerCategoriesThatHaveOrHadContract,
+               string attachmentUrl,
+               DateTimeOffset? finishDate,
+               ICollection<MusicBusinessRoundProjectTargetAudience> musicBusinessRoundProjectTargetAudience,
+               ICollection<MusicBusinessRoundProjectInterest> musicBusinessRoundProjectInterests,
+               ICollection<MusicBusinessRoundProjectPlayerCategory> playerCategories,
+               ICollection<MusicBusinessRoundProjectActivity> musicBusinessRoundProjectActivities,
+               ICollection<MusicBusinessRoundProjectExpectationsForMeeting> musicBusinessRoundProjectExpectationsForMeetings,
+               int userId)
+        {
+            SellerAttendeeCollaboratorId = sellerAttendeeCollaboratorId;
+            PlayerCategoriesThatHaveOrHadContract = playerCategoriesThatHaveOrHadContract;
+            AttachmentUrl = attachmentUrl;
+            FinishDate = finishDate;
+            MusicBusinessRoundProjectTargetAudiences = musicBusinessRoundProjectTargetAudience ?? new List<MusicBusinessRoundProjectTargetAudience>();
+            MusicBusinessRoundProjectInterests = musicBusinessRoundProjectInterests ?? new List<MusicBusinessRoundProjectInterest>();
+            MusicBusinessRoundProjectPlayerCategories = playerCategories ?? new List<MusicBusinessRoundProjectPlayerCategory>();
+            MusicBusinessRoundProjectActivities = musicBusinessRoundProjectActivities ?? new List<MusicBusinessRoundProjectActivity>();
+            MusicBusinessRoundProjectExpectationsForMeetings = musicBusinessRoundProjectExpectationsForMeetings ?? new List<MusicBusinessRoundProjectExpectationsForMeeting>();
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
 
         public bool IsFinished()
         {
@@ -43,6 +103,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Validations
 
+      
         public override bool IsValid()
         {
             this.ValidationResult = new ValidationResult();

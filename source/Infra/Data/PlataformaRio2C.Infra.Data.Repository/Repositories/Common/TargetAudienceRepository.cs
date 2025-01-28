@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
@@ -138,6 +139,26 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return await query
                             .Order()
+                            .ToListAsync();
+        }
+
+        /// <summary>
+        /// Finds all dtos by project type identifier asynchronous.
+        /// </summary>
+        /// <param name="projectTypeId">The project type identifier.</param>
+        /// <returns></returns>
+        public async Task<List<TargetAudienceDto>> FindAllDtosByProjectTypeIdAsync(int projectTypeId)
+        {
+            var query = this.GetBaseQuery()
+                                   .FindByProjectTypeId(projectTypeId);
+
+            return await query
+                            .Order()
+                            .Select(ta => new TargetAudienceDto
+                            {
+                                Uid = ta.Uid,
+                                Name = ta.Name
+                            })
                             .ToListAsync();
         }
     }
