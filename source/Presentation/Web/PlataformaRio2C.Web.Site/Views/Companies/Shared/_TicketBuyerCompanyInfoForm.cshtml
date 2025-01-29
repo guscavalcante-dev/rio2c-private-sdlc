@@ -5,24 +5,6 @@
     </div>
     <div class="form-group col-lg-7 col-xl-9 pl-lg-5">
         <div class="row">
-            <div class="form-group col-md-12">
-                @Html.LabelFor(m => m.TradeName, new { @class = "control-label" })
-                <div class="spinner-container">
-                    @Html.TextBoxFor(m => m.TradeName, new { @class = "form-control ", @autocomplete = "nope" })
-                </div>
-                @Html.ValidationMessageFor(m => m.TradeName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-md-12">
-                @Html.LabelFor(m => m.CompanyName, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
-                <div class="spinner-container">
-                    @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control", @autocomplete = "nope" })
-                </div>
-                @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="row">
             <div class="form-group col-sm-12 col-xl-6" data-id="Country">
                 @Html.LabelFor(m => m.CountryUid, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
                 @Html.HiddenFor(m => m.IsCompanyNumberRequired)
@@ -46,6 +28,24 @@
                     @Html.TextBoxFor(m => m.Document, new { @class = "form-control", autocomplete = "off" })
                 </div>
                 @Html.ValidationMessageFor(m => m.Document, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12">
+                @Html.LabelFor(m => m.TradeName, new { @class = "control-label" })
+                <div class="spinner-container">
+                    @Html.TextBoxFor(m => m.TradeName, new { @class = "form-control ", @autocomplete = "nope" })
+                </div>
+                @Html.ValidationMessageFor(m => m.TradeName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12">
+                @Html.LabelFor(m => m.CompanyName, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                <div class="spinner-container">
+                    @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control", @autocomplete = "nope" })
+                </div>
+                @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
             </div>
         </div>
     </div>

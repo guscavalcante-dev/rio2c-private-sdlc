@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-17-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-17-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-29-2025
 // ***********************************************************************
 // <copyright file="myrio2c.inputmask.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,6 +23,7 @@ var MyRio2cInputMask = function () {
 
     var removeMask = function (inputClassOrId) {
         $(inputClassOrId).inputmask('remove');
+        $(inputClassOrId).val("");
     };
 
     return {
