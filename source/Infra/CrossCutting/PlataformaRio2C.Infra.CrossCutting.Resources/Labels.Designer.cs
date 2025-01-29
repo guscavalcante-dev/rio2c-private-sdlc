@@ -7171,6 +7171,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nome Artístico.
+        /// </summary>
+        public static string StageName {
+            get {
+                return ResourceManager.GetString("StageName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Início.
         /// </summary>
         public static string Start {
