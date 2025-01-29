@@ -34,9 +34,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IMediator eventBus,
             IUnitOfWork uow,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
-            IProjectRepository projectRepository,
-            IMusicBusinessRoundProjectRepository musicProjectRepo)
-            : base(eventBus, uow, attendeeOrganizationRepository, projectRepository, musicProjectRepo)
+            IProjectRepository projectRepository)
+            : base(eventBus, uow, attendeeOrganizationRepository, projectRepository)
         {
         }
 

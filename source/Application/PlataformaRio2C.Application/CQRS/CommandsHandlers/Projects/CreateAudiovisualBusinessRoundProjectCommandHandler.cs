@@ -20,7 +20,6 @@ using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -53,8 +52,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             ILanguageRepository languageRepository,
             ITargetAudienceRepository targetAudienceRepository,
             IInterestRepository interestRepository,
-            IProjectModalityRepository projectModalityRepo, IMusicBusinessRoundProjectRepository musicProjectRepo)
-            : base(eventBus, uow, attendeeOrganizationRepository, projectRepository, musicProjectRepo)
+            IProjectModalityRepository projectModalityRepo)
+            : base(eventBus, uow, attendeeOrganizationRepository, projectRepository)
         {
             this.projectTypeRepo = projectTypeRepository;
             this.languageRepo = languageRepository;

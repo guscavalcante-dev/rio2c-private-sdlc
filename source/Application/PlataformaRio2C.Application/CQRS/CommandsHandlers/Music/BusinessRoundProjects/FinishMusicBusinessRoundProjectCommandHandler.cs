@@ -23,7 +23,7 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
     /// <summary>FinishProjectCommandHandler</summary>
-    public class FinishMusicBusinessRoundProjectCommandHandler : BaseProjectCommandHandler, IRequestHandler<FinishMusicBusinessRoundProject, AppValidationResult>
+    public class FinishMusicBusinessRoundProjectCommandHandler : BaseMusicBusinessRoundProjectCommandHandler, IRequestHandler<FinishMusicBusinessRoundProject, AppValidationResult>
     {
         /// <summary>Initializes a new instance of the <see cref="FinishProjectCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
@@ -34,9 +34,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IMediator eventBus,
             IUnitOfWork uow,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
-            IProjectRepository projectRepository,
             IMusicBusinessRoundProjectRepository musicProjectRepo)
-            : base(eventBus, uow, attendeeOrganizationRepository, projectRepository, musicProjectRepo)
+            : base(eventBus, uow, attendeeOrganizationRepository, musicProjectRepo)
         {
         }
 
@@ -77,7 +76,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            this.musicBusinessRoundProjectRepo.Update(project);
+            this.MusicBusinessRoundProjectRepo.Update(project);
             this.Uow.SaveChanges();
             this.AppValidationResult.Data = project;
 

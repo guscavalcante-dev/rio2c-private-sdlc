@@ -23,7 +23,7 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
     /// <summary>CreateProjectBuyerEvaluationCommandHandler</summary>
-    public class CreateMusicBusinessRoundProjectBuyerEvaluationCommandHandler : BaseProjectCommandHandler, IRequestHandler<CreateMusicBusinessRoundProjectBuyerEvaluation, AppValidationResult>
+    public class CreateMusicBusinessRoundProjectBuyerEvaluationCommandHandler : BaseMusicBusinessRoundProjectCommandHandler, IRequestHandler<CreateMusicBusinessRoundProjectBuyerEvaluation, AppValidationResult>
     {
         private readonly IProjectEvaluationStatusRepository projectEvaluationStatusRepo;
 
@@ -37,9 +37,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IMediator eventBus,
             IUnitOfWork uow,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
-            IProjectRepository projectRepository,
-            IProjectEvaluationStatusRepository projectEvaluationStatusRepository, IMusicBusinessRoundProjectRepository musicRepo)
-            : base(eventBus, uow, attendeeOrganizationRepository, projectRepository,musicRepo)
+            IProjectEvaluationStatusRepository projectEvaluationStatusRepository, 
+            IMusicBusinessRoundProjectRepository musicBusinessRoundProjectRepository)
+            : base(eventBus, uow, attendeeOrganizationRepository, musicBusinessRoundProjectRepository)
         {
             this.projectEvaluationStatusRepo = projectEvaluationStatusRepository;
         }
@@ -85,7 +85,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            this.musicBusinessRoundProjectRepo.Update(project);
+            this.MusicBusinessRoundProjectRepo.Update(project);
             this.Uow.SaveChanges();
             this.AppValidationResult.Data = project;
 

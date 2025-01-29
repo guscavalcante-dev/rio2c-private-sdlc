@@ -42,8 +42,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IUnitOfWork uow,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IProjectRepository projectRepository,
-            IProjectEvaluationStatusRepository projectEvaluationStatusRepository, IMusicBusinessRoundProjectRepository musicProjectRepo)
-            : base(eventBus, uow, attendeeOrganizationRepository, projectRepository, musicProjectRepo)
+            IProjectEvaluationStatusRepository projectEvaluationStatusRepository)
+            : base(eventBus, uow, attendeeOrganizationRepository, projectRepository)
         {
             this.projectEvaluationStatusRepo = projectEvaluationStatusRepository;
         }

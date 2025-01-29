@@ -17,7 +17,6 @@ using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -34,8 +33,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IMediator eventBus,
             IUnitOfWork uow,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
-            IProjectRepository projectRepository, IMusicBusinessRoundProjectRepository musicProjectRepo)
-            : base(eventBus, uow, attendeeOrganizationRepository, projectRepository, musicProjectRepo)
+            IProjectRepository projectRepository)
+            : base(eventBus, uow, attendeeOrganizationRepository, projectRepository)
         {
         }
 

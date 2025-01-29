@@ -44,8 +44,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IProjectRepository projectRepository,
             IInterestRepository interestRepository,
-            ITargetAudienceRepository targetAudienceRepository, IMusicBusinessRoundProjectRepository musicProjectRepo)
-            : base(eventBus, uow, attendeeOrganizationRepository, projectRepository, musicProjectRepo)
+            ITargetAudienceRepository targetAudienceRepository)
+            : base(eventBus, uow, attendeeOrganizationRepository, projectRepository)
         {
             this.interestRepo = interestRepository;
             this.targetAudienceRepo = targetAudienceRepository;
