@@ -2990,6 +2990,9 @@
     <value>Sponsors</value>
     <comment>Patrocinadores</comment>
   </data>
+  <data name="StageName" xml:space="preserve">
+    <value>Stage Name</value>
+  </data>
   <data name="Start" xml:space="preserve">
     <value>Start</value>
     <comment>Início</comment>

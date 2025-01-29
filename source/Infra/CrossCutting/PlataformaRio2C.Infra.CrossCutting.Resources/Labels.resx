@@ -2994,6 +2994,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Patrocinadores</value>
     <comment>Patrocinadores</comment>
   </data>
+  <data name="StageName" xml:space="preserve">
+    <value>Nome Artístico</value>
+  </data>
   <data name="Start" xml:space="preserve">
     <value>Início</value>
     <comment>Início</comment>
