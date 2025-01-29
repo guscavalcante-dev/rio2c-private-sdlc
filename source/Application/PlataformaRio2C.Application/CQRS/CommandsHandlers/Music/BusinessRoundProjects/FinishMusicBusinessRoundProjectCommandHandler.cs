@@ -23,14 +23,14 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
     /// <summary>FinishProjectCommandHandler</summary>
-    public class FinishProjectCommandHandler : BaseProjectCommandHandler, IRequestHandler<FinishProject, AppValidationResult>
+    public class FinishMusicBusinessRoundProjectCommandHandler : BaseProjectCommandHandler, IRequestHandler<FinishMusicBusinessRoundProject, AppValidationResult>
     {
         /// <summary>Initializes a new instance of the <see cref="FinishProjectCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="projectRepository">The project repository.</param>
-        public FinishProjectCommandHandler(
+        public FinishMusicBusinessRoundProjectCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
@@ -44,11 +44,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(FinishProject cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(FinishMusicBusinessRoundProject cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
-            var project = await this.GetProjectByUid(cmd.ProjectUid ?? Guid.Empty);
+            var project = await this.GetMusicBusinessRoundProjectByUid(cmd.ProjectUid ?? Guid.Empty);
 
             #region Initial validations
 
@@ -77,7 +77,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            this.ProjectRepo.Update(project);
+            this.musicBusinessRoundProjectRepo.Update(project);
             this.Uow.SaveChanges();
             this.AppValidationResult.Data = project;
 

@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -37,8 +38,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IUnitOfWork uow,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IProjectRepository projectRepository,
-            IProjectEvaluationStatusRepository projectEvaluationStatusRepository)
-            : base(eventBus, uow, attendeeOrganizationRepository, projectRepository)
+            IProjectEvaluationStatusRepository projectEvaluationStatusRepository,
+            IMusicBusinessRoundProjectRepository musicRepo)
+            : base(eventBus, uow, attendeeOrganizationRepository, projectRepository, musicRepo)
         {
             this.projectEvaluationStatusRepo = projectEvaluationStatusRepository;
         }

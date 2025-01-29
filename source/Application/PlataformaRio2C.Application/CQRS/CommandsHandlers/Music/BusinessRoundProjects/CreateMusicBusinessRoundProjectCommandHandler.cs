@@ -61,7 +61,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IMusicBusinessRoundProjectRepository musicProjectRepo,
             IActivityRepository activityRepo,
             IPlayersCategoryRepository playersCategoryRepo)
-            : base(eventBus, uow, attendeeOrganizationRepository, projectRepository)
+            : base(eventBus, uow, attendeeOrganizationRepository, projectRepository,musicProjectRepo)
         {
             this.musicBusinessRoundProjectRepo = musicProjectRepo;
             this.projectTypeRepo = projectTypeRepository;
