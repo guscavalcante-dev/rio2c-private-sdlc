@@ -365,6 +365,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             var routes = new RouteValueDictionary(RouteData.Values);
             routes["controller"] = "Onboarding";
             routes["action"] = "Index";
+            routes["area"] = "";
 
             // Add other parameters to route
             foreach (string key in HttpContext.Request.QueryString.Keys)
