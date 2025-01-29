@@ -103,7 +103,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             return View();
         }
 
-        #region Seller (Industry or Creator)
+        #region Seller/Producer (Industry or Creator)
 
         #region Submitted List
 
@@ -767,23 +767,22 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             }
 
             // Duplicate project
-            MusicBusinessRoundProjectDto projectDto = null;
+            MusicBusinessRoundProjectDto musicBusinessRoundProjectDto = null;
             if (id.HasValue)
             {
-                //TODO: Enable the project duplication into RIO2CMY-1339 task
-                //projectDto = await musicBusinessRoundProjectRepo.FindSiteDuplicateDtoByProjectUidAsync(id.Value);
-                //if (projectDto != null)
-                //{
-                //    if (UserAccessControlDto?.HasEditionAttendeeOrganization(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
-                //    {
-                //        this.StatusMessageToastr(Texts.ForbiddenErrorMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                //        return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
-                //    }
-                //}
+                musicBusinessRoundProjectDto = await musicBusinessRoundProjectRepo.FindSiteDuplicateDtoByProjectUidAsync(id.Value);
+                if (musicBusinessRoundProjectDto != null)
+                {
+                    if (UserAccessControlDto?.HasEditionAttendeeCollaborator(musicBusinessRoundProjectDto.SellerAttendeeCollaboratorDto.AttendeeCollaborator.Uid) != true)
+                    {
+                        this.StatusMessageToastr(Texts.ForbiddenErrorMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                        return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
+                    }
+                }
             }
 
             var cmd = new CreateMusicBusinessRoundProject(
-                projectDto,
+                musicBusinessRoundProjectDto,
                 await CommandBus.Send(new FindAllLanguagesDtosAsync(UserInterfaceLanguage)),
                 await targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
                 await interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Music.Id),
@@ -976,11 +975,10 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            //TODO: Checar com renan o que fazer com essas ligacoes com organizacao.
-            //if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(buyerCompanyWidgetDto.SellerAttendeeCollaboratorDto.AttendeeOrganizationsDtos.First().AttendeeOrganization.Uid) != true)
-            //{
-            //    return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-            //}
+            if (UserAccessControlDto?.HasEditionAttendeeCollaborator(buyerCompanyWidgetDto.SellerAttendeeCollaboratorDto.AttendeeCollaborator.Uid) != true)
+            {
+                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            }
 
             return Json(new
             {
@@ -1007,11 +1005,10 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            //TODO: Checar com renan o que fazer com essas ligacoes com organizacao.
-            //if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
-            //{
-            //    return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-            //}
+            if (UserAccessControlDto?.HasEditionAttendeeCollaborator(interestWidgetDto.SellerAttendeeCollaboratorDto.AttendeeCollaborator.Uid) != true)
+            {
+                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            }
 
             var matchAttendeeOrganizationDtos = await this.attendeeOrganizationRepo.FindAllDtoByMatchingProjectBuyerAsync(this.EditionDto.Id, interestWidgetDto, searchKeywords, page, pageSize);
 
@@ -1043,11 +1040,10 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            //todo: checar com Renan o que entra no lugar do organizations
-            //if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
-            //{
-            //    return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-            //}
+            if (UserAccessControlDto?.HasEditionAttendeeCollaborator(interestWidgetDto.SellerAttendeeCollaboratorDto.AttendeeCollaborator.Uid) != true)
+            {
+                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            }
 
             var attendeeOrganizationDtos = await this.attendeeOrganizationRepo.FindAllDtoByProjectBuyerAsync(this.EditionDto.Id, interestWidgetDto, searchKeywords, page, pageSize);
 
@@ -1331,7 +1327,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
         #endregion
 
-        #region Buyer (Executive Music)
+        #region Buyer/Player (Player Executive Music)
 
         #region Evaluation List
 

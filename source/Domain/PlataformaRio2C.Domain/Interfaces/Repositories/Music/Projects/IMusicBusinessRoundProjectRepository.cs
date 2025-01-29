@@ -15,5 +15,6 @@ namespace PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects
         Task<MusicBusinessRoundProjectDto> FindDtoToEvaluateAsync(Guid attendeeCollaboratorUid, Guid projectUid);
         Task<MusicBusinessRoundProjectDto> FindSiteInterestWidgetDtoByProjectUidAsync(Guid guid);
         Task<MusicBusinessRoundProjectDto> FindSiteBuyerCompanyWidgetDtoByProjectUidAsync(Guid projectUid);
+        Task<MusicBusinessRoundProjectDto> FindSiteDuplicateDtoByProjectUidAsync(Guid projectUid);
     }
 }

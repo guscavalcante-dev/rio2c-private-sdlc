@@ -665,5 +665,67 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
                             })
                             .FirstOrDefaultAsync();
         }
+
+        /// <summary>
+        /// Finds the site duplicate dto by project uid asynchronous.
+        /// </summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        public async Task<MusicBusinessRoundProjectDto> FindSiteDuplicateDtoByProjectUidAsync(Guid projectUid)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByUid(projectUid);
+
+            return await query
+                            .Select(p => new MusicBusinessRoundProjectDto
+                            {
+                                Uid = p.Uid,
+                                CreateDate = p.CreateDate,
+                                PlayerCategoriesThatHaveOrHadContract = p.PlayerCategoriesThatHaveOrHadContract,
+                                AttachmentUrl = p.AttachmentUrl,
+                                SellerAttendeeCollaboratorDto = new AttendeeCollaboratorDto
+                                {
+                                    AttendeeCollaborator = p.SellerAttendeeCollaborator,
+                                    Collaborator = p.SellerAttendeeCollaborator.Collaborator,
+                                },
+                                MusicBusinessRoundProjectTargetAudienceDtos = p.MusicBusinessRoundProjectTargetAudiences
+                                        .Where(ta => !ta.IsDeleted)
+                                        .Select(ta => new MusicBusinessRoundProjectTargetAudienceDto
+                                        {
+                                            MusicBusinessRoundProjectTargetAudience = ta,
+                                            TargetAudience = ta.TargetAudience
+                                        }),
+                                MusicBusinessRoundProjectExpectationsForMeetingDtos = p.MusicBusinessRoundProjectExpectationsForMeetings
+                                        .Where(pe => !pe.IsDeleted)
+                                        .Select(pe => new MusicBusinessRoundProjectExpectationsForMeetingDto
+                                        {
+                                            Value = pe.Value,
+                                            Language = pe.Language
+                                        }),
+                                MusicBusinessRoundProjectInterestDtos = p.MusicBusinessRoundProjectInterests
+                                        .Where(pi => !pi.IsDeleted)
+                                        .Select(pi => new MusicBusinessRoundProjectInterestDto
+                                        {
+                                            MusicBusinessRoundProjectInterest = pi,
+                                            Interest = pi.Interest,
+                                            InterestGroup = pi.Interest.InterestGroup
+                                        }),
+                                MusicBusinessRoundProjectPlayerCategoryDtos = p.MusicBusinessRoundProjectPlayerCategories
+                                        .Where(pc => !pc.IsDeleted)
+                                        .Select(pc => new MusicBusinessRoundProjectPlayerCategoryDto
+                                        {
+                                            MusicBusinessRoundProjectPlayerCategory = pc,
+                                            PlayerCategory = pc.PlayerCategory
+                                        }),
+                                MusicBusinessRoundProjectActivityDtos = p.MusicBusinessRoundProjectActivities
+                                        .Where(pa => !pa.IsDeleted)
+                                        .Select(pa => new MusicBusinessRoundProjectActivityDto
+                                        {
+                                            MusicBusinessRoundProjectActivity = pa,
+                                            Activity = pa.Activity
+                                        })
+                            })
+                            .FirstOrDefaultAsync();
+        }
     }
 }
