@@ -468,7 +468,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
                                 {
                                     AttendeeCollaborator = p.SellerAttendeeCollaborator,
                                     Collaborator = p.SellerAttendeeCollaborator.Collaborator,
-                                    //Edition = p.SellerAttendeeOrganization.Edition
+                                    JobTitlesDtos = p.SellerAttendeeCollaborator.Collaborator.JobTitles.Where(jt => !jt.IsDeleted).Select(jt => new CollaboratorJobTitleBaseDto
+                                    {
+                                        Id = jt.Id,
+                                        Uid = jt.Uid,
+                                        Value = jt.Value,
+                                        LanguageDto = new LanguageBaseDto
+                                        {
+                                            Id = jt.Language.Id,
+                                            Uid = jt.Language.Uid,
+                                            Name = jt.Language.Name,
+                                            Code = jt.Language.Code
+                                        }
+                                    }),
                                 },
                                 MusicBusinessRoundProjectBuyerEvaluationDtos = p.MusicBusinessRoundProjectBuyerEvaluations
                                     .Where(pbe => !pbe.IsDeleted)

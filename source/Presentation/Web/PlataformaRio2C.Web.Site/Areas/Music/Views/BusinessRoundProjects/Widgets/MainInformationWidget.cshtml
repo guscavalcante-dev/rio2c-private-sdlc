@@ -1,0 +1,81 @@
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Statics
+@model MusicBusinessRoundProjectDto
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+}
+<div class="kt-portlet__body">
+    <div class="kt-widget kt-widget--user-profile-3">
+        <div class="kt-widget__top">
+            @if (Model.SellerAttendeeCollaboratorDto?.Collaborator?.HasImage() == true)
+            {
+                <div style="float: right;">
+                    <a href="@Url.Action("Details", "Executives", new { Area = "", id = Model.SellerAttendeeCollaboratorDto?.Collaborator?.Uid })" target="_blank">
+                        <div class="kt-widget__media">
+                            <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, Model.SellerAttendeeCollaboratorDto.Collaborator.Uid, Model.SellerAttendeeCollaboratorDto.Collaborator.ImageUploadDate, true)" alt="image">
+                        </div>                        
+                    </a>
+                </div>
+            }
+        <div class="kt-widget__content" style="overflow: hidden;">
+            <div class="kt-widget__head">
+                <span class="kt-widget__username">
+                    @(Model.SellerAttendeeCollaboratorDto?.Collaborator?.GetFullName() ?? "-")
+                </span>
+            </div>
+            <div class="kt-widget__subhead pt-0">
+                <a class="pr-0" href="@Url.Action("Details", "Executives", new { Area = "", id = Model.SellerAttendeeCollaboratorDto?.Collaborator?.Uid })" target="_blank">@(Model.SellerAttendeeCollaboratorDto?.Collaborator?.CompanyName ?? "-")</a>
+            </div>
+            @{
+                var jobTitleDto = Model.SellerAttendeeCollaboratorDto.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
+            }
+            @if (jobTitleDto != null)
+            {
+                <div class="kt-widget__subhead pt-0">
+                    @jobTitleDto.Value
+                </div>
+            }
+        </div>
+        </div>
+        <div class="kt-widget__bottom">
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.Document</span>
+                    <span class="kt-widget__value"><span>@(Model.SellerAttendeeCollaboratorDto?.Collaborator.Document ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.CellPhone</span>
+                    <span class="kt-widget__value"><span>@(Model.SellerAttendeeCollaboratorDto?.Collaborator?.CellPhone ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.Email</span>
+                    <span class="kt-widget__value"><span>@(Model.SellerAttendeeCollaboratorDto?.Collaborator?.User?.Email ?? "-")</span></span>
+                </div>
+            </div>
+            @if (Model.SellerAttendeeCollaboratorDto?.Collaborator?.Role?.HasAdditionalInfo == true)
+            {
+                <div class="kt-widget__item">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.Role / @Labels.Others</span>
+                        <span class="kt-widget__value"><span>@(Model.SellerAttendeeCollaboratorDto?.Collaborator?.CollaboratorRoleAdditionalInfo ?? "-")</span></span>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="kt-widget__item">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.Role</span>
+                        <span class="kt-widget__value"><span>@(Model.SellerAttendeeCollaboratorDto?.Collaborator?.Role?.Name.GetSeparatorTranslation(Culture, '|') ?? "-")</span></span>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
