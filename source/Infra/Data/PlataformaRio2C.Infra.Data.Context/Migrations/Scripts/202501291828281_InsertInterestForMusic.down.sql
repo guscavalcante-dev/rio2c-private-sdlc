@@ -1,17 +1,9 @@
 ﻿BEGIN TRY
     BEGIN TRANSACTION
 
-    -- Check if column exists before altering the table
-    IF NOT EXISTS (
-        SELECT 1 
-        FROM INFORMATION_SCHEMA.COLUMNS 
-        WHERE TABLE_NAME = 'MusicBusinessRoundProjectBuyerEvaluations' 
-        AND COLUMN_NAME = 'AttendeeCollaboratorId'
-    )
-    BEGIN
-        ALTER TABLE MusicBusinessRoundProjectBuyerEvaluations 
-        ADD AttendeeCollaboratorId INT NULL;
-    END
+    -- Remove o registro inserido pelo script .up utilizando apenas o Uid
+    DELETE FROM [dbo].[Interests]
+    WHERE [Uid] = '7EF2AF9A-BBD1-48FC-A2AB-7109B17C0FD4';
 
     COMMIT TRANSACTION
 END TRY
