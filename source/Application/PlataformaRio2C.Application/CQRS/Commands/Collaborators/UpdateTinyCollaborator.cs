@@ -23,13 +23,19 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         public Guid CollaboratorUid { get; set; }
         public bool IsAddingToCurrentEdition { get; set; }
+        public bool SkipUserEmailValidation { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateTinyCollaborator"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateTinyCollaborator" /> class.
+        /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="isAddingToCurrentEdition">The is adding to current edition.</param>
+        /// <param name="skipUserEmailValidation">if set to <c>true</c> [skip user email validation].</param>
+        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
         public UpdateTinyCollaborator(
             CollaboratorDto entity, 
-            bool? isAddingToCurrentEdition)
+            bool? isAddingToCurrentEdition,
+            bool skipUserEmailValidation = false)
         {
             if (entity == null)
             {
@@ -38,6 +44,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
             this.CollaboratorUid = entity.Uid;
             this.IsAddingToCurrentEdition = isAddingToCurrentEdition ?? false;
+            this.SkipUserEmailValidation = skipUserEmailValidation;
 
             this.UpdateBaseProperties(entity);
         }

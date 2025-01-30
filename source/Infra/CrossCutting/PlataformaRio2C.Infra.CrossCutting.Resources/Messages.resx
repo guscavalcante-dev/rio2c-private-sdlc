@@ -674,8 +674,8 @@ A distribuição só pode ser executada uma única vez por edição.
     <value>Não avaliado</value>
     <comment>Não avaliado</comment>
   </data>
-  <data name="NoTicketsFoundForEmail" xml:space="preserve">
-    <value>Nenhum ingresso encontrado para o email {0}</value>
+  <data name="NoTicketsFoundForDocument" xml:space="preserve">
+    <value>Nenhum ingresso encontrado para o document {0}</value>
   </data>
   <data name="NotScheduledOneToOneMeetings" xml:space="preserve">
     <value>Rodadas de Negócios não Agendadas</value>

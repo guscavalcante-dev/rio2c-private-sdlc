@@ -337,9 +337,9 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "Invalid API key to execute this action." } });
                 }
 
-                if (string.IsNullOrWhiteSpace(request.Email))
+                if (string.IsNullOrWhiteSpace(request.Document))
                 {
-                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "The email is required" } });
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "The document is required" } });
                 }
 
                 var activeEditions = await this.editionRepo.FindAllByIsActiveAsync(false);
@@ -370,13 +370,13 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
                 #endregion
 
-                var attendeeCollaboratorTicketsInformationDto = await this.attendeeCollaboratorRepo.FindUserTicketsInformationDtoByEmail(edition.Id, request.Email);
+                var attendeeCollaboratorTicketsInformationDto = await this.attendeeCollaboratorRepo.FindUserTicketsInformationDtoByDocument(edition.Id, request.Document);
 
                 return await Json(new UserTicketsInformationApiResponse
                 {
                     Status = ApiStatus.Success,
                     Error = null,
-                    Email = request.Email,
+                    Document = request.Document,
                     TicketsCount = attendeeCollaboratorTicketsInformationDto?.AttendeeCollaboratorTicketsCount ?? 0,
                     TicketsTypes = attendeeCollaboratorTicketsInformationDto?.AttendeeCollaboratorTicketDtos?.Select(dto => new CollaboratorTicketType
                     {
@@ -407,7 +407,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
                     Messages = attendeeCollaboratorTicketsInformationDto?.HasTicket() == true ? 
                     attendeeCollaboratorTicketsInformationDto?.GetAllMessages("", false, null, 0, 0) :
-                    new string[] { string.Format(Messages.NoTicketsFoundForEmail, request.Email) },
+                    new string[] { string.Format(Messages.NoTicketsFoundForDocument, request.Document) },
                 });
             }
             catch (DomainException ex)

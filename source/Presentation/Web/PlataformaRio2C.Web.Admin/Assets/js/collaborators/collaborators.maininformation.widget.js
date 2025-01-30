@@ -63,6 +63,9 @@ var CollaboratorsMainInformationWidget = function () {
 
                 if (typeof (CollaboratorsMainInformationWidget) !== 'undefined') {
                     CollaboratorsMainInformationWidget.init($(collaboratorTypeNameId).val());
+                }
+
+                if (typeof (SpeakersApiConfigurationWidget) !== 'undefined') {
                     SpeakersApiConfigurationWidget.init();
                 }
             },
