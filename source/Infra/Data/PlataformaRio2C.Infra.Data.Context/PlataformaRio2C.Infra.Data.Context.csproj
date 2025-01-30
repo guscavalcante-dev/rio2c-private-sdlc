@@ -448,6 +448,10 @@
     <Compile Include="Migrations\202501231425114_UpdateMusicBandsTablesIsDeleted.Designer.cs">
       <DependentUpon>202501231425114_UpdateMusicBandsTablesIsDeleted.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202501302300392_UpdateMigrations_20250130.cs" />
+    <Compile Include="Migrations\202501302300392_UpdateMigrations_20250130.Designer.cs">
+      <DependentUpon>202501302300392_UpdateMigrations_20250130.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -851,6 +855,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202501231425114_UpdateMusicBandsTablesIsDeleted.resx">
       <DependentUpon>202501231425114_UpdateMusicBandsTablesIsDeleted.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501302300392_UpdateMigrations_20250130.resx">
+      <DependentUpon>202501302300392_UpdateMigrations_20250130.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
