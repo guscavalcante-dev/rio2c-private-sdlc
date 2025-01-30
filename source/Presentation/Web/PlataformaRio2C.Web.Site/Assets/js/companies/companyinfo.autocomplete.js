@@ -87,7 +87,6 @@ var CompanyInfoAutocomplete = function () {
 
     // Update form values -------------------------------------------------------------------------
     var updateOrganizationUid = function (organizationUid, changedElementName) {
-
         var currentOrganizationUid = $(organizationUidId).val();
         if (currentOrganizationUid === organizationUid) {
             return;
@@ -213,6 +212,7 @@ var CompanyInfoAutocomplete = function () {
     //};
 
     // Enable company number autocomplete ---------------------------------------------------------
+
     var enableCompanyNumberAutocomplete = function () {
         var companyNumberElement = $(companyNumberId);
 
@@ -252,6 +252,12 @@ var CompanyInfoAutocomplete = function () {
             },
             onSearchComplete: function (query, suggestions) {
                 companyNumberElement.parent('div.spinner-container').removeClass(spinnerClass);
+
+                if (suggestions.length === 1) {
+                    companyNumberElement.autocomplete('hide'); // Oculta o dropdown
+                    companyNumberElement.val(suggestions[0].value); // Define o valor no input
+                    companyNumberElement.data('autocomplete').onSelect(suggestions[0]); // Dispara o evento de seleção
+                }
             },
             onSelect: function (suggestion) {
                 updateOrganizationUid(suggestion.data.uid, 'companyNumber');

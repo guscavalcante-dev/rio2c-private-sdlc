@@ -111,7 +111,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
             // Redirect to collaborator data if not finished
             if (this.UserAccessControlDto?.IsCollaboratorOnboardingFinished() != true)
             {
-
                 return RedirectToAction(nameof(OnboardingController.CollaboratorData), nameof(OnboardingController));
             }
 
@@ -1243,6 +1242,13 @@ namespace PlataformaRio2C.Web.Site.Controllers
                         )
                     ?.ToList();
             }
+            //else if(this.UserAccessControlDto?.IsTicketBuyer() == true)
+            //{
+            //    ViewBag.PlayerAttendeeOrganizations = this.UserAccessControlDto
+            //        ?.EditionAttendeeOrganizations
+            //        ?.Where(eao => !eao.IsDeleted)
+            //        ?.ToList();
+            //}
         }
 
         #endregion
