@@ -149,12 +149,10 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MusicBusinessRoundProject"/> class.
+        /// Initializes a new instance of the <see cref="MusicBusinessRoundProject" /> class.
         /// </summary>
         /// <param name="musicProjectId">The music project identifier.</param>
-        public MusicBusinessRoundProject(
-            int musicProjectId
-        )
+        public MusicBusinessRoundProject(int musicProjectId)
         {
             this.Id = musicProjectId;
         }
@@ -174,11 +172,16 @@ namespace PlataformaRio2C.Domain.Entities
             return this.FinishDate.HasValue;
         }
 
+        /// <summary>
+        /// Updates the main information.
+        /// </summary>
+        /// <param name="expectationsForMeeting">The expectations for meeting.</param>
+        /// <param name="attachmentUrl">The attachment URL.</param>
+        /// <param name="userId">The user identifier.</param>
         public void UpdateMainInformation(
             List<MusicBusinessRoundProjectExpectationsForMeeting> expectationsForMeeting,
             string attachmentUrl,
-            int userId
-        )
+            int userId)
         {
             this.AttachmentUrl = attachmentUrl?.Trim();
             this.SynchronizeExpectationsForMeeting(expectationsForMeeting, userId);
@@ -230,12 +233,10 @@ namespace PlataformaRio2C.Domain.Entities
         private void DeleteExpectationsForMeeting(List<MusicBusinessRoundProjectExpectationsForMeeting> expectationsForMeeting, int userId)
         {
             var expectationsForMeetingToDelete = this.MusicBusinessRoundProjectExpectationsForMeetings
-                .Where(db =>
-                    expectationsForMeeting
-                        ?.Select(d => d.Language.Code)
-                        ?.Contains(db.Language.Code) == false
-                    && !db.IsDeleted
-                )
+                .Where(db => expectationsForMeeting?
+                                .Select(d => d.Language.Code)?
+                                .Contains(db.Language.Code) == false 
+                                && !db.IsDeleted)
                 .ToList();
             foreach (var expectationForMeeting in expectationsForMeetingToDelete)
             {
@@ -291,6 +292,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.FinishDate = DateTime.UtcNow;
             base.SetUpdateDate(userId);
         }
+
         /// <summary>Determines whether [is finish valid].</summary>
         /// <returns>
         ///   <c>true</c> if [is finish valid]; otherwise, <c>false</c>.</returns>
@@ -303,6 +305,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             return this.ValidationResult.IsValid;
         }
+
         /// <summary>Validates the project buyer evaluations.</summary>
         public void ValidateProjectBuyerEvaluations()
         {
@@ -446,7 +449,6 @@ namespace PlataformaRio2C.Domain.Entities
         #endregion
 
         #region Validations
-
 
         public override bool IsValid()
         {

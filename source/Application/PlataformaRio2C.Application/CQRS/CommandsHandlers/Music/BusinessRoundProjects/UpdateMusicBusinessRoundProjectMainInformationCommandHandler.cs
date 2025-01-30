@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,17 +32,18 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly ILanguageRepository languageRepo;
         private readonly IMusicBusinessRoundProjectRepository musicBusinessRoundProjectRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateMusicBusinessRoundProjectMainInformationCommandHandler"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateMusicBusinessRoundProjectMainInformationCommandHandler" /> class.
+        /// </summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="languageRepository">The language repository.</param>
-        /// <param name="projectModalityRepo">The project modality repository.</param>
+        /// <param name="musicBusinessRoundProjectRepo">The music business round project repo.</param>
         public UpdateMusicBusinessRoundProjectMainInformationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             ILanguageRepository languageRepository,
-            IMusicBusinessRoundProjectRepository musicBusinessRoundProjectRepo
-            )
+            IMusicBusinessRoundProjectRepository musicBusinessRoundProjectRepo)
             : base(eventBus, uow)
         {
             this.languageRepo = languageRepository;
@@ -75,8 +75,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             musicProject.UpdateMainInformation(
                 cmd.MusicBusinessRoundProjectExpectationsForMeetings?.Select(d => new MusicBusinessRoundProjectExpectationsForMeeting(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.AttachmentUrl,
-                cmd.UserId
-            );
+                cmd.UserId);
 
             if (!musicProject.IsValid())
             {
