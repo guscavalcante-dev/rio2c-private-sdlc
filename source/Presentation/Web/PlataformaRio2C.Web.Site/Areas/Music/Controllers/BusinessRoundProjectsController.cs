@@ -34,6 +34,7 @@ using Constants = PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Web.Site.Controllers;
 using PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects;
 using PlataformaRio2C.Domain.Interfaces.Repositories.Music.BusinessRoundProjects;
+using PlataformaRio2C.Infra.Data.Context.Mapping;
 
 namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 {
@@ -637,86 +638,83 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
         //#endregion
 
-        //#region Buyer Companies Widget
+        #region Buyer Companies Widget
 
-        ///// <summary>Shows the buyer company widget.</summary>
-        ///// <param name="projectUid">The project uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowBuyerCompanyWidget(Guid? projectUid)
-        //{
-        //    var buyerCompanyWidgetDto = await projectRepo.FindSiteBuyerCompanyWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
-        //    if (buyerCompanyWidgetDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
+        /// <summary>Shows the buyer company widget.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowBuyerCompanyWidget(Guid? projectUid)
+        {
+            var buyerCompanyWidgetDto = await musicBusinessRoundProjectRepo.FindSiteBuyerCompanyWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
+            if (buyerCompanyWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    if (UserAccessControlDto?.HasEditionAttendeeOrganization(buyerCompanyWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true) // Seller
-        //    {
-        //        return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-        //    }
+            //if (UserAccessControlDto?.HasEditionAttendeeOrganization(buyerCompanyWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true) // Seller
+            //{
+            //    return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            //}
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/BuyerCompanyWidget", buyerCompanyWidgetDto), divIdOrClass = "#ProjectBuyercompanyWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/BuyerCompanyWidget", buyerCompanyWidgetDto), divIdOrClass = "#ProjectBuyercompanyWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
-        //#region Update
 
-        ///// <summary>Shows the update buyer company modal.</summary>
-        ///// <param name="projectUid">The project uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowUpdateBuyerCompanyModal(Guid? projectUid)
-        //{
-        //    ProjectDto buyerCompanyWidgetDto = null;
+        /// <summary>Shows the update buyer company modal.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowUpdateBuyerCompanyModal(Guid? projectUid)
+        {
+            MusicBusinessRoundProjectDto buyerCompanyWidgetDto = null;
 
-        //    try
-        //    {
-        //        buyerCompanyWidgetDto = await projectRepo.FindSiteBuyerCompanyWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
-        //        if (buyerCompanyWidgetDto == null)
-        //        {
-        //            return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //        }
+            try
+            {
+                buyerCompanyWidgetDto = await musicBusinessRoundProjectRepo.FindSiteBuyerCompanyWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
+                if (buyerCompanyWidgetDto == null)
+                {
+                    return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+                }
 
-        //        if (UserAccessControlDto?.HasEditionAttendeeOrganization(buyerCompanyWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
-        //        {
-        //            throw new DomainException(Texts.ForbiddenErrorMessage);
-        //        }
+                //if (UserAccessControlDto?.HasEditionAttendeeOrganization(buyerCompanyWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+                //{
+                //    throw new DomainException(Texts.ForbiddenErrorMessage);
+                //}
 
-        //        if (EditionDto?.IsMusicPitchingProjectSubmitOpen() != true)
-        //        {
-        //            throw new DomainException(Messages.ProjectSubmissionNotOpen);
-        //        }
+                if (EditionDto?.IsMusicBusinessRoundProjectSubmitOpen() != true)
+                {
+                    throw new DomainException(Messages.ProjectSubmissionNotOpen);
+                }
 
-        //        if (buyerCompanyWidgetDto.Project.IsFinished())
-        //        {
-        //            throw new DomainException(Messages.ProjectIsFinishedCannotBeUpdated);
-        //        }
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-        //    }
+                if (buyerCompanyWidgetDto.IsFinished())
+                {
+                    throw new DomainException(Messages.ProjectIsFinishedCannotBeUpdated);
+                }
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Modals/UpdateBuyerCompanyModal", buyerCompanyWidgetDto), divIdOrClass = "#GlobalModalContainer" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/UpdateBuyerCompanyModal", buyerCompanyWidgetDto), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
-        //#endregion
-
-        //#endregion
+        #endregion
 
         #endregion
 

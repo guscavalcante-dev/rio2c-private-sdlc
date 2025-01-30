@@ -655,6 +655,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
                             .Select(p => new MusicBusinessRoundProjectDto
                             {
                                 Uid = p.Uid,
+                                FinishDate = p.FinishDate,
                                 SellerAttendeeCollaboratorDto = new AttendeeCollaboratorDto
                                 {
                                     AttendeeCollaborator = p.SellerAttendeeCollaborator,

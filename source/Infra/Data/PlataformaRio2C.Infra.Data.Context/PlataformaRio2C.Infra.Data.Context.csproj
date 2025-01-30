@@ -440,6 +440,10 @@
     <Compile Include="Migrations\202501291828281_InsertInterestForMusic.Designer.cs">
       <DependentUpon>202501291828281_InsertInterestForMusic.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202501301754441_UpdateMusicBusinessRoundProjectExpectationsForMeetingMaxValue.cs" />
+    <Compile Include="Migrations\202501301754441_UpdateMusicBusinessRoundProjectExpectationsForMeetingMaxValue.Designer.cs">
+      <DependentUpon>202501301754441_UpdateMusicBusinessRoundProjectExpectationsForMeetingMaxValue.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -615,7 +619,13 @@
     <Content Include="Migrations\Scripts\202501241333002_UpdateMusicInterestGroupsNames.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Migrations\Scripts\202501301754441_UpdateMusicBusinessRoundProjectExpectationsForMeetingMaxValue.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Migrations\Scripts\202501291828281_InsertInterestForMusic.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202501301754441_UpdateMusicBusinessRoundProjectExpectationsForMeetingMaxValue.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202501291828281_InsertInterestForMusic.up.sql">
@@ -825,6 +835,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202501291828281_InsertInterestForMusic.resx">
       <DependentUpon>202501291828281_InsertInterestForMusic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501301754441_UpdateMusicBusinessRoundProjectExpectationsForMeetingMaxValue.resx">
+      <DependentUpon>202501301754441_UpdateMusicBusinessRoundProjectExpectationsForMeetingMaxValue.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

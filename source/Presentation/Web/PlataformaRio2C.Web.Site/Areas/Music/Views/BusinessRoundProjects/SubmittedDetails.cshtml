@@ -13,6 +13,13 @@
             </div>
         </div>
         <!--end:Main Information Widget-->
+        <!--begin:Company Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="ProjectBuyercompanyWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+        </div>
+        <!--end:Company Widget-->
     </div>
 </div>
 @section Styles {
@@ -23,6 +30,7 @@
     @Scripts.Render("~/bundles/js/inputmask.js")
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/music.businessrounds.widget.js")
+    @Scripts.Render("~/bundles/js/music.businessrounds.buyercompany.widget.js")
     @Scripts.Render("~/bundles/js/bootbox.js")
     <script>
         // Page translations ----------------------------------------------------------------------
@@ -36,6 +44,7 @@
 
         jQuery(document).ready(function () {
             MusicBusinessRoundProjectsMainInformationWidget.init();
+            ProjectsBuyerCompanyWidget.init();
         });
     </script>
 }
