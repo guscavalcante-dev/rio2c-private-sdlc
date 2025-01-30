@@ -883,6 +883,24 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             return RedirectToAction("Index", "PitchingProjects");
         }
 
+        /// <summary>Submitteds the list.</summary>
+        /// <returns></returns>
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.Industry)]
+        public async Task<ActionResult> SubmittedListPitching()
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper($"{Labels.AudiovisualProjects} - {Labels.BusinessRound}", new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper($"{Labels.Projects} - {Labels.BusinessRound}", Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
+            });
+
+            #endregion
+
+            var view = new PitchingProjectDto() { AttendeeOrganizationUid = this.UserAccessControlDto?.GetFirstAttendeeOrganizationCreated()?.Uid , AttendeeCollaboratorUid = this.UserAccessControlDto?.Collaborator.Uid };
+
+            return View(view);
+        }
+
         #endregion
 
         #region Producer Info
