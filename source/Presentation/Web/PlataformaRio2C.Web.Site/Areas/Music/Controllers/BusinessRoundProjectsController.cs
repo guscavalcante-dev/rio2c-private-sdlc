@@ -3,8 +3,8 @@
 // Author           : Daniel Giese Rodrigues
 // Created          : 01-08-2025
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 01-13-2025
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 01-30-2025
 // ***********************************************************************
 // <copyright file="BusinessRoundProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -842,7 +842,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                     this.UserAccessControlDto.User.Id,
                     this.UserAccessControlDto.User.Uid,
                     this.EditionDto.Id,
-                    this.EditionDto.Uid
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage
                 );
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
@@ -1010,7 +1011,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
 
-            var matchAttendeeOrganizationDtos = await this.attendeeOrganizationRepo.FindAllDtoByMatchingProjectBuyerAsync(this.EditionDto.Id, interestWidgetDto, searchKeywords, page, pageSize);
+            var matchAttendeeOrganizationDtos = await this.attendeeOrganizationRepo.FindAllMusicMatchingAttendeeOrganizationsDtosAsync(this.EditionDto.Id, interestWidgetDto, searchKeywords, page, pageSize);
 
             ViewBag.ShowProjectMatchBuyerCompanySearch = $"&projectUid={projectUid}&pageSize={pageSize}";
             ViewBag.SearchKeywords = searchKeywords;
@@ -1045,7 +1046,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
 
-            var attendeeOrganizationDtos = await this.attendeeOrganizationRepo.FindAllDtoByProjectBuyerAsync(this.EditionDto.Id, interestWidgetDto, searchKeywords, page, pageSize);
+            var attendeeOrganizationDtos = await this.attendeeOrganizationRepo.FindAllMusicBusinessRoundProjectBuyerAsync(this.EditionDto.Id, interestWidgetDto, searchKeywords, page, pageSize);
 
             ViewBag.ShowProjectAllBuyerCompanySearch = $"&projectUid={projectUid}&pageSize={pageSize}";
             ViewBag.SearchKeywords = searchKeywords;
@@ -1058,6 +1059,168 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                     new { page = this.RenderRazorViewToString("Widgets/ProjectAllBuyerCompanyWidget", attendeeOrganizationDtos), divIdOrClass = "#ProjectAllBuyerCompanyWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Creates the buyer evaluation.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> CreateBuyerEvaluation(CreateMusicBusinessRoundProjectBuyerEvaluation cmd)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
+
+                //cmd.UpdateModelsAndLists(
+                //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
+
+                return Json(new { status = "error", message = toastrError?.Message ?? ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM) });
+        }
+
+        /// <summary>Deletes the buyer evaluation.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> DeleteBuyerEvaluation(DeleteMusicBusinessRoundProjectBuyerEvaluation cmd)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
+
+                //cmd.UpdateModelsAndLists(
+                //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
+
+                return Json(new { status = "error", message = toastrError?.Message ?? ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM) });
+        }
+        #endregion
+
+        #region Finish
+
+        /// <summary>Finishes the specified command.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <param name="originPage">The origin page.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> Finish(FinishMusicBusinessRoundProject cmd, string originPage)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
+
+                //cmd.UpdateModelsAndLists(
+                //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
+
+                return Json(new { status = "error", message = toastrError?.Message ?? ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            var successMessage = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.Sent.ToLowerInvariant());
+
+            if (originPage == "SendToPlayers")
+            {
+                this.StatusMessageToastr(successMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
+                return Json(new { status = "success", redirectOnly = Url.Action("SubmittedDetails", "BusinessRoundProjects", new { id = cmd.ProjectUid }) });
+            }
+
+            return Json(new { status = "success", message = successMessage });
         }
 
         #endregion
@@ -1762,6 +1925,174 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 projectUid = cmd.MusicBusinessRoundProjectUid,
                 message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.ProjectRefused.ToLowerInvariant())
             });
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Submitted Details
+
+        /// <summary>Submitteds the details.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.Industry)]
+        public async Task<ActionResult> SubmittedDetails(Guid? id)
+        {
+            if (this.EditionDto?.IsMusicBusinessRoundProjectSubmitStarted() != true)
+            {
+                return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
+            }
+
+            var buyerCompanyWidgetDto = await this.musicBusinessRoundProjectRepo.FindSiteDetailsDtoByProjectUidAsync(id ?? Guid.Empty, this.EditionDto.Id);
+            if (buyerCompanyWidgetDto == null)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
+            }
+
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper($"{Labels.MusicProjects} - {Labels.BusinessRound}", new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper($"{Labels.Projects} - {Labels.BusinessRound}", Url.Action("Index", "BusinessRoundProjects", new { Area = "Music" })),
+                new BreadcrumbItemHelper(Labels.Project, Url.Action("SubmittedDetails", "BusinessRoundProjects", new { Area = "Music", id }))
+            });
+
+            #endregion
+
+            return View(buyerCompanyWidgetDto);
+        }
+
+        #endregion
+
+        #region Main Information Widget
+
+        /// <summary>Shows the main information widget.</summary>
+        /// <param name="musicProjectUid">The music project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowMainInformationWidget(Guid? musicProjectUid)
+        {
+            var mainInformationWidgetDto = await this.musicBusinessRoundProjectRepo.FindSiteDetailsDtoByProjectUidAsync(musicProjectUid ?? Guid.Empty, this.EditionDto.Id);
+            if (mainInformationWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#MusicBusinessRoundProjectsMainInformationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #region Update
+
+        /// <summary>Shows the update main information modal.</summary>
+        /// <param name="musicProjectUid">The music project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? musicProjectUid)
+        {
+            UpdateMusicBusinessRoundProjectMainInformation cmd;
+
+            try
+            {
+                var mainInformationWidgetDto = await this.musicBusinessRoundProjectRepo.FindSiteDetailsDtoByProjectUidAsync(musicProjectUid ?? Guid.Empty, this.EditionDto.Id);
+                if (mainInformationWidgetDto == null)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
+                }            
+
+                if (this.EditionDto?.IsMusicBusinessRoundProjectSubmitStarted() != true)
+                {
+                    throw new DomainException(Messages.ProjectSubmissionNotOpen);
+                }
+
+                cmd = new UpdateMusicBusinessRoundProjectMainInformation(
+                    mainInformationWidgetDto,
+                    await CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+                    true,
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage
+                );
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Updates the main information.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> UpdateMainInformation(UpdateMusicBusinessRoundProjectMainInformation cmd)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.UserAccessControlDto.EditionAttendeeCollaborator.Id,
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage
+                );
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
+
+                return Json(new
+                {
+                    status = "error",
+                    message = toastrError?.Message ?? ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationForm", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM) });
         }
 
         #endregion

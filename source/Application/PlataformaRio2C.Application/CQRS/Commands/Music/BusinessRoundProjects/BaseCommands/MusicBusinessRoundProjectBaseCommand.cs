@@ -3,10 +3,10 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 11-06-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 01-13-2025
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 01-30-2025
 // ***********************************************************************
-// <copyright file="ProjectBaseCommand.cs" company="Softo">
+// <copyright file="MusicBusinessRoundProjectBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -15,8 +15,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using Foolproof;
-using PlataformaRio2C.Application.CQRS.Commands.Music.BusinessRoundProjects.BaseCommands;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -29,6 +27,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public static readonly int PlayerCategoriesThatHaveOrHadContractMaxLength = 300;
         public static readonly int AttachmentUrlMaxLength = 300;
 
+        public Guid? MusicProjectUid { get; set; }
         public int SellerAttendeeCollaboratorId { get; set; }
         public List<Guid> PlayerCategoriesUids { get; set; }
 
@@ -60,19 +59,32 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
         }
 
+        /// <summary>
+        /// Updates the base properties.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="languagesDtos">The languages dtos.</param>
+        /// <param name="targetAudiences">The target audiences.</param>
+        /// <param name="interestsDtos">The interests dtos.</param>
+        /// <param name="activities">The activities.</param>
+        /// <param name="playersCategories">The players categories.</param>
+        /// <param name="isDataRequired">if set to <c>true</c> [is data required].</param>
+        /// <param name="isProductionPlanRequired">if set to <c>true</c> [is production plan required].</param>
+        /// <param name="isAdditionalInformationRequired">if set to <c>true</c> [is additional information required].</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <param name="modalityRequired">if set to <c>true</c> [modality required].</param>
         public void UpdateBaseProperties(
-          MusicBusinessRoundProjectDto entity,
-          List<LanguageDto> languagesDtos,
-          List<TargetAudience> targetAudiences,
-          List<InterestDto> interestsDtos,
-          List<Activity> activities,
-          List<PlayerCategory> playersCategories,
-          bool isDataRequired,
-          bool isProductionPlanRequired,
-          bool isAdditionalInformationRequired,
-          string userInterfaceLanguage,
-          bool modalityRequired
-      )
+            MusicBusinessRoundProjectDto entity,
+            List<LanguageDto> languagesDtos,
+            List<TargetAudience> targetAudiences,
+            List<InterestDto> interestsDtos,
+            List<Activity> activities,
+            List<PlayerCategory> playersCategories,
+            bool isDataRequired,
+            bool isProductionPlanRequired,
+            bool isAdditionalInformationRequired,
+            string userInterfaceLanguage,
+            bool modalityRequired)
         {
 
             this.UpdateInterests(entity, interestsDtos);
@@ -81,6 +93,31 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
             //TODO:Implementar na parte de edicao/duplicacao de projeto.
             /*this.AttachmentUrl = entity.AttachmentUrl;*/
+        }
+
+        /// <summary>
+        /// Updates the base properties.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="languagesDtos">The languages dtos.</param>
+        /// <param name="isDataRequired">if set to <c>true</c> [is data required].</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="userUid">The user uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public void UpdateBaseProperties(
+            MusicBusinessRoundProjectDto entity,
+            List<LanguageDto> languagesDtos,
+            bool isDataRequired,
+            int userId,
+            Guid userUid,
+            int? editionId,
+            Guid? editionUid,
+            string userInterfaceLanguage)
+        {
+            this.UpdateExpectationsForMeetings(entity, languagesDtos, isDataRequired);
+            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, userInterfaceLanguage);
         }
 
         /// <summary>Updates the pre send properties.</summary>
@@ -97,11 +134,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             int userId,
             Guid userUid,
             int? editionId,
-            Guid? editionUid
-        )
+            Guid? editionUid,
+            string userInterfaceLanguage)
         {
             this.SellerAttendeeCollaboratorId = collaboratorId;
-            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
+            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, userInterfaceLanguage);
         }
 
         /// <summary>Updates the dropdown properties.</summary>
@@ -111,8 +148,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<TargetAudience> targetAudiences,
             List<Activity> activities,
             List<PlayerCategory> playersCategories,
-            string userInterfaceLanguage
-        )
+            string userInterfaceLanguage)
         {
             this.PlayerCategories = playersCategories;
             this.Activities = activities;
@@ -124,14 +160,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public void UpdateDropdownProperties(
             List<TargetAudience> targetAudiences,
-            string userInterfaceLanguage
-        )
+            string userInterfaceLanguage)
         {
             this.TargetAudiences = targetAudiences;
         }
 
 
-        /// <summary>Updates the summaries.</summary>
+        /// <summary>Updates expectations for meetings.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="isDataRequired">if set to <c>true</c> [is data required].</param>
@@ -140,9 +175,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.MusicBusinessRoundProjectExpectationsForMeetings = new List<MusicBusinessRoundProjectExpectationsForMeetingBaseCommand>();
             foreach (var languageDto in languagesDtos)
             {
-                var expectations = entity?.MusicBusinessRoundProjectExpectationsForMeetingDtos?.FirstOrDefault(ptd => ptd.Language.Code == languageDto.Code);
-                this.MusicBusinessRoundProjectExpectationsForMeetings.Add(expectations != null ? new MusicBusinessRoundProjectExpectationsForMeetingBaseCommand(expectations, isDataRequired) :
-                                                     new MusicBusinessRoundProjectExpectationsForMeetingBaseCommand(languageDto, isDataRequired));
+                var expectationForMeeting = entity?.MusicBusinessRoundProjectExpectationsForMeetingDtos?.FirstOrDefault(ptd => ptd.Language.Code == languageDto.Code);
+                this.MusicBusinessRoundProjectExpectationsForMeetings.Add(
+                    expectationForMeeting != null
+                        ? new MusicBusinessRoundProjectExpectationsForMeetingBaseCommand(expectationForMeeting, isDataRequired)
+                        : new MusicBusinessRoundProjectExpectationsForMeetingBaseCommand(languageDto, isDataRequired)
+                );
             }
         }
 

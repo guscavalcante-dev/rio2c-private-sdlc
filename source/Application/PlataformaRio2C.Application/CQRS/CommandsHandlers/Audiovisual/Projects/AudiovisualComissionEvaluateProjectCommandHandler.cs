@@ -13,7 +13,6 @@
 // ***********************************************************************
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -43,8 +42,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IProjectRepository projectRepository,
             IEditionRepository editionRepo,
-            IUserRepository userRepo
-            )
+            IUserRepository userRepo)
             : base(commandBus, uow, attendeeOrganizationRepository, projectRepository)
         {
             this.editionRepo = editionRepo;

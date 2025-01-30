@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PlataformaRio2C.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,7 +17,6 @@ namespace PlataformaRio2C.Domain.Dtos
         public int ProjectBuyerEvaluationsCount { get; set; }
 
         public DateTimeOffset CreateDate { get; set; }
-
         public IEnumerable<MusicBusinessRoundProjectTargetAudienceDto> MusicBusinessRoundProjectTargetAudienceDtos { get; set; }
         public IEnumerable<MusicBusinessRoundProjectInterestDto> MusicBusinessRoundProjectInterestDtos { get; set; }
         public IEnumerable<MusicBusinessRoundProjectPlayerCategoryDto> MusicBusinessRoundProjectPlayerCategoryDtos { get; set; }
@@ -90,14 +90,14 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns></returns>
         public int GetProjectBuyerEvaluationMax()
         {
-            return 3; //TODO: Nao sei o que fazer com organizacao.
-            //return this.SellerAttendeeOrganizationDto.GetProjectMaxBuyerEvaluationsCount();
+           return this.SellerAttendeeCollaboratorDto.GetProjectMaxBuyerEvaluationsCount();
         }
 
         /// <summary>Gets the projects buyer evaluations used.</summary>
         /// <returns></returns>
         public int GetProjectsBuyerEvaluationsUsed()
         {
+            this.ProjectBuyerEvaluationsCount = this.MusicBusinessRoundProjectBuyerEvaluationDtos.Count();
             return this.ProjectBuyerEvaluationsCount;
         }
 
@@ -115,6 +115,15 @@ namespace PlataformaRio2C.Domain.Dtos
         /// </summary>
         public MusicBusinessRoundProjectDto()
         {
+        }
+
+        /// <summary>Gets the expectation for meeting by language code.</summary>
+        /// <param name="culture">The culture.</param>
+        /// <returns></returns>
+        public MusicBusinessRoundProjectExpectationsForMeetingDto GetExpectationForMeetingByLanguageCode(string culture)
+        {
+            return this.MusicBusinessRoundProjectExpectationsForMeetingDtos
+                ?.FirstOrDefault(mbrpefm => mbrpefm.Language.Code?.ToLowerInvariant() == culture?.ToLowerInvariant());
         }
     }
 

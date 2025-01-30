@@ -65,7 +65,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <summary>Gets the project by uid.</summary>
         /// <param name="projectUid">The project uid.</param>
         /// <returns></returns>
-        public async Task<MusicBusinessRoundProject> GetProjectByUid(Guid projectUid)
+        public async Task<MusicBusinessRoundProject> GetMusicBusinessRoundProjectByUid(Guid projectUid)
         {
             var musicBusinessRoundProject = await this.MusicBusinessRoundProjectRepo.GetAsync(projectUid);
             if (musicBusinessRoundProject == null || musicBusinessRoundProject.IsDeleted)
