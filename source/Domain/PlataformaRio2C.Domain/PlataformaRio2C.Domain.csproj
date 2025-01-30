@@ -345,6 +345,7 @@
     <Compile Include="Dtos\PlayersExecutives\PlayerExecutiveReportDto.cs" />
     <Compile Include="Dtos\Players\API\PlayerCollaboratorBaseApiDto.cs" />
     <Compile Include="Dtos\Players\API\PlayerOrganizationBaseApiDto.cs" />
+    <Compile Include="Dtos\Projects\PitchingProjectDto.cs" />
     <Compile Include="Dtos\Projects\ProjectBuyerEvaluationBaseDto.cs" />
     <Compile Include="Dtos\Projects\ProjectCommissionEvaluationDto.cs" />
     <Compile Include="Dtos\Projects\ProjectDropdownDto.cs" />

@@ -7057,6 +7057,7 @@
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Modals\UpdateMainInformationForm.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Widgets\BuyerCompanyWidget.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Modals\UpdateBuyerCompanyModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\SubmittedListPitching.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Widgets\OptionsWidget.cshtml" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
