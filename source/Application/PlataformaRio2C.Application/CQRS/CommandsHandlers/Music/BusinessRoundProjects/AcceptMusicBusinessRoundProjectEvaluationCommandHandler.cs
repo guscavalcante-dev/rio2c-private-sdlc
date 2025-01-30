@@ -54,7 +54,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.Uow.BeginTransaction();
 
-            var project = await this.GetProjectByUid(cmd.MusicBusinessRoundProjectUid ?? Guid.Empty);
+            var project = await this.GetMusicBusinessRoundProjectByUid(cmd.MusicBusinessRoundProjectUid ?? Guid.Empty);
 
             #region Initial validations
 

@@ -27,13 +27,11 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
     /// <summary>CreateProjectCommandHandler</summary>
-    public class CreateMusicBusinessRoundProjectCommandHandler : BaseProjectCommandHandler, IRequestHandler<CreateMusicBusinessRoundProject, AppValidationResult>
+    public class CreateMusicBusinessRoundProjectCommandHandler : BaseMusicBusinessRoundProjectCommandHandler, IRequestHandler<CreateMusicBusinessRoundProject, AppValidationResult>
     {
-        private readonly IProjectTypeRepository projectTypeRepo;
         private readonly ILanguageRepository languageRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
         private readonly IInterestRepository interestRepo;
-        private readonly IProjectModalityRepository projectModalityRepo;
         private readonly IMusicBusinessRoundProjectRepository musicBusinessRoundProjectRepo;
         private readonly IActivityRepository activityRepo;
         private readonly IPlayersCategoryRepository playersCategoryRepo;
@@ -52,23 +50,18 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IMediator eventBus,
             IUnitOfWork uow,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
-            IProjectRepository projectRepository,
-            IProjectTypeRepository projectTypeRepository,
             ILanguageRepository languageRepository,
             ITargetAudienceRepository targetAudienceRepository,
             IInterestRepository interestRepository,
-            IProjectModalityRepository projectModalityRepo,
             IMusicBusinessRoundProjectRepository musicProjectRepo,
             IActivityRepository activityRepo,
             IPlayersCategoryRepository playersCategoryRepo)
-            : base(eventBus, uow, attendeeOrganizationRepository, projectRepository)
+            : base(eventBus, uow, attendeeOrganizationRepository, musicProjectRepo)
         {
             this.musicBusinessRoundProjectRepo = musicProjectRepo;
-            this.projectTypeRepo = projectTypeRepository;
             this.languageRepo = languageRepository;
             this.targetAudienceRepo = targetAudienceRepository;
             this.interestRepo = interestRepository;
-            this.projectModalityRepo = projectModalityRepo;
             this.activityRepo = activityRepo;
             this.playersCategoryRepo = playersCategoryRepo;
         }

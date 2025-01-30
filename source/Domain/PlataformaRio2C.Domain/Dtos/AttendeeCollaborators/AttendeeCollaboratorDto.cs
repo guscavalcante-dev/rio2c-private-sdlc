@@ -29,6 +29,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<ConferenceParticipantDto> ConferenceParticipantDtos { get; set; }
         public IEnumerable<NegotiationDto> BuyerNegotiationDtos { get; set; }
         public IEnumerable<NegotiationDto> SellerNegotiationDtos { get; set; }
+        public Edition Edition { get; set; }
 
         public LogisticDto LogisticDto { get; set; }
 
@@ -36,6 +37,24 @@ namespace PlataformaRio2C.Domain.Dtos
         public AttendeeCollaboratorDto()
         {
         }
+
+        #region Edition Limits
+
+        /// <summary>Gets the maximum sell projects count.</summary>
+        /// <returns></returns>
+        public int GetMaxSellProjectsCount()
+        {
+            return this.Edition?.AttendeeOrganizationMaxSellProjectsCount ?? 0;
+        }
+
+        /// <summary>Gets the project maximum buyer evaluations count.</summary>
+        /// <returns></returns>
+        public int GetProjectMaxBuyerEvaluationsCount()
+        {
+            return this.Edition?.ProjectMaxBuyerEvaluationsCount ?? 0;
+        }
+
+        #endregion
 
         /// <summary>Gets the job title dto by language code.</summary>
         /// <param name="culture">The culture.</param>
