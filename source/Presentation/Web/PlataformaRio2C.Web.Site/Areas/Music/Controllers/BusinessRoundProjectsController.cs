@@ -34,7 +34,6 @@ using Constants = PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Web.Site.Controllers;
 using PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects;
 using PlataformaRio2C.Domain.Interfaces.Repositories.Music.BusinessRoundProjects;
-using PlataformaRio2C.Infra.Data.Context.Mapping;
 
 namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 {
@@ -2038,6 +2037,142 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> UpdateMainInformation(UpdateMusicBusinessRoundProjectMainInformation cmd)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.UserAccessControlDto.EditionAttendeeCollaborator.Id,
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage
+                );
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
+
+                return Json(new
+                {
+                    status = "error",
+                    message = toastrError?.Message ?? ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationForm", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM) });
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Options Widget
+
+        /// <summary>Shows the main information widget.</summary>
+        /// <param name="musicProjectUid">The music project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowOptionsWidget(Guid? musicProjectUid)
+        {
+            var mainInformationWidgetDto = await this.musicBusinessRoundProjectRepo.FindSiteDetailsDtoByProjectUidAsync(musicProjectUid ?? Guid.Empty, this.EditionDto.Id);
+            if (mainInformationWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/OptionsWidget", mainInformationWidgetDto), divIdOrClass = "#MusicBusinessRoundProjectsOptionsWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #region Update
+
+        /// <summary>Shows the update main information modal.</summary>
+        /// <param name="musicProjectUid">The music project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowUpdateOptionsModal(Guid? musicProjectUid)
+        {
+            UpdateMusicBusinessRoundProjectOptions cmd;
+
+            try
+            {
+                var musicProjectDto = await this.musicBusinessRoundProjectRepo.FindSiteDetailsDtoByProjectUidAsync(musicProjectUid ?? Guid.Empty, this.EditionDto.Id);
+                if (musicProjectDto == null)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
+                }
+
+                if (this.EditionDto?.IsMusicBusinessRoundProjectSubmitStarted() != true)
+                {
+                    throw new DomainException(Messages.ProjectSubmissionNotOpen);
+                }
+
+                cmd = new UpdateMusicBusinessRoundProjectOptions(
+                    musicProjectDto,
+                    await CommandBus.Send(new FindAllLanguagesDtosAsync(UserInterfaceLanguage)),
+                    await targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
+                    await interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Music.Id),
+                    await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
+                    await this.playersCategoryRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
+                    true,
+                    false,
+                    false,
+                    UserInterfaceLanguage
+                );
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Updates the main information.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> UpdateOptions(UpdateMusicBusinessRoundProjectOptions cmd)
         {
             var result = new AppValidationResult();
 

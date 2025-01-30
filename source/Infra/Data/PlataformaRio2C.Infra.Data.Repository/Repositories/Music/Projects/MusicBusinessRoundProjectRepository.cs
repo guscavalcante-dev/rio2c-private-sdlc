@@ -506,6 +506,35 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
                                         Value = pe.Value,
                                         Language = pe.Language
                                     }),
+                                MusicBusinessRoundProjectTargetAudienceDtos = p.MusicBusinessRoundProjectTargetAudiences
+                                    .Where(pt => !pt.IsDeleted)
+                                    .Select(pt => new MusicBusinessRoundProjectTargetAudienceDto
+                                    {
+                                        TargetAudience = pt.TargetAudience,
+                                        MusicBusinessRoundProjectTargetAudience = pt,
+                                    }),
+                                MusicBusinessRoundProjectActivityDtos = p.MusicBusinessRoundProjectActivities
+                                    .Where(activity => !activity.IsDeleted)
+                                    .Select(activity => new MusicBusinessRoundProjectActivityDto
+                                    {
+                                        Activity = activity.Activity,
+                                        MusicBusinessRoundProjectActivity = activity,
+                                    }),
+                                MusicBusinessRoundProjectInterestDtos = p.MusicBusinessRoundProjectInterests
+                                    .Where(interest => !interest.IsDeleted)
+                                    .Select(interest => new MusicBusinessRoundProjectInterestDto
+                                    {
+                                        Interest = interest.Interest,
+                                        MusicBusinessRoundProjectInterest = interest,
+                                        InterestGroup = interest.Interest.InterestGroup
+                                    }),
+                                MusicBusinessRoundProjectPlayerCategoryDtos = p.MusicBusinessRoundProjectPlayerCategories
+                                    .Where(pc => !pc.IsDeleted)
+                                    .Select(pc => new MusicBusinessRoundProjectPlayerCategoryDto
+                                    {
+                                        PlayerCategory = pc.PlayerCategory,
+                                        MusicBusinessRoundProjectPlayerCategory = pc,
+                                    }),
                             })
                             .FirstOrDefaultAsync();
         }

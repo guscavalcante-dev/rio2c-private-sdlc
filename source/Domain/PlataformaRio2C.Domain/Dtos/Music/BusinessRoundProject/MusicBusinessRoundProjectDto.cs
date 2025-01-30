@@ -29,6 +29,26 @@ namespace PlataformaRio2C.Domain.Dtos
             return this.FinishDate.HasValue;
         }
 
+        /// <summary>
+        /// Gets the activity dto by activity uid.
+        /// </summary>
+        /// <param name="activityUid">The activity uid.</param>
+        /// <returns></returns>
+        public MusicBusinessRoundProjectActivityDto GetActivityDtoByActivityUid(Guid activityUid)
+        {
+            return this.MusicBusinessRoundProjectActivityDtos?.FirstOrDefault(ptad => ptad.Activity.Uid == activityUid);
+        }
+
+        /// <summary>
+        /// Gets the player category dto by interest uid.
+        /// </summary>
+        /// <param name="playerCategoryUid">The player category uid.</param>
+        /// <returns></returns>
+        public MusicBusinessRoundProjectPlayerCategoryDto GetPlayerCategoryDtoByPlayerCategoryIdUid(Guid playerCategoryUid)
+        {
+            return this.MusicBusinessRoundProjectPlayerCategoryDtos?.FirstOrDefault(ptad => ptad.PlayerCategory.Uid == playerCategoryUid);
+        }
+
         #region Target Audiences
 
         /// <summary>
@@ -44,6 +64,24 @@ namespace PlataformaRio2C.Domain.Dtos
         #endregion
 
         #region Interests
+
+        public MusicBusinessRoundProjectInterestDto[][] GetInterestGrouped()
+        {
+            MusicBusinessRoundProjectInterestDto[][] interestsDtos = null;
+            var groupedInterestsDtos = this.MusicBusinessRoundProjectInterestDtos?
+                                            .GroupBy(i => new { i.InterestGroup.Uid, i.InterestGroup.Name, i.InterestGroup.DisplayOrder })?
+                                            .OrderBy(g => g.Key.DisplayOrder)?
+                                            .ToList();
+            if (groupedInterestsDtos?.Any() == true)
+            {
+                interestsDtos = new MusicBusinessRoundProjectInterestDto[groupedInterestsDtos.Count][];
+                for (int i = 0; i < groupedInterestsDtos.Count; i++)
+                {
+                    interestsDtos[i] = groupedInterestsDtos[i].ToArray();
+                }
+            }
+            return interestsDtos;
+        }
 
         /// <summary>Gets all interests by interest group uid.</summary>
         /// <param name="interestGroupUid">The interest group uid.</param>
