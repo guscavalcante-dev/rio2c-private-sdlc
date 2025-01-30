@@ -9,11 +9,10 @@
     var editionDto = ViewBag.EditionDto as EditionDto;
 
     var baseUrl = "https://www.rio2c.com/subscriptions/pitching-industry";
-    var attendeeCollaboratorUid = Model.AttendeeCollaboratorUid?.ToString() ?? "default-collaborator-uid";
-    var attendeeOrganizationUid = Model.AttendeeOrganizationUid?.ToString() ?? "default-organization-uid";
+    var attendeeCollaboratorUid = Model.AttendeeCollaboratorUid?.ToString().ToUpper() ?? "default-collaborator-uid";
+    var attendeeOrganizationUid = Model.AttendeeOrganizationUid?.ToString().ToUpper() ?? "default-organization-uid";
 
     var iframeUrl = $"{baseUrl}/{attendeeCollaboratorUid}/{attendeeOrganizationUid}";
-    iframeUrl = "https://www.rio2c.com/subscriptions/pitching-industry/66A981B3-5975-4B10-8266-B165311FFA0E/8D941A85-CD5A-4EF5-AD8E-EEA4728BA84E";
 }
 
 @section Scripts {
