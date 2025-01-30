@@ -880,6 +880,7 @@
     <Content Include="Assets\js\innovation\projects\innovation.projects.presentation.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.technologies.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.tracks.widget.js" />
+    <Content Include="Assets\js\music\businessrounds\music.businessrounds.maininformation.widget.js" />
     <Content Include="Assets\js\music\businessrounds\music.businessrounds.buyercompany.widget.js" />
     <Content Include="Assets\js\music\businessrounds\music.businessrounds.buyerevaluation.update.widget.js" />
     <Content Include="Assets\js\music\businessrounds\music.businessrounds.buyerevaluation.list.widget.js" />
@@ -7049,6 +7050,10 @@
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Widgets\ProjectMatchBuyerCompanyWidget.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Widgets\BuyerCompanySelectedWidget.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Widgets\ProjectAllBuyerCompanyWidget.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\SubmittedDetails.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Modals\UpdateMainInformationModal.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Modals\UpdateMainInformationForm.cshtml" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />

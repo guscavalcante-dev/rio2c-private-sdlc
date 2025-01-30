@@ -1,0 +1,41 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model MusicBusinessRoundProjectDto
+@{
+    ViewBag.Title = $"{Labels.BusinessRounds} - {Labels.MusicProjects}";
+}
+@Html.Hidden("AggregateId", Model.Uid)
+<div class="row">
+    <div class="col-md-12">
+        <!--begin:Main Information Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="MusicBusinessRoundProjectsMainInformationWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+        </div>
+        <!--end:Main Information Widget-->
+    </div>
+</div>
+@section Styles {
+    @Styles.Render("~/bundles/css/select2.css")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/select2.js")
+    @Scripts.Render("~/bundles/js/inputmask.js")
+    @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/music.businessrounds.widget.js")
+    @Scripts.Render("~/bundles/js/bootbox.js")
+    <script>
+        // Page translations ----------------------------------------------------------------------
+        var translations = {
+            finishModalTitle: '@Labels.Finish @Labels.Project',
+            finishModalMessage: '@Html.Raw(Texts.FinishProjectConfirmationText)',
+            finishPendingModalMessage: '@Html.Raw(string.Format(Texts.FinishProjectPendingConfirmationText, "{0}", "{1}", Labels.Players))',
+            player: '@Labels.Player',
+            players: '@Labels.Players'
+        };
+
+        jQuery(document).ready(function () {
+            MusicBusinessRoundProjectsMainInformationWidget.init();
+        });
+    </script>
+}

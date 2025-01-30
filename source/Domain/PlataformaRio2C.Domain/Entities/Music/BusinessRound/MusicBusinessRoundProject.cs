@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 01-18-2025
 //
-// Last Modified By : Daniel Giese Rodrigues
-// Last Modified On : 01-20-2025
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 01-30-2025
 // ***********************************************************************
 // <copyright file="MusicBusinessRoundProjects.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -148,6 +148,15 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MusicBusinessRoundProject" /> class.
+        /// </summary>
+        /// <param name="musicProjectId">The music project identifier.</param>
+        public MusicBusinessRoundProject(int musicProjectId)
+        {
+            this.Id = musicProjectId;
+        }
+
         public MusicBusinessRoundProject()
         {
         }
@@ -162,6 +171,80 @@ namespace PlataformaRio2C.Domain.Entities
         {
             return this.FinishDate.HasValue;
         }
+
+        /// <summary>
+        /// Updates the main information.
+        /// </summary>
+        /// <param name="expectationsForMeeting">The expectations for meeting.</param>
+        /// <param name="attachmentUrl">The attachment URL.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateMainInformation(
+            List<MusicBusinessRoundProjectExpectationsForMeeting> expectationsForMeeting,
+            string attachmentUrl,
+            int userId)
+        {
+            this.AttachmentUrl = attachmentUrl?.Trim();
+            this.SynchronizeExpectationsForMeeting(expectationsForMeeting, userId);
+        }
+
+        #region MusicBusinessRoundProjectExpectationsForMeeting
+
+        /// <summary>Synchronizes the expectations for meeting.</summary>
+        /// <param name="expectationsForMeeting">The expectations for meeting.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeExpectationsForMeeting(List<MusicBusinessRoundProjectExpectationsForMeeting> expectationsForMeeting, int userId)
+        {
+            if (this.MusicBusinessRoundProjectExpectationsForMeetings == null)
+            {
+                this.MusicBusinessRoundProjectExpectationsForMeetings = new List<MusicBusinessRoundProjectExpectationsForMeeting>();
+            }
+
+            this.DeleteExpectationsForMeeting(expectationsForMeeting, userId);
+
+            if (expectationsForMeeting?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var expectationForMeeting in expectationsForMeeting)
+            {
+                var expectationForMeetingDb = this.MusicBusinessRoundProjectExpectationsForMeetings.FirstOrDefault(d => d.Language.Code == expectationForMeeting.Language.Code);
+                if (expectationForMeetingDb != null)
+                {
+                    expectationForMeetingDb.Update(expectationForMeeting);
+                }
+                else
+                {
+                    this.CreateExpectationForMeeting(expectationForMeeting);
+                }
+            }
+        }
+
+        /// <summary>Creates the expectation for meeting.</summary>
+        /// <param name="expectationForMeeting">The expectation for meeting.</param>
+        private void CreateExpectationForMeeting(MusicBusinessRoundProjectExpectationsForMeeting expectationForMeeting)
+        {
+            this.MusicBusinessRoundProjectExpectationsForMeetings.Add(expectationForMeeting);
+        }
+
+        /// <summary>Deletes the expectations for meeting.</summary>
+        /// <param name="expectationsForMeeting">The new expectation for meeting.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteExpectationsForMeeting(List<MusicBusinessRoundProjectExpectationsForMeeting> expectationsForMeeting, int userId)
+        {
+            var expectationsForMeetingToDelete = this.MusicBusinessRoundProjectExpectationsForMeetings
+                .Where(db => expectationsForMeeting?
+                                .Select(d => d.Language.Code)?
+                                .Contains(db.Language.Code) == false 
+                                && !db.IsDeleted)
+                .ToList();
+            foreach (var expectationForMeeting in expectationsForMeetingToDelete)
+            {
+                expectationForMeeting.Delete(userId);
+            }
+        }
+
+        #endregion
 
         #region Buyer Evaluations
 
@@ -209,6 +292,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.FinishDate = DateTime.UtcNow;
             base.SetUpdateDate(userId);
         }
+
         /// <summary>Determines whether [is finish valid].</summary>
         /// <returns>
         ///   <c>true</c> if [is finish valid]; otherwise, <c>false</c>.</returns>
@@ -221,6 +305,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             return this.ValidationResult.IsValid;
         }
+
         /// <summary>Validates the project buyer evaluations.</summary>
         public void ValidateProjectBuyerEvaluations()
         {
@@ -364,7 +449,6 @@ namespace PlataformaRio2C.Domain.Entities
         #endregion
 
         #region Validations
-
 
         public override bool IsValid()
         {

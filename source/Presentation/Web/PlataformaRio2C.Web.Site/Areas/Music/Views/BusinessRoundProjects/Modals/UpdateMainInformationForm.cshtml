@@ -1,0 +1,17 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model PlataformaRio2C.Application.CQRS.Commands.UpdateMusicBusinessRoundProjectMainInformation
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+}
+<div class="row">
+    <div class="form-group col-md-12 mb-0">
+        @Html.EditorFor(m => m.MusicBusinessRoundProjectExpectationsForMeetings)
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-12">
+        @Html.LabelFor(m => m.AttachmentUrl, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.AttachmentUrl, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.AttachmentUrl, "", new { @class = "text-danger" })
+    </div>
+</div>

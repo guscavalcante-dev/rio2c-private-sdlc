@@ -478,6 +478,11 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/js/music/businessrounds/music.businessrounds.buyercompany.widget.js", 
                 "~/Scripts/jquery.unobtrusive-ajax.js"));
 
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.businessrounds.widget.js").Include(
+               "~/Assets/js/music/businessrounds/music.businessrounds.maininformation.widget.js",
+               "~/Assets/js/myrio2c.additionalinfo.js"));
+
             #endregion
 
             #endregion
