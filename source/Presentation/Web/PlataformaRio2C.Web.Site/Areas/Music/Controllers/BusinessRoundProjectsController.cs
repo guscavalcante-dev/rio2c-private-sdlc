@@ -2144,14 +2144,11 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                     musicProjectDto,
                     await CommandBus.Send(new FindAllLanguagesDtosAsync(UserInterfaceLanguage)),
                     await targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
-                    await interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Music.Id),
+                    await interestRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.Music.Id),
                     await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
                     await this.playersCategoryRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
                     true,
-                    false,
-                    false,
-                    UserInterfaceLanguage
-                );
+                    UserInterfaceLanguage);
             }
             catch (DomainException ex)
             {

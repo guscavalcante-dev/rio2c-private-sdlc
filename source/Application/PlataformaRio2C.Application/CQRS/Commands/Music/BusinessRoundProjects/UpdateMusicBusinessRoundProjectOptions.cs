@@ -38,8 +38,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<Activity> activities,
             List<PlayerCategory> playersCategories,
             bool isDataRequired,
-            bool isProductionPlanRequired,
-            bool isAdditionalInformationRequired,
             string userInterfaceLanguage)
         {
             this.MusicProjectUid = entity?.Uid;
@@ -52,10 +50,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 activities,
                 playersCategories,
                 isDataRequired,
-                isProductionPlanRequired,
-                isAdditionalInformationRequired,
-                userInterfaceLanguage,
-                true
+                userInterfaceLanguage
             );
         }
 
