@@ -69,10 +69,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="activities">The activities.</param>
         /// <param name="playersCategories">The players categories.</param>
         /// <param name="isDataRequired">if set to <c>true</c> [is data required].</param>
-        /// <param name="isProductionPlanRequired">if set to <c>true</c> [is production plan required].</param>
-        /// <param name="isAdditionalInformationRequired">if set to <c>true</c> [is additional information required].</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
-        /// <param name="modalityRequired">if set to <c>true</c> [modality required].</param>
         public void UpdateBaseProperties(
             MusicBusinessRoundProjectDto entity,
             List<LanguageDto> languagesDtos,
@@ -81,18 +78,19 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<Activity> activities,
             List<PlayerCategory> playersCategories,
             bool isDataRequired,
-            bool isProductionPlanRequired,
-            bool isAdditionalInformationRequired,
-            string userInterfaceLanguage,
-            bool modalityRequired)
+            string userInterfaceLanguage)
         {
+            this.AttachmentUrl = entity.AttachmentUrl;
+            this.PlayerCategoriesThatHaveOrHadContract = entity.PlayerCategoriesThatHaveOrHadContract;
 
             this.UpdateInterests(entity, interestsDtos);
             this.UpdateExpectationsForMeetings(entity, languagesDtos, isDataRequired);
-            this.UpdateDropdownProperties(targetAudiences, activities, playersCategories, userInterfaceLanguage);
 
-            //TODO:Implementar na parte de edicao/duplicacao de projeto.
-            /*this.AttachmentUrl = entity.AttachmentUrl;*/
+            //TODO: Daniel continuar daqui. Pegar exemplos do UpdateInterests e UpdateExpectationsForMeetings
+            //this.UpdateActivities(entity, activities);
+            //this.UpdatePlayerCategories(entity, playersCategories);
+
+            this.UpdateDropdownProperties(targetAudiences, activities, playersCategories, userInterfaceLanguage);
         }
 
         /// <summary>

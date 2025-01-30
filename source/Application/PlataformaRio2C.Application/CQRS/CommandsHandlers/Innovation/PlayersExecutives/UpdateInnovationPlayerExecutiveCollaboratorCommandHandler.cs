@@ -132,7 +132,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var collaboratorRole = roleRepo.Get(cmd.CollaboratorRoleUid ?? Guid.Empty);
             var collaboratorIndustry = industryRepo.Get(cmd.CollaboratorIndustryUid ?? Guid.Empty);
             var editions = this.editionRepo.GetAll(e => cmd.EditionsUids.Contains(e.Uid)).ToList();
-            var interestsDtos = await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Startup.Id);
+            var interestsDtos = await this.interestRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.Startup.Id);
             var activities = await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id);
 
             // Interests

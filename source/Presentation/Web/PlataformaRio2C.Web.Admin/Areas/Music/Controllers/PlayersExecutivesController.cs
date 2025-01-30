@@ -469,7 +469,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
                     await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
-                    await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Music.Id),
+                    await this.interestRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.Music.Id),
                     await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
                     EditionDto.Id,
                     false,

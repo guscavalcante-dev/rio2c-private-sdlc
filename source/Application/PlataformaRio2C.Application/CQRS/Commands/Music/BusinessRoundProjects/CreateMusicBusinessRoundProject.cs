@@ -37,8 +37,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<Activity> activities,
             List<PlayerCategory> playersCategories,
             bool isDataRequired,
-            bool isProductionPlanRequired,
-            bool isAdditionalInformationRequired,
             string userInterfaceLanguage)
         {
             this.UpdateBaseProperties(
@@ -49,10 +47,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 activities,
                 playersCategories,
                 isDataRequired,
-                isProductionPlanRequired,
-                isAdditionalInformationRequired,
-                userInterfaceLanguage,
-                true
+                userInterfaceLanguage
             );
         }
 

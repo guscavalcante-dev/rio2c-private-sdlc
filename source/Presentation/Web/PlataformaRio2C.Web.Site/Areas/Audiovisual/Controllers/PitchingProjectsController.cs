@@ -399,7 +399,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 
                 cmd = new UpdateProjectInterests(
                     interestWidgetDto,
-                    await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Audiovisual.Id),
+                    await this.interestRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
                     await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
             }
             catch (DomainException ex)
@@ -773,7 +773,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 projectDto,
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
-                await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Audiovisual.Id),
+                await this.interestRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
                 true,
                 false,
                 false,
