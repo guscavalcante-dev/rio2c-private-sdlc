@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System;
 using PlataformaRio2C.Domain.Enums;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Entities
@@ -50,6 +51,21 @@ namespace PlataformaRio2C.Domain.Entities
         public string GetNameTranslation(string languageCode)
         {
             return this.Name.GetSeparatorTranslation(languageCode, Language.Separator);
+        }
+
+        public string GetLabelToForm()
+        {
+            var label = this.Name;
+            if (this.ProjectTypeId == ProjectType.Music.Id)
+            {
+                if (this.Uid == MusicLookingFor.Uid)
+                    label = Labels.BusinessRoundProjectsObjetives;
+                else if (this.Uid == MusicOpportunitiesYouOffer.Uid)
+                    label = Labels.InterestArea;
+                else
+                    label = this.Name;
+            }
+            return label;
         }
 
         #region Statics

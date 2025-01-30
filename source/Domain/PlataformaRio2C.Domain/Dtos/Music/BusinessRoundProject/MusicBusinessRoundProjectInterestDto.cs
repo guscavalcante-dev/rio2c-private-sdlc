@@ -11,6 +11,14 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <summary>
         /// Initializes a new instance of the <see cref="MusicBusinessRoundProjectInterestDto"/> class.
         /// </summary>
+        public MusicBusinessRoundProjectInterestDto(Interest interest)
+        {
+            this.Interest = interest;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MusicBusinessRoundProjectInterestDto"/> class.
+        /// </summary>
         public MusicBusinessRoundProjectInterestDto()
         {
         }
