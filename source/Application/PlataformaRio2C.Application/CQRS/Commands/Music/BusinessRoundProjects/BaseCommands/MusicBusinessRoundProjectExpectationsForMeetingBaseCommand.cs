@@ -23,14 +23,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>ProjectLogLineBaseCommand</summary>
     public class MusicBusinessRoundProjectExpectationsForMeetingBaseCommand : BaseCommand
     {
-        public static readonly int ValueMaxLength = 256;
+        public static readonly int ValueMaxLength = 3000;
         public static readonly int ValueMinLength = 1;
         public int MusicBusinessRoundProjectId { get; set; }
         public int LanguageId { get; set; }
         
         [Display(Name = "ExpectationsForMeeting", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [StringLength(256, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [StringLength(3000, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Value { get; set; }
         public string LanguageCode { get; set; }
         public string LanguageName { get; set; }
