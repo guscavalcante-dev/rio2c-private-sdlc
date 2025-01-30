@@ -900,7 +900,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<MatchAttendeeOrganizationDto>> FindAllDtoByMatchingProjectBuyerAsync(int editionId, ProjectDto projectDto, string searchKeywords, int page, int pageSize)
+        public async Task<IPagedList<MatchAttendeeOrganizationDto>> FindAllAudiovisualMatchingAttendeeOrganizationsDtosAsync(int editionId, ProjectDto projectDto, string searchKeywords, int page, int pageSize)
         {
             var buyerOrganizationType = projectDto.ProjectType.OrganizationTypes.FirstOrDefault(ot => !ot.IsDeleted && !ot.IsSeller);
             var lookingForInterests = projectDto.ProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.AudiovisualLookingFor.Uid)?.Select(pid => pid.Interest.Uid)?.ToList() ?? new List<Guid>();
@@ -938,6 +938,90 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ToListPagedAsync(page, pageSize);
         }
 
+        /// <summary>Finds all dto by matching project buyer asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="projectDto">The project dto.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<MatchAttendeeOrganizationDto>> FindAllMusicMatchingAttendeeOrganizationsDtosAsync(int editionId, MusicBusinessRoundProjectDto projectDto, string searchKeywords, int page, int pageSize)
+        {
+            var buyerOrganizationType = OrganizationType.MusicPlayer.Uid;
+            var lookingForInterests = projectDto.MusicBusinessRoundProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.MusicLookingFor.Uid)?.Select(pid => pid.Interest.Uid)?.ToList() ?? new List<Guid>();
+            var projectStatusInterests = projectDto.MusicBusinessRoundProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.MusicOpportunitiesYouOffer.Uid)?.Select(pid => pid.Interest.Uid)?.ToList() ?? new List<Guid>();
+            var matchInterests = lookingForInterests
+                                 .Union(projectStatusInterests)
+                                 .ToList();
+
+            var query = this.GetBaseQuery()
+                                .FindByOrganizationTypeUidAndEditionId(editionId, false, buyerOrganizationType)
+                                //.FindNotByUid(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid)
+                                .FindByKeywords(searchKeywords)
+                                .FindByInterestUids(matchInterests)
+                                .IsOnboardingFinished();
+
+            return await query
+                            .Select(ao => new MatchAttendeeOrganizationDto
+                            {
+                                AttendeeOrganization = ao,
+                                ProjectBuyerEvaluationsCount = ao.ProjectBuyerEvaluations.Count(pbe =>
+                                    pbe.BuyerAttendeeOrganizationId == ao.Id && !pbe.IsDeleted
+                                ),
+                                Organization = ao.Organization,
+                                InterestGroupsMatches = ao.Organization.OrganizationInterests
+                                                                            .Where(oi => !oi.IsDeleted && !oi.Interest.IsDeleted && matchInterests.Contains(oi.Interest.Uid))
+                                                                            .Select(oi => oi.Interest.InterestGroup)
+                                                                            .Distinct()
+                            })
+                            .OrderByDescending(ao => ao.InterestGroupsMatches.Count())
+                            .ThenBy(ao => ao.Organization.TradeName)
+                            .ToListPagedAsync(page, pageSize);
+        }
+
+
+
+        /// <summary>Finds all dto by matching project buyer asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="projectDto">The project dto.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<MatchAttendeeOrganizationDto>> FindAllDtoByMatchingMusicBusinessRoundProjectBuyerAsync(int editionId, MusicBusinessRoundProjectDto projectDto, string searchKeywords, int page, int pageSize)
+        {
+            var buyerOrganizationType = OrganizationType.MusicPlayer.Uid;
+            var lookingForInterests = projectDto.MusicBusinessRoundProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.MusicLookingFor.Uid)?.Select(pid => pid.Interest.Uid)?.ToList() ?? new List<Guid>();
+            var projectStatusInterests = projectDto.MusicBusinessRoundProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.MusicOpportunitiesYouOffer.Uid)?.Select(pid => pid.Interest.Uid)?.ToList() ?? new List<Guid>();
+            var matchInterests = lookingForInterests
+                                 .Union(projectStatusInterests)
+                                 .ToList();
+
+            var query = this.GetBaseQuery()
+                                .FindByOrganizationTypeUidAndEditionId(editionId, false, buyerOrganizationType)
+                                //.FindNotByUid(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) //Todo : Rever com Renan o que fazer em casos de organization
+                                .FindByKeywords(searchKeywords)
+                                .FindByInterestUids(matchInterests)
+                                .IsOnboardingFinished();
+
+            return await query
+                            .Select(ao => new MatchAttendeeOrganizationDto
+                            {
+                                AttendeeOrganization = ao,
+                                ProjectBuyerEvaluationsCount = ao.ProjectBuyerEvaluations.Count(pbe =>
+                                    pbe.BuyerAttendeeOrganizationId == ao.Id && !pbe.IsDeleted
+                                ),
+                                Organization = ao.Organization,
+                                InterestGroupsMatches = ao.Organization.OrganizationInterests
+                                                                            .Where(oi => !oi.IsDeleted && !oi.Interest.IsDeleted && matchInterests.Contains(oi.Interest.Uid))
+                                                                            .Select(oi => oi.Interest.InterestGroup)
+                                                                            .Distinct()
+                            })
+                            .OrderByDescending(ao => ao.InterestGroupsMatches.Count())
+                            .ThenBy(ao => ao.Organization.TradeName)
+                            .ToListPagedAsync(page, pageSize);
+        }
+
         /// <summary>Finds all dto by project buyer asynchronous.</summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="projectDto">The project dto.</param>
@@ -952,6 +1036,36 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                 .FindByOrganizationTypeUidAndEditionId(editionId, false, buyerOrganizationType?.Uid ?? Guid.Empty)
                                 .FindNotByUid(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid)
+                                .FindByKeywords(searchKeywords)
+                                .IsOnboardingFinished();
+
+            return await query
+                            .Select(ao => new AttendeeOrganizationDto
+                            {
+                                AttendeeOrganization = ao,
+                                Organization = ao.Organization,
+                                ProjectBuyerEvaluationsCount = ao.ProjectBuyerEvaluations.Count(pbe =>
+                                    pbe.BuyerAttendeeOrganizationId == ao.Id && !pbe.IsDeleted
+                                ),
+                            })
+                            .OrderBy(ao => ao.Organization.TradeName)
+                            .ToListPagedAsync(page, pageSize);
+        }
+
+        /// <summary>Finds all dto by project buyer asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="projectDto">The project dto.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<AttendeeOrganizationDto>> FindAllMusicBusinessRoundProjectBuyerAsync(int editionId, MusicBusinessRoundProjectDto projectDto, string searchKeywords, int page, int pageSize)
+        {
+            var buyerOrganizationType = OrganizationType.MusicPlayer.Uid;
+
+            var query = this.GetBaseQuery()
+                                .FindByOrganizationTypeUidAndEditionId(editionId, false, buyerOrganizationType)
+                                //.FindNotByUid(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid)
                                 .FindByKeywords(searchKeywords)
                                 .IsOnboardingFinished();
 

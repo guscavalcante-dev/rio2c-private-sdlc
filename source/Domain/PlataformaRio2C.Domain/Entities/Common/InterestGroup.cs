@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System;
 using PlataformaRio2C.Domain.Enums;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Entities
@@ -52,6 +53,21 @@ namespace PlataformaRio2C.Domain.Entities
             return this.Name.GetSeparatorTranslation(languageCode, Language.Separator);
         }
 
+        public string GetLabelToForm()
+        {
+            var label = this.Name;
+            if (this.ProjectTypeId == ProjectType.Music.Id)
+            {
+                if (this.Uid == MusicLookingFor.Uid)
+                    label = Labels.BusinessRoundProjectsObjetives;
+                else if (this.Uid == MusicOpportunitiesYouOffer.Uid)
+                    label = Labels.InterestArea;
+                else
+                    label = this.Name;
+            }
+            return label;
+        }
+
         #region Statics
 
         #region Audiovisual
@@ -76,6 +92,7 @@ namespace PlataformaRio2C.Domain.Entities
         #region Music
 
         public static InterestGroup MusicLookingFor = new InterestGroup(new Guid("33AE337F-99F1-4C8D-98EC-8044572A104D"));
+        public static InterestGroup MusicOpportunitiesYouOffer = new InterestGroup(new Guid("A1B2C3D4-E5F6-7890-1234-56789ABCDEF0"));
 
         #endregion
 

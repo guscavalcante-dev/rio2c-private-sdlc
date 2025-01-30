@@ -143,7 +143,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 var attendeeCollaboratorInterests = new List<AttendeeCollaboratorInterest>();
                 if (cmd.InnovationInterests?.Any() == true)
                 {
-                    var interestsDtos = await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Startup.Id);
+                    var interestsDtos = await this.interestRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.Startup.Id);
 
                     foreach (var interestBaseCommands in cmd.InnovationInterests)
                     {

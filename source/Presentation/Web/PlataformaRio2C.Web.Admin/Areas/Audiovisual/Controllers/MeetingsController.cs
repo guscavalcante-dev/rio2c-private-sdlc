@@ -240,7 +240,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         public async Task<ActionResult> ShowEditionScheduledCountGaugeWidget()
         {
             var scheduledCount = await this.projectBuyerEvaluationRepo.CountNegotiationScheduledAsync(this.EditionDto.Id, false);
-            var maximumAvailableSlotsByEditionId = new GetMaximumAvailableSlotsByEditionId(this.EditionDto.Id);
+            var maximumAvailableSlotsByEditionId = new GetAudiovisualMaximumAvailableSlotsByEditionId(this.EditionDto.Id);
 
             return Json(new
             {

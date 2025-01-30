@@ -399,7 +399,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 
                 cmd = new UpdateProjectInterests(
                     interestWidgetDto,
-                    await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Audiovisual.Id),
+                    await this.interestRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
                     await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
             }
             catch (DomainException ex)
@@ -773,7 +773,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 projectDto,
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
-                await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Audiovisual.Id),
+                await this.interestRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
                 true,
                 false,
                 false,
@@ -881,6 +881,24 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             }
 
             return RedirectToAction("Index", "PitchingProjects");
+        }
+
+        /// <summary>Submitteds the list.</summary>
+        /// <returns></returns>
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.Industry)]
+        public async Task<ActionResult> SubmittedListPitching()
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper($"{Labels.AudiovisualProjects} - {Labels.BusinessRound}", new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper($"{Labels.Projects} - {Labels.BusinessRound}", Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
+            });
+
+            #endregion
+
+            var view = new PitchingProjectDto() { AttendeeOrganizationUid = this.UserAccessControlDto?.GetFirstAttendeeOrganizationCreated()?.Uid , AttendeeCollaboratorUid = this.UserAccessControlDto?.Collaborator.Uid };
+
+            return View(view);
         }
 
         #endregion

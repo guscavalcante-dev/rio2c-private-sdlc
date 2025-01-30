@@ -5,8 +5,9 @@
     var editionDto = ViewBag.EditionDto as EditionDto;
     var isSeller = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true;
     var isBuyer = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.PlayerExecutiveAudiovisual) == true;
+    var audiovisualCollaboratorTypesCount = userAccessControlDto?.CountCollaboratorTypes(Constants.CollaboratorType.Audiovisuals);
 }
-@if (isSeller || isBuyer)
+@if (audiovisualCollaboratorTypesCount > 0)
 {
     <div class="kt-portlet">
         <div class="kt-portlet__head">
@@ -20,14 +21,14 @@
             <div class="kt-notification">
                 @if (isSeller)
                 {
-                    if (editionDto?.IsAudiovisualProjectSubmitStarted() != true || editionDto.IsAudiovisualProjectSubmitEnded() != true)
+                    if (editionDto?.IsAudiovisualProjectSubmitStarted() == true)
                     {
-                        var subscriptionUrl = Url.Action("SubmittedList", "Projects", new { Area = "" });
-                        var editionUrl = Url.Action("SubmittedList", "Projects", new { Area = "" });
+                        var subscriptionUrl = Url.Action("Index", "BusinessRoundProjects", new { Area = "Audiovisual" });
+                        var editionUrl = Url.Action("Index", "BusinessRoundProjects", new { Area = "Audiovisual" });
                         if (editionDto?.IsAudiovisualProjectSubmitStarted() != true)
                         {
-                            subscriptionUrl = Url.Action("Index", "Projects", new { Area = "" });
-                            editionUrl = Url.Action("Index", "Projects", new { Area = "" });
+                            subscriptionUrl = Url.Action("Index", "BusinessRoundProjects", new { Area = "Audiovisual" });
+                            editionUrl = Url.Action("Index", "BusinessRoundProjects", new { Area = "Audiovisual" });
                         }
                         <a href="@subscriptionUrl" class="kt-notification__item">
                             <div class="kt-notification__item-icon">
@@ -62,10 +63,10 @@
                             </div>
                         </a>
                     }
-                    var resultUrl = Url.Action("SubmittedList", "Projects", new { Area = "" });
+                    var resultUrl = Url.Action("Index", "BusinessRoundProjects", new { Area = "Audiovisual" });
                     if (editionDto?.IsAudiovisualProjectSubmitEnded() != true)
                     {
-                        resultUrl = Url.Action("Index", "Projects", new { Area = "" });
+                        resultUrl = Url.Action("Index", "BusinessRoundProjects", new { Area = "Audiovisual" });
                     }
                     <a href="@resultUrl" class="kt-notification__item">
                         <div class="kt-notification__item-icon">
@@ -102,10 +103,10 @@
                 }
                 @if (isBuyer)
                 {
-                    var evaluationUrl = Url.Action("EvaluationList", "Projects", new { Area = "" });
+                    var evaluationUrl = Url.Action("EvaluationList", "BusinessRoundProjects", new { Area = "Audiovisual" });
                     if (editionDto?.IsProjectBuyerEvaluationStarted() != true)
                     {
-                        evaluationUrl = Url.Action("Index", "Projects", new { Area = "" });
+                        evaluationUrl = Url.Action("Index", "BusinessRoundProjects", new { Area = "Audiovisual" });
                     }
 
                     <a href="@evaluationUrl" class="kt-notification__item">

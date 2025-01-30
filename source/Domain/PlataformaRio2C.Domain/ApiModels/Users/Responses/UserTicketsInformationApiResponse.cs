@@ -18,8 +18,8 @@ namespace PlataformaRio2C.Domain.ApiModels
 {
     public class UserTicketsInformationApiResponse
     {
-        [JsonProperty("email", Order = 100)]
-        public string Email { get; set; }
+        [JsonProperty("document", Order = 100)]
+        public string Document { get; set; }
 
         [JsonProperty("ticketsCount", Order = 200)]
         public int TicketsCount { get; set; }

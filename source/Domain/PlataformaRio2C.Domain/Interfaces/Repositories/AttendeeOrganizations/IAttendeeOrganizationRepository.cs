@@ -58,8 +58,10 @@ namespace PlataformaRio2C.Domain.Interfaces
         #region Site Projects Widgets
 
         Task<List<AttendeeOrganizationDto>> FindAllDtoByBuyerProjectUid(Guid projectUid);
-        Task<IPagedList<MatchAttendeeOrganizationDto>> FindAllDtoByMatchingProjectBuyerAsync(int editionId, ProjectDto projectDto, string searchKeywords, int page, int pageSize);
+        Task<IPagedList<MatchAttendeeOrganizationDto>> FindAllAudiovisualMatchingAttendeeOrganizationsDtosAsync(int editionId, ProjectDto projectDto, string searchKeywords, int page, int pageSize);
+        Task<IPagedList<MatchAttendeeOrganizationDto>> FindAllMusicMatchingAttendeeOrganizationsDtosAsync(int editionId, MusicBusinessRoundProjectDto projectDto, string searchKeywords, int page, int pageSize);
         Task<IPagedList<AttendeeOrganizationDto>> FindAllDtoByProjectBuyerAsync(int editionId, ProjectDto projectDto, string searchKeywords, int page, int pageSize);
+        Task<IPagedList<AttendeeOrganizationDto>> FindAllMusicBusinessRoundProjectBuyerAsync(int editionId, MusicBusinessRoundProjectDto projectDto, string searchKeywords, int page, int pageSize);
 
         #endregion
 

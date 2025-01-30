@@ -158,6 +158,9 @@
     <value>Qual e a principal atividade da sua empresa?</value>
     <comment>Qual e a principal atividade da sua empresa?</comment>
   </data>
+  <data name="ActivitiesBusinessRoundProjects" xml:space="preserve">
+    <value>Perfil de Executivos: Selecione até 3 opções para as reuniões individuais</value>
+  </data>
   <data name="Activity" xml:space="preserve">
     <value>Atividade</value>
     <comment>Atividade</comment>
@@ -318,6 +321,9 @@
   <data name="Attachments" xml:space="preserve">
     <value>Anexos</value>
   </data>
+  <data name="AttachmentUrl" xml:space="preserve">
+    <value>Anexar Release, Link da plataforma de streaming ou Material de Apresentação</value>
+  </data>
   <data name="AttendeeOrganizationMaxSellProjectsCount" xml:space="preserve">
     <value>Quantidade máxima de projetos por produtora</value>
     <comment>Quantidade máxima de projetos por participante</comment>
@@ -370,6 +376,9 @@
   </data>
   <data name="AudiovisualPitchingRules" xml:space="preserve">
     <value>Regulamento de pitching</value>
+  </data>
+  <data name="AudiovisualPitchingRules1" xml:space="preserve">
+    <value />
   </data>
   <data name="AudiovisualPitchingRulesShorted" xml:space="preserve">
     <value>Reg. de pitching</value>
@@ -434,7 +443,6 @@
   </data>
   <data name="BandType" xml:space="preserve">
     <value>Tipo de artista</value>
-    <comment>Tipo de artist</comment>
   </data>
   <data name="BeingProcessed" xml:space="preserve">
     <value>Sendo executado</value>
@@ -493,6 +501,15 @@
   <data name="BusinessRound" xml:space="preserve">
     <value>Rodadas de Negócios</value>
     <comment>Rodadas de Negócios</comment>
+  </data>
+  <data name="BusinessRoundObjective" xml:space="preserve">
+    <value>Objetivo da Rodada de Negócio</value>
+  </data>
+  <data name="BusinessRoundPlayersCategories" xml:space="preserve">
+    <value>Você possui ou já possuiu contrato com alguma das categorias de players abaixo?</value>
+  </data>
+  <data name="BusinessRoundProjectsObjetives" xml:space="preserve">
+    <value>Objetivos para as Rodadas de Negócio</value>
   </data>
   <data name="BusinessRounds" xml:space="preserve">
     <value>Rodadas de Negócio</value>
@@ -1154,6 +1171,9 @@
     <value>Nome do Executivo</value>
     <comment>Nome do Executivo</comment>
   </data>
+  <data name="ExecutiveProfile" xml:space="preserve">
+    <value>Perfil de Executivo</value>
+  </data>
   <data name="Executives" xml:space="preserve">
     <value>Executivos</value>
     <comment>Executivos</comment>
@@ -1165,6 +1185,9 @@
   <data name="ExecutivesRegistered" xml:space="preserve">
     <value>Executivos cadastrados</value>
     <comment>Executivos cadastrados</comment>
+  </data>
+  <data name="ExpectationsForMeeting" xml:space="preserve">
+    <value>Expectativas para as Rodadas de Negócio</value>
   </data>
   <data name="Experience" xml:space="preserve">
     <value>Experiência</value>
@@ -1358,6 +1381,9 @@
   <data name="Id" xml:space="preserve">
     <value>Id</value>
   </data>
+  <data name="IfAffirmativeWhichCompanies" xml:space="preserve">
+    <value>Se sim, quais empresas?</value>
+  </data>
   <data name="IfAlreadyHaveLogin" xml:space="preserve">
     <value>Se já tiver login e senha</value>
   </data>
@@ -1429,6 +1455,9 @@
   <data name="Interest" xml:space="preserve">
     <value>Interesse</value>
     <comment>Interesse</comment>
+  </data>
+  <data name="InterestArea" xml:space="preserve">
+    <value>Áreas de Interesse</value>
   </data>
   <data name="Interests" xml:space="preserve">
     <value>Interesses</value>
@@ -1595,6 +1624,9 @@
     <value>Sair</value>
     <comment>Sair</comment>
   </data>
+  <data name="LookingFor" xml:space="preserve">
+    <value>Buscando por</value>
+  </data>
   <data name="Low" xml:space="preserve">
     <value>Baixa</value>
   </data>
@@ -1729,6 +1761,9 @@
   <data name="MusicBusinessRoundMaximumEvaluatorsByProject" xml:space="preserve">
     <value>Quantidade máxima de avaliadores por projeto</value>
   </data>
+  <data name="MusicBusinessRoundMaximumProjectsBySeller" xml:space="preserve">
+    <value />
+  </data>
   <data name="MusicBusinessRoundNegotiationEndDate" xml:space="preserve">
     <value>Data de término das negociações de música</value>
   </data>
@@ -1826,12 +1861,10 @@
     <value>Relatório de Players de Música</value>
   </data>
   <data name="MusicProjects" xml:space="preserve">
-    <value>Bandas</value>
-    <comment>Projetos de Música</comment>
+    <value>Projetos de Música</value>
   </data>
   <data name="MusicProjectSubmitEndDate" xml:space="preserve">
     <value>Data de término do cadastro de bandas</value>
-    <comment>Data de término de envio de projeto musical</comment>
   </data>
   <data name="MusicProjectSubmitStartDate" xml:space="preserve">
     <value>Data de início do cadastro de bandas</value>
@@ -1962,6 +1995,9 @@
     <value>Número de episódios</value>
     <comment>Número de episódios</comment>
   </data>
+  <data name="Objective" xml:space="preserve">
+    <value>Objetivo</value>
+  </data>
   <data name="Of" xml:space="preserve">
     <value>de</value>
     <comment>de</comment>
@@ -2051,8 +2087,7 @@
     <comment>Participante</comment>
   </data>
   <data name="ParticipantProfile" xml:space="preserve">
-    <value>Tipo de artista</value>
-    <comment>Tipo de artista</comment>
+    <value>Perfil do Participante</value>
   </data>
   <data name="Participants" xml:space="preserve">
     <value>Participantes</value>
@@ -2157,6 +2192,9 @@
   <data name="Player" xml:space="preserve">
     <value>Player</value>
     <comment>Player</comment>
+  </data>
+  <data name="PlayerCategoriesThatHaveOrHadContract" xml:space="preserve">
+    <value>Categoria de players com que tem/teve contrato</value>
   </data>
   <data name="PlayerDemand" xml:space="preserve">
     <value>Demanda do Player</value>
@@ -2948,6 +2986,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Redes sociais</value>
     <comment>Redes sociais</comment>
   </data>
+  <data name="SocialName" xml:space="preserve">
+    <value>Nome social</value>
+  </data>
   <data name="SocialNetworks" xml:space="preserve">
     <value>Redes Sociais</value>
     <comment>Redes Sociais</comment>
@@ -2993,6 +3034,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Sponsors" xml:space="preserve">
     <value>Patrocinadores</value>
     <comment>Patrocinadores</comment>
+  </data>
+  <data name="StageName" xml:space="preserve">
+    <value>Nome artístico</value>
   </data>
   <data name="Start" xml:space="preserve">
     <value>Início</value>
@@ -3118,6 +3162,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="TargetAudiences" xml:space="preserve">
     <value>Qual o perfil de participante que te interessa para as Rodadas de Negocios?</value>
     <comment>Qual o perfil de participante que te interessa para as Rodadas de Negocios?</comment>
+  </data>
+  <data name="TargetAudiencesMusicBusinessRoundProject" xml:space="preserve">
+    <value>Perfil do Participante: Selecione a opção que melhor descreve suas atividades</value>
   </data>
   <data name="TeaserLink" xml:space="preserve">
     <value>Link do teaser</value>
@@ -3442,6 +3489,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   </data>
   <data name="WhereToStay" xml:space="preserve">
     <value>Onde se hospedar</value>
+  </data>
+  <data name="WhichCompanies" xml:space="preserve">
+    <value>Quais empresas?</value>
   </data>
   <data name="WhichEditionQ" xml:space="preserve">
     <value>Em qual edição?</value>

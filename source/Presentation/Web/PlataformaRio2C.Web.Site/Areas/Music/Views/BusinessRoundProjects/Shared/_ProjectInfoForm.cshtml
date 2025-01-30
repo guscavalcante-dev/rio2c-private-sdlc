@@ -1,0 +1,115 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model PlataformaRio2C.Application.CQRS.Commands.MusicBusinessRoundProjectBaseCommand
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+}
+<!--begin: Form Wizard Step 3-->
+<div class="kt-wizard-v3__content" data-ktwizard-type="step-content" data-ktwizard-state="current">
+    <div class="kt-heading kt-heading--md">@Labels.ProjectInfo</div>
+    <div class="kt-form__section kt-form__section--first">
+        <div class="kt-wizard-v3__form">
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.EditorFor(m => m.MusicBusinessRoundProjectExpectationsForMeetings)
+                </div>
+                <div class="form-group col-md-12">
+                    @Html.LabelFor(m => m.AttachmentUrl, new { @class = "control-label" }) <span class="form-optional-input text-muted"></span>
+                    @Html.TextBoxFor(m => m.AttachmentUrl, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.AttachmentUrl, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-12">
+                    <div class="kt-section">
+                        <h5>@Labels.TargetAudiencesMusicBusinessRoundProject</h5>
+                        @Html.ValidationMessage("TargetAudiencesUids", new { @class = "text-danger" })
+                        <div class="kt-section__content mt-3">
+                            <div class="kt-checkbox-list">
+                                @foreach (var targetAudience in Model.TargetAudiences)
+                                {
+                                    <label class="kt-checkbox">
+                                        <input type="checkbox"
+                                               name="TargetAudiencesUids"
+                                               value="@targetAudience.Uid"
+                                               class="require-one"
+                                               data-id="targetaudience-group"
+                                               @if (Model.TargetAudiencesUids?.Contains(targetAudience.Uid) == true) { <text> checked </text> } /> @targetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                                            <span></span>
+                                        </label>
+                                    }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="kt-section">
+                        <h5>@Labels.ActivitiesBusinessRoundProjects</h5>
+                        <div class="kt-section__content mt-3">
+                            <div class="kt-checkbox-list">
+                                @foreach (var activity in Model.Activities)
+                                {
+                                    <label class="kt-checkbox">
+                                        <input type="checkbox"
+                                               name="ActivitiesUids"
+                                               value="@activity.Uid"
+                                               class="require-one"
+                                               data-id="activities-group"
+                                               @if (Model.ActivitiesUids?.Contains(activity.Uid) == true) { <text> checked </text> } /> @activity.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                                            <span></span>
+                                        </label>
+                                    }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    @if (Model.Interests?.Any() == true)
+                    {
+                        <div class="kt-section">
+                            <div class="kt-section__content">
+                                <div class="kt-checkbox-list">
+                                    @for (int i = 0; i < Model.Interests.Length; i++)
+                                    {
+                                        var group = Model.Interests[i].FirstOrDefault();
+                                        <h5 class="mt-30">@(group?.InterestGroupName?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</h5>
+                                        @Html.ValidationMessage(group?.InterestGroupUid.ToString(), new { @class = "text-danger" })
+                                        <div class="kt-section__content mt-3">
+                                            <div class="row require-one-group" data-id="@(group?.InterestGroupUid)">
+                                                @Html.EditorFor(x => Model.Interests[i])
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="form-group col-md-12">
+                    <!-- Players Categories checkboxes-->
+                    <div class="kt-section">
+                        <h5>@Labels.BusinessRoundPlayersCategories</h5>
+                        <div class="kt-section__content mt-3">
+                            @*@Html.HiddenFor(m => m.PlayerCategoriesUids)*@
+                            <div class="kt-checkbox-list">
+                                @foreach (var playerCategory in Model.PlayerCategories)
+                                {
+                                    <label class="kt-checkbox" style="font-weight:300;">
+                                        <input type="checkbox"
+                                               name="PlayerCategoriesUids"
+                                               value="@playerCategory.Uid"
+                                               data-id="playercategories-group"
+                                               @if (Model.PlayerCategoriesUids?.Contains(playerCategory.Uid) == true) { <text> checked </text> } /> @playerCategory.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                                            <span></span>
+                                        </label>
+                                    }
+                            </div>
+                        </div>
+                        <!-- Players Categories Descritive-->
+                        @Html.LabelFor(m => m.PlayerCategoriesThatHaveOrHadContract, new { @class = "control-label" }) <span class="form-optional-input text-muted"></span>
+                        @Html.TextBoxFor(m => m.PlayerCategoriesThatHaveOrHadContract, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.PlayerCategoriesThatHaveOrHadContract, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end: Form Wizard Step 3-->

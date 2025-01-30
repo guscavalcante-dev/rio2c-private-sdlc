@@ -2628,7 +2628,15 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Collaborator"/> class.
+        /// </summary>
+        /// <param name="badge">The badge.</param>
+        public Collaborator(string badge)
+        {
+            this.Badge = badge;
+        }
+
         protected Collaborator()
         {
         }
@@ -3665,6 +3673,20 @@ namespace PlataformaRio2C.Domain.Entities
         public string GetNameAbbreviation()
         {
             return this.GetFullName().GetTwoLetterCode();
+        }
+
+        /// <summary>
+        /// Gets the full name of the stage name or badge or.
+        /// </summary>
+        /// <returns></returns>
+        public string GetStageNameOrBadgeOrFullName()
+        {
+            if (!string.IsNullOrEmpty(this.StageName))
+                return this.StageName;
+            else if (!string.IsNullOrEmpty(this.Badge))
+                return this.Badge;
+            else
+                return this.GetFullName();
         }
 
         /// <summary>Determines whether this instance has image.</summary>

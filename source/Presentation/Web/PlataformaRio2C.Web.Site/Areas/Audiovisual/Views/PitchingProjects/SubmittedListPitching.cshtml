@@ -1,0 +1,30 @@
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Entities
+@using PlataformaRio2C.Domain.Statics
+@model PitchingProjectDto
+
+@{
+    ViewBag.Title = Labels.ProjectsSubmission;
+    var editionDto = ViewBag.EditionDto as EditionDto;
+
+    var baseUrl = "https://www.rio2c.com/subscriptions/pitching-industry";
+    var attendeeCollaboratorUid = Model.AttendeeCollaboratorUid?.ToString().ToUpper() ?? "default-collaborator-uid";
+    var attendeeOrganizationUid = Model.AttendeeOrganizationUid?.ToString().ToUpper() ?? "default-organization-uid";
+
+    var iframeUrl = $"{baseUrl}/{attendeeCollaboratorUid}/{attendeeOrganizationUid}";
+}
+
+@section Scripts {
+    <script>
+        jQuery(document).ready(function () {
+            MyRio2cCommon.enableTooltips();
+        });
+    </script>
+}
+
+<div class="row">
+    <div class="col-12">
+        <iframe src="@iframeUrl" width="100%" height="600px" frameborder="0" allowfullscreen></iframe>
+    </div>
+</div>

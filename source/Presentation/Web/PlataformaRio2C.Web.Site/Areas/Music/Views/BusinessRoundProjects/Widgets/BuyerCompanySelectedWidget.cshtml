@@ -1,0 +1,105 @@
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Statics
+@model MusicBusinessRoundProjectDto
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+}
+<div class="row">
+    <div class="col-12 text-center mb-2">
+        <small class="font-weight-bold">
+            @{
+                var projectsBuyerEvaluationsUsed = Model.GetProjectsBuyerEvaluationsUsed();
+            }
+            @string.Format(
+                Messages.BuyerEvaluationsSelected,
+                projectsBuyerEvaluationsUsed,
+                projectsBuyerEvaluationsUsed == 1 ? Labels.Player : Labels.Players,
+                (projectsBuyerEvaluationsUsed == 1 ? Labels.SelectedS : Labels.SelectedP).ToLowerInvariant(),
+                Model.GetProjectBuyerEvaluationMax())
+        </small><br/>
+        <small class="font-weight-bold">
+            @{
+                var projectsBuyerEvaluationsAvailable = Model.GetProjectsBuyerEvaluationsAvailable();
+            }
+            @string.Format(
+                Messages.BuyerEvaluationsAvailableForProject,
+                projectsBuyerEvaluationsAvailable,
+                projectsBuyerEvaluationsAvailable == 1 ? Labels.Player : Labels.Players,
+                (projectsBuyerEvaluationsAvailable == 1 ? Labels.AvailableS : Labels.AvailableP).ToLowerInvariant())
+        </small>
+    </div>
+</div>
+@Html.Hidden("ProjectsBuyerEvaluationsAvailable", Model.GetProjectsBuyerEvaluationsAvailable())
+@if (Model.MusicBusinessRoundProjectBuyerEvaluationDtos?.Any() == true)
+{
+    <div class="row rio2c-scroll" style="height: 590px;">
+        <div class="col-12">
+            <div class="row">
+                @foreach (var projectBuyerEvaluationDto in Model.MusicBusinessRoundProjectBuyerEvaluationDtos)
+                {
+                    <div class="col-12 selected-buyer-evaluation" data-attendeeorganizationuid="@projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid">
+                        <!--Begin::Portlet-->
+                        <div class="kt-portlet">
+                            @*<div class="kt-portlet__head kt-portlet__head--noborder"></div>*@
+                            <div class="kt-portlet__body mt-40">
+                                <!--begin::Widget -->
+                                <div class="kt-widget kt-widget--user-profile-2" style="flex-direction: row;">
+                                    <div class="kt-widget__head">
+                                        <div class="kt-widget__media">
+                                            @if (projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.HasImage())
+                                            {
+                                                <img class="kt-widget__img" src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid, projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="image">
+                                            }
+                                            else
+                                            {
+                                                <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest">
+                                                    @(projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.GetTradeNameAbbreviation())
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="kt-widget__info">
+                                            <a href="@Url.Action("Details", "Companies", new {id = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid})" class="kt-widget__username" target="_blank">
+                                                @projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.TradeName
+                                            </a>
+                                            <span class="kt-widget__desc">
+                                                <a href="@Url.Action("Details", "Companies", new {id = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid})" target="_blank">
+                                                    <small><i class="flaticon-profile"></i> @Labels.SeeDescription</small>
+                                                </a>
+                                            </span>
+                                            @if (projectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.Organization?.IsVirtualMeeting != null)
+                                            {
+                                                var isVirtualMeeting = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.IsVirtualMeeting == true;
+                                                var tooltipTile = string.Format(Messages.PlayerMeetingPreference, (isVirtualMeeting ? Labels.RemoteF : Labels.Presential).ToLowerInvariant());
+
+                                                <div class="kt-widget__subhead pt-0 mt-0">
+                                                    <span class="kt-badge kt-badge--inline kt-badge--warning mt-2 kt-font-boldest" data-toggle="tooltip" data-placement="right" title="@tooltipTile" style="cursor: pointer;">
+                                                        @(isVirtualMeeting ? Labels.Remote : Labels.Presential)
+                                                    </span>
+                                                </div>
+                                            }
+                                            @if (editionDto?.IsMusicBusinessRoundProjectSubmitOpen() == true)
+                                            {
+                                                <span class="kt-widget__desc">
+                                                    <button type="button" class="btn btn-label-danger btn-sm btn-upper" onclick="ProjectsBuyerCompanyWidget.unselectCompany('@projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid')">@Labels.Remove</button>
+                                                </span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Widget -->
+                            </div>
+                        </div>
+                        <!--End::Portlet-->
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="col-12 mt-30 text-center">
+        <span>@Labels.ProjectNotSubmittedToPlayers.</span>
+    </div>
+}

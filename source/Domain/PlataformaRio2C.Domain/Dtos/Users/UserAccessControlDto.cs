@@ -306,6 +306,18 @@ namespace PlataformaRio2C.Domain.Dtos
             return this.IsAdmin() || this.EditionAttendeeOrganizations?.Any(eao => eao.Uid == attendeeOrganizationUid) == true;
         }
 
+        /// <summary>
+        /// Determines whether [has edition attendee collaborator] [the specified attendee collaborator uid].
+        /// </summary>
+        /// <param name="attendeeCollaboratorUid">The attendee collaborator uid.</param>
+        /// <returns>
+        ///   <c>true</c> if [has edition attendee collaborator] [the specified attendee collaborator uid]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool HasEditionAttendeeCollaborator(Guid attendeeCollaboratorUid)
+        {
+            return this.IsAdmin() || this.EditionAttendeeCollaborators?.Any(eac => eac.Uid == attendeeCollaboratorUid) == true;
+        }
+
         /// <summary>Determines whether [has any edition attendee organization] [the specified attendee organization uids].</summary>
         /// <param name="attendeeOrganizationUids">The attendee organization uids.</param>
         /// <returns>
@@ -646,8 +658,6 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is project submission organization information pending]; otherwise, <c>false</c>.</returns>
         public bool IsMusicProjectSubmissionOrganizationInformationPending()
         {
-            return false;
-            //TODO:Daniel > Checar com Renan se será necessário novo campo de controle no AttendeeOrganizations tbm.
             var collaboratorTypes = new string[] { Constants.CollaboratorType.Creator, Constants.CollaboratorType.Industry };
             return this.HasAnyCollaboratorType(collaboratorTypes)
                    && (this.EditionAttendeeOrganizations?.Any() == false

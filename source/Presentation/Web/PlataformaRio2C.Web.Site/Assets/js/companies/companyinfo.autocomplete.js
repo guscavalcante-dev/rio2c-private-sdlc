@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 10-23-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-23-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 01-29-2025
 // ***********************************************************************
 // <copyright file="companyinfo.autocomplete.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -40,6 +40,11 @@ var CompanyInfoAutocomplete = function () {
 
         var jsonParameters = new Object();
         jsonParameters.organizationUid = $(organizationUidId).val();
+
+        if (MyRio2cCommon.isNullOrEmpty(jsonParameters.organizationUid)) {
+            MyRio2cCommon.unblock();
+            return;
+        }
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition(showFormUrl), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -82,7 +87,6 @@ var CompanyInfoAutocomplete = function () {
 
     // Update form values -------------------------------------------------------------------------
     var updateOrganizationUid = function (organizationUid, changedElementName) {
-
         var currentOrganizationUid = $(organizationUidId).val();
         if (currentOrganizationUid === organizationUid) {
             return;
@@ -208,6 +212,7 @@ var CompanyInfoAutocomplete = function () {
     //};
 
     // Enable company number autocomplete ---------------------------------------------------------
+
     var enableCompanyNumberAutocomplete = function () {
         var companyNumberElement = $(companyNumberId);
 
@@ -247,6 +252,12 @@ var CompanyInfoAutocomplete = function () {
             },
             onSearchComplete: function (query, suggestions) {
                 companyNumberElement.parent('div.spinner-container').removeClass(spinnerClass);
+
+                if (suggestions.length === 1) {
+                    companyNumberElement.autocomplete('hide'); // Oculta o dropdown
+                    companyNumberElement.val(suggestions[0].value); // Define o valor no input
+                    companyNumberElement.data('autocomplete').onSelect(suggestions[0]); // Dispara o evento de seleção
+                }
             },
             onSelect: function (suggestion) {
                 updateOrganizationUid(suggestion.data.uid, 'companyNumber');

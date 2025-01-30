@@ -364,7 +364,6 @@
     <Compile Include="Areas\Creator\CreatorAreaRegistration.cs" />
     <Compile Include="Areas\Innovation\Controllers\ProjectsController.cs" />
     <Compile Include="Areas\Innovation\InnovationAreaRegistration.cs" />
-    <Compile Include="Areas\Music\Controllers\MusicBandController.cs" />
     <Compile Include="Areas\Music\Controllers\PitchingProjectsController.cs" />
     <Compile Include="Areas\Music\MusicAreaRegistration.cs" />
     <Compile Include="Areas\Player\PlayerAreaRegistration.cs" />
@@ -881,6 +880,11 @@
     <Content Include="Assets\js\innovation\projects\innovation.projects.presentation.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.technologies.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.tracks.widget.js" />
+    <Content Include="Assets\js\music\businessrounds\music.businessrounds.interest.widget.js" />
+    <Content Include="Assets\js\music\businessrounds\music.businessrounds.maininformation.widget.js" />
+    <Content Include="Assets\js\music\businessrounds\music.businessrounds.buyercompany.widget.js" />
+    <Content Include="Assets\js\music\businessrounds\music.businessrounds.buyerevaluation.update.widget.js" />
+    <Content Include="Assets\js\music\businessrounds\music.businessrounds.buyerevaluation.list.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.evaluators.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.socialnetworks.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.videoandmusic.widget.js" />
@@ -6991,7 +6995,7 @@
     <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\EvaluationList.cshtml" />
     <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\SendToPlayers.cshtml" />
     <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Submit.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Index.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\SubmittedList.cshtml" />
     <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\SubmittedDetails.cshtml" />
     <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\TermsAcceptance.cshtml" />
     <Content Include="Areas\Audiovisual\Views\PitchingProjects\CompanyInfo.cshtml" />
@@ -7013,7 +7017,7 @@
     <Content Include="Areas\Audiovisual\Views\PitchingProjects\Shared\_ProjectsOnboardingMenu.cshtml" />
     <Content Include="Areas\Audiovisual\Views\PitchingProjects\Submit.cshtml" />
     <Content Include="Areas\Audiovisual\Views\PitchingProjects\SubmittedDetails.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\PitchingProjects\Index.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\SubmittedList.cshtml" />
     <Content Include="Areas\Audiovisual\Views\PitchingProjects\TermsAcceptance.cshtml" />
     <Content Include="Areas\Audiovisual\Views\PitchingProjects\Widgets\EvaluationListItemWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\PitchingProjects\Widgets\EvaluationListWidget.cshtml" />
@@ -7023,12 +7027,38 @@
     <Content Include="Areas\Music\Views\PitchingProjects\Modals\AcceptMusicPitchingEvaluationModal.cshtml" />
     <Content Include="Areas\Music\Views\PitchingProjects\Modals\RefuseMusicPitchingEvaluationModal.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\EvaluationList.cshtml" />
-    <Content Include="Areas\Music\Views\BusinessRoundProjects\Index.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\SubmittedList.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Shared\_ProducerTermsAcceptanceText.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Shared\_ProjectsOnboardingMenu.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\TermsAcceptance.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Widgets\EvaluationListItemWidget.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Widgets\EvaluationListWidget.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\CompanyInfo.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Shared\_ProducerInfoForm.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Submit.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Shared\_ProjectInfoForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\BusinessRoundProjects\Index.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\Index.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Index.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Shared\_BuyersEvaluations.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\EditorTemplates\MusicBusinessRoundProjectExpectationsForMeetingBaseCommand.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Modals\AcceptEvaluationForm.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Modals\AcceptEvaluationModal.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Modals\RefuseEvaluationForm.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Modals\RefuseEvaluationModal.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\SendToPlayers.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Modals\UpdateBuyerCompanyForm.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Widgets\ProjectMatchBuyerCompanyWidget.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Widgets\BuyerCompanySelectedWidget.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Widgets\ProjectAllBuyerCompanyWidget.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\SubmittedDetails.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Modals\UpdateMainInformationModal.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Modals\UpdateMainInformationForm.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Widgets\BuyerCompanyWidget.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Modals\UpdateBuyerCompanyModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PitchingProjects\SubmittedListPitching.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Widgets\OptionsWidget.cshtml" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />
@@ -7847,6 +7877,7 @@
     <Content Include="Views\Shared\EditorTemplates\AttendeeCollaboratorTargetAudienceBaseCommand.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\InnovationOrganizationTrackOptionBaseCommand.cshtml" />
     <Content Include="Views\Shared\Widgets\CardsWidget.cshtml" />
+    <Content Include="Views\Shared\Widgets\MusicProjectsWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

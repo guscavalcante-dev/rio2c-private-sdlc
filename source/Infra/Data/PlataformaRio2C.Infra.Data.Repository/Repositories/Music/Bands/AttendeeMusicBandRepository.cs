@@ -63,14 +63,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="document">The document.</param>
         /// <param name="email">The email.</param>
         /// <returns></returns>
-        internal static IQueryable<AttendeeMusicBand> FindByResponsible(this IQueryable<AttendeeMusicBand> query, string document, string email)
+        internal static IQueryable<AttendeeMusicBand> FindByResponsible(this IQueryable<AttendeeMusicBand> query, string document)
         {
             query = query.Where(amb => amb.AttendeeMusicBandCollaborators.Any(ambc =>
                 !ambc.AttendeeCollaborator.IsDeleted
                 && !ambc.AttendeeCollaborator.Collaborator.IsDeleted
-                && ambc.AttendeeCollaborator.Collaborator.Document == document
-                && ambc.AttendeeCollaborator.Collaborator.User.Email == email
-            ));
+                && ambc.AttendeeCollaborator.Collaborator.Document == document));
             return query;
         }
 
@@ -174,13 +172,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="document">The document.</param>
-        /// <param name="email">The email.</param>
         /// <returns></returns>
-        public async Task<int> CountByResponsibleAsync(int editionId, string document, string email)
+        public async Task<int> CountByResponsibleAsync(int editionId, string document)
         {
             var query = this.GetBaseQuery()
                 .FindByEditionId(editionId)
-                .FindByResponsible(document, email);
+                .FindByResponsible(document);
             
             return await query.CountAsync();
         }

@@ -152,7 +152,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 var existingOrganizationByName = this.OrganizationRepo.Get(o => o.TradeName == cmd.TradeName && !o.IsDeleted);
                 if (existingOrganizationByName != null)
                 {
-                    this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.Company, Labels.TheName, cmd.CompanyName), new string[] { "CompanyName" }));
+                    this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.Company, Labels.TheName, cmd.CompanyName), new string[] { "TradeName" }));
                 }
 
                 if (!this.ValidationResult.IsValid)

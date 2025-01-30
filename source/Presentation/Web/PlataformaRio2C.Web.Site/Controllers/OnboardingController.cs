@@ -111,7 +111,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
             // Redirect to collaborator data if not finished
             if (this.UserAccessControlDto?.IsCollaboratorOnboardingFinished() != true)
             {
-
                 return RedirectToAction(nameof(OnboardingController.CollaboratorData), nameof(OnboardingController));
             }
 
@@ -660,10 +659,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
                 this.UserAccessControlDto.IsMusicPlayerExecutive() ? await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id) : null,
                 this.UserAccessControlDto.IsMusicPlayerExecutive() ? await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id) : null,
-                this.UserAccessControlDto.IsMusicPlayerExecutive() ? await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Music.Id) : null,
+                this.UserAccessControlDto.IsMusicPlayerExecutive() ? await this.interestRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.Music.Id) : null,
                 this.UserAccessControlDto.IsInnovationPlayerExecutive() ? await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync() : null,
                 this.UserAccessControlDto.IsInnovationPlayerExecutive() ? await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id) : null,
-                this.UserAccessControlDto.IsInnovationPlayerExecutive() ? await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Startup.Id) : null,
+                this.UserAccessControlDto.IsInnovationPlayerExecutive() ? await this.interestRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.Startup.Id) : null,
                 EditionDto.Id,
                 true,
                 true,
@@ -967,7 +966,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             var cmd = new OnboardPlayerInterests(
                 await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(currentOrganization.Uid, this.EditionDto.Id, this.UserInterfaceLanguage)),
-                await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(projectTypeId),
+                await this.interestRepo.FindAllDtosByProjectTypeIdAsync(projectTypeId),
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 true);
 
@@ -1243,6 +1242,13 @@ namespace PlataformaRio2C.Web.Site.Controllers
                         )
                     ?.ToList();
             }
+            //else if(this.UserAccessControlDto?.IsTicketBuyer() == true)
+            //{
+            //    ViewBag.PlayerAttendeeOrganizations = this.UserAccessControlDto
+            //        ?.EditionAttendeeOrganizations
+            //        ?.Where(eao => !eao.IsDeleted)
+            //        ?.ToList();
+            //}
         }
 
         #endregion

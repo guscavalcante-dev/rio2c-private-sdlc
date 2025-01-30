@@ -147,7 +147,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="projectTypeId">The project type identifier.</param>
         /// <returns></returns>
-        public async Task<List<InterestDto>> FindAllDtosbyProjectTypeIdAsync(int projectTypeId)
+        public async Task<List<InterestDto>> FindAllDtosByProjectTypeIdAsync(int projectTypeId)
         {
             var query = this.GetBaseQuery()
                                 .FindByProjectTypeId(projectTypeId);
@@ -176,8 +176,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         {
                             Interest = i,
                             InterestGroup = i.InterestGroup,
+
                             InterestGroupUid = i.InterestGroup.Uid,
                             InterestGroupName = i.InterestGroup.Name,
+                            InterestUid = i.Uid,
                             InterestName = i.Name
                         })
                         .ToListAsync();

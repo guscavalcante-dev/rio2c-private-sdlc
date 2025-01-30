@@ -1,0 +1,19 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.AcceptMusicBusinessRoundProjectEvaluation
+<div class="row">
+    @Html.HiddenFor(m => m.IsProjectsApprovalLimitReached)
+    <div class="form-group col-12">
+        @Html.Raw(string.Format(Texts.DoYouReallyWishAccept, Model.MusicBusinessRoundProjectDto?.SellerAttendeeCollaboratorDto?.Collaborator?.GetStageNameOrBadgeOrFullName()))
+    </div>
+    @if (Enumerable.Count(Model.AttendeeOrganizations) == 1)
+    {
+        @Html.HiddenFor(m => m.AttendeeOrganizationUid)
+    }
+    else
+    {
+        <div class="form-group col-12">
+            @Html.LabelFor(m => m.AttendeeOrganizationUid, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.AttendeeOrganizationUid, new SelectList(Model.AttendeeOrganizations, "Uid", "Name", Model.AttendeeOrganizationUid), Labels.Select + "...", new { @class = "form-control enable-select2" })
+            @Html.ValidationMessageFor(m => m.AttendeeOrganizationUid, "", new { @class = "text-danger" })
+        </div>
+    }
+</div>

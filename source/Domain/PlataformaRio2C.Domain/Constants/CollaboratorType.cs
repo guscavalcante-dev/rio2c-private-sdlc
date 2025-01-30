@@ -70,7 +70,7 @@ namespace PlataformaRio2C.Domain.Constants
 
         public static readonly string[] Musics =
         {
-            AdminMusic, CommissionMusic, PlayerExecutiveMusic, Music, CommissionMusicCurator
+            AdminMusic, CommissionMusic, PlayerExecutiveMusic, Music, CommissionMusicCurator, Industry, Creator
         };
 
         public static readonly string[] MusicCommissions =

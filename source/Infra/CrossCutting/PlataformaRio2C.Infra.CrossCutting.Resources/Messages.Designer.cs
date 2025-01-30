@@ -1358,6 +1358,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O campo discursivo das categorias de players é obrigatório caso alguma opção de player tenha sido selecionada..
+        /// </summary>
+        public static string MusicBusinessRoundProjectDiscursiveRequired {
+            get {
+                return ResourceManager.GetString("MusicBusinessRoundProjectDiscursiveRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to É permitido avaliar no máximo {0} {1} para os curadores.
         /// </summary>
         public static string MusicPitchingMaximumApprovedProjectsByCurator {
@@ -1466,11 +1475,11 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nenhum ingresso encontrado para o email {0}.
+        ///   Looks up a localized string similar to Nenhum ingresso encontrado para o document {0}.
         /// </summary>
-        public static string NoTicketsFoundForEmail {
+        public static string NoTicketsFoundForDocument {
             get {
-                return ResourceManager.GetString("NoTicketsFoundForEmail", resourceCulture);
+                return ResourceManager.GetString("NoTicketsFoundForDocument", resourceCulture);
             }
         }
         

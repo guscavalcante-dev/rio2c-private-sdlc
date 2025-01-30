@@ -64,9 +64,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.BuyerEvaluationUserId = null;
             this.EvaluationDate = null;
 
-            this.IsDeleted = false;
-            this.CreateUserId = this.UpdateUserId = userId;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            base.SetCreateDate(userId);
         }
 
         /// <summary>Initializes a new instance of the <see cref="ProjectBuyerEvaluation"/> class.</summary>
@@ -86,9 +84,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.BuyerEvaluationUserId = null;
             this.EvaluationDate = null;
 
-            this.IsDeleted = false;
-            this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.UtcNow;
+            base.SetUpdateDate(userId);
         }
 
         /// <summary>Deletes the specified user identifier.</summary>
