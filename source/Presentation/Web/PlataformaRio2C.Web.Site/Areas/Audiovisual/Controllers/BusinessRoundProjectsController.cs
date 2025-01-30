@@ -1268,7 +1268,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
 
-            var matchAttendeeOrganizationDtos = await this.attendeeOrganizationRepo.FindAllDtoByMatchingProjectBuyerAsync(this.EditionDto.Id, interestWidgetDto, searchKeywords, page, pageSize);
+            var matchAttendeeOrganizationDtos = await this.attendeeOrganizationRepo.FindAllAudiovisualMatchingAttendeeOrganizationsDtosAsync(this.EditionDto.Id, interestWidgetDto, searchKeywords, page, pageSize);
 
             ViewBag.ShowProjectMatchBuyerCompanySearch = $"&projectUid={projectUid}&pageSize={pageSize}";
             ViewBag.SearchKeywords = searchKeywords;

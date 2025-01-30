@@ -28,12 +28,18 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         protected readonly IAttendeeOrganizationRepository AttendeeOrganizationRepo;
         protected readonly IProjectRepository ProjectRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="BaseProjectCommandHandler"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseProjectCommandHandler" /> class.
+        /// </summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="projectRepository">The project repository.</param>
-        public BaseProjectCommandHandler(IMediator eventBus, IUnitOfWork uow, IAttendeeOrganizationRepository attendeeOrganizationRepository, IProjectRepository projectRepository)
+        public BaseProjectCommandHandler(
+            IMediator eventBus,
+            IUnitOfWork uow,
+            IAttendeeOrganizationRepository attendeeOrganizationRepository,
+            IProjectRepository projectRepository)
             : base(eventBus, uow)
         {
             this.AttendeeOrganizationRepo = attendeeOrganizationRepository;

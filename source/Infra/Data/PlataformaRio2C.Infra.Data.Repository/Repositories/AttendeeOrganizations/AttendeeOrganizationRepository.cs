@@ -154,21 +154,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
-
-        /// <summary>Finds the by organization type uid.</summary>
-        /// <param name="query">The query.</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <param name="organizationTypeUid">The organization type uid.</param>
-        /// <returns></returns>
-        internal static IQueryable<AttendeeOrganization> FindByOrganizationTypeUidAndEditionId(this IQueryable<AttendeeOrganization> query, int editionId, bool showAllEditions)
-        {
-            query = query.Where(ao => (showAllEditions || ao.EditionId == editionId)
-                                      && ao.AttendeeOrganizationTypes.Any(aot =>  !aot.IsDeleted && !aot.OrganizationType.IsDeleted));
-
-            return query;
-        }
-
-
         /// <summary>
         /// Finds the by organization type uid.
         /// </summary>
@@ -915,7 +900,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<MatchAttendeeOrganizationDto>> FindAllDtoByMatchingProjectBuyerAsync(int editionId, ProjectDto projectDto, string searchKeywords, int page, int pageSize)
+        public async Task<IPagedList<MatchAttendeeOrganizationDto>> FindAllAudiovisualMatchingAttendeeOrganizationsDtosAsync(int editionId, ProjectDto projectDto, string searchKeywords, int page, int pageSize)
         {
             var buyerOrganizationType = projectDto.ProjectType.OrganizationTypes.FirstOrDefault(ot => !ot.IsDeleted && !ot.IsSeller);
             var lookingForInterests = projectDto.ProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.AudiovisualLookingFor.Uid)?.Select(pid => pid.Interest.Uid)?.ToList() ?? new List<Guid>();
@@ -953,7 +938,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ToListPagedAsync(page, pageSize);
         }
 
-
         /// <summary>Finds all dto by matching project buyer asynchronous.</summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="projectDto">The project dto.</param>
@@ -961,8 +945,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<MatchAttendeeOrganizationDto>> FindAllDtoByMatchingProjectBuyerAsync(int editionId, MusicBusinessRoundProjectDto projectDto, string searchKeywords, int page, int pageSize)
+        public async Task<IPagedList<MatchAttendeeOrganizationDto>> FindAllMusicMatchingAttendeeOrganizationsDtosAsync(int editionId, MusicBusinessRoundProjectDto projectDto, string searchKeywords, int page, int pageSize)
         {
+            var buyerOrganizationType = OrganizationType.MusicPlayer.Uid;
             var lookingForInterests = projectDto.MusicBusinessRoundProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.MusicLookingFor.Uid)?.Select(pid => pid.Interest.Uid)?.ToList() ?? new List<Guid>();
             var projectStatusInterests = projectDto.MusicBusinessRoundProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.MusicOpportunitiesYouOffer.Uid)?.Select(pid => pid.Interest.Uid)?.ToList() ?? new List<Guid>();
             var matchInterests = lookingForInterests
@@ -970,7 +955,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                  .ToList();
 
             var query = this.GetBaseQuery()
-                                .FindByOrganizationTypeUidAndEditionId(editionId, false)
+                                .FindByOrganizationTypeUidAndEditionId(editionId, false, buyerOrganizationType)
                                 //.FindNotByUid(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid)
                                 .FindByKeywords(searchKeywords)
                                 .FindByInterestUids(matchInterests)
@@ -1005,7 +990,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<IPagedList<MatchAttendeeOrganizationDto>> FindAllDtoByMatchingMusicBusinessRoundProjectBuyerAsync(int editionId, MusicBusinessRoundProjectDto projectDto, string searchKeywords, int page, int pageSize)
         {
-            //var buyerOrganizationType = projectDto.ProjectType.OrganizationTypes.FirstOrDefault(ot => !ot.IsDeleted && !ot.IsSeller);
+            var buyerOrganizationType = OrganizationType.MusicPlayer.Uid;
             var lookingForInterests = projectDto.MusicBusinessRoundProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.MusicLookingFor.Uid)?.Select(pid => pid.Interest.Uid)?.ToList() ?? new List<Guid>();
             var projectStatusInterests = projectDto.MusicBusinessRoundProjectInterestDtos?.Where(pi => pi.InterestGroup.Uid == InterestGroup.MusicOpportunitiesYouOffer.Uid)?.Select(pid => pid.Interest.Uid)?.ToList() ?? new List<Guid>();
             var matchInterests = lookingForInterests
@@ -1013,7 +998,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                  .ToList();
 
             var query = this.GetBaseQuery()
-                                .FindByOrganizationTypeUidAndEditionId(editionId, false)
+                                .FindByOrganizationTypeUidAndEditionId(editionId, false, buyerOrganizationType)
                                 //.FindNotByUid(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) //Todo : Rever com Renan o que fazer em casos de organization
                                 .FindByKeywords(searchKeywords)
                                 .FindByInterestUids(matchInterests)
@@ -1074,13 +1059,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<AttendeeOrganizationDto>> FindAllDtoByProjectBuyerAsync(int editionId, MusicBusinessRoundProjectDto projectDto, string searchKeywords, int page, int pageSize)
-        {   //no caso de musica, nao existe projectType
-            //var buyerOrganizationType = projectDto.ProjectType?.OrganizationTypes?.FirstOrDefault(ot => !ot.IsDeleted && !ot.IsSeller);
+        public async Task<IPagedList<AttendeeOrganizationDto>> FindAllMusicBusinessRoundProjectBuyerAsync(int editionId, MusicBusinessRoundProjectDto projectDto, string searchKeywords, int page, int pageSize)
+        {
+            var buyerOrganizationType = OrganizationType.MusicPlayer.Uid;
 
             var query = this.GetBaseQuery()
-                                .FindByOrganizationTypeUidAndEditionId(editionId, false)
-                                //.FindNotByUid(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) //Todo : Rever com Renan o que fazer em casos de organization
+                                .FindByOrganizationTypeUidAndEditionId(editionId, false, buyerOrganizationType)
+                                //.FindNotByUid(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid)
                                 .FindByKeywords(searchKeywords)
                                 .IsOnboardingFinished();
 

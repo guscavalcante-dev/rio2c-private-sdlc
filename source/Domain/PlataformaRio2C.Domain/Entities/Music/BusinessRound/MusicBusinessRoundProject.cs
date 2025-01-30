@@ -202,6 +202,53 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsAdmin = isAdmin;
         }
 
+        /// <summary>Finishes the project.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void FinishProject(int userId)
+        {
+            this.FinishDate = DateTime.UtcNow;
+            base.SetUpdateDate(userId);
+        }
+        /// <summary>Determines whether [is finish valid].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is finish valid]; otherwise, <c>false</c>.</returns>
+        public bool IsFinishValid()
+        {
+            this.ValidationResult = new ValidationResult();
+
+            this.ValidateProjectBuyerEvaluations();
+            this.ValidateRequiredProjectBuyerEvaluations();
+
+            return this.ValidationResult.IsValid;
+        }
+        /// <summary>Validates the project buyer evaluations.</summary>
+        public void ValidateProjectBuyerEvaluations()
+        {
+            if (this.MusicBusinessRoundProjectBuyerEvaluations?.Any() != true)
+            {
+                return;
+            }
+
+            if (this.ProjectBuyerEvaluationsCount > this.SellerAttendeeCollaborator.Edition.ProjectMaxBuyerEvaluationsCount)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.MaxProjectBuyersEvaluationsReached, this.SellerAttendeeCollaborator.Edition.ProjectMaxBuyerEvaluationsCount, Labels.Players), new string[] { "ToastrError" }));
+            }
+
+            foreach (var projectBuyerEvaluation in this.MusicBusinessRoundProjectBuyerEvaluations?.Where(t => !t.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(projectBuyerEvaluation.ValidationResult);
+            }
+        }
+
+        /// <summary>Validates the required project buyer evaluations.</summary>
+        public void ValidateRequiredProjectBuyerEvaluations()
+        {
+            if (this.ProjectBuyerEvaluationsCount == 0)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheProjectMustHaveOnePlayer, Labels.Player), new string[] { "ToastrError" }));
+            }
+        }
+
         /// <summary>
         /// Deletes the music business round project buyer evaluation.
         /// </summary>

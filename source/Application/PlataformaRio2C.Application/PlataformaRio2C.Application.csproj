@@ -288,6 +288,9 @@
     <Compile Include="CQRS\CommandsHandlers\Logistics\Availability\CreateAvailabilityCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\BusinessRoundProjects\BaseMusicBusinessRoundProjectCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\BusinessRoundProjects\CreateMusicBusinessRoundProjectCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Music\BusinessRoundProjects\CreateMusicBusinessRoundProjectBuyerEvaluationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Music\BusinessRoundProjects\DeleteMusicBusinessRoundProjectBuyerEvaluationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Music\BusinessRoundProjects\FinishMusicBusinessRoundProjectCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\BusinessRoundProjects\RefuseMusicBusinessRoundProjectEvaluationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\Pitching\DistributeMembersMusicPitchingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\PlayersExecutives\CreateMusicPlayerExecutiveCollaboratorCommandHandler.cs" />
@@ -494,6 +497,9 @@
     <Compile Include="CQRS\Commands\Music\BusinessRoundProjects\BaseCommands\MusicBusinessRoundProjectInterestBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Music\BusinessRoundProjects\BaseCommands\MusicBusinessRoundProjectPlayerCategoryBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Music\BusinessRoundProjects\CreateMusicBusinessRoundProject.cs" />
+    <Compile Include="CQRS\Commands\Music\BusinessRoundProjects\CreateMusicBusinessRoundProjectBuyerEvaluation.cs" />
+    <Compile Include="CQRS\Commands\Music\BusinessRoundProjects\DeleteMusicBusinessRoundProjectBuyerEvaluation.cs" />
+    <Compile Include="CQRS\Commands\Music\BusinessRoundProjects\FinishMusicBusinessRoundProject.cs" />
     <Compile Include="CQRS\Commands\Music\BusinessRoundProjects\RefuseMusicBusinessRoundProjectEvaluation.cs" />
     <Compile Include="CQRS\Commands\Music\Pitching\DistributeMembersMusicPitching.cs" />
     <Compile Include="CQRS\Commands\Music\Commissions\BaseCommands\MusicCommissionCollaboratorBaseCommand.cs" />

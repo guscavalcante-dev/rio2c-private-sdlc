@@ -4,9 +4,9 @@
 // Created          : 11-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-14-2019
+// Last Modified On : 06-21-2021
 // ***********************************************************************
-// <copyright file="FinishProjectCommandHandler.cs" company="Softo">
+// <copyright file="DeleteProjectBuyerEvaluationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -22,32 +22,32 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>FinishProjectCommandHandler</summary>
-    public class FinishProjectCommandHandler : BaseProjectCommandHandler, IRequestHandler<FinishProject, AppValidationResult>
+    /// <summary>DeleteProjectBuyerEvaluationCommandHandler</summary>
+    public class DeleteMusicBusinessRoundProjectBuyerEvaluationCommandHandler : BaseMusicBusinessRoundProjectCommandHandler, IRequestHandler<DeleteMusicBusinessRoundProjectBuyerEvaluation, AppValidationResult>
     {
-        /// <summary>Initializes a new instance of the <see cref="FinishProjectCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="DeleteMusicBusinessRoundProjectBuyerEvaluationCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="projectRepository">The project repository.</param>
-        public FinishProjectCommandHandler(
+        public DeleteMusicBusinessRoundProjectBuyerEvaluationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
-            IProjectRepository projectRepository)
-            : base(eventBus, uow, attendeeOrganizationRepository, projectRepository)
+            IMusicBusinessRoundProjectRepository musicProjecRepo)
+            : base(eventBus, uow, attendeeOrganizationRepository, musicProjecRepo)
         {
         }
 
-        /// <summary>Handles the specified finish project.</summary>
+        /// <summary>Handles the specified delete project buyer evaluation.</summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(FinishProject cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(DeleteMusicBusinessRoundProjectBuyerEvaluation cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
-            var project = await this.GetProjectByUid(cmd.ProjectUid ?? Guid.Empty);
+            var project = await this.GetMusicBusinessRoundProjectByUid(cmd.ProjectUid ?? Guid.Empty);
 
             #region Initial validations
 
@@ -69,14 +69,17 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            project.FinishProject(cmd.UserId);
-            if (!project.IsFinishValid())
+            project.DeleteMusicBusinessRoundProjectBuyerEvaluation(
+                cmd.AttendeeOrganizationUid.HasValue ? await this.AttendeeOrganizationRepo.GetAsync(ao => ao.Uid == cmd.AttendeeOrganizationUid) : null,
+                cmd.UserId,
+                cmd.IsAdmin);
+            if (!project.IsValid())
             {
                 this.AppValidationResult.Add(project.ValidationResult);
                 return this.AppValidationResult;
             }
 
-            this.ProjectRepo.Update(project);
+            this.MusicBusinessRoundProjectRepo.Update(project);
             this.Uow.SaveChanges();
             this.AppValidationResult.Data = project;
 
