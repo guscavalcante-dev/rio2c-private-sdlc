@@ -1940,7 +1940,6 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         /// <summary>Submitteds the details.</summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.Industry)]
         public async Task<ActionResult> SubmittedDetails(Guid? id)
         {
             if (this.EditionDto?.IsMusicBusinessRoundProjectSubmitStarted() != true)
