@@ -36,6 +36,16 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
+        /// <summary>Updates the expectation for meeting.</summary>
+        /// <param name="expectationForMeeting">The expectation for meeting.</param>
+        public void Update(MusicBusinessRoundProjectExpectationsForMeeting expectationForMeeting)
+        {
+            this.Value = expectationForMeeting.Value?.Trim();
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = expectationForMeeting.UpdateUserId;
+        }
+
         #region Validations
 
         public override bool IsValid()

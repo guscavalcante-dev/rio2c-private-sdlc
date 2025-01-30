@@ -3,8 +3,8 @@
 // Author           : Daniel Giese Rodrigues
 // Created          : 01-08-2025
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 01-13-2025
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 01-30-2025
 // ***********************************************************************
 // <copyright file="BusinessRoundProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -843,7 +843,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                     this.UserAccessControlDto.User.Id,
                     this.UserAccessControlDto.User.Uid,
                     this.EditionDto.Id,
-                    this.EditionDto.Uid
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage
                 );
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
@@ -1833,16 +1834,16 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         #region Update
 
         /// <summary>Shows the update main information modal.</summary>
-        /// <param name="projectUid">The project uid.</param>
+        /// <param name="musicProjectUid">The music project uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? projectUid)
+        public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? musicProjectUid)
         {
-            UpdateProjectMainInformation cmd;
+            UpdateMusicBusinessRoundProjectMainInformation cmd;
 
             try
             {
-                var mainInformationWidgetDto = await this.musicBusinessRoundProjectRepo.FindSiteDetailsDtoByProjectUidAsync(projectUid ?? Guid.Empty, this.EditionDto.Id);
+                var mainInformationWidgetDto = await this.musicBusinessRoundProjectRepo.FindSiteDetailsDtoByProjectUidAsync(musicProjectUid ?? Guid.Empty, this.EditionDto.Id);
                 if (mainInformationWidgetDto == null)
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
@@ -1853,15 +1854,16 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                     throw new DomainException(Messages.ProjectSubmissionNotOpen);
                 }
 
-                //cmd = new UpdateProjectMainInformation(
-                //    mainInformationWidgetDto,
-                //    await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
-                //    true,
-                //    false,
-                //    false,
-                //    this.UserInterfaceLanguage,
-                //    ProjectModality.BusinessRound.Uid
-                //);
+                cmd = new UpdateMusicBusinessRoundProjectMainInformation(
+                    mainInformationWidgetDto,
+                    await CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+                    true,
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage
+                );
             }
             catch (DomainException ex)
             {
@@ -1873,7 +1875,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    //new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                    new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -1882,7 +1884,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> UpdateMainInformation(UpdateProjectMainInformation cmd)
+        public async Task<ActionResult> UpdateMainInformation(UpdateMusicBusinessRoundProjectMainInformation cmd)
         {
             var result = new AppValidationResult();
 
@@ -1894,14 +1896,12 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    this.UserAccessControlDto.GetFirstAttendeeOrganizationCreated()?.Uid,
-                    ProjectType.Audiovisual.Uid,
+                    this.UserAccessControlDto.EditionAttendeeCollaborator.Id,
                     this.UserAccessControlDto.User.Id,
                     this.UserAccessControlDto.User.Uid,
                     this.EditionDto.Id,
                     this.EditionDto.Uid,
-                    this.UserInterfaceLanguage,
-                    ProjectModality.BusinessRound.Uid
+                    this.UserInterfaceLanguage
                 );
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
@@ -1917,9 +1917,6 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
                 var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
-
-                //cmd.UpdateModelsAndLists(
-                //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
 
                 return Json(new
                 {

@@ -116,6 +116,15 @@ namespace PlataformaRio2C.Domain.Dtos
         public MusicBusinessRoundProjectDto()
         {
         }
+
+        /// <summary>Gets the expectation for meeting by language code.</summary>
+        /// <param name="culture">The culture.</param>
+        /// <returns></returns>
+        public MusicBusinessRoundProjectExpectationsForMeetingDto GetExpectationForMeetingByLanguageCode(string culture)
+        {
+            return this.MusicBusinessRoundProjectExpectationsForMeetingDtos
+                ?.FirstOrDefault(mbrpefm => mbrpefm.Language.Code?.ToLowerInvariant() == culture?.ToLowerInvariant());
+        }
     }
 
 }

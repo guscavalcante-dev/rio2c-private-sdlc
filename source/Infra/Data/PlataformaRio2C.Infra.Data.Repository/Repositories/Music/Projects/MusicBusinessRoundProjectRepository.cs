@@ -44,10 +44,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <returns></returns>
-        internal static IQueryable<MusicBusinessRoundProject> FindByEditionId(this IQueryable<MusicBusinessRoundProject> query, int editionId, bool showAllEditions = false)
+        internal static IQueryable<MusicBusinessRoundProject> FindByEditionId(this IQueryable<MusicBusinessRoundProject> query, int? editionId, bool showAllEditions = false)
         {
-            query = query.Where(p => (showAllEditions || p.SellerAttendeeCollaborator.EditionId == editionId));
-
+            if (editionId.HasValue)
+            {
+                query = query.Where(p => (showAllEditions || p.SellerAttendeeCollaborator.EditionId == editionId));
+            }
             return query;
         }
 
@@ -449,7 +451,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
         /// <param name="projectUid">The project uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<MusicBusinessRoundProjectDto> FindSiteDetailsDtoByProjectUidAsync(Guid projectUid, int editionId)
+        public async Task<MusicBusinessRoundProjectDto> FindSiteDetailsDtoByProjectUidAsync(Guid projectUid, int? editionId)
         {
             var query = this.GetBaseQuery(true)
                                 .FindByUid(projectUid)
@@ -494,6 +496,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
                                         },
                                         ProjectEvaluationStatus = pbe.ProjectEvaluationStatus,
                                         ProjectEvaluationRefuseReason = pbe.ProjectEvaluationRefuseReason
+                                    }),
+                                MusicBusinessRoundProjectExpectationsForMeetingDtos = p.MusicBusinessRoundProjectExpectationsForMeetings
+                                    .Where(pe => !pe.IsDeleted)
+                                    .Select(pe => new MusicBusinessRoundProjectExpectationsForMeetingDto
+                                    {
+                                        Value = pe.Value,
+                                        Language = pe.Language
                                     }),
                             })
                             .FirstOrDefaultAsync();
