@@ -402,7 +402,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                 await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                 await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id),
                 await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id),
-                await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Startup.Id),
+                await this.interestRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.Startup.Id),
                 await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync(),
                 false,
                 false,
@@ -507,7 +507,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                     await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id),
                     await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Startup.Id),
-                    await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(ProjectType.Startup.Id),
+                    await this.interestRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.Startup.Id),
                     await this.innovationOrganizationTrackOptionRepo.FindAllDtoAsync(), //TODO: Pode ser que isso aqui se torne TrackOptionGroup. Cliente está validando.
                     isAddingToCurrentEdition,
                     false,

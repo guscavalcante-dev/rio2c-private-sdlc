@@ -114,7 +114,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var organizationType = await this.organizationTypeRepo.GetAsync(cmd.OrganizationType?.Uid ?? Guid.Empty);
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
             var activities = await this.activityRepo.FindAllByProjectTypeIdAsync(cmd.ProjectType.Id);
-            var interestsDtos = await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(cmd.ProjectType.Id);
+            var interestsDtos = await this.interestRepo.FindAllDtosByProjectTypeIdAsync(cmd.ProjectType.Id);
             var targetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(cmd.ProjectType.Id);
 
             // Interests

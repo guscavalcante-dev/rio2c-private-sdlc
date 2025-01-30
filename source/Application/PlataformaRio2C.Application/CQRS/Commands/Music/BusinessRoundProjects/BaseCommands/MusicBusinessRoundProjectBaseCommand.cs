@@ -69,10 +69,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="activities">The activities.</param>
         /// <param name="playersCategories">The players categories.</param>
         /// <param name="isDataRequired">if set to <c>true</c> [is data required].</param>
-        /// <param name="isProductionPlanRequired">if set to <c>true</c> [is production plan required].</param>
-        /// <param name="isAdditionalInformationRequired">if set to <c>true</c> [is additional information required].</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
-        /// <param name="modalityRequired">if set to <c>true</c> [modality required].</param>
         public void UpdateBaseProperties(
             MusicBusinessRoundProjectDto entity,
             List<LanguageDto> languagesDtos,
@@ -81,18 +78,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<Activity> activities,
             List<PlayerCategory> playersCategories,
             bool isDataRequired,
-            bool isProductionPlanRequired,
-            bool isAdditionalInformationRequired,
-            string userInterfaceLanguage,
-            bool modalityRequired)
+            string userInterfaceLanguage)
         {
-
+            this.AttachmentUrl = entity?.AttachmentUrl;
+            this.PlayerCategoriesThatHaveOrHadContract = entity?.PlayerCategoriesThatHaveOrHadContract;
+            
+            this.UpdateActivies(entity, activities);
+            this.UpdateTargetAudiences(entity,targetAudiences);
             this.UpdateInterests(entity, interestsDtos);
             this.UpdateExpectationsForMeetings(entity, languagesDtos, isDataRequired);
+            this.UpdatePlayerCategories(entity, playersCategories);
             this.UpdateDropdownProperties(targetAudiences, activities, playersCategories, userInterfaceLanguage);
-
-            //TODO:Implementar na parte de edicao/duplicacao de projeto.
-            /*this.AttachmentUrl = entity.AttachmentUrl;*/
         }
 
         /// <summary>
@@ -212,5 +208,65 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             }
         }
 
+       
+        /// <summary>
+        /// Updates the target audiences.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="targetAudiences">The target audiences.</param>
+        public void UpdateTargetAudiences(MusicBusinessRoundProjectDto entity, List<TargetAudience> targetAudiences)
+        {
+            this.TargetAudiences = new List<TargetAudience>();
+            this.TargetAudiencesUids = new List<Guid>();
+            foreach (var targetAudience in targetAudiences)
+            {
+                var musicBusinessRoundProjectTargetAudience = entity?.MusicBusinessRoundProjectTargetAudienceDtos?.FirstOrDefault(ota => ota.TargetAudience.Uid == targetAudience.Uid);
+                if (musicBusinessRoundProjectTargetAudience != null)
+                {
+                    this.TargetAudiences.Add(targetAudience);
+                    this.TargetAudiencesUids.Add(targetAudience.Uid);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates the target audiences.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="activities">The activities of the music project.</param>
+        public void UpdateActivies(MusicBusinessRoundProjectDto entity, List<Activity> activities)
+        {
+            this.Activities = new List<Activity>();
+            this.ActivitiesUids = new List<Guid>();
+            foreach (var activity in activities)
+            {
+                var musicBusinessRoundProjectActivities = entity?.MusicBusinessRoundProjectActivityDtos?.FirstOrDefault(ota => ota.Activity.Uid == activity.Uid);
+                if (musicBusinessRoundProjectActivities != null)
+                {
+                    this.Activities.Add(activity);
+                    this.ActivitiesUids.Add(activity.Uid);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates the target audiences.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="playerCategories">The activities of the music project.</param>
+        public void UpdatePlayerCategories(MusicBusinessRoundProjectDto entity, List<PlayerCategory> playerCategories)
+        {
+            this.PlayerCategories = new List<PlayerCategory>();
+            this.PlayerCategoriesUids = new List<Guid>();
+            foreach (var playerCategory in playerCategories)
+            {
+                var musicBusinessRoundProjectPlayerCategories = entity?.MusicBusinessRoundProjectPlayerCategoryDtos?.FirstOrDefault(ota => ota.PlayerCategory.Uid == playerCategory.Uid);
+                if (musicBusinessRoundProjectPlayerCategories != null)
+                {
+                    this.PlayerCategories.Add(playerCategory);
+                    this.PlayerCategoriesUids.Add(playerCategory.Uid);
+                }
+            }
+        }
     }
 }
