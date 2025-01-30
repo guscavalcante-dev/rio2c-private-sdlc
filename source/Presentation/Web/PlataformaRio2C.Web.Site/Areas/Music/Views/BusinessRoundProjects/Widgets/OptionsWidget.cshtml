@@ -1,0 +1,108 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Entities
+@model MusicBusinessRoundProjectDto
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var groupedInterests = ViewBag.GroupedInterests as List<IGrouping<InterestGroup, Interest>>;
+    var targetAudiences = ViewBag.TargetAudiences as List<TargetAudience>;
+    var isCollaborator = userAccessControlDto?.HasEditionAttendeeCollaborator(Model.SellerAttendeeCollaboratorDto.AttendeeCollaborator.Uid) == true;
+    var isProjectSubmissionOpen = editionDto?.IsMusicBusinessRoundProjectSubmitOpen() == true;
+    var isProjectFinished = Model.IsFinished();
+}
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            @Labels.Options
+        </h3>
+    </div>
+    @if (isCollaborator && isProjectSubmissionOpen && !isProjectFinished)
+    {
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-actions">
+                <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="MusicBusinessRoundProjectsOptionsWidget.showUpdateModal();">
+                    <i class="flaticon2-edit"></i>
+                </button>
+            </div>
+        </div>
+    }
+</div>
+<div class="kt-portlet__body">
+    <div class="kt-widget">
+        <div class="kt-widget__bottom">
+            @if (Model.MusicBusinessRoundProjectTargetAudienceDtos?.Any() == true)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="kt-widget4">
+                            <h3 class="kt-heading kt-heading--sm mb-0 mt-0">@Labels.ParticipantProfile</h3>
+                            @foreach (var targetAudience in Model.MusicBusinessRoundProjectTargetAudienceDtos)
+                            {
+                                var targetAudienceDto = Model.GetTargetAudienceDtoByTargetAudienceUid(targetAudience.TargetAudience.Uid)?.TargetAudience;
+                                if (targetAudienceDto != null)
+                                {
+                                    <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@targetAudienceDto.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (Model.MusicBusinessRoundProjectActivityDtos?.Any() == true)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="kt-widget4">
+                            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.ExecutiveProfile</h3>
+                            @foreach (var activity in Model.MusicBusinessRoundProjectActivityDtos)
+                            {
+                                var activityDto = Model.GetActivityDtoByActivityUid(activity.Activity.Uid)?.Activity;
+                                if (activityDto != null)
+                                {
+                                    <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@activityDto.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+            @{ var interestGrouped = Model.GetInterestGrouped(); }
+            @foreach (var group in interestGrouped)
+            {                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="kt-widget4">
+                            <h3 class="kt-heading kt-heading--sm mb-0">@(group[0].InterestGroup?.GetLabelToForm())</h3>
+                            @foreach (var interest in group)
+                            {
+                                var interestDto = Model.GetInterestDtoByInterestUid(interest.Interest.Uid)?.Interest;
+                                if (interestDto != null)
+                                {
+                                    <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@interestDto.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (Model.MusicBusinessRoundProjectPlayerCategoryDtos?.Any() == true)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="kt-widget4">
+                            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.BusinessRoundPlayersCategories</h3>
+                            @foreach (var pc in Model.MusicBusinessRoundProjectPlayerCategoryDtos)
+                            {
+                                var pcDto = Model.GetPlayerCategoryDtoByPlayerCategoryIdUid(pc.PlayerCategory.Uid)?.PlayerCategory;
+                                if (pcDto != null)
+                                {
+                                    <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@pcDto.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

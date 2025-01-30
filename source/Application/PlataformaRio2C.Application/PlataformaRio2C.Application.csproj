@@ -292,6 +292,7 @@
     <Compile Include="CQRS\CommandsHandlers\Music\BusinessRoundProjects\DeleteMusicBusinessRoundProjectBuyerEvaluationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\BusinessRoundProjects\FinishMusicBusinessRoundProjectCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\BusinessRoundProjects\RefuseMusicBusinessRoundProjectEvaluationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Music\BusinessRoundProjects\UpdateMusicBusinessRoundProjectOptionsCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\BusinessRoundProjects\UpdateMusicBusinessRoundProjectMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\Pitching\DistributeMembersMusicPitchingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\PlayersExecutives\CreateMusicPlayerExecutiveCollaboratorCommandHandler.cs" />
@@ -502,6 +503,7 @@
     <Compile Include="CQRS\Commands\Music\BusinessRoundProjects\DeleteMusicBusinessRoundProjectBuyerEvaluation.cs" />
     <Compile Include="CQRS\Commands\Music\BusinessRoundProjects\FinishMusicBusinessRoundProject.cs" />
     <Compile Include="CQRS\Commands\Music\BusinessRoundProjects\RefuseMusicBusinessRoundProjectEvaluation.cs" />
+    <Compile Include="CQRS\Commands\Music\BusinessRoundProjects\UpdateMusicBusinessRoundProjectOptions.cs" />
     <Compile Include="CQRS\Commands\Music\BusinessRoundProjects\UpdateMusicBusinessRoundProjectMainInformation.cs" />
     <Compile Include="CQRS\Commands\Music\Pitching\DistributeMembersMusicPitching.cs" />
     <Compile Include="CQRS\Commands\Music\Commissions\BaseCommands\MusicCommissionCollaboratorBaseCommand.cs" />

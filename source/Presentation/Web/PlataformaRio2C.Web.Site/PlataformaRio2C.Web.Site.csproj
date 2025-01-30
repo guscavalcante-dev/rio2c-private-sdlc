@@ -880,6 +880,7 @@
     <Content Include="Assets\js\innovation\projects\innovation.projects.presentation.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.technologies.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.tracks.widget.js" />
+    <Content Include="Assets\js\music\businessrounds\music.businessrounds.interest.widget.js" />
     <Content Include="Assets\js\music\businessrounds\music.businessrounds.maininformation.widget.js" />
     <Content Include="Assets\js\music\businessrounds\music.businessrounds.buyercompany.widget.js" />
     <Content Include="Assets\js\music\businessrounds\music.businessrounds.buyerevaluation.update.widget.js" />
@@ -7057,6 +7058,7 @@
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Widgets\BuyerCompanyWidget.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Modals\UpdateBuyerCompanyModal.cshtml" />
     <Content Include="Areas\Audiovisual\Views\PitchingProjects\SubmittedListPitching.cshtml" />
+    <Content Include="Areas\Music\Views\BusinessRoundProjects\Widgets\OptionsWidget.cshtml" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />

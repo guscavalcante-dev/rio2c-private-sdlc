@@ -6,7 +6,7 @@
 // Last Modified By : Gilson Oliveira
 // Last Modified On : 01-30-2025
 // ***********************************************************************
-// <copyright file="UpdateMusicBusinessRoundProjectMainInformation.cs" company="Softo">
+// <copyright file="UpdateMusicBusinessRoundProjectOptions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -14,31 +14,32 @@
 using System;
 using System.Collections.Generic;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>UpdateMusicBusinessRoundProjectMainInformation</summary>
-    public class UpdateMusicBusinessRoundProjectMainInformation : MusicBusinessRoundProjectBaseCommand
+    /// <summary>UpdateMusicBusinessRoundProjectOptions</summary>
+    public class UpdateMusicBusinessRoundProjectOptions : MusicBusinessRoundProjectBaseCommand
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateMusicBusinessRoundProjectMainInformation" /> class.
+        /// Initializes a new instance of the <see cref="UpdateMusicBusinessRoundProjectOptions" /> class.
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="isDataRequired">if set to <c>true</c> [is data required].</param>
-        /// <param name="userId">The user identifier.</param>
-        /// <param name="userUid">The user uid.</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <param name="editionUid">The edition uid.</param>
+        /// <param name="isProductionPlanRequired">if set to <c>true</c> [is production plan required].</param>
+        /// <param name="isAdditionalInformationRequired">if set to <c>true</c> [is additional information required].</param>
         /// <param name="userInterfaceLanguage">if set to <c>true</c> [is additional information required].</param>
-        public UpdateMusicBusinessRoundProjectMainInformation(
+        public UpdateMusicBusinessRoundProjectOptions(
             MusicBusinessRoundProjectDto entity,
             List<LanguageDto> languagesDtos,
+            List<TargetAudience> targetAudiences,
+            List<InterestDto> interestsDtos,
+            List<Activity> activities,
+            List<PlayerCategory> playersCategories,
             bool isDataRequired,
-            int userId,
-            Guid userUid,
-            int? editionId,
-            Guid? editionUid,
+            bool isProductionPlanRequired,
+            bool isAdditionalInformationRequired,
             string userInterfaceLanguage)
         {
             this.MusicProjectUid = entity?.Uid;
@@ -46,12 +47,20 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateBaseProperties(
                 entity,
                 languagesDtos,
-                isDataRequired
+                targetAudiences,
+                interestsDtos,
+                activities,
+                playersCategories,
+                isDataRequired,
+                isProductionPlanRequired,
+                isAdditionalInformationRequired,
+                userInterfaceLanguage,
+                true
             );
         }
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateMusicBusinessRoundProjectMainInformation"/> class.</summary>
-        public UpdateMusicBusinessRoundProjectMainInformation()
+        /// <summary>Initializes a new instance of the <see cref="UpdateMusicBusinessRoundProjectOptions"/> class.</summary>
+        public UpdateMusicBusinessRoundProjectOptions()
         {
         }
     }

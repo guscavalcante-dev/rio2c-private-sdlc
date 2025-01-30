@@ -105,15 +105,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public void UpdateBaseProperties(
             MusicBusinessRoundProjectDto entity,
             List<LanguageDto> languagesDtos,
-            bool isDataRequired,
-            int userId,
-            Guid userUid,
-            int? editionId,
-            Guid? editionUid,
-            string userInterfaceLanguage)
+            bool isDataRequired)
         {
             this.UpdateExpectationsForMeetings(entity, languagesDtos, isDataRequired);
-            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, userInterfaceLanguage);
         }
 
         /// <summary>Updates the pre send properties.</summary>
