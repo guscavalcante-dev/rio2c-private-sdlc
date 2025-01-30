@@ -938,7 +938,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ToListPagedAsync(page, pageSize);
         }
 
-
         /// <summary>Finds all dto by matching project buyer asynchronous.</summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="projectDto">The project dto.</param>
