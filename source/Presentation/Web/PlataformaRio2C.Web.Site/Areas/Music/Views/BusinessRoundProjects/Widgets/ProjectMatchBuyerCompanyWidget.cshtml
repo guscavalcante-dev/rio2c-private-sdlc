@@ -61,7 +61,7 @@
                                                 <small>@totalInterestGroupsMatchesCount @((totalInterestGroupsMatchesCount != 1 ? Labels.Matches : Labels.Match).ToLowerInvariant()):</small><br />
                                                 @foreach (var interestGroupsMatch in matchAttendeeOrganizationDto.InterestGroupsMatches.OrderBy(igm => igm.DisplayOrder))
                                                 {
-                                                    <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@interestGroupsMatch.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
+                                                    <span class="kt-badge kt-badge--inline kt-badge--info mt-1" style="min-height: 2.5rem;">@interestGroupsMatch.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
                                                 }
                                             </span>
                                             @if (editionDto?.IsMusicBusinessRoundProjectSubmitOpen() == true)
