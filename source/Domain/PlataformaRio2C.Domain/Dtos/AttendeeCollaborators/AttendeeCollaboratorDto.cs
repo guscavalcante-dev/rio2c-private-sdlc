@@ -51,7 +51,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns></returns>
         public int GetProjectMaxBuyerEvaluationsCount()
         {
-            return this.Edition?.ProjectMaxBuyerEvaluationsCount ?? 0;
+            return this.Edition?.MusicBusinessRoundMaximumEvaluatorsByProject ?? 0;
         }
 
         #endregion
