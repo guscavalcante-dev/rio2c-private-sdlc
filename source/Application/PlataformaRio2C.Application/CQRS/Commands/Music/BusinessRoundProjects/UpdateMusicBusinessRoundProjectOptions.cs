@@ -26,9 +26,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
+        /// <param name="targetAudiences">The target audience.</param>
+        /// <param name="interestsDtos">The interests.</param>
+        /// <param name="activities">The activities.</param>
+        /// <param name="playerCategories">The player categories.</param>
         /// <param name="isDataRequired">if set to <c>true</c> [is data required].</param>
-        /// <param name="isProductionPlanRequired">if set to <c>true</c> [is production plan required].</param>
-        /// <param name="isAdditionalInformationRequired">if set to <c>true</c> [is additional information required].</param>
         /// <param name="userInterfaceLanguage">if set to <c>true</c> [is additional information required].</param>
         public UpdateMusicBusinessRoundProjectOptions(
             MusicBusinessRoundProjectDto entity,
@@ -36,19 +38,18 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<TargetAudience> targetAudiences,
             List<InterestDto> interestsDtos,
             List<Activity> activities,
-            List<PlayerCategory> playersCategories,
+            List<PlayerCategory> playerCategories,
             bool isDataRequired,
             string userInterfaceLanguage)
         {
             this.MusicProjectUid = entity?.Uid;
-            this.AttachmentUrl = entity?.AttachmentUrl;
             this.UpdateBaseProperties(
                 entity,
                 languagesDtos,
                 targetAudiences,
                 interestsDtos,
                 activities,
-                playersCategories,
+                playerCategories,
                 isDataRequired,
                 userInterfaceLanguage
             );

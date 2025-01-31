@@ -4,7 +4,7 @@
 // Created          : 01-18-2025
 //
 // Last Modified By : Gilson Oliveira
-// Last Modified On : 01-30-2025
+// Last Modified On : 01-31-2025
 // ***********************************************************************
 // <copyright file="MusicBusinessRoundProjects.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -186,6 +186,284 @@ namespace PlataformaRio2C.Domain.Entities
             this.AttachmentUrl = attachmentUrl?.Trim();
             this.SynchronizeExpectationsForMeeting(expectationsForMeeting, userId);
         }
+
+        public void UpdatePlayerCategoriesThatHaveOrHadContract(string value)
+        {
+            this.PlayerCategoriesThatHaveOrHadContract = value;
+        }
+
+        #region MusicBusinessRoundProjectTargetAudience
+
+        /// <summary>Synchronizes the target audiences.</summary>
+        /// <param name="targetAudiences">The music business project target audiences.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeTargetAudiences(List<TargetAudience> targetAudiences, int userId)
+        {
+            if (this.MusicBusinessRoundProjectTargetAudiences == null)
+            {
+                this.MusicBusinessRoundProjectTargetAudiences = new List<MusicBusinessRoundProjectTargetAudience>();
+            }
+
+            this.DeleteTargetAudiences(targetAudiences, userId);
+
+            if (targetAudiences?.Any() != true)
+            {
+                return;
+            }
+
+            // Create or update target audiences
+            foreach (var targetAudience in targetAudiences)
+            {
+                var targetAudienceDb = this.MusicBusinessRoundProjectTargetAudiences.FirstOrDefault(a => a.TargetAudience.Uid == targetAudience.Uid);
+                if (targetAudienceDb != null)
+                {
+                    targetAudienceDb.Update(userId);
+                }
+                else
+                {
+                    this.MusicBusinessRoundProjectTargetAudiences.Add(
+                        new MusicBusinessRoundProjectTargetAudience(
+                            this.Id,
+                            targetAudience,
+                            userId,
+                            string.Empty
+                        )
+                    );
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates the target audiences.
+        /// </summary>
+        /// <param name="targetAudiences">The music business project target audiences.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateTargetAudiences(
+           List<TargetAudience> targetAudiences,
+            int userId)
+        {
+            this.SynchronizeTargetAudiences(targetAudiences, userId);
+            this.IsDeleted = false;
+            this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.UtcNow;
+        }
+
+        /// <summary>Deletes the expectations for meeting.</summary>
+        /// <param name="targetAudiences">The music business project target audiences.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteTargetAudiences(List<TargetAudience> targetAudiences, int userId)
+        {
+            var targetAudiencesToDelete = this.MusicBusinessRoundProjectTargetAudiences.Where(db => targetAudiences?.Select(a => a.Uid)?.Contains(db.TargetAudience.Uid) == false && !db.IsDeleted).ToList();
+            foreach (var targetAudienceToDelete in targetAudiencesToDelete)
+            {
+                targetAudienceToDelete.Delete(userId);
+            }
+        }
+
+        #endregion
+
+        #region MusicBusinessRoundProjectPlayerCategories
+
+        /// <summary>Synchronizes the player categories.</summary>
+        /// <param name="playerCategories">The music business project player categories.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizePlayerCategories(List<PlayerCategory> playerCategories, int userId)
+        {
+            if (this.MusicBusinessRoundProjectPlayerCategories == null)
+            {
+                this.MusicBusinessRoundProjectPlayerCategories = new List<MusicBusinessRoundProjectPlayerCategory>();
+            }
+
+            this.DeletePlayerCategories(playerCategories, userId);
+
+            if (playerCategories?.Any() != true)
+            {
+                return;
+            }
+
+            // Create or update player category
+            foreach (var playerCategory in playerCategories)
+            {
+                var playerCategoryDb = this.MusicBusinessRoundProjectPlayerCategories.FirstOrDefault(a => a.PlayerCategory.Uid == playerCategory.Uid);
+                if (playerCategoryDb != null)
+                {
+                    playerCategoryDb.Update(userId);
+                }
+                else
+                {
+                    this.MusicBusinessRoundProjectPlayerCategories.Add(
+                        new MusicBusinessRoundProjectPlayerCategory(
+                            this.Id,
+                            playerCategory,
+                            string.Empty,
+                            userId
+                        )
+                    );
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates the target player categories.
+        /// </summary>
+        /// <param name="playerCategories">The music business project player categories.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdatePlayerCategories(
+           List<PlayerCategory> playerCategories,
+            int userId)
+        {
+            this.SynchronizePlayerCategories(playerCategories, userId);
+            this.IsDeleted = false;
+            this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.UtcNow;
+        }
+
+        /// <summary>Deletes the player categories.</summary>
+        /// <param name="playerCategories">The player categories.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeletePlayerCategories(List<PlayerCategory> playerCategories, int userId)
+        {
+            var playerCategoriesToDelete = this.MusicBusinessRoundProjectPlayerCategories.Where(db => playerCategories?.Select(a => a.Uid)?.Contains(db.PlayerCategory.Uid) == false && !db.IsDeleted).ToList();
+            foreach (var playerCategoryToDelete in playerCategoriesToDelete)
+            {
+                playerCategoryToDelete.Delete(userId);
+            }
+        }
+
+        #endregion
+
+        #region MusicBusinessRoundProjectInterest
+
+        /// <summary>Synchronizes the interests.</summary>
+        /// <param name="musicBusinessRoundProjectInterests">The music business project interests.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeInterests(List<MusicBusinessRoundProjectInterest> musicBusinessRoundProjectInterests, int userId)
+        {
+            if (this.MusicBusinessRoundProjectInterests == null)
+            {
+                this.MusicBusinessRoundProjectInterests = new List<MusicBusinessRoundProjectInterest>();
+            }
+
+            this.DeleteInterests(musicBusinessRoundProjectInterests, userId);
+
+            if (musicBusinessRoundProjectInterests?.Any() != true)
+            {
+                return;
+            }
+
+            // Create or update interests
+            foreach (var musicBusinessRoundProjectInterest in musicBusinessRoundProjectInterests)
+            {
+                var musicBusinessRoundProjectInterestDb = this.MusicBusinessRoundProjectInterests.FirstOrDefault(a => a.Interest.Uid == musicBusinessRoundProjectInterest.Interest.Uid);
+                if (musicBusinessRoundProjectInterestDb != null)
+                {
+                    musicBusinessRoundProjectInterestDb.Update(userId);
+                }
+                else
+                {
+                    this.MusicBusinessRoundProjectInterests.Add(musicBusinessRoundProjectInterest);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates the interests.
+        /// </summary>
+        /// <param name="musicBusinessRoundProjectInterests">The music business project interests.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateInterests(
+            List<MusicBusinessRoundProjectInterest> musicBusinessRoundProjectInterests,
+            int userId)
+        {
+            this.SynchronizeInterests(musicBusinessRoundProjectInterests, userId);
+            this.IsDeleted = false;
+            this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.UtcNow;
+        }
+
+        /// <summary>Deletes the expectations for meeting.</summary>
+        /// <param name="musicBusinessRoundProjectInterests">The music business project interests.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteInterests(List<MusicBusinessRoundProjectInterest> musicBusinessRoundProjectInterests, int userId)
+        {
+            var interestsToDelete = this.MusicBusinessRoundProjectInterests.Where(db => musicBusinessRoundProjectInterests?.Select(a => a.Interest.Uid)?.Contains(db.Interest.Uid) == false && !db.IsDeleted).ToList();
+            foreach (var interestToDelete in interestsToDelete)
+            {
+                interestToDelete.Delete(userId);
+            }
+        }
+
+        #endregion
+
+        #region MusicBusinessRoundProjectActivities
+
+        /// <summary>Synchronizes the activities.</summary>
+        /// <param name="activities">The music business project activities.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeActivities(List<Activity> activities, int userId)
+        {
+            if (this.MusicBusinessRoundProjectActivities == null)
+            {
+                this.MusicBusinessRoundProjectActivities = new List<MusicBusinessRoundProjectActivity>();
+            }
+
+            this.DeleteActivities(activities, userId);
+
+            if (activities?.Any() != true)
+            {
+                return;
+            }
+
+            // Create or update activities
+            foreach (var activity in activities)
+            {
+                var activityDb = this.MusicBusinessRoundProjectActivities.FirstOrDefault(a => a.Activity.Uid == activity.Uid);
+                if (activityDb != null)
+                {
+                    activityDb.Update(userId);
+                }
+                else
+                {
+                    this.MusicBusinessRoundProjectActivities.Add(
+                        new MusicBusinessRoundProjectActivity(
+                            this.Id,
+                            activity,
+                            string.Empty,
+                            userId
+                        )
+                    );
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates the target activities.
+        /// </summary>
+        /// <param name="activities">The music business project activities.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateActivities(
+           List<Activity> activities,
+            int userId)
+        {
+            this.SynchronizeActivities(activities, userId);
+            this.IsDeleted = false;
+            this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.UtcNow;
+        }
+
+        /// <summary>Deletes the activities.</summary>
+        /// <param name="targetAudiences">The activities.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteActivities(List<Activity> activities, int userId)
+        {
+            var activitiesToDelete = this.MusicBusinessRoundProjectActivities.Where(db => activities?.Select(a => a.Uid)?.Contains(db.Activity.Uid) == false && !db.IsDeleted).ToList();
+            foreach (var activityToDelete in activitiesToDelete)
+            {
+                activityToDelete.Delete(userId);
+            }
+        }
+
+        #endregion
 
         #region MusicBusinessRoundProjectExpectationsForMeeting
 

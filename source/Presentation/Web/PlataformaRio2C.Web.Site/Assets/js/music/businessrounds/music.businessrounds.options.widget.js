@@ -1,24 +1,23 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Rafael Dantas Ruiz
-// Created          : 11-11-2019
+// Author           : Gilson Oliveira
+// Created          : 01-31-2025
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-21-2020
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 01-31-2025
 // ***********************************************************************
-// <copyright file="projects.interest.widget.js" company="Softo">
+// <copyright file="music.businessrounds.options.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
 var MusicBusinessRoundProjectsOptionsWidget = function () {
 
     var widgetElementId = '#MusicBusinessRoundProjectsOptionsWidget';
     var widgetElement = $(widgetElementId);
 
-    var updateModalId = '#UpdateInterestModal';
-    var updateFormId = '#UpdateInterestForm';
+    var updateModalId = '#UpdateOptionsModal';
+    var updateFormId = '#UpdateOptionsForm';
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
@@ -61,8 +60,8 @@ var MusicBusinessRoundProjectsOptionsWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (ProjectsInterestWidget) !== 'undefined') {
-                    ProjectsInterestWidget.init();
+                if (typeof (MusicBusinessRoundProjectsOptionsWidget) !== 'undefined') {
+                    MusicBusinessRoundProjectsOptionsWidget.init();
                 }
             },
             onError: function (data) {
@@ -99,6 +98,7 @@ var MusicBusinessRoundProjectsOptionsWidget = function () {
             onSuccess: function () {
                 enableUpdatePlugins();
                 $(updateModalId).modal();
+                PlayersCategoriesValidation.init();
             },
             // Error
             onError: function () {
@@ -111,7 +111,7 @@ var MusicBusinessRoundProjectsOptionsWidget = function () {
             MyRio2cCommon.unblock();
         });
     };
-
+   
     //// Form submit --------------------------------------------------------------------------------
     //var submit = function () {
     //    var validator = $(updateFormId).validate();
@@ -137,5 +137,39 @@ var MusicBusinessRoundProjectsOptionsWidget = function () {
         //submit: function () {
         //    submit();
         //}
+    };
+}();
+
+var PlayersCategoriesValidation = function () {
+
+    //function to control players categories field in project info form
+    var handleCheckboxSelection = function () {
+        // all checkboxes
+        var checkboxes = $('input[name="PlayerCategoriesUids"]');
+        var textFieldWrapper = $('#PlayerCategoriesThatHaveOrHadContract').closest('.form-group');
+        var textField = $('#PlayerCategoriesThatHaveOrHadContract');
+
+        checkboxes.on('change', function () {
+            var anyChecked = checkboxes.is(':checked');
+            $('#IsPlayersCategoriesDiscursiveRequired').val(anyChecked);
+
+            //hide or show control
+            if (anyChecked) {
+                textFieldWrapper.show();
+            } else {
+                textFieldWrapper.hide();
+                textField.val('');
+            }
+        });
+
+        if (!checkboxes.is(':checked')) {
+            textFieldWrapper.hide();
+        }
+    };
+
+    return {
+        init: function () {
+            handleCheckboxSelection();
+        }
     };
 }();

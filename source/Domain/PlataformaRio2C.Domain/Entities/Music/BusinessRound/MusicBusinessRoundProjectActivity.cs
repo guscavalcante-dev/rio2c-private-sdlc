@@ -3,8 +3,8 @@
 // Author           : Daniel Giese Rodrigues
 // Created          : 01-23-2025
 //
-// Last Modified By : Daniel Giese Rodrigues
-// Last Modified On : 01-23-2025
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 01-31-2025
 // ***********************************************************************
 // <copyright file="MusicBusinessRoundProjectActivity.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -41,6 +41,24 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
         }
+
+        /// <summary>Initializes a new instance of the <see cref="MusicBusinessRoundProjectActivity"/> class.</summary>
+        /// <param name="activity">The activity.</param>
+        /// <param name="additionalInfo">The additional information.</param>
+        /// <param name="userId">The user identifier.</param>
+        public MusicBusinessRoundProjectActivity(int musicBusinessRoundProjectId, Activity activity, string additionalInfo, int userId)
+        {
+            this.MusicBusinessRoundProjectId = musicBusinessRoundProjectId;
+            this.Activity = activity;
+            this.ActivityId = activity?.Id ?? 0;
+            this.AdditionalInfo = additionalInfo?.Trim();
+            this.UpdateUserId = userId;
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
         public MusicBusinessRoundProjectActivity()
         {
         }
@@ -78,6 +96,12 @@ namespace PlataformaRio2C.Domain.Entities
             };
         }
 
-        
+        /// <summary>Updates the music business round project activity.</summary>
+        public void Update(int userId)
+        {
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
     }
 }
