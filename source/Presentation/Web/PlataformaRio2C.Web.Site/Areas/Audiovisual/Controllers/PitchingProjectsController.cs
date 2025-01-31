@@ -896,7 +896,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 
             #endregion
 
-            var view = new PitchingProjectDto() { AttendeeOrganizationUid = this.UserAccessControlDto?.GetFirstAttendeeOrganizationCreated()?.Uid , AttendeeCollaboratorUid = this.UserAccessControlDto?.Collaborator.Uid };
+            var view = new PitchingProjectDto() { AttendeeOrganizationUid = this.UserAccessControlDto?.GetFirstAttendeeOrganizationCreated()?.Uid , AttendeeCollaboratorUid = this.UserAccessControlDto?.EditionAttendeeCollaborator.Uid };
 
             return View(view);
         }
