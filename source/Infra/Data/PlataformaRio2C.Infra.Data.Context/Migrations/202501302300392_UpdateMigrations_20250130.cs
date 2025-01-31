@@ -5,5 +5,11 @@
     
     public partial class UpdateMigrations_20250130 : DbMigration
     {
+        public override void Up()
+        {
+        }
+        public override void Down()
+        {
+        }
     }
 }
