@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 01-18-2025
 //
-// Last Modified By : Daniel Giese Rodrigues
-// Last Modified On : 01-20-2025
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 01-31-2025
 // ***********************************************************************
 // <copyright file="MusicBusinessRoundProjectInterest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -49,7 +49,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="ProjectInterest"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="MusicBusinessRoundProjectInterest"/> class.</summary>
         /// <param name="interest">The interest.</param>
         /// <param name="additionalInfo">The additional information.</param>
         /// <param name="userId">The user identifier.</param>
@@ -62,6 +62,14 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
+        }
+
+        /// <summary>Updates the music business round project interest.</summary>
+        public void Update(int userId)
+        {
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
         }
     }
 }

@@ -481,7 +481,7 @@ namespace PlataformaRio2C.Web.Site
 
             bundles.Add(new ScriptBundle("~/bundles/js/music.businessrounds.widget.js").Include(
                "~/Assets/js/music/businessrounds/music.businessrounds.maininformation.widget.js",
-               "~/Assets/js/music/businessrounds/music.businessrounds.interest.widget.js",               
+               "~/Assets/js/music/businessrounds/music.businessrounds.options.widget.js",               
                "~/Assets/js/myrio2c.additionalinfo.js"));
 
             #endregion

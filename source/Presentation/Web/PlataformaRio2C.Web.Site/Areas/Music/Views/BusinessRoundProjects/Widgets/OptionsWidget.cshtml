@@ -67,23 +67,26 @@
                 </div>
             }
             @{ var interestGrouped = Model.GetInterestGrouped(); }
-            @foreach (var group in interestGrouped)
-            {                
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="kt-widget4">
-                            <h3 class="kt-heading kt-heading--sm mb-0">@(group[0].InterestGroup?.GetLabelToForm())</h3>
-                            @foreach (var interest in group)
-                            {
-                                var interestDto = Model.GetInterestDtoByInterestUid(interest.Interest.Uid)?.Interest;
-                                if (interestDto != null)
+            @if (interestGrouped != null)
+            {
+                foreach (var group in interestGrouped)
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="kt-widget4">
+                                <h3 class="kt-heading kt-heading--sm mb-0">@(group[0].InterestGroup?.GetLabelToForm())</h3>
+                                @foreach (var interest in group)
                                 {
-                                    <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@interestDto.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
+                                    var interestDto = Model.GetInterestDtoByInterestUid(interest.Interest.Uid)?.Interest;
+                                    if (interestDto != null)
+                                    {
+                                        <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@interestDto.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
+                                    }
                                 }
-                            }
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
             }
             @if (Model.MusicBusinessRoundProjectPlayerCategoryDtos?.Any() == true)
             {
@@ -99,6 +102,17 @@
                                     <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@pcDto.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
                                 }
                             }
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(Model.PlayerCategoriesThatHaveOrHadContract))
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="kt-widget4">
+                            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.PlayerCategoriesThatHaveOrHadContract</h3>
+                            <span>@Model.PlayerCategoriesThatHaveOrHadContract</span>
                         </div>
                     </div>
                 </div>

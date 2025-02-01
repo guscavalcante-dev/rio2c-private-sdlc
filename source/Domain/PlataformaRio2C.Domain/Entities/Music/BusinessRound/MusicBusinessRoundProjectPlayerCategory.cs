@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 01-18-2025
 //
-// Last Modified By : Daniel Giese Rodrigues
-// Last Modified On : 01-20-2025
+// Last Modified By : Gilson Oliveira
+// Last Modified On : 01-31-2025
 // ***********************************************************************
 // <copyright file="MusicBusinessRoundProjectPlayerCategory.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,6 +13,7 @@
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using System;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -57,6 +58,14 @@ namespace PlataformaRio2C.Domain.Entities
                     string.Format(Messages.PropertyBetweenLengths, Labels.AdditionalInfo, AdditionalInfoMaxLength, 1),
                     new string[] { "AdditionalInfo" }));
             }
+        }
+
+        /// <summary>Updates the music business round project player category.</summary>
+        public void Update(int userId)
+        {
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
         }
     }
 }

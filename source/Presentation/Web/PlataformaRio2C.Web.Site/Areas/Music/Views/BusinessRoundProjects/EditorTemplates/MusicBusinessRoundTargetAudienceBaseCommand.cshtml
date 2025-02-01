@@ -1,0 +1,28 @@
+﻿@using System.Globalization
+@model PlataformaRio2C.Application.CQRS.Commands.MusicBusinessRoundProjectTargetAudienceBaseCommand
+<div class="col-sm-4" data-id="@Model.TargetAudienceUid">
+    @Html.HiddenFor(m => m.TargetAudienceUid)
+    @Html.HiddenFor(m => m.TargetAudienceName)
+    @Html.HiddenFor(m => m.TargetAudienceDisplayOrder)
+    @Html.HiddenFor(m => m.TargetAudienceHasAdditionalInfo)
+    <label class="kt-checkbox" style="margin-bottom: 5px;">
+        @if (!Model.TargetAudienceHasAdditionalInfo)
+        {
+            @Html.CheckBoxFor(m => m.IsChecked, new { @class = "require-one", data_id = Model.TargetAudienceUid })
+        }
+        else
+        {
+            @Html.CheckBoxFor(m => m.IsChecked, new { @class = "require-one toggle-additional-info", data_id = Model.TargetAudienceUid, data_toggle_id = Model.TargetAudienceUid })
+        }
+        @Model.TargetAudienceName.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')
+        <span></span>
+    </label>
+    @if (Model.TargetAudienceHasAdditionalInfo)
+    {
+        <div class="additional-info @(!Model.IsChecked ? "d-none" : string.Empty)">
+            @Html.TextBoxFor(m => m.AdditionalInfo, (Model.IsChecked ? (object)new { @class = "form-control" } : (object)new { @class = "form-control additional-info-textbox", disabled = "" }))
+            <span class="form-text text-muted">@Messages.TextInPortugueseInEnglish</span>
+        </div>
+        @Html.ValidationMessageFor(m => m.AdditionalInfo, null, new { @class = "text-danger" })
+    }
+</div>

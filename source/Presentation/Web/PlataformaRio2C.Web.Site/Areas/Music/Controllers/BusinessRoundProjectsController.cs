@@ -115,14 +115,14 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper($"{Labels.MusicProjects} - {Labels.BusinessRound}", new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper($"{Labels.Projects} {Labels.BusinessRound}", Url.Action("Index", "BusinessRoundProjects", new { Area = "Music" })),
+                new BreadcrumbItemHelper($"{Labels.Projects} {Labels.BusinessRound}", Url.Action("SubmittedList", "BusinessRoundProjects", new { Area = "Music" })),
             });
 
             #endregion
 
             if (EditionDto?.IsMusicBusinessRoundProjectSubmitStarted() != true)
             {
-                return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
+                return RedirectToAction("SubmittedList", "BusinessRoundProjects", new { Area = "Music" });
             }
 
             var projects = await musicBusinessRoundProjectRepo.FindAllMusicBusinessRoundProjectDtosToSellAsync(UserAccessControlDto?.EditionAttendeeCollaborator?.Uid ?? Guid.Empty);
@@ -728,7 +728,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ProjectInfo, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper($"{Labels.Projects} {Labels.BusinessRound}", Url.Action("Index", "BusinessRoundProjects", new { Area = "Music" })),
+                new BreadcrumbItemHelper($"{Labels.Projects} {Labels.BusinessRound}", Url.Action("SubmittedList", "BusinessRoundProjects", new { Area = "Music" })),
                 new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "BusinessRoundProjects", new { Area = "Music" }))
             });
 
@@ -737,7 +737,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             if (EditionDto?.IsMusicBusinessRoundProjectSubmitOpen() != true)
             {
                 this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
+                return RedirectToAction("SubmittedList", "BusinessRoundProjects", new { Area = "Music" });
             }
 
             //if (UserAccessControlDto?.IsMusicProjectSubmissionOrganizationInformationPending() == true)
@@ -759,7 +759,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 if (projectsCount >= projectMaxCount)
                 {
                     this.StatusMessageToastr(Messages.YouReachedProjectsLimit, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                    return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
+                    return RedirectToAction("SubmittedList", "BusinessRoundProjects", new { Area = "Music" });
                 }
             }
 
@@ -773,7 +773,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                     if (UserAccessControlDto?.HasEditionAttendeeCollaborator(musicBusinessRoundProjectDto.SellerAttendeeCollaboratorDto.AttendeeCollaborator.Uid) != true)
                     {
                         this.StatusMessageToastr(Texts.ForbiddenErrorMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                        return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
+                        return RedirectToAction("SubmittedList", "BusinessRoundProjects", new { Area = "Music" });
                     }
                 }
             }
@@ -801,7 +801,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ProjectInfo, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper($"{Labels.Projects} - {Labels.BusinessRound}", Url.Action("Index", "BusinessRoundProjects", new { Area = "Music" })),
+                new BreadcrumbItemHelper($"{Labels.Projects} - {Labels.BusinessRound}", Url.Action("SubmittedList", "BusinessRoundProjects", new { Area = "Music" })),
                 new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "BusinessRoundProjects", new { Area = "Music" }))
             });
 
@@ -810,7 +810,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             if (this.EditionDto?.IsMusicBusinessRoundProjectSubmitOpen() != true)
             {
                 this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
+                return RedirectToAction("SubmittedList", "BusinessRoundProjects", new { Area = "Music" });
             }
 
             if (this.UserAccessControlDto?.IsMusicProducerBusinessRoundTermsAcceptanceDatePending() == true)
@@ -895,7 +895,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 // ignored
             }
 
-            return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
+            return RedirectToAction("SubmittedList", "BusinessRoundProjects", new { Area = "Music" });
         }
 
         #endregion
@@ -911,7 +911,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.ParticipantsTerms, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper($"{Labels.Projects} - {Labels.BusinessRound}", Url.Action("Index", "BusinessRoundProjects", new { Area = "Music" })),
+                new BreadcrumbItemHelper($"{Labels.Projects} - {Labels.BusinessRound}", Url.Action("SubmittedList", "BusinessRoundProjects", new { Area = "Music" })),
                 new BreadcrumbItemHelper(Labels.Subscription, Url.Action("Submit", "BusinessRoundProjects", new { Area = "Music" }))
             });
 
@@ -920,7 +920,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             if (this.EditionDto?.IsMusicBusinessRoundProjectSubmitOpen() != true)
             {
                 this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
+                return RedirectToAction("SubmittedList", "BusinessRoundProjects", new { Area = "Music" });
             }
 
             if (this.UserAccessControlDto?.IsMusicProducerBusinessRoundTermsAcceptanceDatePending() == true)
@@ -932,13 +932,13 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             if (buyerCompanyWidgetDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
+                return RedirectToAction("SubmittedList", "BusinessRoundProjects", new { Area = "Music" });
             }
 
             if (buyerCompanyWidgetDto.FinishDate != null)
             {
                 this.StatusMessageToastr(Messages.ProjectIsFinishedCannotBeUpdated, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
+                return RedirectToAction("SubmittedList", "BusinessRoundProjects", new { Area = "Music" });
             }
 
             return View(buyerCompanyWidgetDto);
@@ -1935,20 +1935,20 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         {
             if (this.EditionDto?.IsMusicBusinessRoundProjectSubmitStarted() != true)
             {
-                return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
+                return RedirectToAction("SubmittedList", "BusinessRoundProjects", new { Area = "Music" });
             }
 
             var buyerCompanyWidgetDto = await this.musicBusinessRoundProjectRepo.FindSiteDetailsDtoByProjectUidAsync(id ?? Guid.Empty, this.EditionDto.Id);
             if (buyerCompanyWidgetDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "BusinessRoundProjects", new { Area = "Music" });
+                return RedirectToAction("SubmittedList", "BusinessRoundProjects", new { Area = "Music" });
             }
 
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper($"{Labels.MusicProjects} - {Labels.BusinessRound}", new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper($"{Labels.Projects} - {Labels.BusinessRound}", Url.Action("Index", "BusinessRoundProjects", new { Area = "Music" })),
+                new BreadcrumbItemHelper($"{Labels.Projects} - {Labels.BusinessRound}", Url.Action("SubmittedList", "BusinessRoundProjects", new { Area = "Music" })),
                 new BreadcrumbItemHelper(Labels.Project, Url.Action("SubmittedDetails", "BusinessRoundProjects", new { Area = "Music", id }))
             });
 
@@ -2117,7 +2117,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        #region Update
+        #region Update options
 
         /// <summary>Shows the update main information modal.</summary>
         /// <param name="musicProjectUid">The music project uid.</param>
@@ -2142,13 +2142,14 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
                 cmd = new UpdateMusicBusinessRoundProjectOptions(
                     musicProjectDto,
-                    await CommandBus.Send(new FindAllLanguagesDtosAsync(UserInterfaceLanguage)),
-                    await targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
-                    await interestRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.Music.Id),
+                    await CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
+                    await this.interestRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.Music.Id),
                     await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
                     await this.playersCategoryRepo.FindAllByProjectTypeIdAsync(ProjectType.Music.Id),
                     true,
-                    UserInterfaceLanguage);
+                    this.UserInterfaceLanguage
+                );
             }
             catch (DomainException ex)
             {
@@ -2160,7 +2161,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                    new { page = this.RenderRazorViewToString("Modals/UpdateOptionsModal", cmd), divIdOrClass = "#GlobalModalContainer" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }

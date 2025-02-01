@@ -54,3 +54,37 @@ var ProjectsProjectInfo = function () {
         //}
     };
 }();
+
+var PlayersCategoriesValidation = function () {
+
+    //function to control players categories field in project info form
+    var handleCheckboxSelection = function () {
+        // all checkboxes
+        var checkboxes = $('input[name="PlayerCategoriesUids"]');
+        var textFieldWrapper = $('#PlayerCategoriesThatHaveOrHadContract').closest('.form-group');
+        var textField = $('#PlayerCategoriesThatHaveOrHadContract');
+
+        checkboxes.on('change', function () {
+            var anyChecked = checkboxes.is(':checked');
+            $('#IsPlayersCategoriesDiscursiveRequired').val(anyChecked);
+
+            //hide or show control
+            if (anyChecked) {
+                textFieldWrapper.show();
+            } else {
+                textFieldWrapper.hide();
+                textField.val('');
+            }
+        });
+
+        if (!checkboxes.is(':checked')) {
+            textFieldWrapper.hide();
+        }
+    };
+
+    return {
+        init: function () {
+            handleCheckboxSelection();
+        }
+    };
+}();

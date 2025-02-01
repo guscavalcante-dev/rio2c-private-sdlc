@@ -13,15 +13,12 @@
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using System;
 
 namespace PlataformaRio2C.Domain.Entities
 {
     public class MusicBusinessRoundProjectTargetAudience : Entity
     {
-        public MusicBusinessRoundProjectTargetAudience()
-        {
-                
-        }
         public MusicBusinessRoundProjectTargetAudience(
             int musicBusinessRoundProjectId,
             TargetAudience targetAudience,
@@ -43,6 +40,18 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual MusicBusinessRoundProject MusicBusinessRoundProject { get; private set; }
         public virtual TargetAudience TargetAudience { get; private set; }
         public string AdditionalInfo { get; private set; }
+        
+        public MusicBusinessRoundProjectTargetAudience()
+        {       
+        }
+
+        /// <summary>Updates the music business round project target audience.</summary>
+        public void Update(int userId)
+        {
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
 
         public override bool IsValid()
         {

@@ -1,0 +1,88 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateMusicBusinessRoundProjectOptions
+
+<div class="kt-section">
+    <h5>@Labels.TargetAudiencesMusicBusinessRoundProject</h5>
+    @Html.ValidationMessage("TargetAudiencesUids", new { @class = "text-danger" })
+    <div class="kt-section__content mt-3">
+        <div class="kt-checkbox-list">
+            @foreach (var targetAudience in Model.TargetAudiences)
+            {
+                <label class="kt-checkbox">
+                    <input type="checkbox"
+                           name="TargetAudiencesUids"
+                           value="@targetAudience.Uid"
+                           class="require-one"
+                           data-id="targetaudience-group"
+                           @if (Model.TargetAudiencesUids?.Contains(targetAudience.Uid) == true) { <text> checked </text> } /> @targetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                        <span></span>
+                </label>
+                }
+        </div>
+    </div>
+</div>
+
+<div class="kt-section">
+    <h5>@Labels.ActivitiesBusinessRoundProjects</h5>
+    @Html.ValidationMessage("ActivitiesUids", new { @class = "text-danger" })
+    <div class="kt-section__content mt-3">
+        <div class="kt-checkbox-list">
+            @foreach (var activity in Model.Activities)
+            {
+                <label class="kt-checkbox">
+                    <input type="checkbox"
+                        name="ActivitiesUids"
+                        value="@activity.Uid"
+                        class="require-one"
+                        data-id="activity-group"
+                        @if (Model.ActivitiesUids?.Contains(activity.Uid) == true) { <text> checked </text> } /> @activity.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                    <span></span>
+                </label>
+            }
+        </div>
+    </div>
+</div>
+
+@if (Model.Interests?.Any() == true)
+{
+    <div class="kt-section">
+        <div class="kt-section__content">
+            <div class="kt-checkbox-list">
+                @for (int i = 0; i < Model.Interests.Length; i++)
+                {
+                    var group = Model.Interests[i].FirstOrDefault();
+                    <h5 class="mt-30">@(group?.InterestGroupName?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</h5>
+                    @Html.ValidationMessage(group?.InterestGroupUid.ToString(), new {@class = "text-danger"})
+                    <div class="kt-section__content mt-3">
+                        <div class="row require-one-group" data-id="@(group?.InterestGroupUid)">
+                            @Html.EditorFor(x => Model.Interests[i])
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+<div class="kt-section">
+    <h5>@Labels.BusinessRoundPlayersCategories</h5>
+    <div class="kt-section__content mt-3">
+        <div class="kt-checkbox-list">
+            @Html.HiddenFor(m => m.IsPlayersCategoriesDiscursiveRequired)
+            @foreach (var playerCategory in Model.PlayerCategories)
+            {
+                <label class="kt-checkbox">
+                    <input type="checkbox"
+                           name="PlayerCategoriesUids"
+                           value="@playerCategory.Uid"
+                           data-id="playercategory-group"
+                           @if (Model.PlayerCategoriesUids?.Contains(playerCategory.Uid) == true) { <text> checked </text> } /> @playerCategory.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                        <span></span>
+                    </label>
+                }
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.PlayerCategoriesThatHaveOrHadContract, new { @class = "control-label" }) <span class="form-optional-input text-muted"></span>
+        @Html.TextBoxFor(m => m.PlayerCategoriesThatHaveOrHadContract, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.PlayerCategoriesThatHaveOrHadContract, "", new { @class = "text-danger" })
+    </div>
+</div>
