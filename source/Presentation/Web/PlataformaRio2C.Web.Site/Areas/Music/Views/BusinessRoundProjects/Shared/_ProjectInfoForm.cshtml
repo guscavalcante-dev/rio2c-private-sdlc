@@ -42,6 +42,7 @@
                 <div class="col-md-12">
                     <div class="kt-section">
                         <h5>@Labels.ActivitiesBusinessRoundProjects</h5>
+                        @Html.ValidationMessage("ActivitiesUids", new { @class = "text-danger" })
                         <div class="kt-section__content mt-3">
                             <div class="kt-checkbox-list">
                                 @foreach (var activity in Model.Activities)
@@ -87,7 +88,7 @@
                     <div class="kt-section">
                         <h5>@Labels.BusinessRoundPlayersCategories</h5>
                         <div class="kt-section__content mt-3">
-                            @*@Html.HiddenFor(m => m.PlayerCategoriesUids)*@
+                            @Html.HiddenFor(m => m.IsPlayersCategoriesDiscursiveRequired)
                             <div class="kt-checkbox-list">
                                 @foreach (var playerCategory in Model.PlayerCategories)
                                 {
@@ -102,10 +103,12 @@
                                     }
                             </div>
                         </div>
-                        <!-- Players Categories Descritive-->
-                        @Html.LabelFor(m => m.PlayerCategoriesThatHaveOrHadContract, new { @class = "control-label" }) <span class="form-optional-input text-muted"></span>
-                        @Html.TextBoxFor(m => m.PlayerCategoriesThatHaveOrHadContract, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.PlayerCategoriesThatHaveOrHadContract, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <!-- Players Categories Descritive-->
+                            @Html.LabelFor(m => m.PlayerCategoriesThatHaveOrHadContract, new { @class = "control-label" }) <span class="form-optional-input text-muted"></span>
+                            @Html.TextBoxFor(m => m.PlayerCategoriesThatHaveOrHadContract, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.PlayerCategoriesThatHaveOrHadContract, "", new { @class = "text-danger" })
+                        </div>
                     </div>
                 </div>
             </div>

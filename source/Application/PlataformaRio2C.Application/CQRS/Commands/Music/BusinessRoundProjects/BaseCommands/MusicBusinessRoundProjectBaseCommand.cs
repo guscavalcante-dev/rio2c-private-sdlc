@@ -4,7 +4,7 @@
 // Created          : 11-06-2019
 //
 // Last Modified By : Gilson Oliveira
-// Last Modified On : 01-30-2025
+// Last Modified On : 01-31-2025
 // ***********************************************************************
 // <copyright file="MusicBusinessRoundProjectBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,6 +15,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Foolproof;
+using PlataformaRio2C.Application.CQRS.Commands.Music.BusinessRoundProjects.BaseCommands;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -31,8 +33,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public int SellerAttendeeCollaboratorId { get; set; }
         public List<Guid> PlayerCategoriesUids { get; set; }
 
+        public bool IsPlayersCategoriesDiscursiveRequired {  get; set; } 
+
         [Display(Name = "IfAffirmativeWhichCompanies", ResourceType = typeof(Labels))]
-        //[RequiredIfNotEmpty("PlayerCategoriesUids", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [RequiredIf("IsPlayersCategoriesDiscursiveRequired", true, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(300, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string PlayerCategoriesThatHaveOrHadContract { get; set; }
 
@@ -48,6 +52,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public InterestBaseCommand[][] Interests { get; set; }
         //public List<MusicBusinessRoundProjectInterestBaseCommand> MusicBusinessRoundProjectInterests { get; set; }
         public List<TargetAudience> TargetAudiences { get; private set; }
+        public List<MusicBusinessRoundProjectTargetAudienceBaseCommand> MusicBusinessRoundProjectTargetAudienceCommands { get; set; }
         public List<Activity> Activities { get; private set; }
 
         //public List<MusicBusinessRoundProjectPlayerCategoryBaseCommand> PlayerCategories { get; set; }
@@ -79,10 +84,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<PlayerCategory> playersCategories,
             bool isDataRequired,
             string userInterfaceLanguage)
-        {
+            {
             this.AttachmentUrl = entity?.AttachmentUrl;
             this.PlayerCategoriesThatHaveOrHadContract = entity?.PlayerCategoriesThatHaveOrHadContract;
-            
+
             this.UpdateActivies(entity, activities);
             this.UpdateTargetAudiences(entity,targetAudiences);
             this.UpdateInterests(entity, interestsDtos);
@@ -212,6 +217,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             this.TargetAudiences = new List<TargetAudience>();
             this.TargetAudiencesUids = new List<Guid>();
+            this.MusicBusinessRoundProjectTargetAudienceCommands = new List<MusicBusinessRoundProjectTargetAudienceBaseCommand>();
             foreach (var targetAudience in targetAudiences)
             {
                 var musicBusinessRoundProjectTargetAudience = entity?.MusicBusinessRoundProjectTargetAudienceDtos?.FirstOrDefault(ota => ota.TargetAudience.Uid == targetAudience.Uid);
@@ -220,6 +226,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                     this.TargetAudiences.Add(targetAudience);
                     this.TargetAudiencesUids.Add(targetAudience.Uid);
                 }
+                this.MusicBusinessRoundProjectTargetAudienceCommands.Add(
+                    musicBusinessRoundProjectTargetAudience != null
+                        ? new MusicBusinessRoundProjectTargetAudienceBaseCommand(musicBusinessRoundProjectTargetAudience.MusicBusinessRoundProjectTargetAudience)
+                        : new MusicBusinessRoundProjectTargetAudienceBaseCommand(targetAudience)
+                );
             }
         }
 
@@ -257,6 +268,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 var musicBusinessRoundProjectPlayerCategories = entity?.MusicBusinessRoundProjectPlayerCategoryDtos?.FirstOrDefault(ota => ota.PlayerCategory.Uid == playerCategory.Uid);
                 if (musicBusinessRoundProjectPlayerCategories != null)
                 {
+                    this.IsPlayersCategoriesDiscursiveRequired = true;
                     this.PlayerCategories.Add(playerCategory);
                     this.PlayerCategoriesUids.Add(playerCategory.Uid);
                 }
