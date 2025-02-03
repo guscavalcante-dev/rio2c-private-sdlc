@@ -3,9 +3,8 @@
 @{
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var editionDto = ViewBag.EditionDto as EditionDto;
-    var isSeller = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true || userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Creator) == true;
+    var isSeller = userAccessControlDto?.HasAnyCollaboratorType(new string[] { Constants.CollaboratorType.Industry, Constants.CollaboratorType.Creator }) == true;
     var isBuyer = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.PlayerExecutiveMusic) == true;
-    var musicCollaboratorTypesCount = userAccessControlDto?.CountCollaboratorTypes(Constants.CollaboratorType.Musics);
 }
 @if (isSeller || isBuyer)
 {
@@ -21,11 +20,11 @@
             <div class="kt-notification">
                 @if (isSeller)
                 {
-                    if (editionDto?.IsAudiovisualProjectSubmitStarted() == true)
+                    if (editionDto?.IsMusicBusinessRoundProjectSubmitStarted() != true || editionDto.IsMusicBusinessRoundProjectSubmitEnded() != true)
                     {
-                        var subscriptionUrl = Url.Action("Index", "BusinessRoundProjects", new { Area = "Music" });
-                        var editionUrl = Url.Action("Index", "BusinessRoundProjects", new { Area = "Music" });
-                        if (editionDto?.IsAudiovisualProjectSubmitStarted() != true)
+                        var subscriptionUrl = Url.Action("SubmittedList", "BusinessRoundProjects", new { Area = "Music" });
+                        var editionUrl = Url.Action("SubmittedList", "BusinessRoundProjects", new { Area = "Music" });
+                        if (editionDto?.IsMusicBusinessRoundProjectSubmitStarted() != true)
                         {
                             subscriptionUrl = Url.Action("Index", "BusinessRoundProjects", new { Area = "Music" });
                             editionUrl = Url.Action("Index", "BusinessRoundProjects", new { Area = "Music" });
@@ -63,8 +62,8 @@
                             </div>
                         </a>
                     }
-                    var resultUrl = Url.Action("Index", "BusinessRoundProjects", new { Area = "Music" });
-                    if (editionDto?.IsAudiovisualProjectSubmitEnded() != true)
+                    var resultUrl = Url.Action("SubmittedList", "BusinessRoundProjects", new { Area = "Music" });
+                    if (editionDto?.IsMusicBusinessRoundProjectSubmitEnded() != true)
                     {
                         resultUrl = Url.Action("Index", "BusinessRoundProjects", new { Area = "Music" });
                     }
@@ -84,7 +83,7 @@
                             </div>
                         </div>
                     </a>
-                    <a class="kt-notification__item" href="https://www.rio2c.com/players" target="_blank">
+                    <a class="kt-notification__item" href="https://www.rio2c.com/mercado/players-musica/" target="_blank">
                         <div class="kt-notification__item-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -104,7 +103,7 @@
                 @if (isBuyer)
                 {
                     var evaluationUrl = Url.Action("EvaluationList", "BusinessRoundProjects", new { Area = "Music" });
-                    if (editionDto?.IsProjectBuyerEvaluationStarted() != true)
+                    if (editionDto?.IsMusicBusinessRoundProjectBuyerEvaluationStarted() != true)
                     {
                         evaluationUrl = Url.Action("Index", "BusinessRoundProjects", new { Area = "Music" });
                     }
@@ -122,9 +121,9 @@
                         <div class="kt-notification__item-details">
                             <div class="kt-notification__item-title">
                                 @Labels.Evaluation
-                                @if (editionDto?.IsProjectBuyerEvaluationOpen() == true && userAccessControlDto.ProjectEvaluationsPendingCount > 0)
+                                @if (editionDto?.IsMusicBusinessRoundProjectBuyerEvaluationOpen() == true && userAccessControlDto.MusicBusinessRoundProjectEvaluationsPendingCount > 0)
                                 {
-                                    <span class="kt-badge kt-badge--danger float-right mr-2">@userAccessControlDto.ProjectEvaluationsPendingCount</span>
+                                    <span class="kt-badge kt-badge--danger float-right mr-2">@userAccessControlDto.MusicBusinessRoundProjectEvaluationsPendingCount</span>
                                 }
                             </div>
                         </div>
