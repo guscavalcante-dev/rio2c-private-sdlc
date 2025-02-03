@@ -33,6 +33,10 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int TwitterMaxLength = 300;
         public static readonly int YoutubeMaxLength = 300;
         public static readonly int TiktokMaxLength = 300;
+        public static readonly int SpotifyMaxLength = 256;
+        public static readonly int DeezerMaxLength = 256;
+
+
 
         public int MusicBandTypeId { get; private set; }
         public string Name { get; private set; }
