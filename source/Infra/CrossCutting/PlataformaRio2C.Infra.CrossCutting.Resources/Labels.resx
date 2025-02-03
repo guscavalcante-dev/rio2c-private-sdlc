@@ -159,7 +159,7 @@
     <comment>Qual e a principal atividade da sua empresa?</comment>
   </data>
   <data name="ActivitiesBusinessRoundProjects" xml:space="preserve">
-    <value>Perfil de Executivos: Selecione até 3 opções para as reuniões individuais</value>
+    <value>Perfil de Executivos</value>
   </data>
   <data name="Activity" xml:space="preserve">
     <value>Atividade</value>
@@ -322,7 +322,7 @@
     <value>Anexos</value>
   </data>
   <data name="AttachmentUrl" xml:space="preserve">
-    <value>Anexar Release, Link da plataforma de streaming ou Material de Apresentação</value>
+    <value>Insira o link do Release, da plataforma de streaming ou do Material de Apresentação</value>
   </data>
   <data name="AttendeeOrganizationMaxSellProjectsCount" xml:space="preserve">
     <value>Quantidade máxima de projetos por produtora</value>
@@ -2805,6 +2805,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Selecione</value>
     <comment>Selecione</comment>
   </data>
+  <data name="Select3OptionsForIndividualMeetings" xml:space="preserve">
+    <value>Selecione até 3 opções para as reuniões individuais</value>
+  </data>
   <data name="SelectAFEntity" xml:space="preserve">
     <value>Selecione uma {0}</value>
     <comment>Selecione uma {0}</comment>
@@ -2843,6 +2846,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="SelectImage" xml:space="preserve">
     <value>Selecionar imagem</value>
     <comment>Selecionar imagem</comment>
+  </data>
+  <data name="SelectOptionThatBestDescribesYourActivities" xml:space="preserve">
+    <value>Selecione a opção que melhor descreve suas atividades</value>
   </data>
   <data name="SelectOrSendPlayer" xml:space="preserve">
     <value>Selecionar player e/ou enviar</value>
@@ -3164,7 +3170,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Qual o perfil de participante que te interessa para as Rodadas de Negocios?</comment>
   </data>
   <data name="TargetAudiencesMusicBusinessRoundProject" xml:space="preserve">
-    <value>Perfil do Participante: Selecione a opção que melhor descreve suas atividades</value>
+    <value>Perfil do Participante</value>
   </data>
   <data name="TeaserLink" xml:space="preserve">
     <value>Link do teaser</value>

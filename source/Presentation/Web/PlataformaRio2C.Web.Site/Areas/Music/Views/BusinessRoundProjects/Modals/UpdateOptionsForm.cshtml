@@ -1,7 +1,12 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateMusicBusinessRoundProjectOptions
+﻿@using PlataformaRio2C.Domain.Dtos
+
+@model PlataformaRio2C.Application.CQRS.Commands.UpdateMusicBusinessRoundProjectOptions
 
 <div class="kt-section">
-    <h5>@Labels.TargetAudiencesMusicBusinessRoundProject</h5>
+    <div class="d-flex align-items-center">
+        <h5 class="mb-0">@Labels.TargetAudiencesMusicBusinessRoundProject</h5>
+        <span class="form-optional-input text-muted ms-2 ml-2">@Labels.SelectOptionThatBestDescribesYourActivities</span>
+    </div>
     @Html.ValidationMessage("TargetAudiencesUids", new { @class = "text-danger" })
     <div class="kt-section__content mt-3">
         <div class="kt-checkbox-list">
@@ -15,14 +20,17 @@
                            data-id="targetaudience-group"
                            @if (Model.TargetAudiencesUids?.Contains(targetAudience.Uid) == true) { <text> checked </text> } /> @targetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
                         <span></span>
-                </label>
+                    </label>
                 }
         </div>
     </div>
 </div>
 
 <div class="kt-section">
-    <h5>@Labels.ActivitiesBusinessRoundProjects</h5>
+    <div class="d-flex align-items-center">
+        <h5 class="mb-0">@Labels.ActivitiesBusinessRoundProjects</h5>
+        <span class="form-optional-input text-muted ms-2 ml-2">@Labels.Select3OptionsForIndividualMeetings</span>
+    </div>
     @Html.ValidationMessage("ActivitiesUids", new { @class = "text-danger" })
     <div class="kt-section__content mt-3">
         <div class="kt-checkbox-list">
@@ -30,14 +38,14 @@
             {
                 <label class="kt-checkbox">
                     <input type="checkbox"
-                        name="ActivitiesUids"
-                        value="@activity.Uid"
-                        class="require-one"
-                        data-id="activity-group"
-                        @if (Model.ActivitiesUids?.Contains(activity.Uid) == true) { <text> checked </text> } /> @activity.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
-                    <span></span>
-                </label>
-            }
+                           name="ActivitiesUids"
+                           value="@activity.Uid"
+                           class="require-one"
+                           data-id="activity-group"
+                           @if (Model.ActivitiesUids?.Contains(activity.Uid) == true) { <text> checked </text> } /> @activity.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                        <span></span>
+                    </label>
+                }
         </div>
     </div>
 </div>
@@ -51,7 +59,7 @@
                 {
                     var group = Model.Interests[i].FirstOrDefault();
                     <h5 class="mt-30">@(group?.InterestGroupName?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</h5>
-                    @Html.ValidationMessage(group?.InterestGroupUid.ToString(), new {@class = "text-danger"})
+                    @Html.ValidationMessage(group?.InterestGroupUid.ToString(), new { @class = "text-danger" })
                     <div class="kt-section__content mt-3">
                         <div class="row require-one-group" data-id="@(group?.InterestGroupUid)">
                             @Html.EditorFor(x => Model.Interests[i])
@@ -80,7 +88,7 @@
                 }
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group mt-4">
         @Html.LabelFor(m => m.PlayerCategoriesThatHaveOrHadContract, new { @class = "control-label" }) <span class="form-optional-input text-muted"></span>
         @Html.TextBoxFor(m => m.PlayerCategoriesThatHaveOrHadContract, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.PlayerCategoriesThatHaveOrHadContract, "", new { @class = "text-danger" })

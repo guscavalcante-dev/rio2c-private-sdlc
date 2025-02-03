@@ -1556,6 +1556,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Os dados do Perfil do Participante podem ser alterados.
+        /// </summary>
+        public static string ParticipantProfileCanChangedHere {
+            get {
+                return ResourceManager.GetString("ParticipantProfileCanChangedHere", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Senha de confirmação incorreta..
         /// </summary>
         public static string PasswordConfirmationDoesNotMatch {

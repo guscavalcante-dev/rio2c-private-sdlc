@@ -159,8 +159,7 @@
     <comment>Atividades</comment>
   </data>
   <data name="ActivitiesBusinessRoundProjects" xml:space="preserve">
-    <value>Segment of
-Interest: Select up to 3 options for individual meetings</value>
+    <value>Segment of Interest</value>
   </data>
   <data name="Activity" xml:space="preserve">
     <value>Activity</value>
@@ -323,8 +322,7 @@ Interest: Select up to 3 options for individual meetings</value>
     <value>Attachments</value>
   </data>
   <data name="AttachmentUrl" xml:space="preserve">
-    <value>Attach Press Release, Streaming Platform Link, or Presentation
-Material</value>
+    <value>Insert the link to the Release, streaming platform or Presentation Material</value>
   </data>
   <data name="AttendeeOrganizationMaxSellProjectsCount" xml:space="preserve">
     <value>Maximum number of projects by participant</value>
@@ -2805,6 +2803,9 @@ Material</value>
     <value>Select</value>
     <comment>Selecione</comment>
   </data>
+  <data name="Select3OptionsForIndividualMeetings" xml:space="preserve">
+    <value>Select up to 3 options for individual meetings</value>
+  </data>
   <data name="SelectAFEntity" xml:space="preserve">
     <value>Select a {0}</value>
     <comment>Selecione uma {0}</comment>
@@ -2843,6 +2844,9 @@ Material</value>
   <data name="SelectImage" xml:space="preserve">
     <value>Select image</value>
     <comment>Selecionar imagem</comment>
+  </data>
+  <data name="SelectOptionThatBestDescribesYourActivities" xml:space="preserve">
+    <value>Select the option that best describes your activities</value>
   </data>
   <data name="SelectOrSendPlayer" xml:space="preserve">
     <value>Select player and/or send</value>
@@ -3164,7 +3168,7 @@ Material</value>
     <comment>Público-alvo/Faixa-etária</comment>
   </data>
   <data name="TargetAudiencesMusicBusinessRoundProject" xml:space="preserve">
-    <value>Participant's Profile: Select the option that best describes your activities</value>
+    <value>Participant's Profile</value>
   </data>
   <data name="TeaserLink" xml:space="preserve">
     <value>Teaser Link</value>

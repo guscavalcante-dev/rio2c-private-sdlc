@@ -2,7 +2,15 @@
 @model PlataformaRio2C.Application.CQRS.Commands.UpdateMusicBusinessRoundProjectMainInformation
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
 }
+<div class="alert alert-solid-brand" role="alert">
+    <div class="alert-icon"><i class="flaticon-warning"></i></div>
+    <div class="alert-text">
+        @Messages.ParticipantProfileCanChangedHere
+        <a href="@Url.Action("Details", "Executives", new { Area = "", id = userAccessControlDto?.Collaborator?.Uid })" class="alert-link bold" target="_blank">aqui</a>
+    </div>
+</div>
 <div class="row">
     <div class="form-group col-md-12 mb-0">
         @Html.EditorFor(m => m.MusicBusinessRoundProjectExpectationsForMeetings)

@@ -712,6 +712,9 @@ The discursive field of player categories is mandatory if any player option has 
     <value>Showing {0} to {1} of {2}</value>
     <comment>Exibindo {0} a {1} de {2}</comment>
   </data>
+  <data name="ParticipantProfileCanChangedHere" xml:space="preserve">
+    <value>Participant Profile data can be changed</value>
+  </data>
   <data name="PasswordConfirmationDoesNotMatch" xml:space="preserve">
     <value>Incorrect confirmation password.</value>
     <comment>Senha de confirmação incorreta.</comment>

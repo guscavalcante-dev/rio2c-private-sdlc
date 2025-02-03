@@ -160,7 +160,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Perfil de Executivos: Selecione até 3 opções para as reuniões individuais.
+        ///   Looks up a localized string similar to Perfil de Executivos.
         /// </summary>
         public static string ActivitiesBusinessRoundProjects {
             get {
@@ -556,7 +556,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Anexar Release, Link da plataforma de streaming ou Material de Apresentação.
+        ///   Looks up a localized string similar to Insira o link do Release, da plataforma de streaming ou do Material de Apresentação.
         /// </summary>
         public static string AttachmentUrl {
             get {
@@ -6757,6 +6757,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Selecione até 3 opções para as reuniões individuais.
+        /// </summary>
+        public static string Select3OptionsForIndividualMeetings {
+            get {
+                return ResourceManager.GetString("Select3OptionsForIndividualMeetings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Selecione uma {0}.
         /// </summary>
         public static string SelectAFEntity {
@@ -6843,6 +6852,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string SelectImage {
             get {
                 return ResourceManager.GetString("SelectImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selecione a opção que melhor descreve suas atividades.
+        /// </summary>
+        public static string SelectOptionThatBestDescribesYourActivities {
+            get {
+                return ResourceManager.GetString("SelectOptionThatBestDescribesYourActivities", resourceCulture);
             }
         }
         
@@ -7639,7 +7657,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Perfil do Participante: Selecione a opção que melhor descreve suas atividades.
+        ///   Looks up a localized string similar to Perfil do Participante.
         /// </summary>
         public static string TargetAudiencesMusicBusinessRoundProject {
             get {

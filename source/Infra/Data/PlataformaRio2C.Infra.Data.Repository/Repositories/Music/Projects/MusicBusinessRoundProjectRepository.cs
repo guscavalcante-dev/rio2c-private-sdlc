@@ -141,14 +141,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
         /// <returns></returns>
         internal static IQueryable<MusicBusinessRoundProject> FindByProjectEvaluationStatus(this IQueryable<MusicBusinessRoundProject> query, Guid? evaluationStatusUid, Guid attendeeCollaboratorUid)
         {
-            //if (evaluationStatusUid != null)
-            //{
-            //    query = query.Where(p => p.MusicBusinessRoundProjectBuyerEvaluations.Any(pbe => !pbe.IsDeleted
-            //                                                                                      && !pbe.ProjectEvaluationStatus.IsDeleted
-            //                                                                                      && pbe.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators.Any(aoc => !aoc.IsDeleted
-            //                                                                                                                                                                    && aoc.AttendeeCollaborator.Uid == attendeeCollaboratorUid)
-            //                                                                                      && pbe.ProjectEvaluationStatus.Uid == evaluationStatusUid));
-            //}
+            if (evaluationStatusUid != null)
+            {
+                query = query.Where(p => p.MusicBusinessRoundProjectBuyerEvaluations.Any(pbe => !pbe.IsDeleted
+                                                                                                  && !pbe.ProjectEvaluationStatus.IsDeleted
+                                                                                                  && pbe.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators.Any(aoc => !aoc.IsDeleted
+                                                                                                                                                                                && aoc.AttendeeCollaborator.Uid == attendeeCollaboratorUid)
+                                                                                                  && pbe.ProjectEvaluationStatus.Uid == evaluationStatusUid));
+            }
 
             return query;
         }

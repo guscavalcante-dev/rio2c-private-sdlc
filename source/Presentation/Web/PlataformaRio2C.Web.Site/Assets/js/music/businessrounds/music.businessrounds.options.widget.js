@@ -83,6 +83,21 @@ var MusicBusinessRoundProjectsOptionsWidget = function () {
         if (typeof (MyRio2cCommonAdditionalInfo) !== 'undefined') {
             MyRio2cCommonAdditionalInfo.init();
         }
+
+        // Limit Activities checkboxes to 3 selections
+        var maxSelections = 3;
+        $('input[name="ActivitiesUids"]').on('change', function () {
+            var selected = $('input[name="ActivitiesUids"]:checked');
+
+            if (selected.length > maxSelections) {
+                $(this).prop('checked', false);
+                MyRio2cCommon.showAlert({
+                    message: "Você pode selecionar no máximo " + maxSelections + " Perfis de Participante",
+                    messageType: "warning",
+                    isFixed: false
+                });
+            }
+        });
     };
 
     var showUpdateModal = function () {
