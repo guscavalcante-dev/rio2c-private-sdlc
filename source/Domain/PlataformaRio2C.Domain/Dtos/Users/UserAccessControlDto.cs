@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-04-2019
 //
-// Last Modified By : Daniel Giese Rodrigues
-// Last Modified On : 01-08-2025
+// Last Modified By : Renan Valentim
+// Last Modified On : 02-03-2025
 // ***********************************************************************
 // <copyright file="UserAccessControlDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,7 +26,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<Role> Roles { get; set; }
         public Language Language { get; set; }
         public bool HasUnreadMessages { get; set; }
-        public int ProjectEvaluationsPendingCount { get; set; }
+        public int AudiovisualBusinessRoundProjectEvaluationsPendingCount { get; set; }
+        public int MusicBusinessRoundProjectEvaluationsPendingCount { get; set; }
 
         public Collaborator Collaborator { get; set; }
         public AttendeeCollaborator EditionAttendeeCollaborator { get; set; }
