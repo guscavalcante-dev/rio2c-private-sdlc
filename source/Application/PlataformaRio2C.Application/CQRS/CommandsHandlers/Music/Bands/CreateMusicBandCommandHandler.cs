@@ -317,8 +317,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 }
 
                 this.MusicBandRepo.Create(musicBand);
-                this.Uow.SaveChanges();
-                //this.AppValidationResult.Data = musicBand;
+                var saveChangesResult = this.Uow.SaveChanges();
+
+                foreach (var saveResult in saveChangesResult.ValidationResults)
+                    this.AppValidationResult.Add(saveResult.ErrorMessage);
+
+                if (!saveChangesResult.Success)
+                    return this.AppValidationResult;
 
                 //Uploads the Image
                 if (!string.IsNullOrEmpty(musicBandDataApiDto.ImageFile))

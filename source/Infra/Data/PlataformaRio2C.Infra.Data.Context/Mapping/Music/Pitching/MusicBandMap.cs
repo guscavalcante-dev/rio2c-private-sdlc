@@ -48,6 +48,12 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.Property(t => t.Tiktok)
                 .HasMaxLength(MusicBand.TiktokMaxLength);
 
+            this.Property(t => t.Spotify)
+               .HasMaxLength(MusicBand.SpotifyMaxLength);
+
+            this.Property(t => t.Deezer)
+              .HasMaxLength(MusicBand.DeezerMaxLength);
+
             // Relationships
             this.HasRequired(t => t.MusicBandType)
                 .WithMany()
