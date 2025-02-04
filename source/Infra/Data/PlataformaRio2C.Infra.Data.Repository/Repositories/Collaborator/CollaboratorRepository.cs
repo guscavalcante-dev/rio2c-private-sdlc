@@ -1702,7 +1702,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                 }
                                                                                             }))
                             })
-                            .ToListPagedAsync(page, pageSize);
+                            .ToGenericPagedListAsync(page, pageSize);
         }
 
         /// <summary>
