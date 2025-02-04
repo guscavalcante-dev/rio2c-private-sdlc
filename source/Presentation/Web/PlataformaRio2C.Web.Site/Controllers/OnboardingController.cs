@@ -826,7 +826,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(projectTypeId),
                 true,
                 true,
-                true
+                true,
+                projectTypeId
             );
 
             return View(cmd);

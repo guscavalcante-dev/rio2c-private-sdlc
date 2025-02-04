@@ -942,7 +942,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
                 true,
                 true,
-                true);
+                true,
+                ProjectType.Audiovisual.Id);
 
             return View(cmd);
         }
