@@ -28,20 +28,13 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         /// <returns></returns>
         public static async Task<IPagedList<T>> ToGenericPagedListAsync<T>(this IQueryable<T> query, int page, int pageSize)
         {
-            try
-            {
-                page++;
-                // Page the list
-                var pagedList = await query.ToPagedListAsync(page, pageSize);
-                if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
-                    pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
+            page++;
+            // Page the list
+            var pagedList = await query.ToPagedListAsync(page, pageSize);
+            if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
+                pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
 
-                return pagedList;
-            }
-            catch (System.Exception ex)
-            {
-                throw;
-            }
+            return pagedList;
         }
     }
 }
