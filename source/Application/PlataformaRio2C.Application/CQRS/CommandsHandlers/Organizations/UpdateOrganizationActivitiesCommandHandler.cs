@@ -77,7 +77,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         )
                     )
                     ?.ToList(),
-                cmd.UserId);
+                cmd.UserId,
+                cmd.ProjectTypeId ?? ProjectType.Audiovisual.Id);
             if (!organization.IsValid())
             {
                 this.AppValidationResult.Add(organization.ValidationResult);

@@ -37,8 +37,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<TargetAudience> targetAudiences,
             bool isDescriptionRequired, 
             bool isAddressRequired, 
-            bool isImageRequired)
-            : base(entity, languagesDtos, countriesBaseDtos, activities, targetAudiences, isDescriptionRequired, isAddressRequired, isImageRequired)
+            bool isImageRequired,
+            int projectTypeId)
+            : base(entity, languagesDtos, countriesBaseDtos, activities, targetAudiences, isDescriptionRequired, isAddressRequired, isImageRequired, projectTypeId)
         {
         }
 

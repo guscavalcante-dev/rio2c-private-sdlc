@@ -44,8 +44,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isDescriptionRequired, 
             bool isAddressRequired, 
             bool isImageRequired,
+            int projectTypeId,
             bool isVirtualMeetingRequired = true)
-            : base(entity, languagesDtos, countriesBaseDtos, activities, targetAudiences, isDescriptionRequired, isAddressRequired, isImageRequired, isVirtualMeetingRequired)
+            : base(entity, languagesDtos, countriesBaseDtos, activities, targetAudiences, isDescriptionRequired, isAddressRequired, isImageRequired, projectTypeId,isVirtualMeetingRequired)
         {
         }
 
