@@ -59,22 +59,22 @@
                                 <div class="col-lg-12 kt-align-right pl-0 pr-0">
                                     @if (editionDto?.IsAudiovisualProjectSubmitStarted() != true || editionDto.IsAudiovisualProjectSubmitEnded() != true)
                                     {
-                                        var subscriptionUrl = Url.Action("SubmittedList", "Projects", new { Area = "" });
-                                        var editionUrl = Url.Action("SubmittedList", "Projects", new { Area = "" });
+                                        var subscriptionUrl = Url.Action("SubmittedList", "PitchingProjects", new { Area = "Audiovisual" });
+                                        var editionUrl = Url.Action("SubmittedList", "PitchingProjects", new { Area = "Audiovisual" });
                                         if (editionDto?.IsAudiovisualProjectSubmitStarted() != true)
                                         {
-                                            subscriptionUrl = Url.Action("Index", "Projects", new { Area = "" });
-                                            editionUrl = Url.Action("Index", "Projects", new { Area = "" });
+                                            subscriptionUrl = Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" });
+                                            editionUrl = Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" });
                                         }
 
                                         <a href="@subscriptionUrl" class="btn btn-brand mt-1">@Labels.Submit</a>
                                         <a href="@editionUrl" class="btn btn-secondary mt-1">@Labels.Edit</a>
                                     }
                                     @{
-                                        var resultUrl = Url.Action("SubmittedList", "Projects", new { Area = "" });
+                                        var resultUrl = Url.Action("SubmittedList", "PitchingProjects", new { Area = "Audiovisual" });
                                         if (editionDto?.IsAudiovisualProjectSubmitEnded() != true)
                                         {
-                                            resultUrl = Url.Action("Index", "Projects", new { Area = "" });
+                                            resultUrl = Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" });
                                         }
                                     }
                                     <a href="@resultUrl" class="btn btn-secondary mt-1">@Labels.Result</a>
@@ -120,7 +120,7 @@
                         <div class="kt-portlet__foot pl-0 pr-0">
                             <div class="row align-items-center">
                                 <div class="col-lg-12 kt-align-right pl-0 pr-0">
-                                    @{var resultUrl = Url.Action("EvaluationList", "Projects", new { Area = "" }); }
+                                    @{var resultUrl = Url.Action("EvaluationList", "PitchingProjects", new { Area = "Audiovisual" }); }
                                     @if (editionDto?.IsProjectBuyerEvaluationOpen() == true)
                                     {
                                         <a href="@resultUrl" class="btn btn-brand">@Labels.EvaluateProjects</a>
