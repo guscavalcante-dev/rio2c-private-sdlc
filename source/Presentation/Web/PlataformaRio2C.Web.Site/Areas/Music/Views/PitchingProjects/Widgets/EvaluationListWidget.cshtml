@@ -28,7 +28,7 @@
                     <div class="kt-pagination kt-pagination--brand justify-content-center justify-content-sm-between">
                         @Html.PagedListPager(
                             Model,
-                            page => Url.Action("ShowEvaluationListWidget", "Projects", new {
+                            page => Url.Action("ShowEvaluationListWidget", "PitchingProjects", new {
                                 Area = "Music",
                                 searchKeywords = ViewBag.SearchKeywords,
                                 musicGenreUid = ViewBag.MusicGenreUid,

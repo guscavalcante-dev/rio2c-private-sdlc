@@ -17,7 +17,7 @@ using X.PagedList;
 
 namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 {
-    internal static class PagedListExtensions
+    public static class PagedListExtensions
     {
         /// <summary>
         /// To the list paged.
@@ -26,10 +26,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        internal static async Task<IPagedList<T>> ToListPagedAsync<T>(this IQueryable<T> query, int page, int pageSize)
+        public static async Task<IPagedList<T>> ToGenericPagedListAsync<T>(this IQueryable<T> query, int page, int pageSize)
         {
             page++;
-
             // Page the list
             var pagedList = await query.ToPagedListAsync(page, pageSize);
             if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)

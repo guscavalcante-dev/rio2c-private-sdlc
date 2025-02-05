@@ -84,7 +84,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Music, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "Music" }))
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "PitchingProjects", new { Area = "Music" }))
             });
 
             #endregion
@@ -108,13 +108,13 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         {
             if (this.EditionDto?.IsMusicPitchingCommissionEvaluationStarted() != true)
             {
-                return RedirectToAction("Index", "Projects", new { Area = "Music" });
+                return RedirectToAction("Index", "PitchingProjects", new { Area = "Music" });
             }
 
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.MusicProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Music, Url.Action("EvaluationList", "Projects", new { Area = "Music" })),
+                new BreadcrumbItemHelper(Labels.Music, Url.Action("EvaluationList", "PitchingProjects", new { Area = "Music" })),
             });
 
             #endregion
@@ -237,21 +237,21 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             if (this.EditionDto?.IsMusicPitchingCommissionEvaluationStarted() != true)
             {
                 this.StatusMessageToastr(Messages.OutOfEvaluationPeriod, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "Projects", new { Area = "Music" });
+                return RedirectToAction("Index", "PitchingProjects", new { Area = "Music" });
             }
 
             var musicProjectDto = await this.musicProjectRepo.FindDtoToEvaluateAsync(id ?? 0);
             if (musicProjectDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("EvaluationList", "Projects", new { Area = "Music" });
+                return RedirectToAction("EvaluationList", "PitchingProjects", new { Area = "Music" });
             }
 
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.MusicProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Music, Url.Action("EvaluationList", "Projects", new { Area = "Music", searchKeywords, musicGenreUid, evaluationStatusUid, page, pageSize })),
-                new BreadcrumbItemHelper(musicProjectDto.AttendeeMusicBandDto?.MusicBand?.Name ?? Labels.Project, Url.Action("EvaluationDetails", "Projects", new { Area = "Music", id }))
+                new BreadcrumbItemHelper(Labels.Music, Url.Action("EvaluationList", "PitchingProjects", new { Area = "Music", searchKeywords, musicGenreUid, evaluationStatusUid, page, pageSize })),
+                new BreadcrumbItemHelper(musicProjectDto.AttendeeMusicBandDto?.MusicBand?.Name ?? Labels.Project, Url.Action("EvaluationDetails", "PitchingProjects", new { Area = "Music", id }))
             });
 
             #endregion

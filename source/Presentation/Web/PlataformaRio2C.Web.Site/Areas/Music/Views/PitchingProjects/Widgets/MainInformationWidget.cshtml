@@ -18,7 +18,7 @@
     <div class="kt-widget kt-widget--user-profile-3">
         <div class="kt-widget__top">
             <div style="float: right;">
-                <a href="@Url.Action("EvaluationDetails", "Projects", new {Area = "Music", id = Model.MusicProject?.Id})" target="_blank">
+                <a href="@Url.Action("EvaluationDetails", "PitchingProjects", new {Area = "Music", id = Model.MusicProject?.Id})" target="_blank">
                     @if (Model.AttendeeMusicBandDto?.MusicBand?.HasImage() == true)
                     {
                         <div class="kt-widget__media">

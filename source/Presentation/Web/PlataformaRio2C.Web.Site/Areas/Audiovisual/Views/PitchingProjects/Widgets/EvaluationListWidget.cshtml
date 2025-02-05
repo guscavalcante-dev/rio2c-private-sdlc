@@ -29,7 +29,7 @@
                     <div class="kt-pagination kt-pagination--brand justify-content-center justify-content-sm-between">
                         @Html.PagedListPager(
                             Model,
-                            page => Url.Action("ShowEvaluationListWidget", "Projects", new { searchKeywords = ViewBag.SearchKeywords, interestUid = ViewBag.InterestUid, evaluationStatusUid = ViewBag.EvaluationStatusUid, page, pageSize = ViewBag.PageSize }),
+                            page => Url.Action("ShowEvaluationListWidget", "PitchingProjects", new { Area = "Audiovisual", searchKeywords = ViewBag.SearchKeywords, interestUid = ViewBag.InterestUid, evaluationStatusUid = ViewBag.EvaluationStatusUid, page, pageSize = ViewBag.PageSize }),
                             PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
                                 new PagedListRenderOptions
                                 {

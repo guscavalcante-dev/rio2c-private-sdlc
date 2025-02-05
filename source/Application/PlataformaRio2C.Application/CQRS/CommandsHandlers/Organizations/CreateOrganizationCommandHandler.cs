@@ -156,7 +156,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.OrganizationActivities?.Where(oa => oa.IsChecked)?.Select(oa => new OrganizationActivity(activities?.FirstOrDefault(a => a.Uid == oa.ActivityUid), oa.AdditionalInfo, cmd.UserId))?.ToList(),
                 cmd.OrganizationTargetAudiences?.Where(ota => ota.IsChecked)?.Select(ota => new OrganizationTargetAudience(targetAudiences?.FirstOrDefault(a => a.Uid == ota.TargetAudienceUid), ota.AdditionalInfo, cmd.UserId))?.ToList(),
                 organizationInterests,
-                cmd.UserId);
+                cmd.UserId,
+                cmd.ProjectType.Id);
             if (!organization.IsValid())
             {
                 this.AppValidationResult.Add(organization.ValidationResult);
