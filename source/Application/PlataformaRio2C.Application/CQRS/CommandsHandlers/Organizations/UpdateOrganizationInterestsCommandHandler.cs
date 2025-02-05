@@ -69,7 +69,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
             var interestsDtos = await this.interestRepo.FindAllDtosByProjectTypeIdAsync(
-                cmd.ProjectTypeId ?? ProjectType.Audiovisual.Id
+                cmd.ProjectTypeId ?? ProjectType.AudiovisualBusinessRound.Id
             );
 
             // Interests

@@ -91,10 +91,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
             var activities = await this.activityRepo.FindAllByProjectTypeIdAsync(
-                cmd.ProjectTypeId ?? ProjectType.Audiovisual.Id
+                cmd.ProjectTypeId ?? ProjectType.AudiovisualBusinessRound.Id
             );
             var targetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(
-                cmd.ProjectTypeId ?? ProjectType.Audiovisual.Id
+                cmd.ProjectTypeId ?? ProjectType.AudiovisualBusinessRound.Id
             );
 
             organization.OnboardPlayerData(

@@ -88,7 +88,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             collaborator.UpdateCollaboratorInterests(
                 edition,
-                ProjectType.Audiovisual,
+                ProjectType.AudiovisualBusinessRound,
                 attendeeCollaboratorInterests,
                 cmd.UserId);
             if (!collaborator.IsValid())

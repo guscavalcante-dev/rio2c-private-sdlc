@@ -452,6 +452,14 @@
     <Compile Include="Migrations\202501302300392_UpdateMigrations_20250130.Designer.cs">
       <DependentUpon>202501302300392_UpdateMigrations_20250130.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202502051813539_UpdateSubgendersEntititesForAudiovisual.cs" />
+    <Compile Include="Migrations\202502051813539_UpdateSubgendersEntititesForAudiovisual.Designer.cs">
+      <DependentUpon>202502051813539_UpdateSubgendersEntititesForAudiovisual.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202502051829269_UpdateInterestGroupForAudiovisualSubgenres.cs" />
+    <Compile Include="Migrations\202502051829269_UpdateInterestGroupForAudiovisualSubgenres.Designer.cs">
+      <DependentUpon>202502051829269_UpdateInterestGroupForAudiovisualSubgenres.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -627,10 +635,22 @@
     <Content Include="Migrations\Scripts\202501241333002_UpdateMusicInterestGroupsNames.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Migrations\Scripts\202502051829269_UpdateInterestGroupForAudiovisualSubgenres.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202502051829269_UpdateInterestGroupForAudiovisualSubgenres.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202502051813539_UpdateSubgendersEntititesForAudiovisual.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Migrations\Scripts\202501301754441_UpdateMusicBusinessRoundProjectExpectationsForMeetingMaxValue.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202501291828281_InsertInterestForMusic.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202502051813539_UpdateSubgendersEntititesForAudiovisual.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202501301754441_UpdateMusicBusinessRoundProjectExpectationsForMeetingMaxValue.up.sql">
@@ -858,6 +878,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202501302300392_UpdateMigrations_20250130.resx">
       <DependentUpon>202501302300392_UpdateMigrations_20250130.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202502051813539_UpdateSubgendersEntititesForAudiovisual.resx">
+      <DependentUpon>202502051813539_UpdateSubgendersEntititesForAudiovisual.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202502051829269_UpdateInterestGroupForAudiovisualSubgenres.resx">
+      <DependentUpon>202502051829269_UpdateInterestGroupForAudiovisualSubgenres.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -63,7 +63,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             var activities = await this.activityRepo.FindAllByProjectTypeIdAsync(
-                cmd.ProjectTypeId ?? ProjectType.Audiovisual.Id
+                cmd.ProjectTypeId ?? ProjectType.AudiovisualBusinessRound.Id
             );
 
             organization.UpdateOrganizationActivities(

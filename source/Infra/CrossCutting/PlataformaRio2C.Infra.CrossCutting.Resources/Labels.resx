@@ -332,6 +332,9 @@
     <value>Audiovisual</value>
     <comment>Audiovisual</comment>
   </data>
+  <data name="AudiovisualBusinessRound" xml:space="preserve">
+    <value>Audiovisual - Rodadas de Negócio</value>
+  </data>
   <data name="AudiovisualBusinessRoundRules" xml:space="preserve">
     <value>Regulamento de rodadas de negócio</value>
   </data>
@@ -373,6 +376,9 @@
   </data>
   <data name="AudiovisualNegotiationsVirtualMeetingsJoinMinutes" xml:space="preserve">
     <value>Tempo de espera para liberação da sala de reunião virtual</value>
+  </data>
+  <data name="AudiovisualPitching" xml:space="preserve">
+    <value>Audiovisual - Pitching</value>
   </data>
   <data name="AudiovisualPitchingRules" xml:space="preserve">
     <value>Regulamento de pitching</value>
