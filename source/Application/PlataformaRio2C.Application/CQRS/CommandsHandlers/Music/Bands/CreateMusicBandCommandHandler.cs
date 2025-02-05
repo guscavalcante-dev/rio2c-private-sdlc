@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 23-03-2021
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 11-19-2024
+// Last Modified By : Renan Valentim
+// Last Modified On : 02-05-2025
 // ***********************************************************************
 // <copyright file="CreateMusicBandCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -182,8 +182,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var collaboratorDto = await collaboratorRepo.FindByDocumentAsync(cmd.MusicBandResponsibleApiDto.Document, editionDto.Id);
 
-            string musicBandResponsibleName = string.IsNullOrEmpty(cmd.MusicBandResponsibleApiDto.Name) ? 
-                cmd.MusicBandResponsibleApiDto.StageName : 
+            string musicBandResponsibleName = string.IsNullOrEmpty(cmd.MusicBandResponsibleApiDto.Name) ?
+                cmd.MusicBandResponsibleApiDto.StageName :
                 cmd.MusicBandResponsibleApiDto.Name;
 
             if (collaboratorDto == null)
@@ -319,11 +319,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 this.MusicBandRepo.Create(musicBand);
                 var saveChangesResult = this.Uow.SaveChanges();
 
-                foreach (var saveResult in saveChangesResult.ValidationResults)
-                    this.AppValidationResult.Add(saveResult.ErrorMessage);
-
                 if (!saveChangesResult.Success)
+                {
+                    foreach (var saveResult in saveChangesResult?.ValidationResults)
+                    {
+                        this.AppValidationResult.Add(saveResult.ErrorMessage);
+                    }
+
                     return this.AppValidationResult;
+                }
 
                 //Uploads the Image
                 if (!string.IsNullOrEmpty(musicBandDataApiDto.ImageFile))
