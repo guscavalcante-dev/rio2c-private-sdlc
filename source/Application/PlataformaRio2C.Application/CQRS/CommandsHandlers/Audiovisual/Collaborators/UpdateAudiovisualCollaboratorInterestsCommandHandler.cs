@@ -71,7 +71,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            var interestsDtos = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.AudiovisualGenre.Uid);
+            var interestsDtos = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.AudiovisualPítchingSubGenre.Uid);
 
             // Interests
             var attendeeCollaboratorInterests = new List<AttendeeCollaboratorInterest>();
