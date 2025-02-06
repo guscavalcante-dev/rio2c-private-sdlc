@@ -793,7 +793,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd = new UpdateOrganizationInterests(
                     interestWidgetDto,
-                    await this.interestRepo.FindAllDtosbyProjectTypeIdAsync(projectTypeId ?? ProjectType.AudiovisualBusinessRound.Id),
+                    await this.interestRepo.FindAllDtosByProjectTypeIdAsync(projectTypeId ?? ProjectType.AudiovisualBusinessRound.Id),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     projectTypeId != ProjectType.Music.Id
                 );
