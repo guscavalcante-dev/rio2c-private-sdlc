@@ -399,7 +399,7 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             tableSubGenre.DefaultCell.VerticalAlignment = Element.ALIGN_TOP;
 
             chips = new List<Chunk>();
-            var subgeneroDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualSubGenre.Uid);
+            var subgeneroDtos = this.Project.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualBusinessRoundSubGenre.Uid);
             if (subgeneroDtos?.Any() == true)
             {
                 foreach (var subgeneroDto in subgeneroDtos)

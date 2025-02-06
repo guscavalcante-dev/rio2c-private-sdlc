@@ -86,7 +86,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             // Create if the user was not found in database
             if (user == null)
             {
-                var interestsDtos = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.AudiovisualGenre.Uid);
+                var interestsDtos = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.AudiovisualPítchingSubGenre.Uid);
 
                 // Interests
                 var attendeeCollaboratorInterests = new List<AttendeeCollaboratorInterest>();
