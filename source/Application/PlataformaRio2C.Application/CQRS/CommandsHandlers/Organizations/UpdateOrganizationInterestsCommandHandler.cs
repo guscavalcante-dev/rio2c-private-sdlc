@@ -106,7 +106,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             organization.UpdateOrganizationInterests(
                 organizationInterests,
-                cmd.UserId);
+                cmd.UserId,cmd.ProjectTypeId.Value);
             if (!organization.IsValid())
             {
                 this.AppValidationResult.Add(organization.ValidationResult);

@@ -91,7 +91,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public List<TargetAudience> TargetAudiences { get; private set; }
         public List<CountryBaseDto> CountriesBaseDtos { get; private set; }
-
+        public int ProjectTypeId { get; private set; }
         public UserBaseDto UpdaterBaseDto { get; set; }
         public DateTimeOffset? UpdateDate { get; set; }
 
@@ -113,6 +113,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isDescriptionRequired, 
             bool isAddressRequired, 
             bool isImageRequired,
+            int projectTypeId,
             bool isVirtualMeetingRequired = true)
         {
             this.OrganizationUid = entity?.Uid;
@@ -136,6 +137,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateDate = entity?.UpdateDate;
             this.IsVirtualMeetingRequired = isVirtualMeetingRequired;
             this.IsVirtualMeeting = entity?.IsVirtualMeeting;
+            this.ProjectTypeId = projectTypeId;
         }
 
         /// <summary>Initializes a new instance of the <see cref="OrganizationSiteBaseCommand"/> class.</summary>

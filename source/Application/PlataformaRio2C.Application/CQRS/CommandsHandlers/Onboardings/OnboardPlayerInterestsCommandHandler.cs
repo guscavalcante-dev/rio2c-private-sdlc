@@ -99,7 +99,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 await this.organizationTypeRepo.GetAsync(cmd.OrganizationType?.Uid ?? Guid.Empty),
                 cmd.RestrictionSpecifics?.Select(d => new OrganizationRestrictionSpecific(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 organizationInterests,
-                cmd.UserId);
+                cmd.UserId,
+                cmd.ProjectTypeId.Value);
             if (!organization.IsValid())
             {
                 this.AppValidationResult.Add(organization.ValidationResult);

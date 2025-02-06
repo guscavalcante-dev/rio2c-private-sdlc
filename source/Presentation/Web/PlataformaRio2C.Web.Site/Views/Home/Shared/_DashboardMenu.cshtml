@@ -147,20 +147,20 @@
                         CollaboratorType.Industry.Name
                     }) == true)
                     {
-                        var projectsUrl = Url.Action("Index", "Projects", new { Area = "" });
+                        var projectsUrl = Url.Action("Index", "BusinessRoundProjects", new { Area = "Audiovisual" });
                         if (editionDto?.IsAudiovisualProjectSubmitStarted() == true && userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true)
                         {
-                            projectsUrl = Url.Action("SubmittedList", "Projects", new { Area = "" });
+                            projectsUrl = Url.Action("SubmittedList", "BusinessRoundProjects", new { Area = "Audiovisual" });
                         }
                         else if (userAccessControlDto?.HasCollaboratorType(CollaboratorType.PlayerExecutiveAudiovisual.Name) == true)
                         {
-                            projectsUrl = Url.Action("EvaluationList", "Projects", new { Area = "" });
+                            projectsUrl = Url.Action("EvaluationList", "BusinessRoundProjects", new { Area = "Audiovisual" });
                             if (editionDto?.IsProjectBuyerEvaluationStarted() != true)
                             {
-                                projectsUrl = Url.Action("Index", "Projects", new { Area = "" });
+                                projectsUrl = Url.Action("Index", "BusinessRoundProjects", new { Area = "Audiovisual" });
                             }
                         }
-                        <li class="kt-nav__item @this.IsOpen(menuOpenCssClass, null, "Projects", null)">
+                        <li class="kt-nav__item @this.IsOpen(menuOpenCssClass, null, "BusinessRoundProjects", "Audiovisual")">
                             <a class="kt-nav__link" href="@projectsUrl">
                                 <span class="kt-nav__link-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">

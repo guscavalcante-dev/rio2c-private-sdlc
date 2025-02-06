@@ -129,7 +129,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     }
                 }
             }
-
+            
             organization.Update(
                 holding,
                 edition,
@@ -163,7 +163,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.OrganizationTargetAudiences?.Where(ota => ota.IsChecked)?.Select(ota => new OrganizationTargetAudience(targetAudiences?.FirstOrDefault(a => a.Uid == ota.TargetAudienceUid), ota.AdditionalInfo, cmd.UserId))?.ToList(),
                 organizationInterests,
                 cmd.IsAddingToCurrentEdition,
-                cmd.UserId);
+                cmd.UserId,
+                cmd.ProjectType.Id);
             if (!organization.IsValid())
             {
                 this.AppValidationResult.Add(organization.ValidationResult);

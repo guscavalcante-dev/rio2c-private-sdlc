@@ -76,7 +76,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         )
                     )
                     ?.ToList(),
-                cmd.UserId
+                cmd.UserId,
+                cmd.ProjectTypeId
             );
             if (!organization.IsValid())
             {

@@ -956,7 +956,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.AudiovisualBusinessRound.Id),
                     true,
                     true,
-                    true);
+                    true,
+                    ProjectType.Audiovisual.Id);
             }
             catch (DomainException ex)
             {
