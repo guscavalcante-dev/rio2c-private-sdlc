@@ -93,7 +93,9 @@ namespace PlataformaRio2C.Domain.Dtos
         public int InnovationCommissionMinimumEvaluationsCount { get; private set; }
         public int InnovationCommissionMaximumApprovedCompaniesCount { get; private set; }
 
-        // Audiovisual - Commissions
+        // Audiovisual - Pitching
+        public DateTimeOffset? AudiovisualSubmitProjectStartDate { get; private set; }
+        public DateTimeOffset? AudiovisualSubmitProjectEndDate { get; private set; }
         public DateTimeOffset AudiovisualCommissionEvaluationStartDate { get; private set; }
         public DateTimeOffset AudiovisualCommissionEvaluationEndDate { get; private set; }
         public int AudiovisualCommissionMinimumEvaluationsCount { get; private set; }
@@ -203,7 +205,9 @@ namespace PlataformaRio2C.Domain.Dtos
             this.InnovationCommissionMinimumEvaluationsCount = entity.InnovationCommissionMinimumEvaluationsCount;
             this.InnovationCommissionMaximumApprovedCompaniesCount = entity.InnovationCommissionMaximumApprovedCompaniesCount;
 
-            // Audiovisual - Commissions
+            // Audiovisual - Pitching
+            this.AudiovisualSubmitProjectStartDate = entity.AudiovisualPitchingSubmitStartDate;
+            this.AudiovisualSubmitProjectEndDate = entity.AudiovisualPitchingSubmitEndDate;
             this.AudiovisualNegotiationsCreateStartDate = entity.AudiovisualNegotiationsCreateStartDate;
             this.AudiovisualNegotiationsCreateEndDate = entity.AudiovisualNegotiationsCreateEndDate;
             this.AudiovisualCommissionEvaluationStartDate = entity.AudiovisualCommissionEvaluationStartDate;
@@ -363,6 +367,43 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool IsAudiovisualCommissionProjectEvaluationEnded()
         {
             return DateTime.UtcNow > this.AudiovisualCommissionEvaluationEndDate;
+        }
+
+        #endregion
+
+        #region Project Pitching Submission - Audiovisual
+
+        /// <summary>
+        /// Determines whether the audiovisual project submission period is open.
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if the submission period is open; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsAudiovisualPitchingSubmitProjectOpen()
+        {
+            return DateTime.UtcNow >= this.AudiovisualSubmitProjectStartDate && DateTime.UtcNow <= this.AudiovisualSubmitProjectEndDate;
+        }
+
+        /// <summary>
+        /// Determines whether the audiovisual project submission period has started.
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if the submission period has started; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsAudiovisualPitchingSubmitProjectStarted()
+        {
+            return DateTime.UtcNow >= this.AudiovisualSubmitProjectStartDate;
+        }
+
+        /// <summary>
+        /// Determines whether the audiovisual project submission period has ended.
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if the submission period has ended; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsAudiovisualPitchingSubmitProjectEnded()
+        {
+            return DateTime.UtcNow > this.AudiovisualSubmitProjectEndDate;
         }
 
         #endregion

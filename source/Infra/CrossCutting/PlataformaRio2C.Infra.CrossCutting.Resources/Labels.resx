@@ -387,6 +387,12 @@
     <value>Pitching de Audiovisual</value>
     <comment>Pitching de Audiovisual</comment>
   </data>
+  <data name="AudiovisualPitchingSubmitEndDate" xml:space="preserve">
+    <value>Data de término do envio de projetos de Pitching Audiovisual</value>
+  </data>
+  <data name="AudiovisualPitchingSubmitStartDate" xml:space="preserve">
+    <value>Data de início do envio de projetos de Pitching Audiovisual</value>
+  </data>
   <data name="AudiovisualPlayer" xml:space="preserve">
     <value>Player de Audiovisual</value>
   </data>

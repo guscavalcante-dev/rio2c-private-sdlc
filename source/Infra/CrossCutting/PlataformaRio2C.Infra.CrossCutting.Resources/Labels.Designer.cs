@@ -727,6 +727,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data de término do envio de projetos de Pitching Audiovisual.
+        /// </summary>
+        public static string AudiovisualPitchingSubmitEndDate {
+            get {
+                return ResourceManager.GetString("AudiovisualPitchingSubmitEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de início do envio de projetos de Pitching Audiovisual.
+        /// </summary>
+        public static string AudiovisualPitchingSubmitStartDate {
+            get {
+                return ResourceManager.GetString("AudiovisualPitchingSubmitStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Player de Audiovisual.
         /// </summary>
         public static string AudiovisualPlayer {
