@@ -22,7 +22,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 {
     public class AudiovisualCommissionCollaboratorBaseCommand : CollaboratorBaseCommand
     {
-        //TODO: Essa lista tem que ser AttendeeCollaboratorInterestBaseCommand
         [Display(Name = "SubGenre", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneOption")]
         public InterestBaseCommand[][] Interests { get; set; }
