@@ -71,7 +71,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            var interestsDtos = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.AudiovisualGenre.Uid);
+            var interestsDtos = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.AudiovisualPitchingSubGenre.Uid);
 
             // Interests
             var attendeeCollaboratorInterests = new List<AttendeeCollaboratorInterest>();
@@ -88,7 +88,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             collaborator.UpdateCollaboratorInterests(
                 edition,
-                ProjectType.AudiovisualBusinessRound,
+                ProjectType.AudiovisualPitching,
                 attendeeCollaboratorInterests,
                 cmd.UserId);
             if (!collaborator.IsValid())

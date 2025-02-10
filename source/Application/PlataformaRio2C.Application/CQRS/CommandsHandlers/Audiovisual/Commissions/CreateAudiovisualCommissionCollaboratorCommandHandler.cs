@@ -86,7 +86,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             // Create if the user was not found in database
             if (user == null)
             {
-                var interestsDtos = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.AudiovisualGenre.Uid);
+                var interestsDtos = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.AudiovisualPitchingSubGenre.Uid);
 
                 // Interests
                 var attendeeCollaboratorInterests = new List<AttendeeCollaboratorInterest>();
@@ -104,7 +104,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 var collaborator = Collaborator.CreateAudiovisualCommissionCollaborator(
                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                     await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
-                    ProjectType.AudiovisualBusinessRound,
+                    ProjectType.AudiovisualPitching,
                     cmd.FirstName,
                     cmd.LastNames,
                     cmd.Email,
