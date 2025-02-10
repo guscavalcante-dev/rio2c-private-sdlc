@@ -391,6 +391,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.InnovationCommissionMinimumEvaluationsCount = editionDto.Edition.InnovationCommissionMinimumEvaluationsCount;
 
             // Audiovisual - Pitching
+
+            this.AudiovisualPitchingSubmitStartDate = editionDto.Edition.AudiovisualPitchingSubmitStartDate.ToBrazilTimeZone();
+            this.AudiovisualPitchingSubmitEndDate = editionDto.Edition.AudiovisualPitchingSubmitEndDate.ToBrazilTimeZone();
+
             this.AudiovisualCommissionEvaluationStartDate = editionDto.Edition.AudiovisualCommissionEvaluationStartDate.ToBrazilTimeZone();
             this.AudiovisualCommissionEvaluationEndDate = editionDto.Edition.AudiovisualCommissionEvaluationEndDate.ToBrazilTimeZone();
             this.AudiovisualCommissionMaximumApprovedProjectsCount = editionDto.Edition.AudiovisualCommissionMaximumApprovedProjectsCount;
