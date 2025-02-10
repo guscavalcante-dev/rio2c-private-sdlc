@@ -30,7 +30,7 @@
 
 
         -- 4. Insert new Interests linked to the InterestGroup (Subgênero)
-        DECLARE @InterestGroupId INT = (SELECT TOP 1 [Id] FROM [dbo].[InterestGroups] WHERE [Name] = 'Subgênero');
+        DECLARE @InterestGroupId INT = (SELECT TOP 1 [Id] FROM [dbo].[InterestGroups] WHERE [UID] = '55FD72C1-B3D5-4DD5-8A3E-44B1B0BAF5A3');
 
         INSERT INTO [dbo].[Interests]
             ([Uid], [InterestGroupId], [Name], [DisplayOrder], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId], [HasAdditionalInfo], [Description])
