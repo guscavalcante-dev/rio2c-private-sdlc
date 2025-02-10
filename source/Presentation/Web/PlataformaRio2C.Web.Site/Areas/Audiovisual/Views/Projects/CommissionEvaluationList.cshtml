@@ -22,7 +22,7 @@
         <div class="row">
             <div class="col-12 col-sm-6 mt-2">
                 <select name="InterestUid" id="InterestUid" class="form-control">
-                    <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Genre.ToLowerInvariant()))...</option>
+                    <option value="">@(string.Format(Labels.SelectAMEntity, Labels.SubGenre.ToLowerInvariant()))...</option>
                     @foreach (var interest in interests)
                     {
                         <option value="@interest.Uid" @(interest.Uid == ViewBag.InterestUid ? "selected" : string.Empty)>

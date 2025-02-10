@@ -140,7 +140,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 else
                 {
                     //Admin cannot have Collaborator/AttendeeCollaborator, so, get all Interests to list in Dropdown.
-                    interests = await this.interestRepo.FindAllByInterestGroupUidAsync(InterestGroup.AudiovisualGenre.Uid);
+                    interests = await this.interestRepo.FindAllByInterestGroupUidAsync(InterestGroup.AudiovisualPitchingSubGenre.Uid);
                 }
             }
             else
