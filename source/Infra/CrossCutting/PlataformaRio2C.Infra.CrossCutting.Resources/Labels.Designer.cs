@@ -583,6 +583,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Audiovisual - Rodadas de Negócio.
+        /// </summary>
+        public static string AudiovisualBusinessRound {
+            get {
+                return ResourceManager.GetString("AudiovisualBusinessRound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Regulamento de rodadas de negócio.
         /// </summary>
         public static string AudiovisualBusinessRoundRules {
@@ -687,6 +696,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string AudiovisualNegotiationsVirtualMeetingsJoinMinutes {
             get {
                 return ResourceManager.GetString("AudiovisualNegotiationsVirtualMeetingsJoinMinutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Audiovisual - Pitching.
+        /// </summary>
+        public static string AudiovisualPitching {
+            get {
+                return ResourceManager.GetString("AudiovisualPitching", resourceCulture);
             }
         }
         

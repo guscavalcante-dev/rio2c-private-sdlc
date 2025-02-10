@@ -84,7 +84,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             #endregion
 
             ViewBag.GenreInterests = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.AudiovisualGenre.Uid);
-            ViewBag.TargetAudience = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id);
+            ViewBag.TargetAudience = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.AudiovisualBusinessRound.Id);
 
             return View(searchViewModel);
         }
@@ -337,7 +337,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
                 firstLine = true;
                 var subgenre = string.Empty;
-                var projectSubgenreDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualSubGenre.Uid);
+                var projectSubgenreDtos = projectDto.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualBusinessRoundSubGenre.Uid);
                 foreach (var interestDto in projectSubgenreDtos)
                 {
                     subgenre += string.Format("{0}{1}", firstLine ? "" : " | ", interestDto.Interest.Name.GetSeparatorTranslation(UserInterfaceLanguage as string, '|'));

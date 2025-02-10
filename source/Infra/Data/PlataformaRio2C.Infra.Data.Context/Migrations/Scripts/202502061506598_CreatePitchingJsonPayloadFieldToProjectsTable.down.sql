@@ -1,6 +1,10 @@
 ﻿BEGIN TRY
     BEGIN TRANSACTION
-       --Nothing to do here  
+
+        -- Remove the column PitchingJsonPayload from Projects table
+        ALTER TABLE "Projects" 
+        DROP COLUMN "PitchingJsonPayload";
+
     COMMIT TRANSACTION
 END TRY
 BEGIN CATCH

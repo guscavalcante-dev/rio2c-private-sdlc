@@ -793,7 +793,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             this.SetViewBags();
 
             var playerOrganizationTypeName = OrganizationType.AudiovisualPlayer.Name;
-            var projectTypeId = ProjectType.Audiovisual.Id;
+            var projectTypeId = ProjectType.AudiovisualBusinessRound.Id;
             if (this.UserAccessControlDto.IsMusicPlayerExecutive())
             {
                 playerOrganizationTypeName = OrganizationType.MusicPlayer.Name;
@@ -855,7 +855,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             this.SetViewBags();
 
             var result = new AppValidationResult();
-            var projectTypeId = ProjectType.Audiovisual.Id;
+            var projectTypeId = ProjectType.AudiovisualBusinessRound.Id;
             var playerOrganizationType = OrganizationType.AudiovisualPlayer;
 
             try
@@ -946,7 +946,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             this.SetViewBags();
 
             var playerOrganizationTypeName = OrganizationType.AudiovisualPlayer.Name;
-            var projectTypeId = ProjectType.Audiovisual.Id;
+            var projectTypeId = ProjectType.AudiovisualBusinessRound.Id;
             if (this.UserAccessControlDto.IsMusicPlayerExecutive())
             {
                 playerOrganizationTypeName = OrganizationType.MusicPlayer.Name;
@@ -1005,7 +1005,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
 
                 var playerOrganizationType = OrganizationType.AudiovisualPlayer;
-                var projectTypeId = ProjectType.Audiovisual.Id;
+                var projectTypeId = ProjectType.AudiovisualBusinessRound.Id;
                 if (this.UserAccessControlDto.IsMusicPlayerExecutive())
                 {
                     playerOrganizationType = OrganizationType.MusicPlayer;

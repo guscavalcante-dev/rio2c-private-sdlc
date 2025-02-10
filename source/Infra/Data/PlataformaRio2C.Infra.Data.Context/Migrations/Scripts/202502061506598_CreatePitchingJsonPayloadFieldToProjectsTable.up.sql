@@ -1,6 +1,10 @@
 ﻿BEGIN TRY
     BEGIN TRANSACTION
-       --Nothing to do here  
+
+        -- Add new column PitchingJsonPayload to Projects table
+        ALTER TABLE "Projects" 
+        ADD "PitchingJsonPayload" NVARCHAR(MAX) NULL;
+
     COMMIT TRANSACTION
 END TRY
 BEGIN CATCH
