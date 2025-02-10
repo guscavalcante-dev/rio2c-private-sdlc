@@ -957,7 +957,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     true,
                     true,
                     true,
-                    ProjectType.Audiovisual.Id);
+                    ProjectType.AudiovisualBusinessRound.Id);
             }
             catch (DomainException ex)
             {
