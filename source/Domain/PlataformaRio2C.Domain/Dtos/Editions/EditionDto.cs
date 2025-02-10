@@ -94,8 +94,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public int InnovationCommissionMaximumApprovedCompaniesCount { get; private set; }
 
         // Audiovisual - Pitching
-        public DateTimeOffset? AudiovisualSubmitProjectStartDate { get; private set; }
-        public DateTimeOffset? AudiovisualSubmitProjectEndDate { get; private set; }
+        public DateTimeOffset? AudiovisualPitchingSubmitProjectStartDate { get; private set; }
+        public DateTimeOffset? AudiovisualPitchingSubmitProjectEndDate { get; private set; }
         public DateTimeOffset AudiovisualCommissionEvaluationStartDate { get; private set; }
         public DateTimeOffset AudiovisualCommissionEvaluationEndDate { get; private set; }
         public int AudiovisualCommissionMinimumEvaluationsCount { get; private set; }
@@ -206,8 +206,8 @@ namespace PlataformaRio2C.Domain.Dtos
             this.InnovationCommissionMaximumApprovedCompaniesCount = entity.InnovationCommissionMaximumApprovedCompaniesCount;
 
             // Audiovisual - Pitching
-            this.AudiovisualSubmitProjectStartDate = entity.AudiovisualPitchingSubmitStartDate;
-            this.AudiovisualSubmitProjectEndDate = entity.AudiovisualPitchingSubmitEndDate;
+            this.AudiovisualPitchingSubmitProjectStartDate = entity.AudiovisualPitchingSubmitStartDate;
+            this.AudiovisualPitchingSubmitProjectEndDate = entity.AudiovisualPitchingSubmitEndDate;
             this.AudiovisualNegotiationsCreateStartDate = entity.AudiovisualNegotiationsCreateStartDate;
             this.AudiovisualNegotiationsCreateEndDate = entity.AudiovisualNegotiationsCreateEndDate;
             this.AudiovisualCommissionEvaluationStartDate = entity.AudiovisualCommissionEvaluationStartDate;
@@ -381,7 +381,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// </returns>
         public bool IsAudiovisualPitchingSubmitProjectOpen()
         {
-            return DateTime.UtcNow >= this.AudiovisualSubmitProjectStartDate && DateTime.UtcNow <= this.AudiovisualSubmitProjectEndDate;
+            return DateTime.UtcNow >= this.AudiovisualPitchingSubmitProjectStartDate && DateTime.UtcNow <= this.AudiovisualPitchingSubmitProjectEndDate;
         }
 
         /// <summary>
@@ -392,7 +392,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// </returns>
         public bool IsAudiovisualPitchingSubmitProjectStarted()
         {
-            return DateTime.UtcNow >= this.AudiovisualSubmitProjectStartDate;
+            return DateTime.UtcNow >= this.AudiovisualPitchingSubmitProjectStartDate;
         }
 
         /// <summary>
@@ -403,7 +403,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// </returns>
         public bool IsAudiovisualPitchingSubmitProjectEnded()
         {
-            return DateTime.UtcNow > this.AudiovisualSubmitProjectEndDate;
+            return DateTime.UtcNow > this.AudiovisualPitchingSubmitProjectEndDate;
         }
 
         #endregion
