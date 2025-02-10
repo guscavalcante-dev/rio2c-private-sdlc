@@ -945,7 +945,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 true,
                 true,
                 true,
-                ProjectType.Audiovisual.Id);
+                ProjectType.AudiovisualBusinessRound.Id);
 
             return View(cmd);
         }
