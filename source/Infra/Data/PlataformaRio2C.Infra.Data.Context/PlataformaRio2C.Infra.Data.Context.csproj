@@ -472,6 +472,10 @@
     <Compile Include="Migrations\202502061506598_CreatePitchingJsonPayloadFieldToProjectsTable.Designer.cs">
       <DependentUpon>202502061506598_CreatePitchingJsonPayloadFieldToProjectsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202502101947591_DeleteMusicBusinessRoundMaximumProjectsBySellerFromEdition.cs" />
+    <Compile Include="Migrations\202502101947591_DeleteMusicBusinessRoundMaximumProjectsBySellerFromEdition.Designer.cs">
+      <DependentUpon>202502101947591_DeleteMusicBusinessRoundMaximumProjectsBySellerFromEdition.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -659,6 +663,9 @@
     <Content Include="Migrations\Scripts\202502061506598_CreatePitchingJsonPayloadFieldToProjectsTable.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Migrations\Scripts\202502101947591_DeleteMusicBusinessRoundMaximumProjectsBySellerFromEdition.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Migrations\Scripts\202502062046229_AddAudiovisualPitchingSubmitDatesToEdition.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -672,6 +679,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202502061506598_CreatePitchingJsonPayloadFieldToProjectsTable.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202502101947591_DeleteMusicBusinessRoundMaximumProjectsBySellerFromEdition.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202502062046229_AddAudiovisualPitchingSubmitDatesToEdition.up.sql">
@@ -917,6 +927,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202502061506598_CreatePitchingJsonPayloadFieldToProjectsTable.resx">
       <DependentUpon>202502061506598_CreatePitchingJsonPayloadFieldToProjectsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202502101947591_DeleteMusicBusinessRoundMaximumProjectsBySellerFromEdition.resx">
+      <DependentUpon>202502101947591_DeleteMusicBusinessRoundMaximumProjectsBySellerFromEdition.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

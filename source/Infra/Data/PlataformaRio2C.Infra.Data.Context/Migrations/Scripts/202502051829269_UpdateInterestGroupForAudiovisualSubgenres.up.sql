@@ -17,7 +17,7 @@
            ,[IsCommission])
             VALUES
             ('55FD72C1-B3D5-4DD5-8A3E-44B1B0BAF5A3'  -- Uid
-            , (select id from [ProjectTypes] where uid ='E5B7CBA4-10B5-4FCF-A778-09B40AEB6C01')-- ProjectTypeId
+            , (select TOP 1 id from [ProjectTypes] where uid ='E5B7CBA4-10B5-4FCF-A778-09B40AEB6C01')-- ProjectTypeId
             ,'Subgênero'                           -- Name
             ,'Multiple'                            -- Type
             ,1                                     -- DisplayOrder
