@@ -59,7 +59,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.Uow.BeginTransaction();
 
             var project = await this.GetProjectByUid(cmd.ProjectUid ?? Guid.Empty);
-            var interestsDtos = await this.interestRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.Audiovisual.Id);
+            var interestsDtos = await this.interestRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.AudiovisualBusinessRound.Id);
 
             #region Initial validations
 

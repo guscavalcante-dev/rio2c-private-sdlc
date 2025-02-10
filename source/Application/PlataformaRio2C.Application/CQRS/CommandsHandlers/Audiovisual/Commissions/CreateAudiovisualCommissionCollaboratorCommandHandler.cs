@@ -104,7 +104,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 var collaborator = Collaborator.CreateAudiovisualCommissionCollaborator(
                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                     await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
-                    ProjectType.Audiovisual,
+                    ProjectType.AudiovisualBusinessRound,
                     cmd.FirstName,
                     cmd.LastNames,
                     cmd.Email,
