@@ -464,6 +464,10 @@
     <Compile Include="Migrations\202502042043292_FixMigrationsForProdEnv.Designer.cs">
       <DependentUpon>202502042043292_FixMigrationsForProdEnv.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202502061506598_CreatePitchingJsonPayloadFieldToProjectsTable.cs" />
+    <Compile Include="Migrations\202502061506598_CreatePitchingJsonPayloadFieldToProjectsTable.Designer.cs">
+      <DependentUpon>202502061506598_CreatePitchingJsonPayloadFieldToProjectsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -648,6 +652,9 @@
     <Content Include="Migrations\Scripts\202502051813539_UpdateSubgendersEntititesForAudiovisual.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Migrations\Scripts\202502061506598_CreatePitchingJsonPayloadFieldToProjectsTable.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Migrations\Scripts\202501301754441_UpdateMusicBusinessRoundProjectExpectationsForMeetingMaxValue.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -655,6 +662,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202502051813539_UpdateSubgendersEntititesForAudiovisual.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202502061506598_CreatePitchingJsonPayloadFieldToProjectsTable.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202501301754441_UpdateMusicBusinessRoundProjectExpectationsForMeetingMaxValue.up.sql">
@@ -891,6 +901,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202502042043292_FixMigrationsForProdEnv.resx">
       <DependentUpon>202502042043292_FixMigrationsForProdEnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202502061506598_CreatePitchingJsonPayloadFieldToProjectsTable.resx">
+      <DependentUpon>202502061506598_CreatePitchingJsonPayloadFieldToProjectsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
