@@ -31,6 +31,8 @@ using PlataformaRio2C.Web.Site.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
+using Newtonsoft.Json;
+using Microsoft.Ajax.Utilities;
 
 namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 {
@@ -44,6 +46,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         private readonly IUserRepository userRepo;
         private readonly IInterestRepository interestRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
+        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectsController"/> class.
@@ -55,6 +58,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         /// <param name="userRepository">The user repository.</param>
         /// <param name="interestRepository">The interest repository.</param>
         /// <param name="targetAudienceRepository">The target audience repository.</param>
+        /// <param name="attendeeOrganizationRepository">The attendeeOrganizationRepository repository.</param>
+        /// 
         public ProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
@@ -62,8 +67,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             IProjectEvaluationStatusRepository evaluationStatusRepository,
             IUserRepository userRepository,
             IInterestRepository interestRepository,
-            ITargetAudienceRepository targetAudienceRepository
-            )
+            ITargetAudienceRepository targetAudienceRepository,
+            IAttendeeOrganizationRepository attendeeOrganizationRepository)
             : base(commandBus, identityController)
         {
             this.projectRepo = projectRepository;
@@ -71,6 +76,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             this.userRepo = userRepository;
             this.interestRepo = interestRepository;
             this.targetAudienceRepo = targetAudienceRepository;
+            this.attendeeOrganizationRepo = attendeeOrganizationRepository;
         }
 
         #region List
@@ -202,6 +208,20 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                  true,
                  page.Value,
                  pageSize.Value);
+
+            //Convert PitchingJsonPayload to the main object when PitchingJsonPayload is not null.
+            foreach (var projectDto in projects)
+            {
+                if (!String.IsNullOrEmpty(projectDto.Project.PitchingJsonPayload))
+                {
+                    var pitchingJsonPayload = JsonConvert.DeserializeObject<PitchingJsonPayload>(projectDto.Project.PitchingJsonPayload);
+                    if (pitchingJsonPayload != null)
+                    {
+                        projectDto.Project.ProjectTitles.ForEach(p => p.UpdateValue(pitchingJsonPayload.Title));
+                        projectDto.SellerAttendeeOrganizationDto = await attendeeOrganizationRepo.FindDtoByAttendeeOrganizationUid(new Guid(pitchingJsonPayload.SellerAttendeeOrganizationId));
+                    }
+                }
+            }
 
             ViewBag.SearchKeywords = searchKeywords;
             ViewBag.InterestUid = interestUid;

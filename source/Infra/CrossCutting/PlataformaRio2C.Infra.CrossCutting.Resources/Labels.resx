@@ -3120,6 +3120,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="SubGenre" xml:space="preserve">
     <value>Subgênero</value>
   </data>
+  <data name="SubGenres" xml:space="preserve">
+    <value>Subgêneros</value>
+  </data>
   <data name="Submit" xml:space="preserve">
     <value>Inscrever</value>
     <comment>Inscrever</comment>
