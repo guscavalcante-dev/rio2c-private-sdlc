@@ -1063,9 +1063,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var projectsDtos = await this.GetBaseQuery()
                                             .IsFinished()
-                                            //.FindByEditionId(editionId)
+                                            .FindByEditionId(editionId)
                                             .FindByKeywords(searchKeywords)
-                                            //.FindByInterestUids(interestUids)
+                                            .FindByInterestUids(interestUids)
                                             .IsPitchingOnly()
                                             .Select(p => new ProjectDto
                                             {
