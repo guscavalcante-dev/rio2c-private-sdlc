@@ -4,7 +4,7 @@
 // Created          : 11-07-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-13-2025
+// Last Modified On : 02-12-2025
 // ***********************************************************************
 // <copyright file="CreateProjectCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -143,7 +143,18 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             this.AttendeeOrganizationRepo.Update(attendeeOrganization);
-            this.Uow.SaveChanges();
+            var saveChangesResult = this.Uow.SaveChanges();
+
+            if (!saveChangesResult.Success)
+            {
+                foreach (var saveResult in saveChangesResult?.ValidationResults)
+                {
+                    this.AppValidationResult.Add(saveResult.ErrorMessage);
+                }
+
+                return this.AppValidationResult;
+            }
+
             this.AppValidationResult.Data = attendeeOrganization.GetLastCreatedProject();
 
             return this.AppValidationResult;
