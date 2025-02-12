@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-13-2025
+// Last Modified On : 02-12-2025
 // ***********************************************************************
 // <copyright file="Project.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1188,6 +1188,9 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
+        /// <summary>
+        /// Validates the which type of financing description.
+        /// </summary>
         public void ValidateWhichTypeOfFinancingDescription()
         {
             if (!string.IsNullOrEmpty(this.WhichTypeOfFinancingDescription) && this.WhichTypeOfFinancingDescription?.Trim().Length > WhichTypeOfFinancingDescriptionMaxLength)
