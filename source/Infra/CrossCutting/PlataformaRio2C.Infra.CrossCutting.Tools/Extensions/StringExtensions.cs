@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-26-2024
+// Last Modified On : 02-10-2025
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -222,29 +222,32 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             return output;
         }
 
-        /// <summary>Gets the two letter code.</summary>
+        /// <summary>
+        /// Gets the two letter code.
+        /// </summary>
         /// <param name="s">The s.</param>
         /// <returns></returns>
         public static string GetTwoLetterCode(this string s)
         {
-            if (string.IsNullOrEmpty(s))
+            if (string.IsNullOrWhiteSpace(s))
             {
                 return null;
             }
 
             string code = null;
+            var splitString = s.Split(' ').Where(ss => !string.IsNullOrWhiteSpace(ss)).ToList();
 
-            var splitString = s.Split(' ').Where(ss => !string.IsNullOrEmpty(ss)).ToList();
             if (splitString.Count == 1)
             {
-                code = splitString[0].Substring(0, 2);
+                code = splitString[0].Length >= 2 ? splitString[0].Substring(0, 2) : splitString[0];
             }
             else
             {
-                code = splitString[0].Substring(0, 1) + splitString[splitString.Count - 1].Substring(0, 1);
+                code = (splitString[0].Length >= 1 ? splitString[0].Substring(0, 1) : "") +
+                       (splitString[splitString.Count - 1].Length >= 1 ? splitString[splitString.Count - 1].Substring(0, 1) : "");
             }
 
-            return code?.ToUpperInvariant();
+            return string.IsNullOrEmpty(code) ? null : code.ToUpperInvariant();
         }
 
         /// <summary>Gets the splitted word.</summary>
