@@ -460,6 +460,10 @@
     <Compile Include="Migrations\202502062100382_InsertAttendeeSalesPlatformsAndTicketTypesForCreatorPromo2Em1.Designer.cs">
       <DependentUpon>202502062100382_InsertAttendeeSalesPlatformsAndTicketTypesForCreatorPromo2Em1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202502121352008_UpdateMigrations_20250221.cs" />
+    <Compile Include="Migrations\202502121352008_UpdateMigrations_20250221.Designer.cs">
+      <DependentUpon>202502121352008_UpdateMigrations_20250221.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -878,6 +882,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202502062100382_InsertAttendeeSalesPlatformsAndTicketTypesForCreatorPromo2Em1.resx">
       <DependentUpon>202502062100382_InsertAttendeeSalesPlatformsAndTicketTypesForCreatorPromo2Em1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202502121352008_UpdateMigrations_20250221.resx">
+      <DependentUpon>202502121352008_UpdateMigrations_20250221.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

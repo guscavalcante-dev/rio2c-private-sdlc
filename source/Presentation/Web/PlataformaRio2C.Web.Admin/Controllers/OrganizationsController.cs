@@ -795,7 +795,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     interestWidgetDto,
                     await this.interestRepo.FindAllDtosByProjectTypeIdAsync(projectTypeId ?? ProjectType.Audiovisual.Id),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
-                    projectTypeId != ProjectType.Music.Id
+                    projectTypeId != ProjectType.Music.Id,
+                    projectTypeId
                 );
             }
             catch (DomainException ex)
