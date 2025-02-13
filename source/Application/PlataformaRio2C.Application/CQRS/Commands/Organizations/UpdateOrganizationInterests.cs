@@ -33,22 +33,25 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         //public UserBaseDto UpdaterBaseDto { get; private set; }
         //public DateTime UpdateDate { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateOrganizationInterests"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateOrganizationInterests" /> class.
+        /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="interestsDtos">The interests dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="isRestrictionSpecificRequired">if set to <c>true</c> [is restriction specific required].</param>
+        /// <param name="projectTypeId">The project type identifier.</param>
         public UpdateOrganizationInterests(
             AttendeeOrganizationSiteInterestWidgetDto entity,
             List<InterestDto> interestsDtos,
             List<LanguageDto> languagesDtos, 
-            bool isRestrictionSpecificRequired)
+            bool isRestrictionSpecificRequired, 
+            int? projectTypeId)
         {
             this.OrganizationUid = entity.Organization.Uid;
-            //this.UpdaterBaseDto = entity.UpdaterDto;
-            //this.UpdateDate = entity.UpdateDate;
             this.UpdateRestrictionSpecifics(entity, languagesDtos, isRestrictionSpecificRequired);
             this.UpdateInterests(entity, interestsDtos);
+            this.ProjectTypeId = projectTypeId;
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateOrganizationInterests"/> class.</summary>
