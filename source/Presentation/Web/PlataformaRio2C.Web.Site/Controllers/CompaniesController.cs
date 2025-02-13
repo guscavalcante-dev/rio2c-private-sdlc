@@ -789,11 +789,15 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
 
+                //TODO: This endpoint can be used by both, Audiovisual and Music companies.
+                // It's not correct to pass the fixed ProjectType.Audiovisual.Id here.
+                // We need to define a logic to correct this and pass the correct ProjectType.
                 cmd = new UpdateOrganizationInterests(
                     interestWidgetDto,
-                    await this.interestRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
+                    await this.interestRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.Audiovisual.Id),                                                 
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
-                    true);
+                    true,
+                    ProjectType.Audiovisual.Id); 
             }
             catch (DomainException ex)
             {
