@@ -538,6 +538,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Associações.
+        /// </summary>
+        public static string Associations {
+            get {
+                return ResourceManager.GetString("Associations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to em.
         /// </summary>
         public static string At {
@@ -2203,6 +2212,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Elementos de diversidade e inclusão..
+        /// </summary>
+        public static string DiversityElements {
+            get {
+                return ResourceManager.GetString("DiversityElements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Documento.
         /// </summary>
         public static string Document {
@@ -2271,6 +2289,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editais.
+        /// </summary>
+        public static string Editals {
+            get {
+                return ResourceManager.GetString("Editals", resourceCulture);
             }
         }
         
@@ -2883,6 +2910,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Format {
             get {
                 return ResourceManager.GetString("Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Motivação para o formato.
+        /// </summary>
+        public static string FormatMotivation {
+            get {
+                return ResourceManager.GetString("FormatMotivation", resourceCulture);
             }
         }
         
@@ -3643,6 +3679,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Podcast, websérie, curta-metragem, games.
+        /// </summary>
+        public static string LinkPodcastAndOthers {
+            get {
+                return ResourceManager.GetString("LinkPodcastAndOthers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Links.
         /// </summary>
         public static string Links {
@@ -3657,6 +3702,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string LinksForPromoTeaser {
             get {
                 return ResourceManager.GetString("LinksForPromoTeaser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sinopse, conto ou artigo..
+        /// </summary>
+        public static string LinkSinopse {
+            get {
+                return ResourceManager.GetString("LinkSinopse", resourceCulture);
             }
         }
         
@@ -3909,6 +3963,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Marketing {
             get {
                 return ResourceManager.GetString("Marketing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Estratégia de marketing e seu público alvo..
+        /// </summary>
+        public static string MarketingStrategy {
+            get {
+                return ResourceManager.GetString("MarketingStrategy", resourceCulture);
             }
         }
         
@@ -4957,6 +5020,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Outros links.
+        /// </summary>
+        public static string OtherLinks {
+            get {
+                return ResourceManager.GetString("OtherLinks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Outros projetos.
+        /// </summary>
+        public static string OtherProjects {
+            get {
+                return ResourceManager.GetString("OtherProjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Outros.
         /// </summary>
         public static string Others {
@@ -5043,6 +5124,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Senha para visualização dos conteúdos.
+        /// </summary>
+        public static string PasswordProject {
+            get {
+                return ResourceManager.GetString("PasswordProject", resourceCulture);
             }
         }
         
@@ -5241,6 +5331,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Platforms {
             get {
                 return ResourceManager.GetString("Platforms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Projeto original está disponível em plataforma online que não detenha os direitos sobre ele? .
+        /// </summary>
+        public static string PlatformsRights {
+            get {
+                return ResourceManager.GetString("PlatformsRights", resourceCulture);
             }
         }
         
@@ -5960,6 +6059,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Caso seu projeto original esteja disponível em plataforma online, qual foi o alcance de público dele?.
+        /// </summary>
+        public static string ProjectReach {
+            get {
+                return ResourceManager.GetString("ProjectReach", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reprovado.
         /// </summary>
         public static string ProjectRefused {
@@ -6483,6 +6591,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ReturnedItems {
             get {
                 return ResourceManager.GetString("ReturnedItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prêmios.
+        /// </summary>
+        public static string Rewards {
+            get {
+                return ResourceManager.GetString("Rewards", resourceCulture);
             }
         }
         
@@ -7198,6 +7315,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Projetos similares.
+        /// </summary>
+        public static string SimilarProjects {
+            get {
+                return ResourceManager.GetString("SimilarProjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pular.
         /// </summary>
         public static string Skip {
@@ -7711,6 +7837,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Relevância da temática..
+        /// </summary>
+        public static string TematicImportance {
+            get {
+                return ResourceManager.GetString("TematicImportance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aceite do regulamento.
         /// </summary>
         public static string TermsAcceptance {
@@ -8004,6 +8139,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Transfers {
             get {
                 return ResourceManager.GetString("Transfers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Motivação para transformar seu projeto em ficção, não-ficção, animação ou reality show.
+        /// </summary>
+        public static string TransformMotivation {
+            get {
+                return ResourceManager.GetString("TransformMotivation", resourceCulture);
             }
         }
         

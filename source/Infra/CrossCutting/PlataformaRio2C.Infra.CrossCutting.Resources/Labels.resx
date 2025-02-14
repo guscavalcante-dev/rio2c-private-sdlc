@@ -314,6 +314,9 @@
     <value>Associado</value>
     <comment>Associado</comment>
   </data>
+  <data name="Associations" xml:space="preserve">
+    <value>Associações</value>
+  </data>
   <data name="At" xml:space="preserve">
     <value>em</value>
     <comment>em</comment>
@@ -976,6 +979,9 @@
   <data name="Distributed" xml:space="preserve">
     <value>Distribuído</value>
   </data>
+  <data name="DiversityElements" xml:space="preserve">
+    <value>Elementos de diversidade e inclusão.</value>
+  </data>
   <data name="Document" xml:space="preserve">
     <value>Documento</value>
     <comment>Documento</comment>
@@ -1004,6 +1010,9 @@
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Editar</value>
+  </data>
+  <data name="Editals" xml:space="preserve">
+    <value>Editais</value>
   </data>
   <data name="EditInterests" xml:space="preserve">
     <value>Editar Interesses</value>
@@ -1256,6 +1265,9 @@
   </data>
   <data name="Format" xml:space="preserve">
     <value>Formato</value>
+  </data>
+  <data name="FormatMotivation" xml:space="preserve">
+    <value>Motivação para o formato</value>
   </data>
   <data name="ForSeries" xml:space="preserve">
     <value>Se obra seriada</value>
@@ -1563,12 +1575,18 @@
   <data name="LinkedIn" xml:space="preserve">
     <value>LinkedIn</value>
   </data>
+  <data name="LinkPodcastAndOthers" xml:space="preserve">
+    <value>Podcast, websérie, curta-metragem, games</value>
+  </data>
   <data name="Links" xml:space="preserve">
     <value>Links</value>
   </data>
   <data name="LinksForPromoTeaser" xml:space="preserve">
     <value>Link para Promo/Teaser</value>
     <comment>Link para Promo/Teaser</comment>
+  </data>
+  <data name="LinkSinopse" xml:space="preserve">
+    <value>Sinopse, conto ou artigo.</value>
   </data>
   <data name="LinksToImageOrConceptualLayout" xml:space="preserve">
     <value>Link para imagens ou layout conceituais</value>
@@ -1667,6 +1685,9 @@
   <data name="Marketing" xml:space="preserve">
     <value>Marketing</value>
     <comment>Marketing</comment>
+  </data>
+  <data name="MarketingStrategy" xml:space="preserve">
+    <value>Estratégia de marketing e seu público alvo.</value>
   </data>
   <data name="MarketLookingFor" xml:space="preserve">
     <value>Está no mercado buscando</value>
@@ -2073,6 +2094,12 @@
   <data name="OtherAttachedFiles" xml:space="preserve">
     <value>Outros arquivos anexados</value>
   </data>
+  <data name="OtherLinks" xml:space="preserve">
+    <value>Outros links</value>
+  </data>
+  <data name="OtherProjects" xml:space="preserve">
+    <value>Outros projetos</value>
+  </data>
   <data name="Others" xml:space="preserve">
     <value>Outros</value>
     <comment>Outros</comment>
@@ -2110,6 +2137,9 @@
   <data name="Password" xml:space="preserve">
     <value>Senha</value>
     <comment>Senha</comment>
+  </data>
+  <data name="PasswordProject" xml:space="preserve">
+    <value>Senha para visualização dos conteúdos</value>
   </data>
   <data name="PastEditions" xml:space="preserve">
     <value>Edições Passadas</value>
@@ -2194,6 +2224,9 @@
   </data>
   <data name="Platforms" xml:space="preserve">
     <value>Plataformas</value>
+  </data>
+  <data name="PlatformsRights" xml:space="preserve">
+    <value>Projeto original está disponível em plataforma online que não detenha os direitos sobre ele? </value>
   </data>
   <data name="Player" xml:space="preserve">
     <value>Player</value>
@@ -2479,6 +2512,9 @@
   <data name="ProjectPublicNotice" xml:space="preserve">
     <value>O projeto foi contemplado em algum edital? Quais?</value>
   </data>
+  <data name="ProjectReach" xml:space="preserve">
+    <value>Caso seu projeto original esteja disponível em plataforma online, qual foi o alcance de público dele?</value>
+  </data>
   <data name="ProjectRefused" xml:space="preserve">
     <value>Reprovado</value>
     <comment>Reprovado</comment>
@@ -2697,6 +2733,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   </data>
   <data name="ReturnedItems" xml:space="preserve">
     <value>&lt;h4&gt;&lt;strong&gt;{0}&lt;/strong&gt; itens&lt;/h4&gt;</value>
+  </data>
+  <data name="Rewards" xml:space="preserve">
+    <value>Prêmios</value>
   </data>
   <data name="Rio2cChatTitle" xml:space="preserve">
     <value>Rede Rio2C</value>
@@ -2987,6 +3026,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Entrar</value>
     <comment>Entrar</comment>
   </data>
+  <data name="SimilarProjects" xml:space="preserve">
+    <value>Projetos similares</value>
+  </data>
   <data name="Skip" xml:space="preserve">
     <value>Pular</value>
     <comment>Pular</comment>
@@ -3187,6 +3229,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="TeaserLinks" xml:space="preserve">
     <value>Links de teaser</value>
   </data>
+  <data name="TematicImportance" xml:space="preserve">
+    <value>Relevância da temática.</value>
+  </data>
   <data name="TermsAcceptance" xml:space="preserve">
     <value>Aceite do regulamento</value>
     <comment>Aceite do regulamento</comment>
@@ -3309,6 +3354,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Transfers" xml:space="preserve">
     <value>Transfers</value>
     <comment>Transfers</comment>
+  </data>
+  <data name="TransformMotivation" xml:space="preserve">
+    <value>Motivação para transformar seu projeto em ficção, não-ficção, animação ou reality show</value>
   </data>
   <data name="TranslatedSynopsis" xml:space="preserve">
     <value>Ementa {0}</value>

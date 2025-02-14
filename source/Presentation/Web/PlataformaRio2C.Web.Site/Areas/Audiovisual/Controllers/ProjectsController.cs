@@ -304,7 +304,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
                 return RedirectToAction("CommissionEvaluationList", "Projects", new { Area = "Audiovisual" });
             }
-
+            
             var interestsUids = await this.GetSearchInterestsUids(interestUid);
 
             #region Breadcrumb
@@ -333,8 +333,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
             ViewBag.CurrentProjectIndex = currentProjectIdIndex;
-            ViewBag.ProjectsTotalCount = await this.projectRepo.CountPagedAsync(this.EditionDto.Edition.Id, searchKeywords, interestsUids, evaluationStatusUid, showPitchings, new List<Guid?> { }, page.Value, pageSize.Value);
-            ViewBag.ApprovedProjectsIds = await this.projectRepo.FindAllApprovedCommissionProjectsIdsAsync(this.EditionDto.Edition.Id);
+            ViewBag.ProjectsTotalCount = allProjectsIds.Length;
+            ViewBag.ApprovedProjectsIds = await this.projectRepo.FindAllApprovedCommissionPitchingProjectsIdsAsync(this.EditionDto.Edition.Id);
 
             return View(projectDto);
         }
@@ -454,6 +454,14 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
                 return RedirectToAction("CommissionEvaluationList", "Projects", new { Area = "Audiovisual" });
+            }
+
+            //Convert PitchingJsonPayload field  to the object PitchingJsonPayload.
+            if (!String.IsNullOrEmpty(mainInformationWidgetDto.Project.PitchingJsonPayload))
+            {
+                var pitchingJsonPayload = JsonConvert.DeserializeObject<PitchingJsonPayload>(mainInformationWidgetDto.Project.PitchingJsonPayload);
+                if (pitchingJsonPayload != null)
+                    mainInformationWidgetDto.PitchingJsonPayload = pitchingJsonPayload;
             }
 
             #endregion
