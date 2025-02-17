@@ -54,12 +54,12 @@
                                         }
                                     </div>
                                     <div class="kt-widget__info">
-                                        <a href="@Url.Action("Details", "Companies", new {id = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid})" class="kt-widget__username" target="_blank">
+                                        <a href="@Url.Action("Details", "Companies", new { Area = "", id = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid })" class="kt-widget__username" target="_blank">
                                             @projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.TradeName
                                         </a>
                                         @*<span class="kt-widget__desc">@(attendeeOrganizationDto.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value ?? "-")</span>*@
                                         <span class="kt-widget__desc">
-                                            <a href="@Url.Action("Details", "Companies", new { id = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid })" target="_blank">
+                                            <a href="@Url.Action("Details", "Companies", new { Area = "", id = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid })" target="_blank">
                                                 <small><i class="flaticon-profile"></i> @Labels.SeeDescription</small>
                                             </a>
                                         </span>
