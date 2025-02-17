@@ -23,7 +23,6 @@ using PlataformaRio2C.Domain.Dtos;
 using X.PagedList;
 using LinqKit;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using Newtonsoft.Json;
 
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
@@ -311,7 +310,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<Project> IsPitchingOnly(this IQueryable<Project> query)
         {
-            query = query.Where(p => p.ProjectModalityId == ProjectModality.Pitching.Id);
+            query = query.Where(p => p.ProjectModalityId == ProjectModality.Pitching.Id && p.PitchingJsonPayload != null);
             return query;
         }
 
@@ -1255,6 +1254,28 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
+        /// Finds all approved projects ids asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<int[]> FindAllApprovedCommissionPitchingProjectsIdsAsync(int editionId)
+        {
+            var edition = await this.editioRepo.FindByIdAsync(editionId);
+
+            var query = this.GetBaseQuery()
+                                .IsPitchingOnly()
+                                .FindByEditionId(editionId)
+                                .FindByIsEvaluated();
+
+            return await query
+                            .OrderByDescending(p => p.CommissionGrade)
+                            .Take(edition.AudiovisualCommissionMaximumApprovedProjectsCount)
+                            .Select(p => p.Id)
+                            .ToArrayAsync();
+        }
+
+
+        /// <summary>
         /// Finds all projects ids paged asynchronous.
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
@@ -1278,8 +1299,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var projectsIds = await this.GetBaseQuery()
                                 .FindByEditionId(editionId)
                                 .IsFinished()
-                                .IsPitching(showPitchings)
-                                .FindByProjectModalityUid(projectModalityUid)
+                                .IsPitchingOnly()
                                 .FindByKeywords(searchKeywords)
                                 .FindByInterestUids(interestUids)
                                 .Order()

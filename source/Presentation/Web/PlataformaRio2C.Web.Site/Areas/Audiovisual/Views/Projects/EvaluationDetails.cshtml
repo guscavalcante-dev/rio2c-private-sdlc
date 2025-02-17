@@ -51,16 +51,16 @@
                 <div id="ProjectMainInformationWidget" class="kt-portlet" style="min-height: 325px;"></div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <div id="ProjectInterestWidget" class="kt-portlet" style="min-height: 325px;"></div>
+        @*<div class="row">
+                <div class="col-12">
+                    <div id="ProjectInterestWidget" class="kt-portlet" style="min-height: 325px;"></div>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div id="ProjectLinksWidget" class="kt-portlet" style="min-height: 325px;"></div>
-            </div>
-        </div>
+            <div class="row">
+                <div class="col-12">
+                    <div id="ProjectLinksWidget" class="kt-portlet" style="min-height: 325px;"></div>
+                </div>
+            </div>*@
         @if (Model.Project.IsPitching() == true)
         {
             <div class="row">
@@ -86,8 +86,8 @@
     <script>
         jQuery(document).ready(function () {
             AudiovisualProjectsMainInformationWidget.init();
-            AudiovisualProjectsInterestWidget.init();
-            AudiovisualProjectsLinksWidget.init();
+            //AudiovisualProjectsInterestWidget.init();
+            //AudiovisualProjectsLinksWidget.init();
             @if (Model.Project.IsPitching() == true)
             {
                 <text>

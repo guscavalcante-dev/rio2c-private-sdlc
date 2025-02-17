@@ -38,6 +38,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<int> CountAllByDataTable(int editionId, bool showAllEditions = false);
         Task<int[]> FindAllProjectsIdsPagedAsync(int editionId, string searchKeywords, List<Guid?> interestUids, Guid? evaluationStatusUid, bool? showPitchings, List<Guid?> projectModalityUids, int page, int pageSize);
         Task<int[]> FindAllApprovedCommissionProjectsIdsAsync(int editionId);
+        Task<int[]> FindAllApprovedCommissionPitchingProjectsIdsAsync(int editionId);
         Task<int> CountPagedAsync(int editionId, string searchKeywords, List<Guid?> interestUids, Guid? evaluationStatusUid, bool? showPitchings, List<Guid?> projectModalityUids, int page, int pageSize);
 
         #region Admin Widgets

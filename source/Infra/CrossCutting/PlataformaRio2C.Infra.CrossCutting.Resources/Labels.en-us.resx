@@ -314,6 +314,9 @@
     <value>Associated</value>
     <comment>Associado</comment>
   </data>
+  <data name="Associations" xml:space="preserve">
+    <value>Associations</value>
+  </data>
   <data name="At" xml:space="preserve">
     <value>at</value>
     <comment>em</comment>
@@ -986,6 +989,9 @@
   <data name="Distributed" xml:space="preserve">
     <value>Distributed</value>
   </data>
+  <data name="DiversityElements" xml:space="preserve">
+    <value>Elements of diversity and inclusion.</value>
+  </data>
   <data name="Document" xml:space="preserve">
     <value>Document</value>
     <comment>Documento</comment>
@@ -1013,6 +1019,9 @@
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
+  </data>
+  <data name="Editals" xml:space="preserve">
+    <value>Editals</value>
   </data>
   <data name="EditInterests" xml:space="preserve">
     <value>Edit Interests</value>
@@ -1266,6 +1275,10 @@
   </data>
   <data name="Format" xml:space="preserve">
     <value>Format</value>
+  </data>
+  <data name="FormatMotivation" xml:space="preserve">
+    <value>Motivation for the format
+</value>
   </data>
   <data name="ForSeries" xml:space="preserve">
     <value>For series</value>
@@ -1569,12 +1582,19 @@
   <data name="LinkedIn" xml:space="preserve">
     <value>LinkedIn</value>
   </data>
+  <data name="LinkPodcastAndOthers" xml:space="preserve">
+    <value>Podcast, web series, short film, games</value>
+  </data>
   <data name="Links" xml:space="preserve">
     <value>Links</value>
   </data>
   <data name="LinksForPromoTeaser" xml:space="preserve">
     <value>Link for Promo/Teaser</value>
     <comment>Link para Promo/Teaser</comment>
+  </data>
+  <data name="LinkSinopse" xml:space="preserve">
+    <value>Synopsis, story or article
+</value>
   </data>
   <data name="LinksToImageOrConceptualLayout" xml:space="preserve">
     <value>Links to image or conceptual layout</value>
@@ -1673,6 +1693,10 @@
   <data name="Marketing" xml:space="preserve">
     <value>Marketing</value>
     <comment>Marketing</comment>
+  </data>
+  <data name="MarketingStrategy" xml:space="preserve">
+    <value>Marketing strategy and your target audience.
+</value>
   </data>
   <data name="MarketLookingFor" xml:space="preserve">
     <value>Seeking</value>
@@ -2082,6 +2106,12 @@
   <data name="OtherAttachedFiles" xml:space="preserve">
     <value>Other attached files</value>
   </data>
+  <data name="OtherLinks" xml:space="preserve">
+    <value>Other Links</value>
+  </data>
+  <data name="OtherProjects" xml:space="preserve">
+    <value>Other projects</value>
+  </data>
   <data name="Others" xml:space="preserve">
     <value>Others</value>
     <comment>Outros</comment>
@@ -2120,6 +2150,10 @@
   <data name="Password" xml:space="preserve">
     <value>Password</value>
     <comment>Senha</comment>
+  </data>
+  <data name="PasswordProject" xml:space="preserve">
+    <value>Password for viewing content
+</value>
   </data>
   <data name="PastReadF" xml:space="preserve">
     <value>Read</value>
@@ -2200,6 +2234,9 @@
   </data>
   <data name="Platforms" xml:space="preserve">
     <value>Platforms</value>
+  </data>
+  <data name="PlatformsRights" xml:space="preserve">
+    <value>Is the original project available on an online platform that does not hold the rights to it?</value>
   </data>
   <data name="Player" xml:space="preserve">
     <value>Player</value>
@@ -2487,6 +2524,10 @@
   <data name="ProjectPublicNotice" xml:space="preserve">
     <value>Was the project included in any public notice? Which?</value>
   </data>
+  <data name="ProjectReach" xml:space="preserve">
+    <value>If your original project is available on an online platform, what was its audience reach?
+</value>
+  </data>
   <data name="ProjectRefused" xml:space="preserve">
     <value>Refused</value>
     <comment>Reprovado</comment>
@@ -2701,6 +2742,9 @@
   </data>
   <data name="ReturnedItems" xml:space="preserve">
     <value>&lt;h4&gt;&lt;strong&gt;{0}&lt;/strong&gt; itens&lt;/h4&gt;</value>
+  </data>
+  <data name="Rewards" xml:space="preserve">
+    <value>Rewards</value>
   </data>
   <data name="Rio2cChatTitle" xml:space="preserve">
     <value>Rio2C Network</value>
@@ -2988,6 +3032,9 @@
     <value>Sign In</value>
     <comment>Entrar</comment>
   </data>
+  <data name="SimilarProjects" xml:space="preserve">
+    <value>Similar Projects</value>
+  </data>
   <data name="Skip" xml:space="preserve">
     <value>Skip</value>
     <comment>Pular</comment>
@@ -3191,6 +3238,9 @@
   <data name="TeaserLinks" xml:space="preserve">
     <value>Teaser links</value>
   </data>
+  <data name="TematicImportance" xml:space="preserve">
+    <value>Relevance of the theme.</value>
+  </data>
   <data name="TermsAcceptance" xml:space="preserve">
     <value>Terms acceptance</value>
     <comment>Aceite do regulamento</comment>
@@ -3313,6 +3363,9 @@
   <data name="Transfers" xml:space="preserve">
     <value>Transfers</value>
     <comment>Transfers</comment>
+  </data>
+  <data name="TransformMotivation" xml:space="preserve">
+    <value>Motivation to transform your project into fiction, non-fiction, animation or reality show</value>
   </data>
   <data name="TranslatedSynopsis" xml:space="preserve">
     <value>Synopsis {0}</value>
