@@ -199,6 +199,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the by buyer project uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeOrganization> FindByAttendeeOrganizationUid(this IQueryable<AttendeeOrganization> query, Guid attendeeOrganizationUid)
+        {
+            query = query.Where(p => !p.IsDeleted && p.Uid == attendeeOrganizationUid);
+            return query;
+        }
+
         /// <summary>
         /// Determines whether [has active buyer negotiations].
         /// </summary>
@@ -891,6 +901,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             })
                             .OrderBy(ao => ao.Organization.TradeName)
                             .ToListAsync();
+        }
+
+        public async Task<AttendeeOrganizationDto> FindDtoByAttendeeOrganizationUid(Guid attendeeOrganizationUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByAttendeeOrganizationUid(attendeeOrganizationUid);
+
+            return await query
+                            .Select(ao => new AttendeeOrganizationDto
+                            {
+                                AttendeeOrganization = ao,
+                                Organization = ao.Organization,
+                                Edition = ao.Edition
+                            })
+                            .FirstOrDefaultAsync();
         }
 
         /// <summary>Finds all dto by matching project buyer asynchronous.</summary>

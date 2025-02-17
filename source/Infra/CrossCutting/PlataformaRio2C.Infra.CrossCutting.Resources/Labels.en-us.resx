@@ -3124,6 +3124,9 @@
   <data name="SubGenre" xml:space="preserve">
     <value>Subgenre</value>
   </data>
+  <data name="SubGenres" xml:space="preserve">
+    <value>Subgenres</value>
+  </data>
   <data name="Submit" xml:space="preserve">
     <value>Submit</value>
     <comment>Inscrever</comment>

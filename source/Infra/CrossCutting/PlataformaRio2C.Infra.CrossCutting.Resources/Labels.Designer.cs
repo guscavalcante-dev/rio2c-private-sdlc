@@ -7558,6 +7558,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Subgêneros.
+        /// </summary>
+        public static string SubGenres {
+            get {
+                return ResourceManager.GetString("SubGenres", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inscrever.
         /// </summary>
         public static string Submit {
