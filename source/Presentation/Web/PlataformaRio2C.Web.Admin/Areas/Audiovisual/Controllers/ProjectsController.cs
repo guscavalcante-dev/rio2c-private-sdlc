@@ -890,8 +890,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            ViewBag.GroupedInterests = await this.interestRepo.FindAllByProjectTypeIdAndGroupedByInterestGroupAsync(ProjectType.Audiovisual.Id);
-            ViewBag.TargetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id);
+            ViewBag.GroupedInterests = await this.interestRepo.FindAllByProjectTypeIdAndGroupedByInterestGroupAsync(ProjectType.AudiovisualBusinessRound.Id);
+            ViewBag.TargetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.AudiovisualBusinessRound.Id);
 
             return Json(new
             {
@@ -923,8 +923,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
                 cmd = new UpdateProjectInterests(
                     interestWidgetDto,
-                    await this.interestRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
-                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
+                    await this.interestRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.AudiovisualBusinessRound.Id),
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.AudiovisualBusinessRound.Id));
             }
             catch (DomainException ex)
             {
@@ -979,7 +979,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
 
                 cmd.UpdateDropdownProperties(
-                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.AudiovisualBusinessRound.Id));
 
                 return Json(new
                 {

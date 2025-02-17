@@ -58,12 +58,12 @@
 
                 <div class="row">
                     <div class="col-12 mt-3">
-                        <div style="font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; width: 65px; display: inline-block;">@Labels.Genres:</div>
+                        <div style="font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; width: 65px; display: inline-block;">@Labels.SubGenres:</div>
                         @if (Model.ProjectInterestDtos?.Any() == true)
                         {
                             foreach (var projectInterestDto in Model.ProjectInterestDtos)
                             {
-                                <span class="kt-badge kt-badge--inline kt-badge--info mt-1">
+                                <span class="kt-badge kt-badge--inline kt-badge--info mt-1 ml-4">
                                     @(projectInterestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
                                     @if (projectInterestDto.Interest.HasAdditionalInfo && !string.IsNullOrEmpty(projectInterestDto.ProjectInterest.AdditionalInfo))
                                     {
@@ -79,7 +79,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12 mt-2">
+                    @*<div class="col-12 mt-2">
                         <div style="font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; width: 88px; display: inline-block;">@Labels.TargetAudience:</div>
                         @if (Model.ProjectTargetAudienceDtos?.Any() == true)
                         {
@@ -92,7 +92,7 @@
                         {
                             @:-
                         }
-                    </div>
+                    </div>*@
                 </div>
                 <div class="row">
                     <div class="col-12 mt-4">

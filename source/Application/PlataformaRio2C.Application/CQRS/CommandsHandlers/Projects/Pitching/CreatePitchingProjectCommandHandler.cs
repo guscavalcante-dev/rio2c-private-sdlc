@@ -83,7 +83,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
-            var interestsDtos = await this.interestRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.Audiovisual.Id);
+            var interestsDtos = await this.interestRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.AudiovisualPitching.Id);
 
             // Interests
             var projectInterests = new List<ProjectInterest>();

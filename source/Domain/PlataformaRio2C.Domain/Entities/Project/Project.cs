@@ -53,11 +53,9 @@ namespace PlataformaRio2C.Domain.Entities
         public int CommissionEvaluationsCount { get; private set; }
         public decimal? CommissionGrade { get; private set; }
         public DateTimeOffset? LastCommissionEvaluationDate { get; private set; }
-
         public virtual ProjectType ProjectType { get; private set; }
         public virtual AttendeeOrganization SellerAttendeeOrganization { get; private set; }
         public virtual ProjectModality ProjectModality { get; private set; }
-
         public virtual ICollection<ProjectTitle> ProjectTitles { get; private set; }
         public virtual ICollection<ProjectLogLine> ProjectLogLines { get; private set; }
         public virtual ICollection<ProjectSummary> ProjectSummaries { get; private set; }
@@ -69,9 +67,9 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<ProjectTargetAudience> ProjectTargetAudiences { get; private set; }
         public virtual ICollection<ProjectBuyerEvaluation> ProjectBuyerEvaluations { get; private set; }
         public virtual ICollection<CommissionEvaluation> CommissionEvaluations { get; private set; }
-
         private bool IsAdmin = false;
         public int ProjectModalityId { get; private set; }
+        public string PitchingJsonPayload { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Project" /> class.

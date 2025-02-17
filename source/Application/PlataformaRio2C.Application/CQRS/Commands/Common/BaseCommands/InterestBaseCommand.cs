@@ -44,9 +44,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public InterestBaseCommand(AttendeeCollaboratorInterestDto entity)
         {
             this.InterestGroupUid = entity.InterestGroup.Uid;
-
-          
-
             this.InterestGroupDisplayOrder = entity.InterestGroup.DisplayOrder;
             this.InterestUid = entity.Interest.Uid;
             this.InterestName = entity.Interest.Name;

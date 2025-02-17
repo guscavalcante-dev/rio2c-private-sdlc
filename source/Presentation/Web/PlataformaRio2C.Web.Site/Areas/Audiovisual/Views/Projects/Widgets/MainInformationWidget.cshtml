@@ -34,7 +34,7 @@
                     <div class="kt-widget__desc pl-0 @(Model?.Project?.IsPitching() == true ? "col-md-6" : "col-md-12")">
                         <div class="kt-widget__head">
                             <span class="kt-widget__username">
-                                @(Model.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value ?? "-")
+                                @(Model.PitchingJsonPayload?.Title)
                             </span>
                         </div>
                         <div class="kt-widget__subhead pt-0">
@@ -115,94 +115,175 @@
             </div>
         </div>
         <div class="kt-widget__bottom">
-            @{
-                var summaryDto = Model.GetSummaryDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
-                var logLineDto = Model.GetLogLineDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
-            }
-            @if (logLineDto != null)
-            {
-                <div class="kt-widget__item w-100">
-                    <div class="kt-widget__details">
-                        <span class="kt-widget__title">@Labels.LogLines</span>
-                        <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(logLineDto.ProjectLogLine?.Value?.Replace("\n", "<br/>") ?? "-"))</span></span>
-                    </div>
-                </div>
-            }
-            @if (summaryDto != null)
-            {
-                <div class="kt-widget__item w-100">
-                    <div class="kt-widget__details">
-                        <span class="kt-widget__title">@Labels.Summary</span>
-                        <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(summaryDto.ProjectSummary?.Value?.Replace("\n", "<br/>") ?? "-"))</span></span>
-                    </div>
-                </div>
-            }
+
             <div class="kt-widget__item w-100">
                 <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.TotalPlayingTime</span>
-                    <span class="kt-widget__value"><span>@(Model.Project?.TotalPlayingTime ?? "-")</span></span>
+                    <span class="kt-widget__title">@Labels.LogLines</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Model.PitchingJsonPayload.Logline.GetDashIfNullOrEmpty())</span></span>
                 </div>
             </div>
+
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.Description</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Model.PitchingJsonPayload.Description.GetDashIfNullOrEmpty())</span></span>
+                </div>
+            </div>
+
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.Curriculum</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Model.PitchingJsonPayload.Curriculum.GetDashIfNullOrEmpty())</span></span>
+                </div>
+            </div>
+
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.FormatMotivation</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Model.PitchingJsonPayload.FormatMotivation.GetDashIfNullOrEmpty())</span></span>
+                </div>
+            </div>
+
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.TransformMotivation</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Model.PitchingJsonPayload.TransformMotivation.GetDashIfNullOrEmpty())</span></span>
+                </div>
+            </div>
+
             <div class="kt-widget__item w-50">
                 <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.NumberOfEpisodes</span>
-                    <span class="kt-widget__value"><span>@(Model.Project?.NumberOfEpisodes?.ToString() ?? "-")</span></span>
+                    <span class="kt-widget__title">@Labels.Format</span>
+                    <span class="kt-widget__value"><span>@(Model.PitchingJsonPayload.Format.GetDashIfNullOrEmpty())</span></span>
                 </div>
             </div>
+
             <div class="kt-widget__item w-50">
                 <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.EachEpisodePlayingTime</span>
-                    <span class="kt-widget__value"><span>@(Model.Project?.EachEpisodePlayingTime ?? "-")</span></span>
+                    <span class="kt-widget__title">@Labels.Segment</span>
+                    <span class="kt-widget__value"><span>@(Model.PitchingJsonPayload.Segments.GetDashIfNullOrEmpty())</span></span>
                 </div>
             </div>
-            @{
-                var productionPlanDto = Model.GetProductionPlanDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
-            }
-            @if (productionPlanDto != null)
-            {
-                <div class="kt-widget__item w-100">
-                    <div class="kt-widget__details">
-                        <span class="kt-widget__title">@Labels.ProductionPlan</span>
-                        <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(productionPlanDto.ProjectProductionPlan?.Value?.Replace("\n", "<br/>") ?? "-"))</span></span>
-                    </div>
-                </div>
-            }
+
             <div class="kt-widget__item w-50">
                 <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.ValuePerEpisode</span>
-                    <span class="kt-widget__value"><span>@(Model.Project?.ValuePerEpisode?.ToString() ?? "-")</span></span>
+                    <span class="kt-widget__title">@Labels.SubGenre</span>
+                    <span class="kt-widget__value"><span>@(Model.PitchingJsonPayload.Subgenders.GetDashIfNullOrEmpty())</span></span>
                 </div>
             </div>
+
             <div class="kt-widget__item w-50">
                 <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.TotalValueOfProject</span>
-                    <span class="kt-widget__value"><span>@(Model.Project?.TotalValueOfProject?.ToString() ?? "-")</span></span>
+                    <span class="kt-widget__title">@Labels.PhoneNumber</span>
+                    <span class="kt-widget__value"><span>@(Model.PitchingJsonPayload.PhoneNumber.GetDashIfNullOrEmpty())</span></span>
                 </div>
             </div>
+
             <div class="kt-widget__item w-50">
                 <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.ValueAlreadyRaised</span>
-                    <span class="kt-widget__value"><span>@(Model.Project?.ValueAlreadyRaised?.ToString() ?? "-")</span></span>
+                    <span class="kt-widget__title">@Labels.DiversityElements</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Model.PitchingJsonPayload.DiversityElements.GetDashIfNullOrEmpty())</span></span>
                 </div>
             </div>
+
             <div class="kt-widget__item w-50">
                 <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.ValueStillNeeded</span>
-                    <span class="kt-widget__value"><span>@(Model.Project?.ValueStillNeeded?.ToString() ?? "-")</span></span>
+                    <span class="kt-widget__title">@Labels.TematicImportance</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Model.PitchingJsonPayload.TematicImportance.GetDashIfNullOrEmpty())</span></span>
                 </div>
             </div>
-            @{
-                var additionalInformationDto = Model.GetAdditionalInformationDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
-            }
-            @if (additionalInformationDto != null)
-            {
-                <div class="kt-widget__item w-100">
-                    <div class="kt-widget__details">
-                        <span class="kt-widget__title">@Labels.AdditionalInformation</span>
-                        <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(additionalInformationDto.ProjectAdditionalInformation?.Value?.Replace("\n", "<br/>") ?? "-"))</span></span>
-                    </div>
+
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.MarketingStrategy</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Model.PitchingJsonPayload.MarketingStrategy.GetDashIfNullOrEmpty())</span></span>
                 </div>
-            }
+            </div>
+
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.SimilarProjects</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Model.PitchingJsonPayload.SimilarProjects.GetDashIfNullOrEmpty())</span></span>
+                </div>
+            </div>
+
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.PlatformsRights</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Model.PitchingJsonPayload.Platforms.GetDashIfNullOrEmpty())</span></span>
+                </div>
+            </div>
+
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.ProjectReach</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Model.PitchingJsonPayload.ProjectReach.GetDashIfNullOrEmpty())</span></span>
+                </div>
+            </div>
+
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.Rewards</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Model.PitchingJsonPayload.Rewards.GetDashIfNullOrEmpty())</span></span>
+                </div>
+            </div>
+
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.Editals</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Model.PitchingJsonPayload.Editals.GetDashIfNullOrEmpty())</span></span>
+                </div>
+            </div>
+
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.OtherProjects</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Model.PitchingJsonPayload.OtherProjects.GetDashIfNullOrEmpty())</span></span>
+                </div>
+            </div>
+
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.Associations</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Model.PitchingJsonPayload.Associations.GetDashIfNullOrEmpty())</span></span>
+                </div>
+            </div>
+
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.LinkSinopse</span>
+                    <span class="kt-widget__value"><span>@(Model.PitchingJsonPayload.Link1.GetDashIfNullOrEmpty())</span></span>
+                </div>
+            </div>
+
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.Clipping</span>
+                    <span class="kt-widget__value"><span>@(Model.PitchingJsonPayload.Link2.GetDashIfNullOrEmpty())</span></span>
+                </div>
+            </div>
+
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.LinkPodcastAndOthers</span>
+                    <span class="kt-widget__value"><span>@(Model.PitchingJsonPayload.Link3.GetDashIfNullOrEmpty())</span></span>
+                </div>
+            </div>
+
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.OtherLinks</span>
+                    <span class="kt-widget__value"><span>@(Model.PitchingJsonPayload.Link4.GetDashIfNullOrEmpty())</span></span>
+                </div>
+            </div>
+
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.PasswordProject</span>
+                    <span class="kt-widget__value"><span>@(Model.PitchingJsonPayload.Password.GetDashIfNullOrEmpty())</span></span>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

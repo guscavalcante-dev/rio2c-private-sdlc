@@ -102,7 +102,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                 await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
                 cmd.IsAddingToCurrentEdition,
-                ProjectType.Audiovisual,
+                ProjectType.AudiovisualBusinessRound,
                 cmd.FirstName,
                 cmd.LastNames,
                 cmd.Email,

@@ -43,7 +43,8 @@
                 }
             }
             else if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true &&
-                    (editionDto?.IsAudiovisualProjectSubmitStarted() == true))
+                    editionDto?.IsAudiovisualPitchingSubmitProjectStarted() == true || 
+                    editionDto?.IsAudiovisualProjectSubmitStarted() == true )
             {
                 <li class="kt-menu__item kt-menu__item--submenu kt-menu__item--rel
                     @this.IsOpen(menuOpenCssClass, null, "Meetings,PitchingProjects,BusinessRoundProjects", "Audiovisual")"
@@ -67,18 +68,24 @@
                                 </a>
                                 <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--right">
                                     <ul class="kt-menu__subnav">
-                                        <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "SubmittedListPitching", "PitchingProjects", "Audiovisual")" aria-haspopup="true">
-                                            <a href="@Url.Action("SubmittedListPitching", "PitchingProjects", new { Area = "Audiovisual" })" class="kt-menu__link ">
-                                                <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                                                <span class="kt-menu__link-text">@Labels.Pitching</span>
-                                            </a>
-                                        </li>
-                                        <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "SubmittedList", "BusinessRoundProjects", "Audiovisual")" aria-haspopup="true">
-                                            <a href="@Url.Action("SubmittedList", "BusinessRoundProjects", new { Area = "Audiovisual" })" class="kt-menu__link ">
-                                                <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                                                <span class="kt-menu__link-text">@Labels.BusinessRound</span>
-                                            </a>
-                                        </li>
+                                        @if (editionDto?.IsAudiovisualPitchingSubmitProjectStarted() == true)
+                                        {
+                                            <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "SubmittedListPitching", "PitchingProjects", "Audiovisual")" aria-haspopup="true">
+                                                <a href="@Url.Action("SubmittedListPitching", "PitchingProjects", new { Area = "Audiovisual" })" class="kt-menu__link ">
+                                                    <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                                                    <span class="kt-menu__link-text">@Labels.Pitching</span>
+                                                </a>
+                                            </li>
+                                        }
+                                        @if (editionDto?.IsAudiovisualProjectSubmitStarted() == true)
+                                        {
+                                           <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "SubmittedList", "BusinessRoundProjects", "Audiovisual")" aria-haspopup="true">
+                                                <a href="@Url.Action("SubmittedList", "BusinessRoundProjects", new { Area = "Audiovisual" })" class="kt-menu__link ">
+                                                    <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                                                    <span class="kt-menu__link-text">@Labels.BusinessRound</span>
+                                                </a>
+                                            </li>
+                                        }
                                     </ul>
                                 </div>
                             </li>

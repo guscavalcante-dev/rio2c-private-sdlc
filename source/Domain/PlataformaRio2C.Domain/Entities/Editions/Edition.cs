@@ -63,6 +63,8 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Audiovisual - Pitching
 
+        public DateTimeOffset? AudiovisualPitchingSubmitStartDate { get; private set; }
+        public DateTimeOffset? AudiovisualPitchingSubmitEndDate { get; private set; }
         public DateTimeOffset AudiovisualCommissionEvaluationStartDate { get; private set; }
         public DateTimeOffset AudiovisualCommissionEvaluationEndDate { get; private set; }
         public int AudiovisualCommissionMinimumEvaluationsCount { get; private set; }
@@ -247,7 +249,7 @@ namespace PlataformaRio2C.Domain.Entities
             int attendeeOrganizationMaxSellProjectsCount,
             int projectMaxBuyerEvaluationsCount,
             short audiovisualNegotiationsVirtualMeetingsJoinMinutes,
-
+ 
             DateTime musicPitchingSubmitStartDate,
             DateTime musicPitchingSubmitEndDate,
             DateTime musicCommissionEvaluationStartDate,
@@ -270,7 +272,10 @@ namespace PlataformaRio2C.Domain.Entities
             DateTime innovationCommissionEvaluationEndDate,
             int innovationCommissionMinimumEvaluationsCount,
             int innovationCommissionMaximumApprovedCompaniesCount,
-                        
+
+
+            DateTime audiovisualPitchingSubmitStartDate,
+            DateTime audiovisualPitchingSubmitEndDate,
             DateTime audiovisualCommissionEvaluationStartDate,
             DateTime audiovisualCommissionEvaluationEndDate,
             int audiovisualCommissionMinimumEvaluationsCount,
@@ -368,6 +373,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.InnovationCommissionMaximumApprovedCompaniesCount = innovationCommissionMaximumApprovedCompaniesCount;
 
             // Audiovisual - Pitching           
+            this.AudiovisualPitchingSubmitStartDate = audiovisualPitchingSubmitStartDate.ToUtcTimeZone();
+            this.AudiovisualPitchingSubmitEndDate = audiovisualPitchingSubmitEndDate.ToEndDateTimeOffset();
             this.AudiovisualCommissionEvaluationStartDate = audiovisualCommissionEvaluationStartDate.ToUtcTimeZone();
             this.AudiovisualCommissionEvaluationEndDate = audiovisualCommissionEvaluationEndDate.ToEndDateTimeOffset();
             this.AudiovisualCommissionMinimumEvaluationsCount = audiovisualCommissionMinimumEvaluationsCount;
@@ -532,7 +539,9 @@ namespace PlataformaRio2C.Domain.Entities
             DateTime innovationCommissionEvaluationEndDate,
             int innovationCommissionMinimumEvaluationsCount,
             int innovationCommissionMaximumApprovedCompaniesCount,
-                       
+
+            DateTime audiovisualSubmitStartDate,
+            DateTime audiovisualSubmitEndDate,
             DateTime audiovisualCommissionEvaluationStartDate,
             DateTime audiovisualCommissionEvaluationEndDate,
             int audiovisualCommissionMinimumEvaluationsCount,
@@ -614,6 +623,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.InnovationCommissionMinimumEvaluationsCount = innovationCommissionMinimumEvaluationsCount;
             this.InnovationCommissionMaximumApprovedCompaniesCount = innovationCommissionMaximumApprovedCompaniesCount;
 
+            this.AudiovisualPitchingSubmitStartDate = audiovisualSubmitStartDate.ToUtcTimeZone();
+            this.AudiovisualPitchingSubmitEndDate = audiovisualSubmitEndDate.ToEndDateTimeOffset();
             this.AudiovisualCommissionEvaluationStartDate = audiovisualCommissionEvaluationStartDate.ToUtcTimeZone();
             this.AudiovisualCommissionEvaluationEndDate = audiovisualCommissionEvaluationEndDate.ToEndDateTimeOffset();
             this.AudiovisualCommissionMinimumEvaluationsCount = audiovisualCommissionMinimumEvaluationsCount;
