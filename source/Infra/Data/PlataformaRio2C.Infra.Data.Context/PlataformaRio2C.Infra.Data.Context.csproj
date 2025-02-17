@@ -452,9 +452,29 @@
     <Compile Include="Migrations\202501302300392_UpdateMigrations_20250130.Designer.cs">
       <DependentUpon>202501302300392_UpdateMigrations_20250130.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202502051813539_UpdateSubgendersEntititesForAudiovisual.cs" />
+    <Compile Include="Migrations\202502051813539_UpdateSubgendersEntititesForAudiovisual.Designer.cs">
+      <DependentUpon>202502051813539_UpdateSubgendersEntititesForAudiovisual.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202502051829269_UpdateInterestGroupForAudiovisualSubgenres.cs" />
+    <Compile Include="Migrations\202502051829269_UpdateInterestGroupForAudiovisualSubgenres.Designer.cs">
+      <DependentUpon>202502051829269_UpdateInterestGroupForAudiovisualSubgenres.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202502042043292_FixMigrationsForProdEnv.cs" />
     <Compile Include="Migrations\202502042043292_FixMigrationsForProdEnv.Designer.cs">
       <DependentUpon>202502042043292_FixMigrationsForProdEnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202502062046229_AddAudiovisualPitchingSubmitDatesToEdition.cs" />
+    <Compile Include="Migrations\202502062046229_AddAudiovisualPitchingSubmitDatesToEdition.Designer.cs">
+      <DependentUpon>202502062046229_AddAudiovisualPitchingSubmitDatesToEdition.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202502061506598_CreatePitchingJsonPayloadFieldToProjectsTable.cs" />
+    <Compile Include="Migrations\202502061506598_CreatePitchingJsonPayloadFieldToProjectsTable.Designer.cs">
+      <DependentUpon>202502061506598_CreatePitchingJsonPayloadFieldToProjectsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202502101947591_DeleteMusicBusinessRoundMaximumProjectsBySellerFromEdition.cs" />
+    <Compile Include="Migrations\202502101947591_DeleteMusicBusinessRoundMaximumProjectsBySellerFromEdition.Designer.cs">
+      <DependentUpon>202502101947591_DeleteMusicBusinessRoundMaximumProjectsBySellerFromEdition.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\202502062100382_InsertAttendeeSalesPlatformsAndTicketTypesForCreatorPromo2Em1.cs" />
     <Compile Include="Migrations\202502062100382_InsertAttendeeSalesPlatformsAndTicketTypesForCreatorPromo2Em1.Designer.cs">
@@ -649,10 +669,40 @@
     <Content Include="Migrations\Scripts\202501241333002_UpdateMusicInterestGroupsNames.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Migrations\Scripts\202502051829269_UpdateInterestGroupForAudiovisualSubgenres.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202502051829269_UpdateInterestGroupForAudiovisualSubgenres.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202502051813539_UpdateSubgendersEntititesForAudiovisual.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202502061506598_CreatePitchingJsonPayloadFieldToProjectsTable.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202502101947591_DeleteMusicBusinessRoundMaximumProjectsBySellerFromEdition.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202502062046229_AddAudiovisualPitchingSubmitDatesToEdition.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Migrations\Scripts\202501301754441_UpdateMusicBusinessRoundProjectExpectationsForMeetingMaxValue.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202501291828281_InsertInterestForMusic.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202502051813539_UpdateSubgendersEntititesForAudiovisual.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202502061506598_CreatePitchingJsonPayloadFieldToProjectsTable.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202502101947591_DeleteMusicBusinessRoundMaximumProjectsBySellerFromEdition.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202502062046229_AddAudiovisualPitchingSubmitDatesToEdition.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202501301754441_UpdateMusicBusinessRoundProjectExpectationsForMeetingMaxValue.up.sql">
@@ -881,8 +931,23 @@
     <EmbeddedResource Include="Migrations\202501302300392_UpdateMigrations_20250130.resx">
       <DependentUpon>202501302300392_UpdateMigrations_20250130.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202502051813539_UpdateSubgendersEntititesForAudiovisual.resx">
+      <DependentUpon>202502051813539_UpdateSubgendersEntititesForAudiovisual.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202502051829269_UpdateInterestGroupForAudiovisualSubgenres.resx">
+      <DependentUpon>202502051829269_UpdateInterestGroupForAudiovisualSubgenres.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202502042043292_FixMigrationsForProdEnv.resx">
       <DependentUpon>202502042043292_FixMigrationsForProdEnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202502062046229_AddAudiovisualPitchingSubmitDatesToEdition.resx">
+      <DependentUpon>202502062046229_AddAudiovisualPitchingSubmitDatesToEdition.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202502061506598_CreatePitchingJsonPayloadFieldToProjectsTable.resx">
+      <DependentUpon>202502061506598_CreatePitchingJsonPayloadFieldToProjectsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202502101947591_DeleteMusicBusinessRoundMaximumProjectsBySellerFromEdition.resx">
+      <DependentUpon>202502101947591_DeleteMusicBusinessRoundMaximumProjectsBySellerFromEdition.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202502062100382_InsertAttendeeSalesPlatformsAndTicketTypesForCreatorPromo2Em1.resx">
       <DependentUpon>202502062100382_InsertAttendeeSalesPlatformsAndTicketTypesForCreatorPromo2Em1.cs</DependentUpon>

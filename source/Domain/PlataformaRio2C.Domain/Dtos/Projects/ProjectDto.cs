@@ -43,6 +43,7 @@ namespace PlataformaRio2C.Domain.Dtos
 
         public string ProjectTitle { get; set; }
         public bool IsPitching { get; set; }
+        public PitchingJsonPayload PitchingJsonPayload { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="ProjectDto"/> class.</summary>
         public ProjectDto()

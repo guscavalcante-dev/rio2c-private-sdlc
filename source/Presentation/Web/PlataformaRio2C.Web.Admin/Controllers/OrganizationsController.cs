@@ -487,7 +487,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Activity, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            ViewBag.Activities = await this.activityRepo.FindAllByProjectTypeIdAsync(projectTypeId ?? ProjectType.Audiovisual.Id);
+            ViewBag.Activities = await this.activityRepo.FindAllByProjectTypeIdAsync(projectTypeId ?? ProjectType.AudiovisualBusinessRound.Id);
 
             return Json(new
             {
@@ -520,7 +520,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd = new UpdateOrganizationActivities(
                     activityWidgetDto,
-                    await this.activityRepo.FindAllByProjectTypeIdAsync(projectTypeId ?? ProjectType.Audiovisual.Id)
+                    await this.activityRepo.FindAllByProjectTypeIdAsync(projectTypeId ?? ProjectType.AudiovisualBusinessRound.Id)
                 );
             }
             catch (DomainException ex)
@@ -528,7 +528,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
             }
 
-            ViewBag.ProjectTypeId = projectTypeId ?? ProjectType.Audiovisual.Id;
+            ViewBag.ProjectTypeId = projectTypeId ?? ProjectType.AudiovisualBusinessRound.Id;
 
             return Json(new
             {
@@ -619,7 +619,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }
 
             ViewBag.TargetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(
-                projectTypeId ?? ProjectType.Audiovisual.Id
+                projectTypeId ?? ProjectType.AudiovisualBusinessRound.Id
             );
 
             return Json(new
@@ -658,9 +658,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 cmd = new UpdateOrganizationTargetAudiences(
                     targetAudienceWidgetDto,
                     await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(
-                        projectTypeId ?? ProjectType.Audiovisual.Id
+                        projectTypeId ?? ProjectType.AudiovisualBusinessRound.Id
                     ),
-                    projectTypeId ?? ProjectType.Audiovisual.Id
+                    projectTypeId ?? ProjectType.AudiovisualBusinessRound.Id
                 );
             }
             catch (DomainException ex)
@@ -715,7 +715,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
-                cmd.UpdateTargetAudiences(null, await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
+                cmd.UpdateTargetAudiences(null, await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.AudiovisualBusinessRound.Id));
 
                 return Json(new
                 {
@@ -755,7 +755,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Interests, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            ViewBag.GroupedInterests = await this.interestRepo.FindAllByProjectTypeIdAndGroupedByInterestGroupAsync(projectTypeId ?? ProjectType.Audiovisual.Id);
+            ViewBag.GroupedInterests = await this.interestRepo.FindAllByProjectTypeIdAndGroupedByInterestGroupAsync(projectTypeId ?? ProjectType.AudiovisualBusinessRound.Id);
 
             return Json(new
             {
@@ -793,7 +793,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd = new UpdateOrganizationInterests(
                     interestWidgetDto,
-                    await this.interestRepo.FindAllDtosByProjectTypeIdAsync(projectTypeId ?? ProjectType.Audiovisual.Id),
+                    await this.interestRepo.FindAllDtosByProjectTypeIdAsync(projectTypeId ?? ProjectType.AudiovisualBusinessRound.Id),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     projectTypeId != ProjectType.Music.Id,
                     projectTypeId
@@ -804,7 +804,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
             }
 
-            ViewBag.ProjectTypeId = projectTypeId ?? ProjectType.Audiovisual.Id;
+            ViewBag.ProjectTypeId = projectTypeId ?? ProjectType.AudiovisualBusinessRound.Id;
 
             return Json(new
             {

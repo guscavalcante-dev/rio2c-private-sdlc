@@ -228,7 +228,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.AudiovisualPlatforms.Uid, this.UserInterfaceLanguage);
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.AudiovisualFormat.Uid, this.UserInterfaceLanguage);
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.AudiovisualGenre.Uid, this.UserInterfaceLanguage);
-                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.AudiovisualSubGenre.Uid, this.UserInterfaceLanguage);
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.AudiovisualBusinessRoundSubGenre.Uid, this.UserInterfaceLanguage);
 
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.OrganizationTargetAudiencesDtos?.Select(otaDto => otaDto.TargetAudienceName?.GetSeparatorTranslation(this.UserInterfaceLanguage, '|'))?.ToString("; ");
 
@@ -396,9 +396,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
-                await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
-                await this.interestRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
+                await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.AudiovisualBusinessRound.Id),
+                await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.AudiovisualBusinessRound.Id),
+                await this.interestRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.AudiovisualBusinessRound.Id),
                 null,
                 false,
                 false,
@@ -457,8 +457,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 cmd.UpdateDropdownProperties(
                     await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                    await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
-                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
+                    await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.AudiovisualBusinessRound.Id),
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.AudiovisualBusinessRound.Id),
                     null);
 
                 return Json(new
@@ -501,9 +501,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                    await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
-                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
-                    await this.interestRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
+                    await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.AudiovisualBusinessRound.Id),
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.AudiovisualBusinessRound.Id),
+                    await this.interestRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.AudiovisualBusinessRound.Id),
                     null,
                     isAddingToCurrentEdition,
                     false,
@@ -568,8 +568,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 cmd.UpdateDropdownProperties(
                     await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                    await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
-                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
+                    await this.activityRepo.FindAllByProjectTypeIdAsync(ProjectType.AudiovisualBusinessRound.Id),
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.AudiovisualBusinessRound.Id),
                     null);
 
                 return Json(new

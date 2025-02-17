@@ -62,6 +62,13 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = title.UpdateUserId;
         }
 
+        /// <summary>Updates the specified title.</summary>
+        /// <param name="title">The title.</param>
+        public void UpdateValue(string title)
+        {
+            this.Value = title?.Trim();
+        }
+
         /// <summary>Deletes the specified user identifier.</summary>
         /// <param name="userId">The user identifier.</param>
         public void Delete(int userId)

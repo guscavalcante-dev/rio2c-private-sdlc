@@ -24,6 +24,7 @@ using X.PagedList;
 using LinqKit;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
+
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
     #region Project IQueryable Extensions
@@ -300,6 +301,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>
+        /// Determines whether the specified show pitchings is pitching.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="showPitchings">if set to <c>true</c> [show pitchings].</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> IsPitchingOnly(this IQueryable<Project> query)
+        {
+            query = query.Where(p => p.ProjectModalityId == ProjectModality.Pitching.Id && p.PitchingJsonPayload != null);
+            return query;
+        }
+
 
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
@@ -1051,7 +1065,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                             .FindByEditionId(editionId)
                                             .FindByKeywords(searchKeywords)
                                             .FindByInterestUids(interestUids)
-                                            .IsPitching(showPitchings)
+                                            .IsPitchingOnly()
                                             .Select(p => new ProjectDto
                                             {
                                                 Project = p,
@@ -1240,6 +1254,28 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
+        /// Finds all approved projects ids asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<int[]> FindAllApprovedCommissionPitchingProjectsIdsAsync(int editionId)
+        {
+            var edition = await this.editioRepo.FindByIdAsync(editionId);
+
+            var query = this.GetBaseQuery()
+                                .IsPitchingOnly()
+                                .FindByEditionId(editionId)
+                                .FindByIsEvaluated();
+
+            return await query
+                            .OrderByDescending(p => p.CommissionGrade)
+                            .Take(edition.AudiovisualCommissionMaximumApprovedProjectsCount)
+                            .Select(p => p.Id)
+                            .ToArrayAsync();
+        }
+
+
+        /// <summary>
         /// Finds all projects ids paged asynchronous.
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
@@ -1263,8 +1299,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var projectsIds = await this.GetBaseQuery()
                                 .FindByEditionId(editionId)
                                 .IsFinished()
-                                .IsPitching(showPitchings)
-                                .FindByProjectModalityUid(projectModalityUid)
+                                .IsPitchingOnly()
                                 .FindByKeywords(searchKeywords)
                                 .FindByInterestUids(interestUids)
                                 .Order()

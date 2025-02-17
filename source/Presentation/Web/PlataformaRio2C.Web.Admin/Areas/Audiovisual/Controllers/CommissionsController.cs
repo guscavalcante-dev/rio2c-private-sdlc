@@ -681,7 +681,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <returns></returns>
         private async Task<List<InterestDto>> GetInterestsFromGenreInterestGroupAsync()
         {
-            return await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.AudiovisualGenre.Uid);
+            return await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.AudiovisualPitchingSubGenre.Uid);
         }
 
         #endregion

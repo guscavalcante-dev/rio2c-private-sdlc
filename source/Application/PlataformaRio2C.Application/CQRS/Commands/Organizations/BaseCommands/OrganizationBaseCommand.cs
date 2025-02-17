@@ -409,7 +409,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             if (organizationType.Name == OrganizationType.AudiovisualPlayer.Name)
             {
-                return ProjectType.Audiovisual;
+                return ProjectType.AudiovisualBusinessRound;
             }
             else if (organizationType.Name == OrganizationType.MusicPlayer.Name)
             {

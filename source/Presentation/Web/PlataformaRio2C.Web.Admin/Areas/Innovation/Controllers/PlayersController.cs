@@ -232,7 +232,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.AudiovisualPlatforms.Uid, this.UserInterfaceLanguage);
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.AudiovisualFormat.Uid, this.UserInterfaceLanguage);
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.AudiovisualGenre.Uid, this.UserInterfaceLanguage);
-                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.AudiovisualSubGenre.Uid, this.UserInterfaceLanguage);
+                            worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(InterestGroup.AudiovisualBusinessRoundSubGenre.Uid, this.UserInterfaceLanguage);
 
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.OrganizationTargetAudiencesDtos?.Select(otaDto => otaDto.TargetAudienceName?.GetSeparatorTranslation(this.UserInterfaceLanguage, '|'))?.ToString("; ");
 

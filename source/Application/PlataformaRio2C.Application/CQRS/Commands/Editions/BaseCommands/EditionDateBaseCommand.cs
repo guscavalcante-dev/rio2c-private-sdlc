@@ -181,6 +181,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         #region Audiovisual - Pitching
 
+        [Display(Name = nameof(AudiovisualPitchingSubmitStartDate), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public DateTime? AudiovisualPitchingSubmitStartDate { get; set; }
+
+        [Display(Name = nameof(AudiovisualPitchingSubmitEndDate), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [GreaterThanOrEqualTo(nameof(AudiovisualPitchingSubmitStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
+        public DateTime? AudiovisualPitchingSubmitEndDate { get; set; }
+
         [Display(Name = nameof(AudiovisualCommissionEvaluationStartDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public DateTime? AudiovisualCommissionEvaluationStartDate { get; set; }
@@ -382,6 +391,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.InnovationCommissionMinimumEvaluationsCount = editionDto.Edition.InnovationCommissionMinimumEvaluationsCount;
 
             // Audiovisual - Pitching
+
+            this.AudiovisualPitchingSubmitStartDate = editionDto.Edition.AudiovisualPitchingSubmitStartDate.ToBrazilTimeZone();
+            this.AudiovisualPitchingSubmitEndDate = editionDto.Edition.AudiovisualPitchingSubmitEndDate.ToBrazilTimeZone();
+
             this.AudiovisualCommissionEvaluationStartDate = editionDto.Edition.AudiovisualCommissionEvaluationStartDate.ToBrazilTimeZone();
             this.AudiovisualCommissionEvaluationEndDate = editionDto.Edition.AudiovisualCommissionEvaluationEndDate.ToBrazilTimeZone();
             this.AudiovisualCommissionMaximumApprovedProjectsCount = editionDto.Edition.AudiovisualCommissionMaximumApprovedProjectsCount;

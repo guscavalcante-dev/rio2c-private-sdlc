@@ -26,7 +26,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         public Guid CollaboratorUid { get; set; }
 
-        [Display(Name = "Interests", ResourceType = typeof(Labels))]
+        [Display(Name = "SubGenre", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneOption")]
         public InterestBaseCommand[][] Interests { get; set; }
 
