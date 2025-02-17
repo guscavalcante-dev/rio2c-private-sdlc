@@ -23,7 +23,6 @@ using PlataformaRio2C.Domain.Dtos;
 using X.PagedList;
 using LinqKit;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using Newtonsoft.Json;
 
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
