@@ -1062,9 +1062,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var projectsDtos = await this.GetBaseQuery()
                                             .IsFinished()
-                                            //.FindByEditionId(editionId)
+                                            .FindByEditionId(editionId)
                                             .FindByKeywords(searchKeywords)
-                                            //.FindByInterestUids(interestUids)
+                                            .FindByInterestUids(interestUids)
                                             .IsPitchingOnly()
                                             .Select(p => new ProjectDto
                                             {
@@ -1080,7 +1080,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                     CommissionEvaluation = ce,
                                                     EvaluatorUser = ce.EvaluatorUser
                                                 }),
-                                                ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted && i.Interest.InterestGroup.Uid == InterestGroup.AudiovisualGenre.Uid).Select(i => new ProjectInterestDto
+                                                ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted && i.Interest.InterestGroup.Uid == InterestGroup.AudiovisualPitchingSubGenre.Uid).Select(i => new ProjectInterestDto
                                                 {
                                                     Interest = i.Interest,
                                                     InterestGroup = i.Interest.InterestGroup
@@ -1297,11 +1297,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             int pageSize)
         {
             var projectsIds = await this.GetBaseQuery()
-                                //.FindByEditionId(editionId)
+                                .FindByEditionId(editionId)
                                 .IsFinished()
                                 .IsPitchingOnly()
                                 .FindByKeywords(searchKeywords)
-                                //.FindByInterestUids(interestUids)
+                                .FindByInterestUids(interestUids)
                                 .Order()
                                 .Select(p => p.Id)
                                 .ToListAsync();
