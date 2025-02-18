@@ -86,7 +86,7 @@ namespace PlataformaRio2C.Web.Site
                 var requestPath = context.Request.Path.Value;
                 if (requestPath.EndsWith("/projects", StringComparison.OrdinalIgnoreCase))
                 {
-                    context.Response.Redirect("/audiovisual/businessroundprojects");
+                    context.Response.Redirect("/audiovisual/BusinessRoundProjects");
                     return;
                 }
 
