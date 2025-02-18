@@ -217,7 +217,15 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                     var pitchingJsonPayload = JsonConvert.DeserializeObject<PitchingJsonPayload>(projectDto.Project.PitchingJsonPayload);
                     if (pitchingJsonPayload != null)
                     {
-                        projectDto.Project.ProjectTitles.ForEach(p => p.UpdateValue(pitchingJsonPayload.Title));
+                        if (projectDto.Project.ProjectTitles.Count > 0)
+                            projectDto.Project.ProjectTitles.ForEach(p => p.UpdateValue(pitchingJsonPayload.Title));
+                        else
+                        {
+                            projectDto.Project.ProjectTitles.Add(new ProjectTitle(pitchingJsonPayload.Title, Language.Portuguese, 0));
+                            projectDto.Project.ProjectTitles.Add(new ProjectTitle(pitchingJsonPayload.Title, Language.English, 0));
+
+                        }
+
                         projectDto.SellerAttendeeOrganizationDto = await attendeeOrganizationRepo.FindDtoByAttendeeOrganizationUid(new Guid(pitchingJsonPayload.SellerAttendeeOrganizationId));
                     }
                 }
