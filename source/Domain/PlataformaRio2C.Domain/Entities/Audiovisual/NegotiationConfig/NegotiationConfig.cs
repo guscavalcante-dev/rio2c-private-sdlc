@@ -24,6 +24,7 @@ namespace PlataformaRio2C.Domain.Entities
     public class NegotiationConfig : Entity
     {
         public int EditionId { get; private set; }
+        public int ProjectTypeId { get; private set; }
         public DateTimeOffset StartDate { get; private set; }
         public DateTimeOffset EndDate { get; private set; }
         public int RoundFirstTurn { get; private set; }
@@ -31,7 +32,7 @@ namespace PlataformaRio2C.Domain.Entities
         public TimeSpan TimeIntervalBetweenTurn { get; private set; }
         public TimeSpan TimeOfEachRound { get; private set; }
         public TimeSpan TimeIntervalBetweenRound { get; private set; }
-
+        public virtual ProjectType ProjectType { get; private set; }
         public virtual Edition Edition { get; private set; }
         public virtual ICollection<NegotiationRoomConfig> NegotiationRoomConfigs { get; private set; }
 

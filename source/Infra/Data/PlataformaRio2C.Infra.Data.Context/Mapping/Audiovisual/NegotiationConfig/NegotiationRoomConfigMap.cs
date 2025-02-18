@@ -32,6 +32,10 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.HasRequired(t => t.NegotiationConfig)
                 .WithMany(e => e.NegotiationRoomConfigs)
                 .HasForeignKey(t => t.NegotiationConfigId);
+
+            this.HasRequired(t => t.ProjectType)
+                .WithMany()
+                .HasForeignKey(t => t.ProjectTypeId);
         }
     }
 }

@@ -28,6 +28,10 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.HasRequired(t => t.Edition)
                 .WithMany()
                 .HasForeignKey(d => d.EditionId);
+
+            this.HasRequired(t => t.ProjectType)
+              .WithMany()
+              .HasForeignKey(t => t.ProjectTypeId);
         }
     }
 }
