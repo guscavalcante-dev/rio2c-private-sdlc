@@ -31,26 +31,26 @@ namespace PlataformaRio2C.Web.Admin
 
             // Route to include edition
             routes.MapRoute(
-                "DefaultWithCultureAndEdition",
-                "{culture}/{edition}/{controller}/{action}/{id}",
-                new { culture = string.Empty, edition = string.Empty, controller = "Home", action = "Index", area = "", id = UrlParameter.Optional },
-                new { culture = @"^[a-zA-Z]{2}(\-[a-zA-Z]{2})?$", edition = @"^[0-9]{4}$" },
-                new[] { "PlataformaRio2C.Web.Admin.Controllers" });
+                name: "DefaultWithCultureAndEdition",
+                url: "{culture}/{edition}/{controller}/{action}/{id}",
+                defaults: new { culture = string.Empty, edition = string.Empty, controller = "Home", action = "Index", area = "", id = UrlParameter.Optional },
+                constraints: new { culture = @"^[a-zA-Z]{2}(\-[a-zA-Z]{2})?$", edition = @"^[0-9]{4}$" },
+                namespaces: new[] { "PlataformaRio2C.Web.Admin.Controllers" });
 
             // Route to include culture
             routes.MapRoute(
-                "DefaultWithCulture",
-                "{culture}/{controller}/{action}/{id}",
-                new { culture = string.Empty, controller = "Home", action = "Index", area = "", id = UrlParameter.Optional },
-                new { culture = @"^[a-zA-Z]{2}(\-[a-zA-Z]{2})?$" },
-                new[] { "PlataformaRio2C.Web.Admin.Controllers" });
+                name: "DefaultWithCulture",
+                url: "{culture}/{controller}/{action}/{id}",
+                defaults: new { culture = string.Empty, controller = "Home", action = "Index", area = "", id = UrlParameter.Optional },
+                constraints: new { culture = @"^[a-zA-Z]{2}(\-[a-zA-Z]{2})?$" },
+                namespaces: new[] { "PlataformaRio2C.Web.Admin.Controllers" });
 
             // Default route
             routes.MapRoute(
-                "Default",
-                "{controller}/{action}/{id}",
-                new { controller = "Home", action = "Index", area = "", id = UrlParameter.Optional },
-                new[] { "PlataformaRio2C.Web.Admin.Controllers" }
+                name: "Default",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Home", action = "Index", area = "", id = UrlParameter.Optional },
+                namespaces: new[] { "PlataformaRio2C.Web.Admin.Controllers" }
             );
         }
     }
