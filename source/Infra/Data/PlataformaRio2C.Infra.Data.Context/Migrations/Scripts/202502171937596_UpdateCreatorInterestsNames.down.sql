@@ -3,7 +3,10 @@
 
 		ALTER TABLE CreatorProjects DROP COLUMN Synopsis
 		ALTER TABLE CreatorProjects DROP COLUMN Clipping
+		ALTER TABLE CreatorProjects ALTER COLUMN ProjectAwards varchar(300)
+		ALTER TABLE CreatorProjects ALTER COLUMN ProjectPublicNotice varchar(300)
 		ALTER TABLE CreatorProjects ALTER COLUMN PreviouslyDevelopedProjects varchar(300)
+		ALTER TABLE CreatorProjects ALTER COLUMN Synopsis varchar(300)
 
 	COMMIT TRAN -- Transaction Success!
 END TRY

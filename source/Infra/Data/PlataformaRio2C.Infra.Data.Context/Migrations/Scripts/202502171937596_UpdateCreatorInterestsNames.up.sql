@@ -16,7 +16,12 @@
 		-- Add new fields
 		ALTER TABLE CreatorProjects ADD Synopsis varchar(600)
 		ALTER TABLE CreatorProjects ADD Clipping varchar(600)
+		
+		-- Change field lengths
+		ALTER TABLE CreatorProjects ALTER COLUMN ProjectAwards varchar(1024)
+		ALTER TABLE CreatorProjects ALTER COLUMN ProjectPublicNotice varchar(1024)
 		ALTER TABLE CreatorProjects ALTER COLUMN PreviouslyDevelopedProjects varchar(1024)
+		ALTER TABLE CreatorProjects ALTER COLUMN Synopsis varchar(1024)
 
 	COMMIT TRAN -- Transaction Success!
 END TRY
