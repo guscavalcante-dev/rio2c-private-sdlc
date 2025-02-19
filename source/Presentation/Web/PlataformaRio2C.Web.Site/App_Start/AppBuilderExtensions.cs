@@ -21,6 +21,7 @@ using PlataformaRio2C.Infra.CrossCutting.Identity.Configuration;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Models;
 using System;
 using System.Web.Mvc;
+using System.Linq;
 
 namespace PlataformaRio2C.Web.Site
 {
@@ -83,8 +84,14 @@ namespace PlataformaRio2C.Web.Site
         {
             appBuilder.Use(async (context, next) =>
             {
-                var requestPath = context.Request.Path.Value;
-                if (requestPath.EndsWith("/projects", StringComparison.OrdinalIgnoreCase))
+                var requestPath = context.Request.Path.Value.ToLower();
+
+                // If '/projects' is within any of these areas,
+                // it doesn't redirect because the '/projects' route within each area is used by commissions
+                var ignoredPaths = new[] { "/audiovisual", "/cartoon", "/innovation", "/music" };
+                bool isIgnored = ignoredPaths.Any(path => requestPath.Contains(path));
+
+                if (!isIgnored && requestPath.EndsWith("/projects", StringComparison.OrdinalIgnoreCase))
                 {
                     context.Response.Redirect("/audiovisual/BusinessRoundProjects");
                     return;
