@@ -48,8 +48,6 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults;
 namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 {
     /// <summary>The Audiovisual Commissions ProjectsController</summary>
-    [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual)]
     public class ProjectsController : BaseController
     {
         private readonly IProjectRepository projectRepo;
