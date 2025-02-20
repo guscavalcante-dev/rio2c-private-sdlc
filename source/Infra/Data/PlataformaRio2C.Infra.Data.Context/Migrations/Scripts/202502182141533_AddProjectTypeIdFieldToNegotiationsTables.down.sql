@@ -3,11 +3,9 @@
 
         -- Drop foreign key constraints
         ALTER TABLE "NegotiationConfigs" DROP CONSTRAINT "FK_ProjectTypes_NegotiationConfigs_ProjectTypeId";
-        ALTER TABLE "NegotiationRoomConfigs" DROP CONSTRAINT "FK_ProjectTypes_NegotiationRoomConfigs_ProjectTypeId";
 
         -- Drop columns
         ALTER TABLE dbo.NegotiationConfigs DROP COLUMN ProjectTypeId;
-        ALTER TABLE dbo.NegotiationRoomConfigs DROP COLUMN ProjectTypeId;
 
     COMMIT TRANSACTION
 END TRY

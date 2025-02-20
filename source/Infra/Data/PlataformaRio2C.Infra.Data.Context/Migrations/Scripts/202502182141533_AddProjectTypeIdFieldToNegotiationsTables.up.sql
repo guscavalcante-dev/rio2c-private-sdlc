@@ -3,14 +3,9 @@
 
         -- Adding project type id to tables
        	ALTER TABLE dbo.NegotiationConfigs add ProjectTypeId INT NOT NULL DEFAULT 1
-        ALTER TABLE dbo.NegotiationRoomConfigs add ProjectTypeId INT NOT NULL DEFAULT 1
 
         ALTER TABLE "NegotiationConfigs"
         ADD CONSTRAINT "FK_ProjectTypes_NegotiationConfigs_ProjectTypeId" FOREIGN KEY ("ProjectTypeId") REFERENCES "dbo"."ProjectTypes"("Id")
-
-        ALTER TABLE "NegotiationRoomConfigs"
-        ADD CONSTRAINT "FK_ProjectTypes_NegotiationRoomConfigs_ProjectTypeId" FOREIGN KEY ("ProjectTypeId") REFERENCES "dbo"."ProjectTypes"("Id")
-
 
     COMMIT TRANSACTION
 END TRY
