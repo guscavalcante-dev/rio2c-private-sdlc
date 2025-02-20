@@ -6,7 +6,7 @@
 <div class="row">
     <!--begin:: Total Count Widget-->
     <div class="col-sm-6">
-        <div id="AudiovisualMeetingParametersTotalCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <div id="MusicMeetingParametersTotalCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
     </div>
     <!--end:: Total Count Widget-->
     <!--begin:: Edition Count-->
@@ -42,9 +42,9 @@
         var initialPageSize = @(Model.PageSize?.ToString() ?? "null");
 
         jQuery(document).ready(function () {
-            AudiovisualMeetingParametersTotalCountWidget.init();
-            AudiovisualMeetingParametersEditionCountWidget.init();
-            AudiovisualMeetingParametersDataTableWidget.init();
+            MusicMeetingParametersTotalCountWidget.init();
+            MusicMeetingParametersEditionCountWidget.init();
+            MusicMeetingParametersDataTableWidget.init();
         });
     </script>
 }

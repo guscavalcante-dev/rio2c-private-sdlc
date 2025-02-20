@@ -23,7 +23,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>INegotiationConfigRepository</summary>
     public interface INegotiationConfigRepository : IRepository<NegotiationConfig>
     {
-        Task<NegotiationConfigDto> FindMainInformationWidgetDtoAsync(Guid negotiationConfigUid);
+        Task<NegotiationConfigDto> FindMainInformationWidgetDtoAsync(Guid negotiationConfigUid, int projectTypeId);
         Task<NegotiationConfigDto> FindRoomsWidgetDtoAsync(Guid negotiationConfigUid);
         Task<IPagedList<NegotiationConfigJsonDto>> FindAllJsonDtosPagedAsync(int page, int pageSize, List<Tuple<string, string>> sortColumns, string keywords, Guid? musicGenreUid, Guid? evaluationStatusUid, string languageCode, int editionId);
         Task<int> CountAsync(int editionId, bool showAllEditions = false);

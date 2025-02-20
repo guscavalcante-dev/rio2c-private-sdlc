@@ -43,6 +43,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+        internal static IQueryable<NegotiationConfig> FindByProjectTypeId(this IQueryable<NegotiationConfig> query, int projectTypeId)
+        {
+            query = query.Where(nc => nc.ProjectTypeId == projectTypeId);
+
+            return query;
+        }
 
         /// <summary>Finds the by negotiation room configu uid.</summary>
         /// <param name="query">The query.</param>
@@ -194,10 +200,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>Finds the main information widget dto asynchronous.</summary>
         /// <param name="negotiationConfigUid">The negotiation configuration uid.</param>
         /// <returns></returns>
-        public async Task<NegotiationConfigDto> FindMainInformationWidgetDtoAsync(Guid negotiationConfigUid)
+        public async Task<NegotiationConfigDto> FindMainInformationWidgetDtoAsync(Guid negotiationConfigUid, int projectTypeId)
         {
             var query = this.GetBaseQuery()
                                 .FindByUid(negotiationConfigUid)
+                                .FindByProjectTypeId(projectTypeId)
                                 .Select(nc => new NegotiationConfigDto
                                 {
                                     NegotiationConfig = nc

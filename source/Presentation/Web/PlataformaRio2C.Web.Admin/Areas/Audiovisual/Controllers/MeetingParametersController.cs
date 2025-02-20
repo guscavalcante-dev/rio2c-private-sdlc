@@ -33,6 +33,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Admin.Controllers;
 using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
+using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 {
@@ -245,7 +246,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> Details(Guid? id)
         {
-            var mainInformationWidgetDto = await this.negotiationConfigRepo.FindMainInformationWidgetDtoAsync(id ?? Guid.Empty);
+            var mainInformationWidgetDto = await this.negotiationConfigRepo.FindMainInformationWidgetDtoAsync(id ?? Guid.Empty, ProjectType.AudiovisualBusinessRound.Id);
             if (mainInformationWidgetDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Parameter, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
@@ -272,7 +273,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowMainInformationWidget(Guid? negotiationConfigUid)
         {
-            var mainInformationWidgetDto = await this.negotiationConfigRepo.FindMainInformationWidgetDtoAsync(negotiationConfigUid ?? Guid.Empty);
+            var mainInformationWidgetDto = await this.negotiationConfigRepo.FindMainInformationWidgetDtoAsync(negotiationConfigUid ?? Guid.Empty, ProjectType.AudiovisualBusinessRound.Id);
             if (mainInformationWidgetDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Parameter, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
@@ -300,7 +301,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             try
             {
-                var mainInformationWidgetDto = await this.negotiationConfigRepo.FindMainInformationWidgetDtoAsync(negotiationConfigUid ?? Guid.Empty);
+                var mainInformationWidgetDto = await this.negotiationConfigRepo.FindMainInformationWidgetDtoAsync(negotiationConfigUid ?? Guid.Empty, ProjectType.AudiovisualBusinessRound.Id);
                 if (mainInformationWidgetDto == null)
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Parameter, Labels.FoundM.ToLowerInvariant()));

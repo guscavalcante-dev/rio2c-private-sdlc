@@ -33,6 +33,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Admin.Controllers;
 using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
+using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 {
@@ -81,7 +82,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Parameters, Url.Action("Index", "MeetingParameters", new { Area = "Audiovisual" }))
+                new BreadcrumbItemHelper(Labels.Parameters, Url.Action("Index", "MeetingParameters", new { Area = "Music" }))
             });
 
             #endregion
@@ -135,7 +136,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", executivesCount), divIdOrClass = "#AudiovisualMeetingParametersTotalCountWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", executivesCount), divIdOrClass = "#MusicMeetingParametersTotalCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -245,7 +246,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> Details(Guid? id)
         {
-            var mainInformationWidgetDto = await negotiationConfigRepo.FindMainInformationWidgetDtoAsync(id ?? Guid.Empty);
+            var mainInformationWidgetDto = await negotiationConfigRepo.FindMainInformationWidgetDtoAsync(id ?? Guid.Empty, ProjectType.Music.Id);
             if (mainInformationWidgetDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Parameter, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
@@ -255,8 +256,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Parameters, Url.Action("Index", "MeetingParameters", new { Area = "Audiovisual" })),
-                new BreadcrumbItemHelper(Labels.Parameter, Url.Action("Details", "MeetingParameters", new { Area = "Audiovisual", id }))
+                new BreadcrumbItemHelper(Labels.Parameters, Url.Action("Index", "MeetingParameters", new { Area = "Music" })),
+                new BreadcrumbItemHelper(Labels.Parameter, Url.Action("Details", "MeetingParameters", new { Area = "Music", id }))
             });
 
             #endregion
@@ -272,7 +273,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowMainInformationWidget(Guid? negotiationConfigUid)
         {
-            var mainInformationWidgetDto = await negotiationConfigRepo.FindMainInformationWidgetDtoAsync(negotiationConfigUid ?? Guid.Empty);
+            var mainInformationWidgetDto = await negotiationConfigRepo.FindMainInformationWidgetDtoAsync(negotiationConfigUid ?? Guid.Empty, ProjectType.Music.Id);
             if (mainInformationWidgetDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Parameter, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
@@ -283,7 +284,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#AudiovisualMeetingParametersMainInformationWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#MusicMeetingParametersMainInformationWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -300,7 +301,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
             try
             {
-                var mainInformationWidgetDto = await negotiationConfigRepo.FindMainInformationWidgetDtoAsync(negotiationConfigUid ?? Guid.Empty);
+                var mainInformationWidgetDto = await negotiationConfigRepo.FindMainInformationWidgetDtoAsync(negotiationConfigUid ?? Guid.Empty, ProjectType.Music.Id);
                 if (mainInformationWidgetDto == null)
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Parameter, Labels.FoundM.ToLowerInvariant()));
@@ -400,7 +401,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/RoomsWidget", roomsWidgetDto), divIdOrClass = "#AudiovisualMeetingParametersRoomsWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/RoomsWidget", roomsWidgetDto), divIdOrClass = "#MusicMeetingParametersRoomsWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }

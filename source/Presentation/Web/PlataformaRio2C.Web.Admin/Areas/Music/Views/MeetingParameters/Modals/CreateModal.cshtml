@@ -1,5 +1,5 @@
 ﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateNegotiationConfig
-<div class="modal fade" id="CreateAudiovisualMeetingParameterModal" role="dialog" aria-labelledby="CreateAudiovisualMeetingParameterModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div class="modal fade" id="CreateMusicMeetingParameterModal" role="dialog" aria-labelledby="CreateMusicMeetingParameterModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -7,7 +7,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Create", "MeetingParameters", new { Area = "Music" }, FormMethod.Post, new { id = "CreateCAudiovisualMeetingParameterForm" }))
+                @using (Html.BeginForm("Create", "MeetingParameters", new { Area = "Music" }, FormMethod.Post, new { id = "CreateCMusicMeetingParameterForm" }))
                 {
                     <div id="form-container">
                         @Html.Partial("Modals/CreateForm", Model)
@@ -16,7 +16,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">@Labels.Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="$('#CreateCAudiovisualMeetingParameterForm').submit();">@Labels.Save</button>
+                <button type="button" class="btn btn-primary" onclick="$('#CreateCMusicMeetingParameterForm').submit();">@Labels.Save</button>
             </div>
         </div>
     </div>

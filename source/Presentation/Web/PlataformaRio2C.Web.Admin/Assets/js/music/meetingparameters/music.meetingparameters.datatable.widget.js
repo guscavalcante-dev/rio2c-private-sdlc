@@ -6,16 +6,16 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-05-2020
 // ***********************************************************************
-// <copyright file="audiovisual.meetingparameters.datatable.widget.js" company="Softo">
+// <copyright file="Music.meetingparameters.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var AudiovisualMeetingParametersDataTableWidget = function () {
+var MusicMeetingParametersDataTableWidget = function () {
 
-    var widgetElementId = '#AudiovisualMeetingParametersDataTableWidget';
-    var tableElementId = '#audiovisual-meetingparameters-list-table';
+    var widgetElementId = '#MusicMeetingParametersDataTableWidget';
+    var tableElementId = '#Music-meetingparameters-list-table';
 
     // Init datatable -----------------------------------------------------------------------------
     var initiListTable = function () {
@@ -64,7 +64,7 @@ var AudiovisualMeetingParametersDataTableWidget = function () {
                 sSearch: $('#Search').val()
             },
             ajax: {
-                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/Search'),
+                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Music/MeetingParameters/Search'),
                 data: function (d) {
                     //d.showAllEditions = $('#ShowAllEditions').prop('checked');
                     //d.showAllParticipants = $('#ShowAllParticipants').prop('checked');
@@ -166,8 +166,8 @@ var AudiovisualMeetingParametersDataTableWidget = function () {
                                             </a>\
                                             <div class="dropdown-menu dropdown-menu-right">';
 
-                        html += '               <button class="dropdown-item" onclick="AudiovisualMeetingParametersDataTableWidget.showDetails(\'' + full.NegotiationConfigUid + '\');"><i class="la la-edit"></i> ' + labels.edit + '</button>';
-                        html += '               <button class="dropdown-item" onclick="AudiovisualMeetingParametersDelete.showModal(\'' + full.NegotiationConfigUid + '\');"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+                        html += '               <button class="dropdown-item" onclick="MusicMeetingParametersDataTableWidget.showDetails(\'' + full.NegotiationConfigUid + '\');"><i class="la la-edit"></i> ' + labels.edit + '</button>';
+                        html += '               <button class="dropdown-item" onclick="MusicMeetingParametersDelete.showModal(\'' + full.NegotiationConfigUid + '\');"><i class="la la-remove"></i> ' + labels.remove + '</button>';
 
 		                html += '\
                                             </div>\
@@ -226,7 +226,7 @@ var AudiovisualMeetingParametersDataTableWidget = function () {
             return;
         }
 
-        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/Details/' + negotiationConfigUid);
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Music/MeetingParameters/Details/' + negotiationConfigUid);
     };
 
     return {

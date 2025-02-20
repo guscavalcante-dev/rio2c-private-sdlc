@@ -8,7 +8,7 @@
     </div>
     <div class="kt-portlet__head-toolbar">
         <div class="kt-portlet__head-actions">
-            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="AudiovisualMeetingParametersRoomsWidget.showCreateModal();">
+            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="MusicMeetingParametersRoomsWidget.showCreateModal();">
                 <i class="flaticon2-add-1"></i>
             </button>
         </div>
@@ -41,10 +41,10 @@
                                             <i class="la la-ellipsis-h"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <button class="dropdown-item" onclick="AudiovisualMeetingParametersRoomsWidget.showUpdateModal('@(negotiationRoomConfigDto.NegotiationRoomConfig?.Uid)');">
+                                            <button class="dropdown-item" onclick="MusicMeetingParametersRoomsWidget.showUpdateModal('@(negotiationRoomConfigDto.NegotiationRoomConfig?.Uid)');">
                                                 <i class="la la-edit"></i>@Labels.Edit
                                             </button>
-                                            <button class="dropdown-item" onclick="AudiovisualMeetingParametersRoomsWidget.showDeleteModal('@(negotiationRoomConfigDto.NegotiationRoomConfig?.Uid)');">
+                                            <button class="dropdown-item" onclick="MusicMeetingParametersRoomsWidget.showDeleteModal('@(negotiationRoomConfigDto.NegotiationRoomConfig?.Uid)');">
                                                 <i class="la la-remove"></i>@Labels.Remove
                                             </button>
                                         </div>

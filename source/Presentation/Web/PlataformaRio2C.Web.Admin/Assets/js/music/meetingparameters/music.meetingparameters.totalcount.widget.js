@@ -6,16 +6,16 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-04-2020
 // ***********************************************************************
-// <copyright file="audiovisual.meetingparameters.totalcount.widget.js" company="Softo">
+// <copyright file="Music.meetingparameters.totalcount.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var AudiovisualMeetingParametersTotalCountWidget = function () {
+var MusicMeetingParametersTotalCountWidget = function () {
 
-    var widgetElementId = '#AudiovisualMeetingParametersTotalCountWidget';
-    var chartElementId = 'AudiovisualMeetingParametersTotalCountChart';
+    var widgetElementId = '#MusicMeetingParametersTotalCountWidget';
+    var chartElementId = 'MusicMeetingParametersTotalCountChart';
     var widgetElement = $(widgetElementId);
 
     // Show ---------------------------------------------------------------------------------------
@@ -117,7 +117,7 @@ var AudiovisualMeetingParametersTotalCountWidget = function () {
     var show = function () {
         var jsonParameters = new Object();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/ShowTotalCountWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/MeetingParameters/ShowTotalCountWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

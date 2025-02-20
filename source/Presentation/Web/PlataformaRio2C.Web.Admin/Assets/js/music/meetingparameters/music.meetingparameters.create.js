@@ -6,16 +6,16 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-05-2020
 // ***********************************************************************
-// <copyright file="audiovisual.meetingparameters.create.js" company="Softo">
+// <copyright file="Music.meetingparameters.create.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var AudiovisualMeetingParametersCreate = function () {
+var MusicMeetingParametersCreate = function () {
 
-    var modalId = '#CreateAudiovisualMeetingParameterModal';
-    var formId = '#CreateCAudiovisualMeetingParameterForm';
+    var modalId = '#CreateMusicMeetingParameterModal';
+    var formId = '#CreateCMusicMeetingParameterForm';
 
     // Enable form validation ---------------------------------------------------------------------
     var enableFormValidation = function () {
@@ -36,7 +36,7 @@ var AudiovisualMeetingParametersCreate = function () {
 
         var jsonParameters = new Object();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/ShowCreateModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/MeetingParameters/ShowCreateModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -63,16 +63,16 @@ var AudiovisualMeetingParametersCreate = function () {
             onSuccess: function (data) {
                 $(modalId).modal('hide');
 
-                if (typeof (AudiovisualMeetingParametersDataTableWidget) !== 'undefined') {
-	                AudiovisualMeetingParametersDataTableWidget.refreshData();
+                if (typeof (MusicMeetingParametersDataTableWidget) !== 'undefined') {
+	                MusicMeetingParametersDataTableWidget.refreshData();
                 }
 
-                if (typeof (AudiovisualMeetingParametersTotalCountWidget) !== 'undefined') {
-	                AudiovisualMeetingParametersTotalCountWidget.init();
+                if (typeof (MusicMeetingParametersTotalCountWidget) !== 'undefined') {
+	                MusicMeetingParametersTotalCountWidget.init();
                 }
 
-                if (typeof (AudiovisualMeetingParametersEditionCountWidget) !== 'undefined') {
-	                AudiovisualMeetingParametersEditionCountWidget.init();
+                if (typeof (MusicMeetingParametersEditionCountWidget) !== 'undefined') {
+	                MusicMeetingParametersEditionCountWidget.init();
                 }
             },
             onError: function (data) {

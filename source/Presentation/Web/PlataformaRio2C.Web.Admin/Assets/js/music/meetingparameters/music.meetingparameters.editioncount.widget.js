@@ -6,13 +6,13 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-04-2020
 // ***********************************************************************
-// <copyright file="audiovisual.meetingparameters.editioncount.widget.js" company="Softo">
+// <copyright file="Music.meetingparameters.editioncount.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var AudiovisualMeetingParametersEditionCountWidget = function () {
+var MusicMeetingParametersEditionCountWidget = function () {
 
     var widgetElementId = '#MusicMeetingParametersEditionCountWidget';
     var chartElementId = 'MusicMeetingParametersEditionCountChart';
@@ -119,7 +119,7 @@ var AudiovisualMeetingParametersEditionCountWidget = function () {
         jsonParameters.keyword = $('#Search').val();
         jsonParameters.interestUid = $('#InterestUid').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/ShowEditionCountWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/MeetingParameters/ShowEditionCountWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

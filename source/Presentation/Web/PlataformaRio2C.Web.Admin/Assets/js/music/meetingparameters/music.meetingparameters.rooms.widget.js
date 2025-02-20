@@ -6,15 +6,15 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-08-2020
 // ***********************************************************************
-// <copyright file="audiovisual.meetingparameters.rooms.widget.js" company="Softo">
+// <copyright file="Music.meetingparameters.rooms.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var AudiovisualMeetingParametersRoomsWidget = function () {
+var MusicMeetingParametersRoomsWidget = function () {
 
-    var widgetElementId = '#AudiovisualMeetingParametersRoomsWidget';
+    var widgetElementId = '#MusicMeetingParametersRoomsWidget';
     var widgetElement = $(widgetElementId);
 
     var createModalId = '#CreateRoomModal';
@@ -37,7 +37,7 @@ var AudiovisualMeetingParametersRoomsWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.negotiationConfigUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/ShowRoomsWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/MeetingParameters/ShowRoomsWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -65,8 +65,8 @@ var AudiovisualMeetingParametersRoomsWidget = function () {
 		    onSuccess: function (data) {
                 $(createModalId).modal('hide');
 
-			    if (typeof (AudiovisualMeetingParametersRoomsWidget) !== 'undefined') {
-				    AudiovisualMeetingParametersRoomsWidget.init();
+			    if (typeof (MusicMeetingParametersRoomsWidget) !== 'undefined') {
+				    MusicMeetingParametersRoomsWidget.init();
 			    }
 		    },
 		    onError: function (data) {
@@ -91,7 +91,7 @@ var AudiovisualMeetingParametersRoomsWidget = function () {
 	    var jsonParameters = new Object();
 	    jsonParameters.negotiationConfigUid = $('#AggregateId').val();
 
-	    $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/ShowCreateRoomModal'), jsonParameters, function (data) {
+	    $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/MeetingParameters/ShowCreateRoomModal'), jsonParameters, function (data) {
 			    MyRio2cCommon.handleAjaxReturn({
 				    data: data,
 				    // Success
@@ -118,8 +118,8 @@ var AudiovisualMeetingParametersRoomsWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (AudiovisualMeetingParametersRoomsWidget) !== 'undefined') {
-	                AudiovisualMeetingParametersRoomsWidget.init();
+                if (typeof (MusicMeetingParametersRoomsWidget) !== 'undefined') {
+	                MusicMeetingParametersRoomsWidget.init();
                 }
             },
             onError: function (data) {
@@ -145,7 +145,7 @@ var AudiovisualMeetingParametersRoomsWidget = function () {
         jsonParameters.negotiationConfigUid = $('#AggregateId').val();
         jsonParameters.negotiationRoomConfigUid = negotiationRoomConfigUid;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/ShowUpdateRoomModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/MeetingParameters/ShowUpdateRoomModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
             data: data,
             // Success
@@ -173,13 +173,13 @@ var AudiovisualMeetingParametersRoomsWidget = function () {
         jsonParameters.negotiationConfigUid = $('#AggregateId').val();
         jsonParameters.negotiationRoomConfigUid = negotiationRoomConfigUid;
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/DeleteRoom'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/MeetingParameters/DeleteRoom'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
                 onSuccess: function () {
-	                if (typeof (AudiovisualMeetingParametersRoomsWidget) !== 'undefined') {
-		                AudiovisualMeetingParametersRoomsWidget.init();
+	                if (typeof (MusicMeetingParametersRoomsWidget) !== 'undefined') {
+		                MusicMeetingParametersRoomsWidget.init();
 	                }
                 },
                 // Error

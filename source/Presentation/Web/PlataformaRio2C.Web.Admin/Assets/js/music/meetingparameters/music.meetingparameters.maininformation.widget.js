@@ -6,15 +6,15 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-05-2020
 // ***********************************************************************
-// <copyright file="audiovisual.meetingparameters.maininformation.widget.js" company="Softo">
+// <copyright file="Music.meetingparameters.maininformation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var AudiovisualMeetingParametersMainInformationWidget = function () {
+var MusicMeetingParametersMainInformationWidget = function () {
 
-    var widgetElementId = '#AudiovisualMeetingParametersMainInformationWidget';
+    var widgetElementId = '#MusicMeetingParametersMainInformationWidget';
     var widgetElement = $(widgetElementId);
 
     var updateModalId = '#UpdateMainInformationModal';
@@ -34,7 +34,7 @@ var AudiovisualMeetingParametersMainInformationWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.negotiationConfigUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/ShowMainInformationWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/MeetingParameters/ShowMainInformationWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -62,8 +62,8 @@ var AudiovisualMeetingParametersMainInformationWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (AudiovisualMeetingParametersMainInformationWidget) !== 'undefined') {
-	                AudiovisualMeetingParametersMainInformationWidget.init();
+                if (typeof (MusicMeetingParametersMainInformationWidget) !== 'undefined') {
+	                MusicMeetingParametersMainInformationWidget.init();
                 }
             },
             onError: function (data) {
@@ -89,7 +89,7 @@ var AudiovisualMeetingParametersMainInformationWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.negotiationConfigUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/ShowUpdateMainInformationModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/MeetingParameters/ShowUpdateMainInformationModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
             data: data,
             // Success
