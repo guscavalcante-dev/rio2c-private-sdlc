@@ -40,6 +40,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        internal static IQueryable<NegotiationRoomConfig> FindByProjectTypeId(this IQueryable<NegotiationRoomConfig> query, int projectTypeId)
+        {
+            query = query.Where(nc => nc.NegotiationConfig.ProjectTypeId == projectTypeId);
+
+            return query;
+        }
+
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
@@ -78,11 +85,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         /// <summary>Finds the main information widget dto asynchronous.</summary>
         /// <param name="negotiationRoomConfigUid">The negotiation room configuration uid.</param>
+        /// <param name="projectTypeId">The Project Type Identifier.</param>
         /// <returns></returns>
-        public async Task<NegotiationRoomConfigDto> FindMainInformationWidgetDtoAsync(Guid negotiationRoomConfigUid)
+        public async Task<NegotiationRoomConfigDto> FindMainInformationWidgetDtoAsync(Guid negotiationRoomConfigUid, int projectTypeId)
         {
             var query = this.GetBaseQuery()
                                 .FindByUid(negotiationRoomConfigUid)
+                                .FindByProjectTypeId(projectTypeId)
                                 .Select(nrc => new NegotiationRoomConfigDto
                                 {
                                     NegotiationRoomConfig = nrc,

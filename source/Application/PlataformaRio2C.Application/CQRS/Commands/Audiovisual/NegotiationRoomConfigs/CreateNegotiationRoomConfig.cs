@@ -36,6 +36,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Display(Name = "CountManualTables", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public int? CountManualTables { get; set; }
+        public int ProjectTypeId { get; set; } = 0;
+
 
         public List<RoomJsonDto> Rooms { get; private set; }
 

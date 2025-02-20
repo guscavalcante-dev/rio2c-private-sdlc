@@ -106,7 +106,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 null,
                 null,
                 this.UserInterfaceLanguage,
-                this.EditionDto.Id
+                this.EditionDto.Id,
+                ProjectType.AudiovisualBusinessRound.Id
             );
 
             var response = DataTablesResponse.Create(request, negotiationConfigs.TotalItemCount, negotiationConfigs.TotalItemCount, negotiationConfigs);
@@ -129,7 +130,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowTotalCountWidget()
         {
-            var executivesCount = await this.negotiationConfigRepo.CountAsync(this.EditionDto.Id, true);
+            var executivesCount = await this.negotiationConfigRepo.CountAsync(this.EditionDto.Id,ProjectType.AudiovisualBusinessRound.Id, true);
 
             return Json(new
             {
@@ -149,7 +150,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <returns></returns>
         public async Task<ActionResult> ShowEditionCountWidget()
         {
-            var executivesCount = await this.negotiationConfigRepo.CountAsync(this.EditionDto.Id, false);
+            var executivesCount = await this.negotiationConfigRepo.CountAsync(this.EditionDto.Id, ProjectType.AudiovisualBusinessRound.Id, false);
 
             return Json(new
             {
@@ -203,6 +204,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     this.EditionDto.Id,
                     this.EditionDto.Uid,
                     this.UserInterfaceLanguage);
+                cmd.ProjectTypeId = ProjectType.AudiovisualBusinessRound.Id;
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
                 {
@@ -390,7 +392,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowRoomsWidget(Guid? negotiationConfigUid)
         {
-            var roomsWidgetDto = await this.negotiationConfigRepo.FindRoomsWidgetDtoAsync(negotiationConfigUid ?? Guid.Empty);
+            var roomsWidgetDto = await this.negotiationConfigRepo.FindRoomsWidgetDtoAsync(negotiationConfigUid ?? Guid.Empty, ProjectType.AudiovisualBusinessRound.Id);
             if (roomsWidgetDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Parameter, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
@@ -418,7 +420,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             try
             {
-                var roomsWidgetDto = await this.negotiationConfigRepo.FindRoomsWidgetDtoAsync(negotiationConfigUid ?? Guid.Empty);
+                var roomsWidgetDto = await this.negotiationConfigRepo.FindRoomsWidgetDtoAsync(negotiationConfigUid ?? Guid.Empty, ProjectType.AudiovisualBusinessRound.Id);
                 if (roomsWidgetDto == null)
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Parameter, Labels.FoundM.ToLowerInvariant()));
@@ -465,6 +467,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     this.EditionDto.Id,
                     this.EditionDto.Uid,
                     this.UserInterfaceLanguage);
+                cmd.ProjectTypeId = ProjectType.AudiovisualBusinessRound.Id;
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
                 {
@@ -516,7 +519,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             try
             {
-                var roomWidgetDto = await this.negotiationRoomConfigRepo.FindMainInformationWidgetDtoAsync(negotiationRoomConfigUid ?? Guid.Empty);
+                var roomWidgetDto = await this.negotiationRoomConfigRepo.FindMainInformationWidgetDtoAsync(negotiationRoomConfigUid ?? Guid.Empty, ProjectType.AudiovisualBusinessRound.Id);
                 if (roomWidgetDto == null)
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Room, Labels.FoundM.ToLowerInvariant()));
@@ -726,7 +729,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         public async Task<ActionResult> FindAllDates(Guid? buyerOrganizationUid = null, string customFilter = "")
         {
             var buyerOrganizationDto = await this.organizationRepo.FindDtoByUidAsync(buyerOrganizationUid ?? Guid.Empty, this.EditionDto.Edition.Id);
-            var negotiationConfigDtos = await this.negotiationConfigRepo.FindAllDatesDtosAsync(this.EditionDto.Id, customFilter, buyerOrganizationDto?.IsVirtualMeeting == true);
+            var negotiationConfigDtos = await this.negotiationConfigRepo.FindAllDatesDtosAsync(this.EditionDto.Id, customFilter, buyerOrganizationDto?.IsVirtualMeeting == true, ProjectType.AudiovisualBusinessRound.Id);
 
             return Json(new
             {
@@ -748,7 +751,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         public async Task<ActionResult> FindAllRooms(Guid? negotiationConfigUid = null, Guid? buyerOrganizationUid = null, string customFilter = "")
         {
             var buyerOrganizationDto = await this.organizationRepo.FindDtoByUidAsync(buyerOrganizationUid ?? Guid.Empty, this.EditionDto.Edition.Id);
-            var negotiationConfigDtos = await this.negotiationConfigRepo.FindAllRoomsDtosAsync(this.EditionDto.Id, negotiationConfigUid ?? Guid.Empty, customFilter, buyerOrganizationDto.IsVirtualMeeting == true);
+            var negotiationConfigDtos = await this.negotiationConfigRepo.FindAllRoomsDtosAsync(this.EditionDto.Id, negotiationConfigUid ?? Guid.Empty, customFilter, buyerOrganizationDto.IsVirtualMeeting == true, ProjectType.AudiovisualBusinessRound.Id);
 
             return Json(new
             {
@@ -770,7 +773,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         public async Task<ActionResult> FindAllTimes(Guid? negotiationRoomConfigUid = null, Guid? buyerOrganizationUid = null, string customFilter = "")
         {
             var buyerOrganizationDto = await this.organizationRepo.FindDtoByUidAsync(buyerOrganizationUid ?? Guid.Empty, this.EditionDto.Edition.Id);
-            var negotiationConfigDto = await this.negotiationConfigRepo.FindAllTimesDtosAsync(this.EditionDto.Id, negotiationRoomConfigUid ?? Guid.Empty, customFilter, buyerOrganizationDto.IsVirtualMeeting == true);
+            var negotiationConfigDto = await this.negotiationConfigRepo.FindAllTimesDtosAsync(this.EditionDto.Id, negotiationRoomConfigUid ?? Guid.Empty, customFilter, buyerOrganizationDto.IsVirtualMeeting == true, ProjectType.AudiovisualBusinessRound.Id);
 
             return Json(new
             {

@@ -59,7 +59,8 @@ namespace PlataformaRio2C.Domain.Entities
             string timeIntervalBetweenTurnString,
             string timeOfEachRoundString,
             string timeIntervalBetweenRoundString,
-            int userId)
+            int userId,
+            int projectTypeId)
         {
             this.EditionId = edition?.Id ?? 0;
             this.Edition = edition;
@@ -70,6 +71,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.TimeIntervalBetweenTurn = timeIntervalBetweenTurnString.ToTimeSpan();
             this.TimeOfEachRound = timeOfEachRoundString.ToTimeSpan();
             this.TimeIntervalBetweenRound = timeIntervalBetweenRoundString.ToTimeSpan();
+            this.ProjectTypeId = projectTypeId;
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
