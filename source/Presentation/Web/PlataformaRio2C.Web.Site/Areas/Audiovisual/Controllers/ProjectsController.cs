@@ -141,7 +141,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 
                 if (attendeeCollaborator != null)
                 {
-                    interests = await this.interestRepo.FindAllByAttendeeCollaboratorIdAsync(attendeeCollaborator.Id);
+                    interests = await this.interestRepo.FindAllByAttendeeCollaboratorIdAsync(attendeeCollaborator.Id, InterestGroup.AudiovisualPitchingSubGenre.Uid);
                 }
                 else
                 {
@@ -668,7 +668,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             var attendeeCollaborator = userDto.Collaborator?.GetAttendeeCollaboratorByEditionId(this.EditionDto.Edition.Id);
             if (attendeeCollaborator != null)
             {
-                var interests = await this.interestRepo.FindAllByAttendeeCollaboratorIdAsync(attendeeCollaborator.Id);
+                var interests = await this.interestRepo.FindAllByAttendeeCollaboratorIdAsync(attendeeCollaborator.Id, InterestGroup.AudiovisualPitchingSubGenre.Uid);
                 interestsUids = interests.Select(i => i.Uid as Guid?).ToList();
             }
             else
