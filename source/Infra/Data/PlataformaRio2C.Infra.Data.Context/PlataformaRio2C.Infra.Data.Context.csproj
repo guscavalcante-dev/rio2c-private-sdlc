@@ -492,6 +492,10 @@
     <Compile Include="Migrations\202502131739534_UpdateMigrationDevelop02132025.Designer.cs">
       <DependentUpon>202502131739534_UpdateMigrationDevelop02132025.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202502171937596_UpdateCreatorInterestsNames.cs" />
+    <Compile Include="Migrations\202502171937596_UpdateCreatorInterestsNames.Designer.cs">
+      <DependentUpon>202502171937596_UpdateCreatorInterestsNames.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202502172026362_UpdateMigrations02172025.cs" />
     <Compile Include="Migrations\202502172026362_UpdateMigrations02172025.Designer.cs">
       <DependentUpon>202502172026362_UpdateMigrations02172025.cs</DependentUpon>
@@ -507,6 +511,12 @@
     <Compile Include="Migrations\202411140217302_AddMusicPitchingFieldToEditions.Designer.cs">
       <DependentUpon>202411140217302_AddMusicPitchingFieldToEditions.cs</DependentUpon>
     </Compile>
+    <Content Include="Migrations\Scripts\202502171937596_UpdateCreatorInterestsNames.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202502171937596_UpdateCreatorInterestsNames.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Migrations\Scripts\202502062100382_InsertAttendeeSalesPlatformsAndTicketTypesForCreatorPromo2Em1.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -968,6 +978,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202502131739534_UpdateMigrationDevelop02132025.resx">
       <DependentUpon>202502131739534_UpdateMigrationDevelop02132025.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202502171937596_UpdateCreatorInterestsNames.resx">
+      <DependentUpon>202502171937596_UpdateCreatorInterestsNames.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202502172026362_UpdateMigrations02172025.resx">
       <DependentUpon>202502172026362_UpdateMigrations02172025.cs</DependentUpon>
