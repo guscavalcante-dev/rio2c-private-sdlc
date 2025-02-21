@@ -450,6 +450,24 @@
 <h3 class="kt-section__title mt-30 mb-4">@Labels.Pitching - @Labels.AudioVisual</h3>
 <div class="row">
     <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EditionDate.AudiovisualPitchingSubmitStartDate, new { @class = "control-label" })
+        @Html.TextBox("EditionDate.AudiovisualPitchingSubmitStartDate", Model.EditionDate.AudiovisualPitchingSubmitStartDate?.ToShortDateString(), new
+        {
+            @class = "form-control enable-datepicker"
+        })
+        @Html.ValidationMessageFor(m => m.EditionDate.AudiovisualPitchingSubmitStartDate, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EditionDate.AudiovisualPitchingSubmitEndDate, new { @class = "control-label" })
+        @Html.TextBox("EditionDate.AudiovisualPitchingSubmitEndDate", Model.EditionDate.AudiovisualPitchingSubmitEndDate?.ToShortDateString(), new
+        {
+            @class = "form-control enable-datepicker"
+        })
+        @Html.ValidationMessageFor(m => m.EditionDate.AudiovisualPitchingSubmitEndDate, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.AudiovisualCommissionEvaluationStartDate, new { @class = "control-label" })
         @Html.TextBox("EditionDate.AudiovisualCommissionEvaluationStartDate", Model.EditionDate.AudiovisualCommissionEvaluationStartDate?.ToShortDateString(), new
         {

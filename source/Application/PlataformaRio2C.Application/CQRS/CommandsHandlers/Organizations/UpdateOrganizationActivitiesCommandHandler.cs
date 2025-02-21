@@ -63,7 +63,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             var activities = await this.activityRepo.FindAllByProjectTypeIdAsync(
-                cmd.ProjectTypeId ?? ProjectType.Audiovisual.Id
+                cmd.ProjectTypeId ?? ProjectType.AudiovisualBusinessRound.Id
             );
 
             organization.UpdateOrganizationActivities(
@@ -78,7 +78,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     )
                     ?.ToList(),
                 cmd.UserId,
-                cmd.ProjectTypeId ?? ProjectType.Audiovisual.Id);
+                cmd.ProjectTypeId ?? ProjectType.AudiovisualBusinessRound.Id);
             if (!organization.IsValid())
             {
                 this.AppValidationResult.Add(organization.ValidationResult);

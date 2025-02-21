@@ -343,7 +343,7 @@
                     @(Model.Edition.MusicPitchingMaximumApprovedProjectsByPopularVote)
                 </div>
             </div>
-        </div> 
+        </div>
     </div>
     <div class="row">
         <div class="col-md-6 col-lg-6">
@@ -443,6 +443,24 @@
     <div class="mt-30 mb-0">
         <h3 class="kt-subheader__title mb-0 mt-30">@Labels.Pitching - @Labels.AudioVisual</h3>
         <div class="kt-separator kt-separator--border kt-separator--border w-100 mt-2"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.AudiovisualPitchingSubmitStartDate</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.AudiovisualPitchingSubmitStartDate?.ToBrazilTimeZone().ToShortDateString())
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.AudiovisualPitchingSubmitEndDate</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.AudiovisualPitchingSubmitEndDate?.ToBrazilTimeZone().ToShortDateString())
+                </div>
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-6">

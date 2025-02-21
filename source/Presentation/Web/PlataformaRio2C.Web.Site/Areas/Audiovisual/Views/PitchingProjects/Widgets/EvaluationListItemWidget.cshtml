@@ -32,11 +32,11 @@
                             </a>
                         </div>
                         <div class="kt-widget__info mt-0 pl-0">
-                            <a href="@Url.Action("EvaluationDetails", "PitchingProjects", new { Area = "Audiovisual", id = Model.Project.Uid })" class="kt-widget__title">
+                            <a href="@Url.Action("EvaluationDetails", "PitchingProjects", new { Area = "", id = Model.Project.Uid })" class="kt-widget__title">
                                 @projectTitle
                             </a>
                             <span class="kt-widget__desc">
-                                @Labels.Producer: <a href="@Url.Action("Details", "Companies", new { Area = "Audiovisual", id = Model.SellerAttendeeOrganizationDto?.Organization?.Uid })" target="_blank">@(Model.SellerAttendeeOrganizationDto?.Organization?.TradeName)</a>
+                                @Labels.Producer: <a href="@Url.Action("Details", "Companies", new { Area = "", id = Model.SellerAttendeeOrganizationDto?.Organization?.Uid })" target="_blank">@(Model.SellerAttendeeOrganizationDto?.Organization?.TradeName)</a>
                             </span>
                             <span class="kt-widget__desc">
                                 @Labels.Genre:

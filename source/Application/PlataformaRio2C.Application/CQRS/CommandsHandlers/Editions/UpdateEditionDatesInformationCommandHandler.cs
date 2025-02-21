@@ -121,6 +121,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.InnovationCommissionMinimumEvaluationsCount.Value,
                 cmd.InnovationCommissionMaximumApprovedCompaniesCount.Value,
 
+                cmd.AudiovisualPitchingSubmitStartDate.Value,
+                cmd.AudiovisualPitchingSubmitEndDate.Value,
                 cmd.AudiovisualCommissionEvaluationStartDate.Value,
                 cmd.AudiovisualCommissionEvaluationEndDate.Value,
                 cmd.AudiovisualCommissionMinimumEvaluationsCount.Value,
