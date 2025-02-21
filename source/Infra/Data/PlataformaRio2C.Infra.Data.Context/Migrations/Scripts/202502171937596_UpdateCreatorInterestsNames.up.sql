@@ -13,9 +13,16 @@
 		UPDATE Interests set Name = 'Animação | Animation' 
 		WHERE Uid = 'FD691FB9-06A0-4983-9FDC-167FB7935B87'
 
-		-- Add new fields
-		ALTER TABLE CreatorProjects ADD Synopsis varchar(600)
-		ALTER TABLE CreatorProjects ADD Clipping varchar(600)
+		 -- Add new fields if they don't exist
+        IF COL_LENGTH('CreatorProjects', 'Synopsis') IS NULL
+        BEGIN
+            ALTER TABLE CreatorProjects ADD Synopsis varchar(600)
+        END
+
+        IF COL_LENGTH('CreatorProjects', 'Clipping') IS NULL
+        BEGIN
+            ALTER TABLE CreatorProjects ADD Clipping varchar(600)
+        END
 		
 		-- Change field lengths
 		ALTER TABLE CreatorProjects ALTER COLUMN ProjectAwards varchar(1024)
