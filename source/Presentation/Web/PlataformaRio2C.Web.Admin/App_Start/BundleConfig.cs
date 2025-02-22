@@ -782,6 +782,40 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region Meetings Scheduled - Music
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.editionscheduledcount.widget.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.editionscheduledcount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.editionunscheduledcount.widget.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.editionunscheduledcount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.editionscheduledcount.gauge.widget.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.editionscheduledcount.gauge.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.generate.widget.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.status.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.scheduled.widget.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.scheduled.widget.js",
+                "~/Assets/js/music/meetings/music.meetings.scheduled.delete.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.unscheduled.widget.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.unscheduled.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.scheduled.create.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.scheduled.create.js",
+                "~/Assets/js/music/meetings/music.meetings.logistics.info.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.scheduled.update.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.scheduled.update.js",
+                "~/Assets/js/music/meetings/music.meetings.logistics.info.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.report.widget.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.report.widget.js"));
+
+            #endregion
+
             #region Meetings Scheduled
 
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.editionscheduledcount.widget.js").Include(
