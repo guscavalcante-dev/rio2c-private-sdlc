@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Rafael Dantas Ruiz
-// Created          : 03-07-2020
+// Author           : Rafael Ribeiro
+// Created          : 21-02-2025
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified By : Rafael Ribeiro
+// Last Modified On : 21-02-2025
 // ***********************************************************************
 // <copyright file="audiovisual.meetings.editionunscheduledcount.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

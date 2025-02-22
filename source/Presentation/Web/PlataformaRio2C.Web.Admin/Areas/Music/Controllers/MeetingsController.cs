@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Rafael Dantas Ruiz
-// Created          : 03-06-2020
+// Author           : Rafael Ribeiro 
+// Created          : 21-02-2025
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 18-10-2024
+// Last Modified By : Rafael Ribeiro 
+// Last Modified On : 21-02-2025
 // ***********************************************************************
 // <copyright file="MeetingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
