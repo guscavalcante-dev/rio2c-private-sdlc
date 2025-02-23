@@ -263,20 +263,48 @@
                                 </a>
                             </li>
                             @*<li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Meetings", "Music")" aria-haspopup="true">
-                                <a class="kt-menu__link" href="@Url.Action("Index", "Meetings", new { Area = "Music", CollaboratorTypeUid = CollaboratorType.PlayerExecutiveMusic.Uid })">
-                                    <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                                    <span class="kt-menu__link-text">@Labels.ScheduledNegotiations</span>
-                                </a>
-                            </li>*@
+                                    <a class="kt-menu__link" href="@Url.Action("Index", "Meetings", new { Area = "Music", CollaboratorTypeUid = CollaboratorType.PlayerExecutiveMusic.Uid })">
+                                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                                        <span class="kt-menu__link-text">@Labels.ScheduledNegotiations</span>
+                                    </a>
+                                </li>*@
                         </ul>
                     </div>
                 </li>
             }
-
         }
         else if (musicCollaboratorTypesCount > 1)
         {
+            <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel @this.IsOpen(menuOpenCssClass, null, "PitchingProjects", "Music")" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
+                <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">@Labels.Music</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
+                <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
+                    <ul class="kt-menu__subnav">
+                        @if (userAccessControlDto?.HasAnyCollaboratorType(new string[] { Constants.CollaboratorType.CommissionMusic, Constants.CollaboratorType.CommissionMusicCurator }) == true
+                            && editionDto?.IsMusicPitchingCommissionEvaluationStarted() == true)
+                        {
+                            projectsUrl = Url.Action("EvaluationList", "PitchingProjects", new { Area = "Music" });
 
+                            <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "EvaluationList", "PitchingProjects", "Music")" aria-haspopup="true">
+                                <a href="@projectsUrl" class="kt-menu__link">
+                                    <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                                    <span class="kt-menu__link-text">@Labels.Commission</span>
+                                </a>
+                            </li>
+                        }
+                        @if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.PlayerExecutiveMusic) == true
+                            && editionDto?.IsMusicBusinessRoundProjectBuyerEvaluationStarted() == true)
+                        {
+                            projectsUrl = Url.Action("EvaluationList", "BusinessRoundProjects", new { Area = "Music" });
+                            <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "EvaluationList", "BusinessRoundProjects", "Music")" aria-haspopup="true">
+                                <a href="@projectsUrl" class="kt-menu__link">
+                                    <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                                    <span class="kt-menu__link-text">@Labels.ProjectsEvaluation</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </li>
         }
     }
     @if (innovationCollaboratorTypesCount > 0 && userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.CommissionInnovation) == true)
