@@ -1023,6 +1023,9 @@
     <Content Include="Assets\js\music\meetingparameters\music.meetingparameters.maininformation.widget.js" />
     <Content Include="Assets\js\music\meetingparameters\music.meetingparameters.rooms.widget.js" />
     <Content Include="Assets\js\music\meetingparameters\music.meetingparameters.totalcount.widget.js" />
+    <Content Include="Assets\js\music\meetings\music.meetings.editionscheduledcount.gauge.widget.js" />
+    <Content Include="Assets\js\music\meetings\music.meetings.unscheduled.manualschedule.js" />
+    <Content Include="Assets\js\music\meetings\music.meetings.unscheduled.widget.js" />
     <Content Include="Assets\js\music\meetings\music.meetings.editionscheduledcount.widget.js" />
     <Content Include="Assets\js\music\meetings\music.meetings.editionunscheduledcount.widget.js" />
     <Content Include="Assets\js\music\meetings\music.meetings.scheduled.widget.js" />
@@ -8327,6 +8330,11 @@
     <Content Include="Areas\Music\Views\Meetings\Widgets\EditionScheduledCountWidget.cshtml" />
     <Content Include="Areas\Music\Views\Meetings\Widgets\ScheduledDataWidget.cshtml" />
     <Content Include="Areas\Music\Views\Meetings\Widgets\ScheduledWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\Widgets\UnscheduledWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\Unscheduled.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\Index.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\Widgets\EditionScheduledCountGaugeWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\Widgets\EditionUnscheduledCountWidget.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

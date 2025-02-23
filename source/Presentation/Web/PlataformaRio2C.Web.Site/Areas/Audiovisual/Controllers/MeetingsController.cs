@@ -65,7 +65,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.BusinessRound, new List<BreadcrumbItemHelper> {
                 new BreadcrumbItemHelper(Labels.AudioVisual, null),
-                new BreadcrumbItemHelper(Labels.ScheduledNegotiations, Url.Action("Index", "Meetings", new { Area = "Audiovisual", CollaboratorTypeUid = collaboratorTypeUid }))
+                new BreadcrumbItemHelper(Labels.ScheduledNegotiations, Url.Action("Index", "Meetings", new { Area = "Music", CollaboratorTypeUid = collaboratorTypeUid }))
             });
 
             #endregion

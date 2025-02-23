@@ -461,7 +461,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("/Areas/Audiovisual/Views/Meetings/Modals/UpdateForm.cshtml", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("/Areas/Music/Views/Meetings/Modals/UpdateForm.cshtml", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -533,171 +533,171 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
         #endregion
 
-        //#region Unscheduled
+        #region Unscheduled
 
-        ///// <summary>Unscheduleds this instance.</summary>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public ActionResult Unscheduled()
-        //{
-        //    #region Breadcrumb
+        /// <summary>Unscheduleds this instance.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Unscheduled()
+        {
+            #region Breadcrumb
 
-        //    ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
-        //        new BreadcrumbItemHelper(Labels.UnscheduledNegotiations, Url.Action("Unscheduled", "Meetings", new { Area = "Audiovisual" }))
-        //    });
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.UnscheduledNegotiations, Url.Action("Unscheduled", "Meetings", new { Area = "Music" }))
+            });
 
-        //    #endregion
+            #endregion
 
-        //    return View();
-        //}
+            return View();
+        }
 
-        //#region Edition Unscheduled Count Widget
+        #region Edition Unscheduled Count Widget
 
-        ///// <summary>Shows the edition unscheduled count widget.</summary>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowEditionUnscheduledCountWidget()
-        //{
-        //    var notScheduledCount = await this.projectBuyerEvaluationRepo.CountNegotiationNotScheduledAsync(this.EditionDto.Id, false);
+        /// <summary>Shows the edition unscheduled count widget.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowEditionUnscheduledCountWidget()
+        {
+            var notScheduledCount = await this.projectBuyerEvaluationRepo.CountNegotiationNotScheduledAsync(this.EditionDto.Id, false);
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/EditionUnscheduledCountWidget", notScheduledCount), divIdOrClass = "#MusicMeetingsEditionUnscheduledCountWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EditionUnscheduledCountWidget", notScheduledCount), divIdOrClass = "#MusicMeetingsEditionUnscheduledCountWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
-        //#endregion
+        #endregion
 
-        //#region Unscheduled Widget
+        #region Unscheduled Widget
 
-        ///// <summary>Shows the unscheduled widget.</summary>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowUnscheduledWidget()
-        //{
-        //    var negotiations = await this.projectBuyerEvaluationRepo.FindUnscheduledWidgetDtoAsync(this.EditionDto.Id);
+        /// <summary>Shows the unscheduled widget.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowUnscheduledWidget()
+        {
+            var negotiations = await this.projectBuyerEvaluationRepo.FindUnscheduledWidgetDtoAsync(this.EditionDto.Id);
 
-        //    return new JsonResult()
-        //    {
-        //        Data = new
-        //        {
-        //            status = "success",
-        //            pages = new List<dynamic>
-        //            {
-        //                new { page = this.RenderRazorViewToString("Widgets/UnscheduledWidget", negotiations), divIdOrClass = "#AudiovisualMeetingsUnscheduledWidget" },
-        //            }
-        //        },
-        //        //ContentType = contentType,
-        //        //ContentEncoding = contentEncoding,
-        //        JsonRequestBehavior = JsonRequestBehavior.AllowGet,
-        //        MaxJsonLength = Int32.MaxValue
-        //    };
-        //}
+            return new JsonResult()
+            {
+                Data = new
+                {
+                    status = "success",
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Widgets/UnscheduledWidget", negotiations), divIdOrClass = "#MusicMeetingsUnscheduledWidget" },
+                    }
+                },
+                //ContentType = contentType,
+                //ContentEncoding = contentEncoding,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                MaxJsonLength = Int32.MaxValue
+            };
+        }
 
-        //#endregion
+        #endregion
 
-        //#region Manual Schedule
+        #region Manual Schedule
 
-        //[HttpGet]
-        //public async Task<ActionResult> ShowManualScheduleModal(Guid? projectBuyerEvaluationUid)
-        //{
-        //    ScheduleManualNegotiation cmd;
+        [HttpGet]
+        public async Task<ActionResult> ShowManualScheduleModal(Guid? projectBuyerEvaluationUid)
+        {
+            ScheduleManualNegotiation cmd;
 
-        //    try
-        //    {
-        //        var projectBuyerEvaluationDto = await this.projectBuyerEvaluationRepo.FindDtoAsync(projectBuyerEvaluationUid ?? Guid.Empty);
-        //        if (projectBuyerEvaluationDto == null)
-        //        {
-        //            throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM.ToLowerInvariant()));
-        //        }
+            try
+            {
+                var projectBuyerEvaluationDto = await this.projectBuyerEvaluationRepo.FindDtoAsync(projectBuyerEvaluationUid ?? Guid.Empty);
+                if (projectBuyerEvaluationDto == null)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM.ToLowerInvariant()));
+                }
 
-        //        cmd = new ScheduleManualNegotiation(projectBuyerEvaluationDto, this.UserInterfaceLanguage);
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-        //    }
+                cmd = new ScheduleManualNegotiation(projectBuyerEvaluationDto, this.UserInterfaceLanguage);
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Modals/ManualScheduleModal", cmd), divIdOrClass = "#GlobalModalContainer" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/ManualScheduleModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
-        ///// <summary>Creates the specified create negotiation.</summary>
-        ///// <param name="cmd">The command.</param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public async Task<ActionResult> ManualSchedule(ScheduleManualNegotiation cmd)
-        //{
-        //    var result = new AppValidationResult();
+        /// <summary>Creates the specified create negotiation.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> ManualSchedule(ScheduleManualNegotiation cmd)
+        {
+            var result = new AppValidationResult();
 
-        //    try
-        //    {
-        //        //BuyerOrganizationUid and ProjectUid get allways null from dropdown selected item, because dropdown is populated via JavaScript and has initialSelection.
-        //        //These fiels isn't enabled to change, so don't worry with this backend fix!
-        //        cmd.BuyerOrganizationUid = cmd.InitialBuyerOrganizationUid;
-        //        cmd.ProjectUid = cmd.InitialProjectUid;
+            try
+            {
+                //BuyerOrganizationUid and ProjectUid get allways null from dropdown selected item, because dropdown is populated via JavaScript and has initialSelection.
+                //These fiels isn't enabled to change, so don't worry with this backend fix!
+                cmd.BuyerOrganizationUid = cmd.InitialBuyerOrganizationUid;
+                cmd.ProjectUid = cmd.InitialProjectUid;
 
-        //        ScheduleManualNegotiation c;
-        //        ModelState.Remove(nameof(c.BuyerOrganizationUid));
-        //        ModelState.Remove(nameof(c.ProjectUid));
+                ScheduleManualNegotiation c;
+                ModelState.Remove(nameof(c.BuyerOrganizationUid));
+                ModelState.Remove(nameof(c.ProjectUid));
 
-        //        if (!ModelState.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
 
-        //        cmd.UpdatePreSendProperties(
-        //            this.AdminAccessControlDto.User.Id,
-        //            this.AdminAccessControlDto.User.Uid,
-        //            this.EditionDto.Id,
-        //            this.EditionDto.Uid,
-        //            this.UserInterfaceLanguage);
-        //        result = await this.CommandBus.Send(cmd);
-        //        if (!result.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        foreach (var error in result.Errors)
-        //        {
-        //            var target = error.Target ?? "";
-        //            ModelState.AddModelError(target, error.Message);
-        //        }
+                cmd.UpdatePreSendProperties(
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
 
-        //        return Json(new
-        //        {
-        //            status = "error",
-        //            message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
-        //            pages = new List<dynamic>
-        //            {
-        //                new { page = this.RenderRazorViewToString("/Areas/Audiovisual/Views/Meetings/Modals/ManualScheduleForm.cshtml", cmd), divIdOrClass = "#form-container" },
-        //            }
-        //        }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-        //    }
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("/Areas/Music/Views/Meetings/Modals/ManualScheduleForm.cshtml", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Negotiation, Labels.CreatedF) });
-        //}
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Negotiation, Labels.CreatedF) });
+        }
 
-        //#endregion
+        #endregion
 
-        //#endregion
+        #endregion
 
         //#region Logistic Info Widget
 
@@ -706,24 +706,24 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         ///// </summary>
         ///// <param name="organizationsUids">The organizations uids.</param>
         ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowLogisticsInfoWidget(string organizationsUids)
-        //{
-        //    var attendeeCollaboratorDtos = await this.attendeeCollaboratorRepo.FindExecutivesSchedulesByOrganizationsUidsAsync(organizationsUids?.ToListGuid(','), this.EditionDto.Id);
-        //    if (attendeeCollaboratorDtos == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Logistics, Labels.FoundMP.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
+        [HttpGet]
+        public async Task<ActionResult> ShowLogisticsInfoWidget(string organizationsUids)
+        {
+            var attendeeCollaboratorDtos = await this.attendeeCollaboratorRepo.FindExecutivesSchedulesByOrganizationsUidsAsync(organizationsUids?.ToListGuid(','), this.EditionDto.Id);
+            if (attendeeCollaboratorDtos == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Logistics, Labels.FoundMP.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("~/Areas/Audiovisual/Views/Meetings/Widgets/LogisticsInfoWidget.cshtml", attendeeCollaboratorDtos), divIdOrClass = "#AudiovisualMeetingsLogisticsInfoWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("~/Areas/Music/Views/Meetings/Widgets/LogisticsInfoWidget.cshtml", attendeeCollaboratorDtos), divIdOrClass = "#MusicMeetingsLogisticsInfoWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
         //#endregion
 
@@ -744,7 +744,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         //    ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
         //        new BreadcrumbItemHelper(Labels.AudioVisual, null),
         //        new BreadcrumbItemHelper(Labels.OneToOneMeetings, null),
-        //        new BreadcrumbItemHelper(Labels.SendEmailToPlayers, Url.Action("SendEmailToPlayers", "Meetings", new { Area = "Audiovisual" }))
+        //        new BreadcrumbItemHelper(Labels.SendEmailToPlayers, Url.Action("SendEmailToPlayers", "Meetings", new { Area = "Music" }))
         //    });
 
         //    #endregion
@@ -1020,14 +1020,14 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         ///// <param name="selectedAttendeeOrganizationsUids">The selected attendee organizations uids.</param>
         ///// <returns></returns>
         //[HttpPost]
-        //public async Task<ActionResult> SendProducersEmails(string keywords,  string selectedAttendeeOrganizationsUids)
+        //public async Task<ActionResult> SendProducersEmails(string keywords, string selectedAttendeeOrganizationsUids)
         //{
         //    AppValidationResult result = null;
 
         //    try
         //    {
         //        var attendeeOrganizationBaseDtos = await this.attendeeOrganizationRepo.FindAllBaseDtoByActiveSellerNegotiations(
-        //            keywords, 
+        //            keywords,
         //            selectedAttendeeOrganizationsUids?.ToListGuid(','),
         //            this.EditionDto.Id,
         //            this.AdminAccessControlDto.Language.Id);
@@ -1042,7 +1042,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         //            foreach (var attendeeCollaboratorBaseDto in attendeeOrganizationBaseDto.AttendeeCollaboratorBaseDtos)
         //            {
         //                // If the collaborator does not have an user interface language, use the user interface language of the current user
-        //                var collaboratorLanguageCode = attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.UserInterfaceLanguageCode ??  this.UserInterfaceLanguage;
+        //                var collaboratorLanguageCode = attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.UserInterfaceLanguageCode ?? this.UserInterfaceLanguage;
 
         //                try
         //                {
@@ -1208,12 +1208,12 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
         //            #endregion Date Header
 
-        //            if(negotiationReportGroupedByDateDto.NegotiationReportGroupedByRoomDtos?.Any() == true)
+        //            if (negotiationReportGroupedByDateDto.NegotiationReportGroupedByRoomDtos?.Any() == true)
         //            {
         //                foreach (var negotiationReportGroupedByRoomDto in negotiationReportGroupedByDateDto.NegotiationReportGroupedByRoomDtos)
         //                {
         //                    var roomName = negotiationReportGroupedByRoomDto?.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value;
-        //                    var tableNumbers = negotiationReportGroupedByRoomDto?.NegotiationReportGroupedByStartDateDtos?.SelectMany(nd => nd.Negotiations.Select(n => n.TableNumber))?.Distinct()?.OrderBy(tn => tn)?.ToList() ?? 
+        //                    var tableNumbers = negotiationReportGroupedByRoomDto?.NegotiationReportGroupedByStartDateDtos?.SelectMany(nd => nd.Negotiations.Select(n => n.TableNumber))?.Distinct()?.OrderBy(tn => tn)?.ToList() ??
         //                                       new List<int>();
 
         //                    #region Room Sub Header
