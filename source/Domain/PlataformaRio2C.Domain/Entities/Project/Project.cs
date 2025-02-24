@@ -36,7 +36,7 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int ValueStillNeededMaxLength = 50;
         public static readonly int WhichTypeOfFinancingDescriptionMinLength = 1;
         public static readonly int WhichTypeOfFinancingDescriptionMaxLength = 300;
-        public static readonly int PitchingJsonPayloadMaxLength = int.MaxValue;
+        public static readonly int PitchingJsonPayloadMaxLength = 8000;
 
         public int ProjectTypeId { get; private set; }
         public int SellerAttendeeOrganizationId { get; private set; }
