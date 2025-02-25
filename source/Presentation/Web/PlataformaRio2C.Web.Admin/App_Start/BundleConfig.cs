@@ -740,7 +740,7 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
-            #region Meeting Parameters
+            #region Meeting Parameters - AudioVisual
 
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetingparameters.list.widget.js").Include(
                 "~/Assets/js/audiovisual/meetingparameters/audiovisual.meetingparameters.datatable.widget.js",
@@ -758,6 +758,27 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetingparameters.details.js").Include(
                 "~/Assets/js/audiovisual/meetingparameters/audiovisual.meetingparameters.maininformation.widget.js",
                 "~/Assets/js/audiovisual/meetingparameters/audiovisual.meetingparameters.rooms.widget.js"));
+
+            #endregion
+
+            #region Meeting Parameters - Music
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetingparameters.list.widget.js").Include(
+                "~/Assets/js/music/meetingparameters/music.meetingparameters.datatable.widget.js",
+                "~/Assets/js/music/meetingparameters/music.meetingparameters.totalcount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetingparameters.editioncount.widget.js").Include(
+                "~/Assets/js/music/meetingparameters/music.meetingparameters.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetingparameters.create.js").Include(
+                "~/Assets/js/music/meetingparameters/music.meetingparameters.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetingparameters.delete.js").Include(
+                "~/Assets/js/music/meetingparameters/music.meetingparameters.delete.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetingparameters.details.js").Include(
+                "~/Assets/js/music/meetingparameters/music.meetingparameters.maininformation.widget.js",
+                "~/Assets/js/music/meetingparameters/music.meetingparameters.rooms.widget.js"));
 
             #endregion
 

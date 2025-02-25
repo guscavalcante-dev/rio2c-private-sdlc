@@ -35,11 +35,11 @@ using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Domain.Entities;
 
-namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
+namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 {
     /// <summary>MeetingParametersController</summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminMusic)]
     public class MeetingParametersController : BaseController
     {
         private readonly INegotiationConfigRepository negotiationConfigRepo;
@@ -57,7 +57,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="roomRepository">The room repository.</param>
         /// <param name="organizationRepository">The attendee organization repository.</param>
         public MeetingParametersController(
-            IMediator commandBus, 
+            IMediator commandBus,
             IdentityAutenticationService identityController,
             INegotiationConfigRepository negotiationConfigRepository,
             INegotiationRoomConfigRepository negotiationRoomConfigRepository,
@@ -65,10 +65,10 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             IOrganizationRepository organizationRepository)
             : base(commandBus, identityController)
         {
-            this.negotiationConfigRepo = negotiationConfigRepository;
-            this.negotiationRoomConfigRepo = negotiationRoomConfigRepository;
-            this.roomRepo = roomRepository;
-            this.organizationRepo = organizationRepository;
+            negotiationConfigRepo = negotiationConfigRepository;
+            negotiationRoomConfigRepo = negotiationRoomConfigRepository;
+            roomRepo = roomRepository;
+            organizationRepo = organizationRepository;
         }
 
         #region List
@@ -82,7 +82,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Parameters, Url.Action("Index", "MeetingParameters", new { Area = "Audiovisual" }))
+                new BreadcrumbItemHelper(Labels.Parameters, Url.Action("Index", "MeetingParameters", new { Area = "Music" }))
             });
 
             #endregion
@@ -98,16 +98,16 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request)
         {
-            var negotiationConfigs = await this.negotiationConfigRepo.FindAllJsonDtosPagedAsync(
+            var negotiationConfigs = await negotiationConfigRepo.FindAllJsonDtosPagedAsync(
                 request.Start / request.Length,
                 request.Length,
                 request.GetSortColumns(),
                 request.Search?.Value,
                 null,
                 null,
-                this.UserInterfaceLanguage,
-                this.EditionDto.Id,
-                ProjectType.AudiovisualBusinessRound.Id
+                UserInterfaceLanguage,
+                EditionDto.Id,
+                ProjectType.Music.Id
             );
 
             var response = DataTablesResponse.Create(request, negotiationConfigs.TotalItemCount, negotiationConfigs.TotalItemCount, negotiationConfigs);
@@ -130,14 +130,14 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowTotalCountWidget()
         {
-            var executivesCount = await this.negotiationConfigRepo.CountAsync(this.EditionDto.Id,ProjectType.AudiovisualBusinessRound.Id, true);
+            var executivesCount = await negotiationConfigRepo.CountAsync(EditionDto.Id, ProjectType.Music.Id, true);
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", executivesCount), divIdOrClass = "#AudiovisualMeetingParametersTotalCountWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", executivesCount), divIdOrClass = "#MusicMeetingParametersTotalCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -150,14 +150,14 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <returns></returns>
         public async Task<ActionResult> ShowEditionCountWidget()
         {
-            var executivesCount = await this.negotiationConfigRepo.CountAsync(this.EditionDto.Id, ProjectType.AudiovisualBusinessRound.Id, false);
+            var executivesCount = await negotiationConfigRepo.CountAsync(EditionDto.Id, ProjectType.Music.Id, false);
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", executivesCount), divIdOrClass = "#AudiovisualMeetingParametersEditionCountWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", executivesCount), divIdOrClass = "#MusicMeetingParametersEditionCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -199,13 +199,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    this.AdminAccessControlDto.User.Id,
-                    this.AdminAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
-                cmd.ProjectTypeId = ProjectType.AudiovisualBusinessRound.Id;
-                result = await this.CommandBus.Send(cmd);
+                    AdminAccessControlDto.User.Id,
+                    AdminAccessControlDto.User.Uid,
+                    EditionDto.Id,
+                    EditionDto.Uid,
+                    UserInterfaceLanguage);
+                cmd.ProjectTypeId = ProjectType.Music.Id;
+                result = await CommandBus.Send(cmd);
                 if (!result.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);
@@ -248,7 +248,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> Details(Guid? id)
         {
-            var mainInformationWidgetDto = await this.negotiationConfigRepo.FindMainInformationWidgetDtoAsync(id ?? Guid.Empty, ProjectType.AudiovisualBusinessRound.Id);
+            var mainInformationWidgetDto = await negotiationConfigRepo.FindMainInformationWidgetDtoAsync(id ?? Guid.Empty, ProjectType.Music.Id);
             if (mainInformationWidgetDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Parameter, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
@@ -258,8 +258,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Parameters, Url.Action("Index", "MeetingParameters", new { Area = "Audiovisual" })),
-                new BreadcrumbItemHelper(Labels.Parameter, Url.Action("Details", "MeetingParameters", new { Area = "Audiovisual", id }))
+                new BreadcrumbItemHelper(Labels.Parameters, Url.Action("Index", "MeetingParameters", new { Area = "Music" })),
+                new BreadcrumbItemHelper(Labels.Parameter, Url.Action("Details", "MeetingParameters", new { Area = "Music", id }))
             });
 
             #endregion
@@ -275,7 +275,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowMainInformationWidget(Guid? negotiationConfigUid)
         {
-            var mainInformationWidgetDto = await this.negotiationConfigRepo.FindMainInformationWidgetDtoAsync(negotiationConfigUid ?? Guid.Empty, ProjectType.AudiovisualBusinessRound.Id);
+            var mainInformationWidgetDto = await negotiationConfigRepo.FindMainInformationWidgetDtoAsync(negotiationConfigUid ?? Guid.Empty, ProjectType.Music.Id);
             if (mainInformationWidgetDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Parameter, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
@@ -286,7 +286,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#AudiovisualMeetingParametersMainInformationWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#MusicMeetingParametersMainInformationWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -303,7 +303,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             try
             {
-                var mainInformationWidgetDto = await this.negotiationConfigRepo.FindMainInformationWidgetDtoAsync(negotiationConfigUid ?? Guid.Empty, ProjectType.AudiovisualBusinessRound.Id);
+                var mainInformationWidgetDto = await negotiationConfigRepo.FindMainInformationWidgetDtoAsync(negotiationConfigUid ?? Guid.Empty, ProjectType.Music.Id);
                 if (mainInformationWidgetDto == null)
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Parameter, Labels.FoundM.ToLowerInvariant()));
@@ -342,12 +342,12 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    this.AdminAccessControlDto.User.Id,
-                    this.AdminAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
-                result = await this.CommandBus.Send(cmd);
+                    AdminAccessControlDto.User.Id,
+                    AdminAccessControlDto.User.Uid,
+                    EditionDto.Id,
+                    EditionDto.Uid,
+                    UserInterfaceLanguage);
+                result = await CommandBus.Send(cmd);
                 if (!result.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);
@@ -392,7 +392,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowRoomsWidget(Guid? negotiationConfigUid)
         {
-            var roomsWidgetDto = await this.negotiationConfigRepo.FindRoomsWidgetDtoAsync(negotiationConfigUid ?? Guid.Empty, ProjectType.AudiovisualBusinessRound.Id);
+            var roomsWidgetDto = await negotiationConfigRepo.FindRoomsWidgetDtoAsync(negotiationConfigUid ?? Guid.Empty, ProjectType.Music.Id);
             if (roomsWidgetDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Parameter, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
@@ -403,7 +403,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/RoomsWidget", roomsWidgetDto), divIdOrClass = "#AudiovisualMeetingParametersRoomsWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/RoomsWidget", roomsWidgetDto), divIdOrClass = "#MusicMeetingParametersRoomsWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -420,7 +420,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             try
             {
-                var roomsWidgetDto = await this.negotiationConfigRepo.FindRoomsWidgetDtoAsync(negotiationConfigUid ?? Guid.Empty, ProjectType.AudiovisualBusinessRound.Id);
+                var roomsWidgetDto = await negotiationConfigRepo.FindRoomsWidgetDtoAsync(negotiationConfigUid ?? Guid.Empty, ProjectType.Music.Id);
                 if (roomsWidgetDto == null)
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Parameter, Labels.FoundM.ToLowerInvariant()));
@@ -428,8 +428,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
                 cmd = new CreateNegotiationRoomConfig(
                     roomsWidgetDto,
-                    await this.roomRepo.FindAllDtoByEditionIdAsync(this.EditionDto.Id),
-                    this.UserInterfaceLanguage);
+                    await roomRepo.FindAllDtoByEditionIdAsync(EditionDto.Id),
+                    UserInterfaceLanguage);
             }
             catch (DomainException ex)
             {
@@ -462,13 +462,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    this.AdminAccessControlDto.User.Id,
-                    this.AdminAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
-                cmd.ProjectTypeId = ProjectType.AudiovisualBusinessRound.Id;
-                result = await this.CommandBus.Send(cmd);
+                    AdminAccessControlDto.User.Id,
+                    AdminAccessControlDto.User.Uid,
+                    EditionDto.Id,
+                    EditionDto.Uid,
+                    UserInterfaceLanguage);
+                cmd.ProjectTypeId = ProjectType.Music.Id;
+                result = await CommandBus.Send(cmd);
                 if (!result.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);
@@ -483,8 +483,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdateModelsAndLists(
-                    await this.roomRepo.FindAllDtoByEditionIdAsync(this.EditionDto.Id),
-                    this.UserInterfaceLanguage);
+                    await roomRepo.FindAllDtoByEditionIdAsync(EditionDto.Id),
+                    UserInterfaceLanguage);
 
                 return Json(new
                 {
@@ -519,7 +519,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             try
             {
-                var roomWidgetDto = await this.negotiationRoomConfigRepo.FindMainInformationWidgetDtoAsync(negotiationRoomConfigUid ?? Guid.Empty, ProjectType.AudiovisualBusinessRound.Id);
+                var roomWidgetDto = await negotiationRoomConfigRepo.FindMainInformationWidgetDtoAsync(negotiationRoomConfigUid ?? Guid.Empty, ProjectType.Music.Id);
                 if (roomWidgetDto == null)
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Room, Labels.FoundM.ToLowerInvariant()));
@@ -527,8 +527,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
                 cmd = new UpdateNegotiationRoomConfig(
                     roomWidgetDto,
-                    await this.roomRepo.FindAllDtoByEditionIdAsync(this.EditionDto.Id),
-                    this.UserInterfaceLanguage);
+                    await roomRepo.FindAllDtoByEditionIdAsync(EditionDto.Id),
+                    UserInterfaceLanguage);
             }
             catch (DomainException ex)
             {
@@ -562,12 +562,12 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    this.AdminAccessControlDto.User.Id,
-                    this.AdminAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
-                result = await this.CommandBus.Send(cmd);
+                    AdminAccessControlDto.User.Id,
+                    AdminAccessControlDto.User.Uid,
+                    EditionDto.Id,
+                    EditionDto.Uid,
+                    UserInterfaceLanguage);
+                result = await CommandBus.Send(cmd);
                 if (!result.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);
@@ -582,8 +582,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdateModelsAndLists(
-                    await this.roomRepo.FindAllDtoByEditionIdAsync(this.EditionDto.Id),
-                    this.UserInterfaceLanguage);
+                    await roomRepo.FindAllDtoByEditionIdAsync(EditionDto.Id),
+                    UserInterfaceLanguage);
 
                 return Json(new
                 {
@@ -624,13 +624,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    this.AdminAccessControlDto.User.Id,
-                    this.AdminAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
+                    AdminAccessControlDto.User.Id,
+                    AdminAccessControlDto.User.Uid,
+                    EditionDto.Id,
+                    EditionDto.Uid,
+                    UserInterfaceLanguage);
 
-                result = await this.CommandBus.Send(cmd);
+                result = await CommandBus.Send(cmd);
                 if (!result.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);
@@ -683,13 +683,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    this.AdminAccessControlDto.User.Id,
-                    this.AdminAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
+                    AdminAccessControlDto.User.Id,
+                    AdminAccessControlDto.User.Uid,
+                    EditionDto.Id,
+                    EditionDto.Uid,
+                    UserInterfaceLanguage);
 
-                result = await this.CommandBus.Send(cmd);
+                result = await CommandBus.Send(cmd);
                 if (!result.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);
@@ -728,8 +728,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> FindAllDates(Guid? buyerOrganizationUid = null, string customFilter = "")
         {
-            var buyerOrganizationDto = await this.organizationRepo.FindDtoByUidAsync(buyerOrganizationUid ?? Guid.Empty, this.EditionDto.Edition.Id);
-            var negotiationConfigDtos = await this.negotiationConfigRepo.FindAllDatesDtosAsync(this.EditionDto.Id, customFilter, buyerOrganizationDto?.IsVirtualMeeting == true, ProjectType.AudiovisualBusinessRound.Id);
+            var buyerOrganizationDto = await organizationRepo.FindDtoByUidAsync(buyerOrganizationUid ?? Guid.Empty, EditionDto.Edition.Id);
+            var negotiationConfigDtos = await negotiationConfigRepo.FindAllDatesDtosAsync(EditionDto.Id, customFilter, buyerOrganizationDto?.IsVirtualMeeting == true, ProjectType.Music.Id);
 
             return Json(new
             {
@@ -750,8 +750,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> FindAllRooms(Guid? negotiationConfigUid = null, Guid? buyerOrganizationUid = null, string customFilter = "")
         {
-            var buyerOrganizationDto = await this.organizationRepo.FindDtoByUidAsync(buyerOrganizationUid ?? Guid.Empty, this.EditionDto.Edition.Id);
-            var negotiationConfigDtos = await this.negotiationConfigRepo.FindAllRoomsDtosAsync(this.EditionDto.Id, negotiationConfigUid ?? Guid.Empty, customFilter, buyerOrganizationDto.IsVirtualMeeting == true, ProjectType.AudiovisualBusinessRound.Id);
+            var buyerOrganizationDto = await organizationRepo.FindDtoByUidAsync(buyerOrganizationUid ?? Guid.Empty, EditionDto.Edition.Id);
+            var negotiationConfigDtos = await negotiationConfigRepo.FindAllRoomsDtosAsync(EditionDto.Id, negotiationConfigUid ?? Guid.Empty, customFilter, buyerOrganizationDto.IsVirtualMeeting == true, ProjectType.Music.Id);
 
             return Json(new
             {
@@ -760,7 +760,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 {
                     NegotiationRoomConfigUid = nrc.NegotiationRoomConfig.Uid,
                     RoomUid = nrc.RoomDto.Room.Uid,
-                    RoomName = nrc.RoomDto.GetRoomNameByLanguageCode(this.UserInterfaceLanguage).RoomName.Value
+                    RoomName = nrc.RoomDto.GetRoomNameByLanguageCode(UserInterfaceLanguage).RoomName.Value
                 }))
             }, JsonRequestBehavior.AllowGet);
         }
@@ -772,13 +772,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> FindAllTimes(Guid? negotiationRoomConfigUid = null, Guid? buyerOrganizationUid = null, string customFilter = "")
         {
-            var buyerOrganizationDto = await this.organizationRepo.FindDtoByUidAsync(buyerOrganizationUid ?? Guid.Empty, this.EditionDto.Edition.Id);
-            var negotiationConfigDto = await this.negotiationConfigRepo.FindAllTimesDtosAsync(this.EditionDto.Id, negotiationRoomConfigUid ?? Guid.Empty, customFilter, buyerOrganizationDto.IsVirtualMeeting == true, ProjectType.AudiovisualBusinessRound.Id);
+            var buyerOrganizationDto = await organizationRepo.FindDtoByUidAsync(buyerOrganizationUid ?? Guid.Empty, EditionDto.Edition.Id);
+            var negotiationConfigDto = await negotiationConfigRepo.FindAllTimesDtosAsync(EditionDto.Id, negotiationRoomConfigUid ?? Guid.Empty, customFilter, buyerOrganizationDto.IsVirtualMeeting == true, ProjectType.Music.Id);
 
             return Json(new
             {
                 status = "success",
-                times = this.GetNegotiationTimesSlots(negotiationConfigDto)
+                times = GetNegotiationTimesSlots(negotiationConfigDto)
             }, JsonRequestBehavior.AllowGet);
         }
 
@@ -810,12 +810,12 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                         // Each automatic table
                         //for (int tableNumber = 1; tableNumber <= negotiationRoomConfigDto.NegotiationRoomConfig.CountManualTables; tableNumber++)
                         //{
-                            negotiationTimesSlots.Add(new NegotiationTimeDropdownDto
-                            {
-                                StartTime = startDate,
-                                EndTime = startDate.Add(negotiationConfigDto.NegotiationConfig.TimeOfEachRound),
-                                RoundNumber = roundNumber
-                            });
+                        negotiationTimesSlots.Add(new NegotiationTimeDropdownDto
+                        {
+                            StartTime = startDate,
+                            EndTime = startDate.Add(negotiationConfigDto.NegotiationConfig.TimeOfEachRound),
+                            RoundNumber = roundNumber
+                        });
                         //}
                     }
                 }
@@ -842,12 +842,12 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                         // Each automatic table
                         //for (int tableNumber = 1; tableNumber <= negotiationRoomConfigDto.NegotiationRoomConfig.CountManualTables; tableNumber++)
                         //{
-                            negotiationTimesSlots.Add(new NegotiationTimeDropdownDto
-                            {
-                                StartTime = startDate,
-                                EndTime = startDate.Add(negotiationConfigDto.NegotiationConfig.TimeOfEachRound),
-                                RoundNumber = roundNumber
-                            });
+                        negotiationTimesSlots.Add(new NegotiationTimeDropdownDto
+                        {
+                            StartTime = startDate,
+                            EndTime = startDate.Add(negotiationConfigDto.NegotiationConfig.TimeOfEachRound),
+                            RoundNumber = roundNumber
+                        });
                         //}
                     }
                 }

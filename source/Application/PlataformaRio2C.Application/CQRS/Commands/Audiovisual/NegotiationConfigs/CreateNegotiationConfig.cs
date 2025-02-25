@@ -54,6 +54,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public DateTimeOffset? StartDate { get; private set; }
         public DateTimeOffset? EndDate { get; private set; }
+        public int ProjectTypeId { get; set; } = 0;
+
 
         /// <summary>Initializes a new instance of the <see cref="CreateNegotiationConfig"/> class.</summary>
         public CreateNegotiationConfig()

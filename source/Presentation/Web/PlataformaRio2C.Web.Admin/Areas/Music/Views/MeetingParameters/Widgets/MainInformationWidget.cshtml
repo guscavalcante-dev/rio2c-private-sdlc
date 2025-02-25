@@ -1,0 +1,88 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model NegotiationConfigDto
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            @Labels.Informations
+        </h3>
+    </div>
+    <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-actions">
+                <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="MusicMeetingParametersMainInformationWidget.showUpdateModal();">
+                    <i class="flaticon2-edit"></i>
+                </button>
+            </div>
+        </div>
+</div>
+<div class="kt-portlet__body pt-0">
+    <div class="row">
+        <div class="col-md-4">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.Date</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.NegotiationConfig.StartDate.ToBrazilTimeZone().ToShortDateString())
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.StartTime</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.NegotiationConfig.StartDate.ToBrazilTimeZone().ToShortTimeString())
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.EndTime</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.NegotiationConfig.EndDate.ToBrazilTimeZone().ToShortTimeString())
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Html.Raw(Labels.RoundFirstTurn)</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.NegotiationConfig.RoundFirstTurn)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Html.Raw(Labels.RoundSecondTurn)</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.NegotiationConfig.RoundSecondTurn)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.TimeIntervalBetweenTurn</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.NegotiationConfig.TimeIntervalBetweenTurn.ToString(@"hh\:mm"))
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.TimeOfEachRound</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.NegotiationConfig.TimeOfEachRound.ToString(@"hh\:mm"))
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.TimeIntervalBetweenRound</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.NegotiationConfig.TimeIntervalBetweenRound.ToString(@"hh\:mm"))
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
