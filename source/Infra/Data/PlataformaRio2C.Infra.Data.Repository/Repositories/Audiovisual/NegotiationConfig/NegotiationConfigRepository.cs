@@ -43,6 +43,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+        internal static IQueryable<NegotiationConfig> FindByProjectTypeId(this IQueryable<NegotiationConfig> query, int projectTypeId)
+        {
+            query = query.Where(nc => nc.ProjectTypeId == projectTypeId);
+
+            return query;
+        }
 
         /// <summary>Finds the by negotiation room configu uid.</summary>
         /// <param name="query">The query.</param>
@@ -194,10 +200,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>Finds the main information widget dto asynchronous.</summary>
         /// <param name="negotiationConfigUid">The negotiation configuration uid.</param>
         /// <returns></returns>
-        public async Task<NegotiationConfigDto> FindMainInformationWidgetDtoAsync(Guid negotiationConfigUid)
+        public async Task<NegotiationConfigDto> FindMainInformationWidgetDtoAsync(Guid negotiationConfigUid, int projectTypeId)
         {
             var query = this.GetBaseQuery()
                                 .FindByUid(negotiationConfigUid)
+                                .FindByProjectTypeId(projectTypeId)
                                 .Select(nc => new NegotiationConfigDto
                                 {
                                     NegotiationConfig = nc
@@ -209,11 +216,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         /// <summary>Finds the rooms widget dto asynchronous.</summary>
         /// <param name="negotiationConfigUid">The negotiation configuration uid.</param>
+        /// <param name="projectTypeId">The project type identifier.</param>
         /// <returns></returns>
-        public async Task<NegotiationConfigDto> FindRoomsWidgetDtoAsync(Guid negotiationConfigUid)
+        public async Task<NegotiationConfigDto> FindRoomsWidgetDtoAsync(Guid negotiationConfigUid, int projectTypeId)
         {
             var query = this.GetBaseQuery()
                                 .FindByUid(negotiationConfigUid)
+                                .FindByProjectTypeId(projectTypeId)
                                 .Select(nc => new NegotiationConfigDto
                                 {
                                     NegotiationConfig = nc,
@@ -261,10 +270,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             Guid? musicGenreUid,
             Guid? evaluationStatusUid,
             string languageCode,
-            int editionId)
+            int editionId,
+            int projectTypeId)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId, false)
+                                .FindByProjectTypeId(projectTypeId)
                                 .DynamicOrder<NegotiationConfig>(
                                     sortColumns,
                                     null,
@@ -290,12 +301,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         /// <summary>Counts the asynchronous.</summary>
         /// <param name="editionId">The edition identifier.</param>
+        /// <param name="projectTypeId">The project type identifier.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <returns></returns>
-        public async Task<int> CountAsync(int editionId, bool showAllEditions = false)
+        public async Task<int> CountAsync(int editionId,int projectTypeId, bool showAllEditions = false)
         {
             var query = this.GetBaseQuery()
-                                .FindByEditionId(editionId, showAllEditions);
+                                .FindByEditionId(editionId, showAllEditions)
+                                .FindByProjectTypeId(projectTypeId);
 
             return await query.CountAsync();
         }
@@ -318,11 +331,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>Finds all dates dtos asynchronous.</summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="customFilter">The custom filter.</param>
+        /// <param name="projectTypeId">The project type identifier.</param>
         /// <returns></returns>
-        public async Task<List<NegotiationConfigDto>> FindAllDatesDtosAsync(int editionId, string customFilter, bool buyerAttendeeOrganizationAcceptsVirtualMeeting)
+        public async Task<List<NegotiationConfigDto>> FindAllDatesDtosAsync(int editionId, string customFilter, bool buyerAttendeeOrganizationAcceptsVirtualMeeting, int projectTypeId)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
+                                .FindByProjectTypeId(projectTypeId)
                                 .FindByCustomFilter(customFilter, buyerAttendeeOrganizationAcceptsVirtualMeeting);
 
             return await query
@@ -347,11 +362,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="negotiationConfigUid">The negotiation configuration uid.</param>
         /// <param name="customFilter">The custom filter.</param>
+        /// <param name="projectTypeId">The project type identifier.</param>
         /// <returns></returns>
-        public async Task<List<NegotiationConfigDto>> FindAllRoomsDtosAsync(int editionId, Guid negotiationConfigUid, string customFilter, bool buyerAttendeeOrganizationAcceptsVirtualMeeting)
+        public async Task<List<NegotiationConfigDto>> FindAllRoomsDtosAsync(int editionId, Guid negotiationConfigUid, string customFilter, bool buyerAttendeeOrganizationAcceptsVirtualMeeting, int projectTypeId)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId, false)
+                                .FindByProjectTypeId(projectTypeId)
                                 .FindByUid(negotiationConfigUid)
                                 .FindByCustomFilter(customFilter, buyerAttendeeOrganizationAcceptsVirtualMeeting);
 
@@ -391,12 +408,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="negotiationRoomConfigUid">The negotiation room configuration uid.</param>
         /// <param name="customFilter">The custom filter.</param>
+        /// <param name="projectTypeId">The project type identifier.</param>
         /// <returns></returns>
-        public async Task<NegotiationConfigDto> FindAllTimesDtosAsync(int editionId, Guid negotiationRoomConfigUid, string customFilter, bool buyerAttendeeOrganizationAcceptsVirtualMeeting)
+        public async Task<NegotiationConfigDto> FindAllTimesDtosAsync(int editionId, Guid negotiationRoomConfigUid, string customFilter, bool buyerAttendeeOrganizationAcceptsVirtualMeeting,int projectTypeId)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId, false)
                                 .FindByNegotiationRoomConfiguUid(negotiationRoomConfigUid)
+                                .FindByProjectTypeId(projectTypeId)
                                 .FindByCustomFilter(customFilter, buyerAttendeeOrganizationAcceptsVirtualMeeting);
 
             return await query

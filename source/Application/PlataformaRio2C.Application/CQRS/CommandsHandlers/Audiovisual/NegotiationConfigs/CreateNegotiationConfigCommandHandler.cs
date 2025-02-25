@@ -60,7 +60,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.TimeIntervalBetweenTurn,
                 cmd.TimeOfEachRound,
                 cmd.TimeIntervalBetweenRound,
-                cmd.UserId);
+                cmd.UserId,
+                cmd.ProjectTypeId);
             if (!negotiationConfig.IsValid())
             {
                 this.AppValidationResult.Add(negotiationConfig.ValidationResult);

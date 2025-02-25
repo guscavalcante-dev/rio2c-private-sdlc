@@ -504,6 +504,10 @@
     <Compile Include="Migrations\202502172026362_UpdateMigrations02172025.Designer.cs">
       <DependentUpon>202502172026362_UpdateMigrations02172025.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202502182141533_AddProjectTypeIdFieldToNegotiationsTables.cs" />
+    <Compile Include="Migrations\202502182141533_AddProjectTypeIdFieldToNegotiationsTables.Designer.cs">
+      <DependentUpon>202502182141533_AddProjectTypeIdFieldToNegotiationsTables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202502211904403_UpdateDatabase_20250221.cs" />
     <Compile Include="Migrations\202502211904403_UpdateDatabase_20250221.Designer.cs">
       <DependentUpon>202502211904403_UpdateDatabase_20250221.cs</DependentUpon>
@@ -725,6 +729,9 @@
     <Content Include="Migrations\Scripts\202502061506598_CreatePitchingJsonPayloadFieldToProjectsTable.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Migrations\Scripts\202502182141533_AddProjectTypeIdFieldToNegotiationsTables.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Migrations\Scripts\202502101947591_DeleteMusicBusinessRoundMaximumProjectsBySellerFromEdition.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -741,6 +748,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202502061506598_CreatePitchingJsonPayloadFieldToProjectsTable.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202502182141533_AddProjectTypeIdFieldToNegotiationsTables.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202502101947591_DeleteMusicBusinessRoundMaximumProjectsBySellerFromEdition.up.sql">
@@ -1013,6 +1023,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202502172026362_UpdateMigrations02172025.resx">
       <DependentUpon>202502172026362_UpdateMigrations02172025.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202502182141533_AddProjectTypeIdFieldToNegotiationsTables.resx">
+      <DependentUpon>202502182141533_AddProjectTypeIdFieldToNegotiationsTables.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202502211904403_UpdateDatabase_20250221.resx">
       <DependentUpon>202502211904403_UpdateDatabase_20250221.cs</DependentUpon>

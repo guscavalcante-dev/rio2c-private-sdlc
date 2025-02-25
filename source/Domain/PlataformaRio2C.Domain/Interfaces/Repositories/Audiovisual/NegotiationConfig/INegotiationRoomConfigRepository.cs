@@ -21,6 +21,6 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>INegotiationRoomConfigRepository</summary>
     public interface INegotiationRoomConfigRepository : IRepository<NegotiationRoomConfig>
     {
-        Task<NegotiationRoomConfigDto> FindMainInformationWidgetDtoAsync(Guid negotiationRoomConfigUid);
+        Task<NegotiationRoomConfigDto> FindMainInformationWidgetDtoAsync(Guid negotiationRoomConfigUid, int projectTypeId);
     }    
 }

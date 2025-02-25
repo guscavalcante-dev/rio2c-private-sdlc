@@ -24,7 +24,6 @@ namespace PlataformaRio2C.Domain.Entities
         public int NegotiationConfigId { get; private set; }
         public int CountAutomaticTables { get; private set; }
         public int CountManualTables { get; private set; }
-
         public virtual Room Room { get; private set; }
         public virtual NegotiationConfig NegotiationConfig { get; private set; }
 
