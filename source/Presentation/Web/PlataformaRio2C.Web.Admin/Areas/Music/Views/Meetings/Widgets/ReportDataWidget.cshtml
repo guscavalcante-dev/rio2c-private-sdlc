@@ -1,0 +1,87 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model List<NegotiationReportGroupedByDateDto>
+@if (Model?.Any() == true)
+{
+    foreach (var negotiationReportGroupedByDateDto in Model)
+    {
+        var date = negotiationReportGroupedByDateDto.Date.ToShortDateString();
+
+        <div class="kt-portlet kt-portlet--solid-brand kt-portlet--height-fluid" style="background: #d1d1d1;">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    @*<span class="kt-portlet__head-icon"><i class="flaticon-stopwatch"></i></span>*@
+                    <h3 class="kt-portlet__head-title" style="font-size: 25px;">@date</h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                @if (negotiationReportGroupedByDateDto.NegotiationReportGroupedByRoomDtos?.Any() == true)
+                {
+                    foreach (var negotiationReportGroupedByRoomDto in negotiationReportGroupedByDateDto.NegotiationReportGroupedByRoomDtos)
+                    {
+                        var roomName = negotiationReportGroupedByRoomDto?.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value;
+                        var tableNumbers = negotiationReportGroupedByRoomDto?.NegotiationReportGroupedByStartDateDtos?.SelectMany(nd => nd.Negotiations.Select(n => n.TableNumber))?.Distinct()?.OrderBy(tn => tn);
+
+                        <div class="kt-portlet kt-portletk-portlet--height-fluid">
+                            <div class="kt-portlet__head">
+                                <div class="kt-portlet__head-label">
+                                    @*<span class="kt-portlet__head-icon"><i class="flaticon-stopwatch"></i></span>*@
+                                    <h3 class="kt-portlet__head-title" style="font-size: 20px; color: #48465b;">@roomName</h3>
+                                </div>
+                            </div>
+                            <div class="kt-portlet__body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center align-middle">@Labels.Hour</th>
+                                                @foreach (var tableNumber in tableNumbers)
+                                                {
+                                                    <th class="text-center">@Labels.Table @tableNumber</th>
+                                                }
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var negotiationReportGroupedByStartDateDto in negotiationReportGroupedByRoomDto.NegotiationReportGroupedByStartDateDtos.OrderBy(n => n.StartDate))
+                                            {
+                                                <tr>
+                                                    <td class="text-center">
+                                                        <span class="font-weight-bold">@(negotiationReportGroupedByStartDateDto.StartDate.ToString("HH:mm"))</span><br />
+                                                        <span class="font-weight-bold">@(negotiationReportGroupedByStartDateDto.EndDate.ToString("HH:mm"))</span>
+                                                    </td>
+                                                    @foreach (var tableNumber in tableNumbers)
+                                                    {
+                                                        var negotiation = negotiationReportGroupedByStartDateDto.Negotiations.FirstOrDefault(n => n.TableNumber == tableNumber);
+                                                        <td class="text-center">
+                                                            @if (negotiation != null)
+                                                            {
+                                                                <span class="font-weight-bold">@(negotiation.ProjectBuyerEvaluation?.BuyerAttendeeOrganization?.Organization?.TradeName)</span><br />
+                                                                <span class="font-weight-bold">@(negotiation.ProjectBuyerEvaluation?.Project?.ProjectTitles?.FirstOrDefault(pt => pt.Language.Code == ViewBag.UserInterfaceLanguage)?.Value)</span><br />
+                                                                <span>@(negotiation.ProjectBuyerEvaluation?.Project?.SellerAttendeeOrganization?.Organization?.TradeName)</span>
+                                                            }
+                                                        </td>
+                                                    }
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                @*else
+                                    {
+                                    <div class="col-12 text-center mt-30">@string.Format(Messages.EntityNotAction, Labels.BusinessRound, Labels.FoundM)</div>
+                                    }*@
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="col-12 text-center mt-30">@string.Format(Messages.EntityNotAction, Labels.Rooms, Labels.FoundFP)</div>
+                }
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="col-12 text-center mt-30">@string.Format(Messages.EntityNotAction, Labels.ScheduledNegotiations, Labels.FoundFP)</div>
+}

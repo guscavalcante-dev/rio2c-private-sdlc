@@ -1,0 +1,56 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model GenerateAgendaStatusWidgetDto
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    var isNegotiationsProcessing = editionDto?.MusicNegotiationsCreateStartDate != null && editionDto?.MusicNegotiationsCreateEndDate == null;
+}
+<div class="kt-portlet__body pl-5 pr-5">
+    <div class="row">
+        <div class="col-sm-8 mt-2 pt-3">
+            @if (editionDto?.MusicNegotiationsCreateStartDate != null && editionDto?.MusicNegotiationsCreateEndDate == null)
+            {
+                @Html.Raw(string.Format(Messages.CalendarProcessing, editionDto.MusicNegotiationsCreateStartDate?.ToBrazilTimeZone()))
+            }
+            else if (editionDto?.MusicNegotiationsCreateEndDate != null)
+            {
+                var processingTime = editionDto.MusicNegotiationsCreateEndDate.Value - editionDto.MusicNegotiationsCreateStartDate.Value;
+                @Html.Raw(string.Format(Messages.CalendarProcessedSuccessfully, $"{editionDto.MusicNegotiationsCreateEndDate?.ToBrazilTimeZone()} ({processingTime.ToString(@"hh\:mm\:ss")})"))
+            }
+            else
+            {
+                @Messages.CalendarNotProcessed
+            }
+        </div>
+        <div class="col-sm-4 mt-2 mb-3 text-sm-right">
+            @if (isNegotiationsProcessing ||
+                !Model.HasNegotiationConfigWithPresentialRoomConfigured ||
+                !Model.HasNegotiationConfigWithVirtualRoomConfigured)
+            {
+                <button class="btn btn-brand btn-elevate btn-icon-sm" disabled>
+                    <i class="flaticon-event-calendar-symbol"></i>@(editionDto?.MusicNegotiationsCreateEndDate != null ? Labels.RegenerateCalendar : Labels.GenerateCalendar)
+                </button>
+            }
+            else
+            {
+                <button onclick="MusicMeetingsStatusWidget.showModal();" class="btn btn-brand btn-elevate btn-icon-sm">
+                    <i class="flaticon-event-calendar-symbol"></i>@(editionDto?.MusicNegotiationsCreateEndDate != null ? Labels.RegenerateCalendar : Labels.GenerateCalendar)
+                </button>
+            }
+        </div>
+    </div>
+    @if (!Model.HasNegotiationConfigWithPresentialRoomConfigured ||
+            !Model.HasNegotiationConfigWithVirtualRoomConfigured)
+    {
+        <div class="row">
+
+            <div class="form-group col-md-12">
+                <div class="alert alert-warning mb-0">
+                    <div class="alert-icon"><i class="flaticon-warning"></i></div>
+                    <div class="alert-text">
+                        @Html.Raw(string.Format(Messages.MeetingParametersNotFound, Model.GetMessage(), Url.Action("Index", "MeetingParameters", new { Area = "Music" })))
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -727,377 +727,377 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
        //#endregion
 
-        #region Send E-mails to Players
+        //#region Send E-mails to Players
 
-        #region List
+        //#region List
 
-        /// <summary>
-        /// Sends the email to players.
-        /// </summary>
-        /// <param name="searchViewModel">The search view model.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public ActionResult SendEmailToPlayers(SendEmailToPlayersSearchViewModel searchViewModel)
-        {
-            #region Breadcrumb
+        ///// <summary>
+        ///// Sends the email to players.
+        ///// </summary>
+        ///// <param name="searchViewModel">The search view model.</param>
+        ///// <returns></returns>
+        //[HttpGet]
+        //public ActionResult SendEmailToPlayers(SendEmailToPlayersSearchViewModel searchViewModel)
+        //{
+        //    #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.AudioVisual, null),
-                new BreadcrumbItemHelper(Labels.OneToOneMeetings, null),
-                new BreadcrumbItemHelper(Labels.SendEmailToPlayers, Url.Action("SendEmailToPlayers", "Meetings", new { Area = "Music" }))
-            });
+        //    ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
+        //        new BreadcrumbItemHelper(Labels.AudioVisual, null),
+        //        new BreadcrumbItemHelper(Labels.OneToOneMeetings, null),
+        //        new BreadcrumbItemHelper(Labels.SendEmailToPlayers, Url.Action("SendEmailToPlayers", "Meetings", new { Area = "Music" }))
+        //    });
 
-            #endregion
+        //    #endregion
 
-            return View(searchViewModel);
-        }
+        //    return View(searchViewModel);
+        //}
 
-        /// <summary>
-        /// Sends the email to players search.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> SendEmailToPlayersSearch(IDataTablesRequest request)
-        {
-            var producers = await this.attendeeOrganizationRepo.FindAllByActiveBuyerNegotiationsAndByDataTable(
-                request.Start / request.Length,
-                request.Length,
-                request.Search?.Value,
-                request.GetSortColumns(),
-                this.EditionDto.Id,
-                this.AdminAccessControlDto.Language.Id);
+        ///// <summary>
+        ///// Sends the email to players search.
+        ///// </summary>
+        ///// <param name="request">The request.</param>
+        ///// <returns></returns>
+        //[HttpGet]
+        //public async Task<ActionResult> SendEmailToPlayersSearch(IDataTablesRequest request)
+        //{
+        //    var producers = await this.attendeeOrganizationRepo.FindAllByActiveBuyerNegotiationsAndByDataTable(
+        //        request.Start / request.Length,
+        //        request.Length,
+        //        request.Search?.Value,
+        //        request.GetSortColumns(),
+        //        this.EditionDto.Id,
+        //        this.AdminAccessControlDto.Language.Id);
 
-            var response = DataTablesResponse.Create(request, producers.TotalItemCount, producers.TotalItemCount, producers);
+        //    var response = DataTablesResponse.Create(request, producers.TotalItemCount, producers.TotalItemCount, producers);
 
-            return Json(new
-            {
-                status = "success",
-                dataTable = response
-            }, JsonRequestBehavior.AllowGet);
-        }
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        dataTable = response
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
 
-        #endregion
+        //#endregion
 
-        #region Total Count Widget
+        //#region Total Count Widget
 
-        /// <summary>
-        /// Shows the send email to players total count widget.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowSendEmailToPlayersTotalCountWidget()
-        {
-            var producers = await this.attendeeOrganizationRepo.CountAllByActiveBuyerNegotiationsAndByDataTable(true, this.EditionDto.Id);
+        ///// <summary>
+        ///// Shows the send email to players total count widget.
+        ///// </summary>
+        ///// <returns></returns>
+        //[HttpGet]
+        //public async Task<ActionResult> ShowSendEmailToPlayersTotalCountWidget()
+        //{
+        //    var producers = await this.attendeeOrganizationRepo.CountAllByActiveBuyerNegotiationsAndByDataTable(true, this.EditionDto.Id);
 
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Widgets/SendEmailToPlayersTotalCountWidget", producers), divIdOrClass = "#AudiovisualMeetingsSendEmailToPlayersTotalCountWidget" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        pages = new List<dynamic>
+        //        {
+        //            new { page = this.RenderRazorViewToString("Widgets/SendEmailToPlayersTotalCountWidget", producers), divIdOrClass = "#AudiovisualMeetingsSendEmailToPlayersTotalCountWidget" },
+        //        }
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
 
-        #endregion
+        //#endregion
 
-        #region Edition Count Widget
+        //#region Edition Count Widget
 
-        /// <summary>
-        /// Shows the send email to players edition count widget.
-        /// </summary>
-        /// <returns></returns>
-        public async Task<ActionResult> ShowSendEmailToPlayersEditionCountWidget()
-        {
-            var producers = await this.attendeeOrganizationRepo.CountAllByActiveBuyerNegotiationsAndByDataTable(false, this.EditionDto.Id);
+        ///// <summary>
+        ///// Shows the send email to players edition count widget.
+        ///// </summary>
+        ///// <returns></returns>
+        //public async Task<ActionResult> ShowSendEmailToPlayersEditionCountWidget()
+        //{
+        //    var producers = await this.attendeeOrganizationRepo.CountAllByActiveBuyerNegotiationsAndByDataTable(false, this.EditionDto.Id);
 
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Widgets/SendEmailToPlayersEditionCountWidget", producers), divIdOrClass = "#AudiovisualMeetingsSendEmailToPlayersEditionCountWidget" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        pages = new List<dynamic>
+        //        {
+        //            new { page = this.RenderRazorViewToString("Widgets/SendEmailToPlayersEditionCountWidget", producers), divIdOrClass = "#AudiovisualMeetingsSendEmailToPlayersEditionCountWidget" },
+        //        }
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
 
-        #endregion
+        //#endregion
 
-        #region Send E-mails
+        //#region Send E-mails
 
-        /// <summary>
-        /// Sends the players emails.
-        /// </summary>
-        /// <param name="keywords">The keywords.</param>
-        /// <param name="selectedAttendeeOrganizationsUids">The selected attendee organizations uids.</param>
-        /// <returns></returns>
-        /// <exception cref="DomainException">
-        /// </exception>
-        [HttpPost]
-        public async Task<ActionResult> SendPlayersEmails(string keywords, string selectedAttendeeOrganizationsUids)
-        {
-            AppValidationResult result = null;
+        ///// <summary>
+        ///// Sends the players emails.
+        ///// </summary>
+        ///// <param name="keywords">The keywords.</param>
+        ///// <param name="selectedAttendeeOrganizationsUids">The selected attendee organizations uids.</param>
+        ///// <returns></returns>
+        ///// <exception cref="DomainException">
+        ///// </exception>
+        //[HttpPost]
+        //public async Task<ActionResult> SendPlayersEmails(string keywords, string selectedAttendeeOrganizationsUids)
+        //{
+        //    AppValidationResult result = null;
 
-            try
-            {
-                var attendeeOrganizationBaseDtos = await this.attendeeOrganizationRepo.FindAllBaseDtoByActiveBuyerNegotiations(
-                    keywords,
-                    selectedAttendeeOrganizationsUids?.ToListGuid(','),
-                    this.EditionDto.Id,
-                    this.AdminAccessControlDto.Language.Id);
-                if (attendeeOrganizationBaseDtos?.Any() != true)
-                {
-                    throw new DomainException(Messages.SelectAtLeastOneOption);
-                }
+        //    try
+        //    {
+        //        var attendeeOrganizationBaseDtos = await this.attendeeOrganizationRepo.FindAllBaseDtoByActiveBuyerNegotiations(
+        //            keywords,
+        //            selectedAttendeeOrganizationsUids?.ToListGuid(','),
+        //            this.EditionDto.Id,
+        //            this.AdminAccessControlDto.Language.Id);
+        //        if (attendeeOrganizationBaseDtos?.Any() != true)
+        //        {
+        //            throw new DomainException(Messages.SelectAtLeastOneOption);
+        //        }
 
-                List<string> errors = new List<string>();
-                foreach (var attendeeOrganizationBaseDto in attendeeOrganizationBaseDtos)
-                {
-                    foreach (var attendeeCollaboratorBaseDto in attendeeOrganizationBaseDto.AttendeeCollaboratorBaseDtos)
-                    {
-                        // If the collaborator does not have an user interface language, use the user interface language of the current user
-                        var collaboratorLanguageCode = attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.UserInterfaceLanguageCode ?? this.UserInterfaceLanguage;
+        //        List<string> errors = new List<string>();
+        //        foreach (var attendeeOrganizationBaseDto in attendeeOrganizationBaseDtos)
+        //        {
+        //            foreach (var attendeeCollaboratorBaseDto in attendeeOrganizationBaseDto.AttendeeCollaboratorBaseDtos)
+        //            {
+        //                // If the collaborator does not have an user interface language, use the user interface language of the current user
+        //                var collaboratorLanguageCode = attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.UserInterfaceLanguageCode ?? this.UserInterfaceLanguage;
 
-                        try
-                        {
-                            result = await this.CommandBus.Send(new SendPlayerNegotiationsEmailAsync(
-                                attendeeOrganizationBaseDto,
-                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Id,
-                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Uid,
-                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.FirstName,
-                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.FullName,
-                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.Email,
-                                this.EditionDto.Edition,
-                                this.AdminAccessControlDto.User.Id,
-                                collaboratorLanguageCode));
-                            if (!result.IsValid)
-                            {
-                                throw new DomainException(Messages.CorrectFormValues);
-                            }
-                        }
-                        catch (DomainException)
-                        {
-                            //Cannot stop sending email when exception occurs.
-                            errors.AddRange(result.Errors.Select(e => e.Message));
-                        }
-                        catch (Exception ex)
-                        {
-                            Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                        }
-                    }
+        //                try
+        //                {
+        //                    result = await this.CommandBus.Send(new SendPlayerNegotiationsEmailAsync(
+        //                        attendeeOrganizationBaseDto,
+        //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Id,
+        //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Uid,
+        //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.FirstName,
+        //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.FullName,
+        //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.Email,
+        //                        this.EditionDto.Edition,
+        //                        this.AdminAccessControlDto.User.Id,
+        //                        collaboratorLanguageCode));
+        //                    if (!result.IsValid)
+        //                    {
+        //                        throw new DomainException(Messages.CorrectFormValues);
+        //                    }
+        //                }
+        //                catch (DomainException)
+        //                {
+        //                    //Cannot stop sending email when exception occurs.
+        //                    errors.AddRange(result.Errors.Select(e => e.Message));
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                    Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+        //                }
+        //            }
 
-                    if (errors.Any())
-                    {
-                        throw new DomainException(string.Format(Messages.OneOrMoreEmailsNotSend, Labels.WelcomeEmail));
-                    }
-                }
-            }
-            catch (DomainException ex)
-            {
-                return Json(new
-                {
-                    status = "error",
-                    message = result?.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
-                }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-            }
+        //            if (errors.Any())
+        //            {
+        //                throw new DomainException(string.Format(Messages.OneOrMoreEmailsNotSend, Labels.WelcomeEmail));
+        //            }
+        //        }
+        //    }
+        //    catch (DomainException ex)
+        //    {
+        //        return Json(new
+        //        {
+        //            status = "error",
+        //            message = result?.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+        //        }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+        //    }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Emails, Labels.SentMP.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        }
+        //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Emails, Labels.SentMP.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+        //}
 
-        #endregion
+        //#endregion
 
-        #endregion
+        //#endregion
 
-        #region Send E-mails to Producers
+        //#region Send E-mails to Producers
 
-        #region List
+        //#region List
 
-        /// <summary>
-        /// Sends the email to producers.
-        /// </summary>
-        /// <param name="searchViewModel">The search view model.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public ActionResult SendEmailToProducers(SendEmailToProducersSearchViewModel searchViewModel)
-        {
-            #region Breadcrumb
+        ///// <summary>
+        ///// Sends the email to producers.
+        ///// </summary>
+        ///// <param name="searchViewModel">The search view model.</param>
+        ///// <returns></returns>
+        //[HttpGet]
+        //public ActionResult SendEmailToProducers(SendEmailToProducersSearchViewModel searchViewModel)
+        //{
+        //    #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.AudioVisual, null),
-                new BreadcrumbItemHelper(Labels.OneToOneMeetings, null),
-                new BreadcrumbItemHelper(Labels.SendEmailToProducers, Url.Action("SendEmailToProducers", "Meetings", new { Area = "Music" }))
-            });
+        //    ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
+        //        new BreadcrumbItemHelper(Labels.AudioVisual, null),
+        //        new BreadcrumbItemHelper(Labels.OneToOneMeetings, null),
+        //        new BreadcrumbItemHelper(Labels.SendEmailToProducers, Url.Action("SendEmailToProducers", "Meetings", new { Area = "Music" }))
+        //    });
 
-            #endregion
+        //    #endregion
 
-            return View(searchViewModel);
-        }
+        //    return View(searchViewModel);
+        //}
 
-        /// <summary>
-        /// Sends the email to producers search.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> SendEmailToProducersSearch(IDataTablesRequest request)
-        {
-            var producers = await this.attendeeOrganizationRepo.FindAllByActiveSellerNegotiationsAndByDataTable(
-                request.Start / request.Length,
-                request.Length,
-                request.Search?.Value,
-                request.GetSortColumns(),
-                this.EditionDto.Id,
-                this.AdminAccessControlDto.Language.Id);
+        ///// <summary>
+        ///// Sends the email to producers search.
+        ///// </summary>
+        ///// <param name="request">The request.</param>
+        ///// <returns></returns>
+        //[HttpGet]
+        //public async Task<ActionResult> SendEmailToProducersSearch(IDataTablesRequest request)
+        //{
+        //    var producers = await this.attendeeOrganizationRepo.FindAllByActiveSellerNegotiationsAndByDataTable(
+        //        request.Start / request.Length,
+        //        request.Length,
+        //        request.Search?.Value,
+        //        request.GetSortColumns(),
+        //        this.EditionDto.Id,
+        //        this.AdminAccessControlDto.Language.Id);
 
-            var response = DataTablesResponse.Create(request, producers.TotalItemCount, producers.TotalItemCount, producers);
+        //    var response = DataTablesResponse.Create(request, producers.TotalItemCount, producers.TotalItemCount, producers);
 
-            return Json(new
-            {
-                status = "success",
-                dataTable = response
-            }, JsonRequestBehavior.AllowGet);
-        }
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        dataTable = response
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
 
-        #endregion
+        //#endregion
 
-        #region Total Count Widget
+        //#region Total Count Widget
 
-        /// <summary>
-        /// Shows the send email to players total count widget.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowSendEmailToProducersTotalCountWidget()
-        {
-            var producers = await this.attendeeOrganizationRepo.CountAllByActiveSellerNegotiationsAndByDataTable(true, this.EditionDto.Id);
+        ///// <summary>
+        ///// Shows the send email to players total count widget.
+        ///// </summary>
+        ///// <returns></returns>
+        //[HttpGet]
+        //public async Task<ActionResult> ShowSendEmailToProducersTotalCountWidget()
+        //{
+        //    var producers = await this.attendeeOrganizationRepo.CountAllByActiveSellerNegotiationsAndByDataTable(true, this.EditionDto.Id);
 
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Widgets/SendEmailToProducersTotalCountWidget", producers), divIdOrClass = "#MusicMeetingsSendEmailToProducersTotalCountWidget" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        pages = new List<dynamic>
+        //        {
+        //            new { page = this.RenderRazorViewToString("Widgets/SendEmailToProducersTotalCountWidget", producers), divIdOrClass = "#MusicMeetingsSendEmailToProducersTotalCountWidget" },
+        //        }
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
 
-        #endregion
+        //#endregion
 
-        #region Edition Count Widget
+        //#region Edition Count Widget
 
-        /// <summary>
-        /// Shows the send email to players edition count widget.
-        /// </summary>
-        /// <returns></returns>
-        public async Task<ActionResult> ShowSendEmailToProducersEditionCountWidget()
-        {
-            var producers = await this.attendeeOrganizationRepo.CountAllByActiveSellerNegotiationsAndByDataTable(false, this.EditionDto.Id);
+        ///// <summary>
+        ///// Shows the send email to players edition count widget.
+        ///// </summary>
+        ///// <returns></returns>
+        //public async Task<ActionResult> ShowSendEmailToProducersEditionCountWidget()
+        //{
+        //    var producers = await this.attendeeOrganizationRepo.CountAllByActiveSellerNegotiationsAndByDataTable(false, this.EditionDto.Id);
 
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Widgets/SendEmailToProducersEditionCountWidget", producers), divIdOrClass = "#MusicMeetingsSendEmailToProducersEditionCountWidget" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        pages = new List<dynamic>
+        //        {
+        //            new { page = this.RenderRazorViewToString("Widgets/SendEmailToProducersEditionCountWidget", producers), divIdOrClass = "#MusicMeetingsSendEmailToProducersEditionCountWidget" },
+        //        }
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
 
-        #endregion
+        //#endregion
 
-        #region Send E-mails
+        //#region Send E-mails
 
-        /// <summary>
-        /// Sends the producers emails.
-        /// </summary>
-        /// <param name="keywords">The keywords.</param>
-        /// <param name="selectedAttendeeOrganizationsUids">The selected attendee organizations uids.</param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> SendProducersEmails(string keywords, string selectedAttendeeOrganizationsUids)
-        {
-            AppValidationResult result = null;
+        ///// <summary>
+        ///// Sends the producers emails.
+        ///// </summary>
+        ///// <param name="keywords">The keywords.</param>
+        ///// <param name="selectedAttendeeOrganizationsUids">The selected attendee organizations uids.</param>
+        ///// <returns></returns>
+        //[HttpPost]
+        //public async Task<ActionResult> SendProducersEmails(string keywords, string selectedAttendeeOrganizationsUids)
+        //{
+        //    AppValidationResult result = null;
 
-            try
-            {
-                var attendeeOrganizationBaseDtos = await this.attendeeOrganizationRepo.FindAllBaseDtoByActiveSellerNegotiations(
-                    keywords,
-                    selectedAttendeeOrganizationsUids?.ToListGuid(','),
-                    this.EditionDto.Id,
-                    this.AdminAccessControlDto.Language.Id);
-                if (attendeeOrganizationBaseDtos?.Any() != true)
-                {
-                    throw new DomainException(Messages.SelectAtLeastOneOption);
-                }
+        //    try
+        //    {
+        //        var attendeeOrganizationBaseDtos = await this.attendeeOrganizationRepo.FindAllBaseDtoByActiveSellerNegotiations(
+        //            keywords,
+        //            selectedAttendeeOrganizationsUids?.ToListGuid(','),
+        //            this.EditionDto.Id,
+        //            this.AdminAccessControlDto.Language.Id);
+        //        if (attendeeOrganizationBaseDtos?.Any() != true)
+        //        {
+        //            throw new DomainException(Messages.SelectAtLeastOneOption);
+        //        }
 
-                List<string> errors = new List<string>();
-                foreach (var attendeeOrganizationBaseDto in attendeeOrganizationBaseDtos)
-                {
-                    foreach (var attendeeCollaboratorBaseDto in attendeeOrganizationBaseDto.AttendeeCollaboratorBaseDtos)
-                    {
-                        // If the collaborator does not have an user interface language, use the user interface language of the current user
-                        var collaboratorLanguageCode = attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.UserInterfaceLanguageCode ?? this.UserInterfaceLanguage;
+        //        List<string> errors = new List<string>();
+        //        foreach (var attendeeOrganizationBaseDto in attendeeOrganizationBaseDtos)
+        //        {
+        //            foreach (var attendeeCollaboratorBaseDto in attendeeOrganizationBaseDto.AttendeeCollaboratorBaseDtos)
+        //            {
+        //                // If the collaborator does not have an user interface language, use the user interface language of the current user
+        //                var collaboratorLanguageCode = attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.UserInterfaceLanguageCode ?? this.UserInterfaceLanguage;
 
-                        try
-                        {
-                            result = await this.CommandBus.Send(new SendProducerNegotiationsEmailAsync(
-                                attendeeOrganizationBaseDto,
-                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Id,
-                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Uid,
-                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.FirstName,
-                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.FullName,
-                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.Email,
-                                this.EditionDto.Edition,
-                                this.AdminAccessControlDto.User.Id,
-                                collaboratorLanguageCode));
-                            if (!result.IsValid)
-                            {
-                                throw new DomainException(Messages.CorrectFormValues);
-                            }
-                        }
-                        catch (DomainException ex)
-                        {
-                            //Cannot stop sending email when exception occurs.
-                            errors.AddRange(result.Errors.Select(e => e.Message));
-                        }
-                        catch (Exception ex)
-                        {
-                            Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                        }
-                    }
+        //                try
+        //                {
+        //                    result = await this.CommandBus.Send(new SendProducerNegotiationsEmailAsync(
+        //                        attendeeOrganizationBaseDto,
+        //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Id,
+        //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Uid,
+        //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.FirstName,
+        //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.FullName,
+        //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.Email,
+        //                        this.EditionDto.Edition,
+        //                        this.AdminAccessControlDto.User.Id,
+        //                        collaboratorLanguageCode));
+        //                    if (!result.IsValid)
+        //                    {
+        //                        throw new DomainException(Messages.CorrectFormValues);
+        //                    }
+        //                }
+        //                catch (DomainException ex)
+        //                {
+        //                    //Cannot stop sending email when exception occurs.
+        //                    errors.AddRange(result.Errors.Select(e => e.Message));
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                    Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+        //                }
+        //            }
 
-                    if (errors.Any())
-                    {
-                        throw new DomainException(string.Format(Messages.OneOrMoreEmailsNotSend, Labels.WelcomeEmail));
-                    }
-                }
-            }
-            catch (DomainException ex)
-            {
-                return Json(new
-                {
-                    status = "error",
-                    message = result?.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
-                }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-            }
+        //            if (errors.Any())
+        //            {
+        //                throw new DomainException(string.Format(Messages.OneOrMoreEmailsNotSend, Labels.WelcomeEmail));
+        //            }
+        //        }
+        //    }
+        //    catch (DomainException ex)
+        //    {
+        //        return Json(new
+        //        {
+        //            status = "error",
+        //            message = result?.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+        //        }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+        //    }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Emails, Labels.SentMP.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        }
+        //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Emails, Labels.SentMP.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+        //}
 
-        #endregion
+        //#endregion
 
-        #endregion
+        //#endregion
 
         #region Report
 
