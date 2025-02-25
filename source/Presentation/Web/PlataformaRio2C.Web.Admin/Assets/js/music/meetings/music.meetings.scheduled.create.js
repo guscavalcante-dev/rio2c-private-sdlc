@@ -4,7 +4,7 @@
 // Created          : 21-02-2025
 //
 // Last Modified By : Rafael Ribeiro
-// Last Modified On : 21-02-2025
+// Last Modified On : 25-02-2025
 // ***********************************************************************
 // <copyright file="music.meetings.scheduled.create.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
