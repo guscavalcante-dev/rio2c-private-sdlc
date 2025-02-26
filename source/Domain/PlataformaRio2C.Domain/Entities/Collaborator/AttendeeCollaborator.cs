@@ -59,6 +59,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeCollaboratorTargetAudience> AttendeeCollaboratorTargetAudiences { get; private set; }
         public virtual ICollection<MusicBusinessRoundProjectBuyerEvaluation> MusicBusinessRoundProjectBuyerEvaluations { get; private set; }
         public virtual ICollection<MusicBusinessRoundProject> MusicBusinessRoundProjects { get; private set; }
+        public virtual ICollection<AttendeeMusicBusinessRoundNegotiationCollaborator> AttendeeMusicBusinessRoundNegotiationCollaborators { get; private set; }
 
         #region Attendee Collaborator
 

@@ -158,6 +158,8 @@
     <Compile Include="Mapping\Music\BusinessRound\MusicBusinessRoundProjectBuyerEvaluationMap.cs" />
     <Compile Include="Mapping\Music\BusinessRound\MusicBusinessRoundProjectMap.cs" />
     <Compile Include="Mapping\Music\BusinessRound\MusicBusinessRoundProjectPlayerCategoryMap.cs" />
+    <Compile Include="Mapping\Music\BusinessRound\Negotiations\AttendeeMusicBusinessRoundNegotiationCollaboratorMap.cs" />
+    <Compile Include="Mapping\Music\BusinessRound\Negotiations\MusicBusinessRoundNegotiationMap.cs" />
     <Compile Include="Mapping\Music\BusinessRound\PlayerCategoryMap.cs" />
     <Compile Include="Mapping\Music\BusinessRound\MusicBusinessRoundProjectTargetAudienceMap.cs" />
     <Compile Include="Mapping\Music\Pitching\AttendeeMusicBandCollaboratorMap.cs" />
@@ -172,8 +174,8 @@
     <Compile Include="Mapping\Music\Pitching\MusicBandMap.cs" />
     <Compile Include="Mapping\Music\Pitching\MusicBandGenreMap.cs" />
     <Compile Include="Mapping\Music\Pitching\MusicBandTargetAudienceMap.cs" />
-    <Compile Include="Mapping\Audiovisual\NegotiationConfig\NegotiationRoomConfigMap.cs" />
-    <Compile Include="Mapping\Audiovisual\NegotiationConfig\NegotiationConfigMap.cs" />
+    <Compile Include="Mapping\NegotiationConfig\NegotiationRoomConfigMap.cs" />
+    <Compile Include="Mapping\NegotiationConfig\NegotiationConfigMap.cs" />
     <Compile Include="Mapping\Audiovisual\Negotiation\NegotiationMap.cs" />
     <Compile Include="Mapping\Organizations\AttendeeOrganizationCollaboratorMap.cs" />
     <Compile Include="Mapping\Organizations\AttendeeOrganizationTypeMap.cs" />
@@ -524,6 +526,10 @@
     <Compile Include="Migrations\202502251343396_Update_Migrations.Designer.cs">
       <DependentUpon>202502251343396_Update_Migrations.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202502252312562_CreateMusicBusinessRoundNegotiationsTables.cs" />
+    <Compile Include="Migrations\202502252312562_CreateMusicBusinessRoundNegotiationsTables.Designer.cs">
+      <DependentUpon>202502252312562_CreateMusicBusinessRoundNegotiationsTables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -535,6 +541,12 @@
     <Compile Include="Migrations\202411140217302_AddMusicPitchingFieldToEditions.Designer.cs">
       <DependentUpon>202411140217302_AddMusicPitchingFieldToEditions.cs</DependentUpon>
     </Compile>
+    <Content Include="Migrations\Scripts\202502252312562_CreateMusicBusinessRoundNegotiationsTables.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202502252312562_CreateMusicBusinessRoundNegotiationsTables.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Migrations\Scripts\202502241543359_UpdateAttendeeSalesPlatformTicketTypesFieldUpdateDateNotNull.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1038,6 +1050,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202502251343396_Update_Migrations.resx">
       <DependentUpon>202502251343396_Update_Migrations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202502252312562_CreateMusicBusinessRoundNegotiationsTables.resx">
+      <DependentUpon>202502252312562_CreateMusicBusinessRoundNegotiationsTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
