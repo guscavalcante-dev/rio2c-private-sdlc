@@ -43,15 +43,13 @@ namespace PlataformaRio2C.Domain.Dtos
 
         #region Dates Information
 
-        // Audiovisual - Negotiations
+        // Audiovisual - Business Rounds
         public DateTimeOffset ProjectSubmitStartDate { get; private set; }
         public DateTimeOffset ProjectSubmitEndDate { get; private set; }
         public DateTimeOffset ProjectEvaluationStartDate { get; private set; }
         public DateTimeOffset ProjectEvaluationEndDate { get; private set; }
         public DateTimeOffset NegotiationStartDate { get; private set; }
         public DateTimeOffset NegotiationEndDate { get; private set; }
-        public DateTimeOffset? AudiovisualNegotiationsCreateStartDate { get; private set; }
-        public DateTimeOffset? AudiovisualNegotiationsCreateEndDate { get; private set; }
         public int AttendeeOrganizationMaxSellProjectsCount { get; private set; }
         public int ProjectMaxBuyerEvaluationsCount { get; private set; }
 
@@ -157,7 +155,7 @@ namespace PlataformaRio2C.Domain.Dtos
             this.SpeakersApiHighlightPositionsCount = entity.SpeakersApiHighlightPositionsCount;
             this.ConferenceApiHighlightPositionsCount = entity.ConferenceApiHighlightPositionsCount;
 
-            // Audiovisual - Negotiations
+            // Audiovisual - Business Rounds
             this.ProjectSubmitStartDate = entity.ProjectSubmitStartDate;
             this.ProjectSubmitEndDate = entity.ProjectSubmitEndDate;
             this.ProjectEvaluationStartDate = entity.ProjectEvaluationStartDate;
@@ -208,8 +206,6 @@ namespace PlataformaRio2C.Domain.Dtos
             // Audiovisual - Pitching
             this.AudiovisualPitchingSubmitProjectStartDate = entity.AudiovisualPitchingSubmitStartDate;
             this.AudiovisualPitchingSubmitProjectEndDate = entity.AudiovisualPitchingSubmitEndDate;
-            this.AudiovisualNegotiationsCreateStartDate = entity.AudiovisualNegotiationsCreateStartDate;
-            this.AudiovisualNegotiationsCreateEndDate = entity.AudiovisualNegotiationsCreateEndDate;
             this.AudiovisualCommissionEvaluationStartDate = entity.AudiovisualCommissionEvaluationStartDate;
             this.AudiovisualCommissionEvaluationEndDate = entity.AudiovisualCommissionEvaluationEndDate;
             this.AudiovisualCommissionMinimumEvaluationsCount = entity.AudiovisualCommissionMinimumEvaluationsCount;
