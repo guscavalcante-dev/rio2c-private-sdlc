@@ -232,11 +232,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// Finds all by attendee collaborator identifier asynchronous.
         /// </summary>
         /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
+        /// <param name="interestGroupId">The interest group identifier.</param>
         /// <returns></returns>
-        public async Task<List<Interest>> FindAllByAttendeeCollaboratorIdAsync(int attendeeCollaboratorId)
+        public async Task<List<Interest>> FindAllByAttendeeCollaboratorIdAsync(int attendeeCollaboratorId, Guid interestGroupUid)
         {
             var query = this.GetBaseQuery()
                             .FindByAttendeeCollaboratorId(attendeeCollaboratorId)
+                            .FindByInterestGroupUid(interestGroupUid)
                             .Order();
 
             return await query.ToListAsync();

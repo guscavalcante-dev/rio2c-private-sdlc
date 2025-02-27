@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Domain
 // Author           : Renan Valentim
-// Created          : 01-18-2025
+// Created          : 25-02-2025
 //
-// Last Modified By : Daniel Giese Rodrigues
-// Last Modified On : 01-20-2025
+// Last Modified By : Renan Valentim
+// Last Modified On : 25-02-2025
 // ***********************************************************************
 // <copyright file="MusicBusinessRoundProjectBuyerEvaluation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,7 +15,6 @@ using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace PlataformaRio2C.Domain.Entities
@@ -43,6 +42,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ProjectEvaluationRefuseReason ProjectEvaluationRefuseReason { get; private set; }
         public virtual User SellerUser { get; private set; }
         public virtual User BuyerEvaluationUser { get; private set; }
+        public virtual ICollection<MusicBusinessRoundNegotiation> MusicBusinessRoundNegotiations { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MusicBusinessRoundProjectBuyerEvaluation"/> class.

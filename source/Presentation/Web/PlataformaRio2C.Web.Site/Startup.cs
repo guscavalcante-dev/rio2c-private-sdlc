@@ -27,7 +27,7 @@ using PlataformaRio2C.Web.Site.Hub;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Mvc;
 using System.Net;
 
-[assembly: OwinStartupAttribute(typeof(PlataformaRio2C.Web.Site.Startup))]
+[assembly: OwinStartup(typeof(PlataformaRio2C.Web.Site.Startup))]
 namespace PlataformaRio2C.Web.Site
 {
     /// <summary>Startup</summary>
@@ -51,10 +51,11 @@ namespace PlataformaRio2C.Web.Site
 
             GlobalHost.HubPipeline.AddModule(new CallerCulturePipelineModule());
 
-            HttpConfiguration config = new HttpConfiguration();            
+            app.ConfigureAuth();
+            app.ConfigureProjectsToAudiovisualBusinessRoundProjectsRedirect();
 
-            ConfigureAuth(app);
-            config.MessageHandlers.Add(new LanguageMessageHandler());            
+            HttpConfiguration config = new HttpConfiguration();
+            config.MessageHandlers.Add(new LanguageMessageHandler());
 
             var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
             json.UseDataContractJsonSerializer = true;
@@ -65,7 +66,7 @@ namespace PlataformaRio2C.Web.Site
 
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);      
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 
             ModelBinders.Binders.DefaultBinder = new IdentityModelBinder();
@@ -82,6 +83,7 @@ namespace PlataformaRio2C.Web.Site
             {
                 GlobalHost.DependencyResolver.UseSqlServer(sqlConnectionString);
             }
+
             app.MapSignalR("/signalr", hubConfiguration);
         }
     }
