@@ -329,6 +329,13 @@
     <Compile Include="Dtos\Music\MusicProject\MusicProjectJsonDto.cs" />
     <Compile Include="Dtos\Music\MusicProject\MusicProjectEvaluationDto.cs" />
     <Compile Include="Dtos\Music\MusicProject\MusicProjectDto.cs" />
+    <Compile Include="Dtos\Music\Negotiations\MusicBusinessRoundNegotiationDto.cs" />
+    <Compile Include="Dtos\Music\Negotiations\MusicBusinessRoundNegotiationGroupedByDateDto.cs" />
+    <Compile Include="Dtos\Music\Negotiations\MusicBusinessRoundNegotiationGroupedByRoomDto.cs" />
+    <Compile Include="Dtos\Music\Negotiations\MusicBusinessRoundNegotiationGroupedByRoundDto.cs" />
+    <Compile Include="Dtos\Music\Negotiations\MusicBusinessRoundNegotiationReportGroupedByDateDto.cs" />
+    <Compile Include="Dtos\Music\Negotiations\MusicBusinessRoundNegotiationReportGroupedByRoomDto.cs" />
+    <Compile Include="Dtos\Music\Negotiations\MusicBusinessRoundNegotiationReportGroupedByStartDateDto.cs" />
     <Compile Include="Dtos\Music\Player\API\MusicPlayerCollaboratorApiDto.cs" />
     <Compile Include="Dtos\Music\Player\API\MusicPlayerOrganizationApiDto.cs" />
     <Compile Include="Dtos\NegotiationConfig\GenerateAgendaStatusWidgetDto.cs" />
@@ -606,6 +613,8 @@
     <Compile Include="Interfaces\Repositories\Music\Bands\IMusicBandMemberRepository.cs" />
     <Compile Include="Interfaces\Repositories\Music\Bands\IMusicBandRepository.cs" />
     <Compile Include="Interfaces\Repositories\Music\BusinessRoundProjects\IPlayersCategoryRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Music\Negotiation\IAttendeeMusicBusinessRoundNegotiationCollaboratorRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Music\Negotiation\IMusicBusinessRoundNegotiationRepository.cs" />
     <Compile Include="Interfaces\Repositories\Music\Projects\IMusicBusinessRoundProjectRepository.cs" />
     <Compile Include="Interfaces\Repositories\Music\Projects\IMusicProjectRepository.cs" />
     <Compile Include="Interfaces\Repositories\Music\Projects\IMusicGenreRepository.cs" />
