@@ -85,15 +85,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         /// <summary>Finds the by seller attendee organization uid.</summary>
         /// <param name="query">The query.</param>
-        /// <param name="sellerOrganizationUid">The seller organization uid.</param>
+        /// <param name="sellerCollaboratorUid">The seller organization uid.</param>
         /// <returns></returns>
-        internal static IQueryable<MusicBusinessRoundNegotiation> FindBySellerOrganizationUid(this IQueryable<MusicBusinessRoundNegotiation> query, Guid? sellerOrganizationUid)
+        internal static IQueryable<MusicBusinessRoundNegotiation> FindBySellerCollaboratorUid(this IQueryable<MusicBusinessRoundNegotiation> query, Guid? sellerCollaboratorUid)
         {
-            //TODO:DanielGiese Precisa trocar a organization por colaborator.
-            //if (sellerOrganizationUid.HasValue)
-            //{
-            //    query = query.Where(n => n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeOrganization.Organization.Uid == sellerOrganizationUid);
-            //}
+            if (sellerCollaboratorUid.HasValue)
+            {
+                query = query.Where(n => n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator.Collaborator.Uid == sellerCollaboratorUid);
+            }
 
             return query;
         }
@@ -154,22 +153,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<MusicBusinessRoundNegotiation> FindByProjectKeywords(this IQueryable<MusicBusinessRoundNegotiation> query, string projectKeywords)
         {
             //TODO:DanielGiese Refactor keyword search.
-            //if (!string.IsNullOrEmpty(projectKeywords))
-            //{
-            //    var outerWhere = PredicateBuilder.New<MusicBusinessRoundNegotiation>(false);
-            //    var innerProjectTitleWhere = PredicateBuilder.New<MusicBusinessRoundNegotiation>(true);
+            if (!string.IsNullOrEmpty(projectKeywords))
+            {
+                var outerWhere = PredicateBuilder.New<MusicBusinessRoundNegotiation>(false);
+                var innerProjectTitleWhere = PredicateBuilder.New<MusicBusinessRoundNegotiation>(true);
 
-            //    foreach (var keyword in projectKeywords.Split(' '))
-            //    {
-            //        if (!string.IsNullOrEmpty(keyword))
-            //        {
-            //            innerProjectTitleWhere = innerProjectTitleWhere.Or(n => n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.ProjectTitles.Any(pt => !pt.IsDeleted && pt.Value.Contains(keyword)));
-            //        }
-            //    }
+                foreach (var keyword in projectKeywords.Split(' '))
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        innerProjectTitleWhere = innerProjectTitleWhere.Or(n => n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator. .Any(pt => !pt.IsDeleted && pt.Value.Contains(keyword)));
+                    }
+                }
 
-            //    outerWhere = outerWhere.Or(innerProjectTitleWhere);
-            //    query = query.Where(outerWhere);
-            //}
+                outerWhere = outerWhere.Or(innerProjectTitleWhere);
+                query = query.Where(outerWhere);
+            }
 
             return query;
         }
@@ -326,7 +325,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                       },
                                       MusicBusinessRoundProjectDto = new MusicBusinessRoundProjectDto()
                                       {
-                                          //Preencher com colaborador talvez?
+                                          SellerAttendeeCollaboratorDto = new AttendeeCollaboratorDto()
+                                          {
+                                              AttendeeCollaborator = n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator
+                                          }
                                       }
                                   },
                                   RoomDto = new RoomDto()
@@ -374,7 +376,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                       },
                                       MusicBusinessRoundProjectDto = new MusicBusinessRoundProjectDto()
                                       {
-                                          //Preencher com colaborador talvez?
+                                          SellerAttendeeCollaboratorDto = new AttendeeCollaboratorDto()
+                                          {
+                                              AttendeeCollaborator = n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator
+                                          }
                                       }
                                   },
                                   RoomDto = new RoomDto()
@@ -422,7 +427,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                       },
                                       MusicBusinessRoundProjectDto = new MusicBusinessRoundProjectDto()
                                       {
-                                          //Preencher com colaborador talvez?
+                                          SellerAttendeeCollaboratorDto = new AttendeeCollaboratorDto()
+                                          {
+                                              AttendeeCollaborator = n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator
+                                          }
                                       }
                                   },
                                   RoomDto = new RoomDto()
@@ -467,7 +475,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
                                 .FindByBuyerOrganizationUid(buyerOrganizationUid)
-                                .FindBySellerOrganizationUid(sellerOrganizationUid)
+                                .FindBySellerCollaboratorUid(sellerOrganizationUid)
                                 .FindByProjectKeywords(projectKeywords)
                                 .FindByDate(negotiationDate)
                                 .FindByRoomUid(roomUid)
@@ -611,7 +619,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         },
                                         MusicBusinessRoundProjectDto = new MusicBusinessRoundProjectDto()
                                         {
-                                            //Preencher com colaborador talvez?
+                                            SellerAttendeeCollaboratorDto = new AttendeeCollaboratorDto()
+                                            {
+                                                AttendeeCollaborator = n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator
+                                            }
                                         }
                                     },
                                     RoomDto = new RoomDto()
@@ -659,7 +670,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
                                 .FindByBuyerOrganizationUid(buyerOrganizationUid)
-                                .FindBySellerOrganizationUid(sellerOrganizationUid)
+                                .FindBySellerCollaboratorUid(sellerOrganizationUid)
                                 .FindByProjectKeywords(projectKeywords)
                                 .FindByDate(negotiationDate)
                                 .FindByRoomUid(roomUid)
@@ -719,7 +730,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
                                 .FindByBuyerOrganizationUid(buyerOrganizationUid)
-                                .FindBySellerOrganizationUid(sellerOrganizationUid)
+                                .FindBySellerCollaboratorUid(sellerOrganizationUid)
                                 .FindByProjectKeywords(projectKeywords)
                                 .FindByDate(negotiationDate)
                                 .FindByAttendeeCollaboratorUid(attendeeCollaboratorUid)
@@ -754,7 +765,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                             },
                                             MusicBusinessRoundProjectDto = new MusicBusinessRoundProjectDto()
                                             {
-                                                //Check what to map here.
+                                                SellerAttendeeCollaboratorDto = new AttendeeCollaboratorDto()
+                                                {
+                                                    AttendeeCollaborator = n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator
+                                                }
                                             }
                                         },
                                         RoomDto = new RoomDto()
