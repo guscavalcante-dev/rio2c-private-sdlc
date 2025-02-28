@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-28-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 04-15-2024
+// Last Modified By : Rafael Ribeiro
+// Last Modified On : 21-02-2025
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -779,6 +779,40 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/music.meetingparameters.details.js").Include(
                 "~/Assets/js/music/meetingparameters/music.meetingparameters.maininformation.widget.js",
                 "~/Assets/js/music/meetingparameters/music.meetingparameters.rooms.widget.js"));
+
+            #endregion
+
+            #region Meetings Scheduled - Music
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.editionscheduledcount.widget.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.editionscheduledcount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.editionunscheduledcount.widget.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.editionunscheduledcount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.editionscheduledcount.gauge.widget.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.editionscheduledcount.gauge.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.generate.widget.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.status.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.scheduled.widget.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.scheduled.widget.js",
+                "~/Assets/js/music/meetings/music.meetings.scheduled.delete.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.unscheduled.widget.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.unscheduled.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.scheduled.create.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.scheduled.create.js",
+                "~/Assets/js/music/meetings/music.meetings.logistics.info.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.scheduled.update.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.scheduled.update.js",
+                "~/Assets/js/music/meetings/music.meetings.logistics.info.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.report.widget.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.report.widget.js"));
 
             #endregion
 

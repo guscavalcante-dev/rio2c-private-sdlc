@@ -66,6 +66,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset? AudiovisualNegotiationsCreateEndDate { get; private set; }
 
         // Music - Commissions
+        public DateTimeOffset? MusicNegotiationsCreateStartDate { get; private set; }
+        public DateTimeOffset? MusicNegotiationsCreateEndDate { get; private set; }
         public DateTimeOffset MusicPitchingSubmitStartDate { get; private set; }
         public DateTimeOffset MusicPitchingSubmitEndDate { get; private set; }
         public DateTimeOffset MusicCommissionEvaluationStartDate { get; private set; }
