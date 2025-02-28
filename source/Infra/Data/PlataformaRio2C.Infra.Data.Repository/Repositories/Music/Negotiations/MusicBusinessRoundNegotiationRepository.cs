@@ -173,8 +173,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 outerWhere = outerWhere.Or(innerSellerAttendeeCollaboratorStageNameWhere);
                 query = query.Where(outerWhere);
             }
-            return query;
 
+            return query;
         }
 
         /// <summary>Finds the by date.</summary>

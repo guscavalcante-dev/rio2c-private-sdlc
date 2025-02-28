@@ -14,7 +14,6 @@
 
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces.Repositories;
-using PlataformaRio2C.Domain.Interfaces.Repositories.Music.Negotiation;
 using PlataformaRio2C.Infra.Data.Context;
 using System.Data.Entity;
 using System.Linq;
