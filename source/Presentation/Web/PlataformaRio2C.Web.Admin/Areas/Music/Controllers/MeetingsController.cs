@@ -240,7 +240,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         public async Task<ActionResult> ShowEditionScheduledCountGaugeWidget()
         {
             var scheduledCount = await this.projectBuyerEvaluationRepo.CountNegotiationScheduledAsync(this.EditionDto.Id, false);
-            var maximumAvailableSlotsByEditionId = new GetAudiovisualMaximumAvailableSlotsByEditionId(this.EditionDto.Id);
+            var maximumAvailableSlotsByEditionId = new GetMusicMaximumAvailableSlotsByEditionId(this.EditionDto.Id);
 
             return Json(new
             {
@@ -461,7 +461,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("/Areas/Audiovisual/Views/Meetings/Modals/UpdateForm.cshtml", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("/Areas/Music/Views/Meetings/Modals/UpdateForm.cshtml", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
