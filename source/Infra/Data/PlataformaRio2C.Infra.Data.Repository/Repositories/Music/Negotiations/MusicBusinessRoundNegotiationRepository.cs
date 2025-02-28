@@ -23,6 +23,7 @@ using LinqKit;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Domain.Interfaces.Repositories;
+using System.Linq.Dynamic;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -152,25 +153,28 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         ///// <returns></returns>
         internal static IQueryable<MusicBusinessRoundNegotiation> FindByProjectKeywords(this IQueryable<MusicBusinessRoundNegotiation> query, string projectKeywords)
         {
-            //TODO:DanielGiese Refactor keyword search.
             if (!string.IsNullOrEmpty(projectKeywords))
             {
                 var outerWhere = PredicateBuilder.New<MusicBusinessRoundNegotiation>(false);
-                var innerProjectTitleWhere = PredicateBuilder.New<MusicBusinessRoundNegotiation>(true);
-
-                foreach (var keyword in projectKeywords.Split(' '))
+                var innerSellerAttendeeCollaboratorFirstNameWhere = PredicateBuilder.New<MusicBusinessRoundNegotiation>(true);
+                var innerSellerAttendeeCollaboratorLastNamesWhere = PredicateBuilder.New<MusicBusinessRoundNegotiation>(true);
+                var innerSellerAttendeeCollaboratorCompanyNameWhere = PredicateBuilder.New<MusicBusinessRoundNegotiation>(true);
+                var innerSellerAttendeeCollaboratorStageNameWhere = PredicateBuilder.New<MusicBusinessRoundNegotiation>(true);
+                if (!string.IsNullOrEmpty(projectKeywords))
                 {
-                    if (!string.IsNullOrEmpty(keyword))
-                    {
-                        innerProjectTitleWhere = innerProjectTitleWhere.Or(n => n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator. .Any(pt => !pt.IsDeleted && pt.Value.Contains(keyword)));
-                    }
+                    innerSellerAttendeeCollaboratorFirstNameWhere = innerSellerAttendeeCollaboratorFirstNameWhere.Or(sao => sao.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator.Collaborator.FirstName.Contains(projectKeywords));
+                    innerSellerAttendeeCollaboratorLastNamesWhere = innerSellerAttendeeCollaboratorLastNamesWhere.Or(sao => sao.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator.Collaborator.LastNames.Contains(projectKeywords));
+                    innerSellerAttendeeCollaboratorCompanyNameWhere = innerSellerAttendeeCollaboratorCompanyNameWhere.Or(sao => sao.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator.Collaborator.CompanyName.Contains(projectKeywords));
+                    innerSellerAttendeeCollaboratorStageNameWhere = innerSellerAttendeeCollaboratorStageNameWhere.Or(sao => sao.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator.Collaborator.StageName.Contains(projectKeywords));
                 }
-
-                outerWhere = outerWhere.Or(innerProjectTitleWhere);
+                outerWhere = outerWhere.Or(innerSellerAttendeeCollaboratorFirstNameWhere);
+                outerWhere = outerWhere.Or(innerSellerAttendeeCollaboratorLastNamesWhere);
+                outerWhere = outerWhere.Or(innerSellerAttendeeCollaboratorCompanyNameWhere);
+                outerWhere = outerWhere.Or(innerSellerAttendeeCollaboratorStageNameWhere);
                 query = query.Where(outerWhere);
             }
-
             return query;
+
         }
 
         /// <summary>Finds the by date.</summary>
