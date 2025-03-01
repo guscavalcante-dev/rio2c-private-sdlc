@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-12-2025
+// Last Modified On : 02-21-2025
 // ***********************************************************************
 // <copyright file="ProjectMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -46,12 +46,15 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.Property(t => t.WhichTypeOfFinancingDescription)
                 .HasMaxLength(Project.WhichTypeOfFinancingDescriptionMaxLength);
 
+            this.Property(t => t.PitchingJsonPayload)
+                .HasMaxLength(Project.PitchingJsonPayloadMaxLength);
+
             //Relationships
             this.HasRequired(t => t.SellerAttendeeOrganization)
-                .WithMany(e => e.SellProjects)
-                .HasForeignKey(d => d.SellerAttendeeOrganizationId);
+                .WithMany(t => t.SellProjects)
+                .HasForeignKey(t => t.SellerAttendeeOrganizationId);
 
-            this.HasMany(c => c.ProjectTitles)
+            this.HasMany(t => t.ProjectTitles)
                   .WithRequired(t => t.Project)
                   .HasForeignKey(t => t.ProjectId);
         }

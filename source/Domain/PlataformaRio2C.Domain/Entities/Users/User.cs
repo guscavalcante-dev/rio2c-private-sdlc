@@ -65,6 +65,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeCartoonProjectEvaluation> AttendeeCartoonProjectEvaluations { get; set; }
         public virtual ICollection<CommissionEvaluation> CommissionEvaluations { get; set; }
         public virtual ICollection<AttendeeCreatorProjectEvaluation> AttendeeCreatorProjectEvaluations { get; set; }
+        public virtual ICollection<MusicBusinessRoundNegotiation> UpdatedMusicBusinessRoundNegotiations { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="User"/> class.

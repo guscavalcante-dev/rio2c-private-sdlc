@@ -4,7 +4,7 @@
 // Created          : 07-28-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-28-2021
+// Last Modified On : 02-21-2025
 // ***********************************************************************
 // <copyright file="AudiovisualComissionEvaluateProjectCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -95,7 +95,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             this.ProjectRepo.Update(project);
-            this.Uow.SaveChanges();
+
+            var result = this.Uow.SaveChanges();
+            if (!result.Success)
+            {
+                this.AppValidationResult.Add(result);
+                return this.AppValidationResult;
+            }
+
             this.AppValidationResult.Data = project;
 
             return this.AppValidationResult;
