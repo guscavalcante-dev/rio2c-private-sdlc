@@ -11,9 +11,7 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
 using PlataformaRio2C.Domain.Validation;
-using System.Data.Entity.Migrations.Model;
 
 namespace PlataformaRio2C.Domain.Entities
 {

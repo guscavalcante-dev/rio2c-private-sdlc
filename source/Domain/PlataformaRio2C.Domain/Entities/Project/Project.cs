@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-12-2025
+// Last Modified On : 02-21-2025
 // ***********************************************************************
 // <copyright file="Project.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,6 +36,7 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int ValueStillNeededMaxLength = 50;
         public static readonly int WhichTypeOfFinancingDescriptionMinLength = 1;
         public static readonly int WhichTypeOfFinancingDescriptionMaxLength = 300;
+        public static readonly int PitchingJsonPayloadMaxLength = 8000;
 
         public int ProjectTypeId { get; private set; }
         public int SellerAttendeeOrganizationId { get; private set; }

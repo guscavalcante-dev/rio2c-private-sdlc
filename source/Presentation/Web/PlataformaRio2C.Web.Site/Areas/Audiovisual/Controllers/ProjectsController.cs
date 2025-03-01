@@ -4,7 +4,7 @@
 // Created          : 07-28-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-23-2023
+// Last Modified On : 02-22-2025
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,10 +29,10 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Site.Controllers;
 using PlataformaRio2C.Web.Site.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
-using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using Newtonsoft.Json;
 using Microsoft.Ajax.Utilities;
+using X.PagedList;
 
 namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 {
@@ -141,7 +141,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 
                 if (attendeeCollaborator != null)
                 {
-                    interests = await this.interestRepo.FindAllByAttendeeCollaboratorIdAsync(attendeeCollaborator.Id);
+                    interests = await this.interestRepo.FindAllByAttendeeCollaboratorIdAsync(attendeeCollaborator.Id, InterestGroup.AudiovisualPitchingSubGenre.Uid);
                 }
                 else
                 {
@@ -202,7 +202,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 
             var projects = await this.projectRepo.FindAllDtosPagedAsync(
                  this.EditionDto.Id,
-                 searchKeywords,
+                 null, //searchKeywords, //TODO: Re-enable this when we start writing project title into ProjectTitles table instead of writing to the PitchingJsonPayload column
                  interestsUids,
                  evaluationStatusUid,
                  true,
@@ -229,6 +229,18 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                         projectDto.SellerAttendeeOrganizationDto = await attendeeOrganizationRepo.FindDtoByAttendeeOrganizationUid(new Guid(pitchingJsonPayload.SellerAttendeeOrganizationId));
                     }
                 }
+            }
+
+            //TODO: Remove this when we start writing project title into ProjectTitles table instead of writing to the PitchingJsonPayload column
+            // We know, this is not a best practice, but we need to do it! :(
+            if (!string.IsNullOrEmpty(searchKeywords))
+            {
+                var filteredProjects = projects
+                    .Where(p => p.Project.ProjectTitles.Any(t => t.Value.IndexOf(searchKeywords, StringComparison.OrdinalIgnoreCase) >= 0)
+                                || p.SellerAttendeeOrganizationDto.Organization.Name.IndexOf(searchKeywords, StringComparison.OrdinalIgnoreCase) >= 0)
+                    .ToList();
+
+                projects = filteredProjects.ToPagedList(page.Value, pageSize.Value);
             }
 
             ViewBag.SearchKeywords = searchKeywords;
@@ -668,7 +680,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             var attendeeCollaborator = userDto.Collaborator?.GetAttendeeCollaboratorByEditionId(this.EditionDto.Edition.Id);
             if (attendeeCollaborator != null)
             {
-                var interests = await this.interestRepo.FindAllByAttendeeCollaboratorIdAsync(attendeeCollaborator.Id);
+                var interests = await this.interestRepo.FindAllByAttendeeCollaboratorIdAsync(attendeeCollaborator.Id, InterestGroup.AudiovisualPitchingSubGenre.Uid);
                 interestsUids = interests.Select(i => i.Uid as Guid?).ToList();
             }
             else
