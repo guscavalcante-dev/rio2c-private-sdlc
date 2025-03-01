@@ -74,10 +74,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
         /// <returns></returns>
         internal static IQueryable<MusicBusinessRoundProject> FindByBuyerAttendeeCollabratorUid(this IQueryable<MusicBusinessRoundProject> query, Guid buyerAttendeeCollaboratorUid)
         {
-            //query = query.Where(p => p.MusicBusinessRoundProjectBuyerEvaluations.Any(pbe => !pbe.IsDeleted
-            //                                                                                  && !pbe.BuyerAttendeeOrganization.IsDeleted
-            //                                                                                  && pbe.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators.Any(aoc => aoc.AttendeeCollaborator.Uid == buyerAttendeeCollaboratorUid
-            //                                                                                                                                                                && !aoc.IsDeleted)));
+            query = query.Where(p => p.MusicBusinessRoundProjectBuyerEvaluations.Any(pbe => !pbe.IsDeleted
+                                                                                              && !pbe.BuyerAttendeeOrganization.IsDeleted
+                                                                                              && pbe.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators.Any(aoc => aoc.AttendeeCollaborator.Uid == buyerAttendeeCollaboratorUid
+                                                                                                                                                                            && !aoc.IsDeleted)));
 
             return query;
         }

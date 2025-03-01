@@ -24,7 +24,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
-[assembly: OwinStartupAttribute(typeof(PlataformaRio2C.Web.Admin.Startup))]
+[assembly: OwinStartup(typeof(PlataformaRio2C.Web.Admin.Startup))]
 namespace PlataformaRio2C.Web.Admin
 {
     /// <summary>Startup</summary>
@@ -38,9 +38,9 @@ namespace PlataformaRio2C.Web.Admin
 
             SimpleInjectorInitializer.Initialize();
 
+            app.ConfigureAuth();
+            
             HttpConfiguration config = new HttpConfiguration();
-
-            ConfigureAuth(app);
             config.MessageHandlers.Add(new LanguageMessageHandler());
 
             var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
