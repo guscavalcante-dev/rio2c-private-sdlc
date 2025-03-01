@@ -38,9 +38,6 @@ using Constants = PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Application.TemplateDocuments;
 using PlataformaRio2C.Infra.Report.Models;
 using PlataformaRio2C.Application.CQRS.Queries;
-using PlataformaRio2C.Application.CQRS.QueriesHandlers;
-using DocumentFormat.OpenXml.Office.Word;
-using System.Web.Http.Results;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 {
@@ -104,8 +101,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         }
 
         #region Status Widget
-
-        
 
         /// <summary>Shows the status widget.</summary>
         /// <returns></returns>

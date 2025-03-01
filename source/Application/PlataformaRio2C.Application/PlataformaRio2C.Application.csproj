@@ -731,8 +731,10 @@
     <Compile Include="CQRS\Queries\Collaborators\FindAllCollaboratorGenderAsync.cs" />
     <Compile Include="CQRS\Queries\Collaborators\FindAllCollaboratorIndustryAsync.cs" />
     <Compile Include="CQRS\Queries\Collaborators\FindAllCollaboratorRoleAsync.cs" />
+    <Compile Include="CQRS\Queries\NegotiationConfigs\GetMusicMaximumAvailableSlotsByEditionId.cs" />
     <Compile Include="CQRS\Queries\NegotiationConfigs\GetAudiovisualMaximumAvailableSlotsByEditionId.cs" />
     <Compile Include="CQRS\Queries\ProjectBuyerEvaluations\CountPresentialNegotiationsAcceptedByBuyerAttendeeOrganizationUid.cs" />
+    <Compile Include="Dtos\NegotiationConfigs\GetMusicMaximumAvailableSlotsByEditionIdResponseDto.cs" />
     <Compile Include="Dtos\NegotiationConfigs\GetAudiovisualMaximumAvailableSlotsByEditionIdResponseDto.cs" />
     <Compile Include="CQRS\Queries\Users\FindAdminAccessControlDto.cs" />
     <Compile Include="CQRS\Queries\Users\FindUserLanguageDto.cs" />

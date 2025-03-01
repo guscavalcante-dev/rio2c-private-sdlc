@@ -175,7 +175,9 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new MusicBusinessRoundProjectTargetAudienceMap());
             modelBuilder.Configurations.Add(new MusicBusinessRoundProjectBuyerEvaluationMap());
             modelBuilder.Configurations.Add(new MusicBusinessRoundProjectExpectationsForMeetingMap());
-            modelBuilder.Configurations.Add(new PlayerCategoryMap());
+            modelBuilder.Configurations.Add(new MusicBusinessRoundNegotiationMap());
+            modelBuilder.Configurations.Add(new AttendeeMusicBusinessRoundNegotiationCollaboratorMap());
+
 
             // Common
             modelBuilder.Configurations.Add(new ActivityMap());
@@ -188,6 +190,7 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new TrackMap());
             modelBuilder.Configurations.Add(new PresentationFormatMap());
             modelBuilder.Configurations.Add(new PillarMap());
+            modelBuilder.Configurations.Add(new PlayerCategoryMap());
 
             // Logistics Configuration
             modelBuilder.Configurations.Add(new LogisticMap());
