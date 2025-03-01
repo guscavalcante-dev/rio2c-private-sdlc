@@ -54,7 +54,7 @@ var MusicMeetingsScheduledWidget = function () {
         enableSearchEvents();
 
         MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#BuyerOrganizationUid', url: '/Music/Players/FindAllByFilters', customFilter: 'HasProjectNegotiationScheduled', placeholder: translations.playerDropdownPlaceholder });
-        MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#SellerOrganizationUid', url: '/Music/Producers/FindAllByFilters', customFilter: 'HasProjectNegotiationScheduled', placeholder: translations.producerDropdownPlaceholder });
+        MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#SellerOrganizationUid', url: '/Music/StageName/FindAllByFilters', customFilter: 'HasProjectNegotiationScheduled', placeholder: translations.stagenameDropdownPlaceholder });
         MyRio2cCommon.enableDatePicker({ inputIdOrClass: '.enable-datepicker' });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: '#RoomUid', allowClear: true, placeholder: translations.roomDropdownPlaceholder });
     }
