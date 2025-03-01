@@ -824,7 +824,18 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
                 return ResourceManager.GetString("AudiovisualVirtualMeetingJoinDate", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Data de ingresso na reunião virtual.
+        /// </summary>
+        public static string MusicVirtualMeetingJoinDate
+        {
+            get
+            {
+                return ResourceManager.GetString("MusicVirtualMeetingJoinDate", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Automático.
         /// </summary>
