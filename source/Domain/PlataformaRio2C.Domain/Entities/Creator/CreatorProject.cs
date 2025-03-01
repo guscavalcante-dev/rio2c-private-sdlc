@@ -4,7 +4,7 @@
 // Created          : 02-26-2024
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-26-2024
+// Last Modified On : 02-21-2025
 // ***********************************************************************
 // <copyright file="CreatorProject.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -38,9 +38,9 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int MarketingStrategyMaxLength = 3000;
         public static readonly int SimilarProjectsMaxLength = 3000;
         public static readonly int OnlinePlatformsMaxLength = 300;
-        public static readonly int AwardsMaxLength = 300;
-        public static readonly int PublicNoticeMaxLength = 300;
-        public static readonly int PreviousProjectsMaxLength = 300;
+        public static readonly int AwardsMaxLength = 1024;
+        public static readonly int PublicNoticeMaxLength = 1024;
+        public static readonly int PreviousProjectsMaxLength = 1024;
         public static readonly int AssociatedInstitutionsMaxLength = 300;
         public static readonly int ArticleFileExtensionMaxLength = 10;
         public static readonly int ClippingFileExtensionMaxLength = 10;

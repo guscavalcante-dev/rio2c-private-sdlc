@@ -167,7 +167,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper($"{Labels.AudiovisualProjects} - {Labels.Pitching}", new List<BreadcrumbItemHelper> {
+            ViewBag.Breadcrumb = new BreadcrumbHelper($"{Labels.Projects} - {Labels.Pitching}", new List<BreadcrumbItemHelper> {
                 new BreadcrumbItemHelper(Labels.PitchingProjects, Url.Action("Index", "PitchingProjects", new { Area = "Audiovisual" })),
                 new BreadcrumbItemHelper(projectDto.GetTitleDtoByLanguageCode(this.UserInterfaceLanguage)?.ProjectTitle?.Value ?? Labels.Project, Url.Action("SubmittedDetails", "PitchingProjects", new { id }))
             });

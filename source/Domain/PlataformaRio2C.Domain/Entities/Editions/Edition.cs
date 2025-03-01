@@ -53,11 +53,23 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset ProjectEvaluationEndDate { get; private set; }
         public DateTimeOffset NegotiationStartDate { get; private set; }
         public DateTimeOffset NegotiationEndDate { get; private set; }
-        public DateTimeOffset? AudiovisualNegotiationsCreateStartDate { get; private set; }
-        public DateTimeOffset? AudiovisualNegotiationsCreateEndDate { get; private set; }
         public int AttendeeOrganizationMaxSellProjectsCount { get; private set; }
         public int ProjectMaxBuyerEvaluationsCount { get; private set; }
         public short AudiovisualNegotiationsVirtualMeetingsJoinMinutes { get; private set; }
+
+        /// <summary>
+        /// Attention, internal control property.
+        /// It is set automatically when processing Negotiations.
+        /// It shouldn't be set manually by the user!
+        /// </summary>
+        public DateTimeOffset? AudiovisualNegotiationsCreateStartDate { get; private set; }
+
+        /// <summary>
+        /// Attention, internal control property.
+        /// It is set automatically when processing Negotiations.
+        /// It shouldn't be set manually by the user!
+        /// </summary>
+        public DateTimeOffset? AudiovisualNegotiationsCreateEndDate { get; private set; }
 
         #endregion
 
@@ -82,6 +94,20 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset? MusicBusinessRoundNegotiationEndDate { get; private set; }
         public int MusicBusinessRoundsMaximumProjectSubmissionsByCompany { get; private set; }
         public int MusicBusinessRoundMaximumEvaluatorsByProject { get; private set; }
+
+        /// <summary>
+        /// Attention, internal control property.
+        /// It is set automatically when processing Negotiations.
+        /// It shouldn't be set manually by the user!
+        /// </summary>
+        public DateTimeOffset? MusicBusinessRoundNegotiationsCreateStartDate { get; private set; }
+
+        /// <summary>
+        /// Attention, internal control property.
+        /// It is set automatically when processing Negotiations.
+        /// It shouldn't be set manually by the user!
+        /// </summary>
+        public DateTimeOffset? MusicBusinessRoundNegotiationsCreateEndDate { get; private set; }
 
         #endregion
 
@@ -662,39 +688,39 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
         }
 
-        /// <summary>Starts the audiovisual negotiations creation.</summary>
+        /// <summary>
+        /// Starts the audiovisual negotiations creation.
+        /// </summary>
         /// <param name="userId">The user identifier.</param>
         public void StartAudiovisualNegotiationsCreation(int userId)
         {
             this.AudiovisualNegotiationsCreateStartDate = DateTime.UtcNow;
             this.AudiovisualNegotiationsCreateEndDate = null;
 
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            base.SetUpdateDate(userId);
         }
 
-        /// <summary>Finishes the audiovisual negotiations creation.</summary>
+        /// <summary>
+        /// Finishes the audiovisual negotiations creation.
+        /// </summary>
         /// <param name="userId">The user identifier.</param>
         public void FinishAudiovisualNegotiationsCreation(int userId)
         {
             this.AudiovisualNegotiationsCreateEndDate = DateTime.UtcNow;
 
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            base.SetUpdateDate(userId);
         }
 
-        /// <summary>Cancels the audiovisual negotiations creation.</summary>
+        /// <summary>
+        /// Cancels the audiovisual negotiations creation.
+        /// </summary>
         /// <param name="userId">The user identifier.</param>
         public void CancelAudiovisualNegotiationsCreation(int userId)
         {
             this.AudiovisualNegotiationsCreateStartDate = null;
             this.AudiovisualNegotiationsCreateEndDate = null;
 
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            base.SetUpdateDate(userId);
         }
 
         /// <summary>
@@ -737,6 +763,39 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         #endregion
+
+        #endregion
+
+        #region Music - BusinessRound
+
+        /// <summary>Starts the music business round negotiations creation.</summary> 
+        /// <param name="userId">The user identifier.</param>
+        public void StartMusicBusinessRoundNegotiationsCreation(int userId)
+        {
+            this.MusicBusinessRoundNegotiationsCreateStartDate = DateTime.UtcNow;
+            this.MusicBusinessRoundNegotiationsCreateEndDate = null;
+
+            base.SetUpdateDate(userId);
+        }
+
+        /// <summary>Finishes the music business round negotiations creation.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void FinishMusicBusinessRoundNegotiationsCreation(int userId)
+        {
+            this.MusicBusinessRoundNegotiationsCreateEndDate = DateTime.UtcNow;
+
+            base.SetUpdateDate(userId);
+        }
+
+        /// <summary>Cancels the music business round negotiations creation.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void CancelMusicBusinessRoundNegotiationsCreation(int userId)
+        {
+            this.MusicBusinessRoundNegotiationsCreateStartDate = null;
+            this.MusicBusinessRoundNegotiationsCreateEndDate = null;
+
+            base.SetUpdateDate(userId);
+        }
 
         #endregion
 
