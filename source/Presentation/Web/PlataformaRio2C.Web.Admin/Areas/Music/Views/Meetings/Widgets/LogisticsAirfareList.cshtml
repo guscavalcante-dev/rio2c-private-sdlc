@@ -1,0 +1,61 @@
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Constants
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Statics
+@model List<AttendeeCollaboratorDto>
+<div class="kt-widget4">
+    @if (Model != null && Model.Any(ac => ac.LogisticDto?.LogisticAirfareDtos != null && ac.LogisticDto?.LogisticAirfareDtos.Count() > 0))
+    {
+        <table class="table table-sm table-head-bg-brand table-body-scroll table-striped">
+            <thead class="thead-inverse">
+                <tr>
+                    <th class="col-md-4">@Labels.Executive</th>
+                    <th class="text-center">@Labels.FromPlace</th>
+                    <th class="text-center">@Labels.DepartureDate</th>
+                    <th class="text-center">@Labels.ToPlace</th>
+                    <th class="text-center">@Labels.ArrivalDate</th>
+                </tr>
+            </thead>
+            <tbody class="rio2c-scroll" style="height: 150px;">
+                @foreach (var attendeeCollaboratorDto in Model.Where(ac => ac.LogisticDto?.LogisticAirfareDtos != null && ac.LogisticDto?.LogisticAirfareDtos?.Count() > 0))
+                {
+                    foreach (var logisticAirfareDto in attendeeCollaboratorDto.LogisticDto.LogisticAirfareDtos)
+                    {
+                        <tr>
+                            <td class="col-md-4">
+                                <a href="@Url.Action("Details", "Requests", new { Area = "Logistics", id = logisticAirfareDto.LogisticAirfare.Logistic.Uid })" target="_blank">
+                                    @(attendeeCollaboratorDto.Collaborator.GetFullName())
+                                </a>
+                                <div class="row col-md-12">
+                                    <span class="kt-badge kt-badge--inline kt-badge--info">
+                                        @(attendeeCollaboratorDto.AttendeeOrganizationsDtos.FirstOrDefault().Organization.Name)
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                @logisticAirfareDto.LogisticAirfare.From
+                            </td>
+                            <td class="text-center">
+                                @logisticAirfareDto.LogisticAirfare.DepartureDate.ToBrazilTimeZone().ToStringHourMinute()
+                            </td>
+                            <td class="text-center">
+                                @logisticAirfareDto.LogisticAirfare.To
+                            </td>
+                            <td class="text-center">
+                                @logisticAirfareDto.LogisticAirfare.ArrivalDate.ToBrazilTimeZone().ToStringHourMinute()
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="row mt-3">
+            <div class="col-12 text-center">
+                <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Executives, Labels.FoundMP)</span>
+            </div>
+        </div>
+    }
+</div>

@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Ribeiro
 // Last Modified On : 21-02-2025
 // ***********************************************************************
-// <copyright file="audiovisual.meetings.editionunscheduledcount.widget.js" company="Softo">
+// <copyright file="music.meetings.editionunscheduledcount.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -14,7 +14,7 @@
 
 var MusicMeetingsEditionUnscheduledCountWidget = function () {
 
-    var widgetElementId = '#MusciMeetingsEditionUnscheduledCountWidget';
+    var widgetElementId = '#MusicMeetingsEditionUnscheduledCountWidget';
     var chartElementId = 'MusicMeetingsEditionUnscheduledCountChart';
     var widgetElement = $(widgetElementId);
 
