@@ -249,7 +249,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             }
 
             ViewBag.SearchKeywords = searchKeywords;
-            ViewBag.InterestUid = subgenreInterestUid;
+            ViewBag.SelectedSubgenreInterestUid = subgenreInterestUid;
+            ViewBag.SelectedSegmentInterestUid = segmentInterestUid;
             ViewBag.EvaluationStatusUid = evaluationStatusUid;
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
