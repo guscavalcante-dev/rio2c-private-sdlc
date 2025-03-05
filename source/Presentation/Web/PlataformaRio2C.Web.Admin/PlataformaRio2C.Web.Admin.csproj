@@ -1024,7 +1024,7 @@
     <Content Include="Assets\js\music\meetingparameters\music.meetingparameters.rooms.widget.js" />
     <Content Include="Assets\js\music\meetingparameters\music.meetingparameters.totalcount.widget.js" />
     <Content Include="Assets\js\music\meetings\music.meetings.scheduled.delete.js" />
-    <Content Include="Assets\js\music\meetings\music..meetings.status.widget.js" />
+    <Content Include="Assets\js\music\meetings\music.meetings.status.widget.js" />
     <Content Include="Assets\js\music\meetings\music.meetings.logistics.info.widget.js" />
     <Content Include="Assets\js\music\meetings\music.meetings.scheduled.update.js" />
     <Content Include="Assets\js\music\meetings\music.meetings.scheduled.create.js" />
