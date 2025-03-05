@@ -24,7 +24,21 @@ namespace PlataformaRio2C.Domain.Entities
     /// <summary>MusicBusinessRoundNegotiation</summary>
     public class MusicBusinessRoundNegotiation : Entity
     {
-        public int MusicBusinessRoundProjectBuyerEvaluationId { get; private set; }
+        public int AttendeeCollaboratorId;
+        public int NegotiationId;
+        private int value;
+        private Organization buyerOrganization;
+        private Project project;
+        private NegotiationConfig negotiationConfig;
+        private NegotiationRoomConfig negotiationRoomConfig;
+        private List<MusicBusinessRoundNegotiation> negotiationsInThisRoomAndStartDate;
+        private string startTime;
+        private int v;
+        private int userId;
+        private string userInterfaceLanguage;
+        private bool isUsingAutomaticTable;
+
+        public int ProjectBuyerEvaluationId { get; private set; }
         public int RoomId { get; private set; }
         public DateTimeOffset StartDate { get; private set; }
         public DateTimeOffset EndDate { get; private set; }
@@ -33,10 +47,10 @@ namespace PlataformaRio2C.Domain.Entities
         public bool IsAutomatic { get; private set; }
         public int EditionId { get; private set; }
 
-        public virtual MusicBusinessRoundProjectBuyerEvaluation MusicBusinessRoundProjectBuyerEvaluation { get; private set; }
+        public virtual ProjectBuyerEvaluation ProjectBuyerEvaluation { get; private set; }
         public virtual Room Room { get; private set; }
         public virtual User Updater { get; private set; }
-        public virtual ICollection<AttendeeMusicBusinessRoundNegotiationCollaborator> AttendeeMusicBusinessRoundNegotiationCollaborators { get; private set; }
+        public virtual ICollection<AttendeeNegotiationCollaborator> AttendeeNegotiationCollaborators { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MusicBusinessRoundNegotiation"/> class.
@@ -71,6 +85,21 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         protected MusicBusinessRoundNegotiation() { }
+
+        public MusicBusinessRoundNegotiation(int value, Organization buyerOrganization, Project project, NegotiationConfig negotiationConfig, NegotiationRoomConfig negotiationRoomConfig, List<MusicBusinessRoundNegotiation> negotiationsInThisRoomAndStartDate, string startTime, int v, int userId, string userInterfaceLanguage, bool isUsingAutomaticTable)
+        {
+            this.value = value;
+            this.buyerOrganization = buyerOrganization;
+            this.project = project;
+            this.negotiationConfig = negotiationConfig;
+            this.negotiationRoomConfig = negotiationRoomConfig;
+            this.negotiationsInThisRoomAndStartDate = negotiationsInThisRoomAndStartDate;
+            this.startTime = startTime;
+            this.v = v;
+            this.userId = userId;
+            this.userInterfaceLanguage = userInterfaceLanguage;
+            this.isUsingAutomaticTable = isUsingAutomaticTable;
+        }
 
         /// <summary>
         /// Updates the specified negotiation configuration.

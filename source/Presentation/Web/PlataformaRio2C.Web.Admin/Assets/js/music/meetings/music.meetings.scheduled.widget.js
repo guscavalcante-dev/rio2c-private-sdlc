@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Ribeiro
 // Last Modified On : 21-02-2025
 // ***********************************************************************
-// <copyright file="audiovisual.meetings.scheduled.widget.js" company="Softo">
+// <copyright file="Music.meetings.scheduled.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -93,6 +93,7 @@ var MusicMeetingsScheduledWidget = function () {
         var jsonParameters = getJsonParameters();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Meetings/ShowScheduledDataWidget'), jsonParameters, function (data) {
+            console.log(data)
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
