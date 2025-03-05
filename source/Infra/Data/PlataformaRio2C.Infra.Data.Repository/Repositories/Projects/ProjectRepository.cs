@@ -1121,7 +1121,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                     CommissionEvaluation = ce,
                                                     EvaluatorUser = ce.EvaluatorUser
                                                 }),
-                                                ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted && i.Interest.InterestGroup.Uid == InterestGroup.AudiovisualPitchingSubGenre.Uid).Select(i => new ProjectInterestDto
+                                                ProjectInterestDtos = p.ProjectInterests.Where(pi => !pi.IsDeleted).Select(i => new ProjectInterestDto
                                                 {
                                                     Interest = i.Interest,
                                                     InterestGroup = i.Interest.InterestGroup
@@ -1321,16 +1321,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="interestUid">The interest uid.</param>
+        /// <param name="subgenreInterestUids">The subgenre interest uids.</param>
+        /// <param name="segmentInterestUid">The segment interest uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="showPitchings">if set to <c>true</c> [show pitchings].</param>
+        /// <param name="projectModalityUid">The project modality uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         public async Task<int[]> FindAllProjectsIdsPagedAsync(
             int editionId,
             string searchKeywords,
-            List<Guid?> interestUids,
+            List<Guid?> subgenreInterestUids,
+            Guid? segmentInterestUid,
             Guid? evaluationStatusUid,
             bool? showPitchings,
             List<Guid?> projectModalityUid,
@@ -1342,7 +1345,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .IsFinished()
                                 .IsPitchingOnly()
                                 .FindByKeywords(searchKeywords)
-                                .FindByInterestUids(interestUids)
+                                .FindBySubgenreInterestUidsOrSegmentInterestUid(subgenreInterestUids, segmentInterestUid)
                                 .Order()
                                 .Select(p => p.Id)
                                 .ToListAsync();
