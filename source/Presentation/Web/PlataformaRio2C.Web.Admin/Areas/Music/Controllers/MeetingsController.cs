@@ -32,6 +32,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Constants = PlataformaRio2C.Domain.Constants;
+using PlataformaRio2C.Application.TemplateDocuments;
+using PlataformaRio2C.Infra.Report.Models;
+using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Application.CQRS.QueriesHandlers;
+using DocumentFormat.OpenXml.Office.Word;
+using System.Web.Http.Results;
+using PlataformaRio2C.Domain.Interfaces.Repositories;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 {
@@ -40,7 +47,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminMusic)]
     public class MeetingsController : BaseController
     {
-        private readonly INegotiationRepository negotiationRepo;
+        private readonly IMusicBusinessRoundNegotiationRepository musicbusinessRoundnegotiationRepo;
         private readonly IProjectBuyerEvaluationRepository projectBuyerEvaluationRepo;
         private readonly IRoomRepository roomRepo;
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
@@ -51,7 +58,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        /// <param name="negotiationRepository">The negotiation repository.</param>
+        /// <param name="musicbusinessroundnegotiationRepository">The negotiation repository.</param>
         /// <param name="projectBuyerEvaluationRepository">The project buyer evaluation repository.</param>
         /// <param name="roomRepository">The room repository.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
@@ -60,7 +67,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         public MeetingsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
-            INegotiationRepository negotiationRepository,
+            IMusicBusinessRoundNegotiationRepository musicbusinessroundnegotiationRepository,
             IProjectBuyerEvaluationRepository projectBuyerEvaluationRepository,
             IRoomRepository roomRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
@@ -68,7 +75,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             INegotiationConfigRepository negotiationConfigRepo)
             : base(commandBus, identityController)
         {
-            this.negotiationRepo = negotiationRepository;
+            this.musicbusinessRoundnegotiationRepo = musicbusinessroundnegotiationRepository;
             this.projectBuyerEvaluationRepo = projectBuyerEvaluationRepository;
             this.roomRepo = roomRepository;
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
@@ -259,7 +266,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowScheduledDataWidget(ScheduledSearchViewModel searchViewModel)
         {
-            var negotiations = await this.negotiationRepo.FindScheduledWidgetDtoAsync(
+            var negotiations = await this.musicbusinessRoundnegotiationRepo.FindScheduledWidgetDtoAsync(
                 this.EditionDto.Id,
                 searchViewModel.BuyerOrganizationUid,
                 searchViewModel.SellerOrganizationUid,
@@ -371,17 +378,17 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUpdateModal(Guid? negotiationUid)
         {
-            UpdateNegotiation cmd;
+            UpdateMusicBusinessRoundNegotiation cmd;
 
             try
             {
-                var negotiationDto = await this.negotiationRepo.FindDtoAsync(negotiationUid ?? Guid.Empty);
-                if (negotiationDto == null)
+                var MusicBusinessRoundNegotiationDto = await this.musicbusinessRoundnegotiationRepo.FindDtoAsync(negotiationUid ?? Guid.Empty);
+                if (MusicBusinessRoundNegotiationDto == null)
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM.ToLowerInvariant()));
                 }
 
-                cmd = new UpdateNegotiation(negotiationDto, this.UserInterfaceLanguage);
+                cmd = new UpdateMusicBusinessRoundNegotiation(MusicBusinessRoundNegotiationDto, this.UserInterfaceLanguage);
             }
             catch (DomainException ex)
             {

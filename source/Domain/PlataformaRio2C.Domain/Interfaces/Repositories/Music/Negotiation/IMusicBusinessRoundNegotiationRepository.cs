@@ -22,6 +22,5 @@ namespace PlataformaRio2C.Domain.Interfaces.Repositories
         Task<List<MusicBusinessRoundNegotiationReportGroupedByDateDto>> FindReportWidgetDtoAsync(int editionId, Guid? buyerOrganizationUid, Guid? sellerOrganizationUid, string projectKeywords, DateTime? negotiationDate, Guid? roomUid, bool showParticipants);
         Task<List<MusicBusinessRoundNegotiationGroupedByDateDto>> FindCollaboratorScheduledWidgetDtoAsync(int editionId, Guid? buyerOrganizationUid, Guid? sellerOrganizationUid, string projectKeywords, DateTime? negotiationDate, Guid? attendeeCollaboratorUid);
 
-        void Truncate();
     }
 }

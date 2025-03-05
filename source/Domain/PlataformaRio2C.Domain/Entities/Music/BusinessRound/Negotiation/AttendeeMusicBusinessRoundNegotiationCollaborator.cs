@@ -17,8 +17,12 @@ namespace PlataformaRio2C.Domain.Entities
 {
     public class AttendeeMusicBusinessRoundNegotiationCollaborator : Entity
     {
+        private MusicBusinessRoundNegotiation attendeeCollaborator;
+        private int userId;
+
         public int MusicBusinessRoundNegotiationId { get; private set; }
         public int AttendeeCollaboratorId { get; private set; }
+
 
         public MusicBusinessRoundNegotiation MusicBusinessRoundNegotiation { get; private set; }
         public AttendeeCollaborator AttendeeCollaborator { get; private set; }
@@ -43,8 +47,14 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>
         /// Initializes a new instance of the <see cref="AttendeeMusicBusinessRoundNegotiationCollaborator"/> class.
         /// </summary>
-        protected AttendeeMusicBusinessRoundNegotiationCollaborator()
+        protected AttendeeMusicBusinessRoundNegotiationCollaborator(MusicBusinessRoundNegotiation negotiation)
         {
+        }
+
+        public AttendeeMusicBusinessRoundNegotiationCollaborator(MusicBusinessRoundNegotiation negotiation, MusicBusinessRoundNegotiation attendeeCollaborator, int userId) : this(negotiation)
+        {
+            this.attendeeCollaborator = attendeeCollaborator;
+            this.userId = userId;
         }
 
         /// <summary>

@@ -14,7 +14,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public RoomDto RoomDto { get; set; }
         public UserBaseDto UpdaterDto { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="NegotiationDto"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="MusicBusinessRoundNegotiationDto"/> class.</summary>
         public MusicBusinessRoundNegotiationDto()
         {
         }
