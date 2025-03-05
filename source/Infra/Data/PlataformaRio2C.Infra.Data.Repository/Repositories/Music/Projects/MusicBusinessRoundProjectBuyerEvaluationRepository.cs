@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Domain
-// Author           : Rafael Dantas Ruiz
-// Created          : 12-10-2019
+// Author           : Daniel Giese
+// Created          : 05/03/2025
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 12-21-2023
+// Last Modified By :  Daniel Giese
+// Last Modified On :  05/03/2025
 // ***********************************************************************
 // <copyright file="ProjectBuyerEvaluationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
