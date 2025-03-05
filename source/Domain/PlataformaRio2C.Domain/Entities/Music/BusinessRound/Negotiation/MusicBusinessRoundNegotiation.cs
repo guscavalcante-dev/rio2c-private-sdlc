@@ -241,7 +241,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         private void ValidateMusicBusinessRoundProjectBuyerEvaluation()
         {
-            if (this.ProjectBuyerEvaluation == null)
+            if (this.MusicBusinessRoundProjectBuyerEvaluation == null)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Evaluation), new string[] { "MusicBusinessRoundProjectBuyerEvaluation" }));
             }
