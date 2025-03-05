@@ -200,6 +200,45 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>
+        /// Finds the by subgenre interest uids or segment interest uid.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="subgenreInterestsUids">The subgenre interests uids.</param>
+        /// <param name="segmentInterestUid">The segment interest uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> FindBySubgenreInterestUidsOrSegmentInterestUid(this IQueryable<Project> query, List<Guid?> subgenreInterestsUids, Guid? segmentInterestUid)
+        {
+            if (subgenreInterestsUids?.Any(i => i.HasValue) == true && segmentInterestUid.HasValue)
+            {
+                query = query.Where(p =>
+                    p.ProjectInterests.Any(pi => !pi.IsDeleted
+                                                 && !pi.Interest.IsDeleted
+                                                 && subgenreInterestsUids.Contains(pi.Interest.Uid))
+                    &&
+                    p.ProjectInterests.Any(pi => !pi.IsDeleted
+                                                 && !pi.Interest.IsDeleted
+                                                 && pi.Interest.Uid == segmentInterestUid));
+            }
+            else if (subgenreInterestsUids?.Any(i => i.HasValue) == true)
+            {
+                query = query.Where(p =>
+                    p.ProjectInterests.Any(pi => !pi.IsDeleted
+                                                 && !pi.Interest.IsDeleted
+                                                 && subgenreInterestsUids.Contains(pi.Interest.Uid)));
+            }
+            else if (segmentInterestUid.HasValue)
+            {
+                query = query.Where(p =>
+                    p.ProjectInterests.Any(pi => !pi.IsDeleted
+                                                 && !pi.Interest.IsDeleted
+                                                 && pi.Interest.Uid == segmentInterestUid));
+            }
+
+            return query;
+        }
+
+
         /// <summary>Finds the by target audience uids.</summary>
         /// <param name="query">The query.</param>
         /// <param name="targetAudienceUids">The target audience uids.</param>
@@ -1045,7 +1084,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="interestUid">The interest uid.</param>
+        /// <param name="subgenreInterestUids">The subgenre interest uids.</param>
+        /// <param name="segmentInterestUid">The segment interest uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="showPitchings">The show pitchings.</param>
         /// <param name="page">The page.</param>
@@ -1054,7 +1094,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<IPagedList<ProjectDto>> FindAllDtosPagedAsync(
             int editionId,
             string searchKeywords,
-            List<Guid?> interestUids,
+            List<Guid?> subgenreInterestUids,
+            Guid? segmentInterestUid,
             Guid? evaluationStatusUid,
             bool? showPitchings,
             int page,
@@ -1064,7 +1105,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                             .IsFinished()
                                             .FindByEditionId(editionId)
                                             .FindByKeywords(searchKeywords)
-                                            .FindByInterestUids(interestUids)
+                                            .FindBySubgenreInterestUidsOrSegmentInterestUid(subgenreInterestUids, segmentInterestUid)
                                             .IsPitchingOnly()
                                             .Select(p => new ProjectDto
                                             {
