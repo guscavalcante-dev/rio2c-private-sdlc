@@ -1,5 +1,5 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
-@model List<ProjectBuyerEvaluationDto>
+@model List<MusicBusinessRoundProjectBuyerEvaluationDto>
 <div class="kt-portlet kt-portlet--mobile">
     <div class="kt-portlet__head kt-portlet__head--lg">
         <div class="kt-portlet__head-label">
@@ -25,24 +25,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var projectBuyerEvaluationDto in Model)
+                    @foreach (var MusicBusinessRoundProjectBuyerEvaluation in Model)
                     {
                         <tr>
-                            <td>@(projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto?.Organization?.TradeName)</td>
-                            <td>@(projectBuyerEvaluationDto.ProjectDto?.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value)</td>
-                            <td>@(projectBuyerEvaluationDto.ProjectDto?.SellerAttendeeOrganizationDto?.Organization?.TradeName)</td>
+                            <td>@(MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProjectBuyerEvaluation?.BuyerAttendeeOrganization?.Organization?.TradeName)</td>
+                            <td>@(MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProjectBuyerEvaluation?.MusicBusinessRoundProject?.SellerAttendeeCollaborator?.Collaborator?.StageName)</td>
                             <td class="text-center">
                                 <span class="dropdown">
                                     <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
                                         <i class="la la-ellipsis-h"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <button class="dropdown-item" onclick="MusicMeetingsManualSchedule.showModal('@(projectBuyerEvaluationDto.ProjectBuyerEvaluation.Uid)');">
+                                        <button class="dropdown-item" onclick="MusicMeetingsManualSchedule.showModal('@(MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProjectBuyerEvaluation.Uid)');">
                                             <i class="la la-calendar"></i>@Labels.ScheduleManually
                                         </button>
                                         @*<button class="dropdown-item" onclick="MusicMeetingsScheduledDelete.showModal('@(negotiation?.Uid)');">
-            <i class="la la-remove"></i>@Labels.Remove
-        </button>*@
+                        <i class="la la-remove"></i>@Labels.Remove
+                    </button>*@
                                     </div>
                                 </span>
                             </td>

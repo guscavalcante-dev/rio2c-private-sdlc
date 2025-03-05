@@ -556,7 +556,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowEditionUnscheduledCountWidget()
         {
-            var notScheduledCount = await this.projectBuyerEvaluationRepo.CountNegotiationNotScheduledAsync(this.EditionDto.Id, false);
+            var notScheduledCount = await this.musicbusinessRoundnegotiationRepo.CountNegotiationNotScheduledAsync(this.EditionDto.Id, false);
 
             return Json(new
             {
@@ -577,7 +577,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUnscheduledWidget()
         {
-            var negotiations = await this.projectBuyerEvaluationRepo.FindUnscheduledWidgetDtoAsync(this.EditionDto.Id);
+            var negotiations = await this.musicbusinessRoundnegotiationRepo.FindUnscheduledWidgetDtoAsync(this.EditionDto.Id);
 
             return new JsonResult()
             {
@@ -697,7 +697,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
         #endregion
 
-        //#region Logistic Info Widget
+        #region Logistic Info Widget
 
         ///// <summary>
         ///// Shows the logistics information widget.
@@ -723,7 +723,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        //#endregion
+        #endregion
 
         //#region Send E-mails to Players
 
