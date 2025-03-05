@@ -283,16 +283,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                                                      && !roundsExceptions.Contains(ns.RoundNumber) // Is not a exception
                                                                 )?.ToList();
 
-                    //if (projectBuyerEvaluation.IsVirtualMeeting)
-                    //{
-                    //    possibleNegotiationSlots = possibleNegotiationSlots.Where(ns => ns.Room.IsVirtualMeeting).ToList();
-                    //}
-                    //else
-                    //{
-                    //    possibleNegotiationSlots = possibleNegotiationSlots.Where(ns => ns.Room.IsVirtualMeeting == projectBuyerEvaluation.BuyerAttendeeOrganization.Organization.IsVirtualMeeting).ToList();
-                    //}
-                    //todo:check with Renan if we dont have more virtual meetings, and if so, what to do here.
-                    possibleNegotiationSlots = possibleNegotiationSlots.Where(ns => ns.Room.IsVirtualMeeting == projectBuyerEvaluation.BuyerAttendeeOrganization.Organization.IsVirtualMeeting).ToList();
+                    if (projectBuyerEvaluation.IsVirtualMeeting)
+                    {
+                        possibleNegotiationSlots = possibleNegotiationSlots.Where(ns => ns.Room.IsVirtualMeeting).ToList();
+                    }
+                    else
+                    {
+                        possibleNegotiationSlots = possibleNegotiationSlots.Where(ns => ns.Room.IsVirtualMeeting == projectBuyerEvaluation.BuyerAttendeeOrganization.Organization.IsVirtualMeeting).ToList();
+                    }
 
                     if (possibleNegotiationSlots?.Any() == true)
                     {
