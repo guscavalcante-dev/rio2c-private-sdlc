@@ -26,7 +26,8 @@ var AudiovisualProjectsEvaluationListWidget = function () {
     var enableShowPlugins = function () {
         KTApp.initTooltips();
         MyRio2cCommon.initScroll();
-        MyRio2cCommon.enableSelect2({ inputIdOrClass: '#InterestUid', allowClear: true, placeholder: translations.selectPlaceholder.replace('{0}', translations.genre) + '...' });
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: '#SubgenreInterestUid', allowClear: true, placeholder: translations.selectPlaceholder.replace('{0}', translations.genre) + '...' });
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: '#SegmentInterestUid', allowClear: true, placeholder: translations.selectPlaceholder.replace('{0}', translations.segment) + '...' });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: '#EvaluationStatusUid', allowClear: true, placeholder: translations.selectPlaceholder.replace('{0}', translations.status) + '...' });
         enablePageSizeChangeEvent();
     };
@@ -38,7 +39,8 @@ var AudiovisualProjectsEvaluationListWidget = function () {
 
         var jsonParameters = new Object();
         jsonParameters.searchKeywords = $('#SearchKeywords').val();
-        jsonParameters.interestUid = $('#InterestUid').val();
+        jsonParameters.subgenreInterestUid = $('#SubgenreInterestUid').val();
+        jsonParameters.segmentInterestUid = $('#SegmentInterestUid').val();
         jsonParameters.evaluationStatusUid = $('#EvaluationStatusUid').val();
         jsonParameters.page = $('#Page').val();
         jsonParameters.pageSize = $('#PageSize').val();
@@ -74,10 +76,15 @@ var AudiovisualProjectsEvaluationListWidget = function () {
         });
         $('#SearchKeywords').addClass('search-event-enabled');
 
-        $('#InterestUid').not('.change-event-enabled').on('change', function () {
+        $('#SubgenreInterestUid').not('.change-event-enabled').on('change', function () {
             search();
         });
-        $('#InterestUid').addClass('change-event-enabled');
+        $('#SubgenreInterestUid').addClass('change-event-enabled');
+
+        $('#SegmentInterestUid').not('.change-event-enabled').on('change', function () {
+            search();
+        });
+        $('#SegmentInterestUid').addClass('change-event-enabled');
 
         $('#EvaluationStatusUid').not('.change-event-enabled').on('change', function () {
             search();
