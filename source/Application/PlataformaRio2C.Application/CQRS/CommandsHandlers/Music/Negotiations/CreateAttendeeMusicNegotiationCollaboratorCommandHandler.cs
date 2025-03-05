@@ -29,7 +29,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     public class CreateAttendeeMusicNegotiationCollaboratorCommandHandler : BaseCommandHandler, IRequestHandler<CreateAttendeeMusicBusinessNegotiationCollaborator, AppValidationResult>
     {
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
-        private readonly IMusicBusinessRoundNegotiationRepository musicbusinessroundnegotiationRepository;
+        private readonly IMusicBusinessRoundNegotiationRepository musicBusinessRoundNegotiationRepository;
         private readonly IAttendeeNegotiationCollaboratorRepository attendeeNegotiationCollaboratorRepo;
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             : base(eventBus, uow)
         {
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
-            this.musicbusinessroundnegotiationRepository = musicbusinessroundnegotiationRepository;
+            this.musicBusinessRoundNegotiationRepository = musicbusinessroundnegotiationRepository;
             this.attendeeNegotiationCollaboratorRepo = attendeeNegotiationCollaboratorRepo; 
         }
 
@@ -59,53 +59,53 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <returns></returns>
         public async Task<AppValidationResult> Handle(CreateAttendeeMusicBusinessNegotiationCollaborator cmd, CancellationToken cancellationToken)
         {
-            this.Uow.BeginTransaction();
+            //this.Uow.BeginTransaction();
 
-            var negotiation = await this.musicbusinessroundnegotiationRepository.FindByUidAsync(cmd.MusicBusinessNegotiationUid);
-            var attendeeCollaborator = await this.musicbusinessroundnegotiationRepository.GetAsync(ac => !ac.IsDeleted && ((Collaborator)ac.Collaborator).Id == cmd.UserId && ac.EditionId == cmd.EditionId);
+            //var negotiation = await this.musicBusinessRoundNegotiationRepository.FindByUidAsync(cmd.MusicBusinessNegotiationUid);
+            //var attendeeCollaborator = await this.musicBusinessRoundNegotiationRepository.GetAsync(mbrn => !mbrn.IsDeleted && ((Collaborator)mbrn.Collaborator).Id == cmd.UserId && mbrn.EditionId == cmd.EditionId);
             
-            if (negotiation == null)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM), new string[] { "ToastrError" }));
-            }
+            //if (negotiation == null)
+            //{
+            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM), new string[] { "ToastrError" }));
+            //}
 
-            if (attendeeCollaborator == null)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Participant, Labels.FoundM), new string[] { "ToastrError" }));
-            }
+            //if (attendeeCollaborator == null)
+            //{
+            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Participant, Labels.FoundM), new string[] { "ToastrError" }));
+            //}
 
-            if (!this.ValidationResult.IsValid)
-            {
-                this.AppValidationResult.Add(this.ValidationResult);
-                return this.AppValidationResult;
-            }
+            //if (!this.ValidationResult.IsValid)
+            //{
+            //    this.AppValidationResult.Add(this.ValidationResult);
+            //    return this.AppValidationResult;
+            //}
 
-            var attendeeNegotiationCollaboratorDb = await this.musicbusinessroundnegotiationRepository.GetAsync(anc => !anc.IsDeleted 
-                                                                                                                    && anc.AttendeeCollaboratorId == attendeeCollaborator.Id 
-                                                                                                                    && anc.MusicBusinessNegotiationUid == negotiation.Id);
+            //var attendeeNegotiationCollaboratorDb = await this.musicBusinessRoundNegotiationRepository.GetAsync(anc => !anc.IsDeleted 
+            //                                                                                                        && anc.AttendeeCollaboratorId == attendeeCollaborator.Id 
+            //                                                                                                        && anc.MusicBusinessNegotiationUid == negotiation.Id);
 
-            if (attendeeNegotiationCollaboratorDb != null)
-            {
+            //if (attendeeNegotiationCollaboratorDb != null)
+            //{
 
-                this.musicbusinessroundnegotiationRepository.Update(attendeeNegotiationCollaboratorDb);
-            }
-            else
-            {
-                AttendeeMusicBusinessRoundNegotiationCollaborator attendeeNegotiationCollaborator = new AttendeeMusicBusinessRoundNegotiationCollaborator(
-                    negotiation,
-                    attendeeCollaborator,
-                    cmd.UserId);
+            //    this.musicBusinessRoundNegotiationRepository.Update(attendeeNegotiationCollaboratorDb);
+            //}
+            //else
+            //{
+            //    AttendeeMusicBusinessRoundNegotiationCollaborator attendeeNegotiationCollaborator = new AttendeeMusicBusinessRoundNegotiationCollaborator(
+            //        negotiation,
+            //        attendeeCollaborator,
+            //        cmd.UserId);
 
-                this.musicbusinessroundnegotiationRepository.Create(attendeeCollaborator);
-            }
+            //    this.musicBusinessRoundNegotiationRepository.Create(attendeeCollaborator);
+            //}
 
-            if (!attendeeCollaborator.IsValid())
-            {
-                this.AppValidationResult.Add(this.ValidationResult);
-                return this.AppValidationResult;
-            }
+            //if (!attendeeCollaborator.IsValid())
+            //{
+            //    this.AppValidationResult.Add(this.ValidationResult);
+            //    return this.AppValidationResult;
+            //}
             
-            this.Uow.SaveChanges();
+            //this.Uow.SaveChanges();
 
             return this.AppValidationResult;
         }

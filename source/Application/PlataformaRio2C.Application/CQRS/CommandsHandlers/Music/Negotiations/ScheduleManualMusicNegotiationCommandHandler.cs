@@ -202,26 +202,26 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 .Where(n => n.StartDate == startDatePreview)
                 .ToList();
 
-            var negotiation = new MusicBusinessRoundNegotiation(
-                cmd.EditionId.Value,
-                buyerOrganization,
-                project,
-                negotiationConfig,
-                negotiationRoomConfig,
-                negotiationsInThisRoomAndStartDate,
-                cmd.StartTime,
-                cmd.RoundNumber ?? 0,
-                cmd.UserId,
-                cmd.UserInterfaceLanguage,
-                isUsingAutomaticTable);
-            if (!negotiation.IsValid())
-            {
-                this.AppValidationResult.Add(negotiation.ValidationResult);
-                return this.AppValidationResult;
-            }
+            //var negotiation = new MusicBusinessRoundNegotiation(
+            //    cmd.EditionId.Value,
+            //    buyerOrganization,
+            //    project,
+            //    negotiationConfig,
+            //    negotiationRoomConfig,
+            //    negotiationsInThisRoomAndStartDate,
+            //    cmd.StartTime,
+            //    cmd.RoundNumber ?? 0,
+            //    cmd.UserId,
+            //    cmd.UserInterfaceLanguage,
+            //    isUsingAutomaticTable);
+            //if (!negotiation.IsValid())
+            //{
+            //    this.AppValidationResult.Add(negotiation.ValidationResult);
+            //    return this.AppValidationResult;
+            //}
 
-            this.musicbusinessRoundnegotiationRepo.Create(negotiation);
-            this.Uow.SaveChanges();
+            //this.musicbusinessRoundnegotiationRepo.Create(negotiation);
+            //this.Uow.SaveChanges();
 
             return this.AppValidationResult;
         }
