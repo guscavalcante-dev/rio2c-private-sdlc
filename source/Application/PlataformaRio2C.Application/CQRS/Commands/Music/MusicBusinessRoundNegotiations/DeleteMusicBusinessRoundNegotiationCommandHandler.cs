@@ -16,12 +16,12 @@ using System;
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>DeleteNegotiation</summary>
-    public class DeleteMusicBusinessNegotiation : MusicbusinessRoundnegotiationBaseCommand
+    public class DeleteMusicBusinessRoundNegotiationCommandHandler : MusicbusinessRoundnegotiationBaseCommand
     {
         public Guid NegotiationUid { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="DeleteNegotiation"/> class.</summary>
-        public DeleteMusicBusinessNegotiation()
+        public DeleteMusicBusinessRoundNegotiationCommandHandler()
         {
         }
     }

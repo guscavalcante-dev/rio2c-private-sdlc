@@ -37,14 +37,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly INegotiationConfigRepository negotiationConfigRepo;
         private readonly INegotiationRoomConfigRepository negotiationRoomConfigRepo;
         private readonly IMusicBusinessRoundNegotiationRepository musicbusinessRoundnegotiationRepo;
-        private readonly IConferenceRepository conferenceRepo;
-        private readonly INegotiationRepository negotiationRepo;
-        private readonly ILogisticAirfareRepository logisticAirfareRepo;
 
         public CreateMusicBusinesRoundNegotiationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            INegotiationRepository negotiationRepository,
             IOrganizationRepository organizationRepository,
             IMusicBusinessRoundNegotiationRepository musicbusinessroundnegotiationRepository,
             IProjectRepository projectRepository,
@@ -54,14 +50,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             ILogisticAirfareRepository logisticAirfareRepository)
             : base(eventBus, uow)
         {
-            this.negotiationRepo = negotiationRepository;
             this.musicbusinessRoundnegotiationRepo = musicbusinessroundnegotiationRepository;
             this.organizationRepo = organizationRepository;
             this.projectRepo = projectRepository;
             this.negotiationConfigRepo = negotiationConfigRepository;
             this.negotiationRoomConfigRepo = negotiationRoomConfigRepository;
-            this.conferenceRepo = conferenceRepository;
-            this.logisticAirfareRepo = logisticAirfareRepository;
         }
 
         /// <summary>Handles the specified create negotiation.</summary>
@@ -208,26 +201,25 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                                                     .Where(n => n.StartDate == startDatePreview)
                                                                     .ToList();
 
-            //var negotiation = new MusicBusinessRoundNegotiation(
-            //    cmd.EditionId.Value,
-            //    buyerOrganization,
-            //    project,
-            //    negotiationConfig,
-            //    negotiationRoomConfig,
-            //    negotiationsInThisRoomAndStartDate,
-            //    cmd.StartTime,
-            //    cmd.RoundNumber ?? 0,
-            //    cmd.UserId,
-            //    cmd.UserInterfaceLanguage,
-            //    isUsingAutomaticTable);
-            //if (!negotiation.IsValid())
-            //{
-            //    this.AppValidationResult.Add(negotiation.ValidationResult);
-            //    return this.AppValidationResult;
-            //}
+            var negotiation = new MusicBusinessRoundNegotiation(
+                cmd.EditionId.Value,
+                buyerOrganization,
+                negotiationConfig,
+                negotiationRoomConfig,
+                negotiationsInThisRoomAndStartDate,
+                cmd.StartTime,
+                cmd.RoundNumber ?? 0,
+                cmd.UserId,
+                cmd.UserInterfaceLanguage,
+                isUsingAutomaticTable);
+            if (!negotiation.IsValid())
+            {
+                this.AppValidationResult.Add(negotiation.ValidationResult);
+                return this.AppValidationResult;
+            }
 
-            //this.musicbusinessRoundnegotiationRepo.Create(negotiation);
-            //this.Uow.SaveChanges();
+            this.musicbusinessRoundnegotiationRepo.Create(negotiation);
+            this.Uow.SaveChanges();
 
             return this.AppValidationResult;
 

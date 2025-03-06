@@ -17,9 +17,7 @@ namespace PlataformaRio2C.Domain.Entities
 {
     public class AttendeeMusicBusinessRoundNegotiationCollaborator : Entity
     {
-        private MusicBusinessRoundNegotiation attendeeCollaborator;
-        private int userId;
-
+        
         public int MusicBusinessRoundNegotiationId { get; private set; }
         public int AttendeeCollaboratorId { get; private set; }
 
@@ -49,12 +47,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         protected AttendeeMusicBusinessRoundNegotiationCollaborator(MusicBusinessRoundNegotiation negotiation)
         {
-        }
-
-        public AttendeeMusicBusinessRoundNegotiationCollaborator(MusicBusinessRoundNegotiation negotiation, MusicBusinessRoundNegotiation attendeeCollaborator, int userId) : this(negotiation)
-        {
-            this.attendeeCollaborator = attendeeCollaborator;
-            this.userId = userId;
         }
 
         /// <summary>

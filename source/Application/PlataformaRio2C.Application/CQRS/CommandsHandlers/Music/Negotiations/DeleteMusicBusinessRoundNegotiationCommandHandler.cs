@@ -1,75 +1,81 @@
-﻿//// ***********************************************************************
-//// Assembly         : PlataformaRio2C.Application
-//// Author           : Rafael Ribeiro 
-//// Created          : 05-03-2025
-////
-//// Last Modified By : Rafael Ribeiro 
-//// Last Modified On : 05-03-2025
-//// ***********************************************************************
-//// <copyright file="DeleteNegotiationCommandHandler.cs" company="Softo">
-////     Copyright (c) Softo. All rights reserved.
-//// </copyright>
-//// <summary></summary>
-//// ***********************************************************************
-//using System.Threading;
-//using System.Threading.Tasks;
-//using MediatR;
-//using PlataformaRio2C.Application.CQRS.Commands;
-//using PlataformaRio2C.Domain.Interfaces;
-//using PlataformaRio2C.Infra.Data.Context.Interfaces;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Application
+// Author           : Rafael Ribeiro 
+// Created          : 05-03-2025
+//
+// Last Modified By : Rafael Ribeiro 
+// Last Modified On : 05-03-2025
+// ***********************************************************************
+// <copyright file="DeleteNegotiationCommandHandler.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System.Threading;
+using System.Threading.Tasks;
+using MediatR;
+using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Interfaces.Repositories;
+using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
-//namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
-//{
-//    /// <summary>DeleteNegotiationCommandHandler</summary>
-//    public class DeleteMusicNegotiationCommandHandler : NegotiationBaseCommandHandler, IRequestHandler<DeleteNegotiation, AppValidationResult>
-//    {
-//        /// <summary>Initializes a new instance of the <see cref="DeleteNegotiationCommandHandler"/> class.</summary>
-//        /// <param name="eventBus">The event bus.</param>
-//        /// <param name="uow">The uow.</param>
-//        /// <param name="negotiationRepository">The negotiation repository.</param>
-//        public DeleteMusicNegotiationCommandHandler(
-//            IMediator eventBus,
-//            IUnitOfWork uow,
-//            INegotiationRepository negotiationRepository)
-//            : base(eventBus, uow, negotiationRepository)
-//        {
-//        }
+namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
+{
+    /// <summary>DeleteNegotiationCommandHandler</summary>
+    public class DeleteMusicBusinessRoundNegotiationCommandHandler : MusicBusinessRoundNegotiationBaseCommandHandler
+    {
+        private readonly IMusicBusinessRoundNegotiationRepository _musicbusinessRoundnegotiationRepo;
 
-//        /// <summary>Handles the specified delete negotiation.</summary>
-//        /// <param name="cmd">The command.</param>
-//        /// <param name="cancellationToken">The cancellation token.</param>
-//        /// <returns></returns>
-//        public async Task<AppValidationResult> Handle(DeleteNegotiation cmd, CancellationToken cancellationToken)
-//        {
-//            this.Uow.BeginTransaction();
+        /// <summary>Initializes a new instance of the <see cref="DeleteMusicBusinessRoundNegotiationCommandHandler"/> class.</summary>
+        /// <param name="eventBus">The event bus.</param>
+        /// <param name="uow">The uow.</param>
+        /// <param name="negotiationRepository">The negotiation repository.</param>
+        public DeleteMusicBusinessRoundNegotiationCommandHandler(
+            IMediator eventBus,
+            IUnitOfWork uow,
+            IMusicBusinessRoundNegotiationRepository musicbusinessRoundnegotiationRepo)
+            : base(eventBus, uow, musicbusinessRoundnegotiationRepo)
+        {
+            _musicbusinessRoundnegotiationRepo = musicbusinessRoundnegotiationRepo;
+        }
 
-//            var negotiation = await this.GetNegotiationByUid(cmd.NegotiationUid);
+        /// <summary>Handles the specified delete negotiation.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        public async Task<AppValidationResult> Handle(DeleteMusicBusinessRoundProjectBuyerEvaluation cmd)
+        {
+            this.Uow.BeginTransaction();
 
-//            #region Initial validations
+            if (!cmd.ProjectUid.HasValue)
+            {
+                this.AppValidationResult.Add("ProjectUid is required.");
+                return this.AppValidationResult;
+            }
 
-//            if (!this.ValidationResult.IsValid)
-//            {
-//                this.AppValidationResult.Add(this.ValidationResult);
-//                return this.AppValidationResult;
-//            }
+            var negotiation = await this.GetNegotiationByUid(cmd.ProjectUid.Value);
 
-//            #endregion
+            #region Initial validations
 
-//            negotiation.Delete(cmd.UserId);
-//            if (!negotiation.IsValid())
-//            {
-//                this.AppValidationResult.Add(negotiation.ValidationResult);
-//                return this.AppValidationResult;
-//            }
+            if (!this.ValidationResult.IsValid)
+            {
+                this.AppValidationResult.Add(this.ValidationResult);
+                return this.AppValidationResult;
+            }
 
-//            this.NegotiationRepo.Update(negotiation);
-//            this.Uow.SaveChanges();
+            #endregion
 
-//            return this.AppValidationResult;
+            negotiation.Delete(cmd.UserId);
+            if (!negotiation.IsValid())
+            {
+                this.AppValidationResult.Add(negotiation.ValidationResult);
+                return this.AppValidationResult;
+            }
 
-//            //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
+            _musicbusinessRoundnegotiationRepo.Update(negotiation);
+            this.Uow.SaveChanges();
 
-//            //return Task.FromResult(propertyId); // use it when the methed is not async
-//        }
-//    }
-//}
+            return this.AppValidationResult;
+        }
+    }
+}

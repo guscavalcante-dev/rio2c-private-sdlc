@@ -59,53 +59,66 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <returns></returns>
         public async Task<AppValidationResult> Handle(CreateAttendeeMusicBusinessNegotiationCollaborator cmd, CancellationToken cancellationToken)
         {
-            //this.Uow.BeginTransaction();
+            this.Uow.BeginTransaction();
 
-            //var negotiation = await this.musicBusinessRoundNegotiationRepository.FindByUidAsync(cmd.MusicBusinessNegotiationUid);
-            //var attendeeCollaborator = await this.musicBusinessRoundNegotiationRepository.GetAsync(mbrn => !mbrn.IsDeleted && ((Collaborator)mbrn.Collaborator).Id == cmd.UserId && mbrn.EditionId == cmd.EditionId);
-            
-            //if (negotiation == null)
-            //{
-            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM), new string[] { "ToastrError" }));
-            //}
+            var negotiation = await this.musicBusinessRoundNegotiationRepository.FindByUidAsync(cmd.MusicBusinessNegotiationUid);
+            var attendeeCollaborator = await this.attendeeCollaboratorRepo.GetAsync(ac => !ac.IsDeleted && ac.CollaboratorId == cmd.UserId && ac.EditionId == cmd.EditionId);
 
-            //if (attendeeCollaborator == null)
-            //{
-            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Participant, Labels.FoundM), new string[] { "ToastrError" }));
-            //}
+            if (negotiation == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM), new string[] { "ToastrError" }));
+            }
 
-            //if (!this.ValidationResult.IsValid)
-            //{
-            //    this.AppValidationResult.Add(this.ValidationResult);
-            //    return this.AppValidationResult;
-            //}
+            if (attendeeCollaborator == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Participant, Labels.FoundM), new string[] { "ToastrError" }));
+            }
 
-            //var attendeeNegotiationCollaboratorDb = await this.musicBusinessRoundNegotiationRepository.GetAsync(anc => !anc.IsDeleted 
-            //                                                                                                        && anc.AttendeeCollaboratorId == attendeeCollaborator.Id 
-            //                                                                                                        && anc.MusicBusinessNegotiationUid == negotiation.Id);
+            if (!this.ValidationResult.IsValid)
+            {
+                this.AppValidationResult.Add(this.ValidationResult);
+                return this.AppValidationResult;
+            }
 
-            //if (attendeeNegotiationCollaboratorDb != null)
-            //{
+            var attendeeNegotiationCollaboratorDb = await this.attendeeNegotiationCollaboratorRepo.GetAsync(anc => !anc.IsDeleted
+                                                                                                                            && anc.AttendeeCollaboratorId == attendeeCollaborator.Id
+                                                                                                                            && anc.NegotiationId == negotiation.Id);
 
-            //    this.musicBusinessRoundNegotiationRepository.Update(attendeeNegotiationCollaboratorDb);
-            //}
-            //else
-            //{
-            //    AttendeeMusicBusinessRoundNegotiationCollaborator attendeeNegotiationCollaborator = new AttendeeMusicBusinessRoundNegotiationCollaborator(
-            //        negotiation,
-            //        attendeeCollaborator,
-            //        cmd.UserId);
+            if (attendeeNegotiationCollaboratorDb != null)
+            {
+                this.attendeeNegotiationCollaboratorRepo.Update(attendeeNegotiationCollaboratorDb);
+            }
+            else
+            {
+                if (negotiation == null || attendeeCollaborator == null)
+                {
+                    this.ValidationResult.Add(new ValidationError("Dados inválidos para criar negociação.", new string[] { "ToastrError" }));
+                    this.AppValidationResult.Add(this.ValidationResult);
+                    return this.AppValidationResult;
+                }
 
-            //    this.musicBusinessRoundNegotiationRepository.Create(attendeeCollaborator);
-            //}
+                var attendeeNegotiationCollaborator = new AttendeeMusicBusinessRoundNegotiationCollaborator(
+                    negotiation,
+                    attendeeCollaborator,
+                    cmd.UserId);
 
-            //if (!attendeeCollaborator.IsValid())
-            //{
-            //    this.AppValidationResult.Add(this.ValidationResult);
-            //    return this.AppValidationResult;
-            //}
-            
-            //this.Uow.SaveChanges();
+                if (!attendeeNegotiationCollaborator.IsValid())
+                {
+                    this.AppValidationResult.Add(this.ValidationResult);
+                    return this.AppValidationResult;
+                }
+
+                this.attendeeNegotiationCollaboratorRepo.Create(attendeeNegotiationCollaboratorDb);
+            }
+
+
+            if (!attendeeNegotiationCollaboratorDb.IsValid())
+            {
+                this.AppValidationResult.Add(this.ValidationResult);
+                return this.AppValidationResult;
+            }
+
+            this.Uow.SaveChanges();
 
             return this.AppValidationResult;
         }

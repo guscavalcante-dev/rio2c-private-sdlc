@@ -24,7 +24,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public Guid MusicBusinessNegotiationUid { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateAttendeeNegotiationCollaborator"/> class.
+        /// Initializes a new instance of the <see cref="CreateAttendeeMusicBusinessNegotiationCollaborator"/> class.
         /// </summary>
         /// <param name="negotiationUid">The negotiation uid.</param>
         public CreateAttendeeMusicBusinessNegotiationCollaborator(Guid negotiationUid)

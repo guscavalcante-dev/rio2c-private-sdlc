@@ -301,7 +301,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()
         {
-            var cmd = new CreateNegotiation();
+            var cmd = new CreateMusicBusinessNegotiation();
 
             return Json(new
             {
@@ -317,7 +317,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Create(CreateNegotiation cmd)
+        public async Task<ActionResult> Create(CreateMusicBusinessNegotiation cmd)
         {
             var result = new AppValidationResult();
 
@@ -413,7 +413,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <exception cref="DomainException">
         /// </exception>
         [HttpPost]
-        public async Task<ActionResult> Update(UpdateNegotiation cmd)
+        public async Task<ActionResult> Update(UpdateMusicBusinessRoundNegotiation cmd)
         {
             var result = new AppValidationResult();
 
@@ -480,7 +480,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Delete(DeleteNegotiation cmd)
+        public async Task<ActionResult> Delete(DeleteMusicBusinessRoundNegotiationCommandHandler cmd)
         {
             var result = new AppValidationResult();
 
@@ -725,7 +725,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
         #endregion
 
-        //#region Send E-mails to Players
+        #region Send E-mails to Players
 
         //#region List
 
@@ -820,9 +820,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         //    }, JsonRequestBehavior.AllowGet);
         //}
 
-        //#endregion
+        #endregion
 
-        //#region Send E-mails
+        #region Send E-mails
 
         ///// <summary>
         ///// Sends the players emails.
@@ -910,9 +910,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
         //#endregion
 
-        //#endregion
+        #endregion
 
-        //#region Send E-mails to Producers
+        #region Send E-mails to Producers
 
         //#region List
 
@@ -962,9 +962,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         //    }, JsonRequestBehavior.AllowGet);
         //}
 
-        //#endregion
+        #endregion
 
-        //#region Total Count Widget
+        #region Total Count Widget
 
         ///// <summary>
         ///// Shows the send email to players total count widget.
@@ -985,9 +985,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         //    }, JsonRequestBehavior.AllowGet);
         //}
 
-        //#endregion
+        #endregion
 
-        //#region Edition Count Widget
+        #region Edition Count Widget
 
         ///// <summary>
         ///// Shows the send email to players edition count widget.
@@ -1007,9 +1007,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         //    }, JsonRequestBehavior.AllowGet);
         //}
 
-        //#endregion
+        #endregion
 
-        //#region Send E-mails
+        #region Send E-mails
 
         ///// <summary>
         ///// Sends the producers emails.
@@ -1093,11 +1093,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Emails, Labels.SentMP.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
         //}
 
-        //#endregion
+        #endregion
 
         ////#endregion
 
-        //#region Report
+        #region Report
 
         ///// <summary>Indexes the specified search view model.</summary>
         ///// <returns></returns>
@@ -1329,6 +1329,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         //    return File(pdf.GetStream(), "application/pdf", fileName);
         //}
 
-        //#endregion
+        #endregion
     }
 }
