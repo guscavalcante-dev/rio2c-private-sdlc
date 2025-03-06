@@ -32,6 +32,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Constants = PlataformaRio2C.Domain.Constants;
+using PlataformaRio2C.Application.TemplateDocuments;
+using PlataformaRio2C.Infra.Report.Models;
+using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Application.CQRS.QueriesHandlers;
+using DocumentFormat.OpenXml.Office.Word;
+using System.Web.Http.Results;
+using PlataformaRio2C.Domain.Interfaces.Repositories;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 {
@@ -40,7 +47,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminMusic)]
     public class MeetingsController : BaseController
     {
-        private readonly INegotiationRepository negotiationRepo;
+        private readonly IMusicBusinessRoundNegotiationRepository musicbusinessRoundnegotiationRepo;
         private readonly IProjectBuyerEvaluationRepository projectBuyerEvaluationRepo;
         private readonly IRoomRepository roomRepo;
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
@@ -51,7 +58,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        /// <param name="negotiationRepository">The negotiation repository.</param>
+        /// <param name="musicbusinessroundnegotiationRepository">The negotiation repository.</param>
         /// <param name="projectBuyerEvaluationRepository">The project buyer evaluation repository.</param>
         /// <param name="roomRepository">The room repository.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
@@ -60,7 +67,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         public MeetingsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
-            INegotiationRepository negotiationRepository,
+            IMusicBusinessRoundNegotiationRepository musicbusinessroundnegotiationRepository,
             IProjectBuyerEvaluationRepository projectBuyerEvaluationRepository,
             IRoomRepository roomRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
@@ -68,7 +75,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             INegotiationConfigRepository negotiationConfigRepo)
             : base(commandBus, identityController)
         {
-            this.negotiationRepo = negotiationRepository;
+            this.musicbusinessRoundnegotiationRepo = musicbusinessroundnegotiationRepository;
             this.projectBuyerEvaluationRepo = projectBuyerEvaluationRepository;
             this.roomRepo = roomRepository;
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
@@ -259,7 +266,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowScheduledDataWidget(ScheduledSearchViewModel searchViewModel)
         {
-            var negotiations = await this.negotiationRepo.FindScheduledWidgetDtoAsync(
+            var negotiations = await this.musicbusinessRoundnegotiationRepo.FindScheduledWidgetDtoAsync(
                 this.EditionDto.Id,
                 searchViewModel.BuyerOrganizationUid,
                 searchViewModel.SellerOrganizationUid,
@@ -294,7 +301,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()
         {
-            var cmd = new CreateNegotiation();
+            var cmd = new CreateMusicBusinessNegotiation();
 
             return Json(new
             {
@@ -310,7 +317,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Create(CreateNegotiation cmd)
+        public async Task<ActionResult> Create(CreateMusicBusinessNegotiation cmd)
         {
             var result = new AppValidationResult();
 
@@ -371,17 +378,17 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUpdateModal(Guid? negotiationUid)
         {
-            UpdateNegotiation cmd;
+            UpdateMusicBusinessRoundNegotiation cmd;
 
             try
             {
-                var negotiationDto = await this.negotiationRepo.FindDtoAsync(negotiationUid ?? Guid.Empty);
-                if (negotiationDto == null)
+                var MusicBusinessRoundNegotiationDto = await this.musicbusinessRoundnegotiationRepo.FindDtoAsync(negotiationUid ?? Guid.Empty);
+                if (MusicBusinessRoundNegotiationDto == null)
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM.ToLowerInvariant()));
                 }
 
-                cmd = new UpdateNegotiation(negotiationDto, this.UserInterfaceLanguage);
+                cmd = new UpdateMusicBusinessRoundNegotiation(MusicBusinessRoundNegotiationDto, this.UserInterfaceLanguage);
             }
             catch (DomainException ex)
             {
@@ -406,7 +413,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <exception cref="DomainException">
         /// </exception>
         [HttpPost]
-        public async Task<ActionResult> Update(UpdateNegotiation cmd)
+        public async Task<ActionResult> Update(UpdateMusicBusinessRoundNegotiation cmd)
         {
             var result = new AppValidationResult();
 
@@ -473,7 +480,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Delete(DeleteNegotiation cmd)
+        public async Task<ActionResult> Delete(DeleteMusicBusinessRoundNegotiationCommandHandler cmd)
         {
             var result = new AppValidationResult();
 
@@ -549,7 +556,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowEditionUnscheduledCountWidget()
         {
-            var notScheduledCount = await this.projectBuyerEvaluationRepo.CountNegotiationNotScheduledAsync(this.EditionDto.Id, false);
+            var notScheduledCount = await this.musicbusinessRoundnegotiationRepo.CountNegotiationNotScheduledAsync(this.EditionDto.Id, false);
 
             return Json(new
             {
@@ -570,7 +577,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUnscheduledWidget()
         {
-            var negotiations = await this.projectBuyerEvaluationRepo.FindUnscheduledWidgetDtoAsync(this.EditionDto.Id);
+            var negotiations = await this.musicbusinessRoundnegotiationRepo.FindUnscheduledWidgetDtoAsync(this.EditionDto.Id);
 
             return new JsonResult()
             {
@@ -690,7 +697,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
         #endregion
 
-        //#region Logistic Info Widget
+        #region Logistic Info Widget
 
         ///// <summary>
         ///// Shows the logistics information widget.
@@ -716,17 +723,17 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-       //#endregion
+        #endregion
 
         //#region Send E-mails to Players
 
         //#region List
 
-        ///// <summary>
-        ///// Sends the email to players.
-        ///// </summary>
-        ///// <param name="searchViewModel">The search view model.</param>
-        ///// <returns></returns>
+        /// <summary>
+        /// Sends the email to players.
+        /// </summary>
+        /// <param name = "searchViewModel" > The search view model.</param>
+        /// <returns></returns>
         //[HttpGet]
         //public ActionResult SendEmailToPlayers(SendEmailToPlayersSearchViewModel searchViewModel)
         //{
@@ -743,10 +750,10 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         //    return View(searchViewModel);
         //}
 
-        ///// <summary>
-        ///// Sends the email to players search.
-        ///// </summary>
-        ///// <param name="request">The request.</param>
+        /// <summary>
+        /// Sends the email to players search.
+        /// </summary>
+        /// <param name="request">The request.</param>
         ///// <returns></returns>
         //[HttpGet]
         //public async Task<ActionResult> SendEmailToPlayersSearch(IDataTablesRequest request)
@@ -772,9 +779,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
         //#region Total Count Widget
 
-        ///// <summary>
-        ///// Shows the send email to players total count widget.
-        ///// </summary>
+        /// <summary>
+        /// Shows the send email to players total count widget.
+        /// </summary>
         ///// <returns></returns>
         //[HttpGet]
         //public async Task<ActionResult> ShowSendEmailToPlayersTotalCountWidget()
@@ -795,10 +802,10 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
         //#region Edition Count Widget
 
-        ///// <summary>
-        ///// Shows the send email to players edition count widget.
-        ///// </summary>
-        ///// <returns></returns>
+        /// <summary>
+        /// Shows the send email to players edition count widget.
+        /// </summary>
+        /// <returns></returns>
         //public async Task<ActionResult> ShowSendEmailToPlayersEditionCountWidget()
         //{
         //    var producers = await this.attendeeOrganizationRepo.CountAllByActiveBuyerNegotiationsAndByDataTable(false, this.EditionDto.Id);
@@ -1088,7 +1095,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
         //#endregion
 
-        //#endregion
+        ////#endregion
 
         //#region Report
 
