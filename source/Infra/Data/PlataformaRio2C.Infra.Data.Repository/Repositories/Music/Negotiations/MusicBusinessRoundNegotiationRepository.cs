@@ -69,6 +69,32 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+        internal static IQueryable<MusicBusinessRoundNegotiation> FindByProjectEvaluationStatusUid(this IQueryable<MusicBusinessRoundNegotiation> query, Guid projectEvaluationStatusUid)
+        {
+            query = query.Where(pbe => pbe.MusicBusinessRoundProjectBuyerEvaluation.Uid == projectEvaluationStatusUid);
+
+            return query;
+        }
+        internal static IQueryable<MusicBusinessRoundNegotiation> IsProjectFinished(this IQueryable<MusicBusinessRoundNegotiation> query)
+        {
+            //query = query.Where(pbe => pbe.MusicBusinessRoundProjectBuyerEvaluationId.EndDate.HasValue);
+            query = query.Where(pbe => pbe.EndDate != null);
+
+            return query;
+        }
+        internal static IQueryable<MusicBusinessRoundNegotiation> IsNegotiationUnscheduled(this IQueryable<MusicBusinessRoundNegotiation> query)
+        {
+            query = query.Where(pbe => !pbe.AttendeeMusicBusinessRoundNegotiationCollaborators.Any()
+                                       || pbe.AttendeeMusicBusinessRoundNegotiationCollaborators.All(n => n.IsDeleted));
+
+            return query;
+        }
+        internal static IQueryable<MusicBusinessRoundNegotiation> IsNegotiationNotScheduled(this IQueryable<MusicBusinessRoundNegotiation> query)
+        {
+            query = query.Where(pbe => !pbe.AttendeeMusicBusinessRoundNegotiationCollaborators.Any() || pbe.AttendeeMusicBusinessRoundNegotiationCollaborators.All(n => n.IsDeleted));
+
+            return query;
+        }
 
         /// <summary>Finds the by buyer attendee organization uid.</summary>
         /// <param name="query">The query.</param>
@@ -800,6 +826,42 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 )
                                 .OrderBy(ngd => ngd.Date)
                                 .ToList();
+        }
+
+        public async Task<int> CountNegotiationNotScheduledAsync(int editionId, bool showAllEditions = false)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId, showAllEditions)
+                                .FindByProjectEvaluationStatusUid(ProjectEvaluationStatus.Accepted.Uid)
+                                .IsProjectFinished()
+                                .IsNegotiationNotScheduled();
+
+            return await query.CountAsync();
+        }
+
+        public async Task<List<MusicBusinessRoundProjectBuyerEvaluationDto>> FindUnscheduledWidgetDtoAsync(int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                 .FindByEditionId(editionId)
+                                 .FindByProjectEvaluationStatusUid(ProjectEvaluationStatus.Accepted.Uid)
+                                 .IsProjectFinished()
+                                 .IsNegotiationUnscheduled()
+                                 .Select(pbe => new MusicBusinessRoundProjectBuyerEvaluationDto
+                                 {
+                                     BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                     {
+                                         AttendeeOrganization = pbe.MusicBusinessRoundProjectBuyerEvaluation.BuyerAttendeeOrganization,
+                                         Organization = pbe.MusicBusinessRoundProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization
+                                     },
+                                     MusicBusinessRoundProjectDto = new MusicBusinessRoundProjectDto
+                                     {
+                                         SellerAttendeeCollaboratorDto = new AttendeeCollaboratorDto
+                                         {
+                                             AttendeeCollaborator = pbe.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator
+                                         }
+                                     }
+                                 });
+            return await query.ToListAsync();
         }
     }
 }

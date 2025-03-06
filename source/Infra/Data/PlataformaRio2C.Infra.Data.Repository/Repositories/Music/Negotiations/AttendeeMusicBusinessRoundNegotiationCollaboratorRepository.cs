@@ -50,6 +50,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
         }
 
+        public void Update(MusicBusinessRoundNegotiation attendeeNegotiationCollaboratorDb)
+        {
+            throw new System.NotImplementedException();
+        }
+
         /// <summary>Gets the base query.</summary>
         /// <param name="readonly">if set to <c>true</c> [readonly].</param>
         /// <returns></returns>
