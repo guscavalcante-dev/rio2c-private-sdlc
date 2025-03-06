@@ -519,7 +519,7 @@
     <comment>Modelo operacional</comment>
   </data>
   <data name="BusinessRound" xml:space="preserve">
-    <value>One-to-one-meetings</value>
+    <value>Business Round</value>
     <comment>Rodadas de Negócios</comment>
   </data>
   <data name="BusinessRoundObjective" xml:space="preserve">
