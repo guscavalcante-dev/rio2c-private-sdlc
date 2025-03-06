@@ -300,13 +300,7 @@
     <Compile Include="CQRS\CommandsHandlers\Music\BusinessRoundProjects\RefuseMusicBusinessRoundProjectEvaluationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\BusinessRoundProjects\UpdateMusicBusinessRoundProjectOptionsCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\BusinessRoundProjects\UpdateMusicBusinessRoundProjectMainInformationCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Music\Negotiations\CreateAttendeeMusicNegotiationCollaboratorCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Music\Negotiations\CreateMusicBusinesRoundNegotiationCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Music\Negotiations\CreateMusicBusinesRoundNegotiationsCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Music\Negotiations\DeleteMusicBusinessRoundNegotiationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\Negotiations\MusicBusinessRoundNegotiationBaseCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Music\Negotiations\ScheduleManualMusicNegotiationCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Music\Negotiations\UpdateMusicNegotiationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\Pitching\DistributeMembersMusicPitchingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\PlayersExecutives\CreateMusicPlayerExecutiveCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\PlayersExecutives\UpdateMusicPlayerExecutiveCollaboratorCommandHandler.cs" />
