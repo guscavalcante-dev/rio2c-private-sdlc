@@ -1,4 +1,4 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateNegotiation
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateMusicBusinessRoundNegotiation
 <div class="modal fade" id="UpdateMusicMeetingModal" role="dialog" aria-labelledby="UpdateMusicMeetingModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -18,11 +18,11 @@
                         <div id="MusicMeetingsLogisticsInfoWidget" class="kt-portlet kt-portlet--tabs d-none" style="min-height: 180px;"></div>
                     </div>
                 </div>
-                @if (Model.NegotiationDto != null && Model.NegotiationDto.Negotiation.UpdateDate != Model.NegotiationDto.Negotiation.CreateDate)
+                @if (Model != null && Model.MusicBusinesNegotiationDto != null && Model.MusicBusinesNegotiationDto.Negotiation.UpdateDate != Model.MusicBusinesNegotiationDto.Negotiation.CreateDate)
                 {
                     <div class="row">
                         <div class="col-sm-12 text-right">
-                            @Labels.LastUpdateOn <b>@Model.NegotiationDto.Negotiation.UpdateDate.ToBrazilTimeZone().ToShortDateString() @Model.NegotiationDto.Negotiation.UpdateDate.ToBrazilTimeZone().ToLongTimeString()</b> @Labels.By <b>@(Model.NegotiationDto.UpdaterDto?.Name ?? "-")</b>.
+                            @Labels.LastUpdateOn <b>@Model.MusicBusinesNegotiationDto.Negotiation.UpdateDate.ToBrazilTimeZone().ToShortDateString() @Model.MusicBusinesNegotiationDto.Negotiation.UpdateDate.ToBrazilTimeZone().ToLongTimeString()</b> @Labels.By <b>@(Model.MusicBusinesNegotiationDto.UpdaterDto?.Name ?? "-")</b>.
                         </div>
                     </div>
                 }

@@ -376,13 +376,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowUpdateModal(Guid? negotiationUid)
+        public async Task<ActionResult> ShowUpdateModal(Guid? MusicRoundNegotiationUid)
         {
             UpdateMusicBusinessRoundNegotiation cmd;
 
             try
             {
-                var MusicBusinessRoundNegotiationDto = await this.musicbusinessRoundnegotiationRepo.FindDtoAsync(negotiationUid ?? Guid.Empty);
+                var MusicBusinessRoundNegotiationDto = await this.musicbusinessRoundnegotiationRepo.FindDtoAsync(MusicRoundNegotiationUid ?? Guid.Empty);
                 if (MusicBusinessRoundNegotiationDto == null)
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM.ToLowerInvariant()));
@@ -423,8 +423,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 //These fiels isn't enabled to change, so don't worry with this backend fix!
                 cmd.BuyerOrganizationUid = cmd.InitialBuyerOrganizationUid;
                 cmd.ProjectUid = cmd.InitialProjectUid;
-                
-                UpdateNegotiation u;
+
+                UpdateMusicBusinessRoundNegotiation u;
                 ModelState.Remove(nameof(u.BuyerOrganizationUid));
                 ModelState.Remove(nameof(u.ProjectUid));
 
@@ -737,7 +737,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         //[HttpGet]
         //public ActionResult SendEmailToPlayers(SendEmailToPlayersSearchViewModel searchViewModel)
         //{
-        //    #region Breadcrumb
+            #region Breadcrumb
 
         //    ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
         //        new BreadcrumbItemHelper(Labels.AudioVisual, null),
@@ -745,7 +745,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         //        new BreadcrumbItemHelper(Labels.SendEmailToPlayers, Url.Action("SendEmailToPlayers", "Meetings", new { Area = "Music" }))
         //    });
 
-        //    #endregion
+           #endregion
 
         //    return View(searchViewModel);
         //}
