@@ -32,6 +32,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Constants = PlataformaRio2C.Domain.Constants;
+using PlataformaRio2C.Application.TemplateDocuments;
+using PlataformaRio2C.Infra.Report.Models;
+using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Application.CQRS.QueriesHandlers;
+using DocumentFormat.OpenXml.Office.Word;
+using System.Web.Http.Results;
+using PlataformaRio2C.Domain.Interfaces.Repositories;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 {
@@ -40,7 +47,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminMusic)]
     public class MeetingsController : BaseController
     {
-        private readonly INegotiationRepository negotiationRepo;
+        private readonly IMusicBusinessRoundNegotiationRepository musicbusinessRoundnegotiationRepo;
         private readonly IProjectBuyerEvaluationRepository projectBuyerEvaluationRepo;
         private readonly IRoomRepository roomRepo;
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
@@ -51,7 +58,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        /// <param name="negotiationRepository">The negotiation repository.</param>
+        /// <param name="musicbusinessroundnegotiationRepository">The negotiation repository.</param>
         /// <param name="projectBuyerEvaluationRepository">The project buyer evaluation repository.</param>
         /// <param name="roomRepository">The room repository.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
@@ -60,7 +67,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         public MeetingsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
-            INegotiationRepository negotiationRepository,
+            IMusicBusinessRoundNegotiationRepository musicbusinessroundnegotiationRepository,
             IProjectBuyerEvaluationRepository projectBuyerEvaluationRepository,
             IRoomRepository roomRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
@@ -68,7 +75,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             INegotiationConfigRepository negotiationConfigRepo)
             : base(commandBus, identityController)
         {
-            this.negotiationRepo = negotiationRepository;
+            this.musicbusinessRoundnegotiationRepo = musicbusinessroundnegotiationRepository;
             this.projectBuyerEvaluationRepo = projectBuyerEvaluationRepository;
             this.roomRepo = roomRepository;
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
@@ -259,7 +266,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowScheduledDataWidget(ScheduledSearchViewModel searchViewModel)
         {
-            var negotiations = await this.negotiationRepo.FindScheduledWidgetDtoAsync(
+            var negotiations = await this.musicbusinessRoundnegotiationRepo.FindScheduledWidgetDtoAsync(
                 this.EditionDto.Id,
                 searchViewModel.BuyerOrganizationUid,
                 searchViewModel.SellerOrganizationUid,
@@ -294,7 +301,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()
         {
-            var cmd = new CreateNegotiation();
+            var cmd = new CreateMusicBusinessNegotiation();
 
             return Json(new
             {
@@ -310,7 +317,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Create(CreateNegotiation cmd)
+        public async Task<ActionResult> Create(CreateMusicBusinessNegotiation cmd)
         {
             var result = new AppValidationResult();
 
@@ -371,17 +378,17 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUpdateModal(Guid? negotiationUid)
         {
-            UpdateNegotiation cmd;
+            UpdateMusicBusinessRoundNegotiation cmd;
 
             try
             {
-                var negotiationDto = await this.negotiationRepo.FindDtoAsync(negotiationUid ?? Guid.Empty);
-                if (negotiationDto == null)
+                var MusicBusinessRoundNegotiationDto = await this.musicbusinessRoundnegotiationRepo.FindDtoAsync(negotiationUid ?? Guid.Empty);
+                if (MusicBusinessRoundNegotiationDto == null)
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM.ToLowerInvariant()));
                 }
 
-                cmd = new UpdateNegotiation(negotiationDto, this.UserInterfaceLanguage);
+                cmd = new UpdateMusicBusinessRoundNegotiation(MusicBusinessRoundNegotiationDto, this.UserInterfaceLanguage);
             }
             catch (DomainException ex)
             {
@@ -406,7 +413,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <exception cref="DomainException">
         /// </exception>
         [HttpPost]
-        public async Task<ActionResult> Update(UpdateNegotiation cmd)
+        public async Task<ActionResult> Update(UpdateMusicBusinessRoundNegotiation cmd)
         {
             var result = new AppValidationResult();
 
@@ -473,7 +480,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Delete(DeleteNegotiation cmd)
+        public async Task<ActionResult> Delete(DeleteMusicBusinessRoundNegotiationCommandHandler cmd)
         {
             var result = new AppValidationResult();
 
@@ -549,7 +556,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowEditionUnscheduledCountWidget()
         {
-            var notScheduledCount = await this.projectBuyerEvaluationRepo.CountNegotiationNotScheduledAsync(this.EditionDto.Id, false);
+            var notScheduledCount = await this.musicbusinessRoundnegotiationRepo.CountNegotiationNotScheduledAsync(this.EditionDto.Id, false);
 
             return Json(new
             {
@@ -570,7 +577,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUnscheduledWidget()
         {
-            var negotiations = await this.projectBuyerEvaluationRepo.FindUnscheduledWidgetDtoAsync(this.EditionDto.Id);
+            var negotiations = await this.musicbusinessRoundnegotiationRepo.FindUnscheduledWidgetDtoAsync(this.EditionDto.Id);
 
             return new JsonResult()
             {
@@ -690,7 +697,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
         #endregion
 
-        //#region Logistic Info Widget
+        #region Logistic Info Widget
 
         ///// <summary>
         ///// Shows the logistics information widget.
@@ -716,612 +723,612 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-       ////#endregion
-
-       // //#region Send E-mails to Players
-
-       // //#region List
-
-       // ///// <summary>
-       // ///// Sends the email to players.
-       // ///// </summary>
-       // ///// <param name="searchViewModel">The search view model.</param>
-       // ///// <returns></returns>
-       // //[HttpGet]
-       // //public ActionResult SendEmailToPlayers(SendEmailToPlayersSearchViewModel searchViewModel)
-       // //{
-       // //    #region Breadcrumb
-
-       // //    ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
-       // //        new BreadcrumbItemHelper(Labels.AudioVisual, null),
-       // //        new BreadcrumbItemHelper(Labels.OneToOneMeetings, null),
-       // //        new BreadcrumbItemHelper(Labels.SendEmailToPlayers, Url.Action("SendEmailToPlayers", "Meetings", new { Area = "Music" }))
-       // //    });
-
-       // //    #endregion
-
-       // //    return View(searchViewModel);
-       // //}
-
-       // ///// <summary>
-       // ///// Sends the email to players search.
-       // ///// </summary>
-       // ///// <param name="request">The request.</param>
-       // ///// <returns></returns>
-       // //[HttpGet]
-       // //public async Task<ActionResult> SendEmailToPlayersSearch(IDataTablesRequest request)
-       // //{
-       // //    var producers = await this.attendeeOrganizationRepo.FindAllByActiveBuyerNegotiationsAndByDataTable(
-       // //        request.Start / request.Length,
-       // //        request.Length,
-       // //        request.Search?.Value,
-       // //        request.GetSortColumns(),
-       // //        this.EditionDto.Id,
-       // //        this.AdminAccessControlDto.Language.Id);
-
-       // //    var response = DataTablesResponse.Create(request, producers.TotalItemCount, producers.TotalItemCount, producers);
-
-       // //    return Json(new
-       // //    {
-       // //        status = "success",
-       // //        dataTable = response
-       // //    }, JsonRequestBehavior.AllowGet);
-       // //}
-
-       // //#endregion
-
-       // //#region Total Count Widget
-
-       // ///// <summary>
-       // ///// Shows the send email to players total count widget.
-       // ///// </summary>
-       // ///// <returns></returns>
-       // //[HttpGet]
-       // //public async Task<ActionResult> ShowSendEmailToPlayersTotalCountWidget()
-       // //{
-       // //    var producers = await this.attendeeOrganizationRepo.CountAllByActiveBuyerNegotiationsAndByDataTable(true, this.EditionDto.Id);
-
-       // //    return Json(new
-       // //    {
-       // //        status = "success",
-       // //        pages = new List<dynamic>
-       // //        {
-       // //            new { page = this.RenderRazorViewToString("Widgets/SendEmailToPlayersTotalCountWidget", producers), divIdOrClass = "#AudiovisualMeetingsSendEmailToPlayersTotalCountWidget" },
-       // //        }
-       // //    }, JsonRequestBehavior.AllowGet);
-       // //}
-
-       // //#endregion
-
-       // //#region Edition Count Widget
-
-       // ///// <summary>
-       // ///// Shows the send email to players edition count widget.
-       // ///// </summary>
-       // ///// <returns></returns>
-       // //public async Task<ActionResult> ShowSendEmailToPlayersEditionCountWidget()
-       // //{
-       // //    var producers = await this.attendeeOrganizationRepo.CountAllByActiveBuyerNegotiationsAndByDataTable(false, this.EditionDto.Id);
-
-       // //    return Json(new
-       // //    {
-       // //        status = "success",
-       // //        pages = new List<dynamic>
-       // //        {
-       // //            new { page = this.RenderRazorViewToString("Widgets/SendEmailToPlayersEditionCountWidget", producers), divIdOrClass = "#AudiovisualMeetingsSendEmailToPlayersEditionCountWidget" },
-       // //        }
-       // //    }, JsonRequestBehavior.AllowGet);
-       // //}
-
-       // //#endregion
-
-       // //#region Send E-mails
-
-       // ///// <summary>
-       // ///// Sends the players emails.
-       // ///// </summary>
-       // ///// <param name="keywords">The keywords.</param>
-       // ///// <param name="selectedAttendeeOrganizationsUids">The selected attendee organizations uids.</param>
-       // ///// <returns></returns>
-       // ///// <exception cref="DomainException">
-       // ///// </exception>
-       // //[HttpPost]
-       // //public async Task<ActionResult> SendPlayersEmails(string keywords, string selectedAttendeeOrganizationsUids)
-       // //{
-       // //    AppValidationResult result = null;
-
-       // //    try
-       // //    {
-       // //        var attendeeOrganizationBaseDtos = await this.attendeeOrganizationRepo.FindAllBaseDtoByActiveBuyerNegotiations(
-       // //            keywords,
-       // //            selectedAttendeeOrganizationsUids?.ToListGuid(','),
-       // //            this.EditionDto.Id,
-       // //            this.AdminAccessControlDto.Language.Id);
-       // //        if (attendeeOrganizationBaseDtos?.Any() != true)
-       // //        {
-       // //            throw new DomainException(Messages.SelectAtLeastOneOption);
-       // //        }
-
-       // //        List<string> errors = new List<string>();
-       // //        foreach (var attendeeOrganizationBaseDto in attendeeOrganizationBaseDtos)
-       // //        {
-       // //            foreach (var attendeeCollaboratorBaseDto in attendeeOrganizationBaseDto.AttendeeCollaboratorBaseDtos)
-       // //            {
-       // //                // If the collaborator does not have an user interface language, use the user interface language of the current user
-       // //                var collaboratorLanguageCode = attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.UserInterfaceLanguageCode ?? this.UserInterfaceLanguage;
-
-       // //                try
-       // //                {
-       // //                    result = await this.CommandBus.Send(new SendPlayerNegotiationsEmailAsync(
-       // //                        attendeeOrganizationBaseDto,
-       // //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Id,
-       // //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Uid,
-       // //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.FirstName,
-       // //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.FullName,
-       // //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.Email,
-       // //                        this.EditionDto.Edition,
-       // //                        this.AdminAccessControlDto.User.Id,
-       // //                        collaboratorLanguageCode));
-       // //                    if (!result.IsValid)
-       // //                    {
-       // //                        throw new DomainException(Messages.CorrectFormValues);
-       // //                    }
-       // //                }
-       // //                catch (DomainException)
-       // //                {
-       // //                    //Cannot stop sending email when exception occurs.
-       // //                    errors.AddRange(result.Errors.Select(e => e.Message));
-       // //                }
-       // //                catch (Exception ex)
-       // //                {
-       // //                    Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-       // //                }
-       // //            }
-
-       // //            if (errors.Any())
-       // //            {
-       // //                throw new DomainException(string.Format(Messages.OneOrMoreEmailsNotSend, Labels.WelcomeEmail));
-       // //            }
-       // //        }
-       // //    }
-       // //    catch (DomainException ex)
-       // //    {
-       // //        return Json(new
-       // //        {
-       // //            status = "error",
-       // //            message = result?.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
-       // //        }, JsonRequestBehavior.AllowGet);
-       // //    }
-       // //    catch (Exception ex)
-       // //    {
-       // //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-       // //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-       // //    }
-
-       // //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Emails, Labels.SentMP.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-       // //}
-
-       // //#endregion
-
-       // //#endregion
-
-       // //#region Send E-mails to Producers
-
-       // //#region List
-
-       // ///// <summary>
-       // ///// Sends the email to producers.
-       // ///// </summary>
-       // ///// <param name="searchViewModel">The search view model.</param>
-       // ///// <returns></returns>
-       // //[HttpGet]
-       // //public ActionResult SendEmailToProducers(SendEmailToProducersSearchViewModel searchViewModel)
-       // //{
-       // //    #region Breadcrumb
-
-       // //    ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
-       // //        new BreadcrumbItemHelper(Labels.AudioVisual, null),
-       // //        new BreadcrumbItemHelper(Labels.OneToOneMeetings, null),
-       // //        new BreadcrumbItemHelper(Labels.SendEmailToProducers, Url.Action("SendEmailToProducers", "Meetings", new { Area = "Music" }))
-       // //    });
-
-       // //    #endregion
-
-       // //    return View(searchViewModel);
-       // //}
-
-       // ///// <summary>
-       // ///// Sends the email to producers search.
-       // ///// </summary>
-       // ///// <param name="request">The request.</param>
-       // ///// <returns></returns>
-       // //[HttpGet]
-       // //public async Task<ActionResult> SendEmailToProducersSearch(IDataTablesRequest request)
-       // //{
-       // //    var producers = await this.attendeeOrganizationRepo.FindAllByActiveSellerNegotiationsAndByDataTable(
-       // //        request.Start / request.Length,
-       // //        request.Length,
-       // //        request.Search?.Value,
-       // //        request.GetSortColumns(),
-       // //        this.EditionDto.Id,
-       // //        this.AdminAccessControlDto.Language.Id);
-
-       // //    var response = DataTablesResponse.Create(request, producers.TotalItemCount, producers.TotalItemCount, producers);
-
-       // //    return Json(new
-       // //    {
-       // //        status = "success",
-       // //        dataTable = response
-       // //    }, JsonRequestBehavior.AllowGet);
-       // //}
-
-       // //#endregion
-
-       // //#region Total Count Widget
-
-       // ///// <summary>
-       // ///// Shows the send email to players total count widget.
-       // ///// </summary>
-       // ///// <returns></returns>
-       // //[HttpGet]
-       // //public async Task<ActionResult> ShowSendEmailToProducersTotalCountWidget()
-       // //{
-       // //    var producers = await this.attendeeOrganizationRepo.CountAllByActiveSellerNegotiationsAndByDataTable(true, this.EditionDto.Id);
-
-       // //    return Json(new
-       // //    {
-       // //        status = "success",
-       // //        pages = new List<dynamic>
-       // //        {
-       // //            new { page = this.RenderRazorViewToString("Widgets/SendEmailToProducersTotalCountWidget", producers), divIdOrClass = "#MusicMeetingsSendEmailToProducersTotalCountWidget" },
-       // //        }
-       // //    }, JsonRequestBehavior.AllowGet);
-       // //}
-
-       // //#endregion
-
-       // //#region Edition Count Widget
-
-       // ///// <summary>
-       // ///// Shows the send email to players edition count widget.
-       // ///// </summary>
-       // ///// <returns></returns>
-       // //public async Task<ActionResult> ShowSendEmailToProducersEditionCountWidget()
-       // //{
-       // //    var producers = await this.attendeeOrganizationRepo.CountAllByActiveSellerNegotiationsAndByDataTable(false, this.EditionDto.Id);
-
-       // //    return Json(new
-       // //    {
-       // //        status = "success",
-       // //        pages = new List<dynamic>
-       // //        {
-       // //            new { page = this.RenderRazorViewToString("Widgets/SendEmailToProducersEditionCountWidget", producers), divIdOrClass = "#MusicMeetingsSendEmailToProducersEditionCountWidget" },
-       // //        }
-       // //    }, JsonRequestBehavior.AllowGet);
-       // //}
-
-       // //#endregion
-
-       // //#region Send E-mails
-
-       // ///// <summary>
-       // ///// Sends the producers emails.
-       // ///// </summary>
-       // ///// <param name="keywords">The keywords.</param>
-       // ///// <param name="selectedAttendeeOrganizationsUids">The selected attendee organizations uids.</param>
-       // ///// <returns></returns>
-       // //[HttpPost]
-       // //public async Task<ActionResult> SendProducersEmails(string keywords, string selectedAttendeeOrganizationsUids)
-       // //{
-       // //    AppValidationResult result = null;
-
-       // //    try
-       // //    {
-       // //        var attendeeOrganizationBaseDtos = await this.attendeeOrganizationRepo.FindAllBaseDtoByActiveSellerNegotiations(
-       // //            keywords,
-       // //            selectedAttendeeOrganizationsUids?.ToListGuid(','),
-       // //            this.EditionDto.Id,
-       // //            this.AdminAccessControlDto.Language.Id);
-       // //        if (attendeeOrganizationBaseDtos?.Any() != true)
-       // //        {
-       // //            throw new DomainException(Messages.SelectAtLeastOneOption);
-       // //        }
-
-       // //        List<string> errors = new List<string>();
-       // //        foreach (var attendeeOrganizationBaseDto in attendeeOrganizationBaseDtos)
-       // //        {
-       // //            foreach (var attendeeCollaboratorBaseDto in attendeeOrganizationBaseDto.AttendeeCollaboratorBaseDtos)
-       // //            {
-       // //                // If the collaborator does not have an user interface language, use the user interface language of the current user
-       // //                var collaboratorLanguageCode = attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.UserInterfaceLanguageCode ?? this.UserInterfaceLanguage;
-
-       // //                try
-       // //                {
-       // //                    result = await this.CommandBus.Send(new SendProducerNegotiationsEmailAsync(
-       // //                        attendeeOrganizationBaseDto,
-       // //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Id,
-       // //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Uid,
-       // //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.FirstName,
-       // //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.FullName,
-       // //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.Email,
-       // //                        this.EditionDto.Edition,
-       // //                        this.AdminAccessControlDto.User.Id,
-       // //                        collaboratorLanguageCode));
-       // //                    if (!result.IsValid)
-       // //                    {
-       // //                        throw new DomainException(Messages.CorrectFormValues);
-       // //                    }
-       // //                }
-       // //                catch (DomainException ex)
-       // //                {
-       // //                    //Cannot stop sending email when exception occurs.
-       // //                    errors.AddRange(result.Errors.Select(e => e.Message));
-       // //                }
-       // //                catch (Exception ex)
-       // //                {
-       // //                    Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-       // //                }
-       // //            }
-
-       // //            if (errors.Any())
-       // //            {
-       // //                throw new DomainException(string.Format(Messages.OneOrMoreEmailsNotSend, Labels.WelcomeEmail));
-       // //            }
-       // //        }
-       // //    }
-       // //    catch (DomainException ex)
-       // //    {
-       // //        return Json(new
-       // //        {
-       // //            status = "error",
-       // //            message = result?.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
-       // //        }, JsonRequestBehavior.AllowGet);
-       // //    }
-       // //    catch (Exception ex)
-       // //    {
-       // //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-       // //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-       // //    }
-
-       // //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Emails, Labels.SentMP.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-       // //}
-
-       // //#endregion
-
-       // //#endregion
-
-       // #region Report
-
-       // /// <summary>Indexes the specified search view model.</summary>
-       // /// <returns></returns>
-       // [HttpGet]
-       // public async Task<ActionResult> Report()
-       // {
-       //     #region Breadcrumb
-
-       //     ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
-       //         new BreadcrumbItemHelper(Labels.CalendarReport, Url.Action("Report", "Meetings", new { Area = "Music" }))
-       //     });
-
-       //     #endregion
-
-       //     ViewBag.Rooms = (await this.roomRepo.FindAllDtoByEditionIdAsync(this.EditionDto.Id))?.Select(r => new RoomJsonDto
-       //     {
-       //         Id = r.Room.Id,
-       //         Uid = r.Room.Uid,
-       //         Name = r.GetRoomNameByLanguageCode(this.UserInterfaceLanguage)?.RoomName?.Value
-       //     })?.ToList();
-
-       //     return View();
-       // }
-
-       // /// <summary>
-       // /// Shows the report data widget.
-       // /// </summary>
-       // /// <param name="searchViewModel">The search view model.</param>
-       // /// <returns></returns>
-       // [HttpGet]
-       // public async Task<ActionResult> ShowReportDataWidget(ScheduledSearchViewModel searchViewModel)
-       // {
-       //     var negotiationDtos = await this.negotiationRepo.FindReportWidgetDtoAsync(
-       //         this.EditionDto.Id,
-       //         searchViewModel.BuyerOrganizationUid,
-       //         searchViewModel.SellerOrganizationUid,
-       //         searchViewModel.ProjectKeywords,
-       //         searchViewModel.Date,
-       //         searchViewModel.RoomUid,
-       //         searchViewModel.ShowParticipants);
-
-       //     return new JsonResult()
-       //     {
-       //         Data = new
-       //         {
-       //             status = "success",
-       //             pages = new List<dynamic>
-       //             {
-       //                 new { page = this.RenderRazorViewToString("Widgets/ReportDataWidget", negotiationDtos), divIdOrClass = "#MusicMeetingsReportWidget" },
-       //             }
-       //         },
-       //         JsonRequestBehavior = JsonRequestBehavior.AllowGet,
-       //         MaxJsonLength = Int32.MaxValue
-       //     };
-       // }
-
-       // /// <summary>
-       // /// Exports the report to excel.
-       // /// </summary>
-       // /// <param name="searchViewModel">The search view model.</param>
-       // /// <returns></returns>
-       // [HttpGet]
-       // public async Task<ActionResult> ExportReportToExcel(ScheduledSearchViewModel searchViewModel)
-       // {
-       //     var negotiationDtos = await this.negotiationRepo.FindReportWidgetDtoAsync(
-       //         this.EditionDto.Id,
-       //         searchViewModel.BuyerOrganizationUid,
-       //         searchViewModel.SellerOrganizationUid,
-       //         searchViewModel.ProjectKeywords,
-       //         searchViewModel.Date,
-       //         searchViewModel.RoomUid,
-       //         searchViewModel.ShowParticipants);
-
-       //     var workbook = new XLWorkbook();
-       //     var worksheet = workbook.Worksheets.Add(Labels.CalendarReport);
-       //     worksheet.Outline.SummaryVLocation = XLOutlineSummaryVLocation.Top;
-       //     worksheet.ShowGridLines = true;
-
-       //     // Excel colors and formatting
-       //     var dateBackgroundColor = XLColor.FromHtml("#808080");
-       //     var dateFontColor = XLColor.White;
-       //     var roomBackgroundColor = XLColor.FromHtml("#d1d1d1");
-       //     var roomFontColor = XLColor.Black;
-       //     var tableBackgroundColor = XLColor.FromHtml("#d1d1d1");
-       //     var tableFontColor = XLColor.Black;
-       //     var totalColumns = 1;
-
-       //     if (negotiationDtos?.Any() == true)
-       //     {
-       //         var lineIndex = 1;
-
-       //         foreach (var negotiationReportGroupedByDateDto in negotiationDtos)
-       //         {
-       //             #region Date Header
-
-       //             var columnsCount = negotiationReportGroupedByDateDto.NegotiationReportGroupedByRoomDtos.SelectMany(nr => nr.NegotiationReportGroupedByStartDateDtos?.SelectMany(nd => nd.Negotiations.Select(n => n.TableNumber)))?.Distinct()?.Count() ?? 0;
-
-       //             var columnIndex = 0;
-
-       //             worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = negotiationReportGroupedByDateDto.Date.ToShortDateString();
-       //             worksheet.Range(columnIndex.GetExcelColumnLetters() + lineIndex + ":" + (columnsCount + 1).GetExcelColumnLetters() + lineIndex).Row(1).Merge();
-       //             worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Left);
-       //             worksheet.Cell(lineIndex, columnIndex).Style.Font.Bold = true;
-       //             worksheet.Cell(lineIndex, columnIndex).Style.Fill.BackgroundColor = dateBackgroundColor;
-       //             worksheet.Cell(lineIndex, columnIndex).Style.Font.SetFontColor(dateFontColor);
-
-       //             #endregion Date Header
-
-       //             if (negotiationReportGroupedByDateDto.NegotiationReportGroupedByRoomDtos?.Any() == true)
-       //             {
-       //                 foreach (var negotiationReportGroupedByRoomDto in negotiationReportGroupedByDateDto.NegotiationReportGroupedByRoomDtos)
-       //                 {
-       //                     var roomName = negotiationReportGroupedByRoomDto?.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value;
-       //                     var tableNumbers = negotiationReportGroupedByRoomDto?.NegotiationReportGroupedByStartDateDtos?.SelectMany(nd => nd.Negotiations.Select(n => n.TableNumber))?.Distinct()?.OrderBy(tn => tn)?.ToList() ??
-       //                                        new List<int>();
-
-       //                     #region Room Sub Header
-
-       //                     lineIndex++;
-       //                     columnIndex = 0;
-
-       //                     worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = roomName;
-       //                     worksheet.Range(columnIndex.GetExcelColumnLetters() + lineIndex + ":" + (tableNumbers.Count() + 1).GetExcelColumnLetters() + lineIndex).Row(1).Merge();
-       //                     worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Left);
-       //                     worksheet.Cell(lineIndex, columnIndex).Style.Font.Bold = true;
-       //                     worksheet.Cell(lineIndex, columnIndex).Style.Fill.BackgroundColor = roomBackgroundColor;
-       //                     worksheet.Cell(lineIndex, columnIndex).Style.Font.SetFontColor(roomFontColor);
-
-       //                     #endregion Room Sub Headers
-
-       //                     #region Table Header
-
-       //                     lineIndex++;
-       //                     columnIndex = 0;
-
-       //                     worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = Labels.Hour;
-       //                     worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
-       //                     worksheet.Cell(lineIndex, columnIndex).Style.Font.Bold = true;
-       //                     worksheet.Cell(lineIndex, columnIndex).Style.Fill.BackgroundColor = tableBackgroundColor;
-       //                     worksheet.Cell(lineIndex, columnIndex).Style.Font.SetFontColor(tableFontColor);
-
-       //                     foreach (var tableNumber in tableNumbers)
-       //                     {
-       //                         worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = $"{Labels.Table} {tableNumber}";
-       //                         worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
-       //                         worksheet.Cell(lineIndex, columnIndex).Style.Font.Bold = true;
-       //                         worksheet.Cell(lineIndex, columnIndex).Style.Fill.BackgroundColor = tableBackgroundColor;
-       //                         worksheet.Cell(lineIndex, columnIndex).Style.Font.SetFontColor(tableFontColor);
-       //                     }
-
-       //                     #endregion Table Header
-
-       //                     #region Hours
-
-       //                     foreach (var negotiationReportGroupedByStartDateDto in negotiationReportGroupedByRoomDto.NegotiationReportGroupedByStartDateDtos.OrderBy(n => n.StartDate))
-       //                     {
-       //                         lineIndex++;
-       //                         columnIndex = 0;
-
-       //                         worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = $"{negotiationReportGroupedByStartDateDto.StartDate.ToString("HH:mm")}\n{negotiationReportGroupedByStartDateDto.EndDate.ToString("HH:mm")}";
-       //                         worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
-       //                         worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center);
-       //                         worksheet.Cell(lineIndex, columnIndex).Style.Font.Bold = true;
-       //                         worksheet.Cell(lineIndex, columnIndex).Style.Alignment.WrapText = true;
-
-       //                         foreach (var tableNumber in tableNumbers)
-       //                         {
-       //                             totalColumns = columnIndex > totalColumns ? columnIndex : totalColumns;
-
-       //                             var negotiation = negotiationReportGroupedByStartDateDto.Negotiations.FirstOrDefault(n => n.TableNumber == tableNumber);
-       //                             if (negotiation != null)
-       //                             {
-       //                                 worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = negotiation.ProjectBuyerEvaluation?.BuyerAttendeeOrganization?.Organization?.TradeName +
-       //                                                                                                            "\n" + negotiation.ProjectBuyerEvaluation?.Project?.ProjectTitles?.FirstOrDefault(pt => pt.Language.Code == ViewBag.UserInterfaceLanguage)?.Value +
-       //                                                                                                            "\n" + negotiation.ProjectBuyerEvaluation?.Project?.SellerAttendeeOrganization?.Organization?.TradeName;
-       //                             }
-       //                             else
-       //                             {
-       //                                 worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = string.Empty;
-       //                             }
-
-       //                             worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
-       //                             worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center);
-       //                             worksheet.Cell(lineIndex, columnIndex).Style.Alignment.WrapText = true;
-       //                         }
-       //                     }
-
-       //                     #endregion Hours
-       //                 }
-       //             }
-
-       //             lineIndex++;
-       //         }
-       //     }
-
-       //     // AdjustColumns
-       //     for (var i = 1; i <= totalColumns + 1; i++)
-       //     {
-       //         worksheet.Column(i).AdjustToContents();
-       //     }
-
-       //     return new ExcelResult(workbook, Labels.CalendarReport + "_" + DateTime.UtcNow.ToBrazilTimeZone().ToString("yyyyMMdd"));
-       // }
-
-       // /// <summary>
-       // /// Exports the report to PDF.
-       // /// </summary>
-       // /// <param name="searchViewModel">The search view model.</param>
-       // /// <returns></returns>
-       // [HttpGet]
-       // public async Task<ActionResult> ExportReportToPdf(ScheduledSearchViewModel searchViewModel)
-       // {
-       //     var negotiationsDtos = await this.negotiationRepo.FindReportWidgetDtoAsync(
-       //         this.EditionDto.Id,
-       //         searchViewModel.BuyerOrganizationUid,
-       //         searchViewModel.SellerOrganizationUid,
-       //         searchViewModel.ProjectKeywords,
-       //         searchViewModel.Date,
-       //         searchViewModel.RoomUid,
-       //         searchViewModel.ShowParticipants);
-
-       //     if (negotiationsDtos.Count == 0)
-       //     {
-       //         return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.ScheduledOneToOneMeetings, Labels.FoundFP) }, JsonRequestBehavior.AllowGet);
-       //     }
-
-       //     var pdf = new PlataformaRio2CDocument(new ScheduledMeetingsReportDocumentTemplate(negotiationsDtos, this.UserInterfaceLanguage, this.EditionDto));
-       //     var fileName = $"{Labels.ScheduledNegotiations.RemoveFilenameInvalidChars().Trim()}_{DateTime.Now.ToStringHourMinute()}.pdf".RemoveFilenameInvalidChars();
-       //     return File(pdf.GetStream(), "application/pdf", fileName);
-       // }
-
-       // #endregion
+        #endregion
+
+        //#region Send E-mails to Players
+
+        //#region List
+
+        /// <summary>
+        /// Sends the email to players.
+        /// </summary>
+        /// <param name = "searchViewModel" > The search view model.</param>
+        /// <returns></returns>
+        //[HttpGet]
+        //public ActionResult SendEmailToPlayers(SendEmailToPlayersSearchViewModel searchViewModel)
+        //{
+        //    #region Breadcrumb
+
+        //    ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
+        //        new BreadcrumbItemHelper(Labels.AudioVisual, null),
+        //        new BreadcrumbItemHelper(Labels.OneToOneMeetings, null),
+        //        new BreadcrumbItemHelper(Labels.SendEmailToPlayers, Url.Action("SendEmailToPlayers", "Meetings", new { Area = "Music" }))
+        //    });
+
+        //    #endregion
+
+        //    return View(searchViewModel);
+        //}
+
+        /// <summary>
+        /// Sends the email to players search.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        ///// <returns></returns>
+        //[HttpGet]
+        //public async Task<ActionResult> SendEmailToPlayersSearch(IDataTablesRequest request)
+        //{
+        //    var producers = await this.attendeeOrganizationRepo.FindAllByActiveBuyerNegotiationsAndByDataTable(
+        //        request.Start / request.Length,
+        //        request.Length,
+        //        request.Search?.Value,
+        //        request.GetSortColumns(),
+        //        this.EditionDto.Id,
+        //        this.AdminAccessControlDto.Language.Id);
+
+        //    var response = DataTablesResponse.Create(request, producers.TotalItemCount, producers.TotalItemCount, producers);
+
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        dataTable = response
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
+
+        //#endregion
+
+        //#region Total Count Widget
+
+        /// <summary>
+        /// Shows the send email to players total count widget.
+        /// </summary>
+        ///// <returns></returns>
+        //[HttpGet]
+        //public async Task<ActionResult> ShowSendEmailToPlayersTotalCountWidget()
+        //{
+        //    var producers = await this.attendeeOrganizationRepo.CountAllByActiveBuyerNegotiationsAndByDataTable(true, this.EditionDto.Id);
+
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        pages = new List<dynamic>
+        //        {
+        //            new { page = this.RenderRazorViewToString("Widgets/SendEmailToPlayersTotalCountWidget", producers), divIdOrClass = "#AudiovisualMeetingsSendEmailToPlayersTotalCountWidget" },
+        //        }
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
+
+        //#endregion
+
+        //#region Edition Count Widget
+
+        /// <summary>
+        /// Shows the send email to players edition count widget.
+        /// </summary>
+        /// <returns></returns>
+        //public async Task<ActionResult> ShowSendEmailToPlayersEditionCountWidget()
+        //{
+        //    var producers = await this.attendeeOrganizationRepo.CountAllByActiveBuyerNegotiationsAndByDataTable(false, this.EditionDto.Id);
+
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        pages = new List<dynamic>
+        //        {
+        //            new { page = this.RenderRazorViewToString("Widgets/SendEmailToPlayersEditionCountWidget", producers), divIdOrClass = "#AudiovisualMeetingsSendEmailToPlayersEditionCountWidget" },
+        //        }
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
+
+        //#endregion
+
+        //#region Send E-mails
+
+        ///// <summary>
+        ///// Sends the players emails.
+        ///// </summary>
+        ///// <param name="keywords">The keywords.</param>
+        ///// <param name="selectedAttendeeOrganizationsUids">The selected attendee organizations uids.</param>
+        ///// <returns></returns>
+        ///// <exception cref="DomainException">
+        ///// </exception>
+        //[HttpPost]
+        //public async Task<ActionResult> SendPlayersEmails(string keywords, string selectedAttendeeOrganizationsUids)
+        //{
+        //    AppValidationResult result = null;
+
+        //    try
+        //    {
+        //        var attendeeOrganizationBaseDtos = await this.attendeeOrganizationRepo.FindAllBaseDtoByActiveBuyerNegotiations(
+        //            keywords,
+        //            selectedAttendeeOrganizationsUids?.ToListGuid(','),
+        //            this.EditionDto.Id,
+        //            this.AdminAccessControlDto.Language.Id);
+        //        if (attendeeOrganizationBaseDtos?.Any() != true)
+        //        {
+        //            throw new DomainException(Messages.SelectAtLeastOneOption);
+        //        }
+
+        //        List<string> errors = new List<string>();
+        //        foreach (var attendeeOrganizationBaseDto in attendeeOrganizationBaseDtos)
+        //        {
+        //            foreach (var attendeeCollaboratorBaseDto in attendeeOrganizationBaseDto.AttendeeCollaboratorBaseDtos)
+        //            {
+        //                // If the collaborator does not have an user interface language, use the user interface language of the current user
+        //                var collaboratorLanguageCode = attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.UserInterfaceLanguageCode ?? this.UserInterfaceLanguage;
+
+        //                try
+        //                {
+        //                    result = await this.CommandBus.Send(new SendPlayerNegotiationsEmailAsync(
+        //                        attendeeOrganizationBaseDto,
+        //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Id,
+        //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Uid,
+        //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.FirstName,
+        //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.FullName,
+        //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.Email,
+        //                        this.EditionDto.Edition,
+        //                        this.AdminAccessControlDto.User.Id,
+        //                        collaboratorLanguageCode));
+        //                    if (!result.IsValid)
+        //                    {
+        //                        throw new DomainException(Messages.CorrectFormValues);
+        //                    }
+        //                }
+        //                catch (DomainException)
+        //                {
+        //                    //Cannot stop sending email when exception occurs.
+        //                    errors.AddRange(result.Errors.Select(e => e.Message));
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                    Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+        //                }
+        //            }
+
+        //            if (errors.Any())
+        //            {
+        //                throw new DomainException(string.Format(Messages.OneOrMoreEmailsNotSend, Labels.WelcomeEmail));
+        //            }
+        //        }
+        //    }
+        //    catch (DomainException ex)
+        //    {
+        //        return Json(new
+        //        {
+        //            status = "error",
+        //            message = result?.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+        //        }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Emails, Labels.SentMP.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+        //}
+
+        //#endregion
+
+        //#endregion
+
+        //#region Send E-mails to Producers
+
+        //#region List
+
+        ///// <summary>
+        ///// Sends the email to producers.
+        ///// </summary>
+        ///// <param name="searchViewModel">The search view model.</param>
+        ///// <returns></returns>
+        //[HttpGet]
+        //public ActionResult SendEmailToProducers(SendEmailToProducersSearchViewModel searchViewModel)
+        //{
+        //    #region Breadcrumb
+
+        //    ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
+        //        new BreadcrumbItemHelper(Labels.AudioVisual, null),
+        //        new BreadcrumbItemHelper(Labels.OneToOneMeetings, null),
+        //        new BreadcrumbItemHelper(Labels.SendEmailToProducers, Url.Action("SendEmailToProducers", "Meetings", new { Area = "Music" }))
+        //    });
+
+        //    #endregion
+
+        //    return View(searchViewModel);
+        //}
+
+        ///// <summary>
+        ///// Sends the email to producers search.
+        ///// </summary>
+        ///// <param name="request">The request.</param>
+        ///// <returns></returns>
+        //[HttpGet]
+        //public async Task<ActionResult> SendEmailToProducersSearch(IDataTablesRequest request)
+        //{
+        //    var producers = await this.attendeeOrganizationRepo.FindAllByActiveSellerNegotiationsAndByDataTable(
+        //        request.Start / request.Length,
+        //        request.Length,
+        //        request.Search?.Value,
+        //        request.GetSortColumns(),
+        //        this.EditionDto.Id,
+        //        this.AdminAccessControlDto.Language.Id);
+
+        //    var response = DataTablesResponse.Create(request, producers.TotalItemCount, producers.TotalItemCount, producers);
+
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        dataTable = response
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
+
+        //#endregion
+
+        //#region Total Count Widget
+
+        ///// <summary>
+        ///// Shows the send email to players total count widget.
+        ///// </summary>
+        ///// <returns></returns>
+        //[HttpGet]
+        //public async Task<ActionResult> ShowSendEmailToProducersTotalCountWidget()
+        //{
+        //    var producers = await this.attendeeOrganizationRepo.CountAllByActiveSellerNegotiationsAndByDataTable(true, this.EditionDto.Id);
+
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        pages = new List<dynamic>
+        //        {
+        //            new { page = this.RenderRazorViewToString("Widgets/SendEmailToProducersTotalCountWidget", producers), divIdOrClass = "#MusicMeetingsSendEmailToProducersTotalCountWidget" },
+        //        }
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
+
+        //#endregion
+
+        //#region Edition Count Widget
+
+        ///// <summary>
+        ///// Shows the send email to players edition count widget.
+        ///// </summary>
+        ///// <returns></returns>
+        //public async Task<ActionResult> ShowSendEmailToProducersEditionCountWidget()
+        //{
+        //    var producers = await this.attendeeOrganizationRepo.CountAllByActiveSellerNegotiationsAndByDataTable(false, this.EditionDto.Id);
+
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        pages = new List<dynamic>
+        //        {
+        //            new { page = this.RenderRazorViewToString("Widgets/SendEmailToProducersEditionCountWidget", producers), divIdOrClass = "#MusicMeetingsSendEmailToProducersEditionCountWidget" },
+        //        }
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
+
+        //#endregion
+
+        //#region Send E-mails
+
+        ///// <summary>
+        ///// Sends the producers emails.
+        ///// </summary>
+        ///// <param name="keywords">The keywords.</param>
+        ///// <param name="selectedAttendeeOrganizationsUids">The selected attendee organizations uids.</param>
+        ///// <returns></returns>
+        //[HttpPost]
+        //public async Task<ActionResult> SendProducersEmails(string keywords, string selectedAttendeeOrganizationsUids)
+        //{
+        //    AppValidationResult result = null;
+
+        //    try
+        //    {
+        //        var attendeeOrganizationBaseDtos = await this.attendeeOrganizationRepo.FindAllBaseDtoByActiveSellerNegotiations(
+        //            keywords,
+        //            selectedAttendeeOrganizationsUids?.ToListGuid(','),
+        //            this.EditionDto.Id,
+        //            this.AdminAccessControlDto.Language.Id);
+        //        if (attendeeOrganizationBaseDtos?.Any() != true)
+        //        {
+        //            throw new DomainException(Messages.SelectAtLeastOneOption);
+        //        }
+
+        //        List<string> errors = new List<string>();
+        //        foreach (var attendeeOrganizationBaseDto in attendeeOrganizationBaseDtos)
+        //        {
+        //            foreach (var attendeeCollaboratorBaseDto in attendeeOrganizationBaseDto.AttendeeCollaboratorBaseDtos)
+        //            {
+        //                // If the collaborator does not have an user interface language, use the user interface language of the current user
+        //                var collaboratorLanguageCode = attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.UserInterfaceLanguageCode ?? this.UserInterfaceLanguage;
+
+        //                try
+        //                {
+        //                    result = await this.CommandBus.Send(new SendProducerNegotiationsEmailAsync(
+        //                        attendeeOrganizationBaseDto,
+        //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Id,
+        //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Uid,
+        //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.FirstName,
+        //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.FullName,
+        //                        attendeeCollaboratorBaseDto.CollaboratorBaseDto.Email,
+        //                        this.EditionDto.Edition,
+        //                        this.AdminAccessControlDto.User.Id,
+        //                        collaboratorLanguageCode));
+        //                    if (!result.IsValid)
+        //                    {
+        //                        throw new DomainException(Messages.CorrectFormValues);
+        //                    }
+        //                }
+        //                catch (DomainException ex)
+        //                {
+        //                    //Cannot stop sending email when exception occurs.
+        //                    errors.AddRange(result.Errors.Select(e => e.Message));
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                    Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+        //                }
+        //            }
+
+        //            if (errors.Any())
+        //            {
+        //                throw new DomainException(string.Format(Messages.OneOrMoreEmailsNotSend, Labels.WelcomeEmail));
+        //            }
+        //        }
+        //    }
+        //    catch (DomainException ex)
+        //    {
+        //        return Json(new
+        //        {
+        //            status = "error",
+        //            message = result?.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+        //        }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Emails, Labels.SentMP.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+        //}
+
+        //#endregion
+
+        ////#endregion
+
+        //#region Report
+
+        ///// <summary>Indexes the specified search view model.</summary>
+        ///// <returns></returns>
+        //[HttpGet]
+        //public async Task<ActionResult> Report()
+        //{
+        //    #region Breadcrumb
+
+        //    ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
+        //        new BreadcrumbItemHelper(Labels.CalendarReport, Url.Action("Report", "Meetings", new { Area = "Music" }))
+        //    });
+
+        //    #endregion
+
+        //    ViewBag.Rooms = (await this.roomRepo.FindAllDtoByEditionIdAsync(this.EditionDto.Id))?.Select(r => new RoomJsonDto
+        //    {
+        //        Id = r.Room.Id,
+        //        Uid = r.Room.Uid,
+        //        Name = r.GetRoomNameByLanguageCode(this.UserInterfaceLanguage)?.RoomName?.Value
+        //    })?.ToList();
+
+        //    return View();
+        //}
+
+        ///// <summary>
+        ///// Shows the report data widget.
+        ///// </summary>
+        ///// <param name="searchViewModel">The search view model.</param>
+        ///// <returns></returns>
+        //[HttpGet]
+        //public async Task<ActionResult> ShowReportDataWidget(ScheduledSearchViewModel searchViewModel)
+        //{
+        //    var negotiationDtos = await this.negotiationRepo.FindReportWidgetDtoAsync(
+        //        this.EditionDto.Id,
+        //        searchViewModel.BuyerOrganizationUid,
+        //        searchViewModel.SellerOrganizationUid,
+        //        searchViewModel.ProjectKeywords,
+        //        searchViewModel.Date,
+        //        searchViewModel.RoomUid,
+        //        searchViewModel.ShowParticipants);
+
+        //    return new JsonResult()
+        //    {
+        //        Data = new
+        //        {
+        //            status = "success",
+        //            pages = new List<dynamic>
+        //            {
+        //                new { page = this.RenderRazorViewToString("Widgets/ReportDataWidget", negotiationDtos), divIdOrClass = "#MusicMeetingsReportWidget" },
+        //            }
+        //        },
+        //        JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+        //        MaxJsonLength = Int32.MaxValue
+        //    };
+        //}
+
+        ///// <summary>
+        ///// Exports the report to excel.
+        ///// </summary>
+        ///// <param name="searchViewModel">The search view model.</param>
+        ///// <returns></returns>
+        //[HttpGet]
+        //public async Task<ActionResult> ExportReportToExcel(ScheduledSearchViewModel searchViewModel)
+        //{
+        //    var negotiationDtos = await this.negotiationRepo.FindReportWidgetDtoAsync(
+        //        this.EditionDto.Id,
+        //        searchViewModel.BuyerOrganizationUid,
+        //        searchViewModel.SellerOrganizationUid,
+        //        searchViewModel.ProjectKeywords,
+        //        searchViewModel.Date,
+        //        searchViewModel.RoomUid,
+        //        searchViewModel.ShowParticipants);
+
+        //    var workbook = new XLWorkbook();
+        //    var worksheet = workbook.Worksheets.Add(Labels.CalendarReport);
+        //    worksheet.Outline.SummaryVLocation = XLOutlineSummaryVLocation.Top;
+        //    worksheet.ShowGridLines = true;
+
+        //    // Excel colors and formatting
+        //    var dateBackgroundColor = XLColor.FromHtml("#808080");
+        //    var dateFontColor = XLColor.White;
+        //    var roomBackgroundColor = XLColor.FromHtml("#d1d1d1");
+        //    var roomFontColor = XLColor.Black;
+        //    var tableBackgroundColor = XLColor.FromHtml("#d1d1d1");
+        //    var tableFontColor = XLColor.Black;
+        //    var totalColumns = 1;
+
+        //    if (negotiationDtos?.Any() == true)
+        //    {
+        //        var lineIndex = 1;
+
+        //        foreach (var negotiationReportGroupedByDateDto in negotiationDtos)
+        //        {
+        //            #region Date Header
+
+        //            var columnsCount = negotiationReportGroupedByDateDto.NegotiationReportGroupedByRoomDtos.SelectMany(nr => nr.NegotiationReportGroupedByStartDateDtos?.SelectMany(nd => nd.Negotiations.Select(n => n.TableNumber)))?.Distinct()?.Count() ?? 0;
+
+        //            var columnIndex = 0;
+
+        //            worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = negotiationReportGroupedByDateDto.Date.ToShortDateString();
+        //            worksheet.Range(columnIndex.GetExcelColumnLetters() + lineIndex + ":" + (columnsCount + 1).GetExcelColumnLetters() + lineIndex).Row(1).Merge();
+        //            worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Left);
+        //            worksheet.Cell(lineIndex, columnIndex).Style.Font.Bold = true;
+        //            worksheet.Cell(lineIndex, columnIndex).Style.Fill.BackgroundColor = dateBackgroundColor;
+        //            worksheet.Cell(lineIndex, columnIndex).Style.Font.SetFontColor(dateFontColor);
+
+        //            #endregion Date Header
+
+        //            if (negotiationReportGroupedByDateDto.NegotiationReportGroupedByRoomDtos?.Any() == true)
+        //            {
+        //                foreach (var negotiationReportGroupedByRoomDto in negotiationReportGroupedByDateDto.NegotiationReportGroupedByRoomDtos)
+        //                {
+        //                    var roomName = negotiationReportGroupedByRoomDto?.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value;
+        //                    var tableNumbers = negotiationReportGroupedByRoomDto?.NegotiationReportGroupedByStartDateDtos?.SelectMany(nd => nd.Negotiations.Select(n => n.TableNumber))?.Distinct()?.OrderBy(tn => tn)?.ToList() ??
+        //                                       new List<int>();
+
+        //                    #region Room Sub Header
+
+        //                    lineIndex++;
+        //                    columnIndex = 0;
+
+        //                    worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = roomName;
+        //                    worksheet.Range(columnIndex.GetExcelColumnLetters() + lineIndex + ":" + (tableNumbers.Count() + 1).GetExcelColumnLetters() + lineIndex).Row(1).Merge();
+        //                    worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Left);
+        //                    worksheet.Cell(lineIndex, columnIndex).Style.Font.Bold = true;
+        //                    worksheet.Cell(lineIndex, columnIndex).Style.Fill.BackgroundColor = roomBackgroundColor;
+        //                    worksheet.Cell(lineIndex, columnIndex).Style.Font.SetFontColor(roomFontColor);
+
+        //                    #endregion Room Sub Headers
+
+        //                    #region Table Header
+
+        //                    lineIndex++;
+        //                    columnIndex = 0;
+
+        //                    worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = Labels.Hour;
+        //                    worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+        //                    worksheet.Cell(lineIndex, columnIndex).Style.Font.Bold = true;
+        //                    worksheet.Cell(lineIndex, columnIndex).Style.Fill.BackgroundColor = tableBackgroundColor;
+        //                    worksheet.Cell(lineIndex, columnIndex).Style.Font.SetFontColor(tableFontColor);
+
+        //                    foreach (var tableNumber in tableNumbers)
+        //                    {
+        //                        worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = $"{Labels.Table} {tableNumber}";
+        //                        worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+        //                        worksheet.Cell(lineIndex, columnIndex).Style.Font.Bold = true;
+        //                        worksheet.Cell(lineIndex, columnIndex).Style.Fill.BackgroundColor = tableBackgroundColor;
+        //                        worksheet.Cell(lineIndex, columnIndex).Style.Font.SetFontColor(tableFontColor);
+        //                    }
+
+        //                    #endregion Table Header
+
+        //                    #region Hours
+
+        //                    foreach (var negotiationReportGroupedByStartDateDto in negotiationReportGroupedByRoomDto.NegotiationReportGroupedByStartDateDtos.OrderBy(n => n.StartDate))
+        //                    {
+        //                        lineIndex++;
+        //                        columnIndex = 0;
+
+        //                        worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = $"{negotiationReportGroupedByStartDateDto.StartDate.ToString("HH:mm")}\n{negotiationReportGroupedByStartDateDto.EndDate.ToString("HH:mm")}";
+        //                        worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+        //                        worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center);
+        //                        worksheet.Cell(lineIndex, columnIndex).Style.Font.Bold = true;
+        //                        worksheet.Cell(lineIndex, columnIndex).Style.Alignment.WrapText = true;
+
+        //                        foreach (var tableNumber in tableNumbers)
+        //                        {
+        //                            totalColumns = columnIndex > totalColumns ? columnIndex : totalColumns;
+
+        //                            var negotiation = negotiationReportGroupedByStartDateDto.Negotiations.FirstOrDefault(n => n.TableNumber == tableNumber);
+        //                            if (negotiation != null)
+        //                            {
+        //                                worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = negotiation.ProjectBuyerEvaluation?.BuyerAttendeeOrganization?.Organization?.TradeName +
+        //                                                                                                           "\n" + negotiation.ProjectBuyerEvaluation?.Project?.ProjectTitles?.FirstOrDefault(pt => pt.Language.Code == ViewBag.UserInterfaceLanguage)?.Value +
+        //                                                                                                           "\n" + negotiation.ProjectBuyerEvaluation?.Project?.SellerAttendeeOrganization?.Organization?.TradeName;
+        //                            }
+        //                            else
+        //                            {
+        //                                worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = string.Empty;
+        //                            }
+
+        //                            worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+        //                            worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center);
+        //                            worksheet.Cell(lineIndex, columnIndex).Style.Alignment.WrapText = true;
+        //                        }
+        //                    }
+
+        //                    #endregion Hours
+        //                }
+        //            }
+
+        //            lineIndex++;
+        //        }
+        //    }
+
+        //    // AdjustColumns
+        //    for (var i = 1; i <= totalColumns + 1; i++)
+        //    {
+        //        worksheet.Column(i).AdjustToContents();
+        //    }
+
+        //    return new ExcelResult(workbook, Labels.CalendarReport + "_" + DateTime.UtcNow.ToBrazilTimeZone().ToString("yyyyMMdd"));
+        //}
+
+        ///// <summary>
+        ///// Exports the report to PDF.
+        ///// </summary>
+        ///// <param name="searchViewModel">The search view model.</param>
+        ///// <returns></returns>
+        //[HttpGet]
+        //public async Task<ActionResult> ExportReportToPdf(ScheduledSearchViewModel searchViewModel)
+        //{
+        //    var negotiationsDtos = await this.negotiationRepo.FindReportWidgetDtoAsync(
+        //        this.EditionDto.Id,
+        //        searchViewModel.BuyerOrganizationUid,
+        //        searchViewModel.SellerOrganizationUid,
+        //        searchViewModel.ProjectKeywords,
+        //        searchViewModel.Date,
+        //        searchViewModel.RoomUid,
+        //        searchViewModel.ShowParticipants);
+
+        //    if (negotiationsDtos.Count == 0)
+        //    {
+        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.ScheduledOneToOneMeetings, Labels.FoundFP) }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    var pdf = new PlataformaRio2CDocument(new ScheduledMeetingsReportDocumentTemplate(negotiationsDtos, this.UserInterfaceLanguage, this.EditionDto));
+        //    var fileName = $"{Labels.ScheduledNegotiations.RemoveFilenameInvalidChars().Trim()}_{DateTime.Now.ToStringHourMinute()}.pdf".RemoveFilenameInvalidChars();
+        //    return File(pdf.GetStream(), "application/pdf", fileName);
+        //}
+
+        //#endregion
     }
 }

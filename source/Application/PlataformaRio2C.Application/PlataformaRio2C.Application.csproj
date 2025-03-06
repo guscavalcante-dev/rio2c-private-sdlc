@@ -102,6 +102,12 @@
       <HintPath>..\..\..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="Microsoft.Exchange.WebServices, Version=15.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Exchange.WebServices.2.2\lib\40\Microsoft.Exchange.WebServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Exchange.WebServices.Auth, Version=15.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Exchange.WebServices.2.2\lib\40\Microsoft.Exchange.WebServices.Auth.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Extensions.Caching.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Microsoft.Extensions.Caching.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>
     </Reference>
@@ -209,11 +215,11 @@
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationRoomConfigs\DeleteNegotiationRoomConfigCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationRoomConfigs\UpdateNegotiationRoomConfigCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationRoomConfigs\CreateNegotiationRoomConfigCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Audiovisual\Negotiations\DeleteNegotiationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\Negotiations\ScheduleManualNegotiationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\Negotiations\UpdateNegotiationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\Negotiations\CreateNegotiationsCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\Negotiations\CreateNegotiationCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Audiovisual\Negotiations\DeleteNegotiationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\Negotiations\NegotiationBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\Projects\AudiovisualComissionEvaluateProjectCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\BaseCommandHandler.cs" />
@@ -294,6 +300,13 @@
     <Compile Include="CQRS\CommandsHandlers\Music\BusinessRoundProjects\RefuseMusicBusinessRoundProjectEvaluationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\BusinessRoundProjects\UpdateMusicBusinessRoundProjectOptionsCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\BusinessRoundProjects\UpdateMusicBusinessRoundProjectMainInformationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Music\Negotiations\CreateAttendeeMusicNegotiationCollaboratorCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Music\Negotiations\CreateMusicBusinesRoundNegotiationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Music\Negotiations\CreateMusicNegotiationsCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Music\Negotiations\DeleteMusicBusinessRoundNegotiationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Music\Negotiations\MusicBusinessRoundNegotiationBaseCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Music\Negotiations\ScheduleManualMusicNegotiationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Music\Negotiations\UpdateMusicNegotiationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\Pitching\DistributeMembersMusicPitchingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\PlayersExecutives\CreateMusicPlayerExecutiveCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\PlayersExecutives\UpdateMusicPlayerExecutiveCollaboratorCommandHandler.cs" />
@@ -506,6 +519,13 @@
     <Compile Include="CQRS\Commands\Music\BusinessRoundProjects\RefuseMusicBusinessRoundProjectEvaluation.cs" />
     <Compile Include="CQRS\Commands\Music\BusinessRoundProjects\UpdateMusicBusinessRoundProjectOptions.cs" />
     <Compile Include="CQRS\Commands\Music\BusinessRoundProjects\UpdateMusicBusinessRoundProjectMainInformation.cs" />
+    <Compile Include="CQRS\Commands\Music\MusicBusinessRoundNegotiations\BaseCommands\MusicbusinessRoundNegotiationBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Music\MusicBusinessRoundNegotiations\CreateAttendeeMusicBusinessNegotiationCollaborator.cs" />
+    <Compile Include="CQRS\Commands\Music\MusicBusinessRoundNegotiations\CreateNegotiation.cs" />
+    <Compile Include="CQRS\Commands\Music\MusicBusinessRoundNegotiations\CreateMusicBusinessNegotiation.cs" />
+    <Compile Include="CQRS\Commands\Music\MusicBusinessRoundNegotiations\DeleteMusicBusinessRoundNegotiationCommandHandler.cs" />
+    <Compile Include="CQRS\Commands\Music\MusicBusinessRoundNegotiations\ScheduleManualNegotiation.cs" />
+    <Compile Include="CQRS\Commands\Music\MusicBusinessRoundNegotiations\UpdateMusicBusinessRoundNegotiation.cs" />
     <Compile Include="CQRS\Commands\Music\Pitching\DistributeMembersMusicPitching.cs" />
     <Compile Include="CQRS\Commands\Music\Commissions\BaseCommands\MusicCommissionCollaboratorBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Music\Commissions\CreateMusicCommissionCollaborator.cs" />

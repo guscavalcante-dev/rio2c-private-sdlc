@@ -8,6 +8,8 @@ namespace PlataformaRio2C.Domain.Interfaces.Repositories
 {
     public interface IMusicBusinessRoundNegotiationRepository : IRepository<MusicBusinessRoundNegotiation>
     {
+        Task<int> CountNegotiationNotScheduledAsync(int editionId, bool showAllEditions = false);
+        Task<List<MusicBusinessRoundProjectBuyerEvaluationDto>> FindUnscheduledWidgetDtoAsync(int editionId);
         Task<MusicBusinessRoundNegotiation> FindByIdAsync(int negotiationId);
         Task<MusicBusinessRoundNegotiation> FindByUidAsync(Guid negotiationUid);
         Task<MusicBusinessRoundNegotiationDto> FindDtoAsync(Guid negotiationUid);
@@ -22,6 +24,5 @@ namespace PlataformaRio2C.Domain.Interfaces.Repositories
         Task<List<MusicBusinessRoundNegotiationReportGroupedByDateDto>> FindReportWidgetDtoAsync(int editionId, Guid? buyerOrganizationUid, Guid? sellerOrganizationUid, string projectKeywords, DateTime? negotiationDate, Guid? roomUid, bool showParticipants);
         Task<List<MusicBusinessRoundNegotiationGroupedByDateDto>> FindCollaboratorScheduledWidgetDtoAsync(int editionId, Guid? buyerOrganizationUid, Guid? sellerOrganizationUid, string projectKeywords, DateTime? negotiationDate, Guid? attendeeCollaboratorUid);
 
-        void Truncate();
     }
 }
