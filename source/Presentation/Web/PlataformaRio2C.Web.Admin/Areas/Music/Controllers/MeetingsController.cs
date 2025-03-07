@@ -42,6 +42,7 @@ using PlataformaRio2C.Application.CQRS.QueriesHandlers;
 using DocumentFormat.OpenXml.Office.Word;
 using System.Web.Http.Results;
 using PlataformaRio2C.Domain.Interfaces.Repositories;
+using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 {
@@ -114,8 +115,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         public async Task<ActionResult> ShowStatusWidget()
         {
             var generateAgendaStatusWidgetDto = new GenerateAgendaStatusWidgetDto(
-                await this.negotiationConfigRepo.CountNegotiationConfigsWithPresentialRoomConfiguredAsync(this.EditionDto.Id),
-                await this.negotiationConfigRepo.CountNegotiationConfigsWithVirtualRoomConfiguredAsync(this.EditionDto.Id));
+                await this.negotiationConfigRepo.CountNegotiationConfigsWithPresentialRoomConfiguredAsync(this.EditionDto.Id, ProjectType.Music.Id),
+                await this.negotiationConfigRepo.CountNegotiationConfigsWithVirtualRoomConfiguredAsync(this.EditionDto.Id, ProjectType.Music.Id));
 
             return Json(new
             {
@@ -1133,7 +1134,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowReportDataWidget(ScheduledSearchViewModel searchViewModel)
         {
-            var negotiationDtos = await this.negotiationRepo.FindReportWidgetDtoAsync(
+            var negotiationDtos = await this.musicbusinessRoundnegotiationRepo.FindReportWidgetDtoAsync(
                 this.EditionDto.Id,
                 searchViewModel.BuyerOrganizationUid,
                 searchViewModel.SellerOrganizationUid,
@@ -1155,181 +1156,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet,
                 MaxJsonLength = Int32.MaxValue
             };
-        }
-
-        /// <summary>
-        /// Exports the report to excel.
-        /// </summary>
-        /// <param name="searchViewModel">The search view model.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ExportReportToExcel(ScheduledSearchViewModel searchViewModel)
-        {
-            var negotiationDtos = await this.negotiationRepo.FindReportWidgetDtoAsync(
-                this.EditionDto.Id,
-                searchViewModel.BuyerOrganizationUid,
-                searchViewModel.SellerOrganizationUid,
-                searchViewModel.ProjectKeywords,
-                searchViewModel.Date,
-                searchViewModel.RoomUid,
-                searchViewModel.ShowParticipants);
-
-            var workbook = new XLWorkbook();
-            var worksheet = workbook.Worksheets.Add(Labels.CalendarReport);
-            worksheet.Outline.SummaryVLocation = XLOutlineSummaryVLocation.Top;
-            worksheet.ShowGridLines = true;
-
-            // Excel colors and formatting
-            var dateBackgroundColor = XLColor.FromHtml("#808080");
-            var dateFontColor = XLColor.White;
-            var roomBackgroundColor = XLColor.FromHtml("#d1d1d1");
-            var roomFontColor = XLColor.Black;
-            var tableBackgroundColor = XLColor.FromHtml("#d1d1d1");
-            var tableFontColor = XLColor.Black;
-            var totalColumns = 1;
-
-            if (negotiationDtos?.Any() == true)
-            {
-                var lineIndex = 1;
-
-                foreach (var negotiationReportGroupedByDateDto in negotiationDtos)
-                {
-                    #region Date Header
-
-                    var columnsCount = negotiationReportGroupedByDateDto.NegotiationReportGroupedByRoomDtos.SelectMany(nr => nr.NegotiationReportGroupedByStartDateDtos?.SelectMany(nd => nd.Negotiations.Select(n => n.TableNumber)))?.Distinct()?.Count() ?? 0;
-
-                    var columnIndex = 0;
-
-                    worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = negotiationReportGroupedByDateDto.Date.ToShortDateString();
-                    worksheet.Range(columnIndex.GetExcelColumnLetters() + lineIndex + ":" + (columnsCount + 1).GetExcelColumnLetters() + lineIndex).Row(1).Merge();
-                    worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Left);
-                    worksheet.Cell(lineIndex, columnIndex).Style.Font.Bold = true;
-                    worksheet.Cell(lineIndex, columnIndex).Style.Fill.BackgroundColor = dateBackgroundColor;
-                    worksheet.Cell(lineIndex, columnIndex).Style.Font.SetFontColor(dateFontColor);
-
-                    #endregion Date Header
-
-                    if (negotiationReportGroupedByDateDto.NegotiationReportGroupedByRoomDtos?.Any() == true)
-                    {
-                        foreach (var negotiationReportGroupedByRoomDto in negotiationReportGroupedByDateDto.NegotiationReportGroupedByRoomDtos)
-                        {
-                            var roomName = negotiationReportGroupedByRoomDto?.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value;
-                            var tableNumbers = negotiationReportGroupedByRoomDto?.NegotiationReportGroupedByStartDateDtos?.SelectMany(nd => nd.Negotiations.Select(n => n.TableNumber))?.Distinct()?.OrderBy(tn => tn)?.ToList() ??
-                                               new List<int>();
-
-                            #region Room Sub Header
-
-                            lineIndex++;
-                            columnIndex = 0;
-
-                            worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = roomName;
-                            worksheet.Range(columnIndex.GetExcelColumnLetters() + lineIndex + ":" + (tableNumbers.Count() + 1).GetExcelColumnLetters() + lineIndex).Row(1).Merge();
-                            worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Left);
-                            worksheet.Cell(lineIndex, columnIndex).Style.Font.Bold = true;
-                            worksheet.Cell(lineIndex, columnIndex).Style.Fill.BackgroundColor = roomBackgroundColor;
-                            worksheet.Cell(lineIndex, columnIndex).Style.Font.SetFontColor(roomFontColor);
-
-                            #endregion Room Sub Headers
-
-                            #region Table Header
-
-                            lineIndex++;
-                            columnIndex = 0;
-
-                            worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = Labels.Hour;
-                            worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
-                            worksheet.Cell(lineIndex, columnIndex).Style.Font.Bold = true;
-                            worksheet.Cell(lineIndex, columnIndex).Style.Fill.BackgroundColor = tableBackgroundColor;
-                            worksheet.Cell(lineIndex, columnIndex).Style.Font.SetFontColor(tableFontColor);
-
-                            foreach (var tableNumber in tableNumbers)
-                            {
-                                worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = $"{Labels.Table} {tableNumber}";
-                                worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
-                                worksheet.Cell(lineIndex, columnIndex).Style.Font.Bold = true;
-                                worksheet.Cell(lineIndex, columnIndex).Style.Fill.BackgroundColor = tableBackgroundColor;
-                                worksheet.Cell(lineIndex, columnIndex).Style.Font.SetFontColor(tableFontColor);
-                            }
-
-                            #endregion Table Header
-
-                            #region Hours
-
-                            foreach (var negotiationReportGroupedByStartDateDto in negotiationReportGroupedByRoomDto.NegotiationReportGroupedByStartDateDtos.OrderBy(n => n.StartDate))
-                            {
-                                lineIndex++;
-                                columnIndex = 0;
-
-                                worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = $"{negotiationReportGroupedByStartDateDto.StartDate.ToString("HH:mm")}\n{negotiationReportGroupedByStartDateDto.EndDate.ToString("HH:mm")}";
-                                worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
-                                worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center);
-                                worksheet.Cell(lineIndex, columnIndex).Style.Font.Bold = true;
-                                worksheet.Cell(lineIndex, columnIndex).Style.Alignment.WrapText = true;
-
-                                foreach (var tableNumber in tableNumbers)
-                                {
-                                    totalColumns = columnIndex > totalColumns ? columnIndex : totalColumns;
-
-                                    var negotiation = negotiationReportGroupedByStartDateDto.Negotiations.FirstOrDefault(n => n.TableNumber == tableNumber);
-                                    if (negotiation != null)
-                                    {
-                                        worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = negotiation.ProjectBuyerEvaluation?.BuyerAttendeeOrganization?.Organization?.TradeName +
-                                                                                                                   "\n" + negotiation.ProjectBuyerEvaluation?.Project?.ProjectTitles?.FirstOrDefault(pt => pt.Language.Code == ViewBag.UserInterfaceLanguage)?.Value +
-                                                                                                                   "\n" + negotiation.ProjectBuyerEvaluation?.Project?.SellerAttendeeOrganization?.Organization?.TradeName;
-                                    }
-                                    else
-                                    {
-                                        worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = string.Empty;
-                                    }
-
-                                    worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
-                                    worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center);
-                                    worksheet.Cell(lineIndex, columnIndex).Style.Alignment.WrapText = true;
-                                }
-                            }
-
-                            #endregion Hours
-                        }
-                    }
-
-                    lineIndex++;
-                }
-            }
-
-            // AdjustColumns
-            for (var i = 1; i <= totalColumns + 1; i++)
-            {
-                worksheet.Column(i).AdjustToContents();
-            }
-
-            return new ExcelResult(workbook, Labels.CalendarReport + "_" + DateTime.UtcNow.ToBrazilTimeZone().ToString("yyyyMMdd"));
-        }
-
-        /// <summary>
-        /// Exports the report to PDF.
-        /// </summary>
-        /// <param name="searchViewModel">The search view model.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ExportReportToPdf(ScheduledSearchViewModel searchViewModel)
-        {
-            var negotiationsDtos = await this.negotiationRepo.FindReportWidgetDtoAsync(
-                this.EditionDto.Id,
-                searchViewModel.BuyerOrganizationUid,
-                searchViewModel.SellerOrganizationUid,
-                searchViewModel.ProjectKeywords,
-                searchViewModel.Date,
-                searchViewModel.RoomUid,
-                searchViewModel.ShowParticipants);
-
-            if (negotiationsDtos.Count == 0)
-            {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.ScheduledOneToOneMeetings, Labels.FoundFP) }, JsonRequestBehavior.AllowGet);
-            }
-
-            var pdf = new PlataformaRio2CDocument(new ScheduledMeetingsReportDocumentTemplate(negotiationsDtos, this.UserInterfaceLanguage, this.EditionDto));
-            var fileName = $"{Labels.ScheduledNegotiations.RemoveFilenameInvalidChars().Trim()}_{DateTime.Now.ToStringHourMinute()}.pdf".RemoveFilenameInvalidChars();
-            return File(pdf.GetStream(), "application/pdf", fileName);
         }
 
         #endregion
