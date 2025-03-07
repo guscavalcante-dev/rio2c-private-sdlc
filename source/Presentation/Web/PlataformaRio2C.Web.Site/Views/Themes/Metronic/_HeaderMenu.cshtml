@@ -43,8 +43,7 @@
                 }
             }
             else if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true &&
-                    editionDto?.IsAudiovisualPitchingSubmitProjectStarted() == true || 
-                    editionDto?.IsAudiovisualProjectSubmitStarted() == true )
+                    (editionDto?.IsAudiovisualPitchingSubmitProjectStarted() == true || editionDto?.IsAudiovisualProjectSubmitStarted() == true))
             {
                 <li class="kt-menu__item kt-menu__item--submenu kt-menu__item--rel
                     @this.IsOpen(menuOpenCssClass, null, "Meetings,PitchingProjects,BusinessRoundProjects", "Audiovisual")"
