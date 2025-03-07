@@ -524,6 +524,14 @@
     <Compile Include="Migrations\202502251343396_Update_Migrations.Designer.cs">
       <DependentUpon>202502251343396_Update_Migrations.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202503071535077_ChangesForCreatorProjectsTable.cs" />
+    <Compile Include="Migrations\202503071535077_ChangesForCreatorProjectsTable.Designer.cs">
+      <DependentUpon>202503071535077_ChangesForCreatorProjectsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202503071548214_UpdateMigrations_20250307.cs" />
+    <Compile Include="Migrations\202503071548214_UpdateMigrations_20250307.Designer.cs">
+      <DependentUpon>202503071548214_UpdateMigrations_20250307.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202502281354352_InsertNewInterestGroupSegment.cs" />
     <Compile Include="Migrations\202502281354352_InsertNewInterestGroupSegment.Designer.cs">
       <DependentUpon>202502281354352_InsertNewInterestGroupSegment.cs</DependentUpon>
@@ -539,6 +547,13 @@
     <Compile Include="Migrations\202411140217302_AddMusicPitchingFieldToEditions.Designer.cs">
       <DependentUpon>202411140217302_AddMusicPitchingFieldToEditions.cs</DependentUpon>
     </Compile>
+    <Content Include="Migrations\Scripts\202411140217302_AddMusicPitchingFieldToEditions.up.sql" />
+    <Content Include="Migrations\Scripts\202503071535077_ChangesForCreatorProjectsTable.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202503071535077_ChangesForCreatorProjectsTable.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Migrations\Scripts\202502281354352_InsertNewInterestGroupSegment.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1048,6 +1063,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202502251343396_Update_Migrations.resx">
       <DependentUpon>202502251343396_Update_Migrations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202503071535077_ChangesForCreatorProjectsTable.resx">
+      <DependentUpon>202503071535077_ChangesForCreatorProjectsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202503071548214_UpdateMigrations_20250307.resx">
+      <DependentUpon>202503071548214_UpdateMigrations_20250307.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202502281354352_InsertNewInterestGroupSegment.resx">
       <DependentUpon>202502281354352_InsertNewInterestGroupSegment.cs</DependentUpon>
