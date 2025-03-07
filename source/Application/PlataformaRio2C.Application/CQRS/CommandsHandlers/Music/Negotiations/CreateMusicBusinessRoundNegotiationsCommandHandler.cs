@@ -33,7 +33,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     {
         private readonly IEditionRepository editionRepo;
         private readonly INegotiationConfigRepository negotiationConfigRepo;
-        private readonly IMusicBusinessRoundProjectBuyerEvaluationRepository projectBuyerEvaluationRepo;
+        private readonly IMusicBusinessRoundProjectBuyerEvaluationRepository MusicBusinessRoundProjectBuyerEvaluationRepo;
         private readonly ILogisticAirfareRepository logisticAirfareRepo;
         private readonly IConferenceRepository conferenceRepo;
 
@@ -63,7 +63,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.editionRepo = editionRepository;
             this.negotiationConfigRepo = negotiationConfigRepository;
-            this.projectBuyerEvaluationRepo = projectBuyerEvaluationRepository;
+            this.MusicBusinessRoundProjectBuyerEvaluationRepo = projectBuyerEvaluationRepository;
             this.logisticAirfareRepo = logisticAirfareRepository;
             this.conferenceRepo = conferenceRepository;
         }
@@ -86,10 +86,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             try
             {
                 //this.NegotiationRepo.Truncate();
-                var editionNegotiations = await this.NegotiationRepo.FindNegotiationsByEditionIdAsync(cmd.EditionId.Value);
+                var editionNegotiations = await this.MusicBusinessRoundNegotiationRepo.FindAllByEditionIdAsync(cmd.EditionId.Value);
                 if (editionNegotiations.Count > 0)
                 {
-                    this.NegotiationRepo.DeleteAll(editionNegotiations);
+                    this.MusicBusinessRoundNegotiationRepo.DeleteAll(editionNegotiations);
                     this.Uow.SaveChanges();
                 }
 
@@ -114,7 +114,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     return this.AppValidationResult;
                 }
 
-                var projectBuyerEvaluations = await this.projectBuyerEvaluationRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionId ?? 0);
+                var projectBuyerEvaluations = await this.MusicBusinessRoundProjectBuyerEvaluationRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionId ?? 0);
                 if (projectBuyerEvaluations?.Count == 0)
                 {
                     edition?.CancelMusicBusinessRoundNegotiationsCreation(cmd.UserId);
@@ -133,14 +133,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                     .ToList();
 
                 //this.NegotiationRepo.Truncate();
-                var remainingEditionNegotiations = await this.NegotiationRepo.FindNegotiationsByEditionIdAsync(cmd.EditionId.Value);
+                var remainingEditionNegotiations = await this.MusicBusinessRoundNegotiationRepo.FindAllByEditionIdAsync(cmd.EditionId.Value);
                 if (remainingEditionNegotiations.Count > 0)
                 {
-                    this.NegotiationRepo.DeleteAll(remainingEditionNegotiations);
+                    this.MusicBusinessRoundNegotiationRepo.DeleteAll(remainingEditionNegotiations);
                     this.Uow.SaveChanges();
                 }
 
-                this.NegotiationRepo.CreateAll(negotiations);
+                this.MusicBusinessRoundNegotiationRepo.CreateAll(negotiations);
 
                 edition?.FinishMusicBusinessRoundNegotiationsCreation(cmd.UserId);
 

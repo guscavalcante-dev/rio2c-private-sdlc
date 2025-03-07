@@ -29,7 +29,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
     public class MusicBusinessRoundNegotiationBaseCommandHandler : BaseCommandHandler
     {
-        protected readonly IMusicBusinessRoundNegotiationRepository NegotiationRepo;
+        protected readonly IMusicBusinessRoundNegotiationRepository MusicBusinessRoundNegotiationRepo;
 
         /// <summary>Initializes a new instance of the <see cref="MusicBusinessRoundNegotiationBaseCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
@@ -38,15 +38,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         public MusicBusinessRoundNegotiationBaseCommandHandler(IMediator eventBus, IUnitOfWork uow, IMusicBusinessRoundNegotiationRepository negotiationRepository)
             : base(eventBus, uow)
         {
-            this.NegotiationRepo = negotiationRepository;
+            this.MusicBusinessRoundNegotiationRepo = negotiationRepository;
         }
 
         /// <summary>Gets the negotiation by uid.</summary>
         /// <param name="negotiationUid">The negotiation uid.</param>
         /// <returns></returns>
-        public async Task<MusicBusinessRoundNegotiation> GetNegotiationByUid(Guid negotiationUid)
+        public async Task<MusicBusinessRoundNegotiation> GetMusicBusinessRoundNegotiationByUid(Guid negotiationUid)
         {
-            var negotiation = await this.NegotiationRepo.GetAsync(negotiationUid);
+            var negotiation = await this.MusicBusinessRoundNegotiationRepo.GetAsync(negotiationUid);
             if (negotiation == null || negotiation.IsDeleted)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.OneToOneMeetings, Labels.FoundM), new string[] { "ToastrError" }));

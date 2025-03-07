@@ -14,7 +14,7 @@ namespace PlataformaRio2C.Domain.Interfaces.Repositories
         Task<MusicBusinessRoundNegotiationDto> FindMainInformationWidgetDtoAsync(Guid negotiationUid);
         Task<MusicBusinessRoundNegotiationDto> FindVirtualMeetingWidgetDtoAsync(Guid negotiationUid);
         Task<List<MusicBusinessRoundNegotiationGroupedByDateDto>> FindScheduledWidgetDtoAsync(int editionId, Guid? buyerOrganizationUid, Guid? sellerOrganizationUid, string projectKeywords, DateTime? negotiationDate, Guid? roomUid, bool showParticipants);
-        Task<List<MusicBusinessRoundNegotiation>> FindNegotiationsByEditionIdAsync(int editionId);
+        Task<List<MusicBusinessRoundNegotiation>> FindAllByEditionIdAsync(int editionId);
         Task<List<MusicBusinessRoundNegotiation>> FindManualScheduledNegotiationsByRoomIdAsync(int roomId, bool showAllRooms = false);
         Task<List<MusicBusinessRoundNegotiation>> FindAutomaticScheduledNegotiationsByRoomIdAsync(int roomId, bool showAllRooms = false);
         Task<List<MusicBusinessRoundNegotiation>> FindScheduledNegotiationsByRoomIdAsync(int roomId, bool showAllRooms = false);
