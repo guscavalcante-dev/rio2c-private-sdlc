@@ -1,9 +1,8 @@
 ﻿namespace PlataformaRio2C.Infra.Data.Context.Migrations
 {
-    using System;
-    using System.Data.Entity.Migrations;
+    using PlataformaRio2C.Infra.Data.Context.Helpers;
     
-    public partial class UpdateMigrations : DbMigration
+    public partial class ChangesForCreatorProjectsTable : SqlMigration
     {
         public override void Up()
         {

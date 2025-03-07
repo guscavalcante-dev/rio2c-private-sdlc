@@ -7,13 +7,13 @@ namespace PlataformaRio2C.Infra.Data.Context.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.5.1")]
-    public sealed partial class UpdateMigrations : IMigrationMetadata
+    public sealed partial class ChangesForCreatorProjectsTable : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateMigrations));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ChangesForCreatorProjectsTable));
         
         string IMigrationMetadata.Id
         {
-            get { return "202411231452242_UpdateMigrations"; }
+            get { return "202503071535077_ChangesForCreatorProjectsTable"; }
         }
         
         string IMigrationMetadata.Source
