@@ -1,5 +1,5 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
-@model List<NegotiationGroupedByDateDto>
+@model List<MusicBusinessRoundNegotiationGroupedByDateDto>
 @{
     var showParticipants = ViewBag.ShowParticipants as bool?;
 }
@@ -58,8 +58,7 @@
                                                                 <tr>
                                                                     <th class="text-center">@Labels.Table</th>
                                                                     <th>@Labels.Player</th>
-                                                                    <th>@Labels.Project</th>
-                                                                    <th>@Labels.Producer</th>
+                                                                    <th>@Labels.StageName</th>
                                                                     <th class="text-center">@Labels.Type</th>
                                                                     <th class="text-center">@Labels.Actions</th>
                                                                 </tr>
@@ -69,9 +68,8 @@
                                                                 {
                                                                     <tr>
                                                                         <td class="text-center">@(negotiation.TableNumber)</td>
-                                                                        <td>@(negotiation.ProjectBuyerEvaluation?.BuyerAttendeeOrganization?.Organization?.TradeName)</td>
-                                                                        <td>@(negotiation.ProjectBuyerEvaluation?.Project?.ProjectTitles?.FirstOrDefault(pt => pt.Language.Code == ViewBag.UserInterfaceLanguage)?.Value)</td>
-                                                                        <td>@(negotiation.ProjectBuyerEvaluation?.Project?.SellerAttendeeOrganization?.Organization?.TradeName)</td>
+                                                                        <td>@(negotiation.MusicBusinessRoundProjectBuyerEvaluation?.BuyerAttendeeOrganization?.Organization?.TradeName)</td>
+                                                                        <td>@(negotiation.MusicBusinessRoundProjectBuyerEvaluation?.MusicBusinessRoundProject?.SellerAttendeeCollaborator?.Collaborator?.StageName)</td>
                                                                         <td class="text-center">@(negotiation.IsAutomatic ? Labels.Automatic : Labels.Manual)</td>
                                                                         <td class="text-center">
                                                                             <span class="dropdown">
@@ -95,7 +93,7 @@
                                                                             <td colspan="6">
                                                                                 <div class="row">
                                                                                     <table class="w-100" style="margin-left: 10px; margin-right: 10px; border:dashed; border-color:lightgray">
-                                                                                        @if (negotiation.AttendeeNegotiationCollaborators?.Any() == true)
+                                                                                        @if (negotiation.AttendeeMusicBusinessRoundNegotiationCollaborators?.Any() == true)
                                                                                         {
                                                                                             <thead>
                                                                                                 <tr class="bg-light-yellow">
@@ -107,7 +105,7 @@
                                                                                                 </tr>
                                                                                             </thead>
                                                                                             <tbody>
-                                                                                                @foreach (var attendeeNegotiationCollaborator in negotiation.AttendeeNegotiationCollaborators)
+                                                                                                @foreach (var attendeeNegotiationCollaborator in negotiation.AttendeeMusicBusinessRoundNegotiationCollaborators)
                                                                                                 {
                                                                                                     <tr>
                                                                                                         <td>

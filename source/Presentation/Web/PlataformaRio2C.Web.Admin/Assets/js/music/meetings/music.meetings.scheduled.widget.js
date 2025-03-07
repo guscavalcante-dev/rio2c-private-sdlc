@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Ribeiro
 // Last Modified On : 21-02-2025
 // ***********************************************************************
-// <copyright file="music.meetings.scheduled.widget.js" company="Softo">
+// <copyright file="Music.meetings.scheduled.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -54,7 +54,7 @@ var MusicMeetingsScheduledWidget = function () {
         enableSearchEvents();
 
         MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#BuyerOrganizationUid', url: '/Music/Players/FindAllByFilters', customFilter: 'HasProjectNegotiationScheduled', placeholder: translations.playerDropdownPlaceholder });
-        MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#SellerOrganizationUid', url: '/Music/Producers/FindAllByFilters', customFilter: 'HasProjectNegotiationScheduled', placeholder: translations.producerDropdownPlaceholder });
+        MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#SellerOrganizationUid', url: '/Music/StageName/FindAllByFilters', customFilter: 'HasProjectNegotiationScheduled', placeholder: translations.stagenameDropdownPlaceholder });
         MyRio2cCommon.enableDatePicker({ inputIdOrClass: '.enable-datepicker' });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: '#RoomUid', allowClear: true, placeholder: translations.roomDropdownPlaceholder });
     }
@@ -93,6 +93,7 @@ var MusicMeetingsScheduledWidget = function () {
         var jsonParameters = getJsonParameters();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Meetings/ShowScheduledDataWidget'), jsonParameters, function (data) {
+            console.log(data)
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

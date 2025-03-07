@@ -70,6 +70,57 @@ namespace PlataformaRio2C.Domain.Entities
             base.SetCreateDate(userId);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MusicBusinessRoundNegotiation"/> class.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="buyerOrganization">The buyer organization.</param>
+        /// <param name="musicBusinessRoundProject">The music business round project.</param>
+        /// <param name="negotiationConfig">The negotiation configuration.</param>
+        /// <param name="negotiationRoomConfig">The negotiation room configuration.</param>
+        /// <param name="musicBusinessRoundNegotiations">The music business round negotiations.</param>
+        /// <param name="startTime">The start time.</param>
+        /// <param name="roundNumber">The round number.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <param name="isUsingAutomaticTable">if set to <c>true</c> [is using automatic table].</param>
+        public MusicBusinessRoundNegotiation(
+            int editionId,
+            Organization buyerOrganization,
+            MusicBusinessRoundProject musicBusinessRoundProject,
+            NegotiationConfig negotiationConfig,
+            NegotiationRoomConfig negotiationRoomConfig,
+            List<MusicBusinessRoundNegotiation> musicBusinessRoundNegotiations,
+            string startTime,
+            int roundNumber,
+            int userId,
+            string userInterfaceLanguage,
+            bool isUsingAutomaticTable)
+        {
+            this.EditionId = editionId;
+
+            // Project buyer evaluation
+            var musicBusinessRoundProjectBuyerEvaluation = musicBusinessRoundProject.MusicBusinessRoundProjectBuyerEvaluations?.FirstOrDefault(pbe => pbe.BuyerAttendeeOrganization.Organization.Uid == buyerOrganization?.Uid && !pbe.IsDeleted);
+            this.MusicBusinessRoundProjectBuyerEvaluationId = musicBusinessRoundProjectBuyerEvaluation?.Id ?? 0;
+            this.MusicBusinessRoundProjectBuyerEvaluation = musicBusinessRoundProjectBuyerEvaluation;
+
+            // Room
+            var room = negotiationRoomConfig?.Room;
+            this.RoomId = room?.Id ?? 0;
+            this.Room = room;
+
+            // Dates
+            this.GenerateStartAndEndDate(negotiationConfig, startTime);
+
+            // Table Number
+            this.GenerateTableNumber(negotiationConfig, negotiationRoomConfig, musicBusinessRoundNegotiations, startTime, userInterfaceLanguage, isUsingAutomaticTable);
+
+            this.RoundNumber = roundNumber;
+            this.IsAutomatic = isUsingAutomaticTable;
+
+            base.SetCreateDate(userId);
+        }
+
         protected MusicBusinessRoundNegotiation() { }
 
         /// <summary>
@@ -134,7 +185,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         /// <param name="negotiationConfig">The negotiation configuration.</param>
         /// <param name="negotiationRoomConfig">The negotiation room configuration.</param>
-        /// <param name="negotiations">The negotiations.</param>
+        /// <param name="musicBusinessRoundNegotiations">The negotiations.</param>
         /// <param name="startTime">The start time.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         /// <param name="isUsingAutomaticTable">if set to <c>true</c> [is using automatic table].</param>
@@ -142,7 +193,7 @@ namespace PlataformaRio2C.Domain.Entities
         private void GenerateTableNumber(
             NegotiationConfig negotiationConfig,
             NegotiationRoomConfig negotiationRoomConfig,
-            List<MusicBusinessRoundNegotiation> negotiations,
+            List<MusicBusinessRoundNegotiation> musicBusinessRoundNegotiations,
             string startTime,
             string userInterfaceLanguage,
             bool isUsingAutomaticTable)
@@ -150,9 +201,9 @@ namespace PlataformaRio2C.Domain.Entities
             if (negotiationConfig == null || negotiationRoomConfig == null)
                 return;
 
-            if (negotiations?.Count > 0)
+            if (musicBusinessRoundNegotiations?.Count > 0)
             {
-                List<int> tableNumbers = negotiations.Select(n => n.TableNumber).ToList();
+                List<int> tableNumbers = musicBusinessRoundNegotiations.Select(n => n.TableNumber).ToList();
                 int smallestTableNumber = isUsingAutomaticTable ? 1 : negotiationRoomConfig.CountAutomaticTables + 1;
                 int largestTableNumber = isUsingAutomaticTable ? negotiationRoomConfig.CountAutomaticTables : (negotiationRoomConfig.CountAutomaticTables + negotiationRoomConfig.CountManualTables);
                 IEnumerable<int> allTableNumbers = Enumerable.Range(smallestTableNumber, largestTableNumber - smallestTableNumber + 1);
@@ -190,6 +241,8 @@ namespace PlataformaRio2C.Domain.Entities
 
             return this.ValidationResult.IsValid;
         }
+
+        #region Privates
 
         /// <summary>
         /// Validates the project buyer evaluation.
@@ -245,5 +298,7 @@ namespace PlataformaRio2C.Domain.Entities
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyGreaterThanValue, Labels.RoundNumber, 0), new string[] { "RoundNumber" }));
             }
         }
+
+        #endregion
     }
 }

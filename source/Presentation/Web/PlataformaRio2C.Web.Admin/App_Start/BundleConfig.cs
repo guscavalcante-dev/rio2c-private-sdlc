@@ -862,6 +862,61 @@ namespace PlataformaRio2C.Web.Admin
 
             #region Music Page Bundles
 
+            #region Meeting Parameters - Music
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetingparameters.list.widget.js").Include(
+                "~/Assets/js/music/meetingparameters/music.meetingparameters.datatable.widget.js",
+                "~/Assets/js/music/meetingparameters/music.meetingparameters.totalcount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetingparameters.editioncount.widget.js").Include(
+                "~/Assets/js/music/meetingparameters/music.meetingparameters.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetingparameters.create.js").Include(
+                "~/Assets/js/music/meetingparameters/music.meetingparameters.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetingparameters.delete.js").Include(
+                "~/Assets/js/music/meetingparameters/music.meetingparameters.delete.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetingparameters.details.js").Include(
+                "~/Assets/js/music/meetingparameters/music.meetingparameters.maininformation.widget.js",
+                "~/Assets/js/music/meetingparameters/music.meetingparameters.rooms.widget.js"));
+
+            #endregion
+
+            #region Meetings Scheduled - Music
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.editionscheduledcount.widget.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.editionscheduledcount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.editionunscheduledcount.widget.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.editionunscheduledcount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.editionscheduledcount.gauge.widget.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.editionscheduledcount.gauge.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.generate.widget.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.status.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.scheduled.widget.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.scheduled.widget.js",
+                "~/Assets/js/music/meetings/music.meetings.scheduled.delete.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.unscheduled.widget.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.unscheduled.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.scheduled.create.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.scheduled.create.js",
+                "~/Assets/js/music/meetings/music.meetings.logistics.info.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.scheduled.update.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.scheduled.update.js",
+                "~/Assets/js/music/meetings/music.meetings.logistics.info.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.report.widget.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.report.widget.js"));
+
+            #endregion
+
             #region Commissions
 
             bundles.Add(new ScriptBundle("~/bundles/js/music.commissions.list.js").Include(

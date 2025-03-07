@@ -801,5 +801,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .OrderBy(ngd => ngd.Date)
                                 .ToList();
         }
+
+    
     }
 }

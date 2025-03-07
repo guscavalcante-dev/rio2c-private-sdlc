@@ -1,17 +1,15 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
-// Author           :Daniel Giese
-// Created          : 05/03/2025
+// Author           : Rafael Ribeiro 
+// Created          : 05-03-2025
 //
-// Last Modified By : Daniel Giese
-// Last Modified On : 05/03/2025
+// Last Modified By : Rafael Ribeiro 
+// Last Modified On : 05-03-2025
 // ***********************************************************************
-// <copyright file="MusicBusinessRoundNegotiationBaseCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
 using MediatR;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
@@ -27,6 +25,8 @@ using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
+    /// <summary>NegotiationBaseCommandHandler</summary>
+    /// 
     public class MusicBusinessRoundNegotiationBaseCommandHandler : BaseCommandHandler
     {
         protected readonly IMusicBusinessRoundNegotiationRepository MusicBusinessRoundNegotiationRepo;
@@ -55,4 +55,5 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             return negotiation;
         }
     }
+
 }

@@ -35,7 +35,7 @@
                     @Html.DropDownListFor(m => m.BuyerOrganizationUid, Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.Player.ToLowerInvariant())}", new { @class = "form-control" })
                 </div>
                 <div class="col-12 col-md-4 mt-2">
-                    @Html.DropDownListFor(m => m.SellerOrganizationUid, Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAFEntity, Labels.Producer.ToLowerInvariant())}", new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.SellerOrganizationUid, Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.StageName.ToLowerInvariant())}", new { @class = "form-control" })
                 </div>
                 <div class="col-12 col-md-4 mt-2">
                     @Html.TextBoxFor(m => m.ProjectKeywords, null, new { type = "search", @class = "form-control", autocomplete = "off", placeholder = $"{Labels.Project}" })
