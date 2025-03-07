@@ -15,10 +15,10 @@
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>CreateNegotiations</summary>
-    public class CreateMusicBusinessNegotiations : MusicbusinessRoundnegotiationBaseCommand
+    public class CreateMusicBusinesRoundNegotiations : MusicbusinessRoundnegotiationBaseCommand
     {
         /// <summary>Initializes a new instance of the <see cref="CreateNegotiations"/> class.</summary>
-        public CreateMusicBusinessNegotiations()
+        public CreateMusicBusinesRoundNegotiations()
         {
         }
     }

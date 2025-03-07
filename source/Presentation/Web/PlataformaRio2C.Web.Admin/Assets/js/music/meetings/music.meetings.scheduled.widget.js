@@ -93,7 +93,6 @@ var MusicMeetingsScheduledWidget = function () {
         var jsonParameters = getJsonParameters();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Meetings/ShowScheduledDataWidget'), jsonParameters, function (data) {
-            console.log(data)
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
