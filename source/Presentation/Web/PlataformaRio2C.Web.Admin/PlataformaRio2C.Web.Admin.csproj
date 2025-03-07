@@ -1023,6 +1023,11 @@
     <Content Include="Assets\js\music\meetingparameters\music.meetingparameters.maininformation.widget.js" />
     <Content Include="Assets\js\music\meetingparameters\music.meetingparameters.rooms.widget.js" />
     <Content Include="Assets\js\music\meetingparameters\music.meetingparameters.totalcount.widget.js" />
+    <Content Include="Assets\js\music\meetings\music.meetings.scheduled.delete.js" />
+    <Content Include="Assets\js\music\meetings\music.meetings.status.widget.js" />
+    <Content Include="Assets\js\music\meetings\music.meetings.logistics.info.widget.js" />
+    <Content Include="Assets\js\music\meetings\music.meetings.scheduled.update.js" />
+    <Content Include="Assets\js\music\meetings\music.meetings.scheduled.create.js" />
     <Content Include="Assets\js\music\meetings\music.meetings.editionscheduledcount.gauge.widget.js" />
     <Content Include="Assets\js\music\meetings\music.meetings.unscheduled.manualschedule.js" />
     <Content Include="Assets\js\music\meetings\music.meetings.unscheduled.widget.js" />
@@ -8335,6 +8340,15 @@
     <Content Include="Areas\Music\Views\Meetings\Index.cshtml" />
     <Content Include="Areas\Music\Views\Meetings\Widgets\EditionScheduledCountGaugeWidget.cshtml" />
     <Content Include="Areas\Music\Views\Meetings\Widgets\EditionUnscheduledCountWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\Modals\CreateForm.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\Modals\CreateModal.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\Modals\ManualScheduleModal.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\Modals\ManualScheduleForm.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\Modals\UpdateForm.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\Modals\UpdateModal.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\Widgets\LogisticsInfoWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\Widgets\LogisticsAirfareList.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\Widgets\StatusWidget.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

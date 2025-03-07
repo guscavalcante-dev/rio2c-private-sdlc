@@ -13,7 +13,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public int RoundNumber { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public List<MusicBusinessRoundNegotiation> Negotiations { get; set; }
+        public List<MusicBusinessRoundNegotiation> MusicBusinessRoundNegotiations { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="MusicBusinessRoundNegotiationGroupedByRoundDto"/> class.</summary>
         /// <param name="roundNumber">The round number.</param>
@@ -23,7 +23,7 @@ namespace PlataformaRio2C.Domain.Dtos
             this.RoundNumber = roundNumber;
             this.StartDate = negotiations?.FirstOrDefault()?.StartDate.ToBrazilTimeZone();
             this.EndDate = negotiations?.FirstOrDefault()?.EndDate.ToBrazilTimeZone();
-            this.Negotiations = negotiations?.OrderBy(n => n.TableNumber)?.ToList();
+            this.MusicBusinessRoundNegotiations = negotiations?.OrderBy(n => n.TableNumber)?.ToList();
         }
 
         /// <summary>Initializes a new instance of the <see cref="MusicBusinessRoundNegotiationGroupedByRoundDto"/> class.</summary>
