@@ -17,19 +17,19 @@ using System;
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>CreateAttendeeNegotiationCollaborator</summary>
-    public class CreateAttendeeMusicBusinessNegotiationCollaborator : MusicbusinessRoundnegotiationBaseCommand
+    public class CreateAttendeeMusicBusinessRoundNegotiationCollaborator : MusicbusinessRoundnegotiationBaseCommand
     {
-        internal Guid MusicBusineesNegotiationUid;
+        internal Guid MusicBusinesRoundNegotiationUid;
 
-        public Guid MusicBusinessNegotiationUid { get; private set; }
+        public Guid MusicBusinessRoundNegotiationUid { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateAttendeeNegotiationCollaborator"/> class.
         /// </summary>
         /// <param name="negotiationUid">The negotiation uid.</param>
-        public CreateAttendeeMusicBusinessNegotiationCollaborator(Guid negotiationUid)
+        public CreateAttendeeMusicBusinessRoundNegotiationCollaborator(Guid negotiationUid)
         {
-            this.MusicBusinessNegotiationUid = negotiationUid;
+            this.MusicBusinesRoundNegotiationUid = negotiationUid;
         }
     }
 }

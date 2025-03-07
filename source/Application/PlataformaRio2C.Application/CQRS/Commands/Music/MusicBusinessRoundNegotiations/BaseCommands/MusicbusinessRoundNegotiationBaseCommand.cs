@@ -60,18 +60,18 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// Updates the base properties.
         /// </summary>
         /// <param name="projectBuyerEvaluationDto">The negotiation dto.</param>
-        public void UpdateBaseProperties(MusicBusinessRoundProjectBuyerEvaluationDto projectBuyerEvaluationDto, string userInterfaceLanguage)
+        public void UpdateBaseProperties(MusicBusinessRoundProjectBuyerEvaluationDto MusicBusinessRoundprojectBuyerEvaluationDto, string userInterfaceLanguage)
         {
-            if (projectBuyerEvaluationDto == null)
+            if (MusicBusinessRoundprojectBuyerEvaluationDto == null)
                 return;
 
-            this.ProjectBuyerEvaluationDto = projectBuyerEvaluationDto;
+            this.ProjectBuyerEvaluationDto = MusicBusinessRoundprojectBuyerEvaluationDto;
 
-            this.InitialBuyerOrganizationUid = projectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.Organization?.Uid;
-            this.InitialBuyerOrganizationName = projectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.Organization?.TradeName;
+            this.InitialBuyerOrganizationUid = MusicBusinessRoundprojectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.Organization?.Uid;
+            this.InitialBuyerOrganizationName = MusicBusinessRoundprojectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.Organization?.TradeName;
             this.BuyerOrganizationUid = this.InitialBuyerOrganizationUid;
 
-            this.InitialProjectUid = projectBuyerEvaluationDto?.MusicBusinessRoundProjectDto?.Uid;
+            this.InitialProjectUid = MusicBusinessRoundprojectBuyerEvaluationDto?.MusicBusinessRoundProjectDto?.Uid;
             this.ProjectUid = this.InitialProjectUid;
         }
 

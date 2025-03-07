@@ -21,7 +21,7 @@ using System.ComponentModel.DataAnnotations;
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>ScheduleManualNegotiation</summary>
-    public class ScheduleManualMusicBusinessNegotiation : MusicbusinessRoundnegotiationBaseCommand
+    public class ScheduleManualMusicBusinessRoundNegotiation : MusicbusinessRoundnegotiationBaseCommand
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ScheduleManualNegotiation"/> class.
@@ -29,7 +29,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="projectBuyerEvaluationDto">The project buyer evaluation dto.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         /// <exception cref="DomainException"></exception>
-        public ScheduleManualMusicBusinessNegotiation(
+        public ScheduleManualMusicBusinessRoundNegotiation(
             MusicBusinessRoundProjectBuyerEvaluationDto MusicBusinessRoundProjectDto,
             string userInterfaceLanguage)
         {
@@ -45,7 +45,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// Initializes a new instance of the <see cref="ScheduleManualNegotiation"/> class.
         /// </summary>
         /// <param name="negotiationDto">The negotiation.</param>
-        public ScheduleManualMusicBusinessNegotiation()
+        public ScheduleManualMusicBusinessRoundNegotiation()
         {
         }
     }
