@@ -522,7 +522,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<List<MusicBusinessRoundNegotiation>> FindNegotiationsByEditionIdAsync(int editionId)
+        public async Task<List<MusicBusinessRoundNegotiation>> FindAllByEditionIdAsync(int editionId)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId);
