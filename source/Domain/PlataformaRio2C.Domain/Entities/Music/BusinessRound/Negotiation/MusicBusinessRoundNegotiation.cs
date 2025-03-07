@@ -121,6 +121,14 @@ namespace PlataformaRio2C.Domain.Entities
             this.EndDate = this.StartDate.Add(negotiationConfig.TimeOfEachRound);
         }
 
+        /// <summary>Assigns the project buyer evaluation.</summary>
+        /// <param name="projectBuyerEvaluation">The project buyer evaluation.</param>
+        public void AssignProjectBuyerEvaluation(MusicBusinessRoundProjectBuyerEvaluation projectBuyerEvaluation)
+        {
+            this.MusicBusinessRoundProjectBuyerEvaluationId = projectBuyerEvaluation?.Id ?? 0;
+            this.MusicBusinessRoundProjectBuyerEvaluation = projectBuyerEvaluation;
+        }
+
         /// <summary>
         /// Generates the table number.
         /// </summary>

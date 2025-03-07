@@ -590,7 +590,17 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
                 return ResourceManager.GetString("AudioVisual", resourceCulture);
             }
         }
-        
+        /// <summary>
+        ///   Looks up a localized string similar to Music.
+        /// </summary>
+        public static string Music
+        {
+            get
+            {
+                return ResourceManager.GetString("Music", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Audiovisual - Rodadas de Negócio.
         /// </summary>
@@ -689,7 +699,17 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
                 return ResourceManager.GetString("AudiovisualNegotiationsCreateEndDate", resourceCulture);
             }
         }
-        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de término da criação de negociações.
+        /// </summary>
+        public static string MusicNegotiationsCreateEndDate
+        {
+            get
+            {
+                return ResourceManager.GetString("MusicNegotiationsCreateEndDate", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Data de início da criação de negociações.
         /// </summary>
@@ -824,7 +844,17 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
                 return ResourceManager.GetString("AudiovisualVirtualMeetingJoinDate", resourceCulture);
             }
         }
-        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de ingresso na reunião virtual.
+        /// </summary>
+        public static string MusicVirtualMeetingJoinDate
+        {
+            get
+            {
+                return ResourceManager.GetString("MusicVirtualMeetingJoinDate", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Automático.
         /// </summary>
@@ -4116,15 +4146,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Minutes {
             get {
                 return ResourceManager.GetString("Minutes", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Música.
-        /// </summary>
-        public static string Music {
-            get {
-                return ResourceManager.GetString("Music", resourceCulture);
             }
         }
         

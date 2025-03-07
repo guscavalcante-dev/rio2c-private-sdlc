@@ -35,7 +35,7 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset? BuyerEmailSendDate { get; private set; }
 
         public int? AttendeeCollaboratorId { get; set; }
-
+        public bool IsVirtualMeeting { get; set; }
         public virtual MusicBusinessRoundProject MusicBusinessRoundProject { get; private set; }
         public virtual AttendeeOrganization BuyerAttendeeOrganization { get; private set; }
         public virtual ProjectEvaluationStatus ProjectEvaluationStatus { get; private set; }
