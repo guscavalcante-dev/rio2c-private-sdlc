@@ -5,32 +5,21 @@ namespace PlataformaRio2C.Infra.Data.Context.Migrations
     using System.Data.Entity.Migrations;
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
-    
+
     [GeneratedCode("EntityFramework.Migrations", "6.5.1")]
-<<<<<<<< HEAD:source/Infra/Data/PlataformaRio2C.Infra.Data.Context/Migrations/202502281354352_InsertNewInterestGroupSegment.Designer.cs
     public sealed partial class InsertNewInterestGroupSegment : IMigrationMetadata
     {
         private readonly ResourceManager Resources = new ResourceManager(typeof(InsertNewInterestGroupSegment));
-        
+
         string IMigrationMetadata.Id
         {
             get { return "202502281354352_InsertNewInterestGroupSegment"; }
-========
-    public sealed partial class UpdateMigrations_20250307 : IMigrationMetadata
-    {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateMigrations_20250307));
-        
-        string IMigrationMetadata.Id
-        {
-            get { return "202503071548214_UpdateMigrations_20250307"; }
->>>>>>>> prod:source/Infra/Data/PlataformaRio2C.Infra.Data.Context/Migrations/202503071548214_UpdateMigrations_20250307.Designer.cs
         }
-        
-        string IMigrationMetadata.Source
+               string IMigrationMetadata.Source
         {
             get { return null; }
         }
-        
+
         string IMigrationMetadata.Target
         {
             get { return Resources.GetString("Target"); }
