@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
-// Author           : Rafael Dantas Ruiz
-// Created          : 03-06-2020
+// Author           : Daniel Giese
+// Created          : 05/03/2025
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-20-2020
+// Last Modified By : Daniel Giese
+// Last Modified On : 05/03/2025
 // ***********************************************************************
-// <copyright file="CreateNegotiationsCommandHandler.cs" company="Softo">
+// <copyright file="CreateMusicBusinessRoundNegotiationsCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -21,26 +21,27 @@ using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Enums;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Interfaces.Repositories;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>CreateNegotiationsCommandHandler</summary>
-    public class CreateNegotiationsCommandHandler : NegotiationBaseCommandHandler, IRequestHandler<CreateNegotiations, AppValidationResult>
+    /// <summary>CreateMusicBusinessRoundNegotiationsCommandHandler</summary>
+    public class CreateMusicBusinessRoundNegotiationsCommandHandler : MusicBusinessRoundNegotiationBaseCommandHandler, IRequestHandler<CreateMusicBusinessRoundNegotiations, AppValidationResult>
     {
         private readonly IEditionRepository editionRepo;
         private readonly INegotiationConfigRepository negotiationConfigRepo;
-        private readonly IProjectBuyerEvaluationRepository projectBuyerEvaluationRepo;
+        private readonly IMusicBusinessRoundProjectBuyerEvaluationRepository MusicBusinessRoundProjectBuyerEvaluationRepo;
         private readonly ILogisticAirfareRepository logisticAirfareRepo;
         private readonly IConferenceRepository conferenceRepo;
 
-        private IList<ProjectBuyerEvaluation> _projectSubmissionsError = new List<ProjectBuyerEvaluation>();
+        private IList<MusicBusinessRoundProjectBuyerEvaluation> _projectSubmissionsError = new List<MusicBusinessRoundProjectBuyerEvaluation>();
         private List<LogisticAirfare> logisticAirfares = new List<LogisticAirfare>();
         private List<Conference> conferences = new List<Conference>();
 
-        /// <summary>Initializes a new instance of the <see cref="CreateNegotiationsCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="CreateMusicBusinessRoundNegotiationsCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="negotiationRepository">The negotiation repository.</param>
@@ -49,20 +50,20 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="projectBuyerEvaluationRepository">The project buyer evaluation repository.</param>
         /// <param name="logisticAirfareRepository">The logistic airfare repository.</param>
         /// <param name="conferenceRepository">The conference repository.</param>
-        public CreateNegotiationsCommandHandler(
+        public CreateMusicBusinessRoundNegotiationsCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            INegotiationRepository negotiationRepository,
+            IMusicBusinessRoundNegotiationRepository negotiationRepository,
             IEditionRepository editionRepository,
             INegotiationConfigRepository negotiationConfigRepository,
-            IProjectBuyerEvaluationRepository projectBuyerEvaluationRepository,
+            IMusicBusinessRoundProjectBuyerEvaluationRepository projectBuyerEvaluationRepository,
             ILogisticAirfareRepository logisticAirfareRepository,
             IConferenceRepository conferenceRepository)
             : base(eventBus, uow, negotiationRepository)
         {
             this.editionRepo = editionRepository;
             this.negotiationConfigRepo = negotiationConfigRepository;
-            this.projectBuyerEvaluationRepo = projectBuyerEvaluationRepository;
+            this.MusicBusinessRoundProjectBuyerEvaluationRepo = projectBuyerEvaluationRepository;
             this.logisticAirfareRepo = logisticAirfareRepository;
             this.conferenceRepo = conferenceRepository;
         }
@@ -71,12 +72,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(CreateNegotiations cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(CreateMusicBusinessRoundNegotiations cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
-            
+
             var edition = await this.editionRepo.FindByUidAsync(cmd.EditionUid ?? Guid.Empty, true);
-            if (edition.AudiovisualNegotiationsCreateStartDate.HasValue && !edition.AudiovisualNegotiationsCreateEndDate.HasValue)
+            if (edition.MusicBusinessRoundNegotiationsCreateStartDate.HasValue && !edition.MusicBusinessRoundNegotiationsCreateEndDate.HasValue)
             {
                 this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityIsAlreadyAction, Labels.Agenda, Labels.BeingProcessed.ToLowerInvariant()), new string[] { "ToastrError" })));
                 return this.AppValidationResult;
@@ -85,20 +86,20 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             try
             {
                 //this.NegotiationRepo.Truncate();
-                var editionNegotiations = await this.NegotiationRepo.FindNegotiationsByEditionIdAsync(cmd.EditionId.Value);
+                var editionNegotiations = await this.MusicBusinessRoundNegotiationRepo.FindAllByEditionIdAsync(cmd.EditionId.Value);
                 if (editionNegotiations.Count > 0)
                 {
-                    this.NegotiationRepo.DeleteAll(editionNegotiations);
+                    this.MusicBusinessRoundNegotiationRepo.DeleteAll(editionNegotiations);
                     this.Uow.SaveChanges();
                 }
 
-                edition?.StartAudiovisualNegotiationsCreation(cmd.UserId);
+                edition?.StartMusicBusinessRoundNegotiationsCreation(cmd.UserId);
                 this.Uow.SaveChanges();
 
-                var negotiationConfigs = await this.negotiationConfigRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionId.Value,ProjectType.AudiovisualBusinessRound.Id);
+                var negotiationConfigs = await this.negotiationConfigRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionId.Value);
                 if (negotiationConfigs?.Count == 0)
                 {
-                    edition?.CancelAudiovisualNegotiationsCreation(cmd.UserId);
+                    edition?.CancelMusicBusinessRoundNegotiationsCreation(cmd.UserId);
                     this.Uow.SaveChanges();
                     this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Rooms, Labels.FoundFP), new string[] { "ToastrError" })));
                     return this.AppValidationResult;
@@ -107,16 +108,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 var negotiationSlots = this.GetNegotiationSlots(negotiationConfigs, cmd.UserId);
                 if (negotiationConfigs?.Count == 0)
                 {
-                    edition?.CancelAudiovisualNegotiationsCreation(cmd.UserId);
+                    edition?.CancelMusicBusinessRoundNegotiationsCreation(cmd.UserId);
                     this.Uow.SaveChanges();
                     this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Rooms, Labels.FoundFP), new string[] { "ToastrError" })));
                     return this.AppValidationResult;
                 }
 
-                var projectBuyerEvaluations = await this.projectBuyerEvaluationRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionId ?? 0);
+                var projectBuyerEvaluations = await this.MusicBusinessRoundProjectBuyerEvaluationRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionId ?? 0);
                 if (projectBuyerEvaluations?.Count == 0)
                 {
-                    edition?.CancelAudiovisualNegotiationsCreation(cmd.UserId);
+                    edition?.CancelMusicBusinessRoundNegotiationsCreation(cmd.UserId);
                     this.Uow.SaveChanges();
                     this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Projects, Labels.FoundMP), new string[] { "ToastrError" })));
                     return this.AppValidationResult;
@@ -128,26 +129,26 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 this.FillNegotiationSlots(negotiationSlots, projectBuyerEvaluations);
 
                 var negotiations = negotiationSlots
-                                    .Where(ns => ns.ProjectBuyerEvaluation != null && !ns.IsDeleted)
+                                    .Where(ns => ns.MusicBusinessRoundProjectBuyerEvaluation != null && !ns.IsDeleted)
                                     .ToList();
 
                 //this.NegotiationRepo.Truncate();
-                var remainingEditionNegotiations = await this.NegotiationRepo.FindNegotiationsByEditionIdAsync(cmd.EditionId.Value);
+                var remainingEditionNegotiations = await this.MusicBusinessRoundNegotiationRepo.FindAllByEditionIdAsync(cmd.EditionId.Value);
                 if (remainingEditionNegotiations.Count > 0)
                 {
-                    this.NegotiationRepo.DeleteAll(remainingEditionNegotiations);
+                    this.MusicBusinessRoundNegotiationRepo.DeleteAll(remainingEditionNegotiations);
                     this.Uow.SaveChanges();
                 }
 
-                this.NegotiationRepo.CreateAll(negotiations);
+                this.MusicBusinessRoundNegotiationRepo.CreateAll(negotiations);
 
-                edition?.FinishAudiovisualNegotiationsCreation(cmd.UserId);
+                edition?.FinishMusicBusinessRoundNegotiationsCreation(cmd.UserId);
 
                 this.Uow.SaveChanges();
             }
             catch (Exception)
             {
-                edition?.CancelAudiovisualNegotiationsCreation(cmd.UserId);
+                edition?.CancelMusicBusinessRoundNegotiationsCreation(cmd.UserId);
                 this.Uow.SaveChanges();
                 throw;
             }
@@ -162,9 +163,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="negotiationConfigs">The negotiation configs.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        private List<Negotiation> GetNegotiationSlots(List<NegotiationConfig> negotiationConfigs,int userId)
+        private List<MusicBusinessRoundNegotiation> GetNegotiationSlots(List<NegotiationConfig> negotiationConfigs, int userId)
         {
-            var negotiationSlots = new List<Negotiation>();
+            var negotiationSlots = new List<MusicBusinessRoundNegotiation>();
             var roundNumber = 1;
 
             if (negotiationConfigs?.Any() != true)
@@ -241,16 +242,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="type">The type.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        private Negotiation CreateNegotiationSlot(
-            NegotiationConfig dateConfig, 
-            NegotiationRoomConfig roomConfig, 
-            int numberSlot, 
-            int iTable, 
-            DateTimeOffset startDate, 
-            NegotiationTypeCodes type, 
+        private MusicBusinessRoundNegotiation CreateNegotiationSlot(
+            NegotiationConfig dateConfig,
+            NegotiationRoomConfig roomConfig,
+            int numberSlot,
+            int iTable,
+            DateTimeOffset startDate,
+            NegotiationTypeCodes type,
             int userId)
         {
-            return new Negotiation(
+            return new MusicBusinessRoundNegotiation(
                 dateConfig.EditionId,
                 roomConfig.Room,
                 startDate,
@@ -263,7 +264,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <summary>Processes the project submissions.</summary>
         /// <param name="negotiationSlots">The negotiation slots.</param>
         /// <param name="projectBuyerEvaluations">The project buyer evaluations.</param>
-        private void FillNegotiationSlots(List<Negotiation> negotiationSlots, List<ProjectBuyerEvaluation> projectBuyerEvaluations)
+        private void FillNegotiationSlots(List<MusicBusinessRoundNegotiation> negotiationSlots, List<MusicBusinessRoundProjectBuyerEvaluation> projectBuyerEvaluations)
         {
             // Project buyer evaluations with more exceptions are in the beginning of the list
             projectBuyerEvaluations = this.GetProjectBuyerEvaluationsOrderedByExceptions(negotiationSlots, projectBuyerEvaluations);
@@ -276,9 +277,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     var roundsExceptions = this.GetRoundsExceptions(negotiationSlots, projectBuyerEvaluation);
 
                     var possibleNegotiationSlots = negotiationSlots?
-                                                        .Where(ns => ns.ProjectBuyerEvaluation == null // Is not allocated
-                                                                     && ns.ProjectBuyerEvaluation?.ProjectId != projectBuyerEvaluation.ProjectId 
-                                                                     && ns.ProjectBuyerEvaluation?.BuyerAttendeeOrganizationId != projectBuyerEvaluation.BuyerAttendeeOrganizationId
+                                                        .Where(ns => ns.MusicBusinessRoundProjectBuyerEvaluation == null // Is not allocated
+                                                                     && ns.MusicBusinessRoundProjectBuyerEvaluation?.MusicBusinessRoundProjectId != projectBuyerEvaluation.MusicBusinessRoundProjectId
+                                                                     && ns.MusicBusinessRoundProjectBuyerEvaluation?.BuyerAttendeeOrganizationId != projectBuyerEvaluation.BuyerAttendeeOrganizationId
                                                                      && !roundsExceptions.Contains(ns.RoundNumber) // Is not a exception
                                                                 )?.ToList();
 
@@ -297,7 +298,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                             .Select(e => e.StartDate.Date)
                                             .FirstOrDefault();
 
-                        var negotiationsInDate = negotiationSlots.FirstOrDefault(ns => ns.StartDate.Date == dateTest && ns.ProjectBuyerEvaluationId == projectBuyerEvaluation.Id);
+                        var negotiationsInDate = negotiationSlots.FirstOrDefault(ns => ns.StartDate.Date == dateTest && ns.MusicBusinessRoundProjectBuyerEvaluationId == projectBuyerEvaluation.Id);
                         if (negotiationsInDate != null)
                         {
                             var negotiation = possibleNegotiationSlots.FirstOrDefault(e => e.TableNumber == negotiationsInDate.TableNumber && e.RoomId == negotiationsInDate.RoomId);
@@ -336,16 +337,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="negotiationSlots">The negotiation slots.</param>
         /// <param name="projectBuyerEvaluations">The project buyer evaluations.</param>
         /// <returns></returns>
-        private List<ProjectBuyerEvaluation> GetProjectBuyerEvaluationsOrderedByExceptions(List<Negotiation> negotiationSlots, List<ProjectBuyerEvaluation> projectBuyerEvaluations)
+        private List<MusicBusinessRoundProjectBuyerEvaluation> GetProjectBuyerEvaluationsOrderedByExceptions(List<MusicBusinessRoundNegotiation> negotiationSlots, List<MusicBusinessRoundProjectBuyerEvaluation> projectBuyerEvaluations)
         {
-            var projectBuyerEvaluationSlotExceptions = new List<Tuple<ProjectBuyerEvaluation, int>>();
+            var projectBuyerEvaluationSlotExceptions = new List<Tuple<MusicBusinessRoundProjectBuyerEvaluation, int>>();
 
             if (projectBuyerEvaluations?.Any() == true)
             {
                 foreach (var projectBuyerEvaluation in projectBuyerEvaluations)
                 {
                     var slotExceptions = this.GetRoundsExceptions(negotiationSlots, projectBuyerEvaluation);
-                    projectBuyerEvaluationSlotExceptions.Add(new Tuple<ProjectBuyerEvaluation, int>(projectBuyerEvaluation, slotExceptions.Count));
+                    projectBuyerEvaluationSlotExceptions.Add(new Tuple<MusicBusinessRoundProjectBuyerEvaluation, int>(projectBuyerEvaluation, slotExceptions.Count));
                 }
 
                 return projectBuyerEvaluationSlotExceptions
@@ -357,7 +358,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                             .ToList();
             }
 
-            return new List<ProjectBuyerEvaluation>();
+            return new List<MusicBusinessRoundProjectBuyerEvaluation>();
         }
 
         #region Slot exceptions
@@ -366,15 +367,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="negotiationSlots">The negotiation slots.</param>
         /// <param name="playerProjectBuyerEvaluation">The player project buyer evaluation.</param>
         /// <returns></returns>
-        private List<int> GetRoundsExceptions(List<Negotiation> negotiationSlots, ProjectBuyerEvaluation playerProjectBuyerEvaluation)
+        private List<int> GetRoundsExceptions(List<MusicBusinessRoundNegotiation> negotiationSlots, MusicBusinessRoundProjectBuyerEvaluation playerProjectBuyerEvaluation)
         {
             var result = new List<int>();
 
             var playerSlotExceptions = negotiationSlots
-                                                    .Where(ns => ns.ProjectBuyerEvaluationId == playerProjectBuyerEvaluation.Id 
-                                                                || ns.ProjectBuyerEvaluation?.ProjectId == playerProjectBuyerEvaluation.ProjectId 
-                                                                || ns.ProjectBuyerEvaluation?.Project?.SellerAttendeeOrganizationId == playerProjectBuyerEvaluation.Project.SellerAttendeeOrganizationId
-                                                                || ns.ProjectBuyerEvaluation?.BuyerAttendeeOrganizationId == playerProjectBuyerEvaluation.BuyerAttendeeOrganizationId)
+                                                    .Where(ns => ns.MusicBusinessRoundProjectBuyerEvaluationId == playerProjectBuyerEvaluation.Id
+                                                                || ns.MusicBusinessRoundProjectBuyerEvaluation?.MusicBusinessRoundProjectId == playerProjectBuyerEvaluation.MusicBusinessRoundProjectId
+                                                                || ns.MusicBusinessRoundProjectBuyerEvaluation?.MusicBusinessRoundProject?.SellerAttendeeCollaboratorId == playerProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaboratorId
+                                                                || ns.MusicBusinessRoundProjectBuyerEvaluation?.BuyerAttendeeOrganizationId == playerProjectBuyerEvaluation.BuyerAttendeeOrganizationId)
                                                     .Select(ns => ns.RoundNumber)
                                                     .Distinct()
                                                     .ToList();
@@ -392,7 +393,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="negotiationSlots">The negotiation slots.</param>
         /// <param name="projectBuyerEvaluation">The project buyer evaluation.</param>
         /// <returns></returns>
-        private List<int> GetLogisticsRoundsExceptions(List<Negotiation> negotiationSlots, ProjectBuyerEvaluation projectBuyerEvaluation)
+        private List<int> GetLogisticsRoundsExceptions(List<MusicBusinessRoundNegotiation> negotiationSlots, MusicBusinessRoundProjectBuyerEvaluation projectBuyerEvaluation)
         {
             var result = new List<int>();
 
@@ -406,7 +407,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="negotiationSlots">The negotiation slots.</param>
         /// <param name="projectBuyerEvaluation">The project buyer evaluation.</param>
         /// <returns></returns>
-        private List<int> GetPlayerLogisticsRoundsExceptions(List<Negotiation> negotiationSlots, ProjectBuyerEvaluation projectBuyerEvaluation)
+        private List<int> GetPlayerLogisticsRoundsExceptions(List<MusicBusinessRoundNegotiation> negotiationSlots, MusicBusinessRoundProjectBuyerEvaluation projectBuyerEvaluation)
         {
             var result = new List<int>();
 
@@ -417,7 +418,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             // Airfare logistics
             var organizationLogisticAirfares = this.logisticAirfares
-                                                    .Where(la => !la.Logistic.AttendeeCollaborator.IsDeleted 
+                                                    .Where(la => !la.Logistic.AttendeeCollaborator.IsDeleted
                                                                  && la.Logistic.AttendeeCollaborator.AttendeeOrganizationCollaborators
                                                                         .Any(aoc => !aoc.IsDeleted && aoc.AttendeeOrganizationId == projectBuyerEvaluation.BuyerAttendeeOrganizationId))
                                                     .ToList();
@@ -449,7 +450,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="negotiationSlots">The negotiation slots.</param>
         /// <param name="projectBuyerEvaluation">The project buyer evaluation.</param>
         /// <returns></returns>
-        private List<int> GetProducerLogisticsRoundsExceptions(List<Negotiation> negotiationSlots, ProjectBuyerEvaluation projectBuyerEvaluation)
+        private List<int> GetProducerLogisticsRoundsExceptions(List<MusicBusinessRoundNegotiation> negotiationSlots, MusicBusinessRoundProjectBuyerEvaluation projectBuyerEvaluation)
         {
             var result = new List<int>();
 
@@ -462,7 +463,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var organizationLogisticAirfares = this.logisticAirfares
                                                         .Where(la => !la.Logistic.AttendeeCollaborator.IsDeleted
                                                                      && la.Logistic.AttendeeCollaborator.AttendeeOrganizationCollaborators
-                                                                            .Any(aoc => !aoc.IsDeleted && aoc.AttendeeOrganizationId == projectBuyerEvaluation.Project.SellerAttendeeOrganizationId))
+                                                                            .Any(aoc => !aoc.IsDeleted && aoc.AttendeeCollaboratorId == projectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaboratorId))
                                                         .ToList();
             if (organizationLogisticAirfares?.Any() != true)
             {
@@ -496,7 +497,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="negotiationSlots">The negotiation slots.</param>
         /// <param name="projectBuyerEvaluation">The project buyer evaluation.</param>
         /// <returns></returns>
-        private List<int> GetConferencesSlotsExceptions(List<Negotiation> negotiationSlots, ProjectBuyerEvaluation projectBuyerEvaluation)
+        private List<int> GetConferencesSlotsExceptions(List<MusicBusinessRoundNegotiation> negotiationSlots, MusicBusinessRoundProjectBuyerEvaluation projectBuyerEvaluation)
         {
             List<int> result = new List<int>();
 
@@ -510,13 +511,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="negotiationSlots">The negotiation slots.</param>
         /// <param name="projectBuyerEvaluation">The project buyer evaluation.</param>
         /// <returns></returns>
-        private List<int> GetPlayerConferencesSlotsExceptions(List<Negotiation> negotiationSlots, ProjectBuyerEvaluation projectBuyerEvaluation)
+        private List<int> GetPlayerConferencesSlotsExceptions(List<MusicBusinessRoundNegotiation> negotiationSlots, MusicBusinessRoundProjectBuyerEvaluation projectBuyerEvaluation)
         {
             var result = new List<int>();
 
             var organizationConferences = this.conferences
                                                     .Where(c => c.ConferenceParticipants
-                                                                    .Any(cp => !cp.IsDeleted 
+                                                                    .Any(cp => !cp.IsDeleted
                                                                                && !cp.AttendeeCollaborator.IsDeleted
                                                                                && cp.AttendeeCollaborator.AttendeeOrganizationCollaborators
                                                                                         .Any(aoc => !aoc.IsDeleted && aoc.AttendeeOrganizationId == projectBuyerEvaluation.BuyerAttendeeOrganizationId)))
@@ -549,7 +550,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="negotiationSlots">The negotiation slots.</param>
         /// <param name="projectBuyerEvaluation">The project buyer evaluation.</param>
         /// <returns></returns>
-        private List<int> GetProducerConferencesSlotsExceptions(List<Negotiation> negotiationSlots, ProjectBuyerEvaluation projectBuyerEvaluation)
+        private List<int> GetProducerConferencesSlotsExceptions(List<MusicBusinessRoundNegotiation> negotiationSlots, MusicBusinessRoundProjectBuyerEvaluation projectBuyerEvaluation)
         {
             var result = new List<int>();
 
@@ -558,7 +559,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                                                     .Any(cp => !cp.IsDeleted
                                                                                && !cp.AttendeeCollaborator.IsDeleted
                                                                                && cp.AttendeeCollaborator.AttendeeOrganizationCollaborators
-                                                                                        .Any(aoc => !aoc.IsDeleted && aoc.AttendeeOrganizationId == projectBuyerEvaluation.Project.SellerAttendeeOrganizationId)))
+                                                                                        .Any(aoc => !aoc.IsDeleted && aoc.AttendeeCollaboratorId == projectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaboratorId)))
                                                     .ToList();
             if (organizationConferences?.Any() != true)
             {
