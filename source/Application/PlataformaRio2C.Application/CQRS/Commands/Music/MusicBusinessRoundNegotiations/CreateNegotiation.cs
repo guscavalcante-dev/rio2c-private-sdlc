@@ -33,7 +33,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateNegotiation"/> class.
+        /// Initializes a new instance of the <see cref="CreateMusicBusinessNegotiation"/> class.
         /// </summary>
         /// <param name="negotiationDto">The negotiation.</param>
         public CreateMusicBusinessRoundNegotiation()

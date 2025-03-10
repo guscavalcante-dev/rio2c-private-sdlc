@@ -123,6 +123,10 @@ namespace PlataformaRio2C.Domain.Entities
 
         protected MusicBusinessRoundNegotiation() { }
 
+        public MusicBusinessRoundNegotiation(int value, Organization buyerOrganization, NegotiationConfig negotiationConfig, NegotiationRoomConfig negotiationRoomConfig, List<MusicBusinessRoundNegotiation> negotiationsInThisRoomAndStartDate, string startTime, int v, int userId, string userInterfaceLanguage, bool isUsingAutomaticTable)
+        {
+        }
+
         /// <summary>
         /// Updates the specified negotiation configuration.
         /// </summary>

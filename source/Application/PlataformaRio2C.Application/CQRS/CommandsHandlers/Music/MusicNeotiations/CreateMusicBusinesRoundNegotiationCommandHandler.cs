@@ -231,7 +231,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var negotiation = new MusicBusinessRoundNegotiation(
                 cmd.EditionId.Value,
                 buyerOrganization,
-                project,
                 negotiationConfig,
                 negotiationRoomConfig,
                 negotiationsInThisRoomAndStartDate,

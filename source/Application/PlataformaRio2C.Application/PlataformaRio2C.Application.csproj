@@ -519,7 +519,6 @@
     <Compile Include="CQRS\Commands\Music\MusicBusinessRoundNegotiations\CreateAttendeeMusicBusinessNegotiationCollaborator.cs" />
     <Compile Include="CQRS\Commands\Music\MusicBusinessRoundNegotiations\CreateNegotiation.cs" />
     <Compile Include="CQRS\Commands\Music\MusicBusinessRoundNegotiations\CreateMusicBusinessRoundNegotiation.cs" />
-    <Compile Include="CQRS\Commands\Music\MusicBusinessRoundNegotiations\DeleteMusicBusinessNegotiation.cs" />
     <Compile Include="CQRS\Commands\Music\MusicBusinessRoundNegotiations\ScheduleManualNegotiation.cs" />
     <Compile Include="CQRS\Commands\Music\MusicBusinessRoundNegotiations\UpdateMusicBusinessRoundNegotiation.cs" />
     <Compile Include="CQRS\Commands\Music\Negotiations\CreateMusicBusinessRoundNegotiations.cs" />
