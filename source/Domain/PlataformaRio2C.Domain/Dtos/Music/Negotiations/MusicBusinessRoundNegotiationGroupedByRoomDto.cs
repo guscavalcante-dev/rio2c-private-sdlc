@@ -10,7 +10,7 @@ namespace PlataformaRio2C.Domain.Dtos
     public class MusicBusinessRoundNegotiationGroupedByRoomDto
     {
         public Room Room { get; set; }
-        public List<MusicBusinessRoundNegotiationGroupedByRoundDto> NegotiationGroupedByRoundDtos { get; set; }
+        public List<MusicBusinessRoundNegotiationGroupedByRoundDto> MusicBusinessRoundNegotiationGroupedByRoundDtos { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="MusicBusinessRoundNegotiationGroupedByRoomDto"/> class.</summary>
         /// <param name="room">The room.</param>
@@ -18,7 +18,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public MusicBusinessRoundNegotiationGroupedByRoomDto(Room room, List<MusicBusinessRoundNegotiation> negotiations)
         {
             this.Room = room;
-            this.NegotiationGroupedByRoundDtos = negotiations?
+            this.MusicBusinessRoundNegotiationGroupedByRoundDtos = negotiations?
                                                     .GroupBy(n => n.RoundNumber)?
                                                     .OrderBy(g => g.Key)
                                                     .Select(n => new MusicBusinessRoundNegotiationGroupedByRoundDto(n.Key, n.ToList()))?

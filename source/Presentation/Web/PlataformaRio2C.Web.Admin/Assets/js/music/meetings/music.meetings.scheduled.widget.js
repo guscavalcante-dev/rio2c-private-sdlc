@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Ribeiro
 // Last Modified On : 21-02-2025
 // ***********************************************************************
-// <copyright file="music.meetings.scheduled.widget.js" company="Softo">
+// <copyright file="Music.meetings.scheduled.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>

@@ -38,6 +38,7 @@ using Constants = PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Application.TemplateDocuments;
 using PlataformaRio2C.Infra.Report.Models;
 using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 {
@@ -108,8 +109,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         public async Task<ActionResult> ShowStatusWidget()
         {
             var generateAgendaStatusWidgetDto = new GenerateAgendaStatusWidgetDto(
-                await this.negotiationConfigRepo.CountNegotiationConfigsWithPresentialRoomConfiguredAsync(this.EditionDto.Id),
-                await this.negotiationConfigRepo.CountNegotiationConfigsWithVirtualRoomConfiguredAsync(this.EditionDto.Id));
+                await this.negotiationConfigRepo.CountNegotiationConfigsWithPresentialRoomConfiguredAsync(this.EditionDto.Id, ProjectType.AudiovisualBusinessRound.Id),
+                await this.negotiationConfigRepo.CountNegotiationConfigsWithVirtualRoomConfiguredAsync(this.EditionDto.Id, ProjectType.AudiovisualBusinessRound.Id));
 
             return Json(new
             {

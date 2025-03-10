@@ -33,9 +33,9 @@
                                 </div>
                             </div>
                             <div class="kt-portlet__body">
-                                @if (negotiationGroupedByRoomDto.NegotiationGroupedByRoundDtos?.Any() == true)
+                                @if (negotiationGroupedByRoomDto.MusicBusinessRoundNegotiationGroupedByRoundDtos?.Any() == true)
                                 {
-                                    foreach (var negotiationGroupedByRoundDto in negotiationGroupedByRoomDto.NegotiationGroupedByRoundDtos)
+                                    foreach (var negotiationGroupedByRoundDto in negotiationGroupedByRoomDto.MusicBusinessRoundNegotiationGroupedByRoundDtos)
                                     {
                                         <div class="kt-portlet kt-portlet--solid-success kt-portlet--height-fluid" style="background: #ffffff;">
                                             <div class="kt-portlet__head">
@@ -49,7 +49,7 @@
                                                 </div>
                                             </div>
                                             <div class="kt-portlet__body">
-                                                @if (negotiationGroupedByRoundDto.Negotiations?.Any() == true)
+                                                @if (negotiationGroupedByRoundDto.MusicBusinessRoundNegotiations?.Any() == true)
                                                 {
                                                     <!--begin: Data -->
                                                     <div class="table-responsive">
@@ -64,7 +64,7 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                @foreach (var negotiation in negotiationGroupedByRoundDto.Negotiations)
+                                                                @foreach (var negotiation in negotiationGroupedByRoundDto.MusicBusinessRoundNegotiations)
                                                                 {
                                                                     <tr>
                                                                         <td class="text-center">@(negotiation.TableNumber)</td>

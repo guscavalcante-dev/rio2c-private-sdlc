@@ -21,7 +21,7 @@ namespace PlataformaRio2C.Domain.Dtos
     public class MusicBusinessRoundNegotiationReportGroupedByRoomDto
     {
         public Room Room { get; set; }
-        public List<MusicBusinessRoundNegotiationReportGroupedByStartDateDto> NegotiationReportGroupedByStartDateDtos { get; set; }
+        public List<MusicBusinessRoundNegotiationReportGroupedByStartDateDto> MusicBusinessRoundNegotiationReportGroupedByStartDateDtos { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="MusicBusinessRoundNegotiationReportGroupedByRoomDto"/> class.</summary>
         /// <param name="room">The room.</param>
@@ -29,7 +29,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public MusicBusinessRoundNegotiationReportGroupedByRoomDto(Room room, List<MusicBusinessRoundNegotiation> negotiations)
         {
             this.Room = room;
-            this.NegotiationReportGroupedByStartDateDtos = negotiations?
+            this.MusicBusinessRoundNegotiationReportGroupedByStartDateDtos = negotiations?
                                                             .GroupBy(n => new { n.StartDate, n.EndDate })?
                                                             .OrderBy(g => g.Key.StartDate)
                                                             .Select(n => new MusicBusinessRoundNegotiationReportGroupedByStartDateDto(n.Key.StartDate, n.Key.EndDate, n.ToList()))?
