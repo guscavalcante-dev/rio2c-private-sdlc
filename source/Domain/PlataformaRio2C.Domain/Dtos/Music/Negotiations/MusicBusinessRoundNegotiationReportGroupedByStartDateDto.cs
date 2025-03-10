@@ -25,7 +25,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         //public int? TableNumber { get; set; }
-        public List<MusicBusinessRoundNegotiation> Negotiations { get; set; }
+        public List<MusicBusinessRoundNegotiation> MusicBusinessRoundNegotiations { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="MusicBusinessRoundNegotiationReportGroupedByStartDateDto"/> class.</summary>
         /// <param name="startDate">The start date.</param>
@@ -35,7 +35,7 @@ namespace PlataformaRio2C.Domain.Dtos
         {
             this.StartDate = startDate.ToBrazilTimeZone();
             this.EndDate = endDate.ToBrazilTimeZone();
-            this.Negotiations = negotiations?.OrderBy(n => n.TableNumber)?.ToList();
+            this.MusicBusinessRoundNegotiations = negotiations?.OrderBy(n => n.TableNumber)?.ToList();
         }
 
         /// <summary>Initializes a new instance of the <see cref="MusicBusinessRoundNegotiationReportGroupedByStartDateDto"/> class.</summary>

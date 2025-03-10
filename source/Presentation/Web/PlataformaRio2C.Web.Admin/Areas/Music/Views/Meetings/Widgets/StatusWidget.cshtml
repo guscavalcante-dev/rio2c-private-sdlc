@@ -2,19 +2,19 @@
 @model GenerateAgendaStatusWidgetDto
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
-    var isNegotiationsProcessing = editionDto?.MusicNegotiationsCreateStartDate != null && editionDto?.MusicNegotiationsCreateEndDate == null;
+    var isNegotiationsProcessing = editionDto?.MusicBusinessRoundNegotiationsCreateStartDate != null && editionDto?.MusicBusinessRoundNegotiationsCreateEndDate == null;
 }
 <div class="kt-portlet__body pl-5 pr-5">
     <div class="row">
         <div class="col-sm-8 mt-2 pt-3">
-            @if (editionDto?.MusicNegotiationsCreateStartDate != null && editionDto?.MusicNegotiationsCreateEndDate == null)
+            @if (editionDto?.MusicBusinessRoundNegotiationsCreateStartDate != null && editionDto?.MusicBusinessRoundNegotiationsCreateEndDate == null)
             {
-                @Html.Raw(string.Format(Messages.CalendarProcessing, editionDto.MusicNegotiationsCreateStartDate?.ToBrazilTimeZone()))
+                @Html.Raw(string.Format(Messages.CalendarProcessing, editionDto.MusicBusinessRoundNegotiationsCreateStartDate?.ToBrazilTimeZone()))
             }
-            else if (editionDto?.MusicNegotiationsCreateEndDate != null)
+            else if (editionDto?.MusicBusinessRoundNegotiationsCreateStartDate != null)
             {
-                var processingTime = editionDto.MusicNegotiationsCreateEndDate.Value - editionDto.MusicNegotiationsCreateStartDate.Value;
-                @Html.Raw(string.Format(Messages.CalendarProcessedSuccessfully, $"{editionDto.MusicNegotiationsCreateEndDate?.ToBrazilTimeZone()} ({processingTime.ToString(@"hh\:mm\:ss")})"))
+                var processingTime = editionDto.MusicBusinessRoundNegotiationsCreateEndDate.Value - editionDto.MusicBusinessRoundNegotiationsCreateStartDate.Value;
+                @Html.Raw(string.Format(Messages.CalendarProcessedSuccessfully, $"{editionDto.MusicBusinessRoundNegotiationsCreateEndDate?.ToBrazilTimeZone()} ({processingTime.ToString(@"hh\:mm\:ss")})"))
             }
             else
             {
@@ -27,13 +27,13 @@
                 !Model.HasNegotiationConfigWithVirtualRoomConfigured)
             {
                 <button class="btn btn-brand btn-elevate btn-icon-sm" disabled>
-                    <i class="flaticon-event-calendar-symbol"></i>@(editionDto?.MusicNegotiationsCreateEndDate != null ? Labels.RegenerateCalendar : Labels.GenerateCalendar)
+                    <i class="flaticon-event-calendar-symbol"></i>@(editionDto?.MusicBusinessRoundNegotiationsCreateEndDate != null ? Labels.RegenerateCalendar : Labels.GenerateCalendar)
                 </button>
             }
             else
             {
                 <button onclick="MusicMeetingsStatusWidget.showModal();" class="btn btn-brand btn-elevate btn-icon-sm">
-                    <i class="flaticon-event-calendar-symbol"></i>@(editionDto?.MusicNegotiationsCreateEndDate != null ? Labels.RegenerateCalendar : Labels.GenerateCalendar)
+                    <i class="flaticon-event-calendar-symbol"></i>@(editionDto?.MusicBusinessRoundNegotiationsCreateEndDate != null ? Labels.RegenerateCalendar : Labels.GenerateCalendar)
                 </button>
             }
         </div>

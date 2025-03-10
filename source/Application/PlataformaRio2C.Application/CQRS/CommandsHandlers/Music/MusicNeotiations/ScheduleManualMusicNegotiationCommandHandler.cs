@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Ribeiro 
 // Last Modified On : 05-03-2025
 // ***********************************************************************
-// <copyright file="CreateNegotiationCommandHandler.cs" company="Softo">
+// <copyright file="ScheduleManualNegotiationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -22,6 +22,7 @@ using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Interfaces.Repositories;
+using PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
@@ -29,45 +30,52 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>CreateNegotiationCommandHandler</summary>
-    public class CreateMusicBusinesRoundNegotiationCommandHandler : BaseCommandHandler, IRequestHandler<CreateMusicBusinessNegotiation, AppValidationResult>
+    /// <summary>ScheduleManualNegotiationCommandHandler</summary>
+    public class ScheduleManualMusicNegotiationCommandHandler : BaseCommandHandler, IRequestHandler<ScheduleManualMusicBusinessRoundNegotiation, AppValidationResult>
     {
         private readonly IOrganizationRepository organizationRepo;
-        private readonly IProjectRepository projectRepo;
-        private readonly INegotiationConfigRepository negotiationConfigRepo;
+        private readonly IMusicBusinessRoundProjectRepository musicbusinesroundprojectRepo;
+        private readonly INegotiationConfigRepository NegotiationRepo;
         private readonly INegotiationRoomConfigRepository negotiationRoomConfigRepo;
         private readonly IMusicBusinessRoundNegotiationRepository musicbusinessRoundnegotiationRepo;
+        private readonly IConferenceRepository conferenceRepo;
+        private readonly ILogisticAirfareRepository logisticAirfareRepo;
 
-        public CreateMusicBusinesRoundNegotiationCommandHandler(
+        public ScheduleManualMusicNegotiationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
+            //INegotiationRepository negotiationRepository,
             IOrganizationRepository organizationRepository,
-            IMusicBusinessRoundNegotiationRepository musicbusinessroundnegotiationRepository,
-            IProjectRepository projectRepository,
+            IMusicBusinessRoundProjectRepository musicbusinesroundprojectRepo,
             INegotiationConfigRepository negotiationConfigRepository,
+            IMusicBusinessRoundNegotiationRepository musicbusinessroundnegotiationRepository,
             INegotiationRoomConfigRepository negotiationRoomConfigRepository,
             IConferenceRepository conferenceRepository,
-            ILogisticAirfareRepository logisticAirfareRepository)
+            ILogisticAirfareRepository logisticsAirfareRepository)
             : base(eventBus, uow)
         {
-            this.musicbusinessRoundnegotiationRepo = musicbusinessroundnegotiationRepository;
             this.organizationRepo = organizationRepository;
-            this.projectRepo = projectRepository;
-            this.negotiationConfigRepo = negotiationConfigRepository;
+            this.musicbusinesroundprojectRepo = musicbusinesroundprojectRepo;
+            this.NegotiationRepo = negotiationConfigRepository;
+            this.musicbusinessRoundnegotiationRepo = musicbusinessroundnegotiationRepository;
             this.negotiationRoomConfigRepo = negotiationRoomConfigRepository;
+            this.conferenceRepo = conferenceRepository;
+            this.logisticAirfareRepo = logisticsAirfareRepository;
         }
 
-        /// <summary>Handles the specified create negotiation.</summary>
+        /// <summary>
+        /// Handles the specified command.
+        /// </summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(CreateMusicBusinessNegotiation cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(ScheduleManualMusicBusinessRoundNegotiation cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
             var buyerOrganization = await this.organizationRepo.GetAsync(cmd.BuyerOrganizationUid ?? Guid.Empty);
-            var project = await this.projectRepo.GetAsync(cmd.ProjectUid ?? Guid.Empty);
-            var negotiationConfig = await this.negotiationConfigRepo.GetAsync(cmd.NegotiationConfigUid ?? Guid.Empty);
+            var project = await this.musicbusinesroundprojectRepo.GetAsync(cmd.ProjectUid ?? Guid.Empty);
+            var negotiationConfig = await this.NegotiationRepo.GetAsync(cmd.NegotiationConfigUid ?? Guid.Empty);
             var negotiationRoomConfig = await this.negotiationRoomConfigRepo.GetAsync(cmd.NegotiationRoomConfigUid ?? Guid.Empty);
             var manualScheduledNegotiationsInThisRoom = await this.musicbusinessRoundnegotiationRepo.FindManualScheduledNegotiationsByRoomIdAsync(negotiationRoomConfig?.Room?.Id ?? 0);
 
@@ -82,7 +90,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             // Available tables check
             var manualNegotiationsGroupedByRoomAndStartDate = manualScheduledNegotiationsInThisRoom.GroupBy(n => n.StartDate);
             var hasNoMoreManualTablesAvailable = manualNegotiationsGroupedByRoomAndStartDate.Any(n => n.Count(w => w.StartDate == startDatePreview) >= negotiationRoomConfig.CountManualTables);
-            if (hasNoMoreManualTablesAvailable)
+
+            if (negotiationRoomConfig.CountManualTables == 0 || hasNoMoreManualTablesAvailable)
             {
                 // Has no more manual tables available, so, try to use slots available at automatic tables
                 automaticScheduledNegotiationsInThisRoom = await this.musicbusinessRoundnegotiationRepo.FindAutomaticScheduledNegotiationsByRoomIdAsync(negotiationRoomConfig?.Room?.Id ?? 0);
@@ -114,7 +123,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         new string[] { "ToastrError" }));
             }
 
-            var hasProducerScheduledNegotiationsAtThisTime = scheduledNegotiationsAtThisTime.Count(ndto => ndto.ProjectBuyerEvaluationDto.ProjectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.OrganizationId == project.SellerAttendeeOrganization.OrganizationId) > 0;
+            var hasProducerScheduledNegotiationsAtThisTime = scheduledNegotiationsAtThisTime.Count(ndto => ndto.ProjectBuyerEvaluationDto.MusicBusinessRoundProjectDto.SellerAttendeeCollaboratorDto.AttendeeOrganizationsDtos.FirstOrDefault().Organization.Id == project.SellerAttendeeCollaborator.AttendeeMusicBusinessRoundNegotiationCollaborators.FirstOrDefault().AttendeeCollaborator.Id) > 0;
             if (hasProducerScheduledNegotiationsAtThisTime)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(
@@ -125,7 +134,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         new string[] { "ToastrError" }));
             }
 
-            #region [DISABLED] This Conferences and Airfares checks are disabled but its working perfectly! (Dont delete, can be used in future!)
+            #region [DISABLED] This Conferences and Airfare checks are disabled but its working perfectly! (Dont delete, can be used in future!)
 
             //// Conferences checks
             //var scheduledConferencesAtThisTime = await this.conferenceRepo.FindAllScheduleDtosAsync(cmd.EditionId.Value, 0, startDatePreview, endDatePreview, true, true);
@@ -181,13 +190,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            //Update command properties to return to form before throws any ValidationError
-            cmd.InitialProjectUid = project.Uid;
-            cmd.InitialProjectName = project.GetTitleByLanguageCode(cmd.UserInterfaceLanguage);
-            cmd.InitialBuyerOrganizationUid = buyerOrganization.Uid;
-            cmd.InitialBuyerOrganizationName = buyerOrganization.CompanyName;
-            cmd.SellerOrganizationUid = project.SellerAttendeeOrganization.Organization.Uid;
-
             if (!this.ValidationResult.IsValid)
             {
                 this.AppValidationResult.Add(this.ValidationResult);
@@ -196,14 +198,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             // Concat Manual and Automatic negotiations to use inside negotiation.Update();
             var negotiationsInThisRoomAndStartDate = manualScheduledNegotiationsInThisRoom
-                                                                    .Cast<MusicBusinessRoundNegotiation>()
-                                                                    .Concat(automaticScheduledNegotiationsInThisRoom)
-                                                                    .Where(n => n.StartDate == startDatePreview)
-                                                                    .ToList();
+                .Cast<MusicBusinessRoundNegotiation>() // Cast to Negotiation
+                .Concat(automaticScheduledNegotiationsInThisRoom.Cast<MusicBusinessRoundNegotiation>())
+                .Where(n => n.StartDate == startDatePreview)
+                .ToList();
 
             var negotiation = new MusicBusinessRoundNegotiation(
                 cmd.EditionId.Value,
                 buyerOrganization,
+                project,
                 negotiationConfig,
                 negotiationRoomConfig,
                 negotiationsInThisRoomAndStartDate,
@@ -222,10 +225,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.Uow.SaveChanges();
 
             return this.AppValidationResult;
-
-            //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
-
-            //return Task.FromResult(propertyId); // use it when the methed is not async
         }
     }
 }

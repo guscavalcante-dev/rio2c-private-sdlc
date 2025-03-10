@@ -615,6 +615,7 @@
     <Compile Include="Interfaces\Repositories\Music\BusinessRoundProjects\IPlayersCategoryRepository.cs" />
     <Compile Include="Interfaces\Repositories\Music\Negotiation\IAttendeeMusicBusinessRoundNegotiationCollaboratorRepository.cs" />
     <Compile Include="Interfaces\Repositories\Music\Negotiation\IMusicBusinessRoundNegotiationRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Music\Projects\IMusicBusinessRoundProjectBuyerEvaluationRepository.cs" />
     <Compile Include="Interfaces\Repositories\Music\Projects\IMusicBusinessRoundProjectRepository.cs" />
     <Compile Include="Interfaces\Repositories\Music\Projects\IMusicProjectRepository.cs" />
     <Compile Include="Interfaces\Repositories\Music\Projects\IMusicGenreRepository.cs" />

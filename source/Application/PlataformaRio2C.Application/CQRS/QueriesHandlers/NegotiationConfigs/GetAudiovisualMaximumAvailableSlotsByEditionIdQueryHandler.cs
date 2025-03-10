@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Dtos;
 using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
@@ -44,7 +45,7 @@ namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
         /// <returns></returns>
         public async Task<GetAudiovisualMaximumAvailableSlotsByEditionIdResponseDto> Handle(GetAudiovisualMaximumAvailableSlotsByEditionId cmd, CancellationToken cancellationToken)
         {
-            var negotiationConfigDtos = await this.repo.FindAllByEditionIdAsync(cmd.EditionId);
+            var negotiationConfigDtos = await this.repo.FindAllByEditionIdAsync(cmd.EditionId,ProjectType.AudiovisualBusinessRound.Id);
 
             // Get only NegotiationConfigs that have AutomaticTables configured
             var automaticTablesNegotiationConfigDtos = negotiationConfigDtos

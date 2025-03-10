@@ -17,7 +17,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>CreateNegotiation</summary>
-    public class CreateMusicBusinessNegotiation : MusicbusinessRoundnegotiationBaseCommand
+    public class CreateMusicBusinessRoundNegotiation : MusicbusinessRoundnegotiationBaseCommand
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateMusicBusinessNegotiation"/> class.
@@ -25,7 +25,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="MusicBusinessRoundProjectDto">The project buyer evaluation dto.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         /// <exception cref="DomainException"></exception>
-        public CreateMusicBusinessNegotiation(
+        public CreateMusicBusinessRoundNegotiation(
             MusicBusinessRoundProjectBuyerEvaluationDto MusicBusinessRoundProjectDto,
             string userInterfaceLanguage)
         {
@@ -36,7 +36,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// Initializes a new instance of the <see cref="CreateMusicBusinessNegotiation"/> class.
         /// </summary>
         /// <param name="negotiationDto">The negotiation.</param>
-        public CreateMusicBusinessNegotiation()
+        public CreateMusicBusinessRoundNegotiation()
         {
         }
     }
