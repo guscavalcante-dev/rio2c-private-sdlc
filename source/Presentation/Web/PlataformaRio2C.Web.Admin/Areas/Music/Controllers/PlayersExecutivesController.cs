@@ -722,5 +722,54 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         }
 
         #endregion
+
+        #region Finds
+
+        /// <summary>Finds all by filters.</summary>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="filterByProjectsInNegotiation">The filter by projects in negotiation.</param>
+        /// <param name="page">The page.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> FindAllByFilters(string keywords, bool? filterByProjectsInNegotiation = false, int? page = 1)
+        {
+            var collaboratorsApiDtos = await this.collaboratorRepo.FindAllDropdownApiListDtoPaged(
+                this.EditionDto.Id,
+                keywords,
+                filterByProjectsInNegotiation.Value,
+                Constants.CollaboratorType.PlayerExecutiveMusic,
+                false,
+                page.Value,
+                10);
+
+            return Json(new
+            {
+                status = "success",
+                HasPreviousPage = collaboratorsApiDtos.HasPreviousPage,
+                HasNextPage = collaboratorsApiDtos.HasNextPage,
+                TotalItemCount = collaboratorsApiDtos.TotalItemCount,
+                PageCount = collaboratorsApiDtos.PageCount,
+                PageNumber = collaboratorsApiDtos.PageNumber,
+                PageSize = collaboratorsApiDtos.PageSize,
+                Collaborators = collaboratorsApiDtos?.Select(c => new CollaboratorsDropdownDto
+                {
+                    Uid = c.Uid,
+                    BadgeName = c.BadgeName?.Trim(),
+                    Name = c.Name?.Trim(),
+                    Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.Uid, c.ImageUploadDate, true) : null,
+                    JobTitle = c.GetCollaboratorJobTitleBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value?.Trim(),
+                    Companies = c.OrganizationsDtos?.Select(od => new CollaboratorsDropdownOrganizationDto
+                    {
+                        Uid = od.Uid,
+                        TradeName = od.TradeName,
+                        CompanyName = od.CompanyName,
+                        Picture = od.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, od.Uid, od.ImageUploadDate, true) : null
+                    })?.ToList()
+                })?.ToList()
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
     }
 }
