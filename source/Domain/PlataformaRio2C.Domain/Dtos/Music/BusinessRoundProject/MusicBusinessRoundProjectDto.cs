@@ -23,6 +23,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<MusicBusinessRoundProjectExpectationsForMeetingDto> MusicBusinessRoundProjectExpectationsForMeetingDtos { get; set; }
         public IEnumerable<MusicBusinessRoundProjectBuyerEvaluationDto> MusicBusinessRoundProjectBuyerEvaluationDtos { get; set; }
         public IEnumerable<MusicBusinessRoundProjectActivityDto> MusicBusinessRoundProjectActivityDtos { get; set; }
+        public object SellerAttendeeOrganizationDto { get; set; }
 
         public bool IsFinished()
         {

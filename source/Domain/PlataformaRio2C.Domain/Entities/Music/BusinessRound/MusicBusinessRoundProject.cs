@@ -41,6 +41,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<MusicBusinessRoundProjectActivity> MusicBusinessRoundProjectActivities { get; private set; }
         public virtual ICollection<MusicBusinessRoundProjectExpectationsForMeeting> MusicBusinessRoundProjectExpectationsForMeetings { get; private set; }
         public virtual ICollection<MusicBusinessRoundProjectBuyerEvaluation> MusicBusinessRoundProjectBuyerEvaluations { get; private set; }
+        public object SellerAttendeeOrganization { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MusicBusinessRoundProject"/> class.
