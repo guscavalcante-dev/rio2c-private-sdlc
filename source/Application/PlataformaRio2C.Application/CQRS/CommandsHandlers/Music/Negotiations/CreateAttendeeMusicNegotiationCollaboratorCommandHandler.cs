@@ -26,7 +26,7 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
     /// <summary>CreateAttendeeNegotiationCommandHandler</summary>
-    public class CreateAttendeeMusicNegotiationCollaboratorCommandHandler : BaseCommandHandler, IRequestHandler<CreateAttendeeMusicBusinessNegotiationCollaborator, AppValidationResult>
+    public class CreateAttendeeMusicNegotiationCollaboratorCommandHandler : BaseCommandHandler, IRequestHandler<CreateAttendeeMusicBusinessRoundNegotiationCollaborator, AppValidationResult>
     {
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
         private readonly IMusicBusinessRoundNegotiationRepository musicBusinessRoundNegotiationRepository;
@@ -57,11 +57,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(CreateAttendeeMusicBusinessNegotiationCollaborator cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(CreateAttendeeMusicBusinessRoundNegotiationCollaborator cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
-            var negotiation = await this.musicBusinessRoundNegotiationRepository.FindByUidAsync(cmd.MusicBusinessNegotiationUid);
+            var negotiation = await this.musicBusinessRoundNegotiationRepository.FindByUidAsync(cmd.MusicBusinessRoundNegotiationUid);
             var attendeeCollaborator = await this.attendeeCollaboratorRepo.GetAsync(ac => !ac.IsDeleted && ac.CollaboratorId == cmd.UserId && ac.EditionId == cmd.EditionId);
 
             if (negotiation == null)
