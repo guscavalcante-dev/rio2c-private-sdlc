@@ -53,7 +53,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            var negotiation = await this.GetNegotiationByUid(cmd.ProjectUid.Value);
+            var negotiation = await this.GetMusicBusinessRoundNegotiationByUid(cmd.ProjectUid.Value);
 
             #region Initial validations
 

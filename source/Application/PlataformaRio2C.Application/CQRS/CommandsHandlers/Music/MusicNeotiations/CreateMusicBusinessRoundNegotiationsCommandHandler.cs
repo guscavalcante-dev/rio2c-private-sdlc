@@ -96,7 +96,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 edition?.StartMusicBusinessRoundNegotiationsCreation(cmd.UserId);
                 this.Uow.SaveChanges();
 
-                var negotiationConfigs = await this.negotiationConfigRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionId.Value);
+                var negotiationConfigs = await this.negotiationConfigRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionId.Value, ProjectType.Music.Id);
                 if (negotiationConfigs?.Count == 0)
                 {
                     edition?.CancelMusicBusinessRoundNegotiationsCreation(cmd.UserId);
