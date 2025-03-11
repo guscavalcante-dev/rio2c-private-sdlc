@@ -43,6 +43,7 @@ using DocumentFormat.OpenXml.Office.Word;
 using System.Web.Http.Results;
 using PlataformaRio2C.Domain.Interfaces.Repositories;
 using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Application.CQRS.CommandsHandlers;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 {
@@ -107,7 +108,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
         #region Status Widget
 
-        
+
 
         /// <summary>Shows the status widget.</summary>
         /// <returns></returns>
@@ -533,7 +534,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
         #endregion
 
-
         #endregion
 
         #region Unscheduled
@@ -702,6 +702,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
         #endregion
 
+        #region Logistic Info Widget
+
         ///// <summary>
         ///// Shows the logistics information widget.
         ///// </summary>
@@ -725,5 +727,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 }
             }, JsonRequestBehavior.AllowGet);
         }
+
+        #endregion
+
     }
 }
