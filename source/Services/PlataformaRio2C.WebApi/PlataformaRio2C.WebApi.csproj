@@ -467,10 +467,6 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Application\PlataformaRio2C.Application\PlataformaRio2C.Application.csproj">
-      <Project>{5C6E9CB9-B206-4ECF-AE1A-7E07995D39F7}</Project>
-      <Name>PlataformaRio2C.Application</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Infra\CrossCutting\PlataformaRio2C.Infra.CrossCutting.CQRS\PlataformaRio2C.Infra.CrossCutting.CQRS.csproj">
       <Project>{e414d342-6a28-4844-9f2f-a6022d5ae929}</Project>
       <Name>PlataformaRio2C.Infra.CrossCutting.CQRS</Name>

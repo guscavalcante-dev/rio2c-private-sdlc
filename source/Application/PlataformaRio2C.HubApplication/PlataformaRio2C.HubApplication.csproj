@@ -78,10 +78,6 @@
       <Project>{30c4d007-1a78-410c-9fcd-63699985c39b}</Project>
       <Name>PlataformaRio2C.Infra.Data.Context</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PlataformaRio2C.Application\PlataformaRio2C.Application.csproj">
-      <Project>{5c6e9cb9-b206-4ecf-ae1a-7e07995d39f7}</Project>
-      <Name>PlataformaRio2C.Application</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
