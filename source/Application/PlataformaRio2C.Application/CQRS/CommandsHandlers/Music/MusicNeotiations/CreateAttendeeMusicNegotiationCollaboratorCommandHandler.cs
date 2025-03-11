@@ -26,21 +26,21 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
     /// <summary>CreateAttendeeNegotiationCommandHandler</summary>
-    public class MusicBusinessRoundAttendeeNegotiationCollaboratorCommandHandler : BaseCommandHandler, IRequestHandler<CreateAttendeeMusicBusinessRoundNegotiationCollaborator, AppValidationResult>
+    public class CreateAttendeeMusicNegotiationCollaboratorCommandHandler : BaseCommandHandler, IRequestHandler<CreateAttendeeMusicBusinessRoundNegotiationCollaborator, AppValidationResult>
     {
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
         private readonly IMusicBusinessRoundNegotiationRepository musicBusinessRoundNegotiationRepository;
         private readonly IAttendeeNegotiationCollaboratorRepository attendeeNegotiationCollaboratorRepo;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MusicBusinessRoundAttendeeNegotiationCollaboratorCommandHandler"/> class.
+        /// Initializes a new instance of the <see cref="CreateAttendeeMusicNegotiationCollaboratorCommandHandler"/> class.
         /// </summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
         /// <param name="negotiationRepository">The negotiation repository.</param>
         /// <param name="attendeeNegotiationCollaboratorRepo">The attendee negotiation collaborator repo.</param>
-        public MusicBusinessRoundAttendeeNegotiationCollaboratorCommandHandler(
+        public CreateAttendeeMusicNegotiationCollaboratorCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
@@ -50,7 +50,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
             this.musicBusinessRoundNegotiationRepository = musicbusinessroundnegotiationRepository;
-            this.attendeeNegotiationCollaboratorRepo = attendeeNegotiationCollaboratorRepo;
+            this.attendeeNegotiationCollaboratorRepo = attendeeNegotiationCollaboratorRepo; 
         }
 
         /// <summary>Handles the specified create negotiation.</summary>
@@ -61,7 +61,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.Uow.BeginTransaction();
 
-            var negotiation = await this.musicBusinessRoundNegotiationRepository.FindByUidAsync(cmd.MusicBusinesRoundNegotiationUid);
+            var negotiation = await this.musicBusinessRoundNegotiationRepository.FindByUidAsync(cmd.MusicBusinessRoundNegotiationUid);
             var attendeeCollaborator = await this.attendeeCollaboratorRepo.GetAsync(ac => !ac.IsDeleted && ac.CollaboratorId == cmd.UserId && ac.EditionId == cmd.EditionId);
 
             if (negotiation == null)
