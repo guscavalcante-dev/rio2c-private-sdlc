@@ -468,7 +468,7 @@ var MusicMeetingsUpdate = function () {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
-        jsonParameters.negotiationUid = negotiationUid;
+        jsonParameters.MusicRoundNegotiationUid = negotiationUid;
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Meetings/ShowUpdateModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
