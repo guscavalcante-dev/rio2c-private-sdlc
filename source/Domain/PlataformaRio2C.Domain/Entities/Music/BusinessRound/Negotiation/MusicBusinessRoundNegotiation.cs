@@ -202,7 +202,9 @@ namespace PlataformaRio2C.Domain.Entities
             string userInterfaceLanguage,
             bool isUsingAutomaticTable)
         {
-            if (negotiationConfig == null || negotiationRoomConfig == null)
+            if (negotiationConfig == null)
+                return;
+            if (negotiationRoomConfig == null)
                 return;
 
             if (musicBusinessRoundNegotiations?.Count > 0)

@@ -1,15 +1,18 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
-// Author           : Rafael Ribeiro 
-// Created          : 05-03-2025
+// Author           : Rafael Dantas Ruiz
+// Created          : 03-06-2020
 //
-// Last Modified By : Rafael Ribeiro 
-// Last Modified On : 05-03-2025
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-07-2020
 // ***********************************************************************
+// <copyright file="NegotiationBaseCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
+using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
@@ -17,36 +20,34 @@ using PlataformaRio2C.Domain.Interfaces.Repositories;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
     /// <summary>NegotiationBaseCommandHandler</summary>
-    /// 
-    public class MusicBusinessRoundNegotiationBaseCommandHandler : BaseCommandHandler
+    public class MusicBusinesRoundNegotiationBaseCommandHandler : BaseCommandHandler
     {
-        protected readonly IMusicBusinessRoundNegotiationRepository MusicBusinessRoundNegotiationRepo;
+        protected readonly IMusicBusinessRoundNegotiationRepository _musicBusinessRoundNegotiationRepository;
 
-        /// <summary>Initializes a new instance of the <see cref="MusicBusinessRoundNegotiationBaseCommandHandler"/> class.</summary>
+        public MusicBusinesRoundNegotiationBaseCommandHandler(IMediator commandBus, IUnitOfWork uow) : base(commandBus, uow)
+        {
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="NegotiationBaseCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="negotiationRepository">The negotiation repository.</param>
-        public MusicBusinessRoundNegotiationBaseCommandHandler(IMediator eventBus, IUnitOfWork uow, IMusicBusinessRoundNegotiationRepository negotiationRepository)
+        public MusicBusinesRoundNegotiationBaseCommandHandler(IMediator eventBus, IUnitOfWork uow, IMusicBusinessRoundNegotiationRepository negotiationRepository)
             : base(eventBus, uow)
         {
-            this.MusicBusinessRoundNegotiationRepo = negotiationRepository;
+            this._musicBusinessRoundNegotiationRepository = negotiationRepository;
         }
 
         /// <summary>Gets the negotiation by uid.</summary>
         /// <param name="negotiationUid">The negotiation uid.</param>
         /// <returns></returns>
-        public async Task<MusicBusinessRoundNegotiation> GetMusicBusinessRoundNegotiationByUid(Guid negotiationUid)
+        public async Task<MusicBusinessRoundNegotiation> GetNegotiationByUid(Guid negotiationUid)
         {
-            var negotiation = await this.MusicBusinessRoundNegotiationRepo.GetAsync(negotiationUid);
+            var negotiation = await this._musicBusinessRoundNegotiationRepository.GetAsync(negotiationUid) as MusicBusinessRoundNegotiation;
             if (negotiation == null || negotiation.IsDeleted)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.OneToOneMeetings, Labels.FoundM), new string[] { "ToastrError" }));
@@ -55,5 +56,4 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             return negotiation;
         }
     }
-
 }
