@@ -534,6 +534,10 @@
     <Compile Include="Migrations\202503051923323_AddVirtualMeetingFieldToMusicBusinessRoundProjectBuyerEvaluationsTable.Designer.cs">
       <DependentUpon>202503051923323_AddVirtualMeetingFieldToMusicBusinessRoundProjectBuyerEvaluationsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202503121743444_UpdateDatabase_20250312.cs" />
+    <Compile Include="Migrations\202503121743444_UpdateDatabase_20250312.Designer.cs">
+      <DependentUpon>202503121743444_UpdateDatabase_20250312.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -1066,6 +1070,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202503051923323_AddVirtualMeetingFieldToMusicBusinessRoundProjectBuyerEvaluationsTable.resx">
       <DependentUpon>202503051923323_AddVirtualMeetingFieldToMusicBusinessRoundProjectBuyerEvaluationsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202503121743444_UpdateDatabase_20250312.resx">
+      <DependentUpon>202503121743444_UpdateDatabase_20250312.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
