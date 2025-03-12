@@ -4,7 +4,8 @@
 @{
     ViewBag.Title = Labels.ProjectsEvaluation;
     var editionDto = ViewBag.EditionDto as EditionDto;
-    var interests = ViewBag.Interests as List<Interest>;
+    var subgenreInterests = ViewBag.SubgenreInterests as List<Interest>;
+    var segmentInterests = ViewBag.SegmentInterests as List<Interest>;
     var projectEvaluationStatuses = ViewBag.ProjectEvaluationStatuses as List<ProjectEvaluationStatus>;
 }
 <div class="kt-portlet">
@@ -20,18 +21,29 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-sm-6 mt-2">
-                <select name="InterestUid" id="InterestUid" class="form-control">
+            <div class="col-md-4 col-sm-12 mt-2">
+                <select name="SubgenreInterestUid" id="SubgenreInterestUid" class="form-control">
                     <option value="">@(string.Format(Labels.SelectAMEntity, Labels.SubGenre.ToLowerInvariant()))...</option>
-                    @foreach (var interest in interests)
+                    @foreach (var subgenreInterest in subgenreInterests)
                     {
-                        <option value="@interest.Uid" @(interest.Uid == ViewBag.InterestUid ? "selected" : string.Empty)>
-                            @interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                        <option value="@subgenreInterest.Uid" @(subgenreInterest.Uid == ViewBag.SelectedSubgenreInterestUid ? "selected" : string.Empty)>
+                            @subgenreInterest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
                         </option>
                     }
                 </select>
             </div>
-            <div class="col-12 col-sm-6 mt-2">
+            <div class="col-md-4 col-sm-12 mt-2">
+                <select name="SegmentInterestUid" id="SegmentInterestUid" class="form-control">
+                    <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Segment.ToLowerInvariant()))...</option>
+                    @foreach (var segmentInterest in segmentInterests)
+                    {
+                        <option value="@segmentInterest.Uid" @(segmentInterest.Uid == ViewBag.SelectedSegmentInterestUid ? "selected" : string.Empty)>
+                            @segmentInterest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                        </option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-4 col-sm-12 mt-2">
                 <select name="EvaluationStatusUid" id="EvaluationStatusUid" class="form-control">
                     <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Status.ToLowerInvariant()))...</option>
                     @foreach (var evaluationStatus in projectEvaluationStatuses)
@@ -91,7 +103,8 @@
             selectPlaceholder: '@Labels.SelectAMEntity',
             selectFPlaceholder: '@Labels.SelectAFEntity',
             genre: '@Html.Raw(Labels.SubGenre.ToLowerInvariant())',
-            status: '@Labels.Status.ToLowerInvariant()'
+            status: '@Labels.Status.ToLowerInvariant()',
+            segment: '@Html.Raw(Labels.Segment.ToLowerInvariant())',
         };
 
         jQuery(document).ready(function () {

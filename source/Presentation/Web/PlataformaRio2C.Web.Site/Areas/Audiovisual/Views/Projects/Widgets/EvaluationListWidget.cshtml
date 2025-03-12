@@ -3,7 +3,7 @@
 @using X.PagedList.Mvc.Common
 @using PlataformaRio2C.Domain.Entities;
 @model X.PagedList.IPagedList<ProjectDto>
-@{ 
+@{
     var editionDto = ViewBag.EditionDto as EditionDto;
 }
 @if (Model?.Any() == true)
@@ -28,8 +28,17 @@
                     <div class="kt-pagination kt-pagination--brand justify-content-center justify-content-sm-between">
                         @Html.PagedListPager(
                             Model,
-                            page => Url.Action("ShowEvaluationListWidget", "Projects", new { Area = "Audiovisual", searchKeywords = ViewBag.SearchKeywords, interestUid = ViewBag.InterestUid, evaluationStatusUid = ViewBag.EvaluationStatusUid, page, pageSize = ViewBag.PageSize }),
-                            PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
+                            page => Url.Action("ShowEvaluationListWidget", "Projects", new
+                                {
+                                    Area = "Audiovisual",
+                                    searchKeywords = ViewBag.SearchKeywords,
+                                    subgenreInterestUid = ViewBag.SelectedSubgenreInterestUid,
+                                    segmentInterestUid = ViewBag.SelectedSegmentInterestUid,
+                                    evaluationStatusUid = ViewBag.EvaluationStatusUid,
+                                    page,
+                                    pageSize = ViewBag.PageSize
+                                }),
+                                PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
                                 new PagedListRenderOptions
                                 {
                                     DisplayLinkToIndividualPages = true,
@@ -38,7 +47,6 @@
                                     DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
                                     DisplayLinkToNextPage = PagedListDisplayMode.Always,
                                     DisplayLinkToLastPage = PagedListDisplayMode.Always,
-                                    //ContainerDivClasses = new string[] { "kt-pagination kt-pagination--brand" },
                                     UlElementClasses = new string[] { "kt-pagination__links" },
                                     LiElementClasses = new string[] { "" },
                                     PreviousElementClass = "kt-pagination__link--prev",
@@ -49,7 +57,12 @@
                                     PageClasses = new string[] { "" },
                                     EllipsesElementClass = ""
                                 }
-                                , new AjaxOptions { HttpMethod = "GET", OnBegin = "AudiovisualProjectsEvaluationListWidget.changePage", OnSuccess = "AudiovisualProjectsEvaluationListWidget.handlePaginationReturn" }))
+                                , new AjaxOptions 
+                                { 
+                                    HttpMethod = "GET", 
+                                    OnBegin = "AudiovisualProjectsEvaluationListWidget.changePage", 
+                                    OnSuccess = "AudiovisualProjectsEvaluationListWidget.handlePaginationReturn" 
+                                }))
                         <div class="kt-pagination__toolbar">
                             @Html.DropDownList("PageSizeDropdown", new SelectList(new[] { 1, 3, 6, 9, 12, 24, 36 }, ViewBag.PageSize), null, new { @class = "form-control kt-font-brand", style = "width: 60px;" })
                             @Html.PagedListPager(
@@ -91,7 +104,7 @@ else
     {
         message = $"{string.Format(Messages.TheEvaluationPeriodRunsFrom, editionDto.AudiovisualCommissionEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(), editionDto.AudiovisualCommissionEvaluationEndDate.ToBrazilTimeZone().ToShortDateString())}{Environment.NewLine}{Messages.TheProjectsWillReceiveFinalGradeAtPeriodEnds}";
     }
-    else if(!editionDto.IsAudiovisualCommissionProjectEvaluationOpen() &&
+    else if (!editionDto.IsAudiovisualCommissionProjectEvaluationOpen() &&
         evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
     {
         message = $"{Messages.EvaluationPeriodClosed}{Environment.NewLine}{string.Format(Messages.ProjectsNotFoundWithStatus, Labels.UnderEvaluation)}";

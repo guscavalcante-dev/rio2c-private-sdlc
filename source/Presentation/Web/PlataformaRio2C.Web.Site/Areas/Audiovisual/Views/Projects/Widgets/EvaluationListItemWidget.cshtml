@@ -1,15 +1,16 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2c.Infra.Data.FileRepository.Helpers
 @using PlataformaRio2C.Domain.Statics
+@using PlataformaRio2C.Domain.Entities
 @model ProjectDto
 @{
     var evaluationDetailsAction = Url.Action("EvaluationDetails", "Projects", new
     {
         Area = "Audiovisual",
         id = Model.Project.Id,
-        //step = 0,
         searchKeywords = ViewBag.SearchKeywords,
-        interestUid = ViewBag.InterestUid,
+        subgenreInterestUid = ViewBag.SelectedSubgenreInterestUid,
+        segmentInterestUid = ViewBag.SelectedSegmentInterestUid,
         evaluationStatusUid = ViewBag.EvaluationStatusUid,
         Page = ViewBag.Page,
         pageSize = ViewBag.PageSize
@@ -55,44 +56,55 @@
                         <span style="font-weight: 600; font-size: 17px; line-height: 19px; color: #403D50;">@(Model.Project?.GetTitleByLanguageCode(ViewBag.UserInterfaceLanguage) ?? "-")</span>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-12 mt-3">
                         <div style="font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; width: 65px; display: inline-block;">@Labels.SubGenres:</div>
-                        @if (Model.ProjectInterestDtos?.Any() == true)
-                        {
-                            foreach (var projectInterestDto in Model.ProjectInterestDtos)
+                        @{
+                            var subgenreProjectInterests = Model.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualPitchingSubGenre.Uid);
+                            if (subgenreProjectInterests?.Any() == true)
                             {
-                                <span class="kt-badge kt-badge--inline kt-badge--info mt-1 ml-4">
-                                    @(projectInterestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
-                                    @if (projectInterestDto.Interest.HasAdditionalInfo && !string.IsNullOrEmpty(projectInterestDto.ProjectInterest.AdditionalInfo))
-                                    {
-                                        @projectInterestDto.ProjectInterest.AdditionalInfo
-                                    }
-                                </span>
+                                foreach (var subgenreProjectInterestDto in subgenreProjectInterests)
+                                {
+                                    <span class="kt-badge kt-badge--inline kt-badge--info mt-1 ml-4">
+                                        @(subgenreProjectInterestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                        @if (subgenreProjectInterestDto.Interest.HasAdditionalInfo && !string.IsNullOrEmpty(subgenreProjectInterestDto.ProjectInterest.AdditionalInfo))
+                                        {
+                                            @subgenreProjectInterestDto.ProjectInterest.AdditionalInfo
+                                        }
+                                    </span>
+                                }
                             }
-                        }
-                        else
-                        {
-                            @:-
+                            else
+                            {
+                                @:-
+                            }
                         }
                     </div>
                 </div>
                 <div class="row">
-                    @*<div class="col-12 mt-2">
-                        <div style="font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; width: 88px; display: inline-block;">@Labels.TargetAudience:</div>
-                        @if (Model.ProjectTargetAudienceDtos?.Any() == true)
-                        {
-                            foreach (var projectTargetAudienceDto in Model.ProjectTargetAudienceDtos)
+                    <div class="col-12 mt-3">
+                        <div style="font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; width: 65px; display: inline-block;">@Labels.Segment:</div>
+                        @{
+                            var segmentProjectInterests = Model.GetAllInterestsByInterestGroupUid(InterestGroup.AudiovisualPitchingSegment.Uid);
+                            if (segmentProjectInterests?.Any() == true)
                             {
-                                <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@(projectTargetAudienceDto.TargetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
+                                foreach (var segmentProjectInterestDto in segmentProjectInterests)
+                                {
+                                    <span class="kt-badge kt-badge--inline kt-badge--info mt-1 ml-4">
+                                        @(segmentProjectInterestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                        @if (segmentProjectInterestDto.Interest.HasAdditionalInfo && !string.IsNullOrEmpty(segmentProjectInterestDto.ProjectInterest.AdditionalInfo))
+                                        {
+                                            @segmentProjectInterestDto.ProjectInterest.AdditionalInfo
+                                        }
+                                    </span>
+                                }
+                            }
+                            else
+                            {
+                                @:-
                             }
                         }
-                        else
-                        {
-                            @:-
-                        }
-                    </div>*@
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-12 mt-4">

@@ -59,7 +59,6 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         /// <param name="interestRepository">The interest repository.</param>
         /// <param name="targetAudienceRepository">The target audience repository.</param>
         /// <param name="attendeeOrganizationRepository">The attendeeOrganizationRepository repository.</param>
-        /// 
         public ProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
@@ -84,7 +83,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         /// <summary>Indexes this instance.</summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Index(Guid? interestUid, Guid? evaluationStatusUid)
+        public async Task<ActionResult> Index(Guid? subgenreInterestUid, Guid? segmentInterestUid, Guid? evaluationStatusUid)
         {
             #region Breadcrumb
 
@@ -94,7 +93,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 
             #endregion
 
-            ViewBag.InterestUid = interestUid;
+            ViewBag.SelectedSubgenreInterestUid = subgenreInterestUid;
+            ViewBag.SelectedSegmentInterestUid = segmentInterestUid;
             ViewBag.EvaluationStatusUid = evaluationStatusUid;
             ViewBag.Page = 1;
             ViewBag.PageSize = 10;
@@ -109,14 +109,15 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         /// Evaluations the list.
         /// </summary>
         /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="interestUid">The interest uid.</param>
+        /// <param name="subgenreInterestUid">The interest uid.</param>
+        /// <param name="segmentInterestUid">The segment interest uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionAudiovisual)]
-        public async Task<ActionResult> CommissionEvaluationList(string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 12)
+        public async Task<ActionResult> CommissionEvaluationList(string searchKeywords, Guid? subgenreInterestUid, Guid? segmentInterestUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 12)
         {
             if (this.EditionDto?.IsAudiovisualCommissionProjectEvaluationStarted() != true)
             {
@@ -133,7 +134,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 
             #region Interests Dropdown
 
-            List<Interest> interests = null;
+            List<Interest> subgenreInterests = null;
             if (UserAccessControlDto?.User != null && this.EditionDto?.Edition != null)
             {
                 var userDto = await this.userRepo.FindUserDtoByUserIdAsync(this.UserAccessControlDto.User.Id);
@@ -141,27 +142,29 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 
                 if (attendeeCollaborator != null)
                 {
-                    interests = await this.interestRepo.FindAllByAttendeeCollaboratorIdAsync(attendeeCollaborator.Id, InterestGroup.AudiovisualPitchingSubGenre.Uid);
+                    subgenreInterests = await this.interestRepo.FindAllByAttendeeCollaboratorIdAsync(attendeeCollaborator.Id, InterestGroup.AudiovisualPitchingSubGenre.Uid);
                 }
                 else
                 {
-                    //Admin cannot have Collaborator/AttendeeCollaborator, so, get all Interests to list in Dropdown.
-                    interests = await this.interestRepo.FindAllByInterestGroupUidAsync(InterestGroup.AudiovisualPitchingSubGenre.Uid);
+                    //Admin don't have Collaborator/AttendeeCollaborator, so, get all Interests to list in Dropdown.
+                    subgenreInterests = await this.interestRepo.FindAllByInterestGroupUidAsync(InterestGroup.AudiovisualPitchingSubGenre.Uid);
                 }
             }
             else
             {
-                interests = new List<Interest>();
+                subgenreInterests = new List<Interest>();
             }
 
             #endregion
 
             ViewBag.SearchKeywords = searchKeywords;
-            ViewBag.InterestUid = interestUid;
             ViewBag.EvaluationStatusUid = evaluationStatusUid;
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
-            ViewBag.Interests = interests;
+            ViewBag.SubgenreInterests = subgenreInterests;
+            ViewBag.SelectedSubgenreInterestUid = subgenreInterestUid;
+            ViewBag.SegmentInterests = await this.interestRepo.FindAllByInterestGroupUidAsync(InterestGroup.AudiovisualPitchingSegment.Uid);
+            ViewBag.SelectedSegmentInterestUid = segmentInterestUid;
             ViewBag.ProjectEvaluationStatuses = await this.evaluationStatusRepo.FindAllAsync();
 
             return View();
@@ -171,21 +174,22 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         /// Shows the evaluation list widget.
         /// </summary>
         /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="interestUid">The interest uid.</param>
+        /// <param name="subgenreInterestUid">The subgenre interest uid.</param>
+        /// <param name="segmentInterestUid">The segment interest uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionAudiovisual)]
-        public async Task<ActionResult> ShowEvaluationListWidget(string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 12)
+        public async Task<ActionResult> ShowEvaluationListWidget(string searchKeywords, Guid? subgenreInterestUid, Guid? segmentInterestUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 12)
         {
             if (this.EditionDto?.IsAudiovisualCommissionProjectEvaluationStarted() != true)
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
 
-            var attendeeCollaboratorInterestsUids = await this.GetAttendeeCollaboratorInterestsUids();
+            var attendeeCollaboratorInterestsUids = await this.GetAttendeeCollaboratorInterestsUidsByInterestGroupUid(InterestGroup.AudiovisualPitchingSubGenre.Uid);
             if (attendeeCollaboratorInterestsUids.Count <= 0)
             {
                 return Json(new
@@ -198,12 +202,13 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 }, JsonRequestBehavior.AllowGet);
             }
 
-            var interestsUids = await this.GetSearchInterestsUids(interestUid);
+            var subgenreInterestUids = await this.GetSubgenreInterestUids(subgenreInterestUid);
 
             var projects = await this.projectRepo.FindAllDtosPagedAsync(
                  this.EditionDto.Id,
                  null, //searchKeywords, //TODO: Re-enable this when we start writing project title into ProjectTitles table instead of writing to the PitchingJsonPayload column
-                 interestsUids,
+                 subgenreInterestUids,
+                 segmentInterestUid,
                  evaluationStatusUid,
                  true,
                  page.Value,
@@ -244,7 +249,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             }
 
             ViewBag.SearchKeywords = searchKeywords;
-            ViewBag.InterestUid = interestUid;
+            ViewBag.SelectedSubgenreInterestUid = subgenreInterestUid;
+            ViewBag.SelectedSegmentInterestUid = segmentInterestUid;
             ViewBag.EvaluationStatusUid = evaluationStatusUid;
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
@@ -300,14 +306,15 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="interestUid">The interest uid.</param>
+        /// <param name="subgenreInterestUid">The interest uid.</param>
+        /// <param name="segmentInterestUid">The segment interest uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="showPitchings">The show pitchings.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [AuthorizeCollaboratorType(Types = Constants.CollaboratorType.CommissionAudiovisual)]
-        public async Task<ActionResult> EvaluationDetails(int? id, string searchKeywords = null, Guid? interestUid = null, Guid? evaluationStatusUid = null, bool showPitchings = true, int? page = 1, int? pageSize = 12)
+        public async Task<ActionResult> EvaluationDetails(int? id, string searchKeywords = null, Guid? subgenreInterestUid = null, Guid? segmentInterestUid = null, Guid? evaluationStatusUid = null, bool showPitchings = true, int? page = 1, int? pageSize = 12)
         {
             if (this.EditionDto?.IsAudiovisualCommissionProjectEvaluationStarted() != true)
             {
@@ -316,7 +323,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             }
 
             var projectDto = await this.projectRepo.FindDtoToEvaluateAsync(id ?? 0);
-            var attendeeCollaboratorInterestsUids = await this.GetAttendeeCollaboratorInterestsUids();
+            var attendeeCollaboratorInterestsUids = await this.GetAttendeeCollaboratorInterestsUidsByInterestGroupUid(InterestGroup.AudiovisualPitchingSubGenre.Uid);
 
             if (projectDto == null ||
                 projectDto.ProjectInterestDtos.Any(dto => attendeeCollaboratorInterestsUids.Contains(dto.Interest.Uid)) == false)
@@ -325,12 +332,21 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 return RedirectToAction("CommissionEvaluationList", "Projects", new { Area = "Audiovisual" });
             }
             
-            var interestsUids = await this.GetSearchInterestsUids(interestUid);
+            var subgenreInterestUids = await this.GetSubgenreInterestUids(subgenreInterestUid);
 
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.AudioVisual, Url.Action("CommissionEvaluationList", "Projects", new { Area = "Audiovisual", searchKeywords, interestUid, evaluationStatusUid, page, pageSize })),
+                new BreadcrumbItemHelper(Labels.AudioVisual, Url.Action("CommissionEvaluationList", "Projects", new 
+                { 
+                    Area = "Audiovisual", 
+                    searchKeywords, 
+                    subgenreInterestUid, 
+                    segmentInterestUid, 
+                    evaluationStatusUid, 
+                    page, 
+                    pageSize 
+                })),
                 new BreadcrumbItemHelper(projectDto?.GetTitleDtoByLanguageCode(this.UserInterfaceLanguage)?.ProjectTitle?.Value ?? Labels.Project, Url.Action("EvaluationDetails", "Projects", new { Area = "Audiovisual", id }))
             });
 
@@ -339,7 +355,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             var allProjectsIds = await this.projectRepo.FindAllProjectsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
-                interestsUids,
+                subgenreInterestUids,
+                segmentInterestUid,
                 evaluationStatusUid,
                 showPitchings,
                 new List<Guid?> { },
@@ -348,7 +365,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             var currentProjectIdIndex = Array.IndexOf(allProjectsIds, id.Value) + 1; //Index start at 0, its a fix to "start at 1"
 
             ViewBag.SearchKeywords = searchKeywords;
-            ViewBag.InterestUid = interestUid;
+            ViewBag.SelectedSubgenreInterestUid = subgenreInterestUid;
+            ViewBag.SelectedSegmentInterestUid = segmentInterestUid;
             ViewBag.EvaluationStatusUid = evaluationStatusUid;
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
@@ -364,21 +382,23 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="interestUid">The interest uid.</param>
+        /// <param name="subgenreInterestUid">The interest uid.</param>
+        /// <param name="segmentInterestUid">The segment interest uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="showPitchings">The show pitchings.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionAudiovisual)]
-        public async Task<ActionResult> PreviousEvaluationDetails(int? id, string searchKeywords = null, Guid? interestUid = null, Guid? evaluationStatusUid = null, bool showPitchings = true, int? page = 1, int? pageSize = 12)
+        public async Task<ActionResult> PreviousEvaluationDetails(int? id, string searchKeywords = null, Guid? subgenreInterestUid = null, Guid? segmentInterestUid = null, Guid? evaluationStatusUid = null, bool showPitchings = true, int? page = 1, int? pageSize = 12)
         {
-            var interestsUids = await this.GetSearchInterestsUids(interestUid);
+            var subgenreInterestUids = await this.GetSubgenreInterestUids(subgenreInterestUid);
 
             var allProjectsIds = await this.projectRepo.FindAllProjectsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
-                interestsUids,
+                subgenreInterestUids,
+                segmentInterestUid,
                 evaluationStatusUid,
                 showPitchings,
                 new List<Guid?> { },
@@ -395,7 +415,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 {
                     id = previousProjectId,
                     searchKeywords,
-                    interestUid,
+                    subgenreInterestUid,
+                    segmentInterestUid,
                     evaluationStatusUid,
                     showPitchings,
                     page,
@@ -408,21 +429,23 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="interestUid">The interest uid.</param>
+        /// <param name="subgenreInterestUid">The interest uid.</param>
+        /// <param name="segmentInterestUid">The segment interest uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="showPitchings">The show pitchings.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionAudiovisual)]
-        public async Task<ActionResult> NextEvaluationDetails(int? id, string searchKeywords = null, Guid? interestUid = null, Guid? evaluationStatusUid = null, bool showPitchings = true, int? page = 1, int? pageSize = 12)
+        public async Task<ActionResult> NextEvaluationDetails(int? id, string searchKeywords = null, Guid? subgenreInterestUid = null, Guid? segmentInterestUid = null, Guid? evaluationStatusUid = null, bool showPitchings = true, int? page = 1, int? pageSize = 12)
         {
-            var interestsUids = await this.GetSearchInterestsUids(interestUid);
+            var interestsUids = await this.GetSubgenreInterestUids(subgenreInterestUid);
 
             var allProjectsIds = await this.projectRepo.FindAllProjectsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
                 interestsUids,
+                segmentInterestUid,
                 evaluationStatusUid,
                 showPitchings,
                 new List<Guid?> { },
@@ -439,7 +462,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 {
                     id = nextProjectId,
                     searchKeywords,
-                    interestUid,
+                    subgenreInterestUid,
+                    segmentInterestUid,
                     evaluationStatusUid,
                     showPitchings,
                     page,
@@ -467,7 +491,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 
             #region Attendee Collaborator Interest validation
 
-            var attendeeCollaboratorInterestUids = await this.GetAttendeeCollaboratorInterestsUids();
+            var attendeeCollaboratorInterestUids = await this.GetAttendeeCollaboratorInterestsUidsByInterestGroupUid(InterestGroup.AudiovisualPitchingSubGenre.Uid);
 
             if (mainInformationWidgetDto == null ||
                 mainInformationWidgetDto.ProjectInterestDtos?.Any(dto => attendeeCollaboratorInterestUids.Contains(dto.Interest.Uid)) == false)
@@ -669,10 +693,11 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         #endregion
 
         /// <summary>
-        /// Gets the attendee collaborator interests uids.
+        /// Gets the attendee collaborator interests uids by interest group.
         /// </summary>
+        /// <param name="interestGroupUid">The interest group uid.</param>
         /// <returns></returns>
-        private async Task<List<Guid?>> GetAttendeeCollaboratorInterestsUids()
+        private async Task<List<Guid?>> GetAttendeeCollaboratorInterestsUidsByInterestGroupUid(Guid interestGroupUid)
         {
             List<Guid?> interestsUids = new List<Guid?>();
 
@@ -680,13 +705,13 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             var attendeeCollaborator = userDto.Collaborator?.GetAttendeeCollaboratorByEditionId(this.EditionDto.Edition.Id);
             if (attendeeCollaborator != null)
             {
-                var interests = await this.interestRepo.FindAllByAttendeeCollaboratorIdAsync(attendeeCollaborator.Id, InterestGroup.AudiovisualPitchingSubGenre.Uid);
+                var interests = await this.interestRepo.FindAllByAttendeeCollaboratorIdAsync(attendeeCollaborator.Id, interestGroupUid);
                 interestsUids = interests.Select(i => i.Uid as Guid?).ToList();
             }
             else
             {
                 //Admin dont have Collaborator/AttendeeCollaborator, so, list all Interests in Dropdown.
-                var interests = await this.interestRepo.FindAllByInterestGroupUidAsync(InterestGroup.AudiovisualGenre.Uid);
+                var interests = await this.interestRepo.FindAllByInterestGroupUidAsync(interestGroupUid);
                 interestsUids = interests.Select(i => i.Uid as Guid?).ToList();
             }
 
@@ -696,25 +721,25 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         /// <summary>
         /// Gets the search interests uids.
         /// </summary>
-        /// <param name="interestUid">The interest uid.</param>
+        /// <param name="subgenreInterestUid">The interest uid.</param>
         /// <returns></returns>
-        private async Task<List<Guid?>> GetSearchInterestsUids(Guid? interestUid)
+        private async Task<List<Guid?>> GetSubgenreInterestUids(Guid? subgenreInterestUid)
         {
-            var attendeeCollaboratorInterestsUids = await this.GetAttendeeCollaboratorInterestsUids();
+            var attendeeCollaboratorInterestsUids = await this.GetAttendeeCollaboratorInterestsUidsByInterestGroupUid(InterestGroup.AudiovisualPitchingSubGenre.Uid);
 
-            List<Guid?> interestsUids = new List<Guid?>();
-            if (!interestUid.HasValue)
+            List<Guid?> subgenreInterestUids = new List<Guid?>();
+            if (!subgenreInterestUid.HasValue)
             {
-                //Search by "Interests" when have no "InterestUid" selected in dropdown filter
-                interestsUids.AddRange(attendeeCollaboratorInterestsUids);
+                //Search by "Attendee Collaborator Interests" when have no "InterestUid" selected in dropdown filter
+                subgenreInterestUids.AddRange(attendeeCollaboratorInterestsUids);
             }
             else
             {
                 //Search by "InterestUid" selected in dropdown filter
-                interestsUids.Add(interestUid);
+                subgenreInterestUids.Add(subgenreInterestUid);
             }
 
-            return interestsUids;
+            return subgenreInterestUids;
         }
     }
 }
