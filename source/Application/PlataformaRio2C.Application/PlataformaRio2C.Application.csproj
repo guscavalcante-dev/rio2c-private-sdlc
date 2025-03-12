@@ -302,8 +302,10 @@
     <Compile Include="CQRS\CommandsHandlers\Music\BusinessRoundProjects\UpdateMusicBusinessRoundProjectMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\MusicNegotiations\CreateAttendeeMusicNegotiationCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\MusicNegotiations\CreateMusicBusinesRoundNegotiationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Music\MusicNegotiations\CreateMusicBusinessRoundNegotiationsCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\MusicNegotiations\DeleteMusicBusinesRoundNegotiationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\MusicNegotiations\MusicBusinesRoundNegotiationBaseCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Music\MusicNegotiations\MusicBusinessRoundNegotiationBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\MusicNegotiations\ScheduleManualMusicNegotiationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\Pitching\DistributeMembersMusicPitchingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\PlayersExecutives\CreateMusicPlayerExecutiveCollaboratorCommandHandler.cs" />
@@ -519,10 +521,10 @@
     <Compile Include="CQRS\Commands\Music\BusinessRoundProjects\UpdateMusicBusinessRoundProjectMainInformation.cs" />
     <Compile Include="CQRS\Commands\Music\MusicBusinessRoundNegotiations\BaseCommands\MusicbusinessRoundNegotiationBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Music\MusicBusinessRoundNegotiations\CreateAttendeeMusicBusinessRoundNegotiationCollaborator.cs" />
-    <Compile Include="CQRS\Commands\Music\MusicBusinessRoundNegotiations\CreateNegotiation.cs" />
     <Compile Include="CQRS\Commands\Music\MusicBusinessRoundNegotiations\CreateMusicBusinessRoundNegotiation.cs" />
-    <Compile Include="CQRS\Commands\Music\MusicBusinessRoundNegotiations\DeleteNegotiation.cs" />
-    <Compile Include="CQRS\Commands\Music\MusicBusinessRoundNegotiations\ScheduleManualNegotiation.cs" />
+    <Compile Include="CQRS\Commands\Music\MusicBusinessRoundNegotiations\CreateMusicBusinessRoundNegotiations.cs" />
+    <Compile Include="CQRS\Commands\Music\MusicBusinessRoundNegotiations\DeleteMusicBusinesRoundNegotiation.cs" />
+    <Compile Include="CQRS\Commands\Music\MusicBusinessRoundNegotiations\ScheduleManualMusicBusinessRoundNegotiation.cs" />
     <Compile Include="CQRS\Commands\Music\MusicBusinessRoundNegotiations\UpdateMusicBusinessRoundNegotiation.cs" />
     <Compile Include="CQRS\Commands\Music\Pitching\DistributeMembersMusicPitching.cs" />
     <Compile Include="CQRS\Commands\Music\Commissions\BaseCommands\MusicCommissionCollaboratorBaseCommand.cs" />

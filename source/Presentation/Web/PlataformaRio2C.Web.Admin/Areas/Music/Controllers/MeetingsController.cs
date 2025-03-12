@@ -125,7 +125,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Generate(CreateMusicBusinesRoundNegotiations cmd)
+        public async Task<ActionResult> Generate(CreateMusicBusinessRoundNegotiations cmd)
         {
             var result = new AppValidationResult();
 
