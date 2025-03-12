@@ -109,6 +109,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
 
+
         public async Task<List<MusicBusinessRoundProjectBuyerEvaluation>> FindAllForGenerateNegotiationsAsync(int editionId)
         {
             var query = this.GetBaseQuery()
@@ -149,6 +150,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                });
 
             return await query.FirstOrDefaultAsync();
+        }
+
+        /// <summary>Counts the negotiation scheduled asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <returns></returns>
+        public async Task<int> CountNegotiationScheduledAsync(int editionId, bool showAllEditions = false)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId, showAllEditions)
+                                .FindByProjectEvaluationStatusUid(ProjectEvaluationStatus.Accepted.Uid)
+                                .IsProjectFinished();
+
+            return await query.CountAsync();
         }
     }
 }
