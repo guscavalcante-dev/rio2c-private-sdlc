@@ -11,6 +11,7 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces.Repositories;
 using PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects;
@@ -63,6 +64,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+
+        internal static IQueryable<MusicBusinessRoundProjectBuyerEvaluation> FindByUid(this IQueryable<MusicBusinessRoundProjectBuyerEvaluation> query, Guid Uid)
+        {
+            query = query.Where(pbe => pbe.Uid == Uid);
+
+            return query;
+        }
+
         /// <summary>Determines whether [is project finished].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
@@ -99,6 +108,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
+
         public async Task<List<MusicBusinessRoundProjectBuyerEvaluation>> FindAllForGenerateNegotiationsAsync(int editionId)
         {
             var query = this.GetBaseQuery()
@@ -110,6 +120,35 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Include(pbe => pbe.BuyerAttendeeOrganization);
 
             return await query.ToListAsync();
+        }
+
+        /// <summary>
+        /// Finds the dto asynchronous.
+        /// </summary>
+        /// <param name="projectBuyerEvaluationUid">The project buyer evaluation uid.</param>
+        /// <returns></returns>
+        public async Task<MusicBusinessRoundProjectBuyerEvaluationDto> FindDtoAsync(Guid Uid)
+        {
+            var query = this.GetBaseQuery()
+                               .FindByUid(Uid)
+                               .Select(pbe => new MusicBusinessRoundProjectBuyerEvaluationDto
+                               {
+                                   MusicBusinessRoundProjectBuyerEvaluation = pbe,
+                                   BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                   {
+                                       AttendeeOrganization = pbe.BuyerAttendeeOrganization,
+                                       Organization = pbe.BuyerAttendeeOrganization.Organization
+                                   },
+                                   MusicBusinessRoundProjectDto = new MusicBusinessRoundProjectDto
+                                   {
+                                       SellerAttendeeCollaboratorDto = new AttendeeCollaboratorDto
+                                       {
+                                           AttendeeCollaborator = pbe.MusicBusinessRoundProject.SellerAttendeeCollaborator,
+                                       },
+                                   }
+                               });
+
+            return await query.FirstOrDefaultAsync();
         }
     }
 }

@@ -43,7 +43,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
     public class MeetingsController : BaseController
     {
         private readonly IMusicBusinessRoundNegotiationRepository musicbusinessRoundnegotiationRepo;
-        private readonly IProjectBuyerEvaluationRepository projectBuyerEvaluationRepo;
+        private readonly IMusicBusinessRoundProjectBuyerEvaluationRepository projectBuyerEvaluationRepo;
         private readonly IRoomRepository roomRepo;
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
@@ -63,7 +63,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             IMediator commandBus,
             IdentityAutenticationService identityController,
             IMusicBusinessRoundNegotiationRepository musicbusinessroundnegotiationRepository,
-            IProjectBuyerEvaluationRepository projectBuyerEvaluationRepository,
+            IMusicBusinessRoundProjectBuyerEvaluationRepository projectBuyerEvaluationRepository,
             IRoomRepository roomRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
@@ -598,7 +598,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowManualScheduleModal(Guid? projectBuyerEvaluationUid)
         {
-            ScheduleManualNegotiation cmd;
+            ScheduleManualMusicBusinessRoundNegotiation cmd;
 
             try
             {
@@ -608,7 +608,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM.ToLowerInvariant()));
                 }
 
-                cmd = new ScheduleManualNegotiation(projectBuyerEvaluationDto, this.UserInterfaceLanguage);
+                cmd = new ScheduleManualMusicBusinessRoundNegotiation(projectBuyerEvaluationDto, this.UserInterfaceLanguage);
             }
             catch (DomainException ex)
             {
