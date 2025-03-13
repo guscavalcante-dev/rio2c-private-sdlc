@@ -1,0 +1,28 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateMusicBusinessRoundNegotiation
+<div class="modal fade" id="CreateMusicMeetingModal" role="dialog" aria-labelledby="CreateMusicMeetingModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@Labels.NewF @Labels.Negotiation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Create", "Meetings", new { Area = "" }, FormMethod.Post, new { id = "CreateMusicMeetingForm" }))
+                {
+                    <div id="form-container">
+                        @Html.Partial("Modals/CreateForm", Model)
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-12">
+                        <div id="MusicMeetingsLogisticsInfoWidget" class="kt-portlet kt-portlet--tabs d-none"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">@Labels.Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="$('#CreateMusicMeetingForm').submit();">@Labels.Save</button>
+            </div>
+        </div>
+    </div>
+</div>

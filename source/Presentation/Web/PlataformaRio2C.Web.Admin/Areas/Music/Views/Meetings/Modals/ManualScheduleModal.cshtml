@@ -1,0 +1,28 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.ScheduleManualMusicBusinessRoundNegotiation
+<div class="modal fade" id="ManualScheduleMusicMeetingModal" role="dialog" aria-labelledby="ManualScheduleMusicMeetingModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@Labels.ScheduleNegotiation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("ManualSchedule", "Meetings", new { Area = "" }, FormMethod.Post, new { id = "ManualScheduleMusicMeetingForm" }))
+                {
+                    <div id="form-container">
+                        @Html.Partial("Modals/ManualScheduleForm", Model)
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-12">
+                        <div id="MusicMeetingsLogisticsInfoWidget" class="kt-portlet kt-portlet--tabs d-none" style="min-height: 180px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">@Labels.Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="$('#ManualScheduleMusicMeetingForm').submit();">@Labels.Save</button>
+            </div>
+        </div>
+    </div>
+</div>

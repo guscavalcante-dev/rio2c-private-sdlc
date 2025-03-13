@@ -107,7 +107,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Room = room;
 
             // Dates
-            this.GenerateStarAndEndDate(negotiationConfig, startTime);
+            this.GenerateStartAndEndDate(negotiationConfig, startTime);
 
             // Table Number
             this.GenerateTableNumber(negotiationConfig, negotiationRoomConfig, negotiations, startTime, userInterfaceLanguage, isUsingAutomaticTable);
@@ -151,7 +151,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Room = room;
 
             // Dates
-            this.GenerateStarAndEndDate(negotiationConfig, startTime);
+            this.GenerateStartAndEndDate(negotiationConfig, startTime);
 
             // Table Number
             this.GenerateTableNumber(negotiationConfig, negotiationRoomConfig, roomNegotiations, startTime, userInterfaceLanguage, isUsingAutomaticTable);
@@ -168,8 +168,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         /// <param name="negotiationConfig">The negotiation configuration.</param>
         /// <param name="startTime">The start time.</param>
-        /// <returns></returns>
-        private void GenerateStarAndEndDate(
+        private void GenerateStartAndEndDate(
             NegotiationConfig negotiationConfig,
             string startTime)
         {

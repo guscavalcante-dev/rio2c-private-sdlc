@@ -73,9 +73,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.TimeIntervalBetweenRound = timeIntervalBetweenRoundString.ToTimeSpan();
             this.ProjectTypeId = projectTypeId;
 
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
+            base.SetCreateDate(userId);
         }
 
         /// <summary>Initializes a new instance of the <see cref="NegotiationConfig"/> class.</summary>

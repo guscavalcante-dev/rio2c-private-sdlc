@@ -43,17 +43,27 @@ namespace PlataformaRio2C.Domain.Dtos
 
         #region Dates Information
 
-        // Audiovisual - Negotiations
+        // Audiovisual - Business Rounds
         public DateTimeOffset ProjectSubmitStartDate { get; private set; }
         public DateTimeOffset ProjectSubmitEndDate { get; private set; }
         public DateTimeOffset ProjectEvaluationStartDate { get; private set; }
         public DateTimeOffset ProjectEvaluationEndDate { get; private set; }
         public DateTimeOffset NegotiationStartDate { get; private set; }
         public DateTimeOffset NegotiationEndDate { get; private set; }
-        public DateTimeOffset? AudiovisualNegotiationsCreateStartDate { get; private set; }
-        public DateTimeOffset? AudiovisualNegotiationsCreateEndDate { get; private set; }
         public int AttendeeOrganizationMaxSellProjectsCount { get; private set; }
         public int ProjectMaxBuyerEvaluationsCount { get; private set; }
+        /// <summary>
+        /// Attention, internal control property.
+        /// It is set automatically when processing Negotiations.
+        /// It shouldn't be set manually by the user!
+        /// </summary>
+        public DateTimeOffset? AudiovisualNegotiationsCreateStartDate { get; private set; }
+        /// <summary>
+        /// Attention, internal control property.
+        /// It is set automatically when processing Negotiations.
+        /// It shouldn't be set manually by the user!
+        /// </summary>
+        public DateTimeOffset? AudiovisualNegotiationsCreateEndDate { get; private set; }
 
         // Music - Commissions
         public DateTimeOffset MusicPitchingSubmitStartDate { get; private set; }
@@ -84,6 +94,18 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset? MusicBusinessRoundNegotiationEndDate { get; private set; }
         public int MusicBusinessRoundsMaximumProjectSubmissionsByCompany { get; private set; }
         public int MusicBusinessRoundMaximumEvaluatorsByProject { get; private set; }
+        /// <summary>
+        /// Attention, internal control property.
+        /// It is set automatically when processing Negotiations.
+        /// It shouldn't be set manually by the user!
+        /// </summary>
+        public DateTimeOffset? MusicBusinessRoundNegotiationsCreateStartDate { get; private set; }
+        /// <summary>
+        /// Attention, internal control property.
+        /// It is set automatically when processing Negotiations.
+        /// It shouldn't be set manually by the user!
+        /// </summary>
+        public DateTimeOffset? MusicBusinessRoundNegotiationsCreateEndDate { get; private set; }
 
         // Innovation - Commissions
         public DateTimeOffset InnovationProjectSubmitStartDate { get; private set; }
@@ -157,7 +179,7 @@ namespace PlataformaRio2C.Domain.Dtos
             this.SpeakersApiHighlightPositionsCount = entity.SpeakersApiHighlightPositionsCount;
             this.ConferenceApiHighlightPositionsCount = entity.ConferenceApiHighlightPositionsCount;
 
-            // Audiovisual - Negotiations
+            // Audiovisual - Business Rounds
             this.ProjectSubmitStartDate = entity.ProjectSubmitStartDate;
             this.ProjectSubmitEndDate = entity.ProjectSubmitEndDate;
             this.ProjectEvaluationStartDate = entity.ProjectEvaluationStartDate;
@@ -166,6 +188,9 @@ namespace PlataformaRio2C.Domain.Dtos
             this.NegotiationEndDate = entity.NegotiationEndDate;
             this.AttendeeOrganizationMaxSellProjectsCount = entity.AttendeeOrganizationMaxSellProjectsCount;
             this.ProjectMaxBuyerEvaluationsCount = entity.ProjectMaxBuyerEvaluationsCount;
+            // Audiovisual - Business Rounds - Negotiations Creation
+            this.AudiovisualNegotiationsCreateStartDate = entity.AudiovisualNegotiationsCreateStartDate;
+            this.AudiovisualNegotiationsCreateEndDate = entity.AudiovisualNegotiationsCreateEndDate;
 
             // Music - Business Rounds
             this.MusicBusinessRoundSubmitStartDate = entity.MusicBusinessRoundSubmitStartDate;
@@ -176,6 +201,9 @@ namespace PlataformaRio2C.Domain.Dtos
             this.MusicBusinessRoundNegotiationEndDate = entity.MusicBusinessRoundNegotiationEndDate;
             this.MusicBusinessRoundsMaximumProjectSubmissionsByCompany = entity.MusicBusinessRoundsMaximumProjectSubmissionsByCompany;
             this.MusicBusinessRoundMaximumEvaluatorsByProject = entity.MusicBusinessRoundMaximumEvaluatorsByProject;
+            // Music - Business Rounds - Negotiations Creation
+            this.MusicBusinessRoundNegotiationsCreateStartDate = entity.MusicBusinessRoundNegotiationsCreateStartDate;
+            this.MusicBusinessRoundNegotiationsCreateEndDate = entity.MusicBusinessRoundNegotiationsCreateEndDate;
 
             // Music - Commissions
             this.MusicPitchingSubmitStartDate = entity.MusicPitchingSubmitStartDate;
@@ -208,8 +236,6 @@ namespace PlataformaRio2C.Domain.Dtos
             // Audiovisual - Pitching
             this.AudiovisualPitchingSubmitProjectStartDate = entity.AudiovisualPitchingSubmitStartDate;
             this.AudiovisualPitchingSubmitProjectEndDate = entity.AudiovisualPitchingSubmitEndDate;
-            this.AudiovisualNegotiationsCreateStartDate = entity.AudiovisualNegotiationsCreateStartDate;
-            this.AudiovisualNegotiationsCreateEndDate = entity.AudiovisualNegotiationsCreateEndDate;
             this.AudiovisualCommissionEvaluationStartDate = entity.AudiovisualCommissionEvaluationStartDate;
             this.AudiovisualCommissionEvaluationEndDate = entity.AudiovisualCommissionEvaluationEndDate;
             this.AudiovisualCommissionMinimumEvaluationsCount = entity.AudiovisualCommissionMinimumEvaluationsCount;
