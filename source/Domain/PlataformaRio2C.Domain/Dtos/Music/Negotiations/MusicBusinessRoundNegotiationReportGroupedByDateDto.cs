@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -25,7 +23,7 @@ namespace PlataformaRio2C.Domain.Dtos
                                                             .ToList();
         }
 
-        /// <summary>Initializes a new instance of the <see cref="NegotiationGroupedByDateDto"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="MusicBusinessRoundNegotiationReportGroupedByDateDto"/> class.</summary>
         public MusicBusinessRoundNegotiationReportGroupedByDateDto()
         {
         }

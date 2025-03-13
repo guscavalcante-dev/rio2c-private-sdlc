@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Ribeiro 
 // Last Modified On : 05-03-2025
 // ***********************************************************************
-// <copyright file="CreateNegotiation.cs" company="Softo">
+// <copyright file="CreateMusicBusinessRoundNegotiation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -16,7 +16,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>CreateNegotiation</summary>
+    /// <summary>CreateMusicBusinessRoundNegotiation</summary>
     public class CreateMusicBusinessRoundNegotiation : MusicBusinessRoundNegotiationBaseCommand
     {
         /// <summary>

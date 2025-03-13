@@ -6,7 +6,7 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 05-15-2021
 // ***********************************************************************
-// <copyright file="UpdateNegotiation.cs" company="Softo">
+// <copyright file="UpdateMusicBusinessRoundNegotiation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -21,7 +21,7 @@ using System.Linq;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>UpdateNegotiation</summary>
+    /// <summary>UpdateMusicBusinessRoundNegotiation</summary>
     public class UpdateMusicBusinessRoundNegotiation : MusicBusinessRoundNegotiationBaseCommand
     {
         public Guid MusicRoundNegotiationUid { get; set; }

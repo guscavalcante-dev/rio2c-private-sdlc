@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
-// Author           : Rafael Dantas Ruiz
-// Created          : 03-30-2020
+// Author           : Rafael Ribeiro
+// Created          : 03-10-2025
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-30-2020
+// Last Modified By : Rafael Ribeiro
+// Last Modified On : 03-10-2025
 // ***********************************************************************
-// <copyright file="NegotiationReportGroupedByRoomDto.cs" company="Softo">
+// <copyright file="MusicBusinessRoundNegotiationReportGroupedByRoomDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -17,7 +17,7 @@ using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
-    /// <summary>NegotiationReportGroupedByRoomDto</summary>
+    /// <summary>MusicBusinessRoundNegotiationReportGroupedByRoomDto</summary>
     public class MusicBusinessRoundNegotiationReportGroupedByRoomDto
     {
         public Room Room { get; set; }

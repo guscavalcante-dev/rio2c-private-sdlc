@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-07-2020
 // ***********************************************************************
-// <copyright file="NegotiationBaseCommandHandler.cs" company="Softo">
+// <copyright file="MusicBusinesRoundNegotiationBaseCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -23,7 +23,7 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>NegotiationBaseCommandHandler</summary>
+    /// <summary>MusicBusinesRoundNegotiationBaseCommandHandler</summary>
     public class MusicBusinesRoundNegotiationBaseCommandHandler : BaseCommandHandler
     {
         protected readonly IMusicBusinessRoundNegotiationRepository _musicBusinessRoundNegotiationRepository;
@@ -32,10 +32,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="NegotiationBaseCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="MusicBusinesRoundNegotiationBaseCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
-        /// <param name="negotiationRepository">The negotiation repository.</param>
         public MusicBusinesRoundNegotiationBaseCommandHandler(IMediator eventBus, IUnitOfWork uow, IMusicBusinessRoundNegotiationRepository negotiationRepository)
             : base(eventBus, uow)
         {

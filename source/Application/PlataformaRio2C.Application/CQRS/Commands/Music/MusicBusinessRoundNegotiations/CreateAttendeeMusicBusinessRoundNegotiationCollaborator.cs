@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Ribeiro 
 // Last Modified On : 05-03-2025
 // ***********************************************************************
-// <copyright file="CreateAttendeeNegotiationCollaborator.cs" company="Softo">
+// <copyright file="CreateAttendeeMusicBusinessRoundNegotiationCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -16,7 +16,7 @@ using System;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>CreateAttendeeNegotiationCollaborator</summary>
+    /// <summary>CreateAttendeeMusicBusinessRoundNegotiationCollaborator</summary>
     public class CreateAttendeeMusicBusinessRoundNegotiationCollaborator : MusicBusinessRoundNegotiationBaseCommand
     {
         internal Guid MusicBusinesRoundNegotiationUid;

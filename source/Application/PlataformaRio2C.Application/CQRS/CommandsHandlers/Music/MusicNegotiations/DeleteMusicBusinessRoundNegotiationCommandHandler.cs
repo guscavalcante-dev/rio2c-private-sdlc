@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-08-2020
 // ***********************************************************************
-// <copyright file="DeleteNegotiationCommandHandler.cs" company="Softo">
+// <copyright file="DeleteMusicBusinessRoundNegotiationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -22,7 +22,7 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>DeleteNegotiationCommandHandler</summary>
+    /// <summary>DeleteMusicBusinessRoundNegotiationCommandHandler</summary>
     public class DeleteMusicBusinessRoundNegotiationCommandHandler : MusicBusinesRoundNegotiationBaseCommandHandler, IRequestHandler<DeleteMusicBusinessRoundNegotiation, AppValidationResult>
     {
         private readonly IMusicBusinessRoundNegotiationRepository _musicBusinessRoundNegotiationRepository;

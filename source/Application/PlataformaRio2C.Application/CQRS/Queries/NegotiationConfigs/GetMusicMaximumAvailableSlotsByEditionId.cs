@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
-// Author           : Renan Valentim
-// Created          : 10-01-2024
+// Author           : Rafael Ribeiro 
+// Created          : 10-02-2025
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 10-01-2024
+// Last Modified By : Rafael Ribeiro 
+// Last Modified On : 10-01-2025
 // ***********************************************************************
-// <copyright file="GetAudiovisualMaximumAvailableSlotsByEditionId.cs" company="Softo">
+// <copyright file="GetMusicMaximumAvailableSlotsByEditionId.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -15,7 +15,7 @@ using PlataformaRio2C.Application.CQRS.Dtos;
 
 namespace PlataformaRio2C.Application.CQRS.Queries
 {
-    /// <summary>GetAudiovisualMaximumAvailableSlotsByEditionId</summary>
+    /// <summary>GetMusicMaximumAvailableSlotsByEditionId</summary>
     public class GetMusicMaximumAvailableSlotsByEditionId : BaseQuery<GetMusicMaximumAvailableSlotsByEditionIdResponseDto>
     {
         public int EditionId { get; private set; }

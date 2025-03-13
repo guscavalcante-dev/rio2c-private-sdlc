@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Ribeiro 
 // Last Modified On : 05-03-2025
 // ***********************************************************************
-// <copyright file="NegotiationBaseCommand.cs" company="Softo">
+// <copyright file="MusicBusinessRoundNegotiationBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -20,7 +20,7 @@ using System.Linq;
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>
-    /// NegotiationBaseCommand
+    /// MusicBusinessRoundNegotiationBaseCommand
     /// </summary>
     /// <seealso cref="PlataformaRio2C.Application.CQRS.Commands.BaseCommand" />
     public class MusicBusinessRoundNegotiationBaseCommand : BaseCommand

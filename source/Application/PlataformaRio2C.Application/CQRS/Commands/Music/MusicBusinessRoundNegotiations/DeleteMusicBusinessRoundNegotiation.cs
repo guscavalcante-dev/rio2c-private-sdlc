@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-08-2020
 // ***********************************************************************
-// <copyright file="DeleteNegotiation.cs" company="Softo">
+// <copyright file="DeleteMusicBusinessRoundNegotiation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -15,12 +15,12 @@ using System;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>DeleteNegotiation</summary>
+    /// <summary>DeleteMusicBusinessRoundNegotiation</summary>
     public class DeleteMusicBusinessRoundNegotiation : BaseCommand
     {
         public Guid NegotiationUid { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="DeleteNegotiation"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="DeleteMusicBusinessRoundNegotiation"/> class.</summary>
         public DeleteMusicBusinessRoundNegotiation()
         {
         }

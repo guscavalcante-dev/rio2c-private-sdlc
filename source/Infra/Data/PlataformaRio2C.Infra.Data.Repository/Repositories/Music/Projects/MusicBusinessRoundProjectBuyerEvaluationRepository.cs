@@ -6,7 +6,7 @@
 // Last Modified By :  Daniel Giese
 // Last Modified On :  05/03/2025
 // ***********************************************************************
-// <copyright file="ProjectBuyerEvaluationRepository.cs" company="Softo">
+// <copyright file="MusicBusinessRoundProjectBuyerEvaluation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
-    #region Project Buyer Evaluation IQueryable Extensions
+    #region Music Business Round Project BuyerEvaluation IQueryable Extensions
 
     /// <summary>
     /// ProjectBuyerEvaluationIQueryableExtensions

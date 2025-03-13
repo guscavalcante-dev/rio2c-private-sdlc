@@ -6,7 +6,7 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 06-04-2021
 // ***********************************************************************
-// <copyright file="ScheduleManualNegotiation.cs" company="Softo">
+// <copyright file="ScheduleManualMusicBusinessRoundNegotiation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -20,11 +20,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>ScheduleManualNegotiation</summary>
+    /// <summary>ScheduleManualMusicBusinessRoundNegotiation</summary>
     public class ScheduleManualMusicBusinessRoundNegotiation : MusicBusinessRoundNegotiationBaseCommand
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ScheduleManualNegotiation"/> class.
+        /// Initializes a new instance of the <see cref="ScheduleManualMusicBusinessRoundNegotiation"/> class.
         /// </summary>
         /// <param name="musicBusinessRoundProjectDto">The project buyer evaluation dto.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
@@ -42,9 +42,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ScheduleManualNegotiation"/> class.
+        /// Initializes a new instance of the <see cref="ScheduleManualMusicBusinessRoundNegotiation"/> class.
         /// </summary>
-        /// <param name="negotiationDto">The negotiation.</param>
         public ScheduleManualMusicBusinessRoundNegotiation()
         {
         }

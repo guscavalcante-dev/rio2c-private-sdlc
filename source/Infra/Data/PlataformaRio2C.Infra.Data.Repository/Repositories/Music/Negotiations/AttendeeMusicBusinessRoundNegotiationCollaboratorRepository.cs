@@ -6,7 +6,7 @@
 // Last Modified By :Daniel Giese Rodrigues
 // Last Modified On :27-02-2025             
 // ***********************************************************************
-// <copyright file="AttendeeNegotiationCollaboratorRepository.cs" company="Softo">
+// <copyright file="AttendeeMusicBusinessRoundNegotiationCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -20,10 +20,10 @@ using System.Linq;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
-    #region AttendeeNegotiationCollaborator IQueryable Extensions
+    #region AttendeeMusicBusinessRoundNegotiationCollaborator IQueryable Extensions
 
     /// <summary>
-    /// AttendeeNegotiationCollaboratorIQueryableExtensions
+    /// AttendeeMusicBusinessRoundNegotiationCollaboratorIQueryableExtensions
     /// </summary>
     internal static class AttendeeMusicBusinessRoundNegotiationCollaboratorIQueryableExtensions
     {
@@ -40,7 +40,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
     #endregion
 
-    /// <summary>AttendeeNegotiationCollaboratorRepository</summary>
+    /// <summary>AttendeeMusicBusinessRoundNegotiationCollaboratorRepository</summary>
     public class AttendeeMusicBusinessRoundNegotiationCollaboratorRepository : Repository<PlataformaRio2CContext, AttendeeMusicBusinessRoundNegotiationCollaborator>, IAttendeeMusicBusinessRoundNegotiationCollaboratorRepository
     {
         /// <summary>Initializes a new instance of the <see cref="AttendeeMusicBusinessRoundNegotiationCollaboratorRepository"/> class.</summary>

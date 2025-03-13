@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Ribeiro 
 // Last Modified On : 05-03-2025
 // ***********************************************************************
-// <copyright file="ScheduleManualNegotiationCommandHandler.cs" company="Softo">
+// <copyright file="ScheduleManualMusicNegotiationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -30,7 +30,7 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>ScheduleManualNegotiationCommandHandler</summary>
+    /// <summary>ScheduleManualMusicNegotiationCommandHandler</summary>
     public class ScheduleManualMusicNegotiationCommandHandler : BaseCommandHandler, IRequestHandler<ScheduleManualMusicBusinessRoundNegotiation, AppValidationResult>
     {
         private readonly IOrganizationRepository organizationRepo;
@@ -44,7 +44,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         public ScheduleManualMusicNegotiationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            //INegotiationRepository negotiationRepository,
             IOrganizationRepository organizationRepository,
             IMusicBusinessRoundProjectRepository musicbusinesroundprojectRepo,
             INegotiationConfigRepository negotiationConfigRepository,

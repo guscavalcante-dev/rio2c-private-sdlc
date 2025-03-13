@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
-// Author           : Rafael Dantas Ruiz
-// Created          : 03-30-2020
+// Author           : Rafael Ribeiro
+// Created          : 03-10-2025
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-26-2021
+// Last Modified By : Rafael Ribeiro
+// Last Modified On : 06-10-2025
 // ***********************************************************************
-// <copyright file="NegotiationReportGroupedByStartDateDto.cs" company="Softo">
+// <copyright file="MusicBusinessRoundNegotiationReportGroupedByStartDateDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -19,7 +19,7 @@ using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
-    /// <summary>NegotiationReportGroupedByStartDateDto</summary>
+    /// <summary>MusicBusinessRoundNegotiationReportGroupedByStartDateDto</summary>
     public class MusicBusinessRoundNegotiationReportGroupedByStartDateDto
     {
         public DateTime StartDate { get; set; }
