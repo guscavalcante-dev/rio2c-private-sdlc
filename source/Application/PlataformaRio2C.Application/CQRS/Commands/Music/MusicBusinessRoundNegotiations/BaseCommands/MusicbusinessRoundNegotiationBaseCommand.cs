@@ -23,7 +23,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// NegotiationBaseCommand
     /// </summary>
     /// <seealso cref="PlataformaRio2C.Application.CQRS.Commands.BaseCommand" />
-    public class MusicbusinessRoundnegotiationBaseCommand : BaseCommand
+    public class MusicBusinessRoundNegotiationBaseCommand : BaseCommand
     {
         [Display(Name = nameof(Labels.Player), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -78,7 +78,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>
         /// Initializes a new instance of the <see cref="NegotiationBaseCommand"/> class.
         /// </summary>
-        public MusicbusinessRoundnegotiationBaseCommand()
+        public MusicBusinessRoundNegotiationBaseCommand()
         {
 
         }

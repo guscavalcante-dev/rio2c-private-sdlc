@@ -33,7 +33,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     {
         private readonly IEditionRepository editionRepo;
         private readonly INegotiationConfigRepository negotiationConfigRepo;
-        private readonly IMusicBusinessRoundProjectBuyerEvaluationRepository MusicBusinessRoundProjectBuyerEvaluationRepo;
+        private readonly IMusicBusinessRoundProjectBuyerEvaluationRepository musicBusinessRoundProjectBuyerEvaluationRepo;
         private readonly ILogisticAirfareRepository logisticAirfareRepo;
         private readonly IConferenceRepository conferenceRepo;
 
@@ -63,7 +63,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.editionRepo = editionRepository;
             this.negotiationConfigRepo = negotiationConfigRepository;
-            this.MusicBusinessRoundProjectBuyerEvaluationRepo = projectBuyerEvaluationRepository;
+            this.musicBusinessRoundProjectBuyerEvaluationRepo = projectBuyerEvaluationRepository;
             this.logisticAirfareRepo = logisticAirfareRepository;
             this.conferenceRepo = conferenceRepository;
         }
@@ -114,7 +114,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     return this.AppValidationResult;
                 }
 
-                var projectBuyerEvaluations = await this.MusicBusinessRoundProjectBuyerEvaluationRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionId ?? 0);
+                var projectBuyerEvaluations = await this.musicBusinessRoundProjectBuyerEvaluationRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionId ?? 0);
                 if (projectBuyerEvaluations?.Count == 0)
                 {
                     edition?.CancelMusicBusinessRoundNegotiationsCreation(cmd.UserId);

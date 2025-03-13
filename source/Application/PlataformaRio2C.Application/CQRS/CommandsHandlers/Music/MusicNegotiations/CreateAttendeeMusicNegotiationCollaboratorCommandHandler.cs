@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Ribeiro 
 // Last Modified On : 05-03-2025
 // ***********************************************************************
-// <copyright file="CreateAttendeeNegotiationCommandHandler.cs" company="Softo">
+// <copyright file="CreateAttendeeMusicNegotiationCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -38,7 +38,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
-        /// <param name="negotiationRepository">The negotiation repository.</param>
         /// <param name="attendeeNegotiationCollaboratorRepo">The attendee negotiation collaborator repo.</param>
         public CreateAttendeeMusicNegotiationCollaboratorCommandHandler(
             IMediator eventBus,

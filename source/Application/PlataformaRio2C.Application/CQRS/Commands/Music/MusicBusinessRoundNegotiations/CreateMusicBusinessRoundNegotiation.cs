@@ -17,7 +17,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>CreateNegotiation</summary>
-    public class CreateMusicBusinessRoundNegotiation : MusicbusinessRoundnegotiationBaseCommand
+    public class CreateMusicBusinessRoundNegotiation : MusicBusinessRoundNegotiationBaseCommand
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateMusicBusinessNegotiation"/> class.

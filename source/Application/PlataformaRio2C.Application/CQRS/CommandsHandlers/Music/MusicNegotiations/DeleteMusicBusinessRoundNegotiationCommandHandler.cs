@@ -23,15 +23,15 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
     /// <summary>DeleteNegotiationCommandHandler</summary>
-    public class DeleteMusicBusinesRoundNegotiationCommandHandler : MusicBusinesRoundNegotiationBaseCommandHandler, IRequestHandler<DeleteMusicBusinesRoundNegotiation, AppValidationResult>
+    public class DeleteMusicBusinessRoundNegotiationCommandHandler : MusicBusinesRoundNegotiationBaseCommandHandler, IRequestHandler<DeleteMusicBusinessRoundNegotiation, AppValidationResult>
     {
         private readonly IMusicBusinessRoundNegotiationRepository _musicBusinessRoundNegotiationRepository;
 
-        /// <summary>Initializes a new instance of the <see cref="DeleteMusicBusinesRoundNegotiationCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="DeleteMusicBusinessRoundNegotiationCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="negotiationRepository">The negotiation repository.</param>
-        public DeleteMusicBusinesRoundNegotiationCommandHandler(
+        public DeleteMusicBusinessRoundNegotiationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IMusicBusinessRoundNegotiationRepository musicBusinessRoundNegotiationRepository)
@@ -44,7 +44,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(DeleteMusicBusinesRoundNegotiation cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(DeleteMusicBusinessRoundNegotiation cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 

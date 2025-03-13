@@ -21,19 +21,19 @@ using System.ComponentModel.DataAnnotations;
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>ScheduleManualNegotiation</summary>
-    public class ScheduleManualMusicBusinessRoundNegotiation : MusicbusinessRoundnegotiationBaseCommand
+    public class ScheduleManualMusicBusinessRoundNegotiation : MusicBusinessRoundNegotiationBaseCommand
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ScheduleManualNegotiation"/> class.
         /// </summary>
-        /// <param name="projectBuyerEvaluationDto">The project buyer evaluation dto.</param>
+        /// <param name="musicBusinessRoundProjectDto">The project buyer evaluation dto.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         /// <exception cref="DomainException"></exception>
         public ScheduleManualMusicBusinessRoundNegotiation(
-            MusicBusinessRoundProjectBuyerEvaluationDto MusicBusinessRoundProjectDto,
+            MusicBusinessRoundProjectBuyerEvaluationDto musicBusinessRoundProjectDto,
             string userInterfaceLanguage)
         {
-            if (MusicBusinessRoundProjectDto == null )
+            if (musicBusinessRoundProjectDto == null )
             {
                 throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM));
             }

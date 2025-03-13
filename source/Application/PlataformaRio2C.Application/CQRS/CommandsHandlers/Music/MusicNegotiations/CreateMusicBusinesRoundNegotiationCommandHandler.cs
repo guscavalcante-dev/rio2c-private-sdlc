@@ -30,7 +30,7 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>CreateNegotiationCommandHandler</summary>
+    /// <summary>CreateMusicBusinesRoundNegotiationCommandHandler</summary>
     public class CreateMusicBusinesRoundNegotiationCommandHandler : BaseCommandHandler, IRequestHandler<CreateMusicBusinessRoundNegotiation, AppValidationResult>
     {
         private readonly IOrganizationRepository organizationRepo;

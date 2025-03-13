@@ -17,7 +17,7 @@ using System;
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>CreateAttendeeNegotiationCollaborator</summary>
-    public class CreateAttendeeMusicBusinessRoundNegotiationCollaborator : MusicbusinessRoundnegotiationBaseCommand
+    public class CreateAttendeeMusicBusinessRoundNegotiationCollaborator : MusicBusinessRoundNegotiationBaseCommand
     {
         internal Guid MusicBusinesRoundNegotiationUid;
 

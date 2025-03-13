@@ -475,7 +475,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Delete(DeleteMusicBusinesRoundNegotiation cmd)
+        public async Task<ActionResult> Delete(DeleteMusicBusinessRoundNegotiation cmd)
         {
             var result = new AppValidationResult();
 

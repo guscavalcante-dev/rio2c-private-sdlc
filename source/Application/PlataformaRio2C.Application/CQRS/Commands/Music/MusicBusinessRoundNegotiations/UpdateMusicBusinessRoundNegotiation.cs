@@ -22,7 +22,7 @@ using System.Linq;
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>UpdateNegotiation</summary>
-    public class UpdateMusicBusinessRoundNegotiation : MusicbusinessRoundnegotiationBaseCommand
+    public class UpdateMusicBusinessRoundNegotiation : MusicBusinessRoundNegotiationBaseCommand
     {
         public Guid MusicRoundNegotiationUid { get; set; }
         public MusicBusinessRoundNegotiationDto MusicBusinesNegotiationDto { get; set; }
@@ -34,16 +34,16 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         /// <exception cref="DomainException"></exception>
         public UpdateMusicBusinessRoundNegotiation(
-            MusicBusinessRoundNegotiationDto MusicBusinessRoundNegotiationDto, 
+            MusicBusinessRoundNegotiationDto musicBusinessRoundNegotiationDto, 
             string userInterfaceLanguage)
         {
-            if (MusicBusinessRoundNegotiationDto == null || MusicBusinessRoundNegotiationDto.Negotiation == null)
+            if (musicBusinessRoundNegotiationDto == null || musicBusinessRoundNegotiationDto.Negotiation == null)
             {
                 throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM));
             }
 
-            this.MusicRoundNegotiationUid = MusicBusinessRoundNegotiationDto.Negotiation.Uid;
-            this.MusicBusinesNegotiationDto = MusicBusinessRoundNegotiationDto;
+            this.MusicRoundNegotiationUid = musicBusinessRoundNegotiationDto.Negotiation.Uid;
+            this.MusicBusinesNegotiationDto = musicBusinessRoundNegotiationDto;
             this.UpdateBaseProperties(ProjectBuyerEvaluationDto, userInterfaceLanguage);
         }
 
