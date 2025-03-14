@@ -11,6 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using DataTables.AspNet.Core;
+using DataTables.AspNet.Mvc5;
 using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
@@ -717,6 +719,105 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 }
             }, JsonRequestBehavior.AllowGet);
         }
+
+        #endregion
+
+        #region Send E-mails to Producers
+
+        #region List
+
+        /// <summary>
+        /// Sends the email to producers.
+        /// </summary>
+        /// <param name="searchViewModel">The search view model.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult SendEmailToProducers(SendEmailToProducersSearchViewModel searchViewModel)
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Music, null),
+                new BreadcrumbItemHelper(Labels.OneToOneMeetings, null),
+                new BreadcrumbItemHelper(Labels.SendEmailToProducers, Url.Action("SendEmailToProducers", "Meetings", new { Area = "Music" }))
+            });
+
+            #endregion
+
+            return View(searchViewModel);
+        }
+
+        /// <summary>
+        /// Sends the email to producers search.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> SendEmailToProducersSearch(IDataTablesRequest request)
+        {
+            var producers = await this.attendeeOrganizationRepo.FindAllByActiveSellerNegotiationsAndByDataTable(
+                request.Start / request.Length,
+                request.Length,
+                request.Search?.Value,
+                request.GetSortColumns(),
+                this.EditionDto.Id,
+                this.AdminAccessControlDto.Language.Id);
+
+            var response = DataTablesResponse.Create(request, producers.TotalItemCount, producers.TotalItemCount, producers);
+
+            return Json(new
+            {
+                status = "success",
+                dataTable = response
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Total Count Widget
+
+        /// <summary>
+        /// Shows the send email to players total count widget.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowSendEmailToProducersTotalCountWidget()
+        {
+            var producers = await this.attendeeOrganizationRepo.CountAllByActiveSellerNegotiationsAndByDataTable(true, this.EditionDto.Id);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/SendEmailToProducersTotalCountWidget", producers), divIdOrClass = "#AudiovisualMeetingsSendEmailToProducersTotalCountWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Edition Count Widget
+
+        /// <summary>
+        /// Shows the send email to players edition count widget.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ActionResult> ShowSendEmailToProducersEditionCountWidget()
+        {
+            var producers = await this.attendeeOrganizationRepo.CountAllByActiveSellerNegotiationsAndByDataTable(false, this.EditionDto.Id);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/SendEmailToProducersEditionCountWidget", producers), divIdOrClass = "#AudiovisualMeetingsSendEmailToProducersEditionCountWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
 
         #endregion
 
