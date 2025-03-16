@@ -32,9 +32,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? AttendeeOrganizationUid { get; set; }
 
-        public int MaximumAvailableSlotsByPlayer { get; set; }
+        public int AvailableSlotsByPlayer { get; set; }
         public int PlayerAcceptedProjectsCount { get; set; }
-        public bool IsProjectsApprovalLimitReached => this.PlayerAcceptedProjectsCount >= this.MaximumAvailableSlotsByPlayer;
+        public bool IsProjectsApprovalLimitReached => this.PlayerAcceptedProjectsCount >= this.AvailableSlotsByPlayer;
 
         public ProjectDto ProjectDto { get; private set; }
         public dynamic AttendeeOrganizations { get; set; }
@@ -44,17 +44,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// </summary>
         /// <param name="projectDto">The project dto.</param>
         /// <param name="currentUserOrganizations">The current user organizations.</param>
-        /// <param name="maximumAvailableSlotsByPlayer">The maximum available slots by player.</param>
+        /// <param name="availableSlotsByPlayer">The maximum available slots by player.</param>
         /// <param name="playerAcceptedProjectsCount">The player accepted projects count.</param>
         public AcceptProjectEvaluation(
             ProjectDto projectDto, 
             List<AttendeeOrganization> currentUserOrganizations, 
-            int maximumAvailableSlotsByPlayer,
+            int availableSlotsByPlayer,
             int playerAcceptedProjectsCount)
         {
             this.ProjectUid = projectDto?.Project?.Uid;
             this.UpdateOrganizations(projectDto, currentUserOrganizations);
-            this.MaximumAvailableSlotsByPlayer = maximumAvailableSlotsByPlayer;
+            this.AvailableSlotsByPlayer = availableSlotsByPlayer;
             this.PlayerAcceptedProjectsCount = playerAcceptedProjectsCount;
         }
 

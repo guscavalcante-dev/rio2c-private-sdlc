@@ -59,13 +59,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #region Initial validations
 
-            var maximumAvailableSlotsByEditionIdResponseDto = await CommandBus.Send(new GetAudiovisualMaximumAvailableSlotsByEditionId(cmd.EditionId ?? 0));
-            var playerAcceptedProjectsCount = await CommandBus.Send(new CountPresentialNegotiationsAcceptedByBuyerAttendeeOrganizationUid(cmd.AttendeeOrganizationUid ?? Guid.Empty));
-            var projectsApprovalLimitExceeded = playerAcceptedProjectsCount >= maximumAvailableSlotsByEditionIdResponseDto.MaximumAvailableSlotsByPlayer;
+            var maximumAvailableSlotsByEditionIdResponseDto = await CommandBus.Send(new GetAudiovisualNegotiationAvailableSlotsCountByEditionId(cmd.EditionId ?? 0));
+            var playerAcceptedProjectsCount = await CommandBus.Send(new CountAcceptedProjectBuyerEvaluationsByBuyerAttendeeOrganizationUid(cmd.AttendeeOrganizationUid ?? Guid.Empty));
+            var projectsApprovalLimitExceeded = playerAcceptedProjectsCount >= maximumAvailableSlotsByEditionIdResponseDto.RemainingSlotsByPlayer;
             if (projectsApprovalLimitExceeded)
             {
                 cmd.PlayerAcceptedProjectsCount = playerAcceptedProjectsCount;
-                cmd.MaximumAvailableSlotsByPlayer = maximumAvailableSlotsByEditionIdResponseDto.MaximumAvailableSlotsByPlayer;
+                cmd.AvailableSlotsByPlayer = maximumAvailableSlotsByEditionIdResponseDto.RemainingSlotsByPlayer;
             }
 
             if (!this.ValidationResult.IsValid)

@@ -1698,13 +1698,13 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 }
 
                 //TODO: Change this! Implements a "GetMusicMaximumAvailableSlotsByEditionId"
-                var audiovisualMaximumAvailableSlotsByEditionIdResponseDto = await CommandBus.Send(new GetAudiovisualMaximumAvailableSlotsByEditionId(this.EditionDto.Id));
-                var playerAcceptedProjectsCount = await CommandBus.Send(new CountPresentialNegotiationsAcceptedByBuyerAttendeeOrganizationUid(buyerAttendeeOrganizationUid ?? Guid.Empty));
+                var audiovisualMaximumAvailableSlotsByEditionIdResponseDto = await CommandBus.Send(new GetAudiovisualNegotiationAvailableSlotsCountByEditionId(this.EditionDto.Id));
+                var playerAcceptedProjectsCount = await CommandBus.Send(new CountAcceptedProjectBuyerEvaluationsByBuyerAttendeeOrganizationUid(buyerAttendeeOrganizationUid ?? Guid.Empty));
 
                 cmd = new AcceptMusicBusinessRoundProjectEvaluation(
                     musicBusinessRoundProjectDto,
                     this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList(),
-                    maximumAvailableSlotsByPlayer: audiovisualMaximumAvailableSlotsByEditionIdResponseDto.MaximumAvailableSlotsByPlayer,
+                    maximumAvailableSlotsByPlayer: audiovisualMaximumAvailableSlotsByEditionIdResponseDto.RemainingSlotsByPlayer,
                     playerAcceptedProjectsCount: playerAcceptedProjectsCount);
             }
             catch (DomainException ex)

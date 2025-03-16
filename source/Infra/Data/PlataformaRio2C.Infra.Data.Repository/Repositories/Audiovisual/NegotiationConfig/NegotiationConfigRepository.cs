@@ -90,8 +90,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<NegotiationConfig> HasVirtualRoomConfigured(this IQueryable<NegotiationConfig> query)
         {
-            query = query.Where(nc => nc.NegotiationRoomConfigs.Any(nrc => !nrc.IsDeleted && 
-                                                                            !nrc.Room.IsDeleted && 
+            query = query.Where(nc => nc.NegotiationRoomConfigs.Any(nrc => !nrc.IsDeleted &&
+                                                                            !nrc.Room.IsDeleted &&
                                                                             nrc.Room.IsVirtualMeeting));
 
             return query;
@@ -104,8 +104,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<NegotiationConfig> HasPresentialRoomConfigured(this IQueryable<NegotiationConfig> query)
         {
-            query = query.Where(nc => nc.NegotiationRoomConfigs.Any(nrc => !nrc.IsDeleted && 
-                                                                            !nrc.Room.IsDeleted && 
+            query = query.Where(nc => nc.NegotiationRoomConfigs.Any(nrc => !nrc.IsDeleted &&
+                                                                            !nrc.Room.IsDeleted &&
                                                                             !nrc.Room.IsVirtualMeeting));
 
             return query;
@@ -299,12 +299,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                            .ToListPagedAsync(page, pageSize);
         }
 
-        /// <summary>Counts the asynchronous.</summary>
+        /// <summary>
+        /// Counts the asynchronous.
+        /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="projectTypeId">The project type identifier.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <returns></returns>
-        public async Task<int> CountAsync(int editionId,int projectTypeId, bool showAllEditions = false)
+        public async Task<int> CountAsync(int editionId, int projectTypeId, bool showAllEditions = false)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId, showAllEditions)
@@ -315,10 +317,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         /// <summary>Finds all for generate negotiations asynchronous.</summary>
         /// <returns></returns>
-        public async Task<List<NegotiationConfig>> FindAllForGenerateNegotiationsAsync(int editionId)
+        public async Task<List<NegotiationConfig>> FindAllForGenerateNegotiationsAsync(int editionId, int projectTypeId)
         {
             var query = this.GetBaseQuery()
                                     .FindByEditionId(editionId, false)
+                                    .FindByProjectTypeId(projectTypeId)
                                     .HasRoomsConfigured()
                                     .IncludeFilter(nc => nc.NegotiationRoomConfigs.Where(nrc => !nrc.IsDeleted && !nrc.Room.IsDeleted))
                                     .IncludeFilter(nc => nc.NegotiationRoomConfigs.Where(nrc => !nrc.IsDeleted && !nrc.Room.IsDeleted).Select(nrc => nrc.Room));
@@ -410,7 +413,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="customFilter">The custom filter.</param>
         /// <param name="projectTypeId">The project type identifier.</param>
         /// <returns></returns>
-        public async Task<NegotiationConfigDto> FindAllTimesDtosAsync(int editionId, Guid negotiationRoomConfigUid, string customFilter, bool buyerAttendeeOrganizationAcceptsVirtualMeeting,int projectTypeId)
+        public async Task<NegotiationConfigDto> FindAllTimesDtosAsync(int editionId, Guid negotiationRoomConfigUid, string customFilter, bool buyerAttendeeOrganizationAcceptsVirtualMeeting, int projectTypeId)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId, false)
@@ -451,10 +454,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="negotiationRoomConfigUid">The negotiation room configuration uid.</param>
         /// <param name="customFilter">The custom filter.</param>
         /// <returns></returns>
-        public async Task<List<NegotiationConfigDto>> FindAllByEditionIdAsync(int editionId)
+        public async Task<List<NegotiationConfigDto>> FindAllByEditionIdAsync(int editionId, int projectTypeId)
         {
             var query = this.GetBaseQuery(true)
                                 .FindByEditionId(editionId, false)
+                                .FindByProjectTypeId(projectTypeId)
                                 .Select(nc => new NegotiationConfigDto
                                 {
                                     NegotiationConfig = nc,
@@ -474,10 +478,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<int> CountNegotiationConfigsWithVirtualRoomConfiguredAsync(int editionId)
+        public async Task<int> CountNegotiationConfigsWithVirtualRoomConfiguredAsync(int editionId, int projectTypeId)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
+                                .FindByProjectTypeId(projectTypeId)
                                 .HasVirtualRoomConfigured();
 
             return await query.CountAsync();
@@ -488,10 +493,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<int> CountNegotiationConfigsWithPresentialRoomConfiguredAsync(int editionId)
+        public async Task<int> CountNegotiationConfigsWithPresentialRoomConfiguredAsync(int editionId, int projectTypeId)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
+                                .FindByProjectTypeId(projectTypeId)
                                 .HasPresentialRoomConfigured();
 
             return await query.CountAsync();

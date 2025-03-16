@@ -357,15 +357,31 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
-        /// Counts the negotiation accepted by buyer attendee organization uid asynchronous.
+        /// Counts the project buyer evaluations accepted by buyer attendee organization uid asynchronous.
         /// </summary>
         /// <param name="buyerAttendeeOrganizationUid">The buyer attendee organization uid.</param>
         /// <returns></returns>
-        public async Task<int> CountPresentialNegotiationsAcceptedByBuyerAttendeeOrganizationUidAsync(Guid buyerAttendeeOrganizationUid)
+        public async Task<int> CountAcceptedProjectBuyerEvaluationsByBuyerAttendeeOrganizationUidAsync(Guid buyerAttendeeOrganizationUid)
         {
             var query = this.GetBaseQuery()
                                 .FindByProjectEvaluationStatusUid(ProjectEvaluationStatus.Accepted.Uid)
                                 .FindByBuyerAttendeeOrganizationUid(buyerAttendeeOrganizationUid)
+                                .IsProjectFinished()
+                                .IsNotVirtualMeeting(); // Consider only presential negotiations in count
+
+            return await query.CountAsync();
+        }
+
+        /// <summary>
+        /// Counts the negotiation accepted by buyer attendee organization uid asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<int> CountAcceptedProjectBuyerEvaluationsByEditionIdAsync(int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByProjectEvaluationStatusUid(ProjectEvaluationStatus.Accepted.Uid)
+                                .FindByEditionId(editionId)
                                 .IsProjectFinished()
                                 .IsNotVirtualMeeting(); // Consider only presential negotiations in count
 

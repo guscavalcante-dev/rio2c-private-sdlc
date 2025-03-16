@@ -6,7 +6,7 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 10-18-2024
 // ***********************************************************************
-// <copyright file="CountPresentialNegotiationsAcceptedByBuyerAttendeeOrganizationUid.cs" company="Softo">
+// <copyright file="CountAcceptedProjectBuyerEvaluationsByBuyerAttendeeOrganizationUid.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -15,16 +15,16 @@ using System;
 
 namespace PlataformaRio2C.Application.CQRS.Queries
 {
-    /// <summary>CountPresentialNegotiationsAcceptedByBuyerAttendeeOrganizationUid</summary>
-    public class CountPresentialNegotiationsAcceptedByBuyerAttendeeOrganizationUid : BaseQuery<int>
+    /// <summary>CountAcceptedProjectBuyerEvaluationsByBuyerAttendeeOrganizationUid</summary>
+    public class CountAcceptedProjectBuyerEvaluationsByBuyerAttendeeOrganizationUid : BaseQuery<int>
     {
         public Guid BuyerAttendeeOrganizationUid { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CountPresentialNegotiationsAcceptedByBuyerAttendeeOrganizationUid" /> class.
+        /// Initializes a new instance of the <see cref="CountAcceptedProjectBuyerEvaluationsByBuyerAttendeeOrganizationUid" /> class.
         /// </summary>
         /// <param name="buyerAttendeeOrganizationUid">The buyer attendee organization uid.</param>
-        public CountPresentialNegotiationsAcceptedByBuyerAttendeeOrganizationUid(Guid buyerAttendeeOrganizationUid)
+        public CountAcceptedProjectBuyerEvaluationsByBuyerAttendeeOrganizationUid(Guid buyerAttendeeOrganizationUid)
         {
             this.BuyerAttendeeOrganizationUid = buyerAttendeeOrganizationUid;
         }
