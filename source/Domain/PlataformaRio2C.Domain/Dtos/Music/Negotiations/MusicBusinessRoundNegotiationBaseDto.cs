@@ -25,7 +25,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public int TableNumber { get; set; }
         public int RoundNumber { get; set; }
         public bool IsAutomatic { get; set; }
-        public MusicBusinessRoundProjectBuyerEvaluationBaseDto MusicBusinessProjectProjectBuyerEvaluationBaseDto { get; set; }
+        public MusicBusinessRoundProjectBuyerEvaluationBaseDto MusicBusinessRoundProjectBuyerEvaluationBaseDto { get; set; }
         public RoomJsonDto RoomJsonDto { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="MusicBusinessRoundNegotiationBaseDto"/> class.</summary>

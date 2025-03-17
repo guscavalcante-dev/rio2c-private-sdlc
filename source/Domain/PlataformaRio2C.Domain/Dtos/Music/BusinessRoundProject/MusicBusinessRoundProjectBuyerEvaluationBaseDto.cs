@@ -25,7 +25,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public int SellerUserId { get; set; }
         public int? BuyerEvaluationUserId { get; set; }
         public string Reason { get; set; }
-        public MusicBusinessProjectBaseDto MusicBusinessProjectBaseDto { get; set; }
+        public MusicBusinessRoundProjectBaseDto MusicBusinessProjectBaseDto { get; set; }
         public AttendeeOrganizationBaseDto BuyerAttendeeOrganizationBaseDto { get; set; }
         public AttendeeOrganizationBaseDto SellerAttendeeOrganizationBaseDto { get; set; }
         public ProjectEvaluationStatusBaseDto ProjectEvaluationStatusBaseDtos { get; set; }

@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Rafael Ribeiro 
-// Created          : 21-02-2025
+// Author           : Daniel Giese
+// Created          : 03-17-2025
 //
-// Last Modified By : Rafael Ribeiro 
-// Last Modified On : 21-02-2025
+// Last Modified By : Daniel Giese
+// Last Modified On : 03-17-2025
 // ***********************************************************************
 // <copyright file="MeetingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,6 +14,7 @@
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
+using Microsoft.Ajax.Utilities;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
@@ -755,7 +756,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> SendEmailToProducersSearch(IDataTablesRequest request)
         {
-            var producers = await this.attendeeOrganizationRepo.FindAllByActiveSellerNegotiationsAndByDataTable(
+            var producers = await this.attendeeCollaboratorRepo.FindAllByActiveSellerNegotiationsAndByDataTable(
                 request.Start / request.Length,
                 request.Length,
                 request.Search?.Value,
@@ -783,14 +784,14 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowSendEmailToProducersTotalCountWidget()
         {
-            var producers = await this.attendeeOrganizationRepo.CountAllByActiveSellerNegotiationsAndByDataTable(true, this.EditionDto.Id);
+            var producers = await this.attendeeCollaboratorRepo.CountAllByActiveSellerNegotiationsAndByDataTable(true, this.EditionDto.Id);
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/SendEmailToProducersTotalCountWidget", producers), divIdOrClass = "#AudiovisualMeetingsSendEmailToProducersTotalCountWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/SendEmailToProducersTotalCountWidget", producers), divIdOrClass = "#MusicMeetingsSendEmailToProducersTotalCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -805,14 +806,14 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <returns></returns>
         public async Task<ActionResult> ShowSendEmailToProducersEditionCountWidget()
         {
-            var producers = await this.attendeeOrganizationRepo.CountAllByActiveSellerNegotiationsAndByDataTable(false, this.EditionDto.Id);
+            var producers = await this.attendeeCollaboratorRepo.CountAllByActiveSellerNegotiationsAndByDataTable(false, this.EditionDto.Id);
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/SendEmailToProducersEditionCountWidget", producers), divIdOrClass = "#AudiovisualMeetingsSendEmailToProducersEditionCountWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/SendEmailToProducersEditionCountWidget", producers), divIdOrClass = "#MusicMeetingsSendEmailToProducersEditionCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
