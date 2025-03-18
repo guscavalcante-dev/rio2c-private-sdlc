@@ -17,7 +17,7 @@ var MusicMeetingsCreate = function () {
     var modalId = '#CreateMusicMeetingModal';
     var formId = '#CreateMusicMeetingForm';
 
-    var buyerOrganizationUid = '#BuyerOrganizationUid';
+    var buyerOrganizationUid = '#BuyerOrganizationUidModal';
     var projectUid = '#ProjectUid';
     var negotiationConfigUid = '#NegotiationConfigUid';
     var negotiationRoomConfigUid = '#NegotiationRoomConfigUid';
