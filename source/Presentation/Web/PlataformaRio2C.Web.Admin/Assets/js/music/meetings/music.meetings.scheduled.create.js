@@ -79,7 +79,7 @@ var MusicMeetingsCreate = function () {
 
         element.not('.change-event-enabled').on('change', function () {
             toogleProjectSelect2();
-            MusicMeetingsLogisticsInfoWidget.init([this.value, sellerOrganizationUidElement.val()]);
+           //TODO:Com esse nome sugestivo acabei nao entendendo o que é esse MusicMeetingsLogisticsInfoWidget, tem que validar. ---   MusicMeetingsLogisticsInfoWidget.init([this.value, sellerOrganizationUidElement.val()]);
         });
         element.addClass('change-event-enabled');
     };

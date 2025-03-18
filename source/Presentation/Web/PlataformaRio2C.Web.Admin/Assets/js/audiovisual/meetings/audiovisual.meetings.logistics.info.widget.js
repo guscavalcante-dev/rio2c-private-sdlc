@@ -36,7 +36,7 @@ var AudiovisualMeetingsLogisticsInfoWidget = function () {
             jsonParameters.organizationsUids = '';
         }
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Meetings/ShowLogisticsInfoWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('Audiovisual/Meetings/ShowLogisticsInfoWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
