@@ -7,7 +7,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Update", "Meetings", new { Area = "" }, FormMethod.Post, new { id = "UpdateAudiovisualMeetingForm" }))
+                @using (Html.BeginForm("Update", "Meetings", new { Area = "Audiovisual" }, FormMethod.Post, new { id = "UpdateAudiovisualMeetingForm" }))
                 {
                     <div id="form-container">
                         @Html.Partial("Modals/UpdateForm", Model)
