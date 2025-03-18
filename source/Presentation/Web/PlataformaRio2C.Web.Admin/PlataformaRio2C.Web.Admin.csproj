@@ -1023,6 +1023,9 @@
     <Content Include="Assets\js\music\meetingparameters\music.meetingparameters.maininformation.widget.js" />
     <Content Include="Assets\js\music\meetingparameters\music.meetingparameters.rooms.widget.js" />
     <Content Include="Assets\js\music\meetingparameters\music.meetingparameters.totalcount.widget.js" />
+    <Content Include="Assets\js\music\meetings\music.meetings.sendemailtoproducers.datatable.widget.js" />
+    <Content Include="Assets\js\music\meetings\music.meetings.sendemailtoproducers.totalcount.widget.js" />
+    <Content Include="Assets\js\music\meetings\music.meetings.sendemailtoproducers.editioncount.widget.js" />
     <Content Include="Assets\js\music\meetings\music.meetings.scheduled.delete.js" />
     <Content Include="Assets\js\music\meetings\music.meetings.status.widget.js" />
     <Content Include="Assets\js\music\meetings\music.meetings.logistics.info.widget.js" />
@@ -8349,6 +8352,10 @@
     <Content Include="Areas\Music\Views\Meetings\Widgets\LogisticsInfoWidget.cshtml" />
     <Content Include="Areas\Music\Views\Meetings\Widgets\LogisticsAirfareList.cshtml" />
     <Content Include="Areas\Music\Views\Meetings\Widgets\StatusWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\Widgets\SendEmailToProducersTotalCountWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\Widgets\SendEmailToProducersDataTableWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\Widgets\SendEmailToProducersEditionCountWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\SendEmailToProducers.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

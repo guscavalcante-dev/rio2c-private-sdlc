@@ -1097,6 +1097,17 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region Meeting Send Email Producers
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.sendemailtoproducers.list.js").Include(
+              "~/Assets/js/music/meetings/music.meetings.sendemailtoproducers.totalcount.widget.js",
+              "~/Assets/js/music/meetings/music.meetings.sendemailtoproducers.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.sendemailtoproducers.editioncount.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.sendemailtoproducers.editioncount.widget.js"));
+
+            #endregion
+
             #endregion
 
             #region Innovation Page Bundles
