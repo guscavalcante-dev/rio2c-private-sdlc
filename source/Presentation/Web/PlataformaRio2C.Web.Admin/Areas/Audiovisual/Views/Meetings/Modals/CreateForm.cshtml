@@ -7,7 +7,7 @@
         @Html.HiddenFor(m => m.InitialBuyerOrganizationUid)
         @Html.HiddenFor(m => m.InitialBuyerOrganizationName)
         @Html.LabelFor(m => m.BuyerOrganizationUid, new { @class = "control-label" })
-        @Html.DropDownListFor(m => m.BuyerOrganizationUid, Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.Player.ToLowerInvariant())}...", new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.BuyerOrganizationUid, Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.Player.ToLowerInvariant())}...", new { @class = "form-control", id= "BuyerOrganizationUidModal" })
         @Html.ValidationMessageFor(m => m.BuyerOrganizationUid, "", new { @class = "text-danger" })
     </div>
 </div>
