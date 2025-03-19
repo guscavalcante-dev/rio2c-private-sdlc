@@ -835,9 +835,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return await query.CountAsync();
         }
-
         public async Task<List<MusicBusinessRoundProjectBuyerEvaluationDto>> FindUnscheduledWidgetDtoAsync(int editionId)
         {
+            //TODO: REMOVER
+            return null;
+
             var query = this.GetBaseQuery()
                                  .FindByEditionId(editionId)
                                  .FindByProjectEvaluationStatusUid(ProjectEvaluationStatus.Accepted.Uid)
