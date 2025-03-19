@@ -486,6 +486,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
             return await query
                             .Select(p => new MusicBusinessRoundProjectDto
                             {
+                                Uid = p.Uid,
                                SellerAttendeeCollaboratorDto =  new AttendeeCollaboratorDto
                                {
                                  AttendeeCollaborator = p.SellerAttendeeCollaborator,

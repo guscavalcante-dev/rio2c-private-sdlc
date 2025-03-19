@@ -64,173 +64,177 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <returns></returns>
         public async Task<AppValidationResult> Handle(CreateMusicBusinessRoundNegotiation cmd, CancellationToken cancellationToken)
         {
-            this.Uow.BeginTransaction();
-
-            var buyerOrganization = await this.organizationRepo.GetAsync(cmd.BuyerOrganizationUid ?? Guid.Empty);
-            var project = await this.musicbusinesroundprojectRepo.GetAsync(cmd.ProjectUid ?? Guid.Empty);
-            var negotiationConfig = await this.negotiationConfigRepo.GetAsync(cmd.NegotiationConfigUid ?? Guid.Empty);
-            var negotiationRoomConfig = await this.negotiationRoomConfigRepo.GetAsync(cmd.NegotiationRoomConfigUid ?? Guid.Empty);
-            var manualScheduledNegotiationsInThisRoom = await this.musicbusinessRoundnegotiationRepo.FindManualScheduledNegotiationsByRoomIdAsync(negotiationRoomConfig?.Room?.Id ?? 0);
-
-            var startDatePreview = negotiationConfig.StartDate.Date.JoinDateAndTime(cmd.StartTime, true).ToUtcTimeZone();
-            var endDatePreview = startDatePreview.Add(negotiationConfig.TimeOfEachRound);
-
-            List<MusicBusinessRoundNegotiation> automaticScheduledNegotiationsInThisRoom = new List<MusicBusinessRoundNegotiation>();
-            bool isUsingAutomaticTable = false;
-
-            #region Overbooking Validations
-
-            // Available tables check
-            var manualNegotiationsGroupedByRoomAndStartDate = manualScheduledNegotiationsInThisRoom.GroupBy(n => n.StartDate);
-            var hasNoMoreManualTablesAvailable = manualNegotiationsGroupedByRoomAndStartDate.Any(n => n.Count(w => w.StartDate == startDatePreview) >= negotiationRoomConfig.CountManualTables);
-            if (hasNoMoreManualTablesAvailable)
+            try
             {
-                // Has no more manual tables available, so, try to use slots available at automatic tables
-                automaticScheduledNegotiationsInThisRoom = await this.musicbusinessRoundnegotiationRepo.FindAutomaticScheduledNegotiationsByRoomIdAsync(negotiationRoomConfig?.Room?.Id ?? 0);
-                var automaticNegotiationsGroupedByRoomAndStartDate = automaticScheduledNegotiationsInThisRoom.GroupBy(n => n.StartDate);
-                var hasNoMoreAutomaticTablesAvailable = automaticNegotiationsGroupedByRoomAndStartDate.Any(n => n.Count(w => w.StartDate == startDatePreview) >= negotiationRoomConfig.CountAutomaticTables);
-                if (hasNoMoreAutomaticTablesAvailable)
+                this.Uow.BeginTransaction();
+
+                var buyerOrganization = await this.organizationRepo.GetAsync(cmd.BuyerOrganizationUid ?? Guid.Empty);
+                var project = await this.musicbusinesroundprojectRepo.GetAsync(cmd.ProjectUid ?? Guid.Empty);
+                var negotiationConfig = await this.negotiationConfigRepo.GetAsync(cmd.NegotiationConfigUid ?? Guid.Empty);
+                var negotiationRoomConfig = await this.negotiationRoomConfigRepo.GetAsync(cmd.NegotiationRoomConfigUid ?? Guid.Empty);
+                var manualScheduledNegotiationsInThisRoom = await this.musicbusinessRoundnegotiationRepo.FindManualScheduledNegotiationsByRoomIdAsync(negotiationRoomConfig?.Room?.Id ?? 0);
+
+                var startDatePreview = negotiationConfig.StartDate.Date.JoinDateAndTime(cmd.StartTime, true).ToUtcTimeZone();
+                var endDatePreview = startDatePreview.Add(negotiationConfig.TimeOfEachRound);
+
+                List<MusicBusinessRoundNegotiation> automaticScheduledNegotiationsInThisRoom = new List<MusicBusinessRoundNegotiation>();
+                bool isUsingAutomaticTable = false;
+
+                #region Overbooking Validations
+
+                // Available tables check
+                var manualNegotiationsGroupedByRoomAndStartDate = manualScheduledNegotiationsInThisRoom.GroupBy(n => n.StartDate);
+                var hasNoMoreManualTablesAvailable = manualNegotiationsGroupedByRoomAndStartDate.Any(n => n.Count(w => w.StartDate == startDatePreview) >= negotiationRoomConfig.CountManualTables);
+                if (hasNoMoreManualTablesAvailable)
                 {
-                    this.ValidationResult.Add(new ValidationError(string.Format(
-                    Messages.NoMoreTablesAvailableAtTheRoomAndStartTime,
-                    cmd.StartTime,
-                    negotiationRoomConfig.Room.GetRoomNameByLanguageCode(cmd.UserInterfaceLanguage)),
-                        new string[] { "ToastrError" }));
+                    // Has no more manual tables available, so, try to use slots available at automatic tables
+                    automaticScheduledNegotiationsInThisRoom = await this.musicbusinessRoundnegotiationRepo.FindAutomaticScheduledNegotiationsByRoomIdAsync(negotiationRoomConfig?.Room?.Id ?? 0);
+                    var automaticNegotiationsGroupedByRoomAndStartDate = automaticScheduledNegotiationsInThisRoom.GroupBy(n => n.StartDate);
+                    var hasNoMoreAutomaticTablesAvailable = automaticNegotiationsGroupedByRoomAndStartDate.Any(n => n.Count(w => w.StartDate == startDatePreview) >= negotiationRoomConfig.CountAutomaticTables);
+                    if (hasNoMoreAutomaticTablesAvailable)
+                    {
+                        this.ValidationResult.Add(new ValidationError(string.Format(
+                        Messages.NoMoreTablesAvailableAtTheRoomAndStartTime,
+                        cmd.StartTime,
+                        negotiationRoomConfig.Room.GetRoomNameByLanguageCode(cmd.UserInterfaceLanguage)),
+                            new string[] { "ToastrError" }));
+                    }
+
+                    isUsingAutomaticTable = true;
                 }
 
-                isUsingAutomaticTable = true;
-            }
+                // Negotiations checks
+                var scheduledNegotiationsAtThisTime = await this.musicbusinessRoundnegotiationRepo.FindAllScheduledNegotiationsDtosAsync(cmd.EditionId.Value, null, startDatePreview, endDatePreview);
 
-            // Negotiations checks
-            var scheduledNegotiationsAtThisTime = await this.musicbusinessRoundnegotiationRepo.FindAllScheduledNegotiationsDtosAsync(cmd.EditionId.Value, null, startDatePreview, endDatePreview);
+                var hasPlayerScheduledNegotiationsAtThisTime = scheduledNegotiationsAtThisTime.Count(ndto => ndto.ProjectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.AttendeeOrganization.OrganizationId == buyerOrganization.Id) > 0;
+                if (hasPlayerScheduledNegotiationsAtThisTime)
+                {
+                    this.ValidationResult.Add(new ValidationError(string.Format(
+                        Messages.HasBusinessRoundScheduled,
+                        Labels.TheM,
+                        Labels.Player,
+                        ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
+                            new string[] { "ToastrError" }));
+                }
 
-            var hasPlayerScheduledNegotiationsAtThisTime = scheduledNegotiationsAtThisTime.Count(ndto => ndto.ProjectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.AttendeeOrganization.OrganizationId == buyerOrganization.Id) > 0;
-            if (hasPlayerScheduledNegotiationsAtThisTime)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(
-                    Messages.HasBusinessRoundScheduled,
-                    Labels.TheM,
-                    Labels.Player,
-                    ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
+
+                var hasProducerScheduledNegotiationsAtThisTime = scheduledNegotiationsAtThisTime.Count(ndto => ndto.ProjectBuyerEvaluationDto.MusicBusinessRoundProjectDto.SellerAttendeeCollaboratorDto.Collaborator.Id == project.SellerAttendeeCollaboratorId) > 0; 
+                if (hasProducerScheduledNegotiationsAtThisTime)
+                {
+                    this.ValidationResult.Add(new ValidationError(string.Format(
+                        Messages.HasBusinessRoundScheduled,  
+                        Labels.TheF,
+                        Labels.Producer,
+                        ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
                         new string[] { "ToastrError" }));
-            }
+                }
+                if (hasProducerScheduledNegotiationsAtThisTime)
+                {
+                    this.ValidationResult.Add(new ValidationError(string.Format(
+                        Messages.HasBusinessRoundScheduled,
+                        Labels.TheF,
+                        Labels.Producer,
+                        ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
+                            new string[] { "ToastrError" }));
+                }
 
+                #region [DISABLED] This Conferences and Airfares checks are disabled but its working perfectly! (Dont delete, can be used in future!)
 
-            var hasProducerScheduledNegotiationsAtThisTime = scheduledNegotiationsAtThisTime.Count(ndto => ndto.ProjectBuyerEvaluationDto.MusicBusinessRoundProjectDto.SellerAttendeeCollaboratorDto.AttendeeOrganizationsDtos.FirstOrDefault().Organization.Id == project.SellerAttendeeCollaborator.AttendeeMusicBusinessRoundNegotiationCollaborators.FirstOrDefault().AttendeeCollaborator.Id) > 0;
-            if (hasProducerScheduledNegotiationsAtThisTime)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(
-                    Messages.HasBusinessRoundScheduled,
-                    Labels.TheF,
-                    Labels.Producer,
-                    ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
-                    new string[] { "ToastrError" }));
-            }
-            if (hasProducerScheduledNegotiationsAtThisTime)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(
-                    Messages.HasBusinessRoundScheduled,
-                    Labels.TheF,
-                    Labels.Producer,
-                    ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
+                //// Conferences checks
+                //var scheduledConferencesAtThisTime = await this.conferenceRepo.FindAllScheduleDtosAsync(cmd.EditionId.Value, 0, startDatePreview, endDatePreview, true, true);
+
+                //var hasPlayerExecutivesScheduledConferencesAtThisTime = scheduledConferencesAtThisTime.Count(cdto => cdto.ConferenceParticipantDtos.Any(cpdto => cpdto.AttendeeCollaboratorDto.AttendeeOrganizationsDtos.Any(aodto => aodto.Organization.Id == buyerOrganization.Id))) > 0;
+                //if (hasPlayerExecutivesScheduledConferencesAtThisTime)
+                //{
+                //    this.ValidationResult.Add(new ValidationError(string.Format(
+                //        Messages.HasConferenceScheduled,
+                //        Labels.TheF,
+                //        Labels.Producer,
+                //        ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
+                //            new string[] { "ToastrError" }));
+                //}
+
+                //var hasProducerExecutivesScheduledConferencesAtThisTime = scheduledConferencesAtThisTime.Count(cdto => cdto.ConferenceParticipantDtos.Any(cpdto => cpdto.AttendeeCollaboratorDto.AttendeeOrganizationsDtos.Any(aodto => aodto.Organization.Id == project.SellerAttendeeOrganization.OrganizationId))) > 0;
+                //if (hasProducerExecutivesScheduledConferencesAtThisTime)
+                //{
+                //    this.ValidationResult.Add(new ValidationError(string.Format(
+                //        Messages.HasConferenceScheduled,
+                //        Labels.TheF,
+                //        Labels.Producer,
+                //        ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
+                //            new string[] { "ToastrError" }));
+                //}
+
+                //// Airfares checks
+                //var scheduledLogisticAirfaresAtThisTime = await this.logisticAirfareRepo.FindAllScheduleDtosAsync(cmd.EditionId.Value, null, startDatePreview, endDatePreview);
+
+                //var hasPlayerExecutivesScheduledAirfaresAtThisTime = scheduledLogisticAirfaresAtThisTime.Count(ladto => ladto.LogisticDto.AttendeeCollaboratorDto.AttendeeOrganizationsDtos.Any(aodto => aodto.Organization.Id == buyerOrganization.Id)) > 0;
+                //if (hasPlayerExecutivesScheduledAirfaresAtThisTime)
+                //{
+                //    this.ValidationResult.Add(new ValidationError(string.Format(
+                //        Messages.HasAirfareScheduled,
+                //        Labels.TheF,
+                //        Labels.Producer,
+                //        ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
+                //            new string[] { "ToastrError" }));
+                //}
+
+                //var hasProducerExecutivesScheduledAirfaresAtThisTime = scheduledLogisticAirfaresAtThisTime.Count(ladto => ladto.LogisticDto.AttendeeCollaboratorDto.AttendeeOrganizationsDtos.Any(aodto => aodto.Organization.Id == project.SellerAttendeeOrganization.OrganizationId)) > 0;
+                //if (hasProducerExecutivesScheduledAirfaresAtThisTime)
+                //{
+                //    this.ValidationResult.Add(new ValidationError(string.Format(
+                //        Messages.HasAirfareScheduled,
+                //        Labels.TheF,
+                //        Labels.Producer,
+                //        ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
+                //            new string[] { "ToastrError" }));
+                //}
+
+                #endregion
+
+                #endregion
+
+                //Update command properties to return to form before throws any ValidationError
+                cmd.InitialProjectUid = project.Uid;
+                if (hasProducerScheduledNegotiationsAtThisTime)
+                {
+                    this.ValidationResult.Add(new ValidationError(string.Format(
+                        Messages.HasBusinessRoundScheduled,
+                        Labels.TheF,
+                        Labels.Producer,
+                        ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
+                            new string[] { "ToastrError" }));
+                }
+                cmd.InitialBuyerOrganizationUid = buyerOrganization.Uid;
+                cmd.InitialBuyerOrganizationName = buyerOrganization.CompanyName;
+
+                if (!this.ValidationResult.IsValid)
+                {
+                    this.AppValidationResult.Add(this.ValidationResult);
+                    return this.AppValidationResult;
+                }
+
+                // Concat Manual and Automatic negotiations to use inside negotiation.Update();
+                if (hasProducerScheduledNegotiationsAtThisTime)
+                {
+                    this.ValidationResult.Add(new ValidationError(string.Format(
+                        Messages.HasBusinessRoundScheduled,
+                        Labels.TheF,
+                        Labels.Producer,
+                        ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
                         new string[] { "ToastrError" }));
-            }
+                }
+                var negotiationsInThisRoomAndStartDate = manualScheduledNegotiationsInThisRoom
+                                                                        .Cast<MusicBusinessRoundNegotiation>()
+                                                                        .Concat(automaticScheduledNegotiationsInThisRoom)
+                                                                        .Where(n => n.StartDate == startDatePreview)
+                                                                        .ToList();
 
-            #region [DISABLED] This Conferences and Airfares checks are disabled but its working perfectly! (Dont delete, can be used in future!)
 
-            //// Conferences checks
-            //var scheduledConferencesAtThisTime = await this.conferenceRepo.FindAllScheduleDtosAsync(cmd.EditionId.Value, 0, startDatePreview, endDatePreview, true, true);
-
-            //var hasPlayerExecutivesScheduledConferencesAtThisTime = scheduledConferencesAtThisTime.Count(cdto => cdto.ConferenceParticipantDtos.Any(cpdto => cpdto.AttendeeCollaboratorDto.AttendeeOrganizationsDtos.Any(aodto => aodto.Organization.Id == buyerOrganization.Id))) > 0;
-            //if (hasPlayerExecutivesScheduledConferencesAtThisTime)
-            //{
-            //    this.ValidationResult.Add(new ValidationError(string.Format(
-            //        Messages.HasConferenceScheduled,
-            //        Labels.TheF,
-            //        Labels.Producer,
-            //        ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
-            //            new string[] { "ToastrError" }));
-            //}
-
-            //var hasProducerExecutivesScheduledConferencesAtThisTime = scheduledConferencesAtThisTime.Count(cdto => cdto.ConferenceParticipantDtos.Any(cpdto => cpdto.AttendeeCollaboratorDto.AttendeeOrganizationsDtos.Any(aodto => aodto.Organization.Id == project.SellerAttendeeOrganization.OrganizationId))) > 0;
-            //if (hasProducerExecutivesScheduledConferencesAtThisTime)
-            //{
-            //    this.ValidationResult.Add(new ValidationError(string.Format(
-            //        Messages.HasConferenceScheduled,
-            //        Labels.TheF,
-            //        Labels.Producer,
-            //        ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
-            //            new string[] { "ToastrError" }));
-            //}
-
-            //// Airfares checks
-            //var scheduledLogisticAirfaresAtThisTime = await this.logisticAirfareRepo.FindAllScheduleDtosAsync(cmd.EditionId.Value, null, startDatePreview, endDatePreview);
-
-            //var hasPlayerExecutivesScheduledAirfaresAtThisTime = scheduledLogisticAirfaresAtThisTime.Count(ladto => ladto.LogisticDto.AttendeeCollaboratorDto.AttendeeOrganizationsDtos.Any(aodto => aodto.Organization.Id == buyerOrganization.Id)) > 0;
-            //if (hasPlayerExecutivesScheduledAirfaresAtThisTime)
-            //{
-            //    this.ValidationResult.Add(new ValidationError(string.Format(
-            //        Messages.HasAirfareScheduled,
-            //        Labels.TheF,
-            //        Labels.Producer,
-            //        ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
-            //            new string[] { "ToastrError" }));
-            //}
-
-            //var hasProducerExecutivesScheduledAirfaresAtThisTime = scheduledLogisticAirfaresAtThisTime.Count(ladto => ladto.LogisticDto.AttendeeCollaboratorDto.AttendeeOrganizationsDtos.Any(aodto => aodto.Organization.Id == project.SellerAttendeeOrganization.OrganizationId)) > 0;
-            //if (hasProducerExecutivesScheduledAirfaresAtThisTime)
-            //{
-            //    this.ValidationResult.Add(new ValidationError(string.Format(
-            //        Messages.HasAirfareScheduled,
-            //        Labels.TheF,
-            //        Labels.Producer,
-            //        ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
-            //            new string[] { "ToastrError" }));
-            //}
-
-            #endregion
-
-            #endregion
-
-            //Update command properties to return to form before throws any ValidationError
-            cmd.InitialProjectUid = project.Uid;
-            if (hasProducerScheduledNegotiationsAtThisTime)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(
-                    Messages.HasBusinessRoundScheduled,
-                    Labels.TheF,
-                    Labels.Producer,
-                    ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
-                        new string[] { "ToastrError" }));
-            }
-            cmd.InitialBuyerOrganizationUid = buyerOrganization.Uid;
-            cmd.InitialBuyerOrganizationName = buyerOrganization.CompanyName;
-
-            if (!this.ValidationResult.IsValid)
-            {
-                this.AppValidationResult.Add(this.ValidationResult);
-                return this.AppValidationResult;
-            }
-
-            // Concat Manual and Automatic negotiations to use inside negotiation.Update();
-            if (hasProducerScheduledNegotiationsAtThisTime)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(
-                    Messages.HasBusinessRoundScheduled,
-                    Labels.TheF,
-                    Labels.Producer,
-                    ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
-                    new string[] { "ToastrError" }));
-            }
-            var negotiationsInThisRoomAndStartDate = manualScheduledNegotiationsInThisRoom
-                                                                    .Cast<MusicBusinessRoundNegotiation>()
-                                                                    .Concat(automaticScheduledNegotiationsInThisRoom)
-                                                                    .Where(n => n.StartDate == startDatePreview)
-                                                                    .ToList();
-
-            var negotiation = new MusicBusinessRoundNegotiation(
+                var negotiation = new MusicBusinessRoundNegotiation(
                 cmd.EditionId.Value,
                 buyerOrganization,
+                project,
                 negotiationConfig,
                 negotiationRoomConfig,
                 negotiationsInThisRoomAndStartDate,
@@ -239,16 +243,23 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.UserId,
                 cmd.UserInterfaceLanguage,
                 isUsingAutomaticTable);
-            if (!negotiation.IsValid())
-            {
-                this.AppValidationResult.Add(negotiation.ValidationResult);
+
+                if (!negotiation.IsValid())
+                {
+                    this.AppValidationResult.Add(negotiation.ValidationResult);
+                    return this.AppValidationResult;
+                }
+
+                this.musicbusinessRoundnegotiationRepo.Create(negotiation);
+                this.Uow.SaveChanges();
+
                 return this.AppValidationResult;
             }
-
-            this.musicbusinessRoundnegotiationRepo.Create(negotiation);
-            this.Uow.SaveChanges();
-
-            return this.AppValidationResult;
+            catch (Exception ex)
+            {
+                var X = ex;
+                throw;
+            }
         }
     }
 }

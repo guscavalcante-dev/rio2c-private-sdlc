@@ -132,7 +132,7 @@ var MusicMeetingsCreate = function () {
         //});
         element.on('select2:select', function (e) {
             toogleDateSelect2();
-            MusicMeetingsLogisticsInfoWidget.init([e.params.data.SellerUid, buyerOrganizationUidElement.val()]);
+            //TODO: temporariamente desativado, aguaradndo cliente. MusicMeetingsLogisticsInfoWidget.init([e.params.data.SellerUid, buyerOrganizationUidElement.val()]);
         });
 
         element.addClass('change-event-enabled');

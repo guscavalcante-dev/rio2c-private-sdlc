@@ -1118,8 +1118,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 {
                     Uid = p.Uid,
                     ProjectTitle = p.SellerAttendeeCollaboratorDto.Collaborator.GetStageNameOrBadgeOrFullName(),
-                    SellerTradeName = p.SellerAttendeeCollaboratorDto.Collaborator.GetFullName(),
-                    SellerCompanyName = p.SellerAttendeeCollaboratorDto.Collaborator.CompanyName,
+                    SellerTradeName = p.SellerAttendeeCollaboratorDto.Collaborator.GetNameAbbreviation(),
+                    SellerCompanyName = p.SellerAttendeeCollaboratorDto.Collaborator.GetDisplayName(),
                     SellerPicture = p.SellerAttendeeCollaboratorDto.Collaborator.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, p.SellerAttendeeCollaboratorDto.Collaborator.Uid, p.SellerAttendeeCollaboratorDto.Collaborator.ImageUploadDate, true) : null,
                     SellerUid = p.SellerAttendeeCollaboratorDto.Collaborator.Uid
                 })?.ToList()

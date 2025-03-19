@@ -78,7 +78,7 @@ var MusicMeetingsUpdate = function () {
         var element = $(buyerOrganizationUid);
 
         element.not('.change-event-enabled').on('change', function () {
-            MusicMeetingsLogisticsInfoWidget.init([this.value, sellerOrganizationUidElement.val()]);
+            //Desativado -- MusicMeetingsLogisticsInfoWidget.init([this.value, sellerOrganizationUidElement.val()]);
         });
         element.addClass('change-event-enabled');
 
