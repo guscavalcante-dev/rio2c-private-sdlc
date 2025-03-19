@@ -11,5 +11,8 @@ namespace PlataformaRio2C.Domain.Interfaces.Repositories
         Task<List<MusicBusinessRoundProjectBuyerEvaluation>> FindAllForGenerateNegotiationsAsync(int editionId);
         Task<MusicBusinessRoundProjectBuyerEvaluationDto> FindDtoAsync(Guid Uid);
         Task<int> CountNegotiationScheduledAsync(int editionId, bool showAllEditions = false);
+
+        Task<List<MusicBusinessRoundProjectBuyerEvaluationDto>> FindUnscheduledWidgetDtoAsync(int editionId);
+
     }
 }
