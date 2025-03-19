@@ -217,6 +217,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                           && pbe.ProjectEvaluationStatus.Uid == ProjectEvaluationStatus.Accepted.Uid
                                                                                                           && pbe.Negotiations.Any(n => !n.IsDeleted)))));
                     }
+                    else if (organizationTypeUid == OrganizationType.MusicPlayer.Uid)
+                    {
+                        query = query.Where(o => o.AttendeeOrganizations
+                                                       .Any(ao => ao.EditionId == editionId
+                                                                  && !ao.IsDeleted
+                                                                  && ao.MusicBusinessRoundProjectBuyerEvaluations.Any(pbe => !pbe.IsDeleted
+                                                                                                           && !pbe.MusicBusinessRoundProject.IsDeleted
+                                                                                                           && pbe.ProjectEvaluationStatus.Uid == ProjectEvaluationStatus.Accepted.Uid
+                                                                                                           && pbe.MusicBusinessRoundNegotiations.Any(n => !n.IsDeleted))));
+                    }
                 }
                 else if (customFilter == "HasProjectNegotiationNotScheduled")
                 {
@@ -241,6 +251,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                               .Any(pbe => !pbe.IsDeleted
                                                                                                           && pbe.ProjectEvaluationStatus.Uid == ProjectEvaluationStatus.Accepted.Uid
                                                                                                           && (!pbe.Negotiations.Any() || pbe.Negotiations.All(n => n.IsDeleted))))));
+                    }
+
+                    else if(organizationTypeUid ==  OrganizationType.MusicPlayer.Uid)
+                    {
+                        query = query.Where(o => o.AttendeeOrganizations
+                                                      .Any(ao => ao.EditionId == editionId
+                                                                 && !ao.IsDeleted
+                                                                 && ao.MusicBusinessRoundProjectBuyerEvaluations.Any(pbe => !pbe.IsDeleted
+                                                                                                          && !pbe.MusicBusinessRoundProject.IsDeleted
+                                                                                                          && pbe.ProjectEvaluationStatus.Uid == ProjectEvaluationStatus.Accepted.Uid
+                                                                                                          && (!pbe.MusicBusinessRoundNegotiations.Any() || pbe.MusicBusinessRoundNegotiations.All(n => n.IsDeleted)))));
                     }
                 }
             }
