@@ -44,7 +44,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
             this.MusicRoundNegotiationUid = musicBusinessRoundNegotiationDto.Negotiation.Uid;
             this.MusicBusinesNegotiationDto = musicBusinessRoundNegotiationDto;
-            this.UpdateBaseProperties(ProjectBuyerEvaluationDto, userInterfaceLanguage);
+            this.UpdateBaseProperties(MusicBusinesNegotiationDto.ProjectBuyerEvaluationDto, userInterfaceLanguage);
         }
 
         /// <summary>
