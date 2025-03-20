@@ -638,17 +638,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto()
                                         {
                                             AttendeeOrganization = n.MusicBusinessRoundProjectBuyerEvaluation.BuyerAttendeeOrganization,
-                                            Organization = n.MusicBusinessRoundProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization,
-                                            AttendeeCollaboratorDtos = n.MusicBusinessRoundProjectBuyerEvaluation.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted).Select(aoc => new AttendeeCollaboratorDto
-                                            {
-                                                AttendeeCollaborator = aoc.AttendeeCollaborator
-                                            })
+                                            Organization = n.MusicBusinessRoundProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization
                                         },
                                         MusicBusinessRoundProjectDto = new MusicBusinessRoundProjectDto()
                                         {
                                             SellerAttendeeCollaboratorDto = new AttendeeCollaboratorDto()
                                             {
-                                                AttendeeCollaborator = n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator
+                                                AttendeeCollaborator = n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator,
+                                                Collaborator = n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator.Collaborator
                                             }
                                         }
                                     },

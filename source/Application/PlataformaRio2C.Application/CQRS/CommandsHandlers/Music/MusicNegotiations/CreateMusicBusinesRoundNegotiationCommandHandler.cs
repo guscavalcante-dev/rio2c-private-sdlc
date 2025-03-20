@@ -37,7 +37,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IMusicBusinessRoundProjectRepository musicbusinesroundprojectRepo;
         private readonly INegotiationConfigRepository negotiationConfigRepo;
         private readonly INegotiationRoomConfigRepository negotiationRoomConfigRepo;
-        private readonly IMusicBusinessRoundNegotiationRepository musicbusinessRoundnegotiationRepo;
+        private readonly IMusicBusinessRoundNegotiationRepository MusicBusinessRoundNegotiationRepo;
 
         public CreateMusicBusinesRoundNegotiationCommandHandler(
             IMediator eventBus,
@@ -51,7 +51,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             ILogisticAirfareRepository logisticAirfareRepository)
             : base(eventBus, uow)
         {
-            this.musicbusinessRoundnegotiationRepo = musicbusinessroundnegotiationRepository;
+            this.MusicBusinessRoundNegotiationRepo = musicbusinessroundnegotiationRepository;
             this.organizationRepo = organizationRepository;
             this.musicbusinesroundprojectRepo = musicbusinesroundprojectRepo;
             this.negotiationConfigRepo = negotiationConfigRepository;
@@ -64,13 +64,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <returns></returns>
         public async Task<AppValidationResult> Handle(CreateMusicBusinessRoundNegotiation cmd, CancellationToken cancellationToken)
         {
+
             this.Uow.BeginTransaction();
 
             var buyerOrganization = await this.organizationRepo.GetAsync(cmd.BuyerOrganizationUid ?? Guid.Empty);
             var project = await this.musicbusinesroundprojectRepo.GetAsync(cmd.ProjectUid ?? Guid.Empty);
             var negotiationConfig = await this.negotiationConfigRepo.GetAsync(cmd.NegotiationConfigUid ?? Guid.Empty);
             var negotiationRoomConfig = await this.negotiationRoomConfigRepo.GetAsync(cmd.NegotiationRoomConfigUid ?? Guid.Empty);
-            var manualScheduledNegotiationsInThisRoom = await this.musicbusinessRoundnegotiationRepo.FindManualScheduledNegotiationsByRoomIdAsync(negotiationRoomConfig?.Room?.Id ?? 0);
+            var manualScheduledNegotiationsInThisRoom = await this.MusicBusinessRoundNegotiationRepo.FindManualScheduledNegotiationsByRoomIdAsync(negotiationRoomConfig?.Room?.Id ?? 0);
 
             var startDatePreview = negotiationConfig.StartDate.Date.JoinDateAndTime(cmd.StartTime, true).ToUtcTimeZone();
             var endDatePreview = startDatePreview.Add(negotiationConfig.TimeOfEachRound);
@@ -86,7 +87,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             if (hasNoMoreManualTablesAvailable)
             {
                 // Has no more manual tables available, so, try to use slots available at automatic tables
-                automaticScheduledNegotiationsInThisRoom = await this.musicbusinessRoundnegotiationRepo.FindAutomaticScheduledNegotiationsByRoomIdAsync(negotiationRoomConfig?.Room?.Id ?? 0);
+                automaticScheduledNegotiationsInThisRoom = await this.MusicBusinessRoundNegotiationRepo.FindAutomaticScheduledNegotiationsByRoomIdAsync(negotiationRoomConfig?.Room?.Id ?? 0);
                 var automaticNegotiationsGroupedByRoomAndStartDate = automaticScheduledNegotiationsInThisRoom.GroupBy(n => n.StartDate);
                 var hasNoMoreAutomaticTablesAvailable = automaticNegotiationsGroupedByRoomAndStartDate.Any(n => n.Count(w => w.StartDate == startDatePreview) >= negotiationRoomConfig.CountAutomaticTables);
                 if (hasNoMoreAutomaticTablesAvailable)
@@ -102,7 +103,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             // Negotiations checks
-            var scheduledNegotiationsAtThisTime = await this.musicbusinessRoundnegotiationRepo.FindAllScheduledNegotiationsDtosAsync(cmd.EditionId.Value, null, startDatePreview, endDatePreview);
+            var scheduledNegotiationsAtThisTime = await this.MusicBusinessRoundNegotiationRepo.FindAllScheduledNegotiationsDtosAsync(cmd.EditionId.Value, null, startDatePreview, endDatePreview);
 
             var hasPlayerScheduledNegotiationsAtThisTime = scheduledNegotiationsAtThisTime.Count(ndto => ndto.ProjectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.AttendeeOrganization.OrganizationId == buyerOrganization.Id) > 0;
             if (hasPlayerScheduledNegotiationsAtThisTime)
@@ -116,7 +117,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
 
-            var hasProducerScheduledNegotiationsAtThisTime = scheduledNegotiationsAtThisTime.Count(ndto => ndto.ProjectBuyerEvaluationDto.MusicBusinessRoundProjectDto.SellerAttendeeCollaboratorDto.AttendeeOrganizationsDtos.FirstOrDefault().Organization.Id == project.SellerAttendeeCollaborator.AttendeeMusicBusinessRoundNegotiationCollaborators.FirstOrDefault().AttendeeCollaborator.Id) > 0;
+            var hasProducerScheduledNegotiationsAtThisTime = scheduledNegotiationsAtThisTime.Count(ndto => ndto.ProjectBuyerEvaluationDto.MusicBusinessRoundProjectDto.SellerAttendeeCollaboratorDto.Collaborator.Id == project.SellerAttendeeCollaboratorId) > 0;
             if (hasProducerScheduledNegotiationsAtThisTime)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(
@@ -228,24 +229,27 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                                                     .Where(n => n.StartDate == startDatePreview)
                                                                     .ToList();
 
+
             var negotiation = new MusicBusinessRoundNegotiation(
-                cmd.EditionId.Value,
-                buyerOrganization,
-                negotiationConfig,
-                negotiationRoomConfig,
-                negotiationsInThisRoomAndStartDate,
-                cmd.StartTime,
-                cmd.RoundNumber ?? 0,
-                cmd.UserId,
-                cmd.UserInterfaceLanguage,
-                isUsingAutomaticTable);
+            cmd.EditionId.Value,
+            buyerOrganization,
+            project,
+            negotiationConfig,
+            negotiationRoomConfig,
+            negotiationsInThisRoomAndStartDate,
+            cmd.StartTime,
+            cmd.RoundNumber ?? 0,
+            cmd.UserId,
+            cmd.UserInterfaceLanguage,
+            isUsingAutomaticTable);
+
             if (!negotiation.IsValid())
             {
                 this.AppValidationResult.Add(negotiation.ValidationResult);
                 return this.AppValidationResult;
             }
 
-            this.musicbusinessRoundnegotiationRepo.Create(negotiation);
+            this.MusicBusinessRoundNegotiationRepo.Create(negotiation);
             this.Uow.SaveChanges();
 
             return this.AppValidationResult;

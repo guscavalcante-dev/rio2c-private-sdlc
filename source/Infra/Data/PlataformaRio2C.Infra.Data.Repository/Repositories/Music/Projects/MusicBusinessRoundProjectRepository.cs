@@ -153,6 +153,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
             return query;
         }
 
+        /// <summary>Finds the by custom filer.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="buyerOrganizationUid">The buyer organization uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<MusicBusinessRoundProject> FindByCustomFilter(this IQueryable<MusicBusinessRoundProject> query, Guid? buyerOrganizationUid)
+        {
+            query = query.Where(p => p.MusicBusinessRoundProjectBuyerEvaluations
+                                            .Any(pbe => !pbe.IsDeleted
+                                                        && pbe.ProjectEvaluationStatus.Uid == ProjectEvaluationStatus.Accepted.Uid
+                                                        && (!buyerOrganizationUid.HasValue || pbe.BuyerAttendeeOrganization.Organization.Uid == buyerOrganizationUid)
+                                                        && (!pbe.MusicBusinessRoundNegotiations.Any() || pbe.MusicBusinessRoundNegotiations.All(n => n.IsDeleted))));
+            return query;
+        }
+
         /// <summary>
         /// Finds the by target audience.
         /// </summary>
@@ -445,6 +459,45 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
                             .OrderBy(pd => pd.CreateDate)
                             .ToListPagedAsync(page, pageSize);
         }
+
+        #region Dropdown
+
+        /// <summary>Finds all dropdown dto paged.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="customFilter">The custom filter.</param>
+        /// <param name="buyerOrganizationUid">The buyer organization uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<MusicBusinessRoundProjectDto>> FindAllDropdownDtoPaged(
+            int editionId,
+            string keywords,
+            string customFilter,
+            Guid? buyerOrganizationUid,
+            int page,
+            int pageSize)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId)
+                                .FindByKeywords(keywords)
+                                .FindByCustomFilter(buyerOrganizationUid);
+
+            return await query
+                            .Select(p => new MusicBusinessRoundProjectDto
+                            {
+                                Uid = p.Uid,
+                               SellerAttendeeCollaboratorDto =  new AttendeeCollaboratorDto
+                               {
+                                 AttendeeCollaborator = p.SellerAttendeeCollaborator,
+                                 Collaborator = p.SellerAttendeeCollaborator.Collaborator,
+                               }
+                            })
+                            .OrderBy(pd => pd.SellerAttendeeCollaboratorDto.Collaborator.FirstName)
+                            .ToListPagedAsync(page, pageSize);
+        }
+
+        #endregion
 
         /// <summary>
         /// Finds the site details dto by project uid asynchronous.

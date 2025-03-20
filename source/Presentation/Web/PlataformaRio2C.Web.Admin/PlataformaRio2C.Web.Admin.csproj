@@ -1025,7 +1025,6 @@
     <Content Include="Assets\js\music\meetingparameters\music.meetingparameters.totalcount.widget.js" />
     <Content Include="Assets\js\music\meetings\music.meetings.scheduled.delete.js" />
     <Content Include="Assets\js\music\meetings\music.meetings.status.widget.js" />
-    <Content Include="Assets\js\music\meetings\music.meetings.logistics.info.widget.js" />
     <Content Include="Assets\js\music\meetings\music.meetings.scheduled.update.js" />
     <Content Include="Assets\js\music\meetings\music.meetings.scheduled.create.js" />
     <Content Include="Assets\js\music\meetings\music.meetings.editionscheduledcount.gauge.widget.js" />
@@ -8349,6 +8348,7 @@
     <Content Include="Areas\Music\Views\Meetings\Widgets\LogisticsInfoWidget.cshtml" />
     <Content Include="Areas\Music\Views\Meetings\Widgets\LogisticsAirfareList.cshtml" />
     <Content Include="Areas\Music\Views\Meetings\Widgets\StatusWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\Widgets\MeetingsList.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

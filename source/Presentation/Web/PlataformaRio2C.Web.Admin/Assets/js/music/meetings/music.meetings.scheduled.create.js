@@ -79,7 +79,7 @@ var MusicMeetingsCreate = function () {
 
         element.not('.change-event-enabled').on('change', function () {
             toogleProjectSelect2();
-            MusicMeetingsLogisticsInfoWidget.init([this.value, sellerOrganizationUidElement.val()]);
+           //TODO:Desativado temporariamente --MusicMeetingsLogisticsInfoWidget.init([this.value, sellerOrganizationUidElement.val()]);
         });
         element.addClass('change-event-enabled');
     };
@@ -132,7 +132,7 @@ var MusicMeetingsCreate = function () {
         //});
         element.on('select2:select', function (e) {
             toogleDateSelect2();
-            MusicMeetingsLogisticsInfoWidget.init([e.params.data.SellerUid, buyerOrganizationUidElement.val()]);
+            //TODO:To be implemented in the future, the card is in backlog right now.MusicMeetingsLogisticsInfoWidget.init([e.params.data.SellerUid, buyerOrganizationUidElement.val()]);
         });
 
         element.addClass('change-event-enabled');
