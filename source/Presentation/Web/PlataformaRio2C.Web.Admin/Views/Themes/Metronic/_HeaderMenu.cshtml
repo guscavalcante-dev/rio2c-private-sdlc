@@ -208,6 +208,9 @@
                                 <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "Unscheduled", "Meetings", "Music")" aria-haspopup="true">
                                     <a href="@Url.Action("Unscheduled", "Meetings", new { Area = "Music" })" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.UnscheduledNegotiations</span></a>
                                 </li>
+                                <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "SendEmailToPlayers", "Meetings", "Music")" aria-haspopup="true">
+                                    <a href="@Url.Action("SendEmailToPlayers", "Meetings", new { Area = "Music" })" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.SendEmailToPlayers</span></a>
+                                </li>
                                 <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "SendEmailToProducers", "Meetings", "Audiovisual")" aria-haspopup="true">
                                     <a href="@Url.Action("SendEmailToProducers", "Meetings", new { Area = "Music" })" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.SendEmailToProducers</span></a>
                                 </li>

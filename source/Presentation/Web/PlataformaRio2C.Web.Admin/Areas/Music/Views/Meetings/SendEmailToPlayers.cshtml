@@ -1,0 +1,61 @@
+﻿@model SendEmailToPlayersSearchViewModel
+@{
+    ViewBag.Title = Labels.SendEmailToPlayers;
+}
+<!--begin:: Quick Stats-->
+<div class="row">
+    <div class="col-sm-6">
+        <!--begin:: Total Count Widget-->
+        <div id="MusicMeetingsSendEmailToPlayersTotalCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <!--end:: Total Count Widget-->
+    </div>
+    <div class="col-sm-6">
+        <!--begin:: Edition Count-->
+        <div id="MusicMeetingsSendEmailToPlayersEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <!--end:: Edition Count-->
+    </div>
+</div>
+<!--end:: Quick Stats-->
+@Html.Partial("Widgets/SendEmailToPlayersDataTableWidget", Model)
+@section Styles {
+    @Styles.Render("~/bundles/css/dataTables.css")
+    @Styles.Render("~/bundles/css/select2.css")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/dataTables.js")
+    @Scripts.Render("~/bundles/js/chart.js")
+    @Scripts.Render("~/bundles/js/select2.js")
+    @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/music.meetings.sendemailtoplayers.list.js")
+    @Scripts.Render("~/bundles/js/music.meetings.sendemailtoplayers.editioncount.js")
+<script>
+        var collaboratorTypeId = '@PlataformaRio2C.Domain.Entities.CollaboratorType.PlayerExecutiveMusic.Id';
+
+        // Page translations ----------------------------------------------------------------------
+        var translations = {
+            sendEmailToPlayers: '@(Labels.SendEmailToPlayers)',
+            confirmToSendInvitationEmails: '@(Messages.ConfirmToSendInvitationEmails)',
+            virtual: '@(Labels.Virtual)',
+            presential: '@(Labels.Presential)',
+            date: '@(Labels.Date)',
+            room: '@(Labels.Room)',
+            round: '@(Labels.Round)',
+            table: '@(Labels.Table)',
+            player: '@(Labels.Player)',
+            project: '@(Labels.Project)',
+            producer: '@(Labels.Producer)',
+            confirmSendEmailAll: '@Labels.confirmSendEmailAll',
+            confirmSendEmailSelected: '@Labels.confirmSendEmailSelected',
+        }
+
+        // Pagination -----------------------------------------------------------------------------
+        var initialPage = @(Model.Page?.ToString() ?? "null");
+        var initialPageSize = @(Model.PageSize?.ToString() ?? "null");
+
+        jQuery(document).ready(function() {
+            MusicMeetingsSendEmailToPlayersTotalCountWidget.init();
+            MusicMeetingsSendEmailToPlayersEditionCountWidget.init();
+            MusicMeetingsSendEmailToPlayersDataTableWidget.init();
+        });
+</script>
+}
