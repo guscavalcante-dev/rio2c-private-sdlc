@@ -29,7 +29,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? BuyerOrganizationUid { get; set; }
 
-        [Display(Name = nameof(Labels.Project), ResourceType = typeof(Labels))]
+        [Display(Name = nameof(Labels.Producer), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? ProjectUid { get; set; }
 

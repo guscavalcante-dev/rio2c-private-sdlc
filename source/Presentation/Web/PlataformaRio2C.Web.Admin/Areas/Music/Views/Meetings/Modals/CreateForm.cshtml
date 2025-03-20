@@ -15,7 +15,7 @@
         @Html.HiddenFor(m => m.InitialProjectUid)
         @Html.HiddenFor(m => m.InitialProjectName)
         @Html.LabelFor(m => m.ProjectUid, new { @class = "control-label" })
-        @Html.DropDownListFor(m => m.ProjectUid, Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.Project.ToLowerInvariant())}...", new { @class = "form-control disabled", disabled = "disabled" })
+        @Html.DropDownListFor(m => m.ProjectUid, Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.Producer.ToLowerInvariant())}...", new { @class = "form-control disabled", disabled = "disabled" })
         @Html.ValidationMessageFor(m => m.ProjectUid, "", new { @class = "text-danger" })
     </div>
 </div>

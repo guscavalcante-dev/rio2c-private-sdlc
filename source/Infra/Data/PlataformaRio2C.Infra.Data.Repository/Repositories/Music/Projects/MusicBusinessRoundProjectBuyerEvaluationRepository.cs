@@ -250,6 +250,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
 
+        /// <summary>Counts the negotiation not scheduled asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <returns></returns>
+        public async Task<int> CountNegotiationNotScheduledAsync(int editionId, bool showAllEditions = false)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId, showAllEditions)
+                                .FindByProjectEvaluationStatusUid(ProjectEvaluationStatus.Accepted.Uid)
+                                .IsProjectFinished()
+                                .IsNegotiationNotScheduled();
+            return await query.CountAsync();
+        }
+
 
         public async Task<List<MusicBusinessRoundProjectBuyerEvaluation>> FindAllForGenerateNegotiationsAsync(int editionId)
         {
@@ -293,6 +307,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query.FirstOrDefaultAsync();
         }
 
+
+
         /// <summary>Counts the negotiation scheduled asynchronous.</summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
@@ -302,7 +318,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId, showAllEditions)
                                 .FindByProjectEvaluationStatusUid(ProjectEvaluationStatus.Accepted.Uid)
-                                .IsProjectFinished();
+                                .IsProjectFinished()
+                                .IsNegotiationScheduled();
 
             return await query.CountAsync();
         }
