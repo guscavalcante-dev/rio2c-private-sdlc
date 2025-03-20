@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Ribeiro 
 // Last Modified On : 03-18-2025
 // ***********************************************************************
-// <copyright file="SendProducerMusicBusinessRoundEmailAsync.cs" company="Softo">
+// <copyright file="SendMusicBusinessRoundProducerEmailAsync.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -18,7 +18,7 @@ using PlataformaRio2C.Domain.Entities;
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>
-    /// SendProducerNegotiationsEmailAsync
+    /// SendMusicBusinessRoundProducerEmailAsync
     /// </summary>
     public class SendMusicBusinessRoundProducerEmailAsync : EmailBaseCommand
     {

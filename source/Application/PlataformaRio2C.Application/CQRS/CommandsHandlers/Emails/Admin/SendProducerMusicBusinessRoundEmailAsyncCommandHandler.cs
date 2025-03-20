@@ -24,7 +24,7 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
     /// <summary>
-    /// SendProducerMusicBusinessRoundEmailAsyncCommandHandler
+    /// SendMusicBusinessRoundProducerEmailAsyncCommandHandler
     /// </summary>
     public class SendMusicBusinessRoundProducerEmailAsyncCommandHandler : MailerBaseCommandHandler, IRequestHandler<SendMusicBusinessRoundProducerEmailAsync, AppValidationResult>
     {

@@ -492,7 +492,7 @@
     <Compile Include="CQRS\Commands\Emails\Admin\SendCreatorCommissionWelcomeEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendInnovationCommissionWelcomeEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendPlayerNegotiationsEmailAsync.cs" />
-    <Compile Include="CQRS\Commands\Emails\Admin\SendProducerMusicBusinessRoundEmailAsync.cs" />
+    <Compile Include="CQRS\Commands\Emails\Admin\SendMusicBusinessRoundProducerEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendProducerNegotiationsEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Site\SendSpeakersReportEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Innovation\PlayersExecutives\BaseCommands\InnovationPlayerExecutiveCollaboratorBaseCommand.cs" />
