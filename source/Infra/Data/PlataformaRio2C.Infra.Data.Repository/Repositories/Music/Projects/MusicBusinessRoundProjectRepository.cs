@@ -157,7 +157,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
         /// <param name="query">The query.</param>
         /// <param name="buyerOrganizationUid">The buyer organization uid.</param>
         /// <returns></returns>
-        internal static IQueryable<MusicBusinessRoundProject> FindByCustomFiler(this IQueryable<MusicBusinessRoundProject> query, Guid? buyerOrganizationUid)
+        internal static IQueryable<MusicBusinessRoundProject> FindByCustomFilter(this IQueryable<MusicBusinessRoundProject> query, Guid? buyerOrganizationUid)
         {
             query = query.Where(p => p.MusicBusinessRoundProjectBuyerEvaluations
                                             .Any(pbe => !pbe.IsDeleted
@@ -481,7 +481,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
                                 .FindByKeywords(keywords)
-                                .FindByCustomFiler(buyerOrganizationUid);
+                                .FindByCustomFilter(buyerOrganizationUid);
 
             return await query
                             .Select(p => new MusicBusinessRoundProjectDto

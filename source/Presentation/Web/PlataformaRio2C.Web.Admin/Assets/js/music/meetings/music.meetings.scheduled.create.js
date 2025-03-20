@@ -132,7 +132,7 @@ var MusicMeetingsCreate = function () {
         //});
         element.on('select2:select', function (e) {
             toogleDateSelect2();
-            //TODO: temporariamente desativado, aguaradndo cliente. MusicMeetingsLogisticsInfoWidget.init([e.params.data.SellerUid, buyerOrganizationUidElement.val()]);
+            //TODO:To be implemented in the future, the card is in backlog right now.MusicMeetingsLogisticsInfoWidget.init([e.params.data.SellerUid, buyerOrganizationUidElement.val()]);
         });
 
         element.addClass('change-event-enabled');
