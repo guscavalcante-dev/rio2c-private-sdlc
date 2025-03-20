@@ -38,7 +38,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM));
             }
 
-            this.UpdateBaseProperties(ProjectBuyerEvaluationDto, userInterfaceLanguage);
+            this.UpdateBaseProperties(musicBusinessRoundProjectDto, userInterfaceLanguage);
         }
 
         /// <summary>

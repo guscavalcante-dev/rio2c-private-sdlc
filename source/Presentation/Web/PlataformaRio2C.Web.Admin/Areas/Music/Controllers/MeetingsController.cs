@@ -384,6 +384,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 }
 
                 cmd = new UpdateMusicBusinessRoundNegotiation(MusicBusinessRoundNegotiationDto, this.UserInterfaceLanguage);
+                cmd.InitialProjectUid = cmd.ProjectBuyerEvaluationDto.MusicBusinessRoundProjectDto.Uid;
+                cmd.InitialProjectName = cmd.ProjectBuyerEvaluationDto.MusicBusinessRoundProjectDto.SellerAttendeeCollaboratorDto.AttendeeCollaborator.Collaborator.GetStageNameOrBadgeOrFullName();
             }
             catch (DomainException ex)
             {
@@ -609,6 +611,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 }
 
                 cmd = new ScheduleManualMusicBusinessRoundNegotiation(projectBuyerEvaluationDto, this.UserInterfaceLanguage);
+                cmd.InitialProjectUid = cmd.ProjectBuyerEvaluationDto.MusicBusinessRoundProjectDto.Uid;
+                cmd.InitialProjectName = cmd.ProjectBuyerEvaluationDto.MusicBusinessRoundProjectDto.SellerAttendeeCollaboratorDto.AttendeeCollaborator.Collaborator.GetStageNameOrBadgeOrFullName();
+
             }
             catch (DomainException ex)
             {
@@ -629,7 +634,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> ManualSchedule(ScheduleManualNegotiation cmd)
+        public async Task<ActionResult> ManualSchedule(ScheduleManualMusicBusinessRoundNegotiation cmd)
         {
             var result = new AppValidationResult();
 

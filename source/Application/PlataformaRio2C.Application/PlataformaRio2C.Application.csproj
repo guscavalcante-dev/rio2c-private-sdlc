@@ -306,7 +306,8 @@
     <Compile Include="CQRS\CommandsHandlers\Music\MusicNegotiations\DeleteMusicBusinessRoundNegotiationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\MusicNegotiations\MusicBusinesRoundNegotiationBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\MusicNegotiations\MusicBusinessRoundNegotiationBaseCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Music\MusicNegotiations\ScheduleManualMusicNegotiationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Music\MusicNegotiations\ScheduleManualMusicBusinessRoundNegotiationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Music\MusicNegotiations\UpdateMusicBusinessRoundNegotiationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\Pitching\DistributeMembersMusicPitchingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\PlayersExecutives\CreateMusicPlayerExecutiveCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\PlayersExecutives\UpdateMusicPlayerExecutiveCollaboratorCommandHandler.cs" />
