@@ -158,13 +158,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
         /// <summary>Finds the by uids.</summary>
         /// <param name="query">The query.</param>
-        /// <param name="attendeeOrganizationsUids">The attendee organizations uids.</param>
+        /// <param name="attendeeCollaboratorsUids">The attendee organizations uids.</param>
         /// <returns></returns>
-        internal static IQueryable<AttendeeCollaborator> FindByUids(this IQueryable<AttendeeCollaborator> query, List<Guid> attendeeOrganizationsUids)
+        internal static IQueryable<AttendeeCollaborator> FindByUids(this IQueryable<AttendeeCollaborator> query, List<Guid> attendeeCollaboratorsUids)
         {
-            if (attendeeOrganizationsUids?.Any() == true)
+            if (attendeeCollaboratorsUids?.Any() == true)
             {
-                query = query.Where(ao => attendeeOrganizationsUids.Contains(ao.Uid));
+                query = query.Where(ao => attendeeCollaboratorsUids.Contains(ao.Uid));
             }
 
             return query;
@@ -1677,7 +1677,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// Finds all base dto by active seller negotiations.
         /// </summary>
         /// <param name="keywords">The keywords.</param>
-        /// <param name="selectedAttendeeOrganizationsUids">The selected attendee organizations uids.</param>
+        /// <param name="selectedAttendeeCollaboratorsUids">The selected attendee organizations uids.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="languageId">The language identifier.</param>
         /// <returns></returns>
@@ -1700,14 +1700,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             {
                                 Id = ao.Id,
                                 Uid = ao.Uid,
-                                //CollaboratorDto = new CollaboratorDto
-                                //{
-                                //    Id = ao.Collaborator.Id,
-                                //    Uid = ao.Collaborator.Uid,
-                                //    FirstName = ao.Collaborator.FirstName,
-                                //    LastNames = ao.Collaborator.LastNames,
-                                //    ImageUploadDate = ao.Collaborator.ImageUploadDate
-                                //},
                                 CreateDate = ao.CreateDate,
                                 UpdateDate = ao.UpdateDate,
                                 AttendeeCollaboratorBaseDtos = ao.AttendeeOrganizationCollaborators

@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 06-25-2021
 // ***********************************************************************
-// <copyright file="SendProducerNegotiationsEmailAsyncCommandHandler.cs" company="Softo">
+// <copyright file="SendProducerMusicBusinessRoundEmailAsyncCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -24,9 +24,9 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
     /// <summary>
-    /// SendProducerNegotiationsEmailAsyncCommandHandler
+    /// SendProducerMusicBusinessRoundEmailAsyncCommandHandler
     /// </summary>
-    public class SendProducerMusicBusinessRoundEmailAsyncCommandHandler : MailerBaseCommandHandler, IRequestHandler<SendProducerMusicBusinessRoundEmailAsync, AppValidationResult>
+    public class SendMusicBusinessRoundProducerEmailAsyncCommandHandler : MailerBaseCommandHandler, IRequestHandler<SendMusicBusinessRoundProducerEmailAsync, AppValidationResult>
     {
         private readonly ICollaboratorRepository collaboratorRepo;
 
@@ -38,7 +38,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="mailerService">The mailer service.</param>
         /// <param name="sentEmailRepository">The sent email repository.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
-        public SendProducerMusicBusinessRoundEmailAsyncCommandHandler(
+        public SendMusicBusinessRoundProducerEmailAsyncCommandHandler(
             IMediator commandBus,
             IUnitOfWork uow,
             IMailerService mailerService,
@@ -55,7 +55,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(SendProducerMusicBusinessRoundEmailAsync cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(SendMusicBusinessRoundProducerEmailAsync cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 

@@ -824,7 +824,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// Sends the producers emails.
         /// </summary>
         /// <param name="keywords">The keywords.</param>
-        /// <param name="selectedAttendeeOrganizationsUids">The selected attendee organizations uids.</param>
+        /// <param name="selectedAttendeeCollaboratorsUids">The selected attendee organizations uids.</param>
         /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> SendProducersEmails(string keywords, string selectedAttendeeCollaboratorsUids)
@@ -853,7 +853,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
                         try
                         {
-                            result = await this.CommandBus.Send(new SendProducerMusicBusinessRoundEmailAsync(
+                            result = await this.CommandBus.Send(new SendMusicBusinessRoundProducerEmailAsync(
                                 attendeeOrganizationBaseDto,
                                 attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Id,
                                 attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Uid,

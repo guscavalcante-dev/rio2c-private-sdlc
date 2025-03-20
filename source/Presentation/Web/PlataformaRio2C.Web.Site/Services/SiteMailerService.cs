@@ -362,7 +362,7 @@ namespace PlataformaRio2C.Web.Site.ServicesSendProducersNegotiationEmail
         /// <param name="sentEmailUid">The sent email uid.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public MvcMailMessage SendProducersMusicBusinessRoundEmail(SendProducerMusicBusinessRoundEmailAsync cmd, Guid sentEmailUid)
+        public MvcMailMessage SendProducersMusicBusinessRoundEmail(SendMusicBusinessRoundProducerEmailAsync cmd, Guid sentEmailUid)
         {
             throw new NotImplementedException();
         }

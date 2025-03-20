@@ -3,10 +3,10 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-25-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-26-2021
+// Last Modified By : Rafael Ribeiro 
+// Last Modified On : 03-18-2025
 // ***********************************************************************
-// <copyright file="SendProducerNegotiationsEmailAsync.cs" company="Softo">
+// <copyright file="SendProducerMusicBusinessRoundEmailAsync.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -20,9 +20,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>
     /// SendProducerNegotiationsEmailAsync
     /// </summary>
-    public class SendProducerMusicBusinessRoundEmailAsync : EmailBaseCommand
+    public class SendMusicBusinessRoundProducerEmailAsync : EmailBaseCommand
     {
-        public MusicBusinessRoundNegotiationAttendeeCollaboratorBaseDto MusicBusinessRoundAttendeeOrganizationBaseDto { get; private set; }
+        public MusicBusinessRoundNegotiationAttendeeCollaboratorBaseDto musicBusinessRoundAttendeeOrganizationBaseDto { get; private set; }
         public int UserId { get; private set; }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="edition">The edition.</param>
         /// <param name="userId">The user identifier.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
-        public SendProducerMusicBusinessRoundEmailAsync(
+        public SendMusicBusinessRoundProducerEmailAsync(
             MusicBusinessRoundNegotiationAttendeeCollaboratorBaseDto musicbusinessroundAttendeeOrganizationBaseDto,
             int recipientUserId, 
             Guid recipientUserUid, 
@@ -49,12 +49,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string userInterfaceLanguage)
             : base(recipientUserId, recipientUserUid, recipientFirstName, recipientFullName, recipientEmail, edition, userInterfaceLanguage)
         {
-            this.MusicBusinessRoundAttendeeOrganizationBaseDto = musicbusinessroundAttendeeOrganizationBaseDto;
+            this.musicBusinessRoundAttendeeOrganizationBaseDto = musicbusinessroundAttendeeOrganizationBaseDto;
             this.UserId = userId;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="SendProducerMusicBusinessRoundEmailAsync"/> class.</summary>
-        public SendProducerMusicBusinessRoundEmailAsync()
+        /// <summary>Initializes a new instance of the <see cref="SendMusicBusinessRoundProducerEmailAsync"/> class.</summary>
+        public SendMusicBusinessRoundProducerEmailAsync()
         {
         }
     }
