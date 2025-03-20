@@ -21,7 +21,7 @@ using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.Services;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
-namespace PlataformaRio2C.Web.Site.Services
+namespace PlataformaRio2C.Web.Site.ServicesSendProducersNegotiationEmail
 {
     /// <summary>SiteMailerService</summary>
     public class SiteMailerService : MailerBase, IMailerService
@@ -306,6 +306,7 @@ namespace PlataformaRio2C.Web.Site.Services
             throw new NotImplementedException();
         }
 
+
         /// <summary>
         /// Sends the innovation commission welcome email.
         /// </summary>
@@ -350,6 +351,18 @@ namespace PlataformaRio2C.Web.Site.Services
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
         public MvcMailMessage SendExecutiveAgendaEmail(SendExecutiveAgendaEmailAsync cmd, Guid sentEmailUid)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Sends the executive agenda email.
+        /// </summary>
+        /// <param name="cmd">The command.</param>
+        /// <param name="sentEmailUid">The sent email uid.</param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public MvcMailMessage SendProducersMusicBusinessRoundEmail(SendMusicBusinessRoundProducerEmailAsync cmd, Guid sentEmailUid)
         {
             throw new NotImplementedException();
         }

@@ -13,6 +13,8 @@
 // ***********************************************************************
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
+using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.Wordprocessing;
 using MediatR;
 using Microsoft.Ajax.Utilities;
 using PlataformaRio2C.Application;
@@ -817,6 +819,89 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 }
             }, JsonRequestBehavior.AllowGet);
         }
+
+        /// <summary>
+        /// Sends the producers emails.
+        /// </summary>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="selectedAttendeeCollaboratorsUids">The selected attendee organizations uids.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> SendProducersEmails(string keywords, string selectedAttendeeCollaboratorsUids)
+        {
+            AppValidationResult result = null;
+
+            try
+            {
+                var attendeeCollaboratorBaseDtos = await this.attendeeCollaboratorRepo.FindAllBaseDtoByActiveSellerNegotiations(
+                    keywords,
+                    selectedAttendeeCollaboratorsUids?.ToListGuid(','),
+                    this.EditionDto.Id,
+                    this.AdminAccessControlDto.Language.Id);
+                if (attendeeCollaboratorBaseDtos?.Any() != true)
+                {
+                    throw new DomainException(Messages.SelectAtLeastOneOption);
+                }
+
+                List<string> errors = new List<string>();
+                foreach (var attendeeOrganizationBaseDto in attendeeCollaboratorBaseDtos)
+                {
+                    foreach (var attendeeCollaboratorBaseDto in attendeeOrganizationBaseDto.AttendeeCollaboratorBaseDtos)
+                    {
+                        // If the collaborator does not have an user interface language, use the user interface language of the current user
+                        var collaboratorLanguageCode = attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.UserInterfaceLanguageCode ?? this.UserInterfaceLanguage;
+
+                        try
+                        {
+                            result = await this.CommandBus.Send(new SendMusicBusinessRoundProducerEmailAsync(
+                                attendeeOrganizationBaseDto,
+                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Id,
+                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Uid,
+                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.FirstName,
+                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.FullName,
+                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.Email,
+                                this.EditionDto.Edition,
+                                this.AdminAccessControlDto.User.Id,
+                                collaboratorLanguageCode));
+                            if (!result.IsValid)
+                            {
+                                throw new DomainException(Messages.CorrectFormValues);
+                            }
+                        }
+                        catch (DomainException ex)
+                        {
+                            //Cannot stop sending email when exception occurs.
+                            errors.AddRange(result.Errors.Select(e => e.Message));
+                        }
+                        catch (Exception ex)
+                        {
+                            Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                        }
+                    }
+
+                    if (errors.Any())
+                    {
+                        throw new DomainException(string.Format(Messages.OneOrMoreEmailsNotSend, Labels.WelcomeEmail));
+                    }
+                }
+            }
+            catch (DomainException ex)
+            {
+                return Json(new
+                {
+                    status = "error",
+                    message = result?.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Emails, Labels.SentMP.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+        }
+
 
         #endregion
 
