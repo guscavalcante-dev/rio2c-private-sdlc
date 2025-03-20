@@ -52,7 +52,6 @@ var InnovationProjectsSustainableDevelopmentWidget = function () {
 
     return {
         init: function () {
-            debugger;
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
         },

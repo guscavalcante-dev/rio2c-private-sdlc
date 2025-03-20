@@ -1,12 +1,12 @@
-﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Application
-// Author           : Rafael Ribeiro 
-// Created          : 05-03-2025
-//
-// Last Modified By : Rafael Ribeiro 
-// Last Modified On : 05-03-2025
 // ***********************************************************************
-// <copyright file="ScheduleManualMusicNegotiationCommandHandler.cs" company="Softo">
+// Assembly         : PlataformaRio2C.Application
+// Author           : Renan Valentim
+// Created          : 05-15-2021
+//
+// Last Modified By : Renan Valentim
+// Last Modified On : 05-15-2024
+// ***********************************************************************
+// <copyright file="UpdateMusicBusinessRoundNegotiationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -21,8 +21,8 @@ using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Domain.Interfaces.Repositories;
 using PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects;
+using PlataformaRio2C.Domain.Interfaces.Repositories;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
@@ -30,8 +30,8 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>ScheduleManualMusicNegotiationCommandHandler</summary>
-    public class ScheduleManualMusicNegotiationCommandHandler : BaseCommandHandler, IRequestHandler<ScheduleManualMusicBusinessRoundNegotiation, AppValidationResult>
+    /// <summary>UpdateMusicBusinessRoundNegotiationCommandHandler</summary>
+    public class UpdateMusicBusinessRoundNegotiationCommandHandler : MusicBusinesRoundNegotiationBaseCommandHandler, IRequestHandler<UpdateMusicBusinessRoundNegotiation, AppValidationResult>
     {
         private readonly IOrganizationRepository organizationRepo;
         private readonly IMusicBusinessRoundProjectRepository musicbusinesroundprojectRepo;
@@ -41,7 +41,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IConferenceRepository conferenceRepo;
         private readonly ILogisticAirfareRepository logisticAirfareRepo;
 
-        public ScheduleManualMusicNegotiationCommandHandler(
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateMusicBusinessRoundNegotiationCommandHandler"/> class.
+        /// </summary>
+        /// <param name="eventBus">The event bus.</param>
+        /// <param name="uow">The uow.</param>
+        /// <param name="organizationRepository">The organization repository.</param>
+        /// <param name="negotiationConfigRepository">The negotiation configuration repository.</param>
+        /// <param name="negotiationRoomConfigRepository">The negotiation room configuration repository.</param>
+        public UpdateMusicBusinessRoundNegotiationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IOrganizationRepository organizationRepository,
@@ -51,7 +59,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             INegotiationRoomConfigRepository negotiationRoomConfigRepository,
             IConferenceRepository conferenceRepository,
             ILogisticAirfareRepository logisticsAirfareRepository)
-            : base(eventBus, uow)
+            : base(eventBus, uow, musicbusinessroundnegotiationRepository)
         {
             this.organizationRepo = organizationRepository;
             this.musicbusinesroundprojectRepo = musicbusinesroundprojectRepo;
@@ -68,7 +76,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(ScheduleManualMusicBusinessRoundNegotiation cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(UpdateMusicBusinessRoundNegotiation cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
@@ -89,8 +97,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             // Available tables check
             var manualNegotiationsGroupedByRoomAndStartDate = manualScheduledNegotiationsInThisRoom.GroupBy(n => n.StartDate);
             var hasNoMoreManualTablesAvailable = manualNegotiationsGroupedByRoomAndStartDate.Any(n => n.Count(w => w.StartDate == startDatePreview) >= negotiationRoomConfig.CountManualTables);
-
-            if (negotiationRoomConfig.CountManualTables == 0 || hasNoMoreManualTablesAvailable)
+            if (hasNoMoreManualTablesAvailable)
             {
                 // Has no more manual tables available, so, try to use slots available at automatic tables
                 automaticScheduledNegotiationsInThisRoom = await this.musicbusinessRoundnegotiationRepo.FindAutomaticScheduledNegotiationsByRoomIdAsync(negotiationRoomConfig?.Room?.Id ?? 0);
@@ -122,7 +129,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         new string[] { "ToastrError" }));
             }
 
-            var hasProducerScheduledNegotiationsAtThisTime = scheduledNegotiationsAtThisTime.Count(ndto => ndto.ProjectBuyerEvaluationDto.MusicBusinessRoundProjectDto.SellerAttendeeCollaboratorDto.AttendeeOrganizationsDtos.FirstOrDefault().Organization.Id == project.SellerAttendeeCollaborator.AttendeeMusicBusinessRoundNegotiationCollaborators.FirstOrDefault().AttendeeCollaborator.Id) > 0;
+            var hasProducerScheduledNegotiationsAtThisTime = scheduledNegotiationsAtThisTime.Count(ndto => ndto.ProjectBuyerEvaluationDto.MusicBusinessRoundProjectDto.SellerAttendeeCollaboratorDto.AttendeeCollaborator.CollaboratorId == project.SellerAttendeeCollaborator.CollaboratorId) > 0;
             if (hasProducerScheduledNegotiationsAtThisTime)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(
@@ -133,7 +140,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         new string[] { "ToastrError" }));
             }
 
-            #region [DISABLED] This Conferences and Airfare checks are disabled but its working perfectly! (Dont delete, can be used in future!)
+            #region [DISABLED] This Conferences and Airfares checks are disabled but its working perfectly! (Dont delete, can be used in future!)
 
             //// Conferences checks
             //var scheduledConferencesAtThisTime = await this.conferenceRepo.FindAllScheduleDtosAsync(cmd.EditionId.Value, 0, startDatePreview, endDatePreview, true, true);
@@ -195,17 +202,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
+
             // Concat Manual and Automatic negotiations to use inside negotiation.Update();
             var negotiationsInThisRoomAndStartDate = manualScheduledNegotiationsInThisRoom
-                .Cast<MusicBusinessRoundNegotiation>() // Cast to Negotiation
-                .Concat(automaticScheduledNegotiationsInThisRoom.Cast<MusicBusinessRoundNegotiation>())
-                .Where(n => n.StartDate == startDatePreview)
-                .ToList();
+                                                        .Concat(automaticScheduledNegotiationsInThisRoom)
+                                                        .Where(n => n.StartDate == startDatePreview)
+                                                        .ToList();
 
-            var negotiation = new MusicBusinessRoundNegotiation(
-                cmd.EditionId.Value,
-                buyerOrganization,
-                project,
+
+            var negotiation = await this.GetNegotiationByUid(cmd.MusicRoundNegotiationUid);
+            negotiation.Update(
                 negotiationConfig,
                 negotiationRoomConfig,
                 negotiationsInThisRoomAndStartDate,
@@ -214,13 +220,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.UserId,
                 cmd.UserInterfaceLanguage,
                 isUsingAutomaticTable);
+
             if (!negotiation.IsValid())
             {
                 this.AppValidationResult.Add(negotiation.ValidationResult);
                 return this.AppValidationResult;
             }
 
-            this.musicbusinessRoundnegotiationRepo.Create(negotiation);
+            this.musicbusinessRoundnegotiationRepo.Update(negotiation);
             this.Uow.SaveChanges();
 
             return this.AppValidationResult;

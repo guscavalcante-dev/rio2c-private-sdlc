@@ -26,11 +26,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>MusicBusinesRoundNegotiationBaseCommandHandler</summary>
     public class MusicBusinesRoundNegotiationBaseCommandHandler : BaseCommandHandler
     {
-        protected readonly IMusicBusinessRoundNegotiationRepository _musicBusinessRoundNegotiationRepository;
+        protected readonly IMusicBusinessRoundNegotiationRepository musicBusinessRoundNegotiationRepo;
 
-        public MusicBusinesRoundNegotiationBaseCommandHandler(IMediator commandBus, IUnitOfWork uow) : base(commandBus, uow)
-        {
-        }
 
         /// <summary>Initializes a new instance of the <see cref="MusicBusinesRoundNegotiationBaseCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
@@ -38,7 +35,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         public MusicBusinesRoundNegotiationBaseCommandHandler(IMediator eventBus, IUnitOfWork uow, IMusicBusinessRoundNegotiationRepository negotiationRepository)
             : base(eventBus, uow)
         {
-            this._musicBusinessRoundNegotiationRepository = negotiationRepository;
+            this.musicBusinessRoundNegotiationRepo = negotiationRepository;
         }
 
         /// <summary>Gets the negotiation by uid.</summary>
@@ -46,7 +43,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <returns></returns>
         public async Task<MusicBusinessRoundNegotiation> GetNegotiationByUid(Guid negotiationUid)
         {
-            var negotiation = await this._musicBusinessRoundNegotiationRepository.GetAsync(negotiationUid) as MusicBusinessRoundNegotiation;
+            var negotiation = await this.musicBusinessRoundNegotiationRepo.GetAsync(negotiationUid);
             if (negotiation == null || negotiation.IsDeleted)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.OneToOneMeetings, Labels.FoundM), new string[] { "ToastrError" }));

@@ -297,6 +297,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                    },
                                    MusicBusinessRoundProjectDto = new MusicBusinessRoundProjectDto
                                    {
+                                       Uid = pbe.MusicBusinessRoundProject.Uid,
                                        SellerAttendeeCollaboratorDto = new AttendeeCollaboratorDto
                                        {
                                            AttendeeCollaborator = pbe.MusicBusinessRoundProject.SellerAttendeeCollaborator,
