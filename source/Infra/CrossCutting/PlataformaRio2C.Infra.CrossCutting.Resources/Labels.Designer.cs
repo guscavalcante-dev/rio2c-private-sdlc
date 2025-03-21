@@ -6374,7 +6374,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recusado por.
+        ///   Looks up a localized string similar to Reprovado por.
         /// </summary>
         public static string RefusedBy {
             get {
