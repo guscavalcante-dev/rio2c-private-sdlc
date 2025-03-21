@@ -416,7 +416,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             {
                                 AttendeeCollaborator = ac,
                                 Collaborator = ac.Collaborator,
-                                HasLogistic = ac.Logistics.Any(l => !l.IsDeleted)
+                                HasLogistic = ac.Logistics.Any(l => !l.IsDeleted),
                             })
                             .FirstOrDefaultAsync();
         }

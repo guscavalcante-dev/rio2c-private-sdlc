@@ -140,7 +140,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     speaker.MiniBioBaseDtos,
                     speaker.EditionAttendeeCollaboratorBaseDto
                 );
-                collaborator.FillRequiredFieldsToPublishToApi();
+                collaborator.FillRequiredFieldsToPublishToApi(this.EditionDto.Id);
                 speaker.RequiredFieldsToPublish = collaborator.RequiredFieldsToPublish;
                 speaker.JobTitleBaseDtos = Enumerable.Empty<CollaboratorJobTitleBaseDto>();
                 speaker.MiniBioBaseDtos = Enumerable.Empty<CollaboratorMiniBioBaseDto>();
@@ -471,7 +471,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Speaker, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            apiConfigurationWidgetDto.Collaborator.FillRequiredFieldsToPublishToApi();
+            apiConfigurationWidgetDto.Collaborator.FillRequiredFieldsToPublishToApi(this.EditionDto.Id);
 
             return Json(new
             {
@@ -508,7 +508,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     await this.attendeeCollaboratorRepo.FindAllApiConfigurationWidgetDtoByHighlight(this.EditionDto.Id, Constants.CollaboratorType.Speaker),
                     this.EditionDto.SpeakersApiHighlightPositionsCount);
 
-                if (!apiConfigurationWidgetDto.Collaborator.IsAbleToPublishToApi)
+                if (!apiConfigurationWidgetDto.Collaborator.IsAbleToPublishToApi(this.EditionDto.Id))
                 {
                     throw new DomainException(Messages.PendingFieldsToPublish);
                 }
