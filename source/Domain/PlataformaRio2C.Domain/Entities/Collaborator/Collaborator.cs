@@ -93,21 +93,19 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<CollaboratorEditionParticipation> EditionParticipantions { get; private set; }
 
         public Dictionary<string, object> RequiredFieldsToPublish;
-        public bool IsAbleToPublishToApi
+
+        public bool IsAbleToPublishToApi(int editionId)
         {
-            get
+            this.FillRequiredFieldsToPublishToApi(editionId);
+            foreach (var requiredField in this.RequiredFieldsToPublish)
             {
-                this.FillRequiredFieldsToPublishToApi();
-                foreach (var requiredField in this.RequiredFieldsToPublish)
+                dynamic val = requiredField.Value;
+                if (val.IsValid == false)
                 {
-                    dynamic val = requiredField.Value;
-                    if (val.IsValid == false)
-                    {
-                        return false;
-                    }
+                    return false;
                 }
-                return true;
             }
+            return true;
         }
 
         #region Ticket Collaborator
@@ -4002,7 +4000,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// checks speaker is able for publication in the API
         /// </summary>
         /// <returns></returns>
-        public void FillRequiredFieldsToPublishToApi()
+        public void FillRequiredFieldsToPublishToApi(int editionId)
         {
             this.RequiredFieldsToPublish = new Dictionary<string, object> {
                 { "Image", new { IsValid = this.ImageUploadDate != null, Message = Labels.Image } },
@@ -4041,7 +4039,7 @@ namespace PlataformaRio2C.Domain.Entities
                 "SpeakerTermsAcceptanceDate",
                 new
                 {
-                    IsValid = this.AttendeeCollaborators?.Where(ct => ct.SpeakerTermsAcceptanceDate != null)?.Any(),
+                    IsValid = this.AttendeeCollaborators?.Where(ct => ct.SpeakerTermsAcceptanceDate != null && ct.EditionId == editionId)?.Any(),
                     Message = Messages.ImageAuthorizationForm
                 }
             );
