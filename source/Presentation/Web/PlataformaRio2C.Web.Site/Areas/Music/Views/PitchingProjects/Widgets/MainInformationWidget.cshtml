@@ -8,11 +8,15 @@
     var editionDto = ViewBag.EditionDto as EditionDto;
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var isMusicCommission = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.CommissionMusic) == true;
-    var currentEvaluation = Model.AttendeeMusicBandDto.GetAttendeeMusicBandEvaluationByUserId(userAccessControlDto.User.Id);
-    var approvedAttendeeMusicBandsIds = ViewBag.ApprovedAttendeeMusicBandsIds as int[];
-    var isThisMusicProjectApproved = (approvedAttendeeMusicBandsIds?.Contains(Model.AttendeeMusicBandDto.AttendeeMusicBand.Id) == true);
+    var currentEvaluation = Model.AttendeeMusicBandDto.GetLastAttendeeMusicBandEvaluation(userAccessControlDto);
+    var hasCurrentEvaluation = currentEvaluation != null;
+    var isEvaluatedByCurrentUser = currentEvaluation?.EvaluatorUser?.Id == userAccessControlDto.User.Id;
     var isCommissionMusicCurator = userAccessControlDto.IsCommissionMusicCurator();
+    var isCommissionMusic = userAccessControlDto.IsCommissionMusic();
     var disapprovalByPopulation = ViewBag.DisapprovalByPopulation as int? ?? 0;
+    var enabledEvaluationProperties = isEvaluatedByCurrentUser ?
+        $"title='{Labels.ClickHereToChangeEvaluation}' onclick='MyRio2cCommon.enableFieldEdit({{ dataId: \"EvaluationGradeMain\" }})' style='cursor: pointer;'" :
+        "";
 }
 <div class="kt-portlet__body">
     <div class="kt-widget kt-widget--user-profile-3">
@@ -81,22 +85,33 @@
                     </div>
                     <div class="myrio2c-evaluation-position">
                         <div class="kt-widget__text" data-id="EvaluationGradeMain">
-                            @if (editionDto?.IsMusicPitchingCommissionEvaluationStarted() != true)
+                            @if (isCommissionMusicCurator && editionDto.IsMusicPitchingCuratorEvaluationOpen() == true)
                             {
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="myrio2c-alert-box danger mx-auto text-center">
-                                            <span>@Messages.OutOfEvaluationPeriod</span>
-                                        </div>
+                                if (hasCurrentEvaluation)
+                                {
+                                    <div class="view">
+                                        @if (currentEvaluation?.AttendeeMusicBandEvaluation.CuratorEvaluationStatusId == ProjectEvaluationStatus.Accepted.Id)
+                                        {
+                                            <div class="myrio2c-alert-box success mx-auto text-center" @Html.Raw(enabledEvaluationProperties)>
+                                                <span class="fa fa-thumbs-up mr-2"></span><span>@Labels.ApprovedBy</span>
+                                                <br />
+                                                <text>@currentEvaluation.EvaluatorUser.Name</text>
+                                            </div>
+                                        }
+                                        else if (currentEvaluation?.AttendeeMusicBandEvaluation.CuratorEvaluationStatusId == ProjectEvaluationStatus.Refused.Id)
+                                        {
+                                            <div class="myrio2c-alert-box danger mx-auto text-center" @Html.Raw(enabledEvaluationProperties)>
+                                                <span class="fa fa-thumbs-down mr-2"></span><span>@Labels.RefusedBy</span>
+                                                <br />
+                                                <text>@currentEvaluation.EvaluatorUser.Name</text>
+                                            </div>
+                                        }
                                     </div>
-                                </div>
-                            }
-                            else if (editionDto?.IsMusicPitchingComissionEvaluationOpen() == true)
-                            {
-                                <div class="edit">
+                                }
+                                <div class="edit @(hasCurrentEvaluation ? "d-none" : "")">
                                     <form class="form-inline myrio2c-evaluation-grade-box-form justify-content-center">
                                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
-                                            <button @(currentEvaluation?.AttendeeMusicBandEvaluation.CommissionEvaluationStatusId == ProjectEvaluationStatus.Accepted.Id ? "disabled" : "")
+                                            <button @(currentEvaluation?.AttendeeMusicBandEvaluation.CuratorEvaluationStatusId == ProjectEvaluationStatus.Accepted.Id ? "disabled" : "")
                                                     type="button"
                                                     class="btn btn-success"
                                                     onclick="MusicProjectsEvaluationWidget.showAcceptModal('@Model.MusicProject.Uid');">
@@ -104,42 +119,46 @@
                                             </button>
                                         </div>
                                         <div class="form-group mt-2 mb-2 mr-3">
-                                            <button @(currentEvaluation?.AttendeeMusicBandEvaluation.CommissionEvaluationStatusId == ProjectEvaluationStatus.Refused.Id ? "disabled" : "")
+                                            <button @(currentEvaluation?.AttendeeMusicBandEvaluation.CuratorEvaluationStatusId == ProjectEvaluationStatus.Refused.Id ? "disabled" : "")
                                                     type="button"
                                                     class="btn btn-danger"
                                                     onclick="MusicProjectsEvaluationWidget.showRefuseModal('@Model.MusicProject.Uid');">
                                                 <i class="fa fa-thumbs-down"></i> @Labels.RefuseProject
                                             </button>
                                         </div>
-                                    </form>
-                                </div>
-                            }
-                            else if (isCommissionMusicCurator && editionDto.IsMusicPitchingCuratorEvaluationOpen() == true)
-                            {
-                                <div class="edit">
-                                    <form class="form-inline myrio2c-evaluation-grade-box-form justify-content-center">
-                                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
-                                            <button @(currentEvaluation?.AttendeeMusicBandEvaluation.CuratorEvaluationStatusId == ProjectEvaluationStatus.Accepted.Id ? "disabled" : "")
-                                                    type="button"
-                                                    class="btn btn-success"
-                                                    onclick="MusicProjectsEvaluationWidget.showAcceptModal('@Model.MusicProject.Uid');">
-                                                <i class="fa fa-thumbs-up"></i> @Labels.CuratorApproval
+                                        @if (hasCurrentEvaluation)
+                                        {
+                                            <button type="button" class="btn btn-secondary mt-2 mb-2 mr-2 pl-4" onclick="MyRio2cCommon.disableFieldEdit({ dataId: 'EvaluationGradeMain' })" data-toggle="tooltip" title="@(Labels.Cancel)">
+                                                <i class="fa fa-times"></i>
                                             </button>
-                                        </div>
-                                        <div class="form-group mt-2 mb-2 mr-3">
-                                            <button @(currentEvaluation?.AttendeeMusicBandEvaluation.CuratorEvaluationStatusId == ProjectEvaluationStatus.Refused.Id ? "disabled" : "")
-                                                    type="button"
-                                                    class="btn btn-danger"
-                                                    onclick="MusicProjectsEvaluationWidget.showRefuseModal('@Model.MusicProject.Uid');">
-                                                <i class="fa fa-thumbs-down"></i> @Labels.CuratorDisapproval
-                                            </button>
-                                        </div>
+                                        }
                                     </form>
                                 </div>
                             }
                             else if (isCommissionMusicCurator && editionDto?.IsMusicPitchingRepechageEvaluationOpen() == true && disapprovalByPopulation > 0)
                             {
-                                <div class="edit">
+                                if (hasCurrentEvaluation)
+                                {
+                                    <div class="view">
+                                        @if (currentEvaluation?.AttendeeMusicBandEvaluation.RepechageEvaluationStatusId == ProjectEvaluationStatus.Accepted.Id)
+                                        {
+                                            <div class="myrio2c-alert-box success mx-auto text-center" @Html.Raw(enabledEvaluationProperties)>
+                                                <span class="fa fa-thumbs-up mr-2"></span><span>@Labels.ApprovedBy</span>
+                                                <br />
+                                                <text>@currentEvaluation.EvaluatorUser.Name</text>
+                                            </div>
+                                        }
+                                        else if (currentEvaluation?.AttendeeMusicBandEvaluation.RepechageEvaluationStatusId == ProjectEvaluationStatus.Refused.Id)
+                                        {
+                                            <div class="myrio2c-alert-box danger mx-auto text-center" @Html.Raw(enabledEvaluationProperties)>
+                                                <span class="fa fa-thumbs-down mr-2"></span><span>@Labels.RefusedBy</span>
+                                                <br />
+                                                <text>@currentEvaluation.EvaluatorUser.Name</text>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                                <div class="edit @(hasCurrentEvaluation ? "d-none" : "")">
                                     <form class="form-inline myrio2c-evaluation-grade-box-form justify-content-center">
                                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
                                             <button @(currentEvaluation?.AttendeeMusicBandEvaluation.RepechageEvaluationStatusId == ProjectEvaluationStatus.Accepted.Id ? "disabled" : "")
@@ -157,19 +176,77 @@
                                                 <i class="fa fa-thumbs-down"></i> @Labels.DisapproveToRepechage
                                             </button>
                                         </div>
+                                        @if (hasCurrentEvaluation)
+                                        {
+                                            <button type="button" class="btn btn-secondary mt-2 mb-2 mr-2 pl-4" onclick="MyRio2cCommon.disableFieldEdit({ dataId: 'EvaluationGradeMain' })" data-toggle="tooltip" title="@(Labels.Cancel)">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        }
                                     </form>
                                 </div>
                             }
-                            else
+                            else if (isCommissionMusic && editionDto?.IsMusicPitchingComissionEvaluationOpen() == true)
                             {
-                                <form class="form-inline">
-                                    <div class="form-group mb-2">
-                                        <div class="myrio2c-evaluation-grade-box-lg form-control">
-                                            <span class="grade-label mr-2">@Labels.Average</span>
-                                            <span class="grade-vote">@(Model.AttendeeMusicBandDto?.AttendeeMusicBand?.Grade?.ToString() ?? "-")</span>
+                                if (hasCurrentEvaluation)
+                                {
+                                    <div class="view">
+                                        @if (currentEvaluation?.AttendeeMusicBandEvaluation.CommissionEvaluationStatusId == ProjectEvaluationStatus.Accepted.Id)
+                                        {
+                                            <div class="myrio2c-alert-box success mx-auto text-center" @Html.Raw(enabledEvaluationProperties)>
+                                                <span class="fa fa-thumbs-up mr-2"></span><span>@Labels.ApprovedBy</span>
+                                                <br />
+                                                <text>@currentEvaluation.EvaluatorUser.Name</text>
+                                            </div>
+                                        }
+                                        else if (currentEvaluation?.AttendeeMusicBandEvaluation.CommissionEvaluationStatusId == ProjectEvaluationStatus.Refused.Id)
+                                        {
+                                            <div class="myrio2c-alert-box danger mx-auto text-center" @Html.Raw(enabledEvaluationProperties)>
+                                                <span class="fa fa-thumbs-down mr-2"></span><span>@Labels.RefusedBy</span>
+                                                <br />
+                                                <text>@currentEvaluation.EvaluatorUser.Name</text>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                                <div class="edit @(hasCurrentEvaluation ? "d-none" : "")">
+                                    <form class="form-inline myrio2c-evaluation-grade-box-form justify-content-center">
+                                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                                            <button @(currentEvaluation?.AttendeeMusicBandEvaluation.CommissionEvaluationStatusId == ProjectEvaluationStatus.Accepted.Id ? "disabled" : "")
+                                                    type="button"
+                                                    class="btn btn-success"
+                                                    onclick="MusicProjectsEvaluationWidget.showAcceptModal('@Model.MusicProject.Uid');">
+                                                <i class="fa fa-thumbs-up"></i> @Labels.Approve
+                                            </button>
+                                        </div>
+                                        <div class="form-group mt-2 mb-2 mr-3">
+                                            <button @(currentEvaluation?.AttendeeMusicBandEvaluation.CommissionEvaluationStatusId == ProjectEvaluationStatus.Refused.Id ? "disabled" : "")
+                                                    type="button"
+                                                    class="btn btn-danger"
+                                                    onclick="MusicProjectsEvaluationWidget.showRefuseModal('@Model.MusicProject.Uid');">
+                                                <i class="fa fa-thumbs-down"></i> @Labels.RefuseProject
+                                            </button>
+                                        </div>
+                                        @if (hasCurrentEvaluation)
+                                        {
+                                            <button type="button" class="btn btn-secondary mt-2 mb-2 mr-2 pl-4" onclick="MyRio2cCommon.disableFieldEdit({ dataId: 'EvaluationGradeMain' })" data-toggle="tooltip" title="@(Labels.Cancel)">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        }
+                                    </form>
+                                </div>
+                            }
+                            else if (editionDto?.IsMusicPitchingCommissionEvaluationStarted() != true
+                                || editionDto?.IsMusicPitchingCuratorEvaluationStarted() != true
+                                || editionDto?.IsMusicPitchingPopularEvaluationStarted() != true
+                                || editionDto?.IsMusicPitchingRepechageEvaluationStarted() != true)
+                            {
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="myrio2c-alert-box warning mx-auto text-center">
+                                            <span>@Messages.OutOfEvaluationPeriod</span>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
                             }
                         </div>
                     </div>

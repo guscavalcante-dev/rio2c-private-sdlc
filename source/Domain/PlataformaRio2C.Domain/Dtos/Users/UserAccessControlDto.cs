@@ -4,7 +4,7 @@
 // Created          : 09-04-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-03-2025
+// Last Modified On : 21-03-2025
 // ***********************************************************************
 // <copyright file="UserAccessControlDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -215,6 +215,17 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool IsIndustry()
         {
             return this.HasCollaboratorType(Constants.CollaboratorType.Industry);
+        }
+
+        /// <summary>
+        /// Determines whether this instance is commission music.
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is commission; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsCommissionMusic()
+        {
+            return this.HasCollaboratorType(Constants.CollaboratorType.CommissionMusic);
         }
 
         /// <summary>

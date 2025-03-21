@@ -4,7 +4,7 @@
 // Created          : 03-01-2020
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-03-2023
+// Last Modified On : 21-03-2025
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -126,13 +126,14 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 this.EditionDto.Id,
                 request.Search?.Value,
                 searchViewModel.MusicGenreUid,
-                searchViewModel.EvaluationStatusUid,
+                ProjectEvaluationStatus.GetId(searchViewModel.EvaluationStatusUid),
                 searchViewModel.ShowBusinessRounds,
                 page,
                 pageSize,
-                request.GetSortColumns());
+                request.GetSortColumns(),
+                this.AdminAccessControlDto.User.Id);
 
-            var approvedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Id);
+            var approvedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Id, this.AdminAccessControlDto.User.Id);
 
             foreach (var musicProjectJsonDto in musicProjectJsonDtos)
             {
@@ -216,14 +217,15 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             var musicProjectJsonDtos = await this.musicProjectRepo.FindAllByDataTableAsync(
                 this.EditionDto.Id,
                 searchViewModel.Search, 
-                searchViewModel.MusicGenreUid, 
-                searchViewModel.EvaluationStatusUid,
+                searchViewModel.MusicGenreUid,
+                ProjectEvaluationStatus.GetId(searchViewModel.EvaluationStatusUid),
                 searchViewModel.ShowBusinessRounds, 
                 1, 
                 10000, 
-                new List<Tuple<string, string>>());
+                new List<Tuple<string, string>>(), 
+                this.AdminAccessControlDto.User.Id);
 
-            var approvedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Id);
+            var approvedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Id, this.AdminAccessControlDto.User.Id);
 
             foreach (var item in musicProjectJsonDtos)
             {
@@ -259,22 +261,26 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ExportEvaluationsByEvaluatorsReportToExcel(MusicProjectSearchViewModel searchViewModel)
         {
+            // TODO: This method needs refactor. RIO2CMY-1533
+            // The evaluation logic has changed. Before it was via Grade, and now it is via approve/reject. This method still using Grade!
+
             StringBuilder data = new StringBuilder();
             bool ptBR = this.UserInterfaceLanguage == "pt-br";
             if (ptBR)
                 data.AppendLine("Banda; Avaliação; Jurado; Nota;");
             else
-                data.AppendLine("Music Band; Avaliation; Evaluator; Grade;");
+                data.AppendLine("Music Band; Evaluation; Evaluator; Grade;");
 
             var musicProjectJsonDtos = await this.musicProjectRepo.FindAllByDataTableAsync(
                 this.EditionDto.Id,
                 searchViewModel.Search, 
-                searchViewModel.MusicGenreUid, 
-                searchViewModel.EvaluationStatusUid,
+                searchViewModel.MusicGenreUid,
+                ProjectEvaluationStatus.GetId(searchViewModel.EvaluationStatusUid),
                 searchViewModel.ShowBusinessRounds,
                 1, 
                 10000, 
-                new List<Tuple<string, string>>());
+                new List<Tuple<string, string>>(),
+                this.AdminAccessControlDto.User.Id);
 
             foreach (var item in musicProjectJsonDtos)
             {
@@ -314,14 +320,15 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     this.EditionDto.Id,
                     searchViewModel.Search,
                     searchViewModel.MusicGenreUid,
-                    searchViewModel.EvaluationStatusUid,
+                    ProjectEvaluationStatus.GetId(searchViewModel.EvaluationStatusUid),
                     searchViewModel.ShowBusinessRounds,
                     1,
                     10000,
-                    new List<Tuple<string, string>>()
+                    new List<Tuple<string, string>>(),
+                    this.AdminAccessControlDto.User.Id
                 );
 
-                var approvedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Id);
+                var approvedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Id, this.AdminAccessControlDto.User.Id);
 
                 using (var workbook = new XLWorkbook())
                 {
@@ -551,7 +558,14 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> EvaluationDetails(int? id, string searchKeywords = null, Guid? musicGenreUid = null, Guid? evaluationStatusUid = null, bool? showBusinessRounds = false, int? page = 1, int? pageSize = 12)
+        public async Task<ActionResult> EvaluationDetails(
+            int? id,
+            string searchKeywords = null,
+            Guid? musicGenreUid = null,
+            Guid? evaluationStatusUid = null,
+            bool? showBusinessRounds = false,
+            int? page = 1,
+            int? pageSize = 12)
         {
             if (!page.HasValue || page <= 0)
             {
@@ -579,12 +593,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 this.EditionDto.Edition.Id,
                 searchKeywords,
                 musicGenreUid,
-                evaluationStatusUid,
+                ProjectEvaluationStatus.GetId(evaluationStatusUid),
                 showBusinessRounds ?? false,
                 page.Value,
                 pageSize.Value,
-                null,
-                null);
+                this.AdminAccessControlDto.User.Id);
             var currentMusicProjectIdIndex = Array.IndexOf(allMusicProjectsIds, id.Value) + 1; //Index start at 0, its a fix to "start at 1"
 
             ViewBag.SearchKeywords = searchKeywords;
@@ -599,15 +612,14 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             ViewBag.MusicProjectsTotalCount = await this.musicProjectRepo.CountPagedAsync(
                 this.EditionDto.Edition.Id, 
                 searchKeywords, 
-                musicGenreUid, 
-                evaluationStatusUid, 
+                musicGenreUid,
+                ProjectEvaluationStatus.GetId(evaluationStatusUid), 
                 showBusinessRounds ?? false, 
                 page.Value, 
                 pageSize.Value,
-                null,
-                null);
+                this.AdminAccessControlDto.User.Id);
 
-            ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id);
+            ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id, this.AdminAccessControlDto.User.Id);
 
             return View(musicProjectDto);
         }
@@ -624,18 +636,25 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> PreviousEvaluationDetails(int? id, string searchKeywords = null, Guid? musicGenreUid = null, Guid? evaluationStatusUid = null, bool? showBusinessRounds = false, int? page = 1, int? pageSize = 12)
+        public async Task<ActionResult> PreviousEvaluationDetails(
+            int? id,
+            string searchKeywords = null,
+            Guid? musicGenreUid = null,
+            Guid? evaluationStatusUid = null,
+            bool? showBusinessRounds = false,
+            int? page = 1,
+            int? pageSize = 12)
         {
             var allMusicProjectsIds = await this.musicProjectRepo.FindAllMusicProjectsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
                 musicGenreUid,
-                evaluationStatusUid,
+                ProjectEvaluationStatus.GetId(evaluationStatusUid),
                 showBusinessRounds ?? false,
                 page.Value,
                 pageSize.Value,
-                null,
-                null);
+                this.AdminAccessControlDto.User.Id
+                );
 
             var currentMusicProjectIdIndex = Array.IndexOf(allMusicProjectsIds, id.Value);
             var previousProjectId = allMusicProjectsIds.ElementAtOrDefault(currentMusicProjectIdIndex - 1);
@@ -675,12 +694,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 this.EditionDto.Edition.Id,
                 searchKeywords,
                 musicGenreUid,
-                evaluationStatusUid,
+                ProjectEvaluationStatus.GetId(evaluationStatusUid),
                 showBusinessRounds ?? false,
                 page.Value,
                 pageSize.Value,
-                null,
-                null);
+                this.AdminAccessControlDto.User.Id);
 
             var currentMusicProjectIdIndex = Array.IndexOf(allMusicProjectsIds, id.Value);
             var nextProjectId = allMusicProjectsIds.ElementAtOrDefault(currentMusicProjectIdIndex + 1);
@@ -926,7 +944,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id);
+            ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id, this.AdminAccessControlDto.User.Id);
 
             return Json(new
             {

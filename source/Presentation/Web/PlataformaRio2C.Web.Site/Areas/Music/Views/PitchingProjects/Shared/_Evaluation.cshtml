@@ -1,65 +1,50 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @using System.Linq;
+@using PlataformaRio2C.Domain.Entities;
 @model MusicProjectDto
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
-    var currentEvaluation = Model.AttendeeMusicBandDto.GetAttendeeMusicBandEvaluationByUserId(userAccessControlDto?.User?.Id ?? 0);
-    var approvedAttendeeMusicBandsIds = ViewBag.ApprovedAttendeeMusicBandsIds as int[];
-    var isThisMusicProjectApproved = approvedAttendeeMusicBandsIds?.Contains(Model.AttendeeMusicBandDto.AttendeeMusicBand.Id) == true;
-}
-@if (editionDto?.IsMusicPitchingComissionEvaluationOpen() == true)
-{
+    var currentEvaluation = Model.AttendeeMusicBandDto.GetLastAttendeeMusicBandEvaluation(userAccessControlDto);
     var hasCurrentEvaluation = currentEvaluation != null;
-    if (hasCurrentEvaluation)
-    {
-        <form class="form-inline justify-content-center">
-            <div class="form-group mb-2">
-                <div class="myrio2c-evaluation-grade-box-lg form-control">
-                    <span class="grade-label mr-2">@Labels.Evaluation</span>
-                    <span class="grade-vote">@(currentEvaluation?.AttendeeMusicBandEvaluation?.Grade)</span>
-                </div>
-            </div>
-        </form>
-    }
-    else
-    {
-        <div class="row">
-            <div class="col-12 mb-2">
-                <div class="myrio2c-alert-box warning mx-auto text-center">
-                    <span>@Messages.NotEvaluated</span>
-                </div>
-            </div>
-        </div>
-    }
 }
-else if (editionDto?.IsMusicPitchingCommissionEvaluationEnded() == true)
+@if (hasCurrentEvaluation)
 {
-    var icon = "fa-diagnoses";
-    var color = "warning";
-    var status = Labels.UnderEvaluation;
-
-    if (isThisMusicProjectApproved)
-    {
-        icon = "fa-thumbs-up";
-        color = "success";
-        status = Labels.ProjectAccepted;
-    }
-    else
-    {
-        icon = "fa-thumbs-down";
-        color = "danger";
-        status = Labels.ProjectRefused;
-    }
-    <form class="form-inline justify-content-center">
-        <span class="btn btn-label-@(color) mb-2 mr-4">
-            <i class="fa @(icon) mr-1"></i> @status
-        </span>
-        <div class="form-group mb-2">
-            <div class="myrio2c-evaluation-grade-box-sm form-control">
-                <span class="grade-label mr-2">@Labels.Average</span>
-                <span class="grade-vote">@(Model.AttendeeMusicBandDto?.AttendeeMusicBand?.Grade?.ToString() ?? "-")</span>
+    <div class="row">
+        <div class="col-12 mb-2">
+            @if (currentEvaluation?.AttendeeMusicBandEvaluation.CommissionEvaluationStatusId == ProjectEvaluationStatus.Accepted.Id
+                || currentEvaluation?.AttendeeMusicBandEvaluation.CuratorEvaluationStatusId == ProjectEvaluationStatus.Accepted.Id
+                || currentEvaluation?.AttendeeMusicBandEvaluation.PopularEvaluationStatusId == ProjectEvaluationStatus.Accepted.Id
+                || currentEvaluation?.AttendeeMusicBandEvaluation.RepechageEvaluationStatusId == ProjectEvaluationStatus.Accepted.Id)
+            {
+                <div class="myrio2c-alert-box success mx-auto text-center">
+                    <span class="fa fa-thumbs-up mr-1"></span><span>@Labels.ApprovedBy</span>
+                    <br />
+                    <text>@currentEvaluation.EvaluatorUser.Name</text>
+                </div>
+            }
+            else if (currentEvaluation?.AttendeeMusicBandEvaluation.CommissionEvaluationStatusId == ProjectEvaluationStatus.Refused.Id
+                || currentEvaluation?.AttendeeMusicBandEvaluation.CuratorEvaluationStatusId == ProjectEvaluationStatus.Refused.Id
+                || currentEvaluation?.AttendeeMusicBandEvaluation.PopularEvaluationStatusId == ProjectEvaluationStatus.Refused.Id
+                || currentEvaluation?.AttendeeMusicBandEvaluation.RepechageEvaluationStatusId == ProjectEvaluationStatus.Refused.Id)
+            {
+                <div class="myrio2c-alert-box danger mx-auto text-center">
+                    <span class="fa fa-thumbs-down mr-1"></span><span>@Labels.RefusedBy</span>
+                    <br />
+                    <text>@currentEvaluation.EvaluatorUser.Name</text>
+                </div>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-12 mb-2">
+            <div class="myrio2c-alert-box warning mx-auto text-center">
+                <span>@Labels.UnderEvaluation</span>
             </div>
         </div>
-    </form>
+    </div>
 }
+
