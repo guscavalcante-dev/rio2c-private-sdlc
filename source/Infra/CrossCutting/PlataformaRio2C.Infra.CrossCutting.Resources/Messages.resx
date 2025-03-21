@@ -633,12 +633,6 @@ A distribuição só pode ser executada uma única vez por edição.
   <data name="MusicBusinessRoundProjectDiscursiveRequired" xml:space="preserve">
     <value>O campo discursivo das categorias de players é obrigatório caso alguma opção de player tenha sido selecionada.</value>
   </data>
-  <data name="MusicPitchingMaximumApprovedProjectsByCurator" xml:space="preserve">
-    <value>É permitido avaliar no máximo {0} {1} para os curadores</value>
-  </data>
-  <data name="MusicPitchingMaximumApprovedProjectsByRepechage" xml:space="preserve">
-    <value>É permitido avaliar no máximo {0} {1} para repescagem</value>
-  </data>
   <data name="MusicPlayerTerms" xml:space="preserve">
     <value>Regulamento de Players (Música)</value>
   </data>
@@ -1048,6 +1042,9 @@ A distribuição só pode ser executada uma única vez por edição.
   <data name="ThereIsalreadyProjectRegisteredWithThisTitle" xml:space="preserve">
     <value>Já existe um projeto cadastrado com este título!</value>
   </data>
+  <data name="ThisBandHasBeenEvaluatedByAnotherUser" xml:space="preserve">
+    <value>Operação inválida! Essa Banda já foi avaliada por outro usuário.</value>
+  </data>
   <data name="ThisProjectHasAlreadyBeenSubmittedForTheEvaluationOfPlayers" xml:space="preserve">
     <value>Este projeto já foi enviado para avaliação de players</value>
   </data>
@@ -1140,9 +1137,6 @@ A distribuição só pode ser executada uma única vez por edição.
   <data name="WouldYouLikeParticipatePitching" xml:space="preserve">
     <value>Você gostaria de participar do Pitching?</value>
   </data>
-  <data name="YouCanMusicPitchingMaximumApprovedProjectsByCommissionMember" xml:space="preserve">
-    <value>Você pode avaliar no máximo {0} {1} por edição</value>
-  </data>
   <data name="YouCanMusicPitchingMaximumProjectSubmissionsByEdition" xml:space="preserve">
     <value>Foi atingido o limite máximo de {0} {1} por edição</value>
   </data>
@@ -1176,6 +1170,9 @@ A distribuição só pode ser executada uma única vez por edição.
   <data name="YouReachedProjectsLimit" xml:space="preserve">
     <value>Você atingiu o limite de projetos.</value>
     <comment>Você atingiu o limite de projetos.</comment>
+  </data>
+  <data name="YouReachedTheLimitApprovedBands" xml:space="preserve">
+    <value>Você atingiu o limite de {0} bandas aprovadas por {1}</value>
   </data>
   <data name="YouReceivedMessageFrom" xml:space="preserve">
     <value>Você recebeu uma mensagem de &lt;b&gt;{0}&lt;/b&gt;.&lt;br /&gt;&lt;br /&gt;Clique aqui para ser direcionado para a sua caixa de mensagens.</value>

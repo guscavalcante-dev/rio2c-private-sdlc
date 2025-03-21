@@ -246,33 +246,33 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="evaluatorUser">The evaluator user.</param>
-        /// <param name="commissionEvaluationStatus">The comission evaluation status.</param>
-        public void ComissionEvaluation(Edition edition, User evaluatorUser, ProjectEvaluationStatus commissionEvaluationStatus)
+        /// <param name="projectEvaluationStatusId">The comission evaluation status.</param>
+        public void ComissionEvaluation(Edition edition, User evaluatorUser, int projectEvaluationStatusId)
         {
             var attendeeMusicBand = this.FindAttendeeMusicBandByEditionId(edition.Id);
-            attendeeMusicBand?.ComissionEvaluation(evaluatorUser, commissionEvaluationStatus);
+            attendeeMusicBand?.ComissionEvaluation(evaluatorUser, projectEvaluationStatusId);
         }
 
         /// <summary>
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="evaluatorUser">The evaluator user.</param>
-        /// <param name="curatorEvaluationStatusId">The curator evaluation status.</param>
-        public void CuratorEvaluation(Edition edition, User evaluatorUser, ProjectEvaluationStatus curatorEvaluationStatusId)
+        /// <param name="projectEvaluationStatusId">The curator evaluation status.</param>
+        public void CuratorEvaluation(Edition edition, User evaluatorUser, int projectEvaluationStatusId)
         {
             var attendeeMusicBand = this.FindAttendeeMusicBandByEditionId(edition.Id);
-            attendeeMusicBand?.CuratorEvaluation(evaluatorUser, curatorEvaluationStatusId);
+            attendeeMusicBand?.CuratorEvaluation(evaluatorUser, projectEvaluationStatusId);
         }
 
         /// <summary>
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="evaluatorUser">The evaluator user.</param>
-        /// <param name="curatorEvaluationStatusId">The curator evaluation status.</param>
-        public void RepechageEvaluation(Edition edition, User evaluatorUser, ProjectEvaluationStatus curatorEvaluationStatusId)
+        /// <param name="projectEvaluationStatusId">The curator evaluation status.</param>
+        public void RepechageEvaluation(Edition edition, User evaluatorUser, int projectEvaluationStatusId)
         {
             var attendeeMusicBand = this.FindAttendeeMusicBandByEditionId(edition.Id);
-            attendeeMusicBand?.RepechageEvaluation(evaluatorUser, curatorEvaluationStatusId);
+            attendeeMusicBand?.RepechageEvaluation(evaluatorUser, projectEvaluationStatusId);
         }
 
         #endregion

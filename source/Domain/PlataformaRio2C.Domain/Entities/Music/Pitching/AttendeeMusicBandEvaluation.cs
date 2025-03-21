@@ -30,13 +30,13 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual AttendeeMusicBand AttendeeMusicBand { get; private set; }
         public virtual User EvaluatorUser { get; private set; }
         public virtual ProjectEvaluationStatus CommissionEvaluationStatus { get; private set; }
-        public int? CommissionEvaluationStatusId { get; private set; }
+        public int CommissionEvaluationStatusId { get; private set; }
         public DateTimeOffset? CommissionEvaluationDate { get; private set; }
-        public int? CuratorEvaluationStatusId { get; private set; }
+        public int CuratorEvaluationStatusId { get; private set; }
         public DateTimeOffset? CuratorEvaluationDate { get; private set; }
-        public int? PopularEvaluationStatusId { get; private set; }
+        public int PopularEvaluationStatusId { get; private set; }
         public DateTimeOffset? PopularEvaluationDate { get; private set; }
-        public int? RepechageEvaluationStatusId { get; private set; }
+        public int RepechageEvaluationStatusId { get; private set; }
         public DateTimeOffset? RepechageEvaluationDate { get; private set; }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public AttendeeMusicBandEvaluation(
             AttendeeMusicBand attendeeMusicBand,
-            User evaluatorUser, 
+            User evaluatorUser,
             decimal grade,
             int userId)
         {
@@ -56,10 +56,12 @@ namespace PlataformaRio2C.Domain.Entities
             this.AttendeeMusicBandId = attendeeMusicBand.Id;
             this.EvaluatorUserId = evaluatorUser.Id;
             this.Grade = grade;
+            this.CommissionEvaluationStatusId = ProjectEvaluationStatus.UnderEvaluation.Id;
+            this.CuratorEvaluationStatusId = ProjectEvaluationStatus.UnderEvaluation.Id;
+            this.PopularEvaluationStatusId = ProjectEvaluationStatus.UnderEvaluation.Id;
+            this.RepechageEvaluationStatusId = ProjectEvaluationStatus.UnderEvaluation.Id;
 
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
+            base.SetCreateDate(userId);
         }
 
         /// <summary>
@@ -71,14 +73,17 @@ namespace PlataformaRio2C.Domain.Entities
         public AttendeeMusicBandEvaluation(
             AttendeeMusicBand attendeeMusicBand,
             User evaluatorUser,
-            int userId
-        )
+            int userId)
         {
             this.AttendeeMusicBand = attendeeMusicBand;
             this.EvaluatorUser = evaluatorUser;
             this.AttendeeMusicBandId = attendeeMusicBand.Id;
             this.EvaluatorUserId = evaluatorUser.Id;
             this.Grade = 0;
+            this.CommissionEvaluationStatusId = ProjectEvaluationStatus.UnderEvaluation.Id;
+            this.CuratorEvaluationStatusId = ProjectEvaluationStatus.UnderEvaluation.Id;
+            this.PopularEvaluationStatusId = ProjectEvaluationStatus.UnderEvaluation.Id;
+            this.RepechageEvaluationStatusId = ProjectEvaluationStatus.UnderEvaluation.Id;
 
             base.SetCreateDate(userId);
         }
@@ -107,11 +112,13 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>
         /// Updates the commission evaluation.
         /// </summary>
-        /// <param name="commissionEvaluationStatus">The grade.</param>
+        /// <param name="projectEvaluationStatusId">The project evaluation status identifier.</param>
+        /// <param name="">The .</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateCommissionEvaluation(ProjectEvaluationStatus commissionEvaluationStatus, int userId)
+        /// <returns></returns>
+        public void UpdateCommissionEvaluation(int projectEvaluationStatusId, int userId)
         {
-            this.CommissionEvaluationStatusId = commissionEvaluationStatus.Id;
+            this.CommissionEvaluationStatusId = projectEvaluationStatusId;
             this.CommissionEvaluationDate = DateTime.UtcNow;
             base.SetUpdateDate(userId);
         }
@@ -119,11 +126,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>
         /// Updates the curator evaluation.
         /// </summary>
-        /// <param name="curatorEvaluationStatusId">The grade.</param>
+        /// <param name="projectEvaluationStatusId">The project evaluation status identifier.</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateCuratorEvaluation(ProjectEvaluationStatus curatorEvaluationStatusId, int userId)
+        public void UpdateCuratorEvaluation(int projectEvaluationStatusId, int userId)
         {
-            this.CuratorEvaluationStatusId = curatorEvaluationStatusId.Id;
+            this.CuratorEvaluationStatusId = projectEvaluationStatusId;
             this.CuratorEvaluationDate = DateTime.UtcNow;
             base.SetUpdateDate(userId);
         }
@@ -131,11 +138,12 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>
         /// Updates the repechage evaluation.
         /// </summary>
-        /// <param name="repechageEvaluationStatusId">The grade.</param>
+        /// <param name="projectEvaluationStatusId">The project evaluation status identifier.</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateRepechageEvaluation(ProjectEvaluationStatus repechageEvaluationStatusId, int userId)
+        /// <returns></returns>
+        public void UpdateRepechageEvaluation(int projectEvaluationStatusId, int userId)
         {
-            this.RepechageEvaluationStatusId = repechageEvaluationStatusId.Id;
+            this.RepechageEvaluationStatusId = projectEvaluationStatusId;
             this.RepechageEvaluationDate = DateTime.UtcNow;
             base.SetUpdateDate(userId);
         }

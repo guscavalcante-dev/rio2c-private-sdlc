@@ -11,6 +11,7 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Domain.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -20,10 +21,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IAttendeeMusicBandEvaluationRepository</summary>
     public interface IAttendeeMusicBandEvaluationRepository : IRepository<AttendeeMusicBandEvaluation>
     {
-        Task<List<AttendeeMusicBandEvaluation>> FindAllByEditionIdAsync(int editionId);
-        Task<int> CountByCommissionMemberAsync(int editionId, List<int?> musicBandId, List<int?> collaboratorId);
-        Task<int> CountByCuratorAsync(int editionId, List<int?> musicBandId);
-        Task<int> CountByRepechageAsync(int editionId, List<int?> musicBandId);
-        Task<int> CountByPopularEvaluationAsync(int editionId, List<int?> musicBandId, List<int?> popularEvaluationStatusId);
+        Task<int> CountAcceptedByCollaboratorTypeIdAsync(int editionId, int userId, int collaboratorTypeId);
+        Task<int> CountByPopularEvaluationAsync(int editionId, int? musicBandId, int? popularEvaluationStatusId);
     }
 }

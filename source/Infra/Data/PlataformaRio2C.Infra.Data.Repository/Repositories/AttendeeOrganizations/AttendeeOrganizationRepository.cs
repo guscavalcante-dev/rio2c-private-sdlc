@@ -1255,9 +1255,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 UpdateDate = ao.UpdateDate,
                                 AttendeeCollaboratorBaseDtos = ao.AttendeeOrganizationCollaborators
                                                                     .Where(aoc => !aoc.IsDeleted
-                                                                                                          && !aoc.AttendeeCollaborator.IsDeleted
-                                                                                                          && !aoc.AttendeeCollaborator.Collaborator.IsDeleted
-                                                                                                          && !aoc.AttendeeCollaborator.Collaborator.User.IsDeleted)
+                                                                                    && !aoc.AttendeeCollaborator.IsDeleted
+                                                                                    && !aoc.AttendeeCollaborator.Collaborator.IsDeleted
+                                                                                    && !aoc.AttendeeCollaborator.Collaborator.User.IsDeleted)
                                                                     .Select(aoc => new AttendeeCollaboratorBaseDto
                                                                     {
                                                                         Id = aoc.Id,

@@ -545,37 +545,91 @@ namespace PlataformaRio2C.Domain.Dtos
             return DateTime.UtcNow > this.MusicCommissionEvaluationEndDate;
         }
 
-        /// <summary>Determines whether [is music project evaluation open].</summary>
+        #endregion
+
+        #region Project Evaluation - Curator
+
+        /// <summary>
+        /// Determines whether [is music project evaluation open].
+        /// </summary>
         /// <returns>
-        ///   <c>true</c> if [is music project evaluation open]; otherwise, <c>false</c>.</returns>
+        ///   <c>true</c> if [is music project evaluation open]; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsMusicPitchingCuratorEvaluationOpen()
         {
-            return !this.IsMusicPitchingComissionEvaluationOpen()
-                && DateTime.UtcNow >= this.MusicPitchingCuratorEvaluationStartDate
-                && DateTime.UtcNow <= this.MusicPitchingCuratorEvaluationEndDate;
+            return //!this.IsMusicPitchingComissionEvaluationOpen() && // This rule  is making troubles for customer understanding, so we disabled it.
+                DateTime.UtcNow >= this.MusicPitchingCuratorEvaluationStartDate &&
+                DateTime.UtcNow <= this.MusicPitchingCuratorEvaluationEndDate;
         }
 
-        /// <summary>Determines whether [is music pitching popular evaluation open].</summary>
+        /// <summary>
+        /// Determines whether [is music pitching curator evaluation started].
+        /// </summary>
         /// <returns>
-        ///   <c>true</c> if [is music pitching popular evaluation open]; otherwise, <c>false</c>.</returns>
+        ///   <c>true</c> if [is music pitching curator evaluation started]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsMusicPitchingCuratorEvaluationStarted()
+        {
+            return DateTime.UtcNow >= this.MusicPitchingCuratorEvaluationStartDate;
+        }
+
+        #endregion
+
+        #region Project Evaluation - Popular Evaluation
+
+        /// <summary>
+        /// Determines whether [is music pitching popular evaluation open].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is music pitching popular evaluation open]; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsMusicPitchingPopularEvaluationOpen()
         {
-            return !this.IsMusicPitchingComissionEvaluationOpen()
-                && !this.IsMusicPitchingCuratorEvaluationOpen()
-                && DateTime.UtcNow >= this.MusicPitchingPopularEvaluationStartDate
-                && DateTime.UtcNow <= this.MusicPitchingPopularEvaluationEndDate;
+            return //!this.IsMusicPitchingComissionEvaluationOpen() &&  // This rule  is making troubles for customer understanding, so we disabled it.
+                   //!this.IsMusicPitchingCuratorEvaluationOpen() &&    // This rule  is making troubles for customer understanding, so we disabled it.
+                DateTime.UtcNow >= this.MusicPitchingPopularEvaluationStartDate &&
+                DateTime.UtcNow <= this.MusicPitchingPopularEvaluationEndDate;
         }
 
-        /// <summary>Determines whether [is music pitching repechage evaluation open].</summary>
+        /// <summary>
+        /// Determines whether [is music pitching popular evaluatio started].
+        /// </summary>
         /// <returns>
-        ///   <c>true</c> if [is music pitching repechage evaluation open]; otherwise, <c>false</c>.</returns>
+        ///   <c>true</c> if [is music pitching popular evaluatio started]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsMusicPitchingPopularEvaluationStarted()
+        {
+            return DateTime.UtcNow >= this.MusicPitchingPopularEvaluationStartDate;
+        }
+
+        #endregion
+
+        #region Project Evaluation - Repechage
+
+        /// <summary>
+        /// Determines whether [is music pitching repechage evaluation open].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is music pitching repechage evaluation open]; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsMusicPitchingRepechageEvaluationOpen()
         {
-            return !this.IsMusicPitchingComissionEvaluationOpen()
-                && !this.IsMusicPitchingCuratorEvaluationOpen()
-                && !this.IsMusicPitchingPopularEvaluationOpen()
-                && DateTime.UtcNow >= this.MusicPitchingRepechageEvaluationStartDate
-                && DateTime.UtcNow <= this.MusicPitchingRepechageEvaluationEndDate;
+            return //!this.IsMusicPitchingComissionEvaluationOpen() &&  // This rule  is making troubles for customer understanding, so we disabled it.
+                   //!this.IsMusicPitchingCuratorEvaluationOpen() &&    // This rule  is making troubles for customer understanding, so we disabled it.
+                   //!this.IsMusicPitchingPopularEvaluationOpen() &&    // This rule  is making troubles for customer understanding, so we disabled it.
+                DateTime.UtcNow >= this.MusicPitchingRepechageEvaluationStartDate &&
+                DateTime.UtcNow <= this.MusicPitchingRepechageEvaluationEndDate;
+        }
+
+        /// <summary>
+        /// Determines whether [is music pitching repechage evaluatio started].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is music pitching repechage evaluatio started]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsMusicPitchingRepechageEvaluationStarted()
+        {
+            return DateTime.UtcNow >= this.MusicPitchingRepechageEvaluationStartDate;
         }
 
         #endregion

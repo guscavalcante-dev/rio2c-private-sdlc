@@ -14,6 +14,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
@@ -30,6 +31,12 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset? EvaluationEmailSendDate { get; private set; }
         public bool WouldYouLikeParticipateBusinessRound { get; private set; }
         public bool WouldYouLikeParticipatePitching { get; private set; }
+
+        /// <summary>
+        /// This isn't the UserId who rated the band! 
+        /// This is used to filter projects distributed between Commission Evaluators, into "DistributeMembersMusicPitching" command.
+        /// The UserId who rated the band comes from "AttendeeMusicBandEvaluations.EvaluatorUserId"
+        /// </summary>
         public int? EvaluatorUserId { get; private set; }
 
         public virtual Edition Edition { get; private set; }
@@ -104,7 +111,7 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.AttendeeMusicBandEvaluations == null)
                 this.AttendeeMusicBandEvaluations = new List<AttendeeMusicBandEvaluation>();
 
-            var existentAttendeeMusicBandEvaluation = this.GetAttendeeMusicBandEvaluationByEvaluatorId(evaluatorUser.Id);
+            var existentAttendeeMusicBandEvaluation = this.GetAttendeeMusicBandEvaluationByEvaluatorUserId(evaluatorUser.Id);
             if (existentAttendeeMusicBandEvaluation != null)
             {
                 existentAttendeeMusicBandEvaluation.Update(grade, evaluatorUser.Id);
@@ -122,23 +129,22 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.Grade = this.GetAverageEvaluation();
             this.EvaluationsCount = this.GetAttendeeMusicBandEvaluationTotalCount();
-            this.LastEvaluationDate = DateTime.UtcNow;
         }
 
         /// <summary>
         /// Evaluates the specified evaluation user.
         /// </summary>
         /// <param name="evaluatorUser">The evaluation user.</param>
-        /// <param name="commissionEvaluationStatus">The project evaluation status.</param>
-        public void ComissionEvaluation(User evaluatorUser, ProjectEvaluationStatus commissionEvaluationStatus)
+        /// <param name="projectEvaluationStatusId">The project evaluation status.</param>
+        public void ComissionEvaluation(User evaluatorUser, int projectEvaluationStatusId)
         {
             if (this.AttendeeMusicBandEvaluations == null)
                 this.AttendeeMusicBandEvaluations = new List<AttendeeMusicBandEvaluation>();
 
-            var existentAttendeeMusicBandEvaluation = this.GetAttendeeMusicBandEvaluationByEvaluatorId(evaluatorUser.Id);
+            var existentAttendeeMusicBandEvaluation = this.GetAttendeeMusicBandEvaluationByEvaluatorUserId(evaluatorUser.Id);
             if (existentAttendeeMusicBandEvaluation != null)
             {
-                existentAttendeeMusicBandEvaluation.UpdateCommissionEvaluation(commissionEvaluationStatus, evaluatorUser.Id);
+                existentAttendeeMusicBandEvaluation.UpdateCommissionEvaluation(projectEvaluationStatusId, evaluatorUser.Id);
             }
             else
             {
@@ -147,7 +153,7 @@ namespace PlataformaRio2C.Domain.Entities
                     evaluatorUser,
                     evaluatorUser.Id
                 );
-                evaluation.UpdateCommissionEvaluation(commissionEvaluationStatus, evaluatorUser.Id);
+                evaluation.UpdateCommissionEvaluation(projectEvaluationStatusId, evaluatorUser.Id);
                 this.AttendeeMusicBandEvaluations.Add(evaluation);
             }
 
@@ -159,16 +165,16 @@ namespace PlataformaRio2C.Domain.Entities
         /// Evaluates the specified evaluation user.
         /// </summary>
         /// <param name="evaluatorUser">The evaluation user.</param>
-        /// <param name="curatorEvaluationStatusId">The project evaluation status.</param>
-        public void CuratorEvaluation(User evaluatorUser, ProjectEvaluationStatus curatorEvaluationStatusId)
+        /// <param name="projectEvaluationStatusId">The project evaluation status.</param>
+        public void CuratorEvaluation(User evaluatorUser, int projectEvaluationStatusId)
         {
             if (this.AttendeeMusicBandEvaluations == null)
                 this.AttendeeMusicBandEvaluations = new List<AttendeeMusicBandEvaluation>();
 
-            var existentAttendeeMusicBandEvaluation = this.GetAttendeeMusicBandEvaluationByEvaluatorId(evaluatorUser.Id);
+            var existentAttendeeMusicBandEvaluation = this.GetAttendeeMusicBandEvaluationByEvaluatorUserId(evaluatorUser.Id);
             if (existentAttendeeMusicBandEvaluation != null)
             {
-                existentAttendeeMusicBandEvaluation.UpdateCuratorEvaluation(curatorEvaluationStatusId, evaluatorUser.Id);
+                existentAttendeeMusicBandEvaluation.UpdateCuratorEvaluation(projectEvaluationStatusId, evaluatorUser.Id);
             }
             else
             {
@@ -177,7 +183,7 @@ namespace PlataformaRio2C.Domain.Entities
                     evaluatorUser,
                     evaluatorUser.Id
                 );
-                evaluation.UpdateCuratorEvaluation(curatorEvaluationStatusId, evaluatorUser.Id);
+                evaluation.UpdateCuratorEvaluation(projectEvaluationStatusId, evaluatorUser.Id);
                 this.AttendeeMusicBandEvaluations.Add(evaluation);
             }
 
@@ -186,19 +192,19 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>
-        /// Evaluates the specified evaluation user.
+        /// Repechages the evaluation.
         /// </summary>
-        /// <param name="evaluatorUser">The evaluation user.</param>
-        /// <param name="curatorEvaluationStatusId">The project evaluation status.</param>
-        public void RepechageEvaluation(User evaluatorUser, ProjectEvaluationStatus curatorEvaluationStatusId)
+        /// <param name="evaluatorUser">The evaluator user.</param>
+        /// <param name="projectEvaluationStatusId">The project evaluation status identifier.</param>
+        public void RepechageEvaluation(User evaluatorUser, int projectEvaluationStatusId)
         {
             if (this.AttendeeMusicBandEvaluations == null)
                 this.AttendeeMusicBandEvaluations = new List<AttendeeMusicBandEvaluation>();
 
-            var existentAttendeeMusicBandEvaluation = this.GetAttendeeMusicBandEvaluationByEvaluatorId(evaluatorUser.Id);
+            var existentAttendeeMusicBandEvaluation = this.GetAttendeeMusicBandEvaluationByEvaluatorUserId(evaluatorUser.Id);
             if (existentAttendeeMusicBandEvaluation != null)
             {
-                existentAttendeeMusicBandEvaluation.UpdateRepechageEvaluation(curatorEvaluationStatusId, evaluatorUser.Id);
+                existentAttendeeMusicBandEvaluation.UpdateRepechageEvaluation(projectEvaluationStatusId, evaluatorUser.Id);
             }
             else
             {
@@ -207,7 +213,7 @@ namespace PlataformaRio2C.Domain.Entities
                     evaluatorUser,
                     evaluatorUser.Id
                 );
-                evaluation.UpdateRepechageEvaluation(curatorEvaluationStatusId, evaluatorUser.Id);
+                evaluation.UpdateRepechageEvaluation(projectEvaluationStatusId, evaluatorUser.Id);
                 this.AttendeeMusicBandEvaluations.Add(evaluation);
             }
 
@@ -261,11 +267,11 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>
-        /// Gets the attendee music band evaluation by evaluator identifier.
+        /// Gets the attendee music band evaluation by evaluator user identifier.
         /// </summary>
         /// <param name="evaluatorUserId">The evaluator user identifier.</param>
         /// <returns></returns>
-        private AttendeeMusicBandEvaluation GetAttendeeMusicBandEvaluationByEvaluatorId(int evaluatorUserId)
+        private AttendeeMusicBandEvaluation GetAttendeeMusicBandEvaluationByEvaluatorUserId(int evaluatorUserId)
         {
             return this.FindAllAttendeeMusicBandEvaluationsNotDeleted().FirstOrDefault(ambe =>
                 ambe.AttendeeMusicBand.EditionId == this.EditionId &&
@@ -290,6 +296,35 @@ namespace PlataformaRio2C.Domain.Entities
         private List<AttendeeMusicBandEvaluation> FindAllAttendeeMusicBandEvaluationsNotDeleted()
         {
             return this.AttendeeMusicBandEvaluations?.Where(aoc => !aoc.IsDeleted)?.ToList();
+        }
+
+        /// <summary>
+        /// Gets the last attendee music band evaluation.
+        /// </summary>
+        /// <param name="userAccessControlDto">The user access control dto.</param>
+        /// <returns></returns>
+        public AttendeeMusicBandEvaluation GetLastAttendeeMusicBandEvaluation(UserAccessControlDto userAccessControlDto)
+        {
+            if (userAccessControlDto.IsCommissionMusic())
+            {
+                return this.AttendeeMusicBandEvaluations?
+                    .Where(ambe => !ambe.IsDeleted)?
+                    .OrderByDescending(ambe => ambe.CommissionEvaluationDate)
+                    .FirstOrDefault(ambe => ambe.CommissionEvaluationDate != null);
+            }
+            else if (userAccessControlDto.IsCommissionMusicCurator())
+            {
+                return this.AttendeeMusicBandEvaluations?
+                    .Where(ambe => !ambe.IsDeleted)?
+                    .OrderByDescending(ambe => ambe.CuratorEvaluationDate)
+                    .FirstOrDefault(ambe => ambe.CuratorEvaluationDate != null);
+
+                //TODO: Implements the Repechage logic here
+            }
+            else
+            {
+                return null;
+            }
         }
 
         #endregion

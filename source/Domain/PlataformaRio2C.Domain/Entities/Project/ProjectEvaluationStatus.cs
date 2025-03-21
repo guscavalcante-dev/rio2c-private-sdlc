@@ -12,6 +12,8 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Linq;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
@@ -30,8 +32,9 @@ namespace PlataformaRio2C.Domain.Entities
         public static ProjectEvaluationStatus UnderEvaluation = new ProjectEvaluationStatus(1, new Guid("44368049-923D-41C6-9EAB-A9CECA05C296"), "UnderEvaluation", Labels.UnderEvaluation);
         public static ProjectEvaluationStatus Accepted = new ProjectEvaluationStatus(2, new Guid("3DFA9E93-CAB8-4A5E-83D1-BF945DD7C137"), "Accepted", Labels.ProjectAccepted);
         public static ProjectEvaluationStatus Refused = new ProjectEvaluationStatus(3, new Guid("CA9C8F5D-C368-4A50-B85C-49C7CFD48625"), "Refused", Labels.ProjectRefused);
-
-        #endregion
+        public static ProjectEvaluationStatus[] ProjectEvaluationStatuses = { UnderEvaluation, Accepted, Refused };
+        
+            #endregion
 
         public string Name { get; private set; }
         public string Code { get; private set; }
@@ -55,6 +58,19 @@ namespace PlataformaRio2C.Domain.Entities
             this.Uid = projectEvaluationStatusUid;
             this.Code = code?.Trim();
             this.Name = name?.Trim();
+        }
+
+        /// <summary>
+        /// Gets the identifier.
+        /// </summary>
+        /// <param name="uid">The uid.</param>
+        /// <returns></returns>
+        public static int? GetId(Guid? uid)
+        {
+            if (!uid.HasValue)
+                return null;
+
+            return ProjectEvaluationStatuses.FirstOrDefault(pes => pes.Uid == uid).Id;
         }
 
         #region Validations

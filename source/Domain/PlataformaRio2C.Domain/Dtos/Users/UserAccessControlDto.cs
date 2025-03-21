@@ -218,6 +218,17 @@ namespace PlataformaRio2C.Domain.Dtos
         }
 
         /// <summary>
+        /// Determines whether this instance is commission music.
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is commission; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsCommissionMusic()
+        {
+            return this.HasCollaboratorType(Constants.CollaboratorType.CommissionMusic);
+        }
+
+        /// <summary>
         /// Determines whether this instance is commission music curator.
         /// </summary>
         /// <returns>
