@@ -1666,14 +1666,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<int> CountAllByActiveBuyerNegotiationsAndByDataTable(bool showAllEditions, int? editionId)
         {
-            //var query = this.GetBaseQuery()
-            //                .FindByEditionId(editionId ?? 0, showAllEditions)
-            //                .FindByOrganizationTypeUidAndEditionId(editionId ?? 0, showAllEditions, CollaboratorType.MusicPlayer.Uid)
-            //                .HasActiveSellerNegotiations();
-
+           
             var query = this.GetBaseQuery()
                             .FindByEditionId(editionId ?? 0, showAllEditions)
-                            .FindByCollaboratorTypeUid(CollaboratorType.Industry.Uid)
+                            .FindByCollaboratorTypeUid(CollaboratorType.PlayerExecutiveMusic.Uid)
                             .HasActiveSellerNegotiations();
 
             return await query.CountAsync();
