@@ -28,6 +28,7 @@ using PlataformaRio2C.Application.Services;
 using PlataformaRio2C.Infra.CrossCutting.CQRS;
 using PlataformaRio2C.Infra.Data.FileRepository;
 using PlataformaRio2C.Web.Site.Services;
+using PlataformaRio2C.Web.Site.ServicesSendProducersNegotiationEmail;
 
 namespace PlataformaRio2C.Web.Site
 {
