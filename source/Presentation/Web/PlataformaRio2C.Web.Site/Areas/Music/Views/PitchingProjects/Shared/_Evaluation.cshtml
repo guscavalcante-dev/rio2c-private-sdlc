@@ -7,6 +7,8 @@
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var currentEvaluation = Model.AttendeeMusicBandDto.GetLastAttendeeMusicBandEvaluation(userAccessControlDto);
     var hasCurrentEvaluation = currentEvaluation != null;
+    var isCommissionMusicCurator = userAccessControlDto.IsCommissionMusicCurator();
+    var isCommissionMusic = userAccessControlDto.IsCommissionMusic();
 }
 @if (hasCurrentEvaluation)
 {
@@ -37,12 +39,24 @@
         </div>
     </div>
 }
-else
+else if ((isCommissionMusic && editionDto.IsMusicPitchingComissionEvaluationOpen())
+    || (isCommissionMusicCurator && editionDto.IsMusicPitchingCuratorEvaluationOpen())
+    || (isCommissionMusicCurator && editionDto.IsMusicPitchingRepechageEvaluationOpen()))
 {
     <div class="row">
         <div class="col-12 mb-2">
             <div class="myrio2c-alert-box warning mx-auto text-center">
                 <span>@Labels.UnderEvaluation</span>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-12 mb-2">
+            <div class="myrio2c-alert-box warning mx-auto text-center">
+                <span>@Messages.OutOfEvaluationPeriod</span>
             </div>
         </div>
     </div>

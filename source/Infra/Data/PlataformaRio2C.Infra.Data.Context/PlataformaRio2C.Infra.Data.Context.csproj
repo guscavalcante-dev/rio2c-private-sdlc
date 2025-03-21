@@ -540,6 +540,10 @@
     <Compile Include="Migrations\202503211344546_ChangesForAttendeeMusicBandEvaluationsEvaluationStatusIds.Designer.cs">
       <DependentUpon>202503211344546_ChangesForAttendeeMusicBandEvaluationsEvaluationStatusIds.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202503211707354_UpdateMigrations_20250321.cs" />
+    <Compile Include="Migrations\202503211707354_UpdateMigrations_20250321.Designer.cs">
+      <DependentUpon>202503211707354_UpdateMigrations_20250321.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -1085,6 +1089,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202503211344546_ChangesForAttendeeMusicBandEvaluationsEvaluationStatusIds.resx">
       <DependentUpon>202503211344546_ChangesForAttendeeMusicBandEvaluationsEvaluationStatusIds.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202503211707354_UpdateMigrations_20250321.resx">
+      <DependentUpon>202503211707354_UpdateMigrations_20250321.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
