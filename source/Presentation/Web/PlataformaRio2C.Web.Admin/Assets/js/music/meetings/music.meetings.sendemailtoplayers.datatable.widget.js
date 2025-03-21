@@ -223,12 +223,12 @@ var MusicMeetingsSendEmailToPlayersDataTableWidget = function () {
                                 html += '\
                                     <tr style="font-size: 10px; border-top: 1px solid #ebedf2;;">\
                                         <td class="text-center">' + moment(r.StartDate).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L') + '</td>\
-                                        <td class="text-center">' + r.RoomJsonDto.Name;
+                                        <td class="text-center">'+ r.RoomJsonDto.Name ;
 
-                                if (!MyRio2cCommon.isNullOrEmpty(r.RoomJsonDto.IsVirtualMeeting)) {
-                                    var virtualOrPresentialText = (r.RoomJsonDto.IsVirtualMeeting === true) ? translations.virtual : translations.presential;
-                                    html += '<span class="kt-badge kt-badge--inline kt-badge--warning kt-font-boldest">' + virtualOrPresentialText + '</span>';
-                                }
+                                //if (!MyRio2cCommon.isNullOrEmpty(r.RoomJsonDto.IsVirtualMeeting)) {
+                                //    var virtualOrPresentialText = (r.RoomJsonDto.IsVirtualMeeting === true) ? translations.virtual : translations.presential;
+                                //    html += '<span class="kt-badge kt-badge--inline kt-badge--warning kt-font-boldest">' + virtualOrPresentialText + '</span>';
+                                //}
 
                                 html += '\
                                         </td>\

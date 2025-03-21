@@ -1669,7 +1669,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
            
             var query = this.GetBaseQuery()
                             .FindByEditionId(editionId ?? 0, showAllEditions)
-                            .FindByCollaboratorTypeUid(CollaboratorType.PlayerExecutiveMusic.Uid)
+                            .FindByCollaboratorTypeUid(CollaboratorType.Industry.Uid)
                             .HasActiveSellerNegotiations();
 
             return await query.CountAsync();
