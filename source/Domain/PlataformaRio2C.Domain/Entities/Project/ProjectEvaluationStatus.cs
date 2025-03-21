@@ -4,7 +4,7 @@
 // Created          : 11-11-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-13-2023
+// Last Modified On : 21-03-2025
 // ***********************************************************************
 // <copyright file="ProjectEvaluationStatus.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,7 +13,6 @@
 // ***********************************************************************
 using System;
 using System.Linq;
-using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
@@ -33,8 +32,8 @@ namespace PlataformaRio2C.Domain.Entities
         public static ProjectEvaluationStatus Accepted = new ProjectEvaluationStatus(2, new Guid("3DFA9E93-CAB8-4A5E-83D1-BF945DD7C137"), "Accepted", Labels.ProjectAccepted);
         public static ProjectEvaluationStatus Refused = new ProjectEvaluationStatus(3, new Guid("CA9C8F5D-C368-4A50-B85C-49C7CFD48625"), "Refused", Labels.ProjectRefused);
         public static ProjectEvaluationStatus[] ProjectEvaluationStatuses = { UnderEvaluation, Accepted, Refused };
-        
-            #endregion
+
+        #endregion
 
         public string Name { get; private set; }
         public string Code { get; private set; }

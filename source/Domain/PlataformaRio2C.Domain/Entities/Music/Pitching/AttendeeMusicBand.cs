@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 02-26-2020
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 12-02-2024
+// Last Modified By : Renan Valentim
+// Last Modified On : 21-03-2025
 // ***********************************************************************
 // <copyright file="AttendeeMusicBand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

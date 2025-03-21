@@ -4,7 +4,7 @@
 // Created          : 09-26-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 11-19-2024
+// Last Modified On : 21-03-2025
 // ***********************************************************************
 // <copyright file="CollaboratorType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

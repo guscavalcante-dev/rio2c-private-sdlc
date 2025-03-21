@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 03-30-2021
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 12-02-2024
+// Last Modified By : Renan Valentim
+// Last Modified On : 21-03-2025
 // ***********************************************************************
 // <copyright file="AttendeeMusicBandEvaluation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

@@ -14,7 +14,6 @@
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using System.Linq;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
 using PlataformaRio2C.Domain.Dtos;

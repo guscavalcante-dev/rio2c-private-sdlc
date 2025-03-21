@@ -5,7 +5,6 @@
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
-    //var currentEvaluation = Model.AttendeeMusicBandDto.GetAttendeeMusicBandEvaluationByUserId(userAccessControlDto?.User?.Id ?? 0);
     var currentEvaluation = Model.AttendeeMusicBandDto.GetLastAttendeeMusicBandEvaluation(userAccessControlDto);
     var hasCurrentEvaluation = currentEvaluation != null;
 }

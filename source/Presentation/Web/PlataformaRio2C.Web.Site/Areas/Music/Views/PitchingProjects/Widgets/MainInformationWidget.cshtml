@@ -8,7 +8,6 @@
     var editionDto = ViewBag.EditionDto as EditionDto;
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var isMusicCommission = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.CommissionMusic) == true;
-    //var currentEvaluation = Model.AttendeeMusicBandDto.GetAttendeeMusicBandEvaluationByUserId(userAccessControlDto.User.Id);
     var currentEvaluation = Model.AttendeeMusicBandDto.GetLastAttendeeMusicBandEvaluation(userAccessControlDto);
     var hasCurrentEvaluation = currentEvaluation != null;
     var isEvaluatedByCurrentUser = currentEvaluation?.EvaluatorUser?.Id == userAccessControlDto.User.Id;

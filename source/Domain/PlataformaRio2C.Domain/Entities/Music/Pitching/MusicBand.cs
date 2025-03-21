@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 02-26-2020
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 12-02-2024
+// Last Modified By : Renan Valentim
+// Last Modified On : 21-03-2025
 // ***********************************************************************
 // <copyright file="MusicBand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,7 +14,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
@@ -35,8 +34,6 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int TiktokMaxLength = 300;
         public static readonly int SpotifyMaxLength = 256;
         public static readonly int DeezerMaxLength = 256;
-
-
 
         public int MusicBandTypeId { get; private set; }
         public string Name { get; private set; }

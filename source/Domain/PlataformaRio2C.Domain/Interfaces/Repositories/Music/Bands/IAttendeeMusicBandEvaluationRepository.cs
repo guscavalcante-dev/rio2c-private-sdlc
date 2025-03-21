@@ -3,17 +3,15 @@
 // Author           : Gilson Oliveira
 // Created          : 11-19-2024
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 12-02-2024
+// Last Modified By : Renan Valentim
+// Last Modified On : 21-03-2025
 // ***********************************************************************
 // <copyright file="IAttendeeMusicBandEvaluationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Domain.Entities;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Domain.Interfaces

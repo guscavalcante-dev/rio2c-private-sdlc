@@ -3,15 +3,14 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 02-28-2020
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 12-02-2024
+// Last Modified By : Renan Valentim
+// Last Modified On : 21-03-2025
 // ***********************************************************************
 // <copyright file="RefuseMusicPitchingEvaluationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -21,7 +20,6 @@ using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
-using System.Collections.Generic;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {

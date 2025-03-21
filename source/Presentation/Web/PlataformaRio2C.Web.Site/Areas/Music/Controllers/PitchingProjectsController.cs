@@ -3,10 +3,10 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 02-26-2020
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 12-02-2024
+// Last Modified By : Renan Valentim
+// Last Modified On : 21-03-2025
 // ***********************************************************************
-// <copyright file="ProjectsController.cs" company="Softo">
+// <copyright file="PitchingProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -31,11 +31,10 @@ using PlataformaRio2C.Web.Site.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 using X.PagedList;
 using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 {
-    /// <summary>ProjectsController</summary>
+    /// <summary>PitchingProjectsController</summary>
     [AjaxAuthorize(Order = 1)]
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.CommissionMusic + "," + Constants.CollaboratorType.CommissionMusicCurator)]
     public class PitchingProjectsController : BaseController
@@ -167,7 +166,6 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             ViewBag.ShowBusinessRounds = showBusinessRounds;
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
-            //ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id, this.UserAccessControlDto.User.Id);
 
             return Json(new
             {
