@@ -111,28 +111,7 @@
                                     }
                                 </div>
                             }
-                            else if ((isCommissionMusic && editionDto.IsMusicPitchingComissionEvaluationOpen())
-                                || (isCommissionMusicCurator && editionDto.IsMusicPitchingCuratorEvaluationOpen())
-                                || (isCommissionMusicCurator && editionDto.IsMusicPitchingRepechageEvaluationOpen()))
-                            {
-                                <div class="row">
-                                    <div class="col-12 mb-2">
-                                        <div class="myrio2c-alert-box warning mx-auto text-center">
-                                            <span>@Labels.UnderEvaluation</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="row">
-                                    <div class="col-12 mb-2">
-                                        <div class="myrio2c-alert-box warning mx-auto text-center">
-                                            <span>@Messages.OutOfEvaluationPeriod</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
+
                             @if (isCommissionMusicCurator && editionDto.IsMusicPitchingCuratorEvaluationOpen() == true)
                             {
                                 <div class="edit @(hasCurrentEvaluation ? "d-none" : "")">
@@ -218,6 +197,16 @@
                                             </button>
                                         }
                                     </form>
+                                </div>
+                            }
+                            else if(!hasCurrentEvaluation)
+                            {
+                                <div class="row">
+                                    <div class="col-12 mb-2">
+                                        <div class="myrio2c-alert-box warning mx-auto text-center">
+                                            <span>@Messages.OutOfEvaluationPeriod</span>
+                                        </div>
+                                    </div>
                                 </div>
                             }
                         </div>
