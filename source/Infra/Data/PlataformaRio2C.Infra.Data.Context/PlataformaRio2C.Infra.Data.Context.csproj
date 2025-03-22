@@ -550,6 +550,14 @@
     <Compile Include="Migrations\202502281354352_InsertNewInterestGroupSegment.Designer.cs">
       <DependentUpon>202502281354352_InsertNewInterestGroupSegment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202503211344546_ChangesForAttendeeMusicBandEvaluationsEvaluationStatusIds.cs" />
+    <Compile Include="Migrations\202503211344546_ChangesForAttendeeMusicBandEvaluationsEvaluationStatusIds.Designer.cs">
+      <DependentUpon>202503211344546_ChangesForAttendeeMusicBandEvaluationsEvaluationStatusIds.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202503211707354_UpdateMigrations_20250321.cs" />
+    <Compile Include="Migrations\202503211707354_UpdateMigrations_20250321.Designer.cs">
+      <DependentUpon>202503211707354_UpdateMigrations_20250321.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202503131509015_UpdateDatabase_20250313.cs" />
     <Compile Include="Migrations\202503131509015_UpdateDatabase_20250313.Designer.cs">
       <DependentUpon>202503131509015_UpdateDatabase_20250313.cs</DependentUpon>
@@ -579,6 +587,12 @@
     </Content>
     <Content Include="Migrations\Scripts\202411140217302_AddMusicPitchingFieldToEditions.up.sql" />
     <Content Include="Migrations\Scripts\202503071535077_ChangesForCreatorProjectsTable.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202503211344546_ChangesForAttendeeMusicBandEvaluationsEvaluationStatusIds.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202503211344546_ChangesForAttendeeMusicBandEvaluationsEvaluationStatusIds.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202503071535077_ChangesForCreatorProjectsTable.up.sql">
@@ -1111,6 +1125,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202502281354352_InsertNewInterestGroupSegment.resx">
       <DependentUpon>202502281354352_InsertNewInterestGroupSegment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202503211344546_ChangesForAttendeeMusicBandEvaluationsEvaluationStatusIds.resx">
+      <DependentUpon>202503211344546_ChangesForAttendeeMusicBandEvaluationsEvaluationStatusIds.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202503211707354_UpdateMigrations_20250321.resx">
+      <DependentUpon>202503211707354_UpdateMigrations_20250321.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202503131509015_UpdateDatabase_20250313.resx">
       <DependentUpon>202503131509015_UpdateDatabase_20250313.cs</DependentUpon>

@@ -292,6 +292,12 @@
     <value>Approve</value>
     <comment>Aprovar</comment>
   </data>
+  <data name="Approved" xml:space="preserve">
+    <value>Approved</value>
+  </data>
+  <data name="ApprovedBy" xml:space="preserve">
+    <value>Approved by</value>
+  </data>
   <data name="ApproveToRepechage" xml:space="preserve">
     <value>Approve repechage</value>
   </data>
@@ -624,6 +630,9 @@
   <data name="ClickHere" xml:space="preserve">
     <value>Click here</value>
   </data>
+  <data name="ClickHereToChangeEvaluation" xml:space="preserve">
+    <value>Click here to change evaluation</value>
+  </data>
   <data name="ClickHereToEvaluateProject" xml:space="preserve">
     <value>Click here to evaluate the project</value>
     <comment>Clique aqui para avaliar o projeto</comment>
@@ -676,6 +685,9 @@
   </data>
   <data name="CommissionMaximumApprovedProjectsCount" xml:space="preserve">
     <value>Commission maximum approved projects count</value>
+  </data>
+  <data name="CommissionMember" xml:space="preserve">
+    <value>Commission Member</value>
   </data>
   <data name="CommissionMinimumEvaluationsCount" xml:space="preserve">
     <value>Minimum number of votes to generate average</value>
@@ -848,6 +860,9 @@
   </data>
   <data name="Credentialing" xml:space="preserve">
     <value>Credentialing</value>
+  </data>
+  <data name="Curator" xml:space="preserve">
+    <value>Curator</value>
   </data>
   <data name="CuratorApproval" xml:space="preserve">
     <value>Curator's approval</value>
@@ -2624,6 +2639,9 @@
   <data name="Refused" xml:space="preserve">
     <value>Refused</value>
   </data>
+  <data name="RefusedBy" xml:space="preserve">
+    <value>Refused by</value>
+  </data>
   <data name="RefuseProject" xml:space="preserve">
     <value>Refuse</value>
     <comment>Reprovar</comment>
@@ -2688,6 +2706,9 @@
   <data name="RemoveFromEdition" xml:space="preserve">
     <value>Remove from {0}</value>
     <comment>Remover de {0}</comment>
+  </data>
+  <data name="Repechage" xml:space="preserve">
+    <value>Repechage</value>
   </data>
   <data name="Reports" xml:space="preserve">
     <value>Reports</value>

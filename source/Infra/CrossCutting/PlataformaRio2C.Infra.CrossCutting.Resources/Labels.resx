@@ -293,6 +293,12 @@
     <value>Aprovar</value>
     <comment>Aprovar</comment>
   </data>
+  <data name="Approved" xml:space="preserve">
+    <value>Aprovado</value>
+  </data>
+  <data name="ApprovedBy" xml:space="preserve">
+    <value>Aprovado por</value>
+  </data>
   <data name="ApproveToRepechage" xml:space="preserve">
     <value>Aprovar repescagem</value>
   </data>
@@ -619,6 +625,9 @@
   <data name="ClickHere" xml:space="preserve">
     <value>Clique aqui</value>
   </data>
+  <data name="ClickHereToChangeEvaluation" xml:space="preserve">
+    <value>Clique aqui para alterar a avaliação</value>
+  </data>
   <data name="ClickHereToEvaluateProject" xml:space="preserve">
     <value>Clique aqui para avaliar o projeto</value>
     <comment>Clique aqui para avaliar o projeto</comment>
@@ -670,6 +679,9 @@
   </data>
   <data name="CommissionMaximumApprovedProjectsCount" xml:space="preserve">
     <value>Quantidade máxima de projetos aprovados</value>
+  </data>
+  <data name="CommissionMember" xml:space="preserve">
+    <value>Membro da Comissão</value>
   </data>
   <data name="CommissionMinimumEvaluationsCount" xml:space="preserve">
     <value>Quantidade mínima de votos para gerar média</value>
@@ -844,6 +856,9 @@
   </data>
   <data name="Credentialing" xml:space="preserve">
     <value>Credenciamento</value>
+  </data>
+  <data name="Curator" xml:space="preserve">
+    <value>Curador</value>
   </data>
   <data name="CuratorApproval" xml:space="preserve">
     <value>Aprovação do curador</value>
@@ -2615,7 +2630,10 @@
     <value>Recusar</value>
   </data>
   <data name="Refused" xml:space="preserve">
-    <value>Recusado</value>
+    <value>Reprovado</value>
+  </data>
+  <data name="RefusedBy" xml:space="preserve">
+    <value>Reprovado por</value>
   </data>
   <data name="RefuseProject" xml:space="preserve">
     <value>Reprovar</value>
@@ -2685,6 +2703,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="RemoveFromEdition" xml:space="preserve">
     <value>Remover de {0}</value>
     <comment>Remover de {0}</comment>
+  </data>
+  <data name="Repechage" xml:space="preserve">
+    <value>Repescagem</value>
   </data>
   <data name="Reports" xml:space="preserve">
     <value>Relatórios</value>

@@ -4,7 +4,7 @@
 // Created          : 08-28-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-21-2023
+// Last Modified On : 21-03-2025
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1255,9 +1255,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 UpdateDate = ao.UpdateDate,
                                 AttendeeCollaboratorBaseDtos = ao.AttendeeOrganizationCollaborators
                                                                     .Where(aoc => !aoc.IsDeleted
-                                                                                                          && !aoc.AttendeeCollaborator.IsDeleted
-                                                                                                          && !aoc.AttendeeCollaborator.Collaborator.IsDeleted
-                                                                                                          && !aoc.AttendeeCollaborator.Collaborator.User.IsDeleted)
+                                                                                    && !aoc.AttendeeCollaborator.IsDeleted
+                                                                                    && !aoc.AttendeeCollaborator.Collaborator.IsDeleted
+                                                                                    && !aoc.AttendeeCollaborator.Collaborator.User.IsDeleted)
                                                                     .Select(aoc => new AttendeeCollaboratorBaseDto
                                                                     {
                                                                         Id = aoc.Id,

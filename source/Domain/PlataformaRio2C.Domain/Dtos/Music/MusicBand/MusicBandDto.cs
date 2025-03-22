@@ -4,7 +4,7 @@
 // Created          : 01-03-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-03-2021
+// Last Modified On : 21-03-2025
 // ***********************************************************************
 // <copyright file="MusicBandDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -49,6 +49,32 @@ namespace PlataformaRio2C.Domain.Dtos
                 return null;
 
             return this.AttendeeMusicBandEvaluationsDtos.FirstOrDefault(w => w.EvaluatorUser?.Id == userId);
+        }
+
+        /// <summary>
+        /// Gets the last attendee music band evaluation.
+        /// </summary>
+        /// <returns></returns>
+        public AttendeeMusicBandEvaluationDto GetLastAttendeeMusicBandEvaluation(UserAccessControlDto userAccessControlDto)
+        {
+            if (userAccessControlDto.IsCommissionMusic())
+            {
+                return this.AttendeeMusicBandEvaluationsDtos?
+                    .OrderByDescending(ambe => ambe.AttendeeMusicBandEvaluation.CommissionEvaluationDate)
+                    .FirstOrDefault(ambe => ambe.AttendeeMusicBandEvaluation.CommissionEvaluationDate != null);
+            }
+            else if (userAccessControlDto.IsCommissionMusicCurator())
+            {
+                return this.AttendeeMusicBandEvaluationsDtos?
+                    .OrderByDescending(ambe => ambe.AttendeeMusicBandEvaluation.CuratorEvaluationDate)
+                    .FirstOrDefault(ambe => ambe.AttendeeMusicBandEvaluation.CuratorEvaluationDate != null);
+
+                //TODO: Implements the Repechage logic here
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

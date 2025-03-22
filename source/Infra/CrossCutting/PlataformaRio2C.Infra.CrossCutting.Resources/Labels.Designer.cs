@@ -484,6 +484,25 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aprovado.
+        /// </summary>
+        public static string Approved {
+            get {
+                return ResourceManager.GetString("Approved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aprovado por.
+        /// </summary>
+        public static string ApprovedBy {
+            get {
+                return ResourceManager.GetString("ApprovedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aprovar repescagem.
         ///   Consulta uma cadeia de caracteres localizada semelhante a Aprovar repescagem.
         /// </summary>
         public static string ApproveToRepechage {
@@ -1332,6 +1351,16 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clique aqui para alterar a avaliação.
+        /// </summary>
+        public static string ClickHereToChangeEvaluation {
+            get {
+                return ResourceManager.GetString("ClickHereToChangeEvaluation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clique aqui para avaliar o projeto.
         ///   Consulta uma cadeia de caracteres localizada semelhante a Clique aqui para avaliar o projeto.
         /// </summary>
         public static string ClickHereToEvaluateProject {
@@ -1458,6 +1487,16 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Membro da Comissão.
+        /// </summary>
+        public static string CommissionMember {
+            get {
+                return ResourceManager.GetString("CommissionMember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade mínima de votos para gerar média.
         ///   Consulta uma cadeia de caracteres localizada semelhante a Quantidade mínima de votos para gerar média.
         /// </summary>
         public static string CommissionMinimumEvaluationsCount {
@@ -1899,6 +1938,16 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Curador.
+        /// </summary>
+        public static string Curator {
+            get {
+                return ResourceManager.GetString("Curator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aprovação do curador.
         ///   Consulta uma cadeia de caracteres localizada semelhante a Aprovação do curador.
         /// </summary>
         public static string CuratorApproval {
@@ -6331,6 +6380,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reprovado.
         ///   Consulta uma cadeia de caracteres localizada semelhante a Recusado.
         /// </summary>
         public static string Refused {
@@ -6340,6 +6390,16 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reprovado por.
+        /// </summary>
+        public static string RefusedBy {
+            get {
+                return ResourceManager.GetString("RefusedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reprovar.
         ///   Consulta uma cadeia de caracteres localizada semelhante a Reprovar.
         /// </summary>
         public static string RefuseProject {
@@ -6498,6 +6558,16 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Repescagem.
+        /// </summary>
+        public static string Repechage {
+            get {
+                return ResourceManager.GetString("Repechage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Relatórios.
         ///   Consulta uma cadeia de caracteres localizada semelhante a Relatórios.
         /// </summary>
         public static string Reports {

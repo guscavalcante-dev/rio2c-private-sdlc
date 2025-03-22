@@ -638,12 +638,6 @@ The distribution can only be carried out once per issue.</value>
     <value>
 The discursive field of player categories is mandatory if any player option has been selected.</value>
   </data>
-  <data name="MusicPitchingMaximumApprovedProjectsByCurator" xml:space="preserve">
-    <value>It is allowed to evaluate a maximum of {0} {1} for curators</value>
-  </data>
-  <data name="MusicPitchingMaximumApprovedProjectsByRepechage" xml:space="preserve">
-    <value>It is allowed to evaluate a maximum of {0} {1} for repechage</value>
-  </data>
   <data name="MusicPlayerTerms" xml:space="preserve">
     <value>Player’s Regulation (Music)</value>
   </data>
@@ -1055,6 +1049,9 @@ The discursive field of player categories is mandatory if any player option has 
   <data name="ThereIsalreadyProjectRegisteredWithThisTitle" xml:space="preserve">
     <value>There is already a project registered with this title!</value>
   </data>
+  <data name="ThisBandHasBeenEvaluatedByAnotherUser" xml:space="preserve">
+    <value>Invalid operation! This Band has already been evaluated by another user.</value>
+  </data>
   <data name="ThisProjectHasAlreadyBeenSubmittedForTheEvaluationOfPlayers" xml:space="preserve">
     <value>This project has already been submitted for the evaluation of players</value>
   </data>
@@ -1144,9 +1141,6 @@ The discursive field of player categories is mandatory if any player option has 
   <data name="WouldYouLikeParticipatePitching" xml:space="preserve">
     <value>Would you like participate Pitching?</value>
   </data>
-  <data name="YouCanMusicPitchingMaximumApprovedProjectsByCommissionMember" xml:space="preserve">
-    <value>You can evaluate a maximum {0} of {1} in the edition</value>
-  </data>
   <data name="YouCanMusicPitchingMaximumProjectSubmissionsByEdition" xml:space="preserve">
     <value>The maximum limit of {0} {1} by edition has been reached</value>
   </data>
@@ -1180,6 +1174,9 @@ The discursive field of player categories is mandatory if any player option has 
   <data name="YouReachedProjectsLimit" xml:space="preserve">
     <value>Your reached the projects limit.</value>
     <comment>Você atingiu o limite de projetos.</comment>
+  </data>
+  <data name="YouReachedTheLimitApprovedBands" xml:space="preserve">
+    <value>You have reached the limit of {0} {1} approved bands</value>
   </data>
   <data name="YouReceivedMessageFrom" xml:space="preserve">
     <value>Your received a message from &lt;b&gt;{0}&lt;/b&gt;.&lt;br /&gt;&lt;br /&gt;Click here to be redirected to your inbox.</value>
