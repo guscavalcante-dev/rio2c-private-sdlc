@@ -1367,24 +1367,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to É permitido avaliar no máximo {0} {1} para os curadores.
-        /// </summary>
-        public static string MusicPitchingMaximumApprovedProjectsByCurator {
-            get {
-                return ResourceManager.GetString("MusicPitchingMaximumApprovedProjectsByCurator", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to É permitido avaliar no máximo {0} {1} para repescagem.
-        /// </summary>
-        public static string MusicPitchingMaximumApprovedProjectsByRepechage {
-            get {
-                return ResourceManager.GetString("MusicPitchingMaximumApprovedProjectsByRepechage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Regulamento de Players (Música).
         /// </summary>
         public static string MusicPlayerTerms {
@@ -2474,6 +2456,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operação inválida! Essa Banda já foi avaliada por outro usuário..
+        /// </summary>
+        public static string ThisBandHasBeenEvaluatedByAnotherUser {
+            get {
+                return ResourceManager.GetString("ThisBandHasBeenEvaluatedByAnotherUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Este projeto já foi enviado para avaliação de players.
         /// </summary>
         public static string ThisProjectHasAlreadyBeenSubmittedForTheEvaluationOfPlayers {
@@ -2708,15 +2699,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Você pode avaliar no máximo {0} {1} por edição.
-        /// </summary>
-        public static string YouCanMusicPitchingMaximumApprovedProjectsByCommissionMember {
-            get {
-                return ResourceManager.GetString("YouCanMusicPitchingMaximumApprovedProjectsByCommissionMember", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Foi atingido o limite máximo de {0} {1} por edição.
         /// </summary>
         public static string YouCanMusicPitchingMaximumProjectSubmissionsByEdition {
@@ -2803,6 +2785,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string YouReachedProjectsLimit {
             get {
                 return ResourceManager.GetString("YouReachedProjectsLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Você atingiu o limite de {0} bandas aprovadas por {1}.
+        /// </summary>
+        public static string YouReachedTheLimitApprovedBands {
+            get {
+                return ResourceManager.GetString("YouReachedTheLimitApprovedBands", resourceCulture);
             }
         }
         

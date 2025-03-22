@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 02-26-2020
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 12-02-2024
+// Last Modified By : Renan Valentim
+// Last Modified On : 21-03-2025
 // ***********************************************************************
 // <copyright file="MusicBand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,7 +14,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
@@ -35,8 +34,6 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int TiktokMaxLength = 300;
         public static readonly int SpotifyMaxLength = 256;
         public static readonly int DeezerMaxLength = 256;
-
-
 
         public int MusicBandTypeId { get; private set; }
         public string Name { get; private set; }
@@ -246,33 +243,33 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="evaluatorUser">The evaluator user.</param>
-        /// <param name="commissionEvaluationStatus">The comission evaluation status.</param>
-        public void ComissionEvaluation(Edition edition, User evaluatorUser, ProjectEvaluationStatus commissionEvaluationStatus)
+        /// <param name="projectEvaluationStatusId">The comission evaluation status.</param>
+        public void ComissionEvaluation(Edition edition, User evaluatorUser, int projectEvaluationStatusId)
         {
             var attendeeMusicBand = this.FindAttendeeMusicBandByEditionId(edition.Id);
-            attendeeMusicBand?.ComissionEvaluation(evaluatorUser, commissionEvaluationStatus);
+            attendeeMusicBand?.ComissionEvaluation(evaluatorUser, projectEvaluationStatusId);
         }
 
         /// <summary>
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="evaluatorUser">The evaluator user.</param>
-        /// <param name="curatorEvaluationStatusId">The curator evaluation status.</param>
-        public void CuratorEvaluation(Edition edition, User evaluatorUser, ProjectEvaluationStatus curatorEvaluationStatusId)
+        /// <param name="projectEvaluationStatusId">The curator evaluation status.</param>
+        public void CuratorEvaluation(Edition edition, User evaluatorUser, int projectEvaluationStatusId)
         {
             var attendeeMusicBand = this.FindAttendeeMusicBandByEditionId(edition.Id);
-            attendeeMusicBand?.CuratorEvaluation(evaluatorUser, curatorEvaluationStatusId);
+            attendeeMusicBand?.CuratorEvaluation(evaluatorUser, projectEvaluationStatusId);
         }
 
         /// <summary>
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="evaluatorUser">The evaluator user.</param>
-        /// <param name="curatorEvaluationStatusId">The curator evaluation status.</param>
-        public void RepechageEvaluation(Edition edition, User evaluatorUser, ProjectEvaluationStatus curatorEvaluationStatusId)
+        /// <param name="projectEvaluationStatusId">The curator evaluation status.</param>
+        public void RepechageEvaluation(Edition edition, User evaluatorUser, int projectEvaluationStatusId)
         {
             var attendeeMusicBand = this.FindAttendeeMusicBandByEditionId(edition.Id);
-            attendeeMusicBand?.RepechageEvaluation(evaluatorUser, curatorEvaluationStatusId);
+            attendeeMusicBand?.RepechageEvaluation(evaluatorUser, projectEvaluationStatusId);
         }
 
         #endregion
