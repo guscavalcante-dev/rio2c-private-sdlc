@@ -1023,6 +1023,9 @@
     <Content Include="Assets\js\music\meetingparameters\music.meetingparameters.maininformation.widget.js" />
     <Content Include="Assets\js\music\meetingparameters\music.meetingparameters.rooms.widget.js" />
     <Content Include="Assets\js\music\meetingparameters\music.meetingparameters.totalcount.widget.js" />
+    <Content Include="Assets\js\music\meetings\music.meetings.sendemailtoplayers.datatable.widget.js" />
+    <Content Include="Assets\js\music\meetings\music.meetings.sendemailtoplayers.editioncount.widget.js" />
+    <Content Include="Assets\js\music\meetings\music.meetings.sendemailtoplayers.totalcount.widget.js" />
     <Content Include="Assets\js\music\meetings\music.meetings.sendemailtoproducers.datatable.widget.js" />
     <Content Include="Assets\js\music\meetings\music.meetings.sendemailtoproducers.totalcount.widget.js" />
     <Content Include="Assets\js\music\meetings\music.meetings.sendemailtoproducers.editioncount.widget.js" />
@@ -8356,6 +8359,10 @@
     <Content Include="Areas\Music\Views\Meetings\Widgets\SendEmailToProducersDataTableWidget.cshtml" />
     <Content Include="Areas\Music\Views\Meetings\Widgets\SendEmailToProducersEditionCountWidget.cshtml" />
     <Content Include="Areas\Music\Views\Meetings\SendEmailToProducers.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\Widgets\SendEmailToPlayersDataTableWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\Widgets\SendEmailToPlayersEditionCountWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\Widgets\SendEmailToPlayersTotalCountWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\SendEmailToPlayers.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

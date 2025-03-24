@@ -1553,6 +1553,131 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         #endregion
 
+        #region Players
+
+        /// <summary>
+        /// Finds all by active buyer negotiations and by data table.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="languageId">The language identifier.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<MusicBusinessRoundNegotiationAttendeeCollaboratorBaseDto>> FindAllByActiveBuyerNegotiationsAndByDataTable(
+            int page,
+            int pageSize,
+            string keywords,
+            List<Tuple<string, string>> sortColumns,
+            int editionId,
+            int languageId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByKeywords(keywords)
+                                .FindByEditionId(editionId, false)
+                                .FindByCollaboratorTypeUid(CollaboratorType.Industry.Uid)
+                                .HasActiveSellerNegotiations();
+
+            return await query
+                         .DynamicOrder<AttendeeCollaborator>(
+                             sortColumns,
+                             new List<Tuple<string, string>>
+                             {
+                                 //new Tuple<string, string>("HoldingBaseDto.Name", "Holding.Name")
+                             },
+                             new List<string> { "Collaborator.FirstName" },
+                             "Collaborator.FirstName")
+                         .Select(ao => new MusicBusinessRoundNegotiationAttendeeCollaboratorBaseDto
+                         {
+                             Id = ao.Id,
+                             Uid = ao.Uid,
+                             CollaboratorDto = new CollaboratorDto
+                             {
+                                 Id = ao.Collaborator.Id,
+                                 Uid = ao.Collaborator.Uid,
+                                 FirstName = ao.Collaborator.FirstName,
+                                 LastNames = ao.Collaborator.LastNames,
+                                 ImageUploadDate = ao.Collaborator.ImageUploadDate
+                             },
+                             CreateDate = ao.CreateDate,
+                             UpdateDate = ao.UpdateDate,
+                             MusicBusinessRoundNegotiationBaseDtos = ao.MusicBusinessRoundProjects
+                                                             .SelectMany(sp => sp.MusicBusinessRoundProjectBuyerEvaluations
+                                                             .SelectMany(pbe => pbe.MusicBusinessRoundNegotiations
+                                                             .Where(n => !n.IsDeleted && !n.MusicBusinessRoundProjectBuyerEvaluation.IsDeleted && !n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.IsDeleted)
+                                                             .Select(n => new MusicBusinessRoundNegotiationBaseDto
+                                                             {
+                                                                 Id = n.Id,
+                                                                 Uid = n.Uid,
+                                                                 StartDate = n.StartDate,
+                                                                 EndDate = n.EndDate,
+                                                                 TableNumber = n.TableNumber,
+                                                                 RoundNumber = n.RoundNumber,
+                                                                 IsAutomatic = n.IsAutomatic,
+                                                                 MusicBusinessRoundProjectBuyerEvaluationBaseDto = new MusicBusinessRoundProjectBuyerEvaluationBaseDto
+                                                                 {
+                                                                     Id = n.MusicBusinessRoundProjectBuyerEvaluation.Id,
+                                                                     Uid = n.MusicBusinessRoundProjectBuyerEvaluation.Uid,
+                                                                     EvaluationDate = n.MusicBusinessRoundProjectBuyerEvaluation.EvaluationDate,
+                                                                     Reason = n.MusicBusinessRoundProjectBuyerEvaluation.Reason,
+                                                                     MusicBusinessProjectBaseDto = new MusicBusinessRoundProjectBaseDto
+                                                                     {
+                                                                         Id = sp.Id,
+                                                                         Uid = sp.Uid,
+                                                                         ProjectName = sp.SellerAttendeeCollaborator.Collaborator.FirstName,
+                                                                         CreateDate = sp.CreateDate,
+                                                                         FinishDate = sp.FinishDate
+                                                                     },
+                                                                     BuyerAttendeeOrganizationBaseDto = new AttendeeOrganizationBaseDto
+                                                                     {
+                                                                         Id = pbe.BuyerAttendeeOrganization.Id,
+                                                                         Uid = pbe.BuyerAttendeeOrganization.Uid,
+                                                                         OrganizationBaseDto = new OrganizationBaseDto
+                                                                         {
+                                                                             Id = pbe.BuyerAttendeeOrganization.Organization.Id,
+                                                                             Uid = pbe.BuyerAttendeeOrganization.Organization.Uid,
+                                                                             Name = pbe.BuyerAttendeeOrganization.Organization.Name,
+                                                                             TradeName = pbe.BuyerAttendeeOrganization.Organization.TradeName,
+                                                                             ImageUploadDate = pbe.BuyerAttendeeOrganization.Organization.ImageUploadDate
+                                                                         },
+                                                                         CreateDate = pbe.BuyerAttendeeOrganization.CreateDate,
+                                                                         UpdateDate = pbe.BuyerAttendeeOrganization.UpdateDate,
+                                                                     }
+                                                                 },
+                                                                 RoomJsonDto = new RoomJsonDto
+                                                                 {
+                                                                     Id = n.Room.Id,
+                                                                     Uid = n.Room.Uid,
+                                                                     Name = n.Room.RoomNames.FirstOrDefault(rn => !rn.IsDeleted && rn.LanguageId == languageId).Value,
+                                                                     IsVirtualMeeting = n.Room.IsVirtualMeeting,
+                                                                     CreateDate = n.Room.CreateDate,
+                                                                     UpdateDate = n.Room.UpdateDate
+                                                                 }
+                                                             })))
+                         }).ToListPagedAsync(page, pageSize);
+        }
+
+        /// <summary>
+        /// Counts all by active buyer negotiations and by data table.
+        /// </summary>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<int> CountAllByActiveBuyerNegotiationsAndByDataTable(bool showAllEditions, int? editionId)
+        {
+           
+            var query = this.GetBaseQuery()
+                            .FindByEditionId(editionId ?? 0, showAllEditions)
+                            .FindByCollaboratorTypeUid(CollaboratorType.Industry.Uid)
+                            .HasActiveSellerNegotiations();
+
+            return await query.CountAsync();
+        }
+
+
+        #endregion
+
         #region Producer
         /// <summary>
         /// Finds all by active seller negotiations and by data table.
