@@ -298,13 +298,6 @@ var MusicMeetingsSendEmailToPlayersDataTableWidget = function () {
         table.ajax.reload();
     };
 
-    //var showDetails = function (playerUid) {
-    //    if (MyRio2cCommon.isNullOrEmpty(playerUid)) {
-    //        return;
-    //    }
-
-    //    window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Players/Details/' + playerUid);
-    //};
 
     return {
         init: function () {

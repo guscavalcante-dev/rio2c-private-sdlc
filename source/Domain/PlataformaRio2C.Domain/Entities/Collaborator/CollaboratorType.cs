@@ -29,6 +29,7 @@ namespace PlataformaRio2C.Domain.Entities
         public static CollaboratorType AdminAudiovisual = new CollaboratorType(new Guid("3871F510-C081-4B69-9ECC-8889E791B0CC"), "Admin | Audiovisual");
         public static CollaboratorType AdminLogistic = new CollaboratorType(new Guid("2141F9F7-4037-423C-81BF-7ED27520489A"), "Admin | Logistic");
         public static CollaboratorType AdminMusic = new CollaboratorType(new Guid("A838C20B-DD55-4B9D-AECB-37A7E5320DB0"), "Admin | Music");
+        public static CollaboratorType MusicPlayer = new CollaboratorType(new Guid("936B3262-8B8F-472C-94AD-3A2B925DD0AE"), "Music Player");
         public static CollaboratorType AdminInnovation = new CollaboratorType(new Guid("ADF9A699-A8BC-4A1D-8971-C0AC7776D335"), "Admin | Innovation");
         public static CollaboratorType AdminCartoon = new CollaboratorType(new Guid("C55E9C0C-2432-422C-87C6-199457A7C555"), "Admin | Cartoon");
         public static CollaboratorType AdminEditorial = new CollaboratorType(new Guid("3CC40A76-5E69-43E0-872E-2DA26C3C1434"), "Admin | Editorial");
