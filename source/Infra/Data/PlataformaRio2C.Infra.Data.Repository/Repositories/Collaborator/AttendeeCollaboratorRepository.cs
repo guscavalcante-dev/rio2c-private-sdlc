@@ -1576,7 +1576,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords)
                                 .FindByEditionId(editionId, false)
-                                .FindByCollaboratorTypeUid(CollaboratorType.PlayerExecutiveMusic.Uid)
+                                .FindByCollaboratorTypeUid(CollaboratorType.Industry.Uid)
                                 .HasActiveSellerNegotiations();
 
             return await query
@@ -1669,7 +1669,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
            
             var query = this.GetBaseQuery()
                             .FindByEditionId(editionId ?? 0, showAllEditions)
-                            .FindByCollaboratorTypeUid(CollaboratorType.PlayerExecutiveMusic.Uid)
+                            .FindByCollaboratorTypeUid(CollaboratorType.Industry.Uid)
                             .HasActiveSellerNegotiations();
 
             return await query.CountAsync();
@@ -1691,26 +1691,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             int languageId)
         {
             var query = this.GetBaseQuery()
-                                .FindByKeywords(keywords)
-                                .FindByUids(selectedAttendeeCollaboratorsUids)
-                                .FindByEditionId(editionId, false)
-                                .FindByOrganizationTypeUidAndEditionId(editionId, false,CollaboratorType.PlayerExecutiveMusic.Uid)
-                                .HasActiveSellerNegotiations();
+                                 .FindByKeywords(keywords)
+                                 .FindByUids(selectedAttendeeCollaboratorsUids)
+                                 .FindByEditionId(editionId, false)
+                                 .FindByOrganizationTypeUidAndEditionId(editionId, false, CollaboratorType.Industry.Uid)
+                                 .HasActiveSellerNegotiations();
 
             return await query
-                            .OrderBy(ao => ao.Collaborator.StageName)
+                            .OrderBy(ao => ao.Collaborator.FirstName)
                             .Select(ao => new MusicBusinessRoundNegotiationAttendeeCollaboratorBaseDto
                             {
                                 Id = ao.Id,
                                 Uid = ao.Uid,
-                                CollaboratorDto = new CollaboratorDto
-                                {
-                                    Id = ao.Collaborator.Id,
-                                    Uid = ao.Collaborator.Uid,
-                                    LastNames = ao.Collaborator.LastNames,
-                                    FirstName = ao.Collaborator.FirstName,
-                                    ImageUploadDate = ao.Collaborator.ImageUploadDate
-                                },
                                 CreateDate = ao.CreateDate,
                                 UpdateDate = ao.UpdateDate,
                                 AttendeeCollaboratorBaseDtos = ao.AttendeeOrganizationCollaborators

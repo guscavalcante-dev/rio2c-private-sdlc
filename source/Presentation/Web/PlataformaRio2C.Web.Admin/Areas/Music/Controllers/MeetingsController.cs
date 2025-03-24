@@ -827,12 +827,12 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// Sends the players emails.
         /// </summary>
         /// <param name="keywords">The keywords.</param>
-        /// <param name="selectedAttendeeCollaboratorsUids">The selected attendee organizations uids.</param>
+        /// <param name="selectedAttendeeOrganizationsUids">The selected attendee organizations uids.</param>
         /// <returns></returns>
         /// <exception cref="DomainException">
         /// </exception>
         [HttpPost]
-        public async Task<ActionResult> SendPlayersEmails(string keywords, string selectedAttendeeCollaboratorsUids)
+        public async Task<ActionResult> SendPlayersEmails(string keywords, string selectedAttendeeOrganizationsUids)
         {
             AppValidationResult result = null;
 
@@ -840,7 +840,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             {
                 var attendeeOrganizationBaseDtos = await this.attendeeCollaboratorRepo.FindAllBaseDtoByActiveBuyerNegotiations(
                     keywords,
-                    selectedAttendeeCollaboratorsUids?.ToListGuid(','),
+                    selectedAttendeeOrganizationsUids?.ToListGuid(','),
                     this.EditionDto.Id,
                     this.AdminAccessControlDto.Language.Id);
                 if (attendeeOrganizationBaseDtos?.Any() != true)

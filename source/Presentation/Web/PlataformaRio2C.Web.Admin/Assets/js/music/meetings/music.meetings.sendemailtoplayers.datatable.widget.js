@@ -1,9 +1,9 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Rafael Ribeiro
+// Author           : Rafael Dantas Ruiz
 // Created          : 06-26-2021
 //
-// Last Modified By : Rafael Ribeiro
+// Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 07-23-2021
 // ***********************************************************************
 // <copyright file="music.meetings.sendemailtoplayers.datatable.widget.js" company="Softo">
@@ -33,11 +33,11 @@ var MusicMeetingsSendEmailToPlayersDataTableWidget = function () {
                 }
             });
         })
-        .fail(function () {
-        })
-        .always(function () {
-            MyRio2cCommon.unblock();
-        });
+            .fail(function () {
+            })
+            .always(function () {
+                MyRio2cCommon.unblock();
+            });
     };
 
     var showSendEmailsModal = function () {
@@ -90,7 +90,7 @@ var MusicMeetingsSendEmailToPlayersDataTableWidget = function () {
         }
 
         var globalVariables = MyRio2cCommon.getGlobalVariables();
-        var imageDirectory = 'https://' + globalVariables.bucket + '/img/users/';
+        var imageDirectory = 'https://' + globalVariables.bucket + '/img/organizations/';
 
         // Initiate datatable
         table = tableElement.DataTable({
@@ -115,7 +115,7 @@ var MusicMeetingsSendEmailToPlayersDataTableWidget = function () {
                     text: labels.actions,
                     buttons: [
                         {
-                            text: translations.sendEmailToProducers,
+                            text: translations.sendEmailToPlayers,
                             action: function (e, dt, node, config) {
                                 $('.dt-button-background').remove();
                                 showSendEmailsModal();
@@ -212,7 +212,7 @@ var MusicMeetingsSendEmailToPlayersDataTableWidget = function () {
                                         <th style="width: 20%;">' + translations.room + '</th>\
                                         <th style="width: 20%;">' + translations.round + '</th>\
                                         <th style="width: 6%;">' + translations.table + '</th>\
-                                        <th style="width: 26%;">' + translations.producer + '</th>\
+                                        <th style="width: 26%;">' + translations.player + '</th>\
                                     </tr>';
 
                         //loop through all the row details to build output string
@@ -223,7 +223,7 @@ var MusicMeetingsSendEmailToPlayersDataTableWidget = function () {
                                 html += '\
                                     <tr style="font-size: 10px; border-top: 1px solid #ebedf2;;">\
                                         <td class="text-center">' + moment(r.StartDate).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L') + '</td>\
-                                        <td class="text-center">'+ r.RoomJsonDto.Name ;
+                                        <td class="text-center">' + r.RoomJsonDto.Name;
 
                                 //if (!MyRio2cCommon.isNullOrEmpty(r.RoomJsonDto.IsVirtualMeeting)) {
                                 //    var virtualOrPresentialText = (r.RoomJsonDto.IsVirtualMeeting === true) ? translations.virtual : translations.presential;
@@ -298,13 +298,20 @@ var MusicMeetingsSendEmailToPlayersDataTableWidget = function () {
         table.ajax.reload();
     };
 
+    //var showDetails = function (playerUid) {
+    //    if (MyRio2cCommon.isNullOrEmpty(playerUid)) {
+    //        return;
+    //    }
+
+    //    window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Players/Details/' + playerUid);
+    //};
 
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             initiListTable();
         },
-        refreshData: function() {
+        refreshData: function () {
             refreshData();
         },
         //showDetails: function (playerUid) {
