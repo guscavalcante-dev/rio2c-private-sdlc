@@ -212,7 +212,7 @@ var MusicMeetingsSendEmailToPlayersDataTableWidget = function () {
                                         <th style="width: 20%;">' + translations.room + '</th>\
                                         <th style="width: 20%;">' + translations.round + '</th>\
                                         <th style="width: 6%;">' + translations.table + '</th>\
-                                        <th style="width: 26%;">' + translations.player + '</th>\
+                                        <th style="width: 26%;">' + translations.producer + '</th>\
                                     </tr>';
 
                         //loop through all the row details to build output string
@@ -224,11 +224,6 @@ var MusicMeetingsSendEmailToPlayersDataTableWidget = function () {
                                     <tr style="font-size: 10px; border-top: 1px solid #ebedf2;;">\
                                         <td class="text-center">' + moment(r.StartDate).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L') + '</td>\
                                         <td class="text-center">' + r.RoomJsonDto.Name;
-
-                                //if (!MyRio2cCommon.isNullOrEmpty(r.RoomJsonDto.IsVirtualMeeting)) {
-                                //    var virtualOrPresentialText = (r.RoomJsonDto.IsVirtualMeeting === true) ? translations.virtual : translations.presential;
-                                //    html += '<span class="kt-badge kt-badge--inline kt-badge--warning kt-font-boldest">' + virtualOrPresentialText + '</span>';
-                                //}
 
                                 html += '\
                                         </td>\
