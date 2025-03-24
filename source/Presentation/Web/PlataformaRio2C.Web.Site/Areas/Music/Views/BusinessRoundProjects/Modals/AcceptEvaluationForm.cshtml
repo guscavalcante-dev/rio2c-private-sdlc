@@ -1,6 +1,5 @@
 ﻿@model PlataformaRio2C.Application.CQRS.Commands.AcceptMusicBusinessRoundProjectEvaluation
 <div class="row">
-    @Html.HiddenFor(m => m.IsProjectsApprovalLimitReached)
     <div class="form-group col-12">
         @Html.Raw(string.Format(Texts.DoYouReallyWishAccept, Model.MusicBusinessRoundProjectDto?.SellerAttendeeCollaboratorDto?.Collaborator?.GetStageNameOrBadgeOrFullName()))
     </div>

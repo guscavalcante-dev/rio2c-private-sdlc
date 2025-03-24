@@ -93,7 +93,7 @@ var ProjectsBuyerEvaluationUpdateWidget = function () {
         MyRio2cCommon.enableFormValidation({ formIdOrClass: acceptFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
 
-    var showAcceptModal = function (projectUid) {
+    var showAcceptModal = function (projectUid, attendeeOrganizationUid) {
         if (MyRio2cCommon.isNullOrEmpty(projectUid)) {
             return;
         }
@@ -102,7 +102,7 @@ var ProjectsBuyerEvaluationUpdateWidget = function () {
 
         var jsonParameters = new Object();
         jsonParameters.projectUid = projectUid;
-        jsonParameters.buyerAttendeeOrganizationUid = $('#AttendeeOrganizationUid').val()
+        jsonParameters.buyerAttendeeOrganizationUid = !MyRio2cCommon.isNullOrEmpty(attendeeOrganizationUid) ? attendeeOrganizationUid : $('#AttendeeOrganizationUid').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/BusinessRoundProjects/ShowAcceptEvaluationModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -219,8 +219,8 @@ var ProjectsBuyerEvaluationUpdateWidget = function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
         },
-        showAcceptModal: function (projectUid) {
-            showAcceptModal(projectUid);
+        showAcceptModal: function (projectUid, attendeeOrganizationUid) {
+            showAcceptModal(projectUid, attendeeOrganizationUid);
         },
         showRefuseModal: function (projectUid) {
             showRefuseModal(projectUid);

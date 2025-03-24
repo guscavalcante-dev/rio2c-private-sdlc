@@ -43,17 +43,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// Initializes a new instance of the <see cref="AcceptProjectEvaluation" /> class.
         /// </summary>
         /// <param name="projectDto">The project dto.</param>
-        /// <param name="currentUserOrganizations">The current user organizations.</param>
+        /// <param name="currentUserAttendeeOrganizations">The current user organizations.</param>
         /// <param name="availableSlotsByPlayer">The maximum available slots by player.</param>
         /// <param name="playerAcceptedProjectsCount">The player accepted projects count.</param>
         public AcceptProjectEvaluation(
             ProjectDto projectDto, 
-            List<AttendeeOrganization> currentUserOrganizations, 
+            List<AttendeeOrganization> currentUserAttendeeOrganizations, 
             int availableSlotsByPlayer,
             int playerAcceptedProjectsCount)
         {
             this.ProjectUid = projectDto?.Project?.Uid;
-            this.UpdateOrganizations(projectDto, currentUserOrganizations);
+            this.UpdateAttendeeOrganizations(projectDto, currentUserAttendeeOrganizations);
             this.AvailableSlotsByPlayer = availableSlotsByPlayer;
             this.PlayerAcceptedProjectsCount = playerAcceptedProjectsCount;
         }
@@ -68,22 +68,24 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="currentUserOrganizations">The current user organizations.</param>
         public void UpdateModelsAndLists(ProjectDto projectDto, List<AttendeeOrganization> currentUserOrganizations)
         {
-            this.UpdateOrganizations(projectDto, currentUserOrganizations);
+            this.UpdateAttendeeOrganizations(projectDto, currentUserOrganizations);
         }
 
         #region Private Methods
 
         /// <summary>Updates the organizations.</summary>
         /// <param name="projectDto">The project dto.</param>
-        /// <param name="currentUserOrganizations">The current user organizations.</param>
-        private void UpdateOrganizations(ProjectDto projectDto, List<AttendeeOrganization> currentUserOrganizations)
+        /// <param name="currentUserAttendeeOrganizations">The current user organizations.</param>
+        private void UpdateAttendeeOrganizations(ProjectDto projectDto, List<AttendeeOrganization> currentUserAttendeeOrganizations)
         {
             this.ProjectDto = projectDto;
 
             this.AttendeeOrganizations = projectDto?.ProjectBuyerEvaluationDtos?
                                                         .Where(pbed => !pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.IsDeleted
                                                                        && !pbed.BuyerAttendeeOrganizationDto.Organization.IsDeleted
-                                                                       && currentUserOrganizations?.Select(cuo => cuo.Id)?.Contains(pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Id) == true)?
+                                                                       && currentUserAttendeeOrganizations?
+                                                                            .Select(cuo => cuo.Id)?
+                                                                            .Contains(pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Id) == true)?
                                                         .Select(pbed => new
                                                         {
                                                             Uid = pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid,

@@ -2771,11 +2771,20 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Você atingiu o limite de projetos aprovados para &lt;b&gt;reunião presencial&lt;/b&gt; nesta edição ({0}).&lt;br/&gt;&lt;br/&gt;Os projetos aprovados a partir de agora serão agendados como &lt;b&gt;reunião virtual&lt;/b&gt; e as rodadas de negócio acontecerão de maneira remota, via Google Meet..
+        ///   Looks up a localized string similar to Você atingiu o limite de projetos aprovados para esta edição ({0}).
         /// </summary>
         public static string YouReachedProjectsApprovalLimit {
             get {
                 return ResourceManager.GetString("YouReachedProjectsApprovalLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Você atingiu o limite de projetos aprovados para &lt;b&gt;reunião presencial&lt;/b&gt; nesta edição ({0}).&lt;br/&gt;&lt;br/&gt;Os projetos aprovados a partir de agora serão agendados como &lt;b&gt;reunião virtual&lt;/b&gt; e as rodadas de negócio acontecerão de maneira remota, via Google Meet..
+        /// </summary>
+        public static string YouReachedProjectsApprovalLimitVirtualMeeting {
+            get {
+                return ResourceManager.GetString("YouReachedProjectsApprovalLimitVirtualMeeting", resourceCulture);
             }
         }
         

@@ -1716,7 +1716,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 
                 cmd = new AcceptProjectEvaluation(
                     projectDto,
-                    this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList(),
+                    currentUserAttendeeOrganizations: this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList(),
                     availableSlotsByPlayer: audiovisualNegotiationAvailableSlotsCountByEditionIdResponseDto.MaximumSlotsByPlayer,
                     playerAcceptedProjectsCount: playerAcceptedProjectsCount);
             }

@@ -1,17 +1,15 @@
 ﻿@model PlataformaRio2C.Application.CQRS.Commands.AcceptProjectEvaluation
 <div class="row">
-    @Html.HiddenFor(m => m.IsProjectsApprovalLimitReached)
     <div class="form-group col-12">
         @Html.Raw(string.Format(Texts.DoYouReallyWishAccept, Model.ProjectDto?.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value))
     </div>
-    @* This code runs perfectly. Customer requested to remove this validation at RIO2CMY-1245 *@
     @if (Model.IsProjectsApprovalLimitReached)
     {
         <div class="form-group col-12 mb-0">
             <div class="alert alert-warning mb-0">
                 <div class="alert-icon"><i class="flaticon-warning"></i></div>
                 <div class="alert-text">
-                    @Html.Raw(string.Format(Messages.YouReachedProjectsApprovalLimit, Model.AvailableSlotsByPlayer))
+                    @Html.Raw(string.Format(Messages.YouReachedProjectsApprovalLimitVirtualMeeting, Model.AvailableSlotsByPlayer))
                 </div>
             </div>
         </div>

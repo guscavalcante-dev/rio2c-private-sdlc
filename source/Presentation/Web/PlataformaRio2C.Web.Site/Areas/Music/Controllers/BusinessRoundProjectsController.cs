@@ -1704,7 +1704,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 cmd = new AcceptMusicBusinessRoundProjectEvaluation(
                     musicBusinessRoundProjectDto,
                     this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList(),
-                    maximumAvailableSlotsByPlayer: audiovisualMaximumAvailableSlotsByEditionIdResponseDto.RemainingSlotsByPlayer,
+                    maximumAvailableSlotsByPlayer: audiovisualMaximumAvailableSlotsByEditionIdResponseDto.MaximumSlotsByPlayer,
                     playerAcceptedProjectsCount: playerAcceptedProjectsCount);
             }
             catch (DomainException ex)
