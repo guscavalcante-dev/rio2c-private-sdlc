@@ -1465,7 +1465,6 @@ var MyRio2cCommon = function () {
     };
 
     var enableCollaboratorSelect2 = function (options) {
-        debugger
 
         if (isNullOrEmpty(options)) {
             options = new Object();
