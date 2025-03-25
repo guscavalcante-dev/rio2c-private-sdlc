@@ -28,6 +28,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<List<ProjectBuyerEvaluationDto>> FindUnscheduledWidgetDtoAsync(int editionId);
         Task<int> CountNegotiationScheduledAsync(int editionId, bool showAllEditions = false);
         Task<int> CountNegotiationNotScheduledAsync(int editionId, bool showAllEditions = false);
-        Task<int> CountPresentialNegotiationsAcceptedByBuyerAttendeeOrganizationUidAsync(Guid buyerAttendeeOrganizationUid);
+        Task<int> CountAcceptedProjectBuyerEvaluationsByBuyerAttendeeOrganizationUidAsync(Guid buyerAttendeeOrganizationUid);
+        Task<int> CountAcceptedProjectBuyerEvaluationsByEditionIdAsync(int editionId);
     }
 }

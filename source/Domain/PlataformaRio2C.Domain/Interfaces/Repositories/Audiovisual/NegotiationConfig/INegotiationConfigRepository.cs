@@ -26,13 +26,13 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<NegotiationConfigDto> FindMainInformationWidgetDtoAsync(Guid negotiationConfigUid, int projectTypeId);
         Task<NegotiationConfigDto> FindRoomsWidgetDtoAsync(Guid negotiationConfigUid, int projectTypeId);
         Task<IPagedList<NegotiationConfigJsonDto>> FindAllJsonDtosPagedAsync(int page, int pageSize, List<Tuple<string, string>> sortColumns, string keywords, Guid? musicGenreUid, Guid? evaluationStatusUid, string languageCode, int editionId, int projectTypeId);
-        Task<int> CountAsync(int editionId,int projectTypeId, bool showAllEditions = false);
-        Task<List<NegotiationConfig>> FindAllForGenerateNegotiationsAsync(int editionId);
+        Task<int> CountAsync(int editionId, int projectTypeId, bool showAllEditions = false);
+        Task<List<NegotiationConfig>> FindAllForGenerateNegotiationsAsync(int editionId, int projectTypeId);
         Task<List<NegotiationConfigDto>> FindAllDatesDtosAsync(int editionId, string customFilter, bool buyerAttendeeOrganizationAcceptsVirtualMeeting, int projectTypeId);
         Task<List<NegotiationConfigDto>> FindAllRoomsDtosAsync(int editionId, Guid negotiationConfigUid, string customFilter, bool buyerAttendeeOrganizationAcceptsVirtualMeeting, int projectTypeId);
         Task<NegotiationConfigDto> FindAllTimesDtosAsync(int editionId, Guid negotiationRoomConfigUid, string customFilter, bool buyerAttendeeOrganizationAcceptsVirtualMeeting, int projectTypeId);
-        Task<List<NegotiationConfigDto>> FindAllByEditionIdAsync(int editionId);
-        Task<int> CountNegotiationConfigsWithVirtualRoomConfiguredAsync(int editionId);
-        Task<int> CountNegotiationConfigsWithPresentialRoomConfiguredAsync(int editionId);
+        Task<List<NegotiationConfigDto>> FindAllByEditionIdAsync(int editionId, int projectTypeId);
+        Task<int> CountNegotiationConfigsWithVirtualRoomConfiguredAsync(int editionId, int projectTypeId);
+        Task<int> CountNegotiationConfigsWithPresentialRoomConfiguredAsync(int editionId, int projectTypeId);
     }
 }

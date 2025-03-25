@@ -1711,13 +1711,13 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
 
-                var maximumAvailableSlotsByEditionIdResponseDto = await CommandBus.Send(new GetAudiovisualMaximumAvailableSlotsByEditionId(this.EditionDto.Id));
-                var playerAcceptedProjectsCount = await CommandBus.Send(new CountPresentialNegotiationsAcceptedByBuyerAttendeeOrganizationUid(buyerAttendeeOrganizationUid ?? Guid.Empty));
+                var audiovisualNegotiationAvailableSlotsCountByEditionIdResponseDto = await CommandBus.Send(new GetAudiovisualNegotiationAvailableSlotsCountByEditionId(this.EditionDto.Id));
+                var playerAcceptedProjectsCount = await CommandBus.Send(new CountAcceptedProjectBuyerEvaluationsByBuyerAttendeeOrganizationUid(buyerAttendeeOrganizationUid ?? Guid.Empty));
 
                 cmd = new AcceptProjectEvaluation(
                     projectDto,
-                    this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList(),
-                    maximumAvailableSlotsByPlayer: maximumAvailableSlotsByEditionIdResponseDto.MaximumAvailableSlotsByPlayer,
+                    currentUserAttendeeOrganizations: this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList(),
+                    availableSlotsByPlayer: audiovisualNegotiationAvailableSlotsCountByEditionIdResponseDto.MaximumSlotsByPlayer,
                     playerAcceptedProjectsCount: playerAcceptedProjectsCount);
             }
             catch (DomainException ex)
