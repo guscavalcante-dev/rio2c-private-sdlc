@@ -59,13 +59,17 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #region Initial validations
 
-            var maximumAvailableSlotsByEditionIdResponseDto = await CommandBus.Send(new GetAudiovisualMaximumAvailableSlotsByEditionId(cmd.EditionId ?? 0));
-            var playerAcceptedProjectsCount = await CommandBus.Send(new CountPresentialNegotiationsAcceptedByBuyerAttendeeOrganizationUid(cmd.AttendeeOrganizationUid ?? Guid.Empty));
-            var projectsApprovalLimitExceeded = playerAcceptedProjectsCount >= maximumAvailableSlotsByEditionIdResponseDto.MaximumAvailableSlotsByPlayer;
+            var maximumAvailableSlotsByEditionIdResponseDto = await CommandBus.Send(new GetAudiovisualNegotiationAvailableSlotsCountByEditionId(cmd.EditionId ?? 0));
+            var playerAcceptedProjectsCount = await CommandBus.Send(new CountAcceptedProjectBuyerEvaluationsByBuyerAttendeeOrganizationUid(cmd.AttendeeOrganizationUid ?? Guid.Empty));
+            var projectsApprovalLimitExceeded = playerAcceptedProjectsCount >= maximumAvailableSlotsByEditionIdResponseDto.MaximumSlotsByPlayer;
             if (projectsApprovalLimitExceeded)
             {
                 cmd.PlayerAcceptedProjectsCount = playerAcceptedProjectsCount;
-                cmd.MaximumAvailableSlotsByPlayer = maximumAvailableSlotsByEditionIdResponseDto.MaximumAvailableSlotsByPlayer;
+                cmd.AvailableSlotsByPlayer = maximumAvailableSlotsByEditionIdResponseDto.MaximumSlotsByPlayer;
+
+                // This line is responsible to block the project acceptance when Player exceeds the maximum of projects approved by player
+                // If you need, just uncomment this and project acceptance using the "ProjectBuyerEvaluation.IsVirtualMeeting" parameter will be blocked
+                // this.ValidationResult.Add(new ValidationError(string.Format(Messages.YouReachedProjectsApprovalLimit, maximumAvailableSlotsByEditionIdResponseDto.MaximumSlotsByPlayer), new string[] { "ToastrError" }));
             }
 
             if (!this.ValidationResult.IsValid)

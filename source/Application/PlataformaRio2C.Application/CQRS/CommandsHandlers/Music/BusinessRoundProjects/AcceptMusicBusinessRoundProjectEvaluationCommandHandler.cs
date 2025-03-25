@@ -56,17 +56,17 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var project = await this.GetMusicBusinessRoundProjectByUid(cmd.MusicBusinessRoundProjectUid ?? Guid.Empty);
 
-            #region Initial validations
-
             //TODO: Refactor this! Create "GetMusicMaximumAvailableSlotsByEditionId"
-            //var audiovisualMaximumAvailableSlotsByEditionIdResponseDto = await CommandBus.Send(new GetAudiovisualMaximumAvailableSlotsByEditionId(cmd.EditionId ?? 0));
-            //var playerAcceptedProjectsCount = await CommandBus.Send(new CountPresentialNegotiationsAcceptedByBuyerAttendeeOrganizationUid(cmd.AttendeeOrganizationUid ?? Guid.Empty));
+            //var audiovisualMaximumAvailableSlotsByEditionIdResponseDto = await CommandBus.Send(new GetAudiovisualNegotiationAvailableSlotsCountByEditionId(cmd.EditionId ?? 0));
+            //var playerAcceptedProjectsCount = await CommandBus.Send(new CountAcceptedProjectBuyerEvaluationsByBuyerAttendeeOrganizationUid(cmd.AttendeeOrganizationUid ?? Guid.Empty));
             //var projectsApprovalLimitExceeded = playerAcceptedProjectsCount >= audiovisualMaximumAvailableSlotsByEditionIdResponseDto.MaximumAvailableSlotsByPlayer;
             //if (projectsApprovalLimitExceeded)
             //{
             //    cmd.PlayerAcceptedProjectsCount = playerAcceptedProjectsCount;
             //    cmd.MaximumAvailableSlotsByPlayer = audiovisualMaximumAvailableSlotsByEditionIdResponseDto.MaximumAvailableSlotsByPlayer;
             //}
+
+            #region Initial validations
 
             if (!this.ValidationResult.IsValid)
             {

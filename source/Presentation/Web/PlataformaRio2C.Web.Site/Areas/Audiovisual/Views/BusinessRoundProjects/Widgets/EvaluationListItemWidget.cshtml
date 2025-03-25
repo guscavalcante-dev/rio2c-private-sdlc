@@ -5,14 +5,18 @@
 @model ProjectDto
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
+
+    //AttendeeOrganizationUid is used into ProjectsBuyerEvaluationUpdateWidget.showAcceptModal(projectId)
+    Guid? attendeeOrganizationUid = Model.ProjectBuyerEvaluationDtos.Count() == 1 ?
+        (Guid?)Model.ProjectBuyerEvaluationDtos.FirstOrDefault().BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid
+        : null;
 }
 @if (Model != null)
 {
     var projectTitle = Model.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value;
-
     <div class="kt-portlet__body">
-        <div class="kt-widget5">
-            <div class="kt-widget kt-widget--project-1" style="border-bottom: 0.07rem dashed #ebedf2;">
+        <div class="kt-widget5" style="border-bottom: 0.07rem dashed #ebedf2;">
+            <div class="kt-widget kt-widget--project-1">
                 <div class="kt-widget__head pt-0">
                     <div class="kt-widget__label">
                         <div class="kt-widget__media" style="padding-right: 10px">
@@ -82,7 +86,7 @@
             @if (editionDto?.IsProjectBuyerEvaluationOpen() == true)
             {
                 <div class="col-4 text-center">
-                    <button type="button" class="btn btn-success" onclick="ProjectsBuyerEvaluationUpdateWidget.showAcceptModal('@Model.Project.Uid');">
+                    <button type="button" class="btn btn-success" onclick="ProjectsBuyerEvaluationUpdateWidget.showAcceptModal('@Model.Project.Uid', '@attendeeOrganizationUid');">
                         <i class="fa fa-thumbs-up"></i> @Labels.AcceptProject
                     </button>
                 </div>

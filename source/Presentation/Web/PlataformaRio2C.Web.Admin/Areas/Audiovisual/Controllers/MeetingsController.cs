@@ -236,7 +236,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         public async Task<ActionResult> ShowEditionScheduledCountGaugeWidget()
         {
             var scheduledCount = await this.projectBuyerEvaluationRepo.CountNegotiationScheduledAsync(this.EditionDto.Id, false);
-            var maximumAvailableSlotsByEditionId = new GetAudiovisualMaximumAvailableSlotsByEditionId(this.EditionDto.Id);
+            var audiovisualNegotiationAvailableSlotsCountByEditionIdResponseDto = await this.CommandBus.Send(
+                new GetAudiovisualNegotiationAvailableSlotsCountByEditionId(this.EditionDto.Id));
 
             return Json(new
             {
@@ -246,7 +247,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     new { page = this.RenderRazorViewToString("Widgets/EditionScheduledCountGaugeWidget", scheduledCount), divIdOrClass = "#AudiovisualMeetingsEditionScheduledCountGaugeWidget" },
                 },
                 chartData = scheduledCount,
-                maximumAvailableSlots = await this.CommandBus.Send(maximumAvailableSlotsByEditionId)
+                maximumAvailableSlots = audiovisualNegotiationAvailableSlotsCountByEditionIdResponseDto.RemainingAutomaticSlotsInEdition
             }, JsonRequestBehavior.AllowGet);
         }
 

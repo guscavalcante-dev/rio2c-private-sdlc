@@ -203,10 +203,10 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>
-        /// Gets the maximum automatic slots count by edition.
+        /// Counts the maximum automatic slots in edition.
         /// </summary>
         /// <returns></returns>
-        public int GetMaxAutomaticSlotsCountByEdition()
+        public int CountMaximumAutomaticSlotsInEdition()
         {
             int tablesTotalCount = this.NegotiationRoomConfigs
                 .Where(nrc => !nrc.IsDeleted && !nrc.Room.IsVirtualMeeting)
@@ -218,10 +218,10 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>
-        /// Gets the maximum manual slots count by edition.
+        /// Counts the maximum manual slots in edition.
         /// </summary>
         /// <returns></returns>
-        public int GetMaxManualSlotsCountByEdition()
+        public int CountMaximumManualSlotsInEdition()
         {
             int tablesTotalCount = this.NegotiationRoomConfigs
                 .Where(nrc => !nrc.IsDeleted && !nrc.Room.IsVirtualMeeting)
@@ -230,26 +230,6 @@ namespace PlataformaRio2C.Domain.Entities
             int roundsTotalCount = this.RoundFirstTurn + this.RoundSecondTurn;
 
             return tablesTotalCount * roundsTotalCount;
-        }
-
-        /// <summary>
-        /// Gets the maximum slots count by player.
-        /// </summary>
-        /// <param name="includeManualTables">if set to <c>true</c> [include manual tables].</param>
-        /// <returns></returns>
-        public int GetMaxSlotsCountByPlayer()
-        {
-            // If this NegotiationConfig has any virtual room associated, cannot calculate.
-            // TODO: Maybe this rule needs to be reviewed, because a NegotiationConfig can contains Virtual and Presential rooms associated, and this rule only returns 0 and disconsider the Presential rooms.
-            // How to proceed in this cases?
-            if(this.NegotiationRoomConfigs.Any(nrc => nrc.Room.IsVirtualMeeting))
-            {
-                return 0;
-            }
-
-            int roundsTotalCount = this.RoundFirstTurn + this.RoundSecondTurn;
-
-            return roundsTotalCount;
         }
 
         #endregion

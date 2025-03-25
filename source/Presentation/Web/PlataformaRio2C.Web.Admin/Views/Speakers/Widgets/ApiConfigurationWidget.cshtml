@@ -60,6 +60,12 @@
     <div class="kt-widget4 mt-2">
         @foreach (var field in Model.Collaborator.RequiredFieldsToPublish)
         {
+            //RIO2CMY-1538
+            if (field.Key == "SpeakerTermsAcceptanceDate")
+            {
+                continue;
+            }
+
             dynamic fieldValue = field.Value;
             var type = fieldValue.GetType();
             var isValid = type.GetProperty("IsValid").GetValue(fieldValue);

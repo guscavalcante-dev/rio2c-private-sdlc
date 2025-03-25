@@ -95,7 +95,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 edition?.StartAudiovisualNegotiationsCreation(cmd.UserId);
                 this.Uow.SaveChanges();
 
-                var negotiationConfigs = await this.negotiationConfigRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionId.Value,ProjectType.AudiovisualBusinessRound.Id);
+                var negotiationConfigs = await this.negotiationConfigRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionId.Value, ProjectType.AudiovisualBusinessRound.Id);
                 if (negotiationConfigs?.Count == 0)
                 {
                     edition?.CancelAudiovisualNegotiationsCreation(cmd.UserId);

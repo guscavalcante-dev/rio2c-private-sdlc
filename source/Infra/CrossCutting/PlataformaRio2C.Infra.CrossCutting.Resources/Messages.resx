@@ -1165,6 +1165,9 @@ A distribuição só pode ser executada uma única vez por edição.
     <comment>Você tem &lt;b&gt;{0} novas mensagens&lt;/b&gt;.</comment>
   </data>
   <data name="YouReachedProjectsApprovalLimit" xml:space="preserve">
+    <value>Você atingiu o limite de projetos aprovados para esta edição ({0})</value>
+  </data>
+  <data name="YouReachedProjectsApprovalLimitVirtualMeeting" xml:space="preserve">
     <value>Você atingiu o limite de projetos aprovados para &lt;b&gt;reunião presencial&lt;/b&gt; nesta edição ({0}).&lt;br/&gt;&lt;br/&gt;Os projetos aprovados a partir de agora serão agendados como &lt;b&gt;reunião virtual&lt;/b&gt; e as rodadas de negócio acontecerão de maneira remota, via Google Meet.</value>
   </data>
   <data name="YouReachedProjectsLimit" xml:space="preserve">
