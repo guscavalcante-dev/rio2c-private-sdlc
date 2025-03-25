@@ -169,6 +169,28 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>
+        /// Filters attendees based on their availability within the specified conference dates.
+        /// </summary>
+        /// <param name="query">The attendee collaborator query.</param>
+        /// <param name="conferenceStartDate">The start date of the conference.</param>
+        /// <param name="conferenceEndDate">The end date of the conference.</param>
+        /// <returns>A filtered query of attendees available within the given date range.</returns>
+        internal static IQueryable<Collaborator> HasAvailabilityForDates(this IQueryable<Collaborator> query,int editionId,DateTimeOffset conferenceStartDate,DateTimeOffset conferenceEndDate)
+        {
+            query = query.Where(c => c.AttendeeCollaborators.Any(ac =>
+                         !ac.IsDeleted &&
+                         ac.EditionId == editionId &&
+                         (
+                             (!ac.AvailabilityBeginDate.HasValue && !ac.AvailabilityEndDate.HasValue)
+                             ||
+                             (ac.AvailabilityBeginDate.HasValue && ac.AvailabilityEndDate.HasValue &&
+                              ac.AvailabilityBeginDate.Value <= conferenceStartDate && ac.AvailabilityEndDate.Value >= conferenceEndDate)
+                         )
+                     ));
+            return query;
+        }
+
         /// <summary>Finds the by collaborator type name and by edition identifier.</summary>
         /// <param name="query">The query.</param>
         /// <param name="collaboratorTypeNames">Name of the collaborator type.</param>
@@ -1262,7 +1284,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                 OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
                                                                 AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
                                                                 InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
-                                                                MusicProducerTermsAcceptanceDate  = ac.MusicProducerTermsAcceptanceDate,
+                                                                MusicProducerTermsAcceptanceDate = ac.MusicProducerTermsAcceptanceDate,
                                                                 MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
                                                                 AudiovisualProducerBusinessRoundTermsAcceptanceDate = ac.AudiovisualProducerBusinessRoundTermsAcceptanceDate,
                                                                 AudiovisualProducerPitchingTermsAcceptanceDate = ac.AudiovisualProducerPitchingTermsAcceptanceDate,
@@ -2858,6 +2880,47 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery(true)
                                 .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, false, showAllParticipants, editionId)
                                 .FindByNames(keywords);
+
+            return await query
+                            .Select(c => new CollaboratorApiListDto
+                            {
+                                Uid = c.Uid,
+                                BadgeName = c.Badge,
+                                Name = c.FirstName + " " + c.LastNames,
+                                ImageUploadDate = c.ImageUploadDate,
+                                CreateDate = c.CreateDate,
+                                UpdateDate = c.UpdateDate
+                            })
+                            .OrderBy(o => o.BadgeName)
+                            .ToListPagedAsync(page, pageSize);
+        }
+
+        /// <summary>
+        /// Finds all speakers API list dto paged.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="filterByProjectsInNegotiation">if set to <c>true</c> [filter by projects in negotiation].</param>
+        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
+        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<CollaboratorApiListDto>> FindAllSpeakersApiListDtoPaged(
+            int editionId,
+            string keywords,
+            bool filterByProjectsInNegotiation,
+            string collaboratorTypeName,
+            bool showAllParticipants,
+            DateTimeOffset conferenceStartDate,
+            DateTimeOffset conferenceEndDate,
+            int page,
+            int pageSize)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, false, showAllParticipants, editionId)
+                                .FindByNames(keywords)
+                                .HasAvailabilityForDates(editionId, conferenceStartDate, conferenceEndDate);
 
             return await query
                             .Select(c => new CollaboratorApiListDto

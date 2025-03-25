@@ -80,8 +80,19 @@ var ConferencesParticipantsWidget = function () {
 
     var enableCreatePlugins = function () {
         enableCreateAjaxForm();
+        var conferenceStartDate = $('#Conference_StartDate').val();
+        var conferenceEndDate = $('#Conference_EndDate').val();
+
+        if (!MyRio2cCommon.isNullOrEmpty(conferenceStartDate) && !MyRio2cCommon.isNullOrEmpty(conferenceEndDate)) {
+            conferenceStartDate = moment(conferenceStartDate, "L", MyRio2cCommon.getGlobalVariable('userInterfaceLanguageUppercase')).format('YYYY-MM-DD');
+            conferenceEndDate = moment(conferenceEndDate, "L", MyRio2cCommon.getGlobalVariable('userInterfaceLanguageUppercase')).format('YYYY-MM-DD');
+        }
+
         MyRio2cCommon.enableCollaboratorSelect2({
-            url: '/Speakers/FindAllByFilters',
+            url: '/Speakers/FindAllByFiltersAndConferenceDate',
+            isConference: true,
+            conferenceStartDate: conferenceStartDate,
+            conferenceEndDate: conferenceEndDate,
             selectedOption: {
                 id: $('#InitialCollaboratorUid').val(),
                 text: $('#InitialCollaboratorName').val()

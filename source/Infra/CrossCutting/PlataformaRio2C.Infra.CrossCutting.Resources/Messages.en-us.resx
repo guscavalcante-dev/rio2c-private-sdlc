@@ -229,6 +229,9 @@
   <data name="CollaboratorMustHaveAProducer" xml:space="preserve">
     <value>The collaborator must have at least one producer.</value>
   </data>
+  <data name="CollaboratorNotAvailableForConference" xml:space="preserve">
+    <value>{0} is not available during the conference schedule. Available period: {1} to {2}.</value>
+  </data>
   <data name="CommisionMemberDistributionMessage" xml:space="preserve">
     <value>The distribution of projects to commission members has already been carried out.&lt;br&gt;
 The distribution can only be carried out once per issue.</value>

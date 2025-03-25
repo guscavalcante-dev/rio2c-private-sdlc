@@ -10,6 +10,8 @@
     </div>
     <div class="kt-portlet__head-toolbar">
         <div class="kt-portlet__head-actions">
+            @Html.HiddenFor(m => m.Conference.StartDate)
+            @Html.HiddenFor(m => m.Conference.EndDate)
             <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="ConferencesParticipantsWidget.showCreateModal();">
                 <i class="flaticon2-plus"></i>
             </button>

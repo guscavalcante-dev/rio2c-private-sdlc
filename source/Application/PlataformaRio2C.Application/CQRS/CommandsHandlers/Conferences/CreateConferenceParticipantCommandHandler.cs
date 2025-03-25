@@ -71,6 +71,22 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                         ac.EditionId == cmd.EditionId);
 
             #region Initial validations
+            if (attendeeCollaborator.AvailabilityBeginDate != null && attendeeCollaborator.AvailabilityEndDate != null)
+            {
+                // Check if the conference period is WITHIN the speaker's availability
+                if (!(attendeeCollaborator.AvailabilityBeginDate.Value <= conference.StartDate.Value.ToUniversalTime()
+                      && attendeeCollaborator.AvailabilityEndDate.Value >= conference.EndDate.Value.ToUniversalTime()))
+                {
+                    this.ValidationResult.Add(new ValidationError(
+                        string.Format(Messages.CollaboratorNotAvailableForConference,
+                            attendeeCollaborator.Collaborator.GetStageNameOrBadgeOrFullName(),
+                            attendeeCollaborator.AvailabilityBeginDate.Value.ToBrazilTimeZone().ToString("dd/MM/yyyy HH:mm"),
+                            attendeeCollaborator.AvailabilityEndDate.Value.ToBrazilTimeZone().ToString("dd/MM/yyyy HH:mm")),
+                        new[] { "ToastrError" }
+                    ));
+                }
+            }
+
 
             if (conference.StartDate.HasValue && conference.EndDate.HasValue)
             {
