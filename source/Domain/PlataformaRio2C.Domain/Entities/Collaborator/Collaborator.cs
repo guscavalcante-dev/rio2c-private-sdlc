@@ -4039,8 +4039,12 @@ namespace PlataformaRio2C.Domain.Entities
                 "SpeakerTermsAcceptanceDate",
                 new
                 {
-                    IsValid = this.AttendeeCollaborators?.Where(ct => ct.SpeakerTermsAcceptanceDate != null && ct.EditionId == editionId)?.Any(),
+                    IsValid = true,
                     Message = Messages.ImageAuthorizationForm
+
+                    //1538 - This item was requested by the client to be removed from this edition, but i will leave commented to the future. It may be useful.
+                    //IsValid = this.AttendeeCollaborators?.Where(ct => ct.SpeakerTermsAcceptanceDate != null && ct.EditionId == editionId)?.Any(),
+                    //Message = Messages.ImageAuthorizationForm
                 }
             );
         }
