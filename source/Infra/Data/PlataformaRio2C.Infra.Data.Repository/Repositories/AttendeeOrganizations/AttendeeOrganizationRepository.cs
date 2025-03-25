@@ -1129,12 +1129,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             string keywords,
             List<Tuple<string, string>> sortColumns,
             int editionId,
-            int languageId)
+            int languageId, OrganizationType organization)
         {
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords)
                                 .FindByEditionId(editionId, false)
-                                .FindByOrganizationTypeUidAndEditionId(editionId, false, OrganizationType.AudiovisualPlayer.Uid)
+                                .FindByOrganizationTypeUidAndEditionId(editionId, false, organization.Uid)
                                 .HasActiveBuyerNegotiations();
 
             return await query
@@ -1228,13 +1228,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             string keywords,
             List<Guid> selectedAttendeeOrganizationsUids,
             int editionId,
-            int languageId)
+            int languageId, OrganizationType organizationType)
         {
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords)
                                 .FindByUids(selectedAttendeeOrganizationsUids)
                                 .FindByEditionId(editionId, false)
-                                .FindByOrganizationTypeUidAndEditionId(editionId, false, OrganizationType.AudiovisualPlayer.Uid)
+                                .FindByOrganizationTypeUidAndEditionId(editionId, false, organizationType.Uid)
                                 .HasActiveBuyerNegotiations();
 
             return await query
@@ -1340,11 +1340,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<int> CountAllByActiveBuyerNegotiationsAndByDataTable(bool showAllEditions, int? editionId)
+        public async Task<int> CountAllByActiveBuyerNegotiationsAndByDataTable(bool showAllEditions, int? editionId, OrganizationType organizationType)
         {
             var query = this.GetBaseQuery()
                 .FindByEditionId(editionId ?? 0, showAllEditions)
-                .FindByOrganizationTypeUidAndEditionId(editionId ?? 0, showAllEditions, OrganizationType.AudiovisualPlayer.Uid)
+                .FindByOrganizationTypeUidAndEditionId(editionId ?? 0, showAllEditions, organizationType.Uid)
                 .HasActiveBuyerNegotiations();
 
             return await query.CountAsync();

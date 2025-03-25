@@ -187,17 +187,22 @@ var MusicMeetingsSendEmailToPlayersDataTableWidget = function () {
                                     <tr>\
                                         <td>';
 
-                        if (!MyRio2cCommon.isNullOrEmpty(row.CollaboratorDto.ImageUploadDate)) {
-                            html += '<img src="' + imageDirectory + row.CollaboratorDto.Uid + '_thumbnail.png?v=' + moment(row.CollaboratorDto.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
+                        if (!MyRio2cCommon.isNullOrEmpty(row.OrganizationBaseDto.ImageUploadDate)) {
+                            html += '<img src="' + imageDirectory + row.OrganizationBaseDto.Uid + '_thumbnail.png?v=' + moment(row.OrganizationBaseDto.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
                         }
                         else {
                             html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
                         }
 
                         html += '       </td>\
-                                        <td> ' + row.CollaboratorDto.FullName + '</td>\
+                                        <td> ' + row.OrganizationBaseDto.DisplayName + '</td>\
                                     </tr>\
                                 </table>';
+
+                        if (!MyRio2cCommon.isNullOrEmpty(row.OrganizationBaseDto.IsVirtualMeeting)) {
+                            var virtualOrPresentialText = (row.OrganizationBaseDto.IsVirtualMeeting === true) ? virtual : presential;
+                            html += '<span class="kt-badge kt-badge--inline kt-badge--warning kt-font-boldest mt-2 w-50">' + virtualOrPresentialText + '</span>';
+                        }
 
                         return html;
                     }
@@ -212,11 +217,12 @@ var MusicMeetingsSendEmailToPlayersDataTableWidget = function () {
                                         <th style="width: 20%;">' + translations.room + '</th>\
                                         <th style="width: 20%;">' + translations.round + '</th>\
                                         <th style="width: 6%;">' + translations.table + '</th>\
+                                        <th style="width: 20%;">' + translations.project + '</th>\
                                         <th style="width: 26%;">' + translations.producer + '</th>\
                                     </tr>';
 
                         //loop through all the row details to build output string
-                        var sortedNegotiationBaseDtos = row.MusicBusinessRoundNegotiationBaseDtos.sortBy('StartDate');
+                        var sortedNegotiationBaseDtos = row.NegotiationBaseDtos.sortBy('StartDate');
                         for (var item in sortedNegotiationBaseDtos) {
                             if (sortedNegotiationBaseDtos.hasOwnProperty(item)) {
                                 var r = sortedNegotiationBaseDtos[item];
@@ -225,10 +231,12 @@ var MusicMeetingsSendEmailToPlayersDataTableWidget = function () {
                                         <td class="text-center">' + moment(r.StartDate).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L') + '</td>\
                                         <td class="text-center">' + r.RoomJsonDto.Name;
 
+                                
                                 html += '\
                                         </td>\
                                         <td>' + translations.round + ' ' + r.RoundNumber + ' (' + moment(r.StartDate).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('LT') + ' - ' + moment(r.EndDate).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('LT') + ')</td>\
                                         <td class="text-center">' + r.TableNumber + '</td>\
+                                        <td>' + r.ProjectBuyerEvaluationBaseDto.ProjectBaseDto.ProjectName + '</td>\
                                         <td>';
 
                                 html += '\
@@ -236,15 +244,15 @@ var MusicMeetingsSendEmailToPlayersDataTableWidget = function () {
                                                 <tr>\
                                                     <td>';
 
-                                if (!MyRio2cCommon.isNullOrEmpty(r.MusicBusinessRoundProjectBuyerEvaluationBaseDto.BuyerAttendeeOrganizationBaseDto.OrganizationBaseDto.ImageUploadDate)) {
-                                    html += '<img src="' + imageDirectory + r.MusicBusinessRoundProjectBuyerEvaluationBaseDto.BuyerAttendeeOrganizationBaseDto.OrganizationBaseDto.Uid + '_thumbnail.png?v=' + moment(r.MusicBusinessRoundProjectBuyerEvaluationBaseDto.BuyerAttendeeOrganizationBaseDto.OrganizationBaseDto.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
+                                if (!MyRio2cCommon.isNullOrEmpty(r.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.ImageUploadDate)) {
+                                    html += '<img src="' + imageDirectory + r.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.Uid + '_thumbnail.png?v=' + moment(r.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
                                 }
                                 else {
                                     html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
                                 }
 
                                 html += '           </td>\
-                                                    <td> ' + r.MusicBusinessRoundProjectBuyerEvaluationBaseDto.BuyerAttendeeOrganizationBaseDto.OrganizationBaseDto.DisplayName + '</td>\
+                                                    <td> ' + r.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.DisplayName + '</td>\
                                                 </tr>\
                                             </table>\
                                         </td>\
