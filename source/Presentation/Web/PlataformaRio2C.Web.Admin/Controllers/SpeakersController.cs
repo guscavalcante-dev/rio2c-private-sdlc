@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-12-2019
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 10-03-2024
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 03/25/2025
 // ***********************************************************************
 // <copyright file="SpeakersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
