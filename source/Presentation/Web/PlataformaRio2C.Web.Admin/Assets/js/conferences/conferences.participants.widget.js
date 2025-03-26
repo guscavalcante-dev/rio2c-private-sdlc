@@ -4,7 +4,7 @@
 // Created          : 01-02-2020
 //
 // Last Modified By : Daniel Giese Rodrigues
-// Last Modified On : 03/25/2025
+// Last Modified On : 03-25-2025
 // ***********************************************************************
 // <copyright file="conferences.participants.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

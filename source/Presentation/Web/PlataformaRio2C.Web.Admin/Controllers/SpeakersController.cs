@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Daniel Giese Rodrigues
-// Last Modified On : 03/25/2025
+// Last Modified On : 03-25-2025
 // ***********************************************************************
 // <copyright file="SpeakersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -978,6 +978,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 false,
                 Constants.CollaboratorType.Speaker,
                 false,
+                null,
+                null,
                 page.Value,
                 10);
 
@@ -1007,7 +1009,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <returns></returns>
         [HttpGet]
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersReadString)]
-        public async Task<ActionResult> FindAllByFiltersAndConferenceDate(string keywords,bool filterByProjectsInNegotiation,DateTime? conferenceStartDate, DateTime? conferenceEndDate, int? page = 1)
+        public async Task<ActionResult> FindAllByFiltersAndConferenceDate(string keywords, bool filterByProjectsInNegotiation, DateTime? conferenceStartDate, DateTime? conferenceEndDate, int? page = 1)
         {
             var collaboratorsApiDtos = await this.collaboratorRepo.FindAllSpeakersApiListDtoPaged(
                 this.EditionDto.Id,
