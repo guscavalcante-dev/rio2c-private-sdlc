@@ -349,6 +349,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} não está disponível no horário da conferência. Período disponível: {1} até {2}..
+        /// </summary>
+        public static string CollaboratorNotAvailableForConference {
+            get {
+                return ResourceManager.GetString("CollaboratorNotAvailableForConference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A distribuição de projetos para membros da comissão já foi executada.&lt;br&gt;
         ///A distribuição só pode ser executada uma única vez por edição.
         ///    .

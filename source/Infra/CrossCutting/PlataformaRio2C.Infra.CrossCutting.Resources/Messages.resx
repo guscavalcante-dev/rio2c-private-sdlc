@@ -229,6 +229,9 @@
   <data name="CollaboratorMustHaveAProducer" xml:space="preserve">
     <value>O colaborador deve ter pelo menos uma produtora.</value>
   </data>
+  <data name="CollaboratorNotAvailableForConference" xml:space="preserve">
+    <value>{0} não está disponível no horário da conferência. Período disponível: {1} até {2}.</value>
+  </data>
   <data name="CommisionMemberDistributionMessage" xml:space="preserve">
     <value>A distribuição de projetos para membros da comissão já foi executada.&lt;br&gt;
 A distribuição só pode ser executada uma única vez por edição.
