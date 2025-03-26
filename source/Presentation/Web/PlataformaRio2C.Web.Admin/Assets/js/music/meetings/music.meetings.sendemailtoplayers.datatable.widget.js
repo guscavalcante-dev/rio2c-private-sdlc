@@ -3,7 +3,7 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-26-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
+// Last Modified By : Rafael Ribeiro
 // Last Modified On : 07-23-2021
 // ***********************************************************************
 // <copyright file="music.meetings.sendemailtoplayers.datatable.widget.js" company="Softo">

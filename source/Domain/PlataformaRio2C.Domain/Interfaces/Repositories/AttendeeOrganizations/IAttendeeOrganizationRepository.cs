@@ -70,9 +70,9 @@ namespace PlataformaRio2C.Domain.Interfaces
 
         #region Players
 
-        Task<IPagedList<NegotiationAttendeeOrganizationBaseDto>> FindAllByActiveBuyerNegotiationsAndByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, int editionId, int languageId, OrganizationType organization);
+        Task<IPagedList<NegotiationAttendeeOrganizationBaseDto>> FindAllByActiveBuyerNegotiationsAndByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, int editionId, int languageId, OrganizationType organizationType);
         Task<List<NegotiationAttendeeOrganizationBaseDto>> FindAllBaseDtoByActiveBuyerNegotiations(string keywords, List<Guid> selectedAttendeeOrganizationsUids, int editionId, int languageId, OrganizationType organizationType);
-        Task<int> CountAllByActiveBuyerNegotiationsAndByDataTable(bool showAllEditions, int? editionId, OrganizationType organization);
+        Task<int> CountAllByActiveBuyerNegotiationsAndByDataTable(bool showAllEditions, int? editionId, OrganizationType organizationType);
 
         #endregion
 
