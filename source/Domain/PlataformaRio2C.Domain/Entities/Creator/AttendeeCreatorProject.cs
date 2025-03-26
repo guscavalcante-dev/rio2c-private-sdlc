@@ -4,7 +4,7 @@
 // Created          : 02-26-2024
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-26-2024
+// Last Modified On : 03-26-2024
 // ***********************************************************************
 // <copyright file="AttendeeCreatorProject.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,9 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -50,15 +48,14 @@ namespace PlataformaRio2C.Domain.Entities
             var existentEvaluation = this.GetAttendeeCreatorProjectEvaluationByEvaluatorId(evaluatorUser.Id);
             if (existentEvaluation != null)
             {
-                existentEvaluation.Update(grade, evaluatorUser.Id);
+                existentEvaluation.Update(grade, evaluatorUser);
             }
             else
             {
                 this.AttendeeCreatorProjectEvaluations.Add(new AttendeeCreatorProjectEvaluation(
                     this,
                     evaluatorUser,
-                    grade,
-                    evaluatorUser.Id));
+                    grade));
             }
 
             this.Grade = this.GetAverageEvaluation();
@@ -143,7 +140,25 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.ValidationResult = new ValidationResult();
 
+            this.ValidateAttendeeCreatorProjectEvaluations();
+
             return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>
+        /// Validates the commission evaluations.
+        /// </summary>
+        public void ValidateAttendeeCreatorProjectEvaluations()
+        {
+            if (this.AttendeeCreatorProjectEvaluations?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var commissionEvaluation in this.AttendeeCreatorProjectEvaluations?.Where(t => !t.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(commissionEvaluation.ValidationResult);
+            }
         }
 
         #endregion
