@@ -762,7 +762,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 request.Search?.Value,
                 request.GetSortColumns(),
                 this.EditionDto.Id,
-                this.AdminAccessControlDto.Language.Id);
+                this.AdminAccessControlDto.Language.Id, OrganizationType.AudiovisualPlayer);
 
             var response = DataTablesResponse.Create(request, producers.TotalItemCount, producers.TotalItemCount, producers);
 
@@ -784,7 +784,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowSendEmailToPlayersTotalCountWidget()
         {
-            var producers = await this.attendeeOrganizationRepo.CountAllByActiveBuyerNegotiationsAndByDataTable(true, this.EditionDto.Id);
+            var producers = await this.attendeeOrganizationRepo.CountAllByActiveBuyerNegotiationsAndByDataTable(true, this.EditionDto.Id, OrganizationType.AudiovisualPlayer);
 
             return Json(new
             {
@@ -806,7 +806,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <returns></returns>
         public async Task<ActionResult> ShowSendEmailToPlayersEditionCountWidget()
         {
-            var producers = await this.attendeeOrganizationRepo.CountAllByActiveBuyerNegotiationsAndByDataTable(false, this.EditionDto.Id);
+            var producers = await this.attendeeOrganizationRepo.CountAllByActiveBuyerNegotiationsAndByDataTable(false, this.EditionDto.Id, OrganizationType.AudiovisualPlayer);
 
             return Json(new
             {
@@ -841,7 +841,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     keywords,
                     selectedAttendeeOrganizationsUids?.ToListGuid(','),
                     this.EditionDto.Id,
-                    this.AdminAccessControlDto.Language.Id);
+                    this.AdminAccessControlDto.Language.Id,
+                    OrganizationType.AudiovisualPlayer);
                 if (attendeeOrganizationBaseDtos?.Any() != true)
                 {
                     throw new DomainException(Messages.SelectAtLeastOneOption);

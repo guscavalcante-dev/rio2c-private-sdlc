@@ -28,7 +28,7 @@
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/music.meetings.sendemailtoplayers.list.js")
     @Scripts.Render("~/bundles/js/music.meetings.sendemailtoplayers.editioncount.js")
-<script>
+    <script>
         var collaboratorTypeId = '@PlataformaRio2C.Domain.Entities.CollaboratorType.PlayerExecutiveMusic.Id';
 
         // Page translations ----------------------------------------------------------------------
@@ -41,8 +41,8 @@
             room: '@(Labels.Room)',
             round: '@(Labels.Round)',
             table: '@(Labels.Table)',
-            player: '@(Labels.Player)',
             project: '@(Labels.Project)',
+            player: '@(Labels.Player)',
             producer: '@(Labels.Producer)',
             confirmSendEmailAll: '@Labels.confirmSendEmailAll',
             confirmSendEmailSelected: '@Labels.confirmSendEmailSelected',
@@ -57,5 +57,5 @@
             MusicMeetingsSendEmailToPlayersEditionCountWidget.init();
             MusicMeetingsSendEmailToPlayersDataTableWidget.init();
         });
-</script>
+    </script>
 }
