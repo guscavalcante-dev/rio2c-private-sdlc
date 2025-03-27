@@ -77,3 +77,12 @@ Essa propriedade pode ser configurada pelo Visual Studio, clicando com o botão 
 Update-Database -TargetMigration: "nome da miration" ou 0
 
 ```
+
+Bibliotecas Inseridas no projeto :
+A biblioteca Z.EntityFramework.Extensions é usada para fazer o Bulk Insert do projeto, para garantir o uso dela, ela deve ser atualizada ao menos uma vez por ano, com os comandos :
+( sh ) nuget update Z.EntityFramework.Extensions
+                  ou
+( powershell) Update-Package Z.EntityFramework.Extensions
+
+
+

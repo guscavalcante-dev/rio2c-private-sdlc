@@ -103,8 +103,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
         #region Status Widget
 
-        
-
         /// <summary>Shows the status widget.</summary>
         /// <returns></returns>
         [HttpGet]

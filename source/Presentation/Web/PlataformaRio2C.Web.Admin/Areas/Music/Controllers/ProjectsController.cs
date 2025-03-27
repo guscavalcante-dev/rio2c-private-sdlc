@@ -41,6 +41,7 @@ using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults;
 using System.IO;
 using PlataformaRio2c.Infra.Data.FileRepository;
+using PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 {
@@ -50,6 +51,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
     public class ProjectsController : BaseController
     {
         private readonly IMusicProjectRepository musicProjectRepo;
+        private readonly IMusicBusinessRoundProjectRepository musicBusinessRoundProjectRepo;
         private readonly IMusicGenreRepository musicGenreRepo;
         private readonly IProjectEvaluationStatusRepository evaluationStatusRepo;
         private readonly IMusicBandRepository musicBandRepo;
@@ -72,7 +74,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             IMusicGenreRepository musicGenreRepository,
             IProjectEvaluationStatusRepository evaluationStatusRepository,
             IMusicBandRepository musicBandRepository,
-            IFileRepository fileRepository)
+            IFileRepository fileRepository,
+            IMusicBusinessRoundProjectRepository musicBusinessRoundProjectRepo)
             : base(commandBus, identityController)
         {
             this.musicProjectRepo = musicProjectRepository;
@@ -80,6 +83,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             this.evaluationStatusRepo = evaluationStatusRepository;
             this.musicBandRepo = musicBandRepository;
             this.fileRepo = fileRepository;
+            this.musicBusinessRoundProjectRepo = musicBusinessRoundProjectRepo;
         }
 
         #region List
@@ -1096,6 +1100,48 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             }
 
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.DeletedM) });
+        }
+
+        #endregion
+
+        #region Finds
+
+        /// <summary>Finds all by filters.</summary>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="customFilter">The custom filter.</param>
+        /// <param name="buyerOrganizationUid">The buyer organization uid.</param>
+        /// <param name="page">The page.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> FindAllByFilters(string keywords, string customFilter = "", Guid? buyerOrganizationUid = null, int? page = 1)
+        {
+            var projectDtos = await this.musicBusinessRoundProjectRepo.FindAllDropdownDtoPaged(
+                this.EditionDto.Id,
+                keywords,
+                customFilter,
+                buyerOrganizationUid,
+                page.Value,
+                10);
+
+            return Json(new
+            {
+                status = "success",
+                HasPreviousPage = projectDtos.HasPreviousPage,
+                HasNextPage = projectDtos.HasNextPage,
+                TotalItemCount = projectDtos.TotalItemCount,
+                PageCount = projectDtos.PageCount,
+                PageNumber = projectDtos.PageNumber,
+                PageSize = projectDtos.PageSize,
+                Projects = projectDtos?.Select(p => new ProjectDropdownDto
+                {
+                    Uid = p.Uid,
+                    ProjectTitle = p.SellerAttendeeCollaboratorDto.Collaborator.GetStageNameOrBadgeOrFullName(),
+                    SellerTradeName = p.SellerAttendeeCollaboratorDto.Collaborator.GetNameAbbreviation(),
+                    SellerCompanyName = p.SellerAttendeeCollaboratorDto.Collaborator.GetDisplayName(),
+                    SellerPicture = p.SellerAttendeeCollaboratorDto.Collaborator.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, p.SellerAttendeeCollaboratorDto.Collaborator.Uid, p.SellerAttendeeCollaboratorDto.Collaborator.ImageUploadDate, true) : null,
+                    SellerUid = p.SellerAttendeeCollaboratorDto.Collaborator.Uid
+                })?.ToList()
+            }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

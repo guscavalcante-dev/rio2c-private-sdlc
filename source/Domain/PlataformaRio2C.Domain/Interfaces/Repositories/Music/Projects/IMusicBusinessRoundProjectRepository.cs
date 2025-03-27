@@ -16,5 +16,6 @@ namespace PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects
         Task<MusicBusinessRoundProjectDto> FindSiteInterestWidgetDtoByProjectUidAsync(Guid guid);
         Task<MusicBusinessRoundProjectDto> FindSiteBuyerCompanyWidgetDtoByProjectUidAsync(Guid projectUid);
         Task<MusicBusinessRoundProjectDto> FindSiteDuplicateDtoByProjectUidAsync(Guid projectUid);
+        Task<IPagedList<MusicBusinessRoundProjectDto>> FindAllDropdownDtoPaged(int editionId, string keywords, string customFilter, Guid? buyerOrganizationUid, int page, int pageSize);
     }
 }

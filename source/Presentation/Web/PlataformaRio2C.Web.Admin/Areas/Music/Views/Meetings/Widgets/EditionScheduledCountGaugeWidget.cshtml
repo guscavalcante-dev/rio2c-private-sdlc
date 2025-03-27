@@ -1,0 +1,16 @@
+﻿@model int
+<div class="kt-portlet__head kt-portlet__space-x">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            <a class="kt-label-font-color-2" href="@Url.Action("Scheduled", "Meetings", new { Area = "Music" })">
+                @Messages.ScheduledOneToOneMeetings @Labels.InEditionYear.Replace("{0}", ViewBag.EditionDto.UrlCode.ToString())
+            </a>
+        </h3>
+    </div>
+    <div class="kt-portlet__head-toolbar">
+        <span class="kt-badge kt-badge--success kt-badge--lg kt-badge--rounded" style="width:100px;">@Labels.Music</span>
+    </div>
+</div>
+<div class="kt-portlet__body">
+    <div id="MusicMeetingsEditionScheduledCountGaugeChart" style="height:250px;"></div>
+</div>

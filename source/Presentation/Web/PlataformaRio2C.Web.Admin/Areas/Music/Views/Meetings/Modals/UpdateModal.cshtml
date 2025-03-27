@@ -1,0 +1,36 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateMusicBusinessRoundNegotiation
+<div class="modal fade" id="UpdateMusicMeetingModal" role="dialog" aria-labelledby="UpdateMusicMeetingModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@Labels.Update @Labels.Negotiation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Update", "Meetings", new { Area = "Music" }, FormMethod.Post, new { id = "UpdateMusicMeetingForm" }))
+                {
+                    <div id="form-container">
+                        @Html.Partial("Modals/UpdateForm", Model)
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-12">
+                        <div id="MusicMeetingsLogisticsInfoWidget" class="kt-portlet kt-portlet--tabs d-none" style="min-height: 180px;"></div>
+                    </div>
+                </div>
+                @if (Model != null && Model.MusicBusinesNegotiationDto != null && Model.MusicBusinesNegotiationDto.Negotiation.UpdateDate != Model.MusicBusinesNegotiationDto.Negotiation.CreateDate)
+                {
+                    <div class="row">
+                        <div class="col-sm-12 text-right">
+                            @Labels.LastUpdateOn <b>@Model.MusicBusinesNegotiationDto.Negotiation.UpdateDate.ToBrazilTimeZone().ToShortDateString() @Model.MusicBusinesNegotiationDto.Negotiation.UpdateDate.ToBrazilTimeZone().ToLongTimeString()</b> @Labels.By <b>@(Model.MusicBusinesNegotiationDto.UpdaterDto?.Name ?? "-")</b>.
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">@Labels.Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="MusicMeetingsUpdate.submit();">@Labels.Save</button>
+            </div>
+        </div>
+    </div>
+</div>

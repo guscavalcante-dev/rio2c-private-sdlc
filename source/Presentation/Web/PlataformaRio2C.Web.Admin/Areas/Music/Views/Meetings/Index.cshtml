@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = Labels.OneToOneMeetings + " | " + Labels.GenerateCalendar;
+}
+<!--begin:: Quick Stats-->
+<div class="row">
+    <!--begin:: Edition Scheduled Count Widget-->
+    <div class="col-sm-6">
+        <div id="MusicMeetingsEditionScheduledCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+    </div>
+    <!--end:: Edition Scheduled Count Widget-->
+    <!--begin:: Edition Unscheduled Count Widget-->
+    <div class="col-sm-6">
+        <div id="MusicMeetingsEditionUnscheduledCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+    </div>
+    <!--end:: Edition Unscheduled Count Widget-->
+</div>
+<!--end:: Quick Stats-->
+<div class="row">
+    <!--begin:: Status Widget-->
+    <div class="col-12">
+        <div id="MusicMeetingsStatusWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 75px;"></div>
+    </div>
+    <!--end:: Status Widget-->
+</div>
+@section Styles {
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/chart.js")
+    @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/music.meetings.generate.widget.js")
+    @Scripts.Render("~/bundles/js/music.meetings.editionscheduledcount.widget.js")
+    @Scripts.Render("~/bundles/js/music.meetings.editionunscheduledcount.widget.js")
+    <script>
+        // Page translations ----------------------------------------------------------------------
+        var translations = {
+            generateCalendar: '@Labels.GenerateCalendar',
+            generateCalendarMessage: '@Messages.GenerateCalendarMessage'
+        };
+
+        // Pagination -----------------------------------------------------------------------------
+        jQuery(document).ready(function () {
+            MusicMeetingsEditionScheduledCountWidget.init();
+            MusicMeetingsEditionUnscheduledCountWidget.init();
+            MusicMeetingsStatusWidget.init();
+        });
+    </script>
+}

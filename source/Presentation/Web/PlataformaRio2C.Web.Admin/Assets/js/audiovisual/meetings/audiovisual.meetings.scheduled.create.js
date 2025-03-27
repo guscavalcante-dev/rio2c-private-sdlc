@@ -17,7 +17,7 @@ var AudiovisualMeetingsCreate = function () {
     var modalId = '#CreateAudiovisualMeetingModal';
     var formId = '#CreateAudiovisualMeetingForm';
 
-    var buyerOrganizationUid = '#BuyerOrganizationUid';
+    var buyerOrganizationUid = '#BuyerOrganizationUidModal';
     var projectUid = '#ProjectUid';
     var negotiationConfigUid = '#NegotiationConfigUid';
     var negotiationRoomConfigUid = '#NegotiationRoomConfigUid';
