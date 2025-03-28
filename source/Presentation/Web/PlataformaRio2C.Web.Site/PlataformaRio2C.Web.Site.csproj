@@ -364,6 +364,7 @@
     <Compile Include="Areas\Creator\CreatorAreaRegistration.cs" />
     <Compile Include="Areas\Innovation\Controllers\ProjectsController.cs" />
     <Compile Include="Areas\Innovation\InnovationAreaRegistration.cs" />
+    <Compile Include="Areas\Music\Controllers\MeetingsController.cs" />
     <Compile Include="Areas\Music\Controllers\PitchingProjectsController.cs" />
     <Compile Include="Areas\Music\MusicAreaRegistration.cs" />
     <Compile Include="Areas\Player\PlayerAreaRegistration.cs" />
@@ -885,6 +886,9 @@
     <Content Include="Assets\js\music\businessrounds\music.businessrounds.buyercompany.widget.js" />
     <Content Include="Assets\js\music\businessrounds\music.businessrounds.buyerevaluation.update.widget.js" />
     <Content Include="Assets\js\music\businessrounds\music.businessrounds.buyerevaluation.list.widget.js" />
+    <Content Include="Assets\js\music\meetings\music.meetings.maininformation.widget.js" />
+    <Content Include="Assets\js\music\meetings\music.meetings.scheduled.widget.js" />
+    <Content Include="Assets\js\music\meetings\music.meetings.virtualmeeting.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.evaluators.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.socialnetworks.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.videoandmusic.widget.js" />
@@ -7061,6 +7065,12 @@
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Widgets\OptionsWidget.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Modals\UpdateOptionsForm.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Modals\UpdateOptionsModal.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\Details.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\Index.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\Widgets\ScheduledDataWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\Widgets\ScheduledWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Meetings\Widgets\VirtualMeetingWidget.cshtml" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />

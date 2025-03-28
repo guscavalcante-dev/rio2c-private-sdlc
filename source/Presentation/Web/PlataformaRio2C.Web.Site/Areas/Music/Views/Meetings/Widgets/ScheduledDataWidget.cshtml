@@ -1,0 +1,121 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Entities
+@using PlataformaRio2C.Domain.Statics
+@using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
+@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@model List<NegotiationGroupedByDateDto>
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    var brazilUtc = @DateTimeExtensions.GetBrazilUtc();
+    var isPlayerExecutive = (ViewBag.CollaboratorTypeUid as Guid?) == CollaboratorType.PlayerExecutiveMusic.Uid;
+}
+@if (Model?.Any() == true)
+{
+    foreach (var negotiationGroupedByDateDto in Model)
+    {
+        <div class="col-sm-12 col-lg-12 col-xl-12  p-0 m-0">
+            <div class="kt-portlet kt-portlet--height-fluid">
+                <div class="kt-portlet__body">
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="w-100">
+                                <h3 class="kt-portlet__head-title" style="font-size: 20px;">@(negotiationGroupedByDateDto?.Date.ToStringDayMonthYearExtensive(Labels.Of))</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover table-checkable" id="conferences-list-table">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">@Labels.Hour</th>
+                                    @if (isPlayerExecutive)
+                                    {
+                                        <th>@Labels.Producer</th>
+                                    }
+                                    else
+                                    {
+                                        <th>@Labels.Player</th>
+                                    }
+                                    <th>@Labels.Project</th>
+                                    <th class="border-right-0">@Labels.Room</th>
+                                    <th class="border-left-0">&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var negotiationDto in negotiationGroupedByDateDto.NegotiationDtos)
+                                {
+                                    <tr>
+                                        <td class="align-middle text-center col-sm-3 col-lg-2">
+                                            @(negotiationDto?.Negotiation?.StartDate.ToBrazilTimeZone().ToShortTimeString())
+                                            <span class="d-none d-sm-inline">-</span><span class="d-sm-none"><br /></span>
+                                            @(negotiationDto?.Negotiation?.EndDate.ToBrazilTimeZone().ToShortTimeString())
+                                            <span class="d-block form-optional-input">(@brazilUtc)</span>
+                                        </td>
+                                        <td class="col-md-4">
+                                            <div class="row align-items-center">
+                                                @{
+                                                    var organization = isPlayerExecutive ? negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.SellerAttendeeOrganizationDto?.Organization :
+                                                                                            negotiationDto?.ProjectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.Organization;
+                                                    <div class="col-md-2">
+                                                        <div class="kt-widget kt-widget--user-profile-3">
+                                                            <div class="kt-widget__top">
+                                                                @if (organization?.HasImage() == true)
+                                                                {
+                                                                    <div style="float: right;">
+                                                                        <div class="kt-widget__media">
+                                                                            <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, organization.Uid, organization.ImageUploadDate, true)" alt="image" style="max-width:50px; max-height:50px;">
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest ml-2 image-max-size" style="width: 50px; height: 50px;">
+                                                                        @(organization?.GetTradeNameAbbreviation() ?? "-")
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <span>@(organization?.TradeName)</span>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </td>
+                                        <td class="align-middle col-md-3">@(negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value)</td>
+                                        <td class="align-middle border-right-0">
+                                            <span>@(negotiationDto?.RoomDto?.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.RoomName?.Value)</span>
+                                        </td>
+                                        <td class="align-middle text-right border-left-0">
+                                            @if (negotiationDto?.RoomDto?.Room?.IsVirtualMeeting == true)
+                                            {
+                                                <button type="button" class="btn btn-success btn-font-sm">
+                                                    <a class="text-white" href="@Url.Action("Details", "Meetings", new { Area = "Audiovisual", id = negotiationDto?.Negotiation.Uid, collaboratorTypeUid = ViewBag.CollaboratorTypeUid })">@Labels.Join</a>
+                                                </button>
+                                            }
+                                            else if (negotiationDto?.RoomDto?.Room?.IsVirtualMeeting == false)
+                                            {
+                                                <span>@Labels.Table @(negotiationDto.Negotiation.TableNumber)</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    if (DateTime.UtcNow < editionDto.OneToOneMeetingsScheduleDate)
+    {
+        <div class="col-12 text-center mt-30">@string.Format(Messages.AgendaAvailableFrom, editionDto?.OneToOneMeetingsScheduleDate.ToBrazilTimeZone().ToShortDateString())</div>
+    }
+    else
+    {
+        <div class="col-12 text-center mt-30">@string.Format(Messages.EntityNotAction, Labels.ScheduledNegotiations, Labels.FoundFP)</div>
+    }
+}

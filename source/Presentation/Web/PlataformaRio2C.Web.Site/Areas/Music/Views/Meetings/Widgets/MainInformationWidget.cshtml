@@ -1,0 +1,123 @@
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Statics
+@model MusicBusinessRoundNegotiationDto
+@{
+    var buyerAttendeeOrganizationDto = Model.ProjectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto as AttendeeOrganizationDto;
+    var sellerAttendeeOrganizationDto = Model.ProjectBuyerEvaluationDto?.MusicBusinessRoundProjectDto?.SellerAttendeeCollaboratorDto as AttendeeCollaboratorDto;
+    var projectDto = Model.ProjectBuyerEvaluationDto?.MusicBusinessRoundProjectDto as MusicBusinessRoundProjectDto;
+    var buyerCompanyDetailsUrl = Url.Action("Details", "Companies", new { Area = "", id = buyerAttendeeOrganizationDto?.Organization?.Uid });
+    var sellerCompanyDetailsUrl = Url.Action("Details", "Companies", new { Area = "", id = sellerAttendeeOrganizationDto?.Collaborator?.Uid });
+    var brazilUtc = @DateTimeExtensions.GetBrazilUtc();
+}
+<div class="kt-portlet__body">
+    <div class="row">
+        <div class="col-lg-8 col-md-7 kt-widget kt-widget--user-profile-3">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="kt-widget__top">
+                        <a href="@sellerCompanyDetailsUrl" target="_blank">
+                            @if (sellerAttendeeOrganizationDto?.Collaborator?.HasImage() == true)
+                            {
+                                <div class="kt-widget__media">
+                                    <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, sellerAttendeeOrganizationDto.Collaborator.Uid, sellerAttendeeOrganizationDto.Collaborator.ImageUploadDate, true)" alt="image">
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest" style="width: 110px; height: 110px;">
+                                    @(sellerAttendeeOrganizationDto?.Collaborator?.GetStageNameOrBadgeOrFullName() ?? "-")
+                                </div>
+                            }
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="kt-widget__top">
+                        <div class="kt-widget__content" style="overflow: hidden;">
+                            <div class="col-md-12 mr-0 pr-0 pl-0">
+                                <div class="kt-widget__desc pl-0">
+                                    <div class="kt-widget__subhead">
+                                        <span>@Labels.Player:</span> <a href="@buyerCompanyDetailsUrl" target="_blank">@(buyerAttendeeOrganizationDto?.Organization?.TradeName ?? "-")</a>
+                                    </div>
+                                    @*<div class="kt-widget__subhead">
+                                        <span>@Labels.Project:</span> <a>@(projectDto.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value ?? "-")</a>
+                                    </div>*@
+                                    <div class="kt-widget__subhead">
+                                        <span>@Labels.Producer:</span> <a href="@sellerCompanyDetailsUrl" target="_blank">@(sellerAttendeeOrganizationDto?.Collaborator?.StageName ?? "-")</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="kt-widget__top">
+                        <div class="kt-widget__content" style="overflow: hidden;">
+                            <div class="col-md-12 mr-0 pr-0 pl-0">
+                                <div class="kt-widget__desc pl-0">
+                                    <div class="kt-widget__subhead">
+                                        <span>@Labels.Date:</span> <a>@(Model.Negotiation.StartDate.ToBrazilTimeZone().Date.ToStringDayMonthYearExtensive(Labels.Of))</a>
+                                    </div>
+                                    <div class="kt-widget__subhead">
+                                        <span>@Labels.Hour:</span> <a>
+                                            @(Model.Negotiation?.StartDate.ToBrazilTimeZone().ToShortTimeString()) - @(Model.Negotiation?.EndDate.ToBrazilTimeZone().ToShortTimeString())
+                                            <span class="form-optional-input">(@brazilUtc)</span>
+                                        </a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-0">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-10">
+                    <div class="kt-widget__top">
+                        <div class="kt-widget__content" style="overflow: hidden;">
+                            <div class="col-md-12 mr-0 pr-0 pl-0">
+                                <div class="kt-widget__desc pl-0">
+                                    <div class="kt-widget__subhead pt-1">
+                                        <span>@Labels.Description</span><br />
+                                        <span>
+                                            <a>@(projectDto.GetExpectationForMeetingByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectLogLine?.Value ?? "-")</a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-3 d-flex align-items-center justify-content-center">
+            <div id="chronographTimer" class="timer-container d-none">
+                <div class="timer-group">
+                    <div class="timer hour">
+                        <div class="hand"><span id="hourHand1"></span></div>
+                        <div class="hand"><span id="hourHand2"></span></div>
+                    </div>
+                    <div class="timer minute">
+                        <div class="hand"><span></span></div>
+                        <div class="hand"><span></span></div>
+                    </div>
+                    <div class="timer second">
+                        <div class="hand"><span id="secondHand1"></span></div>
+                        <div class="hand"><span id="secondHand2"></span></div>
+                    </div>
+                    <div class="face">
+                        <p class="clock" id="time">00:00:00</p>
+                        <h1 class="clock" id="description">-</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-2">
+            <div class="d-flex h-100 align-items-center justify-content-center justify-content-md-end mt-4 pb-4 pb-md-0 mt-md-0">
+                <button class="btn btn-danger" onclick="AudiovisualMeetingsMainInformationWidget.exitRoom();">@Labels.LeaveRoom</button>
+            </div>
+        </div>
+    </div>
+</div>

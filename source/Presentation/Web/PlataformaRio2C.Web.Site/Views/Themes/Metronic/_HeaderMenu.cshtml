@@ -203,6 +203,7 @@
                 <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "PitchingProjects", "Music")" aria-haspopup="true">
                     <a class="kt-menu__link" href="@projectsUrl">
                         <span class="kt-menu__link-text">@Labels.Music</span>
+
                     </a>
                 </li>
             }
@@ -237,6 +238,15 @@
                                         </li>
                                     </ul>
                                 </div>
+                            </li>
+                            <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Meetings", "Music")" aria-haspopup="true">
+                                @*<a class="kt-menu__link" href="@Url.Action("Index", "Meetings", new { Area = "Music", CollaboratorTypeUid = CollaboratorType.PlayerExecutiveMusic.Uid })">*@
+                                <a class="kt-menu__link"   href="@Url.Action("Index", "Meetings", new { Area = "Music", CollaboratorTypeUid = CollaboratorType.PlayerExecutiveMusic.Uid })">
+
+                                   
+                                    <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                                    <span class="kt-menu__link-text">@Labels.ScheduledNegotiations</span>
+                                </a>
                             </li>
                         </ul>
                     </div>
