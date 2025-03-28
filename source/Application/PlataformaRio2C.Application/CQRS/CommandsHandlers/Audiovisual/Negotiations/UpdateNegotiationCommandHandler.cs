@@ -93,6 +93,19 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #region Overbooking Validations
 
+            // Availability check
+            DateTimeOffset startDate = negotiationConfig.StartDate.Date.JoinDateAndTime(cmd.StartTime, true).ToUtcTimeZone();
+            DateTimeOffset endDate = startDate.Add(negotiationConfig.TimeOfEachRound);
+
+            if (!organizationRepo.HasExecutivePlayersForDate(cmd.BuyerOrganizationUid.Value, cmd.EditionId.Value, startDate, endDate))
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(
+                                                    Messages.NoExecutivePlayersAvailableForDate,
+                                                    buyerOrganization?.Name ?? string.Empty,
+                                                    negotiationConfig.StartDate.ToShortDateString()),
+                                                        new string[] { "ToastrError" }));
+            }
+
             // Available tables check
             var manualNegotiationsGroupedByRoomAndStartDate = manualScheduledNegotiationsInThisRoom.GroupBy(n => n.StartDate);
             var hasNoMoreManualTablesAvailable = manualNegotiationsGroupedByRoomAndStartDate.Any(n => n.Count(w => w.StartDate == startDatePreview) >= negotiationRoomConfig.CountManualTables);
