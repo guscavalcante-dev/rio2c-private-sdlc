@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 01-02-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-21-2020
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 03-25-2025
 // ***********************************************************************
 // <copyright file="conferences.participants.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -80,8 +80,19 @@ var ConferencesParticipantsWidget = function () {
 
     var enableCreatePlugins = function () {
         enableCreateAjaxForm();
+        var conferenceStartDate = $('#Conference_StartDate').val();
+        var conferenceEndDate = $('#Conference_EndDate').val();
+
+        if (!MyRio2cCommon.isNullOrEmpty(conferenceStartDate) && !MyRio2cCommon.isNullOrEmpty(conferenceEndDate)) {
+            conferenceStartDate = moment(conferenceStartDate, "L", MyRio2cCommon.getGlobalVariable('userInterfaceLanguageUppercase')).format('YYYY-MM-DD');
+            conferenceEndDate = moment(conferenceEndDate, "L", MyRio2cCommon.getGlobalVariable('userInterfaceLanguageUppercase')).format('YYYY-MM-DD');
+        }
+
         MyRio2cCommon.enableCollaboratorSelect2({
-            url: '/Speakers/FindAllByFilters',
+            url: '/Speakers/FindAllByFiltersAndConferenceDate',
+            isConference: true,
+            conferenceStartDate: conferenceStartDate,
+            conferenceEndDate: conferenceEndDate,
             selectedOption: {
                 id: $('#InitialCollaboratorUid').val(),
                 text: $('#InitialCollaboratorName').val()

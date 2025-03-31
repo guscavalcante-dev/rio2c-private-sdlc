@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-09-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 04-14-2022
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 03-25-2025
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1487,12 +1487,23 @@ var MyRio2cCommon = function () {
                 type: "GET",
                 //quietMillis: 50,
                 data: function (params) {
-                    var query = {
-                        keywords: params.term,
-                        page: params.page,
-                        filterByProjectsInNegotiation: options.filterByProjectsInNegotiation || false
-                    };
-
+                    query = undefined;
+                    if (options.isConference != undefined && options.isConference) {
+                        query = {
+                            keywords: params.term,
+                            filterByProjectsInNegotiation: options.filterByProjectsInNegotiation || false,
+                            conferenceStartDate: options.conferenceStartDate,
+                            conferenceEndDate: options.conferenceEndDate,
+                            page: params.page,
+                        };
+                    }
+                    else {
+                        query = {
+                            keywords: params.term,
+                            page: params.page,
+                            filterByProjectsInNegotiation: options.filterByProjectsInNegotiation || false
+                        };
+                    }
                     return query;
                 },
                 processResults: function (data, params) {

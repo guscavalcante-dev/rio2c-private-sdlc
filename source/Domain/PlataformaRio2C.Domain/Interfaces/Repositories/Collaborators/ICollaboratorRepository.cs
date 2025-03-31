@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 05-21-2024
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 03-25-2025
 // ***********************************************************************
 // <copyright file="ICollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -92,8 +92,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         #endregion
 
         #region Speakers
-
-        Task<IPagedList<CollaboratorApiListDto>> FindAllSpeakersApiListDtoPaged(int editionId, string keywords, bool filterByProjectsInNegotiation, string collaboratorTypeName, bool showAllParticipants, int page, int pageSize);
+        Task<IPagedList<CollaboratorApiListDto>> FindAllSpeakersApiListDtoPaged(int editionId, string keywords, bool filterByProjectsInNegotiation, string collaboratorTypeName, bool showAllParticipants, DateTimeOffset? conferenceStartDate, DateTimeOffset? conferenceEndDate, int page, int pageSize);
         Task<IPagedList<CollaboratorDto>> FindAllSpeakersByDataTable(
             int page,
             int pageSize,

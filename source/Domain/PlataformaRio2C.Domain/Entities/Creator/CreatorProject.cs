@@ -4,7 +4,7 @@
 // Created          : 02-26-2024
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-21-2025
+// Last Modified On : 03-26-2024
 // ***********************************************************************
 // <copyright file="CreatorProject.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -147,6 +147,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateOtherFileDescription();
             this.ValidateLinks();
             this.ValidateCreatorProjectInterests();
+            this.ValidateAttendeeCreatorProjects();
 
             return this.ValidationResult.IsValid;
         }
@@ -369,6 +370,19 @@ namespace PlataformaRio2C.Domain.Entities
             foreach (var creatorProjectInterest in this.CreatorProjectInterests.Where(aiof => !aiof.IsValid()))
             {
                 this.ValidationResult.Add(creatorProjectInterest.ValidationResult);
+            }
+        }
+
+        public void ValidateAttendeeCreatorProjects()
+        {
+            if (this.AttendeeCreatorProjects?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var attendeeCreatorProject in this.AttendeeCreatorProjects?.Where(t => !t.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(attendeeCreatorProject.ValidationResult);
             }
         }
 

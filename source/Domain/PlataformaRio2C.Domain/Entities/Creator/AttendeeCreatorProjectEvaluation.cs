@@ -4,7 +4,7 @@
 // Created          : 02-26-2024
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-26-2024
+// Last Modified On : 03-26-2024
 // ***********************************************************************
 // <copyright file="AttendeeCreatorProjectEvaluation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,7 +13,6 @@
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
-using System;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -27,17 +26,15 @@ namespace PlataformaRio2C.Domain.Entities
         public User EvaluatorUser { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeCreatorProjectEvaluation"/> class.
+        /// Initializes a new instance of the <see cref="AttendeeCreatorProjectEvaluation" /> class.
         /// </summary>
         /// <param name="attendeeCreatorProject">The attendee creator project.</param>
         /// <param name="evaluatorUser">The evaluator user.</param>
         /// <param name="grade">The grade.</param>
-        /// <param name="userId">The user identifier.</param>
         public AttendeeCreatorProjectEvaluation(
             AttendeeCreatorProject attendeeCreatorProject,
             User evaluatorUser,
-            decimal grade,
-            int userId)
+            decimal grade)
         {
             this.AttendeeCreatorProject = attendeeCreatorProject;
             this.EvaluatorUser = evaluatorUser;
@@ -45,7 +42,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.EvaluatorUserId = evaluatorUser.Id;
             this.Grade = grade;
 
-            this.SetCreateDate(userId);
+            this.SetCreateDate(evaluatorUser.Id);
         }
 
         /// <summary>
@@ -59,11 +56,12 @@ namespace PlataformaRio2C.Domain.Entities
         /// Updates the specified grade.
         /// </summary>
         /// <param name="grade">The grade.</param>
-        /// <param name="userId">The user identifier.</param>
-        public void Update(decimal grade, int userId)
+        /// <param name="evaluatorUser">The evaluator user.</param>
+        public void Update(decimal grade, User evaluatorUser)
         {
             this.Grade = grade;
-            this.SetUpdateDate(userId);
+            this.EvaluatorUser = evaluatorUser;
+            this.SetUpdateDate(evaluatorUser.Id);
         }
 
         #region Validations
@@ -73,7 +71,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidationResult = new ValidationResult();
 
             this.ValidateGrade();
-            this.ValidateEvaluatorUser();
 
             return this.ValidationResult.IsValid;
         }
@@ -83,14 +80,6 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.Grade < 0 || this.Grade > 10)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Grade, "10", "0"), new string[] { "Grade" }));
-            }
-        }
-
-        public void ValidateEvaluatorUser()
-        {
-            if (this.EvaluatorUser == null)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.EvaluatorUser), new string[] { "EvaluatorUserId" }));
             }
         }
 

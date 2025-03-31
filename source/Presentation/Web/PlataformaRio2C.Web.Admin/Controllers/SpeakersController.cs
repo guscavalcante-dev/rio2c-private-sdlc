@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-12-2019
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 10-03-2024
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 03-25-2025
 // ***********************************************************************
 // <copyright file="SpeakersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -40,6 +40,7 @@ using PlataformaRio2C.Domain.ApiModels;
 using ClosedXML.Excel;
 using System.IO;
 using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Models;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
@@ -977,6 +978,47 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 false,
                 Constants.CollaboratorType.Speaker,
                 false,
+                null,
+                null,
+                page.Value,
+                10);
+
+            return Json(new
+            {
+                status = "success",
+                HasPreviousPage = collaboratorsApiDtos.HasPreviousPage,
+                HasNextPage = collaboratorsApiDtos.HasNextPage,
+                TotalItemCount = collaboratorsApiDtos.TotalItemCount,
+                PageCount = collaboratorsApiDtos.PageCount,
+                PageNumber = collaboratorsApiDtos.PageNumber,
+                PageSize = collaboratorsApiDtos.PageSize,
+                Collaborators = collaboratorsApiDtos?.Select(c => new CollaboratorsDropdownDto
+                {
+                    Uid = c.Uid,
+                    BadgeName = c.BadgeName?.Trim(),
+                    Name = c.Name?.Trim(),
+                    Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.Uid, c.ImageUploadDate, true) : null
+                })?.ToList()
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        /// <summary>Finds all by filters.</summary>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="page">The page.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersReadString)]
+        public async Task<ActionResult> FindAllByFiltersAndConferenceDate(string keywords, bool filterByProjectsInNegotiation, DateTime? conferenceStartDate, DateTime? conferenceEndDate, int? page = 1)
+        {
+            var collaboratorsApiDtos = await this.collaboratorRepo.FindAllSpeakersApiListDtoPaged(
+                this.EditionDto.Id,
+                keywords,
+                filterByProjectsInNegotiation,
+                Constants.CollaboratorType.Speaker,
+                false,
+                conferenceStartDate.Value,
+                conferenceEndDate.Value,
                 page.Value,
                 10);
 
