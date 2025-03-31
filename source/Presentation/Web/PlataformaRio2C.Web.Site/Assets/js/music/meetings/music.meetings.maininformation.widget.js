@@ -74,8 +74,8 @@ var MusicMeetingsMainInformationWidget = function () {
 
     var exitRoom = function () {
         //Disconnect from Jitsi Meet API, because it stills connected when closes the page.
-        if (typeof (AudiovisualMeetingsVirtualMeetingWidget) !== 'undefined') {
-            AudiovisualMeetingsVirtualMeetingWidget.hangUpParticipant();
+        if (typeof (MusicMeetingsVirtualMeetingWidget) !== 'undefined') {
+            MusicMeetingsVirtualMeetingWidget.hangUpParticipant();
         }
 
         //Redirect to meetings list

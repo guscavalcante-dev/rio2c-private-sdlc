@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 07-28-2021
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 12-21-2023
+// Last Modified By : Rafael Ribeiro 
+// Last Modified On : 03-28-2025
 // ***********************************************************************
 // <copyright file="MeetingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -37,24 +37,24 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
     /// MeetingsController
     /// </summary>
     [AjaxAuthorize(Order = 1)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.PlayerExecutiveAudiovisual + "," + Constants.CollaboratorType.Industry)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.PlayerExecutiveMusic + "," + Constants.CollaboratorType.Industry)]
     public class MeetingsController : BaseController
     {
-        private readonly INegotiationRepository negotiationRepo;
+        
         private readonly IMusicBusinessRoundNegotiationRepository musicbusinessroundRepo;
 
 
         /// <summary>Initializes a new instance of the <see cref="MeetingsController" /> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        /// <param name="negotiationRepository">The negotiation repository.</param>
+        /// <param name="musicbusinessroundRepo">The negotiation repository.</param>
         public MeetingsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
-            INegotiationRepository negotiationRepository, IMusicBusinessRoundNegotiationRepository musicbusinessroundRepo)
+            IMusicBusinessRoundNegotiationRepository musicbusinessroundRepo)
             : base(commandBus, identityController)
         {
-            this.negotiationRepo = negotiationRepository;
+          
             this.musicbusinessroundRepo = musicbusinessroundRepo;
         }
 
@@ -101,7 +101,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                         status = "success",
                         pages = new List<dynamic>
                         {
-                            new { page = this.RenderRazorViewToString("Widgets/ScheduledDataWidget", new List<NegotiationGroupedByDateDto>()), divIdOrClass = "#MusicMeetingsScheduledWidget" },
+                            new { page = this.RenderRazorViewToString("Widgets/ScheduledDataWidget", new List<MusicBusinessRoundNegotiationGroupedByDateDto>()), divIdOrClass = "#MusicMeetingsScheduledWidget" },
                         }
                     },
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet

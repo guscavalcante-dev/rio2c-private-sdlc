@@ -7065,9 +7065,7 @@
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Widgets\OptionsWidget.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Modals\UpdateOptionsForm.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\Modals\UpdateOptionsModal.cshtml" />
-    <Content Include="Areas\Music\Views\Meetings\Details.cshtml" />
     <Content Include="Areas\Music\Views\Meetings\Index.cshtml" />
-    <Content Include="Areas\Music\Views\Meetings\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Areas\Music\Views\Meetings\Widgets\ScheduledDataWidget.cshtml" />
     <Content Include="Areas\Music\Views\Meetings\Widgets\ScheduledWidget.cshtml" />
     <Content Include="Areas\Music\Views\Meetings\Widgets\VirtualMeetingWidget.cshtml" />
