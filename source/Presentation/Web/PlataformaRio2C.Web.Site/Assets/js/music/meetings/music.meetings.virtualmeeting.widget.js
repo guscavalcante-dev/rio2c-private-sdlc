@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 09-29-2021
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 10-23-2021
+// Last Modified By : Rafael Ribeiro
+// Last Modified On : 02-31-2025
 // ***********************************************************************
 // <copyright file="music.meetings.virtualmeeting.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
