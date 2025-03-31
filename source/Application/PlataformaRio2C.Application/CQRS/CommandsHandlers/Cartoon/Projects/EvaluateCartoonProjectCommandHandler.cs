@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 07-28-2021
 //
-// Last Modified By : Rafael Franco
-// Last Modified On : 02-10-2022
+// Last Modified By : Renan Valentim
+// Last Modified On : 03-26-2024
 // ***********************************************************************
 // <copyright file="EvaluateCartoonProjectCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -75,7 +75,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             if (!cmd.Grade.HasValue)
             {
-                this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired), new string[] { "Grade" })));
+                this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(cmd.Grade)), new string[] { "Grade" })));
                 return this.AppValidationResult;
             }
 

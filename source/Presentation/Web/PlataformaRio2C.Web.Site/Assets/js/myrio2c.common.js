@@ -1465,6 +1465,7 @@ var MyRio2cCommon = function () {
     };
 
     var enableCollaboratorSelect2 = function (options) {
+
         if (isNullOrEmpty(options)) {
             options = new Object();
         }
@@ -1493,12 +1494,23 @@ var MyRio2cCommon = function () {
                 type: "GET",
                 quietMillis: 50,
                 data: function (params) {
-                    var query = {
-                        keywords: params.term,
-                        page: params.page,
-                        filterByProjectsInNegotiation: options.filterByProjectsInNegotiation || false
-                    };
-
+                    query = undefined;
+                    if (options.isConference != undefined && options.isConference) {
+                        query = {
+                            keywords: params.term,
+                            filterByProjectsInNegotiation: options.filterByProjectsInNegotiation || false, 
+                            conferenceStartDate: options.conferenceStartDate,
+                            conferenceEndDate: options.conferenceEndDate,
+                            page: params.page,
+                        };
+                    }
+                    else {
+                        query = {
+                            keywords: params.term,
+                            page: params.page,
+                            filterByProjectsInNegotiation: options.filterByProjectsInNegotiation || false
+                        };
+                    }
                     return query;
                 },
                 processResults: function (data, params) {

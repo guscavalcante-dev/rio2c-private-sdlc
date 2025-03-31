@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Daniel Giese Rodrigues
-// Last Modified On : 01-08-2025
+// Last Modified On : 03-25-2025
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -166,6 +166,28 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                                         && (!act.CollaboratorType.IsDeleted || showDeleted)
                                                                                                                         && collaboratorTypeNames.Contains(act.CollaboratorType.Name)))));
 
+            return query;
+        }
+
+        /// <summary>
+        /// Filters attendees based on their availability within the specified conference dates.
+        /// </summary>
+        /// <param name="query">The attendee collaborator query.</param>
+        /// <param name="conferenceStartDate">The start date of the conference.</param>
+        /// <param name="conferenceEndDate">The end date of the conference.</param>
+        /// <returns>A filtered query of attendees available within the given date range.</returns>
+        internal static IQueryable<Collaborator> HasAvailabilityForDates(this IQueryable<Collaborator> query, int editionId, DateTimeOffset conferenceStartDate, DateTimeOffset conferenceEndDate)
+        {
+            query = query.Where(c => c.AttendeeCollaborators.Any(ac =>
+                         !ac.IsDeleted &&
+                         ac.EditionId == editionId &&
+                         (
+                             (!ac.AvailabilityBeginDate.HasValue && !ac.AvailabilityEndDate.HasValue)
+                             ||
+                             (ac.AvailabilityBeginDate.HasValue && ac.AvailabilityEndDate.HasValue &&
+                              ac.AvailabilityBeginDate.Value <= conferenceStartDate && ac.AvailabilityEndDate.Value >= conferenceEndDate)
+                         )
+                     ));
             return query;
         }
 
@@ -1262,7 +1284,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                 OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
                                                                 AudiovisualPlayerTermsAcceptanceDate = ac.AudiovisualPlayerTermsAcceptanceDate,
                                                                 InnovationPlayerTermsAcceptanceDate = ac.InnovationPlayerTermsAcceptanceDate,
-                                                                MusicProducerTermsAcceptanceDate  = ac.MusicProducerTermsAcceptanceDate,
+                                                                MusicProducerTermsAcceptanceDate = ac.MusicProducerTermsAcceptanceDate,
                                                                 MusicPlayerTermsAcceptanceDate = ac.MusicPlayerTermsAcceptanceDate,
                                                                 AudiovisualProducerBusinessRoundTermsAcceptanceDate = ac.AudiovisualProducerBusinessRoundTermsAcceptanceDate,
                                                                 AudiovisualProducerPitchingTermsAcceptanceDate = ac.AudiovisualProducerPitchingTermsAcceptanceDate,
@@ -2852,12 +2874,28 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             bool filterByProjectsInNegotiation,
             string collaboratorTypeName,
             bool showAllParticipants,
+            DateTimeOffset? conferenceStartDate,
+            DateTimeOffset? conferenceEndDate,
             int page,
             int pageSize)
         {
-            var query = this.GetBaseQuery(true)
-                                .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, false, showAllParticipants, editionId)
-                                .FindByNames(keywords);
+
+            var query = this.GetBaseQuery(true);
+
+            if (conferenceStartDate.HasValue && conferenceEndDate.HasValue)
+            {
+                query = this.GetBaseQuery(true)
+                            .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, false, showAllParticipants, editionId)
+                            .FindByNames(keywords)
+                            .HasAvailabilityForDates(editionId, conferenceStartDate.Value, conferenceEndDate.Value);
+            }
+            else
+            {
+                query = this.GetBaseQuery(true)
+                           .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, false, showAllParticipants, editionId)
+                           .FindByNames(keywords);
+            }
+            
 
             return await query
                             .Select(c => new CollaboratorApiListDto
