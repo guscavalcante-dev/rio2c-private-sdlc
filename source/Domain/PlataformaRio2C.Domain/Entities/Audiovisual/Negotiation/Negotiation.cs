@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 10-03-2024
+// Last Modified On : 03-31-2025
 // ***********************************************************************
 // <copyright file="Negotiation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -233,6 +233,18 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.ProjectBuyerEvaluationId = projectBuyerEvaluation?.Id ?? 0;
             this.ProjectBuyerEvaluation = projectBuyerEvaluation;
+        }
+
+        /// <summary>
+        /// Disables the slot.
+        /// </summary>
+        /// <param name="projectBuyerEvaluation">The project buyer evaluation.</param>
+        /// <param name="isDeleted">if set to <c>true</c> [is deleted].</param>
+        public void DisableSlot(ProjectBuyerEvaluation projectBuyerEvaluation, bool isDeleted)
+        {
+            this.ProjectBuyerEvaluationId = projectBuyerEvaluation.Id;
+            this.ProjectBuyerEvaluation = projectBuyerEvaluation;
+            this.IsDeleted = isDeleted;
         }
 
         #region Validations

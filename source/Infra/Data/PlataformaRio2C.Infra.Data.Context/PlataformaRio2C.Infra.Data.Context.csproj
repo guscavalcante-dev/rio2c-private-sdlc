@@ -562,6 +562,10 @@
     <Compile Include="Migrations\202503131509015_UpdateDatabase_20250313.Designer.cs">
       <DependentUpon>202503131509015_UpdateDatabase_20250313.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202503291320186_UpdateDatabase_20250329.cs" />
+    <Compile Include="Migrations\202503291320186_UpdateDatabase_20250329.Designer.cs">
+      <DependentUpon>202503291320186_UpdateDatabase_20250329.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -1134,6 +1138,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202503131509015_UpdateDatabase_20250313.resx">
       <DependentUpon>202503131509015_UpdateDatabase_20250313.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202503291320186_UpdateDatabase_20250329.resx">
+      <DependentUpon>202503291320186_UpdateDatabase_20250329.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
