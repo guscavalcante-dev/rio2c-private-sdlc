@@ -1457,6 +1457,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Algum dos executivos da organização {0} não estarão disponíveis na data {1}. Verificar Disponibilidades..
+        /// </summary>
+        public static string NoPlayerExecutivesAvailableForDate {
+            get {
+                return ResourceManager.GetString("NoPlayerExecutivesAvailableForDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Não avaliado.
         /// </summary>
         public static string NotEvaluated {
