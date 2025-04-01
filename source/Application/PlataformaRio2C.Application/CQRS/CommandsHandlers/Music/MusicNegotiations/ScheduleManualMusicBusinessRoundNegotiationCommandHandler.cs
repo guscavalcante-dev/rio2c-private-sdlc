@@ -94,7 +94,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 || (project.SellerAttendeeCollaborator.AvailabilityBeginDate <= startDate && project.SellerAttendeeCollaborator.AvailabilityEndDate >= endDate)))
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(
-                                                    Messages.NoExecutivePlayersAvailableForDate,
+                                                    Messages.NoPlayerExecutivesAvailableForDate,
                                                     buyerOrganization?.Name ?? string.Empty,
                                                     negotiationConfig.StartDate.ToShortDateString()),
                                                         new string[] { "ToastrError" }));

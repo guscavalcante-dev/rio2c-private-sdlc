@@ -656,7 +656,7 @@ A distribuição só pode ser executada uma única vez por edição.
     <value>Nenhuma conversa encontrada.</value>
     <comment>Nenhuma conversa encontrada.</comment>
   </data>
-  <data name="NoExecutivePlayersAvailableForDate" xml:space="preserve">
+  <data name="NoPlayerExecutivesAvailableForDate" xml:space="preserve">
     <value>Algum dos executivos da organização {0} não estarão disponíveis na data {1}. Verificar Disponibilidades.</value>
   </data>
   <data name="NoMoreTablesAvailableAtTheRoomAndStartTime" xml:space="preserve">

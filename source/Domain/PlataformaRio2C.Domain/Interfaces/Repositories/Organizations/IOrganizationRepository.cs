@@ -27,7 +27,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<IPagedList<OrganizationBaseDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, Guid organizationTypeUid, bool showAllEditions, bool showAllOrganizations, int? editionId);
         Task<int> CountAllByDataTable(Guid organizationTypeId, bool showAllEditions, int? editionId);
         Task<IPagedList<OrganizationApiListDto>> FindAllDropdownApiListDtoPaged(int editionId, string keywords, string customFilter, Guid? organizationTypeUid, int page, int pageSize);
-        bool HasExecutivePlayersForDate(Guid organizationUid, int editionId, DateTimeOffset startDate, DateTimeOffset endDate);
+        bool HasPlayerExecutiveForDate(Guid organizationUid, int editionId, DateTimeOffset startDate, DateTimeOffset endDate);
 
         #region Audiovisual Players
 

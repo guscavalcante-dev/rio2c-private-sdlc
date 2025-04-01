@@ -86,10 +86,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             DateTimeOffset startDate = negotiationConfig.StartDate.Date.JoinDateAndTime(cmd.StartTime, true).ToUtcTimeZone();
             DateTimeOffset endDate = startDate.Add(negotiationConfig.TimeOfEachRound);
 
-            if (!organizationRepo.HasExecutivePlayersForDate(cmd.BuyerOrganizationUid.Value, cmd.EditionId.Value, startDate, endDate))
+            if (!organizationRepo.HasPlayerExecutiveForDate(cmd.BuyerOrganizationUid.Value, cmd.EditionId.Value, startDate, endDate))
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(
-                                                    Messages.NoExecutivePlayersAvailableForDate,
+                                                    Messages.NoPlayerExecutivesAvailableForDate,
                                                     buyerOrganization?.Name ?? string.Empty,
                                                     negotiationConfig.StartDate.ToShortDateString()),
                                                         new string[] { "ToastrError" }));

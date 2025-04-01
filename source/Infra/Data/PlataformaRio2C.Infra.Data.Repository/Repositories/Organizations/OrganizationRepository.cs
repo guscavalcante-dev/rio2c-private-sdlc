@@ -359,7 +359,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="date">The date filter.</param>
         /// <returns></returns>
-        internal static IQueryable<Organization> HasExecutivePlayerAvailableForDate(this IQueryable<Organization> query, int editionId, DateTimeOffset startDate, DateTimeOffset endDate)
+        internal static IQueryable<Organization> HasPlayerExecutiveAvailableForDate(this IQueryable<Organization> query, int editionId, DateTimeOffset startDate, DateTimeOffset endDate)
         {
             query = query.Where(o =>
                 o.AttendeeOrganizations.Any(ao =>
@@ -572,11 +572,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="date">The date to check the player availability.</param>
         /// <returns></returns>
-        public bool HasExecutivePlayersForDate(Guid organizationUid, int editionId, DateTimeOffset startDate, DateTimeOffset endDate)
+        public bool HasPlayerExecutiveForDate(Guid organizationUid, int editionId, DateTimeOffset startDate, DateTimeOffset endDate)
         {
             var query = this.GetBaseQuery()
                                 .FindByUid(organizationUid)
-                                .HasExecutivePlayerAvailableForDate(editionId,startDate,endDate);
+                                .HasPlayerExecutiveAvailableForDate(editionId,startDate,endDate);
                                 
 
             return query.ToList().Count > 0;

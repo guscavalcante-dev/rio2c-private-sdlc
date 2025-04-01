@@ -662,7 +662,7 @@ The discursive field of player categories is mandatory if any player option has 
     <value>No conversations found.</value>
     <comment>Nenhuma conversa encontrada.</comment>
   </data>
-  <data name="NoExecutivePlayersAvailableForDate" xml:space="preserve">
+  <data name="NoPlayerExecutivesAvailableForDate" xml:space="preserve">
     <value>Some of the executives in organization {0} will not be available in date {1}. Please check Availabilities.</value>
   </data>
   <data name="NoMoreTablesAvailableAtTheRoomAndStartTime" xml:space="preserve">
