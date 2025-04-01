@@ -41,21 +41,21 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
     public class MeetingsController : BaseController
     {
         
-        private readonly IMusicBusinessRoundNegotiationRepository musicbusinessroundRepo;
+        private readonly IMusicBusinessRoundNegotiationRepository musicBusinessRoundRepo;
 
 
         /// <summary>Initializes a new instance of the <see cref="MeetingsController" /> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        /// <param name="musicbusinessroundRepo">The negotiation repository.</param>
+        /// <param name="musicBusinessRoundRepo">The negotiation repository.</param>
         public MeetingsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
-            IMusicBusinessRoundNegotiationRepository musicbusinessroundRepo)
+            IMusicBusinessRoundNegotiationRepository musicBusinessRoundRepo)
             : base(commandBus, identityController)
         {
           
-            this.musicbusinessroundRepo = musicbusinessroundRepo;
+            this.musicBusinessRoundRepo = musicBusinessRoundRepo;
         }
 
         #region List
@@ -108,7 +108,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 };
             }
 
-            var negotiationsDtos = await this.musicbusinessroundRepo.FindCollaboratorScheduledWidgetDtoAsync(
+            var negotiationsDtos = await this.musicBusinessRoundRepo.FindCollaboratorScheduledWidgetDtoAsync(
                 this.EditionDto.Id,
                 searchViewModel.BuyerOrganizationUid,
                 searchViewModel.SellerOrganizationUid,

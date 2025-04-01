@@ -11,7 +11,7 @@
 }
 @if (Model?.Any() == true)
 {
-    foreach (var musicbusinessroundnegotiationGroupedByDateDto in Model)
+    foreach (var musicBusinessRoundNegotiationGroupedByDateDto in Model)
     {
         <div class="col-sm-12 col-lg-12 col-xl-12  p-0 m-0">
             <div class="kt-portlet kt-portlet--height-fluid">
@@ -19,7 +19,7 @@
                     <div class="row mb-3">
                         <div class="col-12">
                             <div class="w-100">
-                                <h3 class="kt-portlet__head-title" style="font-size: 20px;">@(musicbusinessroundnegotiationGroupedByDateDto?.Date.ToStringDayMonthYearExtensive(Labels.Of))</h3>
+                                <h3 class="kt-portlet__head-title" style="font-size: 20px;">@(musicBusinessRoundNegotiationGroupedByDateDto?.Date.ToStringDayMonthYearExtensive(Labels.Of))</h3>
                             </div>
                         </div>
                     </div>
@@ -42,13 +42,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var musicbusinessroundnegotiationDto in musicbusinessroundnegotiationGroupedByDateDto.NegotiationDtos)
+                                @foreach (var musicBusinessRoundNegotiationDto in musicBusinessRoundNegotiationGroupedByDateDto.NegotiationDtos)
                                 {
                                     <tr>
                                         <td class="align-middle text-center col-sm-3 col-lg-2">
-                                            @(musicbusinessroundnegotiationDto?.Negotiation?.StartDate.ToBrazilTimeZone().ToShortTimeString())
+                                            @(musicBusinessRoundNegotiationDto?.Negotiation?.StartDate.ToBrazilTimeZone().ToShortTimeString())
                                             <span class="d-none d-sm-inline">-</span><span class="d-sm-none"><br /></span>
-                                            @(musicbusinessroundnegotiationDto?.Negotiation?.EndDate.ToBrazilTimeZone().ToShortTimeString())
+                                            @(musicBusinessRoundNegotiationDto?.Negotiation?.EndDate.ToBrazilTimeZone().ToShortTimeString())
                                             <span class="d-block form-optional-input">(@brazilUtc)</span>
                                         </td>
                                         <td class="col-md-4">
@@ -59,11 +59,11 @@
 
                                                     if (isPlayerExecutive)
                                                     {
-                                                        collaborator = musicbusinessroundnegotiationDto?.ProjectBuyerEvaluationDto?.MusicBusinessRoundProjectDto?.SellerAttendeeCollaboratorDto?.Collaborator;
+                                                        collaborator = musicBusinessRoundNegotiationDto?.ProjectBuyerEvaluationDto?.MusicBusinessRoundProjectDto?.SellerAttendeeCollaboratorDto?.Collaborator;
                                                     }
                                                     else
                                                     {
-                                                        organization = musicbusinessroundnegotiationDto?.ProjectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.Organization;
+                                                        organization = musicBusinessRoundNegotiationDto?.ProjectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.Organization;
                                                     }
                                                     <div class="col-md-2">
                                                         <div class="kt-widget kt-widget--user-profile-3">
@@ -91,20 +91,20 @@
                                                 }
                                             </div>
                                         </td>
-                                        <td class="align-middle col-md-3">@(musicbusinessroundnegotiationDto?.ProjectBuyerEvaluationDto?.MusicBusinessRoundProjectDto?.GetProjectExpectationsDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value)</td>
+                                        <td class="align-middle col-md-3">@(musicBusinessRoundNegotiationDto?.ProjectBuyerEvaluationDto?.MusicBusinessRoundProjectDto?.GetProjectExpectationsDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value)</td>
                                         <td class="align-middle border-right-0">
-                                            <span>@(musicbusinessroundnegotiationDto?.RoomDto?.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.RoomName?.Value)</span>
+                                            <span>@(musicBusinessRoundNegotiationDto?.RoomDto?.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.RoomName?.Value)</span>
                                         </td>
                                         <td class="align-middle text-right border-left-0">
-                                            @if (musicbusinessroundnegotiationDto?.RoomDto?.Room?.IsVirtualMeeting == true)
+                                            @if (musicBusinessRoundNegotiationDto?.RoomDto?.Room?.IsVirtualMeeting == true)
                                             {
                                                 <button type="button" class="btn btn-success btn-font-sm">
-                                                    <a class="text-white" href="@Url.Action("Details", "Meetings", new { Area = "Music", id = musicbusinessroundnegotiationDto?.Negotiation.Uid, collaboratorTypeUid = ViewBag.CollaboratorTypeUid })">@Labels.Join</a>
+                                                    <a class="text-white" href="@Url.Action("Details", "Meetings", new { Area = "Music", id = musicBusinessRoundNegotiationDto?.Negotiation.Uid, collaboratorTypeUid = ViewBag.CollaboratorTypeUid })">@Labels.Join</a>
                                                 </button>
                                             }
-                                            else if (musicbusinessroundnegotiationDto?.RoomDto?.Room?.IsVirtualMeeting == false)
+                                            else if (musicBusinessRoundNegotiationDto?.RoomDto?.Room?.IsVirtualMeeting == false)
                                             {
-                                                <span>@Labels.Table @(musicbusinessroundnegotiationDto.Negotiation.TableNumber)</span>
+                                                <span>@Labels.Table @(musicBusinessRoundNegotiationDto.Negotiation.TableNumber)</span>
                                             }
                                         </td>
                                     </tr>

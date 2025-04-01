@@ -189,8 +189,6 @@
     }
     @if (musicCollaboratorTypesCount > 0)
     {
-
-
         var meetingsUrl = Url.Action("Index", "Meetings", new { Area = "Music" });
         var projectsUrl = Url.Action("Index", "PitchingProjects", new { Area = "Music" });
         if (musicCollaboratorTypesCount == 1)
@@ -206,7 +204,6 @@
                 <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "PitchingProjects", "Music")" aria-haspopup="true">
                     <a class="kt-menu__link" href="@projectsUrl">
                         <span class="kt-menu__link-text">@Labels.Music</span>
-
                     </a>
                 </li>
             }
@@ -243,7 +240,6 @@
                                 </div>
                             </li>
                             <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Meetings", "Music")" aria-haspopup="true">
-                                @*<a class="kt-menu__link" href="@Url.Action("Index", "Meetings", new { Area = "Music", CollaboratorTypeUid = CollaboratorType.PlayerExecutiveMusic.Uid })">*@
                                 <a class="kt-menu__link" href="@Url.Action("Index", "Meetings", new { Area = "Music", CollaboratorTypeUid = CollaboratorType.PlayerExecutiveMusic.Uid })">
 
 
@@ -274,7 +270,7 @@
                                     <span class="kt-menu__link-text">@Labels.Projects</span>
                                 </a>
                             </li>
-                            @if (editionDto?.IsAudiovisualProjectSubmitStarted() == true)
+                            @if (editionDto?.IsMusicBusinessRoundProjectSubmitStarted() == true)
                             {
                                 <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "SubmittedList", "BusinessRoundProjects", "Music")" aria-haspopup="true">
                                     <a href="@Url.Action("SubmittedList", "BusinessRoundProjects", new { Area = "Music" })" class="kt-menu__link ">
