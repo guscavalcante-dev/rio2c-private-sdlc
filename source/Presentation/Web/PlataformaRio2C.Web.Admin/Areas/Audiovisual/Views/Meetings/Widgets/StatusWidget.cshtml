@@ -23,8 +23,9 @@
         </div>
         <div class="col-sm-4 mt-2 mb-3 text-sm-right">
             @if (isNegotiationsProcessing ||
-                !Model.HasNegotiationConfigWithPresentialRoomConfigured ||
-                !Model.HasNegotiationConfigWithVirtualRoomConfigured)
+                !Model.HasNegotiationConfigWithPresentialRoomConfigured
+                //|| !Model.HasNegotiationConfigWithVirtualRoomConfigured
+                )
             {
                 <button class="btn btn-brand btn-elevate btn-icon-sm" disabled>
                     <i class="flaticon-event-calendar-symbol"></i>@(editionDto?.AudiovisualNegotiationsCreateEndDate != null ? Labels.RegenerateCalendar : Labels.GenerateCalendar)
@@ -38,8 +39,9 @@
             }
         </div>
     </div>
-    @if (!Model.HasNegotiationConfigWithPresentialRoomConfigured ||
-            !Model.HasNegotiationConfigWithVirtualRoomConfigured)
+    @if (!Model.HasNegotiationConfigWithPresentialRoomConfigured
+        //|| !Model.HasNegotiationConfigWithVirtualRoomConfigured
+        )
     {
         <div class="row">
 

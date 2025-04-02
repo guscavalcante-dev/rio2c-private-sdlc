@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 03-06-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-20-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 03-31-2025
 // ***********************************************************************
 // <copyright file="CreateNegotiationsCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -84,13 +84,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             try
             {
-                //this.NegotiationRepo.Truncate();
-                var editionNegotiations = await this.NegotiationRepo.FindNegotiationsByEditionIdAsync(cmd.EditionId.Value);
-                if (editionNegotiations.Count > 0)
-                {
-                    this.NegotiationRepo.DeleteAll(editionNegotiations);
-                    this.Uow.SaveChanges();
-                }
 
                 edition?.StartAudiovisualNegotiationsCreation(cmd.UserId);
                 this.Uow.SaveChanges();
@@ -125,21 +118,33 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 this.logisticAirfares = await this.logisticAirfareRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionUid ?? Guid.Empty);
                 this.conferences = await this.conferenceRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionUid ?? Guid.Empty);
 
-                this.FillNegotiationSlots(negotiationSlots, projectBuyerEvaluations);
-
-                var negotiations = negotiationSlots
-                                    .Where(ns => ns.ProjectBuyerEvaluation != null && !ns.IsDeleted)
-                                    .ToList();
-
-                //this.NegotiationRepo.Truncate();
-                var remainingEditionNegotiations = await this.NegotiationRepo.FindNegotiationsByEditionIdAsync(cmd.EditionId.Value);
-                if (remainingEditionNegotiations.Count > 0)
+                // Get existing negotiations and mark slots as already filled (disable slot)
+                var existingNegotiations = await this.NegotiationRepo.FindNegotiationsByEditionIdAsync(cmd.EditionId.Value);
+                foreach (var existing in existingNegotiations)
                 {
-                    this.NegotiationRepo.DeleteAll(remainingEditionNegotiations);
-                    this.Uow.SaveChanges();
+                    var slot = negotiationSlots.FirstOrDefault(ns =>
+                        ns.RoomId == existing.RoomId &&
+                        ns.TableNumber == existing.TableNumber &&
+                        ns.RoundNumber == existing.RoundNumber);
+
+                    if (slot != null)
+                    {
+                        slot.DisableSlot(existing.ProjectBuyerEvaluation, existing.IsDeleted);
+                    }
                 }
 
-                this.NegotiationRepo.CreateAll(negotiations);
+                this.FillNegotiationSlots(negotiationSlots, projectBuyerEvaluations);
+
+                var newNegotiations = negotiationSlots
+                                .Where(ns => ns.ProjectBuyerEvaluation != null &&
+                                           !ns.IsDeleted &&
+                                           !existingNegotiations.Any(en =>
+                                               en.RoomId == ns.RoomId &&
+                                               en.TableNumber == ns.TableNumber &&
+                                               en.RoundNumber == ns.RoundNumber))
+                                .ToList();
+
+                this.NegotiationRepo.CreateAll(newNegotiations);
 
                 edition?.FinishAudiovisualNegotiationsCreation(cmd.UserId);
 
@@ -153,9 +158,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             return this.AppValidationResult;
-
-            //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
-            //return Task.FromResult(propertyId); // use it when the methed is not async
         }
 
         /// <summary>Gets the negotiation slots.</summary>
@@ -265,7 +267,20 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="projectBuyerEvaluations">The project buyer evaluations.</param>
         private void FillNegotiationSlots(List<Negotiation> negotiationSlots, List<ProjectBuyerEvaluation> projectBuyerEvaluations)
         {
-            // Project buyer evaluations with more exceptions are in the beginning of the list
+            // Removes already allocated ProjectBuyerEvaluations from the list
+            var allocatedProjectBuyerPairs = negotiationSlots
+               .Where(ns => ns.ProjectBuyerEvaluation != null)
+               .Select(ns => new { ns.ProjectBuyerEvaluation.ProjectId, ns.ProjectBuyerEvaluation.BuyerAttendeeOrganizationId })
+               .Distinct()
+               .ToList();
+
+            projectBuyerEvaluations = projectBuyerEvaluations
+                .Where(pbe => !allocatedProjectBuyerPairs.Any(a =>
+                    a.ProjectId == pbe.ProjectId &&
+                    a.BuyerAttendeeOrganizationId == pbe.BuyerAttendeeOrganizationId))
+                .ToList();
+
+            // ProjectBuyerEvaluations with more exceptions must be in the beginning of the list
             projectBuyerEvaluations = this.GetProjectBuyerEvaluationsOrderedByExceptions(negotiationSlots, projectBuyerEvaluations);
 
             var buyerAttendeeOrganizations = projectBuyerEvaluations.GroupBy(e => e.BuyerAttendeeOrganizationId);
@@ -288,7 +303,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     }
                     else
                     {
-                        possibleNegotiationSlots = possibleNegotiationSlots.Where(ns => ns.Room.IsVirtualMeeting == projectBuyerEvaluation.BuyerAttendeeOrganization.Organization.IsVirtualMeeting).ToList();
+                        possibleNegotiationSlots = possibleNegotiationSlots.Where(ns => ns.Room.IsVirtualMeeting == false).ToList();
+                        //possibleNegotiationSlots = possibleNegotiationSlots.Where(ns => ns.Room.IsVirtualMeeting == projectBuyerEvaluation.BuyerAttendeeOrganization.Organization.IsVirtualMeeting).ToList();
                     }
 
                     if (possibleNegotiationSlots?.Any() == true)
