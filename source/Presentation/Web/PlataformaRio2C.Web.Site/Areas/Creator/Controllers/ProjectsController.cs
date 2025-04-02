@@ -221,7 +221,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Creator.Controllers
                 searchViewModel.SearchKeywords,
                 searchViewModel.EvaluationStatusUid,
                 searchViewModel.Page.Value,
-                searchViewModel.PageSize.Value);
+                searchViewModel.PageSize == null ? 100 : searchViewModel.PageSize.Value);
 
             var currentCreatorProjectIdIndex = Array.IndexOf(allCreatorProjectsIds, searchViewModel.Id ?? 0) + 1; //Index start at 0, its a fix to "start at 1"
 
@@ -233,7 +233,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Creator.Controllers
                 searchViewModel.SearchKeywords,
                 searchViewModel.EvaluationStatusUid,
                 searchViewModel.Page.Value,
-                searchViewModel.PageSize.Value);
+                searchViewModel.PageSize == null ? 100 : searchViewModel.PageSize.Value);
 
             return View(attendeeCreatorProjectDto);
         }
