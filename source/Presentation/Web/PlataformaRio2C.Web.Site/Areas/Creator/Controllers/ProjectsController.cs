@@ -223,7 +223,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Creator.Controllers
                 searchViewModel.Page.Value,
                 searchViewModel.PageSize.Value);
 
-            var currentCreatorProjectIdIndex = Array.IndexOf(allCreatorProjectsIds, searchViewModel.Id.Value) + 1; //Index start at 0, its a fix to "start at 1"
+            var currentCreatorProjectIdIndex = Array.IndexOf(allCreatorProjectsIds, searchViewModel.Id ?? 0) + 1; //Index start at 0, its a fix to "start at 1"
 
             ViewBag.SearchViewModel = searchViewModel;
             ViewBag.CurrentProjectIndex = currentCreatorProjectIdIndex;
