@@ -465,6 +465,18 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
 
+            #region Meetings
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.list.widget.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.scheduled.widget.js",
+                "~/Assets/js/music/meetings/music.meetings.scheduled.delete.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.meetings.widget.js").Include(
+                "~/Assets/js/music/meetings/music.meetings.maininformation.widget.js",
+                "~/Assets/js/music/meetings/music.meetings.virtualmeeting.widget.js"));
+
+            #endregion
+
             #region Projects - Business Rounds
 
             bundles.Add(new ScriptBundle("~/bundles/js/music.businessrounds.buyerevaluation.list.widget.js").Include(
