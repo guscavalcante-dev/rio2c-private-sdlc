@@ -352,6 +352,33 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>
+        /// Check if executive players of the company has availabity for the date, OR does not have availability at all.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="date">The date filter.</param>
+        /// <returns></returns>
+        internal static IQueryable<Organization> HasPlayerExecutiveAvailableForDate(this IQueryable<Organization> query, int editionId, DateTimeOffset startDate, DateTimeOffset endDate)
+        {
+            query = query.Where(o =>
+                o.AttendeeOrganizations.Any(ao =>
+                    !ao.IsDeleted
+                    && !ao.Edition.IsDeleted
+                    && ao.EditionId == editionId
+                    && ao.AttendeeOrganizationCollaborators
+                        .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeCollaborator.IsDeleted) 
+                        .All(aoc => 
+                            (aoc.AttendeeCollaborator.AvailabilityBeginDate == null &&
+                             aoc.AttendeeCollaborator.AvailabilityEndDate == null)
+                            ||
+                            (aoc.AttendeeCollaborator.AvailabilityBeginDate <= startDate &&
+                             aoc.AttendeeCollaborator.AvailabilityEndDate >= endDate)
+                        )
+                )
+            );
+            return query;
+        }
     }
 
     #endregion
@@ -540,11 +567,27 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
-        /// <summary>Finds the dto by uid asynchronous.</summary>
+        /// <summary>Finds if the organization does have all executive players availables for the Date, OR does not have availability registered at all.</summary>
         /// <param name="organizationUid">The organization uid.</param>
         /// <param name="editionId">The edition identifier.</param>
+        /// <param name="date">The date to check the player availability.</param>
         /// <returns></returns>
-        public async Task<OrganizationDto> FindDtoByUidAsync(Guid organizationUid, int editionId)
+        public bool HasPlayerExecutiveForDate(Guid organizationUid, int editionId, DateTimeOffset startDate, DateTimeOffset endDate)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(organizationUid)
+                                .HasPlayerExecutiveAvailableForDate(editionId,startDate,endDate);
+                                
+
+            return query.ToList().Count > 0;
+        }
+
+
+            /// <summary>Finds the dto by uid asynchronous.</summary>
+            /// <param name="organizationUid">The organization uid.</param>
+            /// <param name="editionId">The edition identifier.</param>
+            /// <returns></returns>
+            public async Task<OrganizationDto> FindDtoByUidAsync(Guid organizationUid, int editionId)
         {
             var query = this.GetBaseQuery()
                                 .FindByUid(organizationUid);
@@ -1342,7 +1385,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             var query = this.GetBaseQuery(showDeleted: showDeleted)
                                 .FindByOrganizationTypeUidAndByEditionId(playerOrganizationTypeUid, false, false, editionId, showDeleted)
-                                .IsApiDisplayEnabled(editionId, playerOrganizationTypeUid, showDeleted) 
+                                .IsApiDisplayEnabled(editionId, playerOrganizationTypeUid, showDeleted)
                                 .FindByFiltersUids(activitiesUids, targetAudiencesUids, interestsUids, showDeleted)
                                 .FindByKeywords(keywords)
                                 .FindByCreateOrUpdateDate(modifiedAfterDate);
@@ -1476,7 +1519,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                     .FindByUid(organizationUid)
                                     .FindByOrganizationTypeUidAndByEditionId(playerOrganizationTypeUid, false, false, editionId);
-                                    //.IsApiDisplayEnabled(editionId, playerOrganizationTypeUid); //TODO: Enable this filter after implementing: Admin area > Player details view > API Configuration widget
+            //.IsApiDisplayEnabled(editionId, playerOrganizationTypeUid); //TODO: Enable this filter after implementing: Admin area > Player details view > API Configuration widget
 
             return await query
                             .Select(o => new MusicPlayerOrganizationApiDto
@@ -1863,7 +1906,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                     .FindByUid(organizationUid)
                                     .FindByOrganizationTypeUidAndByEditionId(playerOrganizationTypeUid, false, false, editionId);
-                                    //.IsApiDisplayEnabled(editionId, playerOrganizationTypeUid); //TODO: Enable this filter after implementing: Admin area > Player details view > API Configuration widget
+            //.IsApiDisplayEnabled(editionId, playerOrganizationTypeUid); //TODO: Enable this filter after implementing: Admin area > Player details view > API Configuration widget
 
             return await query
                             .Select(o => new InnovationPlayerOrganizationApiDto
