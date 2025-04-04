@@ -1,6 +1,6 @@
 ﻿BEGIN TRY
     BEGIN TRANSACTION
-      UPDATE ProjectBuyerEvaluations set IsVirtualMeeting = 1 WHERE CreateDate >= '2025-01-01' and IsVirtualMeeting = 0
+      UPDATE ProjectBuyerEvaluations set IsVirtualMeeting = 0 WHERE CreateDate >= '2025-01-01' and IsVirtualMeeting = 1
     COMMIT TRANSACTION
 END TRY
 BEGIN CATCH
