@@ -37,12 +37,9 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
     /// MeetingsController
     /// </summary>
     [AjaxAuthorize(Order = 1)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.PlayerExecutiveMusic + "," + Constants.CollaboratorType.Industry)]
     public class MeetingsController : BaseController
     {
-        
         private readonly IMusicBusinessRoundNegotiationRepository musicBusinessRoundRepo;
-
 
         /// <summary>Initializes a new instance of the <see cref="MeetingsController" /> class.</summary>
         /// <param name="commandBus">The command bus.</param>
