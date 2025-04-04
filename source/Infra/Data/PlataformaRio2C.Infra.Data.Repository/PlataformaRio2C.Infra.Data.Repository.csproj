@@ -132,14 +132,14 @@
     <Reference Include="X.PagedList, Version=7.9.0.0, Culture=neutral, PublicKeyToken=00b6c4f97602e5e8, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\X.PagedList.7.9.0\lib\net461\X.PagedList.dll</HintPath>
     </Reference>
-    <Reference Include="Z.EntityFramework.Extensions, Version=9.103.7.1, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Z.EntityFramework.Extensions.9.103.7.1\lib\net45\Z.EntityFramework.Extensions.dll</HintPath>
+    <Reference Include="Z.EntityFramework.Extensions, Version=9.103.7.2, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Z.EntityFramework.Extensions.9.103.7.2\lib\net45\Z.EntityFramework.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Z.EntityFramework.Plus.EF6, Version=9.103.7.1, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Z.EntityFramework.Plus.EF6.9.103.7.1\lib\net45\Z.EntityFramework.Plus.EF6.dll</HintPath>
+    <Reference Include="Z.EntityFramework.Plus.EF6, Version=9.103.7.2, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Z.EntityFramework.Plus.EF6.9.103.7.2\lib\net45\Z.EntityFramework.Plus.EF6.dll</HintPath>
     </Reference>
-    <Reference Include="Z.Expressions.Eval, Version=6.2.6.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Z.Expressions.Eval.6.2.6\lib\net45\Z.Expressions.Eval.dll</HintPath>
+    <Reference Include="Z.Expressions.Eval, Version=6.2.8.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Z.Expressions.Eval.6.2.8\lib\net45\Z.Expressions.Eval.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
