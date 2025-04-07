@@ -763,14 +763,21 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> SendEmailToPlayersSearch(IDataTablesRequest request)
         {
-            var producers = await this.attendeeOrganizationRepo.FindAllByActiveBuyerNegotiationsAndByDataTable(
+            var producers = await this.attendeeOrganizationRepo.FindAllByActiveMusicBusinessRoundBuyerNegotiationsAndByDataTable(
                 request.Start / request.Length,
                 request.Length,
                 request.Search?.Value,
                 request.GetSortColumns(),
                 this.EditionDto.Id,
-                this.AdminAccessControlDto.Language.Id,
-                OrganizationType.MusicPlayer);
+                this.AdminAccessControlDto.Language.Id);
+
+            producers.ForEach(item =>
+            {
+                item.NegotiationBaseDtos.ForEach(negotiation =>
+                {
+                    negotiation.ProjectBuyerEvaluationBaseDto.ProjectBaseDto.ProjectName += ' ' + negotiation.ProjectBuyerEvaluationBaseDto.ProjectBaseDto.ProducerName;
+                });
+            });
 
             var response = DataTablesResponse.Create(request, producers.TotalItemCount, producers.TotalItemCount, producers);
 
