@@ -216,6 +216,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<AttendeeOrganization> HasActiveBuyerNegotiations(this IQueryable<AttendeeOrganization> query)
         {
+            query = query.Where(ao => ao.ProjectBuyerEvaluations.Any(pbe => pbe.ProjectEvaluationStatusId == ProjectEvaluationStatus.Accepted.Id
+                                                                            && !pbe.IsDeleted
+                                                                            && !pbe.Project.IsDeleted
+                                                                            && pbe.Negotiations.Any(n => !n.IsDeleted)));
+
+            return query;
+        }
+
+
+        /// <summary>
+        /// Determines whether [has active buyer negotiations].
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeOrganization> HasActiveMusicBusinessRoundProjectBuyerEvaluations(this IQueryable<AttendeeOrganization> query)
+        {
             query = query.Where(ao => ao.MusicBusinessRoundProjectBuyerEvaluations.Any(pbe => pbe.ProjectEvaluationStatusId == ProjectEvaluationStatus.Accepted.Id
                                                                             && !pbe.IsDeleted
                                                                             && !pbe.MusicBusinessRoundProject.IsDeleted
@@ -1240,7 +1256,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     .FindByKeywords(keywords)
                                     .FindByEditionId(editionId, false)
                                     .FindByOrganizationTypeUidAndEditionId(editionId, false, OrganizationType.MusicPlayer.Uid)
-                                    .HasActiveBuyerNegotiations();
+                                    .HasActiveMusicBusinessRoundProjectBuyerEvaluations();
 
             return await query
                             .DynamicOrder<AttendeeOrganization>(
@@ -1452,6 +1468,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 .FindByEditionId(editionId ?? 0, showAllEditions)
                 .FindByOrganizationTypeUidAndEditionId(editionId ?? 0, showAllEditions, organizationType.Uid)
                 .HasActiveBuyerNegotiations();
+
+            return await query.CountAsync();
+        }
+
+        /// <summary>
+        /// Counts all by active buyer negotiations and by data table.
+        /// </summary>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<int> CountAllByActiveMusicBusinessRoundBuyerNegotiationsAndByDataTable(bool showAllEditions, int? editionId, OrganizationType organizationType)
+        {
+            var query = this.GetBaseQuery()
+                .FindByEditionId(editionId ?? 0, showAllEditions)
+                .FindByOrganizationTypeUidAndEditionId(editionId ?? 0, showAllEditions, organizationType.Uid)
+                .HasActiveMusicBusinessRoundProjectBuyerEvaluations();
 
             return await query.CountAsync();
         }

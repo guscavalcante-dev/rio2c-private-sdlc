@@ -799,7 +799,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowSendEmailToPlayersTotalCountWidget()
         {
-            var producers = await this.attendeeOrganizationRepo.CountAllByActiveBuyerNegotiationsAndByDataTable(true, this.EditionDto.Id, OrganizationType.MusicPlayer);
+            var producers = await this.attendeeOrganizationRepo.CountAllByActiveMusicBusinessRoundBuyerNegotiationsAndByDataTable(true, this.EditionDto.Id, OrganizationType.MusicPlayer);
 
             return Json(new
             {
@@ -821,7 +821,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <returns></returns>
         public async Task<ActionResult> ShowSendEmailToPlayersEditionCountWidget()
         {
-            var producers = await this.attendeeOrganizationRepo.CountAllByActiveBuyerNegotiationsAndByDataTable(false, this.EditionDto.Id, OrganizationType.MusicPlayer);
+            var producers = await this.attendeeOrganizationRepo.CountAllByActiveMusicBusinessRoundBuyerNegotiationsAndByDataTable(false, this.EditionDto.Id, OrganizationType.MusicPlayer);
 
             return Json(new
             {
