@@ -217,8 +217,7 @@ var MusicMeetingsSendEmailToPlayersDataTableWidget = function () {
                                         <th style="width: 20%;">' + translations.room + '</th>\
                                         <th style="width: 20%;">' + translations.round + '</th>\
                                         <th style="width: 6%;">' + translations.table + '</th>\
-                                        <th style="width: 20%;">' + translations.project + '</th>\
-                                        <th style="width: 26%;">' + translations.producer + '</th>\
+                                        <th style="width: 20%;">' + translations.participant + '</th>\
                                     </tr>';
 
                         //loop through all the row details to build output string
@@ -237,25 +236,6 @@ var MusicMeetingsSendEmailToPlayersDataTableWidget = function () {
                                         <td>' + translations.round + ' ' + r.RoundNumber + ' (' + moment(r.StartDate).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('LT') + ' - ' + moment(r.EndDate).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('LT') + ')</td>\
                                         <td class="text-center">' + r.TableNumber + '</td>\
                                         <td>' + r.ProjectBuyerEvaluationBaseDto.ProjectBaseDto.ProjectName + '</td>\
-                                        <td>';
-
-                                html += '\
-                                            <table class="image-side-text text-left">\
-                                                <tr>\
-                                                    <td>';
-
-                                if (!MyRio2cCommon.isNullOrEmpty(r.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.ImageUploadDate)) {
-                                    html += '<img src="' + imageDirectory + r.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.Uid + '_thumbnail.png?v=' + moment(r.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
-                                }
-                                else {
-                                    html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
-                                }
-
-                                html += '           </td>\
-                                                    <td> ' + r.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.DisplayName + '</td>\
-                                                </tr>\
-                                            </table>\
-                                        </td>\
                                     </tr>';
                             }
                         }
