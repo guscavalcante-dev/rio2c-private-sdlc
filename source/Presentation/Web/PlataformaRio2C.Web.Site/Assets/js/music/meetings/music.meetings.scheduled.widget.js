@@ -43,12 +43,8 @@ var MusicMeetingsScheduledWidget = function () {
     var enableSearchForm = function () {
         enableSearchEvents();
 
-        if (isPlayerExecutive) {
-            MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#SearchSellerOrganizationUid', url: '/Companies/FindAllProducersByFilters', customFilter: 'HasProjectNegotiationScheduled', placeholder: translations.producerDropdownPlaceholder });
-        }
-        else {
-            MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#SearchBuyerOrganizationUid', url: '/Companies/FindAllPlayersByFilters', customFilter: 'HasProjectNegotiationScheduled', placeholder: translations.playerDropdownPlaceholder });
-        }
+      
+        MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#SearchBuyerOrganizationUid', url: '/Companies/FindAllMusicPlayersByFilters', customFilter: 'HasProjectNegotiationScheduled', placeholder: translations.playerDropdownPlaceholder });
 
 	    MyRio2cCommon.enableDatePicker({ inputIdOrClass: '.enable-datepicker' });
     }
