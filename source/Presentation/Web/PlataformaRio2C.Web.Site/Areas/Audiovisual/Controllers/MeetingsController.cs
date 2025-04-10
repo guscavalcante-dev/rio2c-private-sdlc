@@ -137,6 +137,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         /// Detailses the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
+        /// <param name="collaboratorTypeUid">The collaborator identifier.</param>
         /// <returns></returns>
         public async Task<ActionResult> Details(Guid? id, Guid? collaboratorTypeUid)
         {

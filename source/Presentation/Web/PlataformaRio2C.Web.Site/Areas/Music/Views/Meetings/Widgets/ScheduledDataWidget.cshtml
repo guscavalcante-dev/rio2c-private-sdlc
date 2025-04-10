@@ -28,15 +28,8 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">@Labels.Hour</th>
-                                    @if (isPlayerExecutive)
-                                    {
-                                        <th>@Labels.Producer</th>
-                                    }
-                                    else
-                                    {
-                                        <th>@Labels.Player</th>
-                                    }
-                                    <th>@Labels.Project</th>
+                                    <th>@Labels.Player</th>
+                                    <th>@Labels.Participant</th>
                                     <th class="border-right-0">@Labels.Room</th>
                                     <th class="border-left-0">&nbsp;</th>
                                 </tr>
@@ -57,14 +50,9 @@
                                                     Collaborator collaborator = null;
                                                     Organization organization = null;
 
-                                                    if (isPlayerExecutive)
-                                                    {
-                                                        collaborator = musicBusinessRoundNegotiationDto?.ProjectBuyerEvaluationDto?.MusicBusinessRoundProjectDto?.SellerAttendeeCollaboratorDto?.Collaborator;
-                                                    }
-                                                    else
-                                                    {
-                                                        organization = musicBusinessRoundNegotiationDto?.ProjectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.Organization;
-                                                    }
+                                                    collaborator = musicBusinessRoundNegotiationDto?.ProjectBuyerEvaluationDto?.MusicBusinessRoundProjectDto?.SellerAttendeeCollaboratorDto?.Collaborator;
+                                                    organization = musicBusinessRoundNegotiationDto?.ProjectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.Organization;
+
                                                     <div class="col-md-2">
                                                         <div class="kt-widget kt-widget--user-profile-3">
                                                             <div class="kt-widget__top">
@@ -91,7 +79,7 @@
                                                 }
                                             </div>
                                         </td>
-                                        <td class="align-middle col-md-3">@(musicBusinessRoundNegotiationDto?.ProjectBuyerEvaluationDto?.MusicBusinessRoundProjectDto?.GetProjectExpectationsDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value)</td>
+                                        <td class="align-middle col-md-3">@(musicBusinessRoundNegotiationDto?.ProjectBuyerEvaluationDto?.MusicBusinessRoundProjectDto?.SellerAttendeeCollaboratorDto.Collaborator.GetStageNameOrBadgeOrFullName())</td>
                                         <td class="align-middle border-right-0">
                                             <span>@(musicBusinessRoundNegotiationDto?.RoomDto?.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.RoomName?.Value)</span>
                                         </td>

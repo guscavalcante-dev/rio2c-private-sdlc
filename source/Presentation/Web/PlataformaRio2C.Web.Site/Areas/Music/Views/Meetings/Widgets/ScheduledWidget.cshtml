@@ -21,19 +21,12 @@
             <!--begin: SearchForm-->
             <div class="row">
                 <div class="col-12 col-md-12 mt-2">
-                    @if (isPlayerExecutive)
-                    {
-                        @Html.DropDownList("SearchSellerOrganizationUid", Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAFEntity, Labels.Producer.ToLowerInvariant())}", new { @class = "form-control" });
-                    }
-                    else
-                    {
-                        @Html.DropDownList("SearchBuyerOrganizationUid", Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.Player.ToLowerInvariant())}", new { @class = "form-control" });
-                    }
+                    @Html.DropDownList("SearchBuyerOrganizationUid", Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.Player.ToLowerInvariant())}", new { @class = "form-control" })
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 col-md-6 mt-2">
-                    @Html.TextBox("SearchProjectKeywords", null, new { type = "search", @class = "form-control", autocomplete = "off", placeholder = $"{Labels.Project}" })
+                    @Html.TextBox("SearchProjectKeywords", null, new { type = "search", @class = "form-control", autocomplete = "off", placeholder = $"{Labels.Participant}" })
                 </div>
                 <div class="col-12 col-md-5 mt-2">
                     @Html.TextBox("SearchDate", null, new { @class = "form-control enable-datepicker", type = "search", data_date_start_date = editionDto?.StartDate.ToBrazilTimeZone().ToShortDateString(), data_date_end_date = editionDto?.EndDate.ToBrazilTimeZone().ToShortDateString(), placeholder = Labels.Date })

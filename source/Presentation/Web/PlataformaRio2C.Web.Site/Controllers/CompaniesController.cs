@@ -1060,6 +1060,44 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Finds all producers by filters.
+        /// </summary>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="customFilter">The custom filter.</param>
+        /// <param name="page">The page.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> FindAllMusicPlayersByFilters(string keywords, string customFilter, int? page = 1)
+        {
+            var collaboratorsApiDtos = await this.organizationRepo.FindAllDropdownApiListDtoPaged(
+                this.EditionDto.Id,
+                keywords,
+                customFilter,
+                OrganizationType.MusicPlayer.Uid,
+                page.Value,
+                10);
+
+            return Json(new
+            {
+                status = "success",
+                HasPreviousPage = collaboratorsApiDtos.HasPreviousPage,
+                HasNextPage = collaboratorsApiDtos.HasNextPage,
+                TotalItemCount = collaboratorsApiDtos.TotalItemCount,
+                PageCount = collaboratorsApiDtos.PageCount,
+                PageNumber = collaboratorsApiDtos.PageNumber,
+                PageSize = collaboratorsApiDtos.PageSize,
+                Organizations = collaboratorsApiDtos?.Select(c => new OrganizationDropdownDto
+                {
+                    Uid = c.Uid,
+                    Name = c.Name,
+                    TradeName = c.TradeName,
+                    CompanyName = c.CompanyName,
+                    Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, c.Uid, c.ImageUploadDate, true) : null
+                })?.ToList()
+            }, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
     }
 }

@@ -152,7 +152,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             {
                 query = query
                             .Where(n => n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator.AttendeeOrganizationCollaborators.Any(aoc => aoc.AttendeeCollaborator.Uid == attendeeCollaboratorUid)
-                                        || n.MusicBusinessRoundProjectBuyerEvaluation.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators.Any(aoc => aoc.AttendeeCollaborator.Uid == attendeeCollaboratorUid));
+                                        || n.MusicBusinessRoundProjectBuyerEvaluation.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators.Any(aoc => aoc.AttendeeCollaborator.Uid == attendeeCollaboratorUid && !aoc.IsDeleted
+                                        || n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator.Uid == attendeeCollaboratorUid));
             }
 
             return query;
@@ -704,13 +705,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Include(n => n.Room.RoomNames.Select(rn => rn.Language))
                                 .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation)
                                 .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject);
-                                //todo:Refactor this.
-                                //.Include(n => n.ProjectBuyerEvaluation.Project.ProjectTitles)
-                                //.Include(n => n.ProjectBuyerEvaluation.Project.ProjectTitles.Select(pt => pt.Language))
-                                //.Include(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization)
-                                //.Include(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.Organization)
-                                //.Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization)
-                                //.Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization);
 
             if (showParticipants)
             {
@@ -763,14 +757,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Include(n => n.Room.RoomNames)
                                 .Include(n => n.Room.RoomNames.Select(rn => rn.Language))
                                 .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation)
-                                .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject);
-                                //todo:Refactor this.
-                                //.Include(n => n.ProjectBuyerEvaluation.Project.ProjectTitles)
-                                //.Include(n => n.ProjectBuyerEvaluation.Project.ProjectTitles.Select(pt => pt.Language))
-                                //.Include(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization)
-                                //.Include(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.Organization)
-                                //.Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization)
-                                //.Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization);
+                                .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject)
+                                .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator)
+                                .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator.Collaborator)
+                                .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator.AttendeeOrganizationCollaborators)
+                                .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation.BuyerAttendeeOrganization)
+                                .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization);
 
             return (await query.ToListAsync())
                                 .GroupBy(n => n.StartDate.ToBrazilTimeZone().Date)
@@ -792,7 +784,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                             {
                                                 SellerAttendeeCollaboratorDto = new AttendeeCollaboratorDto()
                                                 {
-                                                    AttendeeCollaborator = n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator
+                                                    AttendeeCollaborator = n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator,
+                                                    Collaborator = n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator.Collaborator,
                                                 }
                                             }
                                         },
