@@ -705,13 +705,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Include(n => n.Room.RoomNames.Select(rn => rn.Language))
                                 .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation)
                                 .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject);
-            //todo:Refactor this.
-            //.Include(n => n.ProjectBuyerEvaluation.Project.ProjectTitles)
-            //.Include(n => n.ProjectBuyerEvaluation.Project.ProjectTitles.Select(pt => pt.Language))
-            //.Include(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization)
-            //.Include(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.Organization)
-            //.Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization)
-            //.Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization);
 
             if (showParticipants)
             {
