@@ -4,7 +4,7 @@
 // Created          : 03-06-2020
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-31-2025
+// Last Modified On : 04-11-2025
 // ***********************************************************************
 // <copyright file="CreateNegotiationsCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,6 +23,7 @@ using PlataformaRio2C.Domain.Enums;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -84,7 +85,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             try
             {
-
                 edition?.StartAudiovisualNegotiationsCreation(cmd.UserId);
                 this.Uow.SaveChanges();
 
@@ -295,7 +295,24 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                                                      && ns.ProjectBuyerEvaluation?.ProjectId != projectBuyerEvaluation.ProjectId 
                                                                      && ns.ProjectBuyerEvaluation?.BuyerAttendeeOrganizationId != projectBuyerEvaluation.BuyerAttendeeOrganizationId
                                                                      && !roundsExceptions.Contains(ns.RoundNumber) // Is not a exception
-                                                                )?.ToList();
+                                                        )?.ToList();
+
+                    // Get only negotiation slots that are into the executives availability range
+                    var executivesAvailabilities = this.GetExecutivesAvailabilities(projectBuyerEvaluation);
+                    if ((this.GetPlayerExecutivesAvailabilities(projectBuyerEvaluation).Count > 0 
+                        || this.GetProducerExecutivesAvailabilities(projectBuyerEvaluation).Count > 0) 
+                        && executivesAvailabilities.Count == 0)
+                    {
+                        continue;
+                    }
+                    else if (executivesAvailabilities.Count > 0)
+                    {
+                        possibleNegotiationSlots = possibleNegotiationSlots
+                                                    .Where(ns => executivesAvailabilities.Any(ea =>
+                                                                    ns.StartDate >= ea.AvailabilityBeginDate &&
+                                                                    ns.EndDate <= ea.AvailabilityEndDate))
+                                                    ?.ToList();
+                    }
 
                     if (projectBuyerEvaluation.IsVirtualMeeting)
                     {
@@ -375,6 +392,102 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             return new List<ProjectBuyerEvaluation>();
         }
+
+        #region Availability
+
+        public class ExecutiveAvailability
+        {
+            public DateTimeOffset? AvailabilityBeginDate { get; set; }
+            public DateTimeOffset? AvailabilityEndDate { get; set; }
+
+            public ExecutiveAvailability(DateTimeOffset? availabilityBeginDate, DateTimeOffset? availabilityEndDate)
+            {
+                AvailabilityBeginDate = availabilityBeginDate;
+                AvailabilityEndDate = availabilityEndDate;
+            }
+        }
+
+        /// <summary>
+        /// Gets the executives availabilities.
+        /// </summary>
+        /// <param name="projectBuyerEvaluation">The project buyer evaluation.</param>
+        /// <returns></returns>
+        private List<ExecutiveAvailability> GetExecutivesAvailabilities(ProjectBuyerEvaluation projectBuyerEvaluation)
+        {
+            var playerAvailabilities = this.GetPlayerExecutivesAvailabilities(projectBuyerEvaluation);
+            var producerAvailabilities = this.GetProducerExecutivesAvailabilities(projectBuyerEvaluation);
+
+            // If there are no player availability, return the producer's availability (and vice versa)
+            if (!playerAvailabilities.Any())
+                return producerAvailabilities;
+            if (!producerAvailabilities.Any())
+                return playerAvailabilities;
+
+            // Find the intersection between availabilities
+            var intersectingAvailabilities = new List<ExecutiveAvailability>();
+            foreach (var playerAvailability in playerAvailabilities)
+            {
+                foreach (var producerAvailability in producerAvailabilities)
+                {
+                    // Find the overlap between the two ranges
+                    var overlapStart = playerAvailability.AvailabilityBeginDate > producerAvailability.AvailabilityBeginDate
+                        ? playerAvailability.AvailabilityBeginDate
+                        : producerAvailability.AvailabilityBeginDate;
+
+                    var overlapEnd = playerAvailability.AvailabilityEndDate < producerAvailability.AvailabilityEndDate
+                        ? playerAvailability.AvailabilityEndDate
+                        : producerAvailability.AvailabilityEndDate;
+
+                    // Se há overlap válido (início <= fim)
+                    if (overlapStart <= overlapEnd)
+                    {
+                        intersectingAvailabilities.Add(new ExecutiveAvailability(overlapStart, overlapEnd));
+                    }
+                }
+            }
+
+            return intersectingAvailabilities;
+        }
+
+        /// <summary>
+        /// Gets the player executives availabilities.
+        /// </summary>
+        /// <param name="negotiationSlots">The negotiation slots.</param>
+        /// <param name="projectBuyerEvaluation">The project buyer evaluation.</param>
+        /// <returns></returns>
+        private List<ExecutiveAvailability> GetPlayerExecutivesAvailabilities(ProjectBuyerEvaluation projectBuyerEvaluation)
+        {
+            var playerExecutivesAvailabilities = projectBuyerEvaluation.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators
+                                                    .Where(aoc => aoc.AttendeeCollaborator.AvailabilityBeginDate != null 
+                                                                    && aoc.AttendeeCollaborator.AvailabilityEndDate != null)
+                                                    .Select(aoc => new ExecutiveAvailability(
+                                                                    aoc.AttendeeCollaborator.AvailabilityBeginDate?.ToBrazilTimeZone().Date, 
+                                                                    aoc.AttendeeCollaborator.AvailabilityEndDate?.ToBrazilTimeZone().Date.AddDays(1).AddTicks(-1)))
+                                                    .ToList();
+
+            return playerExecutivesAvailabilities;
+        }
+
+        /// <summary>
+        /// Gets the producer executives availabilities.
+        /// </summary>
+        /// <param name="negotiationSlots">The negotiation slots.</param>
+        /// <param name="projectBuyerEvaluation">The project buyer evaluation.</param>
+        /// <returns></returns>
+        private List<ExecutiveAvailability> GetProducerExecutivesAvailabilities(ProjectBuyerEvaluation projectBuyerEvaluation)
+        {
+            var producerExecutivesAvailabilities = projectBuyerEvaluation.Project.SellerAttendeeOrganization.AttendeeOrganizationCollaborators
+                                                    .Where(aoc => aoc.AttendeeCollaborator.AvailabilityBeginDate != null 
+                                                                    && aoc.AttendeeCollaborator.AvailabilityEndDate != null)
+                                                    .Select(aoc => new ExecutiveAvailability(
+                                                                    aoc.AttendeeCollaborator.AvailabilityBeginDate?.ToBrazilTimeZone().Date, 
+                                                                    aoc.AttendeeCollaborator.AvailabilityEndDate?.ToBrazilTimeZone().Date.AddDays(1).AddTicks(-1)))
+                                                    .ToList();
+
+            return producerExecutivesAvailabilities;
+        }
+
+        #endregion
 
         #region Slot exceptions
 
