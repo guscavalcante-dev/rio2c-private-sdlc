@@ -611,6 +611,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                             )
                                             .Select(p => new ProjectBaseDto
                                             {
+                                                Project = p,
                                                 Id = p.Id,
                                                 Uid = p.Uid,
                                                 ProjectName = p.ProjectTitles.Where(t => t.Language.Code == languageCode).Select(t => t.Value).FirstOrDefault(),

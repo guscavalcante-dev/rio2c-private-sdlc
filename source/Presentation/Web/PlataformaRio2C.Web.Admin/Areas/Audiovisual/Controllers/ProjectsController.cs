@@ -44,6 +44,8 @@ using Constants = PlataformaRio2C.Domain.Constants;
 using ClosedXML.Excel;
 using PlataformaRio2C.Domain.ApiModels;
 using PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults;
+using Newtonsoft.Json;
+using Microsoft.Ajax.Utilities;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 {
@@ -164,6 +166,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     projectBaseDto.Genre.Add(projectInterestDto.Interest.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, '|'));
                 }
 
+                //Convert PitchingJsonPayload to the main object when PitchingJsonPayload is not null.
+                if (!String.IsNullOrEmpty(projectBaseDto.Project?.PitchingJsonPayload))
+                {
+                    var pitchingJsonPayload = JsonConvert.DeserializeObject<PitchingJsonPayload>(projectBaseDto.Project.PitchingJsonPayload);
+                    if (pitchingJsonPayload != null)
+                        projectBaseDto.ProjectName = pitchingJsonPayload.Title;
+                }
                 #endregion
             }
 
