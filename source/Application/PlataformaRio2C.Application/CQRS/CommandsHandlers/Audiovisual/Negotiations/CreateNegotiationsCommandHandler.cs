@@ -303,6 +303,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         || this.GetProducerExecutivesAvailabilities(projectBuyerEvaluation).Count > 0) 
                         && executivesAvailabilities.Count == 0)
                     {
+                        // Player and Producer have Executives with Availability configured, but into different dates.
+                        // Ex.: Player Executive has Availability only for 29/05/2025 and Producer Executive has Availability only for 30/05/2025
+                        // so, we don't have availability to create a Negotiation for this match.
                         continue;
                     }
                     else if (executivesAvailabilities.Count > 0)
