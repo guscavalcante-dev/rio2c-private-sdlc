@@ -54,6 +54,11 @@
             AudiovisualPlayersTotalCountWidget.init();
             AudiovisualPlayersEditionCountWidget.init();
             AudiovisualPlayersDataTableWidget.init();
+            $(document).on('shown.bs.modal', function () {
+                $(this).find('.enable-select2,#CountryUid').select2({
+                    dropdownParent: $(this).find('.modal-content')
+                });
+            });
         });
 </script>
 }

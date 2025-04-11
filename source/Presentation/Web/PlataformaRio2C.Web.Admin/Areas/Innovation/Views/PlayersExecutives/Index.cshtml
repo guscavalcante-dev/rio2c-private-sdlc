@@ -61,6 +61,11 @@
             InnovationPlayersExecutivesTotalCountWidget.init();
             InnovationPlayersExecutivesEditionCountWidget.init();
             InnovationPlayersExecutivesDataTableWidget.init();
+            $(document).on('shown.bs.modal', function () {
+                $(this).find('.enable-select2, .enable-select2-attendeeorganization').select2({
+                    dropdownParent: $(this).find('.modal-content')
+                });
+            });
         });
     </script>
 }
