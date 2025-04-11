@@ -398,7 +398,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
         #region Availability
 
-        public class ExecutiveAvailability
+        private class ExecutiveAvailability
         {
             public DateTimeOffset? AvailabilityBeginDate { get; set; }
             public DateTimeOffset? AvailabilityEndDate { get; set; }
@@ -441,7 +441,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         ? playerAvailability.AvailabilityEndDate
                         : producerAvailability.AvailabilityEndDate;
 
-                    // Se há overlap válido (início <= fim)
+                    // Check if have a valid overlap
                     if (overlapStart <= overlapEnd)
                     {
                         intersectingAvailabilities.Add(new ExecutiveAvailability(overlapStart, overlapEnd));
