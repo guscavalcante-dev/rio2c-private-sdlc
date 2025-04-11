@@ -4,7 +4,7 @@
 // Created          : 12-10-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 12-21-2023
+// Last Modified On : 04-11-2025
 // ***********************************************************************
 // <copyright file="ProjectBuyerEvaluationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -245,7 +245,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .IsProjectFinished()
                                 .Include(pbe => pbe.Project)
                                 .Include(pbe => pbe.Project.SellerAttendeeOrganization)
-                                .Include(pbe => pbe.BuyerAttendeeOrganization);
+                                .Include(pbe => pbe.Project.SellerAttendeeOrganization.AttendeeOrganizationCollaborators)
+                                .Include(pbe => pbe.BuyerAttendeeOrganization)
+                                .Include(pbe => pbe.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators);
 
             return await query
                             .ToListAsync();

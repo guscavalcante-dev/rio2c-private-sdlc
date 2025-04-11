@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-16-2024
+// Last Modified On : 04-11-2025
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -253,7 +253,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                           && (!pbe.Negotiations.Any() || pbe.Negotiations.All(n => n.IsDeleted))))));
                     }
 
-                    else if(organizationTypeUid ==  OrganizationType.MusicPlayer.Uid)
+                    else if (organizationTypeUid == OrganizationType.MusicPlayer.Uid)
                     {
                         query = query.Where(o => o.AttendeeOrganizations
                                                       .Any(ao => ao.EditionId == editionId
@@ -367,8 +367,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     && !ao.Edition.IsDeleted
                     && ao.EditionId == editionId
                     && ao.AttendeeOrganizationCollaborators
-                        .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeCollaborator.IsDeleted) 
-                        .All(aoc => 
+                        .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeCollaborator.IsDeleted)
+                        .All(aoc =>
                             (aoc.AttendeeCollaborator.AvailabilityBeginDate == null &&
                              aoc.AttendeeCollaborator.AvailabilityEndDate == null)
                             ||
@@ -576,18 +576,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                                 .FindByUid(organizationUid)
-                                .HasPlayerExecutiveAvailableForDate(editionId,startDate,endDate);
-                                
+                                .HasPlayerExecutiveAvailableForDate(editionId, startDate, endDate);
 
             return query.ToList().Count > 0;
         }
 
-
-            /// <summary>Finds the dto by uid asynchronous.</summary>
-            /// <param name="organizationUid">The organization uid.</param>
-            /// <param name="editionId">The edition identifier.</param>
-            /// <returns></returns>
-            public async Task<OrganizationDto> FindDtoByUidAsync(Guid organizationUid, int editionId)
+        /// <summary>Finds the dto by uid asynchronous.</summary>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<OrganizationDto> FindDtoByUidAsync(Guid organizationUid, int editionId)
         {
             var query = this.GetBaseQuery()
                                 .FindByUid(organizationUid);
