@@ -27,6 +27,7 @@ using System.Linq.Dynamic;
 using System.Data.SqlClient;
 using System.Data;
 using System.Reflection;
+using PlataformaRio2C.Infra.Data.Context.Helpers;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -606,72 +607,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             this._context.Database.ExecuteSqlCommand(TransactionalBehavior.DoNotEnsureTransaction, "TRUNCATE TABLE [dbo].[Negotiations]");
         }
 
-        private DataTable ConvertToDataTableToBulkInsert<T>(List<T> list)
-        {
-            DataTable dataTable = new DataTable();
-            PropertyInfo[] properties = typeof(T).GetProperties();
-
-            foreach (PropertyInfo property in properties)
-            {
-                if (property.Name.ToLower() == "validationresult" || property.Name.ToLower() == "id")
-                {
-                    continue;
-                }
-                if (property.PropertyType.IsClass && property.PropertyType != typeof(string) && property.PropertyType != typeof(Guid) || property.PropertyType.IsInterface)
-                {
-                    continue;
-                }
-                dataTable.Columns.Add(property.Name, Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType);
-            }
-
-            foreach (T item in list)
-            {
-                DataRow row = dataTable.NewRow();
-                foreach (PropertyInfo property in properties)
-                {
-                    if (property.Name.ToLower() == "validationresult" || property.Name.ToLower() == "id")
-                    {
-                        continue;
-                    }
-                    if (property.PropertyType.IsClass && property.PropertyType != typeof(string) && property.PropertyType != typeof(Guid) || property.PropertyType.IsInterface)
-                    {
-                        continue;
-                    }
-
-                    object value = property.GetValue(item) ?? DBNull.Value;
-                    if (property.PropertyType == typeof(Guid) && value != DBNull.Value)
-                    {
-                        value = value.ToString();
-                    }
-
-                    row[property.Name] = value;
-                }
-                dataTable.Rows.Add(row);
-            }
-
-            return dataTable;
-        }
+        
 
         public override void CreateAll(IEnumerable<MusicBusinessRoundNegotiation> entities)
         {
-            using (SqlConnection sqlConnection = this._context.Database.Connection as SqlConnection)
-            {
-                using (SqlBulkCopy bulkOperation = new SqlBulkCopy(sqlConnection))
-                {
-                    bulkOperation.DestinationTableName = "dbo.MusicBusinessRoundNegotiations";
-                    DataTable dataTable = this.ConvertToDataTableToBulkInsert(entities.ToList());
-                   
-                    try
-                    {
-                        sqlConnection.Open();
-                        bulkOperation.WriteToServer(dataTable);
-                    }
-                    catch (Exception e)
-                    {
-                        throw;
-                    }
-                }
-            }
+            BulkInsertExecuter.Create("dbo.MusicBusinessRoundNegotiations", this._context.Database.Connection as SqlConnection)
+                .BulkInsert(entities.ToList()); 
         }
 
 
