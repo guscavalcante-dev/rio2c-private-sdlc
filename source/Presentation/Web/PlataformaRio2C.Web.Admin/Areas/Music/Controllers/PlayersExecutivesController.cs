@@ -3,8 +3,8 @@
 // Author           : Elton Assunção
 // Created          : 12-19-2023
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 01-09-2024
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 04-15-2025
 // ***********************************************************************
 // <copyright file="PlayersExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -343,9 +343,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> Details(Guid? id)
         {
-            var attendeeCollaboratorDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByCollaboratorTypeUidAsync(
-                id ?? Guid.Empty,
-                CollaboratorType.PlayerExecutiveMusic.Uid
+            var attendeeCollaboratorDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUid(
+                id ?? Guid.Empty
             );
 
             if (attendeeCollaboratorDto == null)
