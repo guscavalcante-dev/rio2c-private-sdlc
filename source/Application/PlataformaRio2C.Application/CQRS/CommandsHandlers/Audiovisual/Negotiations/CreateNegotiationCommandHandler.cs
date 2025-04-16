@@ -17,7 +17,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DocumentFormat.OpenXml.Drawing;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
@@ -87,7 +86,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             DateTimeOffset startDate = negotiationConfig.StartDate.Date.JoinDateAndTime(cmd.StartTime, true).ToUtcTimeZone();
             DateTimeOffset endDate = startDate.Add(negotiationConfig.TimeOfEachRound);
 
-            if (!organizationRepo.HasPlayerExecutiveForDate(cmd.BuyerOrganizationUid.Value,cmd.EditionId.Value, startDate, endDate))
+            if (!organizationRepo.HasAllExecutivesAvailableForDate(cmd.BuyerOrganizationUid.Value, cmd.EditionId.Value, startDate, endDate))
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(
                                                     Messages.NoPlayerExecutivesAvailableForDate,
@@ -239,10 +238,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.Uow.SaveChanges();
 
             return this.AppValidationResult;
-
-            //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
-
-            //return Task.FromResult(propertyId); // use it when the methed is not async
         }
     }
 }
