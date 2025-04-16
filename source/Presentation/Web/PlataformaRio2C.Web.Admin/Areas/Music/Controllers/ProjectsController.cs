@@ -271,9 +271,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             StringBuilder data = new StringBuilder();
             bool ptBR = this.UserInterfaceLanguage == "pt-br";
             if (ptBR)
-                data.AppendLine("Banda; Avaliação; Jurado; Nota;");
+                data.AppendLine("Banda; Jurado; Status;");
             else
-                data.AppendLine("Music Band; Evaluation; Evaluator; Grade;");
+                data.AppendLine("Music Band; Evaluator; Status;");
 
             var musicProjectJsonDtos = await this.musicProjectRepo.FindAllByDataTableAsync(
                 this.EditionDto.Id,
@@ -286,16 +286,22 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 new List<Tuple<string, string>>(),
                 this.AdminAccessControlDto.User.Id);
 
+            var approvedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Id, this.AdminAccessControlDto.User.Id);
+
             foreach (var item in musicProjectJsonDtos)
             {
                 var evaluationDto = await this.musicProjectRepo.FindEvaluatorsWidgetDtoAsync(item.MusicProjectUid);
+                var createDate = ptBR ? item.CreateDate.ToString("dd/MM/yy") : item.CreateDate.ToString("MM/dd/yy");
+                var status = ptBR ?
+                    approvedAttendeeMusicBandsIds.Contains(item.AttendeeMusicBandId) ? "Aprovado" : "Reprovado" :
+                    approvedAttendeeMusicBandsIds.Contains(item.AttendeeMusicBandId) ? "Accepted" : "Refused";
+
                 foreach (var eval in evaluationDto.AttendeeMusicBandDto.AttendeeMusicBandEvaluationsDtos)
                 {
                     data.AppendLine(
                         item.MusicBandName + ";" +
-                        item.Grade + ";" +
                         eval.EvaluatorUser.Name + ";" +
-                        eval.AttendeeMusicBandEvaluation.Grade
+                        status
                     );
                 }
             }
