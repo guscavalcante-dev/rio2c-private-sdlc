@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 03-01-2020
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 21-03-2025
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 04-16-2025
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
