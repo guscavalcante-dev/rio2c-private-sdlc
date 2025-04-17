@@ -344,7 +344,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         public async Task<ActionResult> Details(Guid? id)
         {
             var attendeeCollaboratorDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUid(
-                id ?? Guid.Empty
+                id ?? Guid.Empty, this.EditionDto.Id
             );
 
             if (attendeeCollaboratorDto == null)

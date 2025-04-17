@@ -497,11 +497,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// Finds the site detailst dto by collaborator uid asynchronous.
         /// </summary>
         /// <param name="collaboratorUid">The collaborator uid.</param>
-        /// <param name="collaboratorTypeUid">The collaborator type uid.</param>
+        /// <param name="editionId">The edition Id Identifier.</param>
         /// <returns></returns>
-        public async Task<AttendeeCollaboratorSiteDetailsDto> FindSiteDetailstDtoByCollaboratorUid(Guid collaboratorUid)
+        public async Task<AttendeeCollaboratorSiteDetailsDto> FindSiteDetailstDtoByCollaboratorUid(Guid collaboratorUid, int editionId)
         {
             var query = this.GetBaseQuery(true)
+                                .FindByEditionId(editionId, false)
                                 .FindByCollaboratorUid(collaboratorUid);
 
             return await query
