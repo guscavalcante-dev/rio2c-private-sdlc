@@ -18,12 +18,10 @@ namespace PlataformaRio2C.Infra.Data.Context.Helpers
         private string tableToMap;
         private SqlConnection connection;
 
-
         public static BulkInsertExecuter Create(string tableToMap, SqlConnection connection)
         {
             return new BulkInsertExecuter(tableToMap, connection);
         }
-
 
         public void BulkInsert<T>(List<T> list)
         {
@@ -38,7 +36,6 @@ namespace PlataformaRio2C.Infra.Data.Context.Helpers
                     {
                         bulkOperation.ColumnMappings.Add(column.ColumnName, column.ColumnName);
                     }
-
                     bulkOperation.WriteToServer(dataTable);
                 }
             }
@@ -70,7 +67,6 @@ namespace PlataformaRio2C.Infra.Data.Context.Helpers
             }
             return true;
         }
-
         private DataTable ToDataTable<T>(List<T> list)
         {
             DataTable dataTable = new DataTable();
@@ -83,7 +79,6 @@ namespace PlataformaRio2C.Infra.Data.Context.Helpers
                     dataTable.Columns.Add(property.Name, Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType);
                 }
             }
-
             foreach (T item in list)
             {
                 DataRow row = dataTable.NewRow();
@@ -104,6 +99,5 @@ namespace PlataformaRio2C.Infra.Data.Context.Helpers
             }
             return dataTable;
         }
-
     }
 }
