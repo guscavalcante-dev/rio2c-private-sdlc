@@ -827,6 +827,7 @@
     <Compile Include="ViewModels\Common\LogisticRequest\LogisticRequestSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\LogisticSponsor\LogisticSponsorSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Administrators\AdministratorSearchViewModel.cs" />
+    <Compile Include="ViewModels\Common\Meetings\SendEmailToPlayerRegisterViewModel.cs" />
     <Compile Include="ViewModels\Common\Meetings\SendEmailToPlayersSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Meetings\SendEmailToProducersSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Music\Commissions\MusicCommissionSearchViewModel.cs" />

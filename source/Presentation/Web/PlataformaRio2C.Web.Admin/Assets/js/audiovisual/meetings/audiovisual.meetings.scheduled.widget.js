@@ -85,6 +85,53 @@ var AudiovisualMeetingsScheduledWidget = function () {
         MyRio2cCommon.initScroll();
     };
 
+    var sendEmailsPlayersScheduledWidget = function (sendEmailParameters) {
+        var jsonParameters = new Object();
+        jsonParameters.NegotiationUid = sendEmailParameters;
+        MyRio2cCommon.block();
+
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Meetings/SendPlayersEmailsFromNegotiationUid'), jsonParameters, function (data) {
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+                },
+                // Error
+                onError: function () {
+                }
+            });
+        })
+            .fail(function () {
+            })
+            .always(function () {
+                MyRio2cCommon.unblock();
+            });
+    };
+
+    var showSendEmailsPlayersScheduledModal = function (negotiationUid) {
+
+        var message = translations.confirmSendEmailSelected;
+
+        bootbox.dialog({
+            message: message,
+            buttons: {
+                cancel: {
+                    label: labels.cancel,
+                    className: "btn btn-secondary btn-elevate mr-auto",
+                    callback: function () {
+                    }
+                },
+                confirm: {
+                    label: labels.send,
+                    className: "btn btn-brand btn-elevate",
+                    callback: function () {
+                        sendEmailsPlayersScheduledWidget(negotiationUid);
+                    }
+                }
+            }
+        });
+    };
+
     var show = function () {
         if (widgetElement.length <= 0) {
             return;
@@ -128,6 +175,10 @@ var AudiovisualMeetingsScheduledWidget = function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
         },
+        sendEmailToPlayer: function (negotiationUid) {
+            showSendEmailsPlayersScheduledModal(negotiationUid);
+        },
+
         exportToPdf: function () {
             exportToPdf();
         }

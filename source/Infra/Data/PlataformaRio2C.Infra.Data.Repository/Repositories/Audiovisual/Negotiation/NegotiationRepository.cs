@@ -298,6 +298,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+
         /// <summary>
         /// Finds the dto asynchronous.
         /// </summary>
