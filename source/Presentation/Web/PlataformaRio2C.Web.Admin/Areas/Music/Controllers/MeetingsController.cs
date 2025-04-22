@@ -564,7 +564,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
                     try
                     {
-                        result = await this.CommandBus.Send(new SendMusicBusinessRoundPlayerNegotiationsEmailAsync(
+                        result = await this.CommandBus.Send(new SendPlayerNegotiationsEmailAsync(
                             attendeeOrganizationBaseDto,
                             attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Id,
                             attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Uid,
