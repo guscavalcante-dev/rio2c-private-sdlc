@@ -367,6 +367,11 @@ namespace PlataformaRio2C.Web.Site.ServicesSendProducersNegotiationEmail
             throw new NotImplementedException();
         }
 
+        public MvcMailMessage SendMusicBusinessRoundPlayersNegotiationEmail(SendMusicBusinessRoundPlayerNegotiationsEmailAsync cmd, Guid sentEmailUid)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }
