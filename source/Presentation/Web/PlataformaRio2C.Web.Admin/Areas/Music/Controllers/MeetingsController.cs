@@ -531,6 +531,91 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
         #endregion
 
+        #region SendPlayerEmail
+
+        /// <summary>
+        /// Sends the player email from the list
+        /// </summary>
+        /// <param name="negotiationUid">The Negotiation identifier.</param>
+        /// <returns></returns>
+        /// <exception cref="DomainException">
+        /// </exception>
+        [HttpPost]
+        public async Task<ActionResult> SendPlayersEmailsFromNegotiationUid(SendEmailToPlayerRegisterViewModel negotiationUidViewModel)
+        {
+            var negotiation = await musicbusinessRoundnegotiationRepo.FindByUidAsync(negotiationUidViewModel.NegotiationUid);
+            AppValidationResult result = null;
+
+            try
+            {
+                var attendeeOrganizationBaseDto = await this.attendeeOrganizationRepo.FindAllMusicBusinessRoundBaseDtoByUid(negotiation.MusicBusinessRoundProjectBuyerEvaluation.BuyerAttendeeOrganization.Uid, this.AdminAccessControlDto.Language.Id);
+                if (attendeeOrganizationBaseDto == null)
+                {
+                    throw new DomainException(Messages.SelectAtLeastOneOption);
+                }
+
+                List<string> errors = new List<string>();
+                foreach (var attendeeCollaboratorBaseDto in attendeeOrganizationBaseDto.AttendeeCollaboratorBaseDtos)
+                {
+                    #region SendEmailToPlayers
+
+                    // If the collaborator does not have an user interface language, use the user interface language of the current user
+                    var collaboratorLanguageCode = attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.UserInterfaceLanguageCode ?? this.UserInterfaceLanguage;
+
+                    try
+                    {
+                        result = await this.CommandBus.Send(new SendMusicBusinessRoundPlayerNegotiationsEmailAsync(
+                            attendeeOrganizationBaseDto,
+                            attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Id,
+                            attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Uid,
+                            attendeeCollaboratorBaseDto.CollaboratorBaseDto.FirstName,
+                            attendeeCollaboratorBaseDto.CollaboratorBaseDto.FullName,
+                            attendeeCollaboratorBaseDto.CollaboratorBaseDto.Email,
+                            this.EditionDto.Edition,
+                            this.AdminAccessControlDto.User.Id,
+                            collaboratorLanguageCode));
+                        if (!result.IsValid)
+                        {
+                            throw new DomainException(Messages.CorrectFormValues);
+                        }
+                    }
+                    catch (DomainException)
+                    {
+                        //Cannot stop sending email when exception occurs.
+                        errors.AddRange(result.Errors.Select(e => e.Message));
+                    }
+                    catch (Exception ex)
+                    {
+                        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                    }
+
+                    if (errors.Any())
+                    {
+                        throw new DomainException(string.Format(Messages.OneOrMoreEmailsNotSend, Labels.WelcomeEmail));
+                    } 
+
+                    #endregion
+                }
+            }
+            catch (DomainException ex)
+            {
+                return Json(new
+                {
+                    status = "error",
+                    message = result?.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Emails, Labels.SentMP.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
         #endregion
 
         #region Unscheduled

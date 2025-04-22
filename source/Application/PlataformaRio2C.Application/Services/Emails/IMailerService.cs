@@ -27,7 +27,7 @@ namespace PlataformaRio2C.Application.Services
         #endregion
 
         #region Admin Emails
-
+        MvcMailMessage SendMusicBusinessRoundPlayersNegotiationEmail(SendMusicBusinessRoundPlayerNegotiationsEmailAsync cmd, Guid sentEmailUid);
         MvcMailMessage SendPlayerWelcomeEmail(SendPlayerWelcomeEmailAsync cmd, Guid sentEmailUid);
         MvcMailMessage SendSpeakerWelcomeEmail(SendSpeakerWelcomeEmailAsync cmd, Guid sentEmailUid);
         MvcMailMessage SendMusicCommissionWelcomeEmail(SendMusicCommissionWelcomeEmailAsync cmd, Guid sentEmailUid);

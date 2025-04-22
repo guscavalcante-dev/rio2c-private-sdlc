@@ -77,6 +77,9 @@
                                                                                     <i class="la la-ellipsis-h"></i>
                                                                                 </a>
                                                                                 <div class="dropdown-menu dropdown-menu-right">
+                                                                                    <button class="dropdown-item" onclick="MusicMeetingsScheduledWidget.sendEmailToPlayer('@(negotiation?.Uid)');">
+                                                                                        <i class="la la-mail-forward"></i>@Labels.SendAgendaEmail
+                                                                                    </button>
                                                                                     <button class="dropdown-item" onclick="MusicMeetingsUpdate.showModal('@(negotiation?.Uid)');">
                                                                                         <i class="la la-edit"></i>@Labels.Edit
                                                                                     </button>

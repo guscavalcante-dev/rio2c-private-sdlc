@@ -290,6 +290,34 @@ namespace PlataformaRio2C.Web.Admin.Services
         }
 
         /// <summary>
+        /// Sends the players negotiation email.
+        /// </summary>
+        /// <param name="cmd">The command.</param>
+        /// <param name="sentEmailUid">The sent email uid.</param>
+        /// <returns></returns>
+        public MvcMailMessage SendMusicBusinessRoundPlayersNegotiationEmail(SendMusicBusinessRoundPlayerNegotiationsEmailAsync cmd, Guid sentEmailUid)
+        {
+            this.SetCulture(cmd.UserInterfaceLanguage);
+
+            this.ViewData = new ViewDataDictionary(cmd);
+
+            return Populate(x =>
+            {
+                x.Subject = this.GetSubject("Agenda de Rodadas de Negócio | One-to-One Meetings Agenda", cmd.Edition.Name);
+                x.ViewName = "PlayersNegotiationsEmail";
+                x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
+                x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
+                ViewBag.SentEmailUid = sentEmailUid;
+                ViewBag.SiteUrl = this.siteUrl;
+
+                if (!string.IsNullOrEmpty(this.GetBccEmailRecipient(true)))
+                {
+                    x.Bcc.Add(this.GetBccEmailRecipient(true));
+                }
+            });
+        }
+
+        /// <summary>
         /// Sends the producers negotiation email.
         /// </summary>
         /// <param name="cmd">The command.</param>

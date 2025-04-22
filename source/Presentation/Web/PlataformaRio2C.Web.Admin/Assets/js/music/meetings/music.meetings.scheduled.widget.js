@@ -75,6 +75,57 @@ var MusicMeetingsScheduledWidget = function () {
 
         return jsonParameters;
     }
+    //Send Email to Producers and Players ---------------------------------------------------------
+
+    var sendEmailsPlayersScheduledWidget = function (sendEmailParameters) {
+        var jsonParameters = new Object();
+        jsonParameters.NegotiationUid = sendEmailParameters;
+        MyRio2cCommon.block();
+
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Meetings/SendPlayersEmailsFromNegotiationUid'), jsonParameters, function (data) {
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+                },
+                // Error
+                onError: function () {
+                }
+            });
+        })
+            .fail(function () {
+            })
+            .always(function () {
+                MyRio2cCommon.unblock();
+            });
+    };
+
+    var showSendEmailsPlayersScheduledModal = function (negotiationUid) {
+
+        var message = translations.confirmSendEmailSelected;
+
+        bootbox.dialog({
+            message: message,
+            buttons: {
+                cancel: {
+                    label: labels.cancel,
+                    className: "btn btn-secondary btn-elevate mr-auto",
+                    callback: function () {
+                    }
+                },
+                confirm: {
+                    label: labels.send,
+                    className: "btn btn-brand btn-elevate",
+                    callback: function () {
+                        sendEmailsPlayersScheduledWidget(negotiationUid);
+                    }
+                }
+            }
+        });
+    };
+
+
+
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
@@ -127,6 +178,9 @@ var MusicMeetingsScheduledWidget = function () {
         search: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
+        },
+        sendEmailToPlayer: function (negotiationUid) {
+            showSendEmailsPlayersScheduledModal(negotiationUid);
         },
         exportToPdf: function () {
             exportToPdf();
