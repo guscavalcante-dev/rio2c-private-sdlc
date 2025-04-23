@@ -32,11 +32,11 @@
     @Scripts.Render("~/bundles/js/audiovisual.meetings.report.widget.js")
     @Scripts.Render("~/bundles/js/audiovisual.meetings.editionscheduledcount.widget.js")
     @Scripts.Render("~/bundles/js/audiovisual.meetings.editionunscheduledcount.widget.js")
-    <script>
+<script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
             playerDropdownPlaceholder: '@string.Format(Labels.SelectAMEntity, Labels.Player.ToLowerInvariant())...',
-            producerDropdownPlaceholder: '@string.Format(Labels.SelectAMEntity, Labels.Participant.ToLowerInvariant())...',
+            producerDropdownPlaceholder: '@string.Format(Labels.SelectAFEntity, Labels.Producer.ToLowerInvariant())...',
             roomDropdownPlaceholder: '@string.Format(Labels.SelectAFEntity, Labels.Room.ToLowerInvariant())...',
             projectDropdownPlaceholder: '@string.Format(Labels.SelectAFEntity, Labels.Project.ToLowerInvariant())...',
             dateDropdownPlaceholder: '@string.Format(Labels.SelectAFEntity, Labels.Date.ToLowerInvariant())...',
@@ -49,5 +49,5 @@
             AudiovisualMeetingsEditionUnscheduledCountWidget.init();
             AudiovisualMeetingsReportWidget.init();
         });
-    </script>
+</script>
 }

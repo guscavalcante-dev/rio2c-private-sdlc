@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
-// Author           : Rafael Dantas Ruiz
-// Created          : 06-26-2021
+// Author           : Daniel Giese Rodrigues
+// Created          : 04-23-2025
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-26-2021
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 04-23-2025
 // ***********************************************************************
-// <copyright file="SendPlayerNegotiationsEmailAsync.cs" company="Softo">
+// <copyright file="SendMusicBusinessRoundPlayerNegotiationsEmailAsync.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
