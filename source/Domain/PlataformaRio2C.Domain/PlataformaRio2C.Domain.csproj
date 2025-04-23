@@ -94,6 +94,8 @@
     <Compile Include="ApiModels\Audiovisual\Responses\Players\AudiovisualPlayerApiResponse.cs" />
     <Compile Include="ApiModels\Audiovisual\Responses\Players\AudiovisualPlayersApiResponse.cs" />
     <Compile Include="ApiModels\Audiovisual\Responses\Players\AudiovisualPlayersFiltersApiResponse.cs" />
+    <Compile Include="ApiModels\Auth\Request\LoginApiRequest.cs" />
+    <Compile Include="ApiModels\Auth\Response\LoginApiResponse.cs" />
     <Compile Include="ApiModels\Cartoon\Requests\CartoonFiltersApiRequest.cs" />
     <Compile Include="ApiModels\Cartoon\Responses\CartoonFiltersApiResponse.cs" />
     <Compile Include="ApiModels\Conferences\Requests\ConferencesFiltersApiRequest.cs" />

@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-12-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-12-2019
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 04-24-2025
 // ***********************************************************************
 // <copyright file="AjaxAuthorizeAttribute.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -55,8 +55,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Identity.Modules
             var response = context.Response;
             var request = context.Request;
 
-            if (response.StatusCode == 401 && request.Headers["X-Requested-With"] ==
-                "XMLHttpRequest")
+            if (request.FilePath == "/api/v1.0/auth/login" || (response.StatusCode == 401 && request.Headers["X-Requested-With"] == "XMLHttpRequest"))
             {
                 SuppressAuthenticationRedirect(context.Context);
             }
