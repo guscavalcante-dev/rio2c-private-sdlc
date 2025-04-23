@@ -1,4 +1,17 @@
-﻿using MediatR;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Infra.CrossCutting.Identity
+// Author           : Rafael Dantas Ruiz
+// Created          : 08-12-2019
+//
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 04-24-2025
+// ***********************************************************************
+// <copyright file="AjaxAuthorizeAttribute.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using MediatR;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using PlataformaRio2C.Application;

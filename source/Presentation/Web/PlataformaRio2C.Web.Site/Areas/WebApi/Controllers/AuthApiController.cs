@@ -1,4 +1,16 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿// Assembly         : PlataformaRio2C.Web.Site
+// Author           : Daniel Giese Rodrigues
+// Created          : 04-24-2025
+//
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 04-24-2025
+// ***********************************************************************
+// <copyright file="AudiovisualApiController.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using Microsoft.IdentityModel.Tokens;
 using PlataformaRio2C.Domain.ApiModels.Auth.Request;
 using PlataformaRio2C.Domain.ApiModels.Auth.Response;
 using PlataformaRio2C.Domain.Interfaces;
