@@ -13,8 +13,8 @@ source/Presentation/Web/PlataformaRio2C.Web.Admin/Assets/themes/
 source/Presentation/Web/PlataformaRio2C.Web.Admin/Content/
 source/Presentation/Web/PlataformaRio2C.Web.Admin/Scripts/
 
-source/Presentation/Web/PlataformaRio2C.Web.Site/Assets/components/*
-source/Presentation/Web/PlataformaRio2C.Web.Site/Assets/img/*
-source/Presentation/Web/PlataformaRio2C.Web.Site/Assets/themes/*
-source/Presentation/Web/PlataformaRio2C.Web.Site/Content/*
-source/Presentation/Web/PlataformaRio2C.Web.Site/Scripts/*
+source/Presentation/Web/PlataformaRio2C.Web.Site/Assets/components/
+source/Presentation/Web/PlataformaRio2C.Web.Site/Assets/img/
+source/Presentation/Web/PlataformaRio2C.Web.Site/Assets/themes/
+source/Presentation/Web/PlataformaRio2C.Web.Site/Content/
+source/Presentation/Web/PlataformaRio2C.Web.Site/Scripts/

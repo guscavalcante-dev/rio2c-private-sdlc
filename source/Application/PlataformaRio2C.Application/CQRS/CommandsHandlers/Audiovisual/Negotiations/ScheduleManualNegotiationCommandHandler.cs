@@ -4,7 +4,7 @@
 // Created          : 06-04-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 10-03-2024
+// Last Modified On : 04-23-2025
 // ***********************************************************************
 // <copyright file="ScheduleManualNegotiationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,7 +20,6 @@ using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.Interfaces;
-using PlataformaRio2C.Application.Services.Common;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;

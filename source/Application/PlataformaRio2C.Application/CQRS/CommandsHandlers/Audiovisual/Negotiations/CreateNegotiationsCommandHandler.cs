@@ -4,7 +4,7 @@
 // Created          : 03-06-2020
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 04-11-2025
+// Last Modified On : 04-23-2025
 // ***********************************************************************
 // <copyright file="CreateNegotiationsCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

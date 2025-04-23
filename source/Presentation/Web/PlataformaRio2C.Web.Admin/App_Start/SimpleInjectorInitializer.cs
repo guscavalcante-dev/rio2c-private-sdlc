@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 10-23-2024
+// Last Modified On : 04-22-2025
 // ***********************************************************************
 // <copyright file="SimpleInjectorInitializer.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
