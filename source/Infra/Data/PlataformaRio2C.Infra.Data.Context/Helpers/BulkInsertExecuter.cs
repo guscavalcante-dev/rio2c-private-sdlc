@@ -1,4 +1,19 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Infra.Data.Context
+// Author           : Marcelo Bernart Schmidt
+// Created          : 04-17-2024
+//
+// Last Modified By : Marcelo Bernart Schmidt
+// Last Modified On : 04-23-2024
+// ***********************************************************************
+// <copyright file="BulkInsertExecutor.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
@@ -44,7 +59,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Helpers
                 if(connection.State == ConnectionState.Open)
                 {
                     connection.Close();
-                    //NÃO CHAMAR O DISPOSE pq o EF faz coisas subsequentes e o dispose limpa a connectionstring
+                    //do not change this to dispose, as it will clear the connection string property and break the EF that is executing outside this scope
                 }
             }
         }
@@ -100,4 +115,4 @@ namespace PlataformaRio2C.Infra.Data.Context.Helpers
             return dataTable;
         }
     }
-}
+}   
