@@ -55,8 +55,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Identity.Modules
             var response = context.Response;
             var request = context.Request;
 
-            if (response.StatusCode == 401 && request.Headers["X-Requested-With"] ==
-                "XMLHttpRequest")
+            if (request.FilePath == "/api/v1.0/auth/login" || (response.StatusCode == 401 && request.Headers["X-Requested-With"] == "XMLHttpRequest"))
             {
                 SuppressAuthenticationRedirect(context.Context);
             }
