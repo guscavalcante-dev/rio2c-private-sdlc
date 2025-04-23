@@ -19,6 +19,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Application.Interfaces;
+using PlataformaRio2C.Application.Services.Common;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;
@@ -37,7 +39,23 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly INegotiationRoomConfigRepository negotiationRoomConfigRepo;
         private readonly IConferenceRepository conferenceRepo;
         private readonly ILogisticAirfareRepository logisticAirfareRepo;
+        private readonly IProjectBuyerEvaluationRepository projectBuyerEvaluationRepo;
+        private readonly INegotiationService negotiationService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScheduleManualNegotiationCommandHandler"/> class.
+        /// </summary>
+        /// <param name="eventBus">The event bus.</param>
+        /// <param name="uow">The uow.</param>
+        /// <param name="negotiationRepository">The negotiation repository.</param>
+        /// <param name="organizationRepository">The organization repository.</param>
+        /// <param name="projectRepository">The project repository.</param>
+        /// <param name="negotiationConfigRepository">The negotiation configuration repository.</param>
+        /// <param name="negotiationRoomConfigRepository">The negotiation room configuration repository.</param>
+        /// <param name="conferenceRepository">The conference repository.</param>
+        /// <param name="logisticsAirfareRepository">The logistics airfare repository.</param>
+        /// <param name="projectBuyerEvaluationRepository">The project buyer evaluation repository.</param>
+        /// <param name="negotiationService">The negotiation service.</param>
         public ScheduleManualNegotiationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
@@ -47,7 +65,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             INegotiationConfigRepository negotiationConfigRepository,
             INegotiationRoomConfigRepository negotiationRoomConfigRepository,
             IConferenceRepository conferenceRepository,
-            ILogisticAirfareRepository logisticsAirfareRepository)
+            ILogisticAirfareRepository logisticsAirfareRepository,
+            IProjectBuyerEvaluationRepository projectBuyerEvaluationRepository,
+            INegotiationService negotiationService)
             : base(eventBus, uow, negotiationRepository)
         {
             this.organizationRepo = organizationRepository;
@@ -80,22 +100,39 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             List<Negotiation> automaticScheduledNegotiationsInThisRoom = new List<Negotiation>();
             bool isUsingAutomaticTable = false;
 
-            #region Overbooking Validations
+            #region Initial Validations
 
-            // Availability check
-            DateTimeOffset startDate = negotiationConfig.StartDate.Date.JoinDateAndTime(cmd.StartTime, true).ToUtcTimeZone();
-            DateTimeOffset endDate = startDate.Add(negotiationConfig.TimeOfEachRound);
+            #region Executives Availability check
 
-            if (!organizationRepo.HasAllExecutivesAvailableForDate(cmd.BuyerOrganizationUid.Value, cmd.EditionId.Value, startDate, endDate))
+            var projectBuyerEvaluation = await this.projectBuyerEvaluationRepo.FindByProjectIdAndBuyerOrganizationUidAsync(
+                project.Id,
+                cmd.BuyerOrganizationUid ?? Guid.Empty,
+            cmd.EditionId ?? 0);
+
+            var executivesAvailabilities = negotiationService.GetExecutivesAvailabilities(projectBuyerEvaluation);
+
+            // Player and Producer have Executives with Availability configured, but into different dates.
+            // Ex.: Player Executive has Availability only for 29/05/2025 and Producer Executive has Availability only for 30/05/2025
+            // so, we don't have availability to create a Negotiation for this match.
+            bool hasConflictIntoExecutivesAvailabilities = executivesAvailabilities.Count == 0
+                                                            && (negotiationService.GetPlayerExecutivesAvailabilities(projectBuyerEvaluation).Count > 0
+                                                                || negotiationService.GetProducerExecutivesAvailabilities(projectBuyerEvaluation).Count > 0);
+
+            var isStartDatePreviewIntoExecutivesAvailabilityRange = executivesAvailabilities.Count > 0
+                                                                        && executivesAvailabilities.Any(ea => startDatePreview >= ea.AvailabilityBeginDate && endDatePreview <= ea.AvailabilityEndDate);
+
+            if (hasConflictIntoExecutivesAvailabilities || !isStartDatePreviewIntoExecutivesAvailabilityRange)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(
-                                                    Messages.NoPlayerExecutivesAvailableForDate,
-                                                    buyerOrganization?.Name ?? string.Empty,
-                                                    negotiationConfig.StartDate.ToShortDateString()),
-                                                        new string[] { "ToastrError" }));
+                    Messages.NoPlayerExecutivesAvailableForDate,
+                    startDatePreview.ToShortDateString()),
+                        new string[] { "ToastrError" }));
             }
 
-            // Available tables check
+            #endregion
+
+            #region Available tables check
+
             var manualNegotiationsGroupedByRoomAndStartDate = manualScheduledNegotiationsInThisRoom.GroupBy(n => n.StartDate);
             var hasNoMoreManualTablesAvailable = manualNegotiationsGroupedByRoomAndStartDate.Any(n => n.Count(w => w.StartDate == startDatePreview) >= negotiationRoomConfig.CountManualTables);
 
@@ -117,7 +154,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 isUsingAutomaticTable = true;
             }
 
-            // Negotiations checks
+            #endregion
+
+            #region Overbooking checks
+
             var scheduledNegotiationsAtThisTime = await this.NegotiationRepo.FindAllScheduledNegotiationsDtosAsync(cmd.EditionId.Value, null, startDatePreview, endDatePreview);
 
             var hasPlayerScheduledNegotiationsAtThisTime = scheduledNegotiationsAtThisTime.Count(ndto => ndto.ProjectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.AttendeeOrganization.OrganizationId == buyerOrganization.Id) > 0;
@@ -142,9 +182,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         new string[] { "ToastrError" }));
             }
 
-            #region [DISABLED] This Conferences and Airfare checks are disabled but its working perfectly! (Dont delete, can be used in future!)
+            #endregion
 
-            //// Conferences checks
+            #region Conferences check [DISABLED] - But stills working perfectly! Dont delete, can be used in future!
+
             //var scheduledConferencesAtThisTime = await this.conferenceRepo.FindAllScheduleDtosAsync(cmd.EditionId.Value, 0, startDatePreview, endDatePreview, true, true);
 
             //var hasPlayerExecutivesScheduledConferencesAtThisTime = scheduledConferencesAtThisTime.Count(cdto => cdto.ConferenceParticipantDtos.Any(cpdto => cpdto.AttendeeCollaboratorDto.AttendeeOrganizationsDtos.Any(aodto => aodto.Organization.Id == buyerOrganization.Id))) > 0;
@@ -169,7 +210,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             //            new string[] { "ToastrError" }));
             //}
 
-            //// Airfares checks
+            #endregion
+
+            #region Airfares check [DISABLED] - But stills working perfectly! Dont delete, can be used in future!
+
             //var scheduledLogisticAirfaresAtThisTime = await this.logisticAirfareRepo.FindAllScheduleDtosAsync(cmd.EditionId.Value, null, startDatePreview, endDatePreview);
 
             //var hasPlayerExecutivesScheduledAirfaresAtThisTime = scheduledLogisticAirfaresAtThisTime.Count(ladto => ladto.LogisticDto.AttendeeCollaboratorDto.AttendeeOrganizationsDtos.Any(aodto => aodto.Organization.Id == buyerOrganization.Id)) > 0;
