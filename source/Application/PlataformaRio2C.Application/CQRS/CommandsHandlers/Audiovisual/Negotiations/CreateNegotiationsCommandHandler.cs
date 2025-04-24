@@ -4,7 +4,7 @@
 // Created          : 03-06-2020
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 04-11-2025
+// Last Modified On : 04-24-2025
 // ***********************************************************************
 // <copyright file="CreateNegotiationsCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -514,7 +514,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             result.AddRange(playerSlotExceptions);
             result.AddRange(this.GetLogisticsRoundsExceptions(negotiationSlots, playerProjectBuyerEvaluation));
             result.AddRange(this.GetConferencesSlotsExceptions(negotiationSlots, playerProjectBuyerEvaluation));
-            result.AddRange(this.GetAvailabilitySlotsExceptions(negotiationSlots, playerProjectBuyerEvaluation));
 
             return result;
         }
@@ -718,63 +717,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             return result;
         }
 
-        #endregion
-
-        #region Availability
-
-        /// <summary>Gets the conferences slots exceptions.</summary>
-        /// <param name="negotiationSlots">The negotiation slots.</param>
-        /// <param name="projectBuyerEvaluation">The project buyer evaluation.</param>
-        /// <returns></returns>
-        private List<int> GetAvailabilitySlotsExceptions(List<Negotiation> negotiationSlots, ProjectBuyerEvaluation projectBuyerEvaluation)
-        {
-            List<int> result = new List<int>();
-
-            result.AddRange(this.GetPlayerAvailabilitySlotsExceptions(negotiationSlots, projectBuyerEvaluation));
-            result.AddRange(this.GetProducerAvailabilitySlotsExceptions(negotiationSlots, projectBuyerEvaluation));
-
-            return result;
-        }
-
-        private IEnumerable<int> GetProducerAvailabilitySlotsExceptions(List<Negotiation> negotiationSlots, ProjectBuyerEvaluation projectBuyerEvaluation)
-        {
-            var result = new List<int>();
-
-            var organizationConferences = this.conferences
-                                                    .Where(c => c.ConferenceParticipants
-                                                                    .Any(cp => !cp.IsDeleted
-                                                                               && !cp.AttendeeCollaborator.IsDeleted
-                                                                               && cp.AttendeeCollaborator.AttendeeOrganizationCollaborators
-                                                                                        .Any(aoc => !aoc.IsDeleted && aoc.AttendeeOrganizationId == projectBuyerEvaluation.Project.SellerAttendeeOrganizationId)))
-                                                    .ToList();
-            if (organizationConferences?.Any() != true)
-            {
-                return result;
-            }
-
-            var organizationConferencesExceptions = new List<Tuple<DateTimeOffset?, DateTimeOffset?>>();
-            foreach (var organizationConference in organizationConferences)
-            {
-                organizationConferencesExceptions.Add(new Tuple<DateTimeOffset?, DateTimeOffset?>(organizationConference.StartDate?.AddMinutes(-30), organizationConference.EndDate?.AddMinutes(30)));
-            }
-
-            var conferenceSlotsExceptions = negotiationSlots
-                                            .Where(ns => organizationConferencesExceptions
-                                                .Any(lde => (ns.StartDate > lde.Item1 && ns.StartDate < lde.Item2)
-                                                            || (ns.EndDate > lde.Item1 && ns.EndDate < lde.Item2)))
-                                            .Select(e => e.RoundNumber)
-                                            .Distinct()
-                                            .ToList();
-
-            result.AddRange(conferenceSlotsExceptions);
-
-            return result;
-        }
-
-        private IEnumerable<int> GetPlayerAvailabilitySlotsExceptions(List<Negotiation> negotiationSlots, ProjectBuyerEvaluation projectBuyerEvaluation)
-        {
-            throw new NotImplementedException();
-        }
         #endregion
 
         #endregion
