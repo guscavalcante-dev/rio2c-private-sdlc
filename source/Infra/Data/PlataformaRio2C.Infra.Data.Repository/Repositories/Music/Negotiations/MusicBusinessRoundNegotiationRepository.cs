@@ -24,6 +24,10 @@ using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Domain.Interfaces.Repositories;
 using System.Linq.Dynamic;
+using System.Data.SqlClient;
+using System.Data;
+using System.Reflection;
+using PlataformaRio2C.Infra.Data.Context.Helpers;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -603,19 +607,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             this._context.Database.ExecuteSqlCommand(TransactionalBehavior.DoNotEnsureTransaction, "TRUNCATE TABLE [dbo].[Negotiations]");
         }
 
-        /// <summary>Creates multiple entities</summary>
-        /// <param name="entities">Entities</param>
+        
+
         public override void CreateAll(IEnumerable<MusicBusinessRoundNegotiation> entities)
         {
-            try
-            {
-                this._context.BulkInsert(entities);
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+            BulkInsertExecuter.Create("dbo.MusicBusinessRoundNegotiations", this._context.Database.Connection as SqlConnection)
+                .BulkInsert(entities.ToList()); 
         }
+
 
         /// <summary>
         /// Finds all scheduled negotiations dtos asynchronous.
@@ -704,13 +703,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Include(n => n.Room.RoomNames.Select(rn => rn.Language))
                                 .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation)
                                 .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject);
-                                //todo:Refactor this.
-                                //.Include(n => n.ProjectBuyerEvaluation.Project.ProjectTitles)
-                                //.Include(n => n.ProjectBuyerEvaluation.Project.ProjectTitles.Select(pt => pt.Language))
-                                //.Include(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization)
-                                //.Include(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.Organization)
-                                //.Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization)
-                                //.Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization);
+            //todo:Refactor this.
+            //.Include(n => n.ProjectBuyerEvaluation.Project.ProjectTitles)
+            //.Include(n => n.ProjectBuyerEvaluation.Project.ProjectTitles.Select(pt => pt.Language))
+            //.Include(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization)
+            //.Include(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.Organization)
+            //.Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization)
+            //.Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization);
 
             if (showParticipants)
             {
@@ -764,13 +763,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Include(n => n.Room.RoomNames.Select(rn => rn.Language))
                                 .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation)
                                 .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject);
-                                //todo:Refactor this.
-                                //.Include(n => n.ProjectBuyerEvaluation.Project.ProjectTitles)
-                                //.Include(n => n.ProjectBuyerEvaluation.Project.ProjectTitles.Select(pt => pt.Language))
-                                //.Include(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization)
-                                //.Include(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.Organization)
-                                //.Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization)
-                                //.Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization);
+            //todo:Refactor this.
+            //.Include(n => n.ProjectBuyerEvaluation.Project.ProjectTitles)
+            //.Include(n => n.ProjectBuyerEvaluation.Project.ProjectTitles.Select(pt => pt.Language))
+            //.Include(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization)
+            //.Include(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.Organization)
+            //.Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization)
+            //.Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization);
 
             return (await query.ToListAsync())
                                 .GroupBy(n => n.StartDate.ToBrazilTimeZone().Date)

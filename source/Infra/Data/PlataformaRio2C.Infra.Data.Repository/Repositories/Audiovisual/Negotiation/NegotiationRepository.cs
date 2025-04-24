@@ -22,6 +22,8 @@ using System.Threading.Tasks;
 using LinqKit;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Infra.Data.Context.Helpers;
+using System.Data.SqlClient;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -584,14 +586,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="entities">Entities</param>
         public override void CreateAll(IEnumerable<Negotiation> entities)
         {
-            try
-            {
-                this._context.BulkInsert(entities);
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+            BulkInsertExecuter.Create("dbo.Negotiations", this._context.Database.Connection as SqlConnection)
+                .BulkInsert(entities.ToList());
         }
 
         /// <summary>
