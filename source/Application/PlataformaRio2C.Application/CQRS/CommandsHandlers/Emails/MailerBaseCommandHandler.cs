@@ -14,7 +14,7 @@
 using System;
 using System.Threading.Tasks;
 using MediatR;
-using PlataformaRio2C.Application.Services;
+using PlataformaRio2C.Application.Interfaces;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;

@@ -22,7 +22,7 @@ using ClosedXML.Excel;
 using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Application.Services;
+using PlataformaRio2C.Application.Interfaces;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
