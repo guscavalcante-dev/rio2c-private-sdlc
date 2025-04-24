@@ -247,7 +247,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     new { page = this.RenderRazorViewToString("Widgets/EditionScheduledCountGaugeWidget", scheduledCount), divIdOrClass = "#AudiovisualMeetingsEditionScheduledCountGaugeWidget" },
                 },
                 chartData = scheduledCount,
-                maximumAvailableSlots = audiovisualNegotiationAvailableSlotsCountByEditionIdResponseDto.RemainingAutomaticSlotsInEdition
+                maximumAvailableSlots = audiovisualNegotiationAvailableSlotsCountByEditionIdResponseDto.MaximumSlotsCountInEdition
             }, JsonRequestBehavior.AllowGet);
         }
 
