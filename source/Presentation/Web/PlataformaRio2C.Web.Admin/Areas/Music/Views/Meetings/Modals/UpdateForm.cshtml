@@ -7,7 +7,8 @@
         @Html.HiddenFor(m => m.InitialBuyerOrganizationUid)
         @Html.HiddenFor(m => m.InitialBuyerOrganizationName)
         @Html.LabelFor(m => m.BuyerOrganizationUid, new { @class = "control-label" })
-        @Html.DropDownListFor(m => m.BuyerOrganizationUid, Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.Player.ToLowerInvariant())}...", new { @class = "form-control disabled", disabled = "disabled" })
+        @Html.HiddenFor(m => m.BuyerOrganizationUid)
+        <input type="text" class="form-control" value="@Model.InitialBuyerOrganizationName" disabled="disabled" readonly />
         @Html.ValidationMessageFor(m => m.BuyerOrganizationUid, "", new { @class = "text-danger" })
     </div>
 </div>

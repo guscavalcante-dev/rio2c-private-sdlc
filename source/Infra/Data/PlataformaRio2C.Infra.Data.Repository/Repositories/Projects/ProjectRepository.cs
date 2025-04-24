@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 10-30-2024
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 04-15-2025
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -611,6 +611,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                             )
                                             .Select(p => new ProjectBaseDto
                                             {
+                                                Project = p,
                                                 Id = p.Id,
                                                 Uid = p.Uid,
                                                 ProjectName = p.ProjectTitles.Where(t => t.Language.Code == languageCode).Select(t => t.Value).FirstOrDefault(),

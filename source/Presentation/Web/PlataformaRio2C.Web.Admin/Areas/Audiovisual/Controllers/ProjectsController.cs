@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-28-2019
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 10-30-2024
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 04-15-2025
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -44,6 +44,8 @@ using Constants = PlataformaRio2C.Domain.Constants;
 using ClosedXML.Excel;
 using PlataformaRio2C.Domain.ApiModels;
 using PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults;
+using Newtonsoft.Json;
+using Microsoft.Ajax.Utilities;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 {
@@ -164,6 +166,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     projectBaseDto.Genre.Add(projectInterestDto.Interest.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, '|'));
                 }
 
+                //Convert PitchingJsonPayload to the main object when PitchingJsonPayload is not null.
+                if (!String.IsNullOrEmpty(projectBaseDto.Project?.PitchingJsonPayload))
+                {
+                    var pitchingJsonPayload = JsonConvert.DeserializeObject<PitchingJsonPayload>(projectBaseDto.Project.PitchingJsonPayload);
+                    if (pitchingJsonPayload != null)
+                        projectBaseDto.ProjectName = pitchingJsonPayload.Title;
+                }
                 #endregion
             }
 

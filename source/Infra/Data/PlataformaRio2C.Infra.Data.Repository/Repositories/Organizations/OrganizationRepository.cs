@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-16-2024
+// Last Modified On : 04-23-2025
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -253,7 +253,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                           && (!pbe.Negotiations.Any() || pbe.Negotiations.All(n => n.IsDeleted))))));
                     }
 
-                    else if(organizationTypeUid ==  OrganizationType.MusicPlayer.Uid)
+                    else if (organizationTypeUid == OrganizationType.MusicPlayer.Uid)
                     {
                         query = query.Where(o => o.AttendeeOrganizations
                                                       .Any(ao => ao.EditionId == editionId
@@ -353,13 +353,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
-        /// Check if executive players of the company has availabity for the date, OR does not have availability at all.
+        /// Determines whether [has executive available for date] [the specified edition identifier].
         /// </summary>
         /// <param name="query">The query.</param>
         /// <param name="editionId">The edition identifier.</param>
-        /// <param name="date">The date filter.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
         /// <returns></returns>
-        internal static IQueryable<Organization> HasPlayerExecutiveAvailableForDate(this IQueryable<Organization> query, int editionId, DateTimeOffset startDate, DateTimeOffset endDate)
+        internal static IQueryable<Organization> HasAllExecutivesAvailableForDate(this IQueryable<Organization> query, int editionId, DateTimeOffset startDate, DateTimeOffset endDate)
         {
             query = query.Where(o =>
                 o.AttendeeOrganizations.Any(ao =>
@@ -367,8 +368,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     && !ao.Edition.IsDeleted
                     && ao.EditionId == editionId
                     && ao.AttendeeOrganizationCollaborators
-                        .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeCollaborator.IsDeleted) 
-                        .All(aoc => 
+                        .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeCollaborator.IsDeleted)
+                        .All(aoc =>
                             (aoc.AttendeeCollaborator.AvailabilityBeginDate == null &&
                              aoc.AttendeeCollaborator.AvailabilityEndDate == null)
                             ||
@@ -567,27 +568,30 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
-        /// <summary>Finds if the organization does have all executive players availables for the Date, OR does not have availability registered at all.</summary>
+        /// <summary>
+        /// Determines whether [has all executives available for date] [the specified organization uid].
+        /// </summary>
         /// <param name="organizationUid">The organization uid.</param>
         /// <param name="editionId">The edition identifier.</param>
-        /// <param name="date">The date to check the player availability.</param>
-        /// <returns></returns>
-        public bool HasPlayerExecutiveForDate(Guid organizationUid, int editionId, DateTimeOffset startDate, DateTimeOffset endDate)
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <returns>
+        ///   <c>true</c> if [has all executives available for date] [the specified organization uid]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool HasAllExecutivesAvailableForDate(Guid organizationUid, int editionId, DateTimeOffset startDate, DateTimeOffset endDate)
         {
             var query = this.GetBaseQuery()
                                 .FindByUid(organizationUid)
-                                .HasPlayerExecutiveAvailableForDate(editionId,startDate,endDate);
-                                
+                                .HasAllExecutivesAvailableForDate(editionId, startDate, endDate);
 
             return query.ToList().Count > 0;
         }
 
-
-            /// <summary>Finds the dto by uid asynchronous.</summary>
-            /// <param name="organizationUid">The organization uid.</param>
-            /// <param name="editionId">The edition identifier.</param>
-            /// <returns></returns>
-            public async Task<OrganizationDto> FindDtoByUidAsync(Guid organizationUid, int editionId)
+        /// <summary>Finds the dto by uid asynchronous.</summary>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<OrganizationDto> FindDtoByUidAsync(Guid organizationUid, int editionId)
         {
             var query = this.GetBaseQuery()
                                 .FindByUid(organizationUid);

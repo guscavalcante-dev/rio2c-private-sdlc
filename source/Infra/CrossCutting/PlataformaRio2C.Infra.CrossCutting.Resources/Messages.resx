@@ -657,10 +657,10 @@ A distribuição só pode ser executada uma única vez por edição.
     <comment>Nenhuma conversa encontrada.</comment>
   </data>
   <data name="NoPlayerExecutivesAvailableForDate" xml:space="preserve">
-    <value>Algum dos executivos da organização {0} não estarão disponíveis na data {1}. Verificar Disponibilidades.</value>
+    <value>Alguns dos executivos não estarão disponíveis na data {0}. Verificar Disponibilidades.</value>
   </data>
   <data name="NoMoreTablesAvailableAtTheRoomAndStartTime" xml:space="preserve">
-    <value>Não há mesas disponíveis com início às '{0}' na sala '{1}' </value>
+    <value>Não há mesas disponíveis com início às '{0}' na sala '{1}'</value>
     <comment>Não há mesas disponíveis com início às '{0}' na sala '{1}'</comment>
   </data>
   <data name="NoneEntityAction" xml:space="preserve">

@@ -156,7 +156,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             {
                 query = query
                             .Where(n => n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator.AttendeeOrganizationCollaborators.Any(aoc => aoc.AttendeeCollaborator.Uid == attendeeCollaboratorUid)
-                                        || n.MusicBusinessRoundProjectBuyerEvaluation.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators.Any(aoc => aoc.AttendeeCollaborator.Uid == attendeeCollaboratorUid));
+                                        || n.MusicBusinessRoundProjectBuyerEvaluation.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators.Any(aoc => aoc.AttendeeCollaborator.Uid == attendeeCollaboratorUid && !aoc.IsDeleted
+                                        || n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator.Uid == attendeeCollaboratorUid));
             }
 
             return query;
@@ -791,7 +792,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                             {
                                                 SellerAttendeeCollaboratorDto = new AttendeeCollaboratorDto()
                                                 {
-                                                    AttendeeCollaborator = n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator
+                                                    AttendeeCollaborator = n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator,
+                                                    Collaborator = n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator.Collaborator,
                                                 }
                                             }
                                         },

@@ -15,7 +15,7 @@ using System;
 using Mvc.Mailer;
 using PlataformaRio2C.Application.CQRS.Commands;
 
-namespace PlataformaRio2C.Application.Services
+namespace PlataformaRio2C.Application.Interfaces
 {
     /// <summary>IMailerService</summary>
     public interface IMailerService
