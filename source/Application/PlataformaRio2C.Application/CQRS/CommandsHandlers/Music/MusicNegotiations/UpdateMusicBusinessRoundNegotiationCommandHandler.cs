@@ -103,7 +103,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(
                                                     Messages.NoPlayerExecutivesAvailableForDate,
-                                                    buyerOrganization?.Name ?? string.Empty,
                                                     negotiationConfig.StartDate.ToShortDateString()),
                                                         new string[] { "ToastrError" }));
             }
