@@ -55,6 +55,34 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             return Task.FromResult(response);
         }
 
+        /// <summary>returns Unauthorized (401) with customized message.</summary>
+        /// <param name="message">A mensagem de erro.</param>
+        /// <returns></returns>
+        protected Task<IHttpActionResult> Unauthorized(string message)
+        {
+            IHttpActionResult response;
+
+            var errorResponse = new ErrorResponse
+            {
+                Error = new Error
+                {
+                    Code = "Unauthorized",
+                    Message = message,
+                    Target = "",
+                    InnerError = null
+                }
+            };
+
+            HttpResponseMessage responseMessage = new HttpResponseMessage(HttpStatusCode.Unauthorized)
+            {
+                Content = new StringContent(new JavaScriptSerializer().Serialize(errorResponse), Encoding.UTF8, "application/json")
+            };
+
+            response = ResponseMessage(responseMessage);
+
+            return Task.FromResult(response);
+        }
+
         /// <summary>Nots the found.</summary>
         /// <param name="message">The message.</param>
         /// <returns></returns>

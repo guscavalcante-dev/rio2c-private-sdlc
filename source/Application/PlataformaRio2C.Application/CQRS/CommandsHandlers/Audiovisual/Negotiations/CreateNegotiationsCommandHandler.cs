@@ -4,7 +4,7 @@
 // Created          : 03-06-2020
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 04-11-2025
+// Last Modified On : 04-24-2025
 // ***********************************************************************
 // <copyright file="CreateNegotiationsCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,6 +18,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Application.Interfaces;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Enums;
 using PlataformaRio2C.Domain.Interfaces;
@@ -36,12 +37,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IProjectBuyerEvaluationRepository projectBuyerEvaluationRepo;
         private readonly ILogisticAirfareRepository logisticAirfareRepo;
         private readonly IConferenceRepository conferenceRepo;
+        private readonly INegotiationService negotiationService;
 
         private IList<ProjectBuyerEvaluation> _projectSubmissionsError = new List<ProjectBuyerEvaluation>();
         private List<LogisticAirfare> logisticAirfares = new List<LogisticAirfare>();
         private List<Conference> conferences = new List<Conference>();
 
-        /// <summary>Initializes a new instance of the <see cref="CreateNegotiationsCommandHandler"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateNegotiationsCommandHandler" /> class.
+        /// </summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="negotiationRepository">The negotiation repository.</param>
@@ -50,6 +54,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="projectBuyerEvaluationRepository">The project buyer evaluation repository.</param>
         /// <param name="logisticAirfareRepository">The logistic airfare repository.</param>
         /// <param name="conferenceRepository">The conference repository.</param>
+        /// <param name="negotiationService">The negotiation service.</param>
         public CreateNegotiationsCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
@@ -58,7 +63,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             INegotiationConfigRepository negotiationConfigRepository,
             IProjectBuyerEvaluationRepository projectBuyerEvaluationRepository,
             ILogisticAirfareRepository logisticAirfareRepository,
-            IConferenceRepository conferenceRepository)
+            IConferenceRepository conferenceRepository,
+            INegotiationService negotiationService)
             : base(eventBus, uow, negotiationRepository)
         {
             this.editionRepo = editionRepository;
@@ -66,6 +72,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.projectBuyerEvaluationRepo = projectBuyerEvaluationRepository;
             this.logisticAirfareRepo = logisticAirfareRepository;
             this.conferenceRepo = conferenceRepository;
+            this.negotiationService = negotiationService;
         }
 
         /// <summary>Handles the specified create negotiations.</summary>
@@ -75,7 +82,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         public async Task<AppValidationResult> Handle(CreateNegotiations cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
-            
+
             var edition = await this.editionRepo.FindByUidAsync(cmd.EditionUid ?? Guid.Empty, true);
             if (edition.AudiovisualNegotiationsCreateStartDate.HasValue && !edition.AudiovisualNegotiationsCreateEndDate.HasValue)
             {
@@ -164,7 +171,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="negotiationConfigs">The negotiation configs.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        private List<Negotiation> GetNegotiationSlots(List<NegotiationConfig> negotiationConfigs,int userId)
+        private List<Negotiation> GetNegotiationSlots(List<NegotiationConfig> negotiationConfigs, int userId)
         {
             var negotiationSlots = new List<Negotiation>();
             var roundNumber = 1;
@@ -244,12 +251,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
         private Negotiation CreateNegotiationSlot(
-            NegotiationConfig dateConfig, 
-            NegotiationRoomConfig roomConfig, 
-            int numberSlot, 
-            int iTable, 
-            DateTimeOffset startDate, 
-            NegotiationTypeCodes type, 
+            NegotiationConfig dateConfig,
+            NegotiationRoomConfig roomConfig,
+            int numberSlot,
+            int iTable,
+            DateTimeOffset startDate,
+            NegotiationTypeCodes type,
             int userId)
         {
             return new Negotiation(
@@ -292,16 +299,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
                     var possibleNegotiationSlots = negotiationSlots?
                                                         .Where(ns => ns.ProjectBuyerEvaluation == null // Is not allocated
-                                                                     && ns.ProjectBuyerEvaluation?.ProjectId != projectBuyerEvaluation.ProjectId 
+                                                                     && ns.ProjectBuyerEvaluation?.ProjectId != projectBuyerEvaluation.ProjectId
                                                                      && ns.ProjectBuyerEvaluation?.BuyerAttendeeOrganizationId != projectBuyerEvaluation.BuyerAttendeeOrganizationId
                                                                      && !roundsExceptions.Contains(ns.RoundNumber) // Is not a exception
                                                         )?.ToList();
 
-                    // Get only negotiation slots that are into the executives availability range
-                    var executivesAvailabilities = this.GetExecutivesAvailabilities(projectBuyerEvaluation);
-                    if ((this.GetPlayerExecutivesAvailabilities(projectBuyerEvaluation).Count > 0 
-                        || this.GetProducerExecutivesAvailabilities(projectBuyerEvaluation).Count > 0) 
-                        && executivesAvailabilities.Count == 0)
+                    var executivesAvailabilities = negotiationService.GetExecutivesAvailabilities(projectBuyerEvaluation);
+                    if (executivesAvailabilities.Count == 0 &&
+                        (negotiationService.GetPlayerExecutivesAvailabilities(projectBuyerEvaluation).Count > 0
+                            || negotiationService.GetProducerExecutivesAvailabilities(projectBuyerEvaluation).Count > 0))
                     {
                         // Player and Producer have Executives with Availability configured, but into different dates.
                         // Ex.: Player Executive has Availability only for 29/05/2025 and Producer Executive has Availability only for 30/05/2025
@@ -396,102 +402,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             return new List<ProjectBuyerEvaluation>();
         }
 
-        #region Availability
-
-        private class ExecutiveAvailability
-        {
-            public DateTimeOffset? AvailabilityBeginDate { get; set; }
-            public DateTimeOffset? AvailabilityEndDate { get; set; }
-
-            public ExecutiveAvailability(DateTimeOffset? availabilityBeginDate, DateTimeOffset? availabilityEndDate)
-            {
-                AvailabilityBeginDate = availabilityBeginDate;
-                AvailabilityEndDate = availabilityEndDate;
-            }
-        }
-
-        /// <summary>
-        /// Gets the executives availabilities.
-        /// </summary>
-        /// <param name="projectBuyerEvaluation">The project buyer evaluation.</param>
-        /// <returns></returns>
-        private List<ExecutiveAvailability> GetExecutivesAvailabilities(ProjectBuyerEvaluation projectBuyerEvaluation)
-        {
-            var playerAvailabilities = this.GetPlayerExecutivesAvailabilities(projectBuyerEvaluation);
-            var producerAvailabilities = this.GetProducerExecutivesAvailabilities(projectBuyerEvaluation);
-
-            // If there are no player availability, return the producer's availability (and vice versa)
-            if (!playerAvailabilities.Any())
-                return producerAvailabilities;
-            if (!producerAvailabilities.Any())
-                return playerAvailabilities;
-
-            // Find the intersection between availabilities
-            var intersectingAvailabilities = new List<ExecutiveAvailability>();
-            foreach (var playerAvailability in playerAvailabilities)
-            {
-                foreach (var producerAvailability in producerAvailabilities)
-                {
-                    // Find the overlap between the two ranges
-                    var overlapStart = playerAvailability.AvailabilityBeginDate > producerAvailability.AvailabilityBeginDate
-                        ? playerAvailability.AvailabilityBeginDate
-                        : producerAvailability.AvailabilityBeginDate;
-
-                    var overlapEnd = playerAvailability.AvailabilityEndDate < producerAvailability.AvailabilityEndDate
-                        ? playerAvailability.AvailabilityEndDate
-                        : producerAvailability.AvailabilityEndDate;
-
-                    // Check if have a valid overlap
-                    if (overlapStart <= overlapEnd)
-                    {
-                        intersectingAvailabilities.Add(new ExecutiveAvailability(overlapStart, overlapEnd));
-                    }
-                }
-            }
-
-            return intersectingAvailabilities;
-        }
-
-        /// <summary>
-        /// Gets the player executives availabilities.
-        /// </summary>
-        /// <param name="negotiationSlots">The negotiation slots.</param>
-        /// <param name="projectBuyerEvaluation">The project buyer evaluation.</param>
-        /// <returns></returns>
-        private List<ExecutiveAvailability> GetPlayerExecutivesAvailabilities(ProjectBuyerEvaluation projectBuyerEvaluation)
-        {
-            var playerExecutivesAvailabilities = projectBuyerEvaluation.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators
-                                                    .Where(aoc => aoc.AttendeeCollaborator.AvailabilityBeginDate != null 
-                                                                    && aoc.AttendeeCollaborator.AvailabilityEndDate != null)
-                                                    .Select(aoc => new ExecutiveAvailability(
-                                                                    aoc.AttendeeCollaborator.AvailabilityBeginDate?.ToBrazilTimeZone().Date, 
-                                                                    aoc.AttendeeCollaborator.AvailabilityEndDate?.ToBrazilTimeZone().Date.AddDays(1).AddTicks(-1)))
-                                                    .ToList();
-
-            return playerExecutivesAvailabilities;
-        }
-
-        /// <summary>
-        /// Gets the producer executives availabilities.
-        /// </summary>
-        /// <param name="negotiationSlots">The negotiation slots.</param>
-        /// <param name="projectBuyerEvaluation">The project buyer evaluation.</param>
-        /// <returns></returns>
-        private List<ExecutiveAvailability> GetProducerExecutivesAvailabilities(ProjectBuyerEvaluation projectBuyerEvaluation)
-        {
-            var producerExecutivesAvailabilities = projectBuyerEvaluation.Project.SellerAttendeeOrganization.AttendeeOrganizationCollaborators
-                                                    .Where(aoc => aoc.AttendeeCollaborator.AvailabilityBeginDate != null 
-                                                                    && aoc.AttendeeCollaborator.AvailabilityEndDate != null)
-                                                    .Select(aoc => new ExecutiveAvailability(
-                                                                    aoc.AttendeeCollaborator.AvailabilityBeginDate?.ToBrazilTimeZone().Date, 
-                                                                    aoc.AttendeeCollaborator.AvailabilityEndDate?.ToBrazilTimeZone().Date.AddDays(1).AddTicks(-1)))
-                                                    .ToList();
-
-            return producerExecutivesAvailabilities;
-        }
-
-        #endregion
-
         #region Slot exceptions
 
         /// <summary>Gets the slot exceptions.</summary>
@@ -503,8 +413,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var result = new List<int>();
 
             var playerSlotExceptions = negotiationSlots
-                                                    .Where(ns => ns.ProjectBuyerEvaluationId == playerProjectBuyerEvaluation.Id 
-                                                                || ns.ProjectBuyerEvaluation?.ProjectId == playerProjectBuyerEvaluation.ProjectId 
+                                                    .Where(ns => ns.ProjectBuyerEvaluationId == playerProjectBuyerEvaluation.Id
+                                                                || ns.ProjectBuyerEvaluation?.ProjectId == playerProjectBuyerEvaluation.ProjectId
                                                                 || ns.ProjectBuyerEvaluation?.Project?.SellerAttendeeOrganizationId == playerProjectBuyerEvaluation.Project.SellerAttendeeOrganizationId
                                                                 || ns.ProjectBuyerEvaluation?.BuyerAttendeeOrganizationId == playerProjectBuyerEvaluation.BuyerAttendeeOrganizationId)
                                                     .Select(ns => ns.RoundNumber)
@@ -514,7 +424,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             result.AddRange(playerSlotExceptions);
             result.AddRange(this.GetLogisticsRoundsExceptions(negotiationSlots, playerProjectBuyerEvaluation));
             result.AddRange(this.GetConferencesSlotsExceptions(negotiationSlots, playerProjectBuyerEvaluation));
-            result.AddRange(this.GetAvailabilitySlotsExceptions(negotiationSlots, playerProjectBuyerEvaluation));
 
             return result;
         }
@@ -550,7 +459,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             // Airfare logistics
             var organizationLogisticAirfares = this.logisticAirfares
-                                                    .Where(la => !la.Logistic.AttendeeCollaborator.IsDeleted 
+                                                    .Where(la => !la.Logistic.AttendeeCollaborator.IsDeleted
                                                                  && la.Logistic.AttendeeCollaborator.AttendeeOrganizationCollaborators
                                                                         .Any(aoc => !aoc.IsDeleted && aoc.AttendeeOrganizationId == projectBuyerEvaluation.BuyerAttendeeOrganizationId))
                                                     .ToList();
@@ -639,7 +548,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             return result;
         }
 
-
         /// <summary>Gets the player conferences slots exceptions.</summary>
         /// <param name="negotiationSlots">The negotiation slots.</param>
         /// <param name="projectBuyerEvaluation">The project buyer evaluation.</param>
@@ -650,7 +558,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var organizationConferences = this.conferences
                                                     .Where(c => c.ConferenceParticipants
-                                                                    .Any(cp => !cp.IsDeleted 
+                                                                    .Any(cp => !cp.IsDeleted
                                                                                && !cp.AttendeeCollaborator.IsDeleted
                                                                                && cp.AttendeeCollaborator.AttendeeOrganizationCollaborators
                                                                                         .Any(aoc => !aoc.IsDeleted && aoc.AttendeeOrganizationId == projectBuyerEvaluation.BuyerAttendeeOrganizationId)))
@@ -718,63 +626,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             return result;
         }
 
-        #endregion
-
-        #region Availability
-
-        /// <summary>Gets the conferences slots exceptions.</summary>
-        /// <param name="negotiationSlots">The negotiation slots.</param>
-        /// <param name="projectBuyerEvaluation">The project buyer evaluation.</param>
-        /// <returns></returns>
-        private List<int> GetAvailabilitySlotsExceptions(List<Negotiation> negotiationSlots, ProjectBuyerEvaluation projectBuyerEvaluation)
-        {
-            List<int> result = new List<int>();
-
-            result.AddRange(this.GetPlayerAvailabilitySlotsExceptions(negotiationSlots, projectBuyerEvaluation));
-            result.AddRange(this.GetProducerAvailabilitySlotsExceptions(negotiationSlots, projectBuyerEvaluation));
-
-            return result;
-        }
-
-        private IEnumerable<int> GetProducerAvailabilitySlotsExceptions(List<Negotiation> negotiationSlots, ProjectBuyerEvaluation projectBuyerEvaluation)
-        {
-            var result = new List<int>();
-
-            var organizationConferences = this.conferences
-                                                    .Where(c => c.ConferenceParticipants
-                                                                    .Any(cp => !cp.IsDeleted
-                                                                               && !cp.AttendeeCollaborator.IsDeleted
-                                                                               && cp.AttendeeCollaborator.AttendeeOrganizationCollaborators
-                                                                                        .Any(aoc => !aoc.IsDeleted && aoc.AttendeeOrganizationId == projectBuyerEvaluation.Project.SellerAttendeeOrganizationId)))
-                                                    .ToList();
-            if (organizationConferences?.Any() != true)
-            {
-                return result;
-            }
-
-            var organizationConferencesExceptions = new List<Tuple<DateTimeOffset?, DateTimeOffset?>>();
-            foreach (var organizationConference in organizationConferences)
-            {
-                organizationConferencesExceptions.Add(new Tuple<DateTimeOffset?, DateTimeOffset?>(organizationConference.StartDate?.AddMinutes(-30), organizationConference.EndDate?.AddMinutes(30)));
-            }
-
-            var conferenceSlotsExceptions = negotiationSlots
-                                            .Where(ns => organizationConferencesExceptions
-                                                .Any(lde => (ns.StartDate > lde.Item1 && ns.StartDate < lde.Item2)
-                                                            || (ns.EndDate > lde.Item1 && ns.EndDate < lde.Item2)))
-                                            .Select(e => e.RoundNumber)
-                                            .Distinct()
-                                            .ToList();
-
-            result.AddRange(conferenceSlotsExceptions);
-
-            return result;
-        }
-
-        private IEnumerable<int> GetPlayerAvailabilitySlotsExceptions(List<Negotiation> negotiationSlots, ProjectBuyerEvaluation projectBuyerEvaluation)
-        {
-            throw new NotImplementedException();
-        }
         #endregion
 
         #endregion

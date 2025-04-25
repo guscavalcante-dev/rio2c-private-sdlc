@@ -166,6 +166,34 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>
+        /// Finds the by buyer attendee organization identifier.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="buyerOrganizationUid">The buyer attendee organization identifier.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<ProjectBuyerEvaluation> FindByEditionAndBuyerOrganizationUid(this IQueryable<ProjectBuyerEvaluation> query, Guid buyerOrganizationUid, int editionId)
+        {
+            query = query.Where(pbe => pbe.BuyerAttendeeOrganization.EditionId == editionId 
+                                        && pbe.BuyerAttendeeOrganization.Organization.Uid == buyerOrganizationUid);
+
+            return query;
+        }
+
+        /// <summary>
+        /// Finds the by project identifier.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="projectId">The project identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<ProjectBuyerEvaluation> FindByProjectId(this IQueryable<ProjectBuyerEvaluation> query, int projectId)
+        {
+            query = query.Where(pbe => pbe.ProjectId == projectId);
+
+            return query;
+        }
     }
 
     #endregion
@@ -388,6 +416,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .IsNotVirtualMeeting(); // Consider only presential negotiations in count
 
             return await query.CountAsync();
+        }
+
+        /// <summary>
+        /// Finds the by project identifier and buyer attendee organization identifier asynchronous.
+        /// </summary>
+        /// <param name="projectId">The project identifier.</param>
+        /// <param name="buyerOrganizationUid">The buyer organization uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<ProjectBuyerEvaluation> FindByProjectIdAndBuyerOrganizationUidAsync(int projectId, Guid buyerOrganizationUid, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                            .FindByProjectId(projectId)
+                            .FindByEditionAndBuyerOrganizationUid(buyerOrganizationUid, editionId);
+
+            return await query.FirstOrDefaultAsync();
         }
     }
 }

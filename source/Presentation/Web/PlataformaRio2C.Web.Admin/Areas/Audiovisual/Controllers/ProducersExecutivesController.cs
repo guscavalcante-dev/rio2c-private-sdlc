@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-26-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 12-21-2023
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 04-15-2025
 // ***********************************************************************
 // <copyright file="ProducersExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -139,9 +139,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> Details(Guid? id)
         {
-            var attendeeCollaboratorDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByCollaboratorTypeUidAsync(
-                id ?? Guid.Empty, 
-                CollaboratorType.Industry.Uid
+            var attendeeCollaboratorDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUid(
+                id ?? Guid.Empty , this.EditionDto.Id
             );
 
             if (attendeeCollaboratorDto == null)

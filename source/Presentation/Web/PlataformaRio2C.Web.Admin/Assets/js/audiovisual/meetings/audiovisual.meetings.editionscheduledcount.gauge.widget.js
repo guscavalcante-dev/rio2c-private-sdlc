@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 03-07-2020
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 18-10-2024
+// Last Modified By : Renan Valentim
+// Last Modified On : 04-24-2025
 // ***********************************************************************
 // <copyright file="audiovisual.meetings.editionscheduledcount.gauge.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -256,7 +256,7 @@ var AudiovisualMeetingsEditionScheduledCountGaugeWidget = function () {
                 data: data,
                 // Success
                 onSuccess: function () {
-                    enableShowPlugins(data.chartData, data.maximumAvailableSlots.TotalAvailablSlotsByEdition);
+                    enableShowPlugins(data.chartData, data.maximumAvailableSlots);
                 },
                 // Error
                 onError: function () {

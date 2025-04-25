@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Daniel Giese Rodrigues
-// Last Modified On : 04-25-2025
+// Last Modified On : 04-15-2025
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -492,6 +492,29 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             })
                             .FirstOrDefaultAsync();
         }
+
+        /// <summary>
+        /// Finds the site detailst dto by collaborator uid asynchronous.
+        /// </summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="editionId">The edition Id Identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeCollaboratorSiteDetailsDto> FindSiteDetailstDtoByCollaboratorUid(Guid collaboratorUid, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByEditionId(editionId, false)
+                                .FindByCollaboratorUid(collaboratorUid);
+
+            return await query
+                            .Select(ac => new AttendeeCollaboratorSiteDetailsDto
+                            {
+                                AttendeeCollaborator = ac,
+                                Collaborator = ac.Collaborator,
+                                HasLogistic = ac.Logistics.Any(l => !l.IsDeleted)
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
 
         /// <summary>
         /// Finds the site detailst dto by collaborator uid and collaborator type uid and by edition identifier asynchronous.

@@ -18,7 +18,7 @@ using System.Threading;
 using System.Web.Mvc;
 using Mvc.Mailer;
 using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Application.Services;
+using PlataformaRio2C.Application.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Web.Site.ServicesSendProducersNegotiationEmail
