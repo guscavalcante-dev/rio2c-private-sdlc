@@ -34,9 +34,10 @@
     @Scripts.Render("~/bundles/js/music.meetings.editionunscheduledcount.widget.js")
     @Scripts.Render("~/bundles/js/music.meetings.scheduled.create.js")
     @Scripts.Render("~/bundles/js/music.meetings.scheduled.update.js")
-    <script>
+<script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
+            confirmSendEmailSelected: '@Labels.confirmSendEmailSelected',
             playerDropdownPlaceholder: '@string.Format(Labels.SelectAMEntity, Labels.Player.ToLowerInvariant())...',
             projectDropdownPlaceholder: '@string.Format(Labels.SelectAMEntity, Labels.Project.ToLowerInvariant())...',
             stagenameDropdownPlaceholder: '@string.Format(Labels.SelectAMEntity, Labels.StageName.ToLowerInvariant())...',
@@ -53,5 +54,5 @@
         MusicMeetingsScheduledWidget.init();
     });
 
-    </script>
+</script>
 }

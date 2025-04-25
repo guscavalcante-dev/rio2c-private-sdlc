@@ -13,7 +13,6 @@
 // ***********************************************************************
 
 var MusicMeetingsSendEmailToProducersDataTableWidget = function () {
-
     var widgetElementId = '#MusicMeetingsSendEmailToProducersDataTableWidget';
     var tableElementId = '#musicmeetingssendemailtoproducers-list-table';
     var table;
@@ -21,7 +20,6 @@ var MusicMeetingsSendEmailToProducersDataTableWidget = function () {
     // Invitation email ---------------------------------------------------------------------------
     var sendEmails = function (sendEmailParameters) {
         MyRio2cCommon.block();
-
         $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Meetings/SendProducersEmails'), sendEmailParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
@@ -43,10 +41,11 @@ var MusicMeetingsSendEmailToProducersDataTableWidget = function () {
     var showSendEmailsModal = function () {
 
         var jsonParameters = new Object();
-        jsonParameters.selectedAttendeeOrganizationsUids = $('#musicmeetingssendemailtoproducers-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
+        jsonParameters.selectedAttendeeCollaboratorsUids = $('#musicmeetingssendemailtoproducers-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
         jsonParameters.keywords = $('#Search').val();
-
-        var message = jsonParameters.selectedAttendeeOrganizationsUids === '' ? translations.confirmSendEmailAll : translations.confirmSendEmailSelected;
+        
+        
+        var message = jsonParameters.selectedAttendeeCollaboratorsUids === '' ? translations.confirmSendEmailAll : translations.confirmSendEmailSelected;
 
         bootbox.dialog({
             message: message,
@@ -70,7 +69,6 @@ var MusicMeetingsSendEmailToProducersDataTableWidget = function () {
 
     // Init datatable -----------------------------------------------------------------------------
     var initiListTable = function () {
-
         var tableElement = $(tableElementId);
 
         // Disable datatable alert

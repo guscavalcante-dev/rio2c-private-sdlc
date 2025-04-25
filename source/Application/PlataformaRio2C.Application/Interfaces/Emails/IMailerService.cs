@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-02-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 05-03-2024
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 04-25-2025
 // ***********************************************************************
 // <copyright file="IMailerService.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,7 +27,7 @@ namespace PlataformaRio2C.Application.Interfaces
         #endregion
 
         #region Admin Emails
-
+        MvcMailMessage SendMusicBusinessRoundPlayersNegotiationEmail(SendMusicBusinessRoundPlayerNegotiationsEmailAsync cmd, Guid sentEmailUid);
         MvcMailMessage SendPlayerWelcomeEmail(SendPlayerWelcomeEmailAsync cmd, Guid sentEmailUid);
         MvcMailMessage SendSpeakerWelcomeEmail(SendSpeakerWelcomeEmailAsync cmd, Guid sentEmailUid);
         MvcMailMessage SendMusicCommissionWelcomeEmail(SendMusicCommissionWelcomeEmailAsync cmd, Guid sentEmailUid);

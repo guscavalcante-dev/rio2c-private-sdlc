@@ -59,7 +59,7 @@
                                                                     <th class="text-center">@Labels.Table</th>
                                                                     <th>@Labels.Player</th>
                                                                     <th>@Labels.Project</th>
-                                                                    <th>@Labels.StageName</th>
+                                                                    <th>@Labels.Producer</th>
                                                                     <th class="text-center">@Labels.Type</th>
                                                                     <th class="text-center">@Labels.Actions</th>
                                                                 </tr>
@@ -79,6 +79,9 @@
                                                                                     <i class="la la-ellipsis-h"></i>
                                                                                 </a>
                                                                                 <div class="dropdown-menu dropdown-menu-right">
+                                                                                    <button class="dropdown-item" onclick="AudiovisualMeetingsScheduledWidget.sendEmailToPlayer('@(negotiation?.Uid)');">
+                                                                                        <i class="la la-mail-forward"></i>@Labels.SendAgendaEmail
+                                                                                    </button>
                                                                                     <button class="dropdown-item" onclick="AudiovisualMeetingsUpdate.showModal('@(negotiation?.Uid)');">
                                                                                         <i class="la la-edit"></i>@Labels.Edit
                                                                                     </button>
