@@ -43,6 +43,7 @@ var MusicMeetingsSendEmailToPlayersDataTableWidget = function () {
     var showSendEmailsModal = function () {
 
         var jsonParameters = new Object();
+
         jsonParameters.selectedAttendeeOrganizationsUids = $('#musicmeetingssendemailtoplayers-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
         jsonParameters.keywords = $('#Search').val();
 

@@ -3,8 +3,8 @@
 // Author           : Daniel Giese
 // Created          : 03-17-2025
 //
-// Last Modified By : Daniel Giese
-// Last Modified On : 03-17-2025
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 04-25-2025
 // ***********************************************************************
 // <copyright file="MeetingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -531,6 +531,140 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
         #endregion
 
+        #region SendPlayerEmail
+        /// <summary>
+        /// Sends the player email from the list
+        /// </summary>
+        /// <param name="negotiationUidViewModel">The Negotiation identifier.</param>
+        /// <returns></returns>
+        /// <exception cref="DomainException">
+        /// </exception>
+        [HttpPost]
+        public async Task<ActionResult> SendPlayersEmailsFromNegotiationUid(SendEmailToPlayerRegisterViewModel negotiationUidViewModel)
+        {
+            AppValidationResult result = null;
+
+            try
+            {
+                var negotiation = await musicbusinessRoundnegotiationRepo.FindByUidAsync(negotiationUidViewModel.NegotiationUid);
+
+                result = await SendEmailsToProducersByNegotiationAsync(negotiation);
+                result = await SendEmailsToPlayersByNegotiationAsync(negotiation);
+            }
+            catch (DomainException ex)
+            {
+                return Json(new
+                {
+                    status = "error",
+                    message = result?.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Emails, Labels.SentMP.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+        }
+
+        private async Task<AppValidationResult> SendEmailsToProducersByNegotiationAsync(MusicBusinessRoundNegotiation negotiation)
+        {
+            var result = new AppValidationResult();
+            var dtos = await attendeeCollaboratorRepo.FindAllBaseDtoByUid(
+                negotiation.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator.Uid, this.AdminAccessControlDto.Language.Id);
+
+            if (dtos?.Any() != true)
+                throw new DomainException(Messages.SelectAtLeastOneOption);
+
+            List<string> errors = new List<string>();
+
+            foreach (var dto in dtos)
+            {
+                var languageCode = dto.CollaboratorDto.UserInterfaceLanguage ?? this.UserInterfaceLanguage;
+
+                try
+                {
+                    result = await CommandBus.Send(new SendMusicBusinessRoundProducerEmailAsync(
+                        dto,
+                        dto.CollaboratorDto.UserBaseDto.Id,
+                        dto.CollaboratorDto.UserBaseDto.Uid,
+                        dto.CollaboratorDto.FirstName,
+                        dto.CollaboratorDto.FullName,
+                        dto.CollaboratorDto.Email,
+                        EditionDto.Edition,
+                        AdminAccessControlDto.User.Id,
+                        languageCode));
+
+                    if (!result.IsValid)
+                        throw new DomainException(Messages.CorrectFormValues);
+                }
+                catch (DomainException)
+                {
+                    errors.AddRange(result.Errors.Select(e => e.Message));
+                }
+                catch (Exception ex)
+                {
+                    Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                }
+            }
+
+            if (errors.Any())
+                throw new DomainException(string.Format(Messages.OneOrMoreEmailsNotSend, Labels.WelcomeEmail));
+
+            return result;
+        }
+
+        private async Task<AppValidationResult> SendEmailsToPlayersByNegotiationAsync(MusicBusinessRoundNegotiation negotiation)
+        {
+            var result = new AppValidationResult();
+            var dto = await attendeeOrganizationRepo.FindAllMusicBusinessRoundBaseDtoByUid(
+                negotiation.MusicBusinessRoundProjectBuyerEvaluation.BuyerAttendeeOrganization.Uid,
+                AdminAccessControlDto.Language.Id);
+
+            if (dto == null)
+                throw new DomainException(Messages.SelectAtLeastOneOption);
+
+            List<string> errors = new List<string>();
+
+            foreach (var collaboratorDto in dto.AttendeeCollaboratorBaseDtos)
+            {
+                var languageCode = collaboratorDto.CollaboratorBaseDto.UserBaseDto.UserInterfaceLanguageCode ?? this.UserInterfaceLanguage;
+
+                try
+                {
+                    result = await CommandBus.Send(new SendPlayerNegotiationsEmailAsync(
+                        dto,
+                        collaboratorDto.CollaboratorBaseDto.UserBaseDto.Id,
+                        collaboratorDto.CollaboratorBaseDto.UserBaseDto.Uid,
+                        collaboratorDto.CollaboratorBaseDto.FirstName,
+                        collaboratorDto.CollaboratorBaseDto.FullName,
+                        collaboratorDto.CollaboratorBaseDto.Email,
+                        EditionDto.Edition,
+                        AdminAccessControlDto.User.Id,
+                        languageCode));
+
+                    if (!result.IsValid)
+                        throw new DomainException(Messages.CorrectFormValues);
+                }
+                catch (DomainException)
+                {
+                    errors.AddRange(result.Errors.Select(e => e.Message));
+                }
+                catch (Exception ex)
+                {
+                    Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                }
+            }
+
+            if (errors.Any())
+                throw new DomainException(string.Format(Messages.OneOrMoreEmailsNotSend, Labels.WelcomeEmail));
+
+            return result;
+        }
+
+        #endregion
+
         #endregion
 
         #region Unscheduled
@@ -852,7 +986,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
             try
             {
-                var attendeeOrganizationBaseDtos = await this.attendeeOrganizationRepo.FindAllBaseDtoByActiveBuyerNegotiations(
+                var attendeeOrganizationBaseDtos = await this.attendeeOrganizationRepo.FindAllBaseDtoByActiveMusicBusinessRoundBuyerNegotiations(
                     keywords,
                     selectedAttendeeOrganizationsUids?.ToListGuid(','),
                     this.EditionDto.Id,
@@ -1038,50 +1172,46 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
             try
             {
-                var attendeeCollaboratorBaseDtos = await this.attendeeCollaboratorRepo.FindAllBaseDtoByActiveSellerNegotiations(
+                var attendeeCollaboratorsBaseDtos = await this.attendeeCollaboratorRepo.FindAllBaseDtoByActiveSellerNegotiations(
                     keywords,
                     selectedAttendeeCollaboratorsUids?.ToListGuid(','),
                     this.EditionDto.Id,
                     this.AdminAccessControlDto.Language.Id);
-                if (attendeeCollaboratorBaseDtos?.Any() != true)
+                if (attendeeCollaboratorsBaseDtos?.Any() != true)
                 {
                     throw new DomainException(Messages.SelectAtLeastOneOption);
                 }
 
                 List<string> errors = new List<string>();
-                foreach (var attendeeOrganizationBaseDto in attendeeCollaboratorBaseDtos)
+                foreach (var attendeeCollaboratorBaseDtos in attendeeCollaboratorsBaseDtos)
                 {
-                    foreach (var attendeeCollaboratorBaseDto in attendeeOrganizationBaseDto.AttendeeCollaboratorBaseDtos)
+                    // If the collaborator does not have an user interface language, use the user interface language of the current user
+                    var collaboratorLanguageCode = attendeeCollaboratorBaseDtos.CollaboratorDto.UserInterfaceLanguage ?? this.UserInterfaceLanguage;
+                    try
                     {
-                        // If the collaborator does not have an user interface language, use the user interface language of the current user
-                        var collaboratorLanguageCode = attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.UserInterfaceLanguageCode ?? this.UserInterfaceLanguage;
-
-                        try
+                        result = await this.CommandBus.Send(new SendMusicBusinessRoundProducerEmailAsync(
+                            attendeeCollaboratorBaseDtos,
+                            attendeeCollaboratorBaseDtos.CollaboratorDto.UserBaseDto.Id,
+                            attendeeCollaboratorBaseDtos.CollaboratorDto.UserBaseDto.Uid,
+                            attendeeCollaboratorBaseDtos.CollaboratorDto.FirstName,
+                            attendeeCollaboratorBaseDtos.CollaboratorDto.FullName,
+                            attendeeCollaboratorBaseDtos.CollaboratorDto.Email,
+                            this.EditionDto.Edition,
+                            this.AdminAccessControlDto.User.Id,
+                            collaboratorLanguageCode));
+                        if (!result.IsValid)
                         {
-                            result = await this.CommandBus.Send(new SendMusicBusinessRoundProducerEmailAsync(
-                                attendeeOrganizationBaseDto,
-                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Id,
-                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Uid,
-                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.FirstName,
-                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.FullName,
-                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.Email,
-                                this.EditionDto.Edition,
-                                this.AdminAccessControlDto.User.Id,
-                                collaboratorLanguageCode));
-                            if (!result.IsValid)
-                            {
-                                throw new DomainException(Messages.CorrectFormValues);
-                            }
+                            throw new DomainException(Messages.CorrectFormValues);
                         }
-                        catch (DomainException ex)
-                        {
-                            //Cannot stop sending email when exception occurs.
-                            errors.AddRange(result.Errors.Select(e => e.Message));
-                        }
-                        catch (Exception ex)
-                        {
-                            Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                        }
+                    }
+                    catch (DomainException ex)
+                    {
+                        //Cannot stop sending email when exception occurs.
+                        errors.AddRange(result.Errors.Select(e => e.Message));
+                    }
+                    catch (Exception ex)
+                    {
+                        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                     }
 
                     if (errors.Any())

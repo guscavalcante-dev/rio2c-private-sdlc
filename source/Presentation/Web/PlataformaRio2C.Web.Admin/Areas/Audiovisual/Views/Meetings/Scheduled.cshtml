@@ -34,9 +34,10 @@
     @Scripts.Render("~/bundles/js/audiovisual.meetings.editionunscheduledcount.widget.js")
     @Scripts.Render("~/bundles/js/audiovisual.meetings.scheduled.create.js")
     @Scripts.Render("~/bundles/js/audiovisual.meetings.scheduled.update.js")
-<script>
+    <script>
         // Page translations ----------------------------------------------------------------------
-        var translations = {
+    var translations = {
+            confirmSendEmailSelected: '@Labels.confirmSendEmailSelected',
             playerDropdownPlaceholder: '@string.Format(Labels.SelectAMEntity, Labels.Player.ToLowerInvariant())...',
             projectDropdownPlaceholder: '@string.Format(Labels.SelectAMEntity, Labels.Project.ToLowerInvariant())...',
             producerDropdownPlaceholder: '@string.Format(Labels.SelectAFEntity, Labels.Producer.ToLowerInvariant())...',
@@ -52,5 +53,5 @@
             AudiovisualMeetingsEditionUnscheduledCountWidget.init();
             AudiovisualMeetingsScheduledWidget.init();
         });
-</script>
+    </script>
 }

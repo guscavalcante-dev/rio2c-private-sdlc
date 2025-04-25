@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-02-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 12-19-2023
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 04-25-2025
 // ***********************************************************************
 // <copyright file="AdminMailerService.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -290,6 +290,34 @@ namespace PlataformaRio2C.Web.Admin.Services
         }
 
         /// <summary>
+        /// Sends the players negotiation email.
+        /// </summary>
+        /// <param name="cmd">The command.</param>
+        /// <param name="sentEmailUid">The sent email uid.</param>
+        /// <returns></returns>
+        public MvcMailMessage SendMusicBusinessRoundPlayersNegotiationEmail(SendMusicBusinessRoundPlayerNegotiationsEmailAsync cmd, Guid sentEmailUid)
+        {
+            this.SetCulture(cmd.UserInterfaceLanguage);
+
+            this.ViewData = new ViewDataDictionary(cmd);
+
+            return Populate(x =>
+            {
+                x.Subject = this.GetSubject("Agenda de Rodadas de Negócio | One-to-One Meetings Agenda", cmd.Edition.Name);
+                x.ViewName = "PlayersNegotiationsEmail";
+                x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
+                x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
+                ViewBag.SentEmailUid = sentEmailUid;
+                ViewBag.SiteUrl = this.siteUrl;
+
+                if (!string.IsNullOrEmpty(this.GetBccEmailRecipient(true)))
+                {
+                    x.Bcc.Add(this.GetBccEmailRecipient(true));
+                }
+            });
+        }
+
+        /// <summary>
         /// Sends the producers negotiation email.
         /// </summary>
         /// <param name="cmd">The command.</param>
@@ -331,7 +359,7 @@ namespace PlataformaRio2C.Web.Admin.Services
             return Populate(x =>
             {
                 x.Subject = this.GetSubject("Agenda de Rodadas de Negócio | One-to-One Meetings Agenda", cmd.Edition.Name);
-                x.ViewName = "ProducersNegotiationsEmail";
+                x.ViewName = "MusicBusinessRoundProducersNegotiationsEmail";
                 x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
                 x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
                 ViewBag.SentEmailUid = sentEmailUid;

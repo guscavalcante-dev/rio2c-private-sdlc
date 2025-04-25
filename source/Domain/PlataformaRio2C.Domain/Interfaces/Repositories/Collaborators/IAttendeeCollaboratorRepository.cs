@@ -68,7 +68,6 @@ namespace PlataformaRio2C.Domain.Interfaces
         #endregion
 
         #region Producers 
-        Task<AttendeeCollaboratorSiteDetailsDto> FindSiteDetailstDtoByCollaboratorUid(Guid collaboratorUid, int editionId);
         Task<IPagedList<MusicBusinessRoundNegotiationAttendeeCollaboratorBaseDto>> FindAllByActiveSellerNegotiationsAndByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, int editionId, int languageId);
         Task<List<MusicBusinessRoundNegotiationAttendeeCollaboratorBaseDto>> FindAllBaseDtoByActiveSellerNegotiations(string keywords, List<Guid> selectedAttendeeOrganizationsUids, int editionId, int languageId);
         Task<int> CountAllByActiveSellerNegotiationsAndByDataTable(bool showAllEditions, int? editionId);
