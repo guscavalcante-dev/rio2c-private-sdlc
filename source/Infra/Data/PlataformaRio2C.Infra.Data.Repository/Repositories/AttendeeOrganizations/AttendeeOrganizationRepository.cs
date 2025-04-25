@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-28-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 21-03-2025
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 04-25-2025
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

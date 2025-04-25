@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-02-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 03-15-2024
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 04-25-2025
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

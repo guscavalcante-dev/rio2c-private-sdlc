@@ -3,8 +3,8 @@
 // Author           : Daniel Giese
 // Created          : 03-17-2025
 //
-// Last Modified By : Daniel Giese
-// Last Modified On : 03-17-2025
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 04-25-2025
 // ***********************************************************************
 // <copyright file="MeetingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
