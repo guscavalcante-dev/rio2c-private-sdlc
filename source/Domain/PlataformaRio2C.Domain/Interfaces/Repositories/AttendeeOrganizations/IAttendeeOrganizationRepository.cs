@@ -71,6 +71,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         #region Negotiations
 
         #region Players
+        Task<List<NegotiationAttendeeOrganizationBaseDto>> FindAllBaseDtoByActiveMusicBusinessRoundBuyerNegotiations(string keywords,List<Guid> selectedAttendeeOrganizationsUids,int editionId,int languageId, OrganizationType organizationType);
         Task<NegotiationAttendeeOrganizationBaseDto> FindAllMusicBusinessRoundBaseDtoByUid(Guid attendeeOrganizationUid, int languageId);
         Task<NegotiationAttendeeOrganizationBaseDto> FindAllBaseDtoByUid(Guid attendeeOrganizationUid, int languageId);
         Task<IPagedList<NegotiationAttendeeOrganizationBaseDto>> FindAllByActiveBuyerNegotiationsAndByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, int editionId, int languageId, OrganizationType organizationType);

@@ -1456,6 +1456,125 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ToListAsync();
         }
 
+
+        /// <summary>
+        /// Finds all base dto by active buyer negotiations.
+        /// </summary>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="selectedAttendeeOrganizationsUids">The selected attendee organizations uids.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="languageId">The language identifier.</param>
+        /// <returns></returns>
+        public async Task<List<NegotiationAttendeeOrganizationBaseDto>> FindAllBaseDtoByActiveMusicBusinessRoundBuyerNegotiations(
+            string keywords,
+            List<Guid> selectedAttendeeOrganizationsUids,
+            int editionId,
+            int languageId, OrganizationType organizationType)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByKeywords(keywords)
+                                .FindByUids(selectedAttendeeOrganizationsUids)
+                                .FindByEditionId(editionId, false)
+                                .FindByOrganizationTypeUidAndEditionId(editionId, false, organizationType.Uid)
+                                .HasActiveMusicBusinessRoundProjectBuyerEvaluations();
+
+            return await query
+                            .OrderBy(ao => ao.Organization.Name)
+                            .Select(ao => new NegotiationAttendeeOrganizationBaseDto
+                            {
+                                Id = ao.Id,
+                                Uid = ao.Uid,
+                                AttendeeCollaboratorBaseDtos = ao.AttendeeOrganizationCollaborators
+                                                                    .Where(aoc => !aoc.IsDeleted
+                                                                                    && !aoc.AttendeeCollaborator.IsDeleted
+                                                                                    && !aoc.AttendeeCollaborator.Collaborator.IsDeleted
+                                                                                    && !aoc.AttendeeCollaborator.Collaborator.User.IsDeleted)
+                                                                    .Select(aoc => new AttendeeCollaboratorBaseDto
+                                                                    {
+                                                                        Id = aoc.Id,
+                                                                        Uid = aoc.Uid,
+                                                                        CollaboratorBaseDto = new CollaboratorDto
+                                                                        {
+                                                                            Id = aoc.AttendeeCollaborator.Collaborator.Id,
+                                                                            Uid = aoc.AttendeeCollaborator.Collaborator.Uid,
+                                                                            FirstName = aoc.AttendeeCollaborator.Collaborator.FirstName,
+                                                                            LastNames = aoc.AttendeeCollaborator.Collaborator.LastNames,
+                                                                            Email = aoc.AttendeeCollaborator.Collaborator.User.Email,
+                                                                            UserBaseDto = new UserBaseDto
+                                                                            {
+                                                                                Id = aoc.AttendeeCollaborator.Collaborator.User.Id,
+                                                                                Uid = aoc.AttendeeCollaborator.Collaborator.User.Uid,
+                                                                                Email = aoc.AttendeeCollaborator.Collaborator.User.Email,
+                                                                                UserInterfaceLanguageCode = aoc.AttendeeCollaborator.Collaborator.User.UserInterfaceLanguage.Code
+                                                                            }
+                                                                        }
+                                                                    }),
+                                OrganizationBaseDto = new OrganizationBaseDto
+                                {
+                                    Id = ao.Organization.Id,
+                                    Uid = ao.Organization.Uid,
+                                    Name = ao.Organization.Name,
+                                    TradeName = ao.Organization.TradeName,
+                                    ImageUploadDate = ao.Organization.ImageUploadDate
+                                },
+                                CreateDate = ao.CreateDate,
+                                UpdateDate = ao.UpdateDate,
+                                NegotiationBaseDtos = ao.MusicBusinessRoundProjectBuyerEvaluations
+                                                                .SelectMany(pbe => pbe.MusicBusinessRoundNegotiations
+                                                                .Where(n => !n.IsDeleted && !n.MusicBusinessRoundProjectBuyerEvaluation.IsDeleted)
+                                                                .Select(n => new NegotiationBaseDto
+                                                                {
+                                                                    Id = n.Id,
+                                                                    Uid = n.Uid,
+                                                                    StartDate = n.StartDate,
+                                                                    EndDate = n.EndDate,
+                                                                    TableNumber = n.TableNumber,
+                                                                    RoundNumber = n.RoundNumber,
+                                                                    IsAutomatic = n.IsAutomatic,
+                                                                    ProjectBuyerEvaluationBaseDto = new ProjectBuyerEvaluationBaseDto
+                                                                    {
+                                                                        Id = n.MusicBusinessRoundProjectBuyerEvaluation.Id,
+                                                                        Uid = n.MusicBusinessRoundProjectBuyerEvaluation.Uid,
+                                                                        EvaluationDate = n.MusicBusinessRoundProjectBuyerEvaluation.EvaluationDate,
+                                                                        Reason = n.MusicBusinessRoundProjectBuyerEvaluation.Reason,
+                                                                        ProjectBaseDto = new ProjectBaseDto
+                                                                        {
+                                                                            Id = pbe.Id,
+                                                                            Uid = pbe.Uid,
+                                                                            ProjectName = pbe.MusicBusinessRoundProject.SellerAttendeeCollaborator.Collaborator.FirstName,
+                                                                            ProducerName = pbe.MusicBusinessRoundProject.SellerAttendeeCollaborator.Collaborator.LastNames,
+                                                                            CreateDate = pbe.MusicBusinessRoundProject.CreateDate,
+                                                                            FinishDate = pbe.MusicBusinessRoundProject.FinishDate
+                                                                        },
+                                                                        SellerAttendeeOrganizationBaseDto = new AttendeeOrganizationBaseDto
+                                                                        {
+                                                                            Id = pbe.BuyerAttendeeOrganization.Id,
+                                                                            Uid = pbe.BuyerAttendeeOrganization.Uid,
+                                                                            OrganizationBaseDto = new OrganizationBaseDto
+                                                                            {
+                                                                                Id = pbe.BuyerAttendeeOrganization.Organization.Id,
+                                                                                Uid = pbe.BuyerAttendeeOrganization.Organization.Uid,
+                                                                                Name = pbe.BuyerAttendeeOrganization.Organization.Name,
+                                                                                TradeName = pbe.BuyerAttendeeOrganization.Organization.TradeName,
+                                                                                ImageUploadDate = pbe.BuyerAttendeeOrganization.Organization.ImageUploadDate
+                                                                            },
+                                                                            CreateDate = pbe.BuyerAttendeeOrganization.CreateDate,
+                                                                            UpdateDate = pbe.BuyerAttendeeOrganization.UpdateDate,
+                                                                        }
+                                                                    },
+                                                                    RoomJsonDto = new RoomJsonDto
+                                                                    {
+                                                                        Id = n.Room.Id,
+                                                                        Uid = n.Room.Uid,
+                                                                        Name = n.Room.RoomNames.FirstOrDefault(rn => !rn.IsDeleted && rn.LanguageId == languageId).Value,
+                                                                        IsVirtualMeeting = n.Room.IsVirtualMeeting,
+                                                                        CreateDate = n.Room.CreateDate,
+                                                                        UpdateDate = n.Room.UpdateDate
+                                                                    }
+                                                                }))
+                            })
+                            .ToListAsync();
+        }
         /// <summary>
         /// Finds all base dto by active attendeeOrganizationUid.
         /// </summary>
@@ -1579,16 +1698,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             {
                                 Id = ao.Id,
                                 Uid = ao.Uid,
-                                OrganizationBaseDto = new OrganizationBaseDto
-                                {
-                                    Id = ao.Organization.Id,
-                                    Uid = ao.Organization.Uid,
-                                    Name = ao.Organization.Name,
-                                    TradeName = ao.Organization.TradeName,
-                                    ImageUploadDate = ao.Organization.ImageUploadDate
-                                },
-                                CreateDate = ao.CreateDate,
-                                UpdateDate = ao.UpdateDate,
                                 AttendeeCollaboratorBaseDtos = ao.AttendeeOrganizationCollaborators
                                                                     .Where(aoc => !aoc.IsDeleted
                                                                                     && !aoc.AttendeeCollaborator.IsDeleted
@@ -1614,9 +1723,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                             }
                                                                         }
                                                                     }),
-                                NegotiationBaseDtos = ao.ProjectBuyerEvaluations
-                                                                .SelectMany(pbe => pbe.Negotiations
-                                                                .Where(n => !n.IsDeleted && !n.ProjectBuyerEvaluation.IsDeleted && !n.ProjectBuyerEvaluation.Project.IsDeleted)
+                                OrganizationBaseDto = new OrganizationBaseDto
+                                {
+                                    Id = ao.Organization.Id,
+                                    Uid = ao.Organization.Uid,
+                                    Name = ao.Organization.Name,
+                                    TradeName = ao.Organization.TradeName,
+                                    ImageUploadDate = ao.Organization.ImageUploadDate
+                                },
+                                CreateDate = ao.CreateDate,
+                                UpdateDate = ao.UpdateDate,
+                                NegotiationBaseDtos = ao.MusicBusinessRoundProjectBuyerEvaluations
+                                                                .SelectMany(pbe => pbe.MusicBusinessRoundNegotiations
+                                                                .Where(n => !n.IsDeleted && !n.MusicBusinessRoundProjectBuyerEvaluation.IsDeleted)
                                                                 .Select(n => new NegotiationBaseDto
                                                                 {
                                                                     Id = n.Id,
@@ -1628,32 +1747,33 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                     IsAutomatic = n.IsAutomatic,
                                                                     ProjectBuyerEvaluationBaseDto = new ProjectBuyerEvaluationBaseDto
                                                                     {
-                                                                        Id = n.ProjectBuyerEvaluation.Id,
-                                                                        Uid = n.ProjectBuyerEvaluation.Uid,
-                                                                        EvaluationDate = n.ProjectBuyerEvaluation.EvaluationDate,
-                                                                        Reason = n.ProjectBuyerEvaluation.Reason,
+                                                                        Id = n.MusicBusinessRoundProjectBuyerEvaluation.Id,
+                                                                        Uid = n.MusicBusinessRoundProjectBuyerEvaluation.Uid,
+                                                                        EvaluationDate = n.MusicBusinessRoundProjectBuyerEvaluation.EvaluationDate,
+                                                                        Reason = n.MusicBusinessRoundProjectBuyerEvaluation.Reason,
                                                                         ProjectBaseDto = new ProjectBaseDto
                                                                         {
                                                                             Id = pbe.Id,
                                                                             Uid = pbe.Uid,
-                                                                            ProjectName = pbe.Project.ProjectTitles.Where(t => t.LanguageId == languageId).Select(t => t.Value).FirstOrDefault(),
-                                                                            CreateDate = pbe.Project.CreateDate,
-                                                                            FinishDate = pbe.Project.FinishDate
+                                                                            ProjectName = pbe.MusicBusinessRoundProject.SellerAttendeeCollaborator.Collaborator.FirstName,
+                                                                            ProducerName = pbe.MusicBusinessRoundProject.SellerAttendeeCollaborator.Collaborator.LastNames,
+                                                                            CreateDate = pbe.MusicBusinessRoundProject.CreateDate,
+                                                                            FinishDate = pbe.MusicBusinessRoundProject.FinishDate
                                                                         },
                                                                         SellerAttendeeOrganizationBaseDto = new AttendeeOrganizationBaseDto
                                                                         {
-                                                                            Id = pbe.Project.SellerAttendeeOrganization.Id,
-                                                                            Uid = pbe.Project.SellerAttendeeOrganization.Uid,
+                                                                            Id = pbe.BuyerAttendeeOrganization.Id,
+                                                                            Uid = pbe.BuyerAttendeeOrganization.Uid,
                                                                             OrganizationBaseDto = new OrganizationBaseDto
                                                                             {
-                                                                                Id = pbe.Project.SellerAttendeeOrganization.Organization.Id,
-                                                                                Uid = pbe.Project.SellerAttendeeOrganization.Organization.Uid,
-                                                                                Name = pbe.Project.SellerAttendeeOrganization.Organization.Name,
-                                                                                TradeName = pbe.Project.SellerAttendeeOrganization.Organization.TradeName,
-                                                                                ImageUploadDate = pbe.Project.SellerAttendeeOrganization.Organization.ImageUploadDate
+                                                                                Id = pbe.BuyerAttendeeOrganization.Organization.Id,
+                                                                                Uid = pbe.BuyerAttendeeOrganization.Organization.Uid,
+                                                                                Name = pbe.BuyerAttendeeOrganization.Organization.Name,
+                                                                                TradeName = pbe.BuyerAttendeeOrganization.Organization.TradeName,
+                                                                                ImageUploadDate = pbe.BuyerAttendeeOrganization.Organization.ImageUploadDate
                                                                             },
-                                                                            CreateDate = pbe.Project.SellerAttendeeOrganization.CreateDate,
-                                                                            UpdateDate = pbe.Project.SellerAttendeeOrganization.UpdateDate,
+                                                                            CreateDate = pbe.BuyerAttendeeOrganization.CreateDate,
+                                                                            UpdateDate = pbe.BuyerAttendeeOrganization.UpdateDate,
                                                                         }
                                                                     },
                                                                     RoomJsonDto = new RoomJsonDto

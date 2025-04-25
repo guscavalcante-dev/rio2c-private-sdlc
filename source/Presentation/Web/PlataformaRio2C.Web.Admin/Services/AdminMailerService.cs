@@ -359,7 +359,7 @@ namespace PlataformaRio2C.Web.Admin.Services
             return Populate(x =>
             {
                 x.Subject = this.GetSubject("Agenda de Rodadas de Negócio | One-to-One Meetings Agenda", cmd.Edition.Name);
-                x.ViewName = "ProducersNegotiationsEmail";
+                x.ViewName = "MusicBusinessRoundProducersNegotiationsEmail";
                 x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
                 x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
                 ViewBag.SentEmailUid = sentEmailUid;

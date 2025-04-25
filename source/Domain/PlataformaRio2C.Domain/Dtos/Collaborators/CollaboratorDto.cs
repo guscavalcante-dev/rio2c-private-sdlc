@@ -219,6 +219,31 @@ namespace PlataformaRio2C.Domain.Dtos
         #endregion
 
         /// <summary>
+        /// Determines whether this instance has image.
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if this instance has image; otherwise, <c>false</c>.
+        /// </returns>
+        public bool HasImage()
+        {
+            return this.ImageUploadDate.HasValue;
+        }
+
+        /// <summary>Gets the full name.</summary>
+        /// <returns></returns>
+        public string GetFullName()
+        {
+            return this.FirstName + (!string.IsNullOrEmpty(this.LastNames) ? " " + this.LastNames : String.Empty);
+        }
+
+        /// <summary>Gets the name abbreviation.</summary>
+        /// <returns></returns>
+        public string GetNameAbbreviation()
+        {
+            return this.GetFullName().GetTwoLetterCode();
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CollaboratorDto"/> class.
         /// </summary>
         public CollaboratorDto()
