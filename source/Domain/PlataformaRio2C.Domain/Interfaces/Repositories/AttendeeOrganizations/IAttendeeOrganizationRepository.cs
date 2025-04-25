@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-28-2019
 //
-// Last Modified By : Daniel Giese Rodrigues
-// Last Modified On : 04-25-2025
+// Last Modified By : Renan Valentim
+// Last Modified On : 02-06-2023
 // ***********************************************************************
 // <copyright file="IAttendeeOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -71,7 +71,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         #region Negotiations
 
         #region Players
-        Task<List<NegotiationAttendeeOrganizationBaseDto>> FindAllBaseDtoByActiveMusicBusinessRoundBuyerNegotiations(string keywords,List<Guid> selectedAttendeeOrganizationsUids,int editionId,int languageId, OrganizationType organizationType);
+        Task<List<NegotiationAttendeeOrganizationBaseDto>> FindAllBaseDtoByActiveMusicBusinessRoundBuyerNegotiations(string keywords, List<Guid> selectedAttendeeOrganizationsUids, int editionId, int languageId, OrganizationType organizationType);
         Task<NegotiationAttendeeOrganizationBaseDto> FindAllMusicBusinessRoundBaseDtoByUid(Guid attendeeOrganizationUid, int languageId);
         Task<NegotiationAttendeeOrganizationBaseDto> FindAllBaseDtoByUid(Guid attendeeOrganizationUid, int languageId);
         Task<IPagedList<NegotiationAttendeeOrganizationBaseDto>> FindAllByActiveBuyerNegotiationsAndByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, int editionId, int languageId, OrganizationType organizationType);
