@@ -28,6 +28,7 @@ using PlataformaRio2C.Application.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.CQRS;
 using PlataformaRio2C.Infra.Data.FileRepository;
 using PlataformaRio2C.Web.Site.ServicesSendProducersNegotiationEmail;
+using PlataformaRio2C.Application.Services.Common;
 
 namespace PlataformaRio2C.Web.Site
 {
@@ -43,7 +44,10 @@ namespace PlataformaRio2C.Web.Site
             IoCBootStrapper.RegisterServices(container);
             SiteIoCBootStrapper.RegisterServices(container);
             FileRepositoryBootStrapper.RegisterServices(container);
+
             container.Register<IMailerService, SiteMailerService>(Lifestyle.Scoped);
+            container.Register<INegotiationService, NegotiationService>(Lifestyle.Scoped);
+
             CqrsBootStrapper.RegisterServices(container, new[]
             {
                 typeof(CreateSalesPlatformWebhookRequestCommandHandler).Assembly
