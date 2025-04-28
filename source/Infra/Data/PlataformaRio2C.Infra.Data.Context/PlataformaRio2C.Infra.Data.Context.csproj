@@ -574,6 +574,10 @@
     <Compile Include="Migrations\202504041754374_InsertAttendeeSalesPlatformTicketTypesCreatorLote3.Designer.cs">
       <DependentUpon>202504041754374_InsertAttendeeSalesPlatformTicketTypesCreatorLote3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202504251607379_InsertAttendeeSalesPlatformTicketTypesFestivaliaAndDayPassAndBusinessDay.cs" />
+    <Compile Include="Migrations\202504251607379_InsertAttendeeSalesPlatformTicketTypesFestivaliaAndDayPassAndBusinessDay.Designer.cs">
+      <DependentUpon>202504251607379_InsertAttendeeSalesPlatformTicketTypesFestivaliaAndDayPassAndBusinessDay.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Content Include="Migrations\Scripts\202410010030572_AddIsApiDisplayEnabledToConferences.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -586,6 +590,12 @@
       <DependentUpon>202411140217302_AddMusicPitchingFieldToEditions.cs</DependentUpon>
     </Compile>
     <Content Include="Migrations\Scripts\202504041754374_InsertAttendeeSalesPlatformTicketTypesCreatorLote3.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202504251607379_InsertAttendeeSalesPlatformTicketTypesFestivaliaAndDayPassAndBusinessDay.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202504251607379_InsertAttendeeSalesPlatformTicketTypesFestivaliaAndDayPassAndBusinessDay.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202504041754374_InsertAttendeeSalesPlatformTicketTypesCreatorLote3.up.sql">
@@ -1167,6 +1177,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202504041754374_InsertAttendeeSalesPlatformTicketTypesCreatorLote3.resx">
       <DependentUpon>202504041754374_InsertAttendeeSalesPlatformTicketTypesCreatorLote3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202504251607379_InsertAttendeeSalesPlatformTicketTypesFestivaliaAndDayPassAndBusinessDay.resx">
+      <DependentUpon>202504251607379_InsertAttendeeSalesPlatformTicketTypesFestivaliaAndDayPassAndBusinessDay.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
