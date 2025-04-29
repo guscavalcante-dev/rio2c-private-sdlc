@@ -1,4 +1,5 @@
 ﻿using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -6,14 +7,15 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace PlataformaRio2C.Web.Site.Models
 {
+
     public class LanguageMessageHandler : DelegatingHandler
     {
         private const string LangPtBr = "pt-BR";
         private const string LangenUs = "en-US";
-
         private readonly List<string> _supportedLanguages = new List<string> { LangPtBr, LangenUs };
 
         [LogConfig(NoLog = true)]
@@ -26,8 +28,8 @@ namespace PlataformaRio2C.Web.Site.Models
                     SetCulture(request, lang.Value);
                     return true;
                 }
-            }
 
+            }
             return false;
         }
 
@@ -50,24 +52,28 @@ namespace PlataformaRio2C.Web.Site.Models
         [LogConfig(NoLog = true)]
         private void SetCulture(HttpRequestMessage request, string lang)
         {
-            lang = "pt-BR";
             request.Headers.AcceptLanguage.Clear();
             request.Headers.AcceptLanguage.Add(new StringWithQualityHeaderValue(lang));
-            Thread.CurrentThread.CurrentCulture = new CultureInfo(lang);
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo(lang);
+            var culture = new CultureInfo(lang);
+            CultureInfo.CurrentCulture = culture;
+            CultureInfo.CurrentUICulture = culture;
         }
 
         [LogConfig(NoLog = true)]
         protected override async Task<HttpResponseMessage> SendAsync(
             HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            if (!SetHeaderIfAcceptLanguageMatchesSupportedLanguage(request))
+            if (!(request.Headers == null || request.Headers.Count() == 0))
+
             {
-                // Whoops no localization found. Lets try Globalisation
-                if (!SetHeaderIfGlobalAcceptLanguageMatchesSupportedLanguage(request))
+                if (!SetHeaderIfAcceptLanguageMatchesSupportedLanguage(request))
                 {
-                    // no global or localization found
-                    SetCulture(request, LangPtBr);
+                    // Whoops no localization found. Lets try Globalisation
+                    if (!SetHeaderIfGlobalAcceptLanguageMatchesSupportedLanguage(request))
+                    {
+                        // no global or localization found
+                        SetCulture(request, LangPtBr);
+                    }
                 }
             }
 
