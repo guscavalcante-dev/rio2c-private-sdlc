@@ -7,9 +7,9 @@ namespace PlataformaRio2C.Infra.Data.Context.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.5.1")]
-    public sealed partial class InsertAttendeeSalesPlatformTicketTypesFestivaliaAndDayPassAndBusinessDay : IMigrationMetadata
+    public sealed partial class InsertAttendeeSalesPlatformTicketTypesIndustryLote3AndFestivalia : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InsertAttendeeSalesPlatformTicketTypesFestivaliaAndDayPassAndBusinessDay));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InsertAttendeeSalesPlatformTicketTypesIndustryLote3AndFestivalia));
         
         string IMigrationMetadata.Id
         {

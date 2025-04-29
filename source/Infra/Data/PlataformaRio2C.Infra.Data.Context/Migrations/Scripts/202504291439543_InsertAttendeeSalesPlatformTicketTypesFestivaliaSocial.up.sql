@@ -1,36 +1,6 @@
 ﻿BEGIN TRY
 	BEGIN TRANSACTION	
-		-----------------------------------------------
-		-- FESTIVALIA - SOCIAL
-		-----------------------------------------------
-		IF NOT EXISTS (SELECT 1 FROM [dbo].[AttendeeSalesPlatforms] WHERE Uid = 'B6601073-646B-4FF5-BDBB-E98E3F664363')
-		BEGIN
-			INSERT INTO [dbo].[AttendeeSalesPlatforms]
-					   ([Uid]
-					   ,[EditionId]
-					   ,[SalesPlatformId]
-					   ,[SalesPlatformEventId]
-					   ,[IsActive]
-					   ,[IsDeleted]
-					   ,[CreateDate]
-					   ,[CreateUserId]
-					   ,[UpdateDate]
-					   ,[UpdateUserId]
-					   ,[LastSalesPlatformOrderDate])
-				 VALUES
-					   ('B6601073-646B-4FF5-BDBB-E98E3F664363'
-					   ,7
-					   ,3
-					   ,'2878998'
-					   ,1
-					   ,0
-					   ,GETDATE()
-					   ,1
-					   ,GETDATE()
-					   ,1
-					   ,NULL)
-		END;
-
+		
 		-----------------------------------------------
 		-- FESTIVALIA 31.05 - INGRESSO SOCIAL
 		-----------------------------------------------
@@ -50,7 +20,7 @@
 				 VALUES
 						
 					   ('7B9B51AC-7D6E-4639-B18F-760A8111D54C'
-					   ,(select Id from AttendeeSalesPlatforms where Uid = 'B6601073-646B-4FF5-BDBB-E98E3F664363')
+					   ,(select Id from AttendeeSalesPlatforms where Uid = '2429655F-87AE-436E-91B6-D3479ADFE0B3')
 					   ,'FESTIVALIA 31.05 - INGRESSO SOCIAL'
 					   ,'FESTIVALIA 31.05 - INGRESSO SOCIAL'
 					   ,503 --Festivalia
@@ -80,7 +50,7 @@
 				 VALUES
 						
 					   ('E451E258-D18E-4816-A52C-FA26EDAF6D32'
-					   ,(select Id from AttendeeSalesPlatforms where Uid = 'B6601073-646B-4FF5-BDBB-E98E3F664363')
+					   ,(select Id from AttendeeSalesPlatforms where Uid = '2429655F-87AE-436E-91B6-D3479ADFE0B3')
 					   ,'FESTIVALIA 01.06 - INGRESSO SOCIAL'
 					   ,'FESTIVALIA 01.06 - INGRESSO SOCIAL'
 					   ,503 --Festivalia

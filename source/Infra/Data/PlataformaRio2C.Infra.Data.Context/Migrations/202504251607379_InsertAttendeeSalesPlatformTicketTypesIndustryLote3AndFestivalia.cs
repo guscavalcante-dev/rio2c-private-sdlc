@@ -2,7 +2,7 @@
 {
     using PlataformaRio2C.Infra.Data.Context.Helpers;
     
-    public partial class InsertAttendeeSalesPlatformTicketTypesFestivaliaAndDayPassAndBusinessDay : SqlMigration
+    public partial class InsertAttendeeSalesPlatformTicketTypesIndustryLote3AndFestivalia : SqlMigration
     {
     }
 }
