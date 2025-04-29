@@ -17,7 +17,11 @@ namespace PlataformaRio2C.Domain.Entities
 {
     public class AttendeeMusicBusinessRoundNegotiationCollaborator : Entity
     {
-        
+        public AttendeeMusicBusinessRoundNegotiationCollaborator()
+        {
+                
+        }
+
         public int MusicBusinessRoundNegotiationId { get; private set; }
         public int AttendeeCollaboratorId { get; private set; }
 

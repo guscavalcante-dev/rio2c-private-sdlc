@@ -143,8 +143,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         if (attendeeSalesPlatformDto == null)
                         {
                             var errorMessage = $"Edition not found or not active " +
-                                               $"(SalesPlatformAttendeeId: {salesPlatformAttendeeDto.AttendeeId}; " +
-                                               $"SalesPlatformEventId: {salesPlatformAttendeeDto.EventId}).";
+                                               $"(AttendeeId: {salesPlatformAttendeeDto.AttendeeId}; " +
+                                               $"EventId: {salesPlatformAttendeeDto.EventId})";
                             currentValidationResult.Add(new ValidationError("000000003", errorMessage));
                             continue;
                         }
@@ -154,9 +154,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         if (attendeeSalesPlatformTicketTypeDto == null)
                         {
                             var errorMessage = $"Ticket class not found or not active " +
-                                               $"(SalesPlatformAttendeeId: {salesPlatformAttendeeDto.AttendeeId}; " +
+                                               $"(AttendeeId: {salesPlatformAttendeeDto.AttendeeId}; " +
+                                               $"EventId: {salesPlatformAttendeeDto.EventId}; " +
                                                $"TicketClassId: {salesPlatformAttendeeDto.TicketClassId}; " +
-                                               $"TicketClassName: {salesPlatformAttendeeDto.TicketClassName}).";
+                                               $"TicketClassName: {salesPlatformAttendeeDto.TicketClassName})";
                             currentValidationResult.Add(new ValidationError("000000004", errorMessage));
                             continue;
                         }
