@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 01-02-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-05-2020
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 04-30-2025
 // ***********************************************************************
 // <copyright file="UpdateConferenceMainInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,6 +19,7 @@ using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -71,6 +72,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
+            //Availability Check
+            var startDate = cmd.Date?.Add(TimeSpan.Parse(cmd.StartTime ?? "00:00"));
+            var endDate = cmd.Date?.Add(TimeSpan.Parse(cmd.EndTime ?? "00:00"));
+
+            if (!await ValidateParticipantsAvailabilityAsync(cmd.ConferenceUid, cmd.EditionId, startDate, endDate))
+            {
+                this.AppValidationResult.Add(Messages.ParticipantsUnavailables, "Date");
+                return this.AppValidationResult;
+            }
+
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
 
             conference.UpdateMainInformation(
@@ -83,6 +94,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.Synopsis?.Select(d => new ConferenceSynopsis(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.Dynamics?.Select(d => new ConferenceDynamic(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.UserId);
+
             if (!conference.IsValid())
             {
                 this.AppValidationResult.Add(conference.ValidationResult);
@@ -93,10 +105,39 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.Uow.SaveChanges();
 
             return this.AppValidationResult;
-
-            //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
-
-            //return Task.FromResult(propertyId); // use it when the methed is not async
         }
+
+        private async Task<bool> ValidateParticipantsAvailabilityAsync(Guid conferenceUid, int? editionId, DateTime? newStart, DateTime? newEnd)
+        {
+            if (!newStart.HasValue || !newEnd.HasValue)
+                return true;
+
+            var conferenceDto = await this.ConferenceRepo.FindParticipantsWidgetDtoAsync(conferenceUid, editionId.Value);
+            var participants = conferenceDto?.ConferenceParticipantDtos;
+
+            if (participants == null || !participants.Any())
+                return true;
+
+            foreach (var participant in participants)
+            {
+                var availabilityStart = participant.ConferenceParticipant?.AttendeeCollaborator.AvailabilityBeginDate;
+                var availabilityEnd = participant.ConferenceParticipant?.AttendeeCollaborator.AvailabilityEndDate;
+
+                // ignores speakers with no availability registered.
+                if (!availabilityStart.HasValue || !availabilityEnd.HasValue)
+                    continue;
+
+                // availability  date check
+                bool isAvailable = availabilityStart.Value <= newStart && availabilityEnd.Value >= newEnd;
+
+                if (!isAvailable)
+                    return false;
+            }
+
+            return true;
+        }
+
+
+
     }
 }

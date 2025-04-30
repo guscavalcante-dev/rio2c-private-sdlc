@@ -656,9 +656,6 @@ A distribuição só pode ser executada uma única vez por edição.
     <value>Nenhuma conversa encontrada.</value>
     <comment>Nenhuma conversa encontrada.</comment>
   </data>
-  <data name="NoPlayerExecutivesAvailableForDate" xml:space="preserve">
-    <value>Alguns dos executivos não estarão disponíveis na data {0}. Verificar Disponibilidades.</value>
-  </data>
   <data name="NoMoreTablesAvailableAtTheRoomAndStartTime" xml:space="preserve">
     <value>Não há mesas disponíveis com início às '{0}' na sala '{1}'</value>
     <comment>Não há mesas disponíveis com início às '{0}' na sala '{1}'</comment>
@@ -669,6 +666,9 @@ A distribuição só pode ser executada uma única vez por edição.
   </data>
   <data name="NoPermissionToEvaluate" xml:space="preserve">
     <value>Sem permissão para avaliar</value>
+  </data>
+  <data name="NoPlayerExecutivesAvailableForDate" xml:space="preserve">
+    <value>Alguns dos executivos não estarão disponíveis na data {0}. Verificar Disponibilidades.</value>
   </data>
   <data name="NotEvaluated" xml:space="preserve">
     <value>Não avaliado</value>
@@ -707,6 +707,9 @@ A distribuição só pode ser executada uma única vez por edição.
   </data>
   <data name="ParticipantProfileCanChangedHere" xml:space="preserve">
     <value>Os dados do Perfil do Participante podem ser alterados</value>
+  </data>
+  <data name="ParticipantsUnavailables" xml:space="preserve">
+    <value>Existem participantes com conflitos de Agenda para esta data.</value>
   </data>
   <data name="PasswordConfirmationDoesNotMatch" xml:space="preserve">
     <value>Senha de confirmação incorreta.</value>
