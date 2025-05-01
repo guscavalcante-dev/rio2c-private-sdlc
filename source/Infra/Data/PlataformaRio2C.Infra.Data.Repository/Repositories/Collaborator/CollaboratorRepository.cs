@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Daniel Giese Rodrigues
-// Last Modified On : 03-25-2025
+// Last Modified By : Renan Valentims
+// Last Modified On : 05-01-2025
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -3930,7 +3930,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                             CompanyName = aoc.AttendeeOrganization.Organization.CompanyName,
                                             TradeName = aoc.AttendeeOrganization.Organization.TradeName,
                                             ImageUploadDate = aoc.AttendeeOrganization.Organization.ImageUploadDate
-
                                         })),
                                 CreateDate = c.CreateDate,
                                 UpdateDate = c.UpdateDate

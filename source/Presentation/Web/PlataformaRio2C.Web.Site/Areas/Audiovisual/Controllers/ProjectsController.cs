@@ -4,7 +4,7 @@
 // Created          : 07-28-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-22-2025
+// Last Modified On : 05-01-2025
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -242,7 +242,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             {
                 var filteredProjects = projects
                     .Where(p => p.Project.ProjectTitles.Any(t => t.Value.IndexOf(searchKeywords, StringComparison.OrdinalIgnoreCase) >= 0)
-                                || p.SellerAttendeeOrganizationDto.Organization.Name.IndexOf(searchKeywords, StringComparison.OrdinalIgnoreCase) >= 0)
+                                || p.SellerAttendeeOrganizationDto.Organization.TradeName.IndexOf(searchKeywords, StringComparison.OrdinalIgnoreCase) >= 0)
                     .ToList();
 
                 projects = filteredProjects.ToPagedList(page.Value, pageSize.Value);
