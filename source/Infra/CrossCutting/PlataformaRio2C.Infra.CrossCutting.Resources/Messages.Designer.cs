@@ -1565,6 +1565,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Existem participantes com conflitos de Agenda para esta data..
+        /// </summary>
+        public static string ParticipantsUnavailables {
+            get {
+                return ResourceManager.GetString("ParticipantsUnavailables", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Senha de confirmação incorreta..
         /// </summary>
         public static string PasswordConfirmationDoesNotMatch {

@@ -662,9 +662,6 @@ The discursive field of player categories is mandatory if any player option has 
     <value>No conversations found.</value>
     <comment>Nenhuma conversa encontrada.</comment>
   </data>
-  <data name="NoPlayerExecutivesAvailableForDate" xml:space="preserve">
-    <value>Some of the executives will not be available in date {0}. Please check Availabilities.</value>
-  </data>
   <data name="NoMoreTablesAvailableAtTheRoomAndStartTime" xml:space="preserve">
     <value>There are no tables available starting at '{0}' in room '{1}'</value>
     <comment>There are no tables available starting at '{0}' in room '{1}'</comment>
@@ -675,6 +672,9 @@ The discursive field of player categories is mandatory if any player option has 
   </data>
   <data name="NoPermissionToEvaluate" xml:space="preserve">
     <value>No permission to evaluate</value>
+  </data>
+  <data name="NoPlayerExecutivesAvailableForDate" xml:space="preserve">
+    <value>Some of the executives will not be available in date {0}. Please check Availabilities.</value>
   </data>
   <data name="NotEvaluated" xml:space="preserve">
     <value>Not evaluated</value>
@@ -714,6 +714,9 @@ The discursive field of player categories is mandatory if any player option has 
   </data>
   <data name="ParticipantProfileCanChangedHere" xml:space="preserve">
     <value>Participant Profile data can be changed</value>
+  </data>
+  <data name="ParticipantsUnavailables" xml:space="preserve">
+    <value>There are participants with conflicting schedules to this date.</value>
   </data>
   <data name="PasswordConfirmationDoesNotMatch" xml:space="preserve">
     <value>Incorrect confirmation password.</value>
