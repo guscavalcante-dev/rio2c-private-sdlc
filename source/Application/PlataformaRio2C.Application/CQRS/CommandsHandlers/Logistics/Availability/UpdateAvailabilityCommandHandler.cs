@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -60,7 +61,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     if (confStart.HasValue && confEnd.HasValue &&
                         (confEnd.Value < cmd.AvailabilityBeginDate || confStart.Value > cmd.AvailabilityEndDate))
                     {
-                        this.AppValidationResult.Add("AvailabilityBeginDate", "O palestrante está alocado em uma palestra fora da nova disponibilidade.");
+                        this.AppValidationResult.Add(Messages.SpeakerScheduleConflict, "AvailabilityEndDate");
                         return this.AppValidationResult;
                     }
                 }

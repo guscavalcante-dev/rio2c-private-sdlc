@@ -11,6 +11,7 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -26,6 +27,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     public class CreateAvailabilityCommandHandler : BaseCommandHandler, IRequestHandler<CreateAvailability, AppValidationResult>
     {
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
+        private readonly IConferenceRepository conferenceRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateAvailabilityCommandHandler" /> class.
@@ -36,10 +38,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         public CreateAvailabilityCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            IAttendeeCollaboratorRepository attendeeCollaboratorRepository) 
+            IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
+            IConferenceRepository conferenceRepository) 
             : base(eventBus, uow) 
         {
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
+            this.conferenceRepo = conferenceRepository;
         }
 
         /// <summary>
@@ -62,6 +66,28 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             {
                 this.AppValidationResult.Add(this.ValidationResult);
                 return this.AppValidationResult;
+            }
+
+            // check for conflicts with attendeecollaborator scheduled ( Conferences )
+            var conferencesDtoList = await this.conferenceRepo.FindConferencesDtoByParticipantAsync(attendeeCollaborator.Uid, cmd.EditionId.Value);
+            var conferences = conferencesDtoList?
+                .Select(dto => dto.Conference)
+                .Where(c => c != null);
+
+            if (conferences != null)
+            {
+                foreach (var conf in conferences)
+                {
+                    var confStart = conf?.StartDate;
+                    var confEnd = conf?.EndDate;
+
+                    if (confStart.HasValue && confEnd.HasValue &&
+                        (confEnd.Value < cmd.AvailabilityBeginDate || confStart.Value > cmd.AvailabilityEndDate))
+                    {
+                        this.AppValidationResult.Add(Messages.SpeakerScheduleConflict, "AvailabilityEndDate");
+                        return this.AppValidationResult;
+                    }
+                }
             }
 
             attendeeCollaborator.UpdateAvailability(cmd.AvailabilityBeginDate, cmd.AvailabilityEndDate, cmd.UserId);
