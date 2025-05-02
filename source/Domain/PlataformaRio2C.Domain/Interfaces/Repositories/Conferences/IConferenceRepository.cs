@@ -32,6 +32,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<List<Conference>> FindAllForGenerateNegotiationsAsync(Guid editionUid);
         Task<List<ConferenceDto>> FindAllScheduleDtosAsync(int editionId, int attendeeCollaboratorId, DateTimeOffset startDate, DateTimeOffset endDate, bool showMyConferences, bool showAllConferences);
         Task<List<ConferenceDto>> FindAllByAttendeeCollaboratorIdAsync(int attendeeCollaboratorId);
+        Task<List<ConferenceDto>> FindConferencesDtoByParticipantAsync(Guid participantUid, int editionId);
 
         #region Api
 

@@ -73,6 +73,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        internal static IQueryable<Conference> FindByAttendeeCollaboratorUid(this IQueryable<Conference> query, Guid attendeeCollaboratorUid)
+        {
+            return query.Where(c =>
+                c.ConferenceParticipants.Any(cp =>
+                    !cp.IsDeleted &&
+                    cp.AttendeeCollaborator != null &&
+                    cp.AttendeeCollaborator.Uid == attendeeCollaboratorUid));
+        }
+
         /// <summary>Finds the by edition uid.</summary>
         /// <param name="query">The query.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
@@ -554,6 +563,68 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 })
                             })
                             .FirstOrDefaultAsync();
+        }
+
+        /// <summary>Finds the conferences with the participant associated.</summary>
+        /// <param name="attendeeCollaboratorUid">The attendee collaborator uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<List<ConferenceDto>> FindConferencesDtoByParticipantAsync(Guid attendeeCollaboratorUid, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByAttendeeCollaboratorUid(attendeeCollaboratorUid)
+                                .FindByEditionId(false, editionId);
+
+            return await query
+                            .Select(c => new ConferenceDto
+                            {
+                                Conference = c,
+                                ConferenceParticipantDtos = c.ConferenceParticipants.Where(cp => !cp.IsDeleted).Select(cp => new ConferenceParticipantDto
+                                {
+                                    ConferenceParticipant = cp,
+                                    AttendeeCollaboratorDto = new AttendeeCollaboratorDto
+                                    {
+                                        AttendeeCollaborator = cp.AttendeeCollaborator,
+                                        Collaborator = cp.AttendeeCollaborator.Collaborator,
+                                        JobTitlesDtos = cp.AttendeeCollaborator.Collaborator.JobTitles.Where(d => !d.IsDeleted).Select(d => new CollaboratorJobTitleBaseDto
+                                        {
+                                            Id = d.Id,
+                                            Uid = d.Uid,
+                                            Value = d.Value,
+                                            LanguageDto = new LanguageBaseDto
+                                            {
+                                                Id = d.Language.Id,
+                                                Uid = d.Language.Uid,
+                                                Name = d.Language.Name,
+                                                Code = d.Language.Code
+                                            }
+                                        }),
+                                        AttendeeOrganizationsDtos = cp.AttendeeCollaborator.AttendeeOrganizationCollaborators
+                                            .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted && !aoc.AttendeeOrganization.Organization.IsDeleted)
+                                            .Select(aoc => new AttendeeOrganizationDto
+                                            {
+                                                AttendeeOrganization = aoc.AttendeeOrganization,
+                                                Organization = aoc.AttendeeOrganization.Organization
+                                            })
+                                    },
+                                    ConferenceParticipantRoleDto = new ConferenceParticipantRoleDto
+                                    {
+                                        ConferenceParticipantRole = cp.ConferenceParticipantRole,
+                                        ConferenceParticipantRoleTitleDtos = cp.ConferenceParticipantRole.ConferenceParticipantRoleTitles.Where(cprt => !cprt.IsDeleted).Select(cprt => new ConferenceParticipantRoleTitleDto
+                                        {
+                                            ConferenceParticipantRoleTitle = cprt,
+                                            LanguageDto = new LanguageBaseDto
+                                            {
+                                                Id = cprt.Language.Id,
+                                                Uid = cprt.Language.Uid,
+                                                Name = cprt.Language.Name,
+                                                Code = cprt.Language.Code
+                                            }
+                                        })
+                                    }
+                                })
+                            })
+                            .ToListAsync();
         }
 
         /// <summary>Finds all by data table.</summary>

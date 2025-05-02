@@ -11,6 +11,7 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -24,33 +25,46 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     public class UpdateAvailabilityCommandHandler : BaseCommandHandler, IRequestHandler<UpdateAvailability, AppValidationResult>
     {
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
+        private readonly IConferenceRepository conferenceRepo;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateAvailabilityCommandHandler" /> class.
-        /// </summary>
-        /// <param name="eventBus">The event bus.</param>
-        /// <param name="uow">The uow.</param>
-        /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
         public UpdateAvailabilityCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            IAttendeeCollaboratorRepository attendeeCollaboratorRepository) 
-            : base(eventBus, uow) 
+            IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
+            IConferenceRepository conferenceRepository)
+            : base(eventBus, uow)
         {
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
+            this.conferenceRepo = conferenceRepository;
         }
 
-        /// <summary>
-        /// Handles the specified create logistic.
-        /// </summary>
-        /// <param name="cmd">The command.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns></returns>
         public async Task<AppValidationResult> Handle(UpdateAvailability cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
-            
+
             var attendeeCollaborator = await this.attendeeCollaboratorRepo.GetAsync(ac => ac.Uid == cmd.AttendeeCollaboratorUid && !ac.IsDeleted);
+
+            // check for conflicts with attendeecollaborator scheduled ( Conferences )
+            var conferencesDtoList = await this.conferenceRepo.FindConferencesDtoByParticipantAsync(attendeeCollaborator.Uid, cmd.EditionId.Value);
+            var conferences = conferencesDtoList?
+                .Select(dto => dto.Conference)
+                .Where(c => c != null);
+
+            if (conferences != null)
+            {
+                foreach (var conf in conferences)
+                {
+                    var confStart = conf?.StartDate;
+                    var confEnd = conf?.EndDate;
+
+                    if (confStart.HasValue && confEnd.HasValue &&
+                        (confEnd.Value < cmd.AvailabilityBeginDate || confStart.Value > cmd.AvailabilityEndDate))
+                    {
+                        this.AppValidationResult.Add("AvailabilityBeginDate", "O palestrante está alocado em uma palestra fora da nova disponibilidade.");
+                        return this.AppValidationResult;
+                    }
+                }
+            }
 
             if (!this.ValidationResult.IsValid)
             {
@@ -59,7 +73,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             attendeeCollaborator.UpdateAvailability(cmd.AvailabilityBeginDate, cmd.AvailabilityEndDate, cmd.UserId);
-            
+
             if (!attendeeCollaborator.IsValid())
             {
                 this.AppValidationResult.Add(attendeeCollaborator.ValidationResult);
@@ -67,11 +81,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             this.attendeeCollaboratorRepo.Update(attendeeCollaborator);
-
             this.Uow.SaveChanges();
             this.AppValidationResult.Data = attendeeCollaborator;
 
             return this.AppValidationResult;
         }
     }
+
 }
