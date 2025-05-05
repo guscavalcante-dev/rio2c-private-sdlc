@@ -32,6 +32,7 @@
 </div>
 <div class="row">
     <div class="form-group col-md-6">
+        @Html.ValidationMessageFor(m => m.Date, "", new { @class = "text-danger" })
         @Html.LabelFor(m => m.Date, new { @class = "control-label" })
         @Html.TextBox("Date", Model.Date?.ToShortDateString(), new { @class = "form-control enable-datepicker", @readonly = "readonly", data_date_start_date = editionDto?.StartDate.ToBrazilTimeZone().ToShortDateString(), data_date_end_date = editionDto?.EndDate.ToBrazilTimeZone().ToShortDateString() })
         @if (Model.StartDate.HasValue && Model.EndDate.HasValue)
@@ -42,7 +43,6 @@
         {
             <span id="data-period-container" class="form-text text-muted d-none"></span>
         }
-        @Html.ValidationMessageFor(m => m.Date, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="row">
