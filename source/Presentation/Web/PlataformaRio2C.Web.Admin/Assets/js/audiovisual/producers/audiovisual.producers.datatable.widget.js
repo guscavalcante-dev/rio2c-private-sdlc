@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-21-2021
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 05/05/2025
 // ***********************************************************************
 // <copyright file="audiovisual.producers.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -128,6 +128,13 @@ var AudiovisualProducersDataTableWidget = function () {
                 { data: 'Website' },
                 { data: 'PhoneNumber' },
                 {
+                    data: 'OnboardingFinishDate',
+                    render: function (data) {
+                        return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                    }
+                },
+
+                {
                     data: 'CreateDate',
                     render: function (data) {
                         return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
@@ -184,7 +191,7 @@ var AudiovisualProducersDataTableWidget = function () {
                     className: "dt-center"
                 },
                 {
-                    targets: [5,6],
+                    targets: [5,6,7],
                     className: "dt-center"
                 },
                 {

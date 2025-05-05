@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-19-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 04-12-2023
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 05/05/2025
 // ***********************************************************************
 // <copyright file="OrganizationBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -49,7 +49,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public UserBaseDto CreatorBaseDto { get; set; }
         public UserBaseDto UpdaterBaseDto { get; set; }
         public AddressBaseDto AddressBaseDto { get; set; }
-
+        public DateTimeOffset? OnboardingFinishDate { get; set; }
         public IEnumerable<OrganizationDescriptionBaseDto> OrganizationDescriptionBaseDtos { get; set; }
         public IEnumerable<OrganizationRestrictionSpecificBaseDto> OrganizationRestrictionSpecificBaseDtos { get; set; }
 
