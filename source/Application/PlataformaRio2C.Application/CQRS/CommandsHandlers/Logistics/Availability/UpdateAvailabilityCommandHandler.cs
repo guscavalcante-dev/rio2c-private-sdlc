@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 15-04-2024
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 15-04-2024
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 05-06-2025
 // ***********************************************************************
 // <copyright file="UpdateAvailabilityCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
