@@ -600,16 +600,16 @@
     <Content Include="Migrations\Scripts\202504041754374_InsertAttendeeSalesPlatformTicketTypesCreatorLote3.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Migrations\Scripts\202504251607379_InsertAttendeeSalesPlatformTicketTypesIndustryLote3AndFestivalia.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\Scripts\202504251607379_InsertAttendeeSalesPlatformTicketTypesIndustryLote3AndFestivalia.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Migrations\Scripts\202504291439543_InsertAttendeeSalesPlatformTicketTypesFestivaliaSocial.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Migrations\Scripts\202504251607379_InsertAttendeeSalesPlatformTicketTypesFestivaliaAndDayPassAndBusinessDay.down.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Migrations\Scripts\202504291439543_InsertAttendeeSalesPlatformTicketTypesFestivaliaSocial.up.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Migrations\Scripts\202504251607379_InsertAttendeeSalesPlatformTicketTypesFestivaliaAndDayPassAndBusinessDay.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\Scripts\202504041754374_InsertAttendeeSalesPlatformTicketTypesCreatorLote3.up.sql">

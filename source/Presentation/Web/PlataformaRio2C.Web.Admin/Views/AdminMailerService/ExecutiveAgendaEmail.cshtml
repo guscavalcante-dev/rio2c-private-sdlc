@@ -72,13 +72,13 @@
                             <div style="display: inline-block; width: 50%; float:left;">
                                 <span style="font-weight: 700;">@Labels.Date:</span>
                                 <span>
-                                    @conferenceDto.StartDate.ToBrazilTimeZone().ToString("d")
+                                    @(conferenceDto.StartDate.ToBrazilTimeZone()?.ToString("d"))
                                 </span>
                             </div>
                             <div style="display: inline-block; width: 50%; float:right;">
                                 <span style="font-weight: 700;">@Labels.Hour:</span>
                                 <span>
-                                    @conferenceDto.StartDate.ToBrazilTimeZone().ToString("HH:mm") - @conferenceDto.EndDate.ToBrazilTimeZone().ToString("HH:mm") (@brazilUtc)
+                                    @(conferenceDto.StartDate.ToBrazilTimeZone()?.ToString("HH:mm")) - @(conferenceDto.EndDate.ToBrazilTimeZone()?.ToString("HH:mm")) (@brazilUtc)
                                 </span>
                             </div>
                         </td>
