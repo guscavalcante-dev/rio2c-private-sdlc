@@ -266,7 +266,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Agenda.Controllers
 
         #region Private methods
 
-        private readonly string apiUrl = "https://eventos.rio2c.com.br/api/";
+        private readonly string apiUrl = "https://eventos.rio2c.com/api/";
         private readonly string apiKey = "21A502BC-8F12-9C91-2A21CQRHMH542JK2";
 
         /// <summary>
