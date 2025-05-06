@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 03-07-2020
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 04-18-2024
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 05-06-2025
 // ***********************************************************************
 // <copyright file="audiovisual.meetings.scheduled.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -57,6 +57,7 @@ var AudiovisualMeetingsScheduledWidget = function () {
         MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#SellerOrganizationUid', url: '/Audiovisual/Producers/FindAllByFilters', customFilter: 'HasProjectNegotiationScheduled', placeholder: translations.producerDropdownPlaceholder });
         MyRio2cCommon.enableDatePicker({ inputIdOrClass: '.enable-datepicker' });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: '#RoomUid', allowClear: true, placeholder: translations.roomDropdownPlaceholder });
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: '#Type', allowClear: true, placeholder: translations.typeDropdownPlaceholder });
     }
 
     var getJsonParameters = function () {
@@ -66,6 +67,7 @@ var AudiovisualMeetingsScheduledWidget = function () {
         jsonParameters.sellerOrganizationUid = $('#SellerOrganizationUid').val();
         jsonParameters.projectKeywords = $('#ProjectKeywords').val();
         jsonParameters.roomUid = $('#RoomUid').val();
+        jsonParameters.type = $('#Type').val();
         jsonParameters.showParticipants = $('#ShowParticipants').prop('checked');
 
         var date = $('#Date').val();

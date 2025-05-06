@@ -48,7 +48,10 @@
                 <div class="col-12 col-md-4 mt-2">
                     @Html.DropDownListFor(m => m.RoomUid, new SelectList(ViewBag.Rooms, "Uid", "Name", null), $"{string.Format(Labels.SelectAMEntity, Labels.Room.ToLowerInvariant())}", new { @class = "form-control enable-select2" })
                 </div>
-                <div class="col-12 col-md-3 mt-2">
+                <div class="col-12 col-md-2 mt-2">
+                    @Html.DropDownListFor(m => m.Type, new SelectList(ViewBag.Types, "Id", "Name", null), $"{string.Format(Labels.SelectAMEntity, Labels.Type.ToLowerInvariant())}", new { @class = "form-control enable-select2" })
+                </div>
+                <div class="col-12 col-md-1 mt-2">
                     <div class="kt-checkbox-inline  mt-2">
                         <label class="kt-checkbox">
                             @Html.CheckBoxFor(m => m.ShowParticipants, new { @class = "enable-datatable-reload" }) @Labels.ShowParticipants

@@ -4,7 +4,7 @@
 // Created          : 02-27-2025
 //
 // Last Modified By : Daniel Giese Rodrigues
-// Last Modified On : 02-27-2025
+// Last Modified On : 05-06-2025
 // ***********************************************************************
 // <copyright file="NegotiationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -217,6 +217,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             if (negotiationDate.HasValue)
             {
                 query = query.Where(n => DbFunctions.TruncateTime(n.StartDate) == DbFunctions.TruncateTime(negotiationDate));
+            }
+
+            return query;
+        }
+
+        /// <summary>Finds the by negotiation Type.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="negotiationType">The negotiation type.</param>
+        /// <returns></returns>
+        internal static IQueryable<MusicBusinessRoundNegotiation> FindByNegotiationType(this IQueryable<MusicBusinessRoundNegotiation> query, string negotiationType)
+        {
+            if (!string.IsNullOrEmpty(negotiationType))
+            {
+                bool isAutomatic = negotiationType == "Automatic";
+                query = query.Where(n => n.IsAutomatic == isAutomatic);
             }
 
             return query;
@@ -504,6 +519,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             string projectKeywords,
             DateTime? negotiationDate,
             Guid? roomUid,
+            string type,
             bool showParticipants)
         {
             this.SetProxyEnabled(false);
@@ -514,6 +530,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindBySellerCollaboratorUid(sellerOrganizationUid)
                                 .FindByProjectKeywords(projectKeywords)
                                 .FindByDate(negotiationDate)
+                                .FindByNegotiationType(type)
                                 .FindByRoomUid(roomUid)
                                 .Include(n => n.Room)
                                 .Include(n => n.Room.RoomNames)
