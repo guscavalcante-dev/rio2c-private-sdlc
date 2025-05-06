@@ -4,7 +4,7 @@
 // Created          : 09-25-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 30-01-2024
+// Last Modified On : 05-01-2025
 // ***********************************************************************
 // <copyright file="PlayersApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -123,8 +123,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 Players = playerOrganizationApiDtos?.Select(dto => new AudiovisualPlayerApiResponse
                 {
                     Uid = dto.Uid,
-                    Name = dto.Name,
-                    TradeName = dto.TradeName,
+                    TradeName = !string.IsNullOrEmpty(dto.TradeName) ? dto.TradeName : dto.Name,
                     CompanyName = dto.CompanyName,
                     HighlightPosition = dto.ApiHighlightPosition,
                     Picture = dto.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, dto.Uid, dto.ImageUploadDate, true) : null,
@@ -272,8 +271,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 Status = ApiStatus.Success,
                 Error = null,
                 Uid = playerOrganizationApiDto.Uid,
-                Name = playerOrganizationApiDto.Name,
-                TradeName = playerOrganizationApiDto.TradeName,
+                TradeName = !string.IsNullOrEmpty(playerOrganizationApiDto.TradeName) ? playerOrganizationApiDto.TradeName : playerOrganizationApiDto.Name,
                 CompanyName = playerOrganizationApiDto.CompanyName,
                 Picture = playerOrganizationApiDto.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, playerOrganizationApiDto.Uid, playerOrganizationApiDto.ImageUploadDate, true) : null,
                 DescriptionsApiResponses = playerOrganizationApiDto.OrganizationDescriptionBaseDtos?.Select(dd => new LanguageValueApiResponse

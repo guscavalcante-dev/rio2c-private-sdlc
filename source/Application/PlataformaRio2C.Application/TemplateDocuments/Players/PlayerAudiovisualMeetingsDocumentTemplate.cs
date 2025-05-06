@@ -4,7 +4,7 @@
 // Created          : 06-29-2023
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 06-29-2023
+// Last Modified On : 05-01-2025
 // ***********************************************************************
 // <copyright file="PlayerAudiovisualMeetingsDocumentTemplate.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -219,7 +219,7 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             document.Add(paragraph);
             paragraph.Clear();
 
-            paragraph.Add(GetChunk(this.NegotiationsDtos.FirstOrDefault()?.ProjectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.Organization?.Name, DefaultFontSize + 6f, Font.NORMAL));
+            paragraph.Add(GetChunk(this.NegotiationsDtos.FirstOrDefault()?.ProjectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.Organization?.TradeName, DefaultFontSize + 6f, Font.NORMAL));
             paragraph.Alignment = Element.ALIGN_RIGHT;
             paragraph.IndentationLeft = 170;
             paragraph.SpacingBefore = 20;

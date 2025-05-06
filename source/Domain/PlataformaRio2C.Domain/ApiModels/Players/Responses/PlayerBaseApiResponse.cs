@@ -4,7 +4,7 @@
 // Created          : 02-03-2024
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 02-03-2024
+// Last Modified On : 05-01-2025
 // ***********************************************************************
 // <copyright file="PlayerBaseApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,9 +22,6 @@ namespace PlataformaRio2C.Domain.ApiModels
     {
         [JsonProperty("uid", Order = 100)]
         public Guid Uid { get; set; }
-
-        [JsonProperty("name", Order = 200)]
-        public string Name { get; set; }
 
         [JsonProperty("highlightPosition", Order = 300)]
         public int? HighlightPosition { get; set; }
