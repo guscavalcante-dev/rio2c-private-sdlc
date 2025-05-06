@@ -37,6 +37,9 @@
                 <div class="col-12 col-md-4 mt-2">
                     @Html.TextBoxFor(m => m.ProjectKeywords, null, new { type = "search", @class = "form-control", autocomplete = "off", placeholder = $"{Labels.Project}" })
                 </div>
+                <div class="col-12 col-md-4 mt-2">
+                    @Html.DropDownListFor(m => m.Type, new SelectList(ViewBag.Types, "Id", "Name", null), $"{string.Format(Labels.SelectAMEntity, Labels.Type.ToLowerInvariant())}", new { @class = "form-control enable-select2" })
+                </div>
             </div>
             <div class="row">
                 <div class="col-12 col-md-4 mt-2">
