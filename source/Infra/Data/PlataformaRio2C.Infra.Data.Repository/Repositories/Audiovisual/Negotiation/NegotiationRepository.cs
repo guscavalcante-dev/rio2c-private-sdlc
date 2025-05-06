@@ -195,7 +195,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             if (!string.IsNullOrEmpty(negotiationType))
             {
-                bool isAutomatic = negotiationType == "Automatic";
+                bool isAutomatic = negotiationType.ToLower() == "automatic";
                 query = query.Where(n => n.IsAutomatic == isAutomatic);
             }
 
