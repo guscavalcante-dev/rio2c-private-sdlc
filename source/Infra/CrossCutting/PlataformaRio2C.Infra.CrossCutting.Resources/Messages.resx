@@ -990,6 +990,9 @@ A distribuição só pode ser executada uma única vez por edição.
   <data name="SomethingIsWrong" xml:space="preserve">
     <value>Algo está incorreto.</value>
   </data>
+  <data name="SpeakerScheduleConflict" xml:space="preserve">
+    <value>O palestrante está alocado em uma palestra fora da nova disponibilidade.</value>
+  </data>
   <data name="StateIsInvalid" xml:space="preserve">
     <value>Estado inválido.</value>
   </data>

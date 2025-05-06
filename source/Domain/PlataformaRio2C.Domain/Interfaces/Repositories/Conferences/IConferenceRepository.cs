@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-27-2020
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 05-06-2025
 // ***********************************************************************
 // <copyright file="IConferenceRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -32,6 +32,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<List<Conference>> FindAllForGenerateNegotiationsAsync(Guid editionUid);
         Task<List<ConferenceDto>> FindAllScheduleDtosAsync(int editionId, int attendeeCollaboratorId, DateTimeOffset startDate, DateTimeOffset endDate, bool showMyConferences, bool showAllConferences);
         Task<List<ConferenceDto>> FindAllByAttendeeCollaboratorIdAsync(int attendeeCollaboratorId);
+        Task<List<ConferenceDto>> FindConferencesDtoByParticipantAsync(Guid participantUid, int editionId);
 
         #region Api
 

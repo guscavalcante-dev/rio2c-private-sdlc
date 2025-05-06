@@ -2321,6 +2321,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O palestrante está alocado em uma palestra fora da nova disponibilidade..
+        /// </summary>
+        public static string SpeakerScheduleConflict {
+            get {
+                return ResourceManager.GetString("SpeakerScheduleConflict", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Estado inválido..
         /// </summary>
         public static string StateIsInvalid {
