@@ -43,11 +43,20 @@ namespace PlataformaRio2C.Infra.Data.Context
             }
         }
 
-        /// <summary>Initializes a new instance of the <see cref="PlataformaRio2CContext"/> class.</summary>
-        public PlataformaRio2CContext()
-            : base("PlataformaRio2CConnection")
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PlataformaRio2CContext" /> class.
+        /// </summary>
+        public PlataformaRio2CContext() : base("PlataformaRio2CConnection")
         {
             ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = 180;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PlataformaRio2CContext"/> class.
+        /// </summary>
+        /// <param name="nameOrConnectionString">Either the database name or a connection string.</param>
+        public PlataformaRio2CContext(string nameOrConnectionString) : base(nameOrConnectionString)
+        {
         }
 
         /// <summary>Called when [model creating].</summary>

@@ -59,9 +59,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Infra.Cross
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0F13F38F-2712-412C-AD33-F33C25F53415}"
 	ProjectSection(SolutionItems) = preProject
-		README.md = README.md
 		docker-compose.yml = docker-compose.yml
+		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Infra.Data.Seeder", "PlataformaRio2C.Infra.Data.Seeder\PlataformaRio2C.Infra.Data.Seeder.csproj", "{C3640494-4794-480F-81F1-E319A5ABCC32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -178,6 +180,12 @@ Global
 		{33EC5478-C17A-4A12-A0B6-C11B8B061455}.Release|Any CPU.Build.0 = Release|Any CPU
 		{33EC5478-C17A-4A12-A0B6-C11B8B061455}.Test|Any CPU.ActiveCfg = Debug|Any CPU
 		{33EC5478-C17A-4A12-A0B6-C11B8B061455}.Test|Any CPU.Build.0 = Debug|Any CPU
+		{C3640494-4794-480F-81F1-E319A5ABCC32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3640494-4794-480F-81F1-E319A5ABCC32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3640494-4794-480F-81F1-E319A5ABCC32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3640494-4794-480F-81F1-E319A5ABCC32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3640494-4794-480F-81F1-E319A5ABCC32}.Test|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3640494-4794-480F-81F1-E319A5ABCC32}.Test|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -205,12 +213,13 @@ Global
 		{DFF5E3F8-2E2F-47EB-B79E-3C0211CB5033} = {A48DA2F9-A725-40BD-B7E7-197E83DC497C}
 		{D9F58A23-B5EB-4250-83BE-08C8A34A98E6} = {DFF5E3F8-2E2F-47EB-B79E-3C0211CB5033}
 		{33EC5478-C17A-4A12-A0B6-C11B8B061455} = {BBC0206D-64F0-4559-8042-759AB0CD62F7}
+		{C3640494-4794-480F-81F1-E319A5ABCC32} = {0AD73B36-C100-4557-9708-BEF73CFA3AC7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_SaveFilesImmediatelyUponChange = False
-		RESX_NeutralResourcesLanguage = pt-BR
-		RESX_SortFileContentOnSave = True
-		LessCompiler = aaa2f19f-23e9-41d7-9790-8e47cf17db1f
 		SolutionGuid = {359C66AC-967C-49D7-A3E0-7E8A0A656AD1}
+		LessCompiler = aaa2f19f-23e9-41d7-9790-8e47cf17db1f
+		RESX_SortFileContentOnSave = True
+		RESX_NeutralResourcesLanguage = pt-BR
+		RESX_SaveFilesImmediatelyUponChange = False
 	EndGlobalSection
 EndGlobal
