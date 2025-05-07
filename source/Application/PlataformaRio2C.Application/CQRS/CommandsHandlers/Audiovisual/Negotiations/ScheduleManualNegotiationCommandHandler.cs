@@ -69,6 +69,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             INegotiationService negotiationService)
             : base(eventBus, uow, negotiationRepository)
         {
+            this.negotiationService = negotiationService;
+            this.projectBuyerEvaluationRepo = projectBuyerEvaluationRepository; 
             this.organizationRepo = organizationRepository;
             this.projectRepo = projectRepository;
             this.negotiationConfigRepo = negotiationConfigRepository;
