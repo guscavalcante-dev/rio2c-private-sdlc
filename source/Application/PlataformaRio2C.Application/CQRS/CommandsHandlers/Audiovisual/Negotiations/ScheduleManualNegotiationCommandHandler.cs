@@ -4,7 +4,7 @@
 // Created          : 06-04-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 04-23-2025
+// Last Modified On : 05-08-2025
 // ***********************************************************************
 // <copyright file="ScheduleManualNegotiationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
