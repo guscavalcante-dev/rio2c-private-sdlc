@@ -77,6 +77,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.negotiationRoomConfigRepo = negotiationRoomConfigRepository;
             this.conferenceRepo = conferenceRepository;
             this.logisticAirfareRepo = logisticsAirfareRepository;
+            this.projectBuyerEvaluationRepo = projectBuyerEvaluationRepository;
+            this.negotiationService = negotiationService;
         }
 
         /// <summary>
@@ -122,7 +124,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var isStartDatePreviewIntoExecutivesAvailabilityRange = executivesAvailabilities.Count > 0
                                                                         && executivesAvailabilities.Any(ea => startDatePreview >= ea.AvailabilityBeginDate && endDatePreview <= ea.AvailabilityEndDate);
 
-            if (hasConflictIntoExecutivesAvailabilities || !isStartDatePreviewIntoExecutivesAvailabilityRange)
+            if (hasConflictIntoExecutivesAvailabilities 
+                || (executivesAvailabilities.Count != 0 && !isStartDatePreviewIntoExecutivesAvailabilityRange))
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(
                     Messages.NoPlayerExecutivesAvailableForDate,

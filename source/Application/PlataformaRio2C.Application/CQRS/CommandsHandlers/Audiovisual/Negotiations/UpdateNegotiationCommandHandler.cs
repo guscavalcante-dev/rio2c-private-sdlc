@@ -122,7 +122,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var isStartDatePreviewIntoExecutivesAvailabilityRange = executivesAvailabilities.Count > 0
                                                                         && executivesAvailabilities.Any(ea => startDatePreview >= ea.AvailabilityBeginDate && endDatePreview <= ea.AvailabilityEndDate);
 
-            if (hasConflictIntoExecutivesAvailabilities || !isStartDatePreviewIntoExecutivesAvailabilityRange)
+            if (hasConflictIntoExecutivesAvailabilities
+                || (executivesAvailabilities.Count != 0 && !isStartDatePreviewIntoExecutivesAvailabilityRange))
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(
                     Messages.NoPlayerExecutivesAvailableForDate,
