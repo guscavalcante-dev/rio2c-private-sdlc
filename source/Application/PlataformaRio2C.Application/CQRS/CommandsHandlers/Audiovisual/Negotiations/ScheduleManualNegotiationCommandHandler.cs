@@ -42,7 +42,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly INegotiationService negotiationService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ScheduleManualNegotiationCommandHandler"/> class.
+        /// Initializes a new instance of the <see cref="ScheduleManualNegotiationCommandHandler" /> class.
         /// </summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
@@ -69,8 +69,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             INegotiationService negotiationService)
             : base(eventBus, uow, negotiationRepository)
         {
-            this.negotiationService = negotiationService;
-            this.projectBuyerEvaluationRepo = projectBuyerEvaluationRepository; 
             this.organizationRepo = organizationRepository;
             this.projectRepo = projectRepository;
             this.negotiationConfigRepo = negotiationConfigRepository;
