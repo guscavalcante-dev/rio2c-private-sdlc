@@ -120,7 +120,7 @@ var AudiovisualMeetingsManualSchedule = function () {
             jsonParameters.buyerOrganizationUid = buyerOrganizationUidElement.val();
             jsonParameters.projectUid = projectUidElement.val();
 
-            $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/FindAllDates'), jsonParameters, function (data) {
+            $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/FindAllDatesAvailables'), jsonParameters, function (data) {
                 MyRio2cCommon.handleAjaxReturn({
                     data: data,
                     // Success

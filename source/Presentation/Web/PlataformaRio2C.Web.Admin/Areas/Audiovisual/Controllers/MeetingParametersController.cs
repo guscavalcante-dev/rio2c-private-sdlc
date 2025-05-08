@@ -772,6 +772,48 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>Finds all dates.</summary>
+        /// <param name="customFilter">The custom filter.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> FindAllDatesAvailables(Guid? buyerOrganizationUid = null, Guid? projectUid = null, string customFilter = "")
+        {
+            var buyerOrganizationDto = await this.organizationRepo.FindDtoByUidAsync(buyerOrganizationUid ?? Guid.Empty, this.EditionDto.Edition.Id);
+            var negotiationConfigDtos = await this.negotiationConfigRepo.FindAllDatesDtosAsync(this.EditionDto.Id, customFilter, buyerOrganizationDto?.IsVirtualMeeting == true, ProjectType.AudiovisualBusinessRound.Id);
+            var project = await this.projectRepo.GetAsync(projectUid ?? Guid.Empty);
+
+
+            for (int i = negotiationConfigDtos.Count - 1; i >= 0; i--)
+            {
+                var negotiationConfig = negotiationConfigDtos[i];
+                var dayStart = negotiationConfig.NegotiationConfig.StartDate.Date;
+                var dayEnd = dayStart.AddDays(1).AddTicks(-1); // até 23:59:59.9999999
+
+                var result = await this.negotiationValidationService.ValidateOverbookingAsync(
+                    this.EditionDto.Id,
+                    dayStart,
+                    dayEnd,
+                    buyerOrganizationUid.Value,
+                    project.SellerAttendeeOrganization.Uid);
+
+                if (!result.IsValid)
+                {
+                    negotiationConfigDtos.RemoveAt(i);
+                }
+            }
+
+            return Json(new
+            {
+                status = "success",
+                negotiationConfigs = negotiationConfigDtos?.Select(ncd => new NegotiationConfigDropdownDto
+                {
+                    Uid = ncd.NegotiationConfig.Uid,
+                    StartDate = ncd.NegotiationConfig.StartDate,
+                    EndDate = ncd.NegotiationConfig.EndDate
+                })
+            }, JsonRequestBehavior.AllowGet);
+        }
+
         /// <summary>Finds all rooms.</summary>
         /// <param name="negotiationConfigUid">The negotiation configuration uid.</param>
         /// <param name="customFilter">The custom filter.</param>
