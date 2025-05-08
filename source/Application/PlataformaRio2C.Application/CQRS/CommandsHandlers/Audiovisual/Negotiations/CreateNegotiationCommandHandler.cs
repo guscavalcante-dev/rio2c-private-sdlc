@@ -4,7 +4,7 @@
 // Created          : 03-08-2020
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 04-23-2025
+// Last Modified On : 05-08-2025
 // ***********************************************************************
 // <copyright file="CreateNegotiationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -124,7 +124,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var isStartDatePreviewIntoExecutivesAvailabilityRange = executivesAvailabilities.Count > 0
                                                                         && executivesAvailabilities.Any(ea => startDatePreview >= ea.AvailabilityBeginDate && endDatePreview <= ea.AvailabilityEndDate);
 
-            if (hasConflictIntoExecutivesAvailabilities || !isStartDatePreviewIntoExecutivesAvailabilityRange)
+            if (hasConflictIntoExecutivesAvailabilities
+                || (executivesAvailabilities.Count != 0 && !isStartDatePreviewIntoExecutivesAvailabilityRange))
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(
                     Messages.NoPlayerExecutivesAvailableForDate,

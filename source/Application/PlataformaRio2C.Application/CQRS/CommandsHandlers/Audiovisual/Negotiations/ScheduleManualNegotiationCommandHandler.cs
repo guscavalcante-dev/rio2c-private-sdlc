@@ -4,7 +4,7 @@
 // Created          : 06-04-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 04-23-2025
+// Last Modified On : 05-08-2025
 // ***********************************************************************
 // <copyright file="ScheduleManualNegotiationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -42,7 +42,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly INegotiationService negotiationService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ScheduleManualNegotiationCommandHandler"/> class.
+        /// Initializes a new instance of the <see cref="ScheduleManualNegotiationCommandHandler" /> class.
         /// </summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
@@ -69,14 +69,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             INegotiationService negotiationService)
             : base(eventBus, uow, negotiationRepository)
         {
-            this.negotiationService = negotiationService;
-            this.projectBuyerEvaluationRepo = projectBuyerEvaluationRepository; 
             this.organizationRepo = organizationRepository;
             this.projectRepo = projectRepository;
             this.negotiationConfigRepo = negotiationConfigRepository;
             this.negotiationRoomConfigRepo = negotiationRoomConfigRepository;
             this.conferenceRepo = conferenceRepository;
             this.logisticAirfareRepo = logisticsAirfareRepository;
+            this.projectBuyerEvaluationRepo = projectBuyerEvaluationRepository;
+            this.negotiationService = negotiationService;
         }
 
         /// <summary>
@@ -122,7 +122,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var isStartDatePreviewIntoExecutivesAvailabilityRange = executivesAvailabilities.Count > 0
                                                                         && executivesAvailabilities.Any(ea => startDatePreview >= ea.AvailabilityBeginDate && endDatePreview <= ea.AvailabilityEndDate);
 
-            if (hasConflictIntoExecutivesAvailabilities || !isStartDatePreviewIntoExecutivesAvailabilityRange)
+            if (hasConflictIntoExecutivesAvailabilities 
+                || (executivesAvailabilities.Count != 0 && !isStartDatePreviewIntoExecutivesAvailabilityRange))
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(
                     Messages.NoPlayerExecutivesAvailableForDate,
