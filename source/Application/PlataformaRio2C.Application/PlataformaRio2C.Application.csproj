@@ -787,9 +787,11 @@
     <Compile Include="Dtos\ParticipantSympla.cs" />
     <Compile Include="Dtos\Quizzes\QuizDto.cs" />
     <Compile Include="Interfaces\Common\INegotiationService.cs" />
+    <Compile Include="Interfaces\Common\INegotiationValidationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Common\NegotiationService.cs" />
     <Compile Include="Interfaces\Emails\IMailerService.cs" />
+    <Compile Include="Services\Common\NegotiationValidationService.cs" />
     <Compile Include="TemplateDocuments\Meetings\ScheduledMeetingsReportDocumentTemplate.cs" />
     <Compile Include="TemplateDocuments\Players\PlayerAudiovisualMeetingsDocumentTemplate.cs" />
     <Compile Include="TemplateDocuments\Projects\ProjectDocumentTemplate.cs" />

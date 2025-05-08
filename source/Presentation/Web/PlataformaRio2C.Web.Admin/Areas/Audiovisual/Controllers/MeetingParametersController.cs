@@ -34,6 +34,8 @@ using PlataformaRio2C.Web.Admin.Controllers;
 using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Application.Interfaces.Common;
+using DocumentFormat.OpenXml.Office.Word;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 {
@@ -46,6 +48,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         private readonly INegotiationRoomConfigRepository negotiationRoomConfigRepo;
         private readonly IRoomRepository roomRepo;
         private readonly IOrganizationRepository organizationRepo;
+        private readonly INegotiationValidationService negotiationValidationService;
+        private readonly IProjectRepository projectRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MeetingParametersController" /> class.
@@ -60,11 +64,15 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             INegotiationConfigRepository negotiationConfigRepository,
+            IProjectRepository projectRepository,
             INegotiationRoomConfigRepository negotiationRoomConfigRepository,
             IRoomRepository roomRepository,
+            INegotiationValidationService negotiationValidationService,
             IOrganizationRepository organizationRepository)
             : base(commandBus, identityController)
         {
+            this.projectRepo = projectRepository;
+            this.negotiationValidationService = negotiationValidationService;
             this.negotiationConfigRepo = negotiationConfigRepository;
             this.negotiationRoomConfigRepo = negotiationRoomConfigRepository;
             this.roomRepo = roomRepository;
@@ -726,10 +734,31 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="customFilter">The custom filter.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> FindAllDates(Guid? buyerOrganizationUid = null, string customFilter = "")
+        public async Task<ActionResult> FindAllDates(Guid? buyerOrganizationUid = null, Guid? projectUid = null, string customFilter = "")
         {
             var buyerOrganizationDto = await this.organizationRepo.FindDtoByUidAsync(buyerOrganizationUid ?? Guid.Empty, this.EditionDto.Edition.Id);
             var negotiationConfigDtos = await this.negotiationConfigRepo.FindAllDatesDtosAsync(this.EditionDto.Id, customFilter, buyerOrganizationDto?.IsVirtualMeeting == true, ProjectType.AudiovisualBusinessRound.Id);
+            var project = await this.projectRepo.GetAsync(projectUid ?? Guid.Empty);
+
+
+            for (int i = negotiationConfigDtos.Count - 1; i >= 0; i--)
+            {
+                var negotiationConfig = negotiationConfigDtos[i];
+                var dayStart = negotiationConfig.NegotiationConfig.StartDate.Date;
+                var dayEnd = dayStart.AddDays(1).AddTicks(-1); // até 23:59:59.9999999
+
+                var result = await this.negotiationValidationService.ValidateOverbookingAsync(
+                    this.EditionDto.Id,
+                    dayStart,
+                    dayEnd,
+                    buyerOrganizationUid.Value,
+                    project.SellerAttendeeOrganization.Uid);
+
+                if (!result.IsValid)
+                {
+                    negotiationConfigDtos.RemoveAt(i);
+                }
+            }
 
             return Json(new
             {

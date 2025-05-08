@@ -1,18 +1,4 @@
-﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Application
-// Author           : Renan Valentim
-// Created          : 06-04-2021
-//
-// Last Modified By : Renan Valentim
-// Last Modified On : 04-23-2025
-// ***********************************************************************
-// <copyright file="ScheduleManualNegotiationCommandHandler.cs" company="Softo">
-//     Copyright (c) Softo. All rights reserved.
-// </copyright>
-// <summary></summary>
-// ***********************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -29,7 +15,6 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>ScheduleManualNegotiationCommandHandler</summary>
     public class ScheduleManualNegotiationCommandHandler : NegotiationBaseCommandHandler, IRequestHandler<ScheduleManualNegotiation, AppValidationResult>
     {
         private readonly IOrganizationRepository organizationRepo;
@@ -41,20 +26,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IProjectBuyerEvaluationRepository projectBuyerEvaluationRepo;
         private readonly INegotiationService negotiationService;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ScheduleManualNegotiationCommandHandler"/> class.
-        /// </summary>
-        /// <param name="eventBus">The event bus.</param>
-        /// <param name="uow">The uow.</param>
-        /// <param name="negotiationRepository">The negotiation repository.</param>
-        /// <param name="organizationRepository">The organization repository.</param>
-        /// <param name="projectRepository">The project repository.</param>
-        /// <param name="negotiationConfigRepository">The negotiation configuration repository.</param>
-        /// <param name="negotiationRoomConfigRepository">The negotiation room configuration repository.</param>
-        /// <param name="conferenceRepository">The conference repository.</param>
-        /// <param name="logisticsAirfareRepository">The logistics airfare repository.</param>
-        /// <param name="projectBuyerEvaluationRepository">The project buyer evaluation repository.</param>
-        /// <param name="negotiationService">The negotiation service.</param>
         public ScheduleManualNegotiationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
@@ -79,12 +50,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.logisticAirfareRepo = logisticsAirfareRepository;
         }
 
-        /// <summary>
-        /// Handles the specified command.
-        /// </summary>
-        /// <param name="cmd">The command.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns></returns>
         public async Task<AppValidationResult> Handle(ScheduleManualNegotiation cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
@@ -182,62 +147,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
                         new string[] { "ToastrError" }));
             }
-
-            #endregion
-
-            #region Conferences check [DISABLED] - But stills working perfectly! Dont delete, can be used in future!
-
-            //var scheduledConferencesAtThisTime = await this.conferenceRepo.FindAllScheduleDtosAsync(cmd.EditionId.Value, 0, startDatePreview, endDatePreview, true, true);
-
-            //var hasPlayerExecutivesScheduledConferencesAtThisTime = scheduledConferencesAtThisTime.Count(cdto => cdto.ConferenceParticipantDtos.Any(cpdto => cpdto.AttendeeCollaboratorDto.AttendeeOrganizationsDtos.Any(aodto => aodto.Organization.Id == buyerOrganization.Id))) > 0;
-            //if (hasPlayerExecutivesScheduledConferencesAtThisTime)
-            //{
-            //    this.ValidationResult.Add(new ValidationError(string.Format(
-            //        Messages.HasConferenceScheduled,
-            //        Labels.TheF,
-            //        Labels.Producer,
-            //        ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
-            //            new string[] { "ToastrError" }));
-            //}
-
-            //var hasProducerExecutivesScheduledConferencesAtThisTime = scheduledConferencesAtThisTime.Count(cdto => cdto.ConferenceParticipantDtos.Any(cpdto => cpdto.AttendeeCollaboratorDto.AttendeeOrganizationsDtos.Any(aodto => aodto.Organization.Id == project.SellerAttendeeOrganization.OrganizationId))) > 0;
-            //if (hasProducerExecutivesScheduledConferencesAtThisTime)
-            //{
-            //    this.ValidationResult.Add(new ValidationError(string.Format(
-            //        Messages.HasConferenceScheduled,
-            //        Labels.TheF,
-            //        Labels.Producer,
-            //        ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
-            //            new string[] { "ToastrError" }));
-            //}
-
-            #endregion
-
-            #region Airfares check [DISABLED] - But stills working perfectly! Dont delete, can be used in future!
-
-            //var scheduledLogisticAirfaresAtThisTime = await this.logisticAirfareRepo.FindAllScheduleDtosAsync(cmd.EditionId.Value, null, startDatePreview, endDatePreview);
-
-            //var hasPlayerExecutivesScheduledAirfaresAtThisTime = scheduledLogisticAirfaresAtThisTime.Count(ladto => ladto.LogisticDto.AttendeeCollaboratorDto.AttendeeOrganizationsDtos.Any(aodto => aodto.Organization.Id == buyerOrganization.Id)) > 0;
-            //if (hasPlayerExecutivesScheduledAirfaresAtThisTime)
-            //{
-            //    this.ValidationResult.Add(new ValidationError(string.Format(
-            //        Messages.HasAirfareScheduled,
-            //        Labels.TheF,
-            //        Labels.Producer,
-            //        ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
-            //            new string[] { "ToastrError" }));
-            //}
-
-            //var hasProducerExecutivesScheduledAirfaresAtThisTime = scheduledLogisticAirfaresAtThisTime.Count(ladto => ladto.LogisticDto.AttendeeCollaboratorDto.AttendeeOrganizationsDtos.Any(aodto => aodto.Organization.Id == project.SellerAttendeeOrganization.OrganizationId)) > 0;
-            //if (hasProducerExecutivesScheduledAirfaresAtThisTime)
-            //{
-            //    this.ValidationResult.Add(new ValidationError(string.Format(
-            //        Messages.HasAirfareScheduled,
-            //        Labels.TheF,
-            //        Labels.Producer,
-            //        ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
-            //            new string[] { "ToastrError" }));
-            //}
 
             #endregion
 
