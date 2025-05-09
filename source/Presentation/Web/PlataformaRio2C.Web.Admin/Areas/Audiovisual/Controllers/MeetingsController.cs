@@ -204,8 +204,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             ViewBag.Types = new[]
             {
-                new { Id = "Automatic", Name = "Automático" },
-                new { Id = "Manual", Name = "Manual" }
+                new { Id = "Automatic", Name = Labels.Automatic },
+                new { Id = "Manual", Name = Labels.Manual }
             }.ToList();
 
             return View();
