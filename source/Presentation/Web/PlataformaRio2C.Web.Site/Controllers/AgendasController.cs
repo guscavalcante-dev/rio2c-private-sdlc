@@ -27,6 +27,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Application.TemplateDocuments;
 using PlataformaRio2C.Infra.Report.Models;
+using PlataformaRio2C.Domain.Interfaces.Repositories;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -39,8 +40,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
         private readonly ILogisticAirfareRepository logisticAirfareRepo;
         private readonly ILogisticAccommodationRepository logisticAccommodationRepo;
         private readonly ILogisticTransferRepository logisticTransferRepo;
+        private readonly IMusicBusinessRoundNegotiationRepository musicBusinessRoundNegotiationRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="AgendasController"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AgendasController" /> class.
+        /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="conferenceRepository">The conference repository.</param>
@@ -48,6 +52,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="logisticAirfareRepository">The logistic airfare repository.</param>
         /// <param name="logisticAccommodationRepository">The logistic accommodation repository.</param>
         /// <param name="logisticTransferRepository">The logistic transfer repository.</param>
+        /// <param name="musicBusinessRoundNegotiationRepository">The music business round negotiation repository.</param>
         public AgendasController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
@@ -55,7 +60,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
             INegotiationRepository negotiationRepository,
             ILogisticAirfareRepository logisticAirfareRepository,
             ILogisticAccommodationRepository logisticAccommodationRepository,
-            ILogisticTransferRepository logisticTransferRepository)
+            ILogisticTransferRepository logisticTransferRepository,
+            IMusicBusinessRoundNegotiationRepository musicBusinessRoundNegotiationRepository)
             : base(commandBus, identityController)
         {
             this.conferenceRepo = conferenceRepository;
@@ -63,6 +69,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             this.logisticAirfareRepo = logisticAirfareRepository;
             this.logisticAccommodationRepo = logisticAccommodationRepository;
             this.logisticTransferRepo = logisticTransferRepository;
+            this.musicBusinessRoundNegotiationRepo = musicBusinessRoundNegotiationRepository;
         }
 
         /// <summary>Indexes this instance.</summary>
@@ -169,7 +176,35 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 Room = nd.RoomDto.GetRoomNameByLanguageCode(this.UserInterfaceLanguage)?.RoomName?.Value,
                 TableNumber = nd.Negotiation.TableNumber,
                 RoundNumber = nd.Negotiation.RoundNumber
-            });
+            }).ToList();
+
+            //TODO: Move this to an exclusive action "GetMusicMeetingsData"
+            var musicBusinessRoundNegotiationDtos = await this.musicBusinessRoundNegotiationRepo.FindAllScheduledNegotiationsDtosAsync(
+                this.EditionDto.Id,
+                this.UserAccessControlDto?.EditionAttendeeCollaborator?.Id ?? 0,
+                DateTimeOffset.FromUnixTimeSeconds(viewModel.StartDate.Value),
+                DateTimeOffset.FromUnixTimeSeconds(viewModel.EndDate.Value));
+
+            var musicEvents = musicBusinessRoundNegotiationDtos?.Select(dto => new AgendaNegotiationEventJsonDto
+            {
+                Id = dto.Negotiation.Uid.ToString(),
+                Type = "MusicMeeting",
+                Title = this.UserAccessControlDto.IsMusicPlayerExecutive() ?
+                            dto.ProjectBuyerEvaluationDto.MusicBusinessRoundProjectDto.SellerAttendeeCollaboratorDto.Collaborator.GetStageNameOrBadgeOrFullName() :
+                            dto.ProjectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.TradeName,
+                Start = dto.Negotiation.StartDate,
+                End = dto.Negotiation.EndDate,
+                AllDay = false,
+                Css = "fc-event-solid-danger fc-event-light",
+                ProjectLogLine = "",
+                Producer = dto.ProjectBuyerEvaluationDto.MusicBusinessRoundProjectDto.SellerAttendeeCollaboratorDto.Collaborator.GetStageNameOrBadgeOrFullName(),
+                Player = dto.ProjectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.TradeName,
+                Room = dto.RoomDto.GetRoomNameByLanguageCode(this.UserInterfaceLanguage)?.RoomName?.Value,
+                TableNumber = dto.Negotiation.TableNumber,
+                RoundNumber = dto.Negotiation.RoundNumber
+            }).ToList();
+
+            events.AddRange(musicEvents);
 
             return Json(new
             {
