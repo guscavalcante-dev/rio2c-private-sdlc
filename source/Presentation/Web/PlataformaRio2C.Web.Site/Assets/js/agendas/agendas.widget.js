@@ -369,6 +369,9 @@ var AgendasWidget = function () {
                 else if (info.event.extendedProps.type === 'AudiovisualMeeting') {
                     showMeetingPopover(element, info);
                 }
+                else if (info.event.extendedProps.type === 'MusicMeeting') {
+                    showMusicMeetingPopover(element, info);
+                }
                 else if (info.event.extendedProps.type === 'LogisticAirfare') {
                     showLogisticAirfarePopover(element, info);
                 }
@@ -466,6 +469,31 @@ var AgendasWidget = function () {
                     .replace("popoverDate", formatPopupDate(startDate, endDate))
                     .replace("popoverProjectLogLine", info.event.extendedProps.projectLogLine)
                     .replace("popoverProducer", info.event.extendedProps.producer)
+                    .replace("popoverPlayer", info.event.extendedProps.player)
+                    .replace("popoverRoom", info.event.extendedProps.room)
+                    .replace("popoverTableNumber", info.event.extendedProps.tableNumber)
+                    .replace("popoverRoundNumber", info.event.extendedProps.roundNumber);
+
+                return popover;
+            },
+            template: '<div class="fullcalendar-popover popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>',
+            title: '<span class="text-info">' + info.event.title + '</span>',
+            container: 'body'
+        });
+    }
+
+    var showMusicMeetingPopover = function (element, info) {
+        var popoverHtml = $("#music-meeting-popover-event-content").html();
+        var startDate = info.event.start;
+        var endDate = info.event.end;
+
+        element.popover({
+            html: true,
+            placement: 'top',
+            content: function () {
+                var popover = popoverHtml
+                    .replace("popoverDate", formatPopupDate(startDate, endDate))
+                    .replace("popoverParticipant", info.event.extendedProps.producer)
                     .replace("popoverPlayer", info.event.extendedProps.player)
                     .replace("popoverRoom", info.event.extendedProps.room)
                     .replace("popoverTableNumber", info.event.extendedProps.tableNumber)

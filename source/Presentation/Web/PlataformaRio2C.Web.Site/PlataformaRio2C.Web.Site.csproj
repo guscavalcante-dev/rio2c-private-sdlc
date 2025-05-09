@@ -7923,6 +7923,7 @@
     <Content Include="Views\Shared\Widgets\CardsWidget.cshtml" />
     <Content Include="Views\Shared\Widgets\MusicProjectsWidget.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\EditorTemplates\MusicBusinessRoundTargetAudienceBaseCommand.cshtml" />
+    <Content Include="Views\Agendas\Shared\_MusicMeetingPopover.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
