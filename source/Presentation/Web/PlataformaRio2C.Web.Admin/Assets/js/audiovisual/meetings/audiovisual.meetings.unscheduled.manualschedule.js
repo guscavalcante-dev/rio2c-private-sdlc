@@ -349,8 +349,9 @@ var AudiovisualMeetingsManualSchedule = function () {
             jsonParameters.customFilter = 'HasManualTables';
             jsonParameters.negotiationRoomConfigUid = negotiationRoomConfigUid;
             jsonParameters.buyerOrganizationUid = buyerOrganizationUidElement.val();
+            jsonParameters.projectUid = projectUidElement.val();
 
-            $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/FindAllTimes'), jsonParameters, function (data) {
+            $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/FindAllTimesAvailables'), jsonParameters, function (data) {
                 MyRio2cCommon.handleAjaxReturn({
                     data: data,
                     // Success

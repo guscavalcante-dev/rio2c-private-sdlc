@@ -20,6 +20,65 @@ public class NegotiationValidationService : INegotiationValidationService
         this.negotiationRepository = negotiationRepository;
     }
 
+
+    public async Task<ValidationResult> ValidateOverbookingDatesAsync(
+        int editionId,
+        DateTimeOffset dayStart,
+        DateTimeOffset dayEnd,
+        Guid buyerOrganizationId,
+        Guid sellerOrganizationId)
+    {
+        var validationResult = new ValidationResult();
+
+        // 1. Buscar reuniões agendadas
+        var scheduled = await this.negotiationRepository
+            .FindAllScheduledNegotiationsDtosAsync(editionId, null, dayStart, dayEnd);
+
+        // 2. Pega só reuniões onde o buyer OU seller estejam envolvidos
+        var relevantMeetings = scheduled.Where(ndto =>
+            ndto.ProjectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.AttendeeOrganization?.Organization.Uid == buyerOrganizationId ||
+            ndto.ProjectBuyerEvaluationDto?.ProjectDto?.SellerAttendeeOrganizationDto?.AttendeeOrganization?.Organization.Uid == sellerOrganizationId
+        ).OrderBy(n => n.Negotiation.StartDate).ToList();
+
+        // 3. Define duração da reunião (ex: 20 minutos)
+        var meetingDuration = TimeSpan.FromMinutes(20);
+
+        // 4. Verifica se há algum espaço disponível
+        var current = dayStart;
+
+        foreach (var meeting in relevantMeetings)
+        {
+            if (meeting.Negotiation.StartDate >= current.Add(meetingDuration))
+            {
+                // Achou um intervalo livre
+                return validationResult; // sem erro
+            }
+
+            // Atualiza 'current' pro fim da reunião atual se for depois do que já tinha
+            if (meeting.Negotiation.EndDate > current)
+            {
+                current = meeting.Negotiation.EndDate;
+            }
+        }
+
+        // Checar se ainda sobra tempo até o final do dia
+        if (current.Add(meetingDuration) <= dayEnd)
+        {
+            return validationResult; // Tem slot no final do dia
+        }
+
+        // Se chegou aqui, não tem slot livre
+        validationResult.Add(new ValidationError(string.Format(
+            Messages.HasBusinessRoundScheduled,
+            Labels.TheM,
+            Labels.Player, // ou Producer dependendo de quem for
+            $"{dayStart.ToBrazilTimeZone().ToStringHourMinute()} - {dayEnd.ToBrazilTimeZone().ToShortTimeString()}"),
+            new[] { "ToastrError" }));
+
+        return validationResult;
+    }
+
+
     public async Task<ValidationResult> ValidateOverbookingAsync(
         int editionId,
         DateTimeOffset startDate,
@@ -60,5 +119,6 @@ public class NegotiationValidationService : INegotiationValidationService
 
         return validationResult;
     }
+
 }
 

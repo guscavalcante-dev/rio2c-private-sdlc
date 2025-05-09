@@ -17,5 +17,12 @@ namespace PlataformaRio2C.Application.Interfaces.Common
             DateTimeOffset endDate,
             Guid buyerOrganizationId,
             Guid sellerOrganizationId);
+
+        Task<ValidationResult> ValidateOverbookingDatesAsync(
+         int editionId,
+         DateTimeOffset dayStart,
+         DateTimeOffset dayEnd,
+         Guid buyerOrganizationId,
+         Guid sellerOrganizationId);
     }
 }
