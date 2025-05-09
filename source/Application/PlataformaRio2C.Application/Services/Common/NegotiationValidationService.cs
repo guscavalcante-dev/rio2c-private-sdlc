@@ -1,4 +1,18 @@
-﻿using PlataformaRio2C.Application.Interfaces;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Application
+// Author           : Daniel Giese Rodrigues
+// Created          : 05-09-2025
+//
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 05-09-2025
+// ***********************************************************************
+// <copyright file="INegotiationValidationService.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+
+using PlataformaRio2C.Application.Interfaces;
 using PlataformaRio2C.Application.Interfaces.Common;
 using PlataformaRio2C.Application.Services.Common;
 using PlataformaRio2C.Domain.Dtos;

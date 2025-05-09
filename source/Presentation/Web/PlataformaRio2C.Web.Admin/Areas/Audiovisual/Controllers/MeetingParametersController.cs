@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 03-04-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-25-2020
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 05-09-2025
 // ***********************************************************************
 // <copyright file="MeetingParametersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
