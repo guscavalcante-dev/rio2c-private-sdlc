@@ -73,6 +73,9 @@
 <!--begin: Meeting Popover-->
 @Html.Partial("Shared/_MeetingPopover")
 <!--end: Meeting Popover-->
+<!--begin: Music Meeting Popover-->
+@Html.Partial("Shared/_MusicMeetingPopover")
+<!--end: Music Meeting Popover-->
 <!--begin: Logistic Airfare Popover-->
 @Html.Partial("Shared/_LogisticAirfarePopover")
 <!--end: Logistic Airfare Popover-->
@@ -88,7 +91,7 @@
 @section Scripts {
     @Scripts.Render("~/bundles/js/fullcalendar.js")
     @Scripts.Render("~/bundles/js/agendas.widget.js")
-<script>
+    <script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
             fourDaysButton: '4 @Labels.Days.ToLowerInvariant()',
@@ -103,6 +106,6 @@
         jQuery(document).ready(function () {
             AgendasWidget.init();
         });
-</script>
+    </script>
 
 }
