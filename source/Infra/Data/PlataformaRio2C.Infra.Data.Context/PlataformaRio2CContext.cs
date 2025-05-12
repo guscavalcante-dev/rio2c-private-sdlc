@@ -27,20 +27,23 @@ namespace PlataformaRio2C.Infra.Data.Context
         /// <summary>Initializes the <see cref="PlataformaRio2CContext"/> class.</summary>
         static PlataformaRio2CContext()
         {
-            string environment = System.Configuration.ConfigurationManager.AppSettings["Environment"]?.ToLower();
-            if (environment == EnumEnvironments.Test.ToDescription().ToLower() || 
-                environment == EnumEnvironments.Prod.ToDescription().ToLower())
-            {
-                Database.SetInitializer(new MigrateDatabaseToLatestVersion<PlataformaRio2CContext, Migrations.Configuration>());
-                using (var context = new PlataformaRio2CContext())
-                {
-                    context.Database.Initialize(true);
-                }
-            }
-            else 
-            {
-                Database.SetInitializer<PlataformaRio2CContext>(null);
-            }
+            Database.SetInitializer<PlataformaRio2CContext>(null);
+
+            //TODO: We disabled the migrations to use the Seeder project. To reenable Migrations, uncomment this block.
+            //string environment = System.Configuration.ConfigurationManager.AppSettings["Environment"]?.ToLower();
+            //if (environment == EnumEnvironments.Test.ToDescription().ToLower() || 
+            //    environment == EnumEnvironments.Prod.ToDescription().ToLower())
+            //{
+            //    Database.SetInitializer(new MigrateDatabaseToLatestVersion<PlataformaRio2CContext, Migrations.Configuration>());
+            //    using (var context = new PlataformaRio2CContext())
+            //    {
+            //        context.Database.Initialize(true);
+            //    }
+            //}
+            //else 
+            //{
+            //    Database.SetInitializer<PlataformaRio2CContext>(null);
+            //}
         }
 
         /// <summary>
