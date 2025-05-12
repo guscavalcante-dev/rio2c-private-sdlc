@@ -8306,12 +8306,12 @@
     <Content Include="Areas\Creator\Views\web.config" />
     <Content Include="Areas\Logistics\Views\web.config" />
     <Content Include="Areas\Logistics\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Logistics\Views\Availability\Modals\CreateModal.cshtml" />
+    <Content Include="Areas\Logistics\Views\Availability\Modals\_CreateForm.cshtml" />
     <Content Include="Areas\Logistics\Views\Availability\Widgets\DataTableWidget.cshtml" />
     <Content Include="Areas\Logistics\Views\Availability\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Areas\Logistics\Views\Availability\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Areas\Logistics\Views\Availability\Index.cshtml" />
-    <Content Include="Areas\Logistics\Views\Availability\Modals\UpdateModal.cshtml" />
+    <Content Include="Areas\Logistics\Views\Availability\Modals\_UpdateForm.cshtml" />
     <Content Include="Areas\Agenda\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Agenda\Views\web.config" />
     <Content Include="Areas\Music\Views\Pitching\Index.cshtml" />
@@ -8362,6 +8362,8 @@
     <Content Include="Areas\Music\Views\Meetings\Widgets\SendEmailToPlayersEditionCountWidget.cshtml" />
     <Content Include="Areas\Music\Views\Meetings\Widgets\SendEmailToPlayersTotalCountWidget.cshtml" />
     <Content Include="Areas\Music\Views\Meetings\SendEmailToPlayers.cshtml" />
+    <Content Include="Areas\Logistics\Views\Availability\Modals\CreateModal.cshtml" />
+    <Content Include="Areas\Logistics\Views\Availability\Modals\UpdateModal.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

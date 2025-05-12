@@ -1,0 +1,13 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateAvailability
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.AvailabilityBeginDate, new { @class = "control-label" })
+        @Html.TextBox("AvailabilityBeginDate", Model.AvailabilityBeginDate?.DateTime.ToBrazilTimeZone().ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.AvailabilityBeginDate, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.AvailabilityEndDate, new { @class = "control-label" })
+        @Html.TextBox("AvailabilityEndDate", Model.AvailabilityEndDate?.DateTime.ToBrazilTimeZone().ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.AvailabilityEndDate, "", new { @class = "text-danger" })
+    </div>
+</div>
