@@ -27,27 +27,39 @@ namespace PlataformaRio2C.Infra.Data.Context
         /// <summary>Initializes the <see cref="PlataformaRio2CContext"/> class.</summary>
         static PlataformaRio2CContext()
         {
-            string environment = System.Configuration.ConfigurationManager.AppSettings["Environment"]?.ToLower();
-            if (environment == EnumEnvironments.Test.ToDescription().ToLower() || 
-                environment == EnumEnvironments.Prod.ToDescription().ToLower())
-            {
-                Database.SetInitializer(new MigrateDatabaseToLatestVersion<PlataformaRio2CContext, Migrations.Configuration>());
-                using (var context = new PlataformaRio2CContext())
-                {
-                    context.Database.Initialize(true);
-                }
-            }
-            else 
-            {
-                Database.SetInitializer<PlataformaRio2CContext>(null);
-            }
+            Database.SetInitializer<PlataformaRio2CContext>(null);
+
+            //TODO: We disabled the migrations to use the Seeder project. To reenable Migrations, uncomment this block.
+            //string environment = System.Configuration.ConfigurationManager.AppSettings["Environment"]?.ToLower();
+            //if (environment == EnumEnvironments.Test.ToDescription().ToLower() || 
+            //    environment == EnumEnvironments.Prod.ToDescription().ToLower())
+            //{
+            //    Database.SetInitializer(new MigrateDatabaseToLatestVersion<PlataformaRio2CContext, Migrations.Configuration>());
+            //    using (var context = new PlataformaRio2CContext())
+            //    {
+            //        context.Database.Initialize(true);
+            //    }
+            //}
+            //else 
+            //{
+            //    Database.SetInitializer<PlataformaRio2CContext>(null);
+            //}
         }
 
-        /// <summary>Initializes a new instance of the <see cref="PlataformaRio2CContext"/> class.</summary>
-        public PlataformaRio2CContext()
-            : base("PlataformaRio2CConnection")
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PlataformaRio2CContext" /> class.
+        /// </summary>
+        public PlataformaRio2CContext() : base("PlataformaRio2CConnection")
         {
             ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = 180;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PlataformaRio2CContext"/> class.
+        /// </summary>
+        /// <param name="nameOrConnectionString">Either the database name or a connection string.</param>
+        public PlataformaRio2CContext(string nameOrConnectionString) : base(nameOrConnectionString)
+        {
         }
 
         /// <summary>Called when [model creating].</summary>
