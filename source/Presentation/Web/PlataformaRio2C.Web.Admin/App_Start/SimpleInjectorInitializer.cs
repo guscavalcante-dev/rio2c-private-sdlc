@@ -29,7 +29,6 @@ using PlataformaRio2C.Application.CQRS.Events.Editions;
 using MediatR;
 using PlataformaRio2C.Application.Services.Common;
 using PlataformaRio2C.Application.Interfaces;
-using PlataformaRio2C.Application.Interfaces.Common;
 
 namespace PlataformaRio2C.Web.Admin.App_Start
 {
@@ -51,7 +50,6 @@ namespace PlataformaRio2C.Web.Admin.App_Start
             container.Register<IMailerService, AdminMailerService>(Lifestyle.Scoped);
 
             container.Register<INegotiationService, NegotiationService>(Lifestyle.Scoped);
-            container.Register<INegotiationValidationService, NegotiationValidationService>(Lifestyle.Scoped);
 
             #endregion
 

@@ -34,8 +34,8 @@ using PlataformaRio2C.Web.Admin.Controllers;
 using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Application.Interfaces.Common;
 using DocumentFormat.OpenXml.Office.Word;
+using PlataformaRio2C.Application.Interfaces;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 {
@@ -48,7 +48,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         private readonly INegotiationRoomConfigRepository negotiationRoomConfigRepo;
         private readonly IRoomRepository roomRepo;
         private readonly IOrganizationRepository organizationRepo;
-        private readonly INegotiationValidationService negotiationValidationService;
+        private readonly INegotiationService negotiationValidationService;
         private readonly IProjectRepository projectRepo;
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             IProjectRepository projectRepository,
             INegotiationRoomConfigRepository negotiationRoomConfigRepository,
             IRoomRepository roomRepository,
-            INegotiationValidationService negotiationValidationService,
+            INegotiationService negotiationValidationService,
             IOrganizationRepository organizationRepository)
             : base(commandBus, identityController)
         {
@@ -766,14 +766,17 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             {
                 var negotiationConfig = negotiationConfigDtos[i];
                 var dayStart = negotiationConfig.NegotiationConfig.StartDate.Date;
-                var dayEnd = dayStart.AddDays(1).AddTicks(-1); // até 23:59:59.9999999
+                var dayEnd = dayStart.AddDays(1).AddTicks(-1);
+                int totalMinutesInt = (int)(negotiationConfig.NegotiationConfig.TimeOfEachRound +
+                             negotiationConfig.NegotiationConfig.TimeIntervalBetweenRound).TotalMinutes;
 
                 var result = await this.negotiationValidationService.ValidateOverbookingDatesAsync(
                     this.EditionDto.Id,
                     dayStart,
                     dayEnd,
                     buyerOrganizationUid.Value,
-                    project.SellerAttendeeOrganization.Uid);
+                    project.SellerAttendeeOrganization.Uid,
+                    totalMinutesInt);
 
                 if (!result.IsValid)
                 {
