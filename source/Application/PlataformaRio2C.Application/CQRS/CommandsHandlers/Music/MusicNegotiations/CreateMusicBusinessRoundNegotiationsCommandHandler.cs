@@ -4,7 +4,7 @@
 // Created          : 05/03/2025
 //
 // Last Modified By : Daniel Giese
-// Last Modified On : 05/03/2025
+// Last Modified On : 05-12-2025
 // ***********************************************************************
 // <copyright file="CreateMusicBusinessRoundNegotiationsCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -85,14 +85,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             try
             {
-                //this.NegotiationRepo.Truncate();
-                var editionNegotiations = await this.MusicBusinessRoundNegotiationRepo.FindAllByEditionIdAsync(cmd.EditionId.Value);
-                if (editionNegotiations.Count > 0)
-                {
-                    this.MusicBusinessRoundNegotiationRepo.DeleteAll(editionNegotiations);
-                    this.Uow.SaveChanges();
-                }
-
                 edition?.StartMusicBusinessRoundNegotiationsCreation(cmd.UserId);
                 this.Uow.SaveChanges();
 
@@ -106,13 +98,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 }
 
                 var negotiationSlots = this.GetNegotiationSlots(negotiationConfigs, cmd.UserId);
-                if (negotiationConfigs?.Count == 0)
-                {
-                    edition?.CancelMusicBusinessRoundNegotiationsCreation(cmd.UserId);
-                    this.Uow.SaveChanges();
-                    this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Rooms, Labels.FoundFP), new string[] { "ToastrError" })));
-                    return this.AppValidationResult;
-                }
 
                 var projectBuyerEvaluations = await this.musicBusinessRoundProjectBuyerEvaluationRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionId ?? 0);
                 if (projectBuyerEvaluations?.Count == 0)
@@ -126,21 +111,34 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 this.logisticAirfares = await this.logisticAirfareRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionUid ?? Guid.Empty);
                 this.conferences = await this.conferenceRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionUid ?? Guid.Empty);
 
-                this.FillNegotiationSlots(negotiationSlots, projectBuyerEvaluations);
-
-                var negotiations = negotiationSlots
-                                    .Where(ns => ns.MusicBusinessRoundProjectBuyerEvaluation != null && !ns.IsDeleted)
-                                    .ToList();
-
-                //this.NegotiationRepo.Truncate();
-                var remainingEditionNegotiations = await this.MusicBusinessRoundNegotiationRepo.FindAllByEditionIdAsync(cmd.EditionId.Value);
-                if (remainingEditionNegotiations.Count > 0)
+                // Marcar os slots que já estão ocupados
+                var existingNegotiations = await this.MusicBusinessRoundNegotiationRepo.FindAllByEditionIdAsync(cmd.EditionId.Value);
+                foreach (var existing in existingNegotiations)
                 {
-                    this.MusicBusinessRoundNegotiationRepo.DeleteAll(remainingEditionNegotiations);
-                    this.Uow.SaveChanges();
+                    var slot = negotiationSlots.FirstOrDefault(ns =>
+                        ns.RoomId == existing.RoomId &&
+                        ns.TableNumber == existing.TableNumber &&
+                        ns.RoundNumber == existing.RoundNumber);
+
+                    if (slot != null)
+                    {
+                        slot.DisableSlot(existing.MusicBusinessRoundProjectBuyerEvaluation, existing.IsDeleted);
+                    }
                 }
 
-                this.MusicBusinessRoundNegotiationRepo.CreateAll(negotiations);
+                // Preencher os slots restantes
+                this.FillNegotiationSlots(negotiationSlots, projectBuyerEvaluations);
+
+                var newNegotiations = negotiationSlots
+                    .Where(ns => ns.MusicBusinessRoundProjectBuyerEvaluation != null &&
+                                 !ns.IsDeleted &&
+                                 !existingNegotiations.Any(en =>
+                                     en.RoomId == ns.RoomId &&
+                                     en.TableNumber == ns.TableNumber &&
+                                     en.RoundNumber == ns.RoundNumber))
+                    .ToList();
+
+                this.MusicBusinessRoundNegotiationRepo.CreateAll(newNegotiations);
 
                 edition?.FinishMusicBusinessRoundNegotiationsCreation(cmd.UserId);
 
@@ -154,9 +152,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             return this.AppValidationResult;
-
-            //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
-            //return Task.FromResult(propertyId); // use it when the methed is not async
         }
 
         /// <summary>Gets the negotiation slots.</summary>
