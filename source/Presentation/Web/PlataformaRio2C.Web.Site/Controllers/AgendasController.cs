@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 05-01-2025
+// Last Modified On : 05-12-2025
 // ***********************************************************************
 // <copyright file="AgendasController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -137,7 +137,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #endregion
 
-        #region Meetings
+        #region Audiovisual Meetings
 
         /// <summary>Gets the audiovisual meetings data.</summary>
         /// <param name="viewModel">The view model.</param>
@@ -161,7 +161,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 DateTimeOffset.FromUnixTimeSeconds(viewModel.StartDate.Value),
                 DateTimeOffset.FromUnixTimeSeconds(viewModel.EndDate.Value));
 
-            var events = negotiationsDtos?.Select(nd => new AgendaNegotiationEventJsonDto
+            var events = negotiationsDtos?.Select(nd => new AgendaAudiovisualNegotiationEventJsonDto
             {
                 Id = nd.Negotiation.Uid.ToString(),
                 Type = "AudiovisualMeeting",
@@ -177,34 +177,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 TableNumber = nd.Negotiation.TableNumber,
                 RoundNumber = nd.Negotiation.RoundNumber
             }).ToList();
-
-            //TODO: Move this to an exclusive action "GetMusicMeetingsData"
-            var musicBusinessRoundNegotiationDtos = await this.musicBusinessRoundNegotiationRepo.FindAllScheduledNegotiationsDtosAsync(
-                this.EditionDto.Id,
-                this.UserAccessControlDto?.EditionAttendeeCollaborator?.Id ?? 0,
-                DateTimeOffset.FromUnixTimeSeconds(viewModel.StartDate.Value),
-                DateTimeOffset.FromUnixTimeSeconds(viewModel.EndDate.Value));
-
-            var musicEvents = musicBusinessRoundNegotiationDtos?.Select(dto => new AgendaNegotiationEventJsonDto
-            {
-                Id = dto.Negotiation.Uid.ToString(),
-                Type = "MusicMeeting",
-                Title = this.UserAccessControlDto.IsMusicPlayerExecutive() ?
-                            dto.ProjectBuyerEvaluationDto.MusicBusinessRoundProjectDto.SellerAttendeeCollaboratorDto.Collaborator.GetStageNameOrBadgeOrFullName() :
-                            dto.ProjectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.TradeName,
-                Start = dto.Negotiation.StartDate,
-                End = dto.Negotiation.EndDate,
-                AllDay = false,
-                Css = "fc-event-solid-danger fc-event-light",
-                ProjectLogLine = "",
-                Producer = dto.ProjectBuyerEvaluationDto.MusicBusinessRoundProjectDto.SellerAttendeeCollaboratorDto.Collaborator.GetStageNameOrBadgeOrFullName(),
-                Player = dto.ProjectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.TradeName,
-                Room = dto.RoomDto.GetRoomNameByLanguageCode(this.UserInterfaceLanguage)?.RoomName?.Value,
-                TableNumber = dto.Negotiation.TableNumber,
-                RoundNumber = dto.Negotiation.RoundNumber
-            }).ToList();
-
-            events.AddRange(musicEvents);
 
             return Json(new
             {
@@ -237,6 +209,59 @@ namespace PlataformaRio2C.Web.Site.Controllers
             var fileName = $"{Labels.ScheduledNegotiations.RemoveFilenameInvalidChars().Trim()}_{playerOrganization.TradeName}_{DateTime.Now.ToStringHourMinute()}.pdf".RemoveFilenameInvalidChars();
 
             return File(pdf.GetStream(), "application/pdf", fileName);
+        }
+
+        #endregion
+
+        #region Music Meetings
+
+        /// <summary>
+        /// Gets the music meetings data.
+        /// </summary>
+        /// <param name="viewModel">The view model.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> GetMusicMeetingsData(AgendaSearchViewModel viewModel)
+        {
+            if (DateTime.UtcNow < this.EditionDto.OneToOneMeetingsScheduleDate || !viewModel.ShowOneToOneMeetings)
+            {
+                return Json(new { status = "success", events = new List<AgendaBaseEventJsonDto>() }, JsonRequestBehavior.AllowGet);
+            }
+
+            if (!viewModel.StartDate.HasValue || !viewModel.EndDate.HasValue)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.TheFieldIsRequired, Labels.Date) }, JsonRequestBehavior.AllowGet);
+            }
+
+            var musicBusinessRoundNegotiationDtos = await this.musicBusinessRoundNegotiationRepo.FindAllScheduledNegotiationsDtosAsync(
+                this.EditionDto.Id,
+                this.UserAccessControlDto?.EditionAttendeeCollaborator?.Id ?? 0,
+                DateTimeOffset.FromUnixTimeSeconds(viewModel.StartDate.Value),
+                DateTimeOffset.FromUnixTimeSeconds(viewModel.EndDate.Value));
+
+            var events = musicBusinessRoundNegotiationDtos?.Select(dto => new AgendaMusicNegotiationEventJsonDto
+            {
+                Id = dto.Negotiation.Uid.ToString(),
+                Type = "MusicMeeting",
+                Title = this.UserAccessControlDto.IsMusicPlayerExecutive() ?
+                            dto.ProjectBuyerEvaluationDto.MusicBusinessRoundProjectDto.SellerAttendeeCollaboratorDto.Collaborator.GetStageNameOrBadgeOrFullName() :
+                            dto.ProjectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.TradeName,
+                Start = dto.Negotiation.StartDate,
+                End = dto.Negotiation.EndDate,
+                AllDay = false,
+                Css = "fc-event-solid-danger fc-event-light",
+                Participant = dto.ProjectBuyerEvaluationDto.MusicBusinessRoundProjectDto.SellerAttendeeCollaboratorDto.Collaborator.GetStageNameOrBadgeOrFullName(),
+                Player = dto.ProjectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.TradeName,
+                Room = dto.RoomDto.GetRoomNameByLanguageCode(this.UserInterfaceLanguage)?.RoomName?.Value,
+                TableNumber = dto.Negotiation.TableNumber,
+                RoundNumber = dto.Negotiation.RoundNumber
+            }).ToList();
+
+            return Json(new
+            {
+                status = "success",
+                events
+            }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 03-27-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-28-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 05-12-2025
 // ***********************************************************************
 // <copyright file="schedules.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -220,6 +220,57 @@ var AgendasWidget = function () {
                         var jsonParameters = new Object();
                         jsonParameters.startDate = moment(info.start).unix();
                         jsonParameters.endDate = moment(info.end).unix();
+                        jsonParameters.showOneToOneMeetings = $('#ShowOneToOneMeetings').is(':checked');
+
+                        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Agendas/GetMusicMeetingsData'), jsonParameters, function (data) {
+                            MyRio2cCommon.handleAjaxReturn({
+                                data: data,
+                                // Success
+                                onSuccess: function () {
+                                    if (data.events === null) {
+                                        successCallback([]);
+                                        return;
+                                    }
+
+                                    successCallback(
+                                        Array.prototype.slice.call(data.events).map(function (eventEl) {
+                                            return {
+                                                id: eventEl.Id,
+                                                title: eventEl.Title,
+                                                start: moment(eventEl.Start).tz(globalVariables.momentTimeZone).format(),
+                                                end: moment(eventEl.End).tz(globalVariables.momentTimeZone).format(),
+                                                allDay: eventEl.AllDay || false,
+                                                type: eventEl.Type,
+                                                className: eventEl.Css,
+                                                participant: eventEl.Participant,
+                                                player: eventEl.Player,
+                                                room: eventEl.Room,
+                                                tableNumber: eventEl.TableNumber,
+                                                roundNumber: eventEl.RoundNumber
+                                            }
+                                        })
+                                    );
+
+                                    changePrintButtonVisibility(data.events.length > 0);
+                                },
+                                // Error
+                                onError: function () {
+                                    failureCallback('error');
+                                }
+                            });
+                        })
+                            .fail(function () {
+                            })
+                            .always(function () {
+                                //MyRio2cCommon.unblock();
+                            });
+                    }
+                },
+                {
+                    events: function (info, successCallback, failureCallback) {
+                        var jsonParameters = new Object();
+                        jsonParameters.startDate = moment(info.start).unix();
+                        jsonParameters.endDate = moment(info.end).unix();
                         jsonParameters.showFlights = $('#ShowFlights').is(':checked');
 
                         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Agendas/GetLogisticAirfaresData'), jsonParameters, function (data) {
@@ -367,7 +418,7 @@ var AgendasWidget = function () {
                     showConferencePopover(element, info);
                 }
                 else if (info.event.extendedProps.type === 'AudiovisualMeeting') {
-                    showMeetingPopover(element, info);
+                    showAudiovisualMeetingPopover(element, info);
                 }
                 else if (info.event.extendedProps.type === 'MusicMeeting') {
                     showMusicMeetingPopover(element, info);
@@ -456,8 +507,8 @@ var AgendasWidget = function () {
         });
     }
 
-    var showMeetingPopover = function (element, info) {
-        var popoverHtml = $("#meeting-popover-event-content").html();
+    var showAudiovisualMeetingPopover = function (element, info) {
+        var popoverHtml = $("#audiovisual-meeting-popover-event-content").html();
         var startDate = info.event.start;
         var endDate = info.event.end;
 
@@ -493,7 +544,7 @@ var AgendasWidget = function () {
             content: function () {
                 var popover = popoverHtml
                     .replace("popoverDate", formatPopupDate(startDate, endDate))
-                    .replace("popoverParticipant", info.event.extendedProps.producer)
+                    .replace("popoverParticipant", info.event.extendedProps.participant)
                     .replace("popoverPlayer", info.event.extendedProps.player)
                     .replace("popoverRoom", info.event.extendedProps.room)
                     .replace("popoverTableNumber", info.event.extendedProps.tableNumber)
