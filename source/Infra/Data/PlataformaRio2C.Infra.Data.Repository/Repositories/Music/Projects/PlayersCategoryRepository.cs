@@ -1,12 +1,10 @@
 ﻿using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Interfaces.Repositories.Music.BusinessRoundProjects;
 using PlataformaRio2C.Infra.Data.Context;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects

@@ -170,7 +170,7 @@ namespace PlataformaRio2C.WebApi
                         //
                         //c.OperationFilter<AddDefaultResponse>();
                         c.OperationFilter<AddRequiredHeaderParameter>();
-                        
+
                         //
                         // If you've defined an OAuth2 flow as described above, you could use a custom filter
                         // to inspect some attribute on each action and infer which (if any) OAuth2 scopes are required

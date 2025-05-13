@@ -11,14 +11,13 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
-using PlataformaRio2C.Application.CQRS.Dtos;
 using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Interfaces;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.QueryHandlers
 {

@@ -11,17 +11,15 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Validation;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
     /// <summary>AttendeeCartoonProject</summary>
-    public class AttendeeCartoonProject : Entity 
+    public class AttendeeCartoonProject : Entity
     {
         public int EditionId { get; private set; }
         public int CartoonProjectId { get; private set; }

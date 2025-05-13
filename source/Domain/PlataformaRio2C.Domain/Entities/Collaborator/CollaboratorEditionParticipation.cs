@@ -11,8 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using PlataformaRio2C.Domain.Validation;
+using System;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -74,7 +74,7 @@ namespace PlataformaRio2C.Domain.Entities
         public override bool IsValid()
         {
             this.ValidationResult = new ValidationResult();
-            
+
             return this.ValidationResult.IsValid;
         }
 

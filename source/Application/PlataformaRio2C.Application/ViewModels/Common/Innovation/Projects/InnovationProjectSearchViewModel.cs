@@ -11,14 +11,14 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Application.ViewModels
 {
@@ -36,7 +36,7 @@ namespace PlataformaRio2C.Application.ViewModels
 
         [Display(Name = nameof(Labels.ShowPitchings), ResourceType = typeof(Labels))]
         public bool ShowBusinessRounds { get; set; }
-        
+
         public int? Page { get; set; }
         public int? PageSize { get; set; }
         public int? Id { get; set; }
@@ -96,7 +96,7 @@ namespace PlataformaRio2C.Application.ViewModels
         /// <param name="projectEvaluationStatuses">The project evaluation statuses.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public void UpdateModelsAndLists(
-            List<InnovationOrganizationTrackOptionGroup> innovationOrganizationTrackOptionGroups, 
+            List<InnovationOrganizationTrackOptionGroup> innovationOrganizationTrackOptionGroups,
             List<ProjectEvaluationStatus> projectEvaluationStatuses,
             string userInterfaceLanguage)
         {

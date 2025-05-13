@@ -12,8 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
@@ -22,6 +20,8 @@ using PlataformaRio2C.Domain.Interfaces.Repositories;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -49,7 +49,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
             this.musicBusinessRoundNegotiationRepository = musicbusinessroundnegotiationRepository;
-            this.attendeeNegotiationCollaboratorRepo = attendeeNegotiationCollaboratorRepo; 
+            this.attendeeNegotiationCollaboratorRepo = attendeeNegotiationCollaboratorRepo;
         }
 
         /// <summary>Handles the specified create negotiation.</summary>

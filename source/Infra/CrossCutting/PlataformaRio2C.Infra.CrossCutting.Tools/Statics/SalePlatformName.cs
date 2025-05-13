@@ -11,8 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-
 namespace PlataformaRio2C.Infra.CrossCutting.Tools.Statics
 {
     /// <summary>SalePlatformName</summary>

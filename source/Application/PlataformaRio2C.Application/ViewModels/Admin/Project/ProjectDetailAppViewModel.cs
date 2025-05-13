@@ -1,11 +1,6 @@
 ﻿using PlataformaRio2C.Application.Common;
 using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.ViewModels.Admin
 {
@@ -79,7 +74,7 @@ namespace PlataformaRio2C.Application.ViewModels.Admin
     //        {
     //            SendingUser = entity.SendingUser.Name;
     //        }
-            
+
     //        DateSaved = entity.DateSaved;
     //        DateSending = entity.DateSending;
 
@@ -87,13 +82,13 @@ namespace PlataformaRio2C.Application.ViewModels.Admin
     //        {
     //            if (entity.EvaluationId > 0 && entity.Evaluation != null && entity.Evaluation.StatusId > 0 && entity.Evaluation.Status != null)
     //            {
-                  
+
     //                Status = Labels.ResourceManager.GetString(entity.Evaluation.Status.Code);
     //                Reason = entity.Evaluation.Reason;
     //            }
     //            else
     //            {
-                 
+
     //                Status = Labels.ResourceManager.GetString(StatusProjectCodes.OnEvaluation.ToString());
     //            }
     //        }

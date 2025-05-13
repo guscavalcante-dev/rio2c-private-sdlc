@@ -11,9 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
 using System;
 using System.Collections.Generic;
-using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services
 {

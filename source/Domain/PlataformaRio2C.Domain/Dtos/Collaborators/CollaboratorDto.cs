@@ -16,7 +16,6 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Web.Script.Serialization;
 
 namespace PlataformaRio2C.Domain.Dtos
@@ -151,14 +150,14 @@ namespace PlataformaRio2C.Domain.Dtos
                 .ForEach(r => r.GetSeparatorTranslation(rt => rt.Description, this.UserInterfaceLanguage));
             this.Roles = this.Roles?.OrderBy(r => r.Description);
 
-            foreach(var attendeeCollaboratorTypeDto in this.AttendeeCollaboratorTypeDtos)
+            foreach (var attendeeCollaboratorTypeDto in this.AttendeeCollaboratorTypeDtos)
             {
-                if(attendeeCollaboratorTypeDto.CollaboratorType != null)
+                if (attendeeCollaboratorTypeDto.CollaboratorType != null)
                 {
                     attendeeCollaboratorTypeDto.CollaboratorType = attendeeCollaboratorTypeDto.CollaboratorType.GetSeparatorTranslation(ct => ct.Description, this.UserInterfaceLanguage);
                     this.AttendeeCollaboratorTypeDtos = this.AttendeeCollaboratorTypeDtos?.OrderBy(act => act.CollaboratorType.Description);
                 }
-                else if(!string.IsNullOrEmpty(attendeeCollaboratorTypeDto.CollaboratorTypeDescription))
+                else if (!string.IsNullOrEmpty(attendeeCollaboratorTypeDto.CollaboratorTypeDescription))
                 {
                     attendeeCollaboratorTypeDto.CollaboratorTypeDescription = attendeeCollaboratorTypeDto.CollaboratorTypeDescription.GetSeparatorTranslation(this.UserInterfaceLanguage);
                 }
@@ -211,7 +210,7 @@ namespace PlataformaRio2C.Domain.Dtos
                                                                         c.StartDate?.ToStringHourBrazilTimeZone(),
                                                                         c.EndDate?.ToStringHourBrazilTimeZone(),
                                                                         c.GetRoomNameDtoByLanguageCode(culture)?.RoomName?.Value ?? "-",
-                                                                        c.GetConferenceTitleDtoByLanguageCode(culture).ConferenceTitle?.Value ?? "-"                                                                        
+                                                                        c.GetConferenceTitleDtoByLanguageCode(culture).ConferenceTitle?.Value ?? "-"
                                                                     )).ToString("; ");
 
         }

@@ -13,10 +13,10 @@
 // ***********************************************************************
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services;
-using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms
@@ -44,7 +44,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms
 
             if (salesPlatformWebhookRequestDto?.SalesPlatformDto?.Name == SalePlatformName.Inti)
             {
-               return new IntiSalesPlatformService(salesPlatformWebhookRequestDto);
+                return new IntiSalesPlatformService(salesPlatformWebhookRequestDto);
             }
 
             if (salesPlatformWebhookRequestDto?.SalesPlatformDto?.Name == SalePlatformName.Sympla)

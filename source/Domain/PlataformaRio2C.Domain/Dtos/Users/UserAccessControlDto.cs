@@ -11,11 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -336,8 +336,8 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [has any edition attendee organization] [the specified attendee organization uids]; otherwise, <c>false</c>.</returns>
         public bool HasAnyEditionAttendeeOrganization(List<Guid> attendeeOrganizationUids)
         {
-            return this.IsAdmin() 
-                   || (attendeeOrganizationUids?.Any() == true &&  this.EditionAttendeeOrganizations?.Any(eao => attendeeOrganizationUids.Contains(eao.Uid)) == true);
+            return this.IsAdmin()
+                   || (attendeeOrganizationUids?.Any() == true && this.EditionAttendeeOrganizations?.Any(eao => attendeeOrganizationUids.Contains(eao.Uid)) == true);
         }
 
         /// <summary>
@@ -360,9 +360,9 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is onboarding pending]; otherwise, <c>false</c>.</returns>
         public bool IsOnboardingPending()
         {
-            return !this.IsAdmin() 
-                   && (!this.IsAttendeeCollaboratorOnboardingFinished() 
-                       || !this.IsPlayerExecutiveAttendeeOrganizationsOnboardingFinished() 
+            return !this.IsAdmin()
+                   && (!this.IsAttendeeCollaboratorOnboardingFinished()
+                       || !this.IsPlayerExecutiveAttendeeOrganizationsOnboardingFinished()
                        || this.IsTicketBuyerOrganizationOnboardingPending());
         }
 
@@ -373,11 +373,11 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is attendee collaborator onboarding finished]; otherwise, <c>false</c>.</returns>
         public bool IsAttendeeCollaboratorOnboardingFinished()
         {
-            return this.IsAudiovisualPlayerTermsAcceptanceFinished() && 
+            return this.IsAudiovisualPlayerTermsAcceptanceFinished() &&
                    this.IsInnovationPlayerTermsAcceptanceFinished() &&
                    this.IsMusicPlayerTermsAcceptanceFinished() &&
-                   this.IsUserOnboardingFinished() && 
-                   this.IsCollaboratorOnboardingFinished() && 
+                   this.IsUserOnboardingFinished() &&
+                   this.IsCollaboratorOnboardingFinished() &&
                    this.IsSpeakerTermsAcceptanceFinished();
         }
 
@@ -470,7 +470,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// </returns>
         public bool IsAudiovisualPlayerAttendeeOrganizationsOnboardingFinished()
         {
-            return this.IsAudiovisualPlayerOrganizationsOnboardingFinished() 
+            return this.IsAudiovisualPlayerOrganizationsOnboardingFinished()
                    && this.IsAudiovisualPlayerOrganizationsInterestsOnboardingFinished();
         }
 
@@ -501,11 +501,14 @@ namespace PlataformaRio2C.Domain.Dtos
                         this.EditionAttendeeOrganizations?.Any() == false
                         || (
                             this.EditionAttendeeOrganizations?.Any() == true
-                            && this.EditionAttendeeOrganizations?.Where(ao => {
-                                return ao.AttendeeOrganizationTypes.Any(aot => {
+                            && this.EditionAttendeeOrganizations?.Where(ao =>
+                            {
+                                return ao.AttendeeOrganizationTypes.Any(aot =>
+                                {
                                     return !aot.IsDeleted && playerOrganizationTypes.Any(p => p == aot.OrganizationType.Name);
                                 });
-                            }).All(ao => {
+                            }).All(ao =>
+                            {
                                 return ao.OnboardingOrganizationDate.HasValue;
                             }) == true
                         )
@@ -554,11 +557,14 @@ namespace PlataformaRio2C.Domain.Dtos
             IEnumerable<string> playerOrganizationTypes = new string[] { OrganizationType.AudiovisualPlayer.Name, OrganizationType.MusicPlayer.Name };
             return this.HasAnyCollaboratorType(collaboratorTypes)
                 && this.EditionAttendeeOrganizations?.Any() == true
-                && this.EditionAttendeeOrganizations?.Where(ao => {
-                    return ao.AttendeeOrganizationTypes.Any(aot => {
+                && this.EditionAttendeeOrganizations?.Where(ao =>
+                {
+                    return ao.AttendeeOrganizationTypes.Any(aot =>
+                    {
                         return !aot.IsDeleted && playerOrganizationTypes.Any(p => p == aot.OrganizationType.Name);
                     });
-                }).Any(ao => {
+                }).Any(ao =>
+                {
                     return ao.OnboardingOrganizationDate.HasValue && !ao.OnboardingInterestsDate.HasValue;
                 }) == true;
         }
@@ -585,7 +591,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is audiovisual or music player organizations interests onboarding finished]; otherwise, <c>false</c>.
         /// </returns>
         public bool IsPlayerExecutiveOrganizationsInterestsOnboardingFinished()
-        {            
+        {
             var collaboratorTypes = new string[] { Constants.CollaboratorType.PlayerExecutiveAudiovisual, Constants.CollaboratorType.PlayerExecutiveMusic };
             IEnumerable<string> playerOrganizationTypes = new string[] { OrganizationType.AudiovisualPlayer.Name, OrganizationType.MusicPlayer.Name };
             return !this.HasAnyCollaboratorType(collaboratorTypes)
@@ -593,12 +599,15 @@ namespace PlataformaRio2C.Domain.Dtos
                         this.EditionAttendeeOrganizations?.Any() == false
                         || (
                             this.EditionAttendeeOrganizations?.Any() == true
-                            && this.EditionAttendeeOrganizations?.Where(ao => {
-                                return ao.AttendeeOrganizationTypes.Any(aot => {
+                            && this.EditionAttendeeOrganizations?.Where(ao =>
+                            {
+                                return ao.AttendeeOrganizationTypes.Any(aot =>
+                                {
                                     return !aot.IsDeleted && playerOrganizationTypes.Any(p => p == aot.OrganizationType.Name);
                                 });
-                            }).All(ao => {
-                               return ao.OnboardingInterestsDate.HasValue;
+                            }).All(ao =>
+                            {
+                                return ao.OnboardingInterestsDate.HasValue;
                             }) == true
                         )
                     );

@@ -24,7 +24,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         {
             this.ToTable("UsersRoles");
 
-            this.HasKey(p => new {p.UserId, p.RoleId });
+            this.HasKey(p => new { p.UserId, p.RoleId });
 
             this.Ignore(p => p.Id);
             this.Ignore(p => p.Uid);

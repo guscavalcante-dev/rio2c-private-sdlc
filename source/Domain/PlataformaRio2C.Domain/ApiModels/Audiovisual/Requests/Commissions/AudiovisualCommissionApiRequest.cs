@@ -11,9 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using Newtonsoft.Json;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
+using System;
 
 namespace PlataformaRio2C.Domain.ApiModels
 {

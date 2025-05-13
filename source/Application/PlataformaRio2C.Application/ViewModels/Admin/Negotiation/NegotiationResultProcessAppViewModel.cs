@@ -42,7 +42,7 @@
 //        //    {
 //        //        DateProcess = DateTime.Now.ToString("dd/MM/yyyy");
 //        //    }
-            
+
 //        //    NumberScheduledNegotiations = negotiations.Count(e => e.RoundNumber > 0 && e.Project != null);
 //        //    NumberUnscheduledNegotiations = submissionsError.Count();
 //        //    UnscheduledNegotiations = ProjectPlayerAppViewModel.MapList(submissionsError);

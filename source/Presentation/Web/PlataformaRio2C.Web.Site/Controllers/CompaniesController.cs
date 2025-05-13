@@ -11,27 +11,27 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
-using System.Threading.Tasks;
-using System.Web.Mvc;
 using MediatR;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
-using System.Collections.Generic;
-using System.Linq;
+using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Site.Filters;
-using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2c.Infra.Data.FileRepository;
-using PlataformaRio2C.Domain.Statics;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -59,7 +59,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="organizationRepository">The organization repository.</param>
         /// <param name="fileRepository">The file repository.</param>
         public CompaniesController(
-            IMediator commandBus, 
+            IMediator commandBus,
             IdentityAutenticationService identityController,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IActivityRepository activityRepository,
@@ -797,7 +797,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     await this.interestRepo.FindAllDtosByProjectTypeIdAsync(ProjectType.AudiovisualBusinessRound.Id),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     true,
-                    ProjectType.AudiovisualBusinessRound.Id); 
+                    ProjectType.AudiovisualBusinessRound.Id);
             }
             catch (DomainException ex)
             {

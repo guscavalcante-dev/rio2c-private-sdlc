@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Infra.CrossCutting.Resources;
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace PlataformaRio2C.Application.ViewModels

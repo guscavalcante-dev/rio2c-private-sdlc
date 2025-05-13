@@ -26,7 +26,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// </summary>
         /// <param name="userUid">The user uid.</param>
         /// <param name="active">if set to <c>true</c> [active].</param>
-        public UpdateUserStatus (Guid userUid, bool active)
+        public UpdateUserStatus(Guid userUid, bool active)
         {
             this.UserUid = userUid;
             this.Active = active;

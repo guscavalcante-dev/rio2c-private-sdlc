@@ -25,7 +25,7 @@ namespace PlataformaRio2C.WebApi
                     }
             };
             config.AddApiVersioning(o => o.ReportApiVersions = true);
-            
+
             config.MapHttpAttributeRoutes(constraintResolver);
 
             config.Routes.MapHttpRoute(

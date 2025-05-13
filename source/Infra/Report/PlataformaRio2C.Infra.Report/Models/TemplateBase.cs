@@ -11,11 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
 
 namespace PlataformaRio2C.Infra.Report.Models
 {
@@ -187,7 +187,7 @@ namespace PlataformaRio2C.Infra.Report.Models
         {
             var tagLabel = new Chunk(label, fontLabel);
             var tagLabelSize = tagLabel.GetWidthPoint() <= 60f ? tagLabel.GetWidthPoint() : tagLabel.GetWidthPoint() - 25;
-            
+
             var rootTable = new PdfPTable(new float[] { tagLabelSize, (PageSize.A4.Width / 2) - (tagLabelSize) });
             rootTable.WidthPercentage = defaultTable.WidthPercentage;
             rootTable.DefaultCell.VerticalAlignment = defaultTable.DefaultCell.VerticalAlignment;

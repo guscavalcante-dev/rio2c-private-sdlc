@@ -86,7 +86,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             DateTimeOffset endDate = startDate.Add(negotiationConfig.TimeOfEachRound);
 
             if (!((project.SellerAttendeeCollaborator.AvailabilityBeginDate == null && project.SellerAttendeeCollaborator.AvailabilityEndDate == null)
-                ||(project.SellerAttendeeCollaborator.AvailabilityBeginDate <= startDate && project.SellerAttendeeCollaborator.AvailabilityEndDate >= endDate)))
+                || (project.SellerAttendeeCollaborator.AvailabilityBeginDate <= startDate && project.SellerAttendeeCollaborator.AvailabilityEndDate >= endDate)))
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(
                                                     Messages.NoPlayerExecutivesAvailableForDate,

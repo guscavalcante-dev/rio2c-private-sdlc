@@ -11,13 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Mail;
-using System.Threading;
-using System.Threading.Tasks;
 using ClosedXML.Excel;
 using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository;
@@ -28,6 +21,13 @@ using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Mail;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -74,15 +74,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var collaboratorDtos = await this.collaboratorRepo.FindAllSpeakersByDataTable(
                 1,
                 10000,
-                "",   
-                null, 
+                "",
+                null,
                 false,
                 false,
                 false,
                 cmd.EditionId ?? 0,
                 false,
                 null,
-                exportToExcel:true);
+                exportToExcel: true);
 
             #region Initial validations
 

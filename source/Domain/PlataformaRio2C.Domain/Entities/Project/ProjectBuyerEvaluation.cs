@@ -11,11 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PlataformaRio2C.Domain.Validation;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -103,8 +103,8 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="projectsApprovalLimitExceeded">if set to <c>true</c> [projects approval limit exceeded].</param>
         /// <param name="userId">The user identifier.</param>
         public void Accept(
-            List<ProjectEvaluationStatus> projectEvaluationStatuses, 
-            bool projectsApprovalLimitExceeded, 
+            List<ProjectEvaluationStatus> projectEvaluationStatuses,
+            bool projectsApprovalLimitExceeded,
             int userId)
         {
             var projectEvaluationStatus = projectEvaluationStatuses?.FirstOrDefault(pes => pes.Code == ProjectEvaluationStatus.Accepted.Code);
@@ -131,9 +131,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="projectEvaluationStatuses">The project evaluation statuses.</param>
         /// <param name="userId">The user identifier.</param>
         public void Refuse(
-            ProjectEvaluationRefuseReason projectEvaluationRefuseReason, 
-            string reason, List<ProjectEvaluationStatus> 
-            projectEvaluationStatuses, 
+            ProjectEvaluationRefuseReason projectEvaluationRefuseReason,
+            string reason, List<ProjectEvaluationStatus>
+            projectEvaluationStatuses,
             int userId)
         {
             var projectEvaluationStatus = projectEvaluationStatuses?.FirstOrDefault(pes => pes.Code == ProjectEvaluationStatus.Refused.Code);

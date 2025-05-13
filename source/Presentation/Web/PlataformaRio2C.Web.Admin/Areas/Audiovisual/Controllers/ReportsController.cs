@@ -12,25 +12,25 @@
 // <summary></summary>
 // ***********************************************************************
 using MediatR;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using PlataformaRio2C.Application.ViewModels;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
+using PlataformaRio2C.Web.Admin.Controllers;
 using PlataformaRio2C.Web.Admin.Filters;
-using Constants = PlataformaRio2C.Domain.Constants;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Application.ViewModels;
-using OfficeOpenXml;
-using OfficeOpenXml.Style;
 using System.Drawing;
 using System.IO;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using PlataformaRio2C.Web.Admin.Controllers;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 {

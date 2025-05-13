@@ -11,6 +11,10 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Statics;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -20,10 +24,6 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Helpers;
-using PlataformaRio2C.Domain.Statics;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
 {

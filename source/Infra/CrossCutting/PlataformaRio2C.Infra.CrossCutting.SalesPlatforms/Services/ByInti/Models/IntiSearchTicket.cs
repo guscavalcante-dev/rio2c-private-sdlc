@@ -12,8 +12,8 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
 using Newtonsoft.Json;
+using System;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Models
 {

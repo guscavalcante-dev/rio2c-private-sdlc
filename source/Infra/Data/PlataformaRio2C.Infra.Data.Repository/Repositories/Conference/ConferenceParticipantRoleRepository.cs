@@ -11,17 +11,17 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using LinqKit;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using LinqKit;
-using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using X.PagedList;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
@@ -171,7 +171,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                                 .FindByUid(conferenceParticipantRoleUid);
-                                //.FindByEditionId(false, editionId);
+            //.FindByEditionId(false, editionId);
 
             return await query
                             .Select(cpr => new ConferenceParticipantRoleDto
@@ -199,7 +199,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                                 .FindByUid(conferenceParticipantRoleUid);
-                                //.FindByEditionId(false, editionId);
+            //.FindByEditionId(false, editionId);
 
             return await query
                             .Select(cpr => new ConferenceParticipantRoleDto
@@ -232,7 +232,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                                 .FindByUid(conferenceParticipantRoleUid);
-                                //.FindByEditionId(false, editionId);
+            //.FindByEditionId(false, editionId);
 
             return await query
                             .Select(cpr => new ConferenceParticipantRoleDto
@@ -284,7 +284,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<List<ConferenceParticipantRoleDto>> FindAllDtoByEditionIdAsync(int editionId)
         {
             var query = this.GetBaseQuery();
-                                //.FindByEditionId(false, editionId);
+            //.FindByEditionId(false, editionId);
 
             return await query
                             .Select(cpr => new ConferenceParticipantRoleDto
@@ -355,7 +355,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<int> CountAllByDataTable(bool showAllEditions, int editionId)
         {
             var query = this.GetBaseQuery();
-                                //.FindByEditionId(showAllEditions, editionId);
+            //.FindByEditionId(showAllEditions, editionId);
 
             return await query
                             .CountAsync();

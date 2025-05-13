@@ -11,13 +11,13 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -38,7 +38,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IUnitOfWork uow,
             ILogisticRepository logisticRepository,
             IAttendeePlacesRepository placeRepository,
-            ILogisticAccommodationRepository logisticAccommodationRepository) 
+            ILogisticAccommodationRepository logisticAccommodationRepository)
             : base(eventBus, uow, logisticAccommodationRepository)
         {
             this.logisticRepo = logisticRepository;
@@ -54,8 +54,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.Uow.BeginTransaction();
 
             var logisticAccommodation = new LogisticAccommodation(
-                cmd.AdditionalInfo, 
-                cmd.CheckInDate, 
+                cmd.AdditionalInfo,
+                cmd.CheckInDate,
                 cmd.CheckOutDate,
                 placeRepo.Get(cmd.PlaceId),
                 logisticRepo.Get(cmd.LogisticsUid),

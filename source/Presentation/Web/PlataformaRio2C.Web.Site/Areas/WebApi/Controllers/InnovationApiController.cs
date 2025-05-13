@@ -124,7 +124,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("create-startup/{key?}"), HttpPost]
         [SwaggerResponse(System.Net.HttpStatusCode.OK)]
         [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
-        public async Task<IHttpActionResult> CreateStartup(string key,  [FromBody] InnovationOrganizationApiDto innovationOrganizationApiDto)
+        public async Task<IHttpActionResult> CreateStartup(string key, [FromBody] InnovationOrganizationApiDto innovationOrganizationApiDto)
         {
             var validationResult = new AppValidationResult();
             try
@@ -149,7 +149,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 }
 
                 #endregion
-                
+
                 if (innovationOrganizationApiDto == null)
                 {
                     throw new DomainException(Messages.IncorrectJsonStructure);
@@ -325,7 +325,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                         Uid = wd.Uid,
                         Name = wd.GetNameTranslation(currentLanguageCode)
                     })?.ToList(),
-                    
+
                     Status = ApiStatus.Success
                 });
             }

@@ -11,24 +11,24 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Application.ViewModels;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
@@ -44,7 +44,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="identityController">The identity controller.</param>
         /// <param name="editionRepository">The edition repository.</param>
         public EditionsController(
-            IMediator commandBus, 
+            IMediator commandBus,
             IdentityAutenticationService identityController,
             IEditionRepository editionRepository)
             : base(commandBus, identityController)

@@ -11,13 +11,7 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Application.ViewModels;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
+using ClosedXML.Excel;
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
@@ -25,6 +19,8 @@ using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Application.ViewModels;
+using PlataformaRio2C.Domain.ApiModels;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
@@ -32,15 +28,19 @@ using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Admin.Controllers;
 using PlataformaRio2C.Web.Admin.Filters;
-using Constants = PlataformaRio2C.Domain.Constants;
-using ClosedXML.Excel;
-using PlataformaRio2C.Domain.ApiModels;
-using PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 {
@@ -221,7 +221,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                             var musicLookingFor = organizationDto.GetAllInterestsNamesByInterestGroupUidAndCulture(
                                 InterestGroup.MusicLookingFor.Uid,
                                 this.UserInterfaceLanguage
-                            ); 
+                            );
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = string.IsNullOrEmpty(musicLookingFor) ? "-" : musicLookingFor;
 
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.OrganizationTargetAudiencesDtos
@@ -229,7 +229,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                                 ?.ToString("; ");
 
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.ImageUploadDate.HasValue ?
-                                this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, organizationDto.Uid, organizationDto.ImageUploadDate, true, "_500x500") 
+                                this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, organizationDto.Uid, organizationDto.ImageUploadDate, true, "_500x500")
                                     : "-";
 
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = organizationDto.IsApiDisplayEnabled.ToYesOrNoString();
@@ -350,9 +350,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         public async Task<ActionResult> Details(Guid? id)
         {
             var attendeeOrganizationDto = await this.attendeeOrganizationRepo.FindDetailsDtoByOrganizationUidAndByOrganizationTypeUidAsync(
-                id ?? Guid.Empty, 
+                id ?? Guid.Empty,
                 OrganizationType.MusicPlayer.Uid,
-                this.EditionDto.Id, 
+                this.EditionDto.Id,
                 false);
 
             if (attendeeOrganizationDto == null)

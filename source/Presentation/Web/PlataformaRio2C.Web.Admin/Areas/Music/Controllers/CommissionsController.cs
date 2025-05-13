@@ -11,27 +11,27 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Application.ViewModels;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Admin.Controllers;
 using PlataformaRio2C.Web.Admin.Filters;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
@@ -275,7 +275,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
                 Constants.CollaboratorType.CommissionMusic,
                 null,
-                true, 
+                true,
                 this.EditionDto.Id);
 
             return Json(new
@@ -299,7 +299,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
                 Constants.CollaboratorType.CommissionMusic,
                 null,
-                false, 
+                false,
                 this.EditionDto.Id);
 
             return Json(new
@@ -322,7 +322,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         public async Task<ActionResult> ShowCreateModal()
         {
             var cmd = new CreateMusicCommissionCollaborator(
-                await this.collaboratorTypeRepo.FindAllByNamesAsync(Constants.CollaboratorType.MusicCommissions), 
+                await this.collaboratorTypeRepo.FindAllByNamesAsync(Constants.CollaboratorType.MusicCommissions),
                 UserInterfaceLanguage);
 
             return Json(new
@@ -408,7 +408,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             {
                 cmd = new UpdateMusicCommissionCollaborator(
                     await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
-                    await this.collaboratorTypeRepo.FindAllByNamesAsync(Constants.CollaboratorType.MusicCommissions), 
+                    await this.collaboratorTypeRepo.FindAllByNamesAsync(Constants.CollaboratorType.MusicCommissions),
                     isAddingToCurrentEdition ?? false,
                     UserInterfaceLanguage);
             }

@@ -11,13 +11,13 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -54,8 +54,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="currentUserOrganizations">The current user organizations.</param>
         /// <param name="projectEvaluationRefuseReasons">The project evaluation refuse reasons.</param>
         public RefuseMusicBusinessRoundProjectEvaluation(
-            MusicBusinessRoundProjectDto musicBusinessRoundProjectDto, 
-            List<AttendeeOrganization> currentUserOrganizations, 
+            MusicBusinessRoundProjectDto musicBusinessRoundProjectDto,
+            List<AttendeeOrganization> currentUserOrganizations,
             List<ProjectEvaluationRefuseReason> projectEvaluationRefuseReasons)
         {
             this.MusicBusinessRoundProjectUid = musicBusinessRoundProjectDto?.Uid;
@@ -73,7 +73,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="currentUserOrganizations">The current user organizations.</param>
         /// <param name="projectEvaluationRefuseReasons">The project evaluation refuse reasons.</param>
         public void UpdateModelsAndLists(
-            MusicBusinessRoundProjectDto musicBusinessRoundProjectDto, 
+            MusicBusinessRoundProjectDto musicBusinessRoundProjectDto,
             List<AttendeeOrganization> currentUserOrganizations,
             List<ProjectEvaluationRefuseReason> projectEvaluationRefuseReasons)
         {

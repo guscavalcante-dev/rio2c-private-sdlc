@@ -29,7 +29,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .WithMany()
                 .HasForeignKey(e => e.EditionId);
 
-            
+
             this.HasRequired(t => t.Collaborator)
                 .WithMany(t => t.EditionParticipantions)
                 .HasForeignKey(e => e.CollaboratorId);

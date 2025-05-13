@@ -162,7 +162,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                 }
             }
             return;
-        }       
+        }
 
         public static ICollection<T> MapToList<T>(this DbDataReader dr) where T : new()
         {

@@ -11,9 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using ClosedXML.Excel;
 using System.IO;
 using System.Web.Mvc;
-using ClosedXML.Excel;
 
 namespace PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults
 {

@@ -11,16 +11,16 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
-using System.Linq;
-using System.Data.Entity;
-using System.Linq.Expressions;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
-using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -277,7 +277,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return this.dbSet
                 .Include(i => i.InterestGroup)
                 .SingleOrDefault(x => x.Id == (int)id);
-            
+
         }
 
         #endregion

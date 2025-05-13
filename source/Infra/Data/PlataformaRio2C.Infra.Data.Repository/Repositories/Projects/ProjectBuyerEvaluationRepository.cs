@@ -11,14 +11,14 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
-using System.Linq;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
-using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -176,7 +176,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<ProjectBuyerEvaluation> FindByEditionAndBuyerOrganizationUid(this IQueryable<ProjectBuyerEvaluation> query, Guid buyerOrganizationUid, int editionId)
         {
-            query = query.Where(pbe => pbe.BuyerAttendeeOrganization.EditionId == editionId 
+            query = query.Where(pbe => pbe.BuyerAttendeeOrganization.EditionId == editionId
                                         && pbe.BuyerAttendeeOrganization.Organization.Uid == buyerOrganizationUid);
 
             return query;

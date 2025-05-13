@@ -16,7 +16,7 @@ using System.Web.Mvc;
 namespace PlataformaRio2C.Web.Admin.Areas.Music
 {
     /// <summary>MusicAreaRegistration</summary>
-    public class MusicAreaRegistration : AreaRegistration 
+    public class MusicAreaRegistration : AreaRegistration
     {
         /// <summary>Gets the name of the area to register.</summary>
         public override string AreaName

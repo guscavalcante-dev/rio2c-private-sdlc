@@ -11,19 +11,18 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla.Models;
-using Newtonsoft.Json.Linq;
-using System.Linq;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using PlataformaRio2C.Domain.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla
 {
@@ -236,7 +235,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla
             while (!hasNoNextPageOrIsLastProcessedOrderFound)
             {
                 var symplaOrdersPaged = this.GetOrdersByPage(eventId, page++);
-               symplaOrders.AddRange(symplaOrdersPaged.SymplaOrders);
+                symplaOrders.AddRange(symplaOrdersPaged.SymplaOrders);
 
                 // Stops the search when it finds the last Order processed or reach at last page.
                 // Orders below this date has already been processed before!

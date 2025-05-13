@@ -11,10 +11,10 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Dtos;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
-using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Web.Site.Filters
 {

@@ -11,11 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using DataTables.AspNet.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic;
-using DataTables.AspNet.Core;
 
 namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 {
@@ -39,10 +39,10 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         /// <param name="defaultSortColumn">The default sort column.</param>
         /// <returns></returns>
         public static IQueryable<T> DynamicOrder<T>(
-            this IQueryable<T> query, 
-            List<Tuple<string, string>> sortColumns, 
-            List<Tuple<string, string>> changeNameColumns, 
-            List<string> allowedColumns, 
+            this IQueryable<T> query,
+            List<Tuple<string, string>> sortColumns,
+            List<Tuple<string, string>> changeNameColumns,
+            List<string> allowedColumns,
             string defaultSortColumn)
         {
             var hasSortColumn = false;

@@ -24,7 +24,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public int EditionId { get; set; }
         public string EditionName { get; set; }
         public int EditionUrlCode { get; set; }
-        
+
         /// <summary>Initializes a new instance of the <see cref="CollaboratorMiniBioBaseDto"/> class.</summary>
         public CollaboratorEditionParticipationBaseDto()
         {

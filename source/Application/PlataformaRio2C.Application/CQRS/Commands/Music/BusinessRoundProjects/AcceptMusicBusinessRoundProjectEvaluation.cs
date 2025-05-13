@@ -11,13 +11,13 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -47,8 +47,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="maximumAvailableSlotsByPlayer">The maximum available slots by player.</param>
         /// <param name="playerAcceptedProjectsCount">The player accepted projects count.</param>
         public AcceptMusicBusinessRoundProjectEvaluation(
-            MusicBusinessRoundProjectDto musicBusinessRoundProjectDto, 
-            List<AttendeeOrganization> currentUserOrganizations, 
+            MusicBusinessRoundProjectDto musicBusinessRoundProjectDto,
+            List<AttendeeOrganization> currentUserOrganizations,
             int maximumAvailableSlotsByPlayer,
             int playerAcceptedProjectsCount)
         {

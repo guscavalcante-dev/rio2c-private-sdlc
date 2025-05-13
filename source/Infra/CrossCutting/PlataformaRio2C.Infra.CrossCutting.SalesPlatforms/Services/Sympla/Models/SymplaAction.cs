@@ -16,7 +16,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla.Mode
     /// <summary>SymplaAction is 'Order_Status' in Sympla platform</summary>
     public class SymplaAction
     {
-        public const string AttendeeUpdated  = "attendee.updated"; //TODO: Sympla doesn't have this status!
+        public const string AttendeeUpdated = "attendee.updated"; //TODO: Sympla doesn't have this status!
         public const string AttendeeCheckedIn = "barcode.checked_in"; //TODO: Sympla doesn't have this status!
         public const string AttendeeCheckedOut = "barcode.un_checked_in"; //TODO: Sympla doesn't have this status!
         public const string OrderPlaced = "order.placed"; //TODO: Sympla doesn't have this status!

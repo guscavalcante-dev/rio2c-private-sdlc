@@ -11,17 +11,17 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using LinqKit;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using LinqKit;
-using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using X.PagedList;
 using Constants = PlataformaRio2C.Domain.Constants;
 
@@ -2895,7 +2895,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                            .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, false, showAllParticipants, editionId)
                            .FindByNames(keywords);
             }
-            
+
 
             return await query
                             .Select(c => new CollaboratorApiListDto

@@ -11,14 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Configuration;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
-using System.Web.Http.Description;
 using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
@@ -29,6 +21,14 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
 using Swashbuckle.Swagger.Annotations;
+using System;
+using System.Configuration;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 {
@@ -327,7 +327,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             {
                 #region Initial Validations
 
-                if(request == null)
+                if (request == null)
                 {
                     return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00000", Message = $"Invalid request parameters. Must be {new UserTicketsInformationApiRequest().ToJson()}" } });
                 }
@@ -393,7 +393,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
                     MusicProject = new MusicProject
                     {
-                        PitchingProjectsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.GetMusicPitchingProjectsSubscriptionsAvailable("", false, null, 0) ?? 0, 
+                        PitchingProjectsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.GetMusicPitchingProjectsSubscriptionsAvailable("", false, null, 0) ?? 0,
                         BusinessRoundsProjectsSubscriptionsAvailable = attendeeCollaboratorTicketsInformationDto?.GetMusicBusinessRoundsProjectsSubscriptionsAvailable(0) ?? 0,
                         Messages = attendeeCollaboratorTicketsInformationDto?.GetMusicMessages("", false, null, 0, 0),
                     },
@@ -405,7 +405,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                         Messages = attendeeCollaboratorTicketsInformationDto?.GetInnovationMessages()
                     },
 
-                    Messages = attendeeCollaboratorTicketsInformationDto?.HasTicket() == true ? 
+                    Messages = attendeeCollaboratorTicketsInformationDto?.HasTicket() == true ?
                     attendeeCollaboratorTicketsInformationDto?.GetAllMessages("", false, null, 0, 0) :
                     new string[] { string.Format(Messages.NoTicketsFoundForDocument, request.Document) },
                 });
@@ -489,7 +489,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     Error = null,
                     TicketCode = request.TicketCode,
                     TicketExists = attendeeCollaboratorTicketDto != null,
-                    Message = attendeeCollaboratorTicketDto != null ? 
+                    Message = attendeeCollaboratorTicketDto != null ?
                                 string.Format(Messages.TicketIsValidForEdition, request.TicketCode, edition.UrlCode) :
                                 string.Format(Messages.TicketIsInvalidForEdition, request.TicketCode, edition.UrlCode)
                 });

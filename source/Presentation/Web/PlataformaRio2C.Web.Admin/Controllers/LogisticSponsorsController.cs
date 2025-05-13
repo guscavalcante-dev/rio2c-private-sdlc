@@ -11,26 +11,26 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Application.ViewModels;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Admin.Filters;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
@@ -51,7 +51,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="logisticSponsorRepo">The logistic sponsor repo.</param>
         /// <param name="languageRepo">The language repo.</param>
         public LogisticSponsorsController(
-            IMediator commandBus, 
+            IMediator commandBus,
             IdentityAutenticationService identityController,
             ILogisticSponsorRepository logisticSponsorRepo,
             ILanguageRepository languageRepo)
@@ -103,7 +103,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }
 
             var response = DataTablesResponse.Create(request, sponsors.TotalItemCount, sponsors.TotalItemCount, sponsors);
-            
+
             return Json(new
             {
                 status = "success",

@@ -11,12 +11,12 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Web;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Web;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {

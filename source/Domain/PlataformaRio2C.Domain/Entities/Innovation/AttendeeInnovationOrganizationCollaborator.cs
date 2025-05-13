@@ -13,10 +13,6 @@
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -38,8 +34,8 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
         /// <param name="userId">The user identifier.</param>
         public AttendeeInnovationOrganizationCollaborator(
-            AttendeeInnovationOrganization attendeeInnovationOrganization, 
-            AttendeeCollaborator attendeeCollaborator, 
+            AttendeeInnovationOrganization attendeeInnovationOrganization,
+            AttendeeCollaborator attendeeCollaborator,
             int userId)
         {
             this.AttendeeInnovationOrganization = attendeeInnovationOrganization;

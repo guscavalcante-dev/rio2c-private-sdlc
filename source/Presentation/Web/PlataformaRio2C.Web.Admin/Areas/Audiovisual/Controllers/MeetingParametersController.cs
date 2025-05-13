@@ -11,27 +11,28 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Application.ViewModels;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Admin.Controllers;
 using PlataformaRio2C.Web.Admin.Filters;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 using Constants = PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Domain.Entities;
 using DocumentFormat.OpenXml.Office.Word;
@@ -61,7 +62,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="roomRepository">The room repository.</param>
         /// <param name="organizationRepository">The attendee organization repository.</param>
         public MeetingParametersController(
-            IMediator commandBus, 
+            IMediator commandBus,
             IdentityAutenticationService identityController,
             INegotiationConfigRepository negotiationConfigRepository,
             IProjectRepository projectRepository,
@@ -138,7 +139,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowTotalCountWidget()
         {
-            var executivesCount = await this.negotiationConfigRepo.CountAsync(this.EditionDto.Id,ProjectType.AudiovisualBusinessRound.Id, true);
+            var executivesCount = await this.negotiationConfigRepo.CountAsync(this.EditionDto.Id, ProjectType.AudiovisualBusinessRound.Id, true);
 
             return Json(new
             {
@@ -901,12 +902,12 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                         // Each automatic table
                         //for (int tableNumber = 1; tableNumber <= negotiationRoomConfigDto.NegotiationRoomConfig.CountManualTables; tableNumber++)
                         //{
-                            negotiationTimesSlots.Add(new NegotiationTimeDropdownDto
-                            {
-                                StartTime = startDate,
-                                EndTime = startDate.Add(negotiationConfigDto.NegotiationConfig.TimeOfEachRound),
-                                RoundNumber = roundNumber
-                            });
+                        negotiationTimesSlots.Add(new NegotiationTimeDropdownDto
+                        {
+                            StartTime = startDate,
+                            EndTime = startDate.Add(negotiationConfigDto.NegotiationConfig.TimeOfEachRound),
+                            RoundNumber = roundNumber
+                        });
                         //}
                     }
                 }
@@ -933,12 +934,12 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                         // Each automatic table
                         //for (int tableNumber = 1; tableNumber <= negotiationRoomConfigDto.NegotiationRoomConfig.CountManualTables; tableNumber++)
                         //{
-                            negotiationTimesSlots.Add(new NegotiationTimeDropdownDto
-                            {
-                                StartTime = startDate,
-                                EndTime = startDate.Add(negotiationConfigDto.NegotiationConfig.TimeOfEachRound),
-                                RoundNumber = roundNumber
-                            });
+                        negotiationTimesSlots.Add(new NegotiationTimeDropdownDto
+                        {
+                            StartTime = startDate,
+                            EndTime = startDate.Add(negotiationConfigDto.NegotiationConfig.TimeOfEachRound),
+                            RoundNumber = roundNumber
+                        });
                         //}
                     }
                 }

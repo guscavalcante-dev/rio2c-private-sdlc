@@ -16,7 +16,6 @@ using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
-using System.Xml.Linq;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -50,7 +49,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool IsValid()
         {
             this.ValidationResult = new ValidationResult();
-            
+
             if (!this.Uid.HasValue)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(Uid)), new string[] { nameof(Uid) }));

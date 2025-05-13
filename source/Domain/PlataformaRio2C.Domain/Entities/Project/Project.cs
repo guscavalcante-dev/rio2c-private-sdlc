@@ -11,11 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -384,7 +384,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
         public ProjectBuyerEvaluation AcceptProjectBuyerEvaluation(
-            Guid attendeeOrganizationUid, 
+            Guid attendeeOrganizationUid,
             List<ProjectEvaluationStatus> projectEvaluationStatuses,
             bool projectsApprovalLimitExceeded,
             int userId)
@@ -1006,9 +1006,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <returns></returns>
         public int GetMaxSellProjectsCount()
         {
-           return this.SellerAttendeeOrganization
-                ?.Edition
-                ?.AttendeeOrganizationMaxSellProjectsCount ?? 0;
+            return this.SellerAttendeeOrganization
+                 ?.Edition
+                 ?.AttendeeOrganizationMaxSellProjectsCount ?? 0;
         }
 
         /// <summary>Returns true if ... is valid.</summary>
@@ -1529,7 +1529,7 @@ namespace PlataformaRio2C.Domain.Entities
         //}
 
         #endregion
-        
+
         public bool IsPitching()
         {
             return new int[] {

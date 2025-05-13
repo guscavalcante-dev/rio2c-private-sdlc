@@ -12,6 +12,8 @@
 // <summary></summary>
 // ***********************************************************************
 using Microsoft.Owin;
+using PlataformaRio2C.Application.CQRS.CommandsHandlers;
+using PlataformaRio2C.Infra.CrossCutting.CQRS;
 using PlataformaRio2C.Infra.CrossCutting.IOC;
 using SimpleInjector;
 using SimpleInjector.Integration.Web;
@@ -21,8 +23,6 @@ using System.Reflection;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
-using PlataformaRio2C.Application.CQRS.CommandsHandlers;
-using PlataformaRio2C.Infra.CrossCutting.CQRS;
 
 namespace PlataformaRio2C.WebApi
 {

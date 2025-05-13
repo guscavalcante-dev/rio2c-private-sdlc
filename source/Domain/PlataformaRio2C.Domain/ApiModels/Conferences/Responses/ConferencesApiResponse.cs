@@ -11,9 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace PlataformaRio2C.Domain.ApiModels
 {
@@ -62,7 +62,7 @@ namespace PlataformaRio2C.Domain.ApiModels
 
         [JsonProperty("tracks", Order = 702)]
         public List<TrackBaseApiResponse> Tracks { get; set; }
-        
+
         [JsonProperty("presentationFormats", Order = 703)]
         public List<PresentationFormatBaseApiResponse> PresentationFormats { get; set; }
 

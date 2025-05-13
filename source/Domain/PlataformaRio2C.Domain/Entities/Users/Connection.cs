@@ -11,10 +11,10 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using System;
 
 namespace PlataformaRio2C.Domain.Entities
 {

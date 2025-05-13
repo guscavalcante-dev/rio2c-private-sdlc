@@ -11,28 +11,27 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Application.ViewModels;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
-using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Admin.Controllers;
 using PlataformaRio2C.Web.Admin.Filters;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
@@ -55,7 +54,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
         /// <param name="attendeeCartoonProjectRepository">The attendee cartoon project repository.</param>
         public CommissionsController(
-            IMediator commandBus, 
+            IMediator commandBus,
             IdentityAutenticationService identityController,
             ICollaboratorRepository collaboratorRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
@@ -95,7 +94,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
         /// <param name="request">The request.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
-  
+
         /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllParticipants)
@@ -274,7 +273,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
                 Constants.CollaboratorType.CommissionCartoon,
                 null,
-                true, 
+                true,
                 this.EditionDto.Id);
 
             return Json(new
@@ -298,7 +297,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
                 Constants.CollaboratorType.CommissionCartoon,
                 null,
-                false, 
+                false,
                 this.EditionDto.Id);
 
             return Json(new

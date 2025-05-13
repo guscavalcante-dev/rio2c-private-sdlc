@@ -12,8 +12,8 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
-using System;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using System;
 
 namespace PlataformaRio2C.Domain.Entities
 {

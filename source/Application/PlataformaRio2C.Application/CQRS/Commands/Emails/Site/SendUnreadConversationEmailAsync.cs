@@ -33,7 +33,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                   notificationEmailConversationDto.RecipientUser.Uid,
                   notificationEmailConversationDto.RecipientUser.Name.GetFirstWord(),
                   notificationEmailConversationDto.RecipientUser.Name,
-                  notificationEmailConversationDto.RecipientUser.Email, 
+                  notificationEmailConversationDto.RecipientUser.Email,
                   edition,
                   notificationEmailConversationDto.RecipientLanguage?.Code ?? "pt-br")
         {

@@ -12,13 +12,13 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
-using System.Collections.Generic;
 using Newtonsoft.Json;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Models;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using System;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti
 {

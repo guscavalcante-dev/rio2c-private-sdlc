@@ -13,8 +13,6 @@
 // ***********************************************************************
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
-using DocumentFormat.OpenXml.Bibliography;
-using DocumentFormat.OpenXml.Wordprocessing;
 using MediatR;
 using Microsoft.Ajax.Utilities;
 using PlataformaRio2C.Application;

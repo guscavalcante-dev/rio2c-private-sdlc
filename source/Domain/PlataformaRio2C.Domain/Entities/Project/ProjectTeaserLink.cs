@@ -11,9 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using System;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -24,7 +24,7 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int ValueMaxLength = 3000;
 
         public int ProjectId { get; private set; }
-        public string Value { get; private set; }       
+        public string Value { get; private set; }
 
         public virtual Project Project { get; private set; }
 

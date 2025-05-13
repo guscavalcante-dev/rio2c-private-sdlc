@@ -339,7 +339,7 @@ namespace PlataformaRio2C.WebApi.Areas.Api.Controllers
                             if (!fieldsArray.Contains(itemProperty.Name))
                             {
                                 DynamicExtensions.AddProperty(itemOutput, itemProperty.Name, viewModel.GetType().GetProperty(itemProperty.Name).GetValue(viewModel, null));
-                            }                            
+                            }
                         }
 
                         viewModel = itemOutput;

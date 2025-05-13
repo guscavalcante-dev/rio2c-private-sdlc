@@ -12,12 +12,12 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
-using System.Collections.Generic;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using System;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -34,7 +34,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public DateTimeOffset? InnovationPlayerTermsAcceptanceDate { get; private set; }
         public DateTimeOffset? MusicPlayerTermsAcceptanceDate { get; private set; }
         public DateTimeOffset? AudiovisualProducerBusinessRoundTermsAcceptanceDate { get; private set; }
-        public DateTimeOffset? AudiovisualProducerPitchingTermsAcceptanceDate { get; private set; }        
+        public DateTimeOffset? AudiovisualProducerPitchingTermsAcceptanceDate { get; private set; }
         public UserBaseDto UpdaterBaseDto { get; private set; }
         public DateTimeOffset UpdateDate { get; private set; }
 
@@ -144,7 +144,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<CollaboratorGender> genders,
             List<CollaboratorIndustry> industries,
             List<CollaboratorRole> collaboratorRoles,
-            List<EditionDto> editionsDtos,         
+            List<EditionDto> editionsDtos,
             int currentEditionId,
             string userInterfaceLanguage)
         {
@@ -157,7 +157,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.InnovationPlayerTermsAcceptanceDate = entity.EditionAttendeeCollaboratorBaseDto?.InnovationPlayerTermsAcceptanceDate;
             this.MusicPlayerTermsAcceptanceDate = entity.EditionAttendeeCollaboratorBaseDto?.MusicPlayerTermsAcceptanceDate;
             this.AudiovisualProducerBusinessRoundTermsAcceptanceDate = entity.EditionAttendeeCollaboratorBaseDto?.AudiovisualProducerBusinessRoundTermsAcceptanceDate;
-            this.AudiovisualProducerPitchingTermsAcceptanceDate = entity.EditionAttendeeCollaboratorBaseDto?.AudiovisualProducerPitchingTermsAcceptanceDate;            
+            this.AudiovisualProducerPitchingTermsAcceptanceDate = entity.EditionAttendeeCollaboratorBaseDto?.AudiovisualProducerPitchingTermsAcceptanceDate;
             this.UpdaterBaseDto = entity.UpdaterBaseDto;
             this.UpdateDate = entity.UpdateDate;
 
@@ -166,7 +166,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 genders,
                 industries,
                 collaboratorRoles,
-                editionsDtos,              
+                editionsDtos,
                 currentEditionId,
                 userInterfaceLanguage);
         }

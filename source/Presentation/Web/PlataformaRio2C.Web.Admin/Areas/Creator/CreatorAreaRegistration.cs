@@ -16,7 +16,7 @@ using System.Web.Mvc;
 namespace PlataformaRio2C.Web.Admin.Areas.Creator
 {
     /// <summary>CreatorAreaRegistration</summary>
-    public class CreatorAreaRegistration : AreaRegistration 
+    public class CreatorAreaRegistration : AreaRegistration
     {
         /// <summary>Gets the name of the area to register.</summary>
         public override string AreaName

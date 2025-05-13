@@ -11,20 +11,20 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>UpdateCollaboratorMainInformationBaseCommand</summary>
     public class UpdateCollaboratorMainInformationBaseCommand : BaseCommand
-    {        
+    {
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAnOption")]
         public bool? SharePublicEmail { get; set; }
 

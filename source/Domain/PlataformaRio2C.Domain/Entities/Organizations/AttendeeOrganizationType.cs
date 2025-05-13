@@ -33,10 +33,10 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="userId">The user identifier.</param>
         public AttendeeOrganizationType(
-            AttendeeOrganization attendeeOrganization, 
-            OrganizationType organizationType, 
-            bool? isApiDisplayEnabled, 
-            int? apiHighlightPosition, 
+            AttendeeOrganization attendeeOrganization,
+            OrganizationType organizationType,
+            bool? isApiDisplayEnabled,
+            int? apiHighlightPosition,
             int userId)
         {
             this.AttendeeOrganization = attendeeOrganization;

@@ -1,9 +1,9 @@
-using System.Web.Http;
-using WebActivatorEx;
 using PlataformaRio2C.Web.Site;
+using PlataformaRio2C.Web.Site.Filters;
 using Swashbuckle.Application;
 using System.Configuration;
-using PlataformaRio2C.Web.Site.Filters;
+using System.Web.Http;
+using WebActivatorEx;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
@@ -23,7 +23,7 @@ namespace PlataformaRio2C.Web.Site
                         // resolve correctly. You can workaround this by providing your own code to determine the root URL.
                         //
                         c.RootUrl(req => GetRootUrlFromAppConfig());
-                        
+
                         // If schemes are not explicitly provided in a Swagger 2.0 document, then the scheme used to access
                         // the docs is taken as the default. If your API supports multiple schemes and you want to be explicit
                         // about them, you can use the "Schemes" option as shown below.
@@ -34,7 +34,7 @@ namespace PlataformaRio2C.Web.Site
                         // hold additional metadata for an API. Version and title are required but you can also provide
                         // additional fields by chaining methods off SingleApiVersion.
                         //
- 
+
                         c.SingleApiVersion("v1", "PlataformaRio2C.Web.Site");
                         c.SchemaFilter<SwaggerCustomSchemaFilter>();
                         c.SchemaFilter<SwaggerCustomDefaulValueFilter>();

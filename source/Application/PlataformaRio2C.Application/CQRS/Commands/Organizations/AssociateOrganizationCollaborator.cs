@@ -31,7 +31,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "CollaboratorType", ResourceType = typeof(Labels))]
         public string CollaboratorTypeName { get; set; }
-        
+
         [Display(Name = "OrganizationType", ResourceType = typeof(Labels))]
         public Guid? OrganizationTypeUid { get; set; }
 

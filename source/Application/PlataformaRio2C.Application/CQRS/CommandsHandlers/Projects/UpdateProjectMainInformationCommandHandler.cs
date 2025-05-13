@@ -11,15 +11,15 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -109,7 +109,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             {
                 if (new int[] { ProjectModality.Both.Id, ProjectModality.BusinessRound.Id }.Contains(projectModality.Id))
                 {
-                    var sellProjectsCount = await this.ProjectRepo.CountAsync(p => 
+                    var sellProjectsCount = await this.ProjectRepo.CountAsync(p =>
                         p.SellerAttendeeOrganizationId == attendeeOrganization.Id
                         && !p.IsDeleted
                         && new int[] {
@@ -141,7 +141,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     }
                 }
             }
-            
+
             if (!project.IsValid())
             {
                 this.AppValidationResult.Add(project.ValidationResult);

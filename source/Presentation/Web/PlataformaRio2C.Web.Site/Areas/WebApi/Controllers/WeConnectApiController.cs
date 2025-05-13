@@ -11,12 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Configuration;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Description;
 using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
@@ -25,6 +19,12 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
+using System;
+using System.Configuration;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 {
@@ -62,7 +62,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         public async Task<IHttpActionResult> SyncInstagramPublications(string key)
         {
             var result = new AppValidationResult();
-            
+
             try
             {
                 #region Initial Validations
@@ -81,14 +81,14 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 #endregion
 
                 var cmd = new SynchronizeWeConnectPublications(
-                    SocialMediaPlatformName.Instagram, 
+                    SocialMediaPlatformName.Instagram,
                     key);
 
                 cmd.UpdatePreSendProperties(
                     applicationUser.Id,
                     applicationUser.Uid,
                     null,
-                    null, 
+                    null,
                     "");
 
                 result = await this.commandBus.Send(cmd);

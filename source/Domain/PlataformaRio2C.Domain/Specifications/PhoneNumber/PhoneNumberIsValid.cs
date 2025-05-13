@@ -1,7 +1,6 @@
 ﻿using PlataformaRio2C.Domain.Enums;
 using PlataformaRio2C.Domain.Interfaces;
 using System.Text.RegularExpressions;
-using System;
 
 namespace PlataformaRio2C.Domain.Entities.Specifications
 {
@@ -18,7 +17,7 @@ namespace PlataformaRio2C.Domain.Entities.Specifications
         public PhoneNumberIsValid(string target)
         {
             Target = target;
-        }      
+        }
 
         public bool IsSatisfiedBy(string value)
         {

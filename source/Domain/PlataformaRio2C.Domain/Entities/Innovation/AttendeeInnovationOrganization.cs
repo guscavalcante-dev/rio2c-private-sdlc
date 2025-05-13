@@ -16,8 +16,6 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -62,7 +60,7 @@ namespace PlataformaRio2C.Domain.Entities
         public bool WouldYouLikeParticipateBusinessRound { get; private set; }
         public bool WouldYouLikeParticipatePitching { get; private set; }
         public decimal? AccumulatedRevenueForLastTwelveMonths { get; private set; }
-        
+
         public virtual ICollection<AttendeeInnovationOrganizationCollaborator> AttendeeInnovationOrganizationCollaborators { get; private set; }
         public virtual ICollection<AttendeeInnovationOrganizationCompetitor> AttendeeInnovationOrganizationCompetitors { get; private set; }
         public virtual ICollection<AttendeeInnovationOrganizationFounder> AttendeeInnovationOrganizationFounders { get; private set; }

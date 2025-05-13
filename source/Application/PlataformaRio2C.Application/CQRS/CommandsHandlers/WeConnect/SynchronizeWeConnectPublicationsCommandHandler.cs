@@ -11,12 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
@@ -28,6 +22,12 @@ using PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {

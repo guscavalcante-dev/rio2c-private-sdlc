@@ -12,11 +12,11 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -271,10 +271,10 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="otherAirfareSponsorName">Name of the other airfare sponsor.</param>
         /// <param name="userId">The user identifier.</param>
         private void UpdateAirfareAttendeeLogisticSponsor(
-            Edition edition, 
-            AttendeeLogisticSponsor airfareAttendeeLogisticSponsor, 
-            LogisticSponsor otherAirfareLogisticSponsor, 
-            string otherAirfareSponsorName, 
+            Edition edition,
+            AttendeeLogisticSponsor airfareAttendeeLogisticSponsor,
+            LogisticSponsor otherAirfareLogisticSponsor,
+            string otherAirfareSponsorName,
             int userId)
         {
             // Other logistic sponsor typed exists in database
@@ -334,10 +334,10 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="otherAccommodationSponsorName">Name of the other accommodation sponsor.</param>
         /// <param name="userId">The user identifier.</param>
         private void UpdateAccommodationAttendeeLogisticSponsor(
-            Edition edition, 
-            AttendeeLogisticSponsor accommodationAttendeeLogisticSponsor, 
-            LogisticSponsor otherAccommodationLogisticSponsor, 
-            string otherAccommodationSponsorName, 
+            Edition edition,
+            AttendeeLogisticSponsor accommodationAttendeeLogisticSponsor,
+            LogisticSponsor otherAccommodationLogisticSponsor,
+            string otherAccommodationSponsorName,
             int userId)
         {
             // Other logistic sponsor typed exists in database
@@ -398,10 +398,10 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="otherAirportTransferSponsorName">Name of the other airport transfer sponsor.</param>
         /// <param name="userId">The user identifier.</param>
         private void UpdateAirportTransferAttendeeLogisticSponsor(
-            Edition edition, 
+            Edition edition,
             AttendeeLogisticSponsor airportTransferAttendeeLogisticSponsor,
             LogisticSponsor otherAirportTransferLogisticSponsor,
-            string otherAirportTransferSponsorName, 
+            string otherAirportTransferSponsorName,
             int userId)
         {
             // Other logistic sponsor typed exists in database

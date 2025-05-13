@@ -186,7 +186,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         /// <returns></returns>
         public static string GetLimit(this string s, int limit)
         {
-            return (s?.Length ?? 0) <= limit ? s : 
+            return (s?.Length ?? 0) <= limit ? s :
                    s?.Substring(0, limit - 1);
         }
 
@@ -672,7 +672,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             return s;
         }
 
-        
+
         #endregion
 
         #region File

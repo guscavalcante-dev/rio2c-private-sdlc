@@ -11,10 +11,7 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Collections.Generic;
-using System.Linq;
 using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -22,7 +19,7 @@ namespace PlataformaRio2C.Domain.Dtos
     public class UserLanguageDto
     {
         public Language Language { get; set; }
-        
+
         /// <summary>Initializes a new instance of the <see cref="UserAccessControlDto"/> class.</summary>
         public UserLanguageDto()
         {

@@ -26,7 +26,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SystemParameter.Models
         }
 
         public AppValidationResult Add(string message)
-        {            
+        {
             _erros.Add(new AppValidationError(message));
             return this;
         }

@@ -11,11 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
 using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Domain.ApiModels;
 using PlataformaRio2C.Domain.Entities;
@@ -23,6 +18,11 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using Swashbuckle.Swagger.Annotations;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Http;
 
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 {
@@ -107,7 +107,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 request?.ModifiedAfterDate.ToUtcDateKind(),
                 request?.ShowDetails ?? false,
                 request?.ShowDeleted ?? false,
-                request?.Page ?? 1, 
+                request?.Page ?? 1,
                 request?.PageSize ?? 10);
 
             return await Json(new AudiovisualPlayersApiResponse

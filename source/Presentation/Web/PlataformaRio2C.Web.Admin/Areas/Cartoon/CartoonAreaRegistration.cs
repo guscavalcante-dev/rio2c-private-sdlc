@@ -16,7 +16,7 @@ using System.Web.Mvc;
 namespace PlataformaRio2C.Web.Admin.Areas.Cartoon
 {
     /// <summary>CartoonAreaRegistration</summary>
-    public class CartoonAreaRegistration : AreaRegistration 
+    public class CartoonAreaRegistration : AreaRegistration
     {
         /// <summary>Gets the name of the area to register.</summary>
         public override string AreaName

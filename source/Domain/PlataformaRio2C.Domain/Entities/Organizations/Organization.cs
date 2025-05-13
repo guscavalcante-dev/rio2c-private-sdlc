@@ -11,12 +11,12 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -66,7 +66,7 @@ namespace PlataformaRio2C.Domain.Entities
         public int? AddressId { get; private set; }
         public DateTimeOffset? ImageUploadDate { get; private set; }
         public bool? IsVirtualMeeting { get; private set; }
-        
+
         public virtual Holding Holding { get; private set; }
         public virtual Address Address { get; private set; }
         public virtual User Updater { get; private set; }
@@ -114,22 +114,22 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="organizationInterests">The organization interests.</param>
         /// <param name="userId">The user identifier.</param>
         public Organization(
-            Guid uid, 
-            Holding holding, 
+            Guid uid,
+            Holding holding,
             Edition edition,
             OrganizationType organizationType,
             bool? isApiDisplayEnabled,
             int? apiHighlightPosition,
-            string name, 
-            string companyName, 
-            string tradeName, 
+            string name,
+            string companyName,
+            string tradeName,
             string document,
             string website,
             string linkedin,
             string twitter,
             string instagram,
             string youtube,
-            string phoneNumber, 
+            string phoneNumber,
             Country country,
             Guid? stateUid,
             string stateName,
@@ -167,8 +167,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeAttendeeOrganizations(edition, organizationType, isApiDisplayEnabled, apiHighlightPosition, null, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId, projectType);
-            this.SynchronizeOrganizationTargetAudiences(organizationTargetAudiences, userId,projectType);
-            this.SynchronizeOrganizationInterests(organizationInterests, userId,projectType);
+            this.SynchronizeOrganizationTargetAudiences(organizationTargetAudiences, userId, projectType);
+            this.SynchronizeOrganizationInterests(organizationInterests, userId, projectType);
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="organizationIterests">The organization iterests.</param>
         /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
         /// <param name="userId">The user identifier.</param>
-        public void Update (
+        public void Update(
             Holding holding,
             Edition edition,
             OrganizationType organizationType,
@@ -452,9 +452,9 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsVirtualMeeting = isVirtualMeeting;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
-            
+
             this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
-            this.SynchronizeAttendeeOrganizations(edition, organizationType, isApiDisplayEnabled, apiHighlightPosition, null, false, userId);  
+            this.SynchronizeAttendeeOrganizations(edition, organizationType, isApiDisplayEnabled, apiHighlightPosition, null, false, userId);
         }
 
         /// <summary>
@@ -613,7 +613,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
             this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId, projectType);
-            this.SynchronizeOrganizationTargetAudiences(organizationTargetAudiences, userId,projectType);
+            this.SynchronizeOrganizationTargetAudiences(organizationTargetAudiences, userId, projectType);
             this.SynchronizeAttendeeOrganizations(edition, organizationType, null, null, null, true, userId);
             this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, addressIsManual, userId);
             this.OnboardPlayerAttendeeOrganizationData(edition, userId);
@@ -802,27 +802,27 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.Address == null)
             {
                 this.Address = new Address(
-                    country, 
-                    stateUid, 
-                    stateName, 
-                    cityUid, 
-                    cityName, 
+                    country,
+                    stateUid,
+                    stateName,
+                    cityUid,
+                    cityName,
                     address1,
-                    addressZipCode, 
-                    addressIsManual, 
+                    addressZipCode,
+                    addressIsManual,
                     userId);
             }
             else
             {
                 this.Address.Update(
-                    country, 
-                    stateUid, 
-                    stateName, 
-                    cityUid, 
+                    country,
+                    stateUid,
+                    stateName,
+                    cityUid,
                     cityName,
                     address1,
                     addressZipCode,
-                    addressIsManual, 
+                    addressIsManual,
                     userId);
             }
         }
@@ -1034,12 +1034,12 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
         /// <param name="userId">The user identifier.</param>
         private void SynchronizeAttendeeOrganizations(
-            Edition edition, 
+            Edition edition,
             OrganizationType organizationType,
             bool? isApiDisplayEnabled,
             int? apiHighlightPosition,
-            AttendeeCollaborator attendeeCollaborator, 
-            bool isAddingToCurrentEdition, 
+            AttendeeCollaborator attendeeCollaborator,
+            bool isAddingToCurrentEdition,
             int userId)
         {
             //// Synchronize only when is adding to current edition
@@ -1193,7 +1193,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Synchronizes the organization target audiences.</summary>
         /// <param name="organizationTargetAudiences">The target audiences.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeOrganizationTargetAudiences(List<OrganizationTargetAudience> organizationTargetAudiences, int userId,int projectType)
+        private void SynchronizeOrganizationTargetAudiences(List<OrganizationTargetAudience> organizationTargetAudiences, int userId, int projectType)
         {
             if (this.OrganizationTargetAudiences == null)
             {
@@ -1225,7 +1225,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Deletes the organization target audiences.</summary>
         /// <param name="newTargetAudiences">The new target audiences.</param>
         /// <param name="userId">The user identifier.</param>
-        private void DeleteOrganizationTargetAudiences(List<OrganizationTargetAudience> newTargetAudiences, int userId,int projectType)
+        private void DeleteOrganizationTargetAudiences(List<OrganizationTargetAudience> newTargetAudiences, int userId, int projectType)
         {
             var organizationTargetAudiencesToDelete = this.OrganizationTargetAudiences.Where(db => newTargetAudiences?.Select(a => a.Uid)?.Contains(db.TargetAudience.Uid) == false && !db.IsDeleted && db.TargetAudience.ProjectType.Id == projectType).ToList();
             foreach (var organizationTargetAudienceToDelete in organizationTargetAudiencesToDelete)

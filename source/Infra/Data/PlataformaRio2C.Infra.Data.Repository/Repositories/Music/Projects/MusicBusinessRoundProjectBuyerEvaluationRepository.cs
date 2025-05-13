@@ -14,7 +14,6 @@
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces.Repositories;
-using PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

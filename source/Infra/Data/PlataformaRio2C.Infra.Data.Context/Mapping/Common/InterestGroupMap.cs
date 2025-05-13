@@ -26,7 +26,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
 
             this.Property(p => p.Type)
                 .HasMaxLength(InterestGroup.TypeMaxLength)
-                .IsRequired(); 
+                .IsRequired();
 
             this.Property(t => t.Name)
                .HasMaxLength(InterestGroup.NameMaxLength)

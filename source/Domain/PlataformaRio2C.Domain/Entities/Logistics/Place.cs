@@ -11,11 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PlataformaRio2C.Domain.Validation;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -27,12 +27,12 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int AdditionalInfoMaxLength = 1000;
 
         public string Name { get; private set; }
-        public bool IsHotel { get; private set; }     
+        public bool IsHotel { get; private set; }
         public bool IsAirport { get; private set; }
         public int? AddressId { get; private set; }
         public string Website { get; private set; }
         public string AdditionalInfo { get; private set; }
-        
+
         public virtual Address Address { get; private set; }
 
         public virtual ICollection<AttendeePlace> AttendeePlaces { get; private set; }
@@ -98,9 +98,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="addressZipCode">The address zip code.</param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateMainInformation(
-            string name, 
-            string type, 
-            string website, 
+            string name,
+            string type,
+            string website,
             string additionalInfo,
             Country country,
             Guid? stateUid,
@@ -162,7 +162,7 @@ namespace PlataformaRio2C.Domain.Entities
             }
             else
             {
-                this.AttendeePlaces.Add(new AttendeePlace(edition,this, userId));
+                this.AttendeePlaces.Add(new AttendeePlace(edition, this, userId));
             }
         }
 

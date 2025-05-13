@@ -11,9 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.ApiModels
 {
@@ -37,7 +36,7 @@ namespace PlataformaRio2C.Domain.ApiModels
 
         // "OrganizationTracks" was changed to "OrganizationVerticalsAndCreativeEconomyThemes" by customer request.
         // Original Documentation: Enquadre seu produto ou serviço em uma das verticais e temas da economia criativa abaixo*
-        [JsonProperty("organizationVerticalsAndCreativeEconomyThemes")] 
+        [JsonProperty("organizationVerticalsAndCreativeEconomyThemes")]
         public List<InnovationOrganizationTrackOptionListItemApiResponse> InnovationOrganizationTrackOptions { get; set; }
 
     }

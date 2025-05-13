@@ -16,7 +16,7 @@ using System.Web.Mvc;
 namespace PlataformaRio2C.Web.Admin.Areas.Innovation
 {
     /// <summary>InnovationAreaRegistration</summary>
-    public class InnovationAreaRegistration : AreaRegistration 
+    public class InnovationAreaRegistration : AreaRegistration
     {
         /// <summary>Gets the name of the area to register.</summary>
         public override string AreaName

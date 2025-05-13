@@ -11,14 +11,14 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
+using System;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
 using X.PagedList;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
@@ -148,11 +148,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     PublicationText = wcp.PublicationText,
                                     SocialMediaPlatformPublicationId = wcp.SocialMediaPlatformPublicationId,
                                     ImageUploadDate = wcp.ImageUploadDate,
-                                    CreateDate= wcp.CreateDate,
-                                    IsFixedOnTop= wcp.IsFixedOnTop,
+                                    CreateDate = wcp.CreateDate,
+                                    IsFixedOnTop = wcp.IsFixedOnTop,
                                     IsVideo = wcp.IsVideo,
-                                    SocialMediaPlatformDto = new SocialMediaPlatformDto 
-                                    { 
+                                    SocialMediaPlatformDto = new SocialMediaPlatformDto
+                                    {
                                         Name = wcp.SocialMediaPlatform.Name,
                                         PublicationsRootUrl = wcp.SocialMediaPlatform.PublicationsRootUrl
                                     }

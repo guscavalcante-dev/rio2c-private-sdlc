@@ -12,11 +12,11 @@
 // <summary></summary>
 // ***********************************************************************
 using MediatR;
+using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
-using PlataformaRio2C.Application.CQRS.Commands;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -46,7 +46,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         public async Task<AppValidationResult> Handle(UpdateUserInterfaceLanguage cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
-            
+
             var user = await this.GetUserByUid(cmd.Useruid);
             user.UpdateInterfaceLanguage(
                 await this.languageRepo.GetAsync(l => l.Code == cmd.LanguageCode));

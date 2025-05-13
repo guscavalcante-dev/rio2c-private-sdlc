@@ -20,7 +20,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         /// <summary>Initializes a new instance of the <see cref="UpdateEditionDatesInformation"/> class.</summary>
         /// <param name="editionDto">The edition event dto.</param>
-        public UpdateEditionDatesInformation(EditionDto editionDto) 
+        public UpdateEditionDatesInformation(EditionDto editionDto)
             : base(editionDto)
         {
         }

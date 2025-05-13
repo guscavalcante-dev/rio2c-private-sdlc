@@ -11,11 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -23,7 +23,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     public class UpdateOrganizationInterests : BaseCommand
     {
         public Guid OrganizationUid { get; set; }
-        
+
         public int? ProjectTypeId { get; set; }
 
         public List<OrganizationRestrictionSpecificsBaseCommand> RestrictionSpecifics { get; set; }
@@ -44,8 +44,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public UpdateOrganizationInterests(
             AttendeeOrganizationSiteInterestWidgetDto entity,
             List<InterestDto> interestsDtos,
-            List<LanguageDto> languagesDtos, 
-            bool isRestrictionSpecificRequired, 
+            List<LanguageDto> languagesDtos,
+            bool isRestrictionSpecificRequired,
             int? projectTypeId)
         {
             this.OrganizationUid = entity.Organization.Uid;

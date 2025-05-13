@@ -11,8 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using LinqKit;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context;
 using System;
 using System.Collections.Generic;
@@ -20,10 +23,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using LinqKit;
-using PlataformaRio2C.Domain.Dtos;
 using X.PagedList;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {

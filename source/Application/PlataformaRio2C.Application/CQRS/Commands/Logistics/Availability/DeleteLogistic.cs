@@ -23,6 +23,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Initializes a new instance of the <see cref="DeleteAvailability"/> class.</summary>
         public DeleteAvailability()
         {
-        }   
+        }
     }
 }

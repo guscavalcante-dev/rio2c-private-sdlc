@@ -24,7 +24,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool IsVideo { get; set; }
         public bool IsFixedOnTop { get; set; }
         public DateTimeOffset CreateDate { get; set; }
-        
+
         public SocialMediaPlatformDto SocialMediaPlatformDto { get; set; }
 
         /// <summary>

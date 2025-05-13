@@ -25,5 +25,5 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
             //container.Register<IPlayerService, PlayerService>(Lifestyle.Scoped);
             //container.Register<ICountryService, CountryService>(Lifestyle.Scoped);
         }
-    }    
+    }
 }

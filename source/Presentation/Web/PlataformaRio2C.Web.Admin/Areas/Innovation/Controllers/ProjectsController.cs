@@ -11,37 +11,37 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using ClosedXML.Excel;
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
+using PlataformaRio2c.Infra.Data.FileRepository;
+using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
+using PlataformaRio2C.Application;
+using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Application.ViewModels;
+using PlataformaRio2C.Domain.ApiModels;
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using PlataformaRio2C.Application;
-using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Web.Admin.Controllers;
 using PlataformaRio2C.Web.Admin.Filters;
-using Constants = PlataformaRio2C.Domain.Constants;
-using System.Text;
-using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Application.ViewModels;
-using ClosedXML.Excel;
-using PlataformaRio2C.Domain.ApiModels;
-using PlataformaRio2C.Domain.Statics;
-using PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults;
+using System;
+using System.Collections.Generic;
 using System.IO;
-using PlataformaRio2c.Infra.Data.FileRepository;
-using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 {
@@ -173,13 +173,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                     searchViewModel.EvaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid ||
                     searchViewModel.EvaluationStatusUid == ProjectEvaluationStatus.Refused.Uid))
                 {
-                    additionalParameters.Add("noRecordsFoundMessage", 
+                    additionalParameters.Add("noRecordsFoundMessage",
                         $"{string.Format(Messages.TheEvaluationPeriodRunsFrom, this.EditionDto.InnovationCommissionEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(), this.EditionDto.InnovationCommissionEvaluationEndDate.ToBrazilTimeZone().ToShortDateString())}.</br>{Messages.TheProjectsWillReceiveFinalGradeAtPeriodEnds}");
                 }
                 else if (!this.EditionDto.IsInnovationProjectEvaluationOpen() &&
                     searchViewModel.EvaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
                 {
-                    additionalParameters.Add("noRecordsFoundMessage", 
+                    additionalParameters.Add("noRecordsFoundMessage",
                         $"{Messages.EvaluationPeriodClosed}<br/>{string.Format(Messages.ProjectsNotFoundWithStatus, Labels.UnderEvaluation)}");
                 }
             }
@@ -214,12 +214,12 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
             var attendeeInnovationOrganizationJsonDtos = await this.attendeeInnovationOrganizationRepo.FindAllByDataTableAsync(
                 this.EditionDto.Id,
-                searchViewModel.Search, 
+                searchViewModel.Search,
                 new List<Guid?> { searchViewModel.InnovationOrganizationTrackOptionGroupUid },
                 searchViewModel.EvaluationStatusUid,
                 searchViewModel.ShowBusinessRounds,
-                1, 
-                10000, 
+                1,
+                10000,
                 new List<Tuple<string, string>>());
 
             var approvedAttendeeInnovationOrganizationIds = await this.attendeeInnovationOrganizationRepo.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(this.EditionDto.Id);
@@ -254,12 +254,12 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
             var attendeeInnovationOrganizationJsonDtos = await this.attendeeInnovationOrganizationRepo.FindAllByDataTableAsync(
                 this.EditionDto.Id,
-                searchViewModel.Search, 
+                searchViewModel.Search,
                 new List<Guid?> { searchViewModel.InnovationOrganizationTrackOptionGroupUid },
                 searchViewModel.EvaluationStatusUid,
                 searchViewModel.ShowBusinessRounds,
-                1, 
-                10000, 
+                1,
+                10000,
                 new List<Tuple<string, string>>());
 
             foreach (var attendeeInnovationOrganizationJsonDto in attendeeInnovationOrganizationJsonDtos)
@@ -414,13 +414,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.AttendeeInnovationOrganizationFounderDtos.Select(dto => dto.Curriculum).ToString("; ");
 
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.VideoUrl;
-                            
+
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.PresentationUploadDate.HasValue ?
                                 FileHelper.GetFileUrl(
-                                    FileRepositoryPathType.InnovationOrganizationPresentationFile, 
-                                    attendeeInnovationOrganizationReportDto.AttendeeInnovationOrganizationUid, 
-                                    attendeeInnovationOrganizationReportDto.PresentationUploadDate, 
-                                    attendeeInnovationOrganizationReportDto.PresentationFileExtension) 
+                                    FileRepositoryPathType.InnovationOrganizationPresentationFile,
+                                    attendeeInnovationOrganizationReportDto.AttendeeInnovationOrganizationUid,
+                                    attendeeInnovationOrganizationReportDto.PresentationUploadDate,
+                                    attendeeInnovationOrganizationReportDto.PresentationFileExtension)
                                 : "";
 
                             worksheet.Cell(lineIndex, columnIndex += 1).Value = attendeeInnovationOrganizationReportDto.ImageUploadDate.HasValue ?
@@ -588,7 +588,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             ViewBag.ApprovedAttendeeInnovationOrganizationsIds = await this.attendeeInnovationOrganizationRepo.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(this.EditionDto.Edition.Id);
             ViewBag.InnovationProjectsTotalCount = await this.attendeeInnovationOrganizationRepo.CountPagedAsync(
                 this.EditionDto.Edition.Id,
-                searchViewModel.Search, 
+                searchViewModel.Search,
                 new List<Guid?> { searchViewModel.InnovationOrganizationTrackOptionGroupUid },
                 searchViewModel.EvaluationStatusUid,
                 searchViewModel.ShowBusinessRounds,
@@ -785,7 +785,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Startup, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
-            
+
             ViewBag.InnovationOrganizationSustainableDevelopmentObjectivesOptions = await this.innovationOrganizationSustainableDevelopmentObjectivesOptionRepo.FindAllAsync();
 
             return Json(new

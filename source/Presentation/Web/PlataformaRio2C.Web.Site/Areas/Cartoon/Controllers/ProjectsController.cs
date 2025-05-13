@@ -11,26 +11,24 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Web.Mvc;
 using MediatR;
-using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Site.Controllers;
 using PlataformaRio2C.Web.Site.Filters;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 using Constants = PlataformaRio2C.Domain.Constants;
-using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
 {
@@ -225,12 +223,12 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
 
             var attendeeCartoonProjectDto = await this.attendeeCartoonProjectRepo.FindDtoToEvaluateAsync(id ?? 0);
 
-            if(attendeeCartoonProjectDto == null)
+            if (attendeeCartoonProjectDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
                 return RedirectToAction("EvaluationList", "Projects", new { Area = "Cartoon" });
-            }        
-            
+            }
+
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CartoonProjects, new List<BreadcrumbItemHelper> {
@@ -310,7 +308,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionCartoon)]
         public async Task<ActionResult> NextEvaluationDetails(int? id, string searchKeywords = null, Guid? projectFormatUid = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 12)
         {
-           
+
             var allCartoonProjectsIds = await this.attendeeCartoonProjectRepo.FindAllCartoonProjectsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
@@ -488,7 +486,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
                     this.EditionDto.Uid,
                     this.UserInterfaceLanguage);
                 result = await this.CommandBus.Send(cmd);
-                    if (!result.IsValid)
+                if (!result.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);
                 }

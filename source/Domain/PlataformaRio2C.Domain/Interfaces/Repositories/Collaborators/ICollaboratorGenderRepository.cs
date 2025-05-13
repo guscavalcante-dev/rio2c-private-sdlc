@@ -11,10 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Domain.Interfaces
 {
@@ -22,5 +21,5 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface ICollaboratorGenderRepository : IRepository<CollaboratorGender>
     {
         Task<List<CollaboratorGender>> FindAllAsync(bool? showInactive = false);
-    }    
+    }
 }

@@ -11,9 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************  
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace PlataformaRio2C.Domain.ApiModels
 {
@@ -28,7 +28,7 @@ namespace PlataformaRio2C.Domain.ApiModels
 
         [JsonProperty("rooms", Order = 103)]
         public List<ConferencesFilterItemApiResponse> RoomsApiResponses { get; set; }
-        
+
         [JsonProperty("pillars", Order = 104)]
         public List<PillarBaseApiResponse> PillarsApiResponses { get; set; }
 

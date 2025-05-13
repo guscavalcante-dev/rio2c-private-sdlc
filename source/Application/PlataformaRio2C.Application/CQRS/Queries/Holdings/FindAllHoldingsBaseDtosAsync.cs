@@ -12,8 +12,8 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.Collections.Generic;
 using PlataformaRio2C.Domain.Dtos;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Application.CQRS.Queries
 {
@@ -26,7 +26,7 @@ namespace PlataformaRio2C.Application.CQRS.Queries
         /// <param name="keywords">The keywords.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public FindAllHoldingsBaseDtosAsync(
-            string keywords, 
+            string keywords,
             string userInterfaceLanguage)
         {
             this.Keywords = keywords;

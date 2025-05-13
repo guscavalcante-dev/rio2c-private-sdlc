@@ -11,33 +11,33 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using MediatR;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using PlataformaRio2C.Application;
+using PlataformaRio2C.Application.Common;
+using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Models;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Identity.ViewModels;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Enums;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using MediatR;
-using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Application.CQRS.Queries;
-using PlataformaRio2C.Application.Common;
-using System.Text.RegularExpressions;
-using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using Constants = PlataformaRio2C.Domain.Constants;
-using PlataformaRio2C.Application;
-using PlataformaRio2C.Domain.Interfaces;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
@@ -61,7 +61,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="roleRepository">The role repository.</param>
         /// <param name="collaboratorTypeRepository">The collaborator type repository.</param>
         public AccountController(
-            IMediator commandBus, 
+            IMediator commandBus,
             IdentityAutenticationService identityController,
             ICollaboratorRepository collaboratorRepository,
             IRoleRepository roleRepository,

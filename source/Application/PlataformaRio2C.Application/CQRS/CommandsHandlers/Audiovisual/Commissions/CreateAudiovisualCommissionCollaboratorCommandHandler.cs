@@ -11,11 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
@@ -23,6 +18,11 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -125,11 +125,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             {
                 var updateCmd = new UpdateAudiovisualCommissionCollaborator(user.Collaborator.Uid, cmd);
                 updateCmd.UpdatePreSendProperties(
-                    cmd.CollaboratorTypeName, 
-                    cmd.UserId, 
-                    cmd.UserUid, 
-                    cmd.EditionId, 
-                    cmd.EditionUid, 
+                    cmd.CollaboratorTypeName,
+                    cmd.UserId,
+                    cmd.UserUid,
+                    cmd.EditionId,
+                    cmd.EditionUid,
                     cmd.UserInterfaceLanguage);
 
                 this.AppValidationResult = await this.CommandBus.Send(updateCmd, cancellationToken);

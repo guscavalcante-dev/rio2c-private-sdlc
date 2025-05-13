@@ -11,10 +11,10 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using System;
 
 namespace PlataformaRio2C.Infra.Report.Models
 {
@@ -121,7 +121,7 @@ namespace PlataformaRio2C.Infra.Report.Models
                 pdfTemplate.SetFontAndSize(basefont, 6);
                 pdfTemplate.SetTextMatrix(0, 0);
                 pdfTemplate.ShowText("" + document.PageNumber);
-                pdfTemplate.EndText(); 
+                pdfTemplate.EndText();
             }
         }
     }

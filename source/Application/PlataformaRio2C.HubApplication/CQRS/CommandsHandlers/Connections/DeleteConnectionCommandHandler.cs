@@ -11,13 +11,13 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.HubApplication.CQRS.Commands;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.HubApplication.CQRS.CommandsHandlers
 {

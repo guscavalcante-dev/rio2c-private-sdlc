@@ -13,7 +13,6 @@
 // ***********************************************************************
 using Newtonsoft.Json;
 using PlataformaRio2C.Domain.Validation;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -26,7 +25,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public ValidationResult ValidationResult { get; set; }
 
         #region Required
-        
+
         [JsonRequired]
         [JsonProperty("musicBandTypeUid")]
         public Guid MusicBandTypeUid { get; set; }
@@ -76,7 +75,7 @@ namespace PlataformaRio2C.Domain.Dtos
 
         [JsonProperty("releasedMusicProjects")]
         public List<ReleasedMusicProjectApiDto> ReleasedMusicProjectsApiDtos { get; set; }
-        
+
         #endregion
 
         #region Validations

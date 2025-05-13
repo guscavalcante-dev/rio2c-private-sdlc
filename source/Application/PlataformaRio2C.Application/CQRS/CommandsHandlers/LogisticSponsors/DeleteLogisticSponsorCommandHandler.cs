@@ -11,12 +11,12 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -59,7 +59,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             #endregion
-                        
+
             logisticSponsor.Delete(
                 await this.editionRepo.GetAsync(cmd.EditionId ?? 0),
                 cmd.UserId);
@@ -72,7 +72,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             this.logisticSponsorRepo.Update(logisticSponsor);
             this.Uow.SaveChanges();
-            
+
             return this.AppValidationResult;
         }
     }

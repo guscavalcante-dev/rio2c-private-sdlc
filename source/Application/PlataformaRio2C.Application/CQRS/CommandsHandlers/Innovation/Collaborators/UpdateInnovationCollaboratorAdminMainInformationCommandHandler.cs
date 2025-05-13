@@ -11,11 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
 using PlataformaRio2C.Application.CQRS.Commands;
@@ -25,6 +20,11 @@ using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -104,34 +104,34 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
             if (cmd.EditionsUids == null || (!cmd.HaveYouBeenToRio2CBefore ?? false)) cmd.EditionsUids = new List<Guid>();
-                collaborator.UpdateAdminMainInformation(
-                await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
-                cmd.FirstName,
-                cmd.LastNames,
-                cmd.Email,
-                cmd.Badge,
-                cmd.CellPhone,
-                cmd.PhoneNumber,
-                cmd.SharePublicEmail,
-                cmd.PublicEmail,
-                cmd.CropperImage?.ImageFile != null,
-                cmd.CropperImage?.IsImageDeleted == true,
-                cmd.JobTitles?.Select(d => new CollaboratorJobTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
-                cmd.MiniBios?.Select(d => new CollaboratorMiniBio(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
-                cmd.BirthDate,
-                genderRepo.Get(cmd.CollaboratorGenderUid ?? Guid.Empty),
-                cmd.CollaboratorGenderAdditionalInfo,
-                roleRepo.Get(cmd.CollaboratorRoleUid ?? Guid.Empty),
-                cmd.CollaboratorRoleAdditionalInfo,
-                industryRepo.Get(cmd.CollaboratorIndustryUid ?? Guid.Empty),
-                cmd.CollaboratorIndustryAdditionalInfo,
-                cmd.HasAnySpecialNeeds ?? false,
-                cmd.SpecialNeedsDescription,
-                cmd.HaveYouBeenToRio2CBefore,
-                this.editionRepo.GetAll(e => cmd.EditionsUids.Contains(e.Uid)).ToList(),
-                await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
-                cmd.UserId,
-                null);
+            collaborator.UpdateAdminMainInformation(
+            await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
+            cmd.FirstName,
+            cmd.LastNames,
+            cmd.Email,
+            cmd.Badge,
+            cmd.CellPhone,
+            cmd.PhoneNumber,
+            cmd.SharePublicEmail,
+            cmd.PublicEmail,
+            cmd.CropperImage?.ImageFile != null,
+            cmd.CropperImage?.IsImageDeleted == true,
+            cmd.JobTitles?.Select(d => new CollaboratorJobTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
+            cmd.MiniBios?.Select(d => new CollaboratorMiniBio(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
+            cmd.BirthDate,
+            genderRepo.Get(cmd.CollaboratorGenderUid ?? Guid.Empty),
+            cmd.CollaboratorGenderAdditionalInfo,
+            roleRepo.Get(cmd.CollaboratorRoleUid ?? Guid.Empty),
+            cmd.CollaboratorRoleAdditionalInfo,
+            industryRepo.Get(cmd.CollaboratorIndustryUid ?? Guid.Empty),
+            cmd.CollaboratorIndustryAdditionalInfo,
+            cmd.HasAnySpecialNeeds ?? false,
+            cmd.SpecialNeedsDescription,
+            cmd.HaveYouBeenToRio2CBefore,
+            this.editionRepo.GetAll(e => cmd.EditionsUids.Contains(e.Uid)).ToList(),
+            await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
+            cmd.UserId,
+            null);
 
             if (!collaborator.IsValid())
             {

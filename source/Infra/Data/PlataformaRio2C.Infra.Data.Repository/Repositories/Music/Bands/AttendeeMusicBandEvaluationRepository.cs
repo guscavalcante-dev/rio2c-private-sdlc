@@ -11,12 +11,12 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
-using System.Linq;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
-using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -115,7 +115,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             }
             else if (collaboratorTypeId == CollaboratorType.ComissionMusicCurator.Id)
             {
-                if(editionDto.IsMusicPitchingRepechageEvaluationOpen())
+                if (editionDto.IsMusicPitchingRepechageEvaluationOpen())
                 {
                     // Projects evaluated by Repechage
                     query = query.Where(ambe => ambe.RepechageEvaluationStatusId == ProjectEvaluationStatus.Accepted.Id);
@@ -148,7 +148,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="context">The context.</param>
         /// <param name="editioRepository">The editio repository.</param>
         public AttendeeMusicBandEvaluationRepository(
-            Context.PlataformaRio2CContext context, 
+            Context.PlataformaRio2CContext context,
             IEditionRepository editioRepository)
             : base(context)
         {

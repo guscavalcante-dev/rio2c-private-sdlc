@@ -32,7 +32,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset? MusicPlayerTermsAcceptanceDate { get; set; }
         public DateTimeOffset? MusicProducerTermsAcceptanceDate { get; set; }
         public DateTimeOffset? AudiovisualProducerBusinessRoundTermsAcceptanceDate { get; set; }
-        public DateTimeOffset? AudiovisualProducerPitchingTermsAcceptanceDate { get; set; }        
+        public DateTimeOffset? AudiovisualProducerPitchingTermsAcceptanceDate { get; set; }
         public DateTimeOffset? SpeakerTermsAcceptanceDate { get; set; }
         public DateTimeOffset? AvailabilityBeginDate { get; set; }
         public DateTimeOffset? AvailabilityEndDate { get; set; }

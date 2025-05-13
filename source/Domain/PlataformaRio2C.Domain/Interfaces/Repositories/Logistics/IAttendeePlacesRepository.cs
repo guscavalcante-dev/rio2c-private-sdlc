@@ -11,10 +11,10 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Domain.Interfaces
 {
@@ -22,5 +22,5 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface IAttendeePlacesRepository : IRepository<AttendeePlace>
     {
         Task<List<AttendeePlaceDropdownDto>> FindAllDropdownDtosAsync(int editionId, bool? isHotel = null, bool? isAirport = null);
-    }    
+    }
 }

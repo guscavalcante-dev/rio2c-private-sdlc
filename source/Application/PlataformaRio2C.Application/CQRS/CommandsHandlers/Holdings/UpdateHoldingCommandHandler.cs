@@ -11,9 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
 using PlataformaRio2C.Application.CQRS.Commands;
@@ -23,6 +20,9 @@ using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -59,7 +59,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #region Initial Validations
 
             // Check if the name already exists
-            var existHoldingByName = this.HoldingRepo.Get(h => h.Name == cmd.Name 
+            var existHoldingByName = this.HoldingRepo.Get(h => h.Name == cmd.Name
                                                                && h.Uid != cmd.HoldingUid
                                                                && !h.IsDeleted);
             if (existHoldingByName != null)

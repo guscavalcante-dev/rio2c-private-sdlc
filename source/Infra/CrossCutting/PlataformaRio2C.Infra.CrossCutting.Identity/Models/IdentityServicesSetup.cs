@@ -11,9 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using Microsoft.Owin.Security.DataProtection;
 using System.Net;
 using System.Net.Mail;
-using Microsoft.Owin.Security.DataProtection;
 
 namespace PlataformaRio2C.Infra.CrossCutting.Identity.Models
 {

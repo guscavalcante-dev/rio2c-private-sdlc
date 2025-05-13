@@ -11,8 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using DocumentFormat.OpenXml.Bibliography;
-using DocumentFormat.OpenXml.Presentation;
 using System.Web.Optimization;
 
 namespace PlataformaRio2C.Web.Site
@@ -486,14 +484,14 @@ namespace PlataformaRio2C.Web.Site
             bundles.Add(new ScriptBundle("~/bundles/js/music.businessrounds.buyerevaluation.update.widget.js").Include(
                 "~/Assets/js/music/businessrounds/music.businessrounds.buyerevaluation.update.widget.js"));
 
-              bundles.Add(new ScriptBundle("~/bundles/js/music.businessrounds.buyercompany.widget.js").Include(
-                "~/Assets/js/music/businessrounds/music.businessrounds.buyercompany.widget.js", 
-                "~/Scripts/jquery.unobtrusive-ajax.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/music.businessrounds.buyercompany.widget.js").Include(
+              "~/Assets/js/music/businessrounds/music.businessrounds.buyercompany.widget.js",
+              "~/Scripts/jquery.unobtrusive-ajax.js"));
 
 
             bundles.Add(new ScriptBundle("~/bundles/js/music.businessrounds.widget.js").Include(
                "~/Assets/js/music/businessrounds/music.businessrounds.maininformation.widget.js",
-               "~/Assets/js/music/businessrounds/music.businessrounds.options.widget.js",               
+               "~/Assets/js/music/businessrounds/music.businessrounds.options.widget.js",
                "~/Assets/js/myrio2c.additionalinfo.js"));
 
             #endregion

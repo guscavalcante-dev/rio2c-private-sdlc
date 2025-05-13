@@ -19,9 +19,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using LinqKit;
-using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using X.PagedList;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
@@ -83,7 +80,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             query = query.OrderBy(ioto => ioto.DisplayOrder);
 
             return query;
-        }        
+        }
     }
 
     #endregion

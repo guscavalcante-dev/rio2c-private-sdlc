@@ -11,8 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using PlataformaRio2C.Application.CQRS.Commands;
+using System;
 
 namespace PlataformaRio2C.HubApplication.CQRS.Commands
 {

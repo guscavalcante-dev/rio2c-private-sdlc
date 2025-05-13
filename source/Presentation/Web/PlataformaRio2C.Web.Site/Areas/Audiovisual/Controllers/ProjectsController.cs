@@ -11,28 +11,28 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Web.Mvc;
 using MediatR;
-using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.Ajax.Utilities;
+using Newtonsoft.Json;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Site.Controllers;
 using PlataformaRio2C.Web.Site.Filters;
-using Constants = PlataformaRio2C.Domain.Constants;
-using PlataformaRio2C.Domain.Entities;
-using Newtonsoft.Json;
-using Microsoft.Ajax.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 using X.PagedList;
+using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 {
@@ -331,21 +331,21 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
                 return RedirectToAction("CommissionEvaluationList", "Projects", new { Area = "Audiovisual" });
             }
-            
+
             var subgenreInterestUids = await this.GetSubgenreInterestUids(subgenreInterestUid);
 
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.AudioVisual, Url.Action("CommissionEvaluationList", "Projects", new 
-                { 
-                    Area = "Audiovisual", 
-                    searchKeywords, 
-                    subgenreInterestUid, 
-                    segmentInterestUid, 
-                    evaluationStatusUid, 
-                    page, 
-                    pageSize 
+                new BreadcrumbItemHelper(Labels.AudioVisual, Url.Action("CommissionEvaluationList", "Projects", new
+                {
+                    Area = "Audiovisual",
+                    searchKeywords,
+                    subgenreInterestUid,
+                    segmentInterestUid,
+                    evaluationStatusUid,
+                    page,
+                    pageSize
                 })),
                 new BreadcrumbItemHelper(projectDto?.GetTitleDtoByLanguageCode(this.UserInterfaceLanguage)?.ProjectTitle?.Value ?? Labels.Project, Url.Action("EvaluationDetails", "Projects", new { Area = "Audiovisual", id }))
             });

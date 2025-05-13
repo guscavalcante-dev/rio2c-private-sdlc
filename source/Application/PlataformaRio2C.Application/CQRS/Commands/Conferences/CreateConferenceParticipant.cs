@@ -11,11 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -43,7 +43,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="conferenceUid">The conference uid.</param>
         /// <param name="conferenceParticipantRoleDtos">The conference participant role dtos.</param>
         public CreateConferenceParticipant(
-            Guid? conferenceUid, 
+            Guid? conferenceUid,
             List<ConferenceParticipantRoleDto> conferenceParticipantRoleDtos)
         {
             this.ConferenceUid = conferenceUid;

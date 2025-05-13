@@ -16,7 +16,7 @@ namespace PlataformaRio2C.Application
         public AppValidationResult()
         {
             _erros = new List<AppValidationError>();
-        }       
+        }
 
         public AppValidationResult Add(Domain.Validation.ValidationResult domainValidateResult)
         {
@@ -49,7 +49,7 @@ namespace PlataformaRio2C.Application
         {
             foreach (var validationResult in saveChangesResult.ValidationResults)
             {
-                foreach(var memberName in validationResult.MemberNames)
+                foreach (var memberName in validationResult.MemberNames)
                 {
                     _erros.Add(new AppValidationError(validationResult.ErrorMessage, memberName));
                 }

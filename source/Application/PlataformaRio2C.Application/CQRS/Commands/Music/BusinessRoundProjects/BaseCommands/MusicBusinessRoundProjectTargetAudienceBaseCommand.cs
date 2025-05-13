@@ -57,7 +57,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// </summary>
         /// <param name="entity">The entity.</param>
         public MusicBusinessRoundProjectTargetAudienceBaseCommand(TargetAudience entity)
-        {            
+        {
             this.TargetAudienceId = entity.Id;
             this.TargetAudienceUid = entity.Uid;
             this.TargetAudienceName = entity.Name;

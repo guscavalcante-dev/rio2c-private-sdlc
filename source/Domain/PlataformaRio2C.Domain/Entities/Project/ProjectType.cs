@@ -11,9 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -33,7 +33,7 @@ namespace PlataformaRio2C.Domain.Entities
         #endregion
 
         public string Name { get; private set; }
-        
+
         public virtual ICollection<OrganizationType> OrganizationTypes { get; private set; }
         public virtual ICollection<InterestGroup> InterestGroups { get; private set; }
         public virtual ICollection<Activity> Activities { get; private set; }

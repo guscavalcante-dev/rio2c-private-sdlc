@@ -34,8 +34,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="role">The role.</param>
         public DeleteCollaboratorTicket(
-            Collaborator collaborator, 
-            SalesPlatformAttendeeDto salesPlatformAttendeeDto, 
+            Collaborator collaborator,
+            SalesPlatformAttendeeDto salesPlatformAttendeeDto,
             Edition edition,
             AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
             CollaboratorType collaboratorType,

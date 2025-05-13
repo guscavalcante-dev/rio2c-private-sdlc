@@ -28,7 +28,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public string ApiSecret { get; set; }
         public int MaxProcessingCount { get; set; }
         public int CreationUserId { get; set; }
-        public DateTimeOffset CreationDate { get;  set; }
+        public DateTimeOffset CreationDate { get; set; }
         public int UpdateUserId { get; set; }
         public DateTimeOffset UpdateDate { get; set; }
         public string SecurityStamp { get; set; }

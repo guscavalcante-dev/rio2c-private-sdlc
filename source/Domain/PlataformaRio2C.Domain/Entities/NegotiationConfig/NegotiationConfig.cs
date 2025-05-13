@@ -12,11 +12,11 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -109,7 +109,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.TimeIntervalBetweenTurn = timeIntervalBetweenTurnString.ToTimeSpan();
             this.TimeOfEachRound = timeOfEachRoundString.ToTimeSpan();
             this.TimeIntervalBetweenRound = timeIntervalBetweenRoundString.ToTimeSpan();
-            
+
             base.SetUpdateDate(userId);
         }
 
@@ -138,7 +138,7 @@ namespace PlataformaRio2C.Domain.Entities
                 this.NegotiationRoomConfigs = new List<NegotiationRoomConfig>();
             }
 
-            this.NegotiationRoomConfigs.Add(new NegotiationRoomConfig(room,this, countAutomaticTables, countManualTables, userId));
+            this.NegotiationRoomConfigs.Add(new NegotiationRoomConfig(room, this, countAutomaticTables, countManualTables, userId));
         }
 
         /// <summary>Updates the negotiation room configuration.</summary>

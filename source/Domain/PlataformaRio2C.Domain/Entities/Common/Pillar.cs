@@ -11,12 +11,12 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -101,7 +101,7 @@ namespace PlataformaRio2C.Domain.Entities
             var name = string.Empty;
             foreach (var languageCode in Language.CodesOrder)
             {
-                name += (!string.IsNullOrEmpty(name) ? " "  + Language.Separator + " " : String.Empty) + 
+                name += (!string.IsNullOrEmpty(name) ? " " + Language.Separator + " " : String.Empty) +
                         trackNames?.FirstOrDefault(vtc => vtc.Language.Code == languageCode)?.Value;
             }
 

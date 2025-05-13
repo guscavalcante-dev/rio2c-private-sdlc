@@ -11,8 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using MediatR;
+using System;
 
 namespace PlataformaRio2C.Application.CQRS.Queries
 {
@@ -33,10 +33,10 @@ namespace PlataformaRio2C.Application.CQRS.Queries
         public CountAllOrganizationsAsync(
             Guid organizationTypeId,
             bool showAllEditions,
-            int userId, 
-            Guid userUid, 
-            int? editionId, 
-            Guid? editionUid, 
+            int userId,
+            Guid userUid,
+            int? editionId,
+            Guid? editionUid,
             string userInterfaceLanguage)
             : base(userId, userUid, editionId, editionUid, userInterfaceLanguage)
         {

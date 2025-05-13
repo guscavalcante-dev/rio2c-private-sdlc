@@ -11,12 +11,12 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using System;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -25,7 +25,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         public Guid CollaboratorUid { get; set; }
         public bool IsAddingToCurrentEdition { get; set; }
-        
+
         public DateTimeOffset? WelcomeEmailSendDate { get; private set; }
         public DateTimeOffset? OnboardingStartDate { get; private set; }
         public DateTimeOffset? OnboardingFinishDate { get; private set; }
@@ -51,7 +51,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public UpdateAdministrator(
             CollaboratorDto entity,
             List<Role> roles,
-            List<CollaboratorType> collaboratorTypes, 
+            List<CollaboratorType> collaboratorTypes,
             bool isAddingToCurrentEdition,
             string userInterfaceLanguage)
         {

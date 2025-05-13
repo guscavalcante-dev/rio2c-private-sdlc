@@ -24,5 +24,5 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<List<CollaboratorType>> FindAllByNamesAsync(string[] collaboratorTypeNames);
         Task<List<CollaboratorType>> FindAllAdminsAsync();
         List<CollaboratorType> FindAllAdmins();
-    }    
+    }
 }

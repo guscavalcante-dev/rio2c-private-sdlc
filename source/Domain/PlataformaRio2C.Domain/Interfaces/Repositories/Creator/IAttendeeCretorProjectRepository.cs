@@ -11,11 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PlataformaRio2C.Domain.Dtos;
 using X.PagedList;
 
 namespace PlataformaRio2C.Domain.Interfaces
@@ -36,7 +36,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<AttendeeCreatorProjectDto> FindDtoToEvaluateAsync(Guid attendeeCreatorProjectUid);
         Task<AttendeeCreatorProjectDto> FindDtoToEvaluateAsync(int attendeeCreatorProjectId);
         Task<int[]> FindAllCreatorProjectsIdsPagedAsync(int editionId, string searchKeywords, Guid? evaluationStatusUid, int page, int pageSize);
-        Task<int> CountPagedAsync(int editionId, string searchKeywords,  Guid? evaluationStatusUid, int page, int pageSize);
+        Task<int> CountPagedAsync(int editionId, string searchKeywords, Guid? evaluationStatusUid, int page, int pageSize);
 
         #region Widgets
 

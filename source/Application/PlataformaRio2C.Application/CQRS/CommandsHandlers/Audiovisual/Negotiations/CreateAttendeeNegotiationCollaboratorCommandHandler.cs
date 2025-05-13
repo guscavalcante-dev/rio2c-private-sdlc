@@ -12,8 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
@@ -21,6 +19,8 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -49,7 +49,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
             this.negotiationRepo = negotiationRepository;
-            this.attendeeNegotiationCollaboratorRepo = attendeeNegotiationCollaboratorRepo; 
+            this.attendeeNegotiationCollaboratorRepo = attendeeNegotiationCollaboratorRepo;
         }
 
         /// <summary>Handles the specified create negotiation.</summary>
@@ -62,7 +62,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var negotiation = await this.negotiationRepo.FindByUidAsync(cmd.NegotiationUid);
             var attendeeCollaborator = await this.attendeeCollaboratorRepo.GetAsync(ac => !ac.IsDeleted && ac.Collaborator.Id == cmd.UserId && ac.EditionId == cmd.EditionId);
-            
+
             if (negotiation == null)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM), new string[] { "ToastrError" }));
@@ -79,8 +79,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            var attendeeNegotiationCollaboratorDb = await this.attendeeNegotiationCollaboratorRepo.GetAsync(anc => !anc.IsDeleted 
-                                                                                                                    && anc.AttendeeCollaboratorId == attendeeCollaborator.Id 
+            var attendeeNegotiationCollaboratorDb = await this.attendeeNegotiationCollaboratorRepo.GetAsync(anc => !anc.IsDeleted
+                                                                                                                    && anc.AttendeeCollaboratorId == attendeeCollaborator.Id
                                                                                                                     && anc.NegotiationId == negotiation.Id);
 
             if (attendeeNegotiationCollaboratorDb != null)
@@ -104,7 +104,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 this.AppValidationResult.Add(this.ValidationResult);
                 return this.AppValidationResult;
             }
-            
+
             this.Uow.SaveChanges();
 
             return this.AppValidationResult;

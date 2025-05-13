@@ -11,15 +11,15 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
@@ -153,7 +153,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public bool CollaboratorIndustryAdditionalInfoRequired { get; set; }
         public bool CollaboratorGenderAdditionalInfoRequired { get; set; }
         public bool CollaboratorRoleAdditionalInfoRequired { get; set; }
-          
+
         public string PasswordHash { get; private set; }
 
         public IEnumerable<Role> Roles { get; set; }

@@ -12,11 +12,9 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Script.Serialization;
 
 namespace PlataformaRio2C.Domain.Dtos
 {

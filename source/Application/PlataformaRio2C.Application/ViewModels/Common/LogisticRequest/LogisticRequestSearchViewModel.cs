@@ -21,14 +21,14 @@ namespace PlataformaRio2C.Application.ViewModels
     {
         [Display(Name = "Search", ResourceType = typeof(Labels))]
         public string Search { get; set; }
-        
+
         public int? Page { get; set; }
         public int? PageSize { get; set; }
 
-        [Display(Name = "ShowAllParticipants", ResourceType = typeof(Labels))] 
+        [Display(Name = "ShowAllParticipants", ResourceType = typeof(Labels))]
         public bool ShowAllParticipants { get; set; }
 
-        [Display(Name = "ShowAllSponsors", ResourceType = typeof(Labels))] 
+        [Display(Name = "ShowAllSponsors", ResourceType = typeof(Labels))]
         public bool ShowAllSponsors { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="LogisticSponsorSearchViewModel"/> class.</summary>

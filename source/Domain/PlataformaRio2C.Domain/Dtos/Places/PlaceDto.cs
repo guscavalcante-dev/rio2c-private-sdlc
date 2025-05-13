@@ -52,7 +52,7 @@ namespace PlataformaRio2C.Domain.Dtos
             return !string.IsNullOrEmpty(this.Place?.Website)
                    || !string.IsNullOrEmpty(this.Place?.AdditionalInfo)
                    || this.AddressDto != null
-                   ||  this.AddressBaseDto != null;
+                   || this.AddressBaseDto != null;
         }
     }
 }

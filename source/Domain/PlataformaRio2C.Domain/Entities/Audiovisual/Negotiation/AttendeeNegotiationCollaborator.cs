@@ -20,7 +20,7 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public int NegotiationId { get; private set; }
         public int AttendeeCollaboratorId { get; private set; }
-       
+
         public Negotiation Negotiation { get; private set; }
         public AttendeeCollaborator AttendeeCollaborator { get; private set; }
 
@@ -30,7 +30,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="negotiation">The negotiation.</param>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
         public AttendeeNegotiationCollaborator(
-            Negotiation negotiation, 
+            Negotiation negotiation,
             AttendeeCollaborator attendeeCollaborator,
             int userId)
         {

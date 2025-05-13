@@ -11,8 +11,16 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using MediatR;
 using Microsoft.Owin;
+using PlataformaRio2C.Application.CQRS.CommandsHandlers;
+using PlataformaRio2C.Application.CQRS.Events.Editions;
+using PlataformaRio2C.Application.Interfaces;
+using PlataformaRio2C.Application.Services.Common;
+using PlataformaRio2C.Infra.CrossCutting.CQRS;
 using PlataformaRio2C.Infra.CrossCutting.IOC;
+using PlataformaRio2C.Infra.Data.FileRepository;
+using PlataformaRio2C.Web.Admin.Services;
 using SimpleInjector;
 using SimpleInjector.Integration.Web;
 using SimpleInjector.Integration.Web.Mvc;
@@ -21,14 +29,6 @@ using System.Reflection;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
-using PlataformaRio2C.Application.CQRS.CommandsHandlers;
-using PlataformaRio2C.Infra.CrossCutting.CQRS;
-using PlataformaRio2C.Infra.Data.FileRepository;
-using PlataformaRio2C.Web.Admin.Services;
-using PlataformaRio2C.Application.CQRS.Events.Editions;
-using MediatR;
-using PlataformaRio2C.Application.Services.Common;
-using PlataformaRio2C.Application.Interfaces;
 
 namespace PlataformaRio2C.Web.Admin.App_Start
 {
@@ -46,7 +46,7 @@ namespace PlataformaRio2C.Web.Admin.App_Start
             FileRepositoryBootStrapper.RegisterServices(container);
 
             #region Register Application Services
-            
+
             container.Register<IMailerService, AdminMailerService>(Lifestyle.Scoped);
 
             container.Register<INegotiationService, NegotiationService>(Lifestyle.Scoped);

@@ -25,7 +25,7 @@
         public void SetName(string value)
         {
             Name = value;
-        }      
+        }
 
 
         public override bool IsValid()

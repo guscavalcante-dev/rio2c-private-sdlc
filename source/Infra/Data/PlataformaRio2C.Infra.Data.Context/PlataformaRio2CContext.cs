@@ -265,13 +265,13 @@ namespace PlataformaRio2C.Infra.Data.Context
 
         public DbSet<UserRole> UsersRoles { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<AttendeeCollaborator> AttendeeCollaborators { get; set; }      
+        public DbSet<AttendeeCollaborator> AttendeeCollaborators { get; set; }
         public DbSet<AttendeeCollaboratorType> AttendeeCollaboratorTypes { get; set; }
         public DbSet<CollaboratorType> CollaboratorTypes { get; set; }
 
         // Cartoon
 
-        public DbSet<CartoonProject> CartoonProjecs{ get; set; }
+        public DbSet<CartoonProject> CartoonProjecs { get; set; }
         public DbSet<CartoonProjectFormat> CartoonProjectFormats { get; set; }
         public DbSet<CartoonProjectCreator> CartoonProjectCreators { get; set; }
         public DbSet<CartoonProjectOrganization> CartoonProjectOrganizations { get; set; }

@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
+﻿using PlataformaRio2C.Infra.CrossCutting.Resources;
+using System.ComponentModel.DataAnnotations;
 
 namespace PlataformaRio2C.Infra.CrossCutting.Identity.ViewModels
 {

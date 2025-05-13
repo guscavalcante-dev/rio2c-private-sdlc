@@ -15,17 +15,17 @@ using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
 using Newtonsoft.Json.Serialization;
 using Owin;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Mvc;
 using PlataformaRio2C.Web.Site.Areas.WebApi;
+using PlataformaRio2C.Web.Site.Hub;
 using PlataformaRio2C.Web.Site.Models;
 using System;
 using System.Configuration;
+using System.Net;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using PlataformaRio2C.Web.Site.Hub;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Mvc;
-using System.Net;
 
 [assembly: OwinStartup(typeof(PlataformaRio2C.Web.Site.Startup))]
 namespace PlataformaRio2C.Web.Site

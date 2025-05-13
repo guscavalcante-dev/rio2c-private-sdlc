@@ -11,15 +11,15 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using Foolproof;
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using Foolproof;
-using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
 using CollaboratorTypeConst = PlataformaRio2C.Domain.Constants.CollaboratorType;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -58,43 +58,43 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "BirthDate", ResourceType = typeof(Labels))]
         public DateTime? BirthDate { get; set; }
-        
+
         [Display(Name = "CollaboratorIndustry", ResourceType = typeof(Labels))]
         public Guid? CollaboratorIndustryUid { get; set; }
 
         public IEnumerable<CollaboratorIndustry> CollaboratorIndustries { get; set; }
 
-        public bool CollaboratorIndustryAdditionalInfoRequired {get;set;}
+        public bool CollaboratorIndustryAdditionalInfoRequired { get; set; }
 
         [Display(Name = "EnterYourIndustry", ResourceType = typeof(Labels))]
         [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         [RequiredIf("CollaboratorIndustryAdditionalInfoRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public string CollaboratorIndustryAdditionalInfo  { get; set; }
+        public string CollaboratorIndustryAdditionalInfo { get; set; }
 
         [Display(Name = "Gender", ResourceType = typeof(Labels))]
-        public Guid? CollaboratorGenderUid  { get; set; }
+        public Guid? CollaboratorGenderUid { get; set; }
 
         public IEnumerable<CollaboratorGender> CollaboratorGenders { get; set; }
-        
-        public bool CollaboratorGenderAdditionalInfoRequired {get;set;}
+
+        public bool CollaboratorGenderAdditionalInfoRequired { get; set; }
 
         [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
         [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         [RequiredIf("CollaboratorGenderAdditionalInfoRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public string CollaboratorGenderAdditionalInfo  { get; set; }
-        
+        public string CollaboratorGenderAdditionalInfo { get; set; }
+
         [Display(Name = "Role", ResourceType = typeof(Labels))]
         public Guid? CollaboratorRoleUid { get; set; }
 
         public IEnumerable<CollaboratorRole> CollaboratorRoles { get; set; }
-        
-        public bool CollaboratorRoleAdditionalInfoRequired {get;set;}
+
+        public bool CollaboratorRoleAdditionalInfoRequired { get; set; }
 
         [Display(Name = "EnterYourRole", ResourceType = typeof(Labels))]
         [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         [RequiredIf("CollaboratorRoleAdditionalInfoRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public string CollaboratorRoleAdditionalInfo { get; set; }
-        
+
         [Display(Name = "HasAnySpecialNeeds", ResourceType = typeof(Labels))]
         public bool? HasAnySpecialNeeds { get; set; }
 
@@ -102,7 +102,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [RequiredIf("HasAnySpecialNeeds", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string SpecialNeedsDescription { get; set; }
-                
+
         [Display(Name = "HaveYouBeenToRio2CBefore", ResourceType = typeof(Labels))]
         public bool? HaveYouBeenToRio2CBefore { get; set; }
 
@@ -134,11 +134,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public UpdateCollaboratorAdminMainInformation(
             AttendeeCollaboratorSiteMainInformationWidgetDto entity,
             string collaboratorTypeName,
-            List<CollaboratorGender> genders, 
-            List<CollaboratorIndustry> industries, 
+            List<CollaboratorGender> genders,
+            List<CollaboratorIndustry> industries,
             List<CollaboratorRole> roles,
-            List<LanguageDto> languagesDtos, 
-            List<EditionDto> editionsDtos, 
+            List<LanguageDto> languagesDtos,
+            List<EditionDto> editionsDtos,
             int currentEditionId,
             string userInterfaceLanguage)
             : base(entity, languagesDtos, false, false, false)

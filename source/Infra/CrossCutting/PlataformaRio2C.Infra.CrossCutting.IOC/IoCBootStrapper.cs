@@ -16,16 +16,16 @@ using Microsoft.AspNet.Identity;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Configuration;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Models;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms;
+using PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms;
 using PlataformaRio2C.Infra.CrossCutting.SystemParameter;
+using PlataformaRio2C.Infra.CrossCutting.SystemParameter.Context;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Services.Log;
 using PlataformaRio2C.Infra.Data.Repository.Repositories;
 using SimpleInjector;
 using System;
 using System.Linq;
-using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms;
-using PlataformaRio2C.Infra.CrossCutting.SystemParameter.Context;
-using PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms;
 
 namespace PlataformaRio2C.Infra.CrossCutting.IOC
 {

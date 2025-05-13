@@ -20,7 +20,7 @@
 //                    using (var img = Image.FromStream(new MemoryStream(entity.Image.File)))
 //                    {
 //                        var resultMbyte = ImageFile.ConvertBytesToMegabytes(entity.Image.ContentLength);
-                        
+
 //                        return (resultMbyte >= ImageFile.ImageMinMByteSize && resultMbyte <= ImageFile.ImageMaxMByteSize);
 //                    }
 //                }
@@ -33,7 +33,7 @@
 //            return true;
 //        }
 
-        
+
 //    }
 //}
 

@@ -11,11 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -27,7 +27,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<Guid> PillarUids { get; set; }
         public List<Guid> TrackUids { get; set; }
         public List<Guid> PresentationFormatUids { get; set; }
-        
+
         public List<Pillar> Pillars { get; private set; }
         public List<Track> Tracks { get; private set; }
         public List<PresentationFormat> PresentationFormats { get; private set; }

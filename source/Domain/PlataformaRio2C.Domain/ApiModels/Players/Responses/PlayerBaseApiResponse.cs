@@ -11,9 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace PlataformaRio2C.Domain.ApiModels
 {
@@ -45,6 +45,6 @@ namespace PlataformaRio2C.Domain.ApiModels
         public IEnumerable<InterestGroupApiResponse> InterestGroupApiResponses { get; set; }
 
         [JsonProperty("collaborators", Order = 900)]
-        public IEnumerable<PlayerCollaboratorApiResponse> PlayerCollaboratorApiResponses { get; set; }      
+        public IEnumerable<PlayerCollaboratorApiResponse> PlayerCollaboratorApiResponses { get; set; }
     }
 }

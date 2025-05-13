@@ -47,7 +47,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
 
             this.Property(t => t.Clipping3)
                 .HasMaxLength(MusicProject.Clipping3MaxLength);
-            
+
             //this.Property(t => t.Reason)
             //    .HasMaxLength(MusicProject.ReasonMaxLength);
 

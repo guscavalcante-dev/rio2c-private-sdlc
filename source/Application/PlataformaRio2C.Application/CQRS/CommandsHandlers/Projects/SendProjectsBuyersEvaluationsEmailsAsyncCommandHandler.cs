@@ -11,15 +11,15 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -97,7 +97,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         }
                         catch
                         {
-                            currentValidationResult.Add(new ValidationError($"Error sending the email for user {emailRecipientsDto.RecipientUser.Name} (email: {emailRecipientsDto.RecipientUser.Email}; uid: {emailRecipientsDto.RecipientUser.Uid}, buyer evaluation uid: {unsentProjectBuyerEvaluation.ProjectBuyerEvaluation.Uid })."));
+                            currentValidationResult.Add(new ValidationError($"Error sending the email for user {emailRecipientsDto.RecipientUser.Name} (email: {emailRecipientsDto.RecipientUser.Email}; uid: {emailRecipientsDto.RecipientUser.Uid}, buyer evaluation uid: {unsentProjectBuyerEvaluation.ProjectBuyerEvaluation.Uid})."));
                         }
                     }
 
@@ -112,7 +112,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 }
                 catch
                 {
-                    currentValidationResult.Add(new ValidationError($"Error sending the email for organization {unsentProjectBuyerEvaluation.SellerOrganization.TradeName} (buyer evaluation uid: {unsentProjectBuyerEvaluation.ProjectBuyerEvaluation.Uid })."));
+                    currentValidationResult.Add(new ValidationError($"Error sending the email for organization {unsentProjectBuyerEvaluation.SellerOrganization.TradeName} (buyer evaluation uid: {unsentProjectBuyerEvaluation.ProjectBuyerEvaluation.Uid})."));
                 }
 
                 if (!currentValidationResult.IsValid)

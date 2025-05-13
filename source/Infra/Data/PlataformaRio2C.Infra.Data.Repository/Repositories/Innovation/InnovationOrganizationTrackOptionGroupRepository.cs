@@ -261,7 +261,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="sortColumns">The sort columns.</param>
         /// <returns></returns>
         public async Task<IPagedList<InnovationOrganizationTrackOptionGroupDto>> FindAllByDataTable(
-            int page, 
+            int page,
             int pageSize,
             string keywords,
             List<Tuple<string, string>> sortColumns)
@@ -304,7 +304,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<int> CountAllByDataTable(bool showAllEditions, int editionId)
         {
             var query = this.GetBaseQuery();
-                                //.FindByEditionId(showAllEditions, editionId); TODO: This table doesn't have EditionId column. If necessary, implement this!
+            //.FindByEditionId(showAllEditions, editionId); TODO: This table doesn't have EditionId column. If necessary, implement this!
 
             return await query
                             .CountAsync();

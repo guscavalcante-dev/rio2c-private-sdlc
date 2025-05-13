@@ -11,10 +11,10 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -42,9 +42,9 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset UpdateDate { get; set; }
         public bool IsInCurrentEdition { get; set; }
         public bool IsInOtherEdition { get; set; }
-		public bool IsApiDisplayEnabled { get; set; }
+        public bool IsApiDisplayEnabled { get; set; }
         public int ReceivedProjectsCount { get; set; }
-		
+
         public HoldingBaseDto HoldingBaseDto { get; set; }
         public UserBaseDto CreatorBaseDto { get; set; }
         public UserBaseDto UpdaterBaseDto { get; set; }

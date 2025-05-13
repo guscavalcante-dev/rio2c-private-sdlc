@@ -11,12 +11,12 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Collections.Generic;
-using System.Linq;
-using PlataformaRio2C.Web.Site.Models;
-using System.Net;
 using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
+using PlataformaRio2C.Web.Site.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {

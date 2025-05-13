@@ -11,9 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Reflection;
 using MediatR.SimpleInjector;
 using SimpleInjector;
+using System.Reflection;
 
 namespace PlataformaRio2C.Infra.CrossCutting.CQRS
 {

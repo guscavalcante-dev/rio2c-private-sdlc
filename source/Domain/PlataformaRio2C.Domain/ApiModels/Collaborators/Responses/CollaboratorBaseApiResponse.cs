@@ -11,8 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using Newtonsoft.Json;
+using System;
 
 namespace PlataformaRio2C.Domain.ApiModels.Responses
 {

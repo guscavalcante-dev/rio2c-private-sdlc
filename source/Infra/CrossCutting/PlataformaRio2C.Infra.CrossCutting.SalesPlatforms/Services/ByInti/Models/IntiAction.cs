@@ -12,18 +12,12 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Models
 {
     public static class IntiAction
     {
         public const string TicketSold = "ticket_sold";
         public const string TicketCancelled = "ticket_canceled";
-        public const string ParticipantUpdated = "participant_updated"; 
+        public const string ParticipantUpdated = "participant_updated";
     }
 }

@@ -11,11 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -49,7 +49,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public UpdateProjectLinks()
         {
         }
-            
+
         /// <summary>Updates the pre send properties.</summary>
         /// <param name="projectTypeUid">The project type uid.</param>
         /// <param name="userId">The user identifier.</param>

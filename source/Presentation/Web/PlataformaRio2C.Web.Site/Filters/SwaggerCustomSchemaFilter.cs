@@ -11,12 +11,12 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Linq;
-using System.Reflection;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using Swashbuckle.Swagger;
+using System;
+using System.Linq;
+using System.Reflection;
 
 namespace PlataformaRio2C.Web.Site.Filters
 {
@@ -31,10 +31,10 @@ namespace PlataformaRio2C.Web.Site.Filters
             foreach (var property in type.GetProperties())
             {
                 var parameterAttribute = property.GetCustomAttributes<SwaggerParameterDescriptionAttribute>().FirstOrDefault();
-                if(parameterAttribute != null)
+                if (parameterAttribute != null)
                 {
                     var schemaProperty = schema.properties[property.Name.LowercaseFirst()];
-                    if(schemaProperty != null)
+                    if (schemaProperty != null)
                     {
                         schemaProperty.description = parameterAttribute.GetDescription();
                     }

@@ -11,8 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using PlataformaRio2C.Domain.Entities;
+using System;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -32,11 +32,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public SendProducerWelcomeEmailAsync(
             string userSecurityToken,
-            int recipientUserId, 
-            Guid recipientUserUid, 
-            string recipientFirstName, 
-            string recipientFullName, 
-            string recipientEmail, 
+            int recipientUserId,
+            Guid recipientUserUid,
+            string recipientFirstName,
+            string recipientFullName,
+            string recipientEmail,
             Edition edition,
             string userInterfaceLanguage)
             : base(recipientUserId, recipientUserUid, recipientFirstName, recipientFullName, recipientEmail, edition, userInterfaceLanguage)

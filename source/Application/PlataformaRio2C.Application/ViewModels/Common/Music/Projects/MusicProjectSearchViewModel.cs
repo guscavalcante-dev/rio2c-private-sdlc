@@ -11,12 +11,10 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using DocumentFormat.OpenXml.Office2010.ExcelAc;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -68,8 +66,8 @@ namespace PlataformaRio2C.Application.ViewModels
         /// <param name="projectEvaluationStatuses">The project evaluation statuses.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public void UpdateModelsAndLists(
-            List<MusicGenre> musicGenres, 
-            List<ProjectEvaluationStatus> projectEvaluationStatuses, 
+            List<MusicGenre> musicGenres,
+            List<ProjectEvaluationStatus> projectEvaluationStatuses,
             string userInterfaceLanguage)
         {
             this.MusicGenres = musicGenres.GetSeparatorTranslation(i => i.Name, userInterfaceLanguage, '|')?.OrderBy(i => i.Name)?.ToList();

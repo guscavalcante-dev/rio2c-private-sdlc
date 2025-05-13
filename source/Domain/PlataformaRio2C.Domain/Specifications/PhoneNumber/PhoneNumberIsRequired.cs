@@ -16,11 +16,11 @@ namespace PlataformaRio2C.Domain.Entities.Specifications
         public PhoneNumberIsRequired(string target)
         {
             Target = target;
-        }      
+        }
 
         public bool IsSatisfiedBy(string value)
         {
             return !string.IsNullOrWhiteSpace(value);
-        }        
+        }
     }
 }

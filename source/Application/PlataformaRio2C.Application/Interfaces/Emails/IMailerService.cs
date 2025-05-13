@@ -11,9 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using Mvc.Mailer;
 using PlataformaRio2C.Application.CQRS.Commands;
+using System;
 
 namespace PlataformaRio2C.Application.Interfaces
 {
