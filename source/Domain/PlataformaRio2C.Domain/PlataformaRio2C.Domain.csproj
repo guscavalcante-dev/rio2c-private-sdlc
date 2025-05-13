@@ -164,10 +164,11 @@
     <Compile Include="Constants\CollaboratorType.cs" />
     <Compile Include="Constants\Role.cs" />
     <Compile Include="Dtos\Addresses\AddressDto.cs" />
+    <Compile Include="Dtos\Agendas\AgendaMusicNegotiationEventJsonDto.cs" />
     <Compile Include="Dtos\Agendas\AgendaLogisticTransferEventJsonDto.cs" />
     <Compile Include="Dtos\Agendas\AgendaLogisticAccommodationEventJsonDto.cs" />
     <Compile Include="Dtos\Agendas\AgendaLogisticAirfareEventJsonDto.cs" />
-    <Compile Include="Dtos\Agendas\AgendaNegotiationEventJsonDto.cs" />
+    <Compile Include="Dtos\Agendas\AgendaAudiovisualNegotiationEventJsonDto.cs" />
     <Compile Include="Dtos\Agendas\AgendaConferenceEventJsonDto.cs" />
     <Compile Include="Dtos\Agendas\CollaboratorEvent\CollaboratorEventDto.cs" />
     <Compile Include="Dtos\Agendas\CollaboratorEvent\CollaboratorEventsDto.cs" />
