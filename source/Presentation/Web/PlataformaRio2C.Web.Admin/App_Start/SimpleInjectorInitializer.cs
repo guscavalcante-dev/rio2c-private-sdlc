@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-28-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 04-22-2025
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 05-09-2025
 // ***********************************************************************
 // <copyright file="SimpleInjectorInitializer.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

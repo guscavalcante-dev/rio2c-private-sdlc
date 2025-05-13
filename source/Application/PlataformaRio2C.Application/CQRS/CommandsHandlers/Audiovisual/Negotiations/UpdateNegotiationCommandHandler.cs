@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 05-15-2021
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 05-08-2025
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 05-09-2025
 // ***********************************************************************
 // <copyright file="UpdateNegotiationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

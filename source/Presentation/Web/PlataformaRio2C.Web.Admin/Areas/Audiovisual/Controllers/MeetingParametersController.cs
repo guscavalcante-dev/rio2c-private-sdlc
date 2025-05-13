@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 03-04-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-25-2020
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 05-09-2025
 // ***********************************************************************
 // <copyright file="MeetingParametersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,6 +34,8 @@ using PlataformaRio2C.Web.Admin.Controllers;
 using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Domain.Entities;
+using DocumentFormat.OpenXml.Office.Word;
+using PlataformaRio2C.Application.Interfaces;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 {
@@ -46,6 +48,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         private readonly INegotiationRoomConfigRepository negotiationRoomConfigRepo;
         private readonly IRoomRepository roomRepo;
         private readonly IOrganizationRepository organizationRepo;
+        private readonly INegotiationService negotiationValidationService;
+        private readonly IProjectRepository projectRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MeetingParametersController" /> class.
@@ -60,11 +64,15 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             INegotiationConfigRepository negotiationConfigRepository,
+            IProjectRepository projectRepository,
             INegotiationRoomConfigRepository negotiationRoomConfigRepository,
             IRoomRepository roomRepository,
+            INegotiationService negotiationValidationService,
             IOrganizationRepository organizationRepository)
             : base(commandBus, identityController)
         {
+            this.projectRepo = projectRepository;
+            this.negotiationValidationService = negotiationValidationService;
             this.negotiationConfigRepo = negotiationConfigRepository;
             this.negotiationRoomConfigRepo = negotiationRoomConfigRepository;
             this.roomRepo = roomRepository;
@@ -743,6 +751,51 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>Finds all dates.</summary>
+        /// <param name="customFilter">The custom filter.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> FindAllDatesAvailables(Guid? buyerOrganizationUid = null, Guid? projectUid = null, string customFilter = "")
+        {
+            var buyerOrganizationDto = await this.organizationRepo.FindDtoByUidAsync(buyerOrganizationUid ?? Guid.Empty, this.EditionDto.Edition.Id);
+            var negotiationConfigDtos = await this.negotiationConfigRepo.FindAllDatesDtosAsync(this.EditionDto.Id, customFilter, buyerOrganizationDto?.IsVirtualMeeting == true, ProjectType.AudiovisualBusinessRound.Id);
+            var project = await this.projectRepo.GetAsync(projectUid ?? Guid.Empty);
+
+
+            for (int i = negotiationConfigDtos.Count - 1; i >= 0; i--)
+            {
+                var negotiationConfig = negotiationConfigDtos[i];
+                var dayStart = negotiationConfig.NegotiationConfig.StartDate.Date;
+                var dayEnd = dayStart.AddDays(1).AddTicks(-1);
+                int totalMinutesInt = (int)(negotiationConfig.NegotiationConfig.TimeOfEachRound +
+                             negotiationConfig.NegotiationConfig.TimeIntervalBetweenRound).TotalMinutes;
+
+                var result = await this.negotiationValidationService.ValidateOverbookingDatesAsync(
+                    this.EditionDto.Id,
+                    dayStart,
+                    dayEnd,
+                    buyerOrganizationUid.Value,
+                    project.SellerAttendeeOrganization.Uid,
+                    totalMinutesInt);
+
+                if (!result.IsValid)
+                {
+                    negotiationConfigDtos.RemoveAt(i);
+                }
+            }
+
+            return Json(new
+            {
+                status = "success",
+                negotiationConfigs = negotiationConfigDtos?.Select(ncd => new NegotiationConfigDropdownDto
+                {
+                    Uid = ncd.NegotiationConfig.Uid,
+                    StartDate = ncd.NegotiationConfig.StartDate,
+                    EndDate = ncd.NegotiationConfig.EndDate
+                })
+            }, JsonRequestBehavior.AllowGet);
+        }
+
         /// <summary>Finds all rooms.</summary>
         /// <param name="negotiationConfigUid">The negotiation configuration uid.</param>
         /// <param name="customFilter">The custom filter.</param>
@@ -781,6 +834,44 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 times = this.GetNegotiationTimesSlots(negotiationConfigDto)
             }, JsonRequestBehavior.AllowGet);
         }
+
+        /// <summary>Finds all times.</summary>
+        /// <param name="negotiationRoomConfigUid">The negotiation room configuration uid.</param>
+        /// <param name="customFilter">The custom filter.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> FindAllTimesAvailables(Guid? negotiationRoomConfigUid = null, Guid? projectUid = null, Guid? buyerOrganizationUid = null, string customFilter = "")
+        {
+            var buyerOrganizationDto = await this.organizationRepo.FindDtoByUidAsync(buyerOrganizationUid ?? Guid.Empty, this.EditionDto.Edition.Id);
+            var negotiationConfigDto = await this.negotiationConfigRepo.FindAllTimesDtosAsync(this.EditionDto.Id, negotiationRoomConfigUid ?? Guid.Empty, customFilter, buyerOrganizationDto.IsVirtualMeeting == true, ProjectType.AudiovisualBusinessRound.Id);
+            var project = await this.projectRepo.GetAsync(projectUid ?? Guid.Empty);
+
+            var allSlots = this.GetNegotiationTimesSlots(negotiationConfigDto);
+            var availableSlots = new List<NegotiationTimeDropdownDto>();
+
+            foreach (var slot in allSlots)
+            {
+                var validation = await this.negotiationValidationService.ValidateOverbookingAsync(
+                    editionId: this.EditionDto.Id,
+                    startDate: slot.StartTime,
+                    endDate: slot.EndTime,
+                    buyerOrganizationId: buyerOrganizationUid ?? Guid.Empty,
+                    sellerOrganizationId: project.SellerAttendeeOrganization.Organization.Uid
+                );
+
+                if (validation.IsValid)
+                {
+                    availableSlots.Add(slot);
+                }
+            }
+
+            return Json(new
+            {
+                status = "success",
+                times = availableSlots
+            }, JsonRequestBehavior.AllowGet);
+        }
+
 
         /// <summary>Gets the negotiation times slots.</summary>
         /// <param name="negotiationConfigDto">The negotiation configuration dto.</param>

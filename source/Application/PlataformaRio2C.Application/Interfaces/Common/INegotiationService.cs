@@ -13,13 +13,32 @@
 // ***********************************************************************
 using PlataformaRio2C.Application.Services.Common;
 using PlataformaRio2C.Domain.Entities;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using PlataformaRio2C.Domain.Validation;
+
 
 namespace PlataformaRio2C.Application.Interfaces
 {
     /// <summary>INegotiationService</summary>
     public interface INegotiationService
     {
+        Task<ValidationResult> ValidateOverbookingAsync(
+          int editionId,
+          DateTimeOffset startDate,
+          DateTimeOffset endDate,
+          Guid buyerOrganizationId,
+          Guid sellerOrganizationId);
+
+        Task<ValidationResult> ValidateOverbookingDatesAsync(
+         int editionId,
+         DateTimeOffset dayStart,
+         DateTimeOffset dayEnd,
+         Guid buyerOrganizationId,
+         Guid sellerOrganizationId,
+         int meetingDurationTimeSpan);
+
         /// <summary>
         /// Gets the common Availabilities configured between Player Executives and Producer Executives.
         /// Exclude dates that are not in common for both!
