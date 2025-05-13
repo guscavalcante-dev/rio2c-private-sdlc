@@ -4,6 +4,6 @@ namespace PlataformaRio2C.Infra.Data.Context.Migrations
 {
     public partial class AttMusicPlayerForms : SqlMigration
     {
-       
+
     }
 }

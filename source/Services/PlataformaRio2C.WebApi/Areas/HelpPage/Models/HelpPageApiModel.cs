@@ -1,8 +1,8 @@
+using PlataformaRio2C.WebApi.Areas.HelpPage.ModelDescriptions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net.Http.Headers;
 using System.Web.Http.Description;
-using PlataformaRio2C.WebApi.Areas.HelpPage.ModelDescriptions;
 
 namespace PlataformaRio2C.WebApi.Areas.HelpPage.Models
 {

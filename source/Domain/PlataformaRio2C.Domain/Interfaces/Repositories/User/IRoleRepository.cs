@@ -25,5 +25,5 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<Role> FindByNameAsync(string roleName);
         Task<List<Role>> FindAllAdminRolesAsync();
         List<Role> FindAllAdminRoles();
-    }    
+    }
 }

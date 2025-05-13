@@ -11,10 +11,10 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Web;
-using PlataformaRio2C.Web.Admin.App_Start;
-using PlataformaRio2C.Infra.CrossCutting.Identity.Modules;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Modules;
+using PlataformaRio2C.Web.Admin.App_Start;
+using System.Web;
 
 [assembly: PreApplicationStartMethod(typeof(FormsAuthenticationConfig), "Register")]
 namespace PlataformaRio2C.Web.Admin.App_Start

@@ -35,7 +35,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public AttendeeCartoonProjectEvaluation(
             AttendeeCartoonProject attendeeCartoonProject,
-            User evaluatorUser, 
+            User evaluatorUser,
             decimal grade,
             int userId)
         {

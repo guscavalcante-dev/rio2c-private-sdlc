@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace PlataformaRio2C.Web.Site.Models
+﻿namespace PlataformaRio2C.Web.Site.Models
 {
     public class IngressoTicket
     {

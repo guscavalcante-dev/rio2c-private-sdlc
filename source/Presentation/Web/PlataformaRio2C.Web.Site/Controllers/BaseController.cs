@@ -11,22 +11,22 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
-using System;
-using System.Configuration;
-using System.Linq;
-using System.Threading;
-using System.Web.Mvc;
-using System.Web.Routing;
 using MediatR;
 using Microsoft.AspNet.Identity;
 using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
+using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Web.Site.Helpers;
-using Constants = PlataformaRio2C.Domain.Constants;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Threading;
+using System.Web.Mvc;
+using System.Web.Routing;
+using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {

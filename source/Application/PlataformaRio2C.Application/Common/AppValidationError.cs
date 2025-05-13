@@ -14,7 +14,7 @@ namespace PlataformaRio2C.Application
             {
                 Target = validationError.MemberNames.FirstOrDefault();
             }
-            
+
             Code = validationError.Code;
             Message = validationError.Message;
         }
@@ -27,14 +27,14 @@ namespace PlataformaRio2C.Application
         public AppValidationError(string message, string target)
         {
             Message = message;
-            Target = target;            
+            Target = target;
         }
 
         public AppValidationError(string message, string target, string code)
         {
             Message = message;
             Target = target;
-            Code = code;            
+            Code = code;
         }
     }
 }

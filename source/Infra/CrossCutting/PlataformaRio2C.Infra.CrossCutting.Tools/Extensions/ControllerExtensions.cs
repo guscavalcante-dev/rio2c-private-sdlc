@@ -320,7 +320,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 
             controller.TempData["StatusMessageText"] = message;
             controller.TempData["StatusMessageCssClass"] = statusMessageType.ToString().ToLower();
-        }        
+        }
 
         /// <summary>
         /// Cria uma variavel de mensagem de status no tempdata do controller

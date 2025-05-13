@@ -11,10 +11,10 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
 using Newtonsoft.Json;
 using PlataformaRio2C.Domain.ApiModels.Responses;
+using System;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.ApiModels
 {

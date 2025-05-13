@@ -4,5 +4,5 @@ namespace PlataformaRio2C.Domain.Interfaces
 {
     public interface IRoomNameRepository : IRepository<RoomName>
     {
-    }    
+    }
 }

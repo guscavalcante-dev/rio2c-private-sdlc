@@ -12,11 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.Interfaces;
@@ -26,6 +21,11 @@ using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -111,7 +111,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 project.Id,
                 cmd.BuyerOrganizationUid ?? Guid.Empty,
                 cmd.EditionId ?? 0);
-            
+
             var executivesAvailabilities = negotiationService.GetExecutivesAvailabilities(projectBuyerEvaluation);
 
             // Player and Producer have Executives with Availability configured, but into different dates.
@@ -162,9 +162,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #region Overbooking check
 
             var scheduledNegotiationsAtThisTime = await this.NegotiationRepo.FindAllScheduledNegotiationsDtosAsync(
-                cmd.EditionId.Value, 
-                null, 
-                startDatePreview, 
+                cmd.EditionId.Value,
+                null,
+                startDatePreview,
                 endDatePreview);
 
             // Player scheduled Negotiations checks
@@ -222,7 +222,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             #region Airfares check [DISABLED] - But stills working perfectly! Dont delete, can be used in future!
-            
+
             //var scheduledLogisticAirfaresAtThisTime = await this.logisticAirfareRepo.FindAllScheduleDtosAsync(cmd.EditionId.Value, null, startDatePreview, endDatePreview);
 
             //var hasPlayerExecutivesScheduledAirfaresAtThisTime = scheduledLogisticAirfaresAtThisTime.Count(ladto => ladto.LogisticDto.AttendeeCollaboratorDto.AttendeeOrganizationsDtos.Any(aodto => aodto.Organization.Id == buyerOrganization.Id)) > 0;

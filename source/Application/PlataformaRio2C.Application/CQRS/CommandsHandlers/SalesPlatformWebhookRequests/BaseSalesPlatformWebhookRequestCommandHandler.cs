@@ -11,14 +11,14 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -34,8 +34,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="salesPlatformWebhookRequestRepository">The sales platform webhook request repository.</param>
         /// <param name="salesPlatformServiceFactory">The sales platform service factory.</param>
         public BaseSalesPlatformWebhookRequestCommandHandler(
-            IMediator commandBus, 
-            IUnitOfWork uow, 
+            IMediator commandBus,
+            IUnitOfWork uow,
             ISalesPlatformWebhookRequestRepository salesPlatformWebhookRequestRepository,
             ISalesPlatformServiceFactory salesPlatformServiceFactory)
             : base(commandBus, uow)

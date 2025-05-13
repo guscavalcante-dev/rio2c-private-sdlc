@@ -11,28 +11,26 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Application.ViewModels;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Admin.Filters;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 using Constants = PlataformaRio2C.Domain.Constants;
-using PlataformaRio2C.Domain.Entities;
-using System.Web.Http.Results;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
@@ -64,7 +62,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="presentationFormatRepository">The presentation format repository.</param>
         /// <param name="roomRepository">The room repository.</param>
         public ConferencesController(
-            IMediator commandBus, 
+            IMediator commandBus,
             IdentityAutenticationService identityController,
             IConferenceRepository conferenceRepository,
             IConferenceParticipantRoleRepository conferenceParticipantRoleRepository,
@@ -118,7 +116,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 request.Length,
                 request.Search?.Value,
                 request.GetSortColumns(),
-                new List<Guid>(), 
+                new List<Guid>(),
                 this.EditionDto.Id,
                 this.AdminAccessControlDto.Language.Id
             );
@@ -899,7 +897,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Conference, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
-            
+
             apiConfigurationWidgetDto.Conference.FillRequiredFieldsToPublishToApi();
 
             return Json(new

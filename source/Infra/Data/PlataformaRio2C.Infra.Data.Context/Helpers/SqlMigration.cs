@@ -11,13 +11,13 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Reflection;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
+using System;
+using System.Configuration;
 using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
-using System.Configuration;
+using System.Reflection;
 
 namespace PlataformaRio2C.Infra.Data.Context.Helpers
 {
@@ -39,9 +39,9 @@ namespace PlataformaRio2C.Infra.Data.Context.Helpers
 
                 assemblyDir = absolutionAssemblyDir?.Replace(assemblyDir + ".", ""); //Migrations.Initial
                 var array = assemblyDir?.Split('.');
-                
+
                 var path = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath);
-                           
+
                 return Path.Combine(path, array[0]);
             }
         }
@@ -59,7 +59,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Helpers
         public string MigrationName
         {
             get
-            {  
+            {
                 if (!string.IsNullOrEmpty(_migrationName))
                     return _migrationName;
 
@@ -135,12 +135,12 @@ namespace PlataformaRio2C.Infra.Data.Context.Helpers
             base.Down();
         }
 
-       
+
         /// <summary>
         ///  check Annotation EnvironmentVariable
         /// </summary>
         private bool ExecuteEnvironmentVariable()
-        {  
+        {
             bool result = true;
 
             var dnAttribute = GetType().GetCustomAttributes(typeof(EnvironmentVariableAttribute), true).FirstOrDefault() as EnvironmentVariableAttribute;
@@ -155,7 +155,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Helpers
                     var name = environmentVariables[i].ToString().ToUpper();
 
                     if (name == "ALL") return true;
-                                       
+
                     var environment = ConfigurationManager.AppSettings["Environment"];
                     if (environment == null) return true;
 

@@ -11,22 +11,21 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using Foolproof;
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Foolproof;
-using Org.BouncyCastle.Asn1.Ocsp;
-using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>AttendeeOrganizationBaseCommand</summary>
     public class AttendeeOrganizationBaseCommand
     {
-        public Guid? AttendeeOrganizationUid 
+        public Guid? AttendeeOrganizationUid
         {
-            get 
+            get
             {
                 return Guid.TryParse(this.Value, out var result) ? result : (Guid?)null;
             }
@@ -44,8 +43,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="attendeeOrganizationBaseDto">The attendee organization base dto.</param>
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
         public AttendeeOrganizationBaseCommand(
-            AttendeeOrganizationBaseDto attendeeOrganizationBaseDto, 
-            List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, 
+            AttendeeOrganizationBaseDto attendeeOrganizationBaseDto,
+            List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos,
             bool isPlayerRequired)
         {
             this.UpdateBaseProperties(attendeeOrganizationBaseDto, attendeeOrganizationsBaseDtos);

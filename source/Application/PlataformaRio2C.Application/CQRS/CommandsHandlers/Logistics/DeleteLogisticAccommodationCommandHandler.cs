@@ -11,12 +11,12 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -30,7 +30,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         public DeleteLogisticAccommodationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            ILogisticAccommodationRepository repository) 
+            ILogisticAccommodationRepository repository)
             : base(eventBus, uow, repository)
         {
         }

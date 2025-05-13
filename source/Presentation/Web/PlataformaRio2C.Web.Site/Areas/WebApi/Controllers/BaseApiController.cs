@@ -14,6 +14,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using PlataformaRio2C.Application;
+using PlataformaRio2C.Domain.ApiModels;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -21,7 +22,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Script.Serialization;
-using PlataformaRio2C.Domain.ApiModels;
 
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 {
@@ -162,11 +162,11 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         {
             IHttpActionResult response;
 
-            var jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };            
+            var jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
 
             HttpResponseMessage responseMessage = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonConvert.SerializeObject(viewModel, Formatting.None, jsonSerializerSettings), Encoding.UTF8, "application/json")                
+                Content = new StringContent(JsonConvert.SerializeObject(viewModel, Formatting.None, jsonSerializerSettings), Encoding.UTF8, "application/json")
             };
 
             response = ResponseMessage(responseMessage);

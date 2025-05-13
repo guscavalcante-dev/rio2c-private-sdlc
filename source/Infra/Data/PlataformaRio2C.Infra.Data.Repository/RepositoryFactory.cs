@@ -11,7 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
 using PlataformaRio2C.Infra.Data.Repository.Repositories;
@@ -212,7 +211,7 @@ namespace PlataformaRio2C.Infra.Data.Repository
         {
             get
             {
-                return this._attendeePlacesRepository  ?? (this._attendeePlacesRepository = new AttendeePlacesRepository(_context));
+                return this._attendeePlacesRepository ?? (this._attendeePlacesRepository = new AttendeePlacesRepository(_context));
             }
         }
 
@@ -233,7 +232,7 @@ namespace PlataformaRio2C.Infra.Data.Repository
                 return this._logisticAirfareRepository ?? (this._logisticAirfareRepository = new LogisticAirfareRepository(_context));
             }
         }
-        
+
         private ILogisticAccommodationRepository _logisticAccommodationRepository;
         public ILogisticAccommodationRepository LogisticAccommodationRepository
         {

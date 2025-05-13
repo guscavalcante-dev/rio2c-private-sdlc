@@ -11,11 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Globalization;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNet.SignalR.Hubs;
 using Newtonsoft.Json;
@@ -32,12 +27,17 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context;
 using PlataformaRio2C.Infra.Data.Repository.Repositories;
 using SimpleInjector.Lifestyles;
+using System;
+using System.Globalization;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Web.Site.Hub
 {
     /// <summary>MessageHub</summary>
     [Microsoft.AspNet.SignalR.Authorize]
-    public class MessageHub: Microsoft.AspNet.SignalR.Hub
+    public class MessageHub : Microsoft.AspNet.SignalR.Hub
     {
         private IConnectionRepository connectionRepo;
         //private static readonly ConnectionMapping<string> _connections = new ConnectionMapping<string>(); //TODO: Remove this
@@ -130,7 +130,7 @@ namespace PlataformaRio2C.Web.Site.Hub
                         SenderNameInitials = messageDto.SenderCollaborator?.Badge?.GetTwoLetterCode() ??
                                              messageDto.SenderCollaborator?.GetNameAbbreviation() ??
                                              messageDto.SenderUser?.Name?.GetTwoLetterCode(),
-                        SenderImageUrl = messageDto.SenderCollaborator?.ImageUploadDate != null ? ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, messageDto.SenderCollaborator.Uid, messageDto.SenderCollaborator.ImageUploadDate?.DateTime, true) : 
+                        SenderImageUrl = messageDto.SenderCollaborator?.ImageUploadDate != null ? ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, messageDto.SenderCollaborator.Uid, messageDto.SenderCollaborator.ImageUploadDate?.DateTime, true) :
                                                                                                   null,
                         RecipientUserUid = messageDto.RecipientUser.Uid,
                         RecipientEmail = messageDto.RecipientUser.Email,
@@ -254,7 +254,7 @@ namespace PlataformaRio2C.Web.Site.Hub
                 //_connections.Add(userName, Context.ConnectionId); //TODO: Remove this
             }
             catch (Exception)
-            {                
+            {
             }
 
             await base.OnConnected();

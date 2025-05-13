@@ -11,19 +11,16 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using MediatR;
+using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.Data.Context.Interfaces;
 using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
-using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
-using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Domain.Statics;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Infra.Data.Context.Interfaces;
-using PlataformaRio2C.Domain.Validation;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {

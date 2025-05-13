@@ -37,7 +37,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="musicProjectDto">The music project dto.</param>
         public void UpdateBaseProperties(MusicProjectDto musicProjectDto)
         {
-            if(musicProjectDto?.MusicProject == null)
+            if (musicProjectDto?.MusicProject == null)
             {
                 return;
             }

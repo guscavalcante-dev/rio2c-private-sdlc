@@ -35,13 +35,13 @@
         SmtpIsBodyHtml = 105,
 
         [SystemParametersDescription((int)SmtpCredentialUser, "SMTP Username da Credencial", typeof(string), (int)SystemParameterGroupCodes.Emails, (int)LanguageCodes.PtBr, "rio2c@agenciaguppy.com.br")]
-        SmtpCredentialUser= 106,
+        SmtpCredentialUser = 106,
 
         [SystemParametersDescription((int)SmtpCredentialPass, "SMTP Password da Credencial", typeof(string), (int)SystemParameterGroupCodes.Emails, (int)LanguageCodes.PtBr, "rio2c@2018")]
         SmtpCredentialPass = 107,
 
 
-        [SystemParametersDescription((int)EmailTwoFactorSubject, "Subject do E-mail do segundo fator de autenticação", typeof(string), (int)SystemParameterGroupCodes.Emails, (int)LanguageCodes.PtBr, "Rio2C - Token de autenticação")]        
+        [SystemParametersDescription((int)EmailTwoFactorSubject, "Subject do E-mail do segundo fator de autenticação", typeof(string), (int)SystemParameterGroupCodes.Emails, (int)LanguageCodes.PtBr, "Rio2C - Token de autenticação")]
         EmailTwoFactorSubject = 108,
 
         [SystemParametersDescription((int)EmailTwoFactorMessageFormat, "Formato do corpo do E-mail do segundo fator de autenticação (Usar {0} para o valor do Token)", typeof(string), (int)SystemParameterGroupCodes.Emails, (int)LanguageCodes.PtBr, "Seu token de segurança é: {0}")]
@@ -92,12 +92,12 @@
         SymplaUrlPathParticipants = 401,
 
         [SystemParametersDescription((int)SymplaHeaders, "Headers enviados para Api Sympla", typeof(string), (int)SystemParameterGroupCodes.Sympla, (int)LanguageCodes.PtBr, @"[{""Name"":""S_APP_TOKEN"",""Value"": ""fc1da583f7eaf3110ea8daf66db65931""},{""Name"": ""S_EMAIL"", ""Value"": ""angelica@rio2c.com""},{""Name"": ""S_TOKEN"",""Value"": ""47a5181e81d9f9c97bb7ccaab7056955""}]")]
-        SymplaHeaders= 402,
+        SymplaHeaders = 402,
 
         [SystemParametersDescription((int)SymplaFieldKeyCnpj, "Nome do campo chave para busca de CNPJ", typeof(string), (int)SystemParameterGroupCodes.Sympla, (int)LanguageCodes.PtBr, "CNPJ")]
         SymplaFieldKeyCnpj = 403,
 
-      
+
         [SystemParametersDescription((int)SymplaOrderStatusConfirmPayment, "Valor order_status quando pagamento esta confirmado", typeof(string), (int)SystemParameterGroupCodes.Sympla, (int)LanguageCodes.PtBr, "A")]
         SymplaOrderStatusConfirmPayment = 404,
 

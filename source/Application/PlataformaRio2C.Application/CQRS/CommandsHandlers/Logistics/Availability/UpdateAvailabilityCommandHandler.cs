@@ -11,12 +11,12 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -34,8 +34,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         public UpdateAvailabilityCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            IAttendeeCollaboratorRepository attendeeCollaboratorRepository) 
-            : base(eventBus, uow) 
+            IAttendeeCollaboratorRepository attendeeCollaboratorRepository)
+            : base(eventBus, uow)
         {
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
         }
@@ -49,7 +49,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         public async Task<AppValidationResult> Handle(UpdateAvailability cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
-            
+
             var attendeeCollaborator = await this.attendeeCollaboratorRepo.GetAsync(ac => ac.Uid == cmd.AttendeeCollaboratorUid && !ac.IsDeleted);
 
             if (!this.ValidationResult.IsValid)
@@ -59,7 +59,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             attendeeCollaborator.UpdateAvailability(cmd.AvailabilityBeginDate, cmd.AvailabilityEndDate, cmd.UserId);
-            
+
             if (!attendeeCollaborator.IsValid())
             {
                 this.AppValidationResult.Add(attendeeCollaborator.ValidationResult);

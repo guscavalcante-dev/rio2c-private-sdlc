@@ -11,11 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -32,7 +32,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         // Pre send properties
         public OrganizationType OrganizationType { get; private set; }
-        
+
         public int? ProjectTypeId { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="OnboardPlayerInterests"/> class.</summary>
@@ -43,7 +43,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public OnboardPlayerInterests(
             OrganizationDto entity,
             List<InterestDto> interestsDtos,
-            List<LanguageDto> languagesDtos, 
+            List<LanguageDto> languagesDtos,
             bool isRestrictionSpecificRequired)
         {
             this.OrganizationUid = entity.Uid;

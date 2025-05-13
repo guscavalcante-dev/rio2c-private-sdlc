@@ -11,11 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace PlataformaRio2C.Domain.Dtos
 {
     /// <summary>MusicBandGroupedByGenreDto</summary>

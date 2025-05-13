@@ -11,37 +11,37 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using ClosedXML.Excel;
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
+using PlataformaRio2c.Infra.Data.FileRepository;
+using PlataformaRio2C.Application;
+using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Application.ViewModels;
+using PlataformaRio2C.Domain.ApiModels;
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects;
+using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using PlataformaRio2C.Application;
-using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Web.Admin.Controllers;
 using PlataformaRio2C.Web.Admin.Filters;
-using Constants = PlataformaRio2C.Domain.Constants;
-using System.Text;
-using PlataformaRio2C.Domain.Dtos;
-using ClosedXML.Excel;
-using PlataformaRio2C.Application.ViewModels;
-using PlataformaRio2C.Domain.ApiModels;
-using PlataformaRio2C.Domain.Statics;
-using PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults;
+using System;
+using System.Collections.Generic;
 using System.IO;
-using PlataformaRio2c.Infra.Data.FileRepository;
-using PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 {
@@ -220,13 +220,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
             var musicProjectJsonDtos = await this.musicProjectRepo.FindAllByDataTableAsync(
                 this.EditionDto.Id,
-                searchViewModel.Search, 
+                searchViewModel.Search,
                 searchViewModel.MusicGenreUid,
                 ProjectEvaluationStatus.GetId(searchViewModel.EvaluationStatusUid),
-                searchViewModel.ShowBusinessRounds, 
-                1, 
-                10000, 
-                new List<Tuple<string, string>>(), 
+                searchViewModel.ShowBusinessRounds,
+                1,
+                10000,
+                new List<Tuple<string, string>>(),
                 this.AdminAccessControlDto.User.Id);
 
             var approvedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Id, this.AdminAccessControlDto.User.Id);
@@ -277,12 +277,12 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
             var musicProjectJsonDtos = await this.musicProjectRepo.FindAllByDataTableAsync(
                 this.EditionDto.Id,
-                searchViewModel.Search, 
+                searchViewModel.Search,
                 searchViewModel.MusicGenreUid,
                 ProjectEvaluationStatus.GetId(searchViewModel.EvaluationStatusUid),
                 searchViewModel.ShowBusinessRounds,
-                1, 
-                10000, 
+                1,
+                10000,
                 new List<Tuple<string, string>>(),
                 this.AdminAccessControlDto.User.Id);
 
@@ -620,12 +620,12 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             ViewBag.CurrentMusicProjectIndex = currentMusicProjectIdIndex;
 
             ViewBag.MusicProjectsTotalCount = await this.musicProjectRepo.CountPagedAsync(
-                this.EditionDto.Edition.Id, 
-                searchKeywords, 
+                this.EditionDto.Edition.Id,
+                searchKeywords,
                 musicGenreUid,
-                ProjectEvaluationStatus.GetId(evaluationStatusUid), 
-                showBusinessRounds ?? false, 
-                page.Value, 
+                ProjectEvaluationStatus.GetId(evaluationStatusUid),
+                showBusinessRounds ?? false,
+                page.Value,
                 pageSize.Value,
                 this.AdminAccessControlDto.User.Id);
 

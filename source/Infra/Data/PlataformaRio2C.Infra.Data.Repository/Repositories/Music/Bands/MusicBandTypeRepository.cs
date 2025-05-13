@@ -14,11 +14,11 @@
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using X.PagedList;
-using System.Collections.Generic;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {

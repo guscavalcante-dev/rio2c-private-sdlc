@@ -142,9 +142,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 #region Creates new Collaborator and User
 
                 var createCollaboratorCommand = new CreateTinyCollaborator(
-                    cmd.ResponsibleName, 
-                    cmd.Email, 
-                    cmd.CellPhone, 
+                    cmd.ResponsibleName,
+                    cmd.Email,
+                    cmd.CellPhone,
                     cmd.Document);
 
                 createCollaboratorCommand.UpdatePreSendProperties(
@@ -182,7 +182,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.ResponsibleName,
                     cmd.Email,
                     cmd.CellPhone,
-                    cmd.Document, 
+                    cmd.Document,
                     true);
 
                 updateCollaboratorCommand.UpdatePreSendProperties(
@@ -278,7 +278,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                        cmd.BusinessDifferentials,
                        cmd.BusinessStage,
                        !string.IsNullOrEmpty(cmd.PresentationFile),
-                       !string.IsNullOrEmpty(cmd.ImageFile), 
+                       !string.IsNullOrEmpty(cmd.ImageFile),
                        string.IsNullOrEmpty(cmd.ImageFile),
                        cmd.PresentationFile?.GetBase64FileExtension(),
                        cmd.AttendeeInnovationOrganizationFounderApiDtos,

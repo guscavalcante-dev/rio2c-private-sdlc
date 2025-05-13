@@ -18,7 +18,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Identity.ViewModels
 {
     /// <summary>LoginViewModel</summary>
     public class LoginViewModel
-    {        
+    {
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [Display(Name = "Email", ResourceType = typeof(Labels))]
         [EmailAddress(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]

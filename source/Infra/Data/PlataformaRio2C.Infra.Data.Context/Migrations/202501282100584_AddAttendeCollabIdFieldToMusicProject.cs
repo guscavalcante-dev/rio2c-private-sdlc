@@ -4,6 +4,6 @@
 
     public partial class AddAttendeCollabIdFieldToMusicProject : SqlMigration
     {
-     
+
     }
 }

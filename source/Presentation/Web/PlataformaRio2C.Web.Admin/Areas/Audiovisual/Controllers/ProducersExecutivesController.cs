@@ -176,7 +176,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
                 CollaboratorType.Industry.Name,
                 OrganizationType.Producer.Name,
-                true, 
+                true,
                 this.EditionDto.Id);
 
             return Json(new
@@ -200,7 +200,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
                 CollaboratorType.Industry.Name,
                 OrganizationType.Producer.Name,
-                false, 
+                false,
                 this.EditionDto.Id);
 
             return Json(new

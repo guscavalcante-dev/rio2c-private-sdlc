@@ -106,9 +106,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         /// <returns></returns>
         public static string GetDaySuffix(this DateTime dt)
         {
-            return (dt.Day % 10 == 1 && dt.Day != 11) ? "st" : 
-                   (dt.Day % 10 == 2 && dt.Day != 12) ? "nd" : 
-                   (dt.Day % 10 == 3 && dt.Day != 13) ? "rd" : 
+            return (dt.Day % 10 == 1 && dt.Day != 11) ? "st" :
+                   (dt.Day % 10 == 2 && dt.Day != 12) ? "nd" :
+                   (dt.Day % 10 == 3 && dt.Day != 13) ? "rd" :
                    "th";
         }
 
@@ -208,7 +208,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         /// <returns></returns>
         public static string ToStringHourMinute(this DateTime? dt)
         {
-            if(dt == null)
+            if (dt == null)
             {
                 return "";
             }
@@ -242,7 +242,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             {
                 return "";
             }
-            
+
             return dt?.ToString($"dd '{separator}' MMMM '{separator}' yyyy");
         }
 

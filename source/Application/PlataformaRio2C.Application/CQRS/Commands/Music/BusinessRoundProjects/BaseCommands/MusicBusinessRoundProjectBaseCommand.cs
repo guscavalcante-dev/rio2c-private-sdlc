@@ -11,15 +11,14 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using Foolproof;
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using Foolproof;
-using PlataformaRio2C.Application.CQRS.Commands.Music.BusinessRoundProjects.BaseCommands;
-using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -33,7 +32,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public int SellerAttendeeCollaboratorId { get; set; }
         public List<Guid> PlayerCategoriesUids { get; set; }
 
-        public bool IsPlayersCategoriesDiscursiveRequired {  get; set; } 
+        public bool IsPlayersCategoriesDiscursiveRequired { get; set; }
 
         [Display(Name = "IfAffirmativeWhichCompanies", ResourceType = typeof(Labels))]
         [RequiredIf("IsPlayersCategoriesDiscursiveRequired", true, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -84,12 +83,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<PlayerCategory> playersCategories,
             bool isDataRequired,
             string userInterfaceLanguage)
-            {
+        {
             this.AttachmentUrl = entity?.AttachmentUrl;
             this.PlayerCategoriesThatHaveOrHadContract = entity?.PlayerCategoriesThatHaveOrHadContract;
 
             this.UpdateActivies(entity, activities);
-            this.UpdateTargetAudiences(entity,targetAudiences);
+            this.UpdateTargetAudiences(entity, targetAudiences);
             this.UpdateInterests(entity, interestsDtos);
             this.UpdateExpectationsForMeetings(entity, languagesDtos, isDataRequired);
             this.UpdatePlayerCategories(entity, playersCategories);
@@ -207,7 +206,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             }
         }
 
-       
+
         /// <summary>
         /// Updates the target audiences.
         /// </summary>

@@ -12,7 +12,6 @@
 // <summary></summary>
 // ************************************************************************
 using PlataformaRio2C.Domain.Entities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -49,7 +48,7 @@ namespace PlataformaRio2C.Domain.Dtos
             return this.AttendeeCartoonProjectEvaluationDtos.FirstOrDefault(w => w.EvaluatorUser?.Id == userId);
         }
 
-       
+
         /// <summary>
         /// Gets the attendee cartoon organization evaluation by user identifier.
         /// </summary>

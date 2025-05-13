@@ -11,12 +11,12 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -39,7 +39,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="entity">The entity.</param>
         /// <param name="innovationOrganizationTrackOptionDtos">The innovation organization track option dto.</param>
         public void UpdateBaseProperties(
-            AttendeeCollaboratorTracksWidgetDto entity, 
+            AttendeeCollaboratorTracksWidgetDto entity,
             List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos)
         {
             this.UpdateInnovationOrganizationTrackOptionGroups(entity, innovationOrganizationTrackOptionDtos);
@@ -76,7 +76,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="entity">The entity.</param>
         /// <param name="innovationOrganizationTrackOptionDtos">The innovation organization track option dtos.</param>
         private void UpdateInnovationOrganizationTrackOptionGroups(
-            AttendeeCollaboratorTracksWidgetDto entity, 
+            AttendeeCollaboratorTracksWidgetDto entity,
             List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos)
         {
             this.InnovationOrganizationTrackGroups = new List<InnovationOrganizationTrackOptionBaseCommand>();

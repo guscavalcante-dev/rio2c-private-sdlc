@@ -11,9 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Collections.Generic;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -30,16 +30,16 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         public OnboardProducerOrganizationData(
-            OrganizationDto entity, 
-            List<LanguageDto> languagesDtos, 
+            OrganizationDto entity,
+            List<LanguageDto> languagesDtos,
             List<CountryBaseDto> countriesBaseDtos,
             List<Activity> activities,
             List<TargetAudience> targetAudiences,
-            bool isDescriptionRequired, 
-            bool isAddressRequired, 
+            bool isDescriptionRequired,
+            bool isAddressRequired,
             bool isImageRequired,
             int projectType)
-            : base(entity, languagesDtos, countriesBaseDtos, activities, targetAudiences, isDescriptionRequired, isAddressRequired, isImageRequired,projectType)
+            : base(entity, languagesDtos, countriesBaseDtos, activities, targetAudiences, isDescriptionRequired, isAddressRequired, isImageRequired, projectType)
         {
         }
 

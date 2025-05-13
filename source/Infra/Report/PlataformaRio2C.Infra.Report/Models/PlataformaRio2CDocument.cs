@@ -11,11 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
 
 namespace PlataformaRio2C.Infra.Report.Models
 {
@@ -148,7 +148,7 @@ namespace PlataformaRio2C.Infra.Report.Models
                 var groupProperty = items[0].GetType().GetProperty(groupingMap?.GroupPropertyPath ?? "-");
 
                 if (groupingMap != null && groupProperty == null)
-                    throw new Exception($"A propriedade '{ groupingMap.GroupPropertyPath }' não existe nos elementos da coleção");
+                    throw new Exception($"A propriedade '{groupingMap.GroupPropertyPath}' não existe nos elementos da coleção");
 
                 // Carregar propriedades de reflexão de agrupamento
                 for (uint i = 0; i < columns.Length; i++)

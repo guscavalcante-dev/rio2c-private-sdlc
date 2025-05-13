@@ -21,7 +21,7 @@
 //        [DataType(DataType.DateTime, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
 //        [Display(Name = "ArrivalTime", ResourceType = typeof(Labels))]
 //        public TimeSpan? ArrivalTime { get; set; }
-        
+
 //        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
 //        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = false)]
 //        [Display(Name = "DepartureDate", ResourceType = typeof(Labels))]
@@ -81,7 +81,7 @@
 
 //                //Collaborator = new LogisticsCollaboratorAppViewModel() { Name = nameCollaborator, Uid = collaborator.Uid };
 //            }
-            
+
 //        }
 
 //        public Logistics MapReverse()

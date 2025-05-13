@@ -39,7 +39,7 @@ namespace PlataformaRio2C.Web.Admin
             SimpleInjectorInitializer.Initialize();
 
             app.ConfigureAuth();
-            
+
             HttpConfiguration config = new HttpConfiguration();
             config.MessageHandlers.Add(new LanguageMessageHandler());
 
@@ -52,7 +52,7 @@ namespace PlataformaRio2C.Web.Admin
             DataTables.AspNet.Mvc5.Configuration.RegisterDataTables();
 
             app.UseWebApi(config);
-            
+
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);

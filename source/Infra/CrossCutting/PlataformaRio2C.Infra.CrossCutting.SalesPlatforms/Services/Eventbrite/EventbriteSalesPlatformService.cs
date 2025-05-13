@@ -11,15 +11,15 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using Newtonsoft.Json;
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using Newtonsoft.Json;
-using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
-using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite
 {

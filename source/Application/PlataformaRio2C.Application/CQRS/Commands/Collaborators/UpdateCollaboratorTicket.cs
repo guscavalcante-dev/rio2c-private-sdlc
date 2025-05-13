@@ -11,9 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Collections.Generic;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -37,8 +37,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="role">The role.</param>
         public UpdateCollaboratorTicket(
-            Collaborator collaborator, 
-            SalesPlatformAttendeeDto salesPlatformAttendeeDto, 
+            Collaborator collaborator,
+            SalesPlatformAttendeeDto salesPlatformAttendeeDto,
             Edition edition,
             List<AttendeeOrganization> attendeeOrganizations,
             AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,

@@ -11,14 +11,14 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Infra.Data.Context;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Infra.Data.Context;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {

@@ -11,8 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Linq;
 using PlataformaRio2C.HubApplication.CQRS.CommandsHandlers;
 using PlataformaRio2C.Infra.CrossCutting.CQRS;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Interfaces;
@@ -20,6 +18,8 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Services.Log;
 using PlataformaRio2C.Infra.Data.Repository.Repositories;
 using SimpleInjector;
 using SimpleInjector.Lifestyles;
+using System;
+using System.Linq;
 
 namespace PlataformaRio2C.Infra.CrossCutting.IOC
 {

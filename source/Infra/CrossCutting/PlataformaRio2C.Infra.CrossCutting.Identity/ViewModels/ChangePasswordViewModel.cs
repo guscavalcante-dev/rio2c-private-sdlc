@@ -21,13 +21,13 @@ namespace PlataformaRio2C.Infra.CrossCutting.Identity.ViewModels
     {
         [Display(Name = "CurrentPassword", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [DataType(DataType.Password)]        
+        [DataType(DataType.Password)]
         public string OldPassword { get; set; }
 
         [Display(Name = "NewPassword", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(100, MinimumLength = 6, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "MinimumNumberOfCharacters")]
-        [DataType(DataType.Password)]        
+        [DataType(DataType.Password)]
         public string NewPassword { get; set; }
 
         [Display(Name = "ConfirmPassword", ResourceType = typeof(Labels))]

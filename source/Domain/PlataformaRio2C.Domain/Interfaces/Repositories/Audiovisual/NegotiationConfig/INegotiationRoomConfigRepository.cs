@@ -11,10 +11,10 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Threading.Tasks;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
+using System;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Domain.Interfaces
 {
@@ -22,5 +22,5 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface INegotiationRoomConfigRepository : IRepository<NegotiationRoomConfig>
     {
         Task<NegotiationRoomConfigDto> FindMainInformationWidgetDtoAsync(Guid negotiationRoomConfigUid, int projectTypeId);
-    }    
+    }
 }

@@ -9,6 +9,6 @@ namespace PlataformaRio2C.Domain.Entities.Validations
         public UserIsConsistent()
         {
             base.AddRule(new ValidationRule<User>(new UserEmailIsValid(), Messages.EmailISInvalid));
-        }      
+        }
     }
 }

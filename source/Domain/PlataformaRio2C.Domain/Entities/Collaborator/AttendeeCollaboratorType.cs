@@ -11,9 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using System;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -36,9 +36,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="userId">The user identifier.</param>
         public AttendeeCollaboratorType(
-            AttendeeCollaborator attendeeCollaborator, 
+            AttendeeCollaborator attendeeCollaborator,
             CollaboratorType collaboratorType,
-            bool? isApiDisplayEnabled, 
+            bool? isApiDisplayEnabled,
             int? apiHighlightPosition,
             int userId)
         {
@@ -48,7 +48,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId= userId;
+            this.CreateUserId = this.UpdateUserId = userId;
         }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeCollaboratorType"/> class.</summary>

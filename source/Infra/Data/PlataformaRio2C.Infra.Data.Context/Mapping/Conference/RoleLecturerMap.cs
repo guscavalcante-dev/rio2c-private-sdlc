@@ -20,7 +20,7 @@
 //            //                                                )
 //            //                                        )
 //            //    .IsRequired();
-          
+
 
 //            this.ToTable("RoleLecturer");
 //        }

@@ -11,24 +11,23 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Web.Mvc;
 using MediatR;
+using PlataformaRio2C.Application.TemplateDocuments;
 using PlataformaRio2C.Application.ViewModels;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Interfaces.Repositories;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Application.TemplateDocuments;
-using System.Text;
 using PlataformaRio2C.Infra.Report.Models;
-using PlataformaRio2C.Domain.Interfaces.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -55,7 +54,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="logisticTransferRepository">The logistic transfer repository.</param>
         /// <param name="musicBusinessRoundNegotiationRepository">The music business round negotiation repository.</param>
         public AgendasController(
-            IMediator commandBus, 
+            IMediator commandBus,
             IdentityAutenticationService identityController,
             IConferenceRepository conferenceRepository,
             INegotiationRepository negotiationRepository,
@@ -228,7 +227,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 DateTimeOffset.FromUnixTimeSeconds(viewModel.StartDate.Value),
                 DateTimeOffset.FromUnixTimeSeconds(viewModel.EndDate.Value));
 
-            if(negotiationsDtos.Count == 0)
+            if (negotiationsDtos.Count == 0)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.ScheduledOneToOneMeetings, Labels.FoundFP) }, JsonRequestBehavior.AllowGet);
             }

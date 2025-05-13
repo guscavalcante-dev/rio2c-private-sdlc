@@ -11,13 +11,13 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Infra.CrossCutting.SystemParameter.Mapping;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
-using PlataformaRio2C.Infra.CrossCutting.SystemParameter.Mapping;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SystemParameter.Context
 {
@@ -25,7 +25,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SystemParameter.Context
     public class PlataformaRio2CContext : DbContext
     {
         public DbSet<SystemParameter> SystemParameters { get; set; }
-        public DbSet<AppAesEncryptionInfo> AppAesEncryptionInfos { get; set; }        
+        public DbSet<AppAesEncryptionInfo> AppAesEncryptionInfos { get; set; }
 
         static PlataformaRio2CContext()
         {
@@ -47,7 +47,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SystemParameter.Context
             modelBuilder.Properties().Where(p => p.Name == "Id").Configure(p => p.IsKey());
 
             modelBuilder.Properties().Where(p => p.Name == "Uid")
-               .Configure(p => p.HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_Uid", 2) { IsUnique = true })));            
+               .Configure(p => p.HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_Uid", 2) { IsUnique = true })));
 
             modelBuilder.Properties<string>()
                .Configure(p => p.HasColumnType("varchar"));

@@ -146,7 +146,7 @@ namespace PlataformaRio2C.Domain.Constants
         /// </summary>
         public static readonly string[] ReceivesAgendaEmail =
         {
-            Speaker, Industry, Creator, PlayerExecutiveAudiovisual, PlayerExecutiveMusic, PlayerExecutiveInnovation, PlayerExecutiveCreator, CommissionAudiovisual, CommissionMusic, CommissionInnovation, CommissionCreator, 
+            Speaker, Industry, Creator, PlayerExecutiveAudiovisual, PlayerExecutiveMusic, PlayerExecutiveInnovation, PlayerExecutiveCreator, CommissionAudiovisual, CommissionMusic, CommissionInnovation, CommissionCreator,
         };
 
         #endregion

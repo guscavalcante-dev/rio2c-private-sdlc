@@ -29,7 +29,7 @@
 //            CultureInfo currentCulture = Thread.CurrentThread.CurrentCulture;
 
 //            IsPreRegistered = entity.IsPreRegistered;
-                  
+
 //            if (IsPreRegistered)
 //            {
 //                if (entity.Collaborator != null)

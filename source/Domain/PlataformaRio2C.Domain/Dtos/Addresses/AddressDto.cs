@@ -93,11 +93,11 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns></returns>
         public string GetDisplayAddress(string culture)
         {
-            return (!string.IsNullOrEmpty(this.Address?.Address1)   ? (this.Address.Address1) : string.Empty) +
-                   (!string.IsNullOrEmpty(this.City?.Name)          ? (", " + this.City.Name) : string.Empty) +
-                   (!string.IsNullOrEmpty(this.State?.Code)         ? (", " + this.State.Code) : string.Empty) +
-                   (!string.IsNullOrEmpty(this.Country?.Name)       ? (", " + this.Country.Name.GetSeparatorTranslation(culture, '|')) : string.Empty) +
-                   (!string.IsNullOrEmpty(this.Address?.ZipCode)    ? (", " + this.Address.ZipCode) : string.Empty);
+            return (!string.IsNullOrEmpty(this.Address?.Address1) ? (this.Address.Address1) : string.Empty) +
+                   (!string.IsNullOrEmpty(this.City?.Name) ? (", " + this.City.Name) : string.Empty) +
+                   (!string.IsNullOrEmpty(this.State?.Code) ? (", " + this.State.Code) : string.Empty) +
+                   (!string.IsNullOrEmpty(this.Country?.Name) ? (", " + this.Country.Name.GetSeparatorTranslation(culture, '|')) : string.Empty) +
+                   (!string.IsNullOrEmpty(this.Address?.ZipCode) ? (", " + this.Address.ZipCode) : string.Empty);
         }
     }
 }

@@ -11,10 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Http;
 using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Domain.ApiModels;
 using PlataformaRio2C.Domain.Entities;
@@ -22,6 +18,10 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using Swashbuckle.Swagger.Annotations;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Http;
 
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 {
@@ -85,7 +85,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("conferences"), HttpGet]
         [SwaggerResponse(System.Net.HttpStatusCode.OK)]
         [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
-        public async Task<IHttpActionResult> Conferences([FromUri]ConferencesApiRequest request)
+        public async Task<IHttpActionResult> Conferences([FromUri] ConferencesApiRequest request)
         {
             var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
             if (editions?.Any() == false)
@@ -185,7 +185,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("conferences/filters"), HttpGet]
         [SwaggerResponse(System.Net.HttpStatusCode.OK)]
         [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
-        public async Task<IHttpActionResult> Filters([FromUri]ConferencesFiltersApiRequest request)
+        public async Task<IHttpActionResult> Filters([FromUri] ConferencesFiltersApiRequest request)
         {
             try
             {
@@ -271,7 +271,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("conference/{uid?}"), HttpGet]
         [SwaggerResponse(System.Net.HttpStatusCode.OK)]
         [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
-        public async Task<IHttpActionResult> Conference([FromUri]ConferenceApiRequest request)
+        public async Task<IHttpActionResult> Conference([FromUri] ConferenceApiRequest request)
         {
             var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
             if (editions?.Any() == false)

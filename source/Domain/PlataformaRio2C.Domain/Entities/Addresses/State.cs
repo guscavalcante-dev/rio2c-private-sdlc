@@ -11,13 +11,13 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -48,7 +48,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.Country = country;
             this.Name = name?.Trim();
-            this.Code = code?.Trim() ?? 
+            this.Code = code?.Trim() ??
                         name?.Trim().GetTwoLetterCode();
             this.IsManual = isManual;
             this.IsDeleted = false;

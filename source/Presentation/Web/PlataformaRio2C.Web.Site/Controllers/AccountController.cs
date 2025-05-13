@@ -11,32 +11,31 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using HtmlAgilityPack;
+using MediatR;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
-using PlataformaRio2C.Infra.CrossCutting.Identity.Models;
+using PlataformaRio2C.Application;
+using PlataformaRio2C.Application.Common;
+using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Identity.ViewModels;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Enums;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using MediatR;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
-using PlataformaRio2C.Application.CQRS.Queries;
-using PlataformaRio2C.Application.Common;
-using System.Text.RegularExpressions;
-using PlataformaRio2C.Application;
-using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Site.Controllers
@@ -131,7 +130,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 this.SignOut();
                 ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
                 return View(model);
-            } 
+            }
 
             var result = await _identityController.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, true);
             switch (result)
@@ -470,11 +469,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
 
                 var user = await this.userRepo.FindUserByEmailUidAsync(email, uid.Value);
-                
-                if (user == null || token != user.SecurityStamp) 
+
+                if (user == null || token != user.SecurityStamp)
                 {
                     return RedirectToAction("Forbidden", "Error");
-                }              
+                }
 
                 // Check if user has any role
                 var userRoles = await this._identityController.FindAllRolesByUserIdAsync(user.Id);
@@ -485,7 +484,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
                 var userApplication = await this._identityController.FindByIdAsync(user.Id);
 
-                if(userApplication == null)
+                if (userApplication == null)
                 {
                     return RedirectToAction("Forbidden", "Error");
                 }

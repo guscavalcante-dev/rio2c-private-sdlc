@@ -11,12 +11,12 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -34,7 +34,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IMediator eventBus,
             IUnitOfWork uow,
             IAttendeePlacesRepository attendeePlaceRepository,
-            ILogisticAccommodationRepository logisticAccommodationRepository) 
+            ILogisticAccommodationRepository logisticAccommodationRepository)
             : base(eventBus, uow, logisticAccommodationRepository)
         {
             this.attendeePlaceRepo = attendeePlaceRepository;
@@ -67,7 +67,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.CheckOutDate,
                 attendeePlaceRepo.Get(cmd.PlaceId),
                 cmd.UserId);
-            
+
             if (!logisticAccommodation.IsValid())
             {
                 this.AppValidationResult.Add(logisticAccommodation.ValidationResult);

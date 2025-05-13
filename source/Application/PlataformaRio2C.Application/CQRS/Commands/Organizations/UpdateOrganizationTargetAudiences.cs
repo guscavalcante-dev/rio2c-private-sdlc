@@ -11,20 +11,20 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>UpdateOrganizationTargetAudiences</summary>
     public class UpdateOrganizationTargetAudiences : BaseCommand
     {
-        public Guid OrganizationUid { get; set; }        
+        public Guid OrganizationUid { get; set; }
         public int ProjectTypeId { get; set; }
 
         [Display(Name = "TargetAudiences", ResourceType = typeof(Labels))]

@@ -18,7 +18,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using PlataformaRio2C.Domain.Dtos;
 using X.PagedList;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
@@ -52,7 +51,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     }
 
     #endregion
-    
+
     /// <summary>LanguageRepository</summary>
     public class CollaboratorRoleRepository : Repository<PlataformaRio2CContext, CollaboratorRole>, ICollaboratorRoleRepository
     {

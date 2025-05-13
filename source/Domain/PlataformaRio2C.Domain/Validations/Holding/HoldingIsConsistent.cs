@@ -8,7 +8,7 @@ namespace PlataformaRio2C.Domain.Entities.Validations
     {
         public HoldingIsConsistent()
         {
-            base.AddRule(new ValidationRule<Holding>(new HoldingMustHaveName(), Messages.HoldingMustHaveName));            
+            base.AddRule(new ValidationRule<Holding>(new HoldingMustHaveName(), Messages.HoldingMustHaveName));
         }
     }
 }

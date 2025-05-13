@@ -13,7 +13,7 @@
 //        [Display(Name = "Executives", ResourceType = typeof(Labels))]
 //        public IEnumerable<CollaboratorBasicDetailAppViewModel> Collaborators { get; set; }
 //        public IEnumerable<CollaboratorOptionMessageAppViewModel> Executives { get; set; }
-        
+
 
 //        public string Description { get; set; }
 //        public string RestrictionSpecifics { get; set; }

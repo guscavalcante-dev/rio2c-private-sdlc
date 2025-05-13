@@ -11,27 +11,27 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Linq;
-using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
-using System.Threading.Tasks;
-using System.Web.Mvc;
 using MediatR;
-using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
-using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Web.Site.Filters;
-using System.Text.RegularExpressions;
 using PlataformaRio2C.Application.Common;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Application.ViewModels;
+using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
+using PlataformaRio2C.Web.Site.Filters;
 using PlataformaRio2C.Web.Site.Services;
-using Constants = PlataformaRio2C.Domain.Constants;
-using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Application.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -49,7 +49,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="identityController">The identity controller.</param>
         /// <param name="weConnectPublicationRepository">The we connect publication repository.</param>
         public HomeController(
-            IMediator commandBus, 
+            IMediator commandBus,
             IdentityAutenticationService identityController,
             IWeConnectPublicationRepository weConnectPublicationRepository)
             : base(commandBus, identityController)

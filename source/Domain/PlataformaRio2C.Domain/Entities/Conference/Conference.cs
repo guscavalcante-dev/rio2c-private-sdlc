@@ -12,11 +12,11 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -697,13 +697,13 @@ namespace PlataformaRio2C.Domain.Entities
                 { "StartDate", new { IsValid = this.StartDate != null, Message = Labels.StartDate } },
                 { "EndDate", new { IsValid = this.EndDate != null, Message = Labels.EndDate } },
             };
-            foreach(var conferenceSynopse in this.ConferenceSynopses)
+            foreach (var conferenceSynopse in this.ConferenceSynopses)
             {
                 var lang = conferenceSynopse.Language.Code.GetSplittedWord('-', 0).ToUpper();
                 this.RequiredFieldsToPublish.Add(
                     $"Synopsis_{lang}",
                     new
-                    { 
+                    {
                         IsValid = conferenceSynopse.Value != null,
                         Message = string.Format(Labels.TranslatedSynopsis, lang)
                     }

@@ -11,8 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Infra.CrossCutting.Resources;
-
 namespace PlataformaRio2C.Domain.Dtos
 {
     public class MusicPitchingStatusWidgetDto

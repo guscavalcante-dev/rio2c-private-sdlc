@@ -11,14 +11,14 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -106,7 +106,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     .Where(asptt => !asptt.IsDeleted)
                                                                                     .Select(asptt => new AttendeeSalesPlatformTicketTypeDto
                                                                                     {
-                                                                                        AttendeeSalesPlatformTicketType =  asptt,
+                                                                                        AttendeeSalesPlatformTicketType = asptt,
                                                                                         CollaboratorType = asptt.CollaboratorType,
                                                                                         Role = asptt.CollaboratorType.Role
                                                                                     })

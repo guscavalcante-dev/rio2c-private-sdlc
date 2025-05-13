@@ -359,7 +359,7 @@ namespace PlataformaRio2C.Domain.Entities
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(Links), LinksMaxLength, 1), new string[] { nameof(Links) }));
             }
         }
-        
+
         private void ValidateCreatorProjectInterests()
         {
             if (this.CreatorProjectInterests?.Any() != true)

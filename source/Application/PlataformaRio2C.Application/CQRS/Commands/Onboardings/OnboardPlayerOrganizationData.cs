@@ -11,10 +11,10 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
+using System;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -36,17 +36,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         /// <param name="isVirtualMeetingRequired">if set to <c>true</c> [is virtual meeting required].</param>
         public OnboardPlayerOrganizationData(
-            OrganizationDto entity, 
-            List<LanguageDto> languagesDtos, 
+            OrganizationDto entity,
+            List<LanguageDto> languagesDtos,
             List<CountryBaseDto> countriesBaseDtos,
             List<Activity> activities,
             List<TargetAudience> targetAudiences,
-            bool isDescriptionRequired, 
-            bool isAddressRequired, 
+            bool isDescriptionRequired,
+            bool isAddressRequired,
             bool isImageRequired,
             int projectTypeId,
             bool isVirtualMeetingRequired = true)
-            : base(entity, languagesDtos, countriesBaseDtos, activities, targetAudiences, isDescriptionRequired, isAddressRequired, isImageRequired, projectTypeId,isVirtualMeetingRequired)
+            : base(entity, languagesDtos, countriesBaseDtos, activities, targetAudiences, isDescriptionRequired, isAddressRequired, isImageRequired, projectTypeId, isVirtualMeetingRequired)
         {
         }
 

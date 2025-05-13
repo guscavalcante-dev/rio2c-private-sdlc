@@ -12,11 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -43,7 +38,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public AttendeeInnovationOrganizationExperience(
             AttendeeInnovationOrganization attendeeInnovationOrganization,
-            InnovationOrganizationExperienceOption innovationOrganizationExperienceOption, 
+            InnovationOrganizationExperienceOption innovationOrganizationExperienceOption,
             string additionalInfo,
             int userId)
         {

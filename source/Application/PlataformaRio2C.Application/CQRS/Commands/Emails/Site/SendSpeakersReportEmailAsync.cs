@@ -29,7 +29,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public SendSpeakersReportEmailAsync(
             string filePath,
-            string recipientEmail, 
+            string recipientEmail,
             Edition edition,
             string userInterfaceLanguage)
             : base(recipientEmail, edition, userInterfaceLanguage)

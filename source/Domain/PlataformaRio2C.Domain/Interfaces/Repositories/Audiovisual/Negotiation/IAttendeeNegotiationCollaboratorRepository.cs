@@ -18,5 +18,5 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IAttendeeNegotiationCollaboratorRepository</summary>
     public interface IAttendeeNegotiationCollaboratorRepository : IRepository<AttendeeNegotiationCollaborator>
     {
-    }    
+    }
 }

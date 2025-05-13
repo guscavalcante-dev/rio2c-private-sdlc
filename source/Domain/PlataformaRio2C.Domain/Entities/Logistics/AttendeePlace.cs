@@ -11,8 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using PlataformaRio2C.Domain.Validation;
+using System;
 
 namespace PlataformaRio2C.Domain.Entities
 {

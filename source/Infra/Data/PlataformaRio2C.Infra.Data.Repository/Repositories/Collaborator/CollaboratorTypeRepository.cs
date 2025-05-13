@@ -64,7 +64,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             if (collaboratorTypeNames == null)
             {
-                collaboratorTypeNames = new string[] {};
+                collaboratorTypeNames = new string[] { };
             }
 
             query = query.Where(ct => collaboratorTypeNames.Contains(ct.Name));

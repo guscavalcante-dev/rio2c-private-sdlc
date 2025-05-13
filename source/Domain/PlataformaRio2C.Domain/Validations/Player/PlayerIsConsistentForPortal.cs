@@ -16,7 +16,7 @@
 //            // base.AddRule(new ValidationRule<Player>(new PlayerCompanyNameIsRequired(), Messages.CompanyNameIsRequired));
 //            base.AddRule(new ValidationRule<Player>(new PlayerDescriptionEnIsRequired(), Messages.CompanySummaryInEnglishMandatory));                        
 //            base.AddRule(new ValidationRule<Player>(new PlayerTradeNameIsRequired(), Messages.TradeNameIsRequired));
-            
+
 
 //            if (currentCulture != null && currentCulture.Name == "pt-BR")
 //            {

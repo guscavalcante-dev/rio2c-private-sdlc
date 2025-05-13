@@ -11,11 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using Newtonsoft.Json;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
-using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models
 {

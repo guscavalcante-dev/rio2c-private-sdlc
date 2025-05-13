@@ -247,7 +247,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                     propertyInfo.SetValue(x, value, null);
                 }
                 catch (Exception)
-                {                   
+                {
                 }
             }
             return (T)x;

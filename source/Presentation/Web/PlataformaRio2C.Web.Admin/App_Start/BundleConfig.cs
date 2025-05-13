@@ -288,7 +288,7 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/globalize.js").Include(
                 "~/Assets/components/globalize/globalize.js",
                 "~/Assets/components/globalize/cultures/globalize.culture.pt-BR.js"
-                ,"~/Assets/components/globalize/cultures/globalize.culture.en-US.js"
+                , "~/Assets/components/globalize/cultures/globalize.culture.en-US.js"
                 ));
 
             #endregion

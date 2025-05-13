@@ -11,8 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using PlataformaRio2C.Domain.Statics;
+using System;
 
 namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
 {

@@ -11,9 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using System.Threading.Tasks;
-using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Domain.Interfaces
 {
@@ -22,5 +22,5 @@ namespace PlataformaRio2C.Domain.Interfaces
     {
         Task<SalesPlatform> FindByNameAsync(string name);
         Task<SalesPlatformDto> FindDtoByNameAsync(string name);
-    }    
+    }
 }

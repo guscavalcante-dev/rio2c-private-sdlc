@@ -11,9 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Events.Editions;
@@ -22,6 +19,9 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -90,7 +90,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.EditionDate.ProjectSubmitStartDate.Value,
                 cmd.EditionDate.ProjectSubmitEndDate.Value,
                 cmd.EditionDate.ProjectEvaluationStartDate.Value,
-                cmd.EditionDate.ProjectEvaluationEndDate.Value,           
+                cmd.EditionDate.ProjectEvaluationEndDate.Value,
                 cmd.EditionDate.NegotiationStartDate.Value,
                 cmd.EditionDate.NegotiationEndDate.Value,
                 cmd.EditionDate.AttendeeOrganizationMaxSellProjectsCount.Value,
@@ -178,11 +178,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             // Update with this Edition Id to send to event
             cmd.UpdatePreSendProperties(
-                cmd.UserId, 
-                cmd.UserUid, 
+                cmd.UserId,
+                cmd.UserUid,
                 edition.Id,
-                edition.Uid, 
-                cmd.UserInterfaceLanguage, 
+                edition.Uid,
+                cmd.UserInterfaceLanguage,
                 cmd.IsAdmin);
 
             await this.CommandBus.Publish(new EditionCreated(cmd), cancellationToken);

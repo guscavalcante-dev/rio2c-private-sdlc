@@ -11,11 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Globalization;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using System;
+using System.Globalization;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -41,11 +41,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="logistic">The logistic.</param>
         /// <param name="userId">The user identifier.</param>
         public LogisticAccommodation(
-            string additionalInfo, 
-            string stringCheckInDate, 
-            string stringCheckOutDate, 
-            AttendeePlace attendeePlace, 
-            Logistic logistic, 
+            string additionalInfo,
+            string stringCheckInDate,
+            string stringCheckOutDate,
+            AttendeePlace attendeePlace,
+            Logistic logistic,
             int userId)
         {
             this.LogisticId = logistic?.Id ?? 0;
@@ -76,7 +76,7 @@ namespace PlataformaRio2C.Domain.Entities
             string additionalInfo,
             string stringCheckInDate,
             string stringCheckOutDate,
-            AttendeePlace attendeePlace, 
+            AttendeePlace attendeePlace,
             int userId)
         {
             this.AttendeePlaceId = attendeePlace?.Id ?? 0;

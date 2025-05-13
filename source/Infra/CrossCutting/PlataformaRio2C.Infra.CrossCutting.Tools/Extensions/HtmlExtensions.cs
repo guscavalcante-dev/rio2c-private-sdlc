@@ -11,13 +11,14 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using LinqKit;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Enums;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Interfaces;
-using LinqKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Claims;
 using System.Text;
 using System.Web;
 using System.Web.Helpers;
@@ -26,7 +27,6 @@ using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 using System.Web.Script.Serialization;
-using System.Security.Claims;
 
 namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 {
@@ -52,14 +52,14 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         {
             var propertyName = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData).PropertyName;
             var modelState = htmlHelper.ViewData.ModelState;
-            
+
             if (modelState.ContainsKey(propertyName) && modelState[propertyName].Errors.Count > 1)
             {
-                
+
                 var msgs = new StringBuilder();
                 foreach (ModelError error in modelState[propertyName].Errors)
                 {
-                 
+
                     msgs.AppendLine(htmlHelper.ValidationMessageFor(expression, error.ErrorMessage, htmlAttributes as IDictionary<string, object> ?? htmlAttributes).ToHtmlString());
                 }
 
@@ -155,7 +155,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             {
                 var claimsIdentity = helper.ViewContext.HttpContext.User.Identity as System.Security.Claims.ClaimsIdentity;
 
-                return  claimsIdentity.Claims.Any(c => c.Type == ClaimTypes.Role && c.Value == valueCheck);
+                return claimsIdentity.Claims.Any(c => c.Type == ClaimTypes.Role && c.Value == valueCheck);
             }
 
             return false;
@@ -1006,7 +1006,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                 try
                 {
                     foreach (var statusMessage in statusMessages)
-                    {                        
+                    {
                         var message = statusMessage.GetType().GetProperty("Message").GetValue(statusMessage, null);
 
                         if (message != null && !string.IsNullOrWhiteSpace(message.ToString()))
@@ -1259,7 +1259,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 
                     // Create and populate a radio button using the existing html helpers
                     var label = htmlHelper.Label(id, item.Text);
-                    
+
                     var radio = htmlHelper.RadioButton(fullName, item.Value, item.Selected, new { id = idInput }).ToHtmlString();
 
                     // Create the html string that will be returned to the client

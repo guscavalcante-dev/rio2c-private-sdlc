@@ -14,7 +14,7 @@
 
 //            base.AddRule(new ValidationRule<Producer>(new ProducerMustHaveName(), Messages.NameIsRequired));
 //            base.AddRule(new ValidationRule<Producer>(new ProducerDescriptionEnIsRequired(), Messages.CompanySummaryInEnglishMandatory));            
-           
+
 //            base.AddRule(new ValidationRule<Producer>(new ProducerTradeNameIsRequired(), Messages.TradeNameIsRequired));
 
 //            if (currentCulture != null && currentCulture.Name == "pt-BR")

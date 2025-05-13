@@ -11,10 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
 using PlataformaRio2C.Application.CQRS.Commands;
@@ -24,6 +20,10 @@ using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -75,8 +75,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #region Initial validations
 
             // Check if the trade name already exists
-            var existingOrganizationByName = this.OrganizationRepo.Get(o => o.TradeName == cmd.TradeName 
-                                                                            && o.HoldingId == organization.HoldingId 
+            var existingOrganizationByName = this.OrganizationRepo.Get(o => o.TradeName == cmd.TradeName
+                                                                            && o.HoldingId == organization.HoldingId
                                                                             && o.Uid != cmd.OrganizationUid
                                                                             && !o.IsDeleted);
             if (existingOrganizationByName != null)

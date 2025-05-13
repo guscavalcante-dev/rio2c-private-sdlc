@@ -45,8 +45,8 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="innovationOrganizationTrackOptionGroup">The innovation organization track option group.</param>
         /// <param name="userId">The user identifier.</param>
         public InnovationOrganizationTrackOption(
-            string name, 
-            InnovationOrganizationTrackOptionGroup innovationOrganizationTrackOptionGroup, 
+            string name,
+            InnovationOrganizationTrackOptionGroup innovationOrganizationTrackOptionGroup,
             int userId)
         {
             this.Name = name;
@@ -75,7 +75,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="innovationOrganizationTrackOptionGroup">The innovation organization track option group.</param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateMainInformation(
-            string name, 
+            string name,
             InnovationOrganizationTrackOptionGroup innovationOrganizationTrackOptionGroup,
             int userId)
         {

@@ -11,8 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using MediatR;
+using System;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {

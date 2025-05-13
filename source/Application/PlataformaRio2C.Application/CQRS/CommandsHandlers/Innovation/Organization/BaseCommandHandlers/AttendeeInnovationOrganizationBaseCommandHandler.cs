@@ -38,7 +38,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="uow">The uow.</param>
         /// <param name="AttendeeInnovationOrganizationRepo">The innovation organization repo.</param>
         public AttendeeInnovationOrganizationBaseCommandHandler(
-            IMediator commandBus, 
+            IMediator commandBus,
             IUnitOfWork uow,
             IAttendeeInnovationOrganizationRepository AttendeeInnovationOrganizationRepository)
             : base(commandBus, uow)

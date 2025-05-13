@@ -28,7 +28,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// </summary>
         /// <param name="MusicOptions">The Music options.</param>
         public UpdateMusicCommissionCollaborator(
-            CollaboratorDto entity, 
+            CollaboratorDto entity,
             List<CollaboratorType> collaboratorTypes,
             bool isAddingToCurrentEdition,
             string userInterfaceLanguage)
@@ -37,8 +37,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.IsAddingToCurrentEdition = isAddingToCurrentEdition;
 
             this.UpdateBaseProperties(
-                entity, 
-                collaboratorTypes, 
+                entity,
+                collaboratorTypes,
                 userInterfaceLanguage);
         }
 

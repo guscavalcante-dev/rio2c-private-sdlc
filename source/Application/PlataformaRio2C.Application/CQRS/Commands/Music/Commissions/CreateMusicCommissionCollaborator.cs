@@ -25,8 +25,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public CreateMusicCommissionCollaborator(List<CollaboratorType> collaboratorTypes, string userInterfaceLanguage)
         {
             this.UpdateBaseProperties(
-                null, 
-                collaboratorTypes, 
+                null,
+                collaboratorTypes,
                 userInterfaceLanguage);
         }
 

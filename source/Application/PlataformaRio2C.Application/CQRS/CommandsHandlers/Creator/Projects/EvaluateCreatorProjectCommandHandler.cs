@@ -87,7 +87,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             var creatorProject = await creatorProjectRepository.GetAsync(cmd.CreatorProjectId.Value);
-            if(creatorProject == null)
+            if (creatorProject == null)
             {
                 this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), new string[] { "ToastrError" })));
                 return this.AppValidationResult;

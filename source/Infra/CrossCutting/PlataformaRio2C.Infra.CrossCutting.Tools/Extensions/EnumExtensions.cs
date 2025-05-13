@@ -5,8 +5,6 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Resources;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions

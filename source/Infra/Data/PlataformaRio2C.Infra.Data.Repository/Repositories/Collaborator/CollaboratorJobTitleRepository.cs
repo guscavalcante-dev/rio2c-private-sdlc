@@ -3,10 +3,9 @@ using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using System;
-using System.Linq;
 using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -59,11 +58,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
-        internal static IQueryable<CollaboratorJobTitle> FindByCollaboratorId(this IQueryable<CollaboratorJobTitle> query,int id)
+        internal static IQueryable<CollaboratorJobTitle> FindByCollaboratorId(this IQueryable<CollaboratorJobTitle> query, int id)
         {
             query = query.Where(c => c.CollaboratorId == id);
             return query;
         }
     }
 }
-  
+

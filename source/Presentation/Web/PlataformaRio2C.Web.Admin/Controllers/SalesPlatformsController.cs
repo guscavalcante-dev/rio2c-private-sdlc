@@ -11,12 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
 using DataTables.AspNet.Core;
 using MediatR;
 using Newtonsoft.Json;
@@ -26,7 +20,13 @@ using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
@@ -46,7 +46,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="attendeeSalesPlatformTicketTypeRepository">The attendee sales platform ticket type repository.</param>
         public SalesPlatformsController(
-            IMediator commandBus, 
+            IMediator commandBus,
             IdentityAutenticationService identityController,
             ICollaboratorRepository collaboratorRepository,
             IAttendeeSalesPlatformTicketTypeRepository attendeeSalesPlatformTicketTypeRepository)
@@ -86,12 +86,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> ExportEventbriteCsv(
-            IDataTablesRequest request, 
-            string selectedCollaboratorsUids, 
-            string collaboratorTypeName, 
-            string ticketClassName, 
-            bool showAllEditions, 
-            bool showAllParticipants, 
+            IDataTablesRequest request,
+            string selectedCollaboratorsUids,
+            string collaboratorTypeName,
+            string ticketClassName,
+            bool showAllEditions,
+            bool showAllParticipants,
             bool? showHighlights)
         {
             List<EventbriteCsv> eventbriteCsv = null;
@@ -112,9 +112,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 );
 
                 eventbriteCsv = speakers?.Select(s => new EventbriteCsv(
-                    s.FirstName, 
-                    s.LastNames, 
-                    s.Email, 
+                    s.FirstName,
+                    s.LastNames,
+                    s.Email,
                     ticketClassName, 1)).ToList();
             }
             catch (DomainException ex)

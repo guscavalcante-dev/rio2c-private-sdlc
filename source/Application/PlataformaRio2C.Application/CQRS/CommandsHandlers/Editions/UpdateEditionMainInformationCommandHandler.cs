@@ -11,9 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Events.Editions;
@@ -21,6 +18,9 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -68,7 +68,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var currentEditions = await this.editionRepo.FindAllByIsCurrentAsync();
             currentEditions = currentEditions
                                 .Where(e => e.Uid != cmd.EditionUid) //Discard the currentEdition for the checks below
-                                .ToList(); 
+                                .ToList();
 
             //Validates any active current edition. There should always be a single current edition!
             if (!cmd.IsCurrent && currentEditions?.Count == 0)

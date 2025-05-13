@@ -48,7 +48,7 @@ namespace PlataformaRio2C.Domain.Dtos
             if (!userId.HasValue)
                 return null;
 
-            if(this.AttendeeInnovationOrganizationEvaluationDtos == null)
+            if (this.AttendeeInnovationOrganizationEvaluationDtos == null)
             {
                 this.AttendeeInnovationOrganizationEvaluationDtos = new List<AttendeeInnovationOrganizationEvaluationDto>();
             }

@@ -11,12 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Domain.ApiModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
 namespace PlataformaRio2C.Domain.Dtos
 {
     /// <summary>AudiovisualPlayerOrganizationApiDto</summary>

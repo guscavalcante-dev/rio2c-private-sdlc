@@ -15,7 +15,7 @@
 
 //        public GroupPlayerAppViewModel()
 //        {
-            
+
 //        }
 
 //        public GroupPlayerAppViewModel(string title, IEnumerable<Player> players)
@@ -31,7 +31,7 @@
 //                var countPlayersDistinct = group.Select(e => e.Name).Distinct().Count();
 
 //                var title = countPlayersDistinct > 1 ? group.Key : null;
-                
+
 
 //                var players = group.OrderBy(e => e.Name).ToList();
 

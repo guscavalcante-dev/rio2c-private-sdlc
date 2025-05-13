@@ -11,9 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using System;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -80,13 +80,13 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="ticketUpdateDate">The ticket update date.</param>
         /// <param name="userId">The user identifier.</param>
         public AttendeeCollaboratorTicket(
-            AttendeeCollaborator attendeeCollaborator, 
-            AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType, 
-            string salesPlatformAttendeeId, 
+            AttendeeCollaborator attendeeCollaborator,
+            AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
+            string salesPlatformAttendeeId,
             DateTime salesPlatformUpdateDate,
-            string firstName, 
-            string lastName, 
-            string cellPhone, 
+            string firstName,
+            string lastName,
+            string cellPhone,
             string jobTitle,
             string barcode,
             bool isBarcodePrinted,
@@ -121,7 +121,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId= userId;
+            this.CreateUserId = this.UpdateUserId = userId;
         }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeCollaboratorTicket"/> class.</summary>
@@ -311,7 +311,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Validates the cell phone.</summary>
         public void ValidateCellPhone()
         {
-            if (!string.IsNullOrEmpty(this.CellPhone) && (this.CellPhone?.Trim().Length < CellPhoneMinLength || this.CellPhone?.Trim().Length > CellPhoneMaxLength)) 
+            if (!string.IsNullOrEmpty(this.CellPhone) && (this.CellPhone?.Trim().Length < CellPhoneMinLength || this.CellPhone?.Trim().Length > CellPhoneMaxLength))
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.CellPhone, CellPhoneMaxLength, CellPhoneMinLength), new string[] { "CellPhone" }));
             }
@@ -320,7 +320,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Validates the job title.</summary>
         public void ValidateJobTitle()
         {
-            if (!string.IsNullOrEmpty(this.JobTitle) && (this.JobTitle?.Trim().Length < JobTitleMinLength ||  this.JobTitle?.Trim().Length > JobTitleMaxLength))
+            if (!string.IsNullOrEmpty(this.JobTitle) && (this.JobTitle?.Trim().Length < JobTitleMinLength || this.JobTitle?.Trim().Length > JobTitleMaxLength))
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.JobTitle, JobTitleMaxLength, JobTitleMinLength), new string[] { "JobTitle" }));
             }

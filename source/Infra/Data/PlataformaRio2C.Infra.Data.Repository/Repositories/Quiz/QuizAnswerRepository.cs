@@ -18,7 +18,7 @@ using PlataformaRio2C.Infra.Data.Context;
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
     /// <summary>QuizAnswerRepository</summary>
-    public class QuizAnswerRepository: Repository<PlataformaRio2CContext, QuizAnswer>, IQuizAnswerRepository
+    public class QuizAnswerRepository : Repository<PlataformaRio2CContext, QuizAnswer>, IQuizAnswerRepository
     {
         private PlataformaRio2CContext _context;
 

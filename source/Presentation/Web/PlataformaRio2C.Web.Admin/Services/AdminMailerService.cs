@@ -11,15 +11,15 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using Mvc.Mailer;
+using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Application.Interfaces;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Configuration;
 using System.Net.Mail;
 using System.Threading;
 using System.Web.Mvc;
-using Mvc.Mailer;
-using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Application.Interfaces;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Web.Admin.Services
 {
@@ -438,7 +438,7 @@ namespace PlataformaRio2C.Web.Admin.Services
         /// <returns></returns>
         private string GetSubject(string subject, string editionName)
         {
-            var emailPrefix = (!string.IsNullOrEmpty(this.environment) && this.environment.ToLower() != "prod" ? "[" + this.environment.ToUpper() + "] " : string.Empty) 
+            var emailPrefix = (!string.IsNullOrEmpty(this.environment) && this.environment.ToLower() != "prod" ? "[" + this.environment.ToUpper() + "] " : string.Empty)
                                     + "MyRio2C | "
                                     + (!string.IsNullOrEmpty(editionName) ? editionName + " | " : string.Empty);
 
@@ -450,7 +450,7 @@ namespace PlataformaRio2C.Web.Admin.Services
         /// <returns></returns>
         private string GetToEmailRecipient(string email)
         {
-            return environment.ToLower() != "prod" ? this.toEmail : 
+            return environment.ToLower() != "prod" ? this.toEmail :
                                                      email;
         }
 

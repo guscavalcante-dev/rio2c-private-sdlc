@@ -15,13 +15,13 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.draw;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using System.Collections.Generic;
-using System.Linq;
 using PlataformaRio2C.Infra.Report.Models;
+using System.Collections.Generic;
 using System.Globalization;
-using PlataformaRio2C.Domain.Entities;
+using System.Linq;
 
 namespace PlataformaRio2C.Application.TemplateDocuments
 {

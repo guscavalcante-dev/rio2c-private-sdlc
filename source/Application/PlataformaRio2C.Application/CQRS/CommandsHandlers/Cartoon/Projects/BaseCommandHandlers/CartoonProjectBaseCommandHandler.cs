@@ -11,14 +11,14 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -34,8 +34,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="uow">The uow.</param>
         /// <param name="cartoonProjectRepository">The music band repository.</param>
         public CartoonProjectBaseCommandHandler(
-            IMediator commandBus, 
-            IUnitOfWork uow, 
+            IMediator commandBus,
+            IUnitOfWork uow,
             ICartoonProjectRepository cartoonProjectRepository)
             : base(commandBus, uow)
         {

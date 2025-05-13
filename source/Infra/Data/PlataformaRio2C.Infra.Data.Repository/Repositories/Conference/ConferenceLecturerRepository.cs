@@ -18,7 +18,7 @@
 //        public ConferenceLecturer GetLecturerImage(Guid uid)
 //        {
 //            return this.dbSet
-                            
+
 //                            .Include(i => i.Lecturer)
 //                            .Include(i => i.Lecturer.Image)
 //                            .Include(i => i.Collaborator)
@@ -28,7 +28,7 @@
 
 //        public override void Delete(ConferenceLecturer entity)
 //        {
-           
+
 //            base.Delete(entity);
 //        }
 

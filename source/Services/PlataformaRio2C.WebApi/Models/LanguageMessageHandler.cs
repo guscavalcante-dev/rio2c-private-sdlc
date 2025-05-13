@@ -49,7 +49,7 @@ namespace PlataformaRio2C.WebApi.Models
 
         [LogConfig(NoLog = true)]
         private void SetCulture(HttpRequestMessage request, string lang)
-        {            
+        {
             request.Headers.AcceptLanguage.Clear();
             request.Headers.AcceptLanguage.Add(new StringWithQualityHeaderValue(lang));
             Thread.CurrentThread.CurrentCulture = new CultureInfo(lang);

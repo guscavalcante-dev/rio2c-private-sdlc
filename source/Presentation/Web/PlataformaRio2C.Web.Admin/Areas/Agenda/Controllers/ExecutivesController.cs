@@ -18,6 +18,7 @@ using Newtonsoft.Json;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.ViewModels;
+using PlataformaRio2C.Domain.Dtos.Agendas;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
@@ -31,13 +32,11 @@ using PlataformaRio2C.Web.Admin.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Constants = PlataformaRio2C.Domain.Constants;
-using static PlataformaRio2C.Web.Admin.Areas.Agenda.Controllers.ExecutivesController;
-using PlataformaRio2C.Domain.Dtos.Agendas;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Agenda.Controllers
 {
@@ -160,13 +159,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Agenda.Controllers
                     CollaboratorUid = Guid.Parse(ce.Key),
                     CollaboratorEventDtos = apiResult.EventsInfo
                                                         .Where(ei => ce.Value.Contains(ei.Key))
-                                                        .Select(ei => new CollaboratorEventDto 
-                                                        { 
-                                                           Data = (!string.IsNullOrEmpty(ei.Value?.Data) ? DateTime.ParseExact(ei.Value.Data, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture) : new DateTime()),
-                                                           Descritivo = ei.Value?.Descritivo,
-                                                           Horario = ei.Value?.Horario,
-                                                           Local = ei.Value?.Local,
-                                                           Nome = ei.Value?.Nome
+                                                        .Select(ei => new CollaboratorEventDto
+                                                        {
+                                                            Data = (!string.IsNullOrEmpty(ei.Value?.Data) ? DateTime.ParseExact(ei.Value.Data, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture) : new DateTime()),
+                                                            Descritivo = ei.Value?.Descritivo,
+                                                            Horario = ei.Value?.Horario,
+                                                            Local = ei.Value?.Local,
+                                                            Nome = ei.Value?.Nome
                                                         }).ToList()
                 }).ToList();
 

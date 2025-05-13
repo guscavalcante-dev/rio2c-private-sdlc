@@ -11,10 +11,10 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using System;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -33,7 +33,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="skipUserEmailValidation">if set to <c>true</c> [skip user email validation].</param>
         /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
         public UpdateTinyCollaborator(
-            CollaboratorDto entity, 
+            CollaboratorDto entity,
             bool? isAddingToCurrentEdition,
             bool skipUserEmailValidation = false)
         {
@@ -104,6 +104,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Initializes a new instance of the <see cref="UpdateTinyCollaborator"/> class.</summary>
         public UpdateTinyCollaborator()
         {
-        }       
+        }
     }
 }

@@ -11,26 +11,26 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
 using ClosedXML.Excel;
 using MediatR;
-using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Web.Site.Filters;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
     /// <summary>DownloadsController</summary>
     [AjaxAuthorize(Order = 1)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.Industry )]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.Industry)]
     public class DownloadsController : BaseController
     {
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
@@ -40,7 +40,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="identityController">The identity controller.</param>
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
         public DownloadsController(
-            IMediator commandBus, 
+            IMediator commandBus,
             IdentityAutenticationService identityController,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository)
             : base(commandBus, identityController)

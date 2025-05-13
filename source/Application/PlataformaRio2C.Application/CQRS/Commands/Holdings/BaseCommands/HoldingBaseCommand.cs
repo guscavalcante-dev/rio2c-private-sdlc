@@ -11,12 +11,12 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -57,7 +57,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             foreach (var languageDto in languagesDtos)
             {
                 var description = entity?.DescriptionsDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
-                this.Descriptions.Add(description != null ? new HoldingDescriptionBaseCommand(description) : 
+                this.Descriptions.Add(description != null ? new HoldingDescriptionBaseCommand(description) :
                                                             new HoldingDescriptionBaseCommand(languageDto));
             }
         }

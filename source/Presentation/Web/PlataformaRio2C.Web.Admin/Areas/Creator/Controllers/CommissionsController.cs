@@ -11,27 +11,27 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Application.ViewModels;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Admin.Controllers;
 using PlataformaRio2C.Web.Admin.Filters;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Creator.Controllers
@@ -52,7 +52,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Creator.Controllers
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
         public CommissionsController(
-            IMediator commandBus, 
+            IMediator commandBus,
             IdentityAutenticationService identityController,
             ICollaboratorRepository collaboratorRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository)
@@ -278,7 +278,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Creator.Controllers
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
                 Constants.CollaboratorType.CommissionCreator,
                 null,
-                true, 
+                true,
                 this.EditionDto.Id);
 
             return Json(new
@@ -302,7 +302,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Creator.Controllers
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
                 Constants.CollaboratorType.CommissionCreator,
                 null,
-                false, 
+                false,
                 this.EditionDto.Id);
 
             return Json(new

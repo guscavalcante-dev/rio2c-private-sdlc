@@ -11,11 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.WebApi.Areas.HelpPage.ModelDescriptions;
+using PlataformaRio2C.WebApi.Areas.HelpPage.Models;
 using System;
 using System.Web.Http;
 using System.Web.Mvc;
-using PlataformaRio2C.WebApi.Areas.HelpPage.ModelDescriptions;
-using PlataformaRio2C.WebApi.Areas.HelpPage.Models;
 
 namespace PlataformaRio2C.WebApi.Areas.HelpPage.Controllers
 {
@@ -31,7 +31,7 @@ namespace PlataformaRio2C.WebApi.Areas.HelpPage.Controllers
         {
             this.Configuration = GlobalConfiguration.Configuration;
         }
-            
+
         /// <summary>Gets the configuration.</summary>
         /// <value>The configuration.</value>
         public HttpConfiguration Configuration { get; private set; }

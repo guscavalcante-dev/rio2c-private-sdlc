@@ -11,10 +11,10 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using iTextSharp.text.pdf;
 
 namespace PlataformaRio2C.Infra.Report.Models
 {

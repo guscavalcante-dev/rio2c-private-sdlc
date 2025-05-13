@@ -35,8 +35,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public MusicBandMember ToMusicBandMember(int userId)
         {
             return new MusicBandMember(
-                this.Name, 
-                this.MusicInstrumentName, 
+                this.Name,
+                this.MusicInstrumentName,
                 userId);
         }
 

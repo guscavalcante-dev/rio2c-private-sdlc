@@ -1,7 +1,4 @@
 ﻿using PlataformaRio2C.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -9,7 +6,7 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         public int MusicBusinessRoundProjectId { get; set; }
         public int LanguageId { get; set; }
-        public string Value { get; set; } 
+        public string Value { get; set; }
 
         public Language Language { get; set; }
 

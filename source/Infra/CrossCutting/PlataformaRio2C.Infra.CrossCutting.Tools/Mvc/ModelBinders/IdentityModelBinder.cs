@@ -2,10 +2,10 @@
 {
     using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
     using System;
-	using System.Web.Http.Controllers;
-	using System.Web.Mvc;
+    using System.Web.Http.Controllers;
+    using System.Web.Mvc;
 
-	/// <summary>
+    /// <summary>
     /// Model Binder to map custom Id classes of Entities
     /// </summary>
     public class IdentityModelBinder : DefaultModelBinder, System.Web.Http.ModelBinding.IModelBinder
@@ -28,27 +28,27 @@
             return base.BindModel(controllerContext, bindingContext);
         }
 
-		public bool BindModel(HttpActionContext actionContext, System.Web.Http.ModelBinding.ModelBindingContext bindingContext)
-		{
-			if (bindingContext.ModelType.Implements<IIdentity>())
-			{
-				object idValue = null;
+        public bool BindModel(HttpActionContext actionContext, System.Web.Http.ModelBinding.ModelBindingContext bindingContext)
+        {
+            if (bindingContext.ModelType.Implements<IIdentity>())
+            {
+                object idValue = null;
 
-				if (bindingContext.ModelType.IsSubclassOfOrEqualsTo<GuidIdentity>())
-					idValue = new Guid(actionContext.ControllerContext.RouteData.Values["id"].ToString());
-				else if (bindingContext.ModelType.IsSubclassOfOrEqualsTo<IntIdentity>())
-					idValue = int.Parse(actionContext.ControllerContext.RouteData.Values["id"].ToString());
+                if (bindingContext.ModelType.IsSubclassOfOrEqualsTo<GuidIdentity>())
+                    idValue = new Guid(actionContext.ControllerContext.RouteData.Values["id"].ToString());
+                else if (bindingContext.ModelType.IsSubclassOfOrEqualsTo<IntIdentity>())
+                    idValue = int.Parse(actionContext.ControllerContext.RouteData.Values["id"].ToString());
 
-				if (idValue != null)
-				{
-					bindingContext.Model = Activator.CreateInstance(bindingContext.ModelType, idValue);
-					return true;
-				}
+                if (idValue != null)
+                {
+                    bindingContext.Model = Activator.CreateInstance(bindingContext.ModelType, idValue);
+                    return true;
+                }
 
-				return false;
-			}
+                return false;
+            }
 
-		    return false;
-		}
+            return false;
+        }
     }
 }

@@ -11,11 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Globalization;
 using MediatR;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using System;
+using System.Globalization;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -42,12 +42,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="edition">The edition.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public EmailBaseCommand(
-            int recipientUserId, 
-            Guid recipientUserUid, 
-            string recipientFirstName, 
-            string recipientFullName, 
-            string recipientEmail, 
-            Edition edition, 
+            int recipientUserId,
+            Guid recipientUserUid,
+            string recipientFirstName,
+            string recipientFullName,
+            string recipientEmail,
+            Edition edition,
             string userInterfaceLanguage)
         {
             this.RecipientUserId = recipientUserId;
@@ -100,7 +100,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             {
                 return $"{startDateDay} a {endDateDay} de {month} de {year}";
             }
-            else if(culture.Name == "en-US")
+            else if (culture.Name == "en-US")
             {
                 return $"{month} {startDateDay}<sup>{startDate.GetDaySuffix()}</sup> – {endDateDay}<sup>{endDate.GetDaySuffix()}</sup>";
             }

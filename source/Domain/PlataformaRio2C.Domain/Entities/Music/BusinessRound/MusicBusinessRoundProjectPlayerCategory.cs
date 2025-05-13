@@ -39,7 +39,7 @@ namespace PlataformaRio2C.Domain.Entities
             return this.ValidationResult.IsValid;
         }
 
-        public MusicBusinessRoundProjectPlayerCategory(int musicBusinessRoundProjectId,PlayerCategory playerCategory,string additionalInfo,int userId)
+        public MusicBusinessRoundProjectPlayerCategory(int musicBusinessRoundProjectId, PlayerCategory playerCategory, string additionalInfo, int userId)
 
         {
             this.MusicBusinessRoundProjectId = musicBusinessRoundProjectId;

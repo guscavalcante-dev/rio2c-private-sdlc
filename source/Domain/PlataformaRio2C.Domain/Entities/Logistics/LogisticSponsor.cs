@@ -11,11 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PlataformaRio2C.Domain.Validation;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -75,8 +75,8 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isOther">if set to <c>true</c> [is other].</param>
         /// <param name="userId">The user identifier.</param>
         public void Update(
-            List<TranslatedName> names, 
-            Edition edition, 
+            List<TranslatedName> names,
+            Edition edition,
             bool isOther,
             int userId)
         {
@@ -233,12 +233,12 @@ namespace PlataformaRio2C.Domain.Entities
             {
                 this.ValidationResult = new ValidationResult();
             }
-            
+
             ValidateName();
 
             return this.ValidationResult.IsValid;
         }
-        
+
         /// <summary>Validates the first name.</summary>
         public void ValidateName()
         {

@@ -11,14 +11,14 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -69,7 +69,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             organization.UpdateOrganizationActivities(
                 cmd.OrganizationActivities
                     ?.Where(oa => oa.IsChecked)
-                    ?.Select(oa => 
+                    ?.Select(oa =>
                         new OrganizationActivity(
                             activities?.FirstOrDefault(a => a.Uid == oa.ActivityUid),
                             oa.AdditionalInfo,

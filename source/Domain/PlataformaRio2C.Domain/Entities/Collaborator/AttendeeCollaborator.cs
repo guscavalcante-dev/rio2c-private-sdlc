@@ -11,11 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PlataformaRio2C.Domain.Validation;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -35,7 +35,7 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset? MusicPlayerTermsAcceptanceDate { get; private set; }
         public DateTimeOffset? MusicProducerTermsAcceptanceDate { get; private set; }
         public DateTimeOffset? AudiovisualProducerBusinessRoundTermsAcceptanceDate { get; private set; }
-        public DateTimeOffset? AudiovisualProducerPitchingTermsAcceptanceDate { get; private set; }        
+        public DateTimeOffset? AudiovisualProducerPitchingTermsAcceptanceDate { get; private set; }
         public DateTimeOffset? SpeakerTermsAcceptanceDate { get; private set; }
         public DateTimeOffset? AvailabilityBeginDate { get; private set; }
         public DateTimeOffset? AvailabilityEndDate { get; private set; }
@@ -608,11 +608,11 @@ namespace PlataformaRio2C.Domain.Entities
             int userId)
         {
             return new AttendeeCollaborator(
-                edition, 
-                attendeeCollaboratorInterests, 
-                collaboratorType, 
-                projectType, 
-                collaborator, 
+                edition,
+                attendeeCollaboratorInterests,
+                collaboratorType,
+                projectType,
+                collaborator,
                 userId);
         }
 
@@ -810,17 +810,17 @@ namespace PlataformaRio2C.Domain.Entities
             int userId)
         {
             return new AttendeeCollaborator(
-                edition, 
+                edition,
                 collaboratorType,
                 projectType,
-                collaborator, 
-                isApiDisplayEnabled, 
+                collaborator,
+                isApiDisplayEnabled,
                 apiHighlightPosition,
                 shouldDeleteOrganizations,
-                attendeeOrganizations, 
-                attendeeCollaboratorActivities, 
-                attendeeCollaboratorInterests, 
-                attendeeCollaboratorInnovationOrganizationTracks, 
+                attendeeOrganizations,
+                attendeeCollaboratorActivities,
+                attendeeCollaboratorInterests,
+                attendeeCollaboratorInnovationOrganizationTracks,
                 userId);
         }
 

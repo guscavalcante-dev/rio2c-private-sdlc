@@ -24,7 +24,7 @@
 //            base.AddRule(new ValidationRule<Conference>(new ConferenceEndTimeIsValid(), "Hora de término é invalida!"));
 
 //            base.AddRule(new ValidationRule<Conference>(new ConferenceStartTimeSmallerEndTime(), "Hora de início deve ser menor que a hora de término!"));
-            
+
 
 //        }
 //    }
