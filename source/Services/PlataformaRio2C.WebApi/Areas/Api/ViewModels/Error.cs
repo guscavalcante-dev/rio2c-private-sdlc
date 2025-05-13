@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace PlataformaRio2C.WebApi.Areas.Api.ViewModels
+﻿namespace PlataformaRio2C.WebApi.Areas.Api.ViewModels
 {
     public class ErrorResponse
     {

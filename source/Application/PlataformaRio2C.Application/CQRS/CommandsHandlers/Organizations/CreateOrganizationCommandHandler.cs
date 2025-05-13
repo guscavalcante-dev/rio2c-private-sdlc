@@ -11,11 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
 using PlataformaRio2C.Application.CQRS.Commands;
@@ -25,6 +20,11 @@ using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -171,9 +171,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             if (cmd.IsApiDisplayEnabled && cmd.ApiHighlightPosition.HasValue)
             {
                 var sameHighlightPositionOrganizations = await this.OrganizationRepo.FindAllByHightlightPosition(
-                    cmd.EditionId ?? 0, 
-                    cmd.OrganizationType?.Uid ?? Guid.Empty, 
-                    cmd.ApiHighlightPosition.Value, 
+                    cmd.EditionId ?? 0,
+                    cmd.OrganizationType?.Uid ?? Guid.Empty,
+                    cmd.ApiHighlightPosition.Value,
                     null);
                 if (sameHighlightPositionOrganizations?.Any() == true)
                 {

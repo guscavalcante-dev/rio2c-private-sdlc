@@ -11,9 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Collections.Generic;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -45,7 +45,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// </summary>
         /// <param name="MusicOrganizationTrackOptionDtos">The Music organization track option dtos.</param>
         public void UpdateDropdownProperties(
-            List<CollaboratorType> collaboratorTypes, 
+            List<CollaboratorType> collaboratorTypes,
             string userInterfaceLanguage)
         {
             base.UpdateCollaboratorTypes(collaboratorTypes, userInterfaceLanguage);

@@ -11,10 +11,10 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
 using MediatR;
 using PlataformaRio2C.Domain.Dtos;
+using System;
+using System.Collections.Generic;
 using X.PagedList;
 
 namespace PlataformaRio2C.Application.CQRS.Queries
@@ -40,15 +40,15 @@ namespace PlataformaRio2C.Application.CQRS.Queries
         /// <param name="editionUid">The edition uid.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public FindAllHoldingsBaseDtosByPageAsync(
-            int page, 
-            int pageSize, 
-            string keywords, 
+            int page,
+            int pageSize,
+            string keywords,
             List<Tuple<string, string>> sortColumns,
             bool showAllEditions,
-            int userId, 
-            Guid userUid, 
-            int? editionId, 
-            Guid? editionUid, 
+            int userId,
+            Guid userUid,
+            int? editionId,
+            Guid? editionUid,
             string userInterfaceLanguage)
             : base(userId, userUid, editionId, editionUid, userInterfaceLanguage)
         {

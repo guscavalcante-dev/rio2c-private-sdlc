@@ -1,6 +1,6 @@
-﻿using PlataformaRio2C.Infra.CrossCutting.Tools.Enums;
+﻿using log4net;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Enums;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Interfaces;
-using log4net;
 using System;
 
 namespace PlataformaRio2C.Infra.CrossCutting.Tools.Services.Log

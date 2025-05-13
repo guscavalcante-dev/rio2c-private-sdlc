@@ -11,12 +11,12 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -109,10 +109,10 @@ namespace PlataformaRio2C.Domain.Entities
             base.SetCreateDate(userId);
 
             this.SynchronizeAttendeeMusicBands(
-                edition, 
+                edition,
                 attendeeCollaborator,
                 musicProject,
-                userId);  
+                userId);
             this.SynchronizeMusicBandGenres(musicBandGenres, userId);
             this.SynchronizeMusicBandTeamMembers(musicBandTeamMembers, userId);
             this.SynchronizeReleasedMusicProjects(releasedMusicProjects, userId);
@@ -286,7 +286,7 @@ namespace PlataformaRio2C.Domain.Entities
                 this.MusicBandMembers = new List<MusicBandMember>();
             }
 
-            foreach(var musicBandMember in musicBandMembers)
+            foreach (var musicBandMember in musicBandMembers)
             {
                 this.MusicBandMembers.Add(new MusicBandMember(this, musicBandMember.Name, musicBandMember.MusicInstrumentName, userId));
             }

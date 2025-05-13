@@ -14,7 +14,7 @@
 //        {
 //            TimeSpan ts;
 //            bool TruckisValidTimeSpan = TimeSpan.TryParse(entity.ArrivalTime.ToString(), CultureInfo.InvariantCulture, out ts);
-         
+
 //            return entity.ArrivalTime != null && TruckisValidTimeSpan && ts.Days == 0;
 //        }
 //    }

@@ -11,16 +11,16 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
+using LinqKit;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
+using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using LinqKit;
-using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -110,20 +110,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     if (!string.IsNullOrEmpty(keyword))
                     {
                         innerMessageTextWhere = innerMessageTextWhere.And(m => m.Text.Contains(keyword));
-                        innerOtherUserNameWhere = innerOtherUserNameWhere.And(m => m.SenderId == userId ? 
-                                                                                        m.Recipient.Name.Contains(keyword) : 
+                        innerOtherUserNameWhere = innerOtherUserNameWhere.And(m => m.SenderId == userId ?
+                                                                                        m.Recipient.Name.Contains(keyword) :
                                                                                         m.Sender.Name.Contains(keyword));
-                        innerOtherUserJobTitleWhere = innerOtherUserJobTitleWhere.And(m => m.SenderId == userId ? 
-                                                                                        m.Recipient.Collaborator.JobTitles.Any(jb => 
-                                                                                            !jb.IsDeleted 
+                        innerOtherUserJobTitleWhere = innerOtherUserJobTitleWhere.And(m => m.SenderId == userId ?
+                                                                                        m.Recipient.Collaborator.JobTitles.Any(jb =>
+                                                                                            !jb.IsDeleted
                                                                                             && jb.Value.Contains(keyword)) :
-                                                                                        m.Sender.Collaborator.JobTitles.Any(jb => 
-                                                                                            !jb.IsDeleted 
+                                                                                        m.Sender.Collaborator.JobTitles.Any(jb =>
+                                                                                            !jb.IsDeleted
                                                                                             && jb.Value.Contains(keyword)));
-                        innerOtherUserOrganizationWhere = innerOtherUserOrganizationWhere.And(m => m.SenderId == userId ? 
-                                                                                        m.Recipient.Collaborator.AttendeeCollaborators.Any(ac => 
-                                                                                            !ac.IsDeleted 
-                                                                                            && ac.AttendeeOrganizationCollaborators.Any(aoc => 
+                        innerOtherUserOrganizationWhere = innerOtherUserOrganizationWhere.And(m => m.SenderId == userId ?
+                                                                                        m.Recipient.Collaborator.AttendeeCollaborators.Any(ac =>
+                                                                                            !ac.IsDeleted
+                                                                                            && ac.AttendeeOrganizationCollaborators.Any(aoc =>
                                                                                                 !aoc.IsDeleted
                                                                                                 && !aoc.AttendeeOrganization.IsDeleted
                                                                                                 && !aoc.AttendeeOrganization.Organization.IsDeleted
@@ -201,7 +201,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         private IQueryable<Message> GetBaseQuery(bool @readonly = false)
         {
             var consult = this.dbSet;
-                                //.IsNotDeleted();
+            //.IsNotDeleted();
 
             return @readonly
                         ? consult.AsNoTracking()

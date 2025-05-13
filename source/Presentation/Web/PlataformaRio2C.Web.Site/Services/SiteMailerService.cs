@@ -11,15 +11,15 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using Mvc.Mailer;
+using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Application.Interfaces;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Configuration;
 using System.Net.Mail;
 using System.Threading;
 using System.Web.Mvc;
-using Mvc.Mailer;
-using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Application.Interfaces;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Web.Site.ServicesSendProducersNegotiationEmail
 {

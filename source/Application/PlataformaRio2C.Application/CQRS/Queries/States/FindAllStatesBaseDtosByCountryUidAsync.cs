@@ -11,9 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Dtos;
 using System;
 using System.Collections.Generic;
-using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Application.CQRS.Queries
 {

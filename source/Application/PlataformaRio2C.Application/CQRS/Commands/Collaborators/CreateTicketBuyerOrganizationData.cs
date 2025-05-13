@@ -11,15 +11,15 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -92,11 +92,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         public CreateTicketBuyerOrganizationData(
             Guid collaboratorUid,
-            OrganizationDto entity, 
-            List<LanguageDto> languagesDtos, 
+            OrganizationDto entity,
+            List<LanguageDto> languagesDtos,
             List<CountryBaseDto> countriesBaseDtos,
-            bool isDescriptionRequired, 
-            bool isAddressRequired, 
+            bool isDescriptionRequired,
+            bool isAddressRequired,
             bool isImageRequired)
         {
             this.CollaboratorUid = collaboratorUid;
@@ -154,7 +154,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             foreach (var languageDto in languagesDtos)
             {
                 var description = entity?.OrganizationDescriptionBaseDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
-                this.Descriptions.Add(description != null ? new OrganizationDescriptionBaseCommand(description, isDescriptionRequired) : 
+                this.Descriptions.Add(description != null ? new OrganizationDescriptionBaseCommand(description, isDescriptionRequired) :
                                                             new OrganizationDescriptionBaseCommand(languageDto, isDescriptionRequired));
             }
         }

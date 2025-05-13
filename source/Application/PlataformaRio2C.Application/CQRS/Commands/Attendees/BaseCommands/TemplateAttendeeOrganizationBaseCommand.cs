@@ -11,9 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Dtos;
 using System;
 using System.Collections.Generic;
-using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -28,7 +28,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="attendeeOrganizationBaseDto">The attendee organization base dto.</param>
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
         public TemplateAttendeeOrganizationBaseCommand(
-            AttendeeOrganizationBaseDto attendeeOrganizationBaseDto, 
+            AttendeeOrganizationBaseDto attendeeOrganizationBaseDto,
             List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos)
         {
             this.UpdateBaseProperties(attendeeOrganizationBaseDto, attendeeOrganizationsBaseDtos);

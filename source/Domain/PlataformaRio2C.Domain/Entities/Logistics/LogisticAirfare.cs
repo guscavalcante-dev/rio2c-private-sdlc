@@ -11,11 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Globalization;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using System;
+using System.Globalization;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -54,14 +54,14 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isTicketDeleted">if set to <c>true</c> [is ticket deleted].</param>
         /// <param name="userId">The user identifier.</param>
         public LogisticAirfare(
-            Logistic logistic, 
-            bool? isNational, 
-            bool? isArrival, 
-            string from, 
-            string to, 
-            string ticketNumber, 
-            string additionalInfo, 
-            string stringDepartureDate, 
+            Logistic logistic,
+            bool? isNational,
+            bool? isArrival,
+            string from,
+            string to,
+            string ticketNumber,
+            string additionalInfo,
+            string stringDepartureDate,
             string stringArrivalDate,
             bool isTicketUploaded,
             bool isTicketDeleted,
@@ -102,10 +102,10 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isTicketDeleted">if set to <c>true</c> [is ticket deleted].</param>
         /// <param name="userId">The user identifier.</param>
         public void Update(
-            bool? isNational, 
-            bool? isArrival, 
-            string from, 
-            string to, 
+            bool? isNational,
+            bool? isArrival,
+            string from,
+            string to,
             string ticketNumber,
             string additionalInfo,
             string stringDepartureDate,

@@ -11,11 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models;
-using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Models;
-using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla.Models;
 using Newtonsoft.Json;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Models;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Sympla.Models;
+using System;
 using System.Linq;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
@@ -140,8 +140,8 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
             this.TicketClassName = intiPayload?.PriceName;
 
             // Profile
-            this.FirstName = intiPayload?.Name?.Contains(" ") == true? intiPayload?.Name?.Split(Convert.ToChar(" "))[0] : intiPayload?.Name;
-            this.LastName = intiPayload?.Name?.Contains(" ") == true? intiPayload?.Name?.Split(Convert.ToChar(" "))[1] : " "; 
+            this.FirstName = intiPayload?.Name?.Contains(" ") == true ? intiPayload?.Name?.Split(Convert.ToChar(" "))[0] : intiPayload?.Name;
+            this.LastName = intiPayload?.Name?.Contains(" ") == true ? intiPayload?.Name?.Split(Convert.ToChar(" "))[1] : " ";
             this.Name = intiPayload?.Name;
             this.Email = intiPayload?.Email;
             this.Gender = "";

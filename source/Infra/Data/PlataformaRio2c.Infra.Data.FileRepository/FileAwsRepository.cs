@@ -11,16 +11,16 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
-using System.Linq;
 using Amazon;
 using Amazon.S3;
 using Amazon.S3.Model;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
+using System.Linq;
 
 namespace PlataformaRio2c.Infra.Data.FileRepository
 {
@@ -296,7 +296,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
                 return string.Format(this.audioFilesDirectory, args);
             }
 
-            if(fileRepositoryPathType.Uid == FileRepositoryPathType.ErrorCropping.Uid)
+            if (fileRepositoryPathType.Uid == FileRepositoryPathType.ErrorCropping.Uid)
             {
                 return string.Format(this.errorCroppingDirectory, args);
             }

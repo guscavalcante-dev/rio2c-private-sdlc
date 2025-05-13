@@ -34,7 +34,7 @@ namespace PlataformaRio2C.Application.ViewModels
 
         [Display(Name = "StartDate", ResourceType = typeof(Labels))]
         public DateTime? StartDate { get; set; }
-        
+
         [Display(Name = "EndDate", ResourceType = typeof(Labels))]
         public DateTime? EndDate { get; set; }
 

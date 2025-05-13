@@ -16,7 +16,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.
     /// <summary>EventbriteAttendeeStatus</summary>
     public class EventbriteAttendeeStatus
     {
-        public const string Attending  = "attending";
+        public const string Attending = "attending";
         public const string NotAttending = "not_attending";
         public const string Unpaid = "unpaid";
     }

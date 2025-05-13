@@ -17,10 +17,10 @@ using iTextSharp.text.pdf.draw;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using System.Collections.Generic;
-using System.Linq;
 using PlataformaRio2C.Infra.Report.Models;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace PlataformaRio2C.Application.TemplateDocuments
 {
@@ -98,7 +98,7 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             this.GetFirstPageInfo(ref document);
             document.SetMargins(36, 36, 36, 36);
             document.NewPage();
-            
+
             var table = new PdfPTable(_columnsWidths);
             table.WidthPercentage = 100;
             table.DefaultCell.HorizontalAlignment = Element.ALIGN_LEFT;
@@ -114,7 +114,7 @@ namespace PlataformaRio2C.Application.TemplateDocuments
                 {
                     table.DefaultCell.Colspan = _columnsWidths.Length;
                     table.DefaultCell.BackgroundColor = _grayBackground;
-                    
+
                     //Add a middle-align cell to the new table
                     var tableHeader = new PdfPTable(1);
                     //tableHeader.DefaultCell.FixedHeight = 50;
@@ -122,7 +122,7 @@ namespace PlataformaRio2C.Application.TemplateDocuments
                     tableHeaderCell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     tableHeaderCell.FixedHeight = 25;
                     tableHeader.AddCell(tableHeaderCell);
-                    
+
                     table.AddCell(tableHeader);
                     table.DefaultCell.BackgroundColor = null;
 
@@ -175,7 +175,7 @@ namespace PlataformaRio2C.Application.TemplateDocuments
         /// Adds the empty row.
         /// </summary>
         /// <param name="table">The table.</param>
-        private void AddEmptyRow(ref PdfPTable table) 
+        private void AddEmptyRow(ref PdfPTable table)
         {
             var defaultFixedHeight = table.DefaultCell.FixedHeight;
 

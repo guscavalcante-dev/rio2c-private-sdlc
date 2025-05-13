@@ -14,15 +14,11 @@
 
 using MediatR;
 using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Interfaces.Repositories;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers

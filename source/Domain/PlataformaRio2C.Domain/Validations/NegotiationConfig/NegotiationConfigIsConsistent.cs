@@ -25,11 +25,11 @@
 //            base.AddRule(new ValidationRule<NegotiationConfig>(new NegotiationConfigRoomIsRequired(), "Sala é obrigatória."));
 
 //            base.AddRule(new ValidationRule<NegotiationConfig>(new NegotiationConfigStartTimeSmallerEndTime(), "Hora de início deve ser menor que a hora de término!"));
-            
+
 //            base.AddRule(new ValidationRule<NegotiationConfig>(new NegotiationConfigSpecsMustHaveOneRound(), "A configuração deve conter a quantidade mínima de 1 rodada."));
 
 //            base.AddRule(new ValidationRule<NegotiationConfig>(new NegotiationConfigRoomIsUnique(), "Cada sala é permitido somente 1 vez por data de configuração."));
-            
+
 
 
 //        }

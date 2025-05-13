@@ -11,8 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Application.CQRS.Commands;
@@ -20,6 +18,8 @@ using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -40,7 +40,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IUnitOfWork uow,
             ILogisticRepository logisticRepository,
             ILogisticAirfareRepository logisticsAirfareRepository,
-            IFileRepository fileRepository) 
+            IFileRepository fileRepository)
             : base(eventBus, uow, logisticsAirfareRepository)
         {
             this.logisticRepo = logisticRepository;
@@ -68,7 +68,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.Ticket != null,
                 cmd.IsTicketFileDeleted,
                 cmd.UserId);
-            
+
             if (!logisticAirfare.IsValid())
             {
                 this.AppValidationResult.Add(logisticAirfare.ValidationResult);

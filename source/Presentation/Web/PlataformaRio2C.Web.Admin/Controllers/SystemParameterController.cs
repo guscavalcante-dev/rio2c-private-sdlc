@@ -11,12 +11,12 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Infra.CrossCutting.SystemParameter.ViewModels;
-using System.Collections.Generic;
-using System.Web.Mvc;
 using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
+using PlataformaRio2C.Infra.CrossCutting.SystemParameter.ViewModels;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {

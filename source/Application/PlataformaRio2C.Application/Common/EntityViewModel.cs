@@ -14,18 +14,19 @@ namespace PlataformaRio2C.Application.Common
         [Display(Name = "Data da criação")]
         public virtual DateTime CreationDate { get; set; }
 
-        public EntityViewModel() {            
+        public EntityViewModel()
+        {
         }
 
         public EntityViewModel(TDomainClass entity)
         {
             CreationDate = (DateTime)entity.GetType().GetProperty("CreationDate").GetValue(entity, null);
             Uid = (Guid)entity.GetType().GetProperty("Uid").GetValue(entity, null);
-        }       
+        }
 
         public static IEnumerable<TViewModel> MapList(IEnumerable<TDomainClass> entities)
         {
-            Type type = typeof(TViewModel);            
+            Type type = typeof(TViewModel);
 
             foreach (var entity in entities)
             {

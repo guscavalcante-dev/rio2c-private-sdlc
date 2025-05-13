@@ -11,8 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Collections.Generic;
 using PlataformaRio2C.Domain.Dtos;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -45,7 +45,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             this.Names = new List<PresentationFormatNameBaseCommand>();
             foreach (var languageDto in languagesDtos)
-            {       
+            {
                 this.Names.Add(new PresentationFormatNameBaseCommand(presentationFormatDto, languageDto));
             }
         }

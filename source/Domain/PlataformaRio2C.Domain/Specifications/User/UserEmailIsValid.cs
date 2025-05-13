@@ -2,7 +2,6 @@
 using PlataformaRio2C.Domain.Interfaces;
 using System;
 using System.Net.Mail;
-using System.Text.RegularExpressions;
 
 namespace PlataformaRio2C.Domain.Entities.Specifications
 {
@@ -31,7 +30,7 @@ namespace PlataformaRio2C.Domain.Entities.Specifications
             catch (FormatException)
             {
                 return false;
-            } 
+            }
         }
     }
 }

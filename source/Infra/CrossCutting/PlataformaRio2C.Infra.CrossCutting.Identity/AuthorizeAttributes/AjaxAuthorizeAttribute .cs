@@ -21,7 +21,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes
     {
         /// <summary>Initializes a new instance of the <see cref="AjaxAuthorizeAttribute"/> class.</summary>
         /// <param name="roles">The roles.</param>
-        public AjaxAuthorizeAttribute(params string[] roles) 
+        public AjaxAuthorizeAttribute(params string[] roles)
             : base()
         {
             this.Roles = string.Join(",", roles);

@@ -41,9 +41,9 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
 
             this.Property(t => t.PhoneNumber)
                 .HasMaxLength(CartoonProjectCreator.PhoneNumberMaxLength);
-            
-           this.Property(t => t.MiniBio)
-                .HasMaxLength(CartoonProjectCreator.MiniBioMaxLength);
+
+            this.Property(t => t.MiniBio)
+                 .HasMaxLength(CartoonProjectCreator.MiniBioMaxLength);
 
             this.HasRequired(t => t.CartoonProject)
                 .WithMany(e => e.CartoonProjectCreators)

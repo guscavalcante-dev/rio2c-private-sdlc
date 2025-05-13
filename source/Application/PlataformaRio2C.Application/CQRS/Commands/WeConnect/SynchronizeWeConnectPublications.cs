@@ -11,8 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using MediatR;
-
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>SynchronizeWeConnectPublications</summary>

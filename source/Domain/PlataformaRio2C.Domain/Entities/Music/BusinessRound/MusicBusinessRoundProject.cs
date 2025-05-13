@@ -118,16 +118,16 @@ namespace PlataformaRio2C.Domain.Entities
             // casting TargetAudience into MusicBusinessRoundProjectTargetAudience
             this.MusicBusinessRoundProjectTargetAudiences = musicBusinessRoundProjectTargetAudience?
                 .Select(targetAudience => new MusicBusinessRoundProjectTargetAudience(
-                    this.Id,              
+                    this.Id,
                     targetAudience,
                     userId,
-                    string.Empty          
+                    string.Empty
                 )).ToList() ?? new List<MusicBusinessRoundProjectTargetAudience>();
 
             // casting playerCategories into MusicBusinessRoundProjectPlayerCategory
             this.MusicBusinessRoundProjectPlayerCategories = playerCategories?
               .Select(playerCategory => new MusicBusinessRoundProjectPlayerCategory(
-                  this.Id,             
+                  this.Id,
                   playerCategory,
                   string.Empty,
                   userId
@@ -136,9 +136,9 @@ namespace PlataformaRio2C.Domain.Entities
             // casting Activity into MusicBusinessRoundProjectActivity
             this.MusicBusinessRoundProjectActivities = musicBusinessRoundProjectActivities?
                 .Select(activity => new MusicBusinessRoundProjectActivity(
-                    activity,          
-                    string.Empty,      
-                    userId              
+                    activity,
+                    string.Empty,
+                    userId
                 )).ToList() ?? new List<MusicBusinessRoundProjectActivity>();
 
             this.MusicBusinessRoundProjectInterests = musicBusinessRoundProjectInterests ?? new List<MusicBusinessRoundProjectInterest>();
@@ -513,7 +513,7 @@ namespace PlataformaRio2C.Domain.Entities
             var expectationsForMeetingToDelete = this.MusicBusinessRoundProjectExpectationsForMeetings
                 .Where(db => expectationsForMeeting?
                                 .Select(d => d.Language.Code)?
-                                .Contains(db.Language.Code) == false 
+                                .Contains(db.Language.Code) == false
                                 && !db.IsDeleted)
                 .ToList();
             foreach (var expectationForMeeting in expectationsForMeetingToDelete)

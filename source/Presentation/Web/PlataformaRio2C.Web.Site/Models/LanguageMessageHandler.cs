@@ -1,5 +1,4 @@
 ﻿using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -7,7 +6,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace PlataformaRio2C.Web.Site.Models
 {

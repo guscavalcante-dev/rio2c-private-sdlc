@@ -14,8 +14,6 @@
 using Newtonsoft.Json;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
 using System;
 using System.Collections.Generic;
 using System.Linq;

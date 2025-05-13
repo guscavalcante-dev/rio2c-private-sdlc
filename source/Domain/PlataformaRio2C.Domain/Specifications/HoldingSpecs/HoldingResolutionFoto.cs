@@ -1,8 +1,5 @@
 ﻿using PlataformaRio2C.Domain.Enums;
 using PlataformaRio2C.Domain.Interfaces;
-using System;
-using System.Drawing;
-using System.IO;
 
 namespace PlataformaRio2C.Domain.Entities.Specifications
 {

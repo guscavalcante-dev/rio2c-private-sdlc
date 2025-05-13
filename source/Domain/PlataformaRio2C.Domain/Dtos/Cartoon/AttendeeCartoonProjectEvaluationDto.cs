@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Entities;
-using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -21,7 +20,7 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         public CartoonProject CartoonProject { get; set; }
         public AttendeeCartoonProject AttendeeCartoonProject { get; set; }
-        
+
         public AttendeeCartoonProjectEvaluation AttendeeCartoonProjectEvaluation { get; set; }
         public User EvaluatorUser { get; set; }
 

@@ -11,15 +11,15 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -93,8 +93,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     #region Curator Evaluation
 
                     var acceptedEvaluationsCount = await this.attendeeMusicBandEvaluationRepo.CountAcceptedByCollaboratorTypeIdAsync(
-                        editionDto.Id, 
-                        cmd.UserId, 
+                        editionDto.Id,
+                        cmd.UserId,
                         CollaboratorType.ComissionMusicCurator.Id);
                     if (acceptedEvaluationsCount + 1 > editionDto.MusicPitchingMaximumApprovedProjectsByCurator)
                     {
@@ -117,7 +117,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     #region Repechage Evaluation
 
                     var acceptedEvaluationsCount = await this.attendeeMusicBandEvaluationRepo.CountAcceptedByCollaboratorTypeIdAsync(
-                        editionDto.Id, 
+                        editionDto.Id,
                         cmd.UserId,
                         CollaboratorType.ComissionMusicCurator.Id);
                     if (acceptedEvaluationsCount + 1 > editionDto.MusicPitchingMaximumApprovedProjectsByRepechage)
@@ -164,7 +164,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 }
 
                 var acceptedEvaluationsCount = await this.attendeeMusicBandEvaluationRepo.CountAcceptedByCollaboratorTypeIdAsync(
-                    editionDto.Id, 
+                    editionDto.Id,
                     cmd.UserId,
                     CollaboratorType.ComissionMusic.Id);
                 if (acceptedEvaluationsCount + 1 > editionDto.MusicPitchingMaximumApprovedProjectsByCommissionMember)

@@ -12,8 +12,8 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
-using System;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PlataformaRio2C.Domain.Entities
@@ -112,7 +112,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             if (this.IsProcessed)
             {
-                throw  new DomainException("The sales platform webhook request is already processed.");
+                throw new DomainException("The sales platform webhook request is already processed.");
             }
 
             this.IsProcessing = false;

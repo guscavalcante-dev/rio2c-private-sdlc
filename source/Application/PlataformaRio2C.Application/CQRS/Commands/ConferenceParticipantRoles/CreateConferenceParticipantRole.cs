@@ -11,8 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Collections.Generic;
 using PlataformaRio2C.Domain.Dtos;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -45,7 +45,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             this.Titles = new List<ConferenceParticipantRoleTitleBaseCommand>();
             foreach (var languageDto in languagesDtos)
-            {       
+            {
                 var conferenceParticipantRoleTitle = conferenceParticipantRoleDto?.GetConferenceParticipantRoleTitleDtoByLanguageCode(languageDto.Code);
                 this.Titles.Add(conferenceParticipantRoleTitle != null ? new ConferenceParticipantRoleTitleBaseCommand(conferenceParticipantRoleTitle) :
                                                                          new ConferenceParticipantRoleTitleBaseCommand(languageDto));

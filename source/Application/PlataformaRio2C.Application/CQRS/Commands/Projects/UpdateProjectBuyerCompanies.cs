@@ -11,8 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using PlataformaRio2C.Domain.Dtos;
+using System;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -32,7 +32,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public UpdateProjectBuyerCompanies()
         {
         }
-            
+
         /// <summary>Updates the pre send properties.</summary>
         /// <param name="projectTypeUid">The project type uid.</param>
         /// <param name="userId">The user identifier.</param>

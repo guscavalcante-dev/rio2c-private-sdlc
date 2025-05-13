@@ -4,7 +4,6 @@ using Owin;
 using PlataformaRio2C.WebApi.Models;
 using PlataformaRio2C.WebApi.Providers;
 using System;
-using System.Web.Cors;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -21,11 +20,11 @@ namespace PlataformaRio2C.WebApi
             SimpleInjectorInitializer.Initialize();
 
             HttpConfiguration config = new HttpConfiguration();
-            config.MessageHandlers.Add(new LanguageMessageHandler());            
+            config.MessageHandlers.Add(new LanguageMessageHandler());
 
             ConfigureOAuth(app);
 
-            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);          
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             app.UseWebApi(config);
 
             GlobalConfiguration.Configure(WebApiConfig.Register);

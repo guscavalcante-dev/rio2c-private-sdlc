@@ -54,7 +54,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Initializes a new instance of the <see cref="Language"/> class.</summary>
         /// <param name="code">The code.</param>
-        private Language (string code)
+        private Language(string code)
         {
             this.Code = code?.Trim();
         }

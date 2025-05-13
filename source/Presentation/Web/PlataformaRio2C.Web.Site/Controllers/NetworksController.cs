@@ -11,20 +11,20 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Web.Mvc;
 using MediatR;
-using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Site.Filters;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Site.Controllers
@@ -49,7 +49,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="collaboratorRoleRepository">The collaborator role repository.</param>
         /// <param name="collaboratorIndustryRepository">The collaborator industry repository.</param>
         public NetworksController(
-            IMediator commandBus, 
+            IMediator commandBus,
             IdentityAutenticationService identityController,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
             IUserRepository userRepository,
@@ -79,7 +79,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             string searchKeywords,
             Guid? collaboratorRoleUid,
             Guid? collaboratorIndustryUid,
-            int? page = 1, 
+            int? page = 1,
             int? pageSize = 15)
         {
             #region Breadcrumb
@@ -106,8 +106,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
         public async Task<ActionResult> ShowContactsListModal(
             string searchKeywords,
             Guid? collaboratorRoleUid,
-            Guid? collaboratorIndustryUid, 
-            int? page = 1, 
+            Guid? collaboratorIndustryUid,
+            int? page = 1,
             int? pageSize = 6)
         {
             ViewBag.IsModal = true;
@@ -135,18 +135,18 @@ namespace PlataformaRio2C.Web.Site.Controllers
         public async Task<ActionResult> ShowContactsListWidget(
             string searchKeywords,
             Guid? collaboratorRoleUid,
-            Guid? collaboratorIndustryUid, 
-            bool? isModal = false, 
-            int? page = 1, 
+            Guid? collaboratorIndustryUid,
+            bool? isModal = false,
+            int? page = 1,
             int? pageSize = 15)
         {
             var attendeeCollaborators = await this.attendeeCollaboratorRepo.FindAllNetworkDtoByEditionIdPagedAsync(
-                this.EditionDto.Id, 
+                this.EditionDto.Id,
                 searchKeywords,
                 this.UserAccessControlDto?.User?.Collaborator?.Uid ?? Guid.Empty,
-                collaboratorRoleUid, 
-                collaboratorIndustryUid, 
-                page.Value, 
+                collaboratorRoleUid,
+                collaboratorIndustryUid,
+                page.Value,
                 pageSize.Value);
 
             await this.SetSearchFormViewBags(searchKeywords, collaboratorRoleUid, collaboratorIndustryUid, page.Value, pageSize.Value);
@@ -224,7 +224,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         {
             var conversations = await this.messageRepo.FindAllConversationsDtosByEditionIdAndByUserIdAndBySearchKeywords(this.EditionDto.Id, this.UserAccessControlDto.User.Id, searchKeywords) ??
                                 new List<ConversationDto>();
-            
+
             // Create conversation menu for selected user to send message
             if (userUid.HasValue)
             {

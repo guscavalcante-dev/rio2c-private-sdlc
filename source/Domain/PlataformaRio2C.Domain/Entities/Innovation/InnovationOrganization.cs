@@ -11,13 +11,13 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -172,7 +172,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeAttendeeInnovationOrganizationSustainableDevelopmentObjectives(
                edition,
                innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
-               userId); 
+               userId);
 
             this.SynchronizeAttendeeInnovationOrganizationTracks(
                 edition,
@@ -479,7 +479,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <returns></returns>
         private void DeleteAttendeeInnovationOrganizations(int userId)
         {
-            if(this.AttendeeInnovationOrganizations == null)
+            if (this.AttendeeInnovationOrganizations == null)
             {
                 return;
             }
@@ -700,7 +700,7 @@ namespace PlataformaRio2C.Domain.Entities
             List<InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto> innovationOrganizationSustainableDevelopmentObjectivesOptionApiDto,
             int userId)
         {
-            if(innovationOrganizationSustainableDevelopmentObjectivesOptionApiDto == null)
+            if (innovationOrganizationSustainableDevelopmentObjectivesOptionApiDto == null)
             {
                 return;
             }

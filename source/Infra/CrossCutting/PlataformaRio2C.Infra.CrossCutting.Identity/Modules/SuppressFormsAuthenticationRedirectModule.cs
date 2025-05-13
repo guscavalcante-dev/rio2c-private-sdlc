@@ -11,9 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using System;
 using System.Web;
-using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
 namespace PlataformaRio2C.Infra.CrossCutting.Identity.Modules
 {

@@ -52,7 +52,7 @@ namespace PlataformaRio2C.Domain.Dtos
 
         public double GetDemandPercentage(int projectsCount = 0)
         {
-            return (double) projectsCount > 0
+            return (double)projectsCount > 0
                 ? Math.Round((double)this.ProjectBuyerEvaluationsCount / projectsCount * 100, 2)
                 : 0;
         }

@@ -11,17 +11,17 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Description;
 using Microsoft.AspNet.Identity;
 using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Domain.ApiModels;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 {
@@ -58,7 +58,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("organizations")]
-        public async Task<IHttpActionResult> Organizations([FromUri]OrganizationsApiRequest request)
+        public async Task<IHttpActionResult> Organizations([FromUri] OrganizationsApiRequest request)
         {
             int? userId = this.User?.Identity?.GetUserId<int>();
 
@@ -71,7 +71,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 userId,
                 true,
                 true,
-                request?.Page ?? 1, 
+                request?.Page ?? 1,
                 request?.PageSize ?? 10);
 
             return await Json(new OrganizationsApiResponse

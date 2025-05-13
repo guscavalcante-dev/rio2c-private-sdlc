@@ -11,14 +11,14 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Application.ViewModels
 {
@@ -59,7 +59,7 @@ namespace PlataformaRio2C.Application.ViewModels
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         /// <param name="projectModalities">The project modality dto.</param>
         public void UpdateModelsAndLists(
-            List<Interest> interests, 
+            List<Interest> interests,
             List<ProjectEvaluationStatus> evaluationStatuses,
             string userInterfaceLanguage,
             List<ProjectModalityDto> projectModalities)

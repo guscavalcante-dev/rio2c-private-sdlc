@@ -11,10 +11,10 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -53,7 +53,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             this.Names = new List<RoomNameBaseCommand>();
             foreach (var languageDto in languagesDtos)
-            {       
+            {
                 var roomName = roomDto?.GetRoomNameByLanguageCode(languageDto.Code);
                 this.Names.Add(roomName != null ? new RoomNameBaseCommand(roomName) :
                                                   new RoomNameBaseCommand(languageDto));

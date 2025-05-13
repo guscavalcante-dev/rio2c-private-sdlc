@@ -16,8 +16,6 @@ using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
 
 namespace PlataformaRio2C.Domain.Dtos
 {

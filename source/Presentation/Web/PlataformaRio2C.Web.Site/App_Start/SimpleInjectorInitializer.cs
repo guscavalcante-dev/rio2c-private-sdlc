@@ -14,7 +14,13 @@
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.Owin;
+using PlataformaRio2C.Application.CQRS.CommandsHandlers;
+using PlataformaRio2C.Application.Interfaces;
+using PlataformaRio2C.Application.Services.Common;
+using PlataformaRio2C.Infra.CrossCutting.CQRS;
 using PlataformaRio2C.Infra.CrossCutting.IOC;
+using PlataformaRio2C.Infra.Data.FileRepository;
+using PlataformaRio2C.Web.Site.ServicesSendProducersNegotiationEmail;
 using SimpleInjector;
 using SimpleInjector.Integration.Web;
 using SimpleInjector.Integration.Web.Mvc;
@@ -23,12 +29,6 @@ using System.Reflection;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
-using PlataformaRio2C.Application.CQRS.CommandsHandlers;
-using PlataformaRio2C.Application.Interfaces;
-using PlataformaRio2C.Infra.CrossCutting.CQRS;
-using PlataformaRio2C.Infra.Data.FileRepository;
-using PlataformaRio2C.Web.Site.ServicesSendProducersNegotiationEmail;
-using PlataformaRio2C.Application.Services.Common;
 
 namespace PlataformaRio2C.Web.Site
 {

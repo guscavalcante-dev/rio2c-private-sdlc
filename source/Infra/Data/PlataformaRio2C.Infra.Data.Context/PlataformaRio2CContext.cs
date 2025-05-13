@@ -28,7 +28,7 @@ namespace PlataformaRio2C.Infra.Data.Context
         static PlataformaRio2CContext()
         {
             string environment = System.Configuration.ConfigurationManager.AppSettings["Environment"]?.ToLower();
-            if (environment == EnumEnvironments.Test.ToDescription().ToLower() || 
+            if (environment == EnumEnvironments.Test.ToDescription().ToLower() ||
                 environment == EnumEnvironments.Prod.ToDescription().ToLower())
             {
                 Database.SetInitializer(new MigrateDatabaseToLatestVersion<PlataformaRio2CContext, Migrations.Configuration>());
@@ -37,7 +37,7 @@ namespace PlataformaRio2C.Infra.Data.Context
                     context.Database.Initialize(true);
                 }
             }
-            else 
+            else
             {
                 Database.SetInitializer<PlataformaRio2CContext>(null);
             }
@@ -253,13 +253,13 @@ namespace PlataformaRio2C.Infra.Data.Context
 
         public DbSet<UserRole> UsersRoles { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<AttendeeCollaborator> AttendeeCollaborators { get; set; }      
+        public DbSet<AttendeeCollaborator> AttendeeCollaborators { get; set; }
         public DbSet<AttendeeCollaboratorType> AttendeeCollaboratorTypes { get; set; }
         public DbSet<CollaboratorType> CollaboratorTypes { get; set; }
 
         // Cartoon
 
-        public DbSet<CartoonProject> CartoonProjecs{ get; set; }
+        public DbSet<CartoonProject> CartoonProjecs { get; set; }
         public DbSet<CartoonProjectFormat> CartoonProjectFormats { get; set; }
         public DbSet<CartoonProjectCreator> CartoonProjectCreators { get; set; }
         public DbSet<CartoonProjectOrganization> CartoonProjectOrganizations { get; set; }

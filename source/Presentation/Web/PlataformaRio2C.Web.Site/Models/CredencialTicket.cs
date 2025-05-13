@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace PlataformaRio2C.Web.Site.Models
 {
@@ -29,7 +26,7 @@ namespace PlataformaRio2C.Web.Site.Models
         public bool necessidades_especiais { get; set; }
         public string necessidades_obs { get; set; }
         public string nomes_para_credencial { get; set; }
-        public DateTime dt_nascimento { get; set;}
+        public DateTime dt_nascimento { get; set; }
         public char sexo_credencial { get; set; }
         public string outros { get; set; }
         public string email_credencial { get; set; }

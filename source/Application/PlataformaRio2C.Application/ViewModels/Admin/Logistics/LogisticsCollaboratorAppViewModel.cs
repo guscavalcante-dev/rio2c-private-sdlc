@@ -1,12 +1,11 @@
 ﻿using PlataformaRio2C.Application.Common;
 using PlataformaRio2C.Domain.Entities;
 using System;
-using System.Linq;
 
 namespace PlataformaRio2C.Application.ViewModels
 {
     public class LogisticsCollaboratorAppViewModel : EntityViewModel<LogisticsCollaboratorAppViewModel, Collaborator>, IEntityViewModel<Collaborator>
-    {        
+    {
         public string Name { get; set; }
 
         public LogisticsCollaboratorAppViewModel()
@@ -15,7 +14,7 @@ namespace PlataformaRio2C.Application.ViewModels
         }
 
         public LogisticsCollaboratorAppViewModel(Collaborator entity)
-            :base(entity)
+            : base(entity)
         {
 
             //Name = entity.Name;

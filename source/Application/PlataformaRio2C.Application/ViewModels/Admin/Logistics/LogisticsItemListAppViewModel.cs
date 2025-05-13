@@ -15,7 +15,7 @@
 //        [DataType(DataType.DateTime, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
 //        [Display(Name = "ArrivalDate", ResourceType = typeof(Labels))]
 //        public DateTime? ArrivalDate { get; set; }
-        
+
 //        [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
 //        [DataType(DataType.DateTime, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
 //        [Display(Name = "ArrivalTime", ResourceType = typeof(Labels))]
@@ -27,7 +27,7 @@
 //        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
 //        [Display(Name = "DepartureDate", ResourceType = typeof(Labels))]
 //        public DateTime? DepartureDate { get; set; }
-        
+
 //        [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
 //        [Display(Name = "DepartureTime", ResourceType = typeof(Labels))]
 //        public TimeSpan? DepartureTime { get; set; }

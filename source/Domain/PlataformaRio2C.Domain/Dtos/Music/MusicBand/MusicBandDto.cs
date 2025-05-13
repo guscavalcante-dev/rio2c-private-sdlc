@@ -11,9 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Entities;
 using System.Collections.Generic;
 using System.Linq;
-using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -30,7 +30,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<MusicBandTargetAudienceDto> MusicBandTargetAudienceDtos { get; set; }
         public IEnumerable<MusicBandMember> MusicBandMembers { get; set; }
         public IEnumerable<MusicBandTeamMember> MusicBandTeamMembers { get; set; }
-        public IEnumerable<ReleasedMusicProject> ReleasedMusicProjects { get; set; }   
+        public IEnumerable<ReleasedMusicProject> ReleasedMusicProjects { get; set; }
         public IEnumerable<AttendeeMusicBandEvaluationDto> AttendeeMusicBandEvaluationsDtos { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="MusicBandDto"/> class.</summary>

@@ -11,9 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Statics;
 using System;
 using System.IO;
-using PlataformaRio2C.Domain.Statics;
 
 namespace PlataformaRio2c.Infra.Data.FileRepository
 {

@@ -11,11 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
 using X.PagedList;
 
 namespace PlataformaRio2C.Domain.Interfaces
@@ -30,5 +30,5 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<IPagedList<EditionEventJsonDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> editionEventUids, int editionId, int languageId);
         Task<int> CountAllByDataTable(bool showAllEditions, int editionId);
         Task<EditionEventDto> FindByConferenceUidAsync(Guid conferenceUid, int editionId);
-    }    
+    }
 }

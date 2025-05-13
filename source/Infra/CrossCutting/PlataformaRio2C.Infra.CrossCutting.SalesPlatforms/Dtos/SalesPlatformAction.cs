@@ -16,7 +16,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
     /// <summary>SalesPlatformAction</summary>
     public class SalesPlatformAction
     {
-        public const string AttendeeUpdated  = "attendee.updated";
+        public const string AttendeeUpdated = "attendee.updated";
         public const string AttendeeCheckedIn = "barcode.checked_in";
         public const string AttendeeCheckedOut = "barcode.un_checked_in";
     }

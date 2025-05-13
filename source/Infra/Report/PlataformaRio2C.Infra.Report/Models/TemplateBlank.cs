@@ -11,8 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using iTextSharp.text;
+using System;
 
 namespace PlataformaRio2C.Infra.Report.Models
 {

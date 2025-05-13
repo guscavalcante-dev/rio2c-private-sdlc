@@ -156,7 +156,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.MiniBios?.Select(d => new CollaboratorMiniBio(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                     cmd.IsVirtualMeeting,
                     cmd.UserId);
-                         
+
                 if (!collaborator.IsValid())
                 {
                     this.AppValidationResult.Add(collaborator.ValidationResult);

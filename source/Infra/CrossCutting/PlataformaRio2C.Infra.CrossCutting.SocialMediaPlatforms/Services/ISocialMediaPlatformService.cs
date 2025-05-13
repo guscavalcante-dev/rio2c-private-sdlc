@@ -11,8 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Collections.Generic;
 using PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms.Dtos;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms.Services
 {

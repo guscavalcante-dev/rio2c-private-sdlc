@@ -13,16 +13,11 @@
 // ***********************************************************************
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
-using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
-using PlataformaRio2C.Domain.Dtos;
 using X.PagedList;
-using LinqKit;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using System.Linq.Expressions;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -80,7 +75,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<AttendeeMusicBand> FindByEvaluatorUserId(this IQueryable<AttendeeMusicBand> query, int evaluatorUserId)
         {
-            query = query.Where(amb => 
+            query = query.Where(amb =>
                 !amb.IsDeleted
                 && amb.EvaluatorUserId == evaluatorUserId
             );
@@ -178,7 +173,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                 .FindByEditionId(editionId)
                 .FindByResponsible(document);
-            
+
             return await query.CountAsync();
         }
 

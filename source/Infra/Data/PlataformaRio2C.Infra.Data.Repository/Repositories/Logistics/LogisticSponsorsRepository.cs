@@ -11,17 +11,17 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
 using LinqKit;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
 using X.PagedList;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
@@ -147,7 +147,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             _context = context;
         }
-        
+
         /// <summary>Gets the base query.</summary>
         /// <param name="readonly">if set to <c>true</c> [readonly].</param>
         /// <returns></returns>
@@ -235,7 +235,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 IsInCurrentEdition = c.AttendeeLogisticSponsors.Any(als => als.EditionId == editionId && !als.IsDeleted && !als.Edition.IsDeleted),
                                 IsInOtherEdition = c.AttendeeLogisticSponsors.Any(als => als.EditionId != editionId && !als.IsDeleted && !als.Edition.IsDeleted),
                                 CreateDate = c.CreateDate,
-                                UpdateDate = c.UpdateDate,                                
+                                UpdateDate = c.UpdateDate,
                             })
                             .ToListPagedAsync(page, pageSize);
         }

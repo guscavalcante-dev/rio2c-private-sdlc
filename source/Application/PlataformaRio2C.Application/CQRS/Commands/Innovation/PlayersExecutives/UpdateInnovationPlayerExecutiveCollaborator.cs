@@ -11,12 +11,12 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using System;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -24,7 +24,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         public Guid CollaboratorUid { get; set; }
         public bool IsAddingToCurrentEdition { get; set; }
-        
+
         public DateTimeOffset? WelcomeEmailSendDate { get; private set; }
         public DateTimeOffset? OnboardingStartDate { get; private set; }
         public DateTimeOffset? OnboardingFinishDate { get; private set; }
@@ -63,21 +63,21 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
         /// <exception cref="DomainException"></exception>
         public UpdateInnovationPlayerExecutiveCollaborator(
-            CollaboratorDto entity, 
-            List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, 
-            List<LanguageDto> languagesDtos, 
-            List<CountryBaseDto> countriesBaseDtos, 
-            List<CollaboratorGender> genders, 
-            List<CollaboratorIndustry> industries, 
+            CollaboratorDto entity,
+            List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos,
+            List<LanguageDto> languagesDtos,
+            List<CountryBaseDto> countriesBaseDtos,
+            List<CollaboratorGender> genders,
+            List<CollaboratorIndustry> industries,
             List<CollaboratorRole> collaboratorRoles,
             List<EditionDto> editionsDtos,
             List<Activity> activities,
             List<InterestDto> interestsDtos,
             List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos,
             int currentEditionId,
-            bool? isAddingToCurrentEdition, 
+            bool? isAddingToCurrentEdition,
             bool isJobTitleRequired,
-            bool isMiniBioRequired, 
+            bool isMiniBioRequired,
             bool isImageRequired,
             bool isPlayerRequired,
             bool isVirtualMeetingRequired,
@@ -100,31 +100,31 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.CollaboratorUid = entity.Uid;
             this.IsAddingToCurrentEdition = isAddingToCurrentEdition ?? false;
             base.UpdateBaseProperties(
-                entity, 
-                attendeeOrganizationsBaseDtos, 
-                languagesDtos, 
-                genders, 
-                industries, 
-                collaboratorRoles, 
+                entity,
+                attendeeOrganizationsBaseDtos,
+                languagesDtos,
+                genders,
+                industries,
+                collaboratorRoles,
                 editionsDtos,
                 activities,
                 interestsDtos,
                 innovationOrganizationTrackOptionDtos,
-                currentEditionId, 
-                isJobTitleRequired, 
-                isMiniBioRequired, 
-                isImageRequired, 
+                currentEditionId,
+                isJobTitleRequired,
+                isMiniBioRequired,
+                isImageRequired,
                 isPlayerRequired,
                 isVirtualMeetingRequired,
                 userInterfaceLanguage);
             this.UpdateDropdownProperties(
-                entity, 
-                attendeeOrganizationsBaseDtos, 
-                genders, 
-                industries, 
-                collaboratorRoles, 
-                editionsDtos, 
-                currentEditionId, 
+                entity,
+                attendeeOrganizationsBaseDtos,
+                genders,
+                industries,
+                collaboratorRoles,
+                editionsDtos,
+                currentEditionId,
                 userInterfaceLanguage);
         }
 
@@ -148,13 +148,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.PublicEmail = cmd.PublicEmail;
             this.Website = cmd.Website;
             this.Linkedin = cmd.Linkedin;
-            this.Twitter= cmd.Twitter;
-            this.Instagram= cmd.Instagram;
-            this.Youtube= cmd.Youtube;
-            this.CropperImage= cmd.CropperImage;
-            this.JobTitles= cmd.JobTitles;
-            this.MiniBios= cmd.MiniBios;
-            this.AttendeeCollaboratorActivities= cmd.AttendeeCollaboratorActivities;
+            this.Twitter = cmd.Twitter;
+            this.Instagram = cmd.Instagram;
+            this.Youtube = cmd.Youtube;
+            this.CropperImage = cmd.CropperImage;
+            this.JobTitles = cmd.JobTitles;
+            this.MiniBios = cmd.MiniBios;
+            this.AttendeeCollaboratorActivities = cmd.AttendeeCollaboratorActivities;
             this.InnovationOrganizationTrackGroups = cmd.InnovationOrganizationTrackGroups;
             this.EditionsUids = cmd.EditionsUids;
             this.CollaboratorGenderUid = cmd.CollaboratorGenderUid;
@@ -212,11 +212,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
             base.UpdateDropdownProperties(
                 attendeeOrganizationsBaseDtos,
-                genders, 
-                industries, 
-                collaboratorRoles, 
-                editionsDtos, 
-                currentEditionId, 
+                genders,
+                industries,
+                collaboratorRoles,
+                editionsDtos,
+                currentEditionId,
                 userInterfaceLanguage);
         }
     }

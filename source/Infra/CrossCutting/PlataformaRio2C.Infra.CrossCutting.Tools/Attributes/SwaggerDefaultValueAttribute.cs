@@ -18,9 +18,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Attributes
     {
         public SwaggerDefaultValueAttribute(object value)
         {
-            Value = value;          
+            Value = value;
         }
-        
-        public object Value { get; set; }    
+
+        public object Value { get; set; }
     }
 }

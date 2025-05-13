@@ -11,10 +11,10 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using PlataformaRio2C.Domain.Enums;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using System;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -78,7 +78,7 @@ namespace PlataformaRio2C.Domain.Entities
         public static InterestGroup AudiovisualGenre = new InterestGroup(new Guid("7B4A7C4A-EF10-483C-8854-87EBEB883583"));
         public static InterestGroup AudiovisualBusinessRoundSubGenre = new InterestGroup(new Guid("BBFA501D-A4D2-4500-8D7D-8A133685E6D2"));
         public static InterestGroup AudiovisualFormat = new InterestGroup(new Guid("2D5AE955-8D8F-4763-AEE4-964980FFB170"));
-        
+
         public static InterestGroup AudiovisualPitchingSubGenre = new InterestGroup(new Guid("55FD72C1-B3D5-4DD5-8A3E-44B1B0BAF5A3"));
         public static InterestGroup AudiovisualPitchingSegment = new InterestGroup(new Guid("DFFD8186-1E7E-4730-B005-56D1506C9DB6"));
 

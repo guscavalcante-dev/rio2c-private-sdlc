@@ -11,13 +11,12 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -36,10 +35,10 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset StartDate { get; private set; }
         public DateTimeOffset EndDate { get; private set; }
         public DateTimeOffset SellStartDate { get; private set; }
-        public DateTimeOffset SellEndDate { get; private set; }      
+        public DateTimeOffset SellEndDate { get; private set; }
         public DateTimeOffset OneToOneMeetingsScheduleDate { get; private set; }
         public int SpeakersApiHighlightPositionsCount { get; private set; }
-        public int ConferenceApiHighlightPositionsCount { get; private set; }        
+        public int ConferenceApiHighlightPositionsCount { get; private set; }
 
         #endregion
 
@@ -275,7 +274,7 @@ namespace PlataformaRio2C.Domain.Entities
             int attendeeOrganizationMaxSellProjectsCount,
             int projectMaxBuyerEvaluationsCount,
             short audiovisualNegotiationsVirtualMeetingsJoinMinutes,
- 
+
             DateTime musicPitchingSubmitStartDate,
             DateTime musicPitchingSubmitEndDate,
             DateTime musicCommissionEvaluationStartDate,
@@ -532,7 +531,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="musicPitchingRepechageEvaluationEndDate">The music pitching repechage evaluation end date.</param>
         /// <param name="musicPitchingMaximumApprovedProjectsByRepechage">The music pitching maximum approved projects by repechage.</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateDatesInformation(     
+        public void UpdateDatesInformation(
             DateTime projectSubmitStartDate,
             DateTime projectSubmitEndDate,
             DateTime projectEvaluationStartDate,
@@ -883,7 +882,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         public void ValidateIsCurrentAndIsActive()
         {
-            if(this.IsCurrent && !this.IsActive)
+            if (this.IsCurrent && !this.IsActive)
             {
                 this.ValidationResult.Add(new ValidationError(Messages.CanNotDisableCurrentEdition, new string[] { "IsActive" }));
             }

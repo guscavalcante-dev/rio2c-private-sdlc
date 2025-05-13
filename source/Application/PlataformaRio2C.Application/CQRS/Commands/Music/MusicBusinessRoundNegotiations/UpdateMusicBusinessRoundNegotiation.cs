@@ -12,12 +12,9 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
-using System.Linq;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -34,7 +31,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         /// <exception cref="DomainException"></exception>
         public UpdateMusicBusinessRoundNegotiation(
-            MusicBusinessRoundNegotiationDto musicBusinessRoundNegotiationDto, 
+            MusicBusinessRoundNegotiationDto musicBusinessRoundNegotiationDto,
             string userInterfaceLanguage)
         {
             if (musicBusinessRoundNegotiationDto == null || musicBusinessRoundNegotiationDto.Negotiation == null)

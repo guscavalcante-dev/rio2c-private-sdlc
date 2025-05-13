@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 namespace PlataformaRio2C.Application.CQRS.EventsHandlers.Editions
 {
     public class EditionEventHandler : BaseEventHandler,
-        INotificationHandler<EditionCreated>, 
+        INotificationHandler<EditionCreated>,
         INotificationHandler<EditionUpdated>
     {
         /// <summary>

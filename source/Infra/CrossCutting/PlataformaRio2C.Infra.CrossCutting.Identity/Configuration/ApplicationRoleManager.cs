@@ -1,8 +1,4 @@
 ﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin;
-using PlataformaRio2C.Infra.CrossCutting.Identity.Context;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Models;
 
 namespace PlataformaRio2C.Infra.CrossCutting.Identity.Configuration

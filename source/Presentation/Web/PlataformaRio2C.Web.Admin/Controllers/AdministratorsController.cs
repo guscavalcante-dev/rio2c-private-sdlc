@@ -14,7 +14,6 @@
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
-using Microsoft.AspNet.Identity;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
@@ -55,7 +54,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="roleRepository">The role repository.</param>
         /// <param name="collaboratorTypeRepository">The collaborator type repository.</param>
         public AdministratorsController(
-            IMediator commandBus,            
+            IMediator commandBus,
             IdentityAutenticationService identityController,
             ICollaboratorRepository collaboratorRepository,
             IRoleRepository roleRepository,

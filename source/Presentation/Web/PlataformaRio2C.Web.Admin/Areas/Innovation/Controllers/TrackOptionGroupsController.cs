@@ -16,7 +16,6 @@ using DataTables.AspNet.Mvc5;
 using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
@@ -49,9 +48,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// <param name="identityControlle">The identity controlle.</param>
         /// <param name="innovationOrganizationTrackOptionGroupRepository">The innovation organization track option group repository.</param>
         public TrackOptionGroupsController(
-            IMediator commandBus, 
+            IMediator commandBus,
             IdentityAutenticationService identityControlle,
-            IInnovationOrganizationTrackOptionGroupRepository innovationOrganizationTrackOptionGroupRepository) 
+            IInnovationOrganizationTrackOptionGroupRepository innovationOrganizationTrackOptionGroupRepository)
             : base(commandBus, identityControlle)
         {
             this.innovationOrganizationTrackOptionGroupRepo = innovationOrganizationTrackOptionGroupRepository;

@@ -16,11 +16,11 @@ using System.Web.Mvc;
 namespace PlataformaRio2C.Web.Site.Areas.Player
 {
     /// <summary>PlayerAreaRegistration</summary>
-    public class PlayerAreaRegistration : AreaRegistration 
+    public class PlayerAreaRegistration : AreaRegistration
     {
-        public override string AreaName 
+        public override string AreaName
         {
-            get 
+            get
             {
                 return "Player";
             }
@@ -28,7 +28,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Player
 
         /// <summary>Registers an area in an ASP.NET MVC application using the specified area's context information.</summary>
         /// <param name="context">Encapsulates the information that is required in order to register the area.</param>
-        public override void RegisterArea(AreaRegistrationContext context) 
+        public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(
                 "PlayerWithCultureAndEdition",

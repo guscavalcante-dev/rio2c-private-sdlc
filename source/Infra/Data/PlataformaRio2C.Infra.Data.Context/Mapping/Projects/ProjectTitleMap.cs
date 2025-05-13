@@ -27,7 +27,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             //this.Ignore(p => p.LanguageCode);
 
             Property(u => u.Value)
-               .HasMaxLength(ProjectTitle.ValueMaxLength);            
+               .HasMaxLength(ProjectTitle.ValueMaxLength);
 
             //Relationships
             this.HasRequired(t => t.Project)

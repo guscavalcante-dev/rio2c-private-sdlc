@@ -11,15 +11,15 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -81,7 +81,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             OrganizationType organizationType,
             List<HoldingBaseDto> holdingBaseDtos,
             List<LanguageDto> languagesDtos)
-            : base (entity, languagesDtos, false, false, false, false)
+            : base(entity, languagesDtos, false, false, false, false)
         {
             this.OrganizationTypeUid = organizationType?.Uid;
             this.OrganizationType = organizationType;

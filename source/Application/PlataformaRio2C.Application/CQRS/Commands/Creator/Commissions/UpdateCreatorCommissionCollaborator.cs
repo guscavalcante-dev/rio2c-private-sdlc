@@ -34,7 +34,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="entity">The entity.</param>
         /// <param name="isAddingToCurrentEdition">The is adding to current edition.</param>
         public UpdateCreatorCommissionCollaborator(
-            CollaboratorDto entity, 
+            CollaboratorDto entity,
             bool? isAddingToCurrentEdition)
         {
             this.CollaboratorUid = entity.Uid;

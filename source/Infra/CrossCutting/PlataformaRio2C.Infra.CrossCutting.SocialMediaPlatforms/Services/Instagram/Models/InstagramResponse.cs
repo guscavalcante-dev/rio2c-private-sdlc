@@ -21,7 +21,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms.Services.Insta
     {
         [JsonProperty("data")]
         public List<Publication> Publications { get; set; }
-        
+
         [JsonProperty("paging")]
         public Paging Paging { get; set; }
     }
@@ -36,19 +36,19 @@ namespace PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms.Services.Insta
 
         [JsonProperty("caption")]
         public string Caption { get; set; }
-        
+
         [JsonProperty("timestamp")]
         public DateTime Timestamp { get; set; }
-        
+
         [JsonProperty("media_product_type")]
         public string MediaProductType { get; set; }
-        
+
         [JsonProperty("media_type")]
         public string MediaType { get; set; }
-        
+
         [JsonProperty("permalink")]
         public string Permalink { get; set; }
-        
+
         [JsonProperty("media_url")]
         public string MediaUrl { get; set; }
 
@@ -59,7 +59,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms.Services.Insta
     {
         [JsonProperty("cursors")]
         public Cursors Cursors { get; set; }
-        
+
         [JsonProperty("next")]
         public string Next { get; set; }
     }

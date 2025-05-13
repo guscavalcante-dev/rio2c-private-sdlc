@@ -11,29 +11,29 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Web.Mvc;
 using MediatR;
-using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Interfaces.Repositories.Music.BusinessRoundProjects;
+using PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
-using PlataformaRio2C.Web.Site.Filters;
-using Constants = PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Web.Site.Controllers;
-using PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects;
-using PlataformaRio2C.Domain.Interfaces.Repositories.Music.BusinessRoundProjects;
+using PlataformaRio2C.Web.Site.Filters;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 {
@@ -959,7 +959,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             return RedirectToAction("SubmittedDetails", "BusinessRoundProjects", new { Area = "Music", id });
         }
 
-       /// <summary>Shows the buyer company selected widget.</summary>
+        /// <summary>Shows the buyer company selected widget.</summary>
         /// <param name="projectUid"></param>
         /// <returns></returns>
         public async Task<ActionResult> ShowBuyerCompanySelectedWidget(Guid? projectUid)
@@ -1502,12 +1502,12 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.PlayerExecutiveMusic)]
         [HttpGet]
         public async Task<ActionResult> EvaluationList(
-            string searchKeywords, 
+            string searchKeywords,
             Guid? evaluationStatusUid,
             Guid? targetAudienceUid,
             Guid? interestAreaInterestUid,
             Guid? businessRoundObjetiveInterestsUid,
-            int? page = 1, 
+            int? page = 1,
             int? pageSize = 10)
         {
             if (this.EditionDto?.IsMusicBusinessRoundProjectBuyerEvaluationStarted() != true)
@@ -1999,7 +1999,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 if (mainInformationWidgetDto == null)
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
-                }            
+                }
 
                 if (this.EditionDto?.IsMusicBusinessRoundProjectSubmitStarted() != true)
                 {

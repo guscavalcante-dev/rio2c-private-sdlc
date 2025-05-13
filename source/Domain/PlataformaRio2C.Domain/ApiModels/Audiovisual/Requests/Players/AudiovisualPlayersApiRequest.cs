@@ -11,9 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using Newtonsoft.Json;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
-
 namespace PlataformaRio2C.Domain.ApiModels
 {
     /// <summary>AudiovisualPlayersApiRequest</summary>

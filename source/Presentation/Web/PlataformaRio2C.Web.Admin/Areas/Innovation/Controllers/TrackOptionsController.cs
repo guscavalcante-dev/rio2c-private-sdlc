@@ -50,10 +50,10 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// <param name="innovationOrganizationTrackOptionRepository">The innovation organization track option repository.</param>
         /// <param name="innovationOrganizationTrackOptionGroupRepository">The innovation organization track option group repository.</param>
         public TrackOptionsController(
-            IMediator commandBus, 
+            IMediator commandBus,
             IdentityAutenticationService identityControlle,
             IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepository,
-            IInnovationOrganizationTrackOptionGroupRepository innovationOrganizationTrackOptionGroupRepository) 
+            IInnovationOrganizationTrackOptionGroupRepository innovationOrganizationTrackOptionGroupRepository)
             : base(commandBus, identityControlle)
         {
             this.innovationOrganizationTrackOptionRepo = innovationOrganizationTrackOptionRepository;

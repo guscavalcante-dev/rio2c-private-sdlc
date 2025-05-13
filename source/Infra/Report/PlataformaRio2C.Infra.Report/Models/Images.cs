@@ -11,9 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using iTextSharp.text;
 using System;
 using System.IO;
-using iTextSharp.text;
 
 namespace PlataformaRio2C.Infra.Report.Models
 {
@@ -37,7 +37,7 @@ namespace PlataformaRio2C.Infra.Report.Models
                     fileName.Save(img, System.Drawing.Imaging.ImageFormat.Bmp);
                     _background = Image.GetInstance(img.ToArray());
                     _background.Alignment = Element.ALIGN_CENTER;
-                
+
                 }
 
                 return _background;

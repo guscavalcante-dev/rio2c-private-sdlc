@@ -16,7 +16,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
     /// <summary>SalesPlatformAttendeeStatus</summary>
     public class SalesPlatformAttendeeStatus
     {
-        public const string Attending  = "attending";
+        public const string Attending = "attending";
         public const string NotAttending = "Not Attending";
     }
 }

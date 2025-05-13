@@ -21,7 +21,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Identity.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : User
-    {   
+    {
         public Guid Uid { get; set; }
         public bool Active { get; set; }
         public bool IsDeleted { get; set; }
@@ -101,7 +101,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Identity.Models
 
             claims.Add(new Claim(ClaimCodes.Email.ToString(), this.Email));
             claims.Add(new Claim(ClaimCodes.Name.ToString(), this.Name));
-            claims.Add(new Claim(ClaimCodes.UserId.ToString(), this.Id.ToString()));           
+            claims.Add(new Claim(ClaimCodes.UserId.ToString(), this.Id.ToString()));
 
             userIdentity.AddClaims(claims);
         }

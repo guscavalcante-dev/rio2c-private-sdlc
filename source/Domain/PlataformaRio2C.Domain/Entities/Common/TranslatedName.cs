@@ -11,10 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using PlataformaRio2C.Domain.Validation;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
-
 namespace PlataformaRio2C.Domain.Entities
 {
     /// <summary>TranslatedName</summary>
@@ -25,7 +21,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         public int LanguageId { get; private set; }
         public string Value { get; private set; }
-        public Language Language { get; private set; }        
+        public Language Language { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="TrackName"/> class.</summary>
         /// <param name="value">The value.</param>

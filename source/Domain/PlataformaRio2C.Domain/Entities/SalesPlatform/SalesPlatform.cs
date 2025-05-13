@@ -12,9 +12,9 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using System;
 using System.Collections.Generic;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using System.Linq;
 
 namespace PlataformaRio2C.Domain.Entities

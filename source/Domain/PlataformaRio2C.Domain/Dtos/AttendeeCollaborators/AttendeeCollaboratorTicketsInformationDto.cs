@@ -11,12 +11,12 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Collections.Generic;
-using System.Linq;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -75,7 +75,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns></returns>
         public int GetMusicPitchingMaxSellProjectsCount(string document, bool isCompany, Country country)
         {
-            if(country?.Code == Country.Brazil.Code)
+            if (country?.Code == Country.Brazil.Code)
             {
                 if (!string.IsNullOrEmpty(document))
                 {
@@ -98,7 +98,7 @@ namespace PlataformaRio2C.Domain.Dtos
             }
             else
             {
-                return isCompany ? 
+                return isCompany ?
                     this.Edition.MusicPitchingMaximumProjectSubmissionsByCompany :
                     this.Edition.MusicPitchingMaximumProjectSubmissionsByParticipant;
             }

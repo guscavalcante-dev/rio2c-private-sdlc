@@ -27,7 +27,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         public LogisticsSponsorMap()
         {
             this.ToTable("LogisticSponsors");
-                        
+
             this.Property(t => t.Name)
                 .HasMaxLength(LogisticSponsor.NameMaxLength);
         }

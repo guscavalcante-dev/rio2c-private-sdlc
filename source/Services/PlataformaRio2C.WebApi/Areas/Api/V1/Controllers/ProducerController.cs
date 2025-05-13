@@ -44,7 +44,7 @@
 //        public async Task<IHttpActionResult> ListAll([FromUri]ProducerItemListAppViewModel filter, [FromUri]string orderBy = "Name", [FromUri]bool? orderByDesc = false, [FromUri]string fields = null)
 //        {
 //            IEnumerable<ProducerItemListAppViewModel> result = null;
-            
+
 //            result = _producerAppService.GetAllSimple(filter);
 
 //            try

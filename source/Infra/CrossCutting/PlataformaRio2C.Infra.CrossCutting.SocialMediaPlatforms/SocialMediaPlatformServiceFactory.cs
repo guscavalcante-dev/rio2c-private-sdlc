@@ -13,8 +13,8 @@
 // ***********************************************************************
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms.Services;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms.Services.Instagram;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms

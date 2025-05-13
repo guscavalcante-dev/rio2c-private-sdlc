@@ -11,11 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Dtos.Agendas;
 using PlataformaRio2C.Domain.Entities;
+using System;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -50,11 +50,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public SendExecutiveAgendaEmailAsync(
             Guid collaboratorUid,
             string userSecurityToken,
-            int recipientUserId, 
-            Guid recipientUserUid, 
-            string recipientFirstName, 
-            string recipientFullName, 
-            string recipientEmail, 
+            int recipientUserId,
+            Guid recipientUserUid,
+            string recipientFirstName,
+            string recipientFullName,
+            string recipientEmail,
             Edition edition,
             int userId,
             string userInterfaceLanguage,

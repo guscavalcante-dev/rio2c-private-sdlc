@@ -1,14 +1,14 @@
-﻿using PlataformaRio2C.Domain.Entities;
+﻿using LinqKit;
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects;
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
-using PlataformaRio2C.Domain.Dtos;
 using X.PagedList;
-using PlataformaRio2C.Domain.Interfaces.Repositories.Music.Projects;
-using LinqKit;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
 {
@@ -125,7 +125,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
                 outerWhere = outerWhere.Or(innerSellerAttendeeCollaboratorLastNamesWhere);
                 outerWhere = outerWhere.Or(innerSellerAttendeeCollaboratorCompanyNameWhere);
                 outerWhere = outerWhere.Or(innerSellerAttendeeCollaboratorStageNameWhere);
-                
+
                 query = query.Where(outerWhere);
             }
 
@@ -177,8 +177,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
         {
             if (targetAudienceUid != null)
             {
-                query = query.Where(p => p.MusicBusinessRoundProjectTargetAudiences.Any(ta => !ta.IsDeleted && 
-                                                                                              !ta.TargetAudience.IsDeleted && 
+                query = query.Where(p => p.MusicBusinessRoundProjectTargetAudiences.Any(ta => !ta.IsDeleted &&
+                                                                                              !ta.TargetAudience.IsDeleted &&
                                                                                               ta.TargetAudience.Uid == targetAudienceUid));
             }
 
@@ -487,11 +487,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
                             .Select(p => new MusicBusinessRoundProjectDto
                             {
                                 Uid = p.Uid,
-                               SellerAttendeeCollaboratorDto =  new AttendeeCollaboratorDto
-                               {
-                                 AttendeeCollaborator = p.SellerAttendeeCollaborator,
-                                 Collaborator = p.SellerAttendeeCollaborator.Collaborator,
-                               }
+                                SellerAttendeeCollaboratorDto = new AttendeeCollaboratorDto
+                                {
+                                    AttendeeCollaborator = p.SellerAttendeeCollaborator,
+                                    Collaborator = p.SellerAttendeeCollaborator.Collaborator,
+                                }
                             })
                             .OrderBy(pd => pd.SellerAttendeeCollaboratorDto.Collaborator.FirstName)
                             .ToListPagedAsync(page, pageSize);
@@ -748,7 +748,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories.Music.Projects
                                     .Where(be => !be.IsDeleted)
                                     .Select(be => new MusicBusinessRoundProjectBuyerEvaluationDto
                                     {
-                                         MusicBusinessRoundProjectBuyerEvaluation = be,
+                                        MusicBusinessRoundProjectBuyerEvaluation = be,
                                         BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
                                         {
                                             AttendeeOrganization = be.BuyerAttendeeOrganization,

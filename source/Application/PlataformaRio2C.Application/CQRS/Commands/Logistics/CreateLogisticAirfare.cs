@@ -11,12 +11,12 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Web;
 using Foolproof;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Web;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -53,11 +53,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [NotEqualTo("Departure", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyDifferentFromProperty")]
         public string Arrival { get; set; }
-        
+
         [Display(Name = "ReservationCode", ResourceType = typeof(Labels))]
         [StringLength(20, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string TicketNumber { get; set; }
-        
+
         [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
         [StringLength(1000, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string AdditionalInfo { get; set; }

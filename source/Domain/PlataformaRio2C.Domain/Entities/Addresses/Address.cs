@@ -11,10 +11,10 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using System;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -54,14 +54,14 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isManual">if set to <c>true</c> [is manual].</param>
         /// <param name="userId">The user identifier.</param>
         public Address(
-            Country country, 
-            Guid? stateUid, 
-            string stateName, 
-            Guid? cityUid, 
-            string cityName, 
+            Country country,
+            Guid? stateUid,
+            string stateName,
+            Guid? cityUid,
+            string cityName,
             string address1,
             string addressZipCode,
-            bool isManual, 
+            bool isManual,
             int userId)
         {
             this.Address1 = address1?.Trim();
@@ -92,13 +92,13 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isManual">if set to <c>true</c> [is manual].</param>
         /// <param name="userId">The user identifier.</param>
         public void Update(
-            Country country, 
-            Guid? stateUid, 
-            string stateName, 
-            Guid? cityUid, 
-            string cityName, 
+            Country country,
+            Guid? stateUid,
+            string stateName,
+            Guid? cityUid,
+            string cityName,
             string address1,
-            string addressZipCode, 
+            string addressZipCode,
             bool isManual,
             int userId)
         {
@@ -184,10 +184,10 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isManual">if set to <c>true</c> [is manual].</param>
         /// <param name="userId">The user identifier.</param>
         private void UpdateCity(
-            Country country, 
-            Guid? stateUid, 
-            string stateName, 
-            Guid? cityUid, 
+            Country country,
+            Guid? stateUid,
+            string stateName,
+            Guid? cityUid,
             string cityName,
             bool isManual,
             int userId)

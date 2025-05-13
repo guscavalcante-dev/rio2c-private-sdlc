@@ -11,9 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Dtos;
 using System;
 using System.Collections.Generic;
-using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -27,7 +27,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="innovationOrganizationTrackOptionDto">The innovation organization track option  dto.</param>
         /// <param name="innovationOrganizationTrackOptionGroupDtos">The innovation organization track option group dtos.</param>
         public UpdateInnovationOrganizationTrackOptionMainInformation(
-            InnovationOrganizationTrackOptionDto innovationOrganizationTrackOptionDto, 
+            InnovationOrganizationTrackOptionDto innovationOrganizationTrackOptionDto,
             List<InnovationOrganizationTrackOptionGroupDto> innovationOrganizationTrackOptionGroupDtos)
         {
             this.InnovationOrganizationTrackOptionUid = innovationOrganizationTrackOptionDto.Uid;

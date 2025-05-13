@@ -21,7 +21,7 @@ namespace PlataformaRio2C.Domain.Interfaces
 {
     /// <summary>IRepository</summary>
     /// <typeparam name="T"></typeparam>
-    public interface IRepository<T> 
+    public interface IRepository<T>
         where T : class, IEntity
     {
         int Count(Expression<Func<T, bool>> filter = null);

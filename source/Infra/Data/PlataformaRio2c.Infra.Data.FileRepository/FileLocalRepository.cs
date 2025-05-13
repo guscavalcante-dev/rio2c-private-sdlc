@@ -11,11 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Statics;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
 using System;
 using System.Configuration;
 using System.IO;
-using PlataformaRio2C.Domain.Statics;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
 
 namespace PlataformaRio2c.Infra.Data.FileRepository
 {
@@ -80,7 +80,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
                 return string.Empty;
             }
 
-            if(string.IsNullOrEmpty(fileExtension))
+            if (string.IsNullOrEmpty(fileExtension))
             {
                 fileExtension = FileType.Pdf;
             }

@@ -12,11 +12,10 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.ComponentModel.DataAnnotations;
-using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using System.ComponentModel.DataAnnotations;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -27,7 +26,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public static readonly int ValueMinLength = 1;
         public int MusicBusinessRoundProjectId { get; set; }
         public int LanguageId { get; set; }
-        
+
         [Display(Name = "ExpectationsForMeeting", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(3000, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]

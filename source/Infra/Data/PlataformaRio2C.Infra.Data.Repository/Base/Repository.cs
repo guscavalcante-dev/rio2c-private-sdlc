@@ -114,7 +114,7 @@ namespace PlataformaRio2C.Infra.Data.Repository
         {
             return
                 this.dbSet;
-              
+
         }
 
         /// <summary>

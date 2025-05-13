@@ -11,15 +11,15 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -93,7 +93,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             organization.UpdateOrganizationRestrictionSpecifics(
                 cmd.RestrictionSpecifics
-                    ?.Select(d => 
+                    ?.Select(d =>
                         new OrganizationRestrictionSpecific(
                             d.Value,
                             languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language,
@@ -106,7 +106,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             organization.UpdateOrganizationInterests(
                 organizationInterests,
-                cmd.UserId,cmd.ProjectTypeId.Value);
+                cmd.UserId, cmd.ProjectTypeId.Value);
             if (!organization.IsValid())
             {
                 this.AppValidationResult.Add(organization.ValidationResult);

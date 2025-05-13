@@ -27,7 +27,7 @@ namespace PlataformaRio2C.Application.ViewModels
             Value = value;
             ValueUnit = valueUnit;
         }
-       
+
 
         public static IEnumerable<ItemFinancialReportAppViewModel> MapList(IEnumerable<IGrouping<string, ParticipantSympla>> groupParticipants)
         {

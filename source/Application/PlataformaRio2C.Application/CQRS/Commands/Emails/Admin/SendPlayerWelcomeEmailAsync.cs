@@ -11,8 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using PlataformaRio2C.Domain.Entities;
+using System;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -42,11 +42,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             Guid collaboratorUid,
             Guid collaboratorTypeUid,
             string userSecurityToken,
-            int recipientUserId, 
-            Guid recipientUserUid, 
-            string recipientFirstName, 
-            string recipientFullName, 
-            string recipientEmail, 
+            int recipientUserId,
+            Guid recipientUserUid,
+            string recipientFirstName,
+            string recipientFullName,
+            string recipientEmail,
             Edition edition,
             int userId,
             string userInterfaceLanguage)

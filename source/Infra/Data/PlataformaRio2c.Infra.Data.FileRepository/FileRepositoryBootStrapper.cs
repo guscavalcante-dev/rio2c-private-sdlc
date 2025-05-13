@@ -25,5 +25,5 @@ namespace PlataformaRio2C.Infra.Data.FileRepository
         {
             container.Register<IFileRepository>(() => new FileRepositoryFactory().Get(), Lifestyle.Scoped);
         }
-    }    
+    }
 }

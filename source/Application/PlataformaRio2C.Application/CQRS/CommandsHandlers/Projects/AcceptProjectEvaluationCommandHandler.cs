@@ -11,14 +11,14 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -81,7 +81,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             var projectBuyerEvaluation = project.AcceptProjectBuyerEvaluation(
-                cmd.AttendeeOrganizationUid.Value, 
+                cmd.AttendeeOrganizationUid.Value,
                 await this.projectEvaluationStatusRepo.FindAllAsync(),
                 projectsApprovalLimitExceeded,
                 cmd.UserId);

@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
@@ -38,7 +37,7 @@ namespace PlataformaRio2C.Application.ViewModels
 
         [Display(Name = "ShowNotPublishableToApi", ResourceType = typeof(Labels))]
         public bool ShowNotPublishableToApi { get; set; }
-        
+
         [Display(Name = "Room", ResourceType = typeof(Labels))]
         public Guid? RoomsUids { get; set; }
 

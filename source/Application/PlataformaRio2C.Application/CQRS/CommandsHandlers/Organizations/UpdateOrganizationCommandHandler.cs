@@ -11,11 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
 using PlataformaRio2C.Application.CQRS.Commands;
@@ -25,6 +20,11 @@ using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -89,8 +89,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #region Initial validations
 
             // Check if the name already exists
-            var existingOrganizationByName = this.OrganizationRepo.Get(o => o.Name == cmd.Name 
-                                                                            && o.Holding.Uid == cmd.HoldingUid 
+            var existingOrganizationByName = this.OrganizationRepo.Get(o => o.Name == cmd.Name
+                                                                            && o.Holding.Uid == cmd.HoldingUid
                                                                             && o.Uid != cmd.OrganizationUid
                                                                             && !o.IsDeleted);
             if (existingOrganizationByName != null)
@@ -129,7 +129,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     }
                 }
             }
-            
+
             organization.Update(
                 holding,
                 edition,
@@ -178,8 +178,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             if (cmd.IsApiDisplayEnabled && cmd.ApiHighlightPosition.HasValue)
             {
                 var sameHighlightPositionOrganizations = await this.OrganizationRepo.FindAllByHightlightPosition(
-                    cmd.EditionId ?? 0, 
-                    cmd.OrganizationType?.Uid ?? Guid.Empty, 
+                    cmd.EditionId ?? 0,
+                    cmd.OrganizationType?.Uid ?? Guid.Empty,
                     cmd.ApiHighlightPosition.Value,
                     organization.Uid);
                 if (sameHighlightPositionOrganizations?.Any() == true)

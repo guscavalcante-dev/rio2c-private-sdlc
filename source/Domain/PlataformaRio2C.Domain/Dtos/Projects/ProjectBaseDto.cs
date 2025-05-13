@@ -22,7 +22,7 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         public int Id { get; set; }
         public Guid Uid { get; set; }
-        public string ProjectName { get; set; } 
+        public string ProjectName { get; set; }
         public string ProducerName { get; set; }
         public DateTimeOffset? ProducerImageUploadDate { get; set; }
         public Guid ProducerUid { get; set; }

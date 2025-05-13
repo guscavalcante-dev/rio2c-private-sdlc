@@ -15,7 +15,7 @@ using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Dtos
-{ 
+{
     public class AttendeeInnovationOrganizationSustainableDevelopmentObjectiveDto
     {
         public string Name { get; set; }

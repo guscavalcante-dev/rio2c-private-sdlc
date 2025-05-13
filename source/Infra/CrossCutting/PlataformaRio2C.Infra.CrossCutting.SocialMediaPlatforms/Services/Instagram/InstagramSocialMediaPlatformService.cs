@@ -11,13 +11,13 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
 using Newtonsoft.Json;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms.Services.Instagram.Models;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 using System.Text;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms.Services.Instagram
@@ -56,7 +56,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SocialMediaPlatforms.Services.Insta
             {
                 result.Add(new SocialMediaPlatformPublicationDto(publication));
             }
-            
+
             return result;
         }
 

@@ -12,10 +12,10 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -210,7 +210,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             if (isAdminUpdate)
             {
-                rolesToDelete = this.Roles.Where(db => newRoles?.Select(r => r.Id)?.Contains(db.Id) == false 
+                rolesToDelete = this.Roles.Where(db => newRoles?.Select(r => r.Id)?.Contains(db.Id) == false
                                                        && Constants.Role.AnyAdminArray.Contains(db.Name))
                                           .ToList();
             }

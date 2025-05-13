@@ -11,9 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
@@ -21,6 +18,9 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -63,7 +63,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         public async Task<AppValidationResult> Handle(CreateLogistic cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
-            
+
             var attendeeCollaborator = await this.repository.GetAsync(l => l.AttendeeCollaborator.Uid == cmd.AttendeeCollaboratorUid && !l.IsDeleted);
             if (attendeeCollaborator?.AttendeeCollaborator?.Collaborator != null)
             {
@@ -95,7 +95,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.IsVehicleDisposalRequired,
                 cmd.AdditionalInfo,
                 cmd.UserId);
-            
+
             if (!logistic.IsValid())
             {
                 this.AppValidationResult.Add(logistic.ValidationResult);

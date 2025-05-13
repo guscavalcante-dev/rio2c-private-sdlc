@@ -11,12 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using PlataformaRio2C.Domain.Validation;
-using System.Collections.Generic;
-using System.Linq;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Domain.Entities
 {

@@ -16,7 +16,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.WebApi.Controllers
         }
 
         [Route("Sales")]
-        [HttpGet]        
+        [HttpGet]
         public async Task<IHttpActionResult> Sales()
         {
             string userEmail = User.Identity.GetUserName();

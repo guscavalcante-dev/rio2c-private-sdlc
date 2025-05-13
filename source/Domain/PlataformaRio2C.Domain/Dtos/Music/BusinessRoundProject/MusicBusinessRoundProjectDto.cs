@@ -1,5 +1,4 @@
-﻿using PlataformaRio2C.Domain.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -128,7 +127,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns></returns>
         public int GetProjectBuyerEvaluationMax()
         {
-           return this.SellerAttendeeCollaboratorDto.GetProjectMaxBuyerEvaluationsCount();
+            return this.SellerAttendeeCollaboratorDto.GetProjectMaxBuyerEvaluationsCount();
         }
 
         /// <summary>Gets the projects buyer evaluations used.</summary>

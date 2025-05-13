@@ -11,12 +11,12 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using System;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -49,19 +49,19 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isVerticalRequired">if set to <c>true</c> [is vertical required].</param>
         /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
         public UpdateOrganization(
-            OrganizationDto entity, 
+            OrganizationDto entity,
             OrganizationType organizationType,
             List<HoldingBaseDto> holdingBaseDtos,
-            List<LanguageDto> languagesDtos, 
+            List<LanguageDto> languagesDtos,
             List<CountryBaseDto> countriesBaseDtos,
             List<Activity> activities,
             List<TargetAudience> targetAudiences,
             List<InterestDto> interestsDtos,
             List<InnovationOrganizationTrackOptionDto> innovationOrganizationTrackOptionDtos,
             bool? isAddingToCurrentEdition,
-            bool isDescriptionRequired, 
-            bool isAddressRequired, 
-            bool isRestrictionSpecificRequired, 
+            bool isDescriptionRequired,
+            bool isAddressRequired,
+            bool isRestrictionSpecificRequired,
             bool isImageRequired,
             bool isVirtualMeetingRequired,
             bool isHoldingRequired,
@@ -77,17 +77,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdaterBaseDto = entity.UpdaterBaseDto;
             this.UpdateDate = entity.UpdateDate;
             this.UpdateBaseProperties(
-                entity, 
+                entity,
                 organizationType,
-                holdingBaseDtos, 
-                languagesDtos, 
-                countriesBaseDtos, 
-                activities, 
+                holdingBaseDtos,
+                languagesDtos,
+                countriesBaseDtos,
+                activities,
                 targetAudiences,
                 interestsDtos,
                 innovationOrganizationTrackOptionDtos,
-                isDescriptionRequired, 
-                isAddressRequired, 
+                isDescriptionRequired,
+                isAddressRequired,
                 isRestrictionSpecificRequired,
                 isImageRequired,
                 isVirtualMeetingRequired,
