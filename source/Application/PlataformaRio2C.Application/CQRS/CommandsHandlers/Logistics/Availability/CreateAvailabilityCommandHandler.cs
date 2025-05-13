@@ -64,7 +64,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             if (!this.ValidationResult.IsValid)
             {
-                this.AppValidationResult.Add(this.ValidationResult);
+                this.AppValidationResult.Add(this.ValidationResult.Errors?.FirstOrDefault().Message, "AttendeeCollaboratorUid");
                 return this.AppValidationResult;
             }
 

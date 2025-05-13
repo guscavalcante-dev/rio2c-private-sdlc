@@ -1,0 +1,20 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateAvailability
+<div class="row">
+    <div class="form-group col-md-12">
+        @Html.LabelFor(m => m.AttendeeCollaboratorUid, new { @class = "control-label" })
+        @Html.DropDownList("AttendeeCollaboratorUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control enable-collaborator-select2" })
+        @Html.ValidationMessageFor(m => m.AttendeeCollaboratorUid, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.AvailabilityBeginDate, new { @class = "control-label" })
+        @Html.TextBox("AvailabilityBeginDate", Model.AvailabilityBeginDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.AvailabilityBeginDate, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.AvailabilityEndDate, new { @class = "control-label" })
+        @Html.TextBox("AvailabilityEndDate", Model.AvailabilityEndDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.AvailabilityEndDate, "", new { @class = "text-danger" })
+    </div>
+</div>

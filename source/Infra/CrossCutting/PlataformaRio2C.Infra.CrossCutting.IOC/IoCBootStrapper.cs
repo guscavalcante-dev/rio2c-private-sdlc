@@ -42,7 +42,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
             }
 
             // Configures PlataformaRio2C.Infra.Data.Context
-            container.Register<PlataformaRio2C.Infra.Data.Context.PlataformaRio2CContext>(Lifestyle.Scoped);
+            container.Register<Data.Context.PlataformaRio2CContext>(() => new Data.Context.PlataformaRio2CContext(), Lifestyle.Scoped);
             container.Register<Data.Context.Interfaces.IUnitOfWork, Data.Context.Models.UnitOfWorkWithLog<Data.Context.PlataformaRio2CContext>>(Lifestyle.Scoped);
             container.Register<ILogService>(() => new LogService(true), Lifestyle.Scoped);
 

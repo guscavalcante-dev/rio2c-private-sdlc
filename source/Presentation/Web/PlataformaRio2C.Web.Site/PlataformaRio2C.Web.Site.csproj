@@ -7904,7 +7904,7 @@
     <Content Include="Views\Executives\Widgets\LogisticsAirfareList.cshtml" />
     <Content Include="Views\Executives\Widgets\LogisticsTransferList.cshtml" />
     <Content Include="Views\Executives\Widgets\LogisticsAddresses.cshtml" />
-    <Content Include="Views\Agendas\Shared\_MeetingPopover.cshtml" />
+    <Content Include="Views\Agendas\Shared\_AudiovisualMeetingPopover.cshtml" />
     <Content Include="Views\Agendas\Shared\_ConferencePopover.cshtml" />
     <Content Include="Views\Agendas\Shared\_LogisticAirfarePopover.cshtml" />
     <Content Include="Views\Agendas\Shared\_LogisticAccommodationPopover.cshtml" />
@@ -7923,6 +7923,7 @@
     <Content Include="Views\Shared\Widgets\CardsWidget.cshtml" />
     <Content Include="Views\Shared\Widgets\MusicProjectsWidget.cshtml" />
     <Content Include="Areas\Music\Views\BusinessRoundProjects\EditorTemplates\MusicBusinessRoundTargetAudienceBaseCommand.cshtml" />
+    <Content Include="Views\Agendas\Shared\_MusicMeetingPopover.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

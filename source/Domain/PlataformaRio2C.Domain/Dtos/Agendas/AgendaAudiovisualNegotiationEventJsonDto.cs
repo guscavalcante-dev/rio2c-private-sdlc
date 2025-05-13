@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Application
+// Assembly         : PlataformaRio2C.Domain
 // Author           : Rafael Dantas Ruiz
 // Created          : 03-27-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-27-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 05-09-2025
 // ***********************************************************************
-// <copyright file="AgendaNegotiationEventJsonDto.cs" company="Softo">
+// <copyright file="AgendaAudiovisualNegotiationEventJsonDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -14,8 +14,8 @@
 
 namespace PlataformaRio2C.Domain.Dtos
 {
-    /// <summary>AgendaNegotiationEventJsonDto</summary>
-    public class AgendaNegotiationEventJsonDto : AgendaBaseEventJsonDto
+    /// <summary>AgendaAudiovisualNegotiationEventJsonDto</summary>
+    public class AgendaAudiovisualNegotiationEventJsonDto : AgendaBaseEventJsonDto
     {
         public string ProjectLogLine { get; set; }
         public string Producer { get; set; }
@@ -24,8 +24,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public int TableNumber { get; set; }
         public int RoundNumber { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="AgendaNegotiationEventJsonDto"/> class.</summary>
-        public AgendaNegotiationEventJsonDto()
+        /// <summary>Initializes a new instance of the <see cref="AgendaAudiovisualNegotiationEventJsonDto"/> class.</summary>
+        public AgendaAudiovisualNegotiationEventJsonDto()
         {
         }
     }
