@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-19-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 04-23-2025
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 05/05/2025
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -762,7 +762,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                                                                             && !aot.IsDeleted)),
                                 IsInOtherEdition = editionId.HasValue && o.AttendeeOrganizations.Any(ao => ao.EditionId != editionId
                                                                                                             && !ao.IsDeleted),
-
+                                OnboardingFinishDate = o.AttendeeOrganizations.FirstOrDefault(ao => ao.EditionId == editionId && !ao.IsDeleted).OnboardingFinishDate,
                                 IsApiDisplayEnabled = o.AttendeeOrganizations.Any(ao => ao.EditionId == editionId
                                                                                         && ao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
                                                                                                                                    && aot.OrganizationType.Uid == organizationTypeUid

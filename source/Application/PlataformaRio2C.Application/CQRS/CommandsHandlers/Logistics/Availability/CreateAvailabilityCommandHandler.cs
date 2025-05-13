@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 13-04-2024
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 13-04-2024
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 05-06-2025
 // ***********************************************************************
 // <copyright file="CreateAvailabilityCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,6 +27,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     public class CreateAvailabilityCommandHandler : BaseCommandHandler, IRequestHandler<CreateAvailability, AppValidationResult>
     {
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
+        private readonly IConferenceRepository conferenceRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateAvailabilityCommandHandler" /> class.
@@ -37,10 +38,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         public CreateAvailabilityCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            IAttendeeCollaboratorRepository attendeeCollaboratorRepository)
-            : base(eventBus, uow)
+            IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
+            IConferenceRepository conferenceRepository) 
+            : base(eventBus, uow) 
         {
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
+            this.conferenceRepo = conferenceRepository;
         }
 
         /// <summary>
@@ -63,6 +66,28 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             {
                 this.AppValidationResult.Add(this.ValidationResult.Errors?.FirstOrDefault().Message, "AttendeeCollaboratorUid");
                 return this.AppValidationResult;
+            }
+
+            // check for conflicts with attendeecollaborator scheduled ( Conferences )
+            var conferencesDtoList = await this.conferenceRepo.FindConferencesDtoByParticipantAsync(attendeeCollaborator.Uid, cmd.EditionId.Value);
+            var conferences = conferencesDtoList?
+                .Select(dto => dto.Conference)
+                .Where(c => c != null);
+
+            if (conferences != null)
+            {
+                foreach (var conf in conferences)
+                {
+                    var confStart = conf?.StartDate;
+                    var confEnd = conf?.EndDate;
+
+                    if (confStart.HasValue && confEnd.HasValue &&
+                        (confEnd.Value < cmd.AvailabilityBeginDate || confStart.Value > cmd.AvailabilityEndDate))
+                    {
+                        this.AppValidationResult.Add(Messages.SpeakerScheduleConflict, "AvailabilityEndDate");
+                        return this.AppValidationResult;
+                    }
+                }
             }
 
             attendeeCollaborator.UpdateAvailability(cmd.AvailabilityBeginDate, cmd.AvailabilityEndDate, cmd.UserId);

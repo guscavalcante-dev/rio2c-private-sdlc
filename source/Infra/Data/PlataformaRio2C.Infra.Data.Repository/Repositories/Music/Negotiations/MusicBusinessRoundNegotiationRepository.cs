@@ -4,7 +4,7 @@
 // Created          : 02-27-2025
 //
 // Last Modified By : Daniel Giese Rodrigues
-// Last Modified On : 02-27-2025
+// Last Modified On : 05-06-2025
 // ***********************************************************************
 // <copyright file="NegotiationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -212,6 +212,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             if (negotiationDate.HasValue)
             {
                 query = query.Where(n => DbFunctions.TruncateTime(n.StartDate) == DbFunctions.TruncateTime(negotiationDate));
+            }
+
+            return query;
+        }
+
+        /// <summary>Finds the by negotiation Type.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="negotiationType">The negotiation type.</param>
+        /// <returns></returns>
+        internal static IQueryable<MusicBusinessRoundNegotiation> FindByNegotiationType(this IQueryable<MusicBusinessRoundNegotiation> query, string negotiationType)
+        {
+            if (!string.IsNullOrEmpty(negotiationType))
+            {
+                bool isAutomatic = negotiationType.ToLower() == "automatic";
+                query = query.Where(n => n.IsAutomatic == isAutomatic);
             }
 
             return query;
@@ -499,6 +514,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             string projectKeywords,
             DateTime? negotiationDate,
             Guid? roomUid,
+            string type,
             bool showParticipants)
         {
             this.SetProxyEnabled(false);
@@ -509,6 +525,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindBySellerCollaboratorUid(sellerOrganizationUid)
                                 .FindByProjectKeywords(projectKeywords)
                                 .FindByDate(negotiationDate)
+                                .FindByNegotiationType(type)
                                 .FindByRoomUid(roomUid)
                                 .Include(n => n.Room)
                                 .Include(n => n.Room.RoomNames)
@@ -603,19 +620,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             this._context.Database.ExecuteSqlCommand(TransactionalBehavior.DoNotEnsureTransaction, "TRUNCATE TABLE [dbo].[Negotiations]");
         }
 
-        /// <summary>Creates multiple entities</summary>
-        /// <param name="entities">Entities</param>
+        
+
         public override void CreateAll(IEnumerable<MusicBusinessRoundNegotiation> entities)
         {
-            try
-            {
-                this._context.BulkInsert(entities);
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+            BulkInsertExecuter.Create("dbo.MusicBusinessRoundNegotiations", this._context.Database.Connection as SqlConnection)
+                .BulkInsert(entities.ToList()); 
         }
+
 
         /// <summary>
         /// Finds all scheduled negotiations dtos asynchronous.
@@ -704,6 +716,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Include(n => n.Room.RoomNames.Select(rn => rn.Language))
                                 .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation)
                                 .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject);
+            //todo:Refactor this.
+            //.Include(n => n.ProjectBuyerEvaluation.Project.ProjectTitles)
+            //.Include(n => n.ProjectBuyerEvaluation.Project.ProjectTitles.Select(pt => pt.Language))
+            //.Include(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization)
+            //.Include(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.Organization)
+            //.Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization)
+            //.Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization);
 
             if (showParticipants)
             {
@@ -756,12 +775,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Include(n => n.Room.RoomNames)
                                 .Include(n => n.Room.RoomNames.Select(rn => rn.Language))
                                 .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation)
-                                .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject)
-                                .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator)
-                                .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator.Collaborator)
-                                .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator.AttendeeOrganizationCollaborators)
-                                .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation.BuyerAttendeeOrganization)
-                                .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization);
+                                .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject);
+            //todo:Refactor this.
+            //.Include(n => n.ProjectBuyerEvaluation.Project.ProjectTitles)
+            //.Include(n => n.ProjectBuyerEvaluation.Project.ProjectTitles.Select(pt => pt.Language))
+            //.Include(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization)
+            //.Include(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.Organization)
+            //.Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization)
+            //.Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization);
 
             return (await query.ToListAsync())
                                 .GroupBy(n => n.StartDate.ToBrazilTimeZone().Date)

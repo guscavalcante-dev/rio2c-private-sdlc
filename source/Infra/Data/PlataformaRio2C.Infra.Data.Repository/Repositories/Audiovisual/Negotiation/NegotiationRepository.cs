@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Daniel Giese Rodrigues
-// Last Modified On : 04-25-2025
+// Last Modified On : 05-06-2025
 // ***********************************************************************
 // <copyright file="NegotiationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -185,6 +185,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the by negotiation Type.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="negotiationType">The negotiation type.</param>
+        /// <returns></returns>
+        internal static IQueryable<Negotiation> FindByNegotiationType(this IQueryable<Negotiation> query, string negotiationType)
+        {
+            if (!string.IsNullOrEmpty(negotiationType))
+            {
+                bool isAutomatic = negotiationType.ToLower() == "automatic";
+                query = query.Where(n => n.IsAutomatic == isAutomatic);
+            }
+
+            return query;
+        }
         /// <summary>Finds the by room uid.</summary>
         /// <param name="query">The query.</param>
         /// <param name="roomUid">The room uid.</param>
@@ -475,6 +489,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             string projectKeywords,
             DateTime? negotiationDate,
             Guid? roomUid,
+            string type,
             bool showParticipants)
         {
             this.SetProxyEnabled(false);
@@ -485,6 +500,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindBySellerOrganizationUid(sellerOrganizationUid)
                                 .FindByProjectKeywords(projectKeywords)
                                 .FindByDate(negotiationDate)
+                                .FindByNegotiationType(type)
                                 .FindByRoomUid(roomUid)
                                 .Include(n => n.Room)
                                 .Include(n => n.Room.RoomNames)
@@ -585,14 +601,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="entities">Entities</param>
         public override void CreateAll(IEnumerable<Negotiation> entities)
         {
-            try
-            {
-                this._context.BulkInsert(entities);
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+            BulkInsertExecuter.Create("dbo.Negotiations", this._context.Database.Connection as SqlConnection)
+                .BulkInsert(entities.ToList());
         }
 
         /// <summary>

@@ -3,8 +3,8 @@
 // Author           : Renan valentim
 // Created          : 09-27-2021
 //
-// Last Modified By : Renan valentim
-// Last Modified On : 06-26-2023
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 05-06-2025
 // ***********************************************************************
 // <copyright file="ScheduledSearchViewModel.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -37,6 +37,9 @@ namespace PlataformaRio2C.Application.ViewModels
 
         [Display(Name = nameof(Labels.Room), ResourceType = typeof(Labels))]
         public Guid? RoomUid { get; set; }
+
+        [Display(Name = nameof(Labels.Type), ResourceType = typeof(Labels))]
+        public string Type { get; set; }
 
         [Display(Name = nameof(Labels.ShowParticipants), ResourceType = typeof(Labels))]
         public bool ShowParticipants { get; set; }

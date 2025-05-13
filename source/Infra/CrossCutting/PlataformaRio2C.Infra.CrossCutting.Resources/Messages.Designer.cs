@@ -1565,6 +1565,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Existem participantes com conflitos de Agenda para esta data..
+        /// </summary>
+        public static string ParticipantsUnavailables {
+            get {
+                return ResourceManager.GetString("ParticipantsUnavailables", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Senha de confirmação incorreta..
         /// </summary>
         public static string PasswordConfirmationDoesNotMatch {
@@ -2308,6 +2317,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string SomethingIsWrong {
             get {
                 return ResourceManager.GetString("SomethingIsWrong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O palestrante está alocado em uma palestra fora da nova disponibilidade..
+        /// </summary>
+        public static string SpeakerScheduleConflict {
+            get {
+                return ResourceManager.GetString("SpeakerScheduleConflict", resourceCulture);
             }
         }
         

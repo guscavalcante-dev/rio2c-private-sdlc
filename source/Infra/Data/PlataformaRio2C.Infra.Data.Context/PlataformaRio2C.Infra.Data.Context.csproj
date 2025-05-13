@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\BaseContext.cs" />
+    <Compile Include="Helpers\BulkInsertExecuter.cs" />
     <Compile Include="Helpers\SqlMigration.cs" />
     <Compile Include="Interfaces\IDbContext.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />

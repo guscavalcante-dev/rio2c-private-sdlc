@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 03-06-2020
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 18-10-2024
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 05-06-2025
 // ***********************************************************************
 // <copyright file="MeetingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -202,6 +202,12 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 Name = r.GetRoomNameByLanguageCode(this.UserInterfaceLanguage)?.RoomName?.Value
             })?.ToList();
 
+            ViewBag.Types = new[]
+            {
+                new { Id = "Automatic", Name = Labels.Automatic },
+                new { Id = "Manual", Name = Labels.Manual }
+            }.ToList();
+
             return View();
         }
 
@@ -272,6 +278,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 searchViewModel.ProjectKeywords,
                 searchViewModel.Date,
                 searchViewModel.RoomUid,
+                searchViewModel.Type,
                 searchViewModel.ShowParticipants);
 
             ViewBag.ShowParticipants = searchViewModel.ShowParticipants;

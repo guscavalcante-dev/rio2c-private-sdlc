@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 01-17-2024
+// Last Modified On : 05-01-2025
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,9 +36,26 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int YoutubeMaxLength = 300;
 
         public int? HoldingId { get; private set; }
+
+        /// <summary>
+        /// This field must be used only into PlataformaRio2C.Web.Admin. Don't use for public display!
+        /// This field is used to allow the Admin to register a Organization without knowing its TradeName and CompanyName.
+        /// TradeName and CompanyName are registered later into the Organization Data Onboarding, by organization executive.
+        /// </summary>
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Field used for administrative purposes only. Don't use this field for public display!
+        /// Use it with caution!
+        /// </summary>
         public string CompanyName { get; private set; }
+
+        /// <summary>
+        /// This is the default field for public display.
+        /// Use it whenever possible!
+        /// </summary>
         public string TradeName { get; private set; }
+
         public string Document { get; private set; }
         public string PhoneNumber { get; private set; }
         public string Website { get; private set; }

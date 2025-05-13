@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-28-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-28-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 05-01-2025
 // ***********************************************************************
 // <copyright file="AgendasController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,6 +22,8 @@ using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Application.TemplateDocuments;
 using PlataformaRio2C.Infra.Report.Models;
 using System;
 using System.Collections.Generic;
@@ -171,7 +173,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 AllDay = false,
                 Css = "fc-event-solid-danger fc-event-light",
                 ProjectLogLine = nd.ProjectBuyerEvaluationDto.ProjectDto.GetLogLineDtoByLanguageCode(this.UserInterfaceLanguage)?.ProjectLogLine.Value,
-                Producer = nd.ProjectBuyerEvaluationDto.ProjectDto.SellerAttendeeOrganizationDto.Organization.Name,
+                Producer = nd.ProjectBuyerEvaluationDto.ProjectDto.SellerAttendeeOrganizationDto.Organization.TradeName,
                 Player = nd.ProjectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.TradeName,
                 Room = nd.RoomDto.GetRoomNameByLanguageCode(this.UserInterfaceLanguage)?.RoomName?.Value,
                 TableNumber = nd.Negotiation.TableNumber,
@@ -234,7 +236,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             var pdf = new PlataformaRio2CDocument(new PlayerAudiovisualMeetingsDocumentTemplate(negotiationsDtos, this.UserInterfaceLanguage));
             var playerOrganization = negotiationsDtos.FirstOrDefault().ProjectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization;
-            var fileName = $"{Labels.ScheduledNegotiations.RemoveFilenameInvalidChars().Trim()}_{playerOrganization.Name}_{DateTime.Now.ToStringHourMinute()}.pdf".RemoveFilenameInvalidChars();
+            var fileName = $"{Labels.ScheduledNegotiations.RemoveFilenameInvalidChars().Trim()}_{playerOrganization.TradeName}_{DateTime.Now.ToStringHourMinute()}.pdf".RemoveFilenameInvalidChars();
 
             return File(pdf.GetStream(), "application/pdf", fileName);
         }
