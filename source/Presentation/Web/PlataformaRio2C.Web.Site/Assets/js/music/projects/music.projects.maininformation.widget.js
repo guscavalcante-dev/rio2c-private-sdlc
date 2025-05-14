@@ -24,6 +24,11 @@ var MusicProjectsMainInformationWidget = function () {
     var enableShowPlugins = function () {
         KTApp.initTooltips();
         MyRio2cCommon.initScroll();
+        widgetElement.on('click', '.clickable-band-image', function () {
+            var fullImageUrl = $(this).data('full-image');
+            $('#FullBandImage').attr('src', fullImageUrl);
+            $('#ImageFullModal').modal('show');
+        });
     };
 
     var show = function () {
