@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 25-02-2025
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 25-02-2025
+// Last Modified By : Daniel Giese Rodrigues
+// Last Modified On : 05-12-2025
 // ***********************************************************************
 // <copyright file="MusicBusinessRoundNegotiation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -299,6 +299,18 @@ namespace PlataformaRio2C.Domain.Entities
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyGreaterThanValue, Labels.RoundNumber, 0), new string[] { "RoundNumber" }));
             }
+        }
+
+        /// <summary>
+        /// Disables the slot.
+        /// </summary>
+        /// <param name="musicBusinessRoundProjectBuyerEvaluation">The music project buyer evaluation.</param>
+        /// <param name="isDeleted">if set to <c>true</c> [is deleted].</param>
+        public void DisableSlot(MusicBusinessRoundProjectBuyerEvaluation musicBusinessRoundProjectBuyerEvaluation, bool isDeleted)
+        {
+            this.MusicBusinessRoundProjectBuyerEvaluationId = musicBusinessRoundProjectBuyerEvaluation.Id;
+            this.MusicBusinessRoundProjectBuyerEvaluation = musicBusinessRoundProjectBuyerEvaluation;
+            this.IsDeleted = isDeleted;
         }
 
         #endregion
