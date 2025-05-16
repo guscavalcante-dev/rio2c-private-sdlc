@@ -4,13 +4,14 @@
 // Created          : 03-17-2025
 //
 // Last Modified By : Daniel Giese Rodrigues
-// Last Modified On : 05-06-2025
+// Last Modified On : 05-16-2025
 // ***********************************************************************
 // <copyright file="MeetingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using ClosedXML.Excel;
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
@@ -18,6 +19,7 @@ using Microsoft.Ajax.Utilities;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Application.TemplateDocuments;
 using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
@@ -26,9 +28,11 @@ using PlataformaRio2C.Domain.Interfaces.Repositories;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
+using PlataformaRio2C.Infra.Report.Models;
 using PlataformaRio2C.Web.Admin.Controllers;
 using PlataformaRio2C.Web.Admin.Filters;
 using System;
@@ -1246,5 +1250,237 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
         #endregion
 
+        #region Report
+
+        /// <summary>Indexes the specified search view model.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> Report()
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.CalendarReport, Url.Action("Report", "Meetings", new { Area = "Audiovisual" }))
+            });
+
+            #endregion
+
+            ViewBag.Rooms = (await this.roomRepo.FindAllDtoByEditionIdAsync(this.EditionDto.Id))?.Select(r => new RoomJsonDto
+            {
+                Id = r.Room.Id,
+                Uid = r.Room.Uid,
+                Name = r.GetRoomNameByLanguageCode(this.UserInterfaceLanguage)?.RoomName?.Value
+            })?.ToList();
+
+            return View();
+        }
+
+        /// <summary>
+        /// Shows the report data widget.
+        /// </summary>
+        /// <param name="searchViewModel">The search view model.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowReportDataWidget(ScheduledSearchViewModel searchViewModel)
+        {
+            var negotiationDtos = await this.musicbusinessRoundnegotiationRepo.FindReportWidgetDtoAsync(
+                this.EditionDto.Id,
+                searchViewModel.BuyerOrganizationUid,
+                searchViewModel.SellerOrganizationUid,
+                searchViewModel.ProjectKeywords,
+                searchViewModel.Date,
+                searchViewModel.RoomUid,
+                searchViewModel.ShowParticipants);
+
+            return new JsonResult()
+            {
+                Data = new
+                {
+                    status = "success",
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Widgets/ReportDataWidget", negotiationDtos), divIdOrClass = "#MusicMeetingsReportWidget" },
+                    }
+                },
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                MaxJsonLength = Int32.MaxValue
+            };
+        }
+
+        /// <summary>
+        /// Exports the report to excel.
+        /// </summary>
+        /// <param name="searchViewModel">The search view model.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ExportReportToExcel(ScheduledSearchViewModel searchViewModel)
+        {
+            var negotiationDtos = await this.musicbusinessRoundnegotiationRepo.FindReportWidgetDtoAsync(
+                this.EditionDto.Id,
+                searchViewModel.BuyerOrganizationUid,
+                searchViewModel.SellerOrganizationUid,
+                searchViewModel.ProjectKeywords,
+                searchViewModel.Date,
+                searchViewModel.RoomUid,
+                searchViewModel.ShowParticipants);
+
+            var workbook = new XLWorkbook();
+            var worksheet = workbook.Worksheets.Add(Labels.CalendarReport);
+            worksheet.Outline.SummaryVLocation = XLOutlineSummaryVLocation.Top;
+            worksheet.ShowGridLines = true;
+
+            // Excel colors and formatting
+            var dateBackgroundColor = XLColor.FromHtml("#808080");
+            var dateFontColor = XLColor.White;
+            var roomBackgroundColor = XLColor.FromHtml("#d1d1d1");
+            var roomFontColor = XLColor.Black;
+            var tableBackgroundColor = XLColor.FromHtml("#d1d1d1");
+            var tableFontColor = XLColor.Black;
+            var totalColumns = 1;
+
+            if (negotiationDtos?.Any() == true)
+            {
+                var lineIndex = 1;
+
+                foreach (var negotiationReportGroupedByDateDto in negotiationDtos)
+                {
+                    #region Date Header
+
+                    var columnsCount = negotiationReportGroupedByDateDto.MusicBusinessRoundNegotiationReportGroupedByRoomDtos.SelectMany(nr => nr.MusicBusinessRoundNegotiationReportGroupedByStartDateDtos?.SelectMany(nd => nd.MusicBusinessRoundNegotiations.Select(n => n.TableNumber)))?.Distinct()?.Count() ?? 0;
+
+                    var columnIndex = 0;
+
+                    worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = negotiationReportGroupedByDateDto.Date.ToShortDateString();
+                    worksheet.Range(columnIndex.GetExcelColumnLetters() + lineIndex + ":" + (columnsCount + 1).GetExcelColumnLetters() + lineIndex).Row(1).Merge();
+                    worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Left);
+                    worksheet.Cell(lineIndex, columnIndex).Style.Font.Bold = true;
+                    worksheet.Cell(lineIndex, columnIndex).Style.Fill.BackgroundColor = dateBackgroundColor;
+                    worksheet.Cell(lineIndex, columnIndex).Style.Font.SetFontColor(dateFontColor);
+
+                    #endregion Date Header
+
+                    if (negotiationReportGroupedByDateDto.MusicBusinessRoundNegotiationReportGroupedByRoomDtos?.Any() == true)
+                    {
+                        foreach (var negotiationReportGroupedByRoomDto in negotiationReportGroupedByDateDto.MusicBusinessRoundNegotiationReportGroupedByRoomDtos)
+                        {
+                            var roomName = negotiationReportGroupedByRoomDto?.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value;
+                            var tableNumbers = negotiationReportGroupedByRoomDto?.MusicBusinessRoundNegotiationReportGroupedByStartDateDtos?.SelectMany(nd => nd.MusicBusinessRoundNegotiations.Select(n => n.TableNumber))?.Distinct()?.OrderBy(tn => tn)?.ToList() ??
+                                               new List<int>();
+
+                            #region Room Sub Header
+
+                            lineIndex++;
+                            columnIndex = 0;
+
+                            worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = roomName;
+                            worksheet.Range(columnIndex.GetExcelColumnLetters() + lineIndex + ":" + (tableNumbers.Count() + 1).GetExcelColumnLetters() + lineIndex).Row(1).Merge();
+                            worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Left);
+                            worksheet.Cell(lineIndex, columnIndex).Style.Font.Bold = true;
+                            worksheet.Cell(lineIndex, columnIndex).Style.Fill.BackgroundColor = roomBackgroundColor;
+                            worksheet.Cell(lineIndex, columnIndex).Style.Font.SetFontColor(roomFontColor);
+
+                            #endregion Room Sub Headers
+
+                            #region Table Header
+
+                            lineIndex++;
+                            columnIndex = 0;
+
+                            worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = Labels.Hour;
+                            worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                            worksheet.Cell(lineIndex, columnIndex).Style.Font.Bold = true;
+                            worksheet.Cell(lineIndex, columnIndex).Style.Fill.BackgroundColor = tableBackgroundColor;
+                            worksheet.Cell(lineIndex, columnIndex).Style.Font.SetFontColor(tableFontColor);
+
+                            foreach (var tableNumber in tableNumbers)
+                            {
+                                worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = $"{Labels.Table} {tableNumber}";
+                                worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                                worksheet.Cell(lineIndex, columnIndex).Style.Font.Bold = true;
+                                worksheet.Cell(lineIndex, columnIndex).Style.Fill.BackgroundColor = tableBackgroundColor;
+                                worksheet.Cell(lineIndex, columnIndex).Style.Font.SetFontColor(tableFontColor);
+                            }
+
+                            #endregion Table Header
+
+                            #region Hours
+
+                            foreach (var negotiationReportGroupedByStartDateDto in negotiationReportGroupedByRoomDto.MusicBusinessRoundNegotiationReportGroupedByStartDateDtos.OrderBy(n => n.StartDate))
+                            {
+                                lineIndex++;
+                                columnIndex = 0;
+
+                                worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = $"{negotiationReportGroupedByStartDateDto.StartDate.ToString("HH:mm")}\n{negotiationReportGroupedByStartDateDto.EndDate.ToString("HH:mm")}";
+                                worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                                worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center);
+                                worksheet.Cell(lineIndex, columnIndex).Style.Font.Bold = true;
+                                worksheet.Cell(lineIndex, columnIndex).Style.Alignment.WrapText = true;
+
+                                foreach (var tableNumber in tableNumbers)
+                                {
+                                    totalColumns = columnIndex > totalColumns ? columnIndex : totalColumns;
+
+                                    var negotiation = negotiationReportGroupedByStartDateDto.MusicBusinessRoundNegotiations.FirstOrDefault(n => n.TableNumber == tableNumber);
+                                    if (negotiation != null)
+                                    {
+                                        worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = negotiation.MusicBusinessRoundProjectBuyerEvaluation?.BuyerAttendeeOrganization?.Organization?.TradeName +
+                                                                                                                   "\n" + negotiation.MusicBusinessRoundProjectBuyerEvaluation?.MusicBusinessRoundProject?.SellerAttendeeCollaborator?.Collaborator?.GetStageNameOrBadgeOrFullName();
+                                    }
+                                    else
+                                    {
+                                        worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = string.Empty;
+                                    }
+
+                                    worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                                    worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center);
+                                    worksheet.Cell(lineIndex, columnIndex).Style.Alignment.WrapText = true;
+                                }
+                            }
+
+                            #endregion Hours
+                        }
+                    }
+
+                    lineIndex++;
+                }
+            }
+
+            // AdjustColumns
+            for (var i = 1; i <= totalColumns + 1; i++)
+            {
+                worksheet.Column(i).AdjustToContents();
+            }
+
+            return new ExcelResult(workbook, Labels.CalendarReport + "_" + DateTime.UtcNow.ToBrazilTimeZone().ToString("yyyyMMdd"));
+        }
+
+        /// <summary>
+        /// Exports the report to PDF.
+        /// </summary>
+        /// <param name="searchViewModel">The search view model.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ExportReportToPdf(ScheduledSearchViewModel searchViewModel)
+        {
+            var negotiationsDtos = await this.musicbusinessRoundnegotiationRepo.FindReportWidgetDtoAsync(
+                this.EditionDto.Id,
+                searchViewModel.BuyerOrganizationUid,
+                searchViewModel.SellerOrganizationUid,
+                searchViewModel.ProjectKeywords,
+                searchViewModel.Date,
+                searchViewModel.RoomUid,
+                searchViewModel.ShowParticipants);
+
+            if (negotiationsDtos.Count == 0)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.ScheduledOneToOneMeetings, Labels.FoundFP) }, JsonRequestBehavior.AllowGet);
+            }
+
+            var pdf = new PlataformaRio2CDocument(new MusicScheduledMeetingsReportDocumentTemplate(negotiationsDtos, this.UserInterfaceLanguage, this.EditionDto));
+            var fileName = $"{Labels.ScheduledNegotiations.RemoveFilenameInvalidChars().Trim()}_{DateTime.Now.ToStringHourMinute()}.pdf".RemoveFilenameInvalidChars();
+            return File(pdf.GetStream(), "application/pdf", fileName);
+        }
+
+        #endregion
     }
 }

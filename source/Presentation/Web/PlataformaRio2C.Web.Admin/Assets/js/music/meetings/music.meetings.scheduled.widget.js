@@ -4,7 +4,7 @@
 // Created          : 21-02-2025
 //
 // Last Modified By : Daniel Giese Rodrigues
-// Last Modified On : 05-06-2025
+// Last Modified On : 05-16-2025
 // ***********************************************************************
 // <copyright file="Music.meetings.scheduled.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -166,10 +166,14 @@ var MusicMeetingsScheduledWidget = function () {
             });
     };
 
-    // Export to PDF ------------------------------------------------------------------------------
+    // Export to PDF and Xls ------------------------------------------------------------------------------
     var exportToPdf = function () {
         var jsonParameters = getJsonParameters();
         location.href = '/Music/Meetings/ExportReportToPdf?' + jQuery.param(jsonParameters);
+    }
+    var exportToXls = function () {
+        var jsonParameters = getJsonParameters();
+        location.href = '/Music/Meetings/ExportReportToExcel?' + jQuery.param(jsonParameters);
     }
 
     return {
@@ -183,6 +187,9 @@ var MusicMeetingsScheduledWidget = function () {
         },
         sendEmailToPlayer: function (negotiationUid) {
             showSendEmailsPlayersScheduledModal(negotiationUid);
+        },
+        exportToXls: function () {
+            exportToXls();
         },
         exportToPdf: function () {
             exportToPdf();

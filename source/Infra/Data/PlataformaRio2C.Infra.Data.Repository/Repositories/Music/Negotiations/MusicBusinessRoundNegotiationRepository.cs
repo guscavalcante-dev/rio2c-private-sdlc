@@ -4,7 +4,7 @@
 // Created          : 02-27-2025
 //
 // Last Modified By : Daniel Giese Rodrigues
-// Last Modified On : 05-06-2025
+// Last Modified On : 05-16-2025
 // ***********************************************************************
 // <copyright file="NegotiationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -717,7 +717,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Include(n => n.Room.RoomNames)
                                 .Include(n => n.Room.RoomNames.Select(rn => rn.Language))
                                 .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation)
-                                .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject);
+                                .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation.BuyerAttendeeOrganization)
+                                .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization)
+                                .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject)
+                                .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator)
+                                .Include(n => n.MusicBusinessRoundProjectBuyerEvaluation.MusicBusinessRoundProject.SellerAttendeeCollaborator.Collaborator);
+
+
             //todo:Refactor this.
             //.Include(n => n.ProjectBuyerEvaluation.Project.ProjectTitles)
             //.Include(n => n.ProjectBuyerEvaluation.Project.ProjectTitles.Select(pt => pt.Language))
