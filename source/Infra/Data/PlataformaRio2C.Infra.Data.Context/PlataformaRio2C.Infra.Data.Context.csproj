@@ -255,6 +255,7 @@
     <Compile Include="Models\UnitOfWorkWithLog.cs" />
     <Compile Include="PlataformaRio2CContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Seeder\Seeder.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Domain\PlataformaRio2C.Domain\PlataformaRio2C.Domain.csproj">
@@ -274,8 +275,14 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="EntityData\" />
+    <Content Include="Seeder\Scripts\202505071549_InitialScript.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Seeder\Scripts\202505071549_InitialScriptWithEnvironment.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

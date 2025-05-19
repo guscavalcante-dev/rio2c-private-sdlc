@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Gilson Oliveira
-// Last Modified On : 10-23-2024
+// Last Modified By : Renan Valentim
+// Last Modified On : 05-19-2025
 // ***********************************************************************
 // <copyright file="PlataformaRio2CContext.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Enums;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context.Config;
 using PlataformaRio2C.Infra.Data.Context.Mapping;
+using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 
@@ -29,21 +30,26 @@ namespace PlataformaRio2C.Infra.Data.Context
         {
             Database.SetInitializer<PlataformaRio2CContext>(null);
 
-            //TODO: We disabled the migrations to use the Seeder project. To reenable Migrations, uncomment this block.
-            //string environment = System.Configuration.ConfigurationManager.AppSettings["Environment"]?.ToLower();
-            //if (environment == EnumEnvironments.Test.ToDescription().ToLower() || 
-            //    environment == EnumEnvironments.Prod.ToDescription().ToLower())
-            //{
-            //    Database.SetInitializer(new MigrateDatabaseToLatestVersion<PlataformaRio2CContext, Migrations.Configuration>());
-            //    using (var context = new PlataformaRio2CContext())
-            //    {
-            //        context.Database.Initialize(true);
-            //    }
-            //}
-            //else 
-            //{
-            //    Database.SetInitializer<PlataformaRio2CContext>(null);
-            //}
+            string environment = ConfigurationManager.AppSettings["Environment"]?.ToLower();
+            if (environment == EnumEnvironments.Test.ToDescription().ToLower() ||
+                environment == EnumEnvironments.Prod.ToDescription().ToLower())
+            {
+                // Disables the Migrations
+                //Database.SetInitializer(new MigrateDatabaseToLatestVersion<PlataformaRio2CContext, Migrations.Configuration>());
+                //using (var context = new PlataformaRio2CContext())
+                //{
+                //    context.Database.Initialize(true);
+                //}
+
+                // Enables Seeder
+                Seeder.Seed(ConfigurationManager.ConnectionStrings["PlataformaRio2CConnection"].ConnectionString, 
+                    autoRun: true, 
+                    stopOnException: true);
+            }
+            else
+            {
+                Database.SetInitializer<PlataformaRio2CContext>(null);
+            }
         }
 
         /// <summary>
