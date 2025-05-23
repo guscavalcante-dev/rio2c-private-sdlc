@@ -4,7 +4,7 @@
 // Created          : 03-07-2020
 //
 // Last Modified By : Daniel Giese Rodrigues
-// Last Modified On : 05-06-2025
+// Last Modified On : 05-16-2025
 // ***********************************************************************
 // <copyright file="audiovisual.meetings.scheduled.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -162,10 +162,15 @@ var AudiovisualMeetingsScheduledWidget = function () {
             });
     };
 
-    // Export to PDF ------------------------------------------------------------------------------
+    // Export to PDF and XLS ------------------------------------------------------------------------------
     var exportToPdf = function () {
         var jsonParameters = getJsonParameters();
         location.href = '/Audiovisual/Meetings/ExportReportToPdf?' + jQuery.param(jsonParameters);
+    }
+
+    var exportToXls = function () {
+        var jsonParameters = getJsonParameters();
+        location.href = '/Audiovisual/Meetings/ExportReportToExcel?' + jQuery.param(jsonParameters);
     }
 
     return {
@@ -180,7 +185,9 @@ var AudiovisualMeetingsScheduledWidget = function () {
         sendEmailToPlayer: function (negotiationUid) {
             showSendEmailsPlayersScheduledModal(negotiationUid);
         },
-
+        exportToXls: function () {
+            exportToXls();
+        },
         exportToPdf: function () {
             exportToPdf();
         }

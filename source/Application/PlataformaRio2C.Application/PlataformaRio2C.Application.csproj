@@ -790,6 +790,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Common\NegotiationService.cs" />
     <Compile Include="Interfaces\Emails\IMailerService.cs" />
+    <Compile Include="TemplateDocuments\Meetings\MusicScheduledMeetingsReportDocumentTemplate.cs" />
     <Compile Include="TemplateDocuments\Meetings\ScheduledMeetingsReportDocumentTemplate.cs" />
     <Compile Include="TemplateDocuments\Players\PlayerAudiovisualMeetingsDocumentTemplate.cs" />
     <Compile Include="TemplateDocuments\Projects\ProjectDocumentTemplate.cs" />
